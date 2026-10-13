@@ -35,9 +35,10 @@ public sealed record ParamModel(string Name, TypeSig Type, bool In, bool Out, bo
 
 /// <summary>
 /// A mirrored member's state (PLAN.md §3c rule 6), from its attributes. Unclassified means hand-written code that
-/// predates the per-method rule and still has to be analyzed, or marked Quire-only.
+/// predates the per-method rule and still has to be analyzed, or marked Quire-only. Abstract is an unattributed
+/// abstract or interface member without a default body: the declaration, which the manifest checks, is its contract.
 /// </summary>
-public enum MemberStatus { Unclassified, Stub, Blocked, Analyzed, Documented, Tested, Verified, Deviation, QuireOnly }
+public enum MemberStatus { Unclassified, Stub, Blocked, Analyzed, Documented, Tested, Verified, Deviation, QuireOnly, Abstract }
 
 /// <summary>A member's status and the attribute text behind it (reason, evidence record, test class, deviation or source).</summary>
 public interface IHasStatus

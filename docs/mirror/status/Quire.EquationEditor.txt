@@ -62,5 +62,5 @@ T Quire.EquationEditor.Tree.RootMathNode  26 members: stub 22, unclassified 4
   unclassified F private System.Action`3<Quire.DelegateFunction0`1<System.Boolean>,System.String,Quire.EquationEditor.Tree.MathNode> RequestUndoableCommandExecution
   unclassified F private System.EventHandler`1<Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> RequestRestoreInsertionPoint
 
-T Quire.EquationEditor.Tree.Transform.IResultTreeFormatter  13 members: stub 12, unclassified 1
-  unclassified M public abstract Format`0(Quire.Calculation.Core.IResultNode,Quire.Controls.Core.ResultFormatOptions) -> Quire.EquationEditor.Tree.MathExpr
+T Quire.EquationEditor.Tree.Transform.IResultTreeFormatter  13 members: stub 12, abstract 1
+  abstract     M public abstract Format`0(Quire.Calculation.Core.IResultNode,Quire.Controls.Core.ResultFormatOptions) -> Quire.EquationEditor.Tree.MathExpr

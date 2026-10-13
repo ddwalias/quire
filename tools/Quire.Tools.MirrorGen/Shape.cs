@@ -104,11 +104,11 @@ public static class Shape
 
     private static readonly MemberStatus[] Statuses =
         [MemberStatus.Stub, MemberStatus.Unclassified, MemberStatus.Blocked, MemberStatus.Documented, MemberStatus.Analyzed,
-         MemberStatus.Tested, MemberStatus.Verified, MemberStatus.Deviation, MemberStatus.QuireOnly];
+         MemberStatus.Tested, MemberStatus.Verified, MemberStatus.Deviation, MemberStatus.Abstract, MemberStatus.QuireOnly];
 
     /// <summary>Statuses that close a member for a phase (§3c rule 7). Deviations close it as a recorded divergence.</summary>
     public static bool Settled(MemberStatus s) =>
-        s is MemberStatus.Tested or MemberStatus.Verified or MemberStatus.Deviation or MemberStatus.QuireOnly;
+        s is MemberStatus.Tested or MemberStatus.Verified or MemberStatus.Deviation or MemberStatus.Abstract or MemberStatus.QuireOnly;
 
     private static string Text(MemberStatus s) => s switch
     {
@@ -187,15 +187,17 @@ public static class Shape
         sb.AppendLine("- **Tested** `[MirrorTested(evidence)]`: REA-analyzed, implemented independently, behaviour tests pass.");
         sb.AppendLine("- **Verified** `[MirrorVerified(test)]`: differential-verified against the installed Mathcad, for the recorded cases only.");
         sb.AppendLine("- **Deviation** `[MirrorDeviation(id)]`: an accepted entry in [`deviations.md`](deviations.md); a divergence, never a match.");
+        sb.AppendLine("- **Abstract** (no attribute, no body): an abstract or interface member without a default body. Mathcad's has");
+        sb.AppendLine("  no body either, so the declaration, which the manifest checks, is the whole contract.");
         sb.AppendLine("- **Quire-only** `[QuireOnly]`: no Mathcad counterpart.");
         sb.AppendLine();
-        sb.AppendLine("*Settled* is Tested + Verified + Deviation + Quire-only (§3c rule 7). Blocked, documented and analyzed members");
+        sb.AppendLine("*Settled* is Tested + Verified + Deviation + Abstract + Quire-only (§3c rule 7). Blocked, documented and analyzed members");
         sb.AppendLine("are open. Settled says nothing about untested inputs, and deviations are counted apart from matches.");
         sb.AppendLine("Explicit interface implementations, enum values and delegate signatures are not counted. Per-member detail is");
         sb.AppendLine("in [`status/`](status/).");
         sb.AppendLine();
-        sb.AppendLine("| Project | Types | Members | Stub | Unclassified | Blocked | Documented | Analyzed | Tested | Verified | Deviation | Quire-only | Settled |");
-        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+        sb.AppendLine("| Project | Types | Members | Stub | Unclassified | Blocked | Documented | Analyzed | Tested | Verified | Deviation | Abstract | Quire-only | Settled |");
+        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
         void Row(string name, int types, Dictionary<MemberStatus, int> c, string b)
         {
             int members = c.Values.Sum();

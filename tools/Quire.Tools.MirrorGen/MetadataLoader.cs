@@ -169,7 +169,7 @@ public sealed class MetadataLoader
             var setter = a.Setter.IsNil ? null : methods[a.Setter];
             var index = (getter?.Params ?? setter?.Params.RemoveAt(setter.Params.Length - 1) ?? []);
             type.Properties.Add(new PropertyModel(_md.GetString(p.Name), sig.ReturnType, getter, setter, index)
-                { Status = Status(p.GetCustomAttributes(), out var pe), Evidence = pe });
+                { Status = Bodiless((getter ?? setter)?.Abstract == true, Status(p.GetCustomAttributes(), out var pe)), Evidence = pe });
         }
         foreach (var eh in td.GetEvents())
         {
@@ -178,7 +178,7 @@ public sealed class MetadataLoader
             accessors.Add(a.Adder); accessors.Add(a.Remover);
             type.Events.Add(new EventModel(_md.GetString(e.Name), DecodeEntity(e.Type)!,
                 a.Adder.IsNil ? null : methods[a.Adder], a.Remover.IsNil ? null : methods[a.Remover])
-                { Status = Status(e.GetCustomAttributes(), out var ee), Evidence = ee });
+                { Status = Bodiless(a.Adder.IsNil ? false : methods[a.Adder].Abstract, Status(e.GetCustomAttributes(), out var ee)), Evidence = ee });
         }
         // Obfuscated assemblies can lose property and event rows while keeping their special-name accessors.
         // Rebuild them, so the accessors are declared as the properties and events they were written as.
@@ -296,8 +296,12 @@ public sealed class MetadataLoader
             impls.TryGetValue(mh, out var list) ? [.. list] : [],
             (a & MethodAttributes.PinvokeImpl) != 0 || (m.ImplAttributes & MethodImplAttributes.InternalCall) != 0,
             methodAttrs.Contains("System.Runtime.CompilerServices.ExtensionAttribute"),
-            initOnly) { Status = Status(m.GetCustomAttributes(), out var me), Evidence = me };
+            initOnly) { Status = Bodiless((a & MethodAttributes.Abstract) != 0, Status(m.GetCustomAttributes(), out var me)), Evidence = me };
     }
+
+    /// <summary>An abstract member without a status attribute has no body to analyze: its declaration is all there is.</summary>
+    private static MemberStatus Bodiless(bool isAbstract, MemberStatus status) =>
+        isAbstract && status == MemberStatus.Unclassified ? MemberStatus.Abstract : status;
 
     /// <summary>The member's §3c status from its Quire.Mirror attributes, with the attribute's text argument.</summary>
     private MemberStatus Status(CustomAttributeHandleCollection handles, out string? evidence)

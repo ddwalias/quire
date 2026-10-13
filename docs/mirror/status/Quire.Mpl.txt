@@ -185,11 +185,11 @@ T Quire.Mcd.StrVal  8 members: stub 1, unclassified 7
   unclassified P IsString : System.String override get:public
   unclassified P m_string : System.String get:public
 
-T Quire.Mcd.Type  13 members: stub 9, unclassified 4
+T Quire.Mcd.Type  13 members: stub 9, unclassified 3, abstract 1
   unclassified M protected .ctor`0() -> System.Void
   unclassified M public override ToString`0() -> System.String
   unclassified M public static Parse`0(System.String) -> Quire.Mcd.Type
-  unclassified P Name : System.String abstract get:public
+  abstract     P Name : System.String abstract get:public
 
 T Quire.Mcd.Type+Constant  3 members: stub 2, unclassified 1
   unclassified M public .ctor`0(System.String) -> System.Void
@@ -283,7 +283,7 @@ T Quire.Mpl.Run.Atom  15 members: stub 6, unclassified 9
   unclassified P StrCon : System.String virtual get:public
   unclassified P sym : Quire.Mpl.Run.Sym get:public
 
-T Quire.Mpl.Run.Function  166 members: stub 151, unclassified 15
+T Quire.Mpl.Run.Function  166 members: stub 151, unclassified 14, abstract 1
   unclassified F protected System.Boolean m_no_vectorize
   unclassified F protected System.Boolean m_varargs
   unclassified F protected System.Int32 m_minargs
@@ -292,13 +292,13 @@ T Quire.Mpl.Run.Function  166 members: stub 151, unclassified 15
   unclassified F protected System.String m_name
   unclassified M protected .ctor`0(System.Int32,System.Int32) -> System.Void
   unclassified M public InvokeVec`0(System.Object[]) -> System.Object
-  unclassified M public abstract invVec`1(out !!0&,System.Object[]) -> System.Void
   unclassified M public override ToString`0() -> System.String
   unclassified P IsFunction : Quire.Mpl.Run.Function override get:public
   unclassified P MinArgs : System.Int32 get:public
   unclassified P Name : System.String virtual get:public set:public
   unclassified P Purity : System.Int32 get:public
   unclassified P Varargs : System.Boolean get:public
+  abstract     M public abstract invVec`1(out !!0&,System.Object[]) -> System.Void
 
 T Quire.Mpl.Run.FunctionUtilities  18 members: stub 17, unclassified 1
   unclassified M protected .ctor`0() -> System.Void

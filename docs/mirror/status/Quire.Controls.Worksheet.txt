@@ -29,20 +29,20 @@ T Quire.Controls.Worksheet.HeaderFooterViewModel  33 members: stub 30, unclassif
 T Quire.Controls.Worksheet.HeaderFooterZombieViewModel  29 members: stub 28, unclassified 1
   unclassified F private System.Action zombieIsInitialized
 
-T Quire.Controls.Worksheet.IControlFactory  34 members: stub 28, unclassified 6
-  unclassified M public abstract CreateEquation`0() -> Quire.Controls.EquationControl
-  unclassified M public abstract CreatePolarPlot`0() -> Quire.Controls.Plots.XYPlotControl
-  unclassified M public abstract CreateRegion`0(Quire.PersistentDataObjects.RegionPersistentData) -> Quire.Controls.Core.RegionControl
-  unclassified M public abstract CreateSolveBlock`0() -> Quire.Controls.SolveBlockControl
-  unclassified M public abstract CreateText`0() -> Quire.Controls.TextRegionControl
-  unclassified M public abstract CreateXYPlot`0() -> Quire.Controls.Plots.XYPlotControl
+T Quire.Controls.Worksheet.IControlFactory  34 members: stub 28, abstract 6
+  abstract     M public abstract CreateEquation`0() -> Quire.Controls.EquationControl
+  abstract     M public abstract CreatePolarPlot`0() -> Quire.Controls.Plots.XYPlotControl
+  abstract     M public abstract CreateRegion`0(Quire.PersistentDataObjects.RegionPersistentData) -> Quire.Controls.Core.RegionControl
+  abstract     M public abstract CreateSolveBlock`0() -> Quire.Controls.SolveBlockControl
+  abstract     M public abstract CreateText`0() -> Quire.Controls.TextRegionControl
+  abstract     M public abstract CreateXYPlot`0() -> Quire.Controls.Plots.XYPlotControl
 
-T Quire.Controls.Worksheet.IWorksheetModel  38 members: stub 33, unclassified 5
-  unclassified M public abstract AddItemAtLocation`0(Quire.Controls.Core.RegionControl,System.Windows.Point) -> System.Void
-  unclassified M public abstract GetItemWorksheetLocation`0(Quire.Controls.Core.RegionControl) -> System.Windows.Point
-  unclassified M public abstract MoveItem`0(Quire.Controls.Core.RegionControl,System.Windows.Point) -> System.Void
-  unclassified M public abstract RemoveItem`0(Quire.Controls.Core.RegionControl) -> System.Void
-  unclassified P Items : System.Collections.Generic.IReadOnlyList`1<Quire.Controls.Core.RegionControl> abstract get:public
+T Quire.Controls.Worksheet.IWorksheetModel  38 members: stub 33, abstract 5
+  abstract     M public abstract AddItemAtLocation`0(Quire.Controls.Core.RegionControl,System.Windows.Point) -> System.Void
+  abstract     M public abstract GetItemWorksheetLocation`0(Quire.Controls.Core.RegionControl) -> System.Windows.Point
+  abstract     M public abstract MoveItem`0(Quire.Controls.Core.RegionControl,System.Windows.Point) -> System.Void
+  abstract     M public abstract RemoveItem`0(Quire.Controls.Core.RegionControl) -> System.Void
+  abstract     P Items : System.Collections.Generic.IReadOnlyList`1<Quire.Controls.Core.RegionControl> abstract get:public
 
 T Quire.Controls.Worksheet.TemplatedTextBox  32 members: stub 29, unclassified 3
   unclassified F private System.Action`1<Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent

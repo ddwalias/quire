@@ -7,52 +7,52 @@ T Quire.Calculation.Core.EngineError  20 members: stub 17, unclassified 3
   unclassified P Message : System.String get:public
   unclassified P Symbol : System.String get:public
 
-T Quire.Calculation.Core.ICalculatable  16 members: stub 11, unclassified 5
-  unclassified E public abstract System.EventHandler RlChanged
-  unclassified M public abstract SetResult`0(Quire.Calculation.Core.CalculationResult) -> System.Void
-  unclassified M public abstract SetSynchronizationStatus`0(Quire.Calculation.Core.SynchronizationStatus) -> System.Void
-  unclassified P Rl : System.String abstract get:public
-  unclassified P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus abstract get:public
+T Quire.Calculation.Core.ICalculatable  16 members: stub 11, abstract 5
+  abstract     E public abstract System.EventHandler RlChanged
+  abstract     M public abstract SetResult`0(Quire.Calculation.Core.CalculationResult) -> System.Void
+  abstract     M public abstract SetSynchronizationStatus`0(Quire.Calculation.Core.SynchronizationStatus) -> System.Void
+  abstract     P Rl : System.String abstract get:public
+  abstract     P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus abstract get:public
 
-T Quire.Calculation.Core.ICalculatableContext  24 members: stub 14, unclassified 10
-  unclassified E public abstract System.EventHandler AutoCalcChanged
-  unclassified E public abstract System.EventHandler CalculateNowRequested
-  unclassified E public abstract System.EventHandler RecalculateAllRequested
-  unclassified E public abstract System.EventHandler UnitSystemUpdated
-  unclassified E public abstract System.EventHandler`1<Quire.Calculation.Core.CalculatableEventArgs> CalculatableAdded
-  unclassified E public abstract System.EventHandler`1<Quire.Calculation.Core.CalculatableEventArgs> CalculatableMoved
-  unclassified E public abstract System.EventHandler`1<Quire.Calculation.Core.CalculatableEventArgs> CalculatableRemoved
-  unclassified P Calculatables : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.ICalculatable> abstract get:public
-  unclassified P IsAutoCalcOn : System.Boolean abstract get:public
-  unclassified P UnitSystem : System.String abstract get:public
+T Quire.Calculation.Core.ICalculatableContext  24 members: stub 14, abstract 10
+  abstract     E public abstract System.EventHandler AutoCalcChanged
+  abstract     E public abstract System.EventHandler CalculateNowRequested
+  abstract     E public abstract System.EventHandler RecalculateAllRequested
+  abstract     E public abstract System.EventHandler UnitSystemUpdated
+  abstract     E public abstract System.EventHandler`1<Quire.Calculation.Core.CalculatableEventArgs> CalculatableAdded
+  abstract     E public abstract System.EventHandler`1<Quire.Calculation.Core.CalculatableEventArgs> CalculatableMoved
+  abstract     E public abstract System.EventHandler`1<Quire.Calculation.Core.CalculatableEventArgs> CalculatableRemoved
+  abstract     P Calculatables : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.ICalculatable> abstract get:public
+  abstract     P IsAutoCalcOn : System.Boolean abstract get:public
+  abstract     P UnitSystem : System.String abstract get:public
 
-T Quire.Calculation.Core.IEngineError  13 members: stub 11, unclassified 2
-  unclassified P Message : System.String abstract get:public
-  unclassified P Symbol : System.String abstract get:public
+T Quire.Calculation.Core.IEngineError  13 members: stub 11, abstract 2
+  abstract     P Message : System.String abstract get:public
+  abstract     P Symbol : System.String abstract get:public
 
-T Quire.Calculation.Core.IFunctionResultNode  2 members: stub 1, unclassified 1
-  unclassified P Signature : System.String abstract get:public
+T Quire.Calculation.Core.IFunctionResultNode  2 members: stub 1, abstract 1
+  abstract     P Signature : System.String abstract get:public
 
-T Quire.Calculation.Core.IMatrixResultNode  10 members: stub 4, unclassified 6
-  unclassified P Cols : System.Int32 abstract get:public
-  unclassified P DisplayValues : System.Collections.Generic.IReadOnlyList`1<System.Double> abstract get:public
-  unclassified P ElementUnits : System.Collections.Generic.IReadOnlyList`1<System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.UnitPower>> abstract get:public
-  unclassified P IsRangeTable : System.Boolean abstract get:public
-  unclassified P Rows : System.Int32 abstract get:public
-  unclassified P Units : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.UnitPower> abstract get:public
+T Quire.Calculation.Core.IMatrixResultNode  10 members: stub 4, abstract 6
+  abstract     P Cols : System.Int32 abstract get:public
+  abstract     P DisplayValues : System.Collections.Generic.IReadOnlyList`1<System.Double> abstract get:public
+  abstract     P ElementUnits : System.Collections.Generic.IReadOnlyList`1<System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.UnitPower>> abstract get:public
+  abstract     P IsRangeTable : System.Boolean abstract get:public
+  abstract     P Rows : System.Int32 abstract get:public
+  abstract     P Units : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.UnitPower> abstract get:public
 
-T Quire.Calculation.Core.IResultNode  1 members: unclassified 1
-  unclassified P ValueType : Quire.Calculation.Core.ResultValueType abstract get:public
+T Quire.Calculation.Core.IResultNode  1 members: abstract 1
+  abstract     P ValueType : Quire.Calculation.Core.ResultValueType abstract get:public
 
-T Quire.Calculation.Core.IStringResultNode  1 members: unclassified 1
-  unclassified P Value : System.String abstract get:public
+T Quire.Calculation.Core.IStringResultNode  1 members: abstract 1
+  abstract     P Value : System.String abstract get:public
 
-T Quire.Calculation.Core.ITrace2DResultNode  5 members: stub 4, unclassified 1
-  unclassified P Traces : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.TraceData> abstract get:public
+T Quire.Calculation.Core.ITrace2DResultNode  5 members: stub 4, abstract 1
+  abstract     P Traces : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.TraceData> abstract get:public
 
-T Quire.Calculation.Core.IUnitedValueResultNode  4 members: stub 2, unclassified 2
-  unclassified P DisplayValue : System.Double abstract get:public
-  unclassified P Units : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.UnitPower> abstract get:public
+T Quire.Calculation.Core.IUnitedValueResultNode  4 members: stub 2, abstract 2
+  abstract     P DisplayValue : System.Double abstract get:public
+  abstract     P Units : System.Collections.Generic.IReadOnlyList`1<Quire.Calculation.Core.UnitPower> abstract get:public
 
 T Quire.Calculation.Core.Support.CalculatableWrapper  28 members: stub 25, unclassified 3
   unclassified F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
