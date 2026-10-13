@@ -1,0 +1,144 @@
+<Window x:Class="Quire.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Quire" Width="1180" Height="860" Background="#F3F4F6"
+        UseLayoutRounding="True" TextOptions.TextFormattingMode="Display">
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="New" />
+        <KeyBinding Key="O" Modifiers="Control" Command="Open" />
+        <KeyBinding Key="S" Modifiers="Control" Command="Save" />
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs" />
+        <KeyBinding Key="F9" Command="{x:Static local:Commands.CalculateNow}" xmlns:local="clr-namespace:Quire" />
+        <KeyBinding Key="F9" Modifiers="Control" Command="{x:Static local:Commands.RecalculateAll}" xmlns:local="clr-namespace:Quire" />
+        <KeyBinding Key="M" Modifiers="Control" Command="{x:Static local:Commands.InsertMath}" xmlns:local="clr-namespace:Quire" />
+        <KeyBinding Key="T" Modifiers="Control" Command="{x:Static local:Commands.InsertText}" xmlns:local="clr-namespace:Quire" />
+        <KeyBinding Key="D2" Modifiers="Control" Command="{x:Static local:Commands.InsertPlot}" xmlns:local="clr-namespace:Quire" />
+        <KeyBinding Key="F1" Command="Help" />
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="White">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Command="New" InputGestureText="Ctrl+N" />
+                <MenuItem Header="_Open…" Command="Open" InputGestureText="Ctrl+O" />
+                <MenuItem Header="_Save" Command="Save" InputGestureText="Ctrl+S" />
+                <MenuItem Header="Save _As…" Command="SaveAs" InputGestureText="Ctrl+Shift+S" />
+                <Separator />
+                <MenuItem Header="_Import Mathcad Prime worksheet…" Click="ImportMcdx_Click" />
+                <MenuItem Header="Open _sample worksheet" Click="Sample_Click" />
+                <Separator />
+                <MenuItem Header="E_xit" Click="Exit_Click" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo" Click="Undo_Click" InputGestureText="Ctrl+Z" />
+                <MenuItem Header="_Redo" Click="Redo_Click" InputGestureText="Ctrl+Y" />
+                <Separator />
+                <MenuItem Header="Cu_t" Click="Cut_Click" InputGestureText="Ctrl+X" />
+                <MenuItem Header="_Copy" Click="Copy_Click" InputGestureText="Ctrl+C" />
+                <MenuItem Header="_Paste" Click="Paste_Click" InputGestureText="Ctrl+V" />
+                <MenuItem Header="_Delete" Click="Delete_Click" InputGestureText="Del" />
+                <Separator />
+                <MenuItem Header="Select _All" Click="SelectAll_Click" InputGestureText="Ctrl+A" />
+            </MenuItem>
+            <MenuItem Header="_Insert">
+                <MenuItem Header="_Math region" Command="{x:Static local:Commands.InsertMath}" InputGestureText="Ctrl+M" xmlns:local="clr-namespace:Quire" />
+                <MenuItem Header="_Text region" Command="{x:Static local:Commands.InsertText}" InputGestureText="Ctrl+T" xmlns:local="clr-namespace:Quire" />
+                <MenuItem Header="_XY plot" Command="{x:Static local:Commands.InsertPlot}" InputGestureText="Ctrl+2" xmlns:local="clr-namespace:Quire" />
+                <MenuItem Header="_Polar plot" Click="InsertPolar_Click" />
+                <MenuItem Header="_Solve block" Click="InsertSolveBlock_Click" />
+            </MenuItem>
+            <MenuItem Header="_Calculation">
+                <MenuItem Header="_Calculate now" Command="{x:Static local:Commands.CalculateNow}" InputGestureText="F9" xmlns:local="clr-namespace:Quire" />
+                <MenuItem Header="_Recalculate worksheet" Command="{x:Static local:Commands.RecalculateAll}" InputGestureText="Ctrl+F9" xmlns:local="clr-namespace:Quire" />
+                <MenuItem x:Name="AutoCalcMenu" Header="_Automatic calculation" IsCheckable="True" IsChecked="True" Click="AutoCalcMenu_Click" />
+                <Separator />
+                <MenuItem Header="_Unit system">
+                    <MenuItem x:Name="UnitSiMenu" Header="SI" IsCheckable="True" Tag="si" Click="UnitSystemMenu_Click" />
+                    <MenuItem x:Name="UnitUsMenu" Header="US customary" IsCheckable="True" Tag="uscs" Click="UnitSystemMenu_Click" />
+                    <MenuItem x:Name="UnitCgsMenu" Header="CGS" IsCheckable="True" Tag="cgs" Click="UnitSystemMenu_Click" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Format">
+                <MenuItem Header="Result _decimal places">
+                    <MenuItem Header="2" Tag="2" Click="Decimals_Click" />
+                    <MenuItem Header="3" Tag="3" Click="Decimals_Click" />
+                    <MenuItem Header="4" Tag="4" Click="Decimals_Click" />
+                    <MenuItem Header="6" Tag="6" Click="Decimals_Click" />
+                    <MenuItem Header="9" Tag="9" Click="Decimals_Click" />
+                </MenuItem>
+                <MenuItem Header="_Exponential threshold">
+                    <MenuItem Header="3" Tag="3" Click="Threshold_Click" />
+                    <MenuItem Header="5" Tag="5" Click="Threshold_Click" />
+                    <MenuItem Header="8" Tag="8" Click="Threshold_Click" />
+                    <MenuItem Header="15" Tag="15" Click="Threshold_Click" />
+                </MenuItem>
+                <MenuItem x:Name="TrailingZerosMenu" Header="Show _trailing zeros" IsCheckable="True" Click="TrailingZeros_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Quick reference" Command="Help" InputGestureText="F1" />
+                <MenuItem Header="_About Quire" Click="About_Click" />
+            </MenuItem>
+        </Menu>
+
+        <!-- ribbon-like toolbar -->
+        <Border DockPanel.Dock="Top" Background="White" BorderBrush="#DADFE6" BorderThickness="0,1,0,1">
+            <WrapPanel Margin="4,3">
+                <Button Style="{StaticResource RibbonButton}" Command="New" ToolTip="New worksheet (Ctrl+N)">🗋 New</Button>
+                <Button Style="{StaticResource RibbonButton}" Command="Open" ToolTip="Open (Ctrl+O)">📂 Open</Button>
+                <Button Style="{StaticResource RibbonButton}" Command="Save" ToolTip="Save (Ctrl+S)">💾 Save</Button>
+                <Separator Margin="4,2" />
+                <Button Style="{StaticResource RibbonButton}" Click="Undo_Click" ToolTip="Undo (Ctrl+Z)">↶</Button>
+                <Button Style="{StaticResource RibbonButton}" Click="Redo_Click" ToolTip="Redo (Ctrl+Y)">↷</Button>
+                <Separator Margin="4,2" />
+                <Button Style="{StaticResource RibbonButton}" Command="{x:Static local:Commands.InsertMath}" ToolTip="Math region (Ctrl+M) — or just start typing" xmlns:local="clr-namespace:Quire">
+                    <TextBlock><Run FontWeight="Bold" FontStyle="Italic">x</Run> Math</TextBlock>
+                </Button>
+                <Button Style="{StaticResource RibbonButton}" Command="{x:Static local:Commands.InsertText}" ToolTip="Text region (Ctrl+T, or type &quot;)" xmlns:local="clr-namespace:Quire">
+                    <TextBlock><Run FontWeight="Bold">T</Run> Text</TextBlock>
+                </Button>
+                <Button Style="{StaticResource RibbonButton}" Command="{x:Static local:Commands.InsertPlot}" ToolTip="XY plot (Ctrl+2)" xmlns:local="clr-namespace:Quire">📈 XY Plot</Button>
+                <Button Style="{StaticResource RibbonButton}" Click="InsertPolar_Click" ToolTip="Polar plot">◎ Polar</Button>
+                <Button Style="{StaticResource RibbonButton}" Click="InsertSolveBlock_Click" ToolTip="Solve block (Given … Find)">⊞ Solve Block</Button>
+                <Separator Margin="4,2" />
+                <ToggleButton x:Name="OperatorsToggle" Style="{StaticResource RibbonToggle}" Content="Operators ▾" />
+                <ToggleButton x:Name="GreekToggle" Style="{StaticResource RibbonToggle}" Content="αβγ ▾" />
+                <ToggleButton x:Name="UnitsToggle" Style="{StaticResource RibbonToggle}" Content="Units ▾" />
+                <ToggleButton x:Name="FunctionsToggle" Style="{StaticResource RibbonToggle}" Content="Functions ▾" />
+                <Separator Margin="4,2" />
+                <Button Style="{StaticResource RibbonButton}" Command="{x:Static local:Commands.CalculateNow}" ToolTip="Calculate (F9)" xmlns:local="clr-namespace:Quire">= Calculate</Button>
+                <CheckBox x:Name="AutoCalcCheck" Focusable="False" IsChecked="True" VerticalAlignment="Center" Margin="4,0" Click="AutoCalcCheck_Click">Auto</CheckBox>
+                <ComboBox x:Name="UnitSystemCombo" Focusable="False" Width="130" Margin="4,0" VerticalAlignment="Center" SelectionChanged="UnitSystemCombo_SelectionChanged">
+                    <ComboBoxItem Tag="si">SI units</ComboBoxItem>
+                    <ComboBoxItem Tag="uscs">US customary</ComboBoxItem>
+                    <ComboBoxItem Tag="cgs">CGS units</ComboBoxItem>
+                </ComboBox>
+            </WrapPanel>
+        </Border>
+
+        <StatusBar DockPanel.Dock="Bottom" Background="White">
+            <StatusBarItem><TextBlock x:Name="CalcStatus" Text="Ready" MinWidth="110" /></StatusBarItem>
+            <Separator />
+            <StatusBarItem><TextBlock x:Name="RegionStatus" /></StatusBarItem>
+            <Separator />
+            <StatusBarItem><TextBlock x:Name="ErrorStatus" /></StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Zoom " VerticalAlignment="Center" />
+                    <Slider x:Name="ZoomSlider" Width="120" Minimum="0.5" Maximum="2.5" Value="1" Focusable="False" ValueChanged="ZoomSlider_ValueChanged" />
+                    <TextBlock x:Name="ZoomText" Text="100%" Width="44" Margin="4,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid>
+            <ContentControl x:Name="WorksheetHost" Focusable="False" />
+            <Popup x:Name="PalettePopup" Placement="Bottom" StaysOpen="False" AllowsTransparency="True" Closed="PalettePopup_Closed">
+                <Border Background="White" BorderBrush="#B9C3CF" BorderThickness="1" CornerRadius="3" Padding="6">
+                    <Border.Effect><DropShadowEffect BlurRadius="8" ShadowDepth="2" Opacity="0.25" /></Border.Effect>
+                    <ScrollViewer MaxHeight="440" VerticalScrollBarVisibility="Auto" Focusable="False">
+                        <StackPanel x:Name="PaletteContent" MaxWidth="460" />
+                    </ScrollViewer>
+                </Border>
+            </Popup>
+        </Grid>
+    </DockPanel>
+</Window>

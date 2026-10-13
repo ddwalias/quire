@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Controls.Core\Quire.Controls.Core.csproj" />
+    <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />
+    <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
+  </ItemGroup>
+</Project>

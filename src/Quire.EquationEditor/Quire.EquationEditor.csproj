@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
+    <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Quire.Calculation.Core/Quire.Calculation.Core.csproj" />
+    <Project Path="src/Quire.Calculation/Quire.Calculation.csproj" />
+    <Project Path="src/Quire.Controls.Core/Quire.Controls.Core.csproj" />
+    <Project Path="src/Quire.Controls.EquationControl/Quire.Controls.EquationControl.csproj" />
+    <Project Path="src/Quire.Controls.Plots/Quire.Controls.Plots.csproj" />
+    <Project Path="src/Quire.Controls.SolveBlock/Quire.Controls.SolveBlock.csproj" />
+    <Project Path="src/Quire.Controls.Text/Quire.Controls.Text.csproj" />
+    <Project Path="src/Quire.Controls.Worksheet/Quire.Controls.Worksheet.csproj" />
+    <Project Path="src/Quire.Core/Quire.Core.csproj" />
+    <Project Path="src/Quire.Engine/Quire.Engine.csproj" />
+    <Project Path="src/Quire.EquationEditor/Quire.EquationEditor.csproj" />
+    <Project Path="src/Quire.Mpl/Quire.Mpl.csproj" />
+    <Project Path="src/Quire/Quire.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Quire.Calculation.Tests/Quire.Calculation.Tests.csproj" />
+    <Project Path="tests/Quire.Controls.Tests/Quire.Controls.Tests.csproj" />
+    <Project Path="tests/Quire.Core.Tests/Quire.Core.Tests.csproj" />
+    <Project Path="tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj" />
+    <Project Path="tests/Quire.EquationEditor.Tests/Quire.EquationEditor.Tests.csproj" />
+  </Folder>
+</Solution>
