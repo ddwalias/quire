@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class DynamicMethodFunction : global::Quire.gen.MethodFunction
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_delegate_type;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodInfo m_delegate_invoke;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe DynamicMethodFunction(string f, global::Quire.gen.Closure clo, global::System.Type ty, global::System.Type[] tys) : base(default(sbyte*), default(global::Quire.gen.Closure)) { }
     [global::Quire.Mirror.MirrorStub]
     public unsafe DynamicMethodFunction(void* f, global::Quire.gen.Closure clo) : base(default(sbyte*), default(global::Quire.gen.Closure)) { }

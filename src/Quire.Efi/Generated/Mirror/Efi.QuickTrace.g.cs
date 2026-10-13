@@ -14,13 +14,37 @@ internal partial class QuickTrace : global::Quire.Efi.Trace
     [global::Quire.Mirror.MirrorStub]
     public static readonly int QUICK_PLOT_POINTS;
     [global::Quire.Mirror.MirrorStub]
+    private double delta;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool parametric;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string name;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly int SAMPLE_POINTS;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly int SAMPLE_DEPTH;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsParametric { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public QuickTrace(global::Quire.Efi.Trace.Spec spec, global::Quire.Mcd.Dim xDim, global::Quire.Mcd.Dim yDim, bool parametric) : base(default(global::Quire.Efi.Trace.Spec), default(global::Quire.Mcd.Dim), default(global::Quire.Mcd.Dim)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Process(global::Quire.Efi.Engine engine, int currentTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsValidAt(double t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetFirstValidX(double start, double inc, out double t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AdjustDomain(global::Quire.Efi.AxisOptions axis, ref double xLow, ref double xHigh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculateDomain(global::Quire.Efi.Engine plot, out double xLow, out double xHigh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerator<global::Quire.Efi.Pair<object>> PointEnumerator(global::Quire.Efi.Engine plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override bool AddPoint(double x, double y, global::Quire.Efi.AxisOptions X, global::Quire.Efi.AxisOptions Y) => base.AddPoint(x, y, X, Y);
+    [global::Quire.Mirror.MirrorStub]
+    private static bool HasSingularity(global::System.ArraySegment<global::Quire.Efi.Pair<double>> points, global::Quire.Mpl.Run.Function lambda, int depth, ref double xsing) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HasSingularityY(global::System.Collections.Generic.List<global::Quire.Efi.Pair<double>> trace, int i, ref double xsing) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

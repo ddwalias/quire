@@ -12,6 +12,18 @@ namespace Quire.Controls.Core.Settings;
 public partial class TextDecorationsToAttributesSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string LocalName = "textDecorations";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Underline = "underline";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Overline = "overline";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Strikethrough = "strikethrough";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Baseline = "baseline";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.Settings.TextDecorationsToAttributesSerializer.TextDecorationsExistence> _existingDecorations;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.TextDecorationCollection TextDecorationsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasUnderline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -33,6 +45,8 @@ public partial class TextDecorationsToAttributesSerializer : global::Quire.Contr
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Settings.TextDecorationsToAttributesSerializer+TextDecorationsExistence, Ptc.Controls.Core")]
     private partial class TextDecorationsExistence
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.TextDecorationCollection _collection;
         [global::Quire.Mirror.MirrorStub]
         public bool Exists;
         [global::Quire.Mirror.MirrorStub]

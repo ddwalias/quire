@@ -98,6 +98,12 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public global::System.Type CreateType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool _IsInterface() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsStatic() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.TypeInfo CreateTypeInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.ConstructorBuilder DefineConstructor(global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type[] parameterTypes, global::System.Type[][] requiredCustomModifiers, global::System.Type[][] optionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

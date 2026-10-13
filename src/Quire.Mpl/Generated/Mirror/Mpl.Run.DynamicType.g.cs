@@ -12,7 +12,15 @@ namespace Quire.Mpl.Run;
 public partial class DynamicType
 {
     [global::Quire.Mirror.MirrorStub]
+    private static string DelimiterString;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable NameToTypeTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable TypeToNameTable;
+    [global::Quire.Mirror.MirrorStub]
     public static string TuplePrefix;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable FieldNameTable;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineTuple(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -30,7 +38,13 @@ public partial class DynamicType
     [global::Quire.Mirror.MirrorStub]
     public static string MplConcat3(object o1, object o2, object o3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.MethodInfo Concat3Mi() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.MethodInfo Concat2Mi() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.MethodInfo DefinePrinter(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetShortName(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.MethodInfo DefinePrinter(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, string tyName, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -39,6 +53,18 @@ public partial class DynamicType
     public static string TypeParameterName(int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string TypeParameterName(string prefix, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string[] Explode(string Name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string RemovePrefix(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type NameToType(string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string TypeToName(global::System.Type ty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type[] NameDemangle(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string NameMangle(string prefix, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Type[] TupleNameDemangle(string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

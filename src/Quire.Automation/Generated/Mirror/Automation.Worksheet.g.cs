@@ -12,6 +12,10 @@ namespace Quire.Automation;
 public partial class Worksheet : global::Quire.Automation.IMathcadPrimeWorksheet, global::Quire.Automation.IMathcadPrimeWorksheet2, global::Quire.Automation.IMathcadPrimeWorksheet3
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeWorksheet3 _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMathcadPrimeWorksheet3 RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string FullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +39,8 @@ public partial class Worksheet : global::Quire.Automation.IMathcadPrimeWorksheet
     public string WorksheetWorkingDirectory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int DefaultCalculationTimeout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private Worksheet() { }
     [global::Quire.Mirror.MirrorStub]
     internal Worksheet(global::Quire.Automation.IMathcadPrimeWorksheet mathcadPrimeWorksheet) { }
     [global::Quire.Mirror.MirrorStub]

@@ -14,7 +14,15 @@ internal partial class VisualInputControlNode : global::Quire.Controls.Internal.
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.Controls.Border _border;
     [global::Quire.Mirror.MirrorStub]
+    private readonly double BORDER_THICKNESS;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.Controls.Control _inputControl;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.FormattedText _formattedText;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _exponentBaseline;
     [global::Quire.Mirror.MirrorStub]
     public bool IsEditorFrameVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

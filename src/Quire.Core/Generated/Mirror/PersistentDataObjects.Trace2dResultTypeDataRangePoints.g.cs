@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class Trace2dResultTypeDataRangePoints
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.DataVectorsType dataVectorsField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.DataVectorsType DataVectors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Trace2dResultTypeDataRangePoints() { }

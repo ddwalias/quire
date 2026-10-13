@@ -14,6 +14,8 @@ public static partial class XmlLanguageHelper
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Markup.XmlLanguage FallbackXmlLanguage;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Globalization.CultureInfo FallbackCultureInfo;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Globalization.CultureInfo ConvertXmlLanguageToCultureInfo(global::System.Windows.Markup.XmlLanguage lang) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Markup.XmlLanguage ConvertCultureInfoToXmlLanguage(global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

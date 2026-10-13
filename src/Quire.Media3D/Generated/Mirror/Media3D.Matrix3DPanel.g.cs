@@ -12,6 +12,10 @@ namespace Quire.Media3D;
 public partial class Matrix3DPanel : global::System.Windows.FrameworkElement
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Primitives.UniformGrid unigrid;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey MatrixKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MatrixProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MinimumProperty;
@@ -27,6 +31,8 @@ public partial class Matrix3DPanel : global::System.Windows.FrameworkElement
     protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
     [global::Quire.Mirror.MirrorStub]
     public Matrix3DPanel() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void ScrollBarOnValueChanged(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
     [global::Quire.Mirror.MirrorStub]

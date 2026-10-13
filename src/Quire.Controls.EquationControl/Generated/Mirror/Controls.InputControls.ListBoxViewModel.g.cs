@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class ListBoxViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs, global::Quire.Controls.InputControls.IInputControlViewModelWithEditor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.ListBoxModel ListBoxModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double SelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

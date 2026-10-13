@@ -28,7 +28,11 @@ public partial class DelegateFunction : global::Quire.Mpl.Run.Function
     [global::Quire.Mirror.MirrorStub]
     public DelegateFunction(global::System.Delegate f, int function_purity) : base(default(int), default(int)) { }
     [global::Quire.Mirror.MirrorStub]
+    private object app0() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Mpl.Run.Function clo<CLO>(CLO a) => base.clo<CLO>(a);
+    [global::Quire.Mirror.MirrorStub]
+    private string remove_module_suffix(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

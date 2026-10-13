@@ -12,6 +12,8 @@ namespace Quire.Controls.ControlAdorners;
 internal partial class OvertypeAdorner : global::System.Windows.Documents.Adorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.SolidColorBrush _renderBrush;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PointAProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PointBProperty;

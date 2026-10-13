@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 internal partial class VisualFactory : global::Quire.EquationEditor.View.IVisualFactory
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathRegionNode _region;
+    [global::Quire.Mirror.MirrorStub]
     public VisualFactory(global::Quire.Controls.Internal.VisualMathRegionNode region) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualMathNode CreateEmptyEvalResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

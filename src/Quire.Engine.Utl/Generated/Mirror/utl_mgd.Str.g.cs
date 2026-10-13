@@ -12,6 +12,10 @@ namespace Quire.utl_mgd;
 public partial class Str
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Predicate<char> s_is_white;
+    [global::Quire.Mirror.MirrorStub]
+    private static string remove_if(global::System.Predicate<char> p, string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string RemoveWhite(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public Str() { }

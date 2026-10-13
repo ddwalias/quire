@@ -12,6 +12,8 @@ namespace Quire.Automation;
 public partial class MatrixValue : global::Quire.Automation.Value, global::Quire.IMatrixValue, global::Quire.IValue, global::Quire.AutomationPrivate.IMatrixValuePrivate
 {
     [global::Quire.Mirror.MirrorStub]
+    private int size;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override int Size { get => base.Size; }
@@ -53,6 +55,8 @@ public partial class MatrixValue : global::Quire.Automation.Value, global::Quire
     internal override void WriteValueXml(global::System.Xml.XmlWriter xml, global::Quire.Automation.UnitAction action, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override void WriteValueRL(global::System.IO.TextWriter rl, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int CountElements(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void SetElement(int row, int col, object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

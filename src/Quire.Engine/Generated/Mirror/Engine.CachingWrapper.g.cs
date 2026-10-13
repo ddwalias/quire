@@ -12,6 +12,14 @@ namespace Quire.Engine;
 internal partial class CachingWrapper : global::Quire.Engine.IMathcadComponent2
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::Quire.IValue> m_cache;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.IMathcadComponent m_component;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_locked;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_needs_commit;
+    [global::Quire.Mirror.MirrorStub]
     public CachingWrapper(global::Quire.Engine.IMathcadComponent c) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Engine.IMathcadComponent Unwrap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

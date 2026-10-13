@@ -12,6 +12,12 @@ namespace Quire.gen;
 internal partial class PropertyVar : global::Quire.gen.MetaObj
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_record;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Callable m_prop_get;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] m_get_param;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe PropertyVar(void* v, global::Quire.gen.MetaObj rec, global::Quire.gen.Callable prop) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool ModuleScope() => base.ModuleScope();

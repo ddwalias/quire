@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class ForeignCtor : global::Quire.gen.ResolvedForeignId
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] m_sig;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.ConstructorInfo m_ci;
+    [global::Quire.Mirror.MirrorStub]
     public ForeignCtor(string id, global::System.Type[] sig, global::System.Reflection.ConstructorInfo ci) : base(default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.gen.MetaObj CreateMetaObj(global::Quire.gen.IlAsm bcasm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

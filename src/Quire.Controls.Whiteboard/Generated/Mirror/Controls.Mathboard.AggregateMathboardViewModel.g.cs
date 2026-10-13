@@ -14,6 +14,8 @@ public partial class AggregateMathboardViewModel : global::Quire.Controls.Mathbo
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Mathboard.SectionIndicatorInfo[] _sectionIndicators;
     [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationContext;
+    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Controls.Mathboard.ISectionIndicatorInfo[] SectionIndicators { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -46,5 +46,7 @@ public partial class MruFileItem : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public MruFileItem(string fullPathAndName, global::Quire.Controls.MruFileTypes mruFileType) { }
     [global::Quire.Mirror.MirrorStub]
+    private static void IsPinned_Changed(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetNumberedName(int indexInList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

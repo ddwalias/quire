@@ -16,6 +16,12 @@ internal partial class VisualLinearBinaryOperatorNode : global::Quire.Controls.I
     [global::Quire.Mirror.MirrorStub]
     protected double _topLineBaseline;
     [global::Quire.Mirror.MirrorStub]
+    private double _effectiveBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _effectiveScriptBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _currentSeparation;
+    [global::Quire.Mirror.MirrorStub]
     public override bool IsMonoLine { get => base.IsMonoLine; set => base.IsMonoLine = value; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }

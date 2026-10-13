@@ -14,6 +14,8 @@ public partial class CalculationSettings : global::Quire.Controls.Core.Serializa
     [global::Quire.Mirror.MirrorStub]
     protected readonly string _nameSpaceUri;
     [global::Quire.Mirror.MirrorStub]
+    private const string LocalName = "calculation";
+    [global::Quire.Mirror.MirrorStub]
     public bool ShouldValidateOnWrite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldValidateOnRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

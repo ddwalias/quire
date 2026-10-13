@@ -14,9 +14,15 @@ public static partial class WhiteboardBehavior
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty UIEventsHandlerProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _itemManager;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static void SetUIEventsHandler(global::System.Windows.UIElement element, global::Quire.Controls.Whiteboard.IWhiteboardViewModel value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Whiteboard.IWhiteboardViewModel GetUIEventsHandler(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnUIEventsHandlerChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HookupMouseEvents(global::System.Windows.UIElement element, global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

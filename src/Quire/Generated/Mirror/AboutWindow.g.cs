@@ -12,11 +12,17 @@ namespace Quire;
 public partial class AboutWindow : global::System.Windows.Window, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.SpiritMainWindow _spiritMainWindow;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.AboutWindow _this;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public string EngineVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public AboutWindow(global::Quire.SpiritMainWindow owner) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void Hyperlink_RequestNavigate(object sender, global::System.Windows.Navigation.RequestNavigateEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

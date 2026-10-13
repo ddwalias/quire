@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class ChangeYLegendPositionCommand : global::Quire.Controls.Plots.PlotCommands.PlotCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly int _newPositionIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _oldPositionIndex;
+    [global::Quire.Mirror.MirrorStub]
     public ChangeYLegendPositionCommand(global::Quire.Controls.Plots.PlotControl plot, int newIndex) : base(default(global::Quire.Controls.Plots.PlotControl), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

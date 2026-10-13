@@ -12,7 +12,31 @@ namespace Quire.Efi;
 internal partial class pltContour
 {
     [global::Quire.Mirror.MirrorStub]
+    private int myNx;
+    [global::Quire.Mirror.MirrorStub]
+    private int myNy;
+    [global::Quire.Mirror.MirrorStub]
+    private int myLastCol;
+    [global::Quire.Mirror.MirrorStub]
+    private int myLastRow;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Efi.glMesh mySurf;
+    [global::Quire.Mirror.MirrorStub]
+    private double myZmax;
+    [global::Quire.Mirror.MirrorStub]
+    private double myZmin;
+    [global::Quire.Mirror.MirrorStub]
+    private double myZrange;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] myLevels;
+    [global::Quire.Mirror.MirrorStub]
+    private int myNlevels;
+    [global::Quire.Mirror.MirrorStub]
+    private int myNtraces;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID myStartEdge;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID myStopEdge;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> m_allcontours;
     [global::Quire.Mirror.MirrorStub]
@@ -20,9 +44,25 @@ internal partial class pltContour
     [global::Quire.Mirror.MirrorStub]
     public pltContour(double[] levels, int nCustom, int nx, int ny, global::Quire.Efi.glMesh surf) { }
     [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void defaultLevels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool drawConts() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void saveContour(global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D> cont) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Efi.shpPoint3D transform(global::Quire.Efi.shpPoint3D nPt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private double normalizeZ(double oldZ) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Efi.glMesh Surf() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool trcBndCntrs(int levelNum, global::Quire.Efi.pltGridCell cell, global::Quire.Efi.BoolMap gridMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int traceBoundary(int c, int r, int levelNum, global::Quire.Efi.pltGridCell cell, global::Quire.Efi.BoolMap gridMap, bool isSecond) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool trcIntCntrs(int levelNum, global::Quire.Efi.pltGridCell cell, global::Quire.Efi.BoolMap gridMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int traceInterior(int col_, int row_, int levelNum, global::Quire.Efi.pltGridCell cell, global::Quire.Efi.BoolMap gridMap, bool isSecond) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

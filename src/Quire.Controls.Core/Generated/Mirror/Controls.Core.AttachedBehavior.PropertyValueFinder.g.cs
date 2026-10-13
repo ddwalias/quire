@@ -12,6 +12,12 @@ namespace Quire.Controls.Core.AttachedBehavior;
 public partial class PropertyValueFinder : global::Quire.Controls.Core.AttachedBehavior.PropertyValueBase, global::Quire.Controls.Core.AttachedBehavior.IOneTimePropertyOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _propertyName;
+    [global::Quire.Mirror.MirrorStub]
+    private object _propertyProviderKey;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type _propertyOwnerType;
+    [global::Quire.Mirror.MirrorStub]
     public string PropertyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object PropertyProviderKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

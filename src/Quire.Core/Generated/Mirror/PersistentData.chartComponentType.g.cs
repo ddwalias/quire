@@ -12,6 +12,14 @@ namespace Quire.PersistentData;
 public partial class chartComponentType : global::Quire.PersistentData.mathBoardType, global::Quire.PersistentData.IRegionCollectionType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.chartComponentRegionType[] regionsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.oleComponentSectionType inputSectionField;
+    [global::Quire.Mirror.MirrorStub]
+    private int resultRefField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool resultRefFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.chartComponentRegionType[] regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.oleComponentSectionType InputSection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -88,6 +88,20 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Dim DivideByDimension(global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsUniformScalarPtrs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool DimActual() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanonicalizePtrs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool TidyPtrs(int n, int nz, global::Quire.Mcd.Dim d, bool hasOtherPntr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReinsertPtrs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReinsertPtrs1() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal dvm(global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal StripDimension(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal AsUniform(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -99,6 +113,8 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     public global::Quire.Mcd.MatVal ApplyLinearDimension(global::Quire.Mcd.MatDim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal ApplyDimension(global::Quire.Mcd.MatDim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal ApplyCrazyDimension(global::Quire.Mcd.MatDim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal ApplyRowDimensions(global::Quire.Mcd.Dim[] dims) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -113,6 +129,10 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     public static object MDimCast(object o, global::Quire.Mcd.MatDim md) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object MatCreateDim(object icord, object icpnt, object icval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsUniformPtrs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsUniformPtrsNoChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal asRealVector(object mm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -166,6 +186,10 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public MatVal(global::Quire.Mcd.RngVal r) { }
     [global::Quire.Mirror.MirrorStub]
+    private MatVal(global::Quire.Mcd.DimVal first, global::Quire.Mcd.DimVal last) { }
+    [global::Quire.Mirror.MirrorStub]
+    private MatVal(global::Quire.Mcd.DimVal first, global::Quire.Mcd.DimVal next, global::Quire.Mcd.DimVal last) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal map(global::Quire.Mpl.Run.F<object, object> f, global::Quire.Mcd.DimVal collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal map(global::Quire.Mpl.Run.Function func, global::Quire.Mcd.DimVal collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -184,7 +208,19 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public MatVal(global::Quire.Mcd.MatVal m) { }
     [global::Quire.Mirror.MirrorStub]
+    private void InitPtrs(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private MatVal(global::Quire.Mcd.MatVal m, global::Quire.Mcd.Dim d) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void CastPtrs(global::Quire.Mcd.MatVal m, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private MatVal(global::Quire.Mcd.MatVal m, int r, int c) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal realloc(object o, int i, int j) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private MatVal(global::Quire.Mcd.MatVal m, int col) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void TrimPtrs(global::System.Collections.Hashtable parr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object mcd_sym_column(object o, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -199,6 +235,8 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     public static object mcd_row(object o, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Row(int row) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private MatVal(global::Quire.Mcd.MatVal m, int r1, int r2, int c1, int c2) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal SubMatrix(uint r1, uint r2, uint c1, uint c2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -235,6 +273,10 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     public int PushRawIndex(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal PushVectorArg(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal PromoteDim() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal PromoteDim(global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal Replicate(object o, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -316,17 +358,33 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public object get_2_na(global::Quire.Mcd.NumVal n, int i, int j) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private object get(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.ElementType get_type_2(int i, int j, double complex_thresh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<int> offsets(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.ElementType get_type(int offset, double complex_thresh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Mcd.ElementType> element_types(global::Quire.Mcd.MatAxis a, int n, double complex_thresh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<object> get_ptrs(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private double get_double(int offset, double complex_thresh, double scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<double> get_doubles(global::Quire.Mcd.MatAxis a, int n, double complex_thresh, double scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object get_data(int offset, double complex_thresh, double scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<object> get_data(global::Quire.Mcd.MatAxis a, int n, double complex_thresh, double scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim get_dim(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatDim get_matdim(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object get_na(global::Quire.Mcd.NumVal n, int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object get_ptr(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double get_real(int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -382,6 +440,10 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal setblock(int i, int j, object v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void setmatrix(int i, int j, global::Quire.Mcd.MatVal v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void setmatrix_ptrs(int ii, int jj, global::Quire.Mcd.MatVal v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal ReAlloc(object o, int r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal ReAlloc(object o, int r, int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -394,6 +456,12 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public void set_2(int i, int j, object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void setNaN(int offset, object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set(int offset, object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void setspec(int offset, object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void set_1(int i, double re, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void set_2(int i, int j, double re, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -402,11 +470,25 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public void set_2(int i, int j, double re, double im, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void set(int offset, double re, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set(int offset, double re) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set(int offset, double re, double im, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set(int offset, double re, double im) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set(int offset, global::Quire.Mcd.NumVal x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void set_ptrs_1(int i, object p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void set_ptrs_2(int i, int j, object p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void set_ptrs(int offset, object p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool contains(object p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set_ptrs_raw(int off, object p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void set_2i(int i, int j, double imag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -414,11 +496,23 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public void set_2(int i, int j, double r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void set_at(int offset, double re) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set_at(int offset, double re, double im) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set_ptrs_at(int off, object p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static object vectorize(global::Quire.Mpl.Run.Function f, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Transpose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Fill(object v, int init, int incr, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal FillThis(object o, int init, int incr, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal FillThis(global::Quire.Mcd.NumVal x, int init, int incr, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal FillThisPtrs(object p, int init, int incr, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mcd.DimVal asImmutable() => base.asImmutable();
     [global::Quire.Mirror.MirrorStub]
@@ -434,15 +528,41 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public static double ThePtrNan() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsPtrNan(int r, int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void AllocImaginary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AllocImaginary(double[] iarr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FillArr(double[] arr, double v, int init, int incr, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] TransposeArr(double[] arr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Copy(double[] src, int src_offset, double[] dst, int dst_offset, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] Pack(double[] arr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] Pack(double[] arr, int r1, int r2, int c1, int c2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] Pack(double[] arr, int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object[] PackObjects(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object[] PackObjects() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void Stretch(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TidyZeros(int oldr, int oldc, int newr, int newc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Stretch(int r, int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void StretchWithColumnFill(int r, int c, global::Quire.Mcd.DimVal fill) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] Resize(double[] arr, int nr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] CopyResize(double[] arr, int nr, int nc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] Resize(double[] arr, int nr, int nc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double[] PackZero(double[] arr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -462,17 +582,33 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public double[] TransposeImag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable PackPtrs(int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable PackPtrs(int r1, int r2, int c1, int c2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void IteratePtrs(global::Quire.Mcd.PtrDelegate ProcessPtr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TransformPtrs(global::Quire.Mcd.MatVal m, global::Quire.Mcd.PtrDelegate op) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SubMatrixPtrs(global::Quire.Mcd.MatVal m, int r1, int r2, int c1, int c2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AssignPtrs(global::Quire.Mcd.MatVal m, int r, int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable ResizePtrs(int anr, int off) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set_ptrs_2_transpose(int i, int j, object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void TransposePtrs(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void set_ptrs_2_reverse(int i, int j, object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReversePtrs(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CopyPtrs(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal operator /(global::Quire.Mcd.MatVal matrix, double scalar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal Scale(double scalar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Mcd.MatVal+arg_desc, mplrun")]
     private partial struct arg_desc
@@ -489,6 +625,16 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     private partial class TrimSubMatrixPtrs
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.MatVal m_m;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_r1;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_r2;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_c1;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_c2;
+        [global::Quire.Mirror.MirrorStub]
         public TrimSubMatrixPtrs(global::Quire.Mcd.MatVal m, int r1, int r2, int c1, int c2) { }
         [global::Quire.Mirror.MirrorStub]
         public void set_submatrix_ptrs(int i, int j, object v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -498,6 +644,12 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     private partial class AssignMatrixPtrs
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.MatVal m_m;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_r;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_c;
+        [global::Quire.Mirror.MirrorStub]
         public AssignMatrixPtrs(global::Quire.Mcd.MatVal m, int r, int c) { }
         [global::Quire.Mirror.MirrorStub]
         public void assign_matrix_ptrs(int i, int j, object v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -506,6 +658,12 @@ public sealed partial class MatVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorOf("Mcd.MatVal+ResizeMatrixPtrs, mplrun")]
     private partial class ResizeMatrixPtrs
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Hashtable m_parr;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_anr;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_off;
         [global::Quire.Mirror.MirrorStub]
         public ResizeMatrixPtrs(global::System.Collections.Hashtable parr, int anr, int off) { }
         [global::Quire.Mirror.MirrorStub]

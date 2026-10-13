@@ -12,6 +12,12 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class SurfaceFillCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D, global::System.Nullable<global::System.Windows.Media.Color>> _oldValues;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Nullable<global::System.Windows.Media.Color> _newValue;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D> Traces3D { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public SurfaceFillCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D> traceList, global::System.Nullable<global::System.Windows.Media.Color> newColor) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

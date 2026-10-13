@@ -12,5 +12,7 @@ namespace Quire.Controls.InputControls;
 public partial class InputScriptableControlViewModel : global::Quire.Controls.InputControls.InputResizableControlViewModel, global::Quire.Controls.InputControls.IInputScriptableControlViewModel, global::Quire.Controls.InputControls.IInputResizableControlViewModel, global::Quire.Controls.InputControls.IInputControlViewModel, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.IInputScriptableControlModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public InputScriptableControlViewModel(global::Quire.Controls.InputControls.IInputScriptableControlModel model) : base(default(global::Quire.Controls.InputControls.IInputResizableControlModel)) { }
 }

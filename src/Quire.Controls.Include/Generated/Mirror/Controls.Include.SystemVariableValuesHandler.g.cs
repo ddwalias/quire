@@ -12,6 +12,10 @@ namespace Quire.Controls.Include;
 public partial class SystemVariableValuesHandler : global::Quire.Calculation.Core.Support.SimpleCalculatable, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string EvalExpressionRlFormat = "(eval (numeric ({0})))";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _variableName;
+    [global::Quire.Mirror.MirrorStub]
     public bool CanHideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -22,5 +26,9 @@ public partial class SystemVariableValuesHandler : global::Quire.Calculation.Cor
     [global::Quire.Mirror.MirrorStub]
     public SystemVariableValuesHandler(string variableName) { }
     [global::Quire.Mirror.MirrorStub]
+    private void ConstractRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
+    [global::Quire.Mirror.MirrorStub]
+    private object GetComputedValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

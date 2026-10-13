@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class CtxtLet : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe void* m_var;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_MetaObj;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe CtxtLet(global::Quire.gen.Ctxt parent, void* v) : base(default(global::Quire.gen.Ctxt)) { }
     [global::Quire.Mirror.MirrorStub]
     public override unsafe global::Quire.gen.MetaObj lookup(void* key) => base.lookup(key);

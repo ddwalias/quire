@@ -12,6 +12,8 @@ namespace Quire.Engine;
 public partial class Timing2
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable m_table;
+    [global::Quire.Mirror.MirrorStub]
     public static void Start(string msg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Stop(string msg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

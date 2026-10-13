@@ -12,9 +12,15 @@ namespace Quire.AutomationServiceEngNote;
 public partial class CMathcadPrimeWorksheets : global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly bool _isUiInteractiveModeDisabled;
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CMathcadPrimeWorksheets(bool isUiInteractiveModeDisabled) { }
     [global::Quire.Mirror.MirrorStub]
+    private static int DoGetCount() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 Item(int indexArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet2 DoGetOpenItemByIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

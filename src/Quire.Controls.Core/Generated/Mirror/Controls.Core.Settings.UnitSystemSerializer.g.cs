@@ -14,6 +14,8 @@ public partial class UnitSystemSerializer : global::Quire.Controls.Core.Serializ
     [global::Quire.Mirror.MirrorStub]
     public const string localName = "unit";
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.UnitDescriptor _unitDescriptor;
+    [global::Quire.Mirror.MirrorStub]
     public UnitSystemSerializer(global::Quire.Calculation.Core.UnitDescriptor ud, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);

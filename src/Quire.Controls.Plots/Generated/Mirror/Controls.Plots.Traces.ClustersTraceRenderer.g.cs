@@ -12,6 +12,14 @@ namespace Quire.Controls.Plots.Traces;
 internal abstract partial class ClustersTraceRenderer : global::Quire.Controls.Plots.Traces.TraceRenderer
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Traces.ITraceOrderInfoProvider _traceOrderInfoProvider;
+    [global::Quire.Mirror.MirrorStub]
+    private const double SpaceBetweenClusters = 0.2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double SpaceBetweenPoints = 0.1d;
+    [global::Quire.Mirror.MirrorStub]
+    private double Margin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     protected abstract double MaxSize { get; }
     [global::Quire.Mirror.MirrorStub]
     protected double ActualSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

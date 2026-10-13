@@ -18,6 +18,8 @@ public partial class DataMatrixRowsAndColumnsRibbonBar : global::Fluent.RibbonGr
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_DataMatrixRowsAndColumnsRibbonBar_ClearCells;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DataMatrixRowsAndColumnsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

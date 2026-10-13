@@ -16,6 +16,10 @@ public partial class SafeMutex : global::Quire.utl_mgd.SafeWaitHandle
     [global::Quire.Mirror.MirrorStub]
     public unsafe SafeMutex(string A_0) : base(default(string), default(void*)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void _bangSafeMutex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeSafeMutex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ReleaseMutex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void EnsureReleased(uint max_tries) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

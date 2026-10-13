@@ -16,6 +16,8 @@ public partial class DocumentViewRibbonBar : global::Fluent.RibbonGroupBox, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button _draftModeCheckButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DocumentViewRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

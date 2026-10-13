@@ -12,6 +12,12 @@ namespace Quire.Controls;
 public partial class CopyWidget : global::Quire.Controls.Core.CopyWidgetBase, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.CopyWidgetViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Border _childBorder;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public int TotalPages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.DateTime> DisplaySavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

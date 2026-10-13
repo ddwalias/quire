@@ -12,11 +12,21 @@ namespace Quire.Media3D;
 public abstract partial class ModelVisualBase : global::System.Windows.Media.Media3D.ModelVisual3D
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3DCollection verticesPreTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3DCollection normalsPreTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3DCollection normalsAsPoints;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Media3D.WireFrame wireframe;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty NameProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MaterialProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty BackMaterialProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey GeometryKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty GeometryProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -37,6 +47,10 @@ public abstract partial class ModelVisualBase : global::System.Windows.Media.Med
     public bool IsWireFrame { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ModelVisualBase() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void MaterialPropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MaterialPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static void PropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -14,6 +14,8 @@ public partial class ReplaceChildDescriptor : global::Quire.EquationEditor.Tree.
     [global::Quire.Mirror.MirrorStub]
     public readonly string NewDescriptorName;
     [global::Quire.Mirror.MirrorStub]
+    private int a;
+    [global::Quire.Mirror.MirrorStub]
     public int ChildIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ReplaceChildDescriptor(int indexInParent, string newDescriptorName) { }

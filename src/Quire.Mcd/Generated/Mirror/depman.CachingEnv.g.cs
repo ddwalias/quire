@@ -12,6 +12,24 @@ namespace Quire.depman;
 internal partial class CachingEnv : global::Quire.depman.Environment
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_table;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_needs_check;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.DepTrackingEnv m_env;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.ActionChainMgd m_chain;
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsFunction(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsIdentical(global::Quire.depman.DSym ds, global::System.Collections.IDictionary old, global::System.Collections.IDictionary _new) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary GetDictCache(global::Quire.depman.DSym ds, global::Quire.depman.ScopingMode m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary GetDict(global::Quire.depman.DSym ds, global::Quire.depman.ScopingMode m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool do_check() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public CachingEnv(global::Quire.depman.DepTrackingEnv e, global::Quire.depman.ActionChainMgd c) { }
     [global::Quire.Mirror.MirrorStub]
     public void set_needs_check(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

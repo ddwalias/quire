@@ -14,9 +14,9 @@ public partial class HorizontalThicknessSubtractionConverter : global::System.Wi
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.InputControls.HorizontalThicknessSubtractionConverter Instance;
     [global::Quire.Mirror.MirrorStub]
+    private HorizontalThicknessSubtractionConverter() { }
+    [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private HorizontalThicknessSubtractionConverter() { }
 }

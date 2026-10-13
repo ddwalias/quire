@@ -20,6 +20,8 @@ public partial class UnitedValueSimpleResultNode : global::Quire.Calculation.Cor
     [global::Quire.Mirror.MirrorStub]
     public UnitedValueSimpleResultNode() { }
     [global::Quire.Mirror.MirrorStub]
+    private bool isUnitsEquals(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> comparedUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);
     [global::Quire.Mirror.MirrorStub]
     public void AddUnit(string canonicalName, int powerNumerator, int powerDenominator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

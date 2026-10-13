@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class plotEquation
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.mathType[] mathField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.mathFormattingType formattingOverrideField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.mathType[] math { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.mathFormattingType formattingOverride { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

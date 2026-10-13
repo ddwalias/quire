@@ -30,6 +30,8 @@ public partial class UIElementFacade : global::Quire.Controls.Core.IUIElementFac
     [global::Quire.Mirror.MirrorStub]
     public bool IsItemArrangeValid(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsRectEmpty(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetRenderTransform(object obj, global::System.Windows.Media.Transform transform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point TranslatePoint(object source, object target, global::System.Windows.Point sourcePoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

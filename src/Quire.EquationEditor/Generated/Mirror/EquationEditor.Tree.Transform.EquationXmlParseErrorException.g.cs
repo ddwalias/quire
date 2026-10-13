@@ -12,6 +12,8 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class EquationXmlParseErrorException : global::System.ApplicationException
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Transform.EquationXmlParseErrorException.ErrorCodes a;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Transform.EquationXmlParseErrorException.ErrorCodes ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public EquationXmlParseErrorException(string message, global::Quire.EquationEditor.Tree.Transform.EquationXmlParseErrorException.ErrorCodes errorCode = (global::Quire.EquationEditor.Tree.Transform.EquationXmlParseErrorException.ErrorCodes)(0)) { }

@@ -12,6 +12,12 @@ namespace Quire.Engine.Misc;
 public partial class Triple<T1, T2, T3>
 {
     [global::Quire.Mirror.MirrorStub]
+    private T1 m_Datum1;
+    [global::Quire.Mirror.MirrorStub]
+    private T2 m_Datum2;
+    [global::Quire.Mirror.MirrorStub]
+    private T3 m_Datum3;
+    [global::Quire.Mirror.MirrorStub]
     public T1 First { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public T2 Second { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

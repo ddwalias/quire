@@ -12,6 +12,8 @@ namespace Quire;
 public partial class FunctionBrowserPopupWindow : global::System.Windows.Controls.Primitives.Popup, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public FunctionBrowserPopupWindow() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

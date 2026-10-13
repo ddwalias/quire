@@ -12,17 +12,27 @@ namespace Quire.Controls.Core;
 public partial class ImageControl : global::System.Windows.Controls.Control, global::Quire.Controls.Core.IImageControl, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IResizableElementInfo, global::Quire.Controls.Core.IResizeToFitWhiteboardItem
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.ImageControlDictionary _dictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Uri _originalImageUri;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SourceProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ChangedEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand BrowseForImageCommand;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.ImageControl _boundTo;
+    [global::Quire.Mirror.MirrorStub]
     public byte[] OriginalStreamHash { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.ImageSource Source { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Uri OriginalImageUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Imaging.BitmapImage BitmapImage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ImageControl BoundTo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -44,15 +54,25 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.IResizeToFitWhiteboardItem> RequestResizeToFitOrClearRestriction;
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleSourcePropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRequestResizeToFit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public ImageControl() { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.ImageControl CreateImageControl(bool isNewImageControl = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.Imaging.BitmapSource GetBitmapSourceFromUri(global::System.Uri sourceUri, out byte[] streamHash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetImageExtension(global::System.Uri imageUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetImageExtension() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldSerializeSource() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SourceIsBitmapImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
     [global::Quire.Mirror.MirrorStub]
@@ -71,6 +91,8 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     public object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetImageRelationshipId(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

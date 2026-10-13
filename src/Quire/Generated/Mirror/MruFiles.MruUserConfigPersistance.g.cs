@@ -12,9 +12,13 @@ namespace Quire.MruFiles;
 public partial class MruUserConfigPersistance : global::Quire.MruFiles.IMruFilePersistanceManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Properties.Settings _settings;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.MruFileItem> MruFileItemsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MruUserConfigPersistance() { }
+    [global::Quire.Mirror.MirrorStub]
+    private MruUserConfigPersistance(global::Quire.Properties.Settings settings) { }
     [global::Quire.Mirror.MirrorStub]
     public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

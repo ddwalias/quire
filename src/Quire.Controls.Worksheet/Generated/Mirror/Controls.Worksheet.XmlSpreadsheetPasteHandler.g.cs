@@ -12,5 +12,27 @@ namespace Quire.Controls.Worksheet;
 internal static partial class XmlSpreadsheetPasteHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Worksheet.IControlFactory ControlCreator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessXmlSpreadsheet(global::System.Xml.XmlDocument spreadsheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string AddQuotationMarks(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string FormatNumber(string value, global::System.Xml.XmlNode cellNode, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string FormatNumber(double value, string excelNumberFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.NumberFormat CreateNumberFormatFromExcelFormat(double value, string excelNumberFormat, global::Quire.Controls.Core.NumberFormat.NumberStyles numberStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string FixExcelNumberFormat(string excelNumberFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetExcelNumberFormat(global::System.Xml.XmlNode cellNode, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsNumberFormat(double value, string format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsFloatFormat(double value, string format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsPrecentNumberFormat(double value, string format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void GetDecimalPlacesAndShowTralingZeros(double value, string format, out int decimalPlaces, out bool showTrailingZeros) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,10 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal abstract partial class OleBaseComponentCalculatableWrapper : global::Quire.Calculation.Core.Support.CalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isConnectedToTheEngine;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _error;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Action EquationChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.Pair<bool, bool> IsFragment { get; }
@@ -95,6 +99,16 @@ internal abstract partial class OleBaseComponentCalculatableWrapper : global::Qu
     public override void Dispose() => base.Dispose();
     [global::Quire.Mirror.MirrorStub]
     protected abstract void ClearEquationType();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupCalculatableEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookCalculatableEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnEquationChanged(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WrappedCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

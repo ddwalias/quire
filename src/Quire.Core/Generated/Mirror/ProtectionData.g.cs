@@ -12,6 +12,12 @@ namespace Quire;
 public partial class ProtectionData : global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly byte[] _EncryptedPassowrd;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Nullable<global::System.DateTime> _timestamp;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.ProtectionLevel _protectionLevel;
+    [global::Quire.Mirror.MirrorStub]
     public bool HasPassword { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.DateTime> Timestamp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

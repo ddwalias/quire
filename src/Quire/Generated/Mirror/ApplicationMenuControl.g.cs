@@ -60,7 +60,11 @@ public partial class ApplicationMenuControl : global::Fluent.ApplicationMenu, gl
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton Part_ApplicationMenu_Exit;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ApplicationMenuControl() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void KeepTooltipOnTopWhenButtonPopupOpened(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

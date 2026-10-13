@@ -12,11 +12,53 @@ namespace Quire.depman;
 public partial class Depman : global::Quire.depman.IDepman
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.SharedThreadContext m_thread_context;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.PosCallback m_notify;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.PosQueueCallback m_queue_cb;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.InterruptCallback m_interrupt_cb;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.TreatedReadyInvalidCallback m_treated_ready_invalid_cb;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.DepNodeCallback m_node_callback;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_node_order_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.TaskQueue m_message_queue;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.DepManager* m_dm;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.NodeQueue m_queue;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_max_handle;
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool IsUpToDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsBusy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private unsafe void notify(global::Quire.depman.Position* p, global::Quire.Engine.NodeStatus s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void queue_cb(global::Quire.depman.Position* p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void interrupt_cb(int threadId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe bool treated_ready_invalid_cb(global::Quire.depman.Position* p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.Position* GetPosition(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void SetHandle(global::Quire.depman.Position* A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnsetHandle(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void SafeEnqueue(global::Quire.depman.Position* p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.SharedThreadContext GetSharedThreadContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public Depman(int worker_stack_size) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeDepman() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Unload() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

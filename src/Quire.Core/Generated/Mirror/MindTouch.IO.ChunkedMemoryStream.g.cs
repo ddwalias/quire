@@ -14,6 +14,26 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     [global::Quire.Mirror.MirrorStub]
     public const int DefaultChunkSize = 16384;
     [global::Quire.Mirror.MirrorStub]
+    private long _length;
+    [global::Quire.Mirror.MirrorStub]
+    private long _position;
+    [global::Quire.Mirror.MirrorStub]
+    private byte[] _buffer;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _bufferIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _bufferCount;
+    [global::Quire.Mirror.MirrorStub]
+    private byte[][] _chunks;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _closed;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _fixed;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _readonly;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _publiclyVisible;
+    [global::Quire.Mirror.MirrorStub]
     public static int ChunkSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool CanRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -59,4 +79,14 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     public void WriteTo(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Dispose(bool disposing) => base.Dispose(disposing);
+    [global::Quire.Mirror.MirrorStub]
+    private void ConsolidateChunks(long capacity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EnsureCapacity(long requested) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EnsureOpen() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private byte[] GetChunk(int index, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetChunkIndex(long position, out int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

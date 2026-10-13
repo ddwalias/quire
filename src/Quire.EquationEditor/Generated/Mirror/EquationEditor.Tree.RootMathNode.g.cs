@@ -12,6 +12,16 @@ namespace Quire.EquationEditor.Tree;
 public partial class RootMathNode : global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.Tree.IRootMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor k;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action l;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> m;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.DelegateFunction0<bool>, string, global::Quire.EquationEditor.Tree.MathNode> n;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.EquationEditor.Tree.MathNode> o;
+    [global::Quire.Mirror.MirrorStub]
     public override string SExpression { get => base.SExpression; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.MathNode ScopeRoot { get => base.ScopeRoot; }
@@ -37,6 +47,10 @@ public partial class RootMathNode : global::Quire.EquationEditor.Tree.MathNode, 
     public void DispatchRequestUndoableCommandExecution(global::Quire.DelegateFunction0<bool> action, string commandName, global::Quire.EquationEditor.Tree.MathNode nodeToRestore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode FindDescendant(string labelOrSExp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode b(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool TryFindDescendant(string labelOrSExp, out global::Quire.EquationEditor.Tree.MathNode foundNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

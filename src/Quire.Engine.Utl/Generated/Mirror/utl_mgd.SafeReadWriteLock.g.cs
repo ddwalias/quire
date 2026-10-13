@@ -12,6 +12,14 @@ namespace Quire.utl_mgd;
 public partial class SafeReadWriteLock
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_write_lock;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_reader_count_lock;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_reader_count;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_no_readers;
+    [global::Quire.Mirror.MirrorStub]
     public SafeReadWriteLock() { }
     [global::Quire.Mirror.MirrorStub]
     public void WaitReadLock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

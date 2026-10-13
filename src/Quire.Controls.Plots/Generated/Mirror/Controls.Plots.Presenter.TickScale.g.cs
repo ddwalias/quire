@@ -37,4 +37,8 @@ public partial class TickScale
     public double TickMarkPosition(int tickmark) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FormatValues(global::Quire.Controls.Core.NumberFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] GetValuesWithCorrectedZeroForGeneralFormat(global::Quire.Controls.Core.NumberFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GetValueMagnitude(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

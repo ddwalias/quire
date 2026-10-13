@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 internal partial class CaretAdorner : global::Quire.Controls.Core.VisualAdorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.UIElement _adornedElement;
+    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Direction CaretSide;
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Controls.Internal.Caret _caret;

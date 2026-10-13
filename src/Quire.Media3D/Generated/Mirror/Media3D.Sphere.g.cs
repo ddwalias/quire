@@ -12,6 +12,10 @@ namespace Quire.Media3D;
 public partial class Sphere : global::Quire.Media3D.ModelVisualBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.AxisAngleRotation3D rotate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.RotateTransform3D xform;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SlicesProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StacksProperty;
@@ -45,6 +49,14 @@ public partial class Sphere : global::Quire.Media3D.ModelVisualBase
     public double Radius { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Sphere() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidatePositive(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateNonNegative(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateLongitude(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateLatitude(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Triangulate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection vertices, global::System.Windows.Media.Media3D.Vector3DCollection normals, global::System.Windows.Media.Int32Collection indices, global::System.Windows.Media.PointCollection textures) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

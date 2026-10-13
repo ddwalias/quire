@@ -12,9 +12,17 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class bp
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a_;
+    [global::Quire.Mirror.MirrorStub]
     public bp(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1, global::Quire.Direction A_2, global::Quire.Direction A_3) { }
     [global::Quire.Mirror.MirrorStub]
     public bp(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState b(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::Quire.Direction A_0, global::Quire.EquationEditor.Tree.MathNode A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

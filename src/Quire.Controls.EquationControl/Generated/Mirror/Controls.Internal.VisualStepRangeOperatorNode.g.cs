@@ -12,6 +12,12 @@ namespace Quire.Controls.Internal;
 internal partial class VisualStepRangeOperatorNode : global::Quire.Controls.Internal.VisualOperatorNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _effectiveBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _effectiveScriptBaseline;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

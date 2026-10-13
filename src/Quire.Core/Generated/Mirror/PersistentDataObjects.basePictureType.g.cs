@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class basePictureType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private string itemidrefField;
+    [global::Quire.Mirror.MirrorStub]
+    private double displaywidthField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool displaywidthFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double displayheightField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool displayheightFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
     public double displaywidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool displaywidthSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,9 +12,27 @@ namespace Quire.Controls.Internal;
 internal partial class VisualSymbolicEvaluationNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _symEvalDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.Fence _symEvalSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private const double KEYWORD_HORIZONTAL_PADDING = 4d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.SymbolicEvaluationLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
+    private const int _expressionOperandIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int _keywordsOperandIndex = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const int _resultOperandIndex = 2;
+    [global::Quire.Mirror.MirrorStub]
     public override bool IsMonoLine { get => base.IsMonoLine; set => base.IsMonoLine = value; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.SymbolicEvaluationLayoutManager Layout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
     [global::Quire.Mirror.MirrorStub]

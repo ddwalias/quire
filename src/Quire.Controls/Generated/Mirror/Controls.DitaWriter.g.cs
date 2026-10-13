@@ -14,9 +14,29 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorStub]
     public const string RootElement = "pubsTopic";
     [global::Quire.Mirror.MirrorStub]
+    private const double EquationscalingFactor = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _fileName;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _filePath;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Serialization.ISerializationHelper _helper;
+    [global::Quire.Mirror.MirrorStub]
+    private const string P = "p";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Fig = "fig";
+    [global::Quire.Mirror.MirrorStub]
+    private int _currentId;
+    [global::Quire.Mirror.MirrorStub]
+    private const string GraphicsFolderName = "graphics";
+    [global::Quire.Mirror.MirrorStub]
     public const string PubsBody = "pubsBody";
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string DirectoryName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string CurrentIdString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -28,9 +48,21 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorStub]
     public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private void WriteId(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public DitaWriter(string fileName, global::Quire.Serialization.ISerializationHelper documentHelper) : base(default(global::System.IO.TextWriter)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void WriteHeader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ZeroCurrentId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string ImageFileName(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EnsureDirectoryExists() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.FileStream WriteImageElementCreateFile(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteContentControl(global::System.Windows.FrameworkElement element, global::System.IO.Stream fileStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteContentControl(global::System.Windows.Controls.ContentControl contentControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -58,6 +90,8 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     public partial class Element : global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Xml.XmlWriter _writer;
+        [global::Quire.Mirror.MirrorStub]
         public Element(global::System.Xml.XmlWriter writer, string localName) { }
         [global::Quire.Mirror.MirrorStub]
         public Element(global::System.Xml.XmlWriter writer, string localName, string nameSpace) { }
@@ -68,6 +102,10 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Worksheet, Ptc.Controls")]
     public partial class Worksheet : global::Quire.Controls.DitaWriter.Element
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.DitaWriter.Element _regions;
+        [global::Quire.Mirror.MirrorStub]
+        private const string ElementName = "worksheet";
         [global::Quire.Mirror.MirrorStub]
         public Worksheet(global::Quire.Controls.DitaWriter writer) : base(default(global::System.Xml.XmlWriter), default(string)) { }
         [global::Quire.Mirror.MirrorStub]

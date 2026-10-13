@@ -12,7 +12,11 @@ namespace Quire.Controls;
 public partial class VisualSymbolDescriptorTable : global::Quire.Controls.VisualDescriptorTableBase, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo _initInfo;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.VisualSymbolDescriptorTable Default;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public VisualSymbolDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]

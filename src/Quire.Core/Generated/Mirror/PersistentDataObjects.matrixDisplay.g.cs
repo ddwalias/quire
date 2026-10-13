@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class matrixDisplay
 {
     [global::Quire.Mirror.MirrorStub]
+    private string offsetField;
+    [global::Quire.Mirror.MirrorStub]
+    private string sizeField;
+    [global::Quire.Mirror.MirrorStub]
     public string offset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

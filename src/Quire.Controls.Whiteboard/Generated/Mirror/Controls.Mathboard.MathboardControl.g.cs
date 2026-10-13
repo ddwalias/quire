@@ -68,11 +68,29 @@ public abstract partial class MathboardControl : global::Quire.Controls.Whiteboa
     [global::Quire.Mirror.MirrorStub]
     protected MathboardControl(global::Quire.Controls.Mathboard.IMathboardViewModel viewModel, global::System.Windows.ResourceDictionary dict) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void SetupInputGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void BindProperty(string sourceProperty, global::System.Windows.DependencyProperty targetProperty, global::System.Windows.Data.BindingMode mode = (global::System.Windows.Data.BindingMode)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void ViewModelPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.ViewModelPropertyChangedHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSetNumberFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSetMatrixFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSetTextFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanChangeTextStyle(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DispatchCommandWithinSolveBlock(global::System.Windows.Input.RoutedCommand cmd, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleCalculatableAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -116,11 +134,15 @@ public abstract partial class MathboardControl : global::Quire.Controls.Whiteboa
     [global::Quire.Mirror.MirrorStub]
     public override void DeleteVerticalSpaceBelow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => base.DeleteVerticalSpaceBelow(sender, e);
     [global::Quire.Mirror.MirrorStub]
+    private void FireOnGotFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override bool ShouldSerializeContent() => base.ShouldSerializeContent();
     [global::Quire.Mirror.MirrorStub]
     protected abstract string GetInternalHelpContext();
     [global::Quire.Mirror.MirrorStub]
     public virtual string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HasItemInViewPort(global::System.Windows.Rect initialViewPortRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

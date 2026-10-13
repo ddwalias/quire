@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 public partial class ButtonPropertiesEditor : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ButtonPropertiesEditor(global::Quire.Controls.InputControls.IInputControlEditorModel model) { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

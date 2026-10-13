@@ -20,7 +20,13 @@ public partial class DataMatrixDataAndMatricesRibbonBar : global::Fluent.RibbonG
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton vectorAndMatrixFunctionsDropdown;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DataMatrixDataAndMatricesRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void VectorAndMatrixFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VectorAndMatrixOperators(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

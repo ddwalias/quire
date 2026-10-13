@@ -23,4 +23,6 @@ public partial class InputBindingFunctionalityCommandWrapper : global::Quire.Fun
     public override bool CanExecute(object parameter) => base.CanExecute(parameter);
     [global::Quire.Mirror.MirrorStub]
     public void Execute(object parameter, global::System.Windows.IInputElement commandTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey GetFunctionalityBehaviorAccordingParameter(object parameter, global::Quire.Wpf.IHasFunctionalityKeyAccordingToParameter commandWithParameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

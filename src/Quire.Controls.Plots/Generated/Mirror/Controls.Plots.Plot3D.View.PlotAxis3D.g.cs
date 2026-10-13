@@ -12,13 +12,47 @@ namespace Quire.Controls.Plots.Plot3D.View;
 internal partial class PlotAxis3D : global::Quire.Media3D.WireBase, global::Quire.Controls.Plots.Plot3D.View.IPlotAxis3D, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly double AlmostZero;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Media3D.MeshGeometry3D _tickmarksGeometry;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Media3D.Cylinder _arrowHead;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Viewport2DVisual3D[] _labelVisuals;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3D _axisDirection;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LabelsColorProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowTicksProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowNumbersProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private const double WorldEdge1 = -0.5d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double WorldEdge2 = 0.5d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double AxisLengthWithoutMargins = 1d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double AxisMarginProportions = 0.08333333333333333d;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Media3D.Matrix3D _axisToTickTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Media3D.Material _labelMaterial;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Media3D.Vector3D _axisStartPointOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Thickness _zeroThickness;
+    [global::Quire.Mirror.MirrorStub]
+    private const double LabelVerticalMargin = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.PointCollection _labelTextureCoordinates;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _needToAddLabels;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.View.PlotLabelsContainer3D LabelsContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -28,7 +62,11 @@ internal partial class PlotAxis3D : global::Quire.Media3D.WireBase, global::Quir
     [global::Quire.Mirror.MirrorStub]
     public bool ShowNumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.GeometryModel3D BaseModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D BaseLineEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Vector3D AxisDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -38,11 +76,51 @@ internal partial class PlotAxis3D : global::Quire.Media3D.WireBase, global::Quir
     [global::Quire.Mirror.MirrorStub]
     protected void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void OnColorChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PlotAxis3D() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void LabelsColorChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearBinding(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetBinding(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateLabelVisuals() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ColorChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RecalculateNow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Recalculate() => base.Recalculate();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3D GetAxisDirectionScreen(double edgeDistance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D GetPointFromAxisStart(double distance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RecalculateArrowhead() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetAxisOrthogonalDistanceInWorld(global::System.Windows.Media.Media3D.Point3D origin, double screenDist) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetAxisDistanceInWorld(global::System.Windows.Media.Media3D.Point3D origin, double screenDist) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetRelativeDistanceInWorld(global::System.Windows.Media.Media3D.Point3D origin, double screenDist, global::System.Windows.Media.Media3D.Matrix3D transformRelativeToAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ForceGenerate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateLabelVisuals() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveAllLabelsFromViewport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddAllLabelsToViewport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsAxisVertical() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.ModelVisual3D CreateTickmarkModelVisual3D(global::System.Windows.Media.Media3D.MeshGeometry3D mesh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddTickmarksToMeshAndPositionLabels(global::System.Windows.Media.Media3D.Point3DCollection meshVertices, global::System.Windows.Media.Int32Collection meshIndices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddLabelGeometry(int iTick, global::System.Windows.Media.Media3D.Point3D tickEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Generate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection lines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

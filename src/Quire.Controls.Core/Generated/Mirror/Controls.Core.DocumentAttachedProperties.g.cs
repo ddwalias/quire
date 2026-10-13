@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public static partial class DocumentAttachedProperties
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ZoomProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LocationProperty;
@@ -53,6 +55,8 @@ public static partial class DocumentAttachedProperties
     public static readonly global::System.Windows.DependencyProperty IsInPastingProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CopyAsImageSettingsProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceZoom(global::System.Windows.DependencyObject obj, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetZoom<TEngineeringDocument>(TEngineeringDocument dObj, double value) where TEngineeringDocument : global::System.Windows.DependencyObject, global::Quire.Controls.Core.IEngineeringDocument => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -105,6 +109,8 @@ public static partial class DocumentAttachedProperties
     public static string GetLabel(global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetLabel(global::System.Windows.DependencyObject dependencyObject, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceFilePath(global::System.Windows.DependencyObject dependencyObject, object baseValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetFilePath(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

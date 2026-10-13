@@ -12,6 +12,12 @@ namespace Quire.Controls.Internal;
 internal abstract partial class VisualOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _descriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _operatorSymbols;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _operands;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualMathNode[] OperatorSymbols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualMathNode[] Operands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

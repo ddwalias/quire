@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class MultiWorksheetItemCopyVisitor : global::Quire.Controls.Worksheet.MultiWorksheetItemRtfCopyVisitorBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.DataObject _dataObject;
+    [global::Quire.Mirror.MirrorStub]
     public MultiWorksheetItemCopyVisitor(global::System.Windows.DataObject dataObject, global::Quire.Controls.Worksheet.RtfItemWrapperHelper helper, bool copyAsImage) : base(default(global::Quire.Controls.Worksheet.RtfItemWrapperHelper)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void VisitAll(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.VisitAll(items);

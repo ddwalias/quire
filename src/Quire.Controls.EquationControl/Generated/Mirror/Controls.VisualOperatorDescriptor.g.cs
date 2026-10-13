@@ -12,6 +12,10 @@ namespace Quire.Controls;
 public partial class VisualOperatorDescriptor : global::Quire.Controls.SymbolDescriptor
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _canonicalName;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.EditorGesture _multiKeyStrokesBinding;
+    [global::Quire.Mirror.MirrorStub]
     public string CanonicalName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Wpf.EditorGesture MultiKeyStrokesBinding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

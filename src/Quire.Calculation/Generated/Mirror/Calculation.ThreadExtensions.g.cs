@@ -12,6 +12,10 @@ namespace Quire.Calculation;
 public static partial class ThreadExtensions
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Globalization.CultureInfo appCulture;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Globalization.CultureInfo appCultureUI;
+    [global::Quire.Mirror.MirrorStub]
     public static void CaptureUiThreadCulture() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void SyncWithUICulture(this global::System.Threading.Thread thread) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

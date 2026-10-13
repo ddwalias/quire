@@ -12,6 +12,10 @@ namespace Quire.Controls.Worksheet;
 internal partial class DragZombieAdorner : global::System.Windows.Documents.Adorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect _childBoundaries;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.VisualBrush _visual;
+    [global::Quire.Mirror.MirrorStub]
     public DragZombieAdorner(global::System.Windows.UIElement elementToAdorn, global::System.Windows.Media.Visual originalAdorner, global::System.Windows.Rect elementBoundaries) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);

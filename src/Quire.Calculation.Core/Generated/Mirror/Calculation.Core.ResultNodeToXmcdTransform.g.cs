@@ -12,7 +12,59 @@ namespace Quire.Calculation.Core;
 public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.IResultNodeVisitor, global::Quire.IVisitor
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string RealElementName = "real";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ImaginaryElementName = "imag";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ComplexElementName = "complex";
+    [global::Quire.Mirror.MirrorStub]
+    private const string StringElementName = "str";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FunctionElementName = "functionValue";
+    [global::Quire.Mirror.MirrorStub]
+    private const string MatrixElementName = "matrix";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SymbolicResultElementName = "symResult";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UnitedValueElementName = "unitedValue";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UnitMonomialElementName = "unitMonomial";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UnitReferenceElementName = "unitReference";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PlaceholderElementName = "placeholder";
+    [global::Quire.Mirror.MirrorStub]
+    private const string MatrixViewportElementName = "display";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UnitAttributeName = "unit";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PowerNumeratorAttributeName = "power-numerator";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PowerDenominatorAttributeName = "power-denominator";
+    [global::Quire.Mirror.MirrorStub]
+    private const string RowsAttributeName = "rows";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ColsAttributeName = "cols";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DescriptionAttributeName = "description";
+    [global::Quire.Mirror.MirrorStub]
+    private const string OffsetAttributeName = "offset";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SizeAttributeName = "size";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DataVectorsElementName = "DataVectors";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResultValueTypeAttributeName = "ValuesType";
+    [global::Quire.Mirror.MirrorStub]
+    private const string VectorsTypeAttributeName = "VectorsType";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CountAttributeName = "Count";
+    [global::Quire.Mirror.MirrorStub]
+    private const string MathPrefix = "ml";
+    [global::Quire.Mirror.MirrorStub]
     public const string MathNamespaceUri = "http://schemas.mathsoft.com/math50";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UnitPrefix = "u";
     [global::Quire.Mirror.MirrorStub]
     public const string UnitNamespaceUri = "http://schemas.mathsoft.com/units10";
     [global::Quire.Mirror.MirrorStub]
@@ -23,6 +75,16 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     public static void Transform(global::Quire.Calculation.Core.IResultNode resultNode, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string Transform(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WritePlaceholderXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteRealXml(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteImaginaryXml(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteMatrixXml(global::Quire.Calculation.Core.IMatrixResultNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteDisplayMatrixXml(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IEmptyResultNode empty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -38,6 +100,8 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IUnitedValueResultNode unitedValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void Visit(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IEagerMatrixResultNode eagerMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -48,5 +112,15 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.ITrace2DResultNode traceResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void WriteAxisInfoNode(string xmlNodeName, global::Quire.Calculation.Core.ITraceAxisInfo axisInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WritePlotDataPoints(global::Quire.Calculation.Core.ITraceDataPoints dataDataPoints) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IVectorListResultNode vectorList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<TTarget> ConvertAndGetNullableValue<TTarget>(global::System.Enum sourceEnumValue) where TTarget : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteVectorsAsJson<T>(global::Quire.Calculation.Core.IVectorListResultNode vectorsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Visit(global::Quire.Calculation.Core.Unit unit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -22,6 +22,8 @@ public abstract partial class InputControlModel : global::Quire.Controls.InputCo
     [global::Quire.Mirror.MirrorStub]
     protected bool _isAutoRecalculate;
     [global::Quire.Mirror.MirrorStub]
+    private bool _isDirty;
+    [global::Quire.Mirror.MirrorStub]
     public const string SexpressionTagMatrix = "(:= (@MATRIX ";
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.IInputControlEngine InputEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

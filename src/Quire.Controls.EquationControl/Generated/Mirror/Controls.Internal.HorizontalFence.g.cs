@@ -18,6 +18,22 @@ internal partial class HorizontalFence : global::Quire.Controls.Internal.Fence
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.FormattedText Right { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence.GlyphGap LeftGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence.GlyphGap MiddleGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence.GlyphGap RightGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence.GlyphGap SingleGap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size LeftSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size MiddleSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size RightSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size SingleSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Media.Geometry Geometry { get => base.Geometry; }
@@ -30,6 +46,8 @@ internal partial class HorizontalFence : global::Quire.Controls.Internal.Fence
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => base.EffectiveScriptBaselineY; }
     [global::Quire.Mirror.MirrorStub]
+    private HorizontalFence() { }
+    [global::Quire.Mirror.MirrorStub]
     public HorizontalFence(char fenceChar) { }
     [global::Quire.Mirror.MirrorStub]
     public HorizontalFence(char fenceChar, bool stretchable, bool reverseCoordinates) { }
@@ -38,11 +56,17 @@ internal partial class HorizontalFence : global::Quire.Controls.Internal.Fence
     [global::Quire.Mirror.MirrorStub]
     public HorizontalFence(char[] componentChars, bool stretchable, bool reverseCoordinates) { }
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateSizeProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void ReformatComponents() => base.ReformatComponents();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawAndIncrementX(global::System.Windows.Media.DrawingContext dc, global::System.Windows.Media.FormattedText text, global::Quire.Controls.Internal.Fence.GlyphGap gap, ref global::System.Windows.Point loc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void DrawRotatedText(global::System.Windows.Media.DrawingContext dc, global::System.Windows.Media.FormattedText text, global::System.Windows.Point loc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
     [global::Quire.Mirror.MirrorStub]

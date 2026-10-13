@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 public static partial class VisualInputControlFactory
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.InputControls.RadioButtonEventAggregator _radioButtonEventAggregator;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Controls.Control CreateVisualInputControl(string mathNodeName, global::Quire.EquationEditor.Tree.INodeInfo nodeInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Window CreateInputControlEditor(global::Quire.Controls.Core.InputControlTypes controlType, global::Quire.Controls.InputControls.IInputControlViewModel controlViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

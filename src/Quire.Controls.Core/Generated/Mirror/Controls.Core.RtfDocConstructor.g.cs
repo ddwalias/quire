@@ -12,11 +12,31 @@ namespace Quire.Controls.Core;
 public partial class RtfDocConstructor
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string DefaultFont = "Tahoma";
+    [global::Quire.Mirror.MirrorStub]
     internal const int ImageOffsetForDefaultFont = -27;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Core.IRtfItemBase> _orderedRtfItems;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _isSavingWholeDocument;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _startingPageIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _leftTrim;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _contentWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Size _pageSize;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Size _pageBodySize;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.Dictionary<int, global::System.Drawing.Color> ImprovedColorMatchingDictionary;
     [global::Quire.Mirror.MirrorStub]
     public static bool IsRtfCopyEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private RtfDocConstructor() { }
+    private bool IsOnePageContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private RtfDocConstructor(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IRtfItemBase> rtfItems, global::System.Windows.Size pageSize, global::System.Windows.Size pageBodySize, bool isSavingWholeDocument) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void ComputeIsOnePageContent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

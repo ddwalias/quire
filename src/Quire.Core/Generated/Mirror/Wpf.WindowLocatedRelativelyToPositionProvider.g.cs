@@ -16,6 +16,20 @@ public partial class WindowLocatedRelativelyToPositionProvider : global::System.
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
     [global::Quire.Mirror.MirrorStub]
+    private void SetWindowLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.WindowLocatedRelativelyToPositionProvider.ItemQuarterLocationInOwnerWindow GetPositionProviderQuarterPosition(global::System.Windows.Point positionProviderRelativePointFromOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point GetPopupLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect GetPositionProviderScreenBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool GetPopupLocationAndVisibility(global::System.Windows.Rect positionProviderAbsoluteScreenBounds, global::Quire.Wpf.WindowLocatedRelativelyToPositionProvider.ItemQuarterLocationInOwnerWindow quarterLocation, out global::System.Windows.Point popupLocationPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsPopUpWindowWillFullyShowOnScreen(global::System.Windows.Point popupLocationPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.WindowLocatedRelativelyToPositionProvider.DpiFactors GetDpiFactor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public WindowLocatedRelativelyToPositionProvider() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider+DpiFactors, Ptc.Core")]

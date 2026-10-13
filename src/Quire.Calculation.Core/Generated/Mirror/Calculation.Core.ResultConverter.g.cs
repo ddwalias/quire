@@ -12,6 +12,8 @@ namespace Quire.Calculation.Core;
 public partial class ResultConverter : global::Quire.Calculation.Core.IResultConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.IResultNodeFactory _newResultNodeFactory;
+    [global::Quire.Mirror.MirrorStub]
     public ResultConverter(global::Quire.Calculation.Core.IResultNodeFactory newResultNodeFactory) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.IResultNode Convert(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

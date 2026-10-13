@@ -12,6 +12,14 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class AxisSetScalingCommand : global::Quire.Controls.Plots.PlotCommands.AxisCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.AxisScaling _oldScaling;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.AxisScaling _newScaling;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _changedNumberStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotControl _parentPlot;
+    [global::Quire.Mirror.MirrorStub]
     public AxisSetScalingCommand(global::Quire.Controls.Plots.PlotGraphAxis axis, global::Quire.Controls.Plots.Presenter.AxisScaling axesScaling) : base(default(global::Quire.Controls.Plots.PlotGraphAxis), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

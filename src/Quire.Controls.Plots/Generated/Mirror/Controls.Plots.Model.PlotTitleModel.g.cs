@@ -12,6 +12,16 @@ namespace Quire.Controls.Plots.Model;
 internal partial class PlotTitleModel : global::Quire.Controls.Plots.IPlotTitleModel, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.LegendPositions.PlotTitlePosition _position;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showTitle;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isDirty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showBorder;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isVertical;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Text.RichTextTitle Title { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.PlotTitleType TitleType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -33,6 +43,10 @@ internal partial class PlotTitleModel : global::Quire.Controls.Plots.IPlotTitleM
     public global::System.Xml.XmlNode RegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlNode GetXmlNode(string wsNameSpace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetXmlNode(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnPropertyChanged(string propertyName = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

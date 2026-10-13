@@ -12,6 +12,26 @@ namespace Quire.Efi;
 public partial class Fdelegate
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.F<object, object> m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_arg;
+    [global::Quire.Mirror.MirrorStub]
+    private Fdelegate(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim d) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Fdelegate(global::Quire.Mpl.Run.Function f) { }
+    [global::Quire.Mirror.MirrorStub]
+    private object invoke_dbl_to_obj(double v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double invoke_dbl_to_dbl(double v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double invoke_dbl_to_dbl_pure(double v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double invoke_dbl_to_dbl_img(double v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void invoke_cplx_to_cplx(global::Quire.Efi.Managed.mcComplex* res, global::Quire.Efi.Managed.mcComplex* v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void invoke_dbl_to_cplx(global::Quire.Efi.Managed.mcComplex* res, double v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Efi.delegate_dbl_to_obj dbl_to_obj(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Efi.delegate_dbl_to_obj dbl_to_obj(global::Quire.Mpl.Run.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -35,6 +55,4 @@ public partial class Fdelegate
     public static global::Quire.Efi.delegate_dbl_to_cplx dbl_to_cplx(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Efi.delegate_dbl_to_cplx dbl_to_cplx(global::Quire.Mpl.Run.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private Fdelegate() { }
 }

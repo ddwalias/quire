@@ -32,6 +32,10 @@ public abstract partial class InputControlScriptingEngine : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     protected string _lookFor;
     [global::Quire.Mirror.MirrorStub]
+    private const string LookForSub = " ";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DefaultScript = "Not Supported";
+    [global::Quire.Mirror.MirrorStub]
     protected virtual string EventStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected virtual string EventStop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,10 @@ namespace Quire.Controls.Core;
 public static partial class PropertyAggregateExtension
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string ErrorMessageTypeMissmatch = "Type mismatch";
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetPropertyValueWithCommandUndoable(global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, string propertyName, object oldValue, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void SetPropertyValueWithCommand(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, global::Quire.Controls.Core.SetPropertyValueCommandParameter parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetPropertyValueWithCommand(this global::Quire.Controls.Core.IPropertyAggregate propertyAggregate, global::Quire.Controls.Core.SetPropertyValueCommandParameter parameter, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

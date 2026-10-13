@@ -16,6 +16,8 @@ public partial class ReparentChild : global::Quire.EquationEditor.Tree.Parsing.P
     [global::Quire.Mirror.MirrorStub]
     public readonly int IndexInNewParent;
     [global::Quire.Mirror.MirrorStub]
+    private int a;
+    [global::Quire.Mirror.MirrorStub]
     public int ChildIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ReparentChild(string newParentNodeName, int childIndex) { }

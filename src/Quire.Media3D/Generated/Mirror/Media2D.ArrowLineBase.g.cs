@@ -18,6 +18,14 @@ public abstract partial class ArrowLineBase : global::System.Windows.Shapes.Shap
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.PolyLineSegment polysegLine;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PathFigure pathfigHead1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PolyLineSegment polysegHead1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PathFigure pathfigHead2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PolyLineSegment polysegHead2;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ArrowAngleProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ArrowLengthProperty;
@@ -37,4 +45,6 @@ public abstract partial class ArrowLineBase : global::System.Windows.Shapes.Shap
     protected override global::System.Windows.Media.Geometry DefiningGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ArrowLineBase() { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PathFigure CalculateArrow(global::System.Windows.Media.PathFigure pathfig, global::System.Windows.Point pt1, global::System.Windows.Point pt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

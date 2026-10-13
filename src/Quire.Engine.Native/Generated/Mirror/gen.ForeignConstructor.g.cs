@@ -12,6 +12,12 @@ namespace Quire.gen;
 internal partial class ForeignConstructor : global::Quire.gen.Constructor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.ConstructorInfo m_ctor;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_arity;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] m_types;
+    [global::Quire.Mirror.MirrorStub]
     public ForeignConstructor(global::Quire.gen.IlAsm il, string mn, string tn, global::System.Reflection.ConstructorInfo ctor, global::System.Type[] tys) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public override int Arity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

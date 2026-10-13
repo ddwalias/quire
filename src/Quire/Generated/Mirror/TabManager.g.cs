@@ -12,13 +12,29 @@ namespace Quire;
 public partial class TabManager : global::System.Windows.Controls.Primitives.Selector
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string PartTabPanel = "PART_TabPanel";
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.StackPanel _mTabPanel;
+    [global::Quire.Mirror.MirrorStub]
+    private const string PartTabScroll = "PART_TabScroll";
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ScrollViewer _scrollViewer;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ManagedItemsOwnerControlProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private const int MouseMoveSensitivity = 5;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.Primitives.Selector ManagedItemsOwnerControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::System.Windows.UIElement> ViewItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int SelectedViewIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.WindowTabTupleData> ItemsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Data.CollectionView CollectionView { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TabManager() { }
     [global::Quire.Mirror.MirrorStub]
@@ -29,6 +45,32 @@ public partial class TabManager : global::System.Windows.Controls.Primitives.Sel
     public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSelectionChanged(global::System.Windows.Controls.SelectionChangedEventArgs e) => base.OnSelectionChanged(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTabManagerItemClicked(object sender, global::Quire.TabManagerItemClickedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleItemsOwnersControlChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SynchronizeSelection(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.WindowTabTupleData GetDataTupleForWindow(global::AvalonDock.Layout.LayoutAnchorable wnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateItems(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IList<global::Quire.WindowTabTupleData> GenerateTabTupleDataListForWindows(global::System.Collections.IList items, int startIndex = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateItemsOrder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsIndexInCollectionRange(int targetId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SwitchAdjacentTabs(int sourceId, int targetId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ContentPresenter TabItemContainerAtIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PerformTabDragMove(global::Quire.TabManagerItem originalTab) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsContainerOutOfView(global::System.Windows.Controls.ContentPresenter container, out global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double CoerceScrollingOffset(double absoluteOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.TabManager+MoveDirection, MathcadPrime")]
     private enum MoveDirection

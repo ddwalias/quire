@@ -14,9 +14,9 @@ public partial class PlotGraph3DContainerParentMarginConverter : global::System.
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.Plots.Plot3D.View.PlotGraph3DContainerParentMarginConverter Instance;
     [global::Quire.Mirror.MirrorStub]
+    private PlotGraph3DContainerParentMarginConverter() { }
+    [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private PlotGraph3DContainerParentMarginConverter() { }
 }

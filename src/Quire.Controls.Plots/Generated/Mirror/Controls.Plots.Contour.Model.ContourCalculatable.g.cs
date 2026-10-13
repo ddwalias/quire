@@ -14,9 +14,41 @@ internal sealed partial class ContourCalculatable : global::Quire.Controls.Plots
     [global::Quire.Mirror.MirrorStub]
     internal const string RlStringFormat = "(eval (numeric (contour_plot  {0} {1} {2} {3} {4}))  )";
     [global::Quire.Mirror.MirrorStub]
+    private const string RlLimitsFormat = "(op_matrix (unboxed 4) (unboxed 1) (list (number {0}) (number {1}) (number {2}) (number {3})))";
+    [global::Quire.Mirror.MirrorStub]
+    private const string RlGridSizeFormat = "(op_matrix (unboxed 2) (unboxed 1) (list (number {0}) (number {1})))";
+    [global::Quire.Mirror.MirrorStub]
+    private const double RangeMinValueDefault = double.NaN;
+    [global::Quire.Mirror.MirrorStub]
+    private const double RangeMaxValueDefault = double.NaN;
+    [global::Quire.Mirror.MirrorStub]
+    private const int ComputationalGridRowsDefault = 40;
+    [global::Quire.Mirror.MirrorStub]
+    private const int ComputationalGridColumnsDefault = 40;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation _plotEquation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.Model.ContourCalculationResult _result;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.Model.Levels _levels;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Presenter.IPlotEquation PlotEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string GridRL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string LimitsRL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string ScalingRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double XMin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double XMax { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double YMin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double YMax { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Contour.Model.ContourCalculationResult Result { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -28,7 +60,11 @@ internal sealed partial class ContourCalculatable : global::Quire.Controls.Plots
     [global::Quire.Mirror.MirrorStub]
     public void SetHorizontalRange(double min, double max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void InitializeHorizontalRange(double min, double max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetVerticalRange(double min, double max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeVerticalRange(double min, double max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

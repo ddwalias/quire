@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots;
 public abstract partial class PlotGraphAxisBase : global::System.Windows.FrameworkElement
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public const int TickMarksDefault = 11;
     [global::Quire.Mirror.MirrorStub]
     protected static readonly global::System.Windows.Media.SolidColorBrush NumbersBrush;
@@ -29,6 +31,8 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     protected bool LimitSExpressionChanging;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.VisualCollection VisualChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.ViewModel.IAxisViewModel _viewModel;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowGridLinesProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -60,6 +64,8 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     [global::Quire.Mirror.MirrorStub]
     public int TickMarks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void LineColorChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected abstract void UnhookFromViewModel();
     [global::Quire.Mirror.MirrorStub]
     protected abstract void HookToViewModel();
@@ -68,7 +74,15 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     [global::Quire.Mirror.MirrorStub]
     protected void InitializeLimitEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void InitializeLimitEquation(global::Quire.Controls.EquationControl limitEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LimitEquationSExpressionChanging(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LimitEditorLostFocus(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected static void ShowLimit(global::System.Windows.UIElement limit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HideLimit(global::Quire.Controls.EquationControl limit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract void ShowLimitsExpressions();
     [global::Quire.Mirror.MirrorStub]
@@ -85,6 +99,10 @@ public abstract partial class PlotGraphAxisBase : global::System.Windows.Framewo
     public void HideSecondTickExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HideEndExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ShowGridLinesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void GridLineColorChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void TickMarksChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

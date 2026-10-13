@@ -18,6 +18,10 @@ public abstract partial class SafeWaitHandle : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     protected unsafe SafeWaitHandle(string A_0, void* A_1) { }
     [global::Quire.Mirror.MirrorStub]
+    private void _bangSafeWaitHandle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeSafeWaitHandle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void WaitOne() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool WaitOneWithTimeout(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

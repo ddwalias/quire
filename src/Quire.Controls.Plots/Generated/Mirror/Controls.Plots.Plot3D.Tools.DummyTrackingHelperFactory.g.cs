@@ -12,11 +12,15 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 internal partial class DummyTrackingHelperFactory : global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelperFactory, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelperFactory _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Plots.Plot3D.Tools.DummyTrackingHelper _helperInstance;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelperFactory Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper CreateHelper(global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball trackball) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private DummyTrackingHelperFactory() { }
+    [global::Quire.Mirror.MirrorStub]
+    public global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper CreateHelper(global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball trackball) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

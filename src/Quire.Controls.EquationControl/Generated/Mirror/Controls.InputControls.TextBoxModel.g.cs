@@ -14,6 +14,8 @@ internal partial class TextBoxModel : global::Quire.Controls.InputControls.Input
     [global::Quire.Mirror.MirrorStub]
     protected string _text;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.TextBoxScriptableControlData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override object SelectedValue { get => base.SelectedValue; }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Brush Foreground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

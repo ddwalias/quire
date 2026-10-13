@@ -14,9 +14,17 @@ public partial class UIFunctionalityWithCommandAttachedBehavior : global::Quire.
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CommandTargetProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Input.ICommandSource AssociatedObjectAsCommandSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.IInputElement CommandTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLoaded() => base.OnLoaded();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ShouldReplaceToFreemiumIcon(global::System.Windows.Input.RoutedUICommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateElementBehavior(global::System.Windows.FrameworkElement uiFrameworkElement, global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey commandFunctionalityBehaviorKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCommandTargetChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public UIFunctionalityWithCommandAttachedBehavior() { }
 }

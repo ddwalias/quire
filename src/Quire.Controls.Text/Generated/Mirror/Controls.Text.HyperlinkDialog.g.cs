@@ -18,13 +18,19 @@ public partial class HyperlinkDialog : global::Quire.Controls.Core.ControlsWindo
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button OkButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.HyperlinkDialogViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public static bool ShowHyperlinkDialog(global::Quire.Controls.Text.HyperlinkDialogViewModel hyperlinkViewModel, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private HyperlinkDialog(global::Quire.Controls.Text.HyperlinkDialogViewModel hyperlinkViewModel) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HyperlinkDialogLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private HyperlinkDialog() { }
 }

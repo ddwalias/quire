@@ -28,5 +28,7 @@ public partial class MultiWorksheetItemRtfCopyVisitorBase : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     public virtual void Visit(global::Quire.Controls.Core.ICollapsibleAreaControl area) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ConvertItemsToRtfFormat(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual void VisitAll(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

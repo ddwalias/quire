@@ -16,6 +16,14 @@ public partial class TextStyleEditDialogViewModel : global::Quire.Controls.Core.
     [global::Quire.Mirror.MirrorStub]
     public const string TextStyleName_None = "(none)";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.ITextStyle _textStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.ITextStylesManager _textStyleManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TextStyleData _bBasedOn;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _okIsEnabled;
+    [global::Quire.Mirror.MirrorStub]
     public string TextStyleBasedOnKeyNoneLocalized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string TextStyleNameNewLocalized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -73,6 +81,10 @@ public partial class TextStyleEditDialogViewModel : global::Quire.Controls.Core.
     public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TextStyleEditDialogViewModel(global::Quire.ITextStyle textStyle, global::Quire.StyleActionTypeEnum action, global::Quire.Controls.Core.ITextStylesManager textStyleManager) { }
+    [global::Quire.Mirror.MirrorStub]
+    private object ResetValue(object value, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsKeyBasedOnKey(string styleKey, global::Quire.TextStyleData textStyleData, global::Quire.Controls.Core.ITextStylesManager textStyleManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateMarkerStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -29,4 +29,6 @@ public partial class StringValue : global::Quire.Automation.Value, global::Quire
     internal override void WriteValueXml(global::System.Xml.XmlWriter xml, global::Quire.Automation.UnitAction action, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override void WriteValueRL(global::System.IO.TextWriter rl, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string Escaped(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

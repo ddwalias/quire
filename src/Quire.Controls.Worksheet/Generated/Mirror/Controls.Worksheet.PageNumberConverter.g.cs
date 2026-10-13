@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class PageNumberConverter : global::System.Windows.Data.IMultiValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _fallbackValue;
+    [global::Quire.Mirror.MirrorStub]
     public string FallbackValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

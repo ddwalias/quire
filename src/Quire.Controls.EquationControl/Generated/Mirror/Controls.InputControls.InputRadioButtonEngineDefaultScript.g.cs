@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class InputRadioButtonEngineDefaultScript : global::Quire.Controls.InputControls.InputRadioButtonEngineJScript
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptValues = "One\u000BTwo\u000BThree";
+    [global::Quire.Mirror.MirrorStub]
     public InputRadioButtonEngineDefaultScript() { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Apply(string userScript, out object scriptObject, out string exception, object[] inputs, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.Apply(userScript, out scriptObject, out exception, inputs, engineParams);

@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public abstract partial class ViewModelBase : global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Input.CommandBindingCollection _commandBindings;
+    [global::Quire.Mirror.MirrorStub]
     public virtual string DisplayName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.CommandBindingCollection CommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

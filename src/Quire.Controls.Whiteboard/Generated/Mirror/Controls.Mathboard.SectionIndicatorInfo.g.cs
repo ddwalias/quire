@@ -12,6 +12,14 @@ namespace Quire.Controls.Mathboard;
 public partial class SectionIndicatorInfo : global::Quire.Controls.Mathboard.ISectionIndicatorInfo, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _text;
+    [global::Quire.Mirror.MirrorStub]
+    private double _top;
+    [global::Quire.Mirror.MirrorStub]
+    private double _height;
+    [global::Quire.Mirror.MirrorStub]
+    private double _minHeightRatio;
+    [global::Quire.Mirror.MirrorStub]
     public bool Readonly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -27,4 +35,6 @@ public partial class SectionIndicatorInfo : global::Quire.Controls.Mathboard.ISe
     public SectionIndicatorInfo() { }
     [global::Quire.Mirror.MirrorStub]
     public SectionIndicatorInfo(global::Quire.Controls.Mathboard.SectionIndicatorInfo originalSection, bool isReadonly) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

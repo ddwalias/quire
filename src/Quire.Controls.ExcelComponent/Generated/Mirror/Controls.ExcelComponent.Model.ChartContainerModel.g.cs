@@ -12,7 +12,19 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent.Model.OleDataExchangeContainerModel<global::Quire.PersistentData.chartContainerType>, global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel, global::Quire.Controls.Core.Ole.IPublicOleContainerModel<global::Quire.PersistentData.chartContainerType>, global::Quire.Calculation.ICalculationComponent, global::Quire.Calculation.IDataExchangeIValueModel, global::Quire.Calculation.Core.IDataExchangeModel, global::Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter _converter;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly string ComExceptionEngineErrorCode;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] _excludeElementsNames;
+    [global::Quire.Mirror.MirrorStub]
+    private string _helpServerPath;
+    [global::Quire.Mirror.MirrorStub]
+    private uint[] _traceIds;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly object _dataLimitsLock;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<uint, double[,]> _dataLimitsDict;
     [global::Quire.Mirror.MirrorStub]
     public override string ProgId { get => base.ProgId; }
     [global::Quire.Mirror.MirrorStub]
@@ -40,6 +52,8 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public bool IsImageFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources ImageFreezeSources { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     protected override bool CheckOleActiveState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ChartAppLib.ChartAppOLE ChartObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -66,6 +80,12 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public global::System.Exception RemoveTrace(uint traceId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetString(string place, global::Quire.IValue value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetMatrix(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetTrace(uint traceId, global::Quire.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRect(global::System.Windows.Int32Rect rectInPixels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -77,6 +97,14 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     public void ForceUnfreezeImage(bool force) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool ShouldSkipUnchangedValueMultiThreaded(string place) => base.ShouldSkipUnchangedValueMultiThreaded(place);
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.ChartAppLib.ChartMinMax CreateEmptyChartMinMax() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddOrRemoveImageFreezeSource(global::Quire.Controls.ExcelComponent.Model.ImageFreezeSources source, bool add) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ApplyImageFrozenState(global::System.Nullable<bool> frozenOverride = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetHelpServerPathIfRunning() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.IDataExchangeModel.Unlock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

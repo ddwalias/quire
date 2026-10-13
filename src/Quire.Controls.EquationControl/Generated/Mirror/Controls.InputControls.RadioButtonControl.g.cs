@@ -14,9 +14,17 @@ public partial class RadioButtonControl : global::System.Windows.Controls.ListVi
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.InputControls.RadioButtonControl listView;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.IInputControlViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public RadioButtonControl(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data, global::Quire.Controls.InputControls.RadioButtonEventAggregator radioButtonEventAggregator = default) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewMouseRightButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

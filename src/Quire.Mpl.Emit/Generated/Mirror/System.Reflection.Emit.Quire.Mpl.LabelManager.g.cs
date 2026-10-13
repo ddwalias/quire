@@ -12,6 +12,10 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class LabelManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Label, global::System.Reflection.Metadata.Ecma335.LabelHandle> _labels;
+    [global::Quire.Mirror.MirrorStub]
+    private int _id;
+    [global::Quire.Mirror.MirrorStub]
     public LabelManager() { }
     [global::Quire.Mirror.MirrorStub]
     public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

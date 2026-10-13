@@ -12,6 +12,14 @@ namespace Quire.EquationEditor.Tree;
 public partial class FunctionOperatorDescriptor
 {
     [global::Quire.Mirror.MirrorStub]
+    private string a;
+    [global::Quire.Mirror.MirrorStub]
+    private int b;
+    [global::Quire.Mirror.MirrorStub]
+    private string c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Nullable<global::Quire.Controls.Core.IdLabels>> d;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ArgumentCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

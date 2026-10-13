@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class SizeType
 {
     [global::Quire.Mirror.MirrorStub]
+    private double widthField;
+    [global::Quire.Mirror.MirrorStub]
+    private double heightField;
+    [global::Quire.Mirror.MirrorStub]
     public double width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 public sealed partial class DotfuscatorAttribute : global::System.Attribute
 {
     [global::Quire.Mirror.MirrorStub]
+    private string a;
+    [global::Quire.Mirror.MirrorStub]
+    private int c;
+    [global::Quire.Mirror.MirrorStub]
     public string A { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int C { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

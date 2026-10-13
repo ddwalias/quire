@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal abstract partial class Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Ctxt m_parent;
+    [global::Quire.Mirror.MirrorStub]
     public Ctxt(global::Quire.gen.Ctxt parent) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual unsafe global::Quire.gen.MetaObj lookup(void* v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

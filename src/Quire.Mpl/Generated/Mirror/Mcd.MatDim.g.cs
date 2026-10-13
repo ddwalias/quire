@@ -132,6 +132,8 @@ public abstract partial class MatDim
     [global::Quire.Mirror.MirrorStub]
     public static void OnError(string m, global::Quire.Mcd.Dim d, int i, uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void PickLoser(global::Quire.Mcd.MatDim loser, global::Quire.Mcd.MatDim winner, uint param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Mcd.MatDim transpose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Mcd.MatDim invert() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -139,6 +141,14 @@ public abstract partial class MatDim
     protected virtual global::Quire.Mcd.Dim det(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Mcd.MatDim pwr(uint n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatDim makeArrayDim(global::Quire.Mcd.MatVal m, bool linear_algebra_dimensions_only) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatDim makeArrayDim(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatDim makeColumnVectorDim(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatDim makeRowVectorDim(global::Quire.Mcd.MatVal m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Mcd.MatDim+RC, mplrun")]
     public enum RC
@@ -156,6 +166,8 @@ public abstract partial class MatDim
         public override global::Quire.Mcd.Dim UniformDim { get => base.UniformDim; }
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Mcd.MatDim IsLinear { get => base.IsLinear; }
+        [global::Quire.Mirror.MirrorStub]
+        private uniform_dim(global::Quire.Mcd.Dim d, int r, int c) : base(default(int), default(int)) { }
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Mcd.MatDim.uniform_dim make(global::Quire.Mcd.Dim d, int r, int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -184,13 +196,13 @@ public abstract partial class MatDim
         protected override global::Quire.Mcd.MatDim invert() => base.invert();
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Mcd.MatDim pwr(uint n) => base.pwr(n);
-        [global::Quire.Mirror.MirrorStub]
-        private uniform_dim() : base(default(int), default(int)) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.MatDim+crazy_dim, mplrun")]
     protected partial class crazy_dim : global::Quire.Mcd.MatDim
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Mcd.MatVal m_matrix;
         [global::Quire.Mirror.MirrorStub]
         protected crazy_dim(global::Quire.Mcd.MatVal m) : base(default(int), default(int)) { }
         [global::Quire.Mirror.MirrorStub]
@@ -214,6 +226,8 @@ public abstract partial class MatDim
         public readonly global::Quire.Mcd.Dim[] m_coldim;
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Mcd.MatDim IsLinear { get => base.IsLinear; }
+        [global::Quire.Mirror.MirrorStub]
+        private rc_dim(global::Quire.Mcd.Dim[] r, global::Quire.Mcd.Dim[] c) : base(default(int), default(int)) { }
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Mcd.MatDim.rc_dim make_rc(global::Quire.Mcd.Dim[] r, global::Quire.Mcd.Dim[] c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -242,8 +256,6 @@ public abstract partial class MatDim
         protected override global::Quire.Mcd.MatDim invert() => base.invert();
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Mcd.MatDim pwr(uint n) => base.pwr(n);
-        [global::Quire.Mirror.MirrorStub]
-        private rc_dim() : base(default(int), default(int)) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.MatDim+r_dim, mplrun")]
@@ -255,6 +267,8 @@ public abstract partial class MatDim
         public override global::Quire.Mcd.MatDim IsLinear { get => base.IsLinear; }
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Mcd.Dim[] RowDimensions { get => base.RowDimensions; }
+        [global::Quire.Mirror.MirrorStub]
+        private r_dim(global::Quire.Mcd.Dim[] r, int c) : base(default(int), default(int)) { }
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Mcd.MatDim.r_dim make(global::Quire.Mcd.Dim[] r, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -285,8 +299,6 @@ public abstract partial class MatDim
         protected override global::Quire.Mcd.Dim det(int n) => base.det(n);
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Mcd.MatDim invert() => base.invert();
-        [global::Quire.Mirror.MirrorStub]
-        private r_dim() : base(default(int), default(int)) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.MatDim+c_dim, mplrun")]
@@ -298,6 +310,8 @@ public abstract partial class MatDim
         public override global::Quire.Mcd.MatDim IsLinear { get => base.IsLinear; }
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Mcd.Dim[] ColDimensions { get => base.ColDimensions; }
+        [global::Quire.Mirror.MirrorStub]
+        private c_dim(global::Quire.Mcd.Dim[] c, int r) : base(default(int), default(int)) { }
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Mcd.MatDim.c_dim make(global::Quire.Mcd.Dim[] c, int r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -328,7 +342,5 @@ public abstract partial class MatDim
         protected override global::Quire.Mcd.Dim det(int n) => base.det(n);
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Mcd.MatDim invert() => base.invert();
-        [global::Quire.Mirror.MirrorStub]
-        private c_dim() : base(default(int), default(int)) { }
     }
 }

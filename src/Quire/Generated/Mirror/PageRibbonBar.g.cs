@@ -20,7 +20,11 @@ public partial class PageRibbonBar : global::Fluent.RibbonGroupBox, global::Syst
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_Document_Page_Background_White;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public PageRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void A1A2PageSize_OnPreviewMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

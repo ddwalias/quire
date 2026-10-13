@@ -12,6 +12,22 @@ namespace Quire.Controls.Plots.ViewModel;
 internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IMarkersContainer _verticalRange;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IMarkersContainer _horizontalRange;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> _verticalMarkers;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> _horizontalMarkers;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel> _allMarkers;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.AttachedBehavior.RoutedEventBindingCollection _routedEventBindings;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel _activeMarker;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand AddVerticalMarkerCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand AddHorizontalMarkerCommand;
@@ -48,9 +64,19 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     public MarkersViewModel(global::Quire.Controls.Plots.Presenter.IMarkersContainer horizontalRange, global::Quire.Controls.Plots.Presenter.IMarkersContainer verticalRange, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen) { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnMarkerAdded(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnMarkerDeleted(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnActiveMarkerStyleChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddVerticalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.ViewModel.VerticalMarkerViewModel CreateVerticalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddHorizontalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.ViewModel.HorizontalMarkerViewModel CreateHorizontalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void AddPointMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -58,7 +84,53 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     internal void DeleteMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void AddMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddVerticalMarker(global::Quire.Controls.Plots.ViewModel.VerticalMarkerViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddHorizontalMarker(global::Quire.Controls.Plots.ViewModel.HorizontalMarkerViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ActivateMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Plots.Model.AxisMarker CreateDefaultAxisMarker(global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetMarkerOutOfRangeError(global::Quire.Controls.Plots.Model.IAxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ClearMarkerOutOfRangeError(global::Quire.Controls.Plots.Model.IAxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetCustomErrorIfMarkerOutOfRange(global::Quire.Controls.Plots.Model.IAxisMarker marker, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRangeChanged(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleRangePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HorizontalMarkersCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HorizontalMarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VerticalMarkersCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VerticalMarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MarkerPropertyChangedInCollection(object sender, global::System.ComponentModel.PropertyChangedEventArgs e, global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markersCollection, global::Quire.Controls.Plots.Presenter.IMarkersContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void MoveToNewPlace(global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel marker, global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void UpdateFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateVerticalMarkersFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateHorizontalMarkersFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMarkersCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, global::System.ComponentModel.PropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.MarkersViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

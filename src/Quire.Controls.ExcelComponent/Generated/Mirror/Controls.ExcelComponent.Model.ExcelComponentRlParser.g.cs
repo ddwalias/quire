@@ -12,6 +12,12 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class ExcelComponentRlParser : global::Quire.Controls.ExcelComponent.Model.OleComponentRlParser
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string _subscriptExcelExpressionString = "\\(subscript(:0x[0-9a-fA-F]{8})? mc_excel(\\{\\*\\}|\\{VARIABLE\\})(:0x[0-9a-fA-F]{8})? (?<subscript>.*)\\)";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Text.RegularExpressions.Regex _leftHandSubscriptExcelExpression;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Text.RegularExpressions.Regex _rightHandsubscriptExcelExpression;
+    [global::Quire.Mirror.MirrorStub]
     public const string ExcelVariableWithLabel = "mc_excel{VARIABLE}";
     [global::Quire.Mirror.MirrorStub]
     internal static bool ParseExcelComponentEquationRl(string rl, out bool isInput, out string lhsExpression, out string rhsExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -17,4 +17,8 @@ public static partial class SymbolDescriptorFilter
     public static void FilterExcludingCategoryKey(global::System.Windows.Data.FilterEventArgs e, string categoryKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void FilterByCanonicalName(global::System.Windows.Data.FilterEventArgs e, object[] visualOperatorDescriptors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool MatchCategory(global::Quire.Controls.SymbolDescriptor item, string category) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool MatchCanonicalName(global::Quire.Controls.VisualOperatorDescriptor item, object[] visualDescriptors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,8 @@ namespace Quire.Controls.Text;
 public partial class WhiteboardItemInTextWrapper : global::System.Windows.Controls.UserControl, global::Quire.Controls.Text.IWhiteboardItemInTextWrapper
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItemInText _wrappedItem;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IWhiteboardItemInText WrappedItemForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IWhiteboardItemInText WrappedItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,7 +22,15 @@ public partial class WhiteboardItemInTextWrapper : global::System.Windows.Contro
     [global::Quire.Mirror.MirrorStub]
     public WhiteboardItemInTextWrapper(global::Quire.Controls.Core.IWhiteboardItemInText wrappedItem) { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnRequestBringIntoView(object sender, global::System.Windows.RequestBringIntoViewEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWrappedItemSizeChanged(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IList<global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventArgs> argsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CompareBaselineOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
+    [global::Quire.Mirror.MirrorStub]
+    private void SetBaselineOffset(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool ShouldSerializeContent() => base.ShouldSerializeContent();
 }

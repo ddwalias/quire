@@ -12,6 +12,10 @@ namespace Quire;
 public partial struct DiscreteRect
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.DiscretePoint _topLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.DiscretePoint _bottomRight;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.DiscretePoint TopLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.DiscretePoint BottomRight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

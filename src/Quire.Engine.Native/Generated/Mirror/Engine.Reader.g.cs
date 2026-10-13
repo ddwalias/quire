@@ -12,7 +12,25 @@ namespace Quire.Engine;
 public partial class Reader : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.InternFunction m_intern_func;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.InternFunctionLabeled m_intern_func_labeled;
+    [global::Quire.Mirror.MirrorStub]
+    private bool[] m_macro_places;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<int, global::Quire.Engine.ReaderMacro> m_macro_table;
+    [global::Quire.Mirror.MirrorStub]
+    private object read_symbol_or_number(global::Quire.Native.EngutilsMgd.PushbackReader t, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object read_string(global::Quire.Native.EngutilsMgd.PushbackReader t, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string read_labels(global::Quire.Native.EngutilsMgd.PushbackReader t, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string read_tag(global::Quire.Native.EngutilsMgd.PushbackReader t, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public Reader(global::Quire.Engine.InternFunction f, global::Quire.Engine.InternFunctionLabeled lf) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeReader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void add_reader_macro(int ch, global::Quire.Engine.ReadFunction f, bool is_terminating) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

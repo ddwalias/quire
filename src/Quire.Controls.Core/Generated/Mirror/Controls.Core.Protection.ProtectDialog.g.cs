@@ -12,6 +12,14 @@ namespace Quire.Controls.Core.Protection;
 public partial class ProtectDialog : global::Quire.Controls.Core.Protection.PasswordDialog, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.Protection.DisplayStateEnum _displayState;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.Protection.AreaBorderStateEnum _areaBorderState;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.PasswordBox _primaryPasswordBox;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.PasswordBox _reenterPasswordBox;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.CheckBox showTimeStampCheckBox;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.CheckBox showAreaBorderCheckBox;
@@ -19,6 +27,8 @@ public partial class ProtectDialog : global::Quire.Controls.Core.Protection.Pass
     internal global::System.Windows.Controls.CheckBox lockDisplayStateCheckBox;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ComboBox displayStateComboBox;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Protection.DisplayStateEnum DisplayState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -28,13 +38,17 @@ public partial class ProtectDialog : global::Quire.Controls.Core.Protection.Pass
     [global::Quire.Mirror.MirrorStub]
     public static bool ShowProtectionDialog(global::Quire.Controls.Core.Protection.ProtectionDialogState protectionState, global::System.Windows.ResourceDictionary customControlStringsDictionary, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private ProtectDialog(global::Quire.Controls.Core.Protection.ProtectionDialogState protectionState, global::System.Windows.ResourceDictionary customControlStringsDictionary) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnControlDisplayStateChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnChangeBorderVisibilityState(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private ProtectDialog() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.ProtectDialog+ProtectProperties, Ptc.Controls.Core")]
     public partial class ProtectProperties : global::Quire.Controls.Core.Protection.PasswordDialog.Properties

@@ -12,6 +12,10 @@ namespace Quire;
 public partial class ProofingLanguageDataItem : global::Quire.IDropDownSelectorItem, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Globalization.CultureInfo _culture;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isChecked;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Globalization.CultureInfo Culture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

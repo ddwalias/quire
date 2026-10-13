@@ -20,6 +20,10 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SynchronizationStatusProperty;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel _oleBaseViewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel _oleBaseModel;
+    [global::Quire.Mirror.MirrorStub]
     protected const string WhiteboardItemsPropertyName = "WhiteboardItems";
     [global::Quire.Mirror.MirrorStub]
     protected const string IsInputSectionVisiblePropertyName = "IsInputSectionVisible";
@@ -27,6 +31,14 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     protected const string IsOutputSectionVisiblePropertyName = "IsOutputSectionVisible";
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ErrorProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NodeMessageAdorner _errorAdorner;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.RubberBandHighlighter _errorFrame;
+    [global::Quire.Mirror.MirrorStub]
+    private int _componentCookie;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly object _componentCookieLock;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => base.CalculatingStatus; }
     [global::Quire.Mirror.MirrorStub]
@@ -84,6 +96,10 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     public int ComponentCookieMultiThreaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleOleComponentLocationTopChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleOleComponentLocationLeftChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static double GetOleComponentLocationTop(global::System.Windows.DependencyObject whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetOleComponentLocationTop(global::System.Windows.DependencyObject whiteboardItem, double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -108,6 +124,12 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     [global::Quire.Mirror.MirrorStub]
     protected OleBaseComponentControl(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel viewModel, global::System.Windows.ResourceDictionary dict) : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnOleComponentLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IsResizingChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void InsertNewOleComponentExpression(string expression, bool navigateToEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Controls.ExcelComponent.View.IOleContainerItem CreateOleContainerItem();
@@ -125,6 +147,16 @@ public abstract partial class OleBaseComponentControl : global::Quire.Controls.M
     public override string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
+    [global::Quire.Mirror.MirrorStub]
+    private static void ErrorChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ErrorChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalcErrorChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateErrorStateOnComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearErrorOnComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
     [global::Quire.Mirror.MirrorStub]

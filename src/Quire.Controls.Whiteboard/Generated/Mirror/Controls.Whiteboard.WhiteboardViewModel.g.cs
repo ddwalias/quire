@@ -12,11 +12,63 @@ namespace Quire.Controls.Whiteboard;
 public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _moveDownCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _moveUpCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _moveLeftCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _moveRightCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _carriageReturnCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _traverseForwardCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RelayCommand _traverseBackwardCommand;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Controls.Whiteboard.IWhiteboardModel _whiteboardModel;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemMgr;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Point _insertionPoint;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Core.IAlignmentGrid _alignmentGrid;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isFocused;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isCrosshairVisible;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> _savedIsFocused;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _savedMaxSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _savedMinSize;
+    [global::Quire.Mirror.MirrorStub]
+    private double _contentHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _contentWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _maximumHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _maximumWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _minimumHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _minimumWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler> _itemSizeChangedHandlerMap;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _enteredRestoreSavedState;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.ICommand MoveDownCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -136,6 +188,10 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
     [global::Quire.Mirror.MirrorStub]
+    private void ChildWhiteboardPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void SetContentHeight(double height) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -154,9 +210,15 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     [global::Quire.Mirror.MirrorStub]
     protected void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleItemsListChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleItemsListChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual void AddItemAndActivate(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveWhiteboardItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> GetItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -240,6 +302,14 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     [global::Quire.Mirror.MirrorStub]
     public void UnSelectItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateSizeLimit(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteBoard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetOverlappingItems(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireRequestMaximumSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -316,7 +386,11 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void DeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void DeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteActiveOrSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Core.IWhiteboardItem PredictFocus(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -325,6 +399,12 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     protected virtual bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool CanMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanDeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanDeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanDeleteActiveOrSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual bool CanSeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -343,6 +423,8 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     protected virtual void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleItemRemoved(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChildTriggeredResizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleItemMoved(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -424,6 +506,12 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     public partial class AddItemsCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocations;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.Point _insertionPoint;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _shouldActivate;
+        [global::Quire.Mirror.MirrorStub]
         public AddItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::Quire.Controls.Core.IWhiteboardItem item) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public AddItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtLocations) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
@@ -440,6 +528,10 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     {
         [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocations;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _activeItemPriorToRemoval;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Point _insertionPoint;
         [global::Quire.Mirror.MirrorStub]
         public bool SetInsertionPointToFirstItemsLocation { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
@@ -458,6 +550,8 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
         [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocations;
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Undo.CompoundCommand _nestedCommand;
+        [global::Quire.Mirror.MirrorStub]
         public RemoveSelectedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -473,6 +567,10 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
         [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocation;
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.AddItemsCommand _addItemsCommand;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _itemToActivate;
+        [global::Quire.Mirror.MirrorStub]
         public PasteItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, string commandName, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> pasteItemsAtLocation) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -486,6 +584,22 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     public partial class ResizeItemCommand : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Size _oldSize;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Size _newSize;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Core.IWhiteboardItem _item;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Core.DragMode _dragMode;
+        [global::Quire.Mirror.MirrorStub]
+        private bool _isActiveItem;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _widthIsAuto;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _heightIsAuto;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Core.IResizeData _oldData;
+        [global::Quire.Mirror.MirrorStub]
         public ResizeItemCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize, bool widthIsAuto, bool heightIsAuto, global::Quire.Controls.Core.DragMode dragMode) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -493,6 +607,8 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void DoRedo(bool doAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+ResizeItemCommandWithSideEffects, Ptc.Controls.Whiteboard")]
@@ -505,6 +621,18 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+MoveItemsCommand, Ptc.Controls.Whiteboard")]
     public partial class MoveItemsCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _list;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _initialLocations;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _finalLocations;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Core.IWhiteboardItem[] _selectedItems;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _allowGrowthDownOrRight;
         [global::Quire.Mirror.MirrorStub]
         public MoveItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::Quire.Controls.Core.IWhiteboardItem item, bool allowGrowthDownOrRight, global::System.Windows.Point newLocation) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
@@ -522,6 +650,14 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
+        private bool CheckPotentialMove(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool CheckMovementWithGrowth(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool CheckMovementWithoutGrowth(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool MoveItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -538,6 +674,12 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     public partial class PushItemsDownCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand, global::Quire.Undo.IUndoableCommandWithSideEffects, global::Quire.Undo.IUndoableCommand
     {
         [global::Quire.Mirror.MirrorStub]
+        private int _numberOfLines;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveCommand;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.Vector _offset;
+        [global::Quire.Mirror.MirrorStub]
         public PushItemsDownCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel, int numberOfLines, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToMove) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override bool DoWithResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -550,6 +692,14 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+InsertSpaceCommand, Ptc.Controls.Whiteboard")]
     public partial class InsertSpaceCommand : global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardResizingCommand
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveCommand;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.Vector _offset;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Point _insertionPoint;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _pushInsertionPoint;
         [global::Quire.Mirror.MirrorStub]
         public InsertSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, bool pushInsertionPoint, params global::Quire.Controls.Core.IWhiteboardItem[] checkVerticalOnlyItems) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
@@ -566,6 +716,16 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
     public partial class DeleteSpaceCommand : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Direction _direction;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveCommand;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.Vector _offset;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly double _oldHeight;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.Point _insertionPoint;
+        [global::Quire.Mirror.MirrorStub]
         public DeleteSpaceCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, int numberOfLines, global::Quire.Direction direction) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -573,11 +733,15 @@ public partial class WhiteboardViewModel : global::Quire.Controls.Core.ViewModel
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private double LimitOffsetBasedOnMinimumHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+SeparateOverlappedItemsCommand, Ptc.Controls.Whiteboard")]
     public partial class SeparateOverlappedItemsCommand : global::Quire.Controls.Whiteboard.Commands.WhiteboardCommand
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Whiteboard.WhiteboardViewModel.MoveItemsCommand _moveItemsCommand;
         [global::Quire.Mirror.MirrorStub]
         public SeparateOverlappedItemsCommand(global::Quire.Controls.Whiteboard.IWhiteboardViewModel whiteboard, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension, bool allowGrowthDownOrRight = false, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager itemManager = default) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardViewModel), default(string)) { }
         [global::Quire.Mirror.MirrorStub]

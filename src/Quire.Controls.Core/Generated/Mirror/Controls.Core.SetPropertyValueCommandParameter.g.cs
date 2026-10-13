@@ -30,5 +30,7 @@ public partial class SetPropertyValueCommandParameter : global::System.Windows.F
     [global::Quire.Mirror.MirrorStub]
     public SetPropertyValueCommandParameter() { }
     [global::Quire.Mirror.MirrorStub]
+    private static object CoercePropertyName(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

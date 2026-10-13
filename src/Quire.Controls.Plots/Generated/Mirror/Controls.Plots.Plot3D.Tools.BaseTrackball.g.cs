@@ -12,6 +12,12 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.ViewModel.IHasCameraTransform _transformOwner;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper _trackingHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Matrix3D _previousTransform;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Media3D.MatrixTransform3D ScaleTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Media3D.Transform3D BaseTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -48,11 +54,23 @@ public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     public virtual void Detach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireMouseUp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireMouseWheel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void HandleMouseDown(global::System.Windows.Point rawLocation, global::System.Windows.Input.MouseButton mouseButton, bool useTimer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnMouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleMouseUp(global::System.Windows.Point rawLocation, global::System.Windows.Input.MouseButton mouseButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnMouseMove(object sender, global::System.Windows.Input.MouseEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void HandleMouseMove(global::System.Windows.Point rawLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnMouseWheel(object sender, global::System.Windows.Input.MouseWheelEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleMouseWheel(int ticks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -61,6 +79,8 @@ public abstract partial class BaseTrackball : global::Quire.Controls.Plots.Plot3
     protected void AddScale(double scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void SetScale(double scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsTrackingDifferentButton(global::System.Windows.Input.MouseButton button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateCurrentTrackingInfo(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

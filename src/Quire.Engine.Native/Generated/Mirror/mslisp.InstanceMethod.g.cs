@@ -12,6 +12,8 @@ namespace Quire.mslisp;
 internal partial class InstanceMethod : global::Quire.utl_mgd.FunctionBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_name;
+    [global::Quire.Mirror.MirrorStub]
     public InstanceMethod(string name) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

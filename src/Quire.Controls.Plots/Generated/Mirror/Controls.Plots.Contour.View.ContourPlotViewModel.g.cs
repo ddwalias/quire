@@ -12,6 +12,18 @@ namespace Quire.Controls.Plots.Contour.View;
 public sealed partial class ContourPlotViewModel : global::Quire.Controls.Plots.ViewModel.PlotViewModelBase<global::Quire.Controls.Plots.Contour.Model.ContourPlotModel>
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Contour.View.VisualDataCollection _contourVisualDataCollection;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _initialized;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.IColorMap _colorMap;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush[] _brushes;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect _clippingRect;
+    [global::Quire.Mirror.MirrorStub]
+    private double _opacity;
+    [global::Quire.Mirror.MirrorStub]
     public bool HasOriginPositioning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Contour.View.VisualDataCollection ContourVisualDataCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -36,9 +48,27 @@ public sealed partial class ContourPlotViewModel : global::Quire.Controls.Plots.
     [global::Quire.Mirror.MirrorStub]
     public ContourPlotViewModel() { }
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateContoursClippingRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VisualDataCollectionPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs propertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ZAxisViewSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void XorYAxisSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ValueToScreenChangedHandler(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void ModelPropertyChanged(string propertyName) => base.ModelPropertyChanged(propertyName);
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateAxesLimitsFromResults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Initialize(global::Quire.Controls.Plots.Presenter.IPlotEquation zExpression, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalTransformer, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalTransformer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateBrushes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateZAxisColorSamples() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BuildBrushes(global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.ContourPlotViewModel+PropertyNames, Ptc.Controls.Plots")]
     internal sealed partial class PropertyNames : global::Quire.Controls.Plots.ViewModel.PlotViewModelBase<global::Quire.Controls.Plots.Contour.Model.ContourPlotModel>.PropertyNames

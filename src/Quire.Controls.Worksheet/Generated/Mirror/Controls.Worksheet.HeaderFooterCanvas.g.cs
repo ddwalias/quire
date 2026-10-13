@@ -14,6 +14,8 @@ public partial class HeaderFooterCanvas : global::System.Windows.Controls.Canvas
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Worksheet.HeaderFooterItemsControl CommonItemsCanvas;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public HeaderFooterCanvas() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

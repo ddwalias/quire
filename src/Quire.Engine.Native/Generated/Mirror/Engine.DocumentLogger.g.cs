@@ -12,6 +12,32 @@ namespace Quire.Engine;
 public partial class DocumentLogger
 {
     [global::Quire.Mirror.MirrorStub]
+    private object m_nodes;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_file;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.StreamWriter m_writer;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_position;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_assertion_count;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_last_logged_output;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_open_count;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_initialized;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private static int s_logfile_count;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.utl_mgd.SafeMutex s_global_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private static string NewLogfileName() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.IO.StreamWriter TryAppend(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public DocumentLogger(object nds) { }
     [global::Quire.Mirror.MirrorStub]
     public void OpenLog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

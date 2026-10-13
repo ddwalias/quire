@@ -12,11 +12,17 @@ namespace Quire.EngNotebook.Automation;
 public partial class InputMatrixResult : global::Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private InputMatrixResult() { }
     [global::Quire.Mirror.MirrorStub]
     internal InputMatrixResult(global::Quire.EngNotebook.Automation.IMathcadPrimeInputMatrixResult mathcadPrimeInputMatrixResult) { }
     [global::Quire.Mirror.MirrorStub]

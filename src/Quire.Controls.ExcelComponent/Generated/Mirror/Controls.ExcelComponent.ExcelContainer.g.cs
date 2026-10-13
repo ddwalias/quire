@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent;
 public partial class ExcelContainer : global::Quire.Controls.ExcelComponent.View.OleContainerItem<global::Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel, global::Quire.Controls.ExcelComponent.Model.ExcelContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicExcelContainerModel, global::Quire.PersistentData.excelContainerType>, global::Quire.Controls.ExcelComponent.IExcelContainer, global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel global::Quire.Controls.ExcelComponent.IExcelContainer.ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> IsAsIconForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

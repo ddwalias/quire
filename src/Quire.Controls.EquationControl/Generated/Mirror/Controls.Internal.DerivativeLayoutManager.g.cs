@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 public partial class DerivativeLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double EXPRESSION_LEFT_PADDING = 2d;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect OperatorSymbolRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect VariableOperandRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

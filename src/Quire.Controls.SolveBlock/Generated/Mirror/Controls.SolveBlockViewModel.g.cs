@@ -12,11 +12,17 @@ namespace Quire.Controls;
 internal partial class SolveBlockViewModel : global::Quire.Controls.Mathboard.AggregateMathboardViewModel, global::Quire.Controls.ISolveBlockViewModel, global::Quire.Controls.Mathboard.IAggregateMathboardViewModel, global::Quire.Controls.Mathboard.IMathboardViewModel, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.IDisposable, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ISolveBlockModel _sbModel;
+    [global::Quire.Mirror.MirrorStub]
     internal SolveBlockViewModel(global::Quire.Controls.ISolveBlockModel mockModel, global::Quire.Controls.Core.IAlignmentGrid stubGrid) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockViewModel(global::Quire.Controls.ISolveBlockModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
+    private SolveBlockViewModel(global::Quire.Controls.Mathboard.AggregateMathboardViewModel original) : base(default(global::Quire.Controls.Mathboard.AggregateMathboardViewModel)) { }
+    [global::Quire.Mirror.MirrorStub]
     protected override void SetupCommandBindings() => base.SetupCommandBindings();
+    [global::Quire.Mirror.MirrorStub]
+    private void PreviewCanInsertOperator(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
     [global::Quire.Mirror.MirrorStub]

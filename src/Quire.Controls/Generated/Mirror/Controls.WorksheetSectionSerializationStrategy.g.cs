@@ -12,6 +12,10 @@ namespace Quire.Controls;
 internal partial class WorksheetSectionSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentData.IWorksheetSectionPersistentData _worksheetSectionData;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _worksheetSectionRegionDataCreator;
+    [global::Quire.Mirror.MirrorStub]
     public WorksheetSectionSerializationStrategy(global::Quire.PersistentData.IWorksheetSectionPersistentData sectionData, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> worksheetSectionRegionDataCreator) { }
     [global::Quire.Mirror.MirrorStub]
     public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

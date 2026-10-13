@@ -12,7 +12,13 @@ namespace Quire.gen;
 internal partial class DynamicUpdateFunction : global::Quire.gen.DynamicMethodFunction
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type[] m_update_params;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe DynamicUpdateFunction(global::Quire.gen.Closure clo) : base(default(void*), default(global::Quire.gen.Closure)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void EmitReturn() => base.EmitReturn();
+    [global::Quire.Mirror.MirrorStub]
+    private void LoadExportedVariables(global::Quire.gen.MetaObj[] exports) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LoadExportedVariable(global::Quire.gen.MetaObj ev, int ord) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

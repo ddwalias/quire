@@ -12,6 +12,12 @@ namespace Quire.Controls.Include;
 public partial class ErrorWarningHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetControl _control;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.ErrorsList _errorsList;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.WarningsList _warningsList;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.List<global::Quire.Controls.Core.NodeMessageAdorner> AdornersList;
     [global::Quire.Mirror.MirrorStub]
     public ErrorWarningHandler(global::Quire.Controls.Include.IncludeWorksheetControl control) { }
@@ -20,6 +26,22 @@ public partial class ErrorWarningHandler
     [global::Quire.Mirror.MirrorStub]
     public void ShowWarnings(string path, global::Quire.Controls.Include.WarningsList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void RemoveAdorners(global::Quire.Controls.Core.NodeMessageAdornerType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveNodeMessageAdorners(global::Quire.Controls.Core.NodeMessageAdornerType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AddAdorners(global::Quire.Controls.Core.NodeMessageAdornerType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddErrorAdorners() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ElementIsLoadedAddErrorAdorners(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetErrorFrame(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddWarningAdorners() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ElementIsLoadedAddWarningAdorners(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Include.WarningsList GetMergedWarningsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Include.ErrorsList GetMergedErrorsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -27,6 +49,10 @@ public partial class ErrorWarningHandler
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Include.ErrorWarningHandler+ExclamationPointAdorner, Ptc.Controls.Include")]
     public partial class ExclamationPointAdorner : global::System.Windows.Documents.Adorner
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Media.Pen _pen;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly double _height;
         [global::Quire.Mirror.MirrorStub]
         public ExclamationPointAdorner(global::System.Windows.FrameworkElement element) : base(default(global::System.Windows.UIElement)) { }
         [global::Quire.Mirror.MirrorStub]

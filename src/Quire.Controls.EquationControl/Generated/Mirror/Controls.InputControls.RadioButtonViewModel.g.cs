@@ -12,6 +12,28 @@ namespace Quire.Controls.InputControls;
 public partial class RadioButtonViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs, global::Quire.Controls.InputControls.IInputControlViewModelWithEditor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FlowDirection _flowDirection;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isChecked;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.PropertyInfo _backgroundColor;
+    [global::Quire.Mirror.MirrorStub]
+    private string _imagePath;
+    [global::Quire.Mirror.MirrorStub]
+    private string _groupID;
+    [global::Quire.Mirror.MirrorStub]
+    private double _selectedValue;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<string> _dataItems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> _dataSourceItems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Orientation _orientation;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.InputControls.RadioButtonEventAggregator _radioButtonEventAggregator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.RadioButtonModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool IsDataSourceChanged { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double SelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -16,5 +16,9 @@ public static partial class CustomScriptServiceFunctions
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.Run ConvertScriptLevelInternal(global::System.Windows.Documents.Run sourceRun, global::System.Type targetType, double reviveFontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void CopyLocalFormattingValues<T>(T sourceObj, T targetObj) where T : global::System.Windows.Documents.TextElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.Run SplitRun(global::System.Windows.Documents.TextPointer position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static T SplitRun<T>(global::System.Windows.Documents.TextPointer position) where T : global::System.Windows.Documents.Run => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

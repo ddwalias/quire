@@ -12,6 +12,56 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationPageModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool showpageframeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showheaderframeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showfooterframeField;
+    [global::Quire.Mirror.MirrorStub]
+    private float pagewidthField;
+    [global::Quire.Mirror.MirrorStub]
+    private float pageheightField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationPageModelPapercode papercodeField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationPageModelGridsize gridsizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationPageModelOrientation orientationField;
+    [global::Quire.Mirror.MirrorStub]
+    private string pagemarginField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationPageModelMargintype margintypeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showgridField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool issolveblocklabelvisibleField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showhfgridField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool useMajorGridLinesField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool useHFMajorGridLinesField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool printsinglepagewidthField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.BackgroundType plotbackgroundtypeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showinputoutputtagField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool oleobjectpreserveaspectratioField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool spellcheckenabledField;
+    [global::Quire.Mirror.MirrorStub]
+    private string startingpagenumberField;
+    [global::Quire.Mirror.MirrorStub]
+    private string totalpagesoffsetField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool isfirstpageheaderfooterdifferentField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Thickness> _pageMargin;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.ThicknessConverter _thicknessConverter;
+    [global::Quire.Mirror.MirrorStub]
     public bool showpageframe { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool showheaderframe { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

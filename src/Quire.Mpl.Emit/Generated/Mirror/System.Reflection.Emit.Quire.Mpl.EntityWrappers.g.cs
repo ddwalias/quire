@@ -121,6 +121,8 @@ internal partial class EntityWrappers
         [global::Quire.Mirror.MirrorStub]
         internal int parentToken;
         [global::Quire.Mirror.MirrorStub]
+        private int hashCode;
+        [global::Quire.Mirror.MirrorStub]
         public LocalBuilderReferenceWrapper(global::System.Reflection.Emit.Quire.Mpl.LocalBuilder LocalBuilder) { }
         [global::Quire.Mirror.MirrorStub]
         public override bool Equals(object obj) => base.Equals(obj);

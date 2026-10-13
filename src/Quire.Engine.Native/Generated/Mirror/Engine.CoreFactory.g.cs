@@ -12,7 +12,25 @@ namespace Quire.Engine;
 public partial class CoreFactory : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Names* m_names;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Engine.Unmanaged.label_root* m_label_root;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder m_builder;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Engine.ModuleEnv* m_moduleenv;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Interpreter* m_translator;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_has_userefis;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe bool LoadUserEFIs(char* directory) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public CoreFactory() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _bangCoreFactory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeCoreFactory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.Action NewAction(object o, int engine_id, bool bAutoEvalRangeLoops, string symbolic_engine, bool bChainErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

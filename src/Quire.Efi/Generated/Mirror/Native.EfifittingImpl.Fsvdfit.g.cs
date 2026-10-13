@@ -12,6 +12,24 @@ namespace Quire.Native.EfifittingImpl;
 internal partial class Fsvdfit
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_arg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.F<object, object> m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private Fsvdfit(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim @in, global::Quire.Mcd.MatDim @out) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Fsvdfit(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim @in, global::Quire.Mcd.Dim @out) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Fsvdfit(global::Quire.Mpl.Run.Function f) { }
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* compute(double x, double* afunc, int ma) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* compute_Real(double x, double* afunc, int ma) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* compute_Rvector(double x, double* afunc, int ma) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* compute_Lvector(double x, double* afunc, int ma) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfifittingImpl.svdfit_delegate make_delegate(global::Quire.Mpl.Run.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfifittingImpl.svdfit_delegate make_Real_delegate(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim @in, global::Quire.Mcd.Dim @out) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -19,6 +37,4 @@ internal partial class Fsvdfit
     public static global::Quire.Native.EfifittingImpl.svdfit_delegate make_Rvector_delegate(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim @in, global::Quire.Mcd.Dim @out) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfifittingImpl.svdfit_delegate make_Lvector_delegate(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.Dim @in, global::Quire.Mcd.MatDim @out) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private Fsvdfit() { }
 }

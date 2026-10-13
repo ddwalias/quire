@@ -12,6 +12,18 @@ namespace Quire.Controls.Internal;
 internal partial class VisualProgramNode : global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor, global::Quire.EquationEditor.View.IVisualUnaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double VERTICAL_PAD = 4d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VerticalFence _operator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VerticalFence _operatorRightMinorPart;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasMinorFence;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMatrixContents _operandsPanel;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

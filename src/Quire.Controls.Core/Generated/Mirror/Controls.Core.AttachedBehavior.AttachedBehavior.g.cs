@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.AttachedBehavior;
 public static partial class AttachedBehavior
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CanBeActivatedProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ParentPropertyValueKeepersProperty;
@@ -47,4 +49,12 @@ public static partial class AttachedBehavior
     public static global::Quire.Controls.Core.AttachedBehavior.MessagesDecorator GetMessagesDecorator(global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetMessagesDecorator(global::System.Windows.FrameworkElement elem, global::Quire.Controls.Core.AttachedBehavior.MessagesDecorator decorator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceAttachedBehavior<TAttachedBehavior, TValueType>(global::System.Windows.DependencyObject dObj, object basevalue) where TAttachedBehavior : global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior<TValueType>, new() where TValueType : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceBooleanToAttachedBehavior<TAttachedBehavior>(global::System.Windows.DependencyObject dObj, object basevalue) where TAttachedBehavior : class, global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior, new() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceItemToCollection<TItem, TCollection>(global::System.Windows.DependencyObject dObj, object basevalue) where TItem : class where TCollection : class, global::System.Collections.Generic.ICollection<TItem>, new() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnAttachedBehaviorValueChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

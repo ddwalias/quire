@@ -12,6 +12,10 @@ namespace Quire;
 public abstract partial class ReflectionVisitor : global::Quire.IReflectionVisitor, global::Quire.IVisitor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodInfo _lastMethod;
+    [global::Quire.Mirror.MirrorStub]
+    private object _lastVisitable;
+    [global::Quire.Mirror.MirrorStub]
     public void Visit(object visitable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected ReflectionVisitor() { }

@@ -152,13 +152,21 @@ their assembly. They have to exist: Mathcad's equivalents are native or BAML cod
 | `src/*/Generated/Mirror/*.g.cs` | 4,652 files of `partial` declarations: one per top-level type, nested types inside. |
 | `src/*/Generated/Mirror.props` | Per project: project and package references, WPF/WinForms/unsafe settings and `InternalsVisibleTo`, all derived from Mathcad's own references. |
 | `docs/mirror/manifest/*.txt` | The mirrored shape of each project, one line per type and member. |
-| `docs/mirror/coverage.md` | Mirrored types, members and stubs per project: 5,385 types, 43,763 members, 42,896 stubs. The non-stub 2% are hand-written members, including Quire-only ones. |
+| `docs/mirror/coverage.md` | Mirrored types, members and stubs per project: 5,385 types, 57,774 members, 56,114 stubs. The non-stub 3% are hand-written members, including Quire-only ones. |
 | `docs/mirror/notes.txt` | Every place the generated C# differs from Mathcad's metadata, and why. |
 | `docs/mirror/native/` | The §1.3 inventory: 1,389 exports from 11 native DLLs (47 exported classes), 464 Lisp definitions, 712 Prolog predicates, 86 Axiom packages with 2,497 operations, and the `MCADINCL.H` API. Names and signatures only. |
 | `tests/Quire.Mirror.Tests` | Fails when a manifest line changes or disappears, or when an in-scope Mathcad type has no Quire type. It guards against drift; fidelity to Mathcad is the generator's job, and `notes.txt` lists every known difference. |
 
 The reader was cross-checked with REA: for `Ptc.Controls.SolveBlock.dll` the method counts of all 23 named types
 match REA's managed-member inventory, and for `mshex.dll` the 380 exports match exactly.
+
+### Which members are mirrored
+
+Every member Mathcad declares is mirrored, private ones included: fields, constructors, methods, properties and events.
+Only compiler-generated members are left out, because their names come from a compiler rather than from Mathcad's
+design. These are lambdas, local functions, iterator and async state machines, auto-property and event backing
+fields, and the Mpl compiler's `$` gensyms. C# has no private virtual members, so private `newslot` virtual methods
+are declared non-virtual.
 
 ### How stubs behave
 

@@ -12,6 +12,18 @@ namespace Quire.Controls.InputControls;
 internal partial class RadioButtonModel : global::Quire.Controls.InputControls.InputScriptableControlModelWithInputs, global::Quire.Controls.InputControls.IRadioButtonPropertiesEditorModel, global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _name;
+    [global::Quire.Mirror.MirrorStub]
+    private string _groupID;
+    [global::Quire.Mirror.MirrorStub]
+    private string _buttonID;
+    [global::Quire.Mirror.MirrorStub]
+    private string _imagePath;
+    [global::Quire.Mirror.MirrorStub]
+    private string _itemsCache;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.RadioButtonScriptableControlData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override object SelectedValue { get => base.SelectedValue; }
     [global::Quire.Mirror.MirrorStub]
     public double SelectedIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

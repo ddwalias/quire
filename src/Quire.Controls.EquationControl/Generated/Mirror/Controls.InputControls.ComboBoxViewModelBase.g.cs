@@ -22,6 +22,8 @@ public abstract partial class ComboBoxViewModelBase : global::Quire.Controls.Cor
     private partial class ComboBoxTableModelAdapter : global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.InputControls.IComboBoxTableModel _comboBoxTableModel;
+        [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IList<string> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IList<global::System.ValueTuple<string, global::System.Collections.Generic.IList<string>>> GroupByRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

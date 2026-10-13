@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class SimpleOleCalculatable : global::Quire.Calculation.Core.Support.SimpleCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly bool _isFragment;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Pair<bool, bool> IsFragment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

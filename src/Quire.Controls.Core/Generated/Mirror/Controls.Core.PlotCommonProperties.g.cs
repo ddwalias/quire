@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public partial class PlotCommonProperties : global::System.Windows.DependencyObject
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowAxisExpressionsProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowTicksProperty;

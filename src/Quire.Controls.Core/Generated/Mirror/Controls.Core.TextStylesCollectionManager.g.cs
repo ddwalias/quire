@@ -12,6 +12,12 @@ namespace Quire.Controls.Core;
 public partial class TextStylesCollectionManager : global::Quire.Controls.Core.ITextStylesManager, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.TextStyleData> _stylesCollection;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.TextStyleChangedHandler _textStyleChangedHandler;
+    [global::Quire.Mirror.MirrorStub]
+    private const string StyleResourceKey = "Style.";
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.TextStyleData> StylesCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,7 +32,11 @@ public partial class TextStylesCollectionManager : global::Quire.Controls.Core.I
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.Dictionary<string, global::Quire.ITextStyleObject> ToTextStyleDictionary(bool basedOnValues = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public string CreateAndAddStyle(string styleName, string styleKey, global::System.Windows.Style style, string basedOnKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string RenameStyleNameToCounter(string styleName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void LoadWorkSheetStyles(global::System.Collections.Generic.IReadOnlyDictionary<string, global::Quire.ITextStyleObject> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -49,6 +59,10 @@ public partial class TextStylesCollectionManager : global::Quire.Controls.Core.I
     public void RemoveStyle(global::Quire.TextStyleData textStyleData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTextStyleData(string name, string key, global::System.Windows.Style style, string basedOnKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateTextStyleDataBasedOn(global::Quire.TextStyleData updatedTextStyleData, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void KeyIsBasedOnKey(string styleKey, global::Quire.TextStyleData textStyleData, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TextStyleData GetTextStyleDataByName(string styleName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

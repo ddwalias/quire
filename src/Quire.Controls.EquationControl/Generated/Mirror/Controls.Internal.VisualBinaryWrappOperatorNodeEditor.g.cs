@@ -12,11 +12,15 @@ namespace Quire.Controls.Internal;
 internal partial class VisualBinaryWrappOperatorNodeEditor : global::Quire.Controls.Internal.VisualBinaryOperatorNodeEditor, global::Quire.EquationEditor.View.IVisualMultiLineWrappingBinaryOperatorNodeEditor, global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorNodeEditor, global::Quire.EquationEditor.View.IVisualBinaryOperatorNodeEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMultiLineWrappingBinaryOperatorNode _wrappingOperatorNode;
+    [global::Quire.Mirror.MirrorStub]
     public VisualBinaryWrappOperatorNodeEditor(global::Quire.Controls.Internal.VisualMultiLineWrappingBinaryOperatorNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualBinaryOperatorNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void ShowOperatorHighlight(bool show) => base.ShowOperatorHighlight(show);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawSymbolGeometry(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.UIElement signElement, global::System.Windows.Media.Geometry signGeometry) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnOperatorSelectedChanged(bool selected) => base.OnOperatorSelectedChanged(selected);
 }

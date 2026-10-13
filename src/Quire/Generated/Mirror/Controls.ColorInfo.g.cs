@@ -12,6 +12,20 @@ namespace Quire.Controls;
 public partial struct ColorInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double MaxByteValueAsDouble = 255d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double MaxDegrees = 360d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double Degrees60 = 60d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double Degrees120 = 120d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double Degrees240 = 240d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double MaxPresent = 100d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double Tolerance = 1E-15d;
+    [global::Quire.Mirror.MirrorStub]
     public double Red;
     [global::Quire.Mirror.MirrorStub]
     public double Green;
@@ -32,5 +46,9 @@ public partial struct ColorInfo
     [global::Quire.Mirror.MirrorStub]
     public ColorInfo(double hue, double saturation, float lum) { }
     [global::Quire.Mirror.MirrorStub]
+    private static void RgbToHsl(double red, double green, double blue, out double hue, out double sat, out float lum) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HslToRgb(double hue, double sat, double lum, out double red, out double green, out double blue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

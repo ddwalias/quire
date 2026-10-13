@@ -12,6 +12,8 @@ namespace Quire.Controls;
 public partial class CalculationOptions : global::System.Windows.DependencyObject
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StrictComparisionsProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StringsIndexedFromOriginProperty;
@@ -27,6 +29,8 @@ public partial class CalculationOptions : global::System.Windows.DependencyObjec
     public static readonly global::System.Windows.DependencyProperty SymbolicResultMaximumSizeProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty BinOctHexModeProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _restrictedMode;
     [global::Quire.Mirror.MirrorStub]
     public bool StrictComparisions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -53,6 +57,10 @@ public partial class CalculationOptions : global::System.Windows.DependencyObjec
     public event global::Quire.Delegate2<string, object> CalculationOptionChanged;
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate2<string, object> BinOctHexModeOptionChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleOptionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e, string optionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleBinOctHexModeOptionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e, string optionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public CalculationOptions() { }
 }

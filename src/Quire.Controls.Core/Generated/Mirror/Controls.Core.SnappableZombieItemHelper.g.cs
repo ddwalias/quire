@@ -12,13 +12,17 @@ namespace Quire.Controls.Core;
 public partial class SnappableZombieItemHelper : global::Quire.Controls.Core.SnappableItemBaseHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IZombie _zombie;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.EventHandler _onLayoutUpdated;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.SnappableZombieItemHelper Create<T>(T item, bool isPageDescendant) where T : global::System.Windows.UIElement, global::Quire.Controls.Core.IZombie => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private SnappableZombieItemHelper(global::Quire.Controls.Core.SnappableZombieItemHelper.IZombieElement item, bool isPageDescendant) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Dispose() => base.Dispose();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Nullable<global::System.Windows.Point> RecalculateOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private SnappableZombieItemHelper() : base(default(global::System.Windows.UIElement), default(bool)) { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SnappableZombieItemHelper+IZombieElement, Ptc.Controls.Core")]
     private partial interface IZombieElement
@@ -32,6 +36,8 @@ public partial class SnappableZombieItemHelper : global::Quire.Controls.Core.Sna
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.SnappableZombieItemHelper+ZombieElement`1, Ptc.Controls.Core")]
     private partial class ZombieElement<T> : global::Quire.Controls.Core.SnappableZombieItemHelper.IZombieElement where T : global::System.Windows.UIElement, global::Quire.Controls.Core.IZombie
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly T _item;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Controls.Core.IZombie AsZombie { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

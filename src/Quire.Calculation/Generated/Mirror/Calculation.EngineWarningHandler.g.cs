@@ -12,7 +12,13 @@ namespace Quire.Calculation;
 public partial class EngineWarningHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> _handleToICalculatableMap;
+    [global::Quire.Mirror.MirrorStub]
     public EngineWarningHandler(global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineRedefInfo> HandleWarnings(global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineRedefInfo HandleWarning(global::Quire.Engine.RedefInfo redefInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Calculation.Core.EngineDefType ParseTypeString(string engineTypeStr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

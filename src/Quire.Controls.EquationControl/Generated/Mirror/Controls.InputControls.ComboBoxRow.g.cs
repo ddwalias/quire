@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 public abstract partial class ComboBoxRow : global::Quire.Controls.InputControls.IComboBoxRow
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.InputControls.CellData> _cells;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.InputControls.ICellData FirstCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,10 @@ namespace Quire;
 public partial class TwoParametersObject
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly object _parameterOne;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly object _parameterTwo;
+    [global::Quire.Mirror.MirrorStub]
     public object ParameterOne { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object ParameterTwo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

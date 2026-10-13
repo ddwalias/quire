@@ -16,6 +16,12 @@ public abstract partial class WireBase : global::System.Windows.Media.Media3D.Mo
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Media3D.Matrix3D matxScreenToVisual;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.RotateTransform rotate;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _needRecalculation;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey LineCollectionKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LineCollectionProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ColorProperty;
@@ -52,6 +58,10 @@ public abstract partial class WireBase : global::System.Windows.Media.Media3D.Mo
     [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void ThicknessChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void RecalcPropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected static void PropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void PropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -62,7 +72,15 @@ public abstract partial class WireBase : global::System.Windows.Media.Media3D.Mo
     [global::Quire.Mirror.MirrorStub]
     protected virtual void Recalculate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void DoArrow(global::System.Windows.Media.Media3D.Point3D pt1, global::System.Windows.Media.Media3D.Point3D pt2, global::System.Windows.Media.Media3D.Point3DCollection points, global::System.Windows.Media.Int32Collection indices, ref int indicesBase) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DoLine(global::System.Windows.Media.Media3D.Point3D pt1, global::System.Windows.Media.Media3D.Point3D pt2, global::System.Windows.Media.Media3D.Point3DCollection points, global::System.Windows.Media.Int32Collection indices, ref int indicesBase) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Media3D.Point3D Widen(global::System.Windows.Media.Media3D.Point3D pointIn, global::System.Windows.Vector delta) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddRounding(global::System.Windows.Media.Media3D.Point3D ptIn, global::System.Windows.Vector delta, global::System.Windows.Media.Media3D.Point3DCollection points, global::System.Windows.Media.Int32Collection indices, ref int indicesCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D CalculatePoint(global::System.Windows.Media.Media3D.Point3D ptIn, global::System.Windows.Vector delta, double angle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }

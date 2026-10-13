@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class zAxis : global::Quire.PersistentDataObjects.axisBaseType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.xyDomainType zDomainField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.xyDomainType zDomain { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public zAxis() { }

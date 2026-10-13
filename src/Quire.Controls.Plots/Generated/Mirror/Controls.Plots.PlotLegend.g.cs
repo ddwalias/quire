@@ -12,9 +12,17 @@ namespace Quire.Controls.Plots;
 public partial class PlotLegend : global::Quire.Controls.Plots.PlotItem, global::Quire.Controls.Plots.Presenter.IPlotLegend, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string DefaultTraceLabelFormat = "Trace {0}";
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PlotTypeProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<double> _legendWidthChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<double> _pendingLegendWidth;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.PlotLegendContents PlotLegendGrid;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.PlotLegendViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -38,11 +46,25 @@ public partial class PlotLegend : global::Quire.Controls.Plots.PlotItem, global:
     [global::Quire.Mirror.MirrorStub]
     internal void SetLegendWidthWhenLayoutReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void PlotLegendSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PlotLegend(global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.ViewModel.PlotLegendViewModel plotLegendViewModel) { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void PlotLegendWidthChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetMinMaxWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetMinMaxWidth(double previousWidth, double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotLegendItem AddNewItemToPlotLegend(int index, global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void PlotLegendItemSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotLegendItem RemoveTraceFromPlotLegend(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IPlotLegendItem FindByTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateDefaultLegendLabelsAfterIndex(int startIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

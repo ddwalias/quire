@@ -12,6 +12,12 @@ namespace Quire.Wpf;
 public partial class CachedDoubleStringConverter : global::System.Windows.Data.IValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private string strCache;
+    [global::Quire.Mirror.MirrorStub]
+    private double doubleCache;
+    [global::Quire.Mirror.MirrorStub]
+    private const double ScientificNotationThreshold = 0.0001d;
+    [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

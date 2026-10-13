@@ -12,6 +12,12 @@ namespace Quire.Controls.Core;
 public static partial class WorksheetPropertyNames
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfWorksheetProperties;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] _names;
+    [global::Quire.Mirror.MirrorStub]
     public const string PageSizeValue = "PageSizeValue";
     [global::Quire.Mirror.MirrorStub]
     public const string PageMargin = "PageMargin";

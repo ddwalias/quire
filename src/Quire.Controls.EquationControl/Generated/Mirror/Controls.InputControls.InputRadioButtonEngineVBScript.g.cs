@@ -12,6 +12,12 @@ namespace Quire.Controls.InputControls;
 internal partial class InputRadioButtonEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _scriptItemsAsString;
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableRadioButton.VbRadioButtonScriptInternalClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableRadioButton.VbRadioButtonDefaultScript.vbs";
+    [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_SelectionChange()\r\n";
     [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;

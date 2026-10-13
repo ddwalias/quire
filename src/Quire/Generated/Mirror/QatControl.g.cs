@@ -22,6 +22,8 @@ public partial class QatControl : global::Fluent.QuickAccessToolBar, global::Sys
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton Part_Qat_Redo;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public QatControl() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

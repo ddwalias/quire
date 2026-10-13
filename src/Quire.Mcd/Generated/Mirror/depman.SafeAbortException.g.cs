@@ -12,7 +12,7 @@ namespace Quire.depman;
 public partial class SafeAbortException : global::Quire.depman.DepException
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.depman.SafeAbortException Instance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private SafeAbortException() { }
+    [global::Quire.Mirror.MirrorStub]
+    public static global::Quire.depman.SafeAbortException Instance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

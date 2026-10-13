@@ -40,7 +40,33 @@ public partial class MathFunctionsRibbonBar : global::Fluent.RibbonGroupBox, glo
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton allFunctionsDropdown;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathFunctionsRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void BesselFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CurveFittingFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DataAnalysisFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DesignOfExperimentsFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DifferentialEquationsFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FileAccessFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ImageProcessingFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ProbabilityFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SignalProcessingFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SolvingFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StatisticsFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VectorAndMatrixFunctions(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,10 @@ namespace Quire;
 public partial class CustomMarginsDialog : global::Quire.Wpf.WindowLocatedRelativelyToPositionProvider, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.CustomMarginsViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.SpiritMainWindow _ownerWindow;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox LeftMarginTextBox;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox RightMarginTextBox;
@@ -20,15 +24,21 @@ public partial class CustomMarginsDialog : global::Quire.Wpf.WindowLocatedRelati
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox BottomMarginTextBox;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Thickness NewPageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private CustomMarginsDialog(global::Quire.SpiritMainWindow owner, global::Quire.Controls.Core.WorksheetPageLayout currentPageLayout, global::Quire.IPositionProvider positionProvider) { }
+    [global::Quire.Mirror.MirrorStub]
     public static void ShowDialog(global::Quire.SpiritMainWindow owner, global::System.Windows.FrameworkElement positionProvider, global::Quire.Controls.Core.WorksheetPageLayout pageLayout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MarginTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OkButton_Click(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private CustomMarginsDialog() { }
 }

@@ -12,6 +12,28 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class PlotLegendResizeCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.PlotLegend _plotLegend;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _maxWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _minWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _maxItemWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _width;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _minHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMaxWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMinWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMaxListWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMinHeight;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public PlotLegendResizeCommand(global::Quire.Controls.Plots.PlotLegend plotLegend) { }

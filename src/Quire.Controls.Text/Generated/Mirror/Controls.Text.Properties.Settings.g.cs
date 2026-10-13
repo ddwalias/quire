@@ -12,6 +12,8 @@ namespace Quire.Controls.Text.Properties;
 internal sealed partial class Settings : global::Quire.ApplicationSettingsSafe
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Text.Properties.Settings defaultInstance;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Text.Properties.Settings Default { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DictionaryPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

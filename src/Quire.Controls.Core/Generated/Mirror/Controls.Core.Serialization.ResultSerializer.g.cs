@@ -12,17 +12,93 @@ namespace Quire.Controls.Core.Serialization;
 public partial class ResultSerializer : global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string ErrorId = "error-id";
+    [global::Quire.Mirror.MirrorStub]
+    private const string NodeHandleAttr = "error-node-handle";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Argument = "errorArgument";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResourceStringElement = "resource-string";
+    [global::Quire.Mirror.MirrorStub]
+    private const string OriginalEngineErrorIdAttr = "previous-error-id";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ErrorCodeElem = "errorCode";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResultData = "resultData";
+    [global::Quire.Mirror.MirrorStub]
     public const string Result = "result";
     [global::Quire.Mirror.MirrorStub]
     public const string Trace2dResult = "Trace2dResult";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SymbolicResult = "symResult";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CalculationStatusAttr = "calculation-status";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResultIdAttr = "result-id";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResultTagAttr = "tag";
+    [global::Quire.Mirror.MirrorStub]
+    private const string EngineErrorElem = "engineError";
+    [global::Quire.Mirror.MirrorStub]
+    private const string EngineErrorsElem = "engineErrors";
+    [global::Quire.Mirror.MirrorStub]
+    private const string WarningsElem = "Warnings";
+    [global::Quire.Mirror.MirrorStub]
+    private const string WarningElem = "Warning";
+    [global::Quire.Mirror.MirrorStub]
+    private const string NodeId = "nodeId";
+    [global::Quire.Mirror.MirrorStub]
+    private const string OldType = "oldType";
+    [global::Quire.Mirror.MirrorStub]
+    private const string OldLocation = "oldLocation";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Calculation.Core.XmcdToIResultNodeTransform _xmcdToResultNodeTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.EngineError> _errorMap;
+    [global::Quire.Mirror.MirrorStub]
+    private int _nextKey;
+    [global::Quire.Mirror.MirrorStub]
+    private void AddError(global::Quire.Calculation.Core.EngineError error, int id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int AddError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError FindError(int id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int FindError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.Linq.XElement xElement, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void AddResultToElement(global::Quire.Calculation.Core.IResultNode node, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteEngineErrors(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineError> errors, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteEngineWarnings(global::Quire.Calculation.Core.EngineRedefInfo[] resultWarnings, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteWarning(global::Quire.Calculation.Core.EngineRedefInfo warningRedefInfo, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteEngineError(global::Quire.Calculation.Core.EngineError error, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void WriteElement(string name, string valueString, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void RemoveNsFromChildren(global::System.Xml.Linq.XElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.Linq.XElement xElement, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.EngineRedefInfo> ReadEngineWarnings(global::System.Xml.Linq.XContainer element, int resultId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineRedefInfo ReadWarning(global::System.Xml.Linq.XElement warningXElement, int resultId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineErrorCollection ReadEngineErrors(global::System.Xml.Linq.XContainer element, int resultId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError ReadEngineError(global::System.Xml.Linq.XElement element, int resultId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ReadElement(global::System.Xml.Linq.XContainer errorElement, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ReadXAttribute(global::System.Xml.Linq.XElement errorElement, string attributeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ResultSerializer() { }
 }

@@ -12,6 +12,14 @@ namespace Quire.Controls.Plots.Model;
 internal partial class ImageCreator : global::Quire.Controls.Plots.Model.IStyleOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private double[] _hitsArray;
+    [global::Quire.Mirror.MirrorStub]
+    private double _maxPixelCount;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _styleChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Model.IMapper _densityToRGBAMap;
+    [global::Quire.Mirror.MirrorStub]
     public bool UpdateNeeded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint Alpha { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +43,12 @@ internal partial class ImageCreator : global::Quire.Controls.Plots.Model.IStyleO
     public uint[] CreateRgba(global::System.Windows.Media.PointCollection dataPoints, global::System.Windows.Rect dataRange, global::System.Windows.Int32Rect viewPortRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public uint[] UpdateRgba() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool BuildHitsArray(global::System.Windows.Media.PointCollection points, global::System.Windows.Rect axesBounds, global::System.Windows.Int32Rect imageBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int SqueezeToBounds(int min, int max, int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NotifyStyleChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.ImageCreator+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

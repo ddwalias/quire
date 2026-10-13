@@ -12,6 +12,8 @@ namespace Quire.Controls.CollapsibleArea;
 public partial class AreaProtectionDictionary : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public AreaProtectionDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

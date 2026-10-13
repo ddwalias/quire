@@ -16,6 +16,8 @@ public partial class PlotDragger : global::Quire.Controls.Core.CommonDragger, gl
     [global::Quire.Mirror.MirrorStub]
     public PlotDragger(global::Quire.Controls.Plots.PlotControl container, global::System.Windows.Point startPosition, global::Quire.Controls.Core.DragMode mode, global::System.Windows.UIElement elementToDrag, bool automation) : base(default(global::System.Windows.FrameworkElement), default(global::System.Windows.Point), default(bool), default(global::Quire.Controls.Core.DragMode), default(global::System.Windows.UIElement[])) { }
     [global::Quire.Mirror.MirrorStub]
+    private void ResizeRightMode(global::System.Windows.Point endPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point ResizeBy(global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ResizeEnd(global::System.Windows.Point currentPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

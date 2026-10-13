@@ -12,6 +12,18 @@ namespace Quire.PersistentDataObjects;
 public partial class matrix : global::Quire.PersistentDataObjects.exprElementType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.matrixDisplay displayField;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] itemsField;
+    [global::Quire.Mirror.MirrorStub]
+    private string rowsField;
+    [global::Quire.Mirror.MirrorStub]
+    private string colsField;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
+    [global::Quire.Mirror.MirrorStub]
     public const string RootAttributeName = "matrix";
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.matrixDisplay display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

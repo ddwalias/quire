@@ -22,6 +22,16 @@ public static partial class MsiHelper
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Guid MathcadCurrentReleaseProductCode;
     [global::Quire.Mirror.MirrorStub]
+    private const int ERROR_SUCCESS = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int ERROR_MORE_DATA = 234;
+    [global::Quire.Mirror.MirrorStub]
+    private static uint MsiEnumRelatedProducts(string lpUpgradeCode, uint dwReserved, uint iProductIndex, global::System.Text.StringBuilder lpProductBuf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static uint MsiGetProductInfo(string szProduct, string szProperty, global::System.Text.StringBuilder lpValueBuf, ref int pcchValueBuf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GuidToString(global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<global::System.Guid> EnumRelatedProducts(global::System.Guid upgradeCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetProductInfo(global::System.Guid productCode, global::Quire.MsiHelper.InstallProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

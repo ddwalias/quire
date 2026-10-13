@@ -14,6 +14,10 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.Dictionary<global::Quire.TableCoordinate, TItem> _itemMap;
     [global::Quire.Mirror.MirrorStub]
+    private TItem _emptyPosition;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.EqualityComparer<TItem> _itemEqualityComparer;
+    [global::Quire.Mirror.MirrorStub]
     public TItem EmptyPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int PopulatedCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -31,6 +35,10 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
     public TItem this[global::Quire.TableCoordinate position] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Matrices.SparseMatrix<TItem>.SparseMatrixChangedEventHandler Changed;
+    [global::Quire.Mirror.MirrorStub]
+    private void PositionCheck(global::Quire.TableCoordinate position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireChanged(global::Quire.Matrices.SparseMatrix<TItem>.SparseMatrixItemChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SparseMatrix() { }
 

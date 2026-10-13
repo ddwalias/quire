@@ -12,6 +12,18 @@ namespace Quire.ThirdParty;
 public partial class ArgumentAttribute : global::System.Attribute
 {
     [global::Quire.Mirror.MirrorStub]
+    private string shortName;
+    [global::Quire.Mirror.MirrorStub]
+    private string longName;
+    [global::Quire.Mirror.MirrorStub]
+    private string helpText;
+    [global::Quire.Mirror.MirrorStub]
+    private object defaultValue;
+    [global::Quire.Mirror.MirrorStub]
+    private string validValues;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.ThirdParty.ArgumentType type;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ThirdParty.ArgumentType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool DefaultShortName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

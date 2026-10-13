@@ -48,5 +48,7 @@ public partial class TickmarkFormatterHelper : global::Quire.Controls.Core.IForm
     [global::Quire.Mirror.MirrorStub]
     public string Percent(string arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string ExponentToSuperscript(string exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public TickmarkFormatterHelper() { }
 }

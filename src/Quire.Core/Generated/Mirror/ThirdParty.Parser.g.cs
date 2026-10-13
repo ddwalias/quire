@@ -14,6 +14,18 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public const string NewLine = "\r\n";
     [global::Quire.Mirror.MirrorStub]
+    private const int STD_OUTPUT_HANDLE = -11;
+    [global::Quire.Mirror.MirrorStub]
+    private const int spaceBeforeParam = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ArrayList arguments;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable argumentMap;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.ThirdParty.Parser.Argument defaultArgument;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.ThirdParty.ErrorReporter reporter;
+    [global::Quire.Mirror.MirrorStub]
     public bool HasDefaultArgument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool ParseArgumentsWithUsage(string[] arguments, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -24,11 +36,17 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public static bool ParseArguments(string[] arguments, object destination, global::Quire.ThirdParty.ErrorReporter reporter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void NullErrorReporter(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool ParseHelp(string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string ArgumentsUsage(global::System.Type argumentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string ArgumentsUsage(global::System.Type argumentType, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GetStdHandle(int nStdHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GetConsoleScreenBufferInfo(int hConsoleOutput, ref global::Quire.ThirdParty.Parser.CONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int GetConsoleWindowWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -38,9 +56,49 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public Parser(global::System.Type argumentSpecification, global::Quire.ThirdParty.ErrorReporter reporter) { }
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.ThirdParty.ArgumentAttribute GetAttribute(global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReportUnrecognizedArgument(string argument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReportError(string errorMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ParseArgumentList(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool Parse(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetUsageString(int screenWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void AddNewLine(string newLine, global::System.Text.StringBuilder builder, ref int currentColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.ThirdParty.Parser.ArgumentHelpStrings[] GetAllHelpStrings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.ThirdParty.Parser.ArgumentHelpStrings GetHelpStrings(global::Quire.ThirdParty.Parser.Argument arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int NumberOfParametersToDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool LexFileArguments(string fileName, out string[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string LongName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ShortName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ValidValues(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string HelpText(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool HasHelpText(global::Quire.ThirdParty.ArgumentAttribute attribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ExplicitShortName(global::Quire.ThirdParty.ArgumentAttribute attribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object DefaultValue(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type ElementType(global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.ThirdParty.ArgumentType Flags(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsCollectionType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsValidElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+HelpArgument, Ptc.Core")]
     private partial class HelpArgument
@@ -103,6 +161,34 @@ public sealed partial class Parser
     private partial class Argument
     {
         [global::Quire.Mirror.MirrorStub]
+        private string longName;
+        [global::Quire.Mirror.MirrorStub]
+        private string shortName;
+        [global::Quire.Mirror.MirrorStub]
+        private string helpText;
+        [global::Quire.Mirror.MirrorStub]
+        private bool hasHelpText;
+        [global::Quire.Mirror.MirrorStub]
+        private bool explicitShortName;
+        [global::Quire.Mirror.MirrorStub]
+        private object defaultValue;
+        [global::Quire.Mirror.MirrorStub]
+        private bool seenValue;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Reflection.FieldInfo fieldInfo;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Type elementType;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.ThirdParty.ArgumentType flags;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.ArrayList collectionValues;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.ThirdParty.ErrorReporter reporter;
+        [global::Quire.Mirror.MirrorStub]
+        private bool isDefault;
+        [global::Quire.Mirror.MirrorStub]
+        private string validValues;
+        [global::Quire.Mirror.MirrorStub]
         public global::System.Type ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public string LongName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -145,7 +231,21 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         public bool Finish(object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
+        private bool ReportMissingRequiredArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void ReportDuplicateArgumentValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
         public bool SetValue(string value, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void ReportBadArgumentValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void ReportInvalidValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool ParseValue(global::System.Type type, string stringData, out object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void AppendValue(global::System.Text.StringBuilder builder, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private string GetValidValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void ClearShortName() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

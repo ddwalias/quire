@@ -16,6 +16,8 @@ public partial class Tok : global::Quire.Mpl.Run.Sexpr
     [global::Quire.Mirror.MirrorStub]
     public uint Field2;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.Sym tok;
+    [global::Quire.Mirror.MirrorStub]
     public override uint handle { get => base.handle; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Atom atom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

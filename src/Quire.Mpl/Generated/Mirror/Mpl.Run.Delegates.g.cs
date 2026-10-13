@@ -22,6 +22,8 @@ public partial class Delegates
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Function PI_2;
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.MethodInfo[] clo_method;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Type[] clo_params(global::System.Type[] ftys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Type[] fparams(global::System.Type r, global::System.Type[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -45,6 +47,14 @@ public partial class Delegates
     public static global::Quire.Mpl.Run.F<R, A, B, C> Premium_3<R, A, B, C>(global::Quire.Mpl.Run.F<R, A, B, C> f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.F<R, A, B, C, D> Premium_4<R, A, B, C, D>(global::Quire.Mpl.Run.F<R, A, B, C, D> f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.F<R, A> Closure_1<R, CLO, A>(global::Quire.Mpl.Run.F<R, CLO, A> f, CLO clo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.F<R, A, B> Closure_2<R, CLO, A, B>(global::Quire.Mpl.Run.F<R, CLO, A, B> f, CLO clo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.F<R, A, B, C> Closure_3<R, CLO, A, B, C>(global::Quire.Mpl.Run.F<R, CLO, A, B, C> f, CLO clo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.F<R, A, B, C, D> Closure_4<R, CLO, A, B, C, D>(global::Quire.Mpl.Run.F<R, CLO, A, B, C, D> f, CLO clo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.F<object, object> DelegateClosure_1<CLO>(global::System.Delegate d, CLO clo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

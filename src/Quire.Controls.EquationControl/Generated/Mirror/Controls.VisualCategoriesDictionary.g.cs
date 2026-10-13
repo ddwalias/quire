@@ -40,6 +40,8 @@ public partial class VisualCategoriesDictionary : global::System.Windows.Resourc
     [global::Quire.Mirror.MirrorStub]
     public const string VectorAndMatrixCategory = "VectorAndMatrixCategory";
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public VisualCategoriesDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

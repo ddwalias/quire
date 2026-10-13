@@ -12,6 +12,20 @@ namespace Quire.Engine;
 public partial class UnmanagedMemoryStream : global::System.IO.Stream
 {
     [global::Quire.Mirror.MirrorStub]
+    private static int MemStreamMaxLength;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe byte* _mem;
+    [global::Quire.Mirror.MirrorStub]
+    private int _length;
+    [global::Quire.Mirror.MirrorStub]
+    private int _capacity;
+    [global::Quire.Mirror.MirrorStub]
+    private int _position;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _writable;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isOpen;
+    [global::Quire.Mirror.MirrorStub]
     public override long Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override long Length { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

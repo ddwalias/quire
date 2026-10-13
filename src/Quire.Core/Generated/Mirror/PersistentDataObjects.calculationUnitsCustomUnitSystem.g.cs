@@ -12,6 +12,12 @@ namespace Quire.PersistentDataObjects;
 public partial class calculationUnitsCustomUnitSystem
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.calculationUnitsCustomUnitSystemBaseUnits baseUnitsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.calculationUnitsCustomUnitSystemDerivedUnits derivedUnitsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.unitSystemType baseunitsystemField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.calculationUnitsCustomUnitSystemBaseUnits baseUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.calculationUnitsCustomUnitSystemDerivedUnits derivedUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

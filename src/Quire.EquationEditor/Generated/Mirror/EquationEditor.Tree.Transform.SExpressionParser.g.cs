@@ -12,6 +12,22 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionParser
 {
     [global::Quire.Mirror.MirrorStub]
+    private string a__;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Transform.ParsedSExpression b_;
+    [global::Quire.Mirror.MirrorStub]
+    private bool c_;
+    [global::Quire.Mirror.MirrorStub]
+    private string d_;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly char[] e_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Stack<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression> f;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.StringBuilder g;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<string> h;
+    [global::Quire.Mirror.MirrorStub]
     public string SExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Transform.ParsedSExpression Parsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -21,6 +37,20 @@ public partial class SExpressionParser
     public string ReasonInvalid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string UnParse(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression parsed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.Collections.Generic.IEnumerator<char> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private char a(char A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SExpressionParser() { }
 

@@ -12,9 +12,17 @@ namespace Quire.Engine;
 public partial class LispBind : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.Action m_action;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_continuation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_error_handler;
+    [global::Quire.Mirror.MirrorStub]
     public LispBind(global::Quire.depman.Action a, global::Quire.utl_mgd.Function f, int which) { }
     [global::Quire.Mirror.MirrorStub]
     public LispBind(global::Quire.depman.Action a, global::Quire.utl_mgd.Function f, global::Quire.utl_mgd.Function e) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeLispBind() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.ICollection GetDefs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

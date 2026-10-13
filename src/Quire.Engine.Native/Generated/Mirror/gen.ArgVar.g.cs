@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal partial class ArgVar : global::Quire.gen.MetaObj
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_index;
+    [global::Quire.Mirror.MirrorStub]
     public ArgVar(string nm, int index) { }
     [global::Quire.Mirror.MirrorStub]
     public unsafe ArgVar(void* v, int index) { }

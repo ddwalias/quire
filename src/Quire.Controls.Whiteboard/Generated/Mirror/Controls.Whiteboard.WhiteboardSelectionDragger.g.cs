@@ -12,9 +12,21 @@ namespace Quire.Controls.Whiteboard;
 internal partial class WhiteboardSelectionDragger
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Whiteboard.WhiteboardControl _container;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Point _startPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.SelectionDraggerRubberBand _selectionDraggerRubberBand;
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Rect> DragDone;
     [global::Quire.Mirror.MirrorStub]
     public WhiteboardSelectionDragger(global::Quire.Controls.Whiteboard.WhiteboardControl container, global::System.Windows.Point startPosition) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseUp(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void MouseMove(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

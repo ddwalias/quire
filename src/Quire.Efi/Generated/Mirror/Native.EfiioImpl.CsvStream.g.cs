@@ -12,6 +12,20 @@ namespace Quire.Native.EfiioImpl;
 internal partial class CsvStream
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.StreamReader stream;
+    [global::Quire.Mirror.MirrorStub]
+    private bool EOS;
+    [global::Quire.Mirror.MirrorStub]
+    private bool EOL;
+    [global::Quire.Mirror.MirrorStub]
+    private char[] buffer;
+    [global::Quire.Mirror.MirrorStub]
+    private int pos;
+    [global::Quire.Mirror.MirrorStub]
+    private int length;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.StringBuilder item;
+    [global::Quire.Mirror.MirrorStub]
     public char delimiter;
     [global::Quire.Mirror.MirrorStub]
     public char GetNextChar(bool eat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -14,6 +14,24 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand SetColorSchemeCommand;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.ViewModelHelper _viewModelHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.Model.IContourPlotModel _model;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Rect DefaultLogicalRect;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _sizeBeforeResizing;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isResizing;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Transform _plotRenderTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection DefaultContourLogicalDataCollection;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection _contourLogicalData;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty HeightProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty WidthProperty;
@@ -21,6 +39,16 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     public static readonly global::System.Windows.DependencyProperty LabelVisibilityProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LabelFormatterProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _reversed;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.VisualData[] _visualData;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _initialized;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.DashStyle _dashStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _stroke;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Input.CommandBindingCollection CommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -44,6 +72,10 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     [global::Quire.Mirror.MirrorStub]
     public bool IsReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IValueToScreen VerticalValueToScreen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IValueToScreen HorizontalValueToScreen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.DashStyle DashStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Brush Stroke { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -64,11 +96,33 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     [global::Quire.Mirror.MirrorStub]
     public VisualDataCollection(global::Quire.Controls.Plots.Contour.Model.IContourPlotModel model) { }
     [global::Quire.Mirror.MirrorStub]
+    private void ModelPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSizeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateVisualPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LogicalDataChanged(global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection newValue, global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection oldValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HeightChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void WidthChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnLabelVisibilityChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void PositionLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Plots.Contour.View.VisualData> GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.VisualData CreateVisualDataRaw(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCollectionReset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Add(global::Quire.Controls.Plots.Contour.View.VisualData item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -83,6 +137,16 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     public void Initialize(global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalTransformer, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalTransformer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateBrushes(global::System.Windows.Media.Brush[] brushes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetContoursLineStyle(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetColorScheme(global::Quire.Controls.Plots.Contour.ColorScheme newColorScheme) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetLineWeight(double newLineWeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetContoursLineColor(global::System.Windows.Media.Color newLinesColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.VisualDataCollection+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

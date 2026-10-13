@@ -12,9 +12,21 @@ namespace Quire.Controls.Core.Serialization;
 internal partial class IntegrationRegionSerializer : global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.IIORegionContainer _documentArea;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Serialization.ISerializationHelper _serializationHelper;
+    [global::Quire.Mirror.MirrorStub]
     public IntegrationRegionSerializer(global::Quire.Controls.Core.IORegions.IIORegionContainer area, global::Quire.Serialization.ISerializationHelper serializationHelper) { }
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ReadIOAliases(global::System.Windows.DependencyObject ioRegion, global::System.Xml.Linq.XElement xElement, bool isInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteIORegionsFromContainer(global::System.Xml.Linq.XElement xElement, global::Quire.Controls.Core.IORegions.IIORegionContainer ioContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.Linq.XElement WriteRegion(global::Quire.Controls.Core.IORegions.IIORegion element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.Linq.XElement WriteIOAliases(global::Quire.Controls.Core.IORegions.IIORegion element, bool isInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

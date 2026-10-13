@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 internal partial class InputSliderEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableSlider.VbSliderScriptInternalClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableSlider.VbSliderDefaultScript.vbs";
+    [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_ValueChanged()\r\n";
     [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;

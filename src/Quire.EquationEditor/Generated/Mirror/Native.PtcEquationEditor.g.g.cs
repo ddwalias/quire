@@ -12,13 +12,111 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class g : global::Quire.Native.PtcEquationEditor.c
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.View.IVisualFactory a__;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Native.PtcEquationEditor.g.a_> b__;
+    [global::Quire.Mirror.MirrorStub]
     public g(global::Quire.EquationEditor.View.IVisualFactory A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public void b(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void c(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.Equation.ScopeStateChangeEventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void d(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.TypeoverChangeEventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_0, global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> A_1, global::Quire.Direction A_2, bool A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Predicate<global::Quire.EquationEditor.Tree.MathNode> a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool g_(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool f(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool e(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool d(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool c(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool b(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor ad(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor ac(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor ab(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor aa(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor z(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor y(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor x(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor w(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor v(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor u(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor t(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor s(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor r(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor q(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor p(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor o(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor n(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor m(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor l(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor k(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor j(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.View.IVisualOutfixNodeEditor A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor i(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualIdNodeEditor h(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor g_(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor f(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualTextNodeEditor e(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor d(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor c(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0, global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorNodeEditor A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorNodeEditor A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode>> a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0, global::Quire.Native.PtcEquationEditor.aw A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor b(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNodeEditor a(global::Quire.EquationEditor.View.IVisualMathNode A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1, global::Quire.EquationEditor.IMathNodeToVisualNodeMap A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.Predicate<global::Quire.EquationEditor.Tree.MathNode> A_0, global::Quire.DelegateFunction3<global::Quire.EquationEditor.View.IVisualMathNodeEditor, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.Tree.Navigation.NavigatorState, global::Quire.EquationEditor.IMathNodeToVisualNodeMap> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("g+a, Ptc.EquationEditor")]
     private partial struct a_

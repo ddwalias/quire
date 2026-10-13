@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class LateBoundMethod : global::Quire.gen.Callable
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_foreign;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Callable m_impl;
+    [global::Quire.Mirror.MirrorStub]
     public LateBoundMethod(global::Quire.Mpl.Run.Primitive prim) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.gen.Callable GetImpl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

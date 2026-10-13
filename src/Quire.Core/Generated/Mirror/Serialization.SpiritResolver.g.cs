@@ -12,7 +12,11 @@ namespace Quire.Serialization;
 public partial class SpiritResolver : global::Quire.Serialization.PtcXmlResolver
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Serialization.SpiritResolver _instance;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Serialization.SpiritResolver Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private SpiritResolver() : base(default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public static void InitializeDocument(global::System.Xml.XmlDocument xmlDoc, string schemaName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -21,6 +25,4 @@ public partial class SpiritResolver : global::Quire.Serialization.PtcXmlResolver
     public static global::System.Xml.XmlNode WorksheetRootNode(global::System.Xml.XmlNode xmlContentDocument, global::System.Xml.XmlNamespaceManager nameSpaceManager, string rootNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override string SchemaName(global::System.Uri absoluteUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private SpiritResolver() : base(default(string)) { }
 }

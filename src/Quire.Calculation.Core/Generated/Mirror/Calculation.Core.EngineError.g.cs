@@ -12,6 +12,12 @@ namespace Quire.Calculation.Core;
 public partial class EngineError : global::Quire.Calculation.Core.IEngineError, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _code;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.StringCollection _arguments;
+    [global::Quire.Mirror.MirrorStub]
+    private string _message;
+    [global::Quire.Mirror.MirrorStub]
     public string ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.StringCollection ErrorMessageArguments { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

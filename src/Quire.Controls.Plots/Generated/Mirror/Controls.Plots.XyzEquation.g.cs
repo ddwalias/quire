@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots;
 public partial class XyzEquation : global::Quire.Controls.Plots.XyEquation
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string _zSExpression;
+    [global::Quire.Mirror.MirrorStub]
     public string ZsExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public XyzEquation(string xSExpression, string ySExpression, string zSExpression) { }

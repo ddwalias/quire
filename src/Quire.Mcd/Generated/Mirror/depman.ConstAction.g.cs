@@ -12,7 +12,11 @@ namespace Quire.depman;
 public partial class ConstAction : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_env;
+    [global::Quire.Mirror.MirrorStub]
     public ConstAction(object o) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeConstAction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

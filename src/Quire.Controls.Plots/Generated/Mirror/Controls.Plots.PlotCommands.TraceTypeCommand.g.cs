@@ -12,9 +12,21 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class TraceTypeCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTrace, global::Quire.Calculation.Core.Trace2DResults.TraceType> _oldTraceTypeMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.Trace2DResults.TraceType _traceType;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Undo.CompoundCommand _compoundCommand;
+    [global::Quire.Mirror.MirrorStub]
     public TraceTypeCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTrace> traceList, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ChangeSymbolIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateChangeSymbolCommand(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType, global::Quire.Controls.Plots.Presenter.TraceSymbol traceSymbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

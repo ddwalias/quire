@@ -12,6 +12,8 @@ namespace Quire.Controls.Whiteboard;
 public abstract partial class WhiteBoardSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Whiteboard.WhiteboardControl _whiteboard;
+    [global::Quire.Mirror.MirrorStub]
     protected WhiteBoardSerializationStrategy(global::Quire.Controls.Whiteboard.WhiteboardControl control) { }
     [global::Quire.Mirror.MirrorStub]
     public abstract void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument);

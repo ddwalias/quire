@@ -12,6 +12,16 @@ namespace Quire.utl_mgd;
 public partial class InterruptControl
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.utl_mgd.InterruptControl s_interrupt_control;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_request_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_abort_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_interrupt_requested;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.CancellationTokenSource m_cts;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Threading.CancellationTokenSource Cts { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public InterruptControl() { }

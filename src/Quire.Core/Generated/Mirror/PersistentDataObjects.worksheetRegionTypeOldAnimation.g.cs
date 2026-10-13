@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class worksheetRegionTypeOldAnimation
 {
     [global::Quire.Mirror.MirrorStub]
+    private string hrefField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool isinshadowField;
+    [global::Quire.Mirror.MirrorStub]
+    private float trackbarheightField;
+    [global::Quire.Mirror.MirrorStub]
+    private float origwidthField;
+    [global::Quire.Mirror.MirrorStub]
+    private float origheightField;
+    [global::Quire.Mirror.MirrorStub]
     public string href { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool isinshadow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

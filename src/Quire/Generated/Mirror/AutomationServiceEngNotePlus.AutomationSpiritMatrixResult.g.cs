@@ -12,6 +12,12 @@ namespace Quire.AutomationServiceEngNotePlus;
 public partial class AutomationSpiritMatrixResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.IOManagerErrorCode _errorCode;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.AutomationServiceEngNotePlus.AutomationSpiritMatrix _matrixResult;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _units;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IORegions.IOManagerErrorCode ErrorCodeInternal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

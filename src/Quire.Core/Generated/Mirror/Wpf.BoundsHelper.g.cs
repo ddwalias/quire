@@ -15,6 +15,8 @@ public static partial class BoundsHelper
     public static global::System.Windows.Point FindPointOnPathBetween(global::System.Windows.Rect box1, global::System.Windows.Rect box2, double gradient) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point FindCenter(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point IntersectRectangle(global::System.Windows.Rect rect, global::Quire.Wpf.BoundsHelper.Line intersectLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BoundsHelper+Line, Ptc.Core")]
     private partial struct Line
@@ -29,6 +31,12 @@ public static partial class BoundsHelper
         public double YItercept;
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Wpf.BoundsHelper.Line CalculateLine(global::System.Windows.Point a, global::System.Windows.Point b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private static double CalculateSlope(global::System.Windows.Point start, global::System.Windows.Point end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private double CalculateY(double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private double Length() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Point NPoint(double gradient) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]

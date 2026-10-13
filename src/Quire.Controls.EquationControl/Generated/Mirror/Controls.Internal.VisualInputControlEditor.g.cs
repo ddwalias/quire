@@ -12,6 +12,12 @@ namespace Quire.Controls.Internal;
 internal partial class VisualInputControlEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualInputControlNode>, global::Quire.EquationEditor.View.IVisualInputControlEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
     [global::Quire.Mirror.MirrorStub]
+    private double BORDER_THICKNESS;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.Caret _caret;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Controls.Border _border;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty CaretStateProperty;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.CaretStateValues CaretState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

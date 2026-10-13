@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class FieldVar : global::Quire.gen.MetaObj
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_record;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.FieldInfo m_field;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe FieldVar(void* v, global::Quire.gen.MetaObj rec, global::System.Reflection.FieldInfo field) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool ModuleScope() => base.ModuleScope();

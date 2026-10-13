@@ -12,11 +12,17 @@ namespace Quire.Controls.ExcelComponent;
 public partial class OleObjectControl : global::System.Windows.Controls.ContentControl, global::Quire.Controls.ExcelComponent.IOleObjectControl, global::Quire.Controls.Core.IOleBaseObjectControl, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IResizableElementInfo, global::Quire.Controls.Core.IResizeToFitWhiteboardItem, global::Quire.Controls.Core.IResizableElementWithDataStore, global::Quire.Controls.Core.IIndirectMessageAdornerOwner, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ToggleOleObjectAutoResizeCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand OleObjectResetSizeCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand UpdateOleObjectLinkCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.View.OleObject _view;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.ISnapToPixelHelper _snappingHelper;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.View.OleObject View { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,11 +60,35 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<object, global::System.Windows.RoutedEventArgs> OnAdornedElementReady;
     [global::Quire.Mirror.MirrorStub]
+    private bool Accept(global::Quire.Controls.ExcelComponent.OleObjectControl.CreationMethodWithDialog creationMethod, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool Accept(global::Quire.Controls.ExcelComponent.OleObjectControl.CreationMethodWithProgId creationMethod, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool Accept(global::Quire.Controls.ExcelComponent.OleObjectControl.CreationMethodFromFile creationMethod, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.ExcelComponent.IOleObjectControl Create(global::Quire.Controls.ExcelComponent.OleObjectControlCreationOptions creationOptions, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ValidateInstance(bool assertOnFailure) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private OleObjectControl(bool autoResize) { }
     [global::Quire.Mirror.MirrorStub]
     public OleObjectControl() { }
     [global::Quire.Mirror.MirrorStub]
+    private OleObjectControl(global::Quire.Controls.ExcelComponent.View.OleObject content) { }
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnContentChanged(object oldContent, object newContent) => base.OnContentChanged(oldContent, newContent);
+    [global::Quire.Mirror.MirrorStub]
+    private void CanToggleOleObjectAutoResize(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecutedToggleOleObjectAutoResize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecutedOleObjectResetSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanExecuteOleObjectResetSize(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecutedUpdateOleObjectLink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanExecuteUpdateOleObjectLink(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
     [global::Quire.Mirror.MirrorStub]
@@ -76,7 +106,15 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleViewModelRequestResizeToFit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.FrameworkElement GetAdornedElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnViewVisualParentChanged(global::System.Windows.DependencyObject oldParent, global::System.Windows.DependencyObject newParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IResizeData StoreResizeData(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -91,6 +129,8 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleObjectControl+SnapToPixelHelper, Ptc.Controls.ExcelComponent")]
     private partial class SnapToPixelHelper : global::Quire.Core.ISnapToPixelHelper
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.ExcelComponent.OleObjectControl _oleObject;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Media.GeneralTransform TransformFromPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
@@ -126,6 +166,8 @@ public partial class OleObjectControl : global::System.Windows.Controls.ContentC
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile, Ptc.Controls.ExcelComponent")]
     public partial class CreationMethodFromFile : global::Quire.Controls.ExcelComponent.OleObjectControlCreationMethod
     {
+        [global::Quire.Mirror.MirrorStub]
+        private string _filePath;
         [global::Quire.Mirror.MirrorStub]
         public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

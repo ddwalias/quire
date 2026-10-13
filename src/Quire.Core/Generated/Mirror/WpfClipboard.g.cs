@@ -14,7 +14,17 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.WpfClipboard Default;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.IClipboard _current;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _xmlSpreadsheetDataType;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _primeXamlStreamCompressed;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _mathNodeSExpression;
+    [global::Quire.Mirror.MirrorStub]
     internal static readonly string _richTextEmbeddedItemsInfo;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _canPasteIntoTextRegion;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.IClipboard Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -25,6 +35,8 @@ public partial class WpfClipboard : global::Quire.IClipboard
     public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetText(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SafeClipboardAction(global::System.Action clipboardAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetDataObjectToClipboard(global::System.Windows.IDataObject dataObject, bool copy = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -38,7 +50,13 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     public bool HasText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void CreateBitmapFromDib(global::System.IO.Stream dib, global::System.IO.Stream outStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Imaging.BitmapSource GetImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromStream(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromWpfClipboardGetImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Stream GetPrimeXamlStream() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -69,6 +87,8 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard+ClipboardOverride, Ptc.Core")]
     private partial class ClipboardOverride : global::System.IDisposable
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.IClipboard _oldClipboard;
         [global::Quire.Mirror.MirrorStub]
         public ClipboardOverride(global::Quire.IClipboard oldClipboard) { }
         [global::Quire.Mirror.MirrorStub]

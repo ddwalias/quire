@@ -18,6 +18,8 @@ public partial class StringToComboBoxMathTransformerForConvertor : global::Quire
     [global::Quire.Mirror.MirrorStub]
     protected static readonly string m;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string n;
+    [global::Quire.Mirror.MirrorStub]
     protected override string SignExpr { get => base.SignExpr; }
     [global::Quire.Mirror.MirrorStub]
     public StringToComboBoxMathTransformerForConvertor() { }

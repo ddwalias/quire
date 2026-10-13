@@ -12,6 +12,16 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class DetachedTypeoverState
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.br b;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.br c;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.br d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool e;
+    [global::Quire.Mirror.MirrorStub]
     public DetachedTypeoverState(global::Quire.EquationEditor.Tree.Scoping.TypeoverState typeoverState) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Scoping.TypeoverState GetClosestTypeoverState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

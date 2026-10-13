@@ -12,6 +12,12 @@ namespace Quire.Core;
 public sealed partial class MessageBoxTraceListener : global::System.Diagnostics.TraceListener
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Concurrent.ConcurrentQueue<string> _messages;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _dialogShown;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly object _padlock;
+    [global::Quire.Mirror.MirrorStub]
     public override void Fail(string message) => base.Fail(message);
     [global::Quire.Mirror.MirrorStub]
     public override void Fail(string message, string detailMessage) => base.Fail(message, detailMessage);

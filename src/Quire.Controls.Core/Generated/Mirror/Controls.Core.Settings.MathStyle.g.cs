@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Settings;
 public partial class MathStyle : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.ExtendedFont _font;
+    [global::Quire.Mirror.MirrorStub]
     public const string localName = "mathStyle";
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IdLabels Label { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

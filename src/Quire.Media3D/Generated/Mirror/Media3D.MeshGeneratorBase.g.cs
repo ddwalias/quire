@@ -14,6 +14,8 @@ public abstract partial class MeshGeneratorBase : global::System.Windows.Media.A
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty NameProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.DependencyPropertyKey GeometryKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty GeometryProperty;
     [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

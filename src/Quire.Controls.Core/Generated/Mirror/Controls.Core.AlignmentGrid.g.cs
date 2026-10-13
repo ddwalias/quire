@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public partial class AlignmentGrid : global::System.Windows.DependencyObject, global::Quire.Controls.Core.IAlignmentGrid, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Size DefaultGridCellSize;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Rect DefaultGridArea;
@@ -19,6 +21,8 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     public static readonly global::System.Windows.DependencyProperty GridCellSizeProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty GridAreaProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private const double ZeroThreshold = 1E-06d;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IAlignmentGrid Default;
     [global::Quire.Mirror.MirrorStub]
@@ -50,9 +54,15 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Windows.Point GetNearestIntersectionInDirection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsModZero(double dividend, double divisor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetNearestIntersectionPoint(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Windows.Point GetNearestIntersectionPointDisregardingBounds(global::System.Windows.Point startPoint, global::Quire.Controls.Core.GridRestriction restriction, params global::Quire.Direction[] directionsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point Clip(global::System.Windows.Point point, params global::Quire.Direction[] directionsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point GetCandidateIntersectionPoint(global::System.Windows.Point startPoint, double cellWidth, double cellHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Dispose() { }
 }

@@ -12,7 +12,21 @@ namespace Quire.Controls;
 internal partial class SpecTableView : global::Quire.Controls.Internal.VisualMatrixContents, global::Quire.EquationEditor.SpecTable.ISpecTableView
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _rows;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Point> _mouseDownPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Point> _savedMouseDownPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ControlAdorners.OvertypeAdorner _overtypeAdorner;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Pair<int, int>> _selectedCells;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> _activeCells;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ChangedEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Input.CommandBindingCollection _editableCommandBindings;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsSpecTableCellVisibleProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -68,13 +82,57 @@ internal partial class SpecTableView : global::Quire.Controls.Internal.VisualMat
     [global::Quire.Mirror.MirrorStub]
     public SpecTableView(bool isRestrictedReadOnly) { }
     [global::Quire.Mirror.MirrorStub]
+    private void SpecTableViewLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindRoutedCommandsToEvents(bool isRestrictedReadOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateEditableCommandsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindEditingCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnBindEditingCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void HandleRestrictedReadonlyChanged(bool isRestrictedReadonly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireInputTagChanged(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnCanCut(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCut(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCanCopy(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanCopy() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Copy() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCanPerformClearCellsOperation(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SelectedCellsAreEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void FillActiveCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearActiveCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnClearCells(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleClearActiveCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleOnDelete(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleOnBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDeleteSelection(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int ViewIndexFromModelIndex(int modelIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNavigateToEquationStart(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNavigateToEquationEnd(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SpecTableViewLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -84,9 +142,45 @@ internal partial class SpecTableView : global::Quire.Controls.Internal.VisualMat
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
+    private void HandleInsertColumnCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleInsertRowCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDeleteColumnCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDeleteRowCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDeleteCommand(global::System.Windows.Input.ExecutedRoutedEventArgs e, global::Quire.Delegate1<global::Quire.Controls.Core.IEquationControl> eventFirer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleCellCommandWithDirectionParameter(global::System.Windows.Input.ExecutedRoutedEventArgs e, global::Quire.Delegate2<global::Quire.Controls.Core.IEquationControl, global::Quire.Direction> eventFirer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTraverseForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBackwardsTraverse(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BackwardsTraverseCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.Controls.EquationControl FindCellFromDecendent(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireAddColumn(global::Quire.Controls.Core.IEquationControl ctrl, global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireAddRow(global::Quire.Controls.Core.IEquationControl ctrl, global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireDeleteRow(global::Quire.Controls.Core.IEquationControl ctrl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireDeleteColumn(global::Quire.Controls.Core.IEquationControl ctrl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRequestRemoveSelection(global::Quire.Controls.Core.IEquationControl equationControl, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnGotFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool GetIsSpecTableCellVisible(global::System.Windows.UIElement equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateEmptyScalingAndExtraDataCellsVisibility(bool hideOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeAllCellsVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateCellsVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -94,11 +188,17 @@ internal partial class SpecTableView : global::Quire.Controls.Internal.VisualMat
     [global::Quire.Mirror.MirrorStub]
     internal static void ShowCellContent(global::System.Windows.UIElement cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateAdornerLocationToSelectedCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateOvertypeAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ClearOvertypeAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireCellAdded(global::Quire.Controls.Core.IEquationControl eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateSelection(int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseUp(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseUp(e);
     [global::Quire.Mirror.MirrorStub]
@@ -111,6 +211,8 @@ internal partial class SpecTableView : global::Quire.Controls.Internal.VisualMat
     protected override void OnPreviewMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnPreviewMouseMove(e);
     [global::Quire.Mirror.MirrorStub]
     public void SelectCells(int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void GetStartEndCellIndices(global::System.Windows.Point currentCellIndexPoint, out int mouseDownCellIndex, out int currentCellIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDeserializedMathFormatData(global::Quire.Controls.Core.IEquationControl equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

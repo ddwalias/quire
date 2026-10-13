@@ -14,6 +14,8 @@ public partial class ExperimentalCalculationRibbonBar : global::Fluent.RibbonGro
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ExperimentalCalculationRibbonBar Part_ExperimentalCalculationRibbonBar;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ExperimentalCalculationRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

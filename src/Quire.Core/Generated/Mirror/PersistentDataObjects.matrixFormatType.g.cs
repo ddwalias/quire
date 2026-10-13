@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class matrixFormatType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.matrixFormatTypeNestedMatrixFormat[] nestedMatrixFormatsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool expandnestedarraysField;
+    [global::Quire.Mirror.MirrorStub]
+    private string sizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private string offsetField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showindicesField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.matrixFormatTypeNestedMatrixFormat[] nestedMatrixFormats { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool expandnestedarrays { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

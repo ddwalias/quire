@@ -12,5 +12,7 @@ namespace Quire.Controls.Worksheet;
 public partial struct WorksheetRegionsInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isScriptableControlExists;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsScriptableControlExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

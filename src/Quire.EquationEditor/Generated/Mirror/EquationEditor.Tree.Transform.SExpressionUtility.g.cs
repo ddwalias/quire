@@ -12,11 +12,17 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionUtility
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly char[] a_;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Text.RegularExpressions.Regex b;
+    [global::Quire.Mirror.MirrorStub]
     public static string EscapeIdValue(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string EscapeStringValue(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string CleanWhitespace(string unclean) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SExpressionUtility() { }
 }

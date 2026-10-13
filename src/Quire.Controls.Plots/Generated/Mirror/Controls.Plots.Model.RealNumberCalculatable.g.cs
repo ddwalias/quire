@@ -12,11 +12,31 @@ namespace Quire.Controls.Plots.Model;
 public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model.IMarkerCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculationErrorOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.IEquationProxy _equationProxy;
+    [global::Quire.Mirror.MirrorStub]
+    private double _value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _engineError;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<string> _customErrors;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _error;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationContext;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _overrideHideFromCalculation;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.IEquationProxy EquationProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError FirstCustomError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineResult EngineResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -58,6 +78,8 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     [global::Quire.Mirror.MirrorStub]
     public event global::System.EventHandler<global::Quire.Calculation.Core.RequestShowErrorEventArgs> RequestShowError;
     [global::Quire.Mirror.MirrorStub]
+    private void ProxyRequestEvaluation(global::Quire.Controls.Plots.IEquationProxy obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -68,7 +90,11 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     [global::Quire.Mirror.MirrorStub]
     public void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearEngineError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -81,6 +107,8 @@ public partial class RealNumberCalculatable : global::Quire.Controls.Plots.Model
     public void ClearCustomErrors(string errorCode, params string[] errorCodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(params string[] propertyNames) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,12 @@ namespace Quire.Mcd;
 public partial class UnitSystemGroup : global::System.MarshalByRefObject
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<int, global::Quire.Mcd.UnitSystem> m_unitsys_list;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int init_id;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_name;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public UnitSystemGroup(global::Quire.Mcd.UnitSystem unit_system) { }

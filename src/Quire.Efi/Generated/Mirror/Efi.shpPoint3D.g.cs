@@ -12,6 +12,12 @@ namespace Quire.Efi;
 public partial class shpPoint3D
 {
     [global::Quire.Mirror.MirrorStub]
+    private double x;
+    [global::Quire.Mirror.MirrorStub]
+    private double y;
+    [global::Quire.Mirror.MirrorStub]
+    private double z;
+    [global::Quire.Mirror.MirrorStub]
     public shpPoint3D() { }
     [global::Quire.Mirror.MirrorStub]
     public shpPoint3D(global::Quire.Efi.shpPoint3D p) { }

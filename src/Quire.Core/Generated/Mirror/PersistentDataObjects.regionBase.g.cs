@@ -12,6 +12,42 @@ namespace Quire.PersistentDataObjects;
 public abstract partial class regionBase : global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
     [global::Quire.Mirror.MirrorStub]
+    private string regionidField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool mc14conversionlossField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.applicationVersionType convertedfromField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool convertedfromFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double heightField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool heightFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double widthField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool widthFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double actualWidthField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool actualWidthFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double actualHeightField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool actualHeightFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double alignxField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool alignxFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double alignyField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool alignyFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private string tagField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showBorderField;
+    [global::Quire.Mirror.MirrorStub]
     public const float PageUnitsConvertionFactor = 1.3333334f;
     [global::Quire.Mirror.MirrorStub]
     public string regionid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -73,6 +109,8 @@ public abstract partial class regionBase : global::Quire.PersistentDataObjects.I
     public global::Quire.PersistentDataObjects.SolveBlockMemberType SolveBlockMemberType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public regionBase() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void CollectAllAnnotations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PreSerialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

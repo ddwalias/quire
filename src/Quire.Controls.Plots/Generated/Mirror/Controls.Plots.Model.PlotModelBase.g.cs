@@ -12,6 +12,22 @@ namespace Quire.Controls.Plots.Model;
 public abstract partial class PlotModelBase : global::Quire.Controls.Plots.Model.IPlotModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<string> _propertyChanging;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasError;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showAxisExpressions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.BackgroundTypeE _plotBackgroundType;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isCalculating;
+    [global::Quire.Mirror.MirrorStub]
+    private double _graphHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _graphWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isDeserializing;
+    [global::Quire.Mirror.MirrorStub]
     internal bool HasError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsDeserializing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +51,8 @@ public abstract partial class PlotModelBase : global::Quire.Controls.Plots.Model
     public event global::System.Action DeserializationEnded;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.EventHandler<global::Quire.Controls.Plots.Model.EngineErrorEventArgs> PlotCalculatableError;
+    [global::Quire.Mirror.MirrorStub]
+    private void FireDeserializationEnded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

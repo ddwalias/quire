@@ -14,6 +14,12 @@ internal partial class VisualLinearUnaryNode : global::Quire.Controls.Internal.V
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ChildProperty;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualSymbolNode _operator;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _isPrefix;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly double SymbolEdge;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }

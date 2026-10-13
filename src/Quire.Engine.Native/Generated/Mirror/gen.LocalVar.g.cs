@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal partial class LocalVar : global::Quire.gen.MetaObj
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.LocalBuilder m_local;
+    [global::Quire.Mirror.MirrorStub]
     public LocalVar(string nm, global::System.Reflection.Emit.Quire.Mpl.LocalBuilder local) { }
     [global::Quire.Mirror.MirrorStub]
     public unsafe LocalVar(void* v, global::System.Reflection.Emit.Quire.Mpl.LocalBuilder local) { }

@@ -12,7 +12,87 @@ namespace Quire.depman;
 internal partial class NodeQueueImp : global::Quire.depman.NodeQueue
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.SharedThreadContext m_thread_context;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.NQThreadData m_queue_thread;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_available_workers;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_busy_workers;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_num_threads;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.TaskQueue m_callback_queue;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_node_order_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_autocalc;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_calcnow;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.UpToDateMediatorImp m_uptodate_mediator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.BooleanMediatorImp m_busy_mediator;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_in_transaction;
+    [global::Quire.Mirror.MirrorStub]
+    private int num_workers_desired;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.NQThreadData num_workers_listener;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void enqueue(global::Quire.depman.Position* p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.Position* dequeue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe int dequeue(global::Quire.depman.Position* p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool is_heap_empty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void reheap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void on_uptodate(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void on_busy(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void begin_transaction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void end_transaction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void AddThreadData(global::System.Collections.Hashtable t, global::Quire.depman.NQThreadData d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void RemoveThreadData(global::System.Collections.Hashtable t, global::Quire.depman.NQThreadData d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.depman.NQThreadData PopThreadData(global::System.Collections.Hashtable t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.NQThreadData SpawnThread(string name, global::Quire.utl_mgd.MessageQueue<global::Quire.depman.NodeQueueImp, global::Quire.depman.NQThreadData, global::Quire.depman.Msg>.OnMessage om) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AbortThread(global::Quire.depman.NQThreadData d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SetNumWorkers(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ProcessQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CheckUptodate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeThreadAvailable(global::Quire.depman.NQThreadData d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BroadCastToWorkers(global::Quire.depman.Msg m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void OnNodeCalcFinished(global::Quire.depman.Msg* m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void EnqueueDeps(global::Quire.depman.Position* p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FreeDeadNodes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnThreadInit(global::Quire.depman.NodeQueueImp queue, global::Quire.depman.NQThreadData td) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool OnQueueMessage(global::Quire.depman.NodeQueueImp queue, global::Quire.depman.NQThreadData td, global::Quire.depman.Msg m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool OnWorkerMessage(global::Quire.depman.NodeQueueImp queue, global::Quire.depman.NQThreadData td, global::Quire.depman.Msg m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public NodeQueueImp(global::Quire.depman.SharedThreadContext tc, global::Quire.utl_mgd.TaskQueue c, global::Quire.utl_mgd.SafeMutex node_order_mutex) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeNodeQueueImp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.depman.SharedThreadContext GetSharedThreadContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -59,6 +139,10 @@ internal partial class NodeQueueImp : global::Quire.depman.NodeQueue
     [global::Quire.Mirror.MirrorOf("depman.NodeQueueImp+CallBooleanF, mcdepman")]
     private partial class CallBooleanF : global::Quire.utl_mgd.FunctionBase
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Engine.BooleanCallback m_cb;
+        [global::Quire.Mirror.MirrorStub]
+        private bool m_value;
         [global::Quire.Mirror.MirrorStub]
         public CallBooleanF(global::Quire.Engine.BooleanCallback cb, bool value) { }
         [global::Quire.Mirror.MirrorStub]

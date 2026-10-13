@@ -18,6 +18,16 @@ internal partial class VisualTextNodeEditor : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty CaretHighlightOpacityProperty;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.Caret _caret;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Shapes.Rectangle _highlightBox;
+    [global::Quire.Mirror.MirrorStub]
+    private double _highlightX;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect _idAlignmentBox;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _highlightBrush;
+    [global::Quire.Mirror.MirrorStub]
     public int CaretPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,9 +36,27 @@ internal partial class VisualTextNodeEditor : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Geometry Geometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretPositionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretHighlightColorChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretHighlightOpacityChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.DependencyProperty CreateDependencyProperty(object defaultValue, bool affectsRender, bool affectsArrange, global::System.Windows.PropertyChangedCallback callback, string dpName, global::System.Type dpType, global::System.Type ownerType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public VisualTextNodeEditor(global::Quire.Controls.Internal.VisualMathRegionNode region, global::Quire.Controls.Internal.VisualMathNode adornedElement) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void BindProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Remove() => base.Remove();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeCaret() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeHighlightBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetSelection(int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -39,6 +67,16 @@ internal partial class VisualTextNodeEditor : global::Quire.Controls.Internal.Vi
     protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCaretPositionChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTextChanged(string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GlyphIndexToX(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateCaretPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateMeasure() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
@@ -51,4 +89,8 @@ internal partial class VisualTextNodeEditor : global::Quire.Controls.Internal.Vi
     protected void OnEditNodeMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnEditNodeMouseLeftButtonUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnHighlightColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnHighlightOpacityChanged(double opacity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

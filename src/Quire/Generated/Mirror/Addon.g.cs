@@ -12,6 +12,38 @@ namespace Quire;
 public partial class Addon
 {
     [global::Quire.Mirror.MirrorStub]
+    private nint _hModule;
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnInitializeAddOnForPrime = "initializeAddOnForPrime";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnCleanup = "cleanup";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnOnIdleTime = "onIdleTime";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnDocumentOpened = "documentOpened";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnDocumentClosing = "documentClosing";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnDocumentSaving = "documentSaving";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnDocumentSaved = "documentSaved";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnGetResolvedFileNameAlloc = "getResolvedFileNameAlloc";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnGetDefaultDirectoryForPrime = "getDefaultDirectoryForPrime";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnOpenFromWindchill = "getQuirePlacesLocation";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnEnablePtcPlaces = "enableQuirePlaces";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnSaveToPtcServerForPrime = "saveToQuireServerForPrime";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnOnCommand = "onCommand";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnOnUpdateUIForPrime = "onUpdateUIForPrime";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FnIsAddOnActive = "isAddOnActive";
+    [global::Quire.Mirror.MirrorStub]
     public string AddOnId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal Addon(string addOnId) { }
@@ -19,6 +51,10 @@ public partial class Addon
     public bool LoadAddon(string pathToAddonLoader, global::Quire.Automation.IMathcadPrimeApplication mathcadPrimeApplicationPtr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UnloadAddon() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CallAddonInitialize(global::Quire.Automation.IMathcadPrimeApplication cMathcadPrimeApplicationPtr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CallAddonCleanup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CallAddonOnIdle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -45,6 +81,8 @@ public partial class Addon
     public bool CallAddonUpdateMenuItem(int cmdID) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CallAddonToCheckIsAddOnActive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private nint GetAddressOfFunction(string functionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.Addon+Initialize, MathcadPrime")]
     private delegate void Initialize(global::Quire.Automation.IMathcadPrimeApplication ptr);

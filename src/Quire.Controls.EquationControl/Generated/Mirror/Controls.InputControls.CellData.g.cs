@@ -12,6 +12,12 @@ namespace Quire.Controls.InputControls;
 public partial class CellData : global::Quire.Controls.InputControls.ICellData, global::Quire.EquationEditor.View.IReadonlyCellData, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _row;
+    [global::Quire.Mirror.MirrorStub]
+    private int _column;
+    [global::Quire.Mirror.MirrorStub]
+    private string _text;
+    [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Row { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

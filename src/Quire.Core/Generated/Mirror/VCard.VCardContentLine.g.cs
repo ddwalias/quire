@@ -12,6 +12,10 @@ namespace Quire.VCard;
 public partial class VCardContentLine
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly char[] semicolon;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly char[] equals;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.Dictionary<string, string> Params { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,4 +29,6 @@ public partial class VCardContentLine
     public string GetValue(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetParam(string paramName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string DecodePrinatbleQuoted(string encodedString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

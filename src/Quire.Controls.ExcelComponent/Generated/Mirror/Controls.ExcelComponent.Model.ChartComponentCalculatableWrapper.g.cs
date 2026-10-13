@@ -12,6 +12,18 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class ChartComponentCalculatableWrapper : global::Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private const uint LhsTag = 65535u;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable> _traceCalcs;
+    [global::Quire.Mirror.MirrorStub]
+    private string _identifier;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<uint> _identifierHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ChartWrapperType _chartType;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.BaseComponentEquationType ComponentEquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<uint> TraceId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.ChartWrapperType ChartWrapperType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +47,8 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     public override bool IsInvalidEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable> AllTracesWithError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ChartTypeChanged;
     [global::Quire.Mirror.MirrorStub]
@@ -68,11 +82,17 @@ internal partial class ChartComponentCalculatableWrapper : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleRequestEvaluation(calc);
     [global::Quire.Mirror.MirrorStub]
+    private void SetIdentifierLabelsAux(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static string ChartTypeToIdentifier(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType chartType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.Controls.ExcelComponent.Model.ChartWrapperType IdentifierToChartType(string identifier, global::System.Nullable<uint> index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool TraceAffectsCalcData(global::Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetRlIdWithLabel(global::Quire.Controls.ExcelComponent.Model.ChartWrapperType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateEquationAndChartWrapperType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

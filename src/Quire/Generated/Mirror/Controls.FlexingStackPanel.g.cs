@@ -24,7 +24,17 @@ public partial class FlexingStackPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
+    private static T Max<T>(params T[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size GetMinSize(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> children, bool isHorizontal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size SubtractSize(global::System.Windows.Size size1, global::System.Windows.Size size2, bool isHorizontal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size Measure(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> children, global::System.Windows.Size availableSize, bool isHorizontal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
+    [global::Quire.Mirror.MirrorStub]
+    private double GetStrechLenght(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> children, global::System.Windows.Size finalSize, bool isHorizontal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public FlexingStackPanel() { }
 }

@@ -12,6 +12,10 @@ namespace Quire.Media3D;
 public partial class Twister : global::Quire.Media3D.AlgorithmicTransform
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.AxisAngleRotation3D axisRotate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.RotateTransform3D xform;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty AxisProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CenterProperty;
@@ -29,6 +33,8 @@ public partial class Twister : global::Quire.Media3D.AlgorithmicTransform
     public double Attenuation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Twister() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateAttenuation(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

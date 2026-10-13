@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class ScopedNodes
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool b;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode>> ScopedLines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode GetFirstScopedNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

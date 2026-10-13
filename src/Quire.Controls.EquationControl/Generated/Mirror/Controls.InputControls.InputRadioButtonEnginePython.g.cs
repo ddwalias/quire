@@ -22,6 +22,10 @@ internal partial class InputRadioButtonEnginePython : global::Quire.Controls.Inp
     [global::Quire.Mirror.MirrorStub]
     public const string orientation = "orientation";
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableRadioButton.PythonRadioButtonDefaultScript.py";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableRadioButton.PythonRadioButtonScriptInternalClass.py";
+    [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }
     [global::Quire.Mirror.MirrorStub]
     public override string GetUserScriptObjectName(string userScript, global::Quire.Controls.InputControls.IScriptEngineParams engineParams = default) => base.GetUserScriptObjectName(userScript, engineParams);

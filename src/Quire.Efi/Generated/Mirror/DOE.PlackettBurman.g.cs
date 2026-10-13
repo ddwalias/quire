@@ -12,7 +12,15 @@ namespace Quire.DOE;
 public partial class PlackettBurman : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, int[]> m_genvecs;
+    [global::Quire.Mirror.MirrorStub]
+    private double[,] m_pb28;
+    [global::Quire.Mirror.MirrorStub]
     public PlackettBurman(int nruns) { }
     [global::Quire.Mirror.MirrorStub]
     internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void special_28() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

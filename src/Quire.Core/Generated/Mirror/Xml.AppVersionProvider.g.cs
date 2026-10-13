@@ -12,6 +12,12 @@ namespace Quire.Xml;
 public static partial class AppVersionProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Xml.AppVersionData _versionData;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly object Lock;
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResourceName = "Quire.Core.AppVersion.json";
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Xml.AppVersionData VersionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Version CurrentAppVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,4 +25,6 @@ public static partial class AppVersionProvider
     public static global::System.Version CurrentFormatVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Version CurrentEngNbVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Xml.AppVersionData LoadVersionData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

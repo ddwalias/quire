@@ -12,11 +12,35 @@ namespace Quire.Controls.Core;
 public partial class RealNumberFormatter
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IFormatterHelper _helper;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NumberFormat DisplayNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public RealNumberFormatter(global::Quire.Controls.Core.NumberFormat numberFormat, global::Quire.Controls.Core.IFormatterHelper helper) { }
     [global::Quire.Mirror.MirrorStub]
     public string FormatReal(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private string AddNegIfNeeded(double originalValue, string inProcFormated) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FormatRealToGeneral(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FormatRealToDecimal(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FormatRealToExponential(double value, int powerBase) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static double GetBaseVal(double value, int powerBase, out int exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string CreateExponentialENotationFormat(double baseVal, int exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double ToStringAndBack(global::System.IFormattable d, out string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FormatStringAndIsZeroRepresentation(double doubleValue, out bool isZero, global::System.Func<string, string> formatNonZeroValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string CreateExponentialMultiplyByBaseToAPowerFormat(double baseVal, int exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FormatExponent(int exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FormatRealToPercent(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetFormatStringForDouble() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

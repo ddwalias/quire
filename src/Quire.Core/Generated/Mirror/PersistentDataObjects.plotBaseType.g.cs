@@ -12,6 +12,14 @@ namespace Quire.PersistentDataObjects;
 public partial class plotBaseType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private object titleField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.plotBaseTypeLegend legendField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.trace2DType[] tracesField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.SizeType graphsizeField;
+    [global::Quire.Mirror.MirrorStub]
     public object title { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.plotBaseTypeLegend legend { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

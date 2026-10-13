@@ -14,6 +14,8 @@ public partial class StringToDoubleCollectionConverter : global::System.Windows.
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.StringToDoubleCollectionConverter Instance;
     [global::Quire.Mirror.MirrorStub]
+    private const char Separator = '\u002C';
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<double> Convert(string strValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

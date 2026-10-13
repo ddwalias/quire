@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
     <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
     <ProjectReference Include="..\Quire.Controls.Core\Quire.Controls.Core.csproj" />
+    <ProjectReference Include="..\Quire.Controls.EquationControl\Quire.Controls.EquationControl.csproj" />
     <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />

@@ -20,6 +20,10 @@ internal partial class InputCheckBoxEnginePython : global::Quire.Controls.InputC
     [global::Quire.Mirror.MirrorStub]
     public const string check = "check";
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.PythonCheckBoxDefaultScript.py";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.PythonCheckBoxScriptInternalClass.py";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

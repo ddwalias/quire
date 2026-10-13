@@ -12,6 +12,14 @@ namespace Quire.Controls.Internal;
 internal partial class VisualSubscriptOperatorNode : global::Quire.Controls.Internal.VisualLinearBinaryOperatorNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _stapleTop;
+    [global::Quire.Mirror.MirrorStub]
+    private double _secondOperandTop;
+    [global::Quire.Mirror.MirrorStub]
+    private double _effectiveBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private const double PAD = 1d;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
     [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
@@ -21,6 +29,8 @@ internal partial class VisualSubscriptOperatorNode : global::Quire.Controls.Inte
     public override double EffectiveScriptBaselineY { get => base.EffectiveScriptBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public VisualSubscriptOperatorNode() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void SetOperatorSymbolFontSize(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
     [global::Quire.Mirror.MirrorStub]

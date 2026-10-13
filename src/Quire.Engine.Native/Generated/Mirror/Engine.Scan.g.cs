@@ -12,6 +12,38 @@ namespace Quire.Engine;
 public partial class Scan
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_symbolic;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_solveblock;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_placeholder;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_define_symeval;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_define1_symbolic;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_define_only_symbolic;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_mc_solve;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_unquote;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_comma;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_bindings_symbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_bindings_looped_symbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_undefine_subscripts;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Engine.Scan.BlockTerms s_block_terminators;
+    [global::Quire.Mirror.MirrorStub]
+    private static object s_embed_marker;
+    [global::Quire.Mirror.MirrorStub]
+    private static object s_splice_marker;
+    [global::Quire.Mirror.MirrorStub]
+    private static object s_list_marker;
+    [global::Quire.Mirror.MirrorStub]
     public static int HAS_SOLVE_BLOCK;
     [global::Quire.Mirror.MirrorStub]
     public static int HAS_SYM;

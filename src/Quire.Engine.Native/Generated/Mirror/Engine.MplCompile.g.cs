@@ -12,7 +12,25 @@ namespace Quire.Engine;
 public partial class MplCompile : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_source;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_module_name;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_redefs;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_algos;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_labelmap;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Environment* m_modenv;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder m_builder;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary PrepareDict(global::Quire.Mpl.IRegion A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal unsafe MplCompile(string source, string module_name, global::System.Collections.IDictionary redefs, global::System.Collections.IDictionary algos, global::System.Collections.IDictionary labelmap, global::Quire.Hex.Environment* modenv, global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder b) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeMplCompile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

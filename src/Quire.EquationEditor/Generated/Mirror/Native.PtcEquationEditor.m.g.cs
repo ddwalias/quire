@@ -36,6 +36,8 @@ internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b
     [global::Quire.Mirror.MirrorStub]
     public override bool j(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.FormattedString a(string A_0, string A_1, string A_2, bool A_3, out int A_4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override bool a3(global::Quire.Controls.Core.FindReplaceQuery A_0) => base.a3(A_0);
     [global::Quire.Mirror.MirrorStub]
     public override bool a4(global::Quire.Controls.Core.FindReplaceQuery A_0) => base.a4(A_0);
@@ -70,6 +72,8 @@ internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b
     [global::Quire.Mirror.MirrorStub]
     public override void s() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.Delegate0 A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void am() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void an() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -101,6 +105,8 @@ internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b
     public override bool at() => base.at();
     [global::Quire.Mirror.MirrorStub]
     public override bool au() => base.au();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(bool A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("m+a, Ptc.EquationEditor")]
     private sealed partial class a_

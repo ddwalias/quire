@@ -14,6 +14,8 @@ public partial class NameValuesRow : global::Quire.Controls.InputControls.ComboB
     [global::Quire.Mirror.MirrorStub]
     public const string DisplayNameValue = "DisplayName";
     [global::Quire.Mirror.MirrorStub]
+    private string _displayName;
+    [global::Quire.Mirror.MirrorStub]
     public string DisplayName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.ICellData NameCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

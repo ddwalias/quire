@@ -12,6 +12,8 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class DynamicMethod_ILGenerator_Special : global::System.Reflection.Emit.Quire.Mpl.DynamicMethod_ILGenerator
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _ignore_call;
+    [global::Quire.Mirror.MirrorStub]
     public DynamicMethod_ILGenerator_Special(global::System.Reflection.Emit.ILGenerator ilGenerator, global::System.Reflection.Emit.Quire.Mpl.DynamicMethod master) : base(default(global::System.Reflection.Emit.ILGenerator), default(global::System.Reflection.Emit.Quire.Mpl.DynamicMethod)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Emit(global::System.Reflection.Emit.OpCode opcode) => base.Emit(opcode);

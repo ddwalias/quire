@@ -12,6 +12,22 @@ namespace Quire.EquationEditor;
 public partial class RedefinitionWarning
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineRedefInfo a_;
+    [global::Quire.Mirror.MirrorStub]
+    private string b_;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.IdLabels> c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineDefType d;
+    [global::Quire.Mirror.MirrorStub]
+    private string e;
+    [global::Quire.Mirror.MirrorStub]
+    private bool f;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.WarningsTypesToShow> g;
+    [global::Quire.Mirror.MirrorStub]
+    private string h;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineRedefInfo Original { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Id { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -29,6 +45,22 @@ public partial class RedefinitionWarning
     public global::Quire.Controls.Core.WarningsTypesToShow WarningType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.RedefinitionWarning CreateMathNodeWarning(global::Quire.Calculation.Core.EngineRedefInfo redefInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(string A_0, out global::System.ValueTuple<string, global::System.Nullable<global::Quire.Controls.Core.IdLabels>> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(bool A_0, global::Quire.Calculation.Core.EngineDefType A_1, global::System.Nullable<global::Quire.Controls.Core.IdLabels> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string b(global::Quire.Calculation.Core.EngineDefType A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(global::System.Nullable<global::Quire.Controls.Core.IdLabels> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(global::Quire.Calculation.Core.EngineDefType A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.WarningsTypesToShow b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.WarningsTypesToShow a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public RedefinitionWarning() { }
 }

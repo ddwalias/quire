@@ -20,6 +20,10 @@ public partial class DimensionsEditDialog : global::Quire.Controls.Core.Controls
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button OkButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.DimensionEditDialogViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public DimensionsEditDialog(global::Quire.DimensionEditDialogViewModel viewModel) { }
     [global::Quire.Mirror.MirrorStub]
     protected void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class axisGridTypeGridFrequency
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool autogridField;
+    [global::Quire.Mirror.MirrorStub]
+    private string valueField;
+    [global::Quire.Mirror.MirrorStub]
     public bool autogrid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

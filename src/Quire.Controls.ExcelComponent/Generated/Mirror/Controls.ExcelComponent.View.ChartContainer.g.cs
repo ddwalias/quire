@@ -12,6 +12,10 @@ namespace Quire.Controls.ExcelComponent.View;
 public partial class ChartContainer : global::Quire.Controls.ExcelComponent.View.OleContainerItem<global::Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel, global::Quire.Controls.ExcelComponent.Model.ChartContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel, global::Quire.PersistentData.chartContainerType>, global::Quire.Controls.ExcelComponent.View.IChartContainer, global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Int32Rect _renderRectInPixels;
+    [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.ExcelComponent.ViewModel.IChartContainerViewModel global::Quire.Controls.ExcelComponent.View.IChartContainer.ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel global::Quire.Controls.ExcelComponent.View.IChartContainer.Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -47,4 +51,6 @@ public partial class ChartContainer : global::Quire.Controls.ExcelComponent.View
     public void ForceUnfreezeImage(bool force) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeBounds) => base.ArrangeOverride(arrangeBounds);
+    [global::Quire.Mirror.MirrorStub]
+    private void ApplyRect(global::System.Windows.Size size, bool allowEmpty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

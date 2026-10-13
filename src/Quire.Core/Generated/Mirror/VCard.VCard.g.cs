@@ -12,6 +12,8 @@ namespace Quire.VCard;
 public partial class VCard
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] Newline;
+    [global::Quire.Mirror.MirrorStub]
     public string Version { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string FormattedName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -41,4 +43,6 @@ public partial class VCard
     public byte[] Photo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public VCard(string vCardString) { }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IEnumerable<string> GetVCardStringLines(string vCardString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,28 @@ namespace Quire.Controls.Core.Serialization;
 public partial class PackageSerializable : global::Quire.Controls.Core.Serialization.IPackageSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string _uri;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _type;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Serialization.IPackagePartSerializable _packagePartSerializable;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.IO.IPackageOperationsProvider _provider;
+    [global::Quire.Mirror.MirrorStub]
+    private const string ApplicationPropertiesUri = "/docProps/app.xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ApplicationPropertiesType = "application/mathcad.extended-properties+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PresentationUri = "/mathcad/settings/presentation.xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PresentationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.presentation+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CalculationUri = "/mathcad/settings/calculation.xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CalculationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.settings.calculation+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private PackageSerializable(string uri, string type, global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable xmlSerializable, global::Quire.IO.IPackageOperationsProvider packageOperationsProvider) { }
+    [global::Quire.Mirror.MirrorStub]
     public void Write(global::System.IO.Packaging.Package package, bool useTempFile = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Read(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -21,6 +43,4 @@ public partial class PackageSerializable : global::Quire.Controls.Core.Serializa
     public static global::Quire.Controls.Core.Serialization.PackageSerializable GetCalculationSettingsSerializable(global::Quire.Controls.Core.IEngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Serialization.PackageSerializable GetPresentationSettingsSerializable(global::Quire.Controls.Core.IEngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private PackageSerializable() { }
 }

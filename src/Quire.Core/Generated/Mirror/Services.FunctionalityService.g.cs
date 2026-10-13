@@ -12,11 +12,15 @@ namespace Quire.Services;
 public partial class FunctionalityService : global::Quire.Services.IFunctionalityService
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.FunctionalitiesLimitation.FunctionalitiesLimitationDictionary _functionalitiesLimitationDictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Services.FunctionalityService _instance;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Services.FunctionalityService Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private FunctionalityService() { }
     [global::Quire.Mirror.MirrorStub]
     public bool IsFunctionalityEnabled(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsFunctionalityHasUnsupportedLicenseTypes(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private FunctionalityService() { }
 }

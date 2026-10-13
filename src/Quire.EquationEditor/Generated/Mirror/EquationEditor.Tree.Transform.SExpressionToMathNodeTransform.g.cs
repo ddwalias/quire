@@ -14,11 +14,35 @@ public partial class SExpressionToMathNodeTransform : global::Quire.EquationEdit
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform Default;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, string> a_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.r b_;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal SExpressionToMathNodeTransform(global::System.Collections.Generic.Dictionary<string, string> A_0, global::Quire.Native.PtcEquationEditor.r A_1) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode Transform(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode SafeTransform(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNodeDescriptor a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.EquationEditor.Tree.MathNode f(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode e(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode d(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode c(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode b(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(string A_0, global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_1, global::Quire.EquationEditor.Tree.MathNode[] A_2 = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0, global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_1, global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_2 = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode[] a(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

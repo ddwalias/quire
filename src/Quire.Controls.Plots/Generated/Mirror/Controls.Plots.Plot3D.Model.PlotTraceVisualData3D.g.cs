@@ -14,6 +14,10 @@ public abstract partial class PlotTraceVisualData3D
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D Undefined;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Int32Collection _emptyIndices;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Media3D.Transform3D _transformLogicalToVisual;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Int32Collection Indices { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.TraceType3D TraceType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -16,6 +16,8 @@ public partial class TextStyleEditDialog : global::System.Windows.Window, global
     [global::Quire.Mirror.MirrorStub]
     public const int IndentJumps = 20;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Hashtable _controlsInError;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.TextStyleEditDialog _this;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox _tbName;
@@ -46,19 +48,39 @@ public partial class TextStyleEditDialog : global::System.Windows.Window, global
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button OkButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public string TextStyleNames { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TextStyleEditDialogViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool ShowTextStyleEditDialog(global::Quire.ITextStyle textStyle, global::Quire.StyleActionTypeEnum action, global::Quire.Controls.Core.ITextStylesManager textStylesManager, global::Quire.SpiritMainWindow owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private TextStyleEditDialog(global::Quire.TextStyleEditDialogViewModel viewModel) { }
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnClosed(global::System.EventArgs e) => base.OnClosed(e);
     [global::Quire.Mirror.MirrorStub]
+    private void InitPreviewWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ValidationErrorEvent(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void IncreaseFontSize(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DecreaseFontSize(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void IncreaseIndentation(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DecreaseIndentation(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HighlightColorOnNoColorClicked() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontColorOnNoColorClicked() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private TextStyleEditDialog() { }
 }

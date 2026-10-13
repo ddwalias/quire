@@ -12,9 +12,41 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.PlotCalculatable, global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D, global::Quire.Controls.Plots.Model.IPlotCalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Plots.Model.IHasNumberOfPoints, global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::Quire.Controls.Plots.Traces.ISymbolProperties, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D _traceEquation;
+    [global::Quire.Mirror.MirrorStub]
+    private const double DefaultSize = 20d;
+    [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.Media.Media3D.Rect3D DefaultBounds;
     [global::Quire.Mirror.MirrorStub]
+    private const string RlStringFormat = "(eval (numeric (plot_3D  {0} {1} {2} {3})))";
+    [global::Quire.Mirror.MirrorStub]
     public const string NoDataFound = "no_data_found";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Color _disabledColor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D _visualData;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Rect3D _commonRange;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Rect3D _traceBounds;
+    [global::Quire.Mirror.MirrorStub]
+    private double _lineWeight;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isStyleAutomatic;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.TraceSymbol _symbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Media.Color> _surfaceFill;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _axesHaveMinMaxErrors;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color _color;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.Model.IEngineTrace3DResultParser _engineResultParser;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color _renderColor;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D VisualData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -52,6 +84,8 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private string ScalingRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     protected string NumberOfNodesRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal double NumberOfNodesY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -68,6 +102,12 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     public PlotTraceModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D plotEquationModel3D) { }
     [global::Quire.Mirror.MirrorStub]
+    private void AttachCleanErrorsToExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DetachCleanErrorsFromExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ResetOnRemoval() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ChangeSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -82,6 +122,8 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.PersistentDataObjects.trace3DType traceData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateRenderColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => base.OnPlotCalculatableError(args);
@@ -92,9 +134,15 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     public void UpdateVisualData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void UserChangedStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetUserDefinedLimits(double xStart, double xEnd, double yStart, double yEnd, double zStart, double zEnd, out bool needsCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.Media3D.Transform3D TransformForVisual(global::System.Windows.Media.Media3D.Rect3D bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Calculation.Core.EngineResult GetPrintResults(global::Quire.Calculation.Core.EngineResult sourceResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

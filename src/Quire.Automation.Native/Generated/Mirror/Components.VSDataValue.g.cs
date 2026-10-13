@@ -12,6 +12,12 @@ namespace Quire.Components;
 public partial class VSDataValue : global::Quire.Automation.MatrixValue, global::Quire.Components.IPersistStream, global::Quire.Components.IPersist, global::Quire.Components.IVSPersistStream
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly byte[] MatrixMarker;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Runtime.InteropServices.GCHandle handleR;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Runtime.InteropServices.GCHandle handleI;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsScalar { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint Dimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -27,6 +33,10 @@ public partial class VSDataValue : global::Quire.Automation.MatrixValue, global:
     public VSDataValue() { }
     [global::Quire.Mirror.MirrorStub]
     public VSDataValue(global::Quire.Mcd.MatVal mat) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void SetPowers(double[] powers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] GetPowers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitNew(uint rows, uint cols, bool bImag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

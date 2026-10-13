@@ -12,7 +12,13 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class a4
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Native.PtcEquationEditor.a4 b;
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor a_;
+    [global::Quire.Mirror.MirrorStub]
+    public static readonly global::Quire.Native.PtcEquationEditor.a4 b_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.at c_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.aw d_;
     [global::Quire.Mirror.MirrorStub]
     public a4(global::Quire.Native.PtcEquationEditor.at A_0, global::Quire.Native.PtcEquationEditor.aw A_1) { }
     [global::Quire.Mirror.MirrorStub]
@@ -27,4 +33,20 @@ internal partial class a4
     public global::Quire.EquationEditor.Tree.MathNode a(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1, global::Quire.Native.PtcEquationEditor.ay A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode a(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void h(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void g(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void f(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void e(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void d(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void c(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(ref global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,7 +12,23 @@ namespace Quire.Controls.Core.Ole;
 public abstract partial class OleContainerModel<TPersistentData> : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData>, global::System.ComponentModel.INotifyPropertyChanged where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.OLE.IOleSiteManager _oleSiteManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.TemporaryStorageHelper _temporaryStorageHelper;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.Threading.Dispatcher Dispatcher;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly object _lock;
+    [global::Quire.Mirror.MirrorStub]
+    private string _worksheetName;
+    [global::Quire.Mirror.MirrorStub]
+    private string _displayFilePath;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Ole.OleSizeDataWithNotification _sizeData;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.AttachedBehavior.MessageList _messageList;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Guid _guid;
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.OLE.IOleSiteManager SiteManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,6 +70,8 @@ public abstract partial class OleContainerModel<TPersistentData> : global::Quire
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey ToggleActivateStateFunctionalityKey { get; }
     [global::Quire.Mirror.MirrorStub]
+    private string StorageFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.Dictionary<global::System.Guid, global::System.Guid> GuidsConversionDict { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsStorageEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -61,6 +79,8 @@ public abstract partial class OleContainerModel<TPersistentData> : global::Quire
     public global::System.Guid ClassId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.AttachedBehavior.MessageList MessageList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private event global::System.Action Unlocked;
     [global::Quire.Mirror.MirrorStub]
     protected internal event global::System.Action OleSavedAsync;
     [global::Quire.Mirror.MirrorStub]
@@ -110,6 +130,12 @@ public abstract partial class OleContainerModel<TPersistentData> : global::Quire
     [global::Quire.Mirror.MirrorStub]
     protected object GetOleObject(bool forceRun, bool ignoreRunningState = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool SetExtent(global::System.Drawing.Size size, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Drawing.Size GetExtent(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetHostNamesIfRunning(string appName, string docName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal nint CreateHBitmap(global::System.Windows.Int32Rect rect, nint winHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CreateOleFromProgId(string progId, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -125,6 +151,8 @@ public abstract partial class OleContainerModel<TPersistentData> : global::Quire
     public void UpdateOleSizeIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateLink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateOleMessageIfNeeded(global::Quire.OLE.OleResult oleResult, global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> messageKeys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
@@ -168,6 +196,8 @@ public abstract partial class OleContainerModel<TPersistentData> : global::Quire
     [global::Quire.Mirror.MirrorStub]
     public void Unlock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireComponentUnlocked() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected bool TryDoingActionWithLock(global::System.Action action, bool checkOleActiveState, bool mustTakeLock = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetMessage(global::Quire.Controls.Core.AttachedBehavior.MessageCategory category, global::Quire.Controls.Core.NodeMessageAdornerType type, string messageKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -175,4 +205,6 @@ public abstract partial class OleContainerModel<TPersistentData> : global::Quire
     public void ClearMessage(global::Quire.Controls.Core.AttachedBehavior.MessageCategory category) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

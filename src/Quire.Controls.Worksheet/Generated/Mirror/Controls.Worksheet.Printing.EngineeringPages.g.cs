@@ -12,6 +12,16 @@ namespace Quire.Controls.Worksheet.Printing;
 public partial class EngineeringPages : global::System.Windows.Controls.ListBox, global::System.Windows.Documents.IDocumentPaginatorSource, global::System.IDisposable, global::Quire.Controls.Core.IWorksheetPageLayoutSize, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.WorksheetPageLayout _pageLayout;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _pageSizeDips;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.Printing.EngineeringPages.EngPagesPaginator _engPagesPaginator;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Controls.Primitives.Popup _popup;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.WorksheetPageLayout PageLayout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -75,6 +85,8 @@ public partial class EngineeringPages : global::System.Windows.Controls.ListBox,
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.Printing.EngineeringPages+EngPagesPaginator, Ptc.Controls.Worksheet")]
     private partial class EngPagesPaginator : global::System.Windows.Documents.DocumentPaginator
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Worksheet.Printing.EngineeringPages _engineeringPages;
         [global::Quire.Mirror.MirrorStub]
         public override bool IsPageCountValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

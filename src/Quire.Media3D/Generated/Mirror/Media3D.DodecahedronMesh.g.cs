@@ -12,6 +12,16 @@ namespace Quire.Media3D;
 public partial class DodecahedronMesh : global::Quire.Media3D.PolyhedronMeshBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly double G;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly double H;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly double A;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly double B;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Media3D.Point3D[,] faces;
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Media3D.Point3D[,] Faces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public DodecahedronMesh() { }

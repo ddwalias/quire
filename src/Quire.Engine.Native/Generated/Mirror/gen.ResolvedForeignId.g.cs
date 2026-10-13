@@ -16,6 +16,10 @@ internal abstract partial class ResolvedForeignId
     [global::Quire.Mirror.MirrorStub]
     protected string m_id;
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable m_fv_cache;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable s_loaded;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.gen.ResolvedForeignId ResolveForeignId(string QualifiedName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void InitForeignIdCache(sbyte wildcard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -31,4 +35,18 @@ internal abstract partial class ResolvedForeignId
     protected ResolvedForeignId(string id) { }
     [global::Quire.Mirror.MirrorStub]
     protected void CacheId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.gen.ResolvedForeignId FetchId(string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.gen.ResolvedForeignId LookupImportedNameByReflection(string QualifiedName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GobbleWhite(int idx, string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe bool ParseName(string QualifiedName, string* an, string* ty, string* id, global::Quire.gen.CallConv* cc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.Assembly GetAssembly(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type ArrayTypeFromElementType(global::System.Type element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe global::System.Type[] ResolveSignature(string MemberName, string* identifier) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

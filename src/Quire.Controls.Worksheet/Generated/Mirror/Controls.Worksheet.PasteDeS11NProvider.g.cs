@@ -14,6 +14,10 @@ internal partial class PasteDeS11NProvider : global::Quire.Serialization.IDeS11N
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Worksheet.PasteDeS11NProvider Instance;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Serialization.ISerializationHelper _helper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.XmlDocument _xmlDocument;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

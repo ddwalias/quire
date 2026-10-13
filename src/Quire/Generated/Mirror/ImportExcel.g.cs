@@ -26,6 +26,8 @@ public partial class ImportExcel : global::System.Windows.Window, global::System
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FileLoadedProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.Thread _loadExcelThread;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty WorksheetHasDataProperty;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ImportExcel importExcel;
@@ -46,6 +48,8 @@ public partial class ImportExcel : global::System.Windows.Window, global::System
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button _cancelButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public string SelectedRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string FileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -64,7 +68,19 @@ public partial class ImportExcel : global::System.Windows.Window, global::System
     [global::Quire.Mirror.MirrorStub]
     public ImportExcel() { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnBrowseClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BeginInvoke(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BeginInvoke<T1, T2>(global::System.Action<T1, T2> action, T1 param1, T2 param2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LoadExcel(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnExcelLoaded(string resolvedFileName, global::Quire.Controls.Core.Excel.ExcelReader er) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnClosing(global::System.ComponentModel.CancelEventArgs e) => base.OnClosing(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnInsertClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

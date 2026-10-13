@@ -12,11 +12,17 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 public partial class ChartComponentViewModel : global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel, global::Quire.Controls.ExcelComponent.ViewModel.IChartComponentViewModel, global::Quire.Controls.ExcelComponent.ViewModel.IOleBaseComponentViewModel, global::Quire.Controls.Mathboard.IAggregateMathboardViewModel, global::Quire.Controls.Mathboard.IMathboardViewModel, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.IDisposable, global::System.ICloneable, global::Quire.Controls.Core.IResizableElementViewModelWithDataStore, global::Quire.Controls.Core.Whiteboard.IItemContainerWithoutTextRegion
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ChartComponentModel _chartComponentModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _sectionInitialHeight;
+    [global::Quire.Mirror.MirrorStub]
     public override bool OutputSectionExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ChartComponentViewModel(global::Quire.Controls.ExcelComponent.Model.ChartComponentModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     internal ChartComponentViewModel(global::Quire.Controls.ExcelComponent.Model.ChartComponentModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid grid) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private ChartComponentViewModel(global::Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel original) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Commit() => base.Commit();
     [global::Quire.Mirror.MirrorStub]

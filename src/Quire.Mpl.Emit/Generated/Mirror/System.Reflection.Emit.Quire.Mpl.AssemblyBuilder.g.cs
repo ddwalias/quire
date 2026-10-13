@@ -12,6 +12,18 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class AssemblyBuilder : global::System.Reflection.Assembly
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _previouslySaved;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.AssemblyName _assemblyName;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _module;
+    [global::Quire.Mirror.MirrorStub]
+    private string _fullName;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Version _version;
+    [global::Quire.Mirror.MirrorStub]
+    private string _culture;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Metadata.AssemblyDefinitionHandle _assemblyDef;
     [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -21,6 +33,8 @@ public partial class AssemblyBuilder : global::System.Reflection.Assembly
     public global::System.Version Version { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Culture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private AssemblyBuilder(global::System.Reflection.AssemblyName name) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Reflection.AssemblyName GetName() => base.GetName();
     [global::Quire.Mirror.MirrorStub]
@@ -38,5 +52,5 @@ public partial class AssemblyBuilder : global::System.Reflection.Assembly
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder GetDynamicModule(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private AssemblyBuilder() { }
+    private static void WritePEImage(global::System.IO.Stream peStream, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadataBuilder, global::System.Reflection.Metadata.BlobBuilder ilBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

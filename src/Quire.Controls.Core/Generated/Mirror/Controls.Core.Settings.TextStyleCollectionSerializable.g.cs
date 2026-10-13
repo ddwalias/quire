@@ -14,6 +14,8 @@ public partial class TextStyleCollectionSerializable : global::Quire.Controls.Co
     [global::Quire.Mirror.MirrorStub]
     internal const string LocalName = "textStyles";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.Settings.TextFormatSerializer> _styles;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleObject this[string styleName] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TextStyleCollectionSerializable(global::System.Xml.Linq.XNamespace Ns) : base(default(global::System.Xml.Linq.XName), default(object[])) { }

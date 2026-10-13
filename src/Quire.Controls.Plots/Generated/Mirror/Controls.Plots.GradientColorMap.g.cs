@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots;
 public partial class GradientColorMap : global::System.Windows.DependencyObject, global::Quire.Controls.Plots.IColorMap
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SpecialProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty GradientStopsProperty;

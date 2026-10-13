@@ -12,7 +12,37 @@ namespace Quire.Calculation;
 public partial class CalculationController
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Calculation.EngineBuilder _engineBuilder;
+    [global::Quire.Mirror.MirrorStub]
+    private string customUnitSystemRl;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<global::Quire.Calculation.CalculationController> _boundControllers;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Calculation.Core.EmptySimpleResultNode _emptyResult;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _enableDebugWrites;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Engine.IBuiltin _builtin;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Threading.Dispatcher _contextThreadDispatcher;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _importRequestHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _initialHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> _handleToICalculatableMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.CalculationController.CalculatableMapInfo> _iCalculatableToHandleMap;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Calculation.CalculationController.EngineOptions _engineOptions;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _simplifyUnitSystem;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _evaluatingEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Threading.ManualResetEvent _waitForCalc;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Threading.ManualResetEvent _interruptWaitForCalc;
     [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.Threading.DispatcherPriority WaitForCalculationInterruptPriority_Send;
     [global::Quire.Mirror.MirrorStub]
@@ -23,6 +53,92 @@ public partial class CalculationController
     public static void UNITTEST_InitBuilder(global::Quire.Calculation.EngineBuilder engineBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public CalculationController(global::Quire.Calculation.Core.ICalculatableContext context, global::Quire.Engine.IEngine engine, int importRequestHandle, int initialHandle) : this() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupAndInitializeEngine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupContextEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookFromContextEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleEngineUpToDate(bool isUpToDate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleEngineBusy(bool isBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleEngineNodeCallback(int handle, global::Quire.Engine.NodeStatus status, int clientCookie, int triggerHandle, int triggerCookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string HandleGetEngineVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleStartEvaluating() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleStopEvaluating() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string DumpGetHandleToCalculatableMap(global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleContextUnloaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRecalculateAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculateNow(global::Quire.Calculation.Core.ICalculatable lastVisibleCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleStartAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleStopAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCommitAndNotifyDependentCalculatables(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> toBeCommitted) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSimplifyUnitSystemUpdated(bool simplifyUnitsInResults) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleUnitSystemUpdated(global::Quire.Calculation.Core.UnitSystems unitSystem, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> baseList, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> derivedList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculationOptionUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSystemVariableUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWaitForCalculationIdle(int seconds, global::System.Windows.Threading.DispatcherPriority eventsProcessingPriority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddCalculatableChild(global::Quire.Calculation.Core.ICalculatable parent, global::Quire.Calculation.Core.ICalculatable child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableMoved(global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CleanupAfterCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RegisterDataExchange(global::Quire.Calculation.Core.ICalculatableWithDataExchange calcWithDataExchange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.ICalculatableWithDataExchange GetDataExchangeOwnerAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.ICalculatableWithDataExchange GetDataExchangeOwnerRemoved(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleEngineNeedsUIThreadMessagesProcessed() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnregisterDataExchange(global::Quire.Calculation.Core.ICalculatableWithDataExchange calcWithDataExchange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsAggregate(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsAggregate(global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object HandleGetEngineOption(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupCalculatableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookFromCalculatableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableUpdated(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IResultNode HandleGetValueOfIdentifierBefore(global::Quire.Calculation.Core.ICalculatable calcAtPosition, string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTreatCalculatableAsUpToDate(global::Quire.Calculation.Core.ICalculatable arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsCalculatableInContext(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void DebugEnter(string methodName, string methodInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void DebugExit(string methodName, string methodInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void DebugInfo(string info) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+CalculatableMapInfo, Ptc.Calculation")]
     private partial struct CalculatableMapInfo
@@ -71,7 +187,11 @@ public partial class CalculationController
         [global::Quire.Mirror.MirrorStub]
         protected global::Quire.Calculation.CalculationController.EngineOptions _engineOptions;
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Text.RegularExpressions.Regex _resolvedIdRegEx;
+        [global::Quire.Mirror.MirrorStub]
         protected readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> _isCalcInContext;
+        [global::Quire.Mirror.MirrorStub]
+        private int _cookie;
         [global::Quire.Mirror.MirrorStub]
         protected global::System.Windows.Threading.DispatcherPriority ResultDispatchingPriority { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
@@ -122,6 +242,8 @@ public partial class CalculationController
         protected virtual void DispatchedSetSyncResultAndError(global::Quire.Calculation.Core.IResultNode result, global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public virtual void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.IDictionary ParentGlobalErrorResultsDictionary(int handle, global::Quire.Engine.IEngine engine, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         protected virtual void ErrorHandle(global::System.Collections.IDictionary resultsIDictionary, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class axisBaseTypePlotEquations
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.plotEquation[] plotEquationField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool displayField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.plotEquation[] plotEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

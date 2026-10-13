@@ -12,6 +12,14 @@ namespace Quire.Native.EfidataImpl;
 public partial class PartialApply
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] m_args;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_param;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_nested;
+    [global::Quire.Mirror.MirrorStub]
     public PartialApply(global::Quire.Mpl.Run.Function f, object[] args, int param) { }
     [global::Quire.Mirror.MirrorStub]
     public object Apply(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

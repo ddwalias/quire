@@ -12,6 +12,12 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class ILGeneratorStore : global::System.Reflection.Emit.Quire.Mpl.ILGenerator
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> instructions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodBase _method;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.CommonMemberData _memberData;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> Instructions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override int ILOffset { get => base.ILOffset; }

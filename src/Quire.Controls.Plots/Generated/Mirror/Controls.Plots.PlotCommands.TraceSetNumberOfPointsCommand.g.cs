@@ -12,6 +12,16 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class TraceSetNumberOfPointsCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action _activation;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, int> _oldNumberOfPointsMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction _action;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _numberOfPointsValue;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _activate;
+    [global::Quire.Mirror.MirrorStub]
     public TraceSetNumberOfPointsCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle> traceList, global::Quire.Pair<int, bool> numberOfPointsData, global::System.Action activation, global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction action = (global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction)(2)) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -19,4 +29,6 @@ internal partial class TraceSetNumberOfPointsCommand : global::Quire.Controls.Pl
     public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool DoRedoHelper(bool activate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

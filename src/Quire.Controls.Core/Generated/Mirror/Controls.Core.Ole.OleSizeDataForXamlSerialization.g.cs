@@ -21,4 +21,6 @@ public partial class OleSizeDataForXamlSerialization : global::Quire.PersistentD
     public OleSizeDataForXamlSerialization() { }
     [global::Quire.Mirror.MirrorStub]
     public OleSizeDataForXamlSerialization(global::Quire.PersistentData.IOleSizeData sizeData) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void CopyFrom(global::Quire.PersistentData.IOleSizeData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

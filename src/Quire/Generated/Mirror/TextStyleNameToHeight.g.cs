@@ -12,6 +12,10 @@ namespace Quire;
 public partial class TextStyleNameToHeight : global::System.Windows.Data.IValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int ControlHeightStyleIsNone = 24;
+    [global::Quire.Mirror.MirrorStub]
+    private const int ControlHeightStyleIsNotNone = 52;
+    [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

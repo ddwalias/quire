@@ -12,6 +12,12 @@ namespace Quire.Controls.InputControls;
 public partial class ComboBoxViewModel : global::Quire.Controls.InputControls.ComboBoxViewModelBase, global::Quire.Controls.InputControls.IComboBoxViewModel, global::Quire.EquationEditor.View.IComboBoxViewModelBase, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _selectedRowNumber;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.INameValuesRow> _dataItems;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _refreshInProgress;
+    [global::Quire.Mirror.MirrorStub]
     public string TableTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.INameValuesRow> DataItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

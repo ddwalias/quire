@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class IlMethod : global::Quire.gen.Callable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.CallConv m_cc;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_arity;
+    [global::Quire.Mirror.MirrorStub]
     public IlMethod(string nm, global::System.Reflection.MethodInfo mi, global::Quire.gen.CallConv cc) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public IlMethod(global::Quire.Mpl.Run.Primitive prim) : base(default(global::Quire.gen.IlAsm)) { }

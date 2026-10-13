@@ -12,6 +12,8 @@ namespace Quire.mslisp;
 internal partial class SingleMethod : global::Quire.utl_mgd.FunctionBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodInfo m_info;
+    [global::Quire.Mirror.MirrorStub]
     public SingleMethod(global::System.Reflection.MethodInfo m) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

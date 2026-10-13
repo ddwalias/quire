@@ -12,6 +12,8 @@ namespace Quire.Automation;
 public partial class Matrix : global::Quire.Automation.IProxyComRealSubject<global::Quire.Automation.IMathcadPrimeMatrix>, global::Quire.Automation.IMathcadPrimeMatrix
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeMatrix _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.IMathcadPrimeMatrix RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     double[][] global::Quire.Automation.IMathcadPrimeMatrix.Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,6 +21,8 @@ public partial class Matrix : global::Quire.Automation.IProxyComRealSubject<glob
     public double Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private Matrix() { }
     [global::Quire.Mirror.MirrorStub]
     internal Matrix(global::Quire.Automation.IMathcadPrimeMatrix mathcadPrimeMatrix) { }
     [global::Quire.Mirror.MirrorStub]

@@ -26,9 +26,33 @@ internal partial class VisualInputScriptableControlNodeBase : global::Quire.Cont
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent RequestActivateEquationForComboBoxNodeEvent;
     [global::Quire.Mirror.MirrorStub]
+    private const int pastingAttachedPropertyDelay = 5;
+    [global::Quire.Mirror.MirrorStub]
+    private const double headingFontSizeSmallerBy = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double headingFontOpacity = 0.6d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double headingCellHorizontalPadding = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const string rowHeadingName = "RowHeading";
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Visibility _headingsVisibility;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly string VISUAL_NAME;
     [global::Quire.Mirror.MirrorStub]
+    private double _effectiveBaselineY;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MatrixNodeInfo _matrixInfo;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.EquationEditor.Tree.MathNode _mathNode;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.StackPanel _rowHeading;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.StackPanel _columnHeading;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] _rowIndices;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] _columnIndices;
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Internal.VerticalFence _leftBracket;
     [global::Quire.Mirror.MirrorStub]
@@ -47,6 +71,20 @@ internal partial class VisualInputScriptableControlNodeBase : global::Quire.Cont
     protected global::System.Windows.Controls.Primitives.ToggleButton _toggle;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Controls.Control _inputControl;
+    [global::Quire.Mirror.MirrorStub]
+    private double _rowHeadingTop;
+    [global::Quire.Mirror.MirrorStub]
+    private double _columnHeadingLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private double _matrixTop;
+    [global::Quire.Mirror.MirrorStub]
+    private double _matrixLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private double _matrixContentTop;
+    [global::Quire.Mirror.MirrorStub]
+    private double _matrixContentLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNode[] _children;
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Internal.VisualMathRegionNode _region;
     [global::Quire.Mirror.MirrorStub]
@@ -116,13 +154,35 @@ internal partial class VisualInputScriptableControlNodeBase : global::Quire.Cont
     [global::Quire.Mirror.MirrorStub]
     protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
     [global::Quire.Mirror.MirrorStub]
+    private void InitMathRegion(global::Quire.Controls.Internal.VisualMathRegionNode region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitNodeInfo(global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Controls.Control InitInputControl(string mathNodeName, global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRegionActivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRegionDeactivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     ~VisualInputScriptableControlNodeBase() { } // stub finalizers must not throw: they also run for objects whose constructor threw
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Visibility InitializeVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ConstructContextMenu() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void CanAddInputs(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanRemoveInputs(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleOpenEditingMode(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs routedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleAddInputs(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRemoveInputs(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleAddOutput(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnControlLostKeyboardFocusOrDataChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -132,7 +192,17 @@ internal partial class VisualInputScriptableControlNodeBase : global::Quire.Cont
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.EquationControl GetEquationControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void LoadedHandler(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableStateChanged(global::Quire.Calculation.Core.CalculatableState state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.HandleMathFormatChanged(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleIORegionChanged(global::System.Windows.DependencyObject arg1, global::Quire.Controls.Core.IORegions.IORegionChangeType arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSExpressionChanged(global::Quire.Controls.Core.IEquationControl eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupMatrixResizeWidget(object sender, global::System.Windows.Input.MouseEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateOnBorderResize(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, global::System.Windows.Controls.UIElementCollection uiElementCollection = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -148,6 +218,12 @@ internal partial class VisualInputScriptableControlNodeBase : global::Quire.Cont
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsResizeIndicator(global::Quire.EquationEditor.View.IVisualTextNode text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetupResizeIndicatorBehaviour(global::Quire.Controls.Internal.VisualTextNode resizeIndicator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResizeIndicatorOnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
@@ -156,9 +232,25 @@ internal partial class VisualInputScriptableControlNodeBase : global::Quire.Cont
     [global::Quire.Mirror.MirrorStub]
     public void SetParensVisibility(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.StackPanel CreateHeading(string panelName, global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ArrangeHeadingContent(global::System.Windows.Controls.StackPanel heading) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string[] GetMatrixRowOrColumnIndices(global::System.Windows.Controls.StackPanel heading) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetHeadingsCellsVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void PopulateMatrixHeadings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void BuildChildren(global::Quire.EquationEditor.View.IVisualMathNode[] children) => base.BuildChildren(children);
+    [global::Quire.Mirror.MirrorStub]
+    private void ConstructMatrixGrid() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNode CreateTextNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNode CheckIfSpecialCellNeeded(global::Quire.TableCoordinate cellPosition, global::Quire.Controls.Internal.MatrixDisplayHelper displayHelper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetIndexOfNode(global::Quire.EquationEditor.View.IVisualMathNode childNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]

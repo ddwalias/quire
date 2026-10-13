@@ -12,6 +12,28 @@ namespace Quire.Native.EfidiffeqImpl;
 internal partial class PdeDims
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim m_xdim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim m_tdim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatDim m_udim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatDim m_uxdim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatDim m_uxxdim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatDim m_vdim;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_num_pde;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_boundary_cond;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim get_dim(object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatDim get_matdim(object m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int to_int(object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PdeDims(object left, object right, object start_time, object end_time, global::Quire.Mpl.Run.Function pinit_func, object oinit_vec, int num_pde, object boundary_cond) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Dim GetXDim() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

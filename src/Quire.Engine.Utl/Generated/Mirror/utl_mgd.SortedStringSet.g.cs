@@ -12,6 +12,8 @@ namespace Quire.utl_mgd;
 public partial class SortedStringSet : global::System.Collections.IEnumerable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.SortedList m_strings;
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public SortedStringSet(string[] strings) { }

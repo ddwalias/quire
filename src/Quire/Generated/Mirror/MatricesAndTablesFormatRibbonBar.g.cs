@@ -18,6 +18,8 @@ public partial class MatricesAndTablesFormatRibbonBar : global::Fluent.RibbonGro
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button collapseNestedMatrices;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MatricesAndTablesFormatRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

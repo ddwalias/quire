@@ -12,6 +12,12 @@ namespace Quire.PersistentData;
 public partial class fieldType
 {
     [global::Quire.Mirror.MirrorStub]
+    private object textField;
+    [global::Quire.Mirror.MirrorStub]
+    private object itemField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.ItemChoiceType1 itemElementNameField;
+    [global::Quire.Mirror.MirrorStub]
     public object text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -17,4 +17,6 @@ public static partial class CustomInsertedMenuItemsHelper
     public static int TryInsertMenuItemByKey(global::System.Windows.Controls.ContextMenu ctxMenu, global::System.Windows.ResourceDictionary dict, object itemKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Controls.MenuItem GetMenuItemWithCommand(global::System.Windows.Controls.ItemCollection ctxMenuItems, global::System.Windows.Input.RoutedUICommand itemCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int IndexOfCommandMenuItem(global::System.Windows.Controls.ItemCollection ctxMenuItems, global::System.Windows.Input.RoutedUICommand itemCommand, int fallbackInsertIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

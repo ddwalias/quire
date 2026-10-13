@@ -12,5 +12,7 @@ namespace Quire.FunctionalitiesLimitation;
 public static partial class FunctionalitiesLimitationCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand DisplayFreemiumAboutBox;
 }

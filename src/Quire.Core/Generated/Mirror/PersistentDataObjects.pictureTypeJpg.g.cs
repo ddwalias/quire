@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class pictureTypeJpg : global::Quire.PersistentDataObjects.basePictureType
 {
     [global::Quire.Mirror.MirrorStub]
+    private string qualityField;
+    [global::Quire.Mirror.MirrorStub]
     public string quality { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public pictureTypeJpg() { }

@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.ViewModel;
 internal partial class MarkerEventArgs : global::System.EventArgs
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel _marker;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel Marker { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MarkerEventArgs(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) { }

@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Contour.View;
 internal partial class ContoursLabel : global::System.Windows.Controls.ItemsControl, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ContoursLabel() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

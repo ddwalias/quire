@@ -12,9 +12,23 @@ namespace Quire.Services;
 public partial class ApplicationLogger : global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string _defaultApplicationLogFolderPath;
+    [global::Quire.Mirror.MirrorStub]
     protected static readonly string _product;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.IO.IFileOperationsProvider _fileOperationsProvider;
+    [global::Quire.Mirror.MirrorStub]
     protected string _applicationLogFilePath;
+    [global::Quire.Mirror.MirrorStub]
+    private const string DatePattern = "yyyyMMdd_HHmmss";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UnknownBuildId = "Unknown";
+    [global::Quire.Mirror.MirrorStub]
+    private string _subProduct;
+    [global::Quire.Mirror.MirrorStub]
+    private string _fullProductName;
+    [global::Quire.Mirror.MirrorStub]
+    private string _logFolder;
     [global::Quire.Mirror.MirrorStub]
     public string SubProduct { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -43,6 +57,10 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     protected void WriteToLog(string msg, global::System.IO.TextWriter textWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.IO.TextWriter CreateApplicationLog(string logType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetExceptionLogLocation(string appConfigFolderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ReplaceMultiSpaceWithSingleSpace(string stringToReplace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ApplicationLogger() { }
 }

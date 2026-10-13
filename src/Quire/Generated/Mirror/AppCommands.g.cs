@@ -12,6 +12,8 @@ namespace Quire;
 public static partial class AppCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand NewEngineeringDocument;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand SaveEngineeringDocumentWithInputsOutputs;

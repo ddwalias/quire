@@ -12,9 +12,25 @@ namespace Quire.Controls.Help;
 public partial class HelpManager : global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string _rootHelpPath;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Uri _defaultHelpPath;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Uri _defaultWebServerHelpPath;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Core.IHelpSettings _helpSettings;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Services.ApplicationVariant.ApplicationType _currentApplicationType;
+    [global::Quire.Mirror.MirrorStub]
     public const string DefaultRelativeHelpPathDir = "./Help";
     [global::Quire.Mirror.MirrorStub]
     public const string TutorialPath = "index.html#page/Quire_Quire_Help/Tutorials/gs_tutorial/about_the_getting_started_tutorial.html";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DefaultEngNbLocalHelpEnvVarName = "Quire_PMA_HC_URL_13";
+    [global::Quire.Mirror.MirrorStub]
+    private string _engNbLocalHelpEnvVarName;
+    [global::Quire.Mirror.MirrorStub]
+    private string _helpServerPath;
     [global::Quire.Mirror.MirrorStub]
     public string ActiveToolTipUid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -26,7 +42,17 @@ public partial class HelpManager : global::System.ComponentModel.INotifyProperty
     [global::Quire.Mirror.MirrorStub]
     public HelpManager(global::Quire.Services.ApplicationVariant.ApplicationType applicationType, global::Quire.Core.IHelpSettings helpSettings, string rootHelpPath) { }
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Uri GetWebPathPerVariant(global::Quire.Services.ApplicationVariant.ApplicationType currentApplicationType, string cultureLanguage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public string GetTutorialPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string ConstructTopicPath(string helpIdKey, global::Quire.Controls.Core.IWhiteboardItem activeItem, global::System.Windows.UIElement sourceElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string BuildHelpUidKey(string helpIdKey, global::Quire.Controls.Core.IWhiteboardItem activeItem, global::System.Windows.UIElement sourceElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetServerPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnHelpSettingsPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,13 +12,77 @@ namespace Quire.PersistentDataObjects;
 public static partial class MC14MathConversionValidation
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string PercentString = "%";
+    [global::Quire.Mirror.MirrorStub]
+    private const string WhitespaceString = " ";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ElementOfString = "\u2208";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] _numberSetStrings;
+    [global::Quire.Mirror.MirrorStub]
+    private const string GradientString = "\u2207";
+    [global::Quire.Mirror.MirrorStub]
+    private const int GradientNumChildren = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Serialization.AnnotationTypeList _types;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Serialization.AnnotationTypeList MathValidate(global::System.Xml.XmlNode xmlElement, string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsSymbolicEvaluationOfSolver(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsUnsupportedNames(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsOldMc15Functions(global::System.Xml.Linq.XElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsWhitespaces(global::System.Xml.Linq.XElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsExponentialNotation(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsSymbolicEvaluationAsEquals(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsBooleanEqualityAsEquals(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsLocalDefinitionAsEquals(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsPercentOperatorInResult(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsOperatorWhichDisplayWasChanged(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsNotAutoSelectedOrNotDefaultAdvancedOptionsAlgorithm(string nodeName, global::System.Xml.Linq.XContainer doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsMixedNumber(global::System.Xml.Linq.XContainer xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsNameSpace(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsFontStyleAttribute(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsValidGradientExpression(global::System.Xml.Linq.XElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsValidElementOfExpression(global::System.Xml.Linq.XElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsInOrTreeFixity(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsOtherwiseOperator(global::System.Xml.Linq.XContainer xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void AnnotateSymbolicIfNeeded(global::System.Xml.Linq.XContainer xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsStyleAsRightShaft(global::System.Xml.Linq.XContainer xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsHideLHS(global::System.Xml.Linq.XContainer xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainsHideKeyword(global::System.Xml.Linq.XContainer xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsXNameInXDocument(global::System.Xml.Linq.XContainer xDocument, global::System.Xml.Linq.XName xmlMathNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsAttribute(string nodeName, string attributeName, global::System.Xml.Linq.XContainer doc, global::System.Func<global::System.Xml.Linq.XElement, bool> func) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsAttribute(string nodeName, string attributeName, global::System.Xml.Linq.XContainer doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool ContainsAttributeWithValue(string nodeName, string attributeName, string attributeValue, global::System.Xml.Linq.XContainer doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsAttributeWithValueNotEqualTo(string nodeName, string attributeName, string attributeValue, global::System.Xml.Linq.XContainer doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Linq.XName GetMc14Math30XName(string localName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> GetRealAndImaginaryElements(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

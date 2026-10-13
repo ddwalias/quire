@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Whiteboard;
 public partial class ContainerItemManager : global::Quire.Controls.Core.FrameworkElementFacade, global::Quire.Controls.Core.Whiteboard.IContainerItemManager, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty MouseEnterHandlerProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty DragEnterHandlerProperty;
@@ -99,6 +101,10 @@ public partial class ContainerItemManager : global::Quire.Controls.Core.Framewor
     public void SetItemIsInCopy(global::Quire.Controls.Core.IWhiteboardItem item, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearItemIsInCopy(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetIsSelectedProperty(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Nullable<bool> isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetActiveItemProperty(global::Quire.Controls.Core.IWhiteboardItem item, bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetItemSupportsInputsOutputs(global::Quire.Controls.Core.IWhiteboardItem item, bool visible) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

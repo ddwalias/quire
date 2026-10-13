@@ -14,11 +14,15 @@ public partial class SliderControl : global::System.Windows.Controls.Slider, glo
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.InputControls.SliderControl Slider;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.IInputControlViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public SliderControl(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseRightButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseRightButtonDown(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnInvalidateVisuals(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

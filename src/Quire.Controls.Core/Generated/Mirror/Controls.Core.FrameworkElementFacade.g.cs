@@ -16,6 +16,8 @@ public partial class FrameworkElementFacade : global::Quire.Controls.Core.UIElem
     [global::Quire.Mirror.MirrorStub]
     public void SetSize(object obj, global::System.Windows.Size size, global::Quire.Controls.Core.DragMode dragMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement GetResizableElement(object obj, global::Quire.Controls.Core.DragMode dragMode = (global::Quire.Controls.Core.DragMode)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size GetSize(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetHeight(object obj, double height) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

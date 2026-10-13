@@ -20,7 +20,15 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SynchronizationStatusProperty;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetModel _model;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.ErrorWarningHandler _errorwarningViewHandler;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsIBeamCursorProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isTopLevel;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand IncludeReferenceCommand;
     [global::Quire.Mirror.MirrorStub]
@@ -29,6 +37,14 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     public static readonly global::System.Windows.Input.RoutedUICommand OpenFileCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IncludedFilePathProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Threading.DispatcherOperation _lastDispatcherOperation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.UIElement _contentElement;
+    [global::Quire.Mirror.MirrorStub]
+    private const string DataPropertyName = "Data";
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public bool CalcIsDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -81,6 +97,10 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     public global::Quire.Controls.CalculationOptions IncludedFileCalculationOptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.CalculationVariables IncludedFileCalculationVariables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.ErrorsList ErrorsList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.WarningsList WarningsList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsIBeamCursor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -138,6 +158,14 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action HookupSizeChangedHandler;
     [global::Quire.Mirror.MirrorStub]
+    private static void PreRecalculateAllChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSynchronizationStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleHideFromCalculationContext(bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -146,7 +174,39 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     [global::Quire.Mirror.MirrorStub]
     public void WaitForLoad(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private string[] GetWarningParameterList(global::Quire.Controls.Include.WarningOnIncludeWorksheet.FieldName parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetCodeFromLongWarningCode(string longCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnIsInCopyPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public IncludeWorksheetControl() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void GetInformationFromDocument(global::Quire.Controls.Include.IncludeWorksheetControl element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ElementIsLoadedGetInformationFromDocument(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleContentChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDocumentFilePathChanged(global::Quire.Controls.Core.IWorksheetProperties properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetDocumentFilePath(global::Quire.Controls.Core.IWorksheetProperties properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InsertFilePath(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RefreshWorksheet(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string OpenIncludeDialog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void CommitExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IncludedFilePathChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ResetOldIncludedFilePathFromModel(global::Quire.Controls.Include.IncludeWorksheetControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IsActiveRegionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
@@ -159,6 +219,12 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     public bool HighlightAll(string text, global::Quire.Controls.Core.FindOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool FindInRange(int start, int end, string text, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceCanvasLeft(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void CanvasLeftChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
     [global::Quire.Mirror.MirrorStub]
@@ -187,6 +253,16 @@ public partial class IncludeWorksheetControl : global::System.Windows.Controls.T
     public void FireHookupSizeChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseDownOpenFile(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ScrollViewerGotFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ScrollViewerLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CtrlButtonDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CtrlButtonUp(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

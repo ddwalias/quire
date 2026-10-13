@@ -12,6 +12,10 @@ namespace Quire.PersistentData;
 public partial class cachedWorksheetRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private object itemField;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] mc14conversionlossannotationsField;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type[] SupportedTypes;
     [global::Quire.Mirror.MirrorStub]
     public override object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -24,6 +28,10 @@ public partial class cachedWorksheetRegionType : global::Quire.PersistentDataObj
     public partial class headersContainer
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.PersistentData.headerFooterRegions headerField;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.PersistentData.headerFooterRegions firstPageHeaderField;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.PersistentData.headerFooterRegions header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.PersistentData.headerFooterRegions firstPageHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -34,6 +42,10 @@ public partial class cachedWorksheetRegionType : global::Quire.PersistentDataObj
     [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.cachedWorksheetRegionType+footersContainer, Ptc.Core")]
     public partial class footersContainer
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.PersistentData.headerFooterRegions footerField;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.PersistentData.headerFooterRegions firstPageFooterField;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.PersistentData.headerFooterRegions footer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

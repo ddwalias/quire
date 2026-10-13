@@ -12,13 +12,19 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionToRlTransform
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform a__;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer b;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToRlTransform Default;
+    [global::Quire.Mirror.MirrorStub]
+    private SExpressionToRlTransform(global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform A_0, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer A_1) { }
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string Transform(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string TransformIdSubNode(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private SExpressionToRlTransform() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.SExpressionToRlTransform+a, Ptc.EquationEditor")]
     private sealed partial class a_

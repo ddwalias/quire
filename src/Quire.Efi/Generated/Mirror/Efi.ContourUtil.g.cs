@@ -14,6 +14,16 @@ public partial class ContourUtil
     [global::Quire.Mirror.MirrorStub]
     public int ContourGradient(global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D> cntr, global::Quire.Efi.glMesh grid, global::Quire.Mpl.Run.Function F) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void get_bisectorX(global::Quire.Efi.shpPoint3D p1, global::Quire.Efi.shpPoint3D p2, global::Quire.Efi.shpPoint3D p3, out double x, out double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double interpGridData(double x, double y, global::Quire.Efi.glMesh grid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double shape_Qd(double s, double t, int node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double get_nearest_in_vertex_value(global::Quire.Efi.shpPoint3D p0, global::Quire.Efi.shpPoint3D p1, global::Quire.Efi.shpPoint3D p2, global::Quire.Efi.shpPoint3D p3, global::Quire.Efi.shpPoint3D p4, global::Quire.Efi.shpPoint3D pi, global::Quire.Efi.glMesh grid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int segXseg(global::Quire.Efi.shpPoint3D p11, global::Quire.Efi.shpPoint3D p12, global::Quire.Efi.shpPoint3D p21, global::Quire.Efi.shpPoint3D p22, out double h1, out double h2, out double xs, out double ys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.NumVal BGpoint(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> allcontours, global::System.Collections.Generic.List<int> bCntrIdx, global::Quire.Efi.LRect3 rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double polyArea(global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D> strip) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

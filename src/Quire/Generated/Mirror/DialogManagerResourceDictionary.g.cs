@@ -14,6 +14,8 @@ public partial class DialogManagerResourceDictionary : global::System.Windows.Re
     [global::Quire.Mirror.MirrorStub]
     public const string AccessDeniedToBrowsePath = "AccessDeniedToBrowsePath";
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DialogManagerResourceDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

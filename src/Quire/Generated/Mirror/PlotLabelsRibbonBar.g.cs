@@ -24,6 +24,8 @@ public partial class PlotLabelsRibbonBar : global::Fluent.RibbonGroupBox, global
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton Part_PlotMarkersRibbonBar_Delete;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public PlotLabelsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

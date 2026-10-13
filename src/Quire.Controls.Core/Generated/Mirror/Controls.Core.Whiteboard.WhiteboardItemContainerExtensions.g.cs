@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Whiteboard;
 public static partial class WhiteboardItemContainerExtensions
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Whiteboard.IContainerItemManager _itemManager;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Whiteboard.IContainerItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool HasRegionsWithConverterAnnotations(this global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

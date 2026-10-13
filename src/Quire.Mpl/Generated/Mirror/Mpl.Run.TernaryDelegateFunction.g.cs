@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class TernaryDelegateFunction : global::Quire.Mpl.Run.DelegateFunction
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.F<object, object, object, object> m_F;
+    [global::Quire.Mirror.MirrorStub]
     public TernaryDelegateFunction(global::Quire.Mpl.Run.F<object, object, object, object> f) : base(default(global::System.Delegate), default(int)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc) => base.inv<R, A, B, C>(out r, aa, bb, cc);

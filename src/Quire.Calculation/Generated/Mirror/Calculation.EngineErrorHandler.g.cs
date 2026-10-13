@@ -12,7 +12,11 @@ namespace Quire.Calculation;
 public partial class EngineErrorHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> _handleToICalculatableMap;
+    [global::Quire.Mirror.MirrorStub]
     public EngineErrorHandler(global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineError> HandleErrors(global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError HandleError(global::Quire.Mpl.Run.AppException appException) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

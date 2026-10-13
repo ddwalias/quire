@@ -20,6 +20,12 @@ public static partial class RegionBorderConstants
     [global::Quire.Mirror.MirrorStub]
     public const global::System.Windows.Visibility HiddenBusyStateElementsVisibility = (global::System.Windows.Visibility)(1);
     [global::Quire.Mirror.MirrorStub]
+    private const double ResizeDraggerTransparentZoneWidth = 7.5d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double BorderLineDashSmallLength = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double BorderLineDashLargeLength = 4d;
+    [global::Quire.Mirror.MirrorStub]
     public const double DraggerMarginWidth = 10d;
     [global::Quire.Mirror.MirrorStub]
     public const double BorderStrokeThickness = 0.5d;

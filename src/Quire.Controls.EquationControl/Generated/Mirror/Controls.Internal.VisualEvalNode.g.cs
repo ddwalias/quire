@@ -17,4 +17,6 @@ internal partial class VisualEvalNode : global::Quire.Controls.Internal.VisualLi
     protected static void EvaluationPlaceholderChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public VisualEvalNode() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleEvaluationPlaceholderChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

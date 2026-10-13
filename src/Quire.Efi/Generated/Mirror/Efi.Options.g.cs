@@ -12,7 +12,11 @@ namespace Quire.Efi;
 internal partial class Options
 {
     [global::Quire.Mirror.MirrorStub]
+    private int bits;
+    [global::Quire.Mirror.MirrorStub]
     public Options(int bits) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void CheckIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool GetBit(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

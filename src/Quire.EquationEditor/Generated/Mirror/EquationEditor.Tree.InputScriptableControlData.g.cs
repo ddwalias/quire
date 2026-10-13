@@ -16,6 +16,10 @@ public abstract partial class InputScriptableControlData : global::Quire.Equatio
     [global::Quire.Mirror.MirrorStub]
     protected byte[] b;
     [global::Quire.Mirror.MirrorStub]
+    private string c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ObjectModel.Collection<string> d;
+    [global::Quire.Mirror.MirrorStub]
     public string Script { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ScriptObjectControlName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,10 @@ namespace Quire.Controls.Internal;
 internal partial class MatrixDisplayHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MatrixNodeInfo _matrixNodeInfo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TableSize _displaySize;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize DisplaySize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MatrixDisplayHelper(global::Quire.EquationEditor.Tree.MatrixNodeInfo matrixNodeInfo) { }
@@ -28,7 +32,23 @@ internal partial class MatrixDisplayHelper
     [global::Quire.Mirror.MirrorStub]
     public bool ShowEmptyCell(global::Quire.TableCoordinate cellPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsChildInFirstDisplayRow(int childRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsChildInFirstDisplayColumn(int childColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsChildInLastDisplayRow(int childRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsChildInLastDisplayColumn(int childColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool HasRowOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HasColumnOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasRowRemainder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasColumnRemainder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasTooManyRows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasTooManyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,7 +12,25 @@ namespace Quire;
 public partial class TextStyleComboBox : global::System.Windows.Controls.ComboBox
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool _handleSelection;
+    [global::Quire.Mirror.MirrorStub]
+    private object _lastValidTextStyle;
+    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
+    [global::Quire.Mirror.MirrorStub]
+    private void TextStylePreviewGotKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TextStylePreviewLostKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TextStylePreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TextStyleComboBoxSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void TextStyleComboBoxDropDownOpened(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void TextStyleComboBoxDropDownClosed(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateTextStyleDataSource(global::Quire.TextStyleComboBox textStyleComboBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TextStyleComboBox() { }
 }

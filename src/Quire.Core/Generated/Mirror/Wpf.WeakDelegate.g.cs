@@ -12,6 +12,10 @@ namespace Quire.Wpf;
 public partial class WeakDelegate
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.WeakReference _weakReference;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Reflection.MethodInfo _method;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsWeakReferenceAlive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public WeakDelegate(global::System.Delegate realDelegate) { }

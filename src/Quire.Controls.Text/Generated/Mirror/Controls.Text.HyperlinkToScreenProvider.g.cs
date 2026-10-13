@@ -12,6 +12,10 @@ namespace Quire.Controls.Text;
 internal partial class HyperlinkToScreenProvider : global::Quire.IPositionProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Controls.RichTextBox _owner;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Rect _clickInTextRect;
+    [global::Quire.Mirror.MirrorStub]
     public double ActualHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double ActualWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,6 +23,10 @@ internal partial class HyperlinkToScreenProvider : global::Quire.IPositionProvid
     public bool IsVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public HyperlinkToScreenProvider(global::System.Windows.Controls.RichTextBox owner, global::System.Windows.Documents.TextPointer clickedTextPosition) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect GetRectAroundTextPosition(global::System.Windows.Documents.TextPointer clickedPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double ComputeExtend(double value, double minRestriction, double maxRestriction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point TranslatePoint(global::System.Windows.Point point, global::System.Windows.UIElement relativeTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

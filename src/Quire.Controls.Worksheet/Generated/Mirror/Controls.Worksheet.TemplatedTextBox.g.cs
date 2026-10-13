@@ -12,7 +12,15 @@ namespace Quire.Controls.Worksheet;
 public partial class TemplatedTextBox : global::System.Windows.Controls.TextBox, global::Quire.Controls.Worksheet.ITemplatedTextBox, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<double> _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private const int TemplateTextBoxMinWidth = 20;
+    [global::Quire.Mirror.MirrorStub]
+    private string _templateFormat;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ChangedEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.TextFormat _currentTextFormat;
     [global::Quire.Mirror.MirrorStub]
     public bool IsUnregisterWithCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -32,7 +40,13 @@ public partial class TemplatedTextBox : global::System.Windows.Controls.TextBox,
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Direction> RequestRemove;
     [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public TemplatedTextBox() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleClearTextFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetTextFormatPropertiesAccordingTo(global::Quire.Core.TextFormat textFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -42,11 +56,15 @@ public partial class TemplatedTextBox : global::System.Windows.Controls.TextBox,
     [global::Quire.Mirror.MirrorStub]
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs routedEventArgs) => base.OnGotFocus(routedEventArgs);
     [global::Quire.Mirror.MirrorStub]
+    private void FireChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.PersistentDataObjects.textType GetRegionTextPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTextFormattingChanged(global::System.Windows.DependencyPropertyChangedEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ApplyTextFormatPropertyValueToControl(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.Block block = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

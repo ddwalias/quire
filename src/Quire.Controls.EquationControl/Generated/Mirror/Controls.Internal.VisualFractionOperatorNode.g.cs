@@ -12,9 +12,17 @@ namespace Quire.Controls.Internal;
 internal partial class VisualFractionOperatorNode : global::Quire.Controls.Internal.VisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualBinaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double DEFAULT_SIDE_OVERHANG = 2.4d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double DEFAULT_FRACTION_BAR_VERTICAL_PAD = 2.4d;
+    [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.DependencyProperty StaticFractionOverhangProperty;
     [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.DependencyProperty StaticFractionBarVerticalPadProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.HorizontalFence _fractionBar;
+    [global::Quire.Mirror.MirrorStub]
+    private double _textBaselineY;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode Operator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -26,6 +34,10 @@ internal partial class VisualFractionOperatorNode : global::Quire.Controls.Inter
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private double FractionOverhang { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double FractionBarVerticalPad { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect ScreenInkBounds { get => base.ScreenInkBounds; }
     [global::Quire.Mirror.MirrorStub]
     public VisualFractionOperatorNode() { }
@@ -33,6 +45,8 @@ internal partial class VisualFractionOperatorNode : global::Quire.Controls.Inter
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
+    [global::Quire.Mirror.MirrorStub]
+    private double DenominatorY() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

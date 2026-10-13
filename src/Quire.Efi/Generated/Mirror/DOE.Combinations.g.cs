@@ -12,6 +12,18 @@ namespace Quire.DOE;
 public partial class Combinations : global::System.Collections.IEnumerator
 {
     [global::Quire.Mirror.MirrorStub]
+    private string[] m_factors;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] m_currentComb;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] m_curCmbIndices;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_k;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_n;
+    [global::Quire.Mirror.MirrorStub]
+    private bool[] m_init;
+    [global::Quire.Mirror.MirrorStub]
     public int k { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +35,12 @@ public partial class Combinations : global::System.Collections.IEnumerator
     public Combinations(global::System.Collections.IEnumerator factors) { }
     [global::Quire.Mirror.MirrorStub]
     public Combinations(global::System.Collections.IEnumerator factors, int k) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void initK() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void initN(global::System.Collections.IEnumerator factors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool nextCombination() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

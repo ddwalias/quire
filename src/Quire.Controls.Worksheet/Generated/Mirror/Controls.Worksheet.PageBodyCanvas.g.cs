@@ -14,6 +14,10 @@ public partial class PageBodyCanvas : global::System.Windows.Controls.Canvas, gl
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Worksheet.IWhiteboardItemZombie> Zombies;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ItemsControl _itemsControl;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public PageBodyCanvas() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,8 @@ namespace Quire.Controls;
 internal sealed partial class ColorPickerTypeDescriptionProvider : global::System.ComponentModel.TypeDescriptionProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.ComponentModel.TypeDescriptionProvider _defaultProvider;
+    [global::Quire.Mirror.MirrorStub]
     public ColorPickerTypeDescriptionProvider() { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.ComponentModel.ICustomTypeDescriptor GetTypeDescriptor(global::System.Type objectType, object instance) => base.GetTypeDescriptor(objectType, instance);

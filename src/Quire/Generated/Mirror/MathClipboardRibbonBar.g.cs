@@ -20,6 +20,8 @@ public partial class MathClipboardRibbonBar : global::Fluent.RibbonGroupBox, glo
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_MathClipboardRibbonBar_Paste;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathClipboardRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

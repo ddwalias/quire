@@ -14,6 +14,8 @@ public partial class VisualCGSUnitDescriptorTable : global::Quire.Controls.Visua
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.VisualCGSUnitDescriptorTable Instance;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public VisualCGSUnitDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

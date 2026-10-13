@@ -70,6 +70,10 @@ public partial class MathcadSettings : global::System.ComponentModel.INotifyProp
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.ComponentModel.PropertySpec ComboBoxColorSpec;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.ComponentModel.PropertyBag _properties;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.MathcadSettings _instance;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color TypeoverColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color CaretColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -116,5 +120,11 @@ public partial class MathcadSettings : global::System.ComponentModel.INotifyProp
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
+    private static void OnPropertiesSetValue(object sender, global::Quire.ComponentModel.PropertySpecEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnPropertiesGetValue(object sender, global::Quire.ComponentModel.PropertySpecEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public MathcadSettings() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string name = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

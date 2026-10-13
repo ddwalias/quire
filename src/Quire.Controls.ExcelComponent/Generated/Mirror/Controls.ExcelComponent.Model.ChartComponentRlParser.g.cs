@@ -14,6 +14,28 @@ internal partial class ChartComponentRlParser : global::Quire.Controls.ExcelComp
     [global::Quire.Mirror.MirrorStub]
     public const uint MaxIndex = 50u;
     [global::Quire.Mirror.MirrorStub]
+    private const string IdentifierWithHandleGroupName = "identifierWithHandle";
+    [global::Quire.Mirror.MirrorStub]
+    private const string IdentifierGroupName = "identifier";
+    [global::Quire.Mirror.MirrorStub]
+    private const string IndexValueGroupName = "indexValue";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SubscriptDefinitionGroupName = "subscriptDefinition";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SubscriptGroupName = "subscript";
+    [global::Quire.Mirror.MirrorStub]
+    private const string LabelGroupName = "label";
+    [global::Quire.Mirror.MirrorStub]
+    private const string OptionalHandleRegex = "(:0x[0-9a-fA-F]+)?";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _optionalSubscriptDefinition;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _optionalSubscriptIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Text.RegularExpressions.Regex _rhsNotAllowed;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Text.RegularExpressions.Regex _identifierIndexExpression;
+    [global::Quire.Mirror.MirrorStub]
     internal static string SeparateIdentifierVsIndex(string definition, out string identifierWithHandle, out string identifier, out global::System.Nullable<uint> index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static bool ParseChartComponentEquationRl(string rl, out bool isInput, out string lhsExpression, out string rhsExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

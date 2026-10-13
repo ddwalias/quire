@@ -52,6 +52,48 @@ public partial class MatrixValueProxy : global::Quire.Automation.ValueProxy, glo
     private partial class MatrixValueData : global::Quire.Automation.IMatrixValueDataAccessor
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.MatrixValueProxy m_parent;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataConversionOptions m_options;
+        [global::Quire.Mirror.MirrorStub]
+        private double m_scale;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes non_plain_mask;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes double_mask;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes string_mask;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes elem_to_plain(global::Quire.Mcd.ElementType e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes fold_plain(global::System.Collections.Generic.IEnumerable<global::Quire.Automation.PlainDataTypes> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes plain_type(global::System.Collections.Generic.IEnumerable<global::Quire.Mcd.ElementType> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<int> indices(global::Quire.Mcd.MatAxis a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<global::Quire.Mcd.ElementType> element_types(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Automation.PlainDataTypes plain_type(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<global::Quire.Automation.PlainDataTypes> plain_types(global::Quire.Mcd.MatAxis a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<int> mask(global::Quire.Mcd.MatAxis a, global::Quire.Automation.PlainDataTypes mask) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<double> double_data(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<string> string_data(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<object> get_data(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool not_nan(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool obj_not_nan(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.IList plain_data(global::Quire.Mcd.MatAxis a, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.List<global::System.Collections.IList> plain_data(global::Quire.Mcd.MatAxis a, int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
         public MatrixValueData(global::Quire.Automation.MatrixValueProxy p, global::Quire.Automation.PlainDataConversionOptions o, double scale) { }
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.List<global::Quire.Automation.PlainDataTypes> GetRowsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

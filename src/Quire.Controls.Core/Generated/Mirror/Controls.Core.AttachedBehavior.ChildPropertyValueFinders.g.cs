@@ -14,5 +14,7 @@ public partial class ChildPropertyValueFinders : global::Quire.Controls.Core.Att
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLoaded(global::System.Windows.FrameworkElement element) => base.OnLoaded(element);
     [global::Quire.Mirror.MirrorStub]
+    private static void InitializeValues(global::System.Windows.FrameworkElement element, global::System.Windows.ResourceDictionary dictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public ChildPropertyValueFinders() { }
 }

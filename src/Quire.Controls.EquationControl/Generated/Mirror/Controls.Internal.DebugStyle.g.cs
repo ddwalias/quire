@@ -16,6 +16,18 @@ public partial class DebugStyle : global::Quire.Controls.Core.ViewModelBase
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand SetHighlightColorOffsetCommand;
     [global::Quire.Mirror.MirrorStub]
+    private bool _permanentHighlight;
+    [global::Quire.Mirror.MirrorStub]
+    private int _highlightColorOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _highlightOperator;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _highlightLeftOperand;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _highlightRightOperand;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.ColoringMethod _highlightStyle;
+    [global::Quire.Mirror.MirrorStub]
     public bool PermanentHighlight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int HighlightColorOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -33,6 +45,8 @@ public partial class DebugStyle : global::Quire.Controls.Core.ViewModelBase
     public void OnChangeHighlightColorOffsetMethod(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void OnChangeHighlightMethod(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NotifyPropertyChanged(string info) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.DebugStyle+PropertyNames, Ptc.Controls.EquationControl")]
     public static partial class PropertyNames

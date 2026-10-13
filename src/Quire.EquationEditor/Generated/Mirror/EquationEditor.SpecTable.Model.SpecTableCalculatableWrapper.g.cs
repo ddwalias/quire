@@ -12,6 +12,26 @@ namespace Quire.EquationEditor.SpecTable.Model;
 public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculatableResultOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn a__;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.Calculation.Core.ICalculatable> b;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.Calculation.Core.ICalculatable> d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.ComponentModel.PropertyChangedEventHandler e;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus f;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.CalculatingStatus g;
+    [global::Quire.Mirror.MirrorStub]
+    private bool h;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineResult i;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.EventHandler<global::Quire.Calculation.Core.RequestShowErrorEventArgs> j;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn Column { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -56,6 +76,8 @@ public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Co
     [global::Quire.Mirror.MirrorStub]
     public SpecTableCalculatableWrapper(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn column) { }
     [global::Quire.Mirror.MirrorStub]
+    private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -75,6 +97,10 @@ public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Co
     public void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.ComponentModel.PropertyChangedEventArgs A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

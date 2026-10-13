@@ -12,6 +12,12 @@ namespace Quire.Controls.Core;
 public partial class WhiteboardItemsCollection : global::Quire.Wpf.SerializableCollection<global::Quire.Controls.Core.IWhiteboardItem>, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> _parentIsOnVisiblePage;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> _parentSupportsInputsOutputs;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> _containedInCollapsedWhiteboard;
+    [global::Quire.Mirror.MirrorStub]
     public bool ParentIsOnVisiblePage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ParentSupportsInputsOutputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

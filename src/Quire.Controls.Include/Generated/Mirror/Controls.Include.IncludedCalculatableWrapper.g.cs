@@ -12,6 +12,8 @@ namespace Quire.Controls.Include;
 public partial class IncludedCalculatableWrapper : global::Quire.Calculation.Core.Support.CalculatableWrapper, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isCommited;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsInternalCalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.ICalculatableInfo CalculatableInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -53,4 +55,12 @@ public partial class IncludedCalculatableWrapper : global::Quire.Calculation.Cor
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireSetErrorChanged(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireSynchronizationStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

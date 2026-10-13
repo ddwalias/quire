@@ -12,6 +12,14 @@ namespace Quire.Controls.Internal;
 internal partial class VisualRangedPrefixNode : global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor, global::Quire.EquationEditor.View.IVisualUnaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _operatorDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualSymbolNode _operatorSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.RangedPrefixLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
@@ -41,6 +49,8 @@ internal partial class VisualRangedPrefixNode : global::Quire.Controls.Internal.
     public VisualRangedPrefixNode(global::Quire.EquationEditor.Tree.MathNodeDescriptor operatorDescriptor) { }
     [global::Quire.Mirror.MirrorStub]
     public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateRangeBoundsInactiveVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetVisibilityOfOperatorSymbol(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -22,7 +22,11 @@ public partial class StylesAndLabelsFormatRibbonBar : global::Fluent.RibbonGroup
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.ColorPicker LabelFontColorPicker;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public StylesAndLabelsFormatRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDropDownClosedLabelSelection(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

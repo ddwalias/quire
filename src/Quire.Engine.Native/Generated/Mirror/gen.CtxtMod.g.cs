@@ -12,6 +12,26 @@ namespace Quire.gen;
 internal partial class CtxtMod : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlAsm m_ilasm;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.ModuleBuilder m_module_builder;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_cache;
+    [global::Quire.Mirror.MirrorStub]
+    private static char[] m_fid_punctuation;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_compilation_options;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_env;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_envsize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Closure m_clo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlEmit m_update;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_calldepth;
+    [global::Quire.Mirror.MirrorStub]
     public CtxtMod(global::Quire.gen.IlAsm ilasm, uint compilation_options, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb) : base(default(global::Quire.gen.Ctxt)) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder Builder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

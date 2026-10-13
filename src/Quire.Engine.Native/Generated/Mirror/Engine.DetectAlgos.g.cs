@@ -12,7 +12,19 @@ namespace Quire.Engine;
 internal partial class DetectAlgos : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_algos;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_result;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable m_algos_detected;
+    [global::Quire.Mirror.MirrorStub]
+    private static object ms_lock;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ICollection _DetectAlgos(global::Quire.depman.Environment A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public DetectAlgos(global::System.Collections.IDictionary A_0, global::System.Collections.IDictionary A_1) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeDetectAlgos() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

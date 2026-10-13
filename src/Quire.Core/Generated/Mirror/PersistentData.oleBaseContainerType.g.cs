@@ -12,6 +12,10 @@ namespace Quire.PersistentData;
 public abstract partial class oleBaseContainerType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.SizeType oleViewportSizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private string itemidrefField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.SizeType OleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string StorageFileName { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

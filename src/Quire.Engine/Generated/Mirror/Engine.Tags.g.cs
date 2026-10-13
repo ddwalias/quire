@@ -22,4 +22,10 @@ public partial struct Tags
     public static string StripFontTag(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string EncodeRegionID(int id, string tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static char to_hex(char c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static char to_hex(int d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool is_hex(char c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

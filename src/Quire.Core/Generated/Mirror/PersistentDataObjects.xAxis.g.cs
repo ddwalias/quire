@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class xAxis : global::Quire.PersistentDataObjects.axisBaseType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.xyDomainType xyDomainField;
+    [global::Quire.Mirror.MirrorStub]
+    private string legendpositionField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.xyDomainType xyDomain { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string legendposition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

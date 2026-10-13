@@ -12,11 +12,25 @@ namespace Quire.DOE;
 public partial class BoxWilson : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_nc;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_nf;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_fract;
+    [global::Quire.Mirror.MirrorStub]
+    private double m_alpha;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_keepOldOrder;
+    [global::Quire.Mirror.MirrorStub]
     public BoxWilson(int nfacts, bool keepOldOrder) { }
     [global::Quire.Mirror.MirrorStub]
     public BoxWilson(int nfacts, int nc, double alpha, bool keepOldOrder) { }
     [global::Quire.Mirror.MirrorStub]
     public BoxWilson(int nfacts, int fract, int nc, double alpha) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void setNc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void setAlpha() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

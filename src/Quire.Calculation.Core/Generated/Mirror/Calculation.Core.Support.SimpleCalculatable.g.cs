@@ -12,7 +12,17 @@ namespace Quire.Calculation.Core.Support;
 public partial class SimpleCalculatable : global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus _syncStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IResultNode _evaluationResult;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _error;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Calculation.Core.RealSimpleResultNode _systemOrigin;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> _warnings;
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Calculation.Core.IResultNode Result { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

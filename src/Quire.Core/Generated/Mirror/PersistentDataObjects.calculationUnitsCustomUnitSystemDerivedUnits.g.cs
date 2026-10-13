@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class calculationUnitsCustomUnitSystemDerivedUnits
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.customUnitType[] unitField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.customUnitType[] unit { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public calculationUnitsCustomUnitSystemDerivedUnits() { }

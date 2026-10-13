@@ -12,6 +12,14 @@ namespace Quire.mslisp;
 internal partial class ArgSpec
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.PCons m_param_names;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_num_required_args;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_num_optional_args;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_has_rest;
+    [global::Quire.Mirror.MirrorStub]
     public ArgSpec(global::Quire.mslisp.Analyzer i, object @params) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Engine.PCons @params() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

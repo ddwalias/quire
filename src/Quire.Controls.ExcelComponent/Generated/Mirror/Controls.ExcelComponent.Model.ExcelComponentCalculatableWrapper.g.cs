@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class ExcelComponentCalculatableWrapper : global::Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.IResultOwnerWithSerializableEngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType _equationType;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType ExcelComponentEquationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool IsOutputEquation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -33,6 +35,8 @@ internal partial class ExcelComponentCalculatableWrapper : global::Quire.Control
     protected override void ClearEquationType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleRequestEvaluation(calc);
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsTypeInvalid(global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool UpdateExcelComponentEquationType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

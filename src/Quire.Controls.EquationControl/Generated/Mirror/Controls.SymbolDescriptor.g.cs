@@ -12,6 +12,30 @@ namespace Quire.Controls;
 public partial class SymbolDescriptor
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _displayName;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.EditorGesture _keybinding;
+    [global::Quire.Mirror.MirrorStub]
+    private string _keybindingToDisplay;
+    [global::Quire.Mirror.MirrorStub]
+    private string _description;
+    [global::Quire.Mirror.MirrorStub]
+    private string _symbolicRepresentation;
+    [global::Quire.Mirror.MirrorStub]
+    private string _screenRepresentation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<string> _categories;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey _functionalityKey;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey _categoryFunctionalityKey;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey _category2FunctionalityKey;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey _category3FunctionalityKey;
+    [global::Quire.Mirror.MirrorStub]
+    private int _categoryOrdinal;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Input.RoutedCommand _command;
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Windows.Input.RoutedCommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,11 +12,21 @@ namespace Quire.Controls.Plots.Contour.Model;
 internal partial struct Levels
 {
     [global::Quire.Mirror.MirrorStub]
+    private double[] _array;
+    [global::Quire.Mirror.MirrorStub]
+    private int _number;
+    [global::Quire.Mirror.MirrorStub]
     internal const string RlLevelsStringFormat = "(op_matrix (unboxed {0}) (unboxed 1) (list {1}))";
     [global::Quire.Mirror.MirrorStub]
     internal double[] Array { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal int Number { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private string ArrayRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string LevelsAsSequenceOfNumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     internal string RL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string NumberRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

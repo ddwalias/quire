@@ -22,6 +22,8 @@ public partial class CameraControlWidget : global::Quire.Controls.Core.VisualAdo
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button ResetView;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public CameraControlWidget(global::System.Windows.UIElement adornedElement, global::Quire.Controls.Plots.Plot3D.ViewModel.PlotViewModel3D viewModel) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);

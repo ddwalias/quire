@@ -12,6 +12,10 @@ namespace Quire.Media3D;
 internal partial class TextGenerator
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double MaxHeight = 32d;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Media3D.StrokeCharacter[,] chars;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Media3D.Font Font;
     [global::Quire.Mirror.MirrorStub]
     public double FontSize;
@@ -30,7 +34,15 @@ internal partial class TextGenerator
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.VerticalAlignment VerticalAlignment;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3D NormalizedBaselineDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3D NormalizedUpDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public void Generate(global::System.Windows.Media.Media3D.Point3DCollection lines, string Text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D ProcessText(global::System.Windows.Media.Media3D.Point3DCollection lines, global::System.Windows.Media.Media3D.Point3D pointOrigin, string Text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D Convert(global::System.Windows.Point pt, global::System.Windows.Media.Media3D.Point3D pointOrigin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TextGenerator() { }
 }

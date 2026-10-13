@@ -16,6 +16,10 @@ public partial class AppException : global::System.ApplicationException
     [global::Quire.Mirror.MirrorStub]
     public static char errorArgDelimiter;
     [global::Quire.Mirror.MirrorStub]
+    private uint m_argument;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_handle;
+    [global::Quire.Mirror.MirrorStub]
     public uint Region { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint Tag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

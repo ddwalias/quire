@@ -12,6 +12,22 @@ namespace Quire.Controls;
 public partial class CopyWidgetViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _totalPages;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.DateTime> _displaySavedDate;
+    [global::Quire.Mirror.MirrorStub]
+    private string _displayFileName;
+    [global::Quire.Mirror.MirrorStub]
+    private string _displayFilePath;
+    [global::Quire.Mirror.MirrorStub]
+    private string _displayDocumentName;
+    [global::Quire.Mirror.MirrorStub]
+    private int _pageNumber;
+    [global::Quire.Mirror.MirrorStub]
+    private double _parentWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _includeWidth;
+    [global::Quire.Mirror.MirrorStub]
     public int TotalPages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.DateTime> DisplaySavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

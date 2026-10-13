@@ -12,6 +12,18 @@ namespace Quire.Controls.Whiteboard;
 public partial class WhiteboardItemsSeparator : global::Quire.Controls.Whiteboard.IWhiteboardItemsSeparator
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> _itemsToSeparate;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Rect> _oldItemRectMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Rect> _newItemRectMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Dimension _dimension;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IAlignmentGrid _grid;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemManager;
+    [global::Quire.Mirror.MirrorStub]
     public WhiteboardItemsSeparator(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension, global::Quire.Controls.Core.IAlignmentGrid grid, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager whiteboardItemManager) { }
     [global::Quire.Mirror.MirrorStub]
     public bool CanSeparate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -20,5 +20,7 @@ public partial class SList : global::Quire.Mpl.Run.Sexpr
     [global::Quire.Mirror.MirrorStub]
     public SList(global::Quire.Mpl.Run.Cons first, global::Quire.Mpl.Run.Sexpr tail) : base(default(int)) { }
     [global::Quire.Mirror.MirrorStub]
+    private static string FormatCons(global::Quire.Mpl.Run.Cons c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
 }

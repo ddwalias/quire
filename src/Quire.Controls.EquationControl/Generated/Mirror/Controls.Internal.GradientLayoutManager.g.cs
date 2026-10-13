@@ -12,6 +12,14 @@ namespace Quire.Controls.Internal;
 internal partial class GradientLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int VariableListOperandIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int FunctionOperandIndex = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const int OperatorIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const double VariableListHorizontalPadding = 3d;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect VariableListRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect FunctionRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -21,6 +29,8 @@ internal partial class GradientLayoutManager : global::Quire.Controls.Internal.V
     public GradientLayoutManager(global::Quire.Controls.Internal.LayoutItem[] childItems, global::Quire.Controls.Internal.LayoutItem[] operatorPartItems) : base(default(global::Quire.Controls.Internal.LayoutItem[]), default(global::Quire.Controls.Internal.LayoutItem[])) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Arrange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Direction FindClosestChildDirection(global::System.Windows.Point hitPoint, global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void FindClosestChild(global::System.Windows.Point hitPoint, out global::Quire.Controls.Internal.LayoutChildType childType, out int childIndex, out global::Quire.Direction childSideHit) => base.FindClosestChild(hitPoint, out childType, out childIndex, out childSideHit);
 }

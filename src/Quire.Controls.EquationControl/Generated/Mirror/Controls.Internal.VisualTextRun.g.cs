@@ -12,7 +12,17 @@ namespace Quire.Controls.Internal;
 internal partial class VisualTextRun : global::System.Windows.FrameworkElement, global::Quire.Controls.Internal.IVisualText, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.ExtendedFont _font;
+    [global::Quire.Mirror.MirrorStub]
+    private string _text;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.FormattedText _formattedText;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _superscriptBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<double> _characterWidths;
     [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

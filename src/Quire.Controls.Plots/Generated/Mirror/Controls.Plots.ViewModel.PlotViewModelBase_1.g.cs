@@ -12,7 +12,21 @@ namespace Quire.Controls.Plots.ViewModel;
 public partial class PlotViewModelBase<TModel> : global::Quire.Controls.Core.ViewModelBase where TModel : global::Quire.Controls.Plots.Model.PlotModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _showControlLevelErrorFrameForNestedError;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _areAxisExpressionsVisible;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _calcIsDisabled;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isPendingActivation;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isActiveRegion;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Support.CalculatableChildHider _childHider;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ShowAxisExpressionsCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private double _currentMinimalGraphWidth;
     [global::Quire.Mirror.MirrorStub]
     protected TModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -27,6 +41,8 @@ public partial class PlotViewModelBase<TModel> : global::Quire.Controls.Core.Vie
     public bool PendingActivation { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsActiveRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool CalculateAreAxisExpressionsVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,6 +70,12 @@ public partial class PlotViewModelBase<TModel> : global::Quire.Controls.Core.Vie
     [global::Quire.Mirror.MirrorStub]
     internal PlotViewModelBase() { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnModelDeserializationEnded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnModelChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void DelegateModelEvent(global::System.Action handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void BindCommandsAndEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void ModelPropertyChanged(string propertyName) => base.ModelPropertyChanged(propertyName);
@@ -64,11 +86,19 @@ public partial class PlotViewModelBase<TModel> : global::Quire.Controls.Core.Vie
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CollectHiddenAndVisibleCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ComputeAreAxisExpresionsVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowAxisExpressionsCommandExecute(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void OnGraphSizeChanged(global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

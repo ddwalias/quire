@@ -12,6 +12,24 @@ namespace Quire.Controls.Core;
 public partial class NumberFormat : global::Quire.Controls.Core.IPropertyAggregate, global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> _decimalPlaces;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showTrailingDecimalZeros;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.NumberStyles> _numberStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.ExponentStyles> _exponentStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.ComplexStyles> _complexStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> _zeroThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> _exponentialThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> _complexThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.NumberFormat.RadixStyles> _radixStyle;
+    [global::Quire.Mirror.MirrorStub]
     public const int DefaultComplexThresholdValue = 10;
     [global::Quire.Mirror.MirrorStub]
     public const int MinComplexThresholdAllowed = 0;
@@ -86,9 +104,21 @@ public partial class NumberFormat : global::Quire.Controls.Core.IPropertyAggrega
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsValidDecimalPlaces(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static int CoerceDecimalPlaces(int value, int increment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldBeDisplayedAsScientific(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsNumberInRange(global::System.Nullable<int> num, int minimum, int maximum) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsInValidExponentialThresholdRange(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsInValidZeroThresholdRange(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsInValidComplexThresholdRange(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNumberFormatPropertyChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldBeDisplayedAsZero(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

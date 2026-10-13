@@ -12,6 +12,10 @@ namespace Quire.Controls.Internal;
 internal partial class VisualSymKeywordsStackNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMatrixContents _operandsPanel;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

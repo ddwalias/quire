@@ -12,6 +12,12 @@ namespace Quire.gen;
 internal partial class MethodClo : global::Quire.gen.Closure
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Closure m_module;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_clo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_clo_type;
+    [global::Quire.Mirror.MirrorStub]
     public MethodClo(global::System.Type clo_type, global::Quire.gen.Closure module) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public override int ClosureArgs() => base.ClosureArgs();

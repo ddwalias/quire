@@ -12,6 +12,8 @@ namespace Quire.mslisp;
 internal partial class DelegateFunction : global::Quire.utl_mgd.FunctionBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.BuiltinDelegate m_delegate;
+    [global::Quire.Mirror.MirrorStub]
     public DelegateFunction(global::Quire.mslisp.BuiltinDelegate d) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

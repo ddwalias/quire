@@ -12,6 +12,64 @@ namespace Quire.Engine;
 public partial class GlobalMap : global::Quire.Engine.NodeTracker
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<int, global::Quire.Engine.NodeData> m_handles;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_global_zone;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_normal_zone;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData>> m_global_map;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData>> m_normal_map;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> m_outofdate_nodes;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.HashSet<string> m_outofdate_vars;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> s_empty_set;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_too_many_globals;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_normals_and_globals;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_global_not_top_level;
+    [global::Quire.Mirror.MirrorStub]
+    private void AddDefinition(string var, global::Quire.Engine.NodeData position, global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData>> map) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveDefinition(string var, global::Quire.Engine.NodeData position, global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData>> map) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> Lookup(string var, global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData>> map) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> GetGlobals(string var) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> GetNormals(string var) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CheckGlobals() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CheckGlobals(string var) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.NodeData FromHandle(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StartTracking(global::Quire.Engine.NodeData n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StopTracking(global::Quire.Engine.NodeData n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetParent(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetTopAncestor(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsTopLevel(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> FilterTopLevel(global::System.Collections.Generic.HashSet<global::Quire.Engine.NodeData> n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OperateRecursively(global::Quire.Engine.UnaryNodeDataFunc f, int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetZoneRecursive(int fnode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRemoveRecursive(int fnode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Update() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public GlobalMap(object global_zone, object normal_zone) { }
     [global::Quire.Mirror.MirrorStub]
     public void OnUpdate(int fnode, global::Quire.Engine.NodeData _new) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -31,6 +89,10 @@ public partial class GlobalMap : global::Quire.Engine.NodeTracker
     [global::Quire.Mirror.MirrorOf("Engine.GlobalMap+SetZone, mcfront12")]
     private partial class SetZone
     {
+        [global::Quire.Mirror.MirrorStub]
+        private object zone;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Engine.NodeTracker tracker;
         [global::Quire.Mirror.MirrorStub]
         public SetZone(object z, global::Quire.Engine.NodeTracker tr) { }
         [global::Quire.Mirror.MirrorStub]

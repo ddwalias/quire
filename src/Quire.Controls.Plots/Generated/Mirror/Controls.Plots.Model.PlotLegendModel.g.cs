@@ -12,6 +12,18 @@ namespace Quire.Controls.Plots.Model;
 internal partial class PlotLegendModel : global::Quire.Controls.Plots.Presenter.IPlotLegendModel, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isDirty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showBorder;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.LegendPositions.PlotLegendPosition _position;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showPlotLegend;
+    [global::Quire.Mirror.MirrorStub]
+    private double _legendWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Controls.Plots.Presenter.IPlotLegendItem> _legendItems;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.PlotType PlotType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsDirty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -36,6 +48,8 @@ internal partial class PlotLegendModel : global::Quire.Controls.Plots.Presenter.
     [global::Quire.Mirror.MirrorStub]
     public PlotLegendModel(global::Quire.Controls.Plots.Presenter.PlotType plotType) { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void AddLegendItem(global::Quire.Controls.Plots.Presenter.IPlotLegendItem legendItem, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveLegendItem(global::Quire.Controls.Plots.Presenter.IPlotLegendItem legendItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -43,4 +57,8 @@ internal partial class PlotLegendModel : global::Quire.Controls.Plots.Presenter.
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ConvertToPlotBaseTypeLegendPosition(global::Quire.Controls.Plots.LegendPositions.PlotLegendPosition position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TryConvertToPlotLegendPosition(string value, out global::Quire.Controls.Plots.LegendPositions.PlotLegendPosition position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,11 +12,47 @@ namespace Quire.DOE;
 public partial class MonteCarlo
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_G;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_nvars;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_nsamples;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal[] m_nomvals;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_nomvalsd;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_lo;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_hi;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_udist;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_clip;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_LArgNo;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_DArgNo;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_sigma;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function[] m_distfn;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_T;
+    [global::Quire.Mirror.MirrorStub]
     public MonteCarlo(global::Quire.Mpl.Run.Function G, int nsamples, global::Quire.Mcd.MatVal vals) { }
     [global::Quire.Mirror.MirrorStub]
     public MonteCarlo(global::Quire.Mpl.Run.Function G, int nsamples, global::Quire.Mcd.MatVal vals, global::Quire.Mcd.MatVal opt1) { }
     [global::Quire.Mirror.MirrorStub]
     public MonteCarlo(global::Quire.Mpl.Run.Function G, int nsamples, global::Quire.Mcd.MatVal vals, global::Quire.Mcd.MatVal opt1, global::Quire.Mcd.MatVal opt2) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void readLimits(global::Quire.Mcd.MatVal limits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void readDists(global::Quire.Mcd.MatVal D) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool clip(int vidx, double rval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double sample(int vidx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Sample_() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,8 @@ namespace Quire.mslisp;
 internal partial class LoggedFastApp0 : global::Quire.mslisp.LoggedFastApp
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Func0 m_func;
+    [global::Quire.Mirror.MirrorStub]
     public LoggedFastApp0(global::Quire.mslisp.Func0 f, global::Quire.mslisp.Expression ff, global::Quire.mslisp.Expression[] args) : base(default(global::Quire.mslisp.Expression), default(global::Quire.mslisp.Expression[])) { }
     [global::Quire.Mirror.MirrorStub]
     public override object execute(global::Quire.mslisp.Env e, int trace_level) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

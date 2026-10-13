@@ -14,6 +14,14 @@ internal partial class VisualNthRootOperatorNode : global::Quire.Controls.Intern
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ContentSizeProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _nthRootDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualScaledSymbolNode _rootSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.Fence _overbar;
+    [global::Quire.Mirror.MirrorStub]
     public static double ROOT_EXPR_TOP_PADDING;
     [global::Quire.Mirror.MirrorStub]
     public static double ROOT_EXPR_HORIZONTAL_PADDING;
@@ -25,6 +33,8 @@ internal partial class VisualNthRootOperatorNode : global::Quire.Controls.Intern
     public static double NTH_EXPR_BOTTOM_PADDING;
     [global::Quire.Mirror.MirrorStub]
     public static double ROOT_SYMBOL_RIGHT_MARGIN;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.NthRootLayoutManager _layout;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size ContentSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

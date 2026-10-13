@@ -22,7 +22,11 @@ public partial class CameraInfo : global::System.Windows.Media.Animation.Animata
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ViewportHeightProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey ViewMatrixKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ViewMatrixProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey ProjectionMatrixKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ProjectionMatrixProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -47,6 +51,10 @@ public partial class CameraInfo : global::System.Windows.Media.Animation.Animata
     public global::System.Windows.Media.Media3D.Matrix3D InverseTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CameraInfo() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void CameraPropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ViewportPropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Media3D.Matrix3D GetViewMatrix(global::System.Windows.Media.Media3D.Camera camera) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

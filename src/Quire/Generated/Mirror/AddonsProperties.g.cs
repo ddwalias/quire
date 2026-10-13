@@ -18,11 +18,41 @@ internal static partial class AddonsProperties
     [global::Quire.Mirror.MirrorStub]
     public const string IdWwgmAddon = "WWGM";
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string[][] _addonRegKeyProperties;
+    [global::Quire.Mirror.MirrorStub]
+    private const string HKeyCurrentUser = "HKEY_CURRENT_USER";
+    [global::Quire.Mirror.MirrorStub]
+    private const string HKeyLocalMachine = "HKEY_LOCAL_MACHINE";
+    [global::Quire.Mirror.MirrorStub]
+    private const string LoadAddOnsOnDemandRegKeyValue = "LoadAddonsOnDemand";
+    [global::Quire.Mirror.MirrorStub]
+    private const string EndOfRegKey = "_Addon_Path";
+    [global::Quire.Mirror.MirrorStub]
+    private const string AddonRegKey = "Software\\Quire\\Quire\\Quire 1.0\\Addons";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PtcPlacesStatusRegKeyValue = "Quire Places";
+    [global::Quire.Mirror.MirrorStub]
+    private const int PtcPlacesEnable = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const int PtcPlacesDisable = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private static string ReadOpenFromWcCmdText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.AddonsProperties.AddonsData[] GetAddonsProperties(bool isComInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetAddonPath(string[] value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool CheckIfAddonsShouldBeLoaded(bool isComInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetPtcPlacesConnectionStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetPtcPlacesConnectionStatus(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Microsoft.Win32.RegistryKey OpenAddonsRegKey(bool writable = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Microsoft.Win32.RegistryKey CreateAddonsRegKey() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Microsoft.Win32.RegistryKey OpenRegKeyByBaseKey(string baseKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.AddonsProperties+AddonMenuItemCommandId, MathcadPrime")]
     public enum AddonMenuItemCommandId
@@ -54,6 +84,10 @@ internal static partial class AddonsProperties
     [global::Quire.Mirror.MirrorOf("Spirit.AddonsProperties+AddonsData, MathcadPrime")]
     public partial struct AddonsData
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly string _path;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly string _id;
         [global::Quire.Mirror.MirrorStub]
         public string Path { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

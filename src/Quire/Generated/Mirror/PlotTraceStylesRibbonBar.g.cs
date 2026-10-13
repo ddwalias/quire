@@ -28,6 +28,8 @@ public partial class PlotTraceStylesRibbonBar : global::Fluent.RibbonGroupBox, g
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_PlotTraceStylesRibbonBar_PerspectiveCamera;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public PlotTraceStylesRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

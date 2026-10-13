@@ -14,7 +14,17 @@ internal partial class VisualStringNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TextProperty;
     [global::Quire.Mirror.MirrorStub]
+    private const char _leftQuote = '\u201C';
+    [global::Quire.Mirror.MirrorStub]
+    private const char _rightQuote = '\u201D';
+    [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _exponentBaseline;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.FormattedText _formattedText;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<double> _characterWidths;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
     [global::Quire.Mirror.MirrorStub]
@@ -47,6 +57,10 @@ internal partial class VisualStringNode : global::Quire.Controls.Internal.Visual
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect ComputeAlignmentBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,7 +12,31 @@ namespace Quire.Engine;
 public partial class ArlTranslate : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private object m_core;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_source;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Interpreter* m_translator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder m_builder;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Engine.ModuleEnv* m_moduleenv;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_is_undefine;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_engine_id;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_auto_eval_range_loops;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_symbolic_engine;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_chain_errors;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.IDictionary chain_error(global::System.Collections.IDictionary A_0, uint A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal unsafe ArlTranslate(object core, global::Quire.Hex.Interpreter* translator, global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder builder, global::Quire.Engine.ModuleEnv* modenv, int engine_id, bool bAutoEvalRangeLoops, string symbolic_engine, bool bChainErrors, object source) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeArlTranslate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

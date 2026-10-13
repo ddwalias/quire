@@ -12,7 +12,17 @@ namespace Quire.AutomationServiceEngNote;
 internal partial class CMathcadPrimeWorksheetReadonlyOptions : global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions, global::Quire.AutomationServiceEngNote.IConvertableToDocumentReadonlyOptions
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _fileLocationHistoryDisabled;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.WorksheetOperations _operationsWithEnabledStateGeneration;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _requestToUpdateInputsEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _caseInsensitiveAliasComparisonEnabled;
+    [global::Quire.Mirror.MirrorStub]
     public int SetOptionValue(global::Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames optionNameArg, object optionValueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TryConvertToBool(object value, ref bool returnValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.DocumentReadonlyOptions ConvertToDocumentReadonlyOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

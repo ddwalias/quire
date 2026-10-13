@@ -58,6 +58,8 @@ internal partial class VisualTextNode : global::Quire.Controls.Internal.VisualTe
     [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect ComputeAlignmentBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public VisualTextNode() { }

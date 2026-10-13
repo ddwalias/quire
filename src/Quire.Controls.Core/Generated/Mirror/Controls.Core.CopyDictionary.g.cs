@@ -14,6 +14,8 @@ public partial class CopyDictionary : global::System.Windows.ResourceDictionary,
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.Core.CopyDictionary Instance;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public CopyDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

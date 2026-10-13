@@ -12,6 +12,8 @@ namespace Quire;
 public partial class AutomationGetValueResult : global::Quire.Automation.IMathcadPrimeGetValueResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.ICommonValueItem _valueItem;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.ValueResultTypes ResultType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

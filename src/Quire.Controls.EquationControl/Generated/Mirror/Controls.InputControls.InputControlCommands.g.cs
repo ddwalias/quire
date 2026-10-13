@@ -12,5 +12,7 @@ namespace Quire.Controls.InputControls;
 public partial class InputControlCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public InputControlCommands() { }
 }

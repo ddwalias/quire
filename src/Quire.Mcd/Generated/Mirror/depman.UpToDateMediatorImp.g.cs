@@ -12,6 +12,10 @@ namespace Quire.depman;
 internal partial class UpToDateMediatorImp : global::Quire.depman.BooleanMediatorImp
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_in_sync;
+    [global::Quire.Mirror.MirrorStub]
     public override bool Value { get => base.Value; }
     [global::Quire.Mirror.MirrorStub]
     protected override void set_value(bool b) => base.set_value(b);

@@ -12,7 +12,11 @@ namespace Quire.Controls;
 public partial class VisualOperatorDescriptorTable : global::Quire.Controls.VisualDescriptorTableBase, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo _initInfo;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.VisualOperatorDescriptorTable Default;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public VisualOperatorDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]

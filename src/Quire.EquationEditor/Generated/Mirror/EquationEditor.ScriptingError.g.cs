@@ -12,6 +12,24 @@ namespace Quire.EquationEditor;
 public partial class ScriptingError : global::Quire.Calculation.Core.IEngineError, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.StringCollection b;
+    [global::Quire.Mirror.MirrorStub]
+    private uint c;
+    [global::Quire.Mirror.MirrorStub]
+    private uint d;
+    [global::Quire.Mirror.MirrorStub]
+    private string e;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.ICalculatable f;
+    [global::Quire.Mirror.MirrorStub]
+    private string g;
+    [global::Quire.Mirror.MirrorStub]
+    private bool h;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.EngineError i;
+    [global::Quire.Mirror.MirrorStub]
     public string ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.StringCollection ErrorMessageArguments { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

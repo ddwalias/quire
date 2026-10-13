@@ -12,6 +12,16 @@ namespace Quire.EngNotebookPlus.Automation;
 public partial class Application : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication, global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication2, global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication3
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebookPlus.Automation.ProxyComClassManager<global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication> _comProxyManagerInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebookPlus.Automation.IProxyComClassManagerAgent<global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication> _proxyComClassManagerAgent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication3 _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebookPlus.Automation.IMathcadPrimeWorksheets _worksheets;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication3 RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool Visible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebookPlus.Automation.IMathcadPrimeWorksheet ActiveWorksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +33,16 @@ public partial class Application : global::Quire.EngNotebookPlus.Automation.IMat
     internal Application(global::Quire.EngNotebookPlus.Automation.IMathcadPrimeApplication3 mathcadPrimeApplication) { }
     [global::Quire.Mirror.MirrorStub]
     ~Application() { } // stub finalizers must not throw: they also run for objects whose constructor threw
+    [global::Quire.Mirror.MirrorStub]
+    private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Release() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReleaseRealSubject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRefineConnections() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReleaseAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

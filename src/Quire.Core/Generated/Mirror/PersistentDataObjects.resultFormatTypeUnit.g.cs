@@ -12,6 +12,12 @@ namespace Quire.PersistentDataObjects;
 public partial class resultFormatTypeUnit
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool formatunitsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool simplifyunitsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool fractionalunitexponentField;
+    [global::Quire.Mirror.MirrorStub]
     public bool formatunits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool simplifyunits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

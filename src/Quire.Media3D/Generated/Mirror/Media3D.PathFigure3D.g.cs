@@ -14,6 +14,8 @@ public partial class PathFigure3D : global::System.Windows.Media.Animation.Anima
     [global::Quire.Mirror.MirrorStub]
     public static int Approximation;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Media3D.PathFigure3D figFlattened;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StartPointProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SegmentsProperty;
@@ -24,7 +26,17 @@ public partial class PathFigure3D : global::System.Windows.Media.Animation.Anima
     [global::Quire.Mirror.MirrorStub]
     public PathFigure3D() { }
     [global::Quire.Mirror.MirrorStub]
+    private PathFigure3D(int unused) { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void StartPointPropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SegmentsPropertyChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SegmentsPropertyChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Media3D.PathFigure3D GetFlattenedPathFigure() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ConvertBezier(global::System.Windows.Media.Media3D.Point3DCollection points, global::System.Windows.Media.Media3D.Point3D point0, global::System.Windows.Media.Media3D.Point3D point1, global::System.Windows.Media.Media3D.Point3D point2, global::System.Windows.Media.Media3D.Point3D point3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]

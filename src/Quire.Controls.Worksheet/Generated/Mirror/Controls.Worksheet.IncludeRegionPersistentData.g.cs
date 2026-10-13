@@ -12,7 +12,11 @@ namespace Quire.Controls.Worksheet;
 public partial class IncludeRegionPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetControl _include;
+    [global::Quire.Mirror.MirrorStub]
     public IncludeRegionPersistentData(global::Quire.Controls.Include.IncludeWorksheetControl include) : base(default(global::System.Windows.UIElement)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.Packaging.PackagePart HandleGetPackagePartByRefId(string refId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Deserialize() => base.Deserialize();
     [global::Quire.Mirror.MirrorStub]

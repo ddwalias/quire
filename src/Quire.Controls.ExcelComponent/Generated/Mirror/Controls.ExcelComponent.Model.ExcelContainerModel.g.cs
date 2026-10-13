@@ -12,9 +12,29 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent.Model.OleDataExchangeContainerModel<global::Quire.PersistentData.excelContainerType>, global::Quire.Controls.ExcelComponent.Model.IPublicExcelContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicOleDataExchangeContainerModel<global::Quire.PersistentData.excelContainerType>, global::Quire.Controls.Core.Ole.IPublicOleContainerModel<global::Quire.PersistentData.excelContainerType>, global::Quire.Calculation.ICalculationComponent, global::Quire.Calculation.IDataExchangeIValueModel, global::Quire.Calculation.Core.IDataExchangeModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> _excelVersionInstalled;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _excelSheetNotFoundFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _excelNotSupportedValueTypeFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _excelInvalidRangeFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _nonContiguousRangeErrorFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _comExceptionError;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _excelVersionNotInstalledErrorFormat;
+    [global::Quire.Mirror.MirrorStub]
     internal const string DefaultRangeFirstCell = "A1";
     [global::Quire.Mirror.MirrorStub]
     internal const string DefaultRangeLastCell = "G6";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Services.IApplicationBehaviorOptions _appBehaviorOptions;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Threading.DispatcherTimer _postOleClosedTimer;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Microsoft.Office.Interop.Excel.AppEvents_Event _appEvents;
     [global::Quire.Mirror.MirrorStub]
     protected override bool CheckOleActiveState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -30,7 +50,11 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public override string ProgId { get => base.ProgId; }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Microsoft.Office.Interop.Excel.AppEvents_Event AppEvents { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey ToggleActivateStateFunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsDeactivateInitiatedFromMathcad { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override bool IsDisconnected { get => base.IsDisconnected; }
     [global::Quire.Mirror.MirrorStub]
@@ -48,11 +72,25 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.IValue GetValue(string place) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.IValue GetCellValue(global::Quire.Microsoft.Office.Interop.Excel.Range range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Microsoft.Office.Interop.Excel.Sheets GetWorksheets(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Microsoft.Office.Interop.Excel.Workbook GetWorkbook(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Microsoft.Office.Interop.Excel.Workbook GetSafeWorkBook(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Microsoft.Office.Interop.Excel.Application GetSafeApplication(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Microsoft.Office.Interop.Excel.Range GetRange(string rangeAddress, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsExcelErrorValue(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.IValue ConvertToIValue(object value, global::System.Func<string> getDefaultText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object ConvertFromIValue(global::Quire.IValue value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::Quire.PersistentData.excelContainerType excelContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -60,13 +98,31 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public string GetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string GetRangeFullName(global::Quire.Microsoft.Office.Interop.Excel.Range range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool Select(string rangeAddress, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.OLE.OleResult CheckServerStatus(bool forceRun) => base.CheckServerStatus(forceRun);
     [global::Quire.Mirror.MirrorStub]
+    private void OnOleShownSync() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRequestEvaluation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnOleClosedSync() => base.OnOleClosedSync();
     [global::Quire.Mirror.MirrorStub]
+    private void PostOleClosed(object sender, global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnStartRunning() => base.OnStartRunning();
+    [global::Quire.Mirror.MirrorStub]
+    private void RegisterOnActivateHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnWorkbookOpen(global::Quire.Microsoft.Office.Interop.Excel.Workbook wb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnWorkbookActivate(global::Quire.Microsoft.Office.Interop.Excel.Workbook activeWb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool HasVisibleWindow(global::Quire.Microsoft.Office.Interop.Excel.Windows windows) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnWorkbookActivateAsync(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HasAttachedInputsOrOutputs(bool checkOutputOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -76,9 +132,17 @@ public partial class ExcelContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     protected override void DoDeactivate() => base.DoDeactivate();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<bool> IsExcelCalculationManualModel(global::Quire.Microsoft.Office.Interop.Excel.Application application) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> IsExcelCalculationManualModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HideOleObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisableWorkbookCalculation(bool disable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EnableWorksheetsCalculation(global::Quire.Microsoft.Office.Interop.Excel.Sheets worksheets, bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculateWorkbook(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Dispose() => base.Dispose();
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,10 @@ namespace Quire.Calculation;
 internal partial class MatrixValueProxyWrapper : global::Quire.Calculation.Core.IMatrixValueProxyWrapper
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Automation.PlainDataConversionOptions _conversionOptions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMatrixValueProxy Proxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool IsUniform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

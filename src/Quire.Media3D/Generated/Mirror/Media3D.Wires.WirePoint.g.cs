@@ -12,7 +12,13 @@ namespace Quire.Media3D.Wires;
 public partial class WirePoint : global::Quire.Media3D.Wires.WirePointBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CenterProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Media3D.TranslateTransform3D _translate;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Media3D.ScaleTransform3D _scale;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Point3D Center { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

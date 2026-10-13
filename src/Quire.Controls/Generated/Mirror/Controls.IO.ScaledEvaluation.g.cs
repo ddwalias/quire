@@ -12,6 +12,12 @@ namespace Quire.Controls.IO;
 internal partial class ScaledEvaluation : global::Quire.Controls.IO.ShadowCalculatable, global::Quire.Controls.IO.IScaledEvaluation, global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.IO.UnitMonomialBuilder _builder;
+    [global::Quire.Mirror.MirrorStub]
+    private string _rl;
+    [global::Quire.Mirror.MirrorStub]
+    private const string EvalScaledExpressionRlFormat = "(eval (numeric (op_scale_inverse {0} {1})))";
+    [global::Quire.Mirror.MirrorStub]
     internal const string EvalExpressionRlFormat = "(eval (numeric ({0})))";
     [global::Quire.Mirror.MirrorStub]
     public string ScalingSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,7 +26,11 @@ internal partial class ScaledEvaluation : global::Quire.Controls.IO.ShadowCalcul
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; set => base.Rl = value; }
     [global::Quire.Mirror.MirrorStub]
+    private ScaledEvaluation(string baseSExpression, string scalingSExpression) { }
+    [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.Controls.IO.ScaledEvaluation Create(string baseSExpression, string scalingSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SimpleResultNode ExtractUnits(out global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult GetComputedValue(out double value, out string units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -28,9 +38,9 @@ internal partial class ScaledEvaluation : global::Quire.Controls.IO.ShadowCalcul
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.IO.ScaledEvaluation.ScaledEvaluationResult GetComputedValue(out string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override bool IsErrorOnScalingUnits() => base.IsErrorOnScalingUnits();
+    private string ConstructCurrentRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private ScaledEvaluation() { }
+    public override bool IsErrorOnScalingUnits() => base.IsErrorOnScalingUnits();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

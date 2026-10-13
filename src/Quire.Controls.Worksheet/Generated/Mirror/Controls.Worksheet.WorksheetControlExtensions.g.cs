@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public static partial class WorksheetControlExtensions
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Worksheet.IWorksheetViewModel GetViewModel(this global::Quire.Controls.Worksheet.WorksheetControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void SetItemWorksheetLocation(this global::Quire.Controls.Worksheet.WorksheetControl control, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetItemWorksheetGridLocation(this global::Quire.Controls.Worksheet.WorksheetControl control, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -57,4 +59,14 @@ public static partial class WorksheetControlExtensions
     public static global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> GetWorksheetItemParts(this global::Quire.Controls.Worksheet.WorksheetControl control, global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SeparateOverlappedItems(this global::Quire.Controls.Worksheet.WorksheetControl control, global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point WorksheetLocationToGridLocation(this global::Quire.Controls.Worksheet.WorksheetControl control, global::System.Windows.Point worksheetLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point GridLocationToWorksheetLocation(this global::Quire.Controls.Worksheet.WorksheetControl control, global::System.Windows.Point gridLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point WorksheetLocationToGridLocation(this global::Quire.Controls.Worksheet.WorksheetControl control, global::System.Windows.Point worksheetLocation, bool useContentGrid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point GridLocationToWorksheetLocation(this global::Quire.Controls.Worksheet.WorksheetControl control, global::System.Windows.Point gridLocation, bool useContentGrid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GetLinesPerPage(this global::Quire.Controls.Worksheet.WorksheetControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

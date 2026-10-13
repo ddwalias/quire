@@ -12,6 +12,18 @@ namespace Quire;
 public partial class DimensionEditDialogViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor>> _categories;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<string> _dimensionDataSource;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isCustomDataChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private string _dimensionSelectedItem;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.UnitDescriptor _unitSelectedItem;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.UnitSystems _unitSystem;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<string> DimensionDataSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitDescriptor> UnitDataSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

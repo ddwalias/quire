@@ -12,7 +12,13 @@ namespace Quire.Controls.InputControls;
 internal partial class InputTextBoxEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.VbTextBoxScriptInternalClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.VbTextBoxDefaultScript.vbs";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.List<global::System.Type> ValidTextTypes;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }
     [global::Quire.Mirror.MirrorStub]

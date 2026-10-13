@@ -12,6 +12,16 @@ namespace Quire.EquationEditor;
 public partial class MathNodeToVisualNodeMap : global::Quire.EquationEditor.IMathNodeToVisualNodeMap
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.j a_;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.View.IVisualMathNode> b;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.Tree.MathNode> c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNode e;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode RootModelNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualMathNode RootVisualNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -27,4 +37,6 @@ public partial class MathNodeToVisualNodeMap : global::Quire.EquationEditor.IMat
     public global::Quire.EquationEditor.View.IVisualMathNode AssociateNode(global::Quire.EquationEditor.Tree.MathNode modelNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<T> AllVisualNodesOfType<T>() where T : global::Quire.EquationEditor.View.IVisualMathNode => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.View.IVisualMathNode> a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

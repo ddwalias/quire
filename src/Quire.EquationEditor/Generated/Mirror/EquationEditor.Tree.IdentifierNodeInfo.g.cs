@@ -12,7 +12,11 @@ namespace Quire.EquationEditor.Tree;
 public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.ValueNodeInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.IdLabels> b;
+    [global::Quire.Mirror.MirrorStub]
     public string algorithm;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IdLabels c;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.FormattedString Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

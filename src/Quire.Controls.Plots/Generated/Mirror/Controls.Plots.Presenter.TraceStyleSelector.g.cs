@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Presenter;
 public partial class TraceStyleSelector
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _currentColorIndex;
+    [global::Quire.Mirror.MirrorStub]
     public void ApplyNextStyle(global::Quire.Controls.Plots.Presenter.ITraceModel trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TraceStyleSelector() { }

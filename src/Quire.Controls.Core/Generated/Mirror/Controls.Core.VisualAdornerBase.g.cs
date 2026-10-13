@@ -12,7 +12,13 @@ namespace Quire.Controls.Core;
 public abstract partial class VisualAdornerBase : global::Quire.Controls.Core.VisibilityAwareAdorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent AdornerAddedEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _removed;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.TransformGroup _renderTransformGroup;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Documents.AdornerLayer AdornedElementAdornerLayer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -22,7 +28,11 @@ public abstract partial class VisualAdornerBase : global::Quire.Controls.Core.Vi
     [global::Quire.Mirror.MirrorStub]
     public static void AddToAdornerLayer(global::System.Windows.Documents.AdornerDecorator adornerDecorator, global::System.Windows.Documents.Adorner adorner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static object CoerceRenderTransformPropertyValue(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected VisualAdornerBase(global::System.Windows.UIElement adornedElement, bool trackVisibility) : base(default(global::System.Windows.UIElement), default(bool)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Transform UpdateRenderTransformGroup(global::System.Windows.Media.Transform transform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void FireAdornerAdded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -31,4 +41,8 @@ public abstract partial class VisualAdornerBase : global::Quire.Controls.Core.Vi
     protected virtual void Add() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void AddToAdornerLayer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AdornedElementLoadedHandler(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLayoutUpdated(object sender, global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

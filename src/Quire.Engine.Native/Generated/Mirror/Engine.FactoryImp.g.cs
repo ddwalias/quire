@@ -12,9 +12,27 @@ namespace Quire.Engine;
 public sealed partial class FactoryImp : global::Quire.Engine.IFactory, global::Quire.Engine.IFactoryCallbacks
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_engine_creation_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private long m_engine_last_requested;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_engines;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_worker_stack_size;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_engine_count;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_appData;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_assemblyPath;
+    [global::Quire.Mirror.MirrorStub]
     public int WorkerStackSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.IEngine CreateEngine(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public FactoryImp() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeFactoryImp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Initialize(string appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

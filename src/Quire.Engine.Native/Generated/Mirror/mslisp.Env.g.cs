@@ -12,6 +12,14 @@ namespace Quire.mslisp;
 internal partial class Env
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Env m_parent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.PCons m_vars;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] m_vals;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_size;
+    [global::Quire.Mirror.MirrorStub]
     public Env(global::Quire.mslisp.Env parent, object[] vals) { }
     [global::Quire.Mirror.MirrorStub]
     public Env(global::Quire.mslisp.Env parent, global::Quire.Engine.PCons vars) { }

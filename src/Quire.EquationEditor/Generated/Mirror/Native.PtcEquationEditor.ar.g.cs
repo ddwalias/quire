@@ -14,6 +14,8 @@ internal partial class ar
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Native.PtcEquationEditor.ar a_;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Nullable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> b_;
+    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Scoping.TypeoverState c_;
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Native.PtcEquationEditor.al d_;

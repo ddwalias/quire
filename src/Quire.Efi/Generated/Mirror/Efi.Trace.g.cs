@@ -26,6 +26,8 @@ internal abstract partial class Trace
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.IEnumerator<global::Quire.Efi.Pair<object>> enumerator;
     [global::Quire.Mirror.MirrorStub]
+    private int count;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::Quire.Efi.Pair<double>> Points;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Dim DimX { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

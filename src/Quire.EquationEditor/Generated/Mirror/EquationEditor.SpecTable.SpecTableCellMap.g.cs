@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.SpecTable;
 public partial class SpecTableCellMap : global::Quire.EquationEditor.SpecTable.ISpecTableCellMap
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.EquationEditor.IEquationModel, global::Quire.Controls.Core.IEquationControl> a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IEquationControl, global::Quire.EquationEditor.IEquationModel> b;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IEquationControl> Views { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void Map(global::Quire.EquationEditor.IEquationModel eqModel, global::Quire.Controls.Core.IEquationControl eqView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

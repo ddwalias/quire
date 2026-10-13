@@ -12,6 +12,8 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class q : global::System.Exception
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.p a_;
+    [global::Quire.Mirror.MirrorStub]
     public q(global::Quire.Native.PtcEquationEditor.p A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public q(global::Quire.Native.PtcEquationEditor.p A_0, string A_1) { }

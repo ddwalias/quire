@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class DataVectorsType
 {
     [global::Quire.Mirror.MirrorStub]
+    private string countField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.ValuesTypeEnum valuesTypeField;
+    [global::Quire.Mirror.MirrorStub]
+    private string vectorLengthField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.VectorsTypeEnum vectorsTypeField;
+    [global::Quire.Mirror.MirrorStub]
+    private string valueField;
+    [global::Quire.Mirror.MirrorStub]
     public string Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.ValuesTypeEnum ValuesType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

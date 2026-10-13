@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Serialization;
 public partial class XmlToXElementSerializableAdapter : global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable, global::System.Xml.Serialization.IXmlSerializable, global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.Serialization.IXmlSerializable _xmlSerializable;
+    [global::Quire.Mirror.MirrorStub]
     public XmlToXElementSerializableAdapter(global::System.Xml.Serialization.IXmlSerializable xmlSerializable) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -25,4 +27,6 @@ public partial class XmlToXElementSerializableAdapter : global::Quire.Controls.C
     public void WriteXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteXmlToXContainer(global::System.Xml.Linq.XContainer xContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

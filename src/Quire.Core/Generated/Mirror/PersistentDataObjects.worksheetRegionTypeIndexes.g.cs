@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class worksheetRegionTypeIndexes
 {
     [global::Quire.Mirror.MirrorStub]
+    private string[] phraseField;
+    [global::Quire.Mirror.MirrorStub]
     public string[] phrase { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public worksheetRegionTypeIndexes() { }

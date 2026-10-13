@@ -12,11 +12,13 @@ namespace Quire.Controls.Worksheet;
 public partial class HeaderFooterSearchRestrictor : global::Quire.Controls.Core.IFindRestrictor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.ISearchableRegion _searchableRegion;
+    [global::Quire.Mirror.MirrorStub]
     public bool CanSearch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ISearchableRegion SearchableRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Worksheet.HeaderFooterSearchRestrictor CreateFindRestrictor(global::Quire.Controls.Worksheet.IHeaderFooter headerFooter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private HeaderFooterSearchRestrictor() { }
+    private HeaderFooterSearchRestrictor(global::Quire.Controls.Worksheet.IHeaderFooter headerFooter) { }
 }

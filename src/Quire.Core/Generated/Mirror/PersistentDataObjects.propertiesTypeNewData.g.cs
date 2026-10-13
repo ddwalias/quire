@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class propertiesTypeNewData
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlElement[] anyField;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement[] Any { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public propertiesTypeNewData() { }

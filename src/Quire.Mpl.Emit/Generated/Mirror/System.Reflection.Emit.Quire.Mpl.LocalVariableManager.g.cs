@@ -12,6 +12,10 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class LocalVariableManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Type> _locals;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodBase _method;
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.LocalBuilder DeclareLocal(global::System.Type type, bool pinned, string tag = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

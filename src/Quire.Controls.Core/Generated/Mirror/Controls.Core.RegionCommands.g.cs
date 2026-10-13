@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public static partial class RegionCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand Replace;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteRegion;

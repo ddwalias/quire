@@ -12,6 +12,8 @@ namespace Quire.Controls.Text;
 internal partial class RichTextDeserializationStrategy : global::Quire.Controls.Core.Serialization.DeserializationStrategyWithMathFormat
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IRichTextWithEmbeddedItem _richText;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

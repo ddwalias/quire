@@ -12,6 +12,26 @@ namespace Quire.Controls.Plots.Model;
 internal partial class PlotModel : global::Quire.Controls.Plots.Presenter.IPlotModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.ITraceModel> _traces;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _rangeAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _primaryResultAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.IPlotTitleModel _plotTitleModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotLegendModel _plotLegendModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Size _viewPortDpi;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showAxisExpressions;
+    [global::Quire.Mirror.MirrorStub]
+    private const string TitleXmlNodeName = "ws:title";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Size _defaultViewPortDpi;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _graphSize;
+    [global::Quire.Mirror.MirrorStub]
     public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.PlotType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +43,8 @@ internal partial class PlotModel : global::Quire.Controls.Plots.Presenter.IPlotM
     public string RegionSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode PlotXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> SortedTraces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode GraphRegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -51,6 +73,14 @@ internal partial class PlotModel : global::Quire.Controls.Plots.Presenter.IPlotM
     public PlotModel() { }
     [global::Quire.Mirror.MirrorStub]
     public PlotModel(global::Quire.Controls.Plots.Presenter.PlotType type, global::System.Windows.Size viewPortDpi, global::Quire.Controls.Plots.IPlotTitleModel titleModel, global::Quire.Controls.Plots.IPlotTitleModel xAxisTitleModel, global::Quire.Controls.Plots.IPlotTitleModel yAxisTitleModel) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void Notify(string propName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void createPlot(global::System.Xml.XmlNode typeNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeserializeLegendItems(global::System.Xml.XmlNode typeNode, global::System.Xml.XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.XmlNode GetAxisXmlNode(global::System.Xml.XmlDocument xmlDoc, global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeserializeEpilog(bool isConvertedFromMathcad14) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

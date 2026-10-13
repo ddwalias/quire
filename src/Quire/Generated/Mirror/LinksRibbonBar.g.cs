@@ -22,6 +22,8 @@ public partial class LinksRibbonBar : global::Fluent.RibbonGroupBox, global::Sys
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_LinksRibbonBar_RemoveTag;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public LinksRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

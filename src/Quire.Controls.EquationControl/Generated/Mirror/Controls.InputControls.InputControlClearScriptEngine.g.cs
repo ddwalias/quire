@@ -20,6 +20,8 @@ public abstract partial class InputControlClearScriptEngine : global::Quire.Cont
     [global::Quire.Mirror.MirrorStub]
     protected int _linesCountErrorCurrection;
     [global::Quire.Mirror.MirrorStub]
+    private const int MinPropertiesHashSize = 7;
+    [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldEngineInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override string ParseScriptEngineException(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class worksheetRegionTypeRenderingElementimagemap
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.worksheetRegionTypeRenderingElementimagemapBox[] boxField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.worksheetRegionTypeRenderingElementimagemapBox[] box { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public worksheetRegionTypeRenderingElementimagemap() { }

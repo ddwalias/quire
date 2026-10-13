@@ -14,7 +14,21 @@ public partial class ParsedSExpressionToInlineTransform
     [global::Quire.Mirror.MirrorStub]
     public const string ComplexIdentifierAtom = "@ID";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<global::System.Windows.Documents.Inline>> a__;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, global::System.Func<global::System.Windows.Documents.Inline>> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Documents.Span Transform(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression parsed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Span d(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Windows.Documents.Inline> a(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Inline c(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Run b(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Inline a(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ParsedSExpressionToInlineTransform() { }
 

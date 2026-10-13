@@ -14,7 +14,17 @@ public partial class WrappedChildManager : global::Quire.Calculation.Core.Suppor
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool, global::Quire.Calculation.Core.ICalculatable> _createCalculatableWrapper;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatable> _lookupCalculatableWrapper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action<global::Quire.Calculation.Core.ICalculatable> _removeCalculatableWrapper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action<global::Quire.Calculation.Core.ICalculatable, bool> _notifyHiddenStateChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action _notifyContainerChildrenChanged;
+    [global::Quire.Mirror.MirrorStub]
     public WrappedChildManager(global::System.Collections.Generic.IEnumerable<object> getChildren, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableAdded, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableRemoved, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableMoved, global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool, global::Quire.Calculation.Core.ICalculatable> createCalculatableWrapper, global::System.Func<global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatable> lookupCalculatableWrapper, global::System.Action<global::Quire.Calculation.Core.ICalculatable> removeCalculatableWrapper, global::System.Action<global::Quire.Calculation.Core.ICalculatable, bool> notifyHiddenStateChanged, global::System.Action notifyContainerChildrenChanged) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<object> EffectiveChildren(global::System.Collections.Generic.IEnumerable<object> realChildren) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void ChildAddedCore(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

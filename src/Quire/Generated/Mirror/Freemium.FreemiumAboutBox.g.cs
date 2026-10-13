@@ -12,6 +12,14 @@ namespace Quire.Freemium;
 public partial class FreemiumAboutBox : global::Quire.Wpf.WindowLocatedRelativelyToPositionProvider, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.ResourceDictionary _aboutCategoryTitleResourceDictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.ResourceDictionary _premiumBenefitsResourceDictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.ResourceDictionary _helpLinkResourceDictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Freemium.FreemiumAboutBox _instance;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty AboutCategoryTitleProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty BenefitTextProperty;
@@ -22,11 +30,17 @@ public partial class FreemiumAboutBox : global::Quire.Wpf.WindowLocatedRelativel
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.StackPanel vCardDisplay;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Freemium.FreemiumAboutBox Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string AboutCategoryTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string BenefitText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string MoreHelpHyperLink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private FreemiumAboutBox() { }
     [global::Quire.Mirror.MirrorStub]
     public void Show(object commandParameter, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -34,13 +48,25 @@ public partial class FreemiumAboutBox : global::Quire.Wpf.WindowLocatedRelativel
     [global::Quire.Mirror.MirrorStub]
     protected override void OnClosed(global::System.EventArgs e) => base.OnClosed(e);
     [global::Quire.Mirror.MirrorStub]
+    private void OnOptionsWindowOpened() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLicenseStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCloseButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BenefitHyperlinkClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnSourceInitialized(global::System.EventArgs e) => base.OnSourceInitialized(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveMinimizeMaximizeRestoreOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnFreemiumAboutBoxLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnBenefitTextChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private FreemiumAboutBox() { }
 }

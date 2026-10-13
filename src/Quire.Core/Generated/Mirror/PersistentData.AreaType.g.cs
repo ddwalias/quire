@@ -12,9 +12,23 @@ namespace Quire.PersistentData;
 public partial class AreaType : global::Quire.PersistentData.mathBoardType, global::Quire.PersistentData.IRegionCollectionType, global::Quire.PersistentData.IAreaType, global::Quire.PersistentData.IProtectableDataType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.worksheetRegionType[] regionsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.ProtectionDataType protectionDataField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool isCollapsedField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool isBorderVisibleField;
+    [global::Quire.Mirror.MirrorStub]
+    private double areaHeightField;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type TypeOfThis;
     [global::Quire.Mirror.MirrorStub]
     public const string XmlRootElementName = "Area";
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.worksheetRegionType[] regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -37,4 +51,6 @@ public partial class AreaType : global::Quire.PersistentData.mathBoardType, glob
     public AreaType() { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer GetXmlSerializerStatic(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,32 @@ namespace Quire.Controls.Internal;
 internal partial class VisualPairNaryNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualPairNaryNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double OPERATOR_PAD = 4d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double BODY_LEFT_PAD = 8d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VerticalFence _operatorRightMinorPart;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _operatorRightMinorPartTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private double _verticalOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode[] _operatorParts;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] _operatorPartsTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] _operandsTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private string _firstOperatorPartSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private string _middleOperatorPartsSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private string _lastOperatorPartSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasLastSymbol;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -31,6 +57,8 @@ internal partial class VisualPairNaryNode : global::Quire.Controls.Internal.Visu
     public VisualPairNaryNode(string firstOperatorPartSymbol, string middleOperatorPartsSymbol, string lastOperatorPartSymbol) { }
     [global::Quire.Mirror.MirrorStub]
     public override void BuildChildren(global::Quire.EquationEditor.View.IVisualMathNode[] children) => base.BuildChildren(children);
+    [global::Quire.Mirror.MirrorStub]
+    private void PrepareVisualChildren(int childCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]

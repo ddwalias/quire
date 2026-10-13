@@ -30,6 +30,8 @@ public abstract partial class DeserializationStrategy : global::Quire.Controls.C
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegions(global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> regions, global::Quire.Serialization.IDeS11NProvider deS11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void AddRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData, bool skipRegionsNotAffectingCalculation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void AddRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void CleanUpLastRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

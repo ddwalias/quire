@@ -12,11 +12,15 @@ namespace Quire.Controls.IO;
 internal partial class CollectionWithSyncStatus : global::Quire.Calculation.Core.Support.ICalcWithSyncStatus
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> _items;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> Synchronized;
     [global::Quire.Mirror.MirrorStub]
     public bool Add(global::Quire.Calculation.Core.Support.ICalcWithSyncStatus item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnShadowSynchronized(global::Quire.Calculation.Core.Support.ICalcWithSyncStatus shadow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public CollectionWithSyncStatus() { }
 }

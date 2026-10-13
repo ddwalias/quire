@@ -12,19 +12,195 @@ namespace Quire.Engine.Misc;
 public partial class FileUtils
 {
     [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Alpha;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_alpha;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Beta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_beta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Gamma;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_gamma;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Delta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_delta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Epsilon;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_epsilon;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Zeta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_zeta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Eta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_eta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Theta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_theta;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Iota;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_iota;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Kappa;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_kappa;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Lambda;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_lambda;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Mu;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_mu;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Nu;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_nu;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Xi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_xi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Omicron;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_omicron;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Pi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_pi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Rho;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_rho;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Sigma;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_sigma;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Tau;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_tau;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Upsilon;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_upsilon;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Phi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_phi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Chi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_chi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Psi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_psi;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_Omega;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_omega;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_phi_alt;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_pi_alt;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_sigma_alt;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_theta_alt;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_bottom;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_ohm;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_currency;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_yen;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_deg;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_hbar;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_infinity;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_element_of;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_hooked_f;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_right_arrow;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_left_arrow;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_copyright;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_trademark;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_registered;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_DoubleStruckC;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_DoubleStruckQ;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_DoubleStruckR;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Char_DoubleStruckZ;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Start_Subscript;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_End_Subscript;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_Start_Superscript;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_End_Superscript;
+    [global::Quire.Mirror.MirrorStub]
+    private static char[] s_CharMappings;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<char, char> s_AsciiToUnicodeTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<char, char> s_UnicodeToAsciiTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] s_NameMappings;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> s_CharNameToUnicodeStringTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<char, string> s_UnicodeToCharNameTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<global::Quire.Engine.Misc.Pair<string, char>> s_LongUnicodeToShortcutKeyTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<char, char> s_GreekShortcutKeyToUnicodeTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<char, char> s_UnicodeToGreekShortcutKeyTable;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool s_bNamedCharMapInitialized;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.IO.StreamReader StreamToPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ReadExpanded(string path, global::System.IO.TextWriter _out) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string ReadExpanded(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string ProcessInclude(string line, out bool isReference) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SkipPast(global::System.IO.StreamReader r, string seek) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string ContractUnicode(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string ExpandUnicode(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void InitCharMappings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool UnicodeToAscii(char unicode, ref char ascii) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool AsciiToUnicode(char ascii, ref char unicode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InitNamedCharMap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool CharNameToUnicodeString(string name, ref string unicode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

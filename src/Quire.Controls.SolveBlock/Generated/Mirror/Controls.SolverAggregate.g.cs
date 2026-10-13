@@ -12,7 +12,37 @@ namespace Quire.Controls;
 internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalculatable, global::Quire.Controls.ISolverAggregate, global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatableContainer
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _rl;
+    [global::Quire.Mirror.MirrorStub]
+    private const string OdeDefaultAlgorithmString = "adams";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PdeDefaultAlgorithmString = "0";
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> PdeAlgoToRL;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> SolvingAlgoToRL;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> SolvingAlgoOptionsToRL;
+    [global::Quire.Mirror.MirrorStub]
+    private const string SolverFind = "find";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Minerr = "minerr";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Pdesolve = "pdesolve";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Odesolve = "odesolve";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PrognExp = "(progn:0x0000ffff ,%!)";
+    [global::Quire.Mirror.MirrorStub]
+    private const string LambdaExp = "lambda";
+    [global::Quire.Mirror.MirrorStub]
     public const string RL_NIL = "nil";
+    [global::Quire.Mirror.MirrorStub]
+    private const int DefaultEvalIndex = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private const string UndefineSubscripts = "undefine-subscripts";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Calculation.Core.ICalculatable> _calculatableChildren;
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; }
     [global::Quire.Mirror.MirrorStub]
@@ -23,6 +53,16 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     public string DefinedRl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DefinedParams { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string SolverName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string SolverTag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string[] SolverArgs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string LeftOfSolverApply { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string RightOfSolverApply { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -36,9 +76,15 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     public void UpdateSolverRL() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string GetSolvingAlgorithmRl(string algorithmString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddAlgorithmIfRequired(global::System.Text.StringBuilder solverRlBuilder, global::Quire.Calculation.Core.ICalculatable wrappedCalculatable, string solverName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool IsSolverOfSymbolicContainsFind(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsSolverOfSymbolicContainsUndefineSubscripts(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.SolverAggregateChildWrapperAggregate GetSolverWrappedAggregate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => base.HandleRequestEvaluation(calc);
     [global::Quire.Mirror.MirrorStub]
@@ -66,13 +112,25 @@ internal partial class SolverAggregate : global::Quire.Controls.SolveBlockCalcul
     [global::Quire.Mirror.MirrorStub]
     public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
     [global::Quire.Mirror.MirrorStub]
+    private static int GetChildIndexForResult(global::Quire.Calculation.Core.ICalculatableContainer aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
     [global::Quire.Mirror.MirrorStub]
     public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
     [global::Quire.Mirror.MirrorStub]
+    private void ClearError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ParseWrappedRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override bool ContainsError(global::Quire.Calculation.Core.EngineError error) => base.ContainsError(error);
     [global::Quire.Mirror.MirrorStub]
     public override void ShowError(global::Quire.Calculation.Core.EngineError error) => base.ShowError(error);
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableAdded(global::Quire.Controls.SolverAggregateChildWrapper wrapper, global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableRemoved(global::Quire.Controls.SolverAggregateChildWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableMoved(global::Quire.Controls.SolverAggregateChildWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

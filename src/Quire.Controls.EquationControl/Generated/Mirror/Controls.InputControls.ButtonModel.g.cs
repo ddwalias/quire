@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class ButtonModel : global::Quire.Controls.InputControls.InputScriptableControlModelWithInputs, global::Quire.Controls.InputControls.IButtonPropertiesEditorModel, global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.ButtonScriptableControlData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override object SelectedValue { get => base.SelectedValue; }
     [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

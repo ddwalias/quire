@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class textEmbeddedRegionType : global::Quire.PersistentDataObjects.regionInTextBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.mathType mathField;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] mc14conversionlossannotationsField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.mathType math { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string[] mc14conversionlossannotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

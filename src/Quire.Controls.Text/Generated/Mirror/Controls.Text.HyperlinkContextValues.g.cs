@@ -12,6 +12,8 @@ namespace Quire.Controls.Text;
 public partial class HyperlinkContextValues
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Hyperlink _contextLink;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Documents.TextRange ConvertToLinkRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ContextText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

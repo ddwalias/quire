@@ -12,6 +12,12 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class ToggleAxisTitleVisibilityCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.PlotTitle _axisTitle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _oldValue;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _newValue;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ToggleAxisTitleVisibilityCommand(global::Quire.Controls.Plots.PlotTitle axisTitle) { }

@@ -12,9 +12,15 @@ namespace Quire.DOE;
 public partial class Taguchi : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_key;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<string, double[,]> m_designs;
+    [global::Quire.Mirror.MirrorStub]
     public Taguchi(int nfacts, int nlevels) { }
     [global::Quire.Mirror.MirrorStub]
     public Taguchi(int nfacts1, int nlevels1, int nfacts2, int nlevels2) { }
     [global::Quire.Mirror.MirrorStub]
     internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

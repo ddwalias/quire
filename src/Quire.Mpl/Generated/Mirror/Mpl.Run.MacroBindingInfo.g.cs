@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class MacroBindingInfo : global::Quire.Mpl.Run.BindingInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.MplMacro m_macro;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.MplMacro macro { get => base.macro; }
     [global::Quire.Mirror.MirrorStub]
     public MacroBindingInfo(uint handle, global::Quire.Mpl.Run.MplMacro m) { }

@@ -24,6 +24,8 @@ public partial class DataMatrixFileAccessRibbonBar : global::Fluent.RibbonGroupB
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_DataMatrixFileAccessRibbonBar_ExcelComponent_OutputExpression;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DataMatrixFileAccessRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

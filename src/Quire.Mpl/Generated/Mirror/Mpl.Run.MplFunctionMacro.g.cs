@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class MplFunctionMacro : global::Quire.Mpl.Run.MplMacro
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_expander;
+    [global::Quire.Mirror.MirrorStub]
     public MplFunctionMacro(global::Quire.Mpl.Run.Sym name, global::Quire.Mpl.Run.Function expander) : base(default(global::Quire.Mpl.Run.Sym)) { }
     [global::Quire.Mirror.MirrorStub]
     public MplFunctionMacro(string name, global::Quire.Mpl.Run.Function expander) : base(default(global::Quire.Mpl.Run.Sym)) { }

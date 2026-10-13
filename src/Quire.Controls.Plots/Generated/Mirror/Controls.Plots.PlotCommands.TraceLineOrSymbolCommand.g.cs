@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal abstract partial class TraceLineOrSymbolCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::Quire.Controls.Plots.Presenter.TraceStyleState> _previousStyle;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState>> _extraUndoData;
     [global::Quire.Mirror.MirrorStub]
     public TraceLineOrSymbolCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle> traceList, string name) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }

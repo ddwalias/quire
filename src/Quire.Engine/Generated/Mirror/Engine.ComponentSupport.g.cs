@@ -13,6 +13,14 @@ namespace Quire.Engine;
 public partial struct ComponentSupport
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.Dictionary<int, global::Quire.Engine.CachingWrapper>> s_engine_map;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<int, global::Quire.Engine.CachingWrapper> GetComponentMap(int engine_id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GetNewHandle(global::System.Collections.Generic.Dictionary<int, global::Quire.Engine.CachingWrapper> m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Engine.CachingWrapper Lookup(int engine_id, int handle, bool bThrow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static int RegisterComponent(int engine_id, global::Quire.Engine.IMathcadComponent component, int handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int RegisterComponent(int engine_id, global::Quire.Engine.IMathcadComponent component) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -14,6 +14,12 @@ internal partial class MathStyles : global::System.Xml.Serialization.IXmlSeriali
     [global::Quire.Mirror.MirrorStub]
     public const string localName = "mathStyles";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IEngineeringDocument document;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.Linq.XNamespace nameSpace;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.Linq.XName MathStyleName;
+    [global::Quire.Mirror.MirrorStub]
     public MathStyles(global::Quire.Controls.Core.IEngineeringDocument document, global::System.Xml.Linq.XNamespace nameSpace) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

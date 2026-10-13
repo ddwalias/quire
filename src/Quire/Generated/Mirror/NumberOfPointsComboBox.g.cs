@@ -14,6 +14,12 @@ public partial class NumberOfPointsComboBox : global::System.Windows.Controls.Co
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SelectedTracesNumOfPointsProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static bool _handleSelection;
+    [global::Quire.Mirror.MirrorStub]
+    private int _minimumValidValue;
+    [global::Quire.Mirror.MirrorStub]
+    private int _maximumValidValue;
+    [global::Quire.Mirror.MirrorStub]
     public int SelectedTracesNumOfPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     string global::System.ComponentModel.IDataErrorInfo.this[string columnName] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -24,7 +30,21 @@ public partial class NumberOfPointsComboBox : global::System.Windows.Controls.Co
     [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleSelectedTracesNumOfPointsChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ChangeOrRestoreNumberOfPoints(global::Quire.NumberOfPointsComboBox numberOfPointsComboBox, bool activate = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected static void NumberOfPointsComboBoxKeyDown(object sender, global::System.Windows.Input.KeyEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void NumberOfPointsComboBoxPreviewLostFocus(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void NumberOfPointsComboBoxSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void NumberOfPointsComboBoxDropDownOpened(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void NumberOfPointsComboBoxDropDownClosed(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ConvertIntToStringForTag(int intValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnItemsSourceChanged(global::System.Collections.IEnumerable oldValue, global::System.Collections.IEnumerable newValue) => base.OnItemsSourceChanged(oldValue, newValue);
     [global::Quire.Mirror.MirrorStub]

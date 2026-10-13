@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots.Contour.View;
 public partial class VisualData : global::System.Windows.DependencyObject, global::Quire.Controls.Core.AttachedBehavior.IOneTimePropertyOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty GeometryDataProperty;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StrokeProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StrokeThicknessProperty;
@@ -21,6 +25,8 @@ public partial class VisualData : global::System.Windows.DependencyObject, globa
     public static readonly global::System.Windows.DependencyProperty FillProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LabelProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private double _labelValue;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LabelPositionProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -48,11 +54,25 @@ public partial class VisualData : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Visibility LabelVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IValueToScreen VerticalValueToScreen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IValueToScreen HorizontalValueToScreen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point[] PointsData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateLabel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void LabelFormatterChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public VisualData(global::System.Windows.Point[] points, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalTransformer, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalTransformer) { }
     [global::Quire.Mirror.MirrorStub]
     internal void CreateGeometry() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.Borders ComputeBorderBelongingStatusForPoint(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool AreOnSameBorder(global::Quire.Controls.Plots.Contour.View.Borders border1, global::Quire.Controls.Plots.Contour.View.Borders border2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point TransformPoint(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Size GetLabelSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

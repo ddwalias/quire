@@ -20,5 +20,7 @@ public partial class SpecTableColumnToRlTransform
     [global::Quire.Mirror.MirrorStub]
     internal string a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer A_1, global::System.Collections.Generic.List<global::Quire.Pair<global::Quire.EquationEditor.IEquationModel, uint>> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private int a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.IEquationModel> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public SpecTableColumnToRlTransform() { }
 }

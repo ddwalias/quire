@@ -12,6 +12,46 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationTextRenderingTextStyle
 {
     [global::Quire.Mirror.MirrorStub]
+    private string fontfamilyField;
+    [global::Quire.Mirror.MirrorStub]
+    private float fontsizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontweight fontweightField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontstyle fontstyleField;
+    [global::Quire.Mirror.MirrorStub]
+    private string colorField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontstretch fontstretchField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleVariants variantsField;
+    [global::Quire.Mirror.MirrorStub]
+    private string underlineField;
+    [global::Quire.Mirror.MirrorStub]
+    private string overlineField;
+    [global::Quire.Mirror.MirrorStub]
+    private string strikethroughField;
+    [global::Quire.Mirror.MirrorStub]
+    private string baselineField;
+    [global::Quire.Mirror.MirrorStub]
+    private string nameField;
+    [global::Quire.Mirror.MirrorStub]
+    private string styleKeyField;
+    [global::Quire.Mirror.MirrorStub]
+    private string basedOnKeyField;
+    [global::Quire.Mirror.MirrorStub]
+    private string backgroundField;
+    [global::Quire.Mirror.MirrorStub]
+    private string foregroundField;
+    [global::Quire.Mirror.MirrorStub]
+    private string marginField;
+    [global::Quire.Mirror.MirrorStub]
+    private string markerStyleField;
+    [global::Quire.Mirror.MirrorStub]
+    private string textIndentField;
+    [global::Quire.Mirror.MirrorStub]
+    private string textAlignmentField;
+    [global::Quire.Mirror.MirrorStub]
     public string fontfamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public float fontsize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

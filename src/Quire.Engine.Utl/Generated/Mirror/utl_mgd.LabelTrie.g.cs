@@ -24,6 +24,10 @@ public partial class LabelTrie
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.utl_mgd.SafeReadWriteLock s_lock;
     [global::Quire.Mirror.MirrorStub]
+    private static char[] s_braces;
+    [global::Quire.Mirror.MirrorStub]
+    private static char[] s_comma;
+    [global::Quire.Mirror.MirrorStub]
     public LabelTrie(global::Quire.utl_mgd.SortedStringSet labels) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.utl_mgd.LabelSet Find(global::Quire.utl_mgd.SortedStringSet labels, bool wild) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

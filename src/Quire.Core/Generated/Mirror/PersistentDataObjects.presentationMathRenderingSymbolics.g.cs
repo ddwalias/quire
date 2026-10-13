@@ -12,6 +12,12 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationMathRenderingSymbolics
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingSymbolicsDerivationstepsstyle derivationstepsstyleField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showcommentsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool evaluateinplaceField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.presentationMathRenderingSymbolicsDerivationstepsstyle derivationstepsstyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool showcomments { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

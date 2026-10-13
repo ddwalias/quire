@@ -12,6 +12,12 @@ namespace Quire.Controls.InputControls;
 internal partial class ButtonViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isChecked;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.PropertyInfo _backgroundColor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.ButtonModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.PropertyInfo BackgroundColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

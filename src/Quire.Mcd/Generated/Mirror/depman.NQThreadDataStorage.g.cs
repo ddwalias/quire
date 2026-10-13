@@ -14,5 +14,7 @@ internal partial class NQThreadDataStorage
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Threading.ThreadLocal<global::Quire.depman.NQThreadData> s_data;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.depman.NQThreadData make_thread_data() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public NQThreadDataStorage() { }
 }

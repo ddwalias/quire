@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.ViewModel;
 public partial class TraceViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.ITraceModel _model;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.ITraceImageRendererViewModel ImageRendererViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsUsingDensityVisualization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

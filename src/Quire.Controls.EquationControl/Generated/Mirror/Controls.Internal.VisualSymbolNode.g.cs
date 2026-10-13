@@ -14,7 +14,15 @@ internal partial class VisualSymbolNode : global::Quire.Controls.Internal.Visual
     [global::Quire.Mirror.MirrorStub]
     protected readonly string _symbol;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.FormattedText _text;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry _geometry;
+    [global::Quire.Mirror.MirrorStub]
     protected bool _automaticallyAlign;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _glyphGap;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Rect _inkBounds;
     [global::Quire.Mirror.MirrorStub]
@@ -57,6 +65,8 @@ internal partial class VisualSymbolNode : global::Quire.Controls.Internal.Visual
     protected override void OnShowOperatorOnlyWhenActiveChanged(bool value) => base.OnShowOperatorOnlyWhenActiveChanged(value);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
+    [global::Quire.Mirror.MirrorStub]
+    private double GetXCoordinate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]

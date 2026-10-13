@@ -34,6 +34,8 @@ public partial class MathRegionsRibbonBar : global::Fluent.RibbonGroupBox, globa
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_MathRegionsRibbonBar_DeleteRegion;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathRegionsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

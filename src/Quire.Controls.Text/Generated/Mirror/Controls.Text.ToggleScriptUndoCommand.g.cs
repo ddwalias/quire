@@ -12,15 +12,33 @@ namespace Quire.Controls.Text;
 public partial class ToggleScriptUndoCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Text.ScriptState _switchToScript;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Undo.CompoundCommand _nestedCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Text.RichTextBase _textRegion;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _rangeStartOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _rangeEndOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _insertionPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _shouldRecreateSelection;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Text.ToggleScriptUndoCommand CreateToggleScriptUndoCommand(global::Quire.Controls.Text.RichTextBase textRegion, global::System.Windows.Documents.TextRange range, global::Quire.Controls.Text.ScriptState switchToScript, bool bRecreateSelection = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private ToggleScriptUndoCommand(global::Quire.Controls.Text.RichTextBase textRegion, global::System.Windows.Documents.TextRange range, global::Quire.Controls.Text.ScriptState switchToScript, bool bRecreateSelection) { }
+    [global::Quire.Mirror.MirrorStub]
     public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextRange RecreatedRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RecreateSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private ToggleScriptUndoCommand() { }
 }

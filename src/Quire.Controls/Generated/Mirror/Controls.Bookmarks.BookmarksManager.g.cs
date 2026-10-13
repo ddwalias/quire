@@ -14,7 +14,17 @@ public partial class BookmarksManager : global::Quire.Controls.Core.BookmarkTags
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action DataChanged;
     [global::Quire.Mirror.MirrorStub]
+    private void FireDataChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetRegionBookmarkTag(global::Quire.Controls.Core.IWhiteboardItem item, string tagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Undo.UndoableCommand CreateBookmarkTagCommand(global::Quire.Controls.Core.IWhiteboardItem item, string oldTagValue, string tagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetBookmarkTagCommand(global::Quire.Controls.Core.IWhiteboardItem item, string oldTagValue, string tagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearRegionBookmarkTag(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Undo.UndoableCommand CreateRemoveBookmarkTagCommand(global::Quire.Controls.Core.IWhiteboardItem item, string oldTagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveBookmarkTagCommand(global::Quire.Controls.Core.IWhiteboardItem item, string oldTagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -31,11 +31,22 @@
   Quire.ChartAppLib.TraceData F public System.String m_xUnits
   Quire.ChartAppLib.TraceData F public System.String m_yUnits
   Quire.ChartAppLib.TraceData F public System.String m_zUnits
+  Quire.Controls.ExcelComponent.ChartComponentCommands F private static readonly System.Type _typeOfChartComponentControl
   Quire.Controls.ExcelComponent.ChartComponentCommands F public static readonly System.Windows.Input.RoutedUICommand InsertAxisExpression
+  Quire.Controls.ExcelComponent.ExcelComponentCommands F private static readonly System.Type _typeOfExcelComponentControl
   Quire.Controls.ExcelComponent.ExcelComponentCommands F public static readonly System.Windows.Input.RoutedUICommand InsertExcelInputExpression
   Quire.Controls.ExcelComponent.ExcelComponentCommands F public static readonly System.Windows.Input.RoutedUICommand InsertExcelOutputExpression
   Quire.Controls.ExcelComponent.ExcelComponentConstants F public const System.String ExcelComponentHelpContext
   Quire.Controls.ExcelComponent.ExcelComponentControl F internal const System.String ExcelIdentifier
+  Quire.Controls.ExcelComponent.ExcelComponentControl F private readonly Quire.Controls.ExcelComponent.Model.ExcelComponentModel _exModel
+  Quire.Controls.ExcelComponent.ExcelComponentControl F private readonly Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel _exViewModel
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private BindCommands`0() -> System.Void
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private CanInsertInputExpression`0(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private CanInsertOutputExpression`0(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private ExcelInitialize`0() -> System.Void
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private GetExcelSelectionOrDefault`0(System.Boolean) -> System.String
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private OnInsertInputExpression`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.ExcelComponentControl M private OnInsertOutputExpression`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.ExcelComponentControl M protected override CreateOleContainerItem`0() -> Quire.Controls.ExcelComponent.View.IOleContainerItem
   Quire.Controls.ExcelComponent.ExcelComponentControl M protected override GetInternalHelpContext`0() -> System.String
   Quire.Controls.ExcelComponent.ExcelComponentControl M public .ctor`0() -> System.Void
@@ -59,6 +70,7 @@
   Quire.Controls.ExcelComponent.ExcelComponentDeserializationStrategy M public .ctor`0(Quire.Controls.ExcelComponent.ExcelComponentControl) -> System.Void
   Quire.Controls.ExcelComponent.ExcelComponentSerializationStrategy M protected override ConvertToRegionPersistantData`0(Quire.Serialization.IS11NProvider,Quire.Controls.Core.IWhiteboardItem) -> Quire.PersistentDataObjects.IRegionInWhiteboardType
   Quire.Controls.ExcelComponent.ExcelComponentSerializationStrategy M public .ctor`0(Quire.Controls.ExcelComponent.ExcelComponentControl,Quire.DelegateFunction0`1<Quire.PersistentDataObjects.IRegionType>) -> System.Void
+  Quire.Controls.ExcelComponent.ExcelContainer F private static readonly System.Type _typeOfThis
   Quire.Controls.ExcelComponent.ExcelContainer M protected override MeasureOverride`0(System.Windows.Size) -> System.Windows.Size
   Quire.Controls.ExcelComponent.ExcelContainer M protected override OnCreationError`0() -> System.Void
   Quire.Controls.ExcelComponent.ExcelContainer M protected override ShouldSerializeProperty`0(System.Windows.DependencyProperty) -> System.Boolean
@@ -86,9 +98,19 @@
   Quire.Controls.ExcelComponent.Model.BaseComponentEquationType V Unknown = 0
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper E public System.Action`1<Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ChartTypeChanged
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper E public System.Action`2<Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper,System.Collections.Generic.List`1<System.UInt32>> UpdateTraceWithDeserializedError
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private Quire.Controls.ExcelComponent.Model.ChartWrapperType _chartType
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private System.Action`1<Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> ChartTypeChanged
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private System.Action`2<Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper,System.Collections.Generic.List`1<System.UInt32>> UpdateTraceWithDeserializedError
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private System.Nullable`1<System.UInt32> _identifierHandle
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private System.String _identifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private const System.UInt32 LhsTag
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper F private readonly System.Collections.Generic.List`1<Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable> _traceCalcs
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M internal TraceAffectsCalcData`0(Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M internal static ChartTypeToIdentifier`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.String
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M internal static IdentifierToChartType`0(System.String,System.Nullable`1<System.UInt32>) -> Quire.Controls.ExcelComponent.Model.ChartWrapperType
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M private SetIdentifierLabelsAux`0(System.Collections.Generic.IDictionary`2<Quire.Calculation.Core.ResolvedId,System.String[]>) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M private UpdateEquationAndChartWrapperType`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M private static GetRlIdWithLabel`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.String
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M protected override ClearEquationType`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M protected override GetCustomErrorType`0(System.String) -> Quire.Controls.ExcelComponent.Model.OleWrapperCustomErrorType
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M protected override HandleRequestEvaluation`0(Quire.Calculation.Core.ICalculatable) -> System.Void
@@ -103,7 +125,9 @@
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M public override SetIdentifierLabels`0(System.Collections.Generic.IDictionary`2<Quire.Calculation.Core.ResolvedId,System.String[]>) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M public static ConstructAxisExpression`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType,System.Nullable`1<System.UInt32>) -> System.String
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper M public static ConstructRl`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType,System.String) -> System.String
-  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P ChartWrapperType : Quire.Controls.ExcelComponent.Model.ChartWrapperType get:public
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P AllTracesWithError : System.Collections.Generic.IEnumerable`1<Quire.Controls.ExcelComponent.Model.IChartTraceCalculatable> get:private
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P ChartWrapperType : Quire.Controls.ExcelComponent.Model.ChartWrapperType get:public set:private
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P ComponentEquationType : Quire.Controls.ExcelComponent.Model.BaseComponentEquationType get:private set:private
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P EngineResult : Quire.Calculation.Core.EngineResult override get:public set:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P EngineResultForSerialization : Quire.Calculation.Core.EngineResult override get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P IsFragment : Quire.Pair`2<System.Boolean,System.Boolean> override get:public
@@ -111,10 +135,10 @@
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P IsInvalidEquation : System.Boolean override get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P IsOutputEquation : System.Boolean override get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P IsUnknownEquation : System.Boolean override get:public
-  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P PreviousChartType : Quire.Controls.ExcelComponent.Model.ChartWrapperType get:public
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P PreviousChartType : Quire.Controls.ExcelComponent.Model.ChartWrapperType get:public set:private
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P Rl : System.String override get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P RlIdWithLabel : System.String get:public
-  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P TraceId : System.Nullable`1<System.UInt32> get:public
+  Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper P TraceId : System.Nullable`1<System.UInt32> get:public set:private
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::SetResult
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapper X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions M public static IsCommonTraceType`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.Boolean
@@ -127,6 +151,17 @@
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions M public static IsValidOrUnknownType`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ChartComponentCalculatableWrapperExtensions M public static IsValidType`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ChartComponentConstants F internal static readonly System.Collections.Generic.Dictionary`2<Quire.Controls.ExcelComponent.Model.ChartWrapperType,Quire.Pair`2<System.String,System.Boolean>> TypeToIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String XMaxIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String XMinIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String Xidentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String Y2MaxIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String Y2MinIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String YMaxIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String YMinIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String Yidentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String ZMaxIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String ZMinIdentifier
+  Quire.Controls.ExcelComponent.Model.ChartComponentConstants F private const System.String Zidentifier
   Quire.Controls.ExcelComponent.Model.ChartComponentConstants F public const System.String ChartComponentHelpContext
   Quire.Controls.ExcelComponent.Model.ChartComponentErrors F public const System.String ComExceptionError
   Quire.Controls.ExcelComponent.Model.ChartComponentErrors F public const System.String DuplicateLimitExpression
@@ -144,8 +179,18 @@
   Quire.Controls.ExcelComponent.Model.ChartComponentErrors F public static System.String TooManyPointsInResult
   Quire.Controls.ExcelComponent.Model.ChartComponentErrors M public static AddChartPrefix`0(System.String) -> System.String
   Quire.Controls.ExcelComponent.Model.ChartComponentModel E internal System.Action RequestUpdateIdentifierLabels
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel F private System.Action RequestUpdateIdentifierLabels
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel F private readonly Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable _chartMinMaxCalc
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel F private readonly Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable _chartMinMaxPreCalc
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel F private readonly System.Collections.Generic.Dictionary`2<Quire.Controls.ExcelComponent.Model.ChartWrapperType,Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable> _defaultLimits
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel F private readonly System.Collections.Generic.SortedDictionary`2<System.UInt32,Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable> _traceCalculatables
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M internal CommitPost`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M internal CommitPre`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel M private HandleChildWrapperChartTypeChanged`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel M private HandleChildWrapperRemovedOrChartTypeChanged`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper,System.Nullable`1<Quire.Controls.ExcelComponent.Model.ChartWrapperType>) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel M private InternalAddCalculatableAndEvaluate`0(Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel M private UpdateAllTraces`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel M private UpdateChartMinMaxCalculatable`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M protected override CreateCalculatableWrapper`0(Quire.Calculation.Core.ICalculatable,System.Boolean) -> Quire.Calculation.Core.ICalculatable
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M protected override FireCalculatableAdded`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M protected override FireCalculatableMoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
@@ -159,18 +204,45 @@
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M public override Clone`0() -> System.Object
   Quire.Controls.ExcelComponent.Model.ChartComponentModel M public override Commit`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartComponentModel P CalculatablesConnectedToTheEngine : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> override get:protected
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel P ChartContainerItem : Quire.Controls.ExcelComponent.View.ChartContainer get:private
   Quire.Controls.ExcelComponent.Model.ChartComponentModel P ComponentErrors : System.Collections.Generic.IEnumerable`1<System.String> override get:protected
+  Quire.Controls.ExcelComponent.Model.ChartComponentModel P ConnectedDefaultLimits : System.Collections.Generic.IEnumerable`1<Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable> get:private
   Quire.Controls.ExcelComponent.Model.ChartComponentModel P OleContainerItem : Quire.Controls.ExcelComponent.View.IOleContainerItem override get:internal set:internal
   Quire.Controls.ExcelComponent.Model.ChartComponentModel P Rl : System.String override get:public
   Quire.Controls.ExcelComponent.Model.ChartComponentModel X Quire.Calculation.Core.ICalculatable::SetResult
   Quire.Controls.ExcelComponent.Model.ChartComponentModel X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.ChartComponentModel X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String IdentifierGroupName
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String IdentifierWithHandleGroupName
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String IndexValueGroupName
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String LabelGroupName
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String OptionalHandleRegex
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String SubscriptDefinitionGroupName
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private const System.String SubscriptGroupName
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private static readonly System.String _optionalSubscriptDefinition
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private static readonly System.String _optionalSubscriptIndex
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private static readonly System.Text.RegularExpressions.Regex _identifierIndexExpression
+  Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F private static readonly System.Text.RegularExpressions.Regex _rhsNotAllowed
   Quire.Controls.ExcelComponent.Model.ChartComponentRlParser F public const System.UInt32 MaxIndex
   Quire.Controls.ExcelComponent.Model.ChartComponentRlParser M internal static ParseChartComponentEquationRl`0(System.String,out System.Boolean&,out System.String&,out System.String&) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ChartComponentRlParser M internal static SeparateIdentifierVsIndex`0(System.String,out System.String&,out System.String&,out System.Nullable`1<System.UInt32>&) -> System.String
   Quire.Controls.ExcelComponent.Model.ChartComponentRlParser M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartContainerModel E public System.Func`4<Quire.Calculation.Core.IResultNode,System.Double[,],System.Text.StringBuilder,System.Double[,]> OnProcessMinMax
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private System.Collections.Generic.Dictionary`2<System.UInt32,System.Double[,]> _dataLimitsDict
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private System.Func`4<Quire.Calculation.Core.IResultNode,System.Double[,],System.Text.StringBuilder,System.Double[,]> OnProcessMinMax
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private System.String _helpServerPath
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private System.UInt32[] _traceIds
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private readonly Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter _converter
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private readonly System.Object _dataLimitsLock
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel F private static readonly System.String[] _excludeElementsNames
   Quire.Controls.ExcelComponent.Model.ChartContainerModel F public static readonly System.String ComExceptionEngineErrorCode
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private AddOrRemoveImageFreezeSource`0(Quire.Controls.ExcelComponent.Model.ImageFreezeSources,System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private ApplyImageFrozenState`0(System.Nullable`1<System.Boolean>) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private SetHelpServerPathIfRunning`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private SetMatrix`0(System.String,Quire.IValue,Quire.Calculation.IValueToIResultNodeTransform) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private SetString`0(System.String,Quire.IValue) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private SetTrace`0(System.UInt32,Quire.IMatrixValue,Quire.Calculation.IValueToIResultNodeTransform) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel M private static CreateEmptyChartMinMax`0() -> Quire.ChartAppLib.ChartMinMax
   Quire.Controls.ExcelComponent.Model.ChartContainerModel M protected override DoDeactivate`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartContainerModel M protected override OnStartRunning`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartContainerModel M public .ctor`0() -> System.Void
@@ -194,6 +266,7 @@
   Quire.Controls.ExcelComponent.Model.ChartContainerModel P ExcludeElementsNames : System.String[] override get:protected
   Quire.Controls.ExcelComponent.Model.ChartContainerModel P GuidsConversionDict : System.Collections.Generic.Dictionary`2<System.Guid,System.Guid> override get:public
   Quire.Controls.ExcelComponent.Model.ChartContainerModel P HelpServerPath : System.String get:public set:public
+  Quire.Controls.ExcelComponent.Model.ChartContainerModel P ImageFreezeSources : Quire.Controls.ExcelComponent.Model.ImageFreezeSources get:private set:private
   Quire.Controls.ExcelComponent.Model.ChartContainerModel P IsImageFrozen : System.Boolean get:public
   Quire.Controls.ExcelComponent.Model.ChartContainerModel P IsImageReady : System.Boolean get:public
   Quire.Controls.ExcelComponent.Model.ChartContainerModel P IsTypeDefault : System.Boolean get:public
@@ -211,10 +284,26 @@
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F internal const System.Int32 NumLimitSides
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F internal const System.String MinMaxPost
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F internal const System.String MinMaxPre
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private const System.Double DefaultXMax
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private const System.Double DefaultXMin
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private const System.Double LimitsTooCloseThreshold
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private readonly System.Collections.Generic.Dictionary`2<Quire.Controls.ExcelComponent.Model.ChartWrapperType,Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> _limitWrappers
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private readonly System.UInt32 _definitionHandle
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private readonly System.UInt32 _idHandle
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private readonly System.UInt32 _matrixHandle
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private readonly System.UInt32 _subscriptHandle
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable F private readonly System.UInt32[,] _limitHandles
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M internal GetRl`0(System.String) -> System.String
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M internal ProcessComponentError`0(Quire.Calculation.Core.EngineError) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M internal ProcessResult`0(Quire.Calculation.Core.IResultNode,System.Double[,],System.Text.StringBuilder) -> System.Double[,]
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M internal static ConstructDefaultLimitRl`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType,System.String) -> System.String
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M private GetLimitRl`0(System.Int32,System.Int32) -> System.String
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M private GetLimitType`0(System.Int32,System.Int32) -> Quire.Controls.ExcelComponent.Model.ChartWrapperType
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M private GetWrapper`0(System.Int32,System.Int32) -> Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M private SetLimitCalculationError`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper,System.String) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M public Commit`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable M public GetLimit`0(Quire.Controls.ExcelComponent.Model.ChartWrapperType) -> Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper
@@ -238,6 +327,10 @@
   Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable E public System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
   Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable E public System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
   Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable E public System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable F private Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable _calc
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
+  Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable F private System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
   Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable M public Commit`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable M public SetAutoSelectAlgorithm`0(System.Collections.Generic.IDictionary`2<System.Int32,System.String>) -> System.Void
@@ -263,8 +356,31 @@
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable E public System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable E public System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable E public System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private Quire.Calculation.Core.CalculatingStatus _calcStatus
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private Quire.Calculation.Core.EngineError _currentError
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private Quire.Calculation.Core.SynchronizationStatus _syncStatus
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper _xCalculatable
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper _yCalculatable
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.Boolean _isConnectedToTheEngine
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _componentHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _subscriptHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _traceHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _xMaxHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _xMaxScaleHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _xMinHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _xMinScaleHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private System.UInt32 _xyplotHandle
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private readonly Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F private readonly Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable _minMax
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F public const System.UInt32 FirstTraceId
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable F public static readonly System.String ChartVariableWithLabel
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M private HookupChild`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M private OnUpdateTraceWithDeserializedError`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper,System.Collections.Generic.List`1<System.UInt32>) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M private UnHookupChild`0(Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M private UpdateChildren`0(Quire.Controls.ExcelComponent.Model.ChartTraceDataToUpdate) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M public .ctor`0(Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M public Commit`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M public ContainsError`0(Quire.Calculation.Core.EngineError) -> System.Boolean
@@ -279,14 +395,14 @@
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M public SetSynchronizationStatus`0(Quire.Calculation.Core.SynchronizationStatus) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M public ShowError`0(Quire.Calculation.Core.EngineError) -> System.Void
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable M public static TraceIdForChartApp`0(System.UInt32) -> System.Int32
-  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P CalcStatus : Quire.Calculation.Core.CalculatingStatus get:public
-  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P CurrentError : Quire.Calculation.Core.EngineError get:public
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P CalcStatus : Quire.Calculation.Core.CalculatingStatus get:public set:private
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P CurrentError : Quire.Calculation.Core.EngineError get:public set:private
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P Error : Quire.Calculation.Core.EngineError get:public
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P ErrorOwners : System.Collections.Generic.IEnumerable`1<Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> get:public
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P IsConnectedToTheEngine : System.Boolean get:public set:public
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P IsFragment : Quire.Pair`2<System.Boolean,System.Boolean> get:public
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P Rl : System.String get:public
-  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P SyncStatus : Quire.Calculation.Core.SynchronizationStatus get:public
+  Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P SyncStatus : Quire.Calculation.Core.SynchronizationStatus get:public set:private
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P TraceId : System.UInt32 get:public
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P XCalculatable : Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper get:public set:public
   Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable P YCalculatable : Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper get:public set:public
@@ -315,11 +431,14 @@
   Quire.Controls.ExcelComponent.Model.ChartWrapperType V ZMin = 14
   Quire.Controls.ExcelComponent.Model.ChartWrapperType V ZTrace = 7
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper E public System.Action`3<Quire.Calculation.Core.ICalculatable,Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType,Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType> ExcelComponentEquationTypeChanged
+  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper F private Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType _equationType
+  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper F private System.Action`3<Quire.Calculation.Core.ICalculatable,Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType,Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType> ExcelComponentEquationTypeChanged
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper M internal UpdateExcelComponentEquationType`0() -> System.Boolean
+  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper M private static IsTypeInvalid`0(Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper M protected override ClearEquationType`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper M protected override HandleRequestEvaluation`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper M public .ctor`0(Quire.Calculation.Core.ICalculatable) -> System.Void
-  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P ExcelComponentEquationType : Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType get:public
+  Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P ExcelComponentEquationType : Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType get:public set:private
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P IsFragment : Quire.Pair`2<System.Boolean,System.Boolean> override get:public
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P IsInputEquation : System.Boolean override get:public
   Quire.Controls.ExcelComponent.Model.ExcelComponentCalculatableWrapper P IsInvalidEquation : System.Boolean override get:public
@@ -340,6 +459,15 @@
   Quire.Controls.ExcelComponent.Model.ExcelComponentErrors F public const System.String ExcelVersionNotInstalledError
   Quire.Controls.ExcelComponent.Model.ExcelComponentErrors F public const System.String NonContiguousRangeError
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel E public System.Func`1<System.Boolean> QueryHiddenFromCalculationContext
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel F private Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel F private System.Func`1<System.Boolean> QueryHiddenFromCalculationContext
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel F private readonly System.Collections.Generic.HashSet`1<Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper> _wasOutput
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel M private CheckComponentEnabledCalcItems`0(System.Boolean) -> System.Boolean
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel M private GetExcelComponentCalculatableWrapper`0(Quire.Calculation.Core.ICalculatable) -> Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel M private GetOutputDefineLeftHandSide`0(Quire.Calculation.Core.ICalculatable) -> System.String
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel M private GetOutputList`0() -> System.String
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel M private HandleChildWrapperExcelComponentEquationTypeChanged`0(Quire.Calculation.Core.ICalculatable,Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType,Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel M private static IsValidItem`0(Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel M protected AddOrRemoveCalculatable`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel M protected override AddItems`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem>) -> System.Void
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel M protected override CreateCalculatableWrapper`0(Quire.Calculation.Core.ICalculatable,System.Boolean) -> Quire.Calculation.Core.ICalculatable
@@ -355,10 +483,15 @@
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel M public override Clone`0() -> System.Object
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel M public override SetIdentifierLabels`0(System.Collections.Generic.IDictionary`2<Quire.Calculation.Core.ResolvedId,System.String[]>) -> System.Void
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel P ComponentErrors : System.Collections.Generic.IEnumerable`1<System.String> override get:protected
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel P InputsConnectedToTheEngine : System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem> get:private
+  Quire.Controls.ExcelComponent.Model.ExcelComponentModel P OutputsConnectedToTheEngine : System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem> get:private
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel P Rl : System.String override get:public
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel X Quire.Calculation.Core.ICalculatable::SetResult
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.Model.ExcelComponentModel X Quire.Calculation.Core.ICalculatable::get_SynchronizationStatus
+  Quire.Controls.ExcelComponent.Model.ExcelComponentRlParser F private const System.String _subscriptExcelExpressionString
+  Quire.Controls.ExcelComponent.Model.ExcelComponentRlParser F private static readonly System.Text.RegularExpressions.Regex _leftHandSubscriptExcelExpression
+  Quire.Controls.ExcelComponent.Model.ExcelComponentRlParser F private static readonly System.Text.RegularExpressions.Regex _rightHandsubscriptExcelExpression
   Quire.Controls.ExcelComponent.Model.ExcelComponentRlParser F public const System.String ExcelVariableWithLabel
   Quire.Controls.ExcelComponent.Model.ExcelComponentRlParser M internal static ParseExcelComponentEquationRl`0(System.String,out System.Boolean&,out System.String&,out System.String&) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ExcelComponentRlParser M public .ctor`0() -> System.Void
@@ -368,7 +501,38 @@
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel E public System.Action RequestEvaluation
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel F internal const System.String DefaultRangeFirstCell
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel F internal const System.String DefaultRangeLastCell
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private Quire.Microsoft.Office.Interop.Excel.AppEvents_Event _appEvents
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private System.Action RequestEvaluation
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private System.Nullable`1<System.Boolean> _excelVersionInstalled
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private readonly Quire.Services.IApplicationBehaviorOptions _appBehaviorOptions
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private readonly System.Windows.Threading.DispatcherTimer _postOleClosedTimer
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private static readonly System.String _comExceptionError
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private static readonly System.String _excelInvalidRangeFormat
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private static readonly System.String _excelNotSupportedValueTypeFormat
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private static readonly System.String _excelSheetNotFoundFormat
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private static readonly System.String _excelVersionNotInstalledErrorFormat
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel F private static readonly System.String _nonContiguousRangeErrorFormat
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M internal GetSafeWorkBook`0(System.Boolean) -> Quire.Microsoft.Office.Interop.Excel.Workbook
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private CalculateWorkbook`0(System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private DisableWorkbookCalculation`0(System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private EnableWorksheetsCalculation`0(Quire.Microsoft.Office.Interop.Excel.Sheets,System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private FireRequestEvaluation`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private GetSafeApplication`0(System.Boolean) -> Quire.Microsoft.Office.Interop.Excel.Application
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private GetWorkbook`0(System.Boolean) -> Quire.Microsoft.Office.Interop.Excel.Workbook
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private GetWorksheets`0(System.Boolean) -> Quire.Microsoft.Office.Interop.Excel.Sheets
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private OnOleShownSync`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private OnWorkbookActivateAsync`0(System.String) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private OnWorkbookActivate`0(Quire.Microsoft.Office.Interop.Excel.Workbook) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private OnWorkbookOpen`0(Quire.Microsoft.Office.Interop.Excel.Workbook) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private PostOleClosed`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private RegisterOnActivateHandler`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static ConvertFromIValue`0(Quire.IValue) -> System.Object
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static ConvertToIValue`0(System.Object,System.Func`1<System.String>) -> Quire.IValue
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static GetCellValue`0(Quire.Microsoft.Office.Interop.Excel.Range) -> Quire.IValue
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static GetRangeFullName`0(Quire.Microsoft.Office.Interop.Excel.Range) -> System.String
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static HasVisibleWindow`0(Quire.Microsoft.Office.Interop.Excel.Windows) -> System.Boolean
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static IsExcelCalculationManualModel`0(Quire.Microsoft.Office.Interop.Excel.Application) -> System.Nullable`1<System.Boolean>
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel M private static IsExcelErrorValue`0(System.Object) -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M protected override AfterActivate`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M protected override BeforeActivate`0() -> System.Boolean
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M protected override CheckInstalledAndAvailable`0(System.Boolean) -> System.Void
@@ -391,8 +555,10 @@
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M public override GetValue`0(System.String) -> Quire.IValue
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M public override SetRegionPersistentData`0(Quire.Serialization.IDeS11NProvider,Quire.PersistentData.excelContainerType) -> System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData>
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel M public override SetValue`0(System.String,Quire.IValue,Quire.Calculation.IValueToIResultNodeTransform) -> System.Void
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel P AppEvents : Quire.Microsoft.Office.Interop.Excel.AppEvents_Event set:private
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel P CheckOleActiveState : System.Boolean override get:protected
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel P IsAsIcon : System.Nullable`1<System.Boolean> get:public set:public
+  Quire.Controls.ExcelComponent.Model.ExcelContainerModel P IsDeactivateInitiatedFromMathcad : System.Boolean get:private set:private
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel P IsDisconnected : System.Boolean override get:protected
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel P NeedRecalculateOnClose : System.Boolean get:public set:public
   Quire.Controls.ExcelComponent.Model.ExcelContainerModel P ProgId : System.String override get:public
@@ -471,6 +637,15 @@
   Quire.Controls.ExcelComponent.Model.ImageFreezeSources V SynchronousUpdate = 1
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper E public System.Action`2<Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper,Quire.Calculation.Core.EngineError> ErrorChanged
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper F private Quire.Calculation.Core.EngineError _error
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper F private System.Action`2<Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper,Quire.Calculation.Core.EngineError> ErrorChanged
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper F private System.Boolean _isConnectedToTheEngine
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M private FirePropertyChanged`0(System.ComponentModel.PropertyChangedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M private HookupCalculatableEvents`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M private OnEquationChanged`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M private UnhookCalculatableEvents`0() -> System.Void
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M private WrappedCalculatablePropertyChanged`0(System.Object,System.ComponentModel.PropertyChangedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M protected .ctor`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M protected ClearAllErrors`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper M protected SetCustomError`0(Quire.Calculation.Core.EngineError) -> System.Void
@@ -490,7 +665,7 @@
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P EngineResult : Quire.Calculation.Core.EngineResult virtual get:public set:public
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P EngineResultForSerialization : Quire.Calculation.Core.EngineResult virtual get:public
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P EquationChangedHandler : System.Action get:protected set:protected
-  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P Error : Quire.Calculation.Core.EngineError get:public
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P Error : Quire.Calculation.Core.EngineError get:public set:private
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P ErrorCode : System.String get:public
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P ErrorCount : System.Int32 get:public
   Quire.Controls.ExcelComponent.Model.OleBaseComponentCalculatableWrapper P ErrorSExpression : System.String get:public
@@ -525,9 +700,17 @@
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F internal const System.UInt32 InputSectionIndex
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F internal const System.UInt32 OutputSectionIndex
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F private Quire.Calculation.Core.EngineError _error
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F private System.Action`1<Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper> OleComponentChildErrorChanged
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F private System.Action`1<Quire.Controls.ExcelComponent.View.IOleContainerItem> OleContainerItemAdded
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F private const System.Int32 SectionCount
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F private static Quire.Controls.ExcelComponent.IOleBaseComponentItemManager _oleComponentItemMgr
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel F protected readonly System.Collections.Generic.Dictionary`2<Quire.Calculation.Core.ICalculatable,Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper> CalculatableWrapperMap
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M internal UpdateAllErrors`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M internal UpdateCustomErrorBasedOnPlacement`0(Quire.Controls.Core.IWhiteboardItem) -> System.Void
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M private HandleChildCalcHiddenStateChanged`0(Quire.Calculation.Core.ICalculatable,System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M private static HandleContainerChildrenChanged`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M protected .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M protected HandleChildWrapperErrorChanged`0(Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper,Quire.Calculation.Core.EngineError) -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel M protected IsInputItem`0(Quire.Controls.Core.IWhiteboardItem) -> System.Boolean
@@ -578,6 +761,10 @@
   Quire.Controls.ExcelComponent.Model.OleBaseComponentModel+PropertyNames F public const System.String Error
   Quire.Controls.ExcelComponent.Model.OleBaseItemPositionComparer M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.Model.OleBaseItemPositionComparer M public Compare`0(Quire.Controls.Core.IWhiteboardItem,Quire.Controls.Core.IWhiteboardItem) -> System.Int32
+  Quire.Controls.ExcelComponent.Model.OleComponentRlParser F private const System.String DefineGroupName
+  Quire.Controls.ExcelComponent.Model.OleComponentRlParser F private static readonly System.Text.RegularExpressions.Regex _defineExpression
+  Quire.Controls.ExcelComponent.Model.OleComponentRlParser M private static FindPairCloseBracket`0(System.String) -> System.Int32
+  Quire.Controls.ExcelComponent.Model.OleComponentRlParser M private static SeparateExpressionBySpaceOrBrackets`0(System.String,out System.String&,out System.String&) -> System.Void
   Quire.Controls.ExcelComponent.Model.OleComponentRlParser M protected static GroupNamePattern`0(System.String) -> System.String
   Quire.Controls.ExcelComponent.Model.OleComponentRlParser M protected static MatchPattern`0(System.String) -> System.String
   Quire.Controls.ExcelComponent.Model.OleComponentRlParser M protected static ParseOleComponentEquationRl`0(System.String,System.Text.RegularExpressions.Regex,System.Text.RegularExpressions.Regex,out System.Boolean&,out System.String&,out System.String&) -> System.Boolean
@@ -613,6 +800,7 @@
   Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable M public .ctor`0(System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable X Quire.Calculation.Core.ICalculatable::SetResult
   Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable X Quire.Calculation.Core.ICalculatable::add_RlChanged
+  Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable F private readonly System.Boolean _isFragment
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable M public .ctor`0(System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable P IsConnectedToTheEngine : System.Boolean get:public set:public
   Quire.Controls.ExcelComponent.Model.SimpleOleCalculatable P IsFragment : Quire.Pair`2<System.Boolean,System.Boolean> get:public
@@ -630,9 +818,31 @@
   Quire.Controls.ExcelComponent.OleObjectControl E public System.Action`2<Quire.Controls.Core.IWhiteboardItem,Quire.Direction> RequestRemove
   Quire.Controls.ExcelComponent.OleObjectControl E public System.Action`2<System.Object,System.Windows.RoutedEventArgs> OnAdornedElementReady
   Quire.Controls.ExcelComponent.OleObjectControl E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.OleObjectControl F private Quire.Controls.ExcelComponent.View.OleObject _view
+  Quire.Controls.ExcelComponent.OleObjectControl F private Quire.Core.ISnapToPixelHelper _snappingHelper
+  Quire.Controls.ExcelComponent.OleObjectControl F private System.Action`1<Quire.Controls.Core.IResizeToFitWhiteboardItem> RequestResizeToFitOrClearRestriction
+  Quire.Controls.ExcelComponent.OleObjectControl F private System.Action`1<Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent
+  Quire.Controls.ExcelComponent.OleObjectControl F private System.Action`2<Quire.Controls.Core.IWhiteboardItem,Quire.Direction> RequestRemove
+  Quire.Controls.ExcelComponent.OleObjectControl F private System.Action`2<System.Object,System.Windows.RoutedEventArgs> OnAdornedElementReady
+  Quire.Controls.ExcelComponent.OleObjectControl F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.OleObjectControl F private static readonly System.Type _typeOfThis
   Quire.Controls.ExcelComponent.OleObjectControl F public static readonly System.Windows.Input.RoutedUICommand OleObjectResetSizeCommand
   Quire.Controls.ExcelComponent.OleObjectControl F public static readonly System.Windows.Input.RoutedUICommand ToggleOleObjectAutoResizeCommand
   Quire.Controls.ExcelComponent.OleObjectControl F public static readonly System.Windows.Input.RoutedUICommand UpdateOleObjectLinkCommand
+  Quire.Controls.ExcelComponent.OleObjectControl M private Accept`0(Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile,System.String) -> System.Boolean
+  Quire.Controls.ExcelComponent.OleObjectControl M private Accept`0(Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithDialog,System.String) -> System.Boolean
+  Quire.Controls.ExcelComponent.OleObjectControl M private Accept`0(Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithProgId,System.String) -> System.Boolean
+  Quire.Controls.ExcelComponent.OleObjectControl M private CanExecuteOleObjectResetSize`0(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private CanExecuteUpdateOleObjectLink`0(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private CanToggleOleObjectAutoResize`0(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private ExecutedOleObjectResetSize`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private ExecutedToggleOleObjectAutoResize`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private ExecutedUpdateOleObjectLink`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private FirePropertyChanged`0(System.String) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private HandleViewModelPropertyChanged`0(System.Object,System.ComponentModel.PropertyChangedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private HandleViewModelRequestResizeToFit`0() -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private OnViewVisualParentChanged`0(System.Windows.DependencyObject,System.Windows.DependencyObject) -> System.Void
+  Quire.Controls.ExcelComponent.OleObjectControl M private ValidateInstance`0(System.Boolean) -> System.Boolean
   Quire.Controls.ExcelComponent.OleObjectControl M protected override OnContentChanged`0(System.Object,System.Object) -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControl M protected override OnGotFocus`0(System.Windows.RoutedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControl M protected override OnMouseLeftButtonDown`0(System.Windows.Input.MouseButtonEventArgs) -> System.Void
@@ -662,17 +872,19 @@
   Quire.Controls.ExcelComponent.OleObjectControl P SnappingHelper : Quire.Core.ISnapToPixelHelper get:public
   Quire.Controls.ExcelComponent.OleObjectControl P SubElementToResizeData : Quire.Controls.Core.SubElementToResizeData get:public
   Quire.Controls.ExcelComponent.OleObjectControl P VerticalAlignmentOffset : System.Double get:public
-  Quire.Controls.ExcelComponent.OleObjectControl P View : Quire.Controls.ExcelComponent.View.OleObject get:public
+  Quire.Controls.ExcelComponent.OleObjectControl P View : Quire.Controls.ExcelComponent.View.OleObject get:public set:private
+  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile F private System.String _filePath
   Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile M public .ctor`0(System.String,System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile M public override Visit`0(Quire.Controls.ExcelComponent.OleObjectControl,System.String) -> System.Boolean
-  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile P FilePath : System.String get:public
-  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile P Link : System.Boolean get:public
+  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile P FilePath : System.String get:public set:private
+  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodFromFile P Link : System.Boolean get:public set:private
   Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithDialog M public .ctor`0(System.Windows.Window) -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithDialog M public override Visit`0(Quire.Controls.ExcelComponent.OleObjectControl,System.String) -> System.Boolean
-  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithDialog P WinHandle : System.Windows.Window get:public
+  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithDialog P WinHandle : System.Windows.Window get:public set:private
   Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithProgId M public .ctor`0(System.String) -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithProgId M public override Visit`0(Quire.Controls.ExcelComponent.OleObjectControl,System.String) -> System.Boolean
-  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithProgId P ProgId : System.String get:public
+  Quire.Controls.ExcelComponent.OleObjectControl+CreationMethodWithProgId P ProgId : System.String get:public set:private
+  Quire.Controls.ExcelComponent.OleObjectControl+SnapToPixelHelper F private readonly Quire.Controls.ExcelComponent.OleObjectControl _oleObject
   Quire.Controls.ExcelComponent.OleObjectControl+SnapToPixelHelper M public .ctor`0(Quire.Controls.ExcelComponent.OleObjectControl) -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControl+SnapToPixelHelper P HasPointThatSnapsToPixel : System.Boolean get:public
   Quire.Controls.ExcelComponent.OleObjectControl+SnapToPixelHelper P ItemElement : System.Windows.UIElement get:public
@@ -681,8 +893,15 @@
   Quire.Controls.ExcelComponent.OleObjectControlCreationMethod M protected .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.OleObjectControlCreationMethod M public abstract Visit`0(Quire.Controls.ExcelComponent.OleObjectControl,System.String) -> System.Boolean
   Quire.Controls.ExcelComponent.OleObjectControlCreationOptions M public .ctor`0(Quire.Controls.ExcelComponent.OleObjectControlCreationMethod,System.Boolean) -> System.Void
-  Quire.Controls.ExcelComponent.OleObjectControlCreationOptions P OleObjectAutoResize : System.Boolean get:public
-  Quire.Controls.ExcelComponent.OleObjectControlCreationOptions P OleObjectControlCreationMethod : Quire.Controls.ExcelComponent.OleObjectControlCreationMethod get:public
+  Quire.Controls.ExcelComponent.OleObjectControlCreationOptions P OleObjectAutoResize : System.Boolean get:public set:private
+  Quire.Controls.ExcelComponent.OleObjectControlCreationOptions P OleObjectControlCreationMethod : Quire.Controls.ExcelComponent.OleObjectControlCreationMethod get:public set:private
+  Quire.Controls.ExcelComponent.View.ChartComponentControl F private readonly Quire.Controls.ExcelComponent.Model.ChartComponentModel _chartModel
+  Quire.Controls.ExcelComponent.View.ChartComponentControl F private readonly Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel _chartViewModel
+  Quire.Controls.ExcelComponent.View.ChartComponentControl M private BindCommands`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentControl M private CanInsertAxisExpression`0(System.Object,System.Windows.Input.CanExecuteRoutedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentControl M private HandleRequestUpdateIdentifierLabels`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentControl M private Init`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentControl M private OnInsertAxisExpression`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentControl M protected override CreateOleContainerItem`0() -> Quire.Controls.ExcelComponent.View.IOleContainerItem
   Quire.Controls.ExcelComponent.View.ChartComponentControl M protected override GetInternalHelpContext`0() -> System.String
   Quire.Controls.ExcelComponent.View.ChartComponentControl M public .ctor`0() -> System.Void
@@ -692,27 +911,37 @@
   Quire.Controls.ExcelComponent.View.ChartComponentControl M public SetRegionPersistentData`0(Quire.Serialization.IDeS11NProvider,System.Object) -> System.Collections.Generic.IList`1<Quire.Serialization.IRegionPersistentData>
   Quire.Controls.ExcelComponent.View.ChartComponentControl M public override GetHelpContext`0() -> System.String
   Quire.Controls.ExcelComponent.View.ChartComponentControl M public override SetStatusSynchronized`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentControl P ChartContainer : Quire.Controls.ExcelComponent.View.ChartContainer get:private
   Quire.Controls.ExcelComponent.View.ChartComponentControl P DeserializationStrategy : Quire.Controls.Core.Serialization.IDeserializationStrategy override get:protected set:protected
   Quire.Controls.ExcelComponent.View.ChartComponentControl P SerializationStrategy : Quire.Controls.Core.Serialization.ISerializationStrategy override get:protected set:protected
+  Quire.Controls.ExcelComponent.View.ChartComponentControl P UpdateIdentifierLabelsOperation : System.Windows.Threading.DispatcherOperation get:private set:private
   Quire.Controls.ExcelComponent.View.ChartComponentControl X Quire.Calculation.Core.ICalculatable::SetResult
   Quire.Controls.ExcelComponent.View.ChartComponentControl X Quire.Calculation.Core.ICalculatable::add_RlChanged
   Quire.Controls.ExcelComponent.View.ChartComponentControl X Quire.Controls.ExcelComponent.View.IChartComponentControl::get_ChartContainer
   Quire.Controls.ExcelComponent.View.ChartComponentControl X System.ICloneable::Clone
   Quire.Controls.ExcelComponent.View.ChartComponentDeserializationStrategy M public .ctor`0(Quire.Controls.ExcelComponent.View.ChartComponentControl) -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.ChartComponentDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.ChartComponentDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentDictionary X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Controls.ExcelComponent.View.ChartComponentErrorsDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.ChartComponentErrorsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.ChartComponentErrorsDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentErrorsDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentErrorsDictionary X System.Windows.Markup.IComponentConnector::Connect
   Quire.Controls.ExcelComponent.View.ChartComponentSerializationStrategy M protected override ConvertToRegionPersistantData`0(Quire.Serialization.IS11NProvider,Quire.Controls.Core.IWhiteboardItem) -> Quire.PersistentDataObjects.IRegionInWhiteboardType
   Quire.Controls.ExcelComponent.View.ChartComponentSerializationStrategy M public .ctor`0(Quire.Controls.ExcelComponent.View.ChartComponentControl,Quire.DelegateFunction0`1<Quire.PersistentDataObjects.IRegionType>) -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentUtils M private static EnumerateChartComponents`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem>) -> System.Collections.Generic.IEnumerable`1<Quire.Controls.ExcelComponent.View.IChartComponentControl>
+  Quire.Controls.ExcelComponent.View.ChartComponentUtils M private static WaitForChartImagesReady`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.ExcelComponent.View.IChartComponentControl>,System.Diagnostics.Stopwatch) -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentUtils M public static CreateDisposablePrintHelper`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem>,System.Boolean) -> System.IDisposable
   Quire.Controls.ExcelComponent.View.ChartComponentUtils M public static WaitForChartImagesReady`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem>) -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartComponentUtils+PrintHelper F private readonly System.Collections.Generic.IList`1<Quire.Controls.ExcelComponent.View.IChartComponentControl> _chartsList
   Quire.Controls.ExcelComponent.View.ChartComponentUtils+PrintHelper M public .ctor`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem>,System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.View.ChartComponentUtils+PrintHelper M public Dispose`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.ChartContainer F private System.Windows.Int32Rect _renderRectInPixels
+  Quire.Controls.ExcelComponent.View.ChartContainer F private static readonly System.Type _typeOfThis
+  Quire.Controls.ExcelComponent.View.ChartContainer M private ApplyRect`0(System.Windows.Size,System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.View.ChartContainer M protected override ApplyPrintingZoom`0(System.Nullable`1<System.Double>) -> System.Void
   Quire.Controls.ExcelComponent.View.ChartContainer M protected override ArrangeOverride`0(System.Windows.Size) -> System.Windows.Size
   Quire.Controls.ExcelComponent.View.ChartContainer M protected override OnIsInPrintingPropertyChanged`0(System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
@@ -731,18 +960,22 @@
   Quire.Controls.ExcelComponent.View.ChartContainer P RenderRectInPixels : System.Windows.Int32Rect get:public set:public
   Quire.Controls.ExcelComponent.View.ChartContainer X Quire.Controls.ExcelComponent.View.IChartContainer::get_Model
   Quire.Controls.ExcelComponent.View.ChartContainer X Quire.Controls.ExcelComponent.View.IChartContainer::get_ViewModel
+  Quire.Controls.ExcelComponent.View.ChartContainerErrorsDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.ChartContainerErrorsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.ChartContainerErrorsDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ChartContainerErrorsDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ChartContainerErrorsDictionary X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Controls.ExcelComponent.View.ExcelComponentDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.ExcelComponentDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.ExcelComponentDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ExcelComponentDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ExcelComponentDictionary X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Controls.ExcelComponent.View.ExcelComponentErrorsDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.ExcelComponentErrorsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.ExcelComponentErrorsDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ExcelComponentErrorsDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ExcelComponentErrorsDictionary X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Controls.ExcelComponent.View.ExcelContainerErrorsDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.ExcelContainerErrorsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.ExcelContainerErrorsDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.ExcelContainerErrorsDictionary M public InitializeComponent`0() -> System.Void
@@ -759,6 +992,12 @@
   Quire.Controls.ExcelComponent.View.IOleContainerItem P Component : Quire.Calculation.ICalculationComponent virtual get:public
   Quire.Controls.ExcelComponent.View.IOleContainerItem P IsResizing : System.Boolean virtual get:public set:public
   Quire.Controls.ExcelComponent.View.IOleContainerItem P ViewModel : Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel virtual get:public
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl F private Quire.Controls.Core.NodeMessageAdorner _errorAdorner
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl F private Quire.Controls.Internal.RubberBandHighlighter _errorFrame
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl F private System.Int32 _componentCookie
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl F private readonly Quire.Controls.ExcelComponent.Model.OleBaseComponentModel _oleBaseModel
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl F private readonly Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel _oleBaseViewModel
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl F private readonly System.Object _componentCookieLock
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl F protected const System.String IsInputSectionVisiblePropertyName
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl F protected const System.String IsOutputSectionVisiblePropertyName
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl F protected const System.String WhiteboardItemsPropertyName
@@ -767,6 +1006,16 @@
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl F public static readonly System.Windows.DependencyProperty CalculatingStatusProperty
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl F public static readonly System.Windows.DependencyProperty ErrorProperty
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl F public static readonly System.Windows.DependencyProperty SynchronizationStatusProperty
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private ClearErrorOnComponent`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private ErrorChanged`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private FireCalcErrorChanged`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private Init`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private UpdateErrorStateOnComponent`0() -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private static ErrorChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private static HandleOleComponentLocationLeftChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private static HandleOleComponentLocationTopChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private static IsResizingChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.ExcelComponent.View.OleBaseComponentControl M private static OnOleComponentLoaded`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl M protected .ctor`0(Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel,System.Windows.ResourceDictionary) -> System.Void
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl M protected CreateAndInitOleContainerItem`0() -> System.Void
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl M protected HandleOleContainerItemAdded`0(Quire.Controls.ExcelComponent.View.IOleContainerItem) -> System.Void
@@ -828,9 +1077,11 @@
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl P WhiteboardItemsForXamlSerialization : Quire.Controls.Core.IWhiteboardItem[] override get:public set:public
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl X Quire.Calculation.Core.ICalculatable::SetResult
   Quire.Controls.ExcelComponent.View.OleBaseComponentControl X Quire.Calculation.Core.ICalculatable::add_RlChanged
+  Quire.Controls.ExcelComponent.View.OleBaseComponentDeserializationStrategy F private readonly Quire.Controls.ExcelComponent.View.OleBaseComponentControl _control
   Quire.Controls.ExcelComponent.View.OleBaseComponentDeserializationStrategy M public .ctor`0(Quire.Controls.ExcelComponent.View.OleBaseComponentControl) -> System.Void
   Quire.Controls.ExcelComponent.View.OleBaseComponentDeserializationStrategy M public override DeserializeRegionsEpilog`0(System.Xml.XmlDocument) -> System.Void
   Quire.Controls.ExcelComponent.View.OleBaseComponentDeserializationStrategy P RegionFactory : Quire.Controls.Core.IRegionFactory override get:public
+  Quire.Controls.ExcelComponent.View.OleBaseComponentErrorsDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.OleBaseComponentErrorsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.OleBaseComponentErrorsDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.OleBaseComponentErrorsDictionary M public InitializeComponent`0() -> System.Void
@@ -849,6 +1100,10 @@
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 E public System.Action`1<Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 E public System.Action`2<Quire.Controls.Core.IWhiteboardItem,Quire.Direction> RequestRemove
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.View.OleContainerItem`4 F private System.Action`1<Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent
+  Quire.Controls.ExcelComponent.View.OleContainerItem`4 F private System.Action`2<Quire.Controls.Core.IWhiteboardItem,Quire.Direction> RequestRemove
+  Quire.Controls.ExcelComponent.View.OleContainerItem`4 F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.ExcelComponent.View.OleContainerItem`4 F private System.Windows.Size _expectedSize
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 M protected .ctor`0(!0,System.Windows.ResourceDictionary) -> System.Void
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 M protected ArrangeOverrideAux`0(System.Windows.Size,System.Boolean) -> System.Windows.Size
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 M protected override ArrangeOverride`0(System.Windows.Size) -> System.Windows.Size
@@ -867,10 +1122,16 @@
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 P IsResizing : System.Boolean virtual get:public set:public
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 P VerticalAlignmentOffset : System.Double get:public
   Quire.Controls.ExcelComponent.View.OleContainerItem`4 X Quire.Controls.ExcelComponent.View.IOleContainerItem::get_ViewModel
+  Quire.Controls.ExcelComponent.View.OleContainerItem`4+DimensionsConverter F private readonly Quire.Controls.ExcelComponent.View.OleContainerItem`4<!0,!1,!2,!3> _container
   Quire.Controls.ExcelComponent.View.OleContainerItem`4+DimensionsConverter M public .ctor`0(Quire.Controls.ExcelComponent.View.OleContainerItem`4<!0,!1,!2,!3>) -> System.Void
   Quire.Controls.ExcelComponent.View.OleContainerItem`4+DimensionsConverter M public ConvertBack`0(System.Object,System.Type,System.Object,System.Globalization.CultureInfo) -> System.Object
   Quire.Controls.ExcelComponent.View.OleContainerItem`4+DimensionsConverter M public Convert`0(System.Object,System.Type,System.Object,System.Globalization.CultureInfo) -> System.Object
   Quire.Controls.ExcelComponent.View.OleObject E public System.Action`2<System.Windows.DependencyObject,System.Windows.DependencyObject> VisualParentChanged
+  Quire.Controls.ExcelComponent.View.OleObject F private System.Action`2<System.Windows.DependencyObject,System.Windows.DependencyObject> VisualParentChanged
+  Quire.Controls.ExcelComponent.View.OleObject F private System.Guid _guidFromXaml
+  Quire.Controls.ExcelComponent.View.OleObject F private static readonly System.Type _typeOfThis
+  Quire.Controls.ExcelComponent.View.OleObject M private OnCreationFailure`0(System.Boolean,System.Boolean,System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.View.OleObject M private static OnSizePropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.View.OleObject M protected override OnVisualParentChanged`0(System.Windows.DependencyObject) -> System.Void
   Quire.Controls.ExcelComponent.View.OleObject M protected override ShouldSerializeProperty`0(System.Windows.DependencyProperty) -> System.Boolean
   Quire.Controls.ExcelComponent.View.OleObject M public .ctor`0() -> System.Void
@@ -882,10 +1143,13 @@
   Quire.Controls.ExcelComponent.View.OleObject P ClassId : System.Guid get:public
   Quire.Controls.ExcelComponent.View.OleObject P ClassIdForXamlSerialization : System.Guid get:public set:public
   Quire.Controls.ExcelComponent.View.OleObject P NodeMessageAdorners : System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.NodeMessageAdorner> get:public
+  Quire.Controls.ExcelComponent.View.OleObjectErrorsDictionary F private System.Boolean _contentLoaded
   Quire.Controls.ExcelComponent.View.OleObjectErrorsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Controls.ExcelComponent.View.OleObjectErrorsDictionary M public .ctor`0() -> System.Void
   Quire.Controls.ExcelComponent.View.OleObjectErrorsDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.ExcelComponent.View.OleObjectErrorsDictionary X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel F private Quire.Controls.ExcelComponent.Model.ChartComponentModel _chartComponentModel
+  Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel F private readonly System.Double _sectionInitialHeight
   Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel M internal .ctor`0(Quire.Controls.ExcelComponent.Model.ChartComponentModel,Quire.Controls.Core.IRestrictedAreaAlignmentGrid) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel M protected override GetSectionInitialHeight`0() -> System.Double
   Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel M public .ctor`0(Quire.Controls.ExcelComponent.Model.ChartComponentModel,System.Nullable`1<System.Windows.Size>) -> System.Void
@@ -894,6 +1158,7 @@
   Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel M public override Commit`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel M public override EndInit`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel P OutputSectionExists : System.Boolean override get:public
+  Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel F private Quire.Controls.ExcelComponent.Model.ChartContainerModel _model
   Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel M public .ctor`0(Quire.Controls.ExcelComponent.Model.ChartContainerModel) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel M public override EstablishInitialSize`0() -> System.Windows.Size
   Quire.Controls.ExcelComponent.ViewModel.ChartContainerViewModel M public override OnWorksheetPropertiesChanged`0(System.String[],Quire.Controls.Core.IWorksheetProperties,Quire.Controls.Core.IWorksheetProperties) -> System.Void
@@ -904,8 +1169,14 @@
   Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel M public CloneExcelComponentViewModel`0() -> Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel
   Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel M public CollapseInputOutputAfterLoading`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel M public override Clone`0() -> System.Object
+  Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel P ExcelContainerItem : Quire.Controls.ExcelComponent.IExcelContainer get:private
+  Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel P ExcelContainerItemViewModel : Quire.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel get:private
   Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel P IsAsIcon : System.Nullable`1<System.Boolean> get:public set:public
   Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel P OutputSectionExists : System.Boolean override get:public
+  Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel F private System.Nullable`1<System.Windows.Size> _cachedMinimalSize
+  Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel F private System.Windows.Size _cachedSize
+  Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel F private static System.Windows.Size _initialSize
+  Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel M private RecalculateMinimalSize`0() -> System.Nullable`1<System.Windows.Size>
   Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel M protected override OnOleSavedAsync`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel M protected override OnOleSavedSync`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel M protected override PostCreationWindowless`0() -> System.Void
@@ -925,10 +1196,43 @@
   Quire.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel P IsAsIcon : System.Nullable`1<System.Boolean> virtual get:public set:public
   Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel E public virtual System.Action`1<System.Boolean> MinSizeChanged
   Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel P IsResizing : System.Boolean virtual get:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private Quire.Controls.Core.RelayCommand _toggleInputSectionVisibilityCommand
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private Quire.Controls.Core.RelayCommand _toggleOutputSectionVisibilityCommand
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData _previousResizeData
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private System.Boolean _isInputSectionVisible
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private System.Boolean _isOutputSectionVisible
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private System.Windows.Size _strictMinimumSize
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private readonly Quire.Controls.ExcelComponent.Model.OleBaseComponentModel _model
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private readonly System.Collections.Generic.IList`1<Quire.Controls.Core.IWhiteboardItem> _itemsToBeAdded
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F private static readonly System.Type _typeOfThis
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F public static readonly System.Windows.Input.RoutedCommand ToggleInputSectionVisibility
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel F public static readonly System.Windows.Input.RoutedCommand ToggleOutputSectionVisibility
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M internal OnSizeChanged`0(System.Object,System.Windows.SizeChangedEventArgs) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M internal SetInitialSize`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private AddItemToAppropriateSection`0(Quire.Controls.Core.IWhiteboardItem) -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private AdjustOleContainerItemSize`0(System.Windows.Size) -> System.Windows.Size
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private AlignHeightWithGridLines`0(System.Double,System.Boolean) -> System.Double
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private CheckCanDeleteInInput`0() -> System.Boolean
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private CheckCanDeleteInOutput`0(Quire.Direction) -> System.Boolean
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private ClearRestrictedArea`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private DeselectItems`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private ExpandSectionIfNeeded`0(Quire.Controls.Core.IWhiteboardItem) -> System.Boolean
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private ExpandSectionIfNeeded`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.IWhiteboardItem>) -> System.Boolean
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private FillOleComponentResizeData`0(System.Windows.Size) -> Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private FindMinimumSize`0(System.Windows.Size) -> System.Windows.Size
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private GetMinimumContentHeight`0() -> System.Double
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private GetMinimumContentHeight`0(System.Double) -> System.Double
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private GetOleContainerItemMinSize`0(System.Boolean) -> System.Windows.Size
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private Init`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private IsPointInDeadArea`0(System.Windows.Point,System.Double) -> System.Boolean
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private OleContainerMinSizeChanged`0(System.Boolean) -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private OnResizeOleContainerItem`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private ReconcileOutputItemsLocations`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private SetOleContainerItem`0(Quire.Controls.ExcelComponent.View.IOleContainerItem) -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private SetRestrictedArea`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private UpdateItemsLocation`0(System.Boolean,System.Double,System.Double) -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private UpdateMinimumHeight`0() -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M private UpdateSectionHeights`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M protected .ctor`0(Quire.Controls.ExcelComponent.Model.OleBaseComponentModel,Quire.Controls.Core.IRestrictedAreaAlignmentGrid) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M protected .ctor`0(Quire.Controls.ExcelComponent.Model.OleBaseComponentModel,System.Nullable`1<System.Windows.Size>) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel M protected .ctor`0(Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel) -> System.Void
@@ -988,11 +1292,13 @@
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P CanInsertOutputExpression : System.Boolean get:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P DefaultSectionsMinimumHeight : System.Double get:protected
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P Error : Quire.Calculation.Core.EngineError get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P InputItems : Quire.Controls.Core.WhiteboardItemsCollection get:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P InputItems : Quire.Controls.Core.WhiteboardItemsCollection get:public set:private
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P InputSectionActualHeight : System.Double get:public set:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P InputSectionActualTop : System.Double get:private
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P InputSectionIndicator : Quire.Controls.Mathboard.SectionIndicatorInfo get:public set:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P IsCrosshairVisible : System.Boolean override get:public set:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P IsInputSectionVisible : System.Boolean get:public set:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P IsInternalResizing : System.Boolean get:private set:private
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P IsOutputSectionVisible : System.Boolean get:public set:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P IsResizing : System.Boolean get:internal set:internal
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OleComponentItemMgr : Quire.Controls.ExcelComponent.IOleBaseComponentItemManager static get:protected-internal
@@ -1001,9 +1307,11 @@
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OleContainerItemInitialSize : System.Windows.Size get:protected
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OleContainerItemSize : System.Windows.Size get:internal
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OleContainerItemTop : System.Double get:internal set:internal
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OleContainerItemViewModel : Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel get:private
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OleContainerItemWidth : System.Double get:protected
-  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OutputItems : Quire.Controls.Core.WhiteboardItemsCollection get:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OutputItems : Quire.Controls.Core.WhiteboardItemsCollection get:public set:private
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OutputSectionActualHeight : System.Double get:public set:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OutputSectionActualTop : System.Double get:private
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OutputSectionExists : System.Boolean abstract get:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P OutputSectionIndicator : Quire.Controls.Mathboard.SectionIndicatorInfo get:public set:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P SectionsMinimumHeight : System.Double get:internal set:internal
@@ -1011,35 +1319,51 @@
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P StrictMinimumSize : System.Windows.Size override get:protected
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P ToggleInputSectionVisibilityCommand : System.Windows.Input.ICommand get:public
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel P ToggleOutputSectionVisibilityCommand : System.Windows.Input.ICommand get:public
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private System.Boolean _insertionPointPushedUp
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private System.Windows.Point _insertionPoint
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private System.Windows.Vector _offset
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private readonly Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel _oleBaseComponentViewModel
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private readonly Quire.Controls.Whiteboard.WhiteboardViewModel+MoveItemsCommand _moveCommand
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private readonly Quire.Direction _direction
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private readonly System.Double _oldHeight
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent F private readonly System.Double _oldInputHeight
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent M private LimitOffsetBasedOnMinimumHeightAndCaretPosition`0() -> System.Double
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent M public .ctor`0(Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel,System.Int32,Quire.Direction) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent M public override Do`0() -> System.Boolean
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent M public override Redo`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+DeleteSpaceCommandForOleComponent M public override Undo`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+PasteOleComponentItemsCommand M protected override DoWithResize`0() -> System.Boolean
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+PasteOleComponentItemsCommand M public .ctor`0(Quire.Controls.ExcelComponent.ViewModel.IOleBaseComponentViewModel,System.String,System.Collections.Generic.IDictionary`2<Quire.Controls.Core.IWhiteboardItem,System.Windows.Point>) -> System.Void
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+PasteOleComponentItemsCommand P OleBaseComponentViewModel : Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel get:private
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand F private readonly Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel _oleBaseComponentViewModel
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand F private readonly System.Action`1<System.Boolean> _setVisibility
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand F private readonly System.Boolean _originalVisibility
+  Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand F private readonly System.String _name
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand M public .ctor`0(Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel,System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand M public Do`0() -> System.Boolean
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand M public Redo`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand M public Undo`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel+ToggleSectionVisibilityCommand P Name : System.String get:public
   Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData M public .ctor`0(System.Windows.Size,System.Windows.Size,System.Double,System.Double,System.Double,System.Double,System.Double,System.Collections.Generic.Dictionary`2<Quire.Controls.Core.IWhiteboardItem,System.Windows.Point>) -> System.Void
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P InputSectionHeight : System.Double get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P LocationMap : System.Collections.Generic.Dictionary`2<Quire.Controls.Core.IWhiteboardItem,System.Windows.Point> get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OldMinSize : System.Windows.Size get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OldSize : System.Windows.Size get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OleContainerItemSize : System.Windows.Size get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OleContainerItemTop : System.Double get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OutputSectionHeight : System.Double get:public
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P InputSectionHeight : System.Double get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P LocationMap : System.Collections.Generic.Dictionary`2<Quire.Controls.Core.IWhiteboardItem,System.Windows.Point> get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OldMinSize : System.Windows.Size get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OldSize : System.Windows.Size get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OleContainerItemSize : System.Windows.Size get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OleContainerItemTop : System.Double get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleComponentResizeData P OutputSectionHeight : System.Double get:public set:private
   Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 E public System.Action`1<System.Boolean> MinSizeChanged
+  Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 F private System.Action`1<System.Boolean> MinSizeChanged
+  Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 F private System.Boolean _isResizing
   Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 M protected FireMinimalSizeChanged`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 M protected virtual RunAndCheckAvailabilityOnResizing`0() -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 M public .ctor`0(!0,System.Windows.Size) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 P IsResizing : System.Boolean virtual get:public set:protected-internal
   Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel`3 P MinSize : System.Windows.Size override get:public set:protected
   Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData M public .ctor`0(System.Windows.Size,System.Double,System.Double) -> System.Void
-  Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData P DiagonalForRedo : System.Double get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData P DiagonalForUndo : System.Double get:public
-  Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData P OldSize : System.Windows.Size get:public
+  Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData P DiagonalForRedo : System.Double get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData P DiagonalForUndo : System.Double get:public set:private
+  Quire.Controls.ExcelComponent.ViewModel.OleObjectResizeData P OldSize : System.Windows.Size get:public set:private
   Quire.Controls.ExcelComponent.ViewModel.OleObjectViewModel M protected override PostCreation`0(System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleObjectViewModel M public .ctor`0(System.Boolean) -> System.Void
   Quire.Controls.ExcelComponent.ViewModel.OleObjectViewModel M public CoerceNewSize`0(System.Windows.Size,Quire.Controls.Core.IResizeData) -> System.Windows.Size

@@ -12,6 +12,8 @@ namespace Quire;
 public partial class NumberFormatRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private double ThresholdMaxWidth;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.NumberFormatRibbonBar numberFormatRibbonBar;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.DropDownSelector numberStyle;
@@ -42,7 +44,15 @@ public partial class NumberFormatRibbonBar : global::Fluent.RibbonGroupBox, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_NumberFormatRibbonBar_ClearFormat;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public NumberFormatRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void NumberFormatRibbonBarLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateThresholdSection(string uid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AlignThresholdsWidthWithLargestWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

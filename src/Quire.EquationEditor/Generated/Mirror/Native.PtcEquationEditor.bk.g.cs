@@ -12,6 +12,16 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class bk : global::Quire.Native.PtcEquationEditor.bf
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNode a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int b;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int c;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNode d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> e;
+    [global::Quire.Mirror.MirrorStub]
     public bk(global::Quire.Native.PtcEquationEditor.a5 A_0, global::Quire.EquationEditor.Tree.MathNode A_1, int A_2, int A_3, global::Quire.EquationEditor.Tree.MathNode A_4, global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> A_5) : base(default(global::Quire.Native.PtcEquationEditor.a5)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.EquationEditor.Tree.Navigation.NavigatorState bq() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

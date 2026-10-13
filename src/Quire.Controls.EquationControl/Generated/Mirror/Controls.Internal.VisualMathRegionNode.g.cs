@@ -12,9 +12,61 @@ namespace Quire.Controls.Internal;
 internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualMathRegionNode, global::Quire.Controls.IIdLabelOwner, global::Quire.Controls.Core.INodeMessageAdornerReferenceHolder
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private const string SExpressionComplexIndicator = "@";
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isLogicalFocusWithinScriptableControl;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isSymbolicEvalKeywordsShown;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty RootNodeProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty LocationProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty RootPaddingProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.GestureManager _activeGestureManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.GestureManager _defaultGestureManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.GestureManager _emptyGestureManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.GestureManager _limitSideGestureManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualFactory _visualFactory;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NodeMessageAdorner _message;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.RubberBandHighlighter _highlight;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.HistoryPopup _historyPopup;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _mouseDownPosition;
+    [global::Quire.Mirror.MirrorStub]
+    private const double DragHysteresis = 5d;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isDragging;
+    [global::Quire.Mirror.MirrorStub]
+    private string _previouseKeys;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Delegate0 _loadedEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction1<string, global::Quire.Calculation.Core.EngineError> GetErrorDisplayText;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> _previousLabeledIdFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, int> _previousLabeledIdFormatRevisionNumber;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NodeMessageAdorner _visibleWarningMessage;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Visibility _lhsOfDefinitionVisibility;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Visibility LhsOfDefinitionVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool SymbolicEvalKeywordsVisibilityState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Thickness RootPadding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IMathFormat RootMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -244,6 +296,14 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action Disposed;
     [global::Quire.Mirror.MirrorStub]
+    private void Register_EQUATION_WRAPPING_DEBUG_Handlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool TryFindDefinitionAndUpdateIsLhsVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleProhibitMouseClickPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnRootNodePropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal VisualMathRegionNode() { }
     [global::Quire.Mirror.MirrorStub]
     internal VisualMathRegionNode(global::Quire.Controls.Internal.GestureManager gestureManager, global::Quire.DelegateFunction1<string, global::Quire.Calculation.Core.EngineError> getErrorDisplayTextDelegate) { }
@@ -278,21 +338,37 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualDefinitionNode GetDefinitionNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseMove(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseUp(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseUp(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnStylusDown(global::System.Windows.Input.StylusDownEventArgs e) => base.OnStylusDown(e);
     [global::Quire.Mirror.MirrorStub]
+    private bool OnInput(global::System.Windows.Point position, int count, bool capture = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMathNodeHitTestResult GetHitTestResult(global::System.Windows.Point position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnLostKeyboardFocus(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRequestRestoreInsertionPoint(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireRequestRestoreInsertionPoint(global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs requestRestoreInsertionPointEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetWarnings(global::System.Collections.Generic.IList<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.View.IVisualMathNode>> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleGotFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnLostMouseCapture(global::System.Windows.Input.MouseEventArgs e) => base.OnLostMouseCapture(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void FireLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void FireNodeDoubleClick(global::Quire.EquationEditor.View.IVisualMathNode node, global::Quire.Direction caretSide, global::Quire.Direction nodeSide, global::System.Nullable<int> operatorPartIndex, global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -372,6 +448,8 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public bool CanConvertToTextRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsTextRegionEnabled(global::Quire.Controls.EquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void FireRequestChangeToTextBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireInsertOperator(string nodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -422,6 +500,8 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void FirePaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void BuildAndExecPasteCmd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void FireCanPaste(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -434,6 +514,8 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void FireCut() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void BuildAndExecCutCmd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void FireCanCut(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireShowRegionHistory(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -441,6 +523,10 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     public void FireCanShowRegionHistory(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void GetContent(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRootNodeChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRootNodeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void FireDeleteLeft() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -450,15 +536,21 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::Quire.EquationEditor.View.IVisualMathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleWarningDisplayFilterChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetError(global::Quire.Calculation.Core.IEngineError error, global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Adorner[] GetAdorners(global::System.Windows.UIElement visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ShowVisualHistory(global::System.Collections.Generic.IList<global::Quire.EquationEditor.View.IVisualMathNode> nodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearEditors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RecursiveRemoveOfEditors(global::System.Windows.Controls.Panel visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireRestoreFromHistory(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -501,6 +593,12 @@ internal partial class VisualMathRegionNode : global::Quire.Controls.Internal.Vi
     public void HandleLabeledIdFormatDictionaryChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleLabeledIdFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BackUpLabeledIdDictionary(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> labeledIdDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsLabeledIdDictionaryEqualToBackUp(global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> labeledIdDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsExtendedFontEqualsToBackUp(global::Quire.Controls.Core.IdLabels labelID, global::Quire.Controls.Core.ExtendedFont extendedFont) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireInputTagChanged(bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

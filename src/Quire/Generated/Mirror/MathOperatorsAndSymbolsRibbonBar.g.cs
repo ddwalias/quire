@@ -24,7 +24,15 @@ public partial class MathOperatorsAndSymbolsRibbonBar : global::Fluent.RibbonGro
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton operatorsAndSymbolsSymbolics;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathOperatorsAndSymbolsRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void FilterNonProgrammingOperators(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FilterProgrammingOperators(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FilterSymbolicOperators(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

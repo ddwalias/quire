@@ -12,6 +12,14 @@ namespace Quire.Controls.IO;
 public partial class IOItem : global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IORegions.IIOItem
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.DependencyObject _region;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _idSExpression;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _idName;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _isIn;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.DependencyObject Region { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string IdSexp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

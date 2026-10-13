@@ -12,6 +12,12 @@ namespace Quire.Efi;
 internal partial class BoolMap
 {
     [global::Quire.Mirror.MirrorStub]
+    private int myNcols;
+    [global::Quire.Mirror.MirrorStub]
+    private int myNrows;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.BitArray myBoolMap;
+    [global::Quire.Mirror.MirrorStub]
     public BoolMap(int ncols, int nrows) { }
     [global::Quire.Mirror.MirrorStub]
     public void zero() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

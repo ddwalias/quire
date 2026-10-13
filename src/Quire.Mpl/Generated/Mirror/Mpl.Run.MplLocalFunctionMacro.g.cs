@@ -12,6 +12,12 @@ namespace Quire.Mpl.Run;
 public partial class MplLocalFunctionMacro : global::Quire.Mpl.Run.MplMacro
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.MplEnv m_env;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_handle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Sexpr m_lambda;
+    [global::Quire.Mirror.MirrorStub]
     public MplLocalFunctionMacro(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.Sym s, uint handle, global::Quire.Mpl.Run.Sexpr lambda) : base(default(global::Quire.Mpl.Run.Sym)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr form) => base.ExpandCall(e, form);

@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots.Contour.Model;
 internal partial class ContourCalculationResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IMatrixResultNode _matrixResultNode;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IMatrixResultNode MatrixResultNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.IMatrixResultNode ZNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,5 +30,11 @@ internal partial class ContourCalculationResult
     [global::Quire.Mirror.MirrorStub]
     internal ContourCalculationResult(global::Quire.Calculation.Core.IMatrixResultNode lazyMatrixSimpleResultNode) { }
     [global::Quire.Mirror.MirrorStub]
+    private void GetZAndUnits(out global::Quire.Calculation.Core.IMatrixResultNode z, out global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IMatrixResultNode GetContour(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection Convert() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double ResultNodeToDouble(global::Quire.Calculation.Core.IResultNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

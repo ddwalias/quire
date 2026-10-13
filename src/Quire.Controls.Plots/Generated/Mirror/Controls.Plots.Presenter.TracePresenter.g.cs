@@ -12,5 +12,39 @@ namespace Quire.Controls.Plots.Presenter;
 internal partial class TracePresenter
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotTrace _view;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.ITraceModel _model;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.PropertyChangedNotificationHandler _propertyChangedNotificationHandler;
+    [global::Quire.Mirror.MirrorStub]
     public TracePresenter(global::Quire.Controls.Plots.Presenter.IPlotTrace view, global::Quire.Controls.Plots.Presenter.ITraceModel model) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewRequestResetIsTypeDefault() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelHasEquationErrorChanged(bool hasError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelResultValidChanged(bool resultValid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelIsTraceCommittedChanged(bool isCommitted) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewTraceClicked(global::Quire.Controls.Plots.Presenter.IPlotTrace obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleModelCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleModelSynchronizationStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelEquationError(global::Quire.Calculation.Core.EngineError equationError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelPlotCalculatableError(object sender, global::Quire.Controls.Plots.Model.EngineErrorEventArgs engineErrorEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelPlottingPointsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewStyleChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelStyleChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewNumberOfPointsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelIsNumOfPointsMutableChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 internal partial class VisualScaledSymbolNode : global::Quire.Controls.Internal.VisualSymbolNode, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.ScaleTransform _scaleFactor;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => base.EffectiveBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Media.Geometry Geometry { get => base.Geometry; }

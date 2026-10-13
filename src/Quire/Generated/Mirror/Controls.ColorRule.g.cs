@@ -12,6 +12,10 @@ namespace Quire.Controls;
 public partial class ColorRule : global::System.Windows.Controls.ValidationRule
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int ColorValueLength = 6;
+    [global::Quire.Mirror.MirrorStub]
+    private const string PatternAlphaNumeric = "^[0-9a-fA-F]+$";
+    [global::Quire.Mirror.MirrorStub]
     public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Controls.ValidationResult Validate(object value, global::System.Globalization.CultureInfo cultureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

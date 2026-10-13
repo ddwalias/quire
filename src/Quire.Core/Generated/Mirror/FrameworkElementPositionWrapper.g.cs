@@ -12,6 +12,8 @@ namespace Quire;
 public partial class FrameworkElementPositionWrapper : global::Quire.IPositionProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement _element;
+    [global::Quire.Mirror.MirrorStub]
     public double ActualHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double ActualWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

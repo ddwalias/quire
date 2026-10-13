@@ -12,6 +12,22 @@ namespace Quire.Controls.Internal;
 public partial class IntegralLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double INTEGRAND_LEFT_PADDING = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double INTEGRAND_RIGHT_PADDING = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double LIMITBOUND_ADJACENT_HORIZONTAL_PADDING = 3d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double LIMITBOUND_HORIZONTAL_PADDING = 1d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double LIMITBOUND_VERTICAL_PADDING = 0.5d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _adjacentIntegral;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _adjacentUpperLimitHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _adjacentLowerLimitHeight;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect LowerLimitRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect UpperLimitRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

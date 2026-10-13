@@ -12,6 +12,8 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class DoubleListResultNode : global::Quire.Calculation.Core.Trace2DResults.ListResultNode<double>, global::Quire.Calculation.Core.IDoubleListResultNode, global::Quire.Calculation.Core.IListResultNode<double>, global::Quire.Calculation.Core.IListResultNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double _neutralValue = double.NaN;
+    [global::Quire.Mirror.MirrorStub]
     public override double NeutralValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public DoubleListResultNode(double paddingValue, int length) : base(default(global::System.Collections.Generic.IList<double>)) { }

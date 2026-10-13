@@ -12,6 +12,22 @@ namespace Quire.Controls.Whiteboard;
 internal partial class WhiteboardItemResizer : global::Quire.Controls.Core.ItemResizerBase, global::Quire.Controls.Core.IResizer
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.DragMode _mode;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.FrameworkElement _container;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _startPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _currentPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _started;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Threading.DispatcherTimer _bringIntoViewDispatcherTimer;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _pt;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point StartPointInElementCoordinates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size, bool, bool, global::Quire.Controls.Core.DragMode> DragDone;
     [global::Quire.Mirror.MirrorStub]
     public WhiteboardItemResizer(global::System.Windows.FrameworkElement container, global::System.Windows.Point startPosition, global::Quire.Controls.Core.DragMode mode, global::System.Windows.FrameworkElement elementToResize, bool preserveAspectRatio, bool automation) : base(default(global::System.Windows.FrameworkElement), default(bool)) { }
@@ -24,7 +40,39 @@ internal partial class WhiteboardItemResizer : global::Quire.Controls.Core.ItemR
     [global::Quire.Mirror.MirrorStub]
     public void EndCaptureEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void MouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NotifyResizeProgress(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BringIntoViewCallback(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Vector OffsetTo(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseUpResizeRightMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMoveResizeRightMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseUpResizeBottomMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMoveResizeBottomMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseUpResizeBottomRightMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMoveResizeBottomRightMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double ResizeLeft(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement fe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMoveResizeLeftMode(global::System.Windows.Vector offset, global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point ResizeBy(global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point TransformToElement(global::System.Windows.Point containerPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMouseUp(global::System.Windows.FrameworkElement element, global::System.Windows.Vector offset, bool changeWidth, bool changeHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMouseMove(global::System.Windows.FrameworkElement element, global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardItemResizer+ResizeEndHandler, Ptc.Controls.Whiteboard")]
     public delegate void ResizeEndHandler(global::System.Windows.Point endPoint);

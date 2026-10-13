@@ -12,19 +12,47 @@ namespace Quire.Controls.Plots.Plot3D.View;
 public partial class PlotGraph3D : global::System.Windows.Controls.UserControl, global::System.IDisposable, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.Tools.VisualTrackballAdorner _trackballAdorner;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.TemporaryStorageHelper _temporaryStorageHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Controls.Plots.Plot3D.View.PlotTrace3D> _traceViews;
+    [global::Quire.Mirror.MirrorStub]
+    private const double LineThicknessForPrint = 1d;
+    [global::Quire.Mirror.MirrorStub]
     internal const double BaseLineThicknessValue = 1d;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty BaseLineThicknessProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsInPrintingProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.ImageSource _imageSource;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Plot3D.View.PlotGraph3D _thisPlotGraph3D;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.PlotGraphViewport3D _viewport;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.PlotAxis3D _xAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.PlotAxis3D _yAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.PlotAxis3D _zAxis;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Media3D.WireLines _boundingBoxVisual;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.PlotLabelsContainer3D _labelsContainer;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public double BaseLineThickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsInPrinting { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsCopyAsImageWithZoom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.ImageSource ImageSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ImageFileNameForPrintXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -44,15 +72,31 @@ public partial class PlotGraph3D : global::System.Windows.Controls.UserControl, 
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Media.Media3D.ProjectionCamera Camera { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void BaseLineThicknessChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnZoomChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnIsPrintingChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PlotGraph3D() { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Imaging.BitmapSource CreateBitmapForPrint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void ToggleVisualTrackballCues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddToViewport(global::System.Windows.Media.Media3D.Visual3D visual3D) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveFromViewport(global::System.Windows.Media.Media3D.Visual3D visual3D) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.PlotTrace3D GetTraceViewByViewModel(global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D traceViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InsertTraceView(global::Quire.Controls.Plots.Plot3D.View.PlotTrace3D traceView, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveTrace(global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D traceViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TraceViewVisualChanged(global::Quire.Controls.Plots.Plot3D.View.PlotTrace3D sender, global::System.Windows.Media.Media3D.Visual3D oldValue, global::System.Windows.Media.Media3D.Visual3D newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<TResult> SelectTraceViews<TResult>(global::System.Func<global::Quire.Controls.Plots.Plot3D.View.PlotTrace3D, TResult> selector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

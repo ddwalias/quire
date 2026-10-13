@@ -12,7 +12,27 @@ namespace Quire.depman;
 internal partial class ActionChainMgd : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.ActionChain* m_chain_umgd;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.Action m_action;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.CachingEnv m_env;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_state;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_result;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<global::Quire.depman.CacheKey, global::System.Collections.Generic.HashSet<global::Quire.depman.Scope>> m_deps;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.DepManager* depman() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.Position* loc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.ActionChain* next() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public unsafe ActionChainMgd(global::Quire.depman.ActionChain* __unnamed000, global::Quire.depman.Action action, global::Quire.depman.DepTrackingEnv env, object state) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeActionChainMgd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void OnUnload() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

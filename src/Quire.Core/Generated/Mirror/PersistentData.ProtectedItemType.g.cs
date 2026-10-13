@@ -12,6 +12,12 @@ namespace Quire.PersistentData;
 public partial class ProtectedItemType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IDeS11NConsumer
 {
     [global::Quire.Mirror.MirrorStub]
+    private string dataidrefField;
+    [global::Quire.Mirror.MirrorStub]
+    private string itemtypeField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.IProtectableDataType _dataToProtect;
+    [global::Quire.Mirror.MirrorStub]
     public string itemtype { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.IProtectableDataType DataToProtect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

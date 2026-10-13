@@ -12,6 +12,12 @@ namespace Quire.mslisp;
 internal partial class TaggedSymbol : global::Quire.mslisp.Symbol
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_base;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol m_tag;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.LabelSet m_labels;
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool Wild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.utl_mgd.LabelSet Labels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

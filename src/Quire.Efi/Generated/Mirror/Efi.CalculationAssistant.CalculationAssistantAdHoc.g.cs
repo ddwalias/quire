@@ -12,9 +12,59 @@ namespace Quire.Efi.CalculationAssistant;
 public partial class CalculationAssistantAdHoc
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string PathToRegistrySettings = "SOFTWARE\\Quire\\Quire\\PlotMultithreadingSettings";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DisableKey = "Disable";
+    [global::Quire.Mirror.MirrorStub]
+    private const string MaxInstancesKey = "MaxInstances";
+    [global::Quire.Mirror.MirrorStub]
+    private const string MaxThreadsKey = "MaxThreads";
+    [global::Quire.Mirror.MirrorStub]
+    private const int defaultThreads = 4;
+    [global::Quire.Mirror.MirrorStub]
+    private const int defaultMaxInstances = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const string ms_threadName = "CalculationSubtaskThread";
+    [global::Quire.Mirror.MirrorStub]
+    private static int ms_threads;
+    [global::Quire.Mirror.MirrorStub]
+    private static int ms_maxInstances;
+    [global::Quire.Mirror.MirrorStub]
+    private static int ms_isSettingsCalled;
+    [global::Quire.Mirror.MirrorStub]
+    private static object ms_lockSetup;
+    [global::Quire.Mirror.MirrorStub]
+    private static object ms_lockInstanceCounter;
+    [global::Quire.Mirror.MirrorStub]
+    private static int ms_instancesCounter;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly int ms_waitTimeout;
+    [global::Quire.Mirror.MirrorStub]
+    private static long ms_overheadTime_mksec;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.CalculationAssistant.CalculationAssistantAdHoc.ConcurrentQueueWithSignal m_queue;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Efi.CalculationAssistant.CalculationAssistantAdHoc.InnerTask> m_innerTaskList;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.CancellationTokenSource m_source;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Threading.Thread> m_thrds;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_hasException;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Exception m_exception;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_cancelIsSet;
+    [global::Quire.Mirror.MirrorStub]
     public static int Threads { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.Efi.CalculationAssistant.CalculationAssistantAdHoc Instance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void setup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void calculateOverhead() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private CalculationAssistantAdHoc() { }
     [global::Quire.Mirror.MirrorStub]
     public void StartTasks(global::System.Collections.Generic.List<global::Quire.Efi.CalculationAssistant.TaskDefinition> listOfTasks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -24,7 +74,9 @@ public partial class CalculationAssistantAdHoc
     [global::Quire.Mirror.MirrorStub]
     public void Release() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private CalculationAssistantAdHoc() { }
+    private void waitResultTasks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void startThreads(global::System.Collections.Generic.List<global::Quire.Efi.CalculationAssistant.CalculationAssistantAdHoc.InnerTask> innerTaskList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Efi.CalculationAssistant.CalculationAssistantAdHoc+InnerTask, efiplot_")]
     protected partial class InnerTask
@@ -42,6 +94,12 @@ public partial class CalculationAssistantAdHoc
     [global::Quire.Mirror.MirrorOf("Efi.CalculationAssistant.CalculationAssistantAdHoc+ConcurrentQueueWithSignal, efiplot_")]
     protected partial class ConcurrentQueueWithSignal
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Concurrent.ConcurrentQueue<global::Quire.Efi.CalculationAssistant.CalculationAssistantAdHoc.ReadinessInfo> m_queue;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Threading.ManualResetEvent m_available;
+        [global::Quire.Mirror.MirrorStub]
+        private object m_lock;
         [global::Quire.Mirror.MirrorStub]
         public ConcurrentQueueWithSignal() { }
         [global::Quire.Mirror.MirrorStub]

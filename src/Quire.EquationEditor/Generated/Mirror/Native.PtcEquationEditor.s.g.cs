@@ -14,6 +14,10 @@ internal partial struct s
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Native.PtcEquationEditor.s a_;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNode b_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<int> c;
+    [global::Quire.Mirror.MirrorStub]
     public s(global::Quire.EquationEditor.Tree.MathNode A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public s(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.EquationEditor.Tree.MathNode A_1) { }

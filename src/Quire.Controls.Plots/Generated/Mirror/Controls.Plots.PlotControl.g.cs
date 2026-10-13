@@ -74,21 +74,109 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     protected const string PlotGrid = "plotGrid";
     [global::Quire.Mirror.MirrorStub]
+    private const string MarkersControl = "PART_MarkersControl";
+    [global::Quire.Mirror.MirrorStub]
     public const int NumOfPoints_Step = 100;
     [global::Quire.Mirror.MirrorStub]
     public const int NumberOfPoints_Min = 100;
     [global::Quire.Mirror.MirrorStub]
     public const int NumberOfPoints_Max = 3000;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.DoubleComparer _doubleComparer;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.EquationList _resultEquations;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.EquationList _rangeEquations;
+    [global::Quire.Mirror.MirrorStub]
     internal readonly global::Quire.Controls.Plots.PlotTitle _plotTitle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.IPlotTitleModel _plotTitleModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.ViewModel.PlotTitleViewModel _plotTitleViewModel;
     [global::Quire.Mirror.MirrorStub]
     internal readonly global::Quire.Controls.Plots.PlotTitle XAxisTitle;
     [global::Quire.Mirror.MirrorStub]
     internal readonly global::Quire.Controls.Plots.PlotTitle YAxisTitle;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Plots.Presenter.IPlotAxisView> _subregionMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotModel _model;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.ViewModel.PlotViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.IPlotStrategy _plotStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.Support.CalculatableChildHider _childHider;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotLegend _plotLegend;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotItemAdorner _plotItemAdorner;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotItemPlaceholder[] _rangeLegendsPositions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotItemPlaceholder[] _resultLegendsPositions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotItemPlaceholder[] _plotTitlePositions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotItemPlaceholder _sharedResultLegendPosition;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotItemPlaceholder[] _plotLegendPositions;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Controls.Grid _plotGrid;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ItemsControl _markersControl;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ContentControl _graphPlaceholder;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotGraphAxis _rangeAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotGraphAxis _primaryResultAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private int _rangeLegendPositionIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _resultLegendPositionIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _plotTitlePositionIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _plotLegendPositionIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _plotSizeChanging;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _referenceSizeForPostUnfixate;
+    [global::Quire.Mirror.MirrorStub]
+    private int _numCells;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> _xEquationSizeChangingDueToPlotSizeChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ContentControl _dropTarget;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _resizeInProgress;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _expressionVisibilityChangeInProgress;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isActivationPending;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _resizeEventsInitialized;
+    [global::Quire.Mirror.MirrorStub]
+    private double _expressionHorizontalExtentBeforeChange;
+    [global::Quire.Mirror.MirrorStub]
+    private double _graphHeightBeforeShowingLegendBelow;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action _attachGraphSizeChangedOnApplyTemplate;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PlotTypeProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Visibility HiddenExpressionsVisibility;
+    [global::Quire.Mirror.MirrorStub]
+    private const string XAxisEquationDataObjectsPropertyName = "XAxisEquationDataObjects";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PrimaryYAxisEquationDataObjectsPropertyName = "PrimaryYAxisEquationDataObjects";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PlotTitleDataObjectPropertyName = "PlotTitleDataObject";
+    [global::Quire.Mirror.MirrorStub]
+    private const string TracesPropertyName = "Traces";
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsInPrintingProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -136,9 +224,21 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TraceSymbolProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty SelectedTraceTypeProperty;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SelectedTracesProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.plotEquation[] _xEquationsToAdd;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineResult[] _engineResults;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.RoutedEvent _changedEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Action _postInitializeResizeEventsCallback;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.PlotTitle PlotTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -158,9 +258,17 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Plots.Presenter.PlotType PlotType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.EquationList RightMostEquationList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.EquationList LeftMostEquationList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool IsInPrinting { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ContentControl DropTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.CommandBindingCollection CommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Func<global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel, global::System.Windows.DependencyObject> GetMarkerView { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.SolidColorBrush TraceColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -200,6 +308,8 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::Quire.Calculation.Core.Trace2DResults.TraceType> SelectedTraceType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> SelectedTracesClone { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int XLegendPositionIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int YLegendPositionIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -218,7 +328,13 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Func<global::Quire.Controls.Plots.Presenter.ITraceModel, int> VisualOrder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> TraceModels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatableResultOwner> ResultOwners { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> InternalCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => base.CalculatableChildren; }
     [global::Quire.Mirror.MirrorStub]
@@ -264,6 +380,8 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.PlotViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private bool IsNumberOfPointsAvailable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override int NumberOfPointsMin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override int NumberOfPointsMax { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -278,11 +396,35 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate1<int> PlotLegendPositionsIndexChanged;
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleContainedInCollapsedWhiteboardChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleMinWidthChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleMinHeightChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PlotControl() { }
     [global::Quire.Mirror.MirrorStub]
     internal PlotControl(global::Quire.Controls.Plots.Presenter.PlotType type, global::Quire.Controls.Plots.IPlotStrategy strategy) { }
     [global::Quire.Mirror.MirrorStub]
+    private void HandleMinHeightChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMinWidthChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void GraphTraceRemoved(global::Quire.Controls.Plots.PlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void GraphTraceAdded(global::Quire.Controls.Plots.PlotTrace newTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IsResizingChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotControlLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SelectAllTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeResizeEventsAfterLoading() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void PostInitializeResizeEventsAfterLoading() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void BindCommands() => base.BindCommands();
     [global::Quire.Mirror.MirrorStub]
@@ -294,21 +436,127 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     protected override void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => base.OnTraversedFocusEvent(sender, args);
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleShowAxisExpressionsChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SwitchExpressionsVisibility(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowHidePseudoErrorFrame(global::System.Windows.Visibility equationVisibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanNavigateToYEquationList(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanNavigateToXEquationList(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NavigateToYEquationListStart(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NavigateToYEquationListEnd(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NavigateToXEquationList(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void XEquationsSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void YEquationsSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotLegendSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EquationListOrPlotLegendSizeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PreserveGraphHeightAfterShowingBelowLegend() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeSurePlotLegendNotOutsidePlot(bool changePlotSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeSureXEquationsNotOutsidePlot(bool changePlotSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeSureYEquationsNotOutsidePlot(global::Quire.Controls.Plots.PlotItemPlaceholder equationPlaceholder, global::Quire.Controls.Plots.EquationList equations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void GraphSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLayoutUpdated(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CorrectHeightIfXEquationSizeIsChanged(double verticalChange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void KeepGraphMinSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetExpressionHorizontalExtent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotControlSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlaceholderSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeAxes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializePlotLegend() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotItemDragEnded(global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotItemDragStarted(global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void UpdateStaticXPlaceholdersVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdatePlotTitlePlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdatePlotLegendPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void UpdateStaticYPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateAxisTitlePlaceholderVisibility(global::Quire.Controls.Plots.ViewModel.PlotTitleViewModel axisTitleViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void CreatePlotItemAdorner(global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemovePlotItemAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void SetIsDropTarget(global::System.Windows.UIElement element, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetIsDropTarget(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void PlotControlPreviewDragOver(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ContentControl GetClosestPlaceholder(global::System.Windows.Point position, global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void CommitAllEquationListWithoutEvent(global::Quire.Controls.Plots.EquationList equationList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRequestMoveAndResize(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TraceCanIncrease(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TraceCanDecrease(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AnySelectedTrace(global::System.Func<global::Quire.Controls.Plots.Presenter.IPlotTrace, bool> predicate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TogglePlotTitleCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TogglePlotTitleCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddRowCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteTraceCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeTraceTypeCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeTraceSymbolCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeTraceLineCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeTraceWeightCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static void TraceCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool AnySelectedTraceIsForcedToDensityPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AnySelectedTraceIsRestrictedToDensityPointsOrSolidLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AllSelectedTracesSupportDensityPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsDensityUsedForAnySelectedTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected static void TraceLineWeightCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void TraceSymbolLineCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args, global::System.Func<object, bool> isTypeAlwaysAllowed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static void TraceSymbolCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -318,11 +566,29 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     protected bool TraceCommandGenCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void TraceCommandCanExecuteByType(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool TraceCanChangeToType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToggleAxisScalingExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ToggleAxisScalingCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToggleAxisTitleVisibilityExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ToggleAxisTitleVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TogglePlotLegendVisibilityExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TogglePlotLegendVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnTemplateChanged(global::System.Windows.Controls.ControlTemplate oldTemplate, global::System.Windows.Controls.ControlTemplate newTemplate) => base.OnTemplateChanged(oldTemplate, newTemplate);
     [global::Quire.Mirror.MirrorStub]
     protected void UpdatePlaceholders() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> GetElementsForAxis(global::Quire.Controls.Plots.Presenter.AxesType axisType, bool useEquations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleLostFocus(global::System.Windows.DependencyObject oldFocused, global::System.Windows.DependencyObject newFocused) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -336,6 +602,8 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     protected void UnRegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ContentControlDrop(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void MoveLegendXToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void MoveLegendYToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -344,7 +612,15 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public void MovePlotLegendToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleActiveEquationChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void ChangeOriginPositioning(bool newValue) => base.ChangeOriginPositioning(newValue);
+    [global::Quire.Mirror.MirrorStub]
+    private void XMinGapPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void YMinGapPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SnapToGridChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetShowCallouts(global::System.Windows.UIElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -352,25 +628,59 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public void SetTraceColor(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.SolidColorBrush GetSelectedTracesCommonColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object GetSelectedTracesCommonValueForProperty(global::Quire.DelegateFunction1<object, global::Quire.Controls.Plots.Presenter.IPlotTrace> getPropertyForTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetSelectedTracesSymbol() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Calculation.Core.Trace2DResults.TraceType> GetSelectedTracesType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetTraceLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetTraceSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetSelectedTracesLineWeight(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<double> GetSelectedTracesLineWeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TraceErrorChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTraceCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Internal.RubberBandHighlighter CreateErrorFrame(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void DelegateFocus() => base.DelegateFocus();
     [global::Quire.Mirror.MirrorStub]
+    private void RetryDelegateFocusAfterResizeEventsInitialized(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int IndexByX(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int IndexByY(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SelectedTracesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HasEquationErrorPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireXLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireYLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePlotTitlePositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePlotLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddEquations(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -388,19 +698,49 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     public void UpdateAxisOriginPositions(bool modelHasOriginPositioning) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.plotEquation[] GetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView, global::Quire.PersistentDataObjects.plotEquation[] dataObjects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void AddEquations(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.textType[] GetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend, global::Quire.PersistentDataObjects.textType[] legendlabelitems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual void SetGraphSizeForXamlSerialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
     [global::Quire.Mirror.MirrorStub]
     public override void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.XmlNode ConvertToWorkseetXmlDocumentAndValidate(global::Quire.PersistentDataObjects.plotType plotType, bool withOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AssertPlotDataXml(global::Quire.PersistentDataObjects.plotType dummyPlotType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void CompareXmls(global::System.Xml.XmlNode node1, global::System.Xml.XmlNode node2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool CompareDouble(double d1, double d2, int digits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual bool SetGraphSize(int numCells) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ForceMc14GraphSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.XmlNode BuildPlotXmlNodeFromChildren(string nodeName, global::System.Xml.XmlNode[] nodes, global::System.Xml.XmlNamespaceManager namespaceManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ChangeNumOfPointsCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void UpdateTraceNumOfPoints(global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction action, int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateSelectedTracesNumOfPoints(global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction action, global::Quire.Pair<int, bool> numberOfPointsData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateSelectedTracesNumOfPointsProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int CalculateNumberOfPointsInSelectedTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void DeserializeEpilog() => base.DeserializeEpilog();
     [global::Quire.Mirror.MirrorStub]

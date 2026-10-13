@@ -12,17 +12,31 @@ namespace Quire;
 public partial class InputOutputDesignationWindow : global::AvalonDock.Layout.LayoutAnchorable, global::System.Windows.Markup.IComponentConnector, global::System.Windows.Markup.IStyleConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Data.PropertyGroupDescription _groupByRegion;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _handling;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty EngineeringDocumentProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey _inputCollectionPropertyKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty InputCollectionProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey _outputCollectionPropertyKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty OutputCollectionProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.DependencyObject _selectedRegion;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.InputOutputDesignationWindow InputOutputDesignation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ScrollViewer _rootElement;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ListView InputsListView;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ListView OutputsListView;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IEngineeringDocument EngineeringDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -32,15 +46,47 @@ public partial class InputOutputDesignationWindow : global::AvalonDock.Layout.La
     [global::Quire.Mirror.MirrorStub]
     public InputOutputDesignationWindow() { }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement GetRootElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DefineFloatingRectangle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsThisDockWindowSelected(object dockControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void HandleAfterDockedEvent(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool SetFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void OpenWindow(global::System.Windows.Input.CommandBinding helpCommandBinding) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsDisconnectedItem(global::System.Windows.FrameworkElement frameworkElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PreMouseDown(global::System.Windows.Controls.TextBox box) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LostKeyboardFocusHandler(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void EngineeringDocumentChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowSelectedRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HideSelectedRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnActivated(global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnDeactivated(global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.IO.IOItem RetrieveAssociatedIOItem(object visual, out global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowIOItemInWorksheet(global::Quire.Controls.IO.IOItem ioItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMouseDown(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ListViewItemSelected(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InputsSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OutputsSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ColumnHeaderClickedHandler(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

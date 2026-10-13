@@ -12,6 +12,8 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class a0
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.PtcEquationEditor.ar a_;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Native.PtcEquationEditor.ay b_;
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Native.PtcEquationEditor.a5 c_;

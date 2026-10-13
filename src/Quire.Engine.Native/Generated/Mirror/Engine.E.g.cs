@@ -12,6 +12,12 @@ namespace Quire.Engine;
 internal partial struct E
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.StringBuilder m_out;
+    [global::Quire.Mirror.MirrorStub]
+    private ulong m_arg;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_hnd;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe E(global::Quire.Hex.Error* A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public static unsafe global::Quire.Engine.E* op_LeftShift(global::Quire.Engine.E* A_0, global::Quire.Mcd.Type A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

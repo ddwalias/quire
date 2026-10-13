@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 internal partial class RadioButtonPropertiesEditorViewModel : global::Quire.Controls.InputControls.InputControlEditorViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> _dataSourceItems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.IRadioButtonPropertiesEditorModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.InputControls.DataListItem> DataSourceItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

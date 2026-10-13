@@ -12,6 +12,28 @@ namespace Quire.PersistentDataObjects;
 public partial class mathType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.resultFormatType resultFormatField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.mathFormattingType formattingOverrideField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool optimizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool disablecalcField;
+    [global::Quire.Mirror.MirrorStub]
+    private string errorField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool pushdownField;
+    [global::Quire.Mirror.MirrorStub]
+    private int resultRefField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool resultRefFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showLhsOfDefinitionField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.LhsOfDefinitionVisibility visibilityLhsOfDefinitionField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool symbolicEvalKeywordsVisibilityStateField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.resultFormatType resultFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.mathFormattingType formattingOverride { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

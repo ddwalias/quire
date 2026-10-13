@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public partial class DocumentReadonlyOptions
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.DocumentReadonlyOptions _default;
+    [global::Quire.Mirror.MirrorStub]
     public bool RequestToUpdateInputsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool FileLocationHistoryEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -14,6 +14,8 @@ public partial class DropDownSelectorItem : global::Fluent.Button, global::Quire
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ValueProperty;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public DropDownSelectorItem() { }

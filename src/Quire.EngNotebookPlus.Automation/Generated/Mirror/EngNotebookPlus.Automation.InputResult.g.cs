@@ -12,11 +12,17 @@ namespace Quire.EngNotebookPlus.Automation;
 public partial class InputResult : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeInputResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebookPlus.Automation.IMathcadPrimeInputResult _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebookPlus.Automation.IMathcadPrimeInputResult RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double RealResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private InputResult() { }
     [global::Quire.Mirror.MirrorStub]
     internal InputResult(global::Quire.EngNotebookPlus.Automation.IMathcadPrimeInputResult mathcadPrimeInputResult) { }
     [global::Quire.Mirror.MirrorStub]

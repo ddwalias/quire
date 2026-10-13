@@ -12,7 +12,53 @@ namespace Quire.EquationEditor.SpecTable;
 public partial class SpecTablePresenter
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.SpecTable.ISpecTableView a_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.SpecTable.ISpecTableModel b_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.IEquationTriadBuilder c_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.SpecTable.ISpecTableCellMap d_;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IFrameworkElementFacade e_;
+    [global::Quire.Mirror.MirrorStub]
     protected static global::Quire.Controls.Core.IFrameworkElementFacade FrameworkElementFacade { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public SpecTablePresenter(global::Quire.EquationEditor.SpecTable.ISpecTableModel model, global::Quire.EquationEditor.SpecTable.ISpecTableView view, global::Quire.EquationEditor.IEquationTriadBuilder triadBuilder, global::Quire.EquationEditor.SpecTable.ISpecTableCellMap cellMap) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void f(global::Quire.Controls.Core.IEquationControl A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(bool A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.Controls.Core.IEquationControl A_0, int A_1, int A_2, global::Quire.Direction A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void e(global::Quire.Controls.Core.IEquationControl A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void d(global::Quire.Controls.Core.IEquationControl A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void c(global::Quire.Controls.Core.IEquationControl A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b(global::Quire.Controls.Core.IEquationControl A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.Controls.Core.IEquationControl A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b(global::Quire.Controls.Core.IEquationControl A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.Controls.Core.IEquationControl A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(object A_0, global::Quire.EquationEditor.SpecTable.ShouldHideCellEventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -14,6 +14,8 @@ public partial class TextStylesDictionary : global::System.Windows.ResourceDicti
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.TextStylesDictionary Instance;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public TextStylesDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

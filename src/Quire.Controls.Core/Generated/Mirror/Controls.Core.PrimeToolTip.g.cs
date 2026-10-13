@@ -18,6 +18,8 @@ public partial class PrimeToolTip : global::System.Windows.Controls.ToolTip, glo
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Core.PrimeToolTip _this;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public object Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object ContentBody { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

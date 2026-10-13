@@ -12,11 +12,31 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public static partial class Logger
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly object _lock;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string path1;
+    [global::Quire.Mirror.MirrorStub]
+    private static string _logFileName;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _isEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Concurrent.ConcurrentQueue<string> _logQueue;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Threading.AutoResetEvent _logSignal;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Threading.Thread _logThread;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _isRunning;
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string LogFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static uint GetCurrentThreadId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void Log(string message, string filePath = "", string memberName = "", int lineNumber = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ProcessLogQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Shutdown() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -28,5 +28,9 @@ public abstract partial class CylindricalMeshBase : global::Quire.Media3D.MeshGe
     [global::Quire.Mirror.MirrorStub]
     public int Stacks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateSlices(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateStacks(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected CylindricalMeshBase() { }
 }

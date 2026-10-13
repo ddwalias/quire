@@ -12,6 +12,8 @@ namespace Quire.Native.EfiioImpl;
 internal partial class DelimitedStream : global::Quire.Native.EfiioImpl.ReadTextStream
 {
     [global::Quire.Mirror.MirrorStub]
+    private DelimitedStream(global::System.IO.StreamReader s, global::Quire.Native.EfiioImpl.ReadOptions opts) : base(default(global::System.IO.StreamReader), default(global::Quire.Native.EfiioImpl.ReadOptions)) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfiioImpl.ReadTextStream MakeStream(global::System.IO.StreamReader s, global::Quire.Native.EfiioImpl.ReadOptions opts) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.List<global::System.Collections.Generic.List<string>> ReadInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -21,6 +23,4 @@ internal partial class DelimitedStream : global::Quire.Native.EfiioImpl.ReadText
     public void SetDelimiterAutomatically() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDelimiter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private DelimitedStream() : base(default(global::System.IO.StreamReader), default(global::Quire.Native.EfiioImpl.ReadOptions)) { }
 }

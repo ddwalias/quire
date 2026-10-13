@@ -12,6 +12,10 @@ namespace Quire.Native.PtcCore;
 public static partial class SnapToRootVisualUtils
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.ScaleTransform _dpiScale;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.ScaleTransform DpiScale { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Visual GetSnappableRootVisual(global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.GeneralTransform GetTransformToRootVisual(global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

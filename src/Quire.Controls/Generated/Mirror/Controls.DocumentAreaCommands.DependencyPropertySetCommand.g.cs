@@ -12,6 +12,14 @@ namespace Quire.Controls.DocumentAreaCommands;
 public partial class DependencyPropertySetCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.DependencyProperty _property;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.DependencyObject _target;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly object _value;
+    [global::Quire.Mirror.MirrorStub]
+    private object _old_value;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public DependencyPropertySetCommand(global::System.Windows.DependencyObject target, global::System.Windows.DependencyProperty property, object value) { }

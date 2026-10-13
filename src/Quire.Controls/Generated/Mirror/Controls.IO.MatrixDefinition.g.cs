@@ -12,6 +12,10 @@ namespace Quire.Controls.IO;
 internal partial class MatrixDefinition : global::Quire.Controls.IO.ShadowCalculatable, global::Quire.Controls.IO.IShadowIdDefinition, global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string MatrixSexpFormat = "(@MATRIX {0} {1} {2})";
+    [global::Quire.Mirror.MirrorStub]
+    private string _rl;
+    [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => base.Rl; set => base.Rl = value; }
     [global::Quire.Mirror.MirrorStub]
     public string IdSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -24,9 +28,15 @@ internal partial class MatrixDefinition : global::Quire.Controls.IO.ShadowCalcul
     [global::Quire.Mirror.MirrorStub]
     internal MatrixDefinition(string idSExpression, double[,] value, string scalingSExpression) { }
     [global::Quire.Mirror.MirrorStub]
+    private string BuildListOfValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string ConstructCurrentRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
     [global::Quire.Mirror.MirrorStub]
     public override bool IsErrorOnScalingUnits() => base.IsErrorOnScalingUnits();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsMatrixEqual(double[,] first, double[,] second) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);
     [global::Quire.Mirror.MirrorStub]

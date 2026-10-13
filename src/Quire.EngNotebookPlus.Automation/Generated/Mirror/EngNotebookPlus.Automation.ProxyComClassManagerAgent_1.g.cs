@@ -12,6 +12,8 @@ namespace Quire.EngNotebookPlus.Automation;
 internal partial class ProxyComClassManagerAgent<T> : global::Quire.EngNotebookPlus.Automation.IProxyComClassManagerAgent<T> where T : class
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebookPlus.Automation.ProxyComClassManager<T> _comProxyManagerInstance;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsRegistered { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsReleased { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

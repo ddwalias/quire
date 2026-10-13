@@ -12,7 +12,19 @@ namespace Quire.Controls.Internal;
 internal partial class VisualLinearUnaryEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor>, global::Quire.EquationEditor.View.IVisualUnaryEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty OperatorSelectedProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _caretBrush;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry _operatorGeometry;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.RubberBandHighlighter _operandHighlighter;
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnOperatorSelectedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public VisualLinearUnaryEditor(global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnOperatorSelectedChanged(bool selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SelectOperator(bool selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

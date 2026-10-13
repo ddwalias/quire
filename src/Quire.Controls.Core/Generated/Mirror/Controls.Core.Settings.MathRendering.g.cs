@@ -14,6 +14,12 @@ public partial class MathRendering : global::Quire.Controls.Core.Serialization.X
     [global::Quire.Mirror.MirrorStub]
     public const string LocalName = "mathRendering";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IEngineeringDocument _document;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.Linq.XNamespace _namespace;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.Linq.XNamespace _resultsNS;
+    [global::Quire.Mirror.MirrorStub]
     public MathRendering(global::Quire.Controls.Core.IEngineeringDocument document, global::System.Xml.Linq.XName name, string resultsNS) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);

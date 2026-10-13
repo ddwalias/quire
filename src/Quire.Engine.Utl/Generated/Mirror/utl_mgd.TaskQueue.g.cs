@@ -12,6 +12,12 @@ namespace Quire.utl_mgd;
 public partial class TaskQueue : global::Quire.utl_mgd.MessageQueue<global::Quire.utl_mgd.TaskQueue, int, global::Quire.utl_mgd.Function>
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_empty_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_empty;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ExecuteTask(global::Quire.utl_mgd.TaskQueue q, int __unnamed001, global::Quire.utl_mgd.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void OnTaskExecuted() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TaskQueue() : base(default(int)) { }

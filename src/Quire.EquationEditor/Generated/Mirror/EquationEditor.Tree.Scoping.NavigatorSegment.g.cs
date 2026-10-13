@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class NavigatorSegment
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a_;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Navigation.NavigatorState b;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState LeftNavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState RightNavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -41,4 +45,6 @@ public partial class NavigatorSegment
     public int[] GetPartsOfOperatorInSegment(global::Quire.EquationEditor.Tree.MathNode current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.EquationEditor.Tree.Scoping.LinearSegment a(global::Quire.Native.PtcEquationEditor.aw A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EquationEditor.Tree.Navigation.NavigatorState a(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

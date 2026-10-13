@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class QuartnaryDelegateFunction : global::Quire.Mpl.Run.DelegateFunction
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.F<object, object, object, object, object> m_F;
+    [global::Quire.Mirror.MirrorStub]
     public QuartnaryDelegateFunction(global::Quire.Mpl.Run.F<object, object, object, object, object> f) : base(default(global::System.Delegate), default(int)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => base.inv<R, A, B, C, D>(out r, aa, bb, cc, dd);

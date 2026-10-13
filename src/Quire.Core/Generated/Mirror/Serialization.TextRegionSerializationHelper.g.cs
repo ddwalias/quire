@@ -16,6 +16,10 @@ public static partial class TextRegionSerializationHelper
     [global::Quire.Mirror.MirrorStub]
     public static readonly string PAGE_GAP_CONTAINER_NODE_NAME;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Version _firstVerToNotPackFlowDocumentImages;
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetAttributeValueAndRemoveIt(global::System.Xml.XmlNode xmlNode, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNamespaceManager CreateNamespaceManagerForTextRegions(global::System.Xml.XmlNode root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SaveTextRangeAsXamlPackage(global::Quire.Serialization.TextRangeExtended src, global::System.IO.Stream stream, bool isConversion = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

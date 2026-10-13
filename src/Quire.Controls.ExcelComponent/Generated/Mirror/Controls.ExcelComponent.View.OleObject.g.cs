@@ -12,6 +12,10 @@ namespace Quire.Controls.ExcelComponent.View;
 public partial class OleObject : global::Quire.Controls.Core.Ole.OleContainer<global::Quire.Controls.ExcelComponent.ViewModel.OleObjectViewModel, global::Quire.Controls.ExcelComponent.Model.OleObjectModel, global::Quire.Controls.ExcelComponent.Model.IOleObjectModel, global::Quire.PersistentData.oleObjectRegionType>, global::Quire.Controls.Core.INodeMessageAdornerReferenceHolder
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Guid _guidFromXaml;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Guid ClassId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Guid ClassIdForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,11 +30,15 @@ public partial class OleObject : global::Quire.Controls.Core.Ole.OleContainer<gl
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
     [global::Quire.Mirror.MirrorStub]
+    private static void OnSizePropertyChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool CreateSiteWithDialog(nint winHandler, string dialogTitle, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CreateSiteWithProgId(string progId, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CreateSiteFromFile(string filePath, bool link, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCreationFailure(bool created, bool isCancelled, bool isNew) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.oleObjectRegionType GetOlePersistentData(global::Quire.Serialization.IS11NProvider s11NProvider, string uniqueId) => base.GetOlePersistentData(s11NProvider, uniqueId);
     [global::Quire.Mirror.MirrorStub]

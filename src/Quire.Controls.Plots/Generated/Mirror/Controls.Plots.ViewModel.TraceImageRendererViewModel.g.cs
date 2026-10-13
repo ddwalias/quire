@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.ViewModel;
 public partial class TraceImageRendererViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.ViewModel.ITraceImageRendererViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Model.ITraceImageRendererModel _model;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Imaging.BitmapSource RenderingBitmap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasCachedBitmap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

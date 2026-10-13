@@ -12,7 +12,23 @@ namespace Quire.Controls.Plots.Base3D.ViewModel;
 public abstract partial class Base3DAxisViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D, global::Quire.Controls.Plots.ViewModel.IAxisViewModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isActive;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isHighlighted;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color _lineColor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IPlotAxisView _plotAxisView;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Color _defaultLineColor;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Color _higlightedLineColor;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Color _activeLineColor;
+    [global::Quire.Mirror.MirrorStub]
+    private double _height;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Presenter.IAxisModel PlotAxisModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -60,11 +76,23 @@ public abstract partial class Base3DAxisViewModel : global::Quire.Controls.Core.
     [global::Quire.Mirror.MirrorStub]
     protected Base3DAxisViewModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType) { }
     [global::Quire.Mirror.MirrorStub]
+    private void FireRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeLimitExpression(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor limitExpression, global::System.Action limitValueChangedHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StartExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateLineColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void HookupView(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void LimitEquationRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

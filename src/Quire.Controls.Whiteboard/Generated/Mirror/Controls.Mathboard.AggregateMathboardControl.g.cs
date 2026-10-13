@@ -56,6 +56,12 @@ public abstract partial class AggregateMathboardControl : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     protected override void ViewModelPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.ViewModelPropertyChangedHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
+    private void BindProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

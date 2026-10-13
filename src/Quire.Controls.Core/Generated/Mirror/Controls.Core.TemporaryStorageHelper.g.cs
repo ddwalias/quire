@@ -16,6 +16,8 @@ public partial class TemporaryStorageHelper
     [global::Quire.Mirror.MirrorStub]
     public void SaveIfFileNameNullOrEmpty(global::System.Func<global::System.Windows.Media.Imaging.BitmapSource> getImageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void SaveBitmap(string filename, global::System.Func<global::System.Windows.Media.Imaging.BitmapSource> getImageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Imaging.BitmapSource LoadBitmap(string filename) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CleanStorage(bool deleteFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

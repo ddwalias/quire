@@ -20,11 +20,21 @@ public partial class StatusRibbonBar : global::System.Windows.Controls.UserContr
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ActiveDocumentProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.TextBox _tbHead;
+    [global::Quire.Mirror.MirrorStub]
+    private const string Escape = "\u001B";
+    [global::Quire.Mirror.MirrorStub]
+    private const int GotoPageMaxLength = 4;
+    [global::Quire.Mirror.MirrorStub]
+    private int _gotoPage;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.StatusBarControls.StatusRibbonBar _this;
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton btCurrentPage;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBlock tbPageCount;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public int PageCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -39,6 +49,18 @@ public partial class StatusRibbonBar : global::System.Windows.Controls.UserContr
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public StatusRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnEnableEditCurrentPageChanged(global::System.Windows.DependencyObject target, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCurrentPageChanged(global::System.Windows.DependencyObject target, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CurrentPageTextBox_OnPreviewTextInput(object sender, global::System.Windows.Input.TextCompositionEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CurrentPageTextBox_OnLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TbHeader_OnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

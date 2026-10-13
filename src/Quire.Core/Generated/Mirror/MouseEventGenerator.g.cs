@@ -12,6 +12,18 @@ namespace Quire;
 public partial class MouseEventGenerator
 {
     [global::Quire.Mirror.MirrorStub]
+    private const global::Quire.Win32.SendMouseInputFlags _moveFlags = (global::Quire.Win32.SendMouseInputFlags)(49153);
+    [global::Quire.Mirror.MirrorStub]
+    private const global::Quire.Win32.SendMouseInputFlags _moveRelativeFlags = (global::Quire.Win32.SendMouseInputFlags)(16385);
+    [global::Quire.Mirror.MirrorStub]
+    private const global::Quire.Win32.SendMouseInputFlags _downHereFlags = (global::Quire.Win32.SendMouseInputFlags)(16386);
+    [global::Quire.Mirror.MirrorStub]
+    private const global::Quire.Win32.SendMouseInputFlags _upHereFlags = (global::Quire.Win32.SendMouseInputFlags)(16388);
+    [global::Quire.Mirror.MirrorStub]
+    private const global::Quire.Win32.SendMouseInputFlags _downFlags = (global::Quire.Win32.SendMouseInputFlags)(49154);
+    [global::Quire.Mirror.MirrorStub]
+    private const global::Quire.Win32.SendMouseInputFlags _upFlags = (global::Quire.Win32.SendMouseInputFlags)(49156);
+    [global::Quire.Mirror.MirrorStub]
     public static void GenerateMouseClick(global::System.Windows.Point wpfScreenPoint, int clickCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void GenerateMouseMove(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -27,6 +39,12 @@ public partial class MouseEventGenerator
     public static void GenerateMouseClick(global::System.Windows.Point screenPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void GenerateMouseDrag(global::System.Windows.Point startScreenPoint, global::System.Windows.Point endScreenPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void MouseClickFromNormalizedCoordinates(int x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SendMouseInput(int x, int y, global::Quire.Win32.SendMouseInputFlags flags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void NormalizeCoordinates(global::System.Windows.Point rawPoint, out int x, out int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public MouseEventGenerator() { }
 }

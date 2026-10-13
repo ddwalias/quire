@@ -12,6 +12,10 @@ namespace Quire.PersistentData;
 public partial class IntegerSizeType
 {
     [global::Quire.Mirror.MirrorStub]
+    private int widthField;
+    [global::Quire.Mirror.MirrorStub]
+    private int heightField;
+    [global::Quire.Mirror.MirrorStub]
     public int width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

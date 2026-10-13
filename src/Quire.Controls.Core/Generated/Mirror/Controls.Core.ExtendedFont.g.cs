@@ -12,6 +12,18 @@ namespace Quire.Controls.Core;
 public partial class ExtendedFont : global::System.Windows.Freezable, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Typeface _fontTypeface;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.GlyphRun _M_Run;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.GlyphRun _n_Run;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.GlyphRun _j_Run;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.GlyphTypeface _glyphTypeface;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baselineAdjustment;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FontFamilyProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FontSizeProperty;
@@ -25,6 +37,8 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     public static readonly global::System.Windows.DependencyProperty ForegroundProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FontStretchProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.IDictionary<string, global::System.Windows.Media.GlyphRun> GlyphRunCache;
     [global::Quire.Mirror.MirrorStub]
     public int RevisionNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,6 +68,8 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate1<global::System.Windows.DependencyPropertyChangedEventArgs> FormatChanged;
     [global::Quire.Mirror.MirrorStub]
+    private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Rect SafeComputeInkBoundingBox(global::System.Windows.Media.GlyphRun glyphRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ExtendedFont() { }
@@ -63,6 +79,14 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     public ExtendedFont(global::System.Windows.Media.Typeface typeface, double fontSize) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.GlyphRun GenerateGlyphRun(string text, global::System.Uri fontUri, double fontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.GlyphRun CreateGlyphRun(string text, global::System.Uri fontUri, double fontSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.GlyphRun GenerateGlyphRun(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculateTypeface() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleExtendedFontPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ExtendedFont Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,8 @@ namespace Quire.Undo;
 public partial class CompoundCommand : global::System.Collections.Generic.List<global::Quire.Undo.IUndoableCommand>, global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _name;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CompoundCommand(string name, global::System.Collections.Generic.IEnumerable<global::Quire.Undo.IUndoableCommand> subCommands) { }

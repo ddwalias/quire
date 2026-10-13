@@ -12,6 +12,16 @@ namespace Quire.Calculation.Core;
 public partial class UnitDescriptor : global::System.IComparable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> _derivedUnitSystems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> _baseUnitSystems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> _excludeUnitSystems;
+    [global::Quire.Mirror.MirrorStub]
+    private string _rl;
+    [global::Quire.Mirror.MirrorStub]
+    private string _key;
+    [global::Quire.Mirror.MirrorStub]
     public const string KeyPropertyName = "Key";
     [global::Quire.Mirror.MirrorStub]
     public const string QuantityPropertyName = "Quantity";
@@ -63,6 +73,8 @@ public partial class UnitDescriptor : global::System.IComparable
     public bool IsFunction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsSymbolResultNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private void SetUnitSystem(ref global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> unitSystems, global::Quire.Calculation.Core.UnitSystems value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]

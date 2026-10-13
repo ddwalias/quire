@@ -14,6 +14,10 @@ public abstract partial class ViewModelBaseWithDataErrors : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.ResourceDictionary _errorsDictionary;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::System.Collections.Generic.List<string>> _errors;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasErrors;
+    [global::Quire.Mirror.MirrorStub]
     public bool HasErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.EventHandler<global::System.ComponentModel.DataErrorsChangedEventArgs> ErrorsChanged;

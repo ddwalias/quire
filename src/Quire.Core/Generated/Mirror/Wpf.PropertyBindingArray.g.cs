@@ -12,6 +12,8 @@ namespace Quire.Wpf;
 public partial class PropertyBindingArray
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.PropertyBinding[] _propertyBindings;
+    [global::Quire.Mirror.MirrorStub]
     public PropertyBindingArray(params global::Quire.Wpf.PropertyBinding[] propertyBindings) { }
     [global::Quire.Mirror.MirrorStub]
     public void Set(global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

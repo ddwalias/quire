@@ -16,5 +16,7 @@ public partial class MruFileExtensionComparer : global::System.Collections.Gener
     [global::Quire.Mirror.MirrorStub]
     public int GetHashCode(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool IsMctxExtension(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public MruFileExtensionComparer() { }
 }

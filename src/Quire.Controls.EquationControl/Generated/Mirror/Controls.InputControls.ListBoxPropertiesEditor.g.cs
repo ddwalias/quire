@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 public partial class ListBoxPropertiesEditor : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.InputControls.IInputControlEditorViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ListBoxPropertiesEditor(global::Quire.Controls.InputControls.IInputControlEditorModel model) { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

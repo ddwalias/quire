@@ -12,5 +12,9 @@ namespace Quire;
 public static partial class DebugExtensions
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<global::System.Type, string[]> _types;
+    [global::Quire.Mirror.MirrorStub]
     public static void VerifyPropertyName(this global::System.ComponentModel.INotifyPropertyChanged obj, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool VerifyPropertyName(global::System.Type type, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

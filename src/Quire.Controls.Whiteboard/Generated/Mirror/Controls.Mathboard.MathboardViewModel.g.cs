@@ -12,7 +12,19 @@ namespace Quire.Controls.Mathboard;
 public partial class MathboardViewModel : global::Quire.Controls.Whiteboard.WhiteboardViewModel, global::Quire.Controls.Mathboard.IMathboardViewModel, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NumberFormat _currentNumberFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MatrixFormat _currentMatrixFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.TextFormat _currentTextFormat;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Mathboard.IMathboardModel _mathboardModel;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationButtonEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationButtonChecked;
+    [global::Quire.Mirror.MirrorStub]
+    private double _containerFrameThickness;
     [global::Quire.Mirror.MirrorStub]
     public double ContainerFrameThickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -50,6 +62,14 @@ public partial class MathboardViewModel : global::Quire.Controls.Whiteboard.Whit
     [global::Quire.Mirror.MirrorStub]
     protected override void SetupCommandBindings() => base.SetupCommandBindings();
     [global::Quire.Mirror.MirrorStub]
+    private void CanBookmarkTag(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanRemoveBookmarkTag(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRemoveBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Whiteboard.WhiteboardViewModel.SeparateOverlappedItemsCommand CreateSeparateOverlappedItemsCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSeparate, global::Quire.Dimension dimension) => base.CreateSeparateOverlappedItemsCommand(itemsToSeparate, dimension);
     [global::Quire.Mirror.MirrorStub]
     protected MathboardViewModel(global::Quire.Controls.Mathboard.IMathboardModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardModel)) { }
@@ -59,6 +79,8 @@ public partial class MathboardViewModel : global::Quire.Controls.Whiteboard.Whit
     protected MathboardViewModel(global::Quire.Controls.Mathboard.MathboardViewModel original) : base(default(global::Quire.Controls.Whiteboard.IWhiteboardModel)) { }
     [global::Quire.Mirror.MirrorStub]
     protected void Initialize(global::Quire.Controls.Mathboard.IMathboardModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupEventHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -76,17 +98,31 @@ public partial class MathboardViewModel : global::Quire.Controls.Whiteboard.Whit
     [global::Quire.Mirror.MirrorStub]
     public virtual void ToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnActiveTextRegionContentChanged(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Activate(bool isActive) => base.Activate(isActive);
+    [global::Quire.Mirror.MirrorStub]
+    private void ActiveItemPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HookupActiveItem(global::Quire.Controls.Core.IWhiteboardItem item) => base.HookupActiveItem(item);
     [global::Quire.Mirror.MirrorStub]
     protected override void UnhookActiveItem(global::Quire.Controls.Core.IWhiteboardItem item) => base.UnhookActiveItem(item);
+    [global::Quire.Mirror.MirrorStub]
+    private void ChildWhiteboardPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private T[] GetActiveOrSelectedItemsOfType<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Pair<double, double> GetDefaultDimensions(double top, double minHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Pair<double, double> IndicatorRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> sbCalculatables) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateHideFromCalculationButton() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem GetWhiteboardItem(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateTabStopStatus(global::Quire.Calculation.Core.ICalculationHideableChild hideable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Mathboard.MathboardViewModel+PropertyNames, Ptc.Controls.Whiteboard")]
     public static partial class PropertyNames

@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots.Contour.View;
 internal partial class ContoursView : global::System.Windows.Controls.ItemsControl, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.PropertyBindingArray _itemsSourceBindings;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ContoursView() { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnItemsSourceChanged(global::System.Collections.IEnumerable oldValue, global::System.Collections.IEnumerable newValue) => base.OnItemsSourceChanged(oldValue, newValue);

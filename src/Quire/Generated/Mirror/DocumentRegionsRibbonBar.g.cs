@@ -22,6 +22,8 @@ public partial class DocumentRegionsRibbonBar : global::Fluent.RibbonGroupBox, g
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_DocumentRegionsRibbonBar_Image;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DocumentRegionsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

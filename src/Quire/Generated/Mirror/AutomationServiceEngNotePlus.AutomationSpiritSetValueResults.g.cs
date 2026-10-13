@@ -12,6 +12,8 @@ namespace Quire.AutomationServiceEngNotePlus;
 public partial class AutomationSpiritSetValueResults : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeSetValueResults
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.ISetValueResults _setValuesResults;
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public AutomationSpiritSetValueResults(global::Quire.Controls.Core.IORegions.ISetValueResults setValuesResults) { }

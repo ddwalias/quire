@@ -12,11 +12,25 @@ namespace Quire.MessageBoxes;
 public partial class MessageDialogWithOptions : global::Quire.Controls.Core.Dialogs.MessageDialogBase<int>, global::System.Windows.Markup.IComponentConnector, global::System.Windows.Markup.IStyleConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Image _image;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.TextBlock _message;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.StackPanel _checkBoxesPanel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ItemsControl _checkBoxesItems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ItemsControl _buttons;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.TextBlock Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.Image Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.ItemsControl Buttons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private MessageDialogWithOptions(global::System.Windows.Window ownerWindow, string caption, global::System.Collections.Generic.IEnumerable<global::Quire.Wpf.CheckBoxData> checkBoxesData) : base(default(global::System.Windows.Window), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public static int Show(global::System.Windows.Window ownerWindow, string message, string caption, global::System.Windows.MessageBoxImage imageName, global::Quire.Wpf.CheckBoxData[] checkBoxesData, string[] buttonsKey, string defaultButtonKey, string cancelButtonKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -27,6 +41,4 @@ public partial class MessageDialogWithOptions : global::Quire.Controls.Core.Dial
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private MessageDialogWithOptions() : base(default(global::System.Windows.Window), default(string)) { }
 }

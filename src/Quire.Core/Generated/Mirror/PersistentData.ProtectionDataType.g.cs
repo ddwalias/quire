@@ -12,6 +12,16 @@ namespace Quire.PersistentData;
 public partial class ProtectionDataType
 {
     [global::Quire.Mirror.MirrorStub]
+    private byte[] passwordField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showTimestampField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.DateTime timestampField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool timestampFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.ProtectionLevelType[] protectionLevelField;
+    [global::Quire.Mirror.MirrorStub]
     public byte[] Password { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ShowTimestamp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,8 @@ namespace Quire;
 public partial struct TableCoordinate
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Discrete2DCoordinate _coordinate;
+    [global::Quire.Mirror.MirrorStub]
     public int Row { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Column { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,20 @@ namespace Quire.Controls.Core.Serialization;
 public partial class McdxSerializer : global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action<global::System.Xml.Schema.XmlSchemaException> _onWriteValidationFailed;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Serialization.ISerializationStrategy _serializationStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Serialization.ISerializationHelper _serializationHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentData.IRegionCollectionSerializer _regionCollectionSerializer;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.IO.Packaging.PackagePart _packagePart;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _worksheetNodeName;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsConverterApplication { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -30,6 +44,8 @@ public partial class McdxSerializer : global::Quire.Serialization.IS11NProvider,
     [global::Quire.Mirror.MirrorStub]
     public void Serialize(global::System.IO.Packaging.PackagePart part, bool useTempFile = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnWriteValidationFailedHandler(object sender, global::System.Xml.Schema.ValidationEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string PackImage(global::System.IO.Packaging.PackagePart sourcePackagePart, global::Quire.Serialization.ISerializationHelper serializationHelper, global::System.Uri imageSourceUri, byte[] imageSourceStreamHash, global::System.Windows.Media.Imaging.BitmapSource image, string uniqueImageName, string imageExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string PackFile(global::System.IO.Packaging.PackagePart sourcePackagePart, string sourceFileName, string pathInPackage, string relationshipUri, string mimeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -43,4 +59,8 @@ public partial class McdxSerializer : global::Quire.Serialization.IS11NProvider,
     public string PackFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument, string regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string PackProtectedPart(global::System.IO.Stream content, string uniqueId, string regionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InitializeDocument(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BuildDocumentXml(global::Quire.PersistentData.IRegionCollectionSerializer regionCollectionSerializer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

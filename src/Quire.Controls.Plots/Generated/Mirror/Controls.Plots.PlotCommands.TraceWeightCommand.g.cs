@@ -12,6 +12,12 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class TraceWeightCommand : global::Quire.Controls.Plots.PlotCommands.TraceCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, double> _oldWeightMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState>> _exUndoData;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _newWeight;
+    [global::Quire.Mirror.MirrorStub]
     public TraceWeightCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle> traceList, double newWeight) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

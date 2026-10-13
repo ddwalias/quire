@@ -12,6 +12,10 @@ namespace Quire.Controls.Text;
 internal partial class RichTextSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IRichTextWithEmbeddedItem _richText;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _regionCreator;
+    [global::Quire.Mirror.MirrorStub]
     public RichTextSerializationStrategy(global::Quire.Controls.Core.IRichTextWithEmbeddedItem richText, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> regionCreator) { }
     [global::Quire.Mirror.MirrorStub]
     public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

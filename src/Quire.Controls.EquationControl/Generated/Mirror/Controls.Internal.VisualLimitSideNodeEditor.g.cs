@@ -14,9 +14,23 @@ internal partial class VisualLimitSideNodeEditor : global::Quire.Controls.Intern
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CaretOpacityProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.RubberBandHighlighter _highlighter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Caret _caret;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _limitSideSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretOpacityPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnCaretColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCaretOpacityChanged(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateSymbols() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindToSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public VisualLimitSideNodeEditor(global::Quire.Controls.Internal.VisualMathNode node, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
     [global::Quire.Mirror.MirrorStub]

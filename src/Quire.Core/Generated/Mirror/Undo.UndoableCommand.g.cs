@@ -12,6 +12,14 @@ namespace Quire.Undo;
 public partial class UndoableCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.DelegateFunction0<bool> _do;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Delegate0 _undo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Delegate0 _redo;
+    [global::Quire.Mirror.MirrorStub]
+    private string _name;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public UndoableCommand(string name, global::Quire.DelegateFunction0<bool> doMethod, global::Quire.Delegate0 undoMethod, global::Quire.Delegate0 redoMethod) { }

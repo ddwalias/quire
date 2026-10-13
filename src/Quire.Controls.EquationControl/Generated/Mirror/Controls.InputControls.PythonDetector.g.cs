@@ -12,7 +12,23 @@ namespace Quire.Controls.InputControls;
 public static partial class PythonDetector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Version minVersion;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Version maxVersion;
+    [global::Quire.Mirror.MirrorStub]
+    private const string PythonExecutable = "python.exe";
+    [global::Quire.Mirror.MirrorStub]
+    private static string[] possibleRegistryKeys;
+    [global::Quire.Mirror.MirrorStub]
     public static string FindPythonPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetPythonInstallationPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetPythonPathFromEnvironmentVariables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetPythonPathFromCommonLocations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ExtractVersionFromFolderName(string folderName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsVersionInRange(string targetVersionString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -25,4 +41,6 @@ public static partial class PythonDetector
     internal static string FindPythonDllPath(string pythonPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetMajorMinorVersion(string versionString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetPythonVersionFromExecutable(string pythonExecutablePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

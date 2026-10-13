@@ -12,6 +12,12 @@ namespace Quire.Controls;
 internal partial class HeadersContainerSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.WorksheetSectionSerializationStrategy _headerStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.WorksheetSectionSerializationStrategy _firstPageHeaderStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentData.headersContainerRegionCollectionSerializer _containerSerializer;
+    [global::Quire.Mirror.MirrorStub]
     public HeadersContainerSerializationStrategy(global::Quire.Controls.WorksheetSectionSerializationStrategy headerStrategy, global::Quire.Controls.WorksheetSectionSerializationStrategy firstPageHeaderStrategy, global::Quire.PersistentData.headersContainerRegionCollectionSerializer containerSerializer) { }
     [global::Quire.Mirror.MirrorStub]
     public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

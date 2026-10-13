@@ -12,6 +12,8 @@ namespace Quire;
 public partial class UniqueTextStyleNameRule : global::System.Windows.Controls.ValidationRule
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.UniqueTextStyleNameHelper _helper;
+    [global::Quire.Mirror.MirrorStub]
     public string StyleNames { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.UniqueTextStyleNameHelper DependencyPropertyHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

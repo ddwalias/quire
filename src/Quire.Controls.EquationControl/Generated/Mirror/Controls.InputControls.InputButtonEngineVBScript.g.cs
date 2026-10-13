@@ -14,6 +14,8 @@ internal partial class InputButtonEngineVBScript : global::Quire.Controls.InputC
     [global::Quire.Mirror.MirrorStub]
     protected string scriptInternalClassResourceKey;
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableButton.VbButtonDefaultScript.vbs";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

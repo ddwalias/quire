@@ -12,6 +12,26 @@ namespace Quire.Controls.Worksheet;
 public partial class RtfItemWrapperHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IEngineeringDocument _engineeringDocument;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _worksheetPageManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IItemLocationStrategy _itemLocationStrategyDefault;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.AreaItemLocationInWorksheetStrategy _itemLocationStrategyWorksheetArea;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IWorksheetControl _worksheet;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IWorksheetItemManager _worksheetItemManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Windows.Media.Brush, global::System.Windows.Media.Imaging.BitmapSource> _lineSeparators;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.IItemLocationStrategy ItemLocationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsInWorksheetMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Imaging.BitmapSource GetLineSeparator(global::System.Windows.Media.Brush color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public RtfItemWrapperHelper(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.Controls.Worksheet.IWorksheetControl worksheet, bool handleAsWholeDocument) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.RtfItemImage CreateAreaSeparateLine(global::Quire.Controls.Core.ICollapsibleAreaControl area, bool onTop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -33,4 +53,10 @@ public partial class RtfItemWrapperHelper
     public global::Quire.Controls.Worksheet.RtfItemModel CreateRtfItemModel(global::Quire.Controls.Core.IRichTextWithEmbeddedItem textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CopyItemAsImageToDataObject(global::System.Windows.DataObject dataObject, global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Core.RegionImageSettings imageSettings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect CalculateItemMeaningfulPartBounds(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::System.Windows.Rect cloneBounds, global::System.Windows.Size rtfContentFullSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size ClipToCloneBounds(global::System.Windows.Rect originalBounds, global::System.Windows.Rect cloneBounds, global::System.Windows.Size rtfContentFullSize, global::System.Windows.Rect clipRectGeometry) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Imaging.BitmapSource CreateImage(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::Quire.Controls.Core.RegionImageSettings imageSettings, out global::System.Windows.Rect cloneBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

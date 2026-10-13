@@ -12,6 +12,14 @@ namespace Quire.Engine;
 internal partial class TranslateHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Interpreter* i;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Module* m;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.Environment e;
+    [global::Quire.Mirror.MirrorStub]
+    private void Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Threading.ThreadStart GetThreadStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private TranslateHelper() { }

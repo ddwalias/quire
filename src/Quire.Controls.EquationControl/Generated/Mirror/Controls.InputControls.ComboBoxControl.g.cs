@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.InputControls.ComboBoxViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.ComboBoxControlWidget _comboBoxWidget;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type TypeOfThis;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ComboBoxEditingModeLostFocusEvent;
@@ -22,6 +26,8 @@ public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox,
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.InputControls.ComboBoxControl ComboBox;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.ComboBoxViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string SelectedItemValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -30,7 +36,11 @@ public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox,
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableComboBoxVisualTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private bool IsChangeSelectionFunctionalityEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public ComboBoxControl() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCloseComboBoxDropDown(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSelectionChanged(global::System.Windows.Controls.SelectionChangedEventArgs e) => base.OnSelectionChanged(e);
     [global::Quire.Mirror.MirrorStub]
@@ -55,6 +65,8 @@ public partial class ComboBoxControl : global::System.Windows.Controls.ComboBox,
     protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs mouseEventArgs) => base.OnPreviewMouseLeftButtonDown(mouseEventArgs);
+    [global::Quire.Mirror.MirrorStub]
+    private void RefreshItems(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

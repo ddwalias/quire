@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class PremiumFunction : global::Quire.Mpl.Run.Function
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_func;
+    [global::Quire.Mirror.MirrorStub]
     public override string Name { get => base.Name; }
     [global::Quire.Mirror.MirrorStub]
     public PremiumFunction(global::Quire.Mpl.Run.Function f) : base(default(int), default(int)) { }

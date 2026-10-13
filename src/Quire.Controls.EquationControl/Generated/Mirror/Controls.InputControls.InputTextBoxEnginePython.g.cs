@@ -28,6 +28,12 @@ internal partial class InputTextBoxEnginePython : global::Quire.Controls.InputCo
     [global::Quire.Mirror.MirrorStub]
     public const string DefaultUserScriptObjectName = "TextBox";
     [global::Quire.Mirror.MirrorStub]
+    private const string HexColorRegexPattern = "^#(?:[0-9A-Fa-f]{3}){1,2}$";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.PythonTextBoxScriptInternalClass.py";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.PythonTextBoxDefaultScript.py";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

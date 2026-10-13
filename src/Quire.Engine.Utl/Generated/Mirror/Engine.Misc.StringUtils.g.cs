@@ -14,6 +14,8 @@ public partial class StringUtils
     [global::Quire.Mirror.MirrorStub]
     public static char[] Whitespace;
     [global::Quire.Mirror.MirrorStub]
+    private static char[] s_CommandSpecialChars;
+    [global::Quire.Mirror.MirrorStub]
     public static string Capitalize(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string CharName(char ch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -27,6 +29,8 @@ public partial class StringUtils
     public static string StringSubstitute(string str, string substr, string replacement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool SameLines(string str1, string str2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsWhitespace(char ch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool SameLines(string str1, string str2, int start1, int end1, int start2, int end2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

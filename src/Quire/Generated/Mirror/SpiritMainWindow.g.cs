@@ -86,21 +86,57 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public const string TemplateFileVersionNotCompatible = "Application.TemplateFileVersionNotCompatible";
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private const string DefaultTemplateName = "Default.mctx";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DefaultCulture = "en-US";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DefaultCultureTwoLetters = "en";
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.AddonsCollection Addons;
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.QualityAgentManager.IQualityAgentManager QualityAgentManagerInstance;
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.OptOutQualityAgentHandler OptOutQualityAgentHandler;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Windows.Window, global::System.Windows.Visibility> _visibilityDictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _handlingException;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty ActiveDocumentProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PageMarginSelectorTypeProperty;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IEngineeringDocument> _openDocumentsList;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Thickness> _lastCustomMarginValueSetting;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Help.HelpManager _helpManager;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _anyDocumentRequestToUpdateInputsEnabled;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowLicenseErrorProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private string _defaultQuickAccessToolbarLayoutValue;
     [global::Quire.Mirror.MirrorStub]
     public const string InUseByAnotherResourceKey = "Application.InUseByAnother";
     [global::Quire.Mirror.MirrorStub]
     public const string FileIsReadonlyResourceKey = "Application.FileIsReadOnly";
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionBrowserWindow _functionBrowserWindow;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Diagnostics.Process _converterProcess;
+    [global::Quire.Mirror.MirrorStub]
+    private int _nextUntitledIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _useDocumentTabs;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isShowWarningsEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.WarningsTypesToShow _displayWarningsFilter;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.FindUserProperties _findProperties;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.SpiritMainWindow _this;
     [global::Quire.Mirror.MirrorStub]
@@ -114,9 +150,13 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton _draftModeCheckButton;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Zoom _zoomControl;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.DockPanel EngineNotificationBar;
     [global::Quire.Mirror.MirrorStub]
     internal global::AvalonDock.DockingManager appDock;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.IntegrationCommands IntegrationCommands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -138,6 +178,8 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.CommandBinding HelpCommandBinding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Services.IExceptionLogger ExLogger { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Controls.Core.IEngineeringDocument> OpenDocumentsList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Thickness> LastCustomMarginValueSetting { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -154,9 +196,13 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public string DefaultBuiltInTemplatesLocation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private bool IsDefaultTemplateNewDocExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool ShowLicenseError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IEngineeringDocument ActiveDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.EngineeringDocument ActiveEngineeringDoc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.MruFiles.MruFileManager MruFileManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -194,11 +240,25 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
+    private void HandlePrepareSnapshotStart(global::Quire.Controls.EngineeringDocument _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandlePrepareSnapshotEnd(global::Quire.Controls.EngineeringDocument _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private T ShowMessage<T>(global::System.Func<global::System.Windows.Window, string, T> messageDisplayDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnEngNotebookConnectionStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static void EnsureLicenseManagerInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SpiritMainWindow(bool isEmbedding = false, bool handleExceptions = false) { }
     [global::Quire.Mirror.MirrorStub]
     public void OpenStartPage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AnyDocumentRequestToUpdateInputsEnabledCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenDocumentsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DocumentPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetPathToDefaultTemplateForNewDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -218,43 +278,255 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public void SetSharedTemplatesLocation(string folderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private string GetFullPathForTemplatesLocationByKey(string templateKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetPathToTemplatesFolderByKey(string templateKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateTemplatesFolderLocationForKey(string userTemplatesDefaultLocationKey, string templatesLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool IsGivenKeyMyTemplatesKey(string templateKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetPythonDirectoryPath(string pythonDirectoryPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void InitializeTemplatesLocations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static string GetCultureForDefaultTemplatesAndSplashScreen() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetupWindowDimensions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void SetupMainWindowDimensions(global::System.Windows.Window win) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<string> GetOpenFilesList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhandledDispatcherExceptionHandler(object sender, global::System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleException(global::System.Exception exception, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AttemptToSaveWorksheetCopy(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhandledExceptionHandler(object sender, global::System.UnhandledExceptionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SpiritOptionPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HelpManagerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void IsVisibleChangedEventHandler(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ContextMenuOpeningEventHandler(object sender, global::System.Windows.Controls.ContextMenuEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupLicense(bool isEmbedding) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookLicense() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLicensePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLicenseStatusChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateShowLicenseErrorProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWindowLoaded(bool isEmbedding) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnFunctionalityServiceLicenseTypeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnFunctionalityServiceLicenseTypeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWindowUnloaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupWndProc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookWndProc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private nint WndProc(nint hwnd, int msg, nint wparam, nint lparam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InitializeSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public object GetXamlObject(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HandleMissingWriteRightsOnSaveException(global::Quire.Controls.Core.IEngineeringDocument doc, global::System.Exception exception, string fileName, global::Quire.Controls.Core.IDocumentSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ClassifyWriteFailure(global::System.Exception exception, string fileName, out string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayWarning(string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayCriticalWarning(string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDocumentZoomIn(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanImportExcel(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayTutorial(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanUpdateInputs(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AreAliasesValidForUpdateInputs(global::Quire.Controls.Core.IEngineeringDocument doc, global::System.Collections.Generic.IEnumerable<string> aliases) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void UpdateInputsEngNote(object sender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateInputs(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void SetContextDataEngNote(string[] contextData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleOpenFuncitonBrowser(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool SetForegroundWindow(nint hWnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleLaunchConverter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void CanLaunchConverter(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCloseEngineeringDocument(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCloseTabs(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Predicate<global::Quire.Controls.Core.IEngineeringDocument> GetFilterForCloseTabsEnum(global::Quire.CloseTabCommandEnum commandEnum) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMoveTab(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanExecuteMoveTabCommand(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal bool HandleCloseEngineeringDocument(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LaunchImportExcel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleOpenInputOutputDesignationWindow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenWorksheetInputOutputWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDockWindowClosedEvent(object sender, global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddHandlersForWorksheetInputOutputWindowEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetBindingForWorksheetInputOutputWindowProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InsertReadExcel(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, string range, global::System.Windows.IInputElement originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayHelp(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToolTipOpened(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTooltipIsVisibleChanged(object obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleShowPropertyGrid(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleShowSaveAsError(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CloseDocument(global::Quire.Controls.Core.IEngineeringDocument doc, bool forceClose = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveTabAndDocument(global::AvalonDock.Layout.LayoutAnchorable dockWindow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNewDocument(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SaveDocumentWithFilenameAndExtension(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, string extension, global::Quire.Controls.Core.IDocumentSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSaveDocumentWithExtension(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSaveDocumentAs(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool SaveDocumentWithFilename(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool SaveDocumentAsNonPrimeFormat_ForApiOnly(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleSaveDocumentCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int ShouldPromptForFileNameOnSave(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool SaveDocumentAsPdf_ForApiOnly(global::Quire.Controls.Core.IEngineeringDocument doc, string pdfFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool SaveAndPushEngNote(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool SaveDocument(global::Quire.Controls.Core.IEngineeringDocument doc, global::Quire.Controls.RegularSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSaveDocumentWithInputsOutputsStates(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSaveDocumentWithoutInputsOutputsStates(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal bool SaveDocumentWithoutInputsOutputsStates(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string AskForSaveDefaultFileName(global::Quire.Controls.Core.IEngineeringDocument doc, string defaultFileExtensionForDialog) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> GetFileSaveOpenFilters(string extension, bool save) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> GetFileSaveOpenFilters(string extension, global::System.Func<object, object> tryFindResource, global::Quire.Services.IFunctionalityService functionalityService, bool docOptionsEnabled, bool save) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private int GetFilterIdxForExtensionOrDefault(global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> filterArray, string fileExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string AskForSaveFileName(global::Quire.Controls.Core.IEngineeringDocument doc, global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> filterList, string defaultFileExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string ReviseFileExtension(string fileName, string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IList<T> ExtractCaseInsensitiveDuplicates<T>(global::System.Collections.Generic.IEnumerable<T> allItems, out global::System.Collections.Generic.IList<string> duplicates) where T : global::Quire.Controls.Core.IORegions.IItemAlias => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IORegions.IInputOutputItemsStates GenerateInputOutputStatesOnSave(global::Quire.Controls.Core.IEngineeringDocument doc, string dlgTitle, out bool cancelSave, out global::Quire.SpiritMainWindow.SaveAndSyncFinalMessage needsFinalMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool TrySaveFile(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, global::Quire.Controls.Core.IDocumentSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCWDChanged(string directory) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnZoomChanged(double zoom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentModified(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<bool> IsReadonly(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleOpenDocument(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNewDocumentFromExisting(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HandleClonningAndOpenningWorksheetInNewDocument(string fileName, global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions, out global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetTemplateFileName(global::System.Windows.Input.ExecutedRoutedEventArgs args, bool isNewFromTemplate = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleOpenTemplateDocument(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsDirectoryOneOfDefaultTemplateLocations(string location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string LaunchOpenFileDialogAndGetFileNameForTemplates(string templatesFolderLocation, bool overrideDialogTitle, string title = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetAndDisplayWarning(string warningMessage, string problematicEntity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Exception CloneWorksheetAndOpenInDocument(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string LaunchOpenFileDialogAndGetFileName(string cmdName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnDrop(global::System.Windows.DragEventArgs e) => base.OnDrop(e);
     [global::Quire.Mirror.MirrorStub]
+    private void OpenFile(string fileName, global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions, string tag = "") => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ScrollToTagInDoc(global::Quire.Controls.Core.IEngineeringDocument doc, string tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool TryOpenFileInDocument(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, string tag = "") => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleOpenFileFailure(string fileName, global::System.Exception result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSaveFileFailure(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, global::System.Exception result, global::Quire.Controls.Core.IDocumentSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayCriticalWarningWithLogFile(string displayedMessage, string logFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Exception OpenFileInDocument(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, string tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void ResetUntitledIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateCurrentShowWarningsFilter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IEngineeringDocument NewDocument(global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanGetDefaultBuiltInTemplateIfPossible(ref string templateName, out bool isTemplateIncompatible) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanGetDefaultBuildInTemplateFromDefaultLocationIfPossible(ref string templateName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool DoesTemplateFileExists(string templateName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanUseTemplateForNewDocument(string templateName, out bool isTemplateIncompatible) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string ChooseDefaultTemplateIfAnyForNewDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IEngineeringDocument NewDocument(bool incrementCounter, global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions, bool isTemplate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReplaceActiveTabWithDocument(global::Quire.Controls.EngineeringDocument newDoc, bool incrementCounter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ActiveTabChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal int GetIndexOfTabForDocument(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -262,15 +534,115 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IEngineeringDocument GetDocumentForTab(global::AvalonDock.Layout.LayoutAnchorable dockWindow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void CreateNewTabWithDocument(global::Quire.Controls.EngineeringDocument content, bool incrementCounter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LaunchCustomMarginsDialog(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LaunchSystemUnitDialog(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWorksheetControlDebuggerModeChange(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetTabHeaderBindingForNewDocument(global::AvalonDock.Layout.LayoutAnchorable dockWin, global::Quire.Controls.Core.IEngineeringDocument newDoc, bool incrementCounter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetUntitledHeader(bool incrementIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeDocument(global::Quire.Controls.EngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentLoaded(global::Quire.Controls.Core.IEngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDocumentPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDocumentInputsOutputsSelected(global::Quire.Controls.Core.IEngineeringDocument doc, global::System.Collections.Generic.List<string> selectedInputs, global::System.Collections.Generic.List<string> selectedOutputs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnDocumentTabIconChanged(global::Quire.Controls.Core.IEngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookFromDocument(global::Quire.Controls.EngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentFilePathChanged(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExitApplication(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayAboutDialog(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayOptionsDialog(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void UpdateTemplateLocationsIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenUrl(string url, bool useBrowser) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowFailedToOpenUrlMessage(string url) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayFreemiumAboutBox(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AskCancelPrintInProgressDialog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleToggleMultithreadingCalculationOption(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateWarningsDisplayFilterHandler(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToggleShowWarningsHandler(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => base.OnCreateAutomationPeer();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnClosing(global::System.ComponentModel.CancelEventArgs e) => base.OnClosing(e);
     [global::Quire.Mirror.MirrorStub]
+    private void SaveWindowState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AskToSaveDocument(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HandleFindNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleFindNext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleFindPrev(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool FindIsNotAllowedInFreemiumMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanFind(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleReplaceAndFindNext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ReplaceIsNotAllowedInFreemiumMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanReplaceAndFindNext(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool Find(global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleGoToFind(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleGoToPage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDictionaryUpdated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WorksheetPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnActiveDocumentChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnActiveDocumentChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetStringParameter(global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnIsKeyboardFocusWithinChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnIsKeyboardFocusWithinChanged(e);
     [global::Quire.Mirror.MirrorStub]
+    private void HandlePrintDocument(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public string GetEngineVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PrimeActivated(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PrimeDeactivated(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetMathcadPrimeInstallDirectoryLocalPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetEngNbInstallDirectoryLocalPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HideEngineNotification(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SymbolicEngineChangeslinkClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

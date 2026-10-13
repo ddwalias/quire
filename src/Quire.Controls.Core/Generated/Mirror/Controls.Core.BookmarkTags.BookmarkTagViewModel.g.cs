@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.BookmarkTags;
 public partial class BookmarkTagViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _tag;
+    [global::Quire.Mirror.MirrorStub]
     public string Tag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public BookmarkTagViewModel(string currentTag) { }

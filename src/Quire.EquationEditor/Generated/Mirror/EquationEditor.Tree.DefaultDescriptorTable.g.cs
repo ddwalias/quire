@@ -16,7 +16,21 @@ public partial class DefaultDescriptorTable : global::Quire.EquationEditor.Tree.
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.FormattedString ClearSymbolicFunctionOperator;
     [global::Quire.Mirror.MirrorStub]
+    private void f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     private DefaultDescriptorTable() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Delegate0 a(params string[] A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.DefaultDescriptorTable+a, Ptc.EquationEditor")]
     private static partial class a_
@@ -49,6 +63,8 @@ public partial class DefaultDescriptorTable : global::Quire.EquationEditor.Tree.
         public const int m = 71;
         [global::Quire.Mirror.MirrorStub]
         public const int n = 72;
+        [global::Quire.Mirror.MirrorStub]
+        private const int o = 80;
         [global::Quire.Mirror.MirrorStub]
         public const int p = 80;
         [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,8 @@ namespace Quire.EquationEditor.Tree;
 public abstract partial class ValueNodeInfo : global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    private object a;
+    [global::Quire.Mirror.MirrorStub]
     public object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public abstract string ValueSExpression { get; }

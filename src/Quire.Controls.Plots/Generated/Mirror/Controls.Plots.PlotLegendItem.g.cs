@@ -12,6 +12,16 @@ namespace Quire.Controls.Plots;
 public partial class PlotLegendItem : global::System.Windows.Controls.UserControl, global::Quire.Controls.Plots.Presenter.IPlotLegendItem, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.RichTextTitle _legendLabel;
+    [global::Quire.Mirror.MirrorStub]
+    private const double DefaultMiniTraceWidth = 36.7d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double MiniTraceDefaultHeight = 10d;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Thickness MiniTraceDefaultMargin;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.PointCollection MiniTraceDefaultPoints;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MiniTraceWidthProperty;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.StackPanel LegendItemStackPanel;
@@ -20,6 +30,8 @@ public partial class PlotLegendItem : global::System.Windows.Controls.UserContro
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ContentPresenter LegendItemLabelPlaceholder;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotTrace SourceTrace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Text.RichTextTitle LegendLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -27,6 +39,10 @@ public partial class PlotLegendItem : global::System.Windows.Controls.UserContro
     public double MiniTraceWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public PlotLegendItem(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnActivateExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLegendLabelLostFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

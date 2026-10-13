@@ -12,6 +12,12 @@ namespace Quire.AutomationServiceEngNote;
 public partial class AutomationSpiritInputsOutputsStates : global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.IInputOutputItemsStates _itemsWithStates;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<string, global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState> _inputAliasToItemStatesMap;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<string, global::Quire.Controls.Core.IORegions.IScalarItem> _outputAliasToItemStatesMap;
+    [global::Quire.Mirror.MirrorStub]
     public int ScalarInputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ScalarOutputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,4 +31,12 @@ public partial class AutomationSpiritInputsOutputsStates : global::Quire.EngNote
     public int GetInputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int GetOutputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(int idx, out string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(int idx, out string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

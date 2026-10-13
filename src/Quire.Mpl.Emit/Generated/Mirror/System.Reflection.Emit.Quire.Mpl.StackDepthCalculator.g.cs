@@ -12,7 +12,15 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class StackDepthCalculator
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly int _defaultMaxStackDepth;
+    [global::Quire.Mirror.MirrorStub]
     public static int CalculateMaxStackDepth(global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> instructions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int CalculateMaxStackDepthDefault(global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> instructions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int CalculateMaxStackDepthPushOnly(global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> instructions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int CalculateMaxStackDepthOptimistic(global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> instructions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public StackDepthCalculator() { }
 }

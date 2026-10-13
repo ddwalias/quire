@@ -32,6 +32,8 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Size SizeInfinity;
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<bool> _eastAsianLanguagesInstalled;
+    [global::Quire.Mirror.MirrorStub]
     public const string ApplicationAcademicNameResourceKey = "Application.AcademicNameAndVersion";
     [global::Quire.Mirror.MirrorStub]
     public const string ApplicationExpressNameResourceKey = "Application.ExpressVersionName";
@@ -160,6 +162,8 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.DependencyObject GetParentDependencyObject(global::System.Windows.DependencyObject d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyObject GetVisualParent(this global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T GetParent<T>(global::System.Windows.DependencyObject d) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -180,6 +184,10 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<T> GetDescendantsOfType<T>(global::System.Windows.DependencyObject obj, bool recurseAllLevels = false, bool includingSelf = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void GetDescendantsOfType<T>(global::System.Windows.DependencyObject obj, global::System.Collections.Generic.ICollection<T> descendantsList, bool recurseAllLevels = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void GetAdornersOfDescendants(global::System.Windows.UIElement element, global::System.Collections.Generic.ICollection<global::System.Windows.Documents.Adorner> adorners) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool ShouldSuspendInputMethod() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void DoWork(global::System.Action work) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -199,4 +207,8 @@ public static partial class WpfUtils
     public static bool IsVisualTreeFullyUpdated(global::System.Windows.UIElement root, out bool isTreeFullyLoaded) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CreateVisualTreeForPrinting(global::System.Windows.Controls.Primitives.Popup popup, long maxUpdateLayoutTimeMsec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsWaitingForPrintoutReady(global::System.Diagnostics.Stopwatch stopwatch, ref long maxUpdateLayoutTimeMsec, ref bool isTreeLoaded, ref int attemptNumber, ref int nLoadingAttempts, ref int totalLoadingAttempts, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.MessageBoxResult DisplayQuestionMessage(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

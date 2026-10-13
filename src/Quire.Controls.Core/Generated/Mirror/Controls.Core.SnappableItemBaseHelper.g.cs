@@ -12,6 +12,12 @@ namespace Quire.Controls.Core;
 public abstract partial class SnappableItemBaseHelper : global::Quire.Core.ISnappableItemHelper, global::Quire.Core.ISnapToPixelHelper, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.TranslateTransform _transform;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.DependencyPropertyChangedEventHandler _isOnVisiblePagePropertyChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.UIElement _renderTarget;
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsClearImageEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsPageDescendant { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

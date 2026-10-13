@@ -12,6 +12,44 @@ namespace Quire.gen;
 internal partial class IlAsm
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool m_statics_initialized;
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe global::Quire.gen.AstInfo* m_info;
+    [global::Quire.Mirror.MirrorStub]
+    private static int m_counter;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_int_type;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_dbl_type;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_obj_type;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_fcn_type;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_del_type;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_tag_type;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_voidtype;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.MethodInfo m_num_ctor;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.gen.Constructor m_dyn_cons;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.gen.Constructor m_key_cons;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.gen.MetaObj[] m_primitive;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Ctxt m_ctxt;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.CtxtMod m_mod;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void* m_handle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_datatypes;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlEmit m_emit;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe IlAsm(void* __unnamed000, global::Quire.gen.AstInfo* info, uint compilation_options) { }
     [global::Quire.Mirror.MirrorStub]
     public void Finish() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

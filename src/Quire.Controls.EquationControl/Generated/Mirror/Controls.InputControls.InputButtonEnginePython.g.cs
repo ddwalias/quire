@@ -16,6 +16,10 @@ internal partial class InputButtonEnginePython : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public const string text = "text";
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableButton.PythonButtonDefaultScript.py";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableButton.PythonButtonScriptInternalClass.py";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

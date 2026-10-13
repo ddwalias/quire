@@ -12,6 +12,10 @@ namespace Quire.Mpl.Run;
 internal partial class CodeArg : global::Quire.Mpl.Run.Code
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Code m_beg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Code m_end;
+    [global::Quire.Mirror.MirrorStub]
     public CodeArg(global::Quire.Mpl.Run.Code beg, global::Quire.Mpl.Run.Code end) { }
     [global::Quire.Mirror.MirrorStub]
     public CodeArg(global::Quire.Mpl.Run.Code beg) { }

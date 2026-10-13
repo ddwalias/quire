@@ -12,7 +12,17 @@ namespace Quire.Controls.Internal;
 internal abstract partial class VisualMathNode : global::Quire.Controls.Internal.VisualNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode, global::Quire.Controls.Core.IBaselinedVisual, global::Quire.Controls.Core.INotifyMeasureOverride, global::Quire.Controls.Core.IMathFormatOwner, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string OperatorFontFamilyName;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Point _alignmentPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideSubNodesFromClicks;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromClicks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.ExtendedFont _font;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IFontManager _fontManager;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsValidProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -105,6 +115,8 @@ internal abstract partial class VisualMathNode : global::Quire.Controls.Internal
     public virtual void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static void SetOperatorFontProperties(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnShowOperatorOnlyWhenActiveChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnShowOperatorOnlyWhenActiveChanged(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

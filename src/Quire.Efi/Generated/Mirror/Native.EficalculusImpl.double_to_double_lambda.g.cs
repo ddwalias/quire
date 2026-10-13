@@ -12,6 +12,10 @@ namespace Quire.Native.EficalculusImpl;
 internal partial class double_to_double_lambda
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_msg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.delegate_dbl_to_dbl m_func;
+    [global::Quire.Mirror.MirrorStub]
     public double_to_double_lambda(global::Quire.Mpl.Run.Function f, int rp) { }
     [global::Quire.Mirror.MirrorStub]
     public double_to_double_lambda(global::Quire.Mpl.Run.Function f) { }

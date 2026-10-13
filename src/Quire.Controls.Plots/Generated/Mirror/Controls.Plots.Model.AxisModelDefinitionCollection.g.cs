@@ -12,6 +12,16 @@ namespace Quire.Controls.Plots.Model;
 public partial class AxisModelDefinitionCollection
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection.AxisModelDefinition _linearAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection.AxisModelDefinition _angularAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection.AxisModelDefinition _radialAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection.AxisModelDefinition _linearAxisFor3DPlot;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Model.AxisModelDefinitionCollection.AxisModelDefinition this[global::Quire.Controls.Plots.Presenter.AxesType axesType, global::Quire.Controls.Plots.Presenter.PlotType plotType] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -58,6 +68,16 @@ public partial class AxisModelDefinitionCollection
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisModelDefinitionCollection+AxisModelDefinition, Ptc.Controls.Plots")]
     public partial class AxisModelDefinition
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly double _startDefault;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly double _endDefault;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int _maxTickmarks;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int _tickMarksDefault;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly double _defaultTickMagnitudeThreashold;
         [global::Quire.Mirror.MirrorStub]
         public double StartDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

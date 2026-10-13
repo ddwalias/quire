@@ -13,6 +13,14 @@ namespace Quire.Efi;
 public partial struct Affine
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Text.RegularExpressions.Regex[] s_fif;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Text.RegularExpressions.Regex s_hms;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.Dim s_Time;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.Dim s_Length;
+    [global::Quire.Mirror.MirrorStub]
     public static object DMS(object A_0, object A_1, object A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object DMS_inverse(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -24,4 +32,10 @@ public partial struct Affine
     public static object HMS(object A_0, object A_1, object A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object HMS_inverse(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double mod(double A_0, double A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe void parse(global::System.Text.RegularExpressions.GroupCollection A_0, string A_1, bool* A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe void parse(global::System.Text.RegularExpressions.GroupCollection A_0, string A_1, double* A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

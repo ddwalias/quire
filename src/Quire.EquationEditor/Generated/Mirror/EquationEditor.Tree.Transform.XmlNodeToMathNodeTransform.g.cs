@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class XmlNodeToMathNodeTransform
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Text.RegularExpressions.Regex a__;
+    [global::Quire.Mirror.MirrorStub]
+    private const char b__ = '\u002D';
+    [global::Quire.Mirror.MirrorStub]
     public const string ExceptionDataElementNameKey = "ElementName";
     [global::Quire.Mirror.MirrorStub]
     public const string PercentString = "%";
@@ -24,21 +28,179 @@ public partial class XmlNodeToMathNodeTransform
     [global::Quire.Mirror.MirrorStub]
     public const string AutoSelectAlgorithm = "autoSelect";
     [global::Quire.Mirror.MirrorStub]
+    private const int c__ = 211;
+    [global::Quire.Mirror.MirrorStub]
+    private int d__;
+    [global::Quire.Mirror.MirrorStub]
+    private int e_;
+    [global::Quire.Mirror.MirrorStub]
+    private bool f_;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly string[] NumberSetStrings;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform Default;
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> g_;
+    [global::Quire.Mirror.MirrorStub]
+    private const string h_ = "5-pt-diff";
+    [global::Quire.Mirror.MirrorStub]
+    private const string i_ = "5-pt-diff";
+    [global::Quire.Mirror.MirrorStub]
+    private const string j_ = "optimized levenberg-marquardt";
+    [global::Quire.Mirror.MirrorStub]
+    private const string k_ = "adams/bdf (auto)";
+    [global::Quire.Mirror.MirrorStub]
+    private const string l_ = "laguerre";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, string> m_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.r n_;
+    [global::Quire.Mirror.MirrorStub]
+    private bool o;
+    [global::Quire.Mirror.MirrorStub]
+    private const string p = "gradient";
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Func<string, global::System.Nullable<global::Quire.Controls.Core.IdLabels>> q;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal XmlNodeToMathNodeTransform(global::System.Collections.Generic.Dictionary<string, string> A_0, global::Quire.Native.PtcEquationEditor.r A_1) { }
+    [global::Quire.Mirror.MirrorStub]
+    private string k(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNodeDescriptor a(string A_0, bool A_1 = false, string A_2 = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void j(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode Transform(global::System.Xml.XmlNode xmlMathRegionNode, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs worksheetXmlTransformArgs, int adjustMaxRecursionDepthBy = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode TransformToEditable(global::System.Xml.XmlNode xmlMathRegionNode, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs worksheetXmlTransformArgs, int adjustMaxRecursionDepthBy = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode n(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode m(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode l(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode k(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode j(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode i(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode h(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs A_0, global::System.Xml.XmlElement A_1, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size b(global::System.Xml.XmlNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs A_1, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode g(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> c(global::System.Xml.XmlNodeList A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::System.Xml.XmlElement A_0, bool A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool i(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(string A_0, out string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode h(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool g(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void a(ref string A_0, out int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(double A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool f(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string RemoveMinusSignFromString(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode f(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlElement ScrapWrappingParenthesesFromExpression(global::System.Xml.XmlElement originalElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode e(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_0, global::System.Xml.XmlNodeList A_1, int A_2, global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode d(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EquationEditor.Tree.IdentifierNodeInfo a(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.FormattedString A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EquationEditor.Tree.FormattedString c(global::System.Xml.XmlElement A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EquationEditor.Tree.FormattedString b(global::System.Xml.XmlElement A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string e(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Core.IdLabels> a(global::System.Xml.XmlElement A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsMC14Document(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.Controls.Core.IdLabels> a(global::System.Xml.XmlNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode c(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(string A_0, global::System.Xml.XmlNodeList A_1, int A_2, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode b(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode k(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.XmlNode[] a(global::System.Xml.XmlNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode j(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode i(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> h(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode g(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode f(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode e(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool a(global::System.Xml.XmlElement A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode d(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> c(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> a(global::System.Xml.XmlNodeList A_0, global::System.Xml.XmlNode[] A_1, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> a(global::System.Xml.XmlNodeList A_0, global::System.Xml.XmlNode A_1, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> a(global::System.Xml.XmlNode[] A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> b(global::System.Xml.XmlNodeList A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode[] a(global::System.Xml.XmlNodeList A_0, int A_1, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::System.Xml.XmlNodeList A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode b(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode a(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void b(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool d(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.Controls.Core.IdLabels> c(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.Controls.Core.IdLabels> b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.Controls.Core.IdLabels> a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.Controls.Core.IdLabels> a(params global::System.Nullable<global::Quire.Controls.Core.IdLabels>[] A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform+a, Ptc.EquationEditor")]
     private enum a_

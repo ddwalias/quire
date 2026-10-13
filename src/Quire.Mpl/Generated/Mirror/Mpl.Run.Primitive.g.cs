@@ -182,5 +182,19 @@ public partial class Primitive
     [global::Quire.Mirror.MirrorStub]
     public static object seq_void(object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private Primitive() { }
+    private Primitive(string nm, global::System.Reflection.Emit.OpCode code, global::System.Reflection.MethodInfo mi) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm, global::System.Reflection.Emit.OpCode[] codes, global::System.Reflection.MethodInfo mi) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm, global::System.Reflection.Emit.OpCode code) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm, global::Quire.Mpl.Run.Code code) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm, global::System.Reflection.Emit.OpCode[] codes) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm, global::System.Reflection.MethodInfo mi) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Primitive(string nm, string def) { }
 }

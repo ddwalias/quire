@@ -12,13 +12,19 @@ namespace Quire.Controls.Text;
 public partial class SuperscriptRun : global::Quire.Controls.Text.CustomScriptRunBase, global::Quire.Wpf.ISuperscript, global::Quire.Wpf.ICustomFontSizeOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.BaselineAlignment DefaultAlignment;
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.FontVariants FontVariantsForCopy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceBaselineAlignmentCallback(global::System.Windows.DependencyObject depObj, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SuperscriptRun() { }
     [global::Quire.Mirror.MirrorStub]
     public SuperscriptRun(string text) { }
     [global::Quire.Mirror.MirrorStub]
     public SuperscriptRun(string text, global::System.Windows.Documents.TextPointer insertionPosition) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void InitBaseline() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

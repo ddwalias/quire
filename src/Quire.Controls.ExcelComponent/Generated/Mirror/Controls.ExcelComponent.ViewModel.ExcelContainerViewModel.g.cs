@@ -12,6 +12,12 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 public partial class ExcelContainerViewModel : global::Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel<global::Quire.Controls.ExcelComponent.Model.ExcelContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicExcelContainerModel, global::Quire.PersistentData.excelContainerType>, global::Quire.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel, global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel, global::Quire.Controls.Core.Ole.IOleContainerViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _cachedSize;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size _initialSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Size> _cachedMinimalSize;
+    [global::Quire.Mirror.MirrorStub]
     protected override bool IsStrictMinSize { get => base.IsStrictMinSize; }
     [global::Quire.Mirror.MirrorStub]
     public override bool IsResizing { get => base.IsResizing; protected internal set => base.IsResizing = value; }
@@ -29,6 +35,8 @@ public partial class ExcelContainerViewModel : global::Quire.Controls.ExcelCompo
     public global::System.Windows.Size Measure(global::System.Windows.Size constraint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Size EstablishInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Size> RecalculateMinimalSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void RunAndCheckAvailabilityOnResizing() => base.RunAndCheckAvailabilityOnResizing();
     [global::Quire.Mirror.MirrorStub]

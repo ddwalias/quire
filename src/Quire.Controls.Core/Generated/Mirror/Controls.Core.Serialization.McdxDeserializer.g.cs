@@ -12,6 +12,22 @@ namespace Quire.Controls.Core.Serialization;
 public partial class McdxDeserializer : global::Quire.Serialization.IDeS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.IO.Packaging.PackagePart _packagePart;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Serialization.ISerializationHelper _serializationHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Serialization.IDeserializationStrategy _deserializationStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _filePath;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentData.IRegionCollectionSerializer _regionCollectionSerializer;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _worksheetNodeName;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlDocument _xmlContentDocument;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> DeserializedRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -31,6 +47,14 @@ public partial class McdxDeserializer : global::Quire.Serialization.IDeS11NProvi
     public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void Deserialize(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RepairXmlDocument(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RepairNumberFormatPrecision(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RepairPictureElements(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void RepairPictureElementIfNeed(global::System.Xml.XmlNode region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void ThrowIncorrectSerializationFormatException(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

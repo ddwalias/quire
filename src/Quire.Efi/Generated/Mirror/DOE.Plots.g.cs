@@ -12,7 +12,13 @@ namespace Quire.DOE;
 public partial class Plots
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim[] m_cdim;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal BoxPlot(global::Quire.Mcd.MatVal data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal csResult(global::System.Array rvecs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal stripVector(global::Quire.Mcd.MatVal v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal ParetoPlot(global::Quire.Mcd.MatVal data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

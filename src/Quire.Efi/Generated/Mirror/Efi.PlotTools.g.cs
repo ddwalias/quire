@@ -16,5 +16,25 @@ public partial class PlotTools
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal EliminateCollinearPoints(ref global::Quire.Mcd.MatVal xs, ref global::Quire.Mcd.MatVal ys, double Max_Angle, uint ncycles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal EliminateCollinearPoints(ref global::Quire.Mcd.MatVal xs, ref global::Quire.Mcd.MatVal ys, double Max_Angle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int[] HeapSort(global::Quire.Mcd.MatVal A) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object ev(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.DimVal p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int adaptiveSmoothing(global::Quire.Mpl.Run.Function F, ref global::Quire.Mcd.MatVal ys, ref global::Quire.Mcd.MatVal xs, double dmin, double dmax, int istart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void dmin_dmax(global::Quire.Mcd.MatVal ys, out double dmin, out double dmax) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void adaptiveSmoothing(global::Quire.Mpl.Run.Function F, ref global::Quire.Mcd.MatVal ys, ref global::Quire.Mcd.MatVal xs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal adaptiveParametricSmoothing(global::Quire.Mcd.MatVal ys, global::Quire.Mcd.MatVal xs, double dmin, double dmax) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal adaptiveParametricSmoothing(global::Quire.Mcd.MatVal ys, global::Quire.Mcd.MatVal xs, double dmin, double dmax, int istart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void fill_center_pts(global::Quire.Mpl.Run.Function Fy, global::Quire.Mpl.Run.Function Fx, global::Quire.Mcd.MatVal xci, ref global::Quire.Mcd.MatVal prm, ref global::Quire.Mcd.MatVal ys, ref global::Quire.Mcd.MatVal xs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void adaptiveParametricSmoothing(global::Quire.Mpl.Run.Function Fy, global::Quire.Mpl.Run.Function Fx, global::Quire.Mcd.RngVal rng, ref global::Quire.Mcd.MatVal ys, ref global::Quire.Mcd.MatVal xs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PlotTools() { }
 }

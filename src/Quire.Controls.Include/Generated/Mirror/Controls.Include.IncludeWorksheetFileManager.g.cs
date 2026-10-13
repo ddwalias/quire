@@ -12,6 +12,28 @@ namespace Quire.Controls.Include;
 public partial class IncludeWorksheetFileManager : global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.Serialization.IHasS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.Serialization.SerializationHelper _serializationHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.IncludeFileDeserializationStrategy _deserializationStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.IncludeWorksheetSerializationStrategy _serializationStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.Serialization.IMetadataModel _metadataModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.IO.IPackageOperationsProvider _packageOpsProvider;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.CalculationOptions _calcOptions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.CalculationVariables _calcVariables;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isInCacheSerialization;
+    [global::Quire.Mirror.MirrorStub]
+    private const string IncludeUri = "/mathcad/include/include{0}.xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string IncludeMimeType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.include+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.Serialization.McdxSerializer _serializer;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -40,15 +62,33 @@ public partial class IncludeWorksheetFileManager : global::Quire.Serialization.I
     [global::Quire.Mirror.MirrorStub]
     internal void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void InitializeSerialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResetCalcSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void OpenFile(string filePath, bool cacheValid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenPackage(string filePath, bool cacheValid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Open(global::System.IO.Packaging.Package package, bool cacheValid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SerializeCalculationSettings(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeSerializeCalculationSettings(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.IO.Packaging.PackagePart WriteIncludedWorksheetToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void ReadIncludedWorksheetFromPackage(global::System.IO.Packaging.PackagePart cachedPart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.calculation SetCalculationData(global::Quire.Controls.CalculationVariables variables, global::Quire.Controls.CalculationOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void GetCalculationData(global::Quire.PersistentDataObjects.calculation calculationData, out global::Quire.Controls.CalculationVariables variables, out global::Quire.Controls.CalculationOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SerializationEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeserializationEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string ConstructUniqueIdForIncluded(string includedId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string PackImage(global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

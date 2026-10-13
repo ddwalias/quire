@@ -12,9 +12,39 @@ namespace Quire.Controls.Core.MC14Conversion;
 public partial class Mathcad14TextStyle
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Xml.Linq.XNamespace _namespace;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle> _stylesDictionary;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle _baseStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.FontFamily _fontFamily;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<double> _fontSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.FontWeight> _fontWeight;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.FontStyle> _fontStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.TextDecorationCollection _textDecorations;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Media.Color> _color;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.FontVariants> _variants;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Thickness> _margin;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<double> _textIndent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.TextAlignment> _textAlign;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.TextMarkerStyle> _markerStyle;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string BaseStyleName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle BaseStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.FontFamily FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -49,6 +79,10 @@ public partial class Mathcad14TextStyle
     public Mathcad14TextStyle(global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle baseStyle) { }
     [global::Quire.Mirror.MirrorStub]
     public Mathcad14TextStyle(global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle> stylesDictionary) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void SetLocalValueFromXElementValue(global::System.Xml.Linq.XElement xElement, string attributeName, global::Quire.Delegate1<string> setLocalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReadInlineAttr(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ApplyInlineAttr(global::System.Windows.Documents.Run inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

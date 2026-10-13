@@ -12,6 +12,8 @@ namespace Quire.Controls.EquationProperties;
 internal sealed partial class Settings : global::Quire.ApplicationSettingsSafe
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.EquationProperties.Settings defaultInstance;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.EquationProperties.Settings Default { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color CaretColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

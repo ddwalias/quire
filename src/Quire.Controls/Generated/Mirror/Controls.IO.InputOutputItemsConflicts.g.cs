@@ -12,6 +12,14 @@ namespace Quire.Controls.IO;
 public partial class InputOutputItemsConflicts : global::Quire.Controls.IO.IInputOutputItemsConflicts
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.IO.GeneralIssue> _generalWarnings;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.IO.GeneralIssue> _generalErrors;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.IO.ItemIssue> _itemWarnings;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.IO.ItemIssue> _itemErrors;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.GeneralIssue> GeneralWarnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.IO.GeneralIssue> GeneralErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

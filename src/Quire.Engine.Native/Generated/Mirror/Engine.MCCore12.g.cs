@@ -12,6 +12,12 @@ namespace Quire.Engine;
 public partial class MCCore12
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.CoreFactory m_factory;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Engine.MCCore12 s_instance;
+    [global::Quire.Mirror.MirrorStub]
+    private MCCore12() { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Engine.MCCore12 Instance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.depman.Action NewAction(object expr, int engine_id, bool bAutoEvalRangeLoops, string symbolic_engine, bool bChainErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -29,6 +35,4 @@ public partial class MCCore12
     public object LoadMplModuleRec(string module_name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HasUserEFIs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private MCCore12() { }
 }

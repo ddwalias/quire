@@ -12,6 +12,20 @@ namespace Quire.PersistentDataObjects;
 public partial class domainBaseType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.valueType startValueField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.valueType secondTickValueField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.valueType endValueField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.scaleType scaletypeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool allownegativevaluesField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool allownegativevaluesFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private bool autoscaleField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.valueType startValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.valueType secondTickValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

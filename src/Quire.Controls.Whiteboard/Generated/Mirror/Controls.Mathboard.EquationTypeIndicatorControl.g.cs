@@ -18,6 +18,8 @@ public partial class EquationTypeIndicatorControl : global::System.Windows.Contr
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Grid MainGrid;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public string IndicatorText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

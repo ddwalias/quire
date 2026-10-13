@@ -44,6 +44,8 @@ public abstract partial class ValueProxy : global::Quire.Automation.IValueProxy
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.Value GetAutomationValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.IO.TextWriter writer, bool simplify, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.IO.TextWriter writer, bool simplify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

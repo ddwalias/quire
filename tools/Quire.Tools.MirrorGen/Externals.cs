@@ -17,6 +17,9 @@ public sealed class Externals
         ["AvalonDock"] = new("Dirkster.AvalonDock", "5.0.1", "net10.0-windows7.0"),
         ["Microsoft.Xaml.Behaviors"] = new("Microsoft.Xaml.Behaviors.Wpf", "1.1.161", "net10.0-windows7.0"),
         ["JetBrains.Annotations"] = new("JetBrains.Annotations", "2024.3.0", "netstandard2.0"),
+        // Mathcad ships 2.17.1; 3.x keeps the type names and namespaces (some types moved to the Framework assembly).
+        ["DocumentFormat.OpenXml"] = new("DocumentFormat.OpenXml", "3.5.1", "net8.0"),
+        ["DocumentFormat.OpenXml.Framework"] = new("DocumentFormat.OpenXml", "3.5.1", "net8.0"),
         ["Python.Runtime"] = new("pythonnet", "3.0.5", "netstandard2.0"),
         ["ClearScript.Core"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),
         ["ClearScript.Windows"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),

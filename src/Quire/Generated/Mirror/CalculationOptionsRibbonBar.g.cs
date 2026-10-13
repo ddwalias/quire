@@ -26,6 +26,8 @@ public partial class CalculationOptionsRibbonBar : global::Fluent.RibbonGroupBox
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_CalculationOptionsRibbonBar_BinOctHexMode;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public CalculationOptionsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

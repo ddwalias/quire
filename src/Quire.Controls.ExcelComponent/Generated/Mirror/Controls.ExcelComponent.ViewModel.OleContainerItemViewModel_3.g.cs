@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 public abstract partial class OleContainerItemViewModel<TModel, TIPublicModel, TPersistentData> : global::Quire.Controls.Core.Ole.OleContainerViewModel<TModel, TIPublicModel, TPersistentData>, global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel, global::Quire.Controls.Core.Ole.IOleContainerViewModel where TModel : global::Quire.Controls.Core.Ole.OleContainerModel<TPersistentData>, TIPublicModel where TIPublicModel : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData> where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isResizing;
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool IsResizing { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Size MinSize { get => base.MinSize; protected set => base.MinSize = value; }

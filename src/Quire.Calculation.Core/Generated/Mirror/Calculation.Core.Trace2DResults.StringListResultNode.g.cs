@@ -12,6 +12,8 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class StringListResultNode : global::Quire.Calculation.Core.Trace2DResults.ListResultNode<string>, global::Quire.Calculation.Core.IStringListResultNode, global::Quire.Calculation.Core.IListResultNode<string>, global::Quire.Calculation.Core.IListResultNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string _neutralValue = null;
+    [global::Quire.Mirror.MirrorStub]
     public override string NeutralValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public StringListResultNode(global::System.Collections.Generic.IList<string> data) : base(default(global::System.Collections.Generic.IList<string>)) { }

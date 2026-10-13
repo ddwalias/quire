@@ -12,17 +12,23 @@ namespace Quire.Controls.Core.Serialization;
 public partial class XElementSerializable : global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable, global::System.Xml.Serialization.IXmlSerializable, global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.Linq.XName _name;
+    [global::Quire.Mirror.MirrorStub]
     public object[] Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Xml.Linq.XName Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Xml.Linq.XNamespace Namespace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private bool HasChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public XElementSerializable(global::System.Xml.Linq.XName name, params object[] children) { }
     [global::Quire.Mirror.MirrorStub]
     protected virtual void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::System.Xml.Linq.XElement GetThisElement(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.Linq.XElement GetThisElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

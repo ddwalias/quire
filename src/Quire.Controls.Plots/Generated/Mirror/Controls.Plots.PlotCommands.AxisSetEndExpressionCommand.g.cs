@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class AxisSetEndExpressionCommand : global::Quire.Controls.Plots.PlotCommands.AxisCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string _endExpression;
+    [global::Quire.Mirror.MirrorStub]
+    private string _prevEndExpression;
+    [global::Quire.Mirror.MirrorStub]
     public AxisSetEndExpressionCommand(global::Quire.Controls.Plots.PlotGraphAxis axis, string endExpression) : base(default(global::Quire.Controls.Plots.PlotGraphAxis), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

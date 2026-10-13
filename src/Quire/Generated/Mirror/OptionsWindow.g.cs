@@ -12,6 +12,8 @@ namespace Quire;
 public partial class OptionsWindow : global::System.Windows.Window, global::Quire.Controls.Core.IHelpContext, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.SpiritMainWindow _spiritMainWindow;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand BrowseForTemplatesFolder;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ChooseNewDefaultTemplate;
@@ -48,11 +50,27 @@ public partial class OptionsWindow : global::System.Windows.Window, global::Quir
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox CustomPythonDirLocationTextBox;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public OptionsWindow(global::Quire.SpiritMainWindow spiritMainWindow) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleChooseNewDefaultTemplate(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBrowseForTemplatesFolder(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBrowseForPythonDirPath(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RestCustomPythonDirPath(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> ShowDialog(global::Quire.OptionsWindow.DialogTabIndex tab) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnClosed(global::System.EventArgs e) => base.OnClosed(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void RestPathToDefaultTemplateForNewDocument(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResetCustomSharedTemplatesLocation(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RestCustomMyTemplatesLocation(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

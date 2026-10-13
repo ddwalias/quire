@@ -22,5 +22,7 @@ public partial class TextRegionModel : global::System.Windows.ContentElement
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.MemoryStream Document { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleDocumentChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public TextRegionModel() { }
 }

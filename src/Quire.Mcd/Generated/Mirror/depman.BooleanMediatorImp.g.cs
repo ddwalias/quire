@@ -12,6 +12,14 @@ namespace Quire.depman;
 internal partial class BooleanMediatorImp : global::Quire.depman.BooleanMediator
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.BooleanCallback m_callback;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_event;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.TaskQueue m_task_queue;
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected virtual void set_value(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -31,6 +39,10 @@ internal partial class BooleanMediatorImp : global::Quire.depman.BooleanMediator
     [global::Quire.Mirror.MirrorOf("depman.BooleanMediatorImp+HandleMessageF, mcdepman")]
     protected partial class HandleMessageF : global::Quire.utl_mgd.FunctionBase
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.depman.BooleanMediatorImp mediator;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.depman.MediatorMsg m;
         [global::Quire.Mirror.MirrorStub]
         public HandleMessageF(global::Quire.depman.BooleanMediatorImp mediator, global::Quire.depman.MediatorMsg m) { }
         [global::Quire.Mirror.MirrorStub]

@@ -14,6 +14,8 @@ public partial class RedefinitionWarningsDictionary : global::System.Windows.Res
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type[] KeysOwnerTypes;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public RedefinitionWarningsDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

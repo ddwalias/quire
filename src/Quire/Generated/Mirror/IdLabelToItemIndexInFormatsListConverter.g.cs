@@ -16,5 +16,7 @@ public partial class IdLabelToItemIndexInFormatsListConverter : global::System.W
     [global::Quire.Mirror.MirrorStub]
     public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static int FindItemIndexToSelect(global::System.Nullable<global::Quire.Controls.Core.IdLabels> currentDisplayLabel, global::System.Collections.IList labelIDsCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public IdLabelToItemIndexInFormatsListConverter() { }
 }

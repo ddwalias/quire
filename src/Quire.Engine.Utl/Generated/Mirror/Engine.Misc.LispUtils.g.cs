@@ -12,7 +12,33 @@ namespace Quire.Engine.Misc;
 public partial class LispUtils
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool s_Debug;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_LispWhitepaceChars;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_LispHorizontalWhitespaceChars;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_LispVerticalWhitespaceChars;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_LispBreakChars;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_EscapeChar;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_OpenParen;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_CloseParen;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_StringQuote;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_CommentChar;
+    [global::Quire.Mirror.MirrorStub]
+    private static char[] s_SymbolSeps;
+    [global::Quire.Mirror.MirrorStub]
+    private static string[] s_Definers;
+    [global::Quire.Mirror.MirrorStub]
     public static void badSyntax(string msg, string str, int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Dbg(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool scanExpression(string str, ref int startPos, out int endPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -42,6 +68,8 @@ public partial class LispUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.Queue<string> scanExpressions(string s, int startPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void PrettyPrint(string exp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string PrettyString(string exp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string PrettyStringTop(string exp, int target_indentation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -49,6 +77,8 @@ public partial class LispUtils
     public static bool IsDefinerName(string op_name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string IdentifierName(string op_name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void PrettyStringWorker(string exp, bool top, ref int spos, ref int epos, int indent, global::System.IO.TextWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void IndentTo(int n, global::System.IO.TextWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -59,6 +89,10 @@ public partial class LispUtils
     [global::Quire.Mirror.MirrorOf("Engine.Misc.LispUtils+LinePartition, mcmisc")]
     public partial class LinePartition
     {
+        [global::Quire.Mirror.MirrorStub]
+        private string m_Line;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Pair<int, int>> m_Locs;
         [global::Quire.Mirror.MirrorStub]
         public string Line { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

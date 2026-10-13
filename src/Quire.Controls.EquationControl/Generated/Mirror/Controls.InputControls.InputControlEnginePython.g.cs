@@ -12,6 +12,12 @@ namespace Quire.Controls.InputControls;
 public abstract partial class InputControlEnginePython : global::Quire.Controls.InputControls.InputControlScriptingEngine
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string Default_Input_Init = "Inputs = None\r\n";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Default_Output_Init = "Outputs = [{'Value': ''}]\r\n";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CtrScriptClass = "CtrScriptClass";
+    [global::Quire.Mirror.MirrorStub]
     protected const string Event_Click = "_Click";
     [global::Quire.Mirror.MirrorStub]
     protected const string Event_Start = "Event_Start";
@@ -28,9 +34,19 @@ public abstract partial class InputControlEnginePython : global::Quire.Controls.
     [global::Quire.Mirror.MirrorStub]
     protected int _linesCountErrorCurrection;
     [global::Quire.Mirror.MirrorStub]
+    private const string StrPyType = "<class 'str'>";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ListPyType = "<class 'list'>";
+    [global::Quire.Mirror.MirrorStub]
+    private const string NonePyType = "<class 'NoneType'>";
+    [global::Quire.Mirror.MirrorStub]
     public static string PythonDirectoryPath;
     [global::Quire.Mirror.MirrorStub]
     public static bool IsPythonPathSet;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly object _engineLifecycleLock;
+    [global::Quire.Mirror.MirrorStub]
+    private const string PythonRequiredMessageKey = "PythonRequiredMessage";
     [global::Quire.Mirror.MirrorStub]
     protected InputControlEnginePython() { }
     [global::Quire.Mirror.MirrorStub]
@@ -47,6 +63,8 @@ public abstract partial class InputControlEnginePython : global::Quire.Controls.
     public int GetPyListRowCount(global::Python.Runtime.PyList pyList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int GetPyListColCount(global::Python.Runtime.PyList pyList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializePythonEngine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetPythonDllFromCustomPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -77,6 +95,10 @@ public abstract partial class InputControlEnginePython : global::Quire.Controls.
     public override bool CanExecEvent(string eventCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<object> RunEventStandalone(string eventCommand, out string exception) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int FillMatrix(object pyObj, object[,] matrix, int rowIndex = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object[,] ConvertPythonListToMatrix(object pyObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override string ParseScriptEngineException(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

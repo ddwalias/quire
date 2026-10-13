@@ -12,6 +12,16 @@ namespace Quire.gen;
 internal partial class CtxtLam : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlEmit m_func;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_env;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Tag* m_einfo;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_trace;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_einfo_local;
+    [global::Quire.Mirror.MirrorStub]
     public override unsafe global::Quire.gen.MetaObj lookup(void* v) => base.lookup(v);
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.gen.MetaObj DefineLetVar(string nm, global::System.Type ty) => base.DefineLetVar(nm, ty);
@@ -27,6 +37,8 @@ internal partial class CtxtLam : global::Quire.gen.Ctxt
     public override bool Alternative() => base.Alternative();
     [global::Quire.Mirror.MirrorStub]
     public override void EmitReturn(global::Quire.gen.IlEmit emit) => base.EmitReturn(emit);
+    [global::Quire.Mirror.MirrorStub]
+    private bool ShouldTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private CtxtLam() : base(default(global::Quire.gen.Ctxt)) { }
 }

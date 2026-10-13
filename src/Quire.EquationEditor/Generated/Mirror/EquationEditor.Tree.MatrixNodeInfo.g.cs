@@ -12,6 +12,12 @@ namespace Quire.EquationEditor.Tree;
 public partial class MatrixNodeInfo : global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MatrixFormat a_;
+    [global::Quire.Mirror.MirrorStub]
+    private bool b_;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TableSize c;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsMatrixComplete { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize FullSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -51,6 +57,8 @@ public partial class MatrixNodeInfo : global::Quire.EquationEditor.Tree.INodeInf
     public MatrixNodeInfo(global::Quire.TableSize size, int origin, global::Quire.TableCoordinate offset) { }
     [global::Quire.Mirror.MirrorStub]
     public MatrixNodeInfo(global::Quire.TableSize size, int origin, global::Quire.TableCoordinate offset, global::Quire.TableSize totalSize, bool isInResult, bool showResultMatrixIndices) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void a(string A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

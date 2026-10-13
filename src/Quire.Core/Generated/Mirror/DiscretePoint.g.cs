@@ -12,6 +12,8 @@ namespace Quire;
 public partial struct DiscretePoint
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Discrete2DCoordinate _coordinate;
+    [global::Quire.Mirror.MirrorStub]
     public int X { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Y { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

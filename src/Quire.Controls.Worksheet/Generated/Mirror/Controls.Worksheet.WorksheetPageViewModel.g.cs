@@ -12,6 +12,20 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetPageViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Worksheet.IWorksheetPageViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _pageNumber;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.IHeaderFooter _header;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.IHeaderFooter _footer;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasPageBreak;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showNonPrintableSpaceIndicator;
+    [global::Quire.Mirror.MirrorStub]
+    private double _nonPrintableSpaceButtonPosition;
+    [global::Quire.Mirror.MirrorStub]
+    private double _nonPrintableSpaceIndicatorHeight;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.IWorksheetPageBody PageBody { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.IHeaderFooterZombie HeaderZombie { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -45,6 +59,8 @@ public partial class WorksheetPageViewModel : global::Quire.Controls.Core.ViewMo
     public void OnRequestBringIntoView(object sender, global::System.Windows.RequestBringIntoViewEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetNavigateOutLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSectionRequestScrollTo(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl section, global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnDispose() => base.OnDispose();
     [global::Quire.Mirror.MirrorStub]

@@ -12,11 +12,17 @@ namespace Quire.Controls.Plots;
 public partial class OwnerOrProxyToProxyEnumerableConverter : global::System.Windows.Data.IValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Plots.OwnerOrProxyToProxyEnumerableConverter _instance;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.OwnerOrProxyToProxyEnumerableConverter Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Plots.IEquationProxy GetProxy(object proxyOrOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.IEquationProxy> GetItems(global::Quire.Controls.Plots.IEquationProxy proxy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public OwnerOrProxyToProxyEnumerableConverter() { }
 }

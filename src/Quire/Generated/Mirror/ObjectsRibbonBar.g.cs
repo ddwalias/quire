@@ -22,6 +22,8 @@ public partial class ObjectsRibbonBar : global::Fluent.RibbonGroupBox, global::S
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_ObjectsRibbonBar_OleObject_UpdateLink;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ObjectsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

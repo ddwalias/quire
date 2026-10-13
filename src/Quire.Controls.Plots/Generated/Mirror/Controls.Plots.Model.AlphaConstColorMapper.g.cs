@@ -12,6 +12,20 @@ namespace Quire.Controls.Plots.Model;
 public partial class AlphaConstColorMapper : global::Quire.Controls.Plots.Model.IMapper
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double MinAlphaPortion = 0.3d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double GammaCorrection = 0.45d;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly uint _invalidTraceColor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color _color;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _alpha;
+    [global::Quire.Mirror.MirrorStub]
+    private const int AlphaByteMaxValue = 255;
+    [global::Quire.Mirror.MirrorStub]
+    private const int AlphaByteOffsetInBits = 24;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Model.StyleType StyleType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

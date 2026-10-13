@@ -16,11 +16,17 @@ public partial class TextRenderingSerializer : global::Quire.Controls.Core.Seria
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Xml.Linq.XNamespace Ns;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Settings.TextStyleCollectionSerializable _textStyles;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Settings.TextStyleCollectionSerializable TextStyles { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.IWorksheetPersistentData WorksheetData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Settings.XmlLanguageConverterWithDefaultValue XmlProofingLanguageConverter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public TextRenderingSerializer(global::Quire.PersistentData.IWorksheetPersistentData worksheetData) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement) => base.CreateChildren(thisElement);
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.Serialization.PropertySerializableToXmlAttribute GetProofingLanguageSerializableAttribute(global::Quire.PersistentData.IWorksheetPersistentData worksheetData, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,11 +12,23 @@ namespace Quire.PersistentDataObjects;
 public partial class axes3Type
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.xAxis xAxisField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.yAxis yAxisField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.zAxis zAxisField;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private const string _rootAttributeName = "axes";
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode xAxisRaw;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode yAxisRaw;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode zAxisRaw;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.xAxis xAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

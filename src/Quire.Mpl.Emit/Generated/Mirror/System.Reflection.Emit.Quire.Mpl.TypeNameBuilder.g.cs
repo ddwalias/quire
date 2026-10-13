@@ -12,11 +12,65 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal sealed partial class TypeNameBuilder
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.StringBuilder _str;
+    [global::Quire.Mirror.MirrorStub]
+    private int _instNesting;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _firstInstArg;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _nestedName;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasAssemblySpec;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _useAngleBracketsForGenerics;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<int> _stack;
+    [global::Quire.Mirror.MirrorStub]
+    private int _stackIdx;
+    [global::Quire.Mirror.MirrorStub]
+    private TypeNameBuilder() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenGenericArguments() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CloseGenericArguments() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CloseGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddArray(int rank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddAssemblySpec(string assemblySpec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ContainsReservedChar(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsTypeNameReservedChar(char ch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EscapeName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EscapeAssemblyName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EscapeEmbeddedAssemblyName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PushOpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PopOpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetUseAngleBracketsForGenerics(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Append(string pStr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Append(char c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static string ToString(global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeNameBuilder.Format format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private TypeNameBuilder() { }
+    private void AddElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddAssemblyQualifiedName(global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeNameBuilder.Format format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeNameBuilder+Format, mplasb")]
     internal enum Format

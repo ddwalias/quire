@@ -116,6 +116,8 @@ public sealed partial class NumVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mcd.DimVal SetDim(global::Quire.Mcd.Dim d) => base.SetDim(d);
     [global::Quire.Mirror.MirrorStub]
+    private static unsafe bool isNearInt(int* res, double r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override unsafe bool isInt(int* res) => base.isInt(res);
     [global::Quire.Mirror.MirrorStub]
     public override double asReal(string m, uint a) => base.asReal(m, a);

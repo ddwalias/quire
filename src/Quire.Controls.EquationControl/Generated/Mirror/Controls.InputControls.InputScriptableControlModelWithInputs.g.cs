@@ -12,9 +12,13 @@ namespace Quire.Controls.InputControls;
 public partial class InputScriptableControlModelWithInputs : global::Quire.Controls.InputControls.InputScriptableControlModel, global::Quire.Controls.InputControls.IInputScriptableControlModelWithInputs, global::Quire.Controls.InputControls.IInputScriptableControlModel, global::Quire.Controls.InputControls.IInputResizableControlModel, global::Quire.Controls.InputControls.IInputControlModel, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable, global::Quire.Calculation.Core.IDataExchangeScriptingModel, global::Quire.Calculation.Core.IDataExchangeModel, global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _lazyMatrixSimpleResultNodeXml;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.Threading.Dispatcher _dispatcher;
     [global::Quire.Mirror.MirrorStub]
     public const string SexpressionTagInputs = "(@ScriptableControl ";
+    [global::Quire.Mirror.MirrorStub]
+    private const string splitRL = "(unboxed 1) (unboxed 2)";
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -37,6 +41,8 @@ public partial class InputScriptableControlModelWithInputs : global::Quire.Contr
     public InputScriptableControlModelWithInputs(global::Quire.Controls.InputControls.IInputControlEngineFactory factory, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputControlEngineFactory), default(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue)) { }
     [global::Quire.Mirror.MirrorStub]
     ~InputScriptableControlModelWithInputs() { } // stub finalizers must not throw: they also run for objects whose constructor threw
+    [global::Quire.Mirror.MirrorStub]
+    private string GetInputFieldSExpression(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool HandleInputFieldResultChanged(object args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -71,6 +77,8 @@ public partial class InputScriptableControlModelWithInputs : global::Quire.Contr
     public void SetValue(string id, object inputs, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetValue(string id, bool isRunScriptingOnRecalculate, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsRunScriptNeeded(bool isRunScript) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void RunScript(bool isRecalculate = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

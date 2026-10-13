@@ -14,6 +14,8 @@ public partial class MarkersPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     public const string PartMarkerEquationContainer = "PART_MarkerEquationContainer";
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.MarkersPanel.DraggingScope _draggingScope;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty HorizontalRangeHelperProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty VerticalRangeHelperProperty;
@@ -30,6 +32,26 @@ public partial class MarkersPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     public MarkersPanel() { }
     [global::Quire.Mirror.MirrorStub]
+    private void AddDragEventHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDragStart(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDrag(object sender, global::Quire.Controls.Core.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDragEnd(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double HorizontalValueToScreen(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double VerticalValueToScreen(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double HorizontalScreenToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double VerticalScreenToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleRangeHelperChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleValueToScreenChanged(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static double GetVerticalValue(global::System.Windows.UIElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetVerticalValue(global::System.Windows.UIElement uiElement, double verticalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -38,6 +60,8 @@ public partial class MarkersPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     public static void SetHorizontalValue(global::System.Windows.UIElement uiElement, double horizontalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void EquationControlTransformChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.EquationControlWithTransform GetEquationControlTransform(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetEquationControlTransform(global::System.Windows.DependencyObject depObj, global::Quire.Controls.EquationControlWithTransform value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -45,14 +69,30 @@ public partial class MarkersPanel : global::System.Windows.Controls.Panel
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
+    [global::Quire.Mirror.MirrorStub]
+    private double GetActualX(double horizontalValue, bool valueSet, global::System.Windows.HorizontalAlignment horizontalAlignment, global::System.Windows.Size desiredSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetActualY(double verticalValue, bool valueSet, global::System.Windows.VerticalAlignment verticalAlignment, global::System.Windows.Size desiredSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.MarkersPanel+DraggingScope, Ptc.Controls.Plots")]
     private partial class DraggingScope : global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly double _draggedMarkerHorizontalScreenValue;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly double _draggedMarkerVerticalScreenValue;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.FrameworkElement _draggedElemnt;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.MarkersPanel _markersPanel;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Undo.CommandScope _commandScope;
+        [global::Quire.Mirror.MirrorStub]
         public DraggingScope(global::System.Windows.FrameworkElement draggedElement, global::Quire.Controls.Plots.MarkersPanel markersPanel) { }
         [global::Quire.Mirror.MirrorStub]
         public void HandleDrag(global::System.Windows.Vector vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void UpdateBindingTanget(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void Dispose() { }
     }

@@ -12,6 +12,8 @@ namespace Quire.Calculation.Core.Support;
 public partial class CalculatableWrapper : global::Quire.Calculation.Core.ICalcWithPriority, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.ICalculatable _wrappedCalculatable;
+    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Calculation.Core.ICalculatable WrappedCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -55,6 +57,10 @@ public partial class CalculatableWrapper : global::Quire.Calculation.Core.ICalcW
     public void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Dispose() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupCalculatableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookCalculatableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

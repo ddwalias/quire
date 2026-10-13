@@ -12,5 +12,7 @@ namespace Quire.Controls.Core;
 public partial class BorderDragger : global::System.Windows.Controls.Control
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public BorderDragger() { }
 }

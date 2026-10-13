@@ -16,6 +16,10 @@ public partial class NodeTimer : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     public NodeTimer() { }
     [global::Quire.Mirror.MirrorStub]
+    private void _bangNodeTimer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeNodeTimer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Start() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Stop() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

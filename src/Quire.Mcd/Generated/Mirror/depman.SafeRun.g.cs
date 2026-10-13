@@ -12,6 +12,16 @@ namespace Quire.depman;
 internal partial class SafeRun
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.ThreadStart ts;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.RuntimeOptions options;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.InterruptControl interrupt_control;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.utl.InterruptControl* interrupt_control_umgd;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Exception ex;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe SafeRun(global::System.Threading.ThreadStart _ts, global::Quire.Mcd.RuntimeOptions o, global::Quire.utl_mgd.InterruptControl c, global::Quire.utl.InterruptControl* c_umgd) { }
     [global::Quire.Mirror.MirrorStub]
     public void Run() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,8 @@ namespace Quire.Utils;
 public partial class COMStreamAdaptor : global::System.IO.Stream, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Runtime.InteropServices.ComTypes.IStream m_COMStream;
+    [global::Quire.Mirror.MirrorStub]
     public override bool CanRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool CanSeek { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

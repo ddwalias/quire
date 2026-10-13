@@ -12,13 +12,27 @@ namespace Quire.Controls.Whiteboard;
 public partial class WhiteboardDragger
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Whiteboard.WhiteboardDragger _default;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsDragSourceProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsDropTargetProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement _dragDropManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement _whiteboardControl;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Point _startLocation;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.DataFormat _dataFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private object _dragData;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Whiteboard.WhiteboardItemManager _whiteboardItemManager;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Whiteboard.WhiteboardDragger Default { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Whiteboard.IWhiteboardViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action OnNoDrag;
     [global::Quire.Mirror.MirrorStub]
@@ -28,9 +42,53 @@ public partial class WhiteboardDragger
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsDragSource(global::System.Windows.DependencyObject obj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void IsDragSourceChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool GetIsDropTarget(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsDropTarget(global::System.Windows.DependencyObject obj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IsDropTargetChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnNoDrag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EndDrag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DragSourceMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs mouseButtonEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DragSourceMouseLeftButtonDown(global::System.Windows.FrameworkElement sender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DragSourceMouseLeftButtonUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DragSourceMouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TopWindowQueryContinueDrag(object sender, global::System.Windows.QueryContinueDragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TopWindowDragEnter(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TopWindowDragOver(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TopWindowDragLeave(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VisualCleanup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DoDrag(global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DropTargetDrop(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DropTargetDragEnter(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DropTargetDragOver(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DropTargetDragLeave(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupDragSourceEvents(global::System.Windows.UIElement dragSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookDragSourceEvents(global::System.Windows.UIElement dragSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HookupDropTargetEvents(global::System.Windows.UIElement dropTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UnhookDropTargetEvents(global::System.Windows.UIElement dropTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public WhiteboardDragger() { }
 }

@@ -12,9 +12,13 @@ namespace Quire.Engine;
 public sealed partial class Factory : global::Quire.Engine.IFactoryFactory
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_worker_stack_size;
+    [global::Quire.Mirror.MirrorStub]
     public Factory() { }
     [global::Quire.Mirror.MirrorStub]
     public void AppendPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Engine.IFactory NewFactory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Engine.IFactory CreateFactory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

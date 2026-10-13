@@ -18,6 +18,10 @@ public partial class AlgorithmOptions : global::System.ICloneable
     [global::Quire.Mirror.MirrorStub]
     public const char OptionSeparator = '\u002D';
     [global::Quire.Mirror.MirrorStub]
+    private bool a_;
+    [global::Quire.Mirror.MirrorStub]
+    private bool b;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsMultiStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsOptimize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

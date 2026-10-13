@@ -12,5 +12,9 @@ namespace Quire.PersistentData;
 public static partial class ProtectableTypesRegistry
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Dictionary<string, global::System.Type> _map;
+    [global::Quire.Mirror.MirrorStub]
+    private static void Register(string rootElementName, global::System.Type typeToProtect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(string rootElementName, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

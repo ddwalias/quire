@@ -12,6 +12,12 @@ namespace Quire.gen;
 internal partial class IlOpCode : global::Quire.gen.Callable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.OpCode[] m_op;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Code m_code;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_arity;
+    [global::Quire.Mirror.MirrorStub]
     public IlOpCode(global::Quire.Mpl.Run.Primitive p) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public override int Arity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

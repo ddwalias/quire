@@ -12,6 +12,8 @@ namespace Quire.Media3D;
 public partial class CubeMesh : global::Quire.Media3D.PolyhedronMeshBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Media.Media3D.Point3D[,] faces;
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Media3D.Point3D[,] Faces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CubeMesh() { }

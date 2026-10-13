@@ -31,4 +31,6 @@ public partial class MathFormatDobjController : global::Quire.Controls.Core.IMat
     public MathFormatDobjController(global::System.Windows.DependencyObject owner) { }
     [global::Quire.Mirror.MirrorStub]
     public void SetPropertiesFrom(global::Quire.Controls.Core.IMathFormat mathFormat, bool overwriteLocalValues = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsPropertySet(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

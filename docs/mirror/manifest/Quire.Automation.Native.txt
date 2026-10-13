@@ -60,8 +60,10 @@
   Quire.Automation.IValueProxy P Xml : System.String virtual get:public
   Quire.Automation.MPLRunSerializationBinder M public .ctor`0() -> System.Void
   Quire.Automation.MPLRunSerializationBinder M public override BindToType`0(System.String,System.String) -> System.Type
+  Quire.Automation.MatrixValue F private System.Int32 size
   Quire.Automation.MatrixValue M internal override WriteValueRL`0(System.IO.TextWriter,Quire.Automation.UnitAction) -> System.Void
   Quire.Automation.MatrixValue M internal override WriteValueXml`0(System.Xml.XmlWriter,Quire.Automation.UnitAction,System.Double) -> System.Void
+  Quire.Automation.MatrixValue M private CountElements`0(Quire.Mcd.MatVal) -> System.Int32
   Quire.Automation.MatrixValue M public .ctor`0() -> System.Void
   Quire.Automation.MatrixValue M public .ctor`0(Quire.Mcd.MatVal) -> System.Void
   Quire.Automation.MatrixValue M public .ctor`0(Quire.Mcd.MatVal,Quire.Mcd.RuntimeOptions) -> System.Void
@@ -101,6 +103,27 @@
   Quire.Automation.MatrixValueProxy P IsVector : System.Boolean get:public
   Quire.Automation.MatrixValueProxy P Mat : Quire.Mcd.MatVal get:protected
   Quire.Automation.MatrixValueProxy P Rows : System.UInt32 get:public
+  Quire.Automation.MatrixValueProxy+MatrixValueData F private Quire.Automation.MatrixValueProxy m_parent
+  Quire.Automation.MatrixValueProxy+MatrixValueData F private Quire.Automation.PlainDataConversionOptions m_options
+  Quire.Automation.MatrixValueProxy+MatrixValueData F private Quire.Automation.PlainDataTypes double_mask
+  Quire.Automation.MatrixValueProxy+MatrixValueData F private Quire.Automation.PlainDataTypes non_plain_mask
+  Quire.Automation.MatrixValueProxy+MatrixValueData F private Quire.Automation.PlainDataTypes string_mask
+  Quire.Automation.MatrixValueProxy+MatrixValueData F private System.Double m_scale
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private double_data`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.Generic.IEnumerable`1<System.Double>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private elem_to_plain`0(Quire.Mcd.ElementType) -> Quire.Automation.PlainDataTypes
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private element_types`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.Generic.IEnumerable`1<Quire.Mcd.ElementType>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private fold_plain`0(System.Collections.Generic.IEnumerable`1<Quire.Automation.PlainDataTypes>) -> Quire.Automation.PlainDataTypes
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private get_data`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.Generic.IEnumerable`1<System.Object>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private indices`0(Quire.Mcd.MatAxis) -> System.Collections.Generic.IEnumerable`1<System.Int32>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private mask`0(Quire.Mcd.MatAxis,Quire.Automation.PlainDataTypes) -> System.Collections.Generic.IEnumerable`1<System.Int32>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private not_nan`0(System.Double) -> System.Boolean
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private obj_not_nan`0(System.Object) -> System.Boolean
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private plain_data`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.IList
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private plain_data`0(Quire.Mcd.MatAxis,System.Int32,System.Int32) -> System.Collections.Generic.List`1<System.Collections.IList>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private plain_type`0(Quire.Mcd.MatAxis,System.Int32) -> Quire.Automation.PlainDataTypes
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private plain_type`0(System.Collections.Generic.IEnumerable`1<Quire.Mcd.ElementType>) -> Quire.Automation.PlainDataTypes
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private plain_types`0(Quire.Mcd.MatAxis) -> System.Collections.Generic.IEnumerable`1<Quire.Automation.PlainDataTypes>
+  Quire.Automation.MatrixValueProxy+MatrixValueData M private string_data`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.Generic.IEnumerable`1<System.String>
   Quire.Automation.MatrixValueProxy+MatrixValueData M public .ctor`0(Quire.Automation.MatrixValueProxy,Quire.Automation.PlainDataConversionOptions,System.Double) -> System.Void
   Quire.Automation.MatrixValueProxy+MatrixValueData M public GetColumnsPlainDataTypes`0() -> System.Collections.Generic.List`1<Quire.Automation.PlainDataTypes>
   Quire.Automation.MatrixValueProxy+MatrixValueData M public GetColumnsPlainDataValues`0(System.Int32,System.Int32) -> System.Collections.Generic.List`1<System.Collections.IList>
@@ -144,6 +167,7 @@
   Quire.Automation.SerializerCOMStreamAdaptor M public .ctor`0(System.Runtime.InteropServices.ComTypes.IStream) -> System.Void
   Quire.Automation.StringValue M internal override WriteValueRL`0(System.IO.TextWriter,Quire.Automation.UnitAction) -> System.Void
   Quire.Automation.StringValue M internal override WriteValueXml`0(System.Xml.XmlWriter,Quire.Automation.UnitAction,System.Double) -> System.Void
+  Quire.Automation.StringValue M private static Escaped`0(System.String) -> System.String
   Quire.Automation.StringValue M public .ctor`0() -> System.Void
   Quire.Automation.StringValue M public .ctor`0(System.String) -> System.Void
   Quire.Automation.StringValue M public .ctor`0(System.String,Quire.Mcd.RuntimeOptions) -> System.Void
@@ -159,6 +183,9 @@
   Quire.Automation.StringValueProxy P String : System.String get:public
   Quire.Automation.SymbolicValue M internal override WriteValueRL`0(System.IO.TextWriter,Quire.Automation.UnitAction) -> System.Void
   Quire.Automation.SymbolicValue M internal override WriteValueXml`0(System.Xml.XmlWriter,Quire.Automation.UnitAction,System.Double) -> System.Void
+  Quire.Automation.SymbolicValue M private EmitToRLString`0(System.Object) -> System.String
+  Quire.Automation.SymbolicValue M private EmitToXMLString`0(System.String,System.Object) -> System.String
+  Quire.Automation.SymbolicValue M private ExpressionSize`0(System.Object) -> System.Int32
   Quire.Automation.SymbolicValue M public .ctor`0() -> System.Void
   Quire.Automation.SymbolicValue M public .ctor`0(System.Object) -> System.Void
   Quire.Automation.SymbolicValue M public .ctor`0(System.Object,Quire.Mcd.RuntimeOptions) -> System.Void
@@ -255,6 +282,7 @@
   Quire.Automation.ValueProxy F internal Quire.Mcd.RuntimeOptions m_options
   Quire.Automation.ValueProxy F protected readonly System.Boolean m_Simplify
   Quire.Automation.ValueProxy M internal static MakeProxy`0(System.Object,System.Boolean,Quire.Mcd.RuntimeOptions) -> Quire.Automation.IValueProxy
+  Quire.Automation.ValueProxy M private GetAutomationValue`0() -> Quire.Automation.Value
   Quire.Automation.ValueProxy M protected .ctor`0(System.Boolean,Quire.Mcd.RuntimeOptions) -> System.Void
   Quire.Automation.ValueProxy M protected GetUnits`0() -> Quire.Automation.UnitPower[]
   Quire.Automation.ValueProxy M public WriteUnitsXml`0(System.Xml.XmlWriter) -> System.Void
@@ -324,7 +352,9 @@
   Quire.AutomationPrivate.IValuePrivate M public virtual Save`0(Quire.AutomationPrivate.IStream) -> System.Void
   Quire.AutomationPrivate.IValuePrivate M public virtual XML`0(System.Boolean) -> System.String
   Quire.AutomationPrivate.IValuePrivate P Size : System.Int32 virtual get:public
+  Quire.Components.BitStream F private System.Runtime.InteropServices.ComTypes.IStream stream
   Quire.Components.BitStream F public static readonly System.Exception SerializeException
+  Quire.Components.BitStream M private ReadStringLength`0() -> System.UInt32
   Quire.Components.BitStream M public .ctor`0(System.Runtime.InteropServices.ComTypes.IStream) -> System.Void
   Quire.Components.BitStream M public BytesToString`0(System.Byte[]) -> System.String
   Quire.Components.BitStream M public ReadDouble`0() -> System.Double
@@ -376,6 +406,15 @@
   Quire.Components.IPersistStream P MaxSize : System.Int64 virtual get:public
   Quire.Components.IVSPersistStream M public virtual Load`0(System.Runtime.InteropServices.ComTypes.IStream,System.Boolean) -> System.Void
   Quire.Components.IVSPersistStream M public virtual Save`0(System.Runtime.InteropServices.ComTypes.IStream,System.Boolean,System.Boolean) -> System.Void
+  Quire.Components.McxComponent F private System.Boolean running
+  Quire.Components.McxComponent F private System.Exception lastError
+  Quire.Components.McxComponent F private System.Int32 key
+  Quire.Components.McxComponent F private static readonly System.Boolean MultiThreaded
+  Quire.Components.McxComponent F private static readonly System.String[] PROGIDS
+  Quire.Components.McxComponent M private CreateInputQueue`0(System.UInt32,Quire.Components.McxInput[]&,System.Object[],Quire.Automation.UnitAction) -> System.Void
+  Quire.Components.McxComponent M private CreateOutputQueue`0(System.UInt32,Quire.Components.McxOutput[]&,Quire.Automation.UnitAction) -> System.Void
+  Quire.Components.McxComponent M private FixInputs`0(System.Object[]&,System.UInt32&,System.UInt32&) -> System.Boolean
+  Quire.Components.McxComponent M private ShouldScale`0() -> System.Boolean
   Quire.Components.McxComponent M public .ctor`0() -> System.Void
   Quire.Components.McxComponent M public Eval`0(System.Object[],System.Object) -> System.Object[]
   Quire.Components.McxComponent M public Initialize`0(System.Object) -> System.Void
@@ -383,6 +422,7 @@
   Quire.Components.McxComponent P CWD : System.Object get:public set:public
   Quire.Components.McxComponent P LastError : System.Exception get:public
   Quire.Components.McxComponent P Origin : System.Object get:public set:public
+  Quire.Components.McxComponent P ThreadsPerDocument : System.Int32 static get:private
   Quire.Components.McxIO F protected Quire.Automation.UnitAction action
   Quire.Components.McxIO M protected .ctor`0(Quire.Automation.UnitAction) -> System.Void
   Quire.Components.McxIO M protected virtual CopyOf`0(Quire.Components.McxIO) -> System.Void
@@ -409,6 +449,11 @@
   Quire.Components.Utilities+CALLBACK_MSG F public System.Int32 handle
   Quire.Components.Utilities+CALLBACK_MSG F public System.Int32 msg
   Quire.Components.Utilities+CALLBACK_MSG M public .ctor`0() -> System.Void
+  Quire.Components.VSDataValue F private System.Runtime.InteropServices.GCHandle handleI
+  Quire.Components.VSDataValue F private System.Runtime.InteropServices.GCHandle handleR
+  Quire.Components.VSDataValue F private static readonly System.Byte[] MatrixMarker
+  Quire.Components.VSDataValue M private GetPowers`0() -> System.Double[]
+  Quire.Components.VSDataValue M private SetPowers`0(System.Double[]) -> System.Void
   Quire.Components.VSDataValue M public .ctor`0() -> System.Void
   Quire.Components.VSDataValue M public .ctor`0(Quire.Mcd.MatVal) -> System.Void
   Quire.Components.VSDataValue M public GetNumBaseUnits`0(System.Int32&) -> System.Void

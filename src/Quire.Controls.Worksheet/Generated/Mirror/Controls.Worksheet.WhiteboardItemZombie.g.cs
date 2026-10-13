@@ -12,6 +12,20 @@ namespace Quire.Controls.Worksheet;
 public partial class WhiteboardItemZombie : global::System.Windows.Controls.ContentControl, global::Quire.Controls.Worksheet.IWhiteboardItemZombie, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IZombie, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Shapes.Rectangle _zombieRect;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.ZombieAdorner _zombieAdorner;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _itemManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IWhiteboardItem _item;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.FrameworkElement _itemElement;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.SnappableZombieItemHelper _snappableHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isDisposed;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IWhiteboardItem Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -40,11 +54,15 @@ public partial class WhiteboardItemZombie : global::System.Windows.Controls.Cont
     [global::Quire.Mirror.MirrorStub]
     public WhiteboardItemZombie(global::Quire.Controls.Core.IWhiteboardItem item) { }
     [global::Quire.Mirror.MirrorStub]
+    private void HandleZombieVisibilityChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ResetVisualBrush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Hide() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Show() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleZombieLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateZombieRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

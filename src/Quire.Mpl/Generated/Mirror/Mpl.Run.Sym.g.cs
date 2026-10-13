@@ -16,6 +16,8 @@ public partial class Sym : global::Quire.Mpl.Run.Atom
     [global::Quire.Mirror.MirrorStub]
     public string Field2;
     [global::Quire.Mirror.MirrorStub]
+    private uint m_umgd;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Mpl.Run.Tok make_sym;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Mpl.Run.Tok make_symq;

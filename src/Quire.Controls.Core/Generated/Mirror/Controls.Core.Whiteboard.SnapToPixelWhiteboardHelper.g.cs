@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Whiteboard;
 public partial class SnapToPixelWhiteboardHelper : global::Quire.Core.ISnapToPixelHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Whiteboard.SnapToPixelWhiteboardHelper.IContainerElement _item;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.GeneralTransform TransformFromPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasPointThatSnapsToPixel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,7 +22,7 @@ public partial class SnapToPixelWhiteboardHelper : global::Quire.Core.ISnapToPix
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Whiteboard.SnapToPixelWhiteboardHelper Create<T>(T item) where T : global::System.Windows.UIElement, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private SnapToPixelWhiteboardHelper() { }
+    private SnapToPixelWhiteboardHelper(global::Quire.Controls.Core.Whiteboard.SnapToPixelWhiteboardHelper.IContainerElement item) { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.SnapToPixelWhiteboardHelper+IContainerElement, Ptc.Controls.Core")]
     private partial interface IContainerElement
@@ -34,6 +36,8 @@ public partial class SnapToPixelWhiteboardHelper : global::Quire.Core.ISnapToPix
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Whiteboard.SnapToPixelWhiteboardHelper+ContainerElement`1, Ptc.Controls.Core")]
     private partial class ContainerElement<T> : global::Quire.Controls.Core.Whiteboard.SnapToPixelWhiteboardHelper.IContainerElement where T : global::System.Windows.UIElement, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly T _t;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.UIElement AsElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

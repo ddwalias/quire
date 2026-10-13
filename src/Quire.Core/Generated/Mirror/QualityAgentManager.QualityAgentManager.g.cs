@@ -12,6 +12,24 @@ namespace Quire.QualityAgentManager;
 public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQualityAgentManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string ProdDcuExe = "prod_dcu.exe";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _mathcadPrimeInstallPath;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.QualityAgentManager.IQualityAgentReportData _reportData;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.DateTime _startupTime;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _mathcadPrimeVersion;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Threading.Tasks.Task _computeCheckSumOperationState;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action _checkSumDelegate;
+    [global::Quire.Mirror.MirrorStub]
+    private string _mathcadPrimeChecksum;
+    [global::Quire.Mirror.MirrorStub]
+    private const string Dummy = "1234567890123456789012345678901234567890123456789012345678901234";
+    [global::Quire.Mirror.MirrorStub]
     public bool IsReportSendingEnabled { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public QualityAgentManager(string mathcadPrimeInstallationPath) { }
@@ -19,4 +37,26 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     public bool SendReport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool SendReport(out global::Quire.QualityAgentManager.IQualityAgentReportData reportedData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SendReportHelper() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetCommandLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void AddArgument(ref string commandLine, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void AddArgument(ref string commandLine, string name, string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetProdDcuPath(string mathcadPrimeInstallPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetMathcadPrimeVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetMathcadPrimeBitness() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetMathcadPrimeInstallationDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetMathcadPrimeChecksum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ComputeCheckSum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddHashesForFileExt(global::System.Collections.Generic.List<byte> hashesList, global::System.Security.Cryptography.HashAlgorithm hashAlgorithm, string filesFilter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

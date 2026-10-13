@@ -12,6 +12,24 @@ namespace Quire.Controls.Plots;
 public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IAxisLimitEditor, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatableInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double CalculatedValueDefault = double.NaN;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IEquationControl _eq;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.ICurrentNumberFormatProperty _currentNumberFormatProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasErrors;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isDefaultValue;
+    [global::Quire.Mirror.MirrorStub]
+    private double _calculatedValue;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasCustomError;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationContext;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationContextOverride;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsWaitingForEngineResponse { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double CalculatedValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -70,13 +88,27 @@ public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IA
     [global::Quire.Mirror.MirrorStub]
     public AxisLimitEditor(global::Quire.Controls.Core.IEquationControl equationControl, global::Quire.Controls.Core.ICurrentNumberFormatProperty currentNumberFormatProperty) { }
     [global::Quire.Mirror.MirrorStub]
+    private void HookupEquationChangedEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookEquationChangedEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetCalculatedValueField(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetIsDefaultValueInternal(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResetCalculatedValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetPreCalculatedValue(double defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetNonCalculationRelatedCustomError(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCalculationRelatedCustomError(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetCustomError(string message, bool calculationRelated) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ClearNonCalculationRelatedCustomErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearAllCustomErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -88,6 +120,8 @@ public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IA
     [global::Quire.Mirror.MirrorStub]
     public void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void EqRequestEvaluation(global::Quire.Calculation.Core.ICalculatable obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -96,7 +130,21 @@ public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IA
     [global::Quire.Mirror.MirrorStub]
     public void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetHideFromCalculationContext(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void UpdateHideFromCalculationContextToDefaultValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EquationChanged(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EquationSExpressionChanging(string obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateNewSExpIfIsDefaultValueIsTrue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireHasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -105,6 +153,8 @@ public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IA
     public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.valueType GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetEquationExpressionXml(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.PersistentDataObjects.valueType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,12 @@ namespace Quire.PersistentDataObjects;
 public partial class userValueType
 {
     [global::Quire.Mirror.MirrorStub]
+    private string nameField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.userValueTypeType typeField;
+    [global::Quire.Mirror.MirrorStub]
+    private string valueField;
+    [global::Quire.Mirror.MirrorStub]
     public string name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.userValueTypeType type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

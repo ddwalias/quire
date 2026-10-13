@@ -20,7 +20,15 @@ public partial class FontFormatRibbonBar : global::Fluent.RibbonGroupBox, global
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.ColorPicker HighlightColorPicker;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public FontFormatRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeFontSize(global::Quire.DelegateFunction1<double, double> impl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void IncreaseFontSize(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DecreaseFontSize(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

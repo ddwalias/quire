@@ -24,6 +24,8 @@ public partial class MruFileManager : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public int MaxNumberOfPinnedItems;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.MruFiles.IMruFilePersistanceManager userConfigPersistance;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MruListProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RegularMruListProperty;
@@ -46,15 +48,33 @@ public partial class MruFileManager : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public MruFileManager() { }
     [global::Quire.Mirror.MirrorStub]
+    private static void SetMruCommandsFunctionalityParameters() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void onPinChanged(global::Quire.Controls.MruFileItem mruFileItem, bool pinned) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void AddMRUFileItemIfNeeded(string fullPathAndName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InsertMruItem(string fullPathAndName, global::Quire.Controls.MruFileItem item, global::Quire.Controls.MruFileTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InsertMruItemAtSpecificSpot(int indexWhereTobeAdded, global::Quire.Controls.MruFileItem mruFileItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetIndexOfLastPinnedItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveMruItem(global::Quire.Controls.MruFileItem mruItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void FixAccessKey(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.MruFileItem> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearPersistence(global::Quire.Controls.MruFileTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void RemoveItem(global::Quire.Controls.MruFileItem fileItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.MruFileItem GetMruFileItem(string fullPathAndName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.MruFileItem RemoveLastNotPinnedItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Menu_Opened(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void LoadMruItemsAndRegisterToPinChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateMruSubLists() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

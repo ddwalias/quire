@@ -12,6 +12,8 @@ namespace Quire;
 public partial class AutomationSpiritInputsOutputsConflicts : global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.IO.IInputOutputItemsConflicts _conflicts;
+    [global::Quire.Mirror.MirrorStub]
     public AutomationSpiritInputsOutputsConflicts(global::Quire.Controls.IO.IInputOutputItemsConflicts conflicts) { }
     [global::Quire.Mirror.MirrorStub]
     public void AddGeneralWarning(string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

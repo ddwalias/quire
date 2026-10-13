@@ -12,9 +12,15 @@ namespace Quire.EngNotebook.Automation;
 public partial class InputsOutputsStates : global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int ScalarInputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ScalarOutputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private InputsOutputsStates() { }
     [global::Quire.Mirror.MirrorStub]
     internal InputsOutputsStates(global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates mathcadPrimeInputsOutputsStates) { }
     [global::Quire.Mirror.MirrorStub]

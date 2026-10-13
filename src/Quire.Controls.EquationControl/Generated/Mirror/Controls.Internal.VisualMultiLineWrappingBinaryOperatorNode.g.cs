@@ -12,6 +12,26 @@ namespace Quire.Controls.Internal;
 internal partial class VisualMultiLineWrappingBinaryOperatorNode : global::Quire.Controls.Internal.VisualVariantLineBinaryOperatorNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _firstNodeArrangeVoffset;
+    [global::Quire.Mirror.MirrorStub]
+    private double _secondNodeArrangeVoffset;
+    [global::Quire.Mirror.MirrorStub]
+    private double _firstNodeArrangeHoffset;
+    [global::Quire.Mirror.MirrorStub]
+    private double _secondNodeArrangeHOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualWrappingSign _wrappingSign;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect _wrappingSignHitRectangle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _firstOperandTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _secondOperandTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _operatorTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _wrappingSignTopLeft;
+    [global::Quire.Mirror.MirrorStub]
     public override bool IsMultiline { get => base.IsMultiline; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualWrappingSign WrappingSign { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -29,6 +49,10 @@ internal partial class VisualMultiLineWrappingBinaryOperatorNode : global::Quire
     protected void ComputeCurrentValues(bool recreateZeroCache) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect ComputeOperatorRectangle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect ComputeWrappingSignRectangle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Internal.VisualMathNode GetVisualMathNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetVisualMathNodeAtPoint(hitPoint);
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.Tree;
 public partial class RequestRestoreInsertionPointEventArgs : global::System.EventArgs
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.View.IVisualMathNode a;
+    [global::Quire.Mirror.MirrorStub]
+    private bool b;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualMathNode OriginalSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool RequestHandled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

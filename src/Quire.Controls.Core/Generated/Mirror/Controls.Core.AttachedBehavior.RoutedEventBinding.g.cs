@@ -12,6 +12,10 @@ namespace Quire.Controls.Core.AttachedBehavior;
 public partial class RoutedEventBinding
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.RoutedEvent _routedEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.RoutedEventHandler _handler;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.RoutedEvent RoutedEvent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.RoutedEventHandler Handler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

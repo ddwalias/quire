@@ -12,11 +12,59 @@ namespace Quire.Engine.Misc;
 public partial class XmlUtils
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool s_Debug;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_WhitepaceChars;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_TagBreakChars;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_OpenAngle;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_CloseAngle;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_DoubleQuote;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_SingleQuote;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_Slash;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_Excl;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_Hyphen;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_CloseBracket;
+    [global::Quire.Mirror.MirrorStub]
+    private static char s_EqualSign;
+    [global::Quire.Mirror.MirrorStub]
+    private static string s_xmlns;
+    [global::Quire.Mirror.MirrorStub]
     protected static bool s_TightenXmlnsAttributes;
+    [global::Quire.Mirror.MirrorStub]
+    private static int s_TestsDone;
+    [global::Quire.Mirror.MirrorStub]
+    private static int s_TestsPassed;
+    [global::Quire.Mirror.MirrorStub]
+    private static int s_TestNum;
+    [global::Quire.Mirror.MirrorStub]
+    private static int s_TestPos;
     [global::Quire.Mirror.MirrorStub]
     public static bool TightenXmlnsAttributes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static void BadSyntax(string str, int pos, string msg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void BadSyntax(string str, int pos, string fmt, object obj0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1, object obj2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Dbg(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Dbg(string fmt, object obj0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Dbg(string fmt, object obj0, object obj1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Dbg(string fmt, object obj0, object obj1, object obj2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool LookingAtText(string str, int scanPos, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -42,6 +90,8 @@ public partial class XmlUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool SkipSgmlComment(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool FindCandidateXmlnsAttr(string str, ref int scan_pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string StripXmlnsAttrs(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool EquivalentXml(string xml1, string xml2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -49,6 +99,10 @@ public partial class XmlUtils
     public static string TightenXmlWhitespace(string rawstr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool FindXmlnsAttrs(string str, ref int scanPos, out global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>> skipAttrs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool SkipWhitespace(string str, ref int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int BackOverWhitespace(string str, int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool SkipCDATA(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

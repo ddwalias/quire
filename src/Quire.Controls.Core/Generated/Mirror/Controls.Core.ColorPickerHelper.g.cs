@@ -13,4 +13,6 @@ public static partial class ColorPickerHelper
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.SolidColorBrush FindClosestMatchingColorInPalette(global::System.Windows.Media.SolidColorBrush brush, global::System.Collections.IEnumerable colorPaletteCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double ColorDifference(global::System.Windows.Media.Color colorOne, global::System.Windows.Media.Color colorTwo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

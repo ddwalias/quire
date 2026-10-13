@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class unitedValue : global::Quire.PersistentDataObjects.exprElementType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.real realField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.imag imagField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.complex complexField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.str strField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.unitMonomial unitMonomialField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.real real { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.imag imag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

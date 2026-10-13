@@ -12,6 +12,22 @@ namespace Quire.PersistentDataObjects;
 public partial class traceStyleType
 {
     [global::Quire.Mirror.MirrorStub]
+    private string colorField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.traceSymbolType symbolField;
+    [global::Quire.Mirror.MirrorStub]
+    private double symbolweightField;
+    [global::Quire.Mirror.MirrorStub]
+    private uint symbolfrequencyField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.traceLineStyle linestyleField;
+    [global::Quire.Mirror.MirrorStub]
+    private double lineweightField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool automaticStyleField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.traceStyleEnumCommonType valueField;
+    [global::Quire.Mirror.MirrorStub]
     public string color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.traceSymbolType symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

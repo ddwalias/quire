@@ -16,6 +16,16 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     internal const string UserSettingsGroupName = "userSettings";
     [global::Quire.Mirror.MirrorStub]
+    private const string CompanyName = "Quire";
+    [global::Quire.Mirror.MirrorStub]
+    private const string UserConfigFileName = "user.config";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FolderNamePattern = "Quire_Url_[a-zA-Z0-9]{32}";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SettingsGroupName = "userSettings";
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _useAssemblyVersionInConfigPath;
+    [global::Quire.Mirror.MirrorStub]
     public static string ConfigFolderName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool IsConfigCopiedForMOR { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -34,15 +44,25 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Configuration.SettingsPropertyValueCollection GetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsApplicationScoped(global::System.Configuration.SettingsProperty prop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsUserScoped(global::System.Configuration.SettingsProperty prop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasSettingScope(global::System.Configuration.SettingsProperty prop, global::System.Type attributeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Configuration.SettingsPropertyValue GetPreviousVersion(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Reset(global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Upgrade(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string GetSectionName(string sectionGroupName, global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static string ConfigFilenameFromApplicationConfigPath(string applicationConfigPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.UserSettingsProvider.GetSectionStatusEnum GetSection(global::System.Configuration.SettingsContext context, out global::System.Configuration.ClientSettingsSection section, out global::System.Configuration.Configuration origConfig, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ObtainConfigFiles(global::System.Configuration.ExeConfigurationFileMap FileMap, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyPrevUserConfig(global::System.Version version) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

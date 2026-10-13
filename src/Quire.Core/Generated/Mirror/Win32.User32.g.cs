@@ -169,6 +169,8 @@ public static partial class User32
     public partial struct HWND
     {
         [global::Quire.Mirror.MirrorStub]
+        private nint _value;
+        [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Win32.User32.HWND NULL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Win32.User32.HWND Cast(nint hwnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

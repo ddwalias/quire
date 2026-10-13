@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class contourPlotType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.axes3Type axesField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.contourPlotTypeContour contourField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.SizeType graphsizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.plotEquation plotEquationField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool equalscaleField;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode plotEquationRaw;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.axes3Type axes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

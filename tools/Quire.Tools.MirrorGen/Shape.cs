@@ -3,8 +3,8 @@ using System.Text;
 namespace Quire.Tools.MirrorGen;
 
 /// <summary>
-/// The mirrored surface of compiled Quire assemblies as canonical text lines: one per type and one per non-private
-/// member. Stub and real members produce the same line, so a stub can be implemented without changing the shape.
+/// The mirrored surface of compiled Quire assemblies as canonical text lines: one per type and one per declared
+/// member, private ones included (compiler-generated members excluded). Stub and real members produce the same line, so a stub can be implemented without changing the shape.
 /// The checked-in manifest (docs/mirror/manifest) is this output, taken from a build; the shape test recomputes it and
 /// fails when a line changes or disappears. It guards against drift; fidelity to Mathcad is the generator's job, and
 /// every known difference is listed in docs/mirror/notes.txt.
@@ -61,7 +61,7 @@ public static class Shape
         foreach (var m in t.Methods)
         {
             if (m.Name == ".cctor" || m.Name.StartsWith('<')) continue;
-            if (m.Access == Access.Private)
+            if (m.Access == Access.Private && m.Name.Contains('.'))
             {
                 foreach (var i in m.Implements) yield return $"{prefix}X {i.Interface}::{i.Method}";
                 continue;
@@ -70,7 +70,8 @@ public static class Shape
         }
     }
 
-    private static bool Visible(Access a, string name) => a != Access.Private && !name.StartsWith('<');
+    /// <summary>Every declared member except compiler-generated ones (private members are mirrored too).</summary>
+    private static bool Visible(Access a, string name) => !name.StartsWith('<');
 
     private static string Signature(MethodModel m) =>
         $"{m.Name}`{m.GenericParams.Length}({string.Join(",", m.Params.Select(p => (p.Out ? "out " : "") + p.Type))}) -> {m.Return}";
@@ -132,10 +133,10 @@ public static class Shape
             int members = 0, stubs = 0;
             foreach (var t in mirrored)
             {
-                foreach (var m in t.Methods.Where(m => m.Access != Access.Private && !m.Name.StartsWith('<') && m.Name != ".cctor")) { members++; if (m.Stub) stubs++; }
+                foreach (var m in t.Methods.Where(m => !m.Name.Contains('.') && !m.Name.StartsWith('<') || m.Name == ".ctor")) { members++; if (m.Stub) stubs++; }
                 foreach (var p in t.Properties.Where(p => !p.Name.Contains('.'))) { members++; if (p.Stub) stubs++; }
                 foreach (var e in t.Events.Where(e => !e.Name.Contains('.'))) { members++; if (e.Stub) stubs++; }
-                foreach (var f in t.Fields.Where(f => f.Access != Access.Private && !f.Name.StartsWith('<') && t.Kind != TypeKind.Enum)) { members++; if (f.Stub) stubs++; }
+                foreach (var f in t.Fields.Where(f => !f.Name.StartsWith('<') && t.Kind != TypeKind.Enum)) { members++; if (f.Stub) stubs++; }
             }
             rows.Add((project, mirrored.Count, members, stubs));
         }

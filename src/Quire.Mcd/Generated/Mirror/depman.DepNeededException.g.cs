@@ -12,6 +12,8 @@ namespace Quire.depman;
 public partial class DepNeededException : global::Quire.depman.DepException
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.Position* p;
+    [global::Quire.Mirror.MirrorStub]
     internal unsafe DepNeededException(global::Quire.depman.Position* _p) { }
     [global::Quire.Mirror.MirrorStub]
     internal unsafe global::Quire.depman.Position* loc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

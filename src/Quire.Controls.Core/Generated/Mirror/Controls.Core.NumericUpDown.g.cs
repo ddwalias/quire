@@ -14,6 +14,10 @@ public partial class NumericUpDown : global::System.Windows.Controls.UserControl
     [global::Quire.Mirror.MirrorStub]
     protected static readonly global::System.Windows.DependencyProperty NumberValueProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty IsInputValidProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty ValidationMessageProperty;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox ValueTextBox;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBlock WaterMarkTextBlock;
@@ -21,6 +25,8 @@ public partial class NumericUpDown : global::System.Windows.Controls.UserControl
     internal global::System.Windows.Controls.Button UpButton;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button DownButton;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Action<int> NumberChangedAction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -40,7 +46,21 @@ public partial class NumericUpDown : global::System.Windows.Controls.UserControl
     [global::Quire.Mirror.MirrorStub]
     protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
     [global::Quire.Mirror.MirrorStub]
+    private void UpButton_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DownButton_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ValueTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ValueTextBox_KeyUp(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void IncrementValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DecrementValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected static void OnNumberChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowValue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsTextBoxEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

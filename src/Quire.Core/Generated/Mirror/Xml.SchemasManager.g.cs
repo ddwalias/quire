@@ -57,6 +57,10 @@ public static partial class SchemasManager
     public partial class SchemaData
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::System.Xml.Schema.XmlSchema _schema;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Xml.Schema.XmlSchemaSet _schemaSet;
+        [global::Quire.Mirror.MirrorStub]
         public string SchemaName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public global::System.Xml.Schema.XmlSchema Schema { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

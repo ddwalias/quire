@@ -34,6 +34,8 @@ internal abstract partial class Fence : global::Quire.Controls.Internal.VisualMa
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Geometry _geometry;
     [global::Quire.Mirror.MirrorStub]
+    private char[] _componentChars;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size ContentSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -58,6 +60,10 @@ internal abstract partial class Fence : global::Quire.Controls.Internal.VisualMa
     [global::Quire.Mirror.MirrorStub]
     public override void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.HandleMathFormatChanged(e);
     [global::Quire.Mirror.MirrorStub]
+    private void GenerateFenceComponents(global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateGlyphGaps(global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void ReformatComponents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -67,6 +73,8 @@ internal abstract partial class Fence : global::Quire.Controls.Internal.VisualMa
     protected void Clone(global::Quire.Controls.Internal.Fence clone) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Point CalculateGlyphGap(global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence.GlyphGap CalculateGlyphGap(char c, global::Quire.Controls.Core.ExtendedFont font) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void DrawAndIncrementY(global::System.Windows.Media.DrawingContext dc, global::System.Windows.Media.FormattedText text, ref global::System.Windows.Point loc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

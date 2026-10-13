@@ -12,6 +12,26 @@ namespace Quire.PersistentDataObjects;
 public partial class calculationCalculationBehavior
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool stringsuseoriginField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool automaticrecalculationField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool matrixstrictsingularitycheckField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool optimizeexpressionsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool exactbooleanField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool unitsinsymbolicsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool constantsinsymbolicsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool binocthexmodeField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.calculationCalculationBehaviorZerooverzero zerooverzeroField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.SymbolicEngineType symbolicengineField;
+    [global::Quire.Mirror.MirrorStub]
     public bool stringsuseorigin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool automaticrecalculation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

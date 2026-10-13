@@ -58,6 +58,8 @@ public partial class IncludeWorksheetErrorWarningData
     [global::Quire.Mirror.MirrorStub]
     public const string UnitsAndConstantsInSymbolicsConflictWarningCode = "IncludeControlWarningsConflictPropertyNameUnitsAndConstantsInSymbolics";
     [global::Quire.Mirror.MirrorStub]
+    private static string[] conflictwarnings;
+    [global::Quire.Mirror.MirrorStub]
     public string PathIndexes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string FileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -46,6 +46,8 @@ public partial class PlotCreationRibbonBar : global::Fluent.RibbonGroupBox, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.NumberOfPointsComboBox numberOfPointsComboBox;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public PlotCreationRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

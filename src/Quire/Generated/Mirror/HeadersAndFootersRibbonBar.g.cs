@@ -24,7 +24,11 @@ public partial class HeadersAndFootersRibbonBar : global::Fluent.RibbonGroupBox,
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_HeadersAndFootersRibbonBar_FilePath;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public HeadersAndFootersRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void FileButtonDropDown_OnPopupOpened(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

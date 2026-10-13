@@ -12,6 +12,8 @@ namespace Quire.Components;
 internal partial class BitStream
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Runtime.InteropServices.ComTypes.IStream stream;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Exception SerializeException;
     [global::Quire.Mirror.MirrorStub]
     public byte[] ReadSome(int cb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -19,6 +21,8 @@ internal partial class BitStream
     public void WriteSome(byte[] buf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteStringLength(uint nLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private uint ReadStringLength() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public BitStream(global::System.Runtime.InteropServices.ComTypes.IStream stm) { }
     [global::Quire.Mirror.MirrorStub]

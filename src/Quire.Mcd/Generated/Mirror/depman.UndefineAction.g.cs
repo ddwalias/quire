@@ -12,7 +12,15 @@ namespace Quire.depman;
 public partial class UndefineAction : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ICollection m_vars;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_value;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_child_only;
+    [global::Quire.Mirror.MirrorStub]
     public UndefineAction(global::System.Collections.ICollection c, object v, bool b) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeUndefineAction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment __unnamed000, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

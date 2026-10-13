@@ -12,6 +12,12 @@ namespace Quire.Native.EfisolverImpl;
 public partial class CurryToOne
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] m_args;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_param;
+    [global::Quire.Mirror.MirrorStub]
     public CurryToOne(global::Quire.Mpl.Run.Function f, object[] args, int param) { }
     [global::Quire.Mirror.MirrorStub]
     public object Apply(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

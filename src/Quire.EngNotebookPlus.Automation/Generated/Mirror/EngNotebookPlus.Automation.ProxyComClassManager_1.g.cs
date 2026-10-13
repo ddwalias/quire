@@ -12,21 +12,35 @@ namespace Quire.EngNotebookPlus.Automation;
 internal partial class ProxyComClassManager<T> where T : class
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly object _syncRoot;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EngNotebookPlus.Automation.ProxyComClassManager<T> _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private static int _lockCount;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _refineConnectionsInProcess;
+    [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.EngNotebookPlus.Automation.ProxyComClassManager<T> Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasConnections { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal event global::Quire.EngNotebookPlus.Automation.ProxyComClassManager<T>.RefineConnectionsHandler RefineConnections;
     [global::Quire.Mirror.MirrorStub]
+    private ProxyComClassManager() { }
+    [global::Quire.Mirror.MirrorStub]
     internal bool Register(global::Quire.EngNotebookPlus.Automation.IProxyComClassManagerAgent<T> proxyComClassManagerAgent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool Unregister(global::Quire.EngNotebookPlus.Automation.IProxyComClassManagerAgent<T> proxyComClassManagerAgent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static int Lock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int Unlock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InvokeRefineConnections() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal bool IsConnectionAlive(T proxyComClassInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal object CreateInstanceByProgId(string progId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private ProxyComClassManager() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebookPlus.Automation.ProxyComClassManager`1+RefineConnectionsHandler, Ptc.EngNotebookPlus.Automation")]
     internal delegate void RefineConnectionsHandler();

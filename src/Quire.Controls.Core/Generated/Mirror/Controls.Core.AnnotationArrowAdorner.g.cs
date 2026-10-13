@@ -15,4 +15,6 @@ public partial class AnnotationArrowAdorner : global::Quire.Controls.Core.Visibi
     public AnnotationArrowAdorner(global::System.Windows.FrameworkElement element) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawAnnotationArrow(global::System.Windows.Media.DrawingContext drawingContext, double boundingRectWidth, double boundingRectHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

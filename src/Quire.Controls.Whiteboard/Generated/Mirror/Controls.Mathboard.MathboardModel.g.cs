@@ -14,6 +14,10 @@ public abstract partial class MathboardModel : global::Quire.Controls.Whiteboard
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Calculation.Core.Support.CalculatableChildHider _childManager;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IORegions.IIORegionManager _ioRegionManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.BookmarkTags.IBookmarksManager _bookmarksManager;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IORegions.IIORegionManager IoRegionManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -36,6 +40,8 @@ public abstract partial class MathboardModel : global::Quire.Controls.Whiteboard
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleItemsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,6 +57,10 @@ public abstract partial class MathboardModel : global::Quire.Controls.Whiteboard
     protected virtual void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void FireCalculatableHiddenStatusChanged(global::Quire.Calculation.Core.ICalculationHideableChild hideable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleShadowCalculationsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetChildShadowCalculatables(global::System.Collections.Generic.IEnumerable<global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable>> calculationPairs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetCalculatableOverrides(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

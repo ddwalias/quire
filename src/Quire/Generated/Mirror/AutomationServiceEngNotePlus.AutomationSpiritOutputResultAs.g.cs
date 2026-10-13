@@ -12,6 +12,10 @@ namespace Quire.AutomationServiceEngNotePlus;
 public partial class AutomationSpiritOutputResultAs : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeOutputResultAs
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.IOManagerErrorCode _errorCode;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly double _realResult;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IORegions.IOManagerErrorCode ErrorCodeInternal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

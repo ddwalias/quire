@@ -18,6 +18,8 @@ public partial class MathUnitsSettingsRibbonBar : global::Fluent.RibbonGroupBox,
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.DropDownButton Part_MathUnitRibbonBar_UnitDialog;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathUnitsSettingsRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

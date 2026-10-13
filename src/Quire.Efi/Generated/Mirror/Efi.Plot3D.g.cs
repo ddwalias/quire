@@ -40,6 +40,8 @@ public partial class Plot3D
     [global::Quire.Mirror.MirrorStub]
     protected int m_origin;
     [global::Quire.Mirror.MirrorStub]
+    private int m_fullyConstrained;
+    [global::Quire.Mirror.MirrorStub]
     protected int m_gridNDefault;
     [global::Quire.Mirror.MirrorStub]
     protected double m_rangeIncDefault;
@@ -50,11 +52,39 @@ public partial class Plot3D
     [global::Quire.Mirror.MirrorStub]
     public Plot3D(int origin, object exp, object scale, object limits_, object gridn, object[] param) { }
     [global::Quire.Mirror.MirrorStub]
+    private void verifyExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal getSamplePoint(int nmb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void testSimpleFunction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void testMatrixData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal eval_3d_plot() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void setLimits(global::Quire.Mcd.MatVal Z, int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal explicitSurface() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Mcd.MatVal explicitSurface_rangized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool try_calc_mt_explicitSurface_range(ref global::Quire.Mcd.MatVal X, ref global::Quire.Mcd.MatVal Y, ref global::Quire.Mcd.MatVal Z) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void explicitSurfaceRangized_loop_function(ref global::Quire.Mcd.MatVal X, ref global::Quire.Mcd.MatVal Y, ref global::Quire.Mcd.MatVal Z, ref object[] param, int mv_start, int mv_end, int mu_start, int mu_end, int cnt, ref global::Quire.Mcd.Dim fd, global::System.Threading.CancellationToken token) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Mcd.MatVal explicitSurface_rangized(bool try_multithreading) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal MappedMatrixData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal ScatteredData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal CreateData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal paramCurve() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal explicitCurve2D() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Mcd.MatVal parametricSurface() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal packResult(global::Quire.Mcd.MatVal X, global::Quire.Mcd.MatVal Y, global::Quire.Mcd.MatVal Z) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

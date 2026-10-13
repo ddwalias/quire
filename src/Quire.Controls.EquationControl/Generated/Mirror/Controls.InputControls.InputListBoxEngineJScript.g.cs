@@ -24,7 +24,13 @@ internal partial class InputListBoxEngineJScript : global::Quire.Controls.InputC
     [global::Quire.Mirror.MirrorStub]
     public const string items = "items";
     [global::Quire.Mirror.MirrorStub]
+    private string _itemsCache;
+    [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_SelChanged(Inputs, Outputs)\r\n";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableListBox.JsListBoxDefaultScript.js";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableListBox.JsListBoxScriptInternalClass.js";
     [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]

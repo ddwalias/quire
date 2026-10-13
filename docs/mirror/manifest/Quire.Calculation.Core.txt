@@ -11,6 +11,7 @@
   Quire.Calculation.Core.CalculatableState V Initializing = 0
   Quire.Calculation.Core.CalculatableState V Pasting = 4
   Quire.Calculation.Core.CalculatableState V Printing = 3
+  Quire.Calculation.Core.CalculatingStatusChangedEventArgs F private static Quire.Calculation.Core.CalculatingStatusChangedEventArgs _singleton
   Quire.Calculation.Core.CalculatingStatusChangedEventArgs M public .ctor`0() -> System.Void
   Quire.Calculation.Core.CalculatingStatusChangedEventArgs M public static GetArgs`0() -> Quire.Calculation.Core.CalculatingStatusChangedEventArgs
   Quire.Calculation.Core.CalculationDisabledException M public .ctor`0(System.String) -> System.Void
@@ -38,8 +39,16 @@
   Quire.Calculation.Core.ComplexSimpleResultNode P IValue : System.Double get:public set:public
   Quire.Calculation.Core.ComplexSimpleResultNode P RValue : System.Double get:public set:public
   Quire.Calculation.Core.ComplexSimpleResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private Quire.Calculation.Core.UnitDescriptorTable _cgsBase
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private Quire.Calculation.Core.UnitDescriptorTable _cgsDerived
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private Quire.Calculation.Core.UnitDescriptorTable _siBase
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private Quire.Calculation.Core.UnitDescriptorTable _siDerived
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private Quire.Calculation.Core.UnitDescriptorTable _usBase
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private Quire.Calculation.Core.UnitDescriptorTable _usDerived
+  Quire.Calculation.Core.DefaultUnitDescriptorTable F private System.Boolean _contentLoaded
   Quire.Calculation.Core.DefaultUnitDescriptorTable F public static readonly Quire.Calculation.Core.DefaultUnitDescriptorTable Instance
   Quire.Calculation.Core.DefaultUnitDescriptorTable M internal _CreateDelegate`0(System.Type,System.String) -> System.Delegate
+  Quire.Calculation.Core.DefaultUnitDescriptorTable M private InitializeUnitSystems`0() -> System.Void
   Quire.Calculation.Core.DefaultUnitDescriptorTable M public .ctor`0() -> System.Void
   Quire.Calculation.Core.DefaultUnitDescriptorTable M public InitializeComponent`0() -> System.Void
   Quire.Calculation.Core.DefaultUnitDescriptorTable P SystemCGSBase : Quire.Calculation.Core.UnitDescriptorTable get:public
@@ -49,15 +58,16 @@
   Quire.Calculation.Core.DefaultUnitDescriptorTable P SystemUSBase : Quire.Calculation.Core.UnitDescriptorTable get:public
   Quire.Calculation.Core.DefaultUnitDescriptorTable P SystemUSDerived : Quire.Calculation.Core.UnitDescriptorTable get:public
   Quire.Calculation.Core.DefaultUnitDescriptorTable X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Calculation.Core.DisplayMatrixSimpleResultNode F private readonly Quire.Calculation.Core.EmptySimpleResultNode _emptyNode
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode M public .ctor`0(System.Int32,System.Int32,Quire.TableCoordinate,Quire.TableSize) -> System.Void
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode M public override Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
-  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Columns : System.Int32 get:public
+  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Columns : System.Int32 get:public set:private
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Count : System.Int32 get:public
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Item[System.Int32,System.Int32] : Quire.Calculation.Core.SimpleResultNode get:public
-  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Rows : System.Int32 get:public
+  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Rows : System.Int32 get:public set:private
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Size : Quire.TableSize get:public
-  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Viewport : Quire.Calculation.Core.IEagerMatrixResultNode get:public
-  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P ViewportOffset : Quire.TableCoordinate get:public
+  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P Viewport : Quire.Calculation.Core.IEagerMatrixResultNode get:public set:private
+  Quire.Calculation.Core.DisplayMatrixSimpleResultNode P ViewportOffset : Quire.TableCoordinate get:public set:private
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_Cols
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_DisplayValues
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_ElementUnits
@@ -65,13 +75,15 @@
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_Item
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_Units
   Quire.Calculation.Core.DisplayMatrixSimpleResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
+  Quire.Calculation.Core.EagerMatrixSimpleResultNode F private readonly System.Collections.Generic.IList`1<Quire.Calculation.Core.SimpleResultNode> _children
+  Quire.Calculation.Core.EagerMatrixSimpleResultNode M private IsChildrenEquals`0(Quire.Calculation.Core.EagerMatrixSimpleResultNode) -> System.Boolean
   Quire.Calculation.Core.EagerMatrixSimpleResultNode M public .ctor`0(System.Int32,System.Int32) -> System.Void
   Quire.Calculation.Core.EagerMatrixSimpleResultNode M public SetElementAt`0(System.Int32,System.Int32,Quire.Calculation.Core.IResultNode) -> System.Void
   Quire.Calculation.Core.EagerMatrixSimpleResultNode M public override Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
   Quire.Calculation.Core.EagerMatrixSimpleResultNode M public override Equals`0(System.Object) -> System.Boolean
   Quire.Calculation.Core.EagerMatrixSimpleResultNode M public override ToString`0() -> System.String
   Quire.Calculation.Core.EagerMatrixSimpleResultNode M public static ConvertToEagerMatrix`0(Quire.Calculation.Core.IMatrixResultNode) -> Quire.Calculation.Core.IEagerMatrixResultNode
-  Quire.Calculation.Core.EagerMatrixSimpleResultNode P Columns : System.Int32 get:public
+  Quire.Calculation.Core.EagerMatrixSimpleResultNode P Columns : System.Int32 get:public set:private
   Quire.Calculation.Core.EagerMatrixSimpleResultNode P Count : System.Int32 get:public
   Quire.Calculation.Core.EagerMatrixSimpleResultNode P Item[System.Int32,System.Int32] : Quire.Calculation.Core.SimpleResultNode get:public set:public
   Quire.Calculation.Core.EagerMatrixSimpleResultNode P Rows : System.Int32 get:public
@@ -91,6 +103,9 @@
   Quire.Calculation.Core.EngineDefType V Function = 2
   Quire.Calculation.Core.EngineDefType V Matrix = 1
   Quire.Calculation.Core.EngineDefType V Value = 0
+  Quire.Calculation.Core.EngineError F private Quire.Calculation.Core.StringCollection _arguments
+  Quire.Calculation.Core.EngineError F private System.String _code
+  Quire.Calculation.Core.EngineError F private System.String _message
   Quire.Calculation.Core.EngineError M public .ctor`0() -> System.Void
   Quire.Calculation.Core.EngineError M public .ctor`0(System.String,System.String) -> System.Void
   Quire.Calculation.Core.EngineError M public Clone`0() -> Quire.Calculation.Core.EngineError
@@ -111,9 +126,13 @@
   Quire.Calculation.Core.EngineError X System.ICloneable::Clone
   Quire.Calculation.Core.EngineErrorCollection M public .ctor`0() -> System.Void
   Quire.Calculation.Core.EngineErrorCollection M public .ctor`0(System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.EngineError>,Quire.Calculation.Core.EngineError) -> System.Void
+  Quire.Calculation.Core.EngineErrorExtensions F private const System.String _pholderErrorCode
   Quire.Calculation.Core.EngineErrorExtensions M public static IsPlaceholderError`0(Quire.Calculation.Core.EngineError) -> System.Boolean
+  Quire.Calculation.Core.EngineErrorMessages F private System.Boolean _contentLoaded
+  Quire.Calculation.Core.EngineErrorMessages F private static readonly Quire.Calculation.Core.EngineErrorMessages _instance
   Quire.Calculation.Core.EngineErrorMessages F public const System.String FreemiumErrorCode
   Quire.Calculation.Core.EngineErrorMessages F public const System.String IllegalRange
+  Quire.Calculation.Core.EngineErrorMessages M private static EscapeForFormatString`0(System.String) -> System.String
   Quire.Calculation.Core.EngineErrorMessages M public .ctor`0() -> System.Void
   Quire.Calculation.Core.EngineErrorMessages M public InitializeComponent`0() -> System.Void
   Quire.Calculation.Core.EngineErrorMessages M public static GetDisplayMessage`0(Quire.Calculation.Core.EngineError) -> System.String
@@ -131,11 +150,12 @@
   Quire.Calculation.Core.EngineResult M public .ctor`0(Quire.Calculation.Core.IResultNode,Quire.Calculation.Core.EngineErrorCollection,System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.EngineRedefInfo>,Quire.Calculation.Core.SynchronizationStatus) -> System.Void
   Quire.Calculation.Core.EngineResult M public IsEmpty`0() -> System.Boolean
   Quire.Calculation.Core.EngineResult P Errors : Quire.Calculation.Core.EngineErrorCollection get:public set:public
-  Quire.Calculation.Core.EngineResult P ResultNode : Quire.Calculation.Core.IResultNode get:public
+  Quire.Calculation.Core.EngineResult P ResultNode : Quire.Calculation.Core.IResultNode get:public set:private
   Quire.Calculation.Core.EngineResult P ResultXml : System.String get:public set:public
   Quire.Calculation.Core.EngineResult P SerializationTag : System.String get:public set:public
   Quire.Calculation.Core.EngineResult P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus get:public set:public
   Quire.Calculation.Core.EngineResult P Warnings : Quire.Calculation.Core.EngineRedefInfo[] get:public set:public
+  Quire.Calculation.Core.ErrorChangedEventArgs F private static Quire.Calculation.Core.ErrorChangedEventArgs _singleton
   Quire.Calculation.Core.ErrorChangedEventArgs M public .ctor`0() -> System.Void
   Quire.Calculation.Core.ErrorChangedEventArgs M public static GetArgs`0() -> Quire.Calculation.Core.ErrorChangedEventArgs
   Quire.Calculation.Core.FunctionSimpleResultNode M public .ctor`0() -> System.Void
@@ -363,13 +383,13 @@
   Quire.Calculation.Core.LazyMatrixSimpleResultNode M public override Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
   Quire.Calculation.Core.LazyMatrixSimpleResultNode M public override Equals`0(System.Object) -> System.Boolean
   Quire.Calculation.Core.LazyMatrixSimpleResultNode M public override ToString`0() -> System.String
-  Quire.Calculation.Core.LazyMatrixSimpleResultNode P Columns : System.Int32 get:public
+  Quire.Calculation.Core.LazyMatrixSimpleResultNode P Columns : System.Int32 get:public set:private
   Quire.Calculation.Core.LazyMatrixSimpleResultNode P Count : System.Int32 get:public
   Quire.Calculation.Core.LazyMatrixSimpleResultNode P Item[System.Int32,System.Int32] : Quire.Calculation.Core.SimpleResultNode get:public set:public
-  Quire.Calculation.Core.LazyMatrixSimpleResultNode P MatrixProxy : Quire.Calculation.Core.IMatrixValueProxyWrapper get:public
-  Quire.Calculation.Core.LazyMatrixSimpleResultNode P Rows : System.Int32 get:public
+  Quire.Calculation.Core.LazyMatrixSimpleResultNode P MatrixProxy : Quire.Calculation.Core.IMatrixValueProxyWrapper get:public set:private
+  Quire.Calculation.Core.LazyMatrixSimpleResultNode P Rows : System.Int32 get:public set:private
   Quire.Calculation.Core.LazyMatrixSimpleResultNode P Size : Quire.TableSize get:public
-  Quire.Calculation.Core.LazyMatrixSimpleResultNode P TransformValueToResult : System.Func`2<Quire.Calculation.Core.IValueProxyWrapper,Quire.Calculation.Core.IResultNode> get:public
+  Quire.Calculation.Core.LazyMatrixSimpleResultNode P TransformValueToResult : System.Func`2<Quire.Calculation.Core.IValueProxyWrapper,Quire.Calculation.Core.IResultNode> get:public set:private
   Quire.Calculation.Core.LazyMatrixSimpleResultNode P Xml : System.String get:public
   Quire.Calculation.Core.LazyMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_Cols
   Quire.Calculation.Core.LazyMatrixSimpleResultNode X Quire.Calculation.Core.IMatrixResultNode::get_DisplayValues
@@ -407,19 +427,32 @@
   Quire.Calculation.Core.RedefinitionWarningMsgCodes F public const System.String RedefinesUserValue_Function
   Quire.Calculation.Core.RedefinitionWarningMsgCodes F public const System.String RedefinesUserValue_Matrix
   Quire.Calculation.Core.RedefinitionWarningMsgCodes F public const System.String RedefinesUserValue_Variable
+  Quire.Calculation.Core.RedefinitionWarningsDictionary F private System.Boolean _contentLoaded
   Quire.Calculation.Core.RedefinitionWarningsDictionary F public static readonly System.Type[] KeysOwnerTypes
   Quire.Calculation.Core.RedefinitionWarningsDictionary M public .ctor`0() -> System.Void
   Quire.Calculation.Core.RedefinitionWarningsDictionary M public InitializeComponent`0() -> System.Void
   Quire.Calculation.Core.RedefinitionWarningsDictionary X System.Windows.Markup.IComponentConnector::Connect
   Quire.Calculation.Core.RequestShowErrorEventArgs M public .ctor`0(Quire.Calculation.Core.EngineError) -> System.Void
-  Quire.Calculation.Core.RequestShowErrorEventArgs P Error : Quire.Calculation.Core.EngineError get:public
+  Quire.Calculation.Core.RequestShowErrorEventArgs P Error : Quire.Calculation.Core.EngineError get:public set:private
   Quire.Calculation.Core.ResolvedId F public Quire.Calculation.Core.ICalculatable Calculatable
   Quire.Calculation.Core.ResolvedId F public System.Int32 Tag
   Quire.Calculation.Core.ResolvedId F public System.String Name
+  Quire.Calculation.Core.ResultConverter F private readonly Quire.Calculation.Core.IResultNodeFactory _newResultNodeFactory
   Quire.Calculation.Core.ResultConverter M public .ctor`0(Quire.Calculation.Core.IResultNodeFactory) -> System.Void
   Quire.Calculation.Core.ResultConverter M public Convert`0(Quire.Calculation.Core.IResultNode) -> Quire.Calculation.Core.IResultNode
   Quire.Calculation.Core.ResultConverter M public static ConvertFromIResultNode`0(Quire.Calculation.Core.SimpleResultNode) -> System.Object
   Quire.Calculation.Core.ResultConverter M public static ConvertToIResultNode`0(System.Object,System.Boolean) -> Quire.Calculation.Core.SimpleResultNode
+  Quire.Calculation.Core.ResultManager F private System.Collections.Generic.Dictionary`2<System.Int32,Quire.Pair`2<Quire.Calculation.Core.EngineResult,Quire.Calculation.Core.ICalculatableResultOwner>> _results
+  Quire.Calculation.Core.ResultManager F private System.Int32 _oldResultKey
+  Quire.Calculation.Core.ResultManager F private System.Int32 _resultKey
+  Quire.Calculation.Core.ResultManager F private System.Int32 forceAddIndex
+  Quire.Calculation.Core.ResultManager F private const System.Int32 ResultRefIdMinusOne
+  Quire.Calculation.Core.ResultManager F private static readonly Quire.Calculation.Core.IResultManager _instance
+  Quire.Calculation.Core.ResultManager M private AddOldResult`0(Quire.Calculation.Core.IResultNode,Quire.Calculation.Core.ICalculatableResultOwner) -> System.Int32
+  Quire.Calculation.Core.ResultManager M private AddResult`0(Quire.Calculation.Core.ICalculatableResultOwner) -> System.Int32
+  Quire.Calculation.Core.ResultManager M private AddResult`0(System.Int32,Quire.Pair`2<Quire.Calculation.Core.EngineResult,Quire.Calculation.Core.ICalculatableResultOwner>) -> System.Void
+  Quire.Calculation.Core.ResultManager M private static SerialNumberToErrorHandles`0(Quire.Calculation.Core.EngineError,System.String) -> System.Void
+  Quire.Calculation.Core.ResultManager M private static VerifyNodeHandle`0(System.Boolean,Quire.Calculation.Core.EngineError,System.String) -> System.Void
   Quire.Calculation.Core.ResultManager M public Clear`0() -> System.Void
   Quire.Calculation.Core.ResultManager M public CreateOldResultRefId`0(Quire.Calculation.Core.IResultNode,Quire.Calculation.Core.ICalculatableResultOwner) -> System.Int32
   Quire.Calculation.Core.ResultManager M public CreateResultRefId`0(Quire.Calculation.Core.ICalculatableResultOwner) -> System.Int32
@@ -439,8 +472,45 @@
   Quire.Calculation.Core.ResultManager M public static GetEngineResultForSerializationFromCalculatable`0(Quire.Calculation.Core.ICalculatableResultOwner) -> Quire.Calculation.Core.EngineResult
   Quire.Calculation.Core.ResultManager P Instance : Quire.Calculation.Core.IResultManager static get:public
   Quire.Calculation.Core.ResultManager P Results : System.Collections.Generic.IEnumerable`1<System.Collections.Generic.KeyValuePair`2<System.Int32,Quire.Pair`2<Quire.Calculation.Core.EngineResult,Quire.Calculation.Core.ICalculatableResultOwner>>> get:public
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String ColsAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String ComplexElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String CountAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String DataVectorsElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String DescriptionAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String FunctionElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String ImaginaryElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String MathPrefix
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String MatrixElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String MatrixViewportElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String OffsetAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String PlaceholderElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String PowerDenominatorAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String PowerNumeratorAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String RealElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String ResultValueTypeAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String RowsAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String SizeAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String StringElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String SymbolicResultElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String UnitAttributeName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String UnitMonomialElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String UnitPrefix
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String UnitReferenceElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String UnitedValueElementName
+  Quire.Calculation.Core.ResultNodeToXmcdTransform F private const System.String VectorsTypeAttributeName
   Quire.Calculation.Core.ResultNodeToXmcdTransform F public const System.String MathNamespaceUri
   Quire.Calculation.Core.ResultNodeToXmcdTransform F public const System.String UnitNamespaceUri
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private Visit`0(Quire.Calculation.Core.Unit) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private Visit`0(System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit>) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WriteAxisInfoNode`0(System.String,Quire.Calculation.Core.ITraceAxisInfo) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WriteDisplayMatrixXml`0(Quire.Calculation.Core.IDisplayMatrixResultNode) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WriteImaginaryXml`0(System.Double) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WriteMatrixXml`0(Quire.Calculation.Core.IMatrixResultNode) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WritePlaceholderXml`0() -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WritePlotDataPoints`0(Quire.Calculation.Core.ITraceDataPoints) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WriteRealXml`0(System.Double) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private WriteVectorsAsJson`1(Quire.Calculation.Core.IVectorListResultNode) -> System.Void
+  Quire.Calculation.Core.ResultNodeToXmcdTransform M private static ConvertAndGetNullableValue`1(System.Enum) -> System.Nullable`1<!!0>
   Quire.Calculation.Core.ResultNodeToXmcdTransform M public .ctor`0(System.Xml.XmlWriter) -> System.Void
   Quire.Calculation.Core.ResultNodeToXmcdTransform M public Visit`0(Quire.Calculation.Core.IComplexResultNode) -> System.Void
   Quire.Calculation.Core.ResultNodeToXmcdTransform M public Visit`0(Quire.Calculation.Core.IDisplayMatrixResultNode) -> System.Void
@@ -457,7 +527,8 @@
   Quire.Calculation.Core.ResultNodeToXmcdTransform M public Visit`0(Quire.Calculation.Core.IVectorListResultNode) -> System.Void
   Quire.Calculation.Core.ResultNodeToXmcdTransform M public static Transform`0(Quire.Calculation.Core.IResultNode) -> System.String
   Quire.Calculation.Core.ResultNodeToXmcdTransform M public static Transform`0(Quire.Calculation.Core.IResultNode,System.Xml.XmlWriter) -> System.Void
-  Quire.Calculation.Core.ResultNodeToXmcdTransform P Writer : System.Xml.XmlWriter get:public
+  Quire.Calculation.Core.ResultNodeToXmcdTransform P Writer : System.Xml.XmlWriter get:public set:private
+  Quire.Calculation.Core.ResultNodeUtils M private static TryParsePlottableValue`0(Quire.Calculation.Core.IResultNode,out System.Double&) -> System.Boolean
   Quire.Calculation.Core.ResultNodeUtils M public static ParsePlottableValue`0(Quire.Calculation.Core.IResultNode) -> System.Double
   Quire.Calculation.Core.SimpleResultNode M protected .ctor`0() -> System.Void
   Quire.Calculation.Core.SimpleResultNode M public abstract Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
@@ -487,7 +558,15 @@
   Quire.Calculation.Core.StringSimpleResultNode M public override ToString`0() -> System.String
   Quire.Calculation.Core.StringSimpleResultNode P Value : System.String get:public set:public
   Quire.Calculation.Core.StringSimpleResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
+  Quire.Calculation.Core.Support.CalculatableChildHider F private System.Action`1<Quire.Calculation.Core.ICalculatable> _fireCalculatableAdded
+  Quire.Calculation.Core.Support.CalculatableChildHider F private System.Action`1<Quire.Calculation.Core.ICalculatable> _fireCalculatableRemoved
+  Quire.Calculation.Core.Support.CalculatableChildHider F private System.Boolean _adoptCalculatableContainerChildren
+  Quire.Calculation.Core.Support.CalculatableChildHider F private System.Collections.Generic.IEnumerable`1<System.Object> _containerChildren
   Quire.Calculation.Core.Support.CalculatableChildHider F protected System.Action`1<Quire.Calculation.Core.ICalculatable> _fireCalculatableMoved
+  Quire.Calculation.Core.Support.CalculatableChildHider M private SubscribeToCalculatableContainerEvents`0(Quire.Calculation.Core.ICalculatableContainer) -> System.Boolean
+  Quire.Calculation.Core.Support.CalculatableChildHider M private SubscribeToPropertyChangedEvents`0(System.Object) -> System.Void
+  Quire.Calculation.Core.Support.CalculatableChildHider M private UnsubscribeFromCalculatableContainerEvents`0(Quire.Calculation.Core.ICalculatableContainer) -> System.Boolean
+  Quire.Calculation.Core.Support.CalculatableChildHider M private UnsubscribeFromPropertyChangedEvents`0(System.Object) -> System.Void
   Quire.Calculation.Core.Support.CalculatableChildHider M protected .ctor`0() -> System.Void
   Quire.Calculation.Core.Support.CalculatableChildHider M protected Initialize`0(System.Collections.Generic.IEnumerable`1<System.Object>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Action`1<Quire.Calculation.Core.ICalculatable>,System.Boolean) -> System.Void
   Quire.Calculation.Core.Support.CalculatableChildHider M protected virtual GetContainerChildren`0(Quire.Calculation.Core.ICalculatableContainer) -> System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable>
@@ -505,6 +584,12 @@
   Quire.Calculation.Core.Support.CalculatableWrapper E public System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
   Quire.Calculation.Core.Support.CalculatableWrapper E public System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
   Quire.Calculation.Core.Support.CalculatableWrapper E public System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Calculation.Core.Support.CalculatableWrapper F private Quire.Calculation.Core.ICalculatable _wrappedCalculatable
+  Quire.Calculation.Core.Support.CalculatableWrapper F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
+  Quire.Calculation.Core.Support.CalculatableWrapper F private System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
+  Quire.Calculation.Core.Support.CalculatableWrapper F private System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Calculation.Core.Support.CalculatableWrapper M private HookupCalculatableEvents`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.Core.Support.CalculatableWrapper M private UnhookCalculatableEvents`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Calculation.Core.Support.CalculatableWrapper M protected FireRequestEvaluation`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Calculation.Core.Support.CalculatableWrapper M protected virtual HandleGetValueOfIdentifier`0(Quire.Calculation.Core.ICalculatable,System.String) -> Quire.Calculation.Core.IResultNode
   Quire.Calculation.Core.Support.CalculatableWrapper M protected virtual HandleRequestEvaluation`0(Quire.Calculation.Core.ICalculatable) -> System.Void
@@ -564,6 +649,15 @@
   Quire.Calculation.Core.Support.SimpleCalculatable E public System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
   Quire.Calculation.Core.Support.SimpleCalculatable E public System.Action`1<Quire.Calculation.Core.Support.ICalcWithSyncStatus> Synchronized
   Quire.Calculation.Core.Support.SimpleCalculatable E public System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Calculation.Core.Support.SimpleCalculatable F private Quire.Calculation.Core.CalculatingStatus _calculatingStatus
+  Quire.Calculation.Core.Support.SimpleCalculatable F private Quire.Calculation.Core.EngineError _error
+  Quire.Calculation.Core.Support.SimpleCalculatable F private Quire.Calculation.Core.IResultNode _evaluationResult
+  Quire.Calculation.Core.Support.SimpleCalculatable F private Quire.Calculation.Core.SynchronizationStatus _syncStatus
+  Quire.Calculation.Core.Support.SimpleCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
+  Quire.Calculation.Core.Support.SimpleCalculatable F private System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
+  Quire.Calculation.Core.Support.SimpleCalculatable F private System.Action`1<Quire.Calculation.Core.Support.ICalcWithSyncStatus> Synchronized
+  Quire.Calculation.Core.Support.SimpleCalculatable F private System.Collections.Generic.IList`1<Quire.Calculation.Core.EngineRedefInfo> _warnings
+  Quire.Calculation.Core.Support.SimpleCalculatable F private System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
   Quire.Calculation.Core.Support.SimpleCalculatable F protected Quire.Calculation.Core.RealSimpleResultNode _systemOrigin
   Quire.Calculation.Core.Support.SimpleCalculatable M public .ctor`0() -> System.Void
   Quire.Calculation.Core.Support.SimpleCalculatable M public FireGetValueOfIdentifierBefore`0(System.String) -> Quire.Calculation.Core.IResultNode
@@ -593,12 +687,14 @@
   Quire.Calculation.Core.SymbolicSimpleResultNode M public override ToString`0() -> System.String
   Quire.Calculation.Core.SymbolicSimpleResultNode P Xml : System.String get:public set:public
   Quire.Calculation.Core.SymbolicSimpleResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
+  Quire.Calculation.Core.SyncStatusChangedEventArgs F private static Quire.Calculation.Core.SyncStatusChangedEventArgs _singleton
   Quire.Calculation.Core.SyncStatusChangedEventArgs M public .ctor`0() -> System.Void
   Quire.Calculation.Core.SyncStatusChangedEventArgs M public static GetArgs`0() -> Quire.Calculation.Core.SyncStatusChangedEventArgs
   Quire.Calculation.Core.Trace2DResultType V Parametric = 1
   Quire.Calculation.Core.Trace2DResultType V Range = 3
   Quire.Calculation.Core.Trace2DResultType V Real = 2
   Quire.Calculation.Core.Trace2DResultType V Vector = 0
+  Quire.Calculation.Core.Trace2DResults.DoubleListResultNode F private const System.Double _neutralValue
   Quire.Calculation.Core.Trace2DResults.DoubleListResultNode M public .ctor`0(System.Collections.Generic.IList`1<System.Double>) -> System.Void
   Quire.Calculation.Core.Trace2DResults.DoubleListResultNode M public .ctor`0(System.Collections.Generic.IList`1<System.Double>,System.Double,System.Int32) -> System.Void
   Quire.Calculation.Core.Trace2DResults.DoubleListResultNode M public .ctor`0(System.Double,System.Int32) -> System.Void
@@ -617,6 +713,8 @@
   Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper P RangeUnitsAllowed : System.Boolean virtual get:public
   Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner P IsTypeDefault : System.Boolean virtual get:public
   Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner P Type : Quire.Calculation.Core.Trace2DResults.TraceType virtual get:public
+  Quire.Calculation.Core.Trace2DResults.ListResultNode`1 F private System.Int32 _meaningfulValuesCount
+  Quire.Calculation.Core.Trace2DResults.ListResultNode`1 F private readonly System.Collections.Generic.IList`1<!0> _data
   Quire.Calculation.Core.Trace2DResults.ListResultNode`1 M protected .ctor`0(System.Collections.Generic.IList`1<!0>,!0,System.Int32) -> System.Void
   Quire.Calculation.Core.Trace2DResults.ListResultNode`1 M protected .ctor`0(System.Collections.Generic.IList`1<!0>,System.Int32) -> System.Void
   Quire.Calculation.Core.Trace2DResults.ListResultNode`1 M public abstract IsMeaningfulValue`0(!0) -> System.Boolean
@@ -626,12 +724,30 @@
   Quire.Calculation.Core.Trace2DResults.ListResultNode`1 P List : System.Collections.Generic.IList`1<!0> get:public
   Quire.Calculation.Core.Trace2DResults.ListResultNode`1 P MeaningfulValuesCount : System.Int32 get:public
   Quire.Calculation.Core.Trace2DResults.ListResultNode`1 P NeutralValue : !0 abstract get:public
+  Quire.Calculation.Core.Trace2DResults.StringListResultNode F private const System.String _neutralValue
   Quire.Calculation.Core.Trace2DResults.StringListResultNode M public .ctor`0(System.Collections.Generic.IList`1<System.String>) -> System.Void
   Quire.Calculation.Core.Trace2DResults.StringListResultNode M public .ctor`0(System.Collections.Generic.IList`1<System.String>,System.String,System.Int32) -> System.Void
   Quire.Calculation.Core.Trace2DResults.StringListResultNode M public override IsMeaningfulValue`0(System.String) -> System.Boolean
   Quire.Calculation.Core.Trace2DResults.StringListResultNode P NeutralValue : System.String override get:public
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 FirstColumnIndex
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 PlotTypeIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 XMaxValueIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 XMinValueIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 XResultIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 YMaxValueIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 YMinValueIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private const System.Int32 YResultIdx
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter F private readonly Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper _helper
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M private BuildTraceData`0(Quire.Calculation.Core.IMatrixResultNode,Quire.Calculation.Core.IMatrixResultNode,Quire.Calculation.Core.Trace2DResults.TraceType,Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter,Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter) -> Quire.Calculation.Core.Trace2DResults.TraceDataPoints
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M private GetTraceTypePreset`0(System.Int32,System.Int32) -> Quire.Calculation.Core.Trace2DResults.TraceType
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M private static DissectUnits`0(Quire.Calculation.Core.IResultNode,out Quire.Calculation.Core.IMatrixResultNode&) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit>
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M private static GetDataSourceType`0(Quire.Calculation.Core.IMatrixResultNode,out Quire.Calculation.Core.Trace2DResultType&) -> System.Boolean
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M private static GetMatrixToVectorsConverter`0(out System.Boolean&,Quire.Calculation.Core.IMatrixResultNode,System.Boolean) -> Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M private static TryParseResult`0(Quire.Calculation.Core.IMatrixResultNode,out Quire.Calculation.Core.IMatrixResultNode&,out Quire.Calculation.Core.IMatrixResultNode&,out System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit>&,out System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit>&,out Quire.Calculation.Core.Trace2DResultType&) -> System.String
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M public .ctor`0(Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper) -> System.Void
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter M public ConvertToVectorsForm`0(Quire.Calculation.Core.IMatrixResultNode,out System.String&) -> Quire.Calculation.Core.ITrace2DResultNode
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter P ReadAsColumns : System.Boolean get:private
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase M private static ValidateEnoughResultColumnsForTraceType`0(System.Int32,Quire.Calculation.Core.Trace2DResults.TraceType) -> System.String
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase M protected .ctor`0(Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner) -> System.Void
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase M public AssertValuesTypeMatchTraceType`0(System.Boolean,System.Boolean,Quire.Calculation.Core.Trace2DResults.TraceType) -> System.String
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase M public ValidateColumnsAndUnits`0(System.Int32,System.Int32,System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit>,Quire.Calculation.Core.Trace2DResults.TraceType) -> System.String
@@ -641,24 +757,24 @@
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase P IsTypeDefault : System.Boolean get:public
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase P MaxNumberOf2DPoints : System.Int32 abstract get:public
   Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase P RangeUnitsAllowed : System.Boolean abstract get:public
-  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase P ResultsOwner : Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner get:protected
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase P ResultsOwner : Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner get:protected set:private
   Quire.Calculation.Core.Trace2DResults.Trace2DResultNode M public .ctor`0(Quire.Calculation.Core.ITraceAxisInfo,Quire.Calculation.Core.ITraceAxisInfo,Quire.Calculation.Core.ITraceDataPoints,Quire.Calculation.Core.Trace2DResultType) -> System.Void
   Quire.Calculation.Core.Trace2DResults.Trace2DResultNode M public override Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
-  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P DataPoints : Quire.Calculation.Core.ITraceDataPoints get:public
-  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P RangeAxisInfo : Quire.Calculation.Core.ITraceAxisInfo get:public
-  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P ResultAxisInfo : Quire.Calculation.Core.ITraceAxisInfo get:public
-  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P TraceResultType : Quire.Calculation.Core.Trace2DResultType get:public
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P DataPoints : Quire.Calculation.Core.ITraceDataPoints get:public set:private
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P RangeAxisInfo : Quire.Calculation.Core.ITraceAxisInfo get:public set:private
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P ResultAxisInfo : Quire.Calculation.Core.ITraceAxisInfo get:public set:private
+  Quire.Calculation.Core.Trace2DResults.Trace2DResultNode P TraceResultType : Quire.Calculation.Core.Trace2DResultType get:public set:private
   Quire.Calculation.Core.Trace2DResults.Trace2DResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
   Quire.Calculation.Core.Trace2DResults.Trace2DResultNode X Quire.Calculation.Core.ITrace2DResultNode::get_Traces
   Quire.Calculation.Core.Trace2DResults.TraceAxisInfo M public .ctor`0(System.Double,System.Double,System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.Unit>) -> System.Void
-  Quire.Calculation.Core.Trace2DResults.TraceAxisInfo P Max : System.Double get:public
-  Quire.Calculation.Core.Trace2DResults.TraceAxisInfo P Min : System.Double get:public
-  Quire.Calculation.Core.Trace2DResults.TraceAxisInfo P Units : System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit> get:public
+  Quire.Calculation.Core.Trace2DResults.TraceAxisInfo P Max : System.Double get:public set:private
+  Quire.Calculation.Core.Trace2DResults.TraceAxisInfo P Min : System.Double get:public set:private
+  Quire.Calculation.Core.Trace2DResults.TraceAxisInfo P Units : System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit> get:public set:private
   Quire.Calculation.Core.Trace2DResults.TraceDataPoints M public .ctor`0() -> System.Void
   Quire.Calculation.Core.Trace2DResults.TraceDataPoints M public .ctor`0(Quire.Calculation.Core.IVectorListResultNode,Quire.Calculation.Core.IVectorListResultNode) -> System.Void
   Quire.Calculation.Core.Trace2DResults.TraceDataPoints P IsEmpty : System.Boolean get:public
-  Quire.Calculation.Core.Trace2DResults.TraceDataPoints P RangePoints : Quire.Calculation.Core.IVectorListResultNode get:public
-  Quire.Calculation.Core.Trace2DResults.TraceDataPoints P ResultPoints : Quire.Calculation.Core.IVectorListResultNode get:public
+  Quire.Calculation.Core.Trace2DResults.TraceDataPoints P RangePoints : Quire.Calculation.Core.IVectorListResultNode get:public set:private
+  Quire.Calculation.Core.Trace2DResults.TraceDataPoints P ResultPoints : Quire.Calculation.Core.IVectorListResultNode get:public set:private
   Quire.Calculation.Core.Trace2DResults.TraceErrorCodes F public const System.String BoxesResultsNotCorrect
   Quire.Calculation.Core.Trace2DResults.TraceErrorCodes F public const System.String EffectsShouldHaveTwoColumnsOnTheYEquation
   Quire.Calculation.Core.Trace2DResults.TraceErrorCodes F public const System.String ErrorTooManyPointsInResult
@@ -669,6 +785,8 @@
   Quire.Calculation.Core.Trace2DResults.TraceErrorCodes F public const System.String UnitsAreNotSupportedInRange
   Quire.Calculation.Core.Trace2DResults.TraceErrorCodes F public const System.String UnsupportedType
   Quire.Calculation.Core.Trace2DResults.TraceErrorCodes M public static CreateTooManyPointsInResultMessage`0(System.Int32) -> System.String
+  Quire.Calculation.Core.Trace2DResults.TraceResultAnalyzer M private static AddOneDataSegment`0(System.Collections.Generic.IList`1<System.Windows.Point>,System.Double,System.Collections.Generic.IList`1<System.Double>,System.Boolean) -> System.Boolean
+  Quire.Calculation.Core.Trace2DResults.TraceResultAnalyzer M private static StringVectorToIndices`0(Quire.Calculation.Core.IStringListResultNode,System.Int32) -> System.Collections.Generic.IList`1<System.Double>
   Quire.Calculation.Core.Trace2DResults.TraceResultAnalyzer M public static AddOneDataSegment`0(System.Collections.Generic.IList`1<System.Windows.Point>,System.Collections.Generic.IList`1<System.Double>,System.Collections.Generic.IList`1<System.Double>,System.Boolean) -> System.Boolean
   Quire.Calculation.Core.Trace2DResults.TraceResultAnalyzer M public static BuildPointsForBoxes`0(System.Collections.Generic.IList`1<System.Windows.Point>,System.Collections.Generic.IList`1<System.Double>,System.Collections.Generic.IList`1<System.Collections.Generic.IList`1<System.Double>>) -> System.Boolean
   Quire.Calculation.Core.Trace2DResults.TraceResultAnalyzer M public static BuildPointsForWaterfall`0(System.Collections.Generic.IList`1<System.Windows.Point>,System.Collections.Generic.IList`1<System.Collections.Generic.IList`1<System.Double>>,System.Collections.Generic.IList`1<System.Collections.Generic.IList`1<System.Double>>) -> System.Boolean
@@ -683,6 +801,7 @@
   Quire.Calculation.Core.Trace2DResults.TraceType V Lines = 0
   Quire.Calculation.Core.Trace2DResults.TraceType V Stems = 6
   Quire.Calculation.Core.Trace2DResults.TraceType V Waterfall = 7
+  Quire.Calculation.Core.Trace2DResults.TraceTypeDefinitions F private static readonly System.Collections.Generic.Dictionary`2<Quire.Calculation.Core.Trace2DResults.TraceType,Quire.Calculation.Core.Trace2DResults.TraceTypeRange> _traceColumnsRanges
   Quire.Calculation.Core.Trace2DResults.TraceTypeDefinitions F public const Quire.Calculation.Core.Trace2DResults.TraceType AutoTypeForMultipleColumns
   Quire.Calculation.Core.Trace2DResults.TraceTypeDefinitions F public const Quire.Calculation.Core.Trace2DResults.TraceType AutoTypeForSingleColumn
   Quire.Calculation.Core.Trace2DResults.TraceTypeDefinitions F public const Quire.Calculation.Core.Trace2DResults.TraceType ReadAsRowsType
@@ -692,6 +811,7 @@
   Quire.Calculation.Core.Trace2DResults.TraceTypeDefinitions M public static GetMinResultColumns`0(Quire.Calculation.Core.Trace2DResults.TraceType) -> System.Int32
   Quire.Calculation.Core.Trace2DResults.TraceTypeRange P End : System.Int32 get:public set:public
   Quire.Calculation.Core.Trace2DResults.TraceTypeRange P Start : System.Int32 get:public set:public
+  Quire.Calculation.Core.Trace2DResults.VectorListResultNode F private readonly System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode> _vectors
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode M public .ctor`0(System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>,System.Int32,Quire.Calculation.Core.VectorsType) -> System.Void
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode M public GetVectorValuesType`0(System.Int32) -> Quire.Calculation.Core.ResultValueType
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode M public override Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
@@ -700,32 +820,66 @@
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode P Count : System.Int32 get:public
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode P ElementsCount : System.Int32 get:public
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode P Item[System.Int32] : Quire.Calculation.Core.IListResultNode get:public set:public
-  Quire.Calculation.Core.Trace2DResults.VectorListResultNode P SingleVectorLength : System.Int32 get:public
+  Quire.Calculation.Core.Trace2DResults.VectorListResultNode P SingleVectorLength : System.Int32 get:public set:private
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode P Vectors : System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode> get:public
-  Quire.Calculation.Core.Trace2DResults.VectorListResultNode P VectorsType : Quire.Calculation.Core.VectorsType get:public
+  Quire.Calculation.Core.Trace2DResults.VectorListResultNode P VectorsType : Quire.Calculation.Core.VectorsType get:public set:private
   Quire.Calculation.Core.Trace2DResults.VectorListResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
+  Quire.Calculation.Core.Trace2DResults.VectorsConverterBase M private static IsOfExactPlainType`0(Quire.Calculation.Core.PlainDataTypes,Quire.Calculation.Core.PlainDataTypes) -> System.Boolean
   Quire.Calculation.Core.Trace2DResults.VectorsConverterBase M public .ctor`0() -> System.Void
   Quire.Calculation.Core.Trace2DResults.VectorsConverterBase M public static GetVectorsValueType`0(Quire.Calculation.Core.PlainDataTypes) -> Quire.Calculation.Core.ResultValueType
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private Quire.Calculation.Core.ResultValueType _commonValueType
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private System.Func`3<System.Int32,System.Int32,System.Collections.Generic.IList`1<System.Collections.IList>> _getPlainDataValues
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private readonly Quire.Calculation.Core.ILazyMatrixResultNode _node
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private readonly Quire.Calculation.Core.IMatrixValueDataAccessorWrapper _plainDataAccessor
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private readonly System.Boolean _readAsColumns
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private readonly System.Int32 _singleVectorLength
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter F private readonly System.Int32 _vectorsNum
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter M private BuildResultVectors`0(System.Int32) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>
+  Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter M private GetPlainDataValues`0(System.Int32,System.Int32) -> System.Collections.Generic.IList`1<System.Collections.IList>
   Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter M public GetCommonType`0() -> Quire.Calculation.Core.ResultValueType
   Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter M public ReadVectors`0(System.Int32) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>
   Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter M public static Create`0(Quire.Calculation.Core.ILazyMatrixResultNode,System.Boolean) -> Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter
   Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter P ReadAsColumns : System.Boolean get:public
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private Quire.Calculation.Core.ResultValueType _commonValueType
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private System.Boolean _hasCache
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private System.Collections.Generic.List`1<Quire.Calculation.Core.IListResultNode> _vectorsRes
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private System.Func`3<System.Int32,System.Int32,Quire.Calculation.Core.IResultNode> _readElement
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private readonly Quire.Calculation.Core.IMatrixResultNode _node
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private readonly System.Boolean _readAsColumns
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private readonly System.Int32 _singleVectorLength
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter F private readonly System.Int32 _vectorsNum
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private ConvertAndCache`0() -> System.Void
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private GetFirstMeaningfulValueType`0(System.Int32,out System.Int32&) -> System.Nullable`1<Quire.Calculation.Core.ResultValueType>
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private ReadDoubleValues`0(System.Int32,System.Int32) -> System.Collections.Generic.IList`1<System.Double>
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private ReadElement`0(System.Int32,System.Int32) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private ReadStringValues`0(System.Int32,System.Int32) -> System.Collections.Generic.IList`1<System.String>
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private TryConvertSingleVector`0(System.Int32,out Quire.Calculation.Core.PlainDataTypes&) -> Quire.Calculation.Core.IListResultNode
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private static ReadDoubleOrNone`0(Quire.Calculation.Core.IResultNode,out System.Double&) -> System.Boolean
+  Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M private static ReadString`0(Quire.Calculation.Core.IResultNode,out System.String&) -> System.Boolean
   Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M public GetCommonType`0() -> Quire.Calculation.Core.ResultValueType
   Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M public ReadVectors`0(System.Int32) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>
   Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter M public static Create`0(Quire.Calculation.Core.IMatrixResultNode,System.Boolean) -> Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter
   Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter P ReadAsColumns : System.Boolean get:public
+  Quire.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1 F private static readonly System.Runtime.Serialization.Json.DataContractJsonSerializer _jSonVectorsListSerializer
   Quire.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1 M internal static Read`0(System.IO.Stream) -> System.Collections.Generic.IList`1<!0>
   Quire.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1 M internal static Write`0(System.IO.Stream,!0[]) -> System.Void
+  Quire.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1 M private static CreateListNode`0(System.Collections.Generic.IList`1<!0>) -> Quire.Calculation.Core.IListResultNode
   Quire.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1 M public static Read`0(System.IO.Stream,System.Int32) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>
   Quire.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1 M public static Write`0(System.IO.Stream,System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>,System.Int32) -> System.Void
   Quire.Calculation.Core.Unit F public System.Int32 PowerDenominator
   Quire.Calculation.Core.Unit F public System.Int32 PowerNumerator
   Quire.Calculation.Core.Unit F public System.String CanonicalName
   Quire.Calculation.Core.Unit F public System.String Symbol
+  Quire.Calculation.Core.UnitDescriptor F private System.Collections.Generic.List`1<Quire.Calculation.Core.UnitSystems> _baseUnitSystems
+  Quire.Calculation.Core.UnitDescriptor F private System.Collections.Generic.List`1<Quire.Calculation.Core.UnitSystems> _derivedUnitSystems
+  Quire.Calculation.Core.UnitDescriptor F private System.Collections.Generic.List`1<Quire.Calculation.Core.UnitSystems> _excludeUnitSystems
+  Quire.Calculation.Core.UnitDescriptor F private System.String _key
+  Quire.Calculation.Core.UnitDescriptor F private System.String _rl
   Quire.Calculation.Core.UnitDescriptor F public const System.String CGS_Keys
   Quire.Calculation.Core.UnitDescriptor F public const System.String KeyPropertyName
   Quire.Calculation.Core.UnitDescriptor F public const System.String QuantityPropertyName
   Quire.Calculation.Core.UnitDescriptor F public const System.String RL_prefix
+  Quire.Calculation.Core.UnitDescriptor M private SetUnitSystem`0(System.Collections.Generic.List`1<Quire.Calculation.Core.UnitSystems>&,Quire.Calculation.Core.UnitSystems) -> System.Void
   Quire.Calculation.Core.UnitDescriptor M public .ctor`0() -> System.Void
   Quire.Calculation.Core.UnitDescriptor M public CompareTo`0(System.Object) -> System.Int32
   Quire.Calculation.Core.UnitDescriptor M public override ToString`0() -> System.String
@@ -756,11 +910,12 @@
   Quire.Calculation.Core.UnitSystems V Custom = 3
   Quire.Calculation.Core.UnitSystems V SI = 0
   Quire.Calculation.Core.UnitSystems V US = 1
+  Quire.Calculation.Core.UnitedValueSimpleResultNode M private isUnitsEquals`0(System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit>) -> System.Boolean
   Quire.Calculation.Core.UnitedValueSimpleResultNode M public .ctor`0() -> System.Void
   Quire.Calculation.Core.UnitedValueSimpleResultNode M public AddUnit`0(System.String,System.Int32,System.Int32) -> System.Void
   Quire.Calculation.Core.UnitedValueSimpleResultNode M public override Accept`0(Quire.Calculation.Core.IResultNodeVisitor) -> System.Void
   Quire.Calculation.Core.UnitedValueSimpleResultNode M public override Equals`0(System.Object) -> System.Boolean
-  Quire.Calculation.Core.UnitedValueSimpleResultNode P Units : System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit> get:public
+  Quire.Calculation.Core.UnitedValueSimpleResultNode P Units : System.Collections.Generic.IList`1<Quire.Calculation.Core.Unit> get:public set:private
   Quire.Calculation.Core.UnitedValueSimpleResultNode P Value : Quire.Calculation.Core.SimpleResultNode get:public set:public
   Quire.Calculation.Core.UnitedValueSimpleResultNode X Quire.Calculation.Core.IResultNode::get_ValueType
   Quire.Calculation.Core.UnitedValueSimpleResultNode X Quire.Calculation.Core.IUnitedValueResultNode::get_DisplayValue
@@ -770,6 +925,27 @@
   Quire.Calculation.Core.VectorsType V Columns = 0
   Quire.Calculation.Core.VectorsType V Rows = 1
   Quire.Calculation.Core.WhitespacePreservingStringCollection M public .ctor`0() -> System.Void
+  Quire.Calculation.Core.XmcdToIResultNodeTransform F private const System.String ErrorAttributeConversionToEnum
+  Quire.Calculation.Core.XmcdToIResultNodeTransform F private readonly Quire.Calculation.Core.IResultNodeFactory _resultNodeFactory
+  Quire.Calculation.Core.XmcdToIResultNodeTransform F private static readonly System.Xml.Xsl.XslCompiledTransform _resultVectorUnescapingXslt
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private AddElementsToMatrix`0(System.Collections.Generic.IEnumerable`1<System.Xml.XmlNode>,Quire.Calculation.Core.IEagerMatrixResultNode) -> System.Void
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private BuildComplex`0(System.Xml.XmlNode) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private BuildDisplayMatrix`0(System.Xml.XmlNode,System.Int32,System.Int32,Quire.TableSize) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private BuildMatrix`0(System.Xml.XmlNode) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private BuildPlotTraceResult`0(System.Xml.XmlNode) -> Quire.Calculation.Core.ITrace2DResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private BuildSymbolic`0(System.Xml.XmlNode) -> Quire.Calculation.Core.ISymbolicResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private BuildUnitedValue`0(System.Xml.XmlNode) -> Quire.Calculation.Core.IUnitedValueResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private MakeResultNode`0(System.Xml.XmlNode) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static BuildAxisInfo`0(System.Xml.XmlNode) -> Quire.Calculation.Core.ITraceAxisInfo
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static BuildDataVectors`0(System.Xml.XmlNode) -> Quire.Calculation.Core.IVectorListResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static BuildDataVectors`0(System.Xml.XmlNode,System.String) -> Quire.Calculation.Core.IVectorListResultNode
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static GetIntegerFromAttribute`0(System.Xml.XmlNode,System.String,System.Int32) -> System.Int32
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static GetUnitPowerDenominator`0(System.Xml.XmlNode) -> System.Int32
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static GetUnitPowerNumerator`0(System.Xml.XmlNode) -> System.Int32
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static ReadJsonVectorsAsStream`0(System.Xml.XmlNode,Quire.Calculation.Core.ResultValueType,System.Int32) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static ReadJson`0(System.IO.Stream,Quire.Calculation.Core.ResultValueType,System.Int32) -> System.Collections.Generic.IList`1<Quire.Calculation.Core.IListResultNode>
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static ReadUnitMonomial`0(Quire.Calculation.Core.IUnitedValueResultNode,System.Xml.XmlNode) -> System.Void
+  Quire.Calculation.Core.XmcdToIResultNodeTransform M private static TryParseUsingIntermediate`2(System.String,out !!1&) -> System.Boolean
   Quire.Calculation.Core.XmcdToIResultNodeTransform M public .ctor`0(Quire.Calculation.Core.IResultNodeFactory) -> System.Void
   Quire.Calculation.Core.XmcdToIResultNodeTransform M public Transform`0(System.String) -> Quire.Calculation.Core.IResultNode
   Quire.Calculation.Core.XmcdToIResultNodeTransform M public Transform`0(System.Xml.XmlNode) -> Quire.Calculation.Core.IResultNode

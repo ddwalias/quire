@@ -12,6 +12,8 @@ namespace Quire.Controls.IO;
 internal static partial class CalculationOverridesHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty CalculationOverridesProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.IO.ICalculationOverrideContainer GetCalculationOverrides(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -36,6 +38,10 @@ internal static partial class CalculationOverridesHandler
     private partial class CalculationOverrideContainer : global::Quire.Controls.IO.ICalculationOverrideContainer
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.IO.CalculationOverrides> _sExprToCalcOverridesMap;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.IList<string> _sExprOrderList;
+        [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public CalculationOverrideContainer(global::System.Collections.Generic.IList<string> sExprOrderList) { }
@@ -47,6 +53,8 @@ internal static partial class CalculationOverridesHandler
         public global::Quire.Calculation.Core.Support.ISimpleCalculatable RemoveCalculationOverrideForSExpr(string sExprKey, global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public bool IsEmpty(string sExprKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> GetCalculatableOverrides(global::System.Func<global::Quire.Controls.IO.CalculationOverrides, global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable>> selector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.ICalculatable> RemoveCalculationOverrides(global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]

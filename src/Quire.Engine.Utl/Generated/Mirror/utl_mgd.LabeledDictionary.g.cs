@@ -12,6 +12,10 @@ namespace Quire.utl_mgd;
 public partial class LabeledDictionary : global::System.Collections.IDictionary
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_table;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_locked;
+    [global::Quire.Mirror.MirrorStub]
     public virtual object SyncRoot { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsSynchronized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

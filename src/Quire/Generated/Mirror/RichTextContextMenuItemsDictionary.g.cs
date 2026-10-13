@@ -14,6 +14,8 @@ public partial class RichTextContextMenuItemsDictionary : global::System.Windows
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type[] KeysOwnerTypes;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public RichTextContextMenuItemsDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

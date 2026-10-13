@@ -14,7 +14,39 @@ internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComp
     [global::Quire.Mirror.MirrorStub]
     public const uint FirstTraceId = 1u;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCalculatable _minMax;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _componentHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _subscriptHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _traceHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _xyplotHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _xMinScaleHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _xMaxScaleHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _xMinHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private uint _xMaxHandle;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly string ChartVariableWithLabel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper _xCalculatable;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper _yCalculatable;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus _syncStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.CalculatingStatus _calcStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isConnectedToTheEngine;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _currentError;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper XCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -71,6 +103,14 @@ internal partial class ChartTraceCalculatable : global::Quire.Controls.ExcelComp
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupChild(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnHookupChild(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnUpdateTraceWithDeserializedError(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Collections.Generic.List<uint> traceIds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateChildren(global::Quire.Controls.ExcelComponent.Model.ChartTraceDataToUpdate dataToUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

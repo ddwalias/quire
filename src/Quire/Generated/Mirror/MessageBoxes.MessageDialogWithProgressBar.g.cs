@@ -12,6 +12,18 @@ namespace Quire.MessageBoxes;
 public partial class MessageDialogWithProgressBar : global::Quire.Controls.Core.Dialogs.MessageDialogBase<global::Quire.Controls.Core.Dialogs.SaveAndSyncDialogResult>, global::System.Windows.Markup.IComponentConnector, global::System.Windows.Markup.IStyleConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.INotifyProgress _progressBarProgressNotifier;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.TextBlock _message;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.TextBlock _progressBarMessage;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ProgressBar _progressBar;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ItemsControl _buttons;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public string ProgressBarMessageFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.TextBlock Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,7 +32,13 @@ public partial class MessageDialogWithProgressBar : global::Quire.Controls.Core.
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.ItemsControl Buttons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private MessageDialogWithProgressBar(global::System.Windows.Window ownerWindow, string title, global::Quire.Wpf.ProgressBarData progressBarData) : base(default(global::System.Windows.Window), default(string)) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Dialogs.SaveAndSyncDialogResult Show(global::System.Windows.Window ownerWindow, string message, string title, global::Quire.Wpf.ProgressBarData progressBarData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleProgressStopped(bool finished) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleProgressValueChanged(object sender, global::System.ComponentModel.ProgressChangedEventArgs progressArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnClosed(global::System.EventArgs e) => base.OnClosed(e);
     [global::Quire.Mirror.MirrorStub]
@@ -29,6 +47,4 @@ public partial class MessageDialogWithProgressBar : global::Quire.Controls.Core.
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private MessageDialogWithProgressBar() : base(default(global::System.Windows.Window), default(string)) { }
 }

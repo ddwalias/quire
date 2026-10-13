@@ -16,11 +16,31 @@ public partial class CustomColorCanvas : global::System.Windows.Controls.UserCon
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty HueProperty;
     [global::Quire.Mirror.MirrorStub]
+    private const double CursorKeyboardYoffset = 17d;
+    [global::Quire.Mirror.MirrorStub]
+    private double _cursorKeyboardScaleX;
+    [global::Quire.Mirror.MirrorStub]
+    private double _cursorKeyboardScaleY;
+    [global::Quire.Mirror.MirrorStub]
+    private const int TargetScreenSizeHorizontal = 1920;
+    [global::Quire.Mirror.MirrorStub]
+    private const int TargetScreenSizeVertical = 1050;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Resources.StreamResourceInfo cursorMouseStreamInfo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Input.Cursor cursorMouse;
+    [global::Quire.Mirror.MirrorStub]
+    private const double MaxDegrees = 360d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double MaxPresent = 100d;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.CustomcolorPicker.CustomColorCanvas customColorCanvas;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Canvas canvas;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Shapes.Path cursorKeyboard;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public double Saturation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -35,6 +55,24 @@ public partial class CustomColorCanvas : global::System.Windows.Controls.UserCon
     ~CustomColorCanvas() { } // stub finalizers must not throw: they also run for objects whose constructor threw
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnHslChanged(global::System.Windows.DependencyObject target, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnMouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnMouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleArrowKeys(global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnPreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnGotKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Canvas_OnMouseEnter(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

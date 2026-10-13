@@ -12,11 +12,27 @@ namespace Quire.Media3D;
 public abstract partial class FlatSurfaceMeshBase : global::Quire.Media3D.MeshGeneratorBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D[] verticesBase;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3D[] normalsBase;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] indicesBase;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] texturesBase;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SlicesProperty;
     [global::Quire.Mirror.MirrorStub]
     public int Slices { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateSlices(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void TriangleSubdivide(global::System.Windows.Media.Media3D.Point3DCollection vertices, global::System.Windows.Media.Media3D.Vector3DCollection normals, global::System.Windows.Media.Int32Collection indices, global::System.Windows.Media.PointCollection textures) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D Point3DWeight(global::System.Windows.Media.Media3D.Point3D one, global::System.Windows.Media.Media3D.Point3D two, double wt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Vector3D Vector3DWeight(global::System.Windows.Media.Media3D.Vector3D one, global::System.Windows.Media.Media3D.Vector3D two, double wt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point PointWeight(global::System.Windows.Point one, global::System.Windows.Point two, double wt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected FlatSurfaceMeshBase() { }
 }

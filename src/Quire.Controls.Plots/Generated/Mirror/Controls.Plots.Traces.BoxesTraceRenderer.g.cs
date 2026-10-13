@@ -17,4 +17,14 @@ internal partial class BoxesTraceRenderer : global::Quire.Controls.Plots.Traces.
     public BoxesTraceRenderer(global::Quire.Controls.Plots.Presenter.IPlotTrace ownerTrace, global::Quire.Controls.Plots.Traces.HorizontalTraceOrderInfoProvider orderInfoProvider) : base(default(global::Quire.Controls.Plots.Presenter.IPlotTrace), default(global::Quire.Controls.Plots.Traces.ITraceOrderInfoProvider)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateBoxes(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawBox(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Point point1, global::System.Windows.Point point2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawMedianLine(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Point point1, global::System.Windows.Point point2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawWhisker(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollection, double xMid, double width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawOutliers(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollection, double xStart, double width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

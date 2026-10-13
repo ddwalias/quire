@@ -12,6 +12,20 @@ namespace Quire.DOE;
 public partial class FractFact : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private string[] m_gens;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] m_gens_sgn;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_q;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>> m_fractDefaults;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.List<string>> m_sdefRel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<string> m_defRel;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_keepOldOrder;
+    [global::Quire.Mirror.MirrorStub]
     public string Generators { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int nfactors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -22,11 +36,21 @@ public partial class FractFact : global::Quire.DOE.DoeBase
     [global::Quire.Mirror.MirrorStub]
     public FractFact(string gens, bool keepOldOrder) { }
     [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool lookupDefaultGens() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void defineDefaultGens() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.List<string>> getSortedDefRelation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<string> getDefiningRelation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int getDefWordSgn(string[] combs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string getDefWord(string[] combs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int getResolution() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,12 @@ namespace Quire.PersistentData;
 public partial class headersContainerRegionCollectionSerializer : global::Quire.PersistentData.IRegionCollectionSerializer
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.headersContainerWrapper _containerWrapper;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
+    [global::Quire.Mirror.MirrorStub]
     public string RootNodeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.headersContainerWrapper ContainerWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -21,6 +27,8 @@ public partial class headersContainerRegionCollectionSerializer : global::Quire.
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public headersContainerRegionCollectionSerializer() { }
 }

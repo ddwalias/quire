@@ -12,9 +12,21 @@ namespace Quire.Engine;
 public partial class EngMailbox : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_nonempty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_notbusy;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Queue m_messages;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_stopped;
+    [global::Quire.Mirror.MirrorStub]
     public EngMailbox() { }
     [global::Quire.Mirror.MirrorStub]
     public void Stop() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeEngMailbox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PutMessage(int h, global::Quire.Engine.NodeStatus s, int client_cookie, int trigger_handle, int trigger_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

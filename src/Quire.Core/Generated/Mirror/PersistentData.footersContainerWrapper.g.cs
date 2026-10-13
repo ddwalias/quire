@@ -14,6 +14,8 @@ public partial class footersContainerWrapper : global::Quire.PersistentData.IReg
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "footers";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentData.cachedWorksheetRegionType.footersContainer _container;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.cachedWorksheetRegionType.footersContainer Container { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.footer Footer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

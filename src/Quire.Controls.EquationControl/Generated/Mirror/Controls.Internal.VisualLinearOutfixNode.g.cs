@@ -18,6 +18,20 @@ internal partial class VisualLinearOutfixNode : global::Quire.Controls.Internal.
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Controls.Internal.Fence _rightFence;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> _leftFenceFactory;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction0<global::Quire.Controls.Internal.Fence> _rightFenceFactory;
+    [global::Quire.Mirror.MirrorStub]
+    private double _opacity;
+    [global::Quire.Mirror.MirrorStub]
+    private double _x;
+    [global::Quire.Mirror.MirrorStub]
+    private double _y;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _horizontal;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly double SymbolEdge;
+    [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -54,7 +68,13 @@ internal partial class VisualLinearOutfixNode : global::Quire.Controls.Internal.
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
+    private void CreateFences() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence CreateLeftFence() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Fence CreateRightFence() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -66,6 +66,8 @@ public partial class RuntimeOptions
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.UnitSystem s_default_unit_system;
     [global::Quire.Mirror.MirrorStub]
+    private static object s_init;
+    [global::Quire.Mirror.MirrorStub]
     public void SyncToThread() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveUnitSystem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

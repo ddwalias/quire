@@ -12,6 +12,16 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class bi : global::Quire.Native.PtcEquationEditor.bf
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly bool a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNode b;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.MathNode c;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.a2 d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Nullable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> e;
+    [global::Quire.Mirror.MirrorStub]
     public bi(global::Quire.Native.PtcEquationEditor.a5 A_0, bool A_1, global::Quire.EquationEditor.Tree.MathNode A_2, global::Quire.EquationEditor.Tree.MathNode A_3) : base(default(global::Quire.Native.PtcEquationEditor.a5)) { }
     [global::Quire.Mirror.MirrorStub]
     public bi(global::Quire.Native.PtcEquationEditor.a5 A_0, bool A_1, global::Quire.EquationEditor.Tree.MathNode A_2, global::System.Nullable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> A_3, global::Quire.EquationEditor.Tree.MathNode A_4) : base(default(global::Quire.Native.PtcEquationEditor.a5)) { }

@@ -12,6 +12,10 @@ namespace Quire.Mpl;
 public partial class MplSignature
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type return_type;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] parameter_types;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Type RetType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Type[] ArgTypes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

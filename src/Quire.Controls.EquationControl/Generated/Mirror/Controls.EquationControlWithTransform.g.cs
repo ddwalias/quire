@@ -12,6 +12,20 @@ namespace Quire.Controls;
 public partial class EquationControlWithTransform : global::Quire.Controls.Core.AttachedBehavior.IOneTimePropertyOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double InnerMargin = 4d;
+    [global::Quire.Mirror.MirrorStub]
+    private double _desiredNumericHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.HorizontalAlignment _hAlignment;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.VerticalAlignment _vAlignment;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.ScaleTransform _scaleTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.TranslateTransform _translateTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.EquationControl _control;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.EquationControl Control { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double DesiredNumericHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -27,4 +41,10 @@ public partial class EquationControlWithTransform : global::Quire.Controls.Core.
     public EquationControlWithTransform(double desiredNumericHeight) { }
     [global::Quire.Mirror.MirrorStub]
     public EquationControlWithTransform(global::Quire.Controls.EquationControl control, double desiredNumericHeight) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void SetTransform() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeTranslateTransformHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChangeTranslateTransformVertically() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

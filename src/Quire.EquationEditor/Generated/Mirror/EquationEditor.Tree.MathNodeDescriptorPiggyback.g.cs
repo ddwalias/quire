@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.Tree;
 public partial class MathNodeDescriptorPiggyback : global::Quire.EquationEditor.Tree.MathNodeDescriptor
 {
     [global::Quire.Mirror.MirrorStub]
+    private string b3;
+    [global::Quire.Mirror.MirrorStub]
+    private bool b4;
+    [global::Quire.Mirror.MirrorStub]
     public override string DescriptorName { get => base.DescriptorName; }
     [global::Quire.Mirror.MirrorStub]
     public MathNodeDescriptorPiggyback(string piggyBackName, string baseDescriptorName) : base(default(string)) { }

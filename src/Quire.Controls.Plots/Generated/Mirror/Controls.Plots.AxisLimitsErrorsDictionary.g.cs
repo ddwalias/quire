@@ -32,6 +32,8 @@ public partial class AxisLimitsErrorsDictionary : global::System.Windows.Resourc
     [global::Quire.Mirror.MirrorStub]
     public const string TickmarksHasUnits = "Quire.Plots.TICKMARKS_HAS_UNITS";
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public AxisLimitsErrorsDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

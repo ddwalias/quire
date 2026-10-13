@@ -12,6 +12,32 @@ namespace Quire.Mcd;
 public partial class UnitSystem : global::System.MarshalByRefObject
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_name;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_code;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_ro_number;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_guid;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_rank;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Unit[] m_base;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Type[] m_dims;
+    [global::Quire.Mirror.MirrorStub]
+    private double[,] m_ltog;
+    [global::Quire.Mirror.MirrorStub]
+    private double[,] m_gtol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_defs;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Unit[] m_basis_orig;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Unit[] m_defaults_orig;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_unit_syms;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint Code { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -57,6 +83,18 @@ public partial class UnitSystem : global::System.MarshalByRefObject
     public int[] ChangeBasis(double[] local) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsUnitSymbol(string sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int GetDimensionIndex(global::Quire.Mcd.Type dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.Type.Product GetDimensions(string signature) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double[,] Inverse(double[,] matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsSmall(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int Count(int[] array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int Count(double[] array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Mcd.UnitSystem+Default, mplrun")]
     private partial class Default : global::System.IComparable

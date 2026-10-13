@@ -12,6 +12,12 @@ namespace Quire.gen;
 internal partial class MethodFunction : global::Quire.gen.IlEmit
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_arity;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_return_type;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] m_param_types;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe MethodFunction(string f, global::Quire.gen.Closure clo, global::System.Type ty, global::System.Type[] tys) : base(default(void*), default(global::Quire.gen.IlEmit)) { }
     [global::Quire.Mirror.MirrorStub]
     public unsafe MethodFunction(sbyte* f, global::Quire.gen.Closure clo) : base(default(void*), default(global::Quire.gen.IlEmit)) { }

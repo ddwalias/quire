@@ -17,4 +17,16 @@ public static partial class WorksheetBehavior
     public static void SetUIEventsHandler(global::System.Windows.UIElement element, global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Worksheet.IWorksheetViewModel GetUIEventsHandler(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnUIEventsHandlerChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool LetParentHandleRequest(global::System.Windows.DependencyObject originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HookupMouseEvents(global::System.Windows.UIElement element, global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void PreviewMouseDownHandler(global::System.Windows.Input.MouseButtonEventArgs args, global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void MouseUpHandler(global::System.Windows.Input.MouseButtonEventArgs args, global::Quire.Controls.Worksheet.IWorksheetViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HookupBuiltinCommands(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

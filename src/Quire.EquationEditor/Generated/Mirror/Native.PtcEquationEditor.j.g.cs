@@ -12,6 +12,18 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class j : global::Quire.EquationEditor.View.IMathViewTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.View.IVisualFactory a__;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction0<global::Quire.EquationEditor.View.IVisualMathNode>> b;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Native.PtcEquationEditor.j.a_> c;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction1<global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.Tree.MathNode>> d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.IEquationEditorSettings e;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IFrameworkElementFacade f;
+    [global::Quire.Mirror.MirrorStub]
     public j(global::Quire.EquationEditor.View.IVisualMathRegionNode A_0, global::Quire.EquationEditor.IEquationEditorSettings A_1) { }
     [global::Quire.Mirror.MirrorStub]
     public j(global::Quire.EquationEditor.View.IVisualFactory A_0, global::Quire.EquationEditor.IEquationEditorSettings A_1) { }
@@ -19,6 +31,8 @@ internal partial class j : global::Quire.EquationEditor.View.IMathViewTransforme
     protected static global::Quire.Controls.Core.IFrameworkElementFacade a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IVisualMathNode Transform(global::Quire.EquationEditor.Tree.MathNode subTreeRoot, ref global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.View.IVisualMathNode> modelToViewMap, global::Quire.Controls.Core.IMathFormat mathFormatToApply, bool overideLabelColor, object labelIdFormatDictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.View.IVisualMathNode a(global::Quire.EquationEditor.Tree.MathNode A_0, global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.View.IVisualMathNode> A_1, global::Quire.Controls.Core.IMathFormat A_2, bool A_3, object A_4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("j+a, Ptc.EquationEditor")]
     private partial struct a_

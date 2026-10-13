@@ -12,6 +12,22 @@ namespace Quire;
 public static partial class FrameworkVersion
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<global::Quire.Pair<global::Quire.FrameworkVersion.Versions, int>> _registryReleaseKeyLegend;
+    [global::Quire.Mirror.MirrorStub]
+    private const string RegistryFrameworkVersionsKey = "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP";
+    [global::Quire.Mirror.MirrorStub]
+    private const string RegistryFrameworkVersionKey_4 = "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full";
+    [global::Quire.Mirror.MirrorStub]
+    private const string RegistryFrameworkVersionRelease = "Release";
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.FrameworkVersion.MajorVersions _majorVersion;
+    [global::Quire.Mirror.MirrorStub]
+    private static int _versionID;
+    [global::Quire.Mirror.MirrorStub]
+    private static void InitializeRegistryReleaseKeyLegendDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IdentifyFrameworkVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsGreaterThan(global::Quire.FrameworkVersion.Versions frameworkVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLesserThan(global::Quire.FrameworkVersion.Versions frameworkVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

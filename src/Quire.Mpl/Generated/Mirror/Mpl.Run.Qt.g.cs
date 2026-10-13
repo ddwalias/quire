@@ -14,6 +14,8 @@ public partial class Qt : global::Quire.Mpl.Run.Sexpr
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Sexpr Field1;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.Sym Qt_constructor;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quotation { get => base.quotation; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }

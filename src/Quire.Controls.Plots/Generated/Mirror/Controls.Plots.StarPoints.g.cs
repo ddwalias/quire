@@ -12,7 +12,41 @@ namespace Quire.Controls.Plots;
 internal partial class StarPoints
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] _primaryPoints;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] _secondaryPoints;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] _mergedPoints;
+    [global::Quire.Mirror.MirrorStub]
+    private int _rays;
+    [global::Quire.Mirror.MirrorStub]
+    private double _radius;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _center;
+    [global::Quire.Mirror.MirrorStub]
+    private StarPoints(int rays, double radius, global::System.Windows.Point center) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.PointCollection generateStarPoints(int rays, double radius, global::System.Windows.Point center) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private StarPoints() { }
+    private static double getX(double radius, double startAngle, double stepAngle, int iPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double getY(double radius, double startAngle, double stepAngle, int iPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculatePoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AdjustToCenter(global::System.Windows.Point[] points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] MergePoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double FindSecondaryRadius() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void findLineCoefficients(out double ac, out double b, global::System.Windows.Point point1, global::System.Windows.Point point2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::System.Windows.Point> findIntersectionPoint(double a1, double b1, double a2, double b2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] BuildPrimaryPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] BuildSecondaryPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point[] BuildPoints(double startAngle, double radius) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

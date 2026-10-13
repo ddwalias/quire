@@ -12,7 +12,13 @@ namespace Quire.msclr;
 internal partial class @lock : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private object m_object;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_locked;
+    [global::Quire.Mirror.MirrorStub]
     public @lock(global::Quire.Mcd.RuntimeOptions _object) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildelock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool is_locked() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

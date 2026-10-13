@@ -12,7 +12,19 @@ namespace Quire.Controls.Plots;
 public partial class PlotEquation : global::Quire.Controls.Plots.PlotEquationBase, global::Quire.Controls.Plots.Presenter.IPlotEquationScaled, global::Quire.Controls.Plots.Presenter.IPlotEquation, global::Quire.Controls.Core.IDelegateFocus, global::System.Windows.IInputElement, global::Quire.Controls.Plots.Presenter.IPlotEquationBase, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IMathFormatForDeserialization, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Wpf.PreemptiveCommandBinding _navigateToEquationStart;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.RubberBandHighlighter _errorFrame;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.ViewModel.IPlotEquationViewModelBase _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.PropertyChangedNotificationHandler _propertyChangedNotificationHandler;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey _scalingHeaderVisibilityPropertyKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ScalingHeaderVisibilityProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CalcIsDisabledProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -23,6 +35,8 @@ public partial class PlotEquation : global::Quire.Controls.Plots.PlotEquationBas
     internal global::Quire.Controls.EquationControl _exp;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.ScaledEquationControl _scaling;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IEquationControl> ContainedEquationControls { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -88,13 +102,55 @@ public partial class PlotEquation : global::Quire.Controls.Plots.PlotEquationBas
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquationScaled> ScalingChanged;
     [global::Quire.Mirror.MirrorStub]
+    private void ComputeBaseLine(double expHeight, double scalingHeight, double zEqBaseLineY) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     public PlotEquation() { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSubEquationExpressionChanged(global::Quire.Controls.Core.IEquationControl subEquation) => base.OnSubEquationExpressionChanged(subEquation);
     [global::Quire.Mirror.MirrorStub]
+    private void PlotCalculatableErrorChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanNavigateRight(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanNavigateLeft(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnNavigateRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnNavigateLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewGotKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNavigateToEquationStart(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNavigateToEquationEnd(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDelete(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanNavigate(global::Quire.Controls.Core.IEquationControl control, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NavigateToExp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NavigateToScaling() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ShowOrHideScaling(bool isEquationListKeyboardFocusWithin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowScaling() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HideScaling() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowScalingHeader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HideScalingHeader() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string FormatPlotEquationSExpression(string equationSExpression, string unitSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -102,13 +158,39 @@ public partial class PlotEquation : global::Quire.Controls.Plots.PlotEquationBas
     [global::Quire.Mirror.MirrorStub]
     public void SetRegionXmlNode(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetScalingXmlNode(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetScalingSExpression(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetExpressionXmlNode(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetExpressionSExpression(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode GetRegionXmlNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IEquationControl GetUserScalingExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlNode GetExpXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireScalingChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Commit(bool fireEvent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void CommitEquationAvoidingEvents(global::Quire.Controls.Core.IEquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRequestEvaluation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRequestRemove(global::Quire.Controls.Plots.PlotEquation plotEquation, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MergeScalingExpression(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Unit> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void MergeUnitMonomial(global::Quire.Controls.EquationControl eq, global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.plotEquation GetDataObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

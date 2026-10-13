@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.AttachedBehavior;
 public partial class PropertyValueKeeper : global::Quire.Controls.Core.AttachedBehavior.PropertyValueBase, global::Quire.Controls.Core.AttachedBehavior.IOneTimePropertyOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _propertyPath;
+    [global::Quire.Mirror.MirrorStub]
     public string PropertyPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void SetBinding(global::System.Windows.DependencyObject sourceObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

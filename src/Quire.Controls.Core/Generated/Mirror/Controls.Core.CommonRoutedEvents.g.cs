@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public partial class CommonRoutedEvents
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent TraversedFocusEvent;

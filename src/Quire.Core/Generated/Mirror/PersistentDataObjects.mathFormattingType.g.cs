@@ -12,6 +12,28 @@ namespace Quire.PersistentDataObjects;
 public partial class mathFormattingType
 {
     [global::Quire.Mirror.MirrorStub]
+    private string fontFamilyField;
+    [global::Quire.Mirror.MirrorStub]
+    private double fontSizeField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool fontSizeFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private bool boldField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool boldFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private bool italicField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool italicFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private bool underlineField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool underlineFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private string foregroundColorField;
+    [global::Quire.Mirror.MirrorStub]
+    private string backgroundColorField;
+    [global::Quire.Mirror.MirrorStub]
     public string FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

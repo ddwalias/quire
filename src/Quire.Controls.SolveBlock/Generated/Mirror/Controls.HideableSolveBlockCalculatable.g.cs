@@ -20,5 +20,11 @@ internal partial class HideableSolveBlockCalculatable : global::Quire.Controls.S
     [global::Quire.Mirror.MirrorStub]
     public HideableSolveBlockCalculatable(global::Quire.Calculation.Core.ICalculatable calculatable) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void WrappedCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Dispose() => base.Dispose();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupHideableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookHideableEvents(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

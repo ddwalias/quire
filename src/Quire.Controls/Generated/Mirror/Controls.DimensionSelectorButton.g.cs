@@ -22,7 +22,11 @@ public partial class DimensionSelectorButton : global::Fluent.DropDownButton, gl
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ColumnDisplayTextProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey TitlePropertyKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TitleProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Primitives.UniformGrid _child;
     [global::Quire.Mirror.MirrorStub]
     public bool IsSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -46,13 +50,23 @@ public partial class DimensionSelectorButton : global::Fluent.DropDownButton, gl
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate0 Commit;
     [global::Quire.Mirror.MirrorStub]
+    private static void UpdateTitle(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool GetIsSelected(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsSelected(global::System.Windows.DependencyObject obj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public DimensionSelectorButton() { }
     [global::Quire.Mirror.MirrorStub]
+    private void PopulateTiles() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCellMouseEnter(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetSelection(params int[] cellIndexes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCommitIfNeeded(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCommit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     object global::Quire.Controls.IDimensionSelectorView.CommandParameter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

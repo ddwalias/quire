@@ -18,6 +18,8 @@ public partial class SpellingRibbonBar : global::Fluent.RibbonGroupBox, global::
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ProofingLanguageDropDownSelector Part_SpellingRibbonBar_ProofingLanguage;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public SpellingRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

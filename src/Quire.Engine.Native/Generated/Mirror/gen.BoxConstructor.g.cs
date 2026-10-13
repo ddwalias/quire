@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal partial class BoxConstructor : global::Quire.gen.Constructor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_box;
+    [global::Quire.Mirror.MirrorStub]
     public BoxConstructor(global::Quire.gen.IlAsm il, global::System.Type ty) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public unsafe BoxConstructor(global::Quire.gen.IlAsm il, void** c) : base(default(global::Quire.gen.IlAsm)) { }

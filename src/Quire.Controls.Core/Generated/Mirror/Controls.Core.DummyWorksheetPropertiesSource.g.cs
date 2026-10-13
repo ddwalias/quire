@@ -12,6 +12,20 @@ namespace Quire.Controls.Core;
 internal partial class DummyWorksheetPropertiesSource : global::Quire.Controls.Core.IWorksheetPropertiesSource, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IWorksheetProperties
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.DummyWorksheetPropertiesSource _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Core.PageLayoutMode _worksheetPageLayoutMode;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Thickness _pageMargin;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Size _pageSizeValue;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.Size _gridCellSize;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.CalculationOptions _docCalculationOptions;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.CalculationVariables _docCalculationVariables;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Thickness PageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

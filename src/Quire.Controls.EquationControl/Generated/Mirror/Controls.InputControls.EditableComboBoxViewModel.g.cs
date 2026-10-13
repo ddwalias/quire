@@ -12,6 +12,16 @@ namespace Quire.Controls.InputControls;
 public partial class EditableComboBoxViewModel : global::Quire.Controls.InputControls.ComboBoxViewModelBase, global::Quire.EquationEditor.View.IEditableComboBoxViewModel, global::Quire.EquationEditor.View.IComboBoxViewModelBase, global::Quire.EquationEditor.View.IInputControlViewModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _placeHolderBoxSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _tableSize;
+    [global::Quire.Mirror.MirrorStub]
+    private double _midPointBetweenFirstAndSecondRow;
+    [global::Quire.Mirror.MirrorStub]
+    private double _midPointBetweenFirstAndSecondColumn;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Tuple<int, int> _selectedCells;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> AllCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -46,9 +56,27 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public void CreateSelection(int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Controls.InputControls.ICellData> ExpandComboBoxRowsColumns(int targetRectBottom, int targetRectRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.DiscreteRect> PasteSelectedValues(global::Quire.DiscreteRect selectedRect, global::Quire.EquationEditor.Tree.MathNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode TryReadMathNodeFromClipboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanPasteEditMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool AreOnlyValuesSelected(global::Quire.DiscreteRect selectedRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PasteEditMode(global::Quire.DiscreteRect sourceRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PasteEditModeBySelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CopyEditMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void TextBox_CanPaste(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TextBox_OnPaste(object sender, global::Quire.EquationEditor.Tree.ComboBoxCellDataType cellDataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdatePlaceHolderBoxSize(global::System.Windows.DpiScale dpiScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -83,4 +111,8 @@ public partial class EditableComboBoxViewModel : global::Quire.Controls.InputCon
     public void FinishEditing() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void ProcessConsecutiveIntervalsInReverseOrderAndNotify(int fromIndex, int toIndex, global::System.Func<int, bool> condition, global::System.Action<int, int> notify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteEmptyRows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteEmptyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

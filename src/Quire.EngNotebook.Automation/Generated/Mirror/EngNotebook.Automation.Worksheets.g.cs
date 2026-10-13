@@ -12,7 +12,13 @@ namespace Quire.EngNotebook.Automation;
 public partial class Worksheets : global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private Worksheets() { }
     [global::Quire.Mirror.MirrorStub]
     internal Worksheets(global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets mathcadPrimeWorksheets) { }
     [global::Quire.Mirror.MirrorStub]

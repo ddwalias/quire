@@ -14,6 +14,10 @@ internal partial class InputCheckBoxEngineJScript : global::Quire.Controls.Input
     [global::Quire.Mirror.MirrorStub]
     public const string DefaultUserScriptObjectName = "CheckBox";
     [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.JsCheckBoxScriptInternalClass.js";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.JsCheckBoxDefaultScript.js";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public const string text = "text";

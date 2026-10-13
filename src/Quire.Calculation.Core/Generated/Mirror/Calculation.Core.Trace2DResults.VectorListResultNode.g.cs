@@ -12,6 +12,8 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class VectorListResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IVectorListResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> _vectors;
+    [global::Quire.Mirror.MirrorStub]
     public int ElementsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int SingleVectorLength { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

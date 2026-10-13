@@ -16,6 +16,30 @@ public partial class SliderScriptableControlData : global::Quire.EquationEditor.
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 100;
     [global::Quire.Mirror.MirrorStub]
+    private double c;
+    [global::Quire.Mirror.MirrorStub]
+    private double d;
+    [global::Quire.Mirror.MirrorStub]
+    private bool n;
+    [global::Quire.Mirror.MirrorStub]
+    private bool o;
+    [global::Quire.Mirror.MirrorStub]
+    private double p;
+    [global::Quire.Mirror.MirrorStub]
+    private double q;
+    [global::Quire.Mirror.MirrorStub]
+    private double r;
+    [global::Quire.Mirror.MirrorStub]
+    private bool s;
+    [global::Quire.Mirror.MirrorStub]
+    private int t;
+    [global::Quire.Mirror.MirrorStub]
+    private bool u;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Primitives.TickPlacement v;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Orientation w;
+    [global::Quire.Mirror.MirrorStub]
     public double Minimum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double Maximum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

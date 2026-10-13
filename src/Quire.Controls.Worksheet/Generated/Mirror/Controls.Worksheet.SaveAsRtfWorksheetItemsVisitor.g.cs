@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class SaveAsRtfWorksheetItemsVisitor : global::Quire.Controls.Worksheet.MultiWorksheetItemRtfCopyVisitorBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string _fileName;
+    [global::Quire.Mirror.MirrorStub]
     public SaveAsRtfWorksheetItemsVisitor(string fileName, global::Quire.Controls.Worksheet.RtfItemWrapperHelper helper) : base(default(global::Quire.Controls.Worksheet.RtfItemWrapperHelper)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void VisitAll(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.VisitAll(items);

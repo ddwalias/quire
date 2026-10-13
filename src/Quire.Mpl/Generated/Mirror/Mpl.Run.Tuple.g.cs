@@ -12,7 +12,15 @@ namespace Quire.Mpl.Run;
 public partial class Tuple
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type[] tup_types;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.MethodInfo gf;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.MethodInfo sf;
+    [global::Quire.Mirror.MirrorStub]
     public static int tuple_length(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type IType(global::System.Type[] tys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool AllObjects(global::System.Type[] tys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

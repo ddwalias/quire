@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class ToggleAxisTitleOrientationCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _oldValue;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _newValue;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ToggleAxisTitleOrientationCommand(global::Quire.Controls.Plots.PlotTitle axisTitle) { }

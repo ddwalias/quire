@@ -19,4 +19,8 @@ public partial class NumericUpDownWatermark : global::Quire.Controls.Core.Numeri
     public string WatermarkValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public NumericUpDownWatermark() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WatermarkVisibilityToggle(object sender, global::System.Windows.Controls.TextChangedEventArgs textChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

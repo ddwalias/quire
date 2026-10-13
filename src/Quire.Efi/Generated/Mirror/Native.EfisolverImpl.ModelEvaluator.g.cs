@@ -22,7 +22,29 @@ public partial class ModelEvaluator : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     public bool m_purtubGuess;
     [global::Quire.Mirror.MirrorStub]
+    private sbyte[] m_senses;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_use_complex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_objective;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_objgrad;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_objhess;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function[] m_constraints;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] m_iguess;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] m_cnstrResLen_init;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] m_cnVals_init;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.ThreadLocal<global::Quire.Native.EfisolverImpl.ModelEvaluator.DataTls> m_dataTls;
+    [global::Quire.Mirror.MirrorStub]
     public ModelEvaluator(global::Quire.Mpl.Run.Function objf, global::Quire.Mpl.Run.Function objgrad, global::Quire.Mpl.Run.Function objhess, global::Quire.Mpl.Run.Function[] contsr, object[] iguess) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeModelEvaluator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void init(object[] sense) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -45,6 +67,8 @@ public partial class ModelEvaluator : global::System.IDisposable
     public unsafe bool eval_lag_hess(double* A_0, double* A_1, double* A_2, double* A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public unsafe bool eval_constraints_jacobian(double* A_0, double* A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void unpack(double* vars, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public unsafe object[] unpack(double* vars) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -69,6 +93,20 @@ public partial class ModelEvaluator : global::System.IDisposable
     public object eval_lagrangian_constr(object[] A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int get_num_args() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool eval_gradient(global::Quire.Mpl.Run.Function A_0, object[] A_1, int A_2, object[] A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool eval_gradient_direct(object[] A_0, object[] A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe bool eval_objective_hess_direct(double* A_0, object[] A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfisolverImpl.ModelEvaluator.DataTls DataTlsFactory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void pack1(object arg, double* vars, int nvars) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void pack(object[] args, double* vars, int nvars) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void unpack_spec(double* vars, object[] args, double extr, int ind) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void Dispose(bool A_0) { }
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,12 @@ namespace Quire.mslisp;
 internal partial class PlusFunction : global::Quire.utl_mgd.FunctionBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_multiplier;
+    [global::Quire.Mirror.MirrorStub]
+    private int isum(object[] args, global::System.ValueType __unnamed001) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double fsum(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PlusFunction(int multiplier) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

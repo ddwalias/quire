@@ -16,6 +16,8 @@ public partial class ControlsWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     public ControlsWindow() { }
     [global::Quire.Mirror.MirrorStub]
+    private void HelpCommandHandler(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void DialogLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

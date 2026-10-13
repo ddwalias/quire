@@ -14,5 +14,7 @@ public partial class ButtonDropDownSelection : global::Fluent.DropDownButton
     [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
     [global::Quire.Mirror.MirrorStub]
+    private void childButton_Checked(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public ButtonDropDownSelection() { }
 }

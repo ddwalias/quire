@@ -12,9 +12,15 @@ namespace Quire.Automation;
 public partial class OutputMatrixResultAs : global::Quire.Automation.IMathcadPrimeOutputMatrixResultAs
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeOutputMatrixResultAs _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMathcadPrimeOutputMatrixResultAs RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private OutputMatrixResultAs() { }
     [global::Quire.Mirror.MirrorStub]
     internal OutputMatrixResultAs(global::Quire.Automation.IMathcadPrimeOutputMatrixResultAs mathcadPrimeOutputMatrixResultAs) { }
     [global::Quire.Mirror.MirrorStub]

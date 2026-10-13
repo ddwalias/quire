@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Protection;
 public abstract partial class PasswordDialog : global::System.Windows.Window, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _showError;
+    [global::Quire.Mirror.MirrorStub]
     public bool ShowError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected abstract bool DoPasswordsMatch { get; }

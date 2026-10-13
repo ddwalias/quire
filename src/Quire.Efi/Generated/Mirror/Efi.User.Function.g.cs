@@ -24,6 +24,8 @@ public partial class Function
     [global::Quire.Mirror.MirrorStub]
     public object m_cwd;
     [global::Quire.Mirror.MirrorStub]
+    private static bool InOrOutArgs(int[] argType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static object function_registry(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object function_register(string fname, string dllname, global::Quire.Mpl.Run.Function f, global::Quire.Mcd.MatVal reg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

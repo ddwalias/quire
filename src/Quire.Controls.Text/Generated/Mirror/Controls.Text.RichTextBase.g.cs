@@ -12,6 +12,10 @@ namespace Quire.Controls.Text;
 public partial class RichTextBase : global::System.Windows.Controls.RichTextBox, global::Quire.Controls.Core.IRichTextBase, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation, global::Quire.Controls.Core.ISpellCheckRegion, global::Quire.Serialization.IPersistentDataProvider, global::System.IDisposable, global::Quire.Controls.Core.IWorksheetPropertiesTarget, global::Quire.Controls.Core.ICurrentProofingLanguageProperty
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private const double FontSizeResetToCreateRun = 14.67d;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent CaretLeavesTextAreaEvent;
@@ -46,15 +50,65 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RevertCoerceAfterSerializationProcessProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.TextFormat _textFormat;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Core.TextFormat _textFormatInitialization;
     [global::Quire.Mirror.MirrorStub]
+    private bool _isEndOfLine;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.IDataObject _pasteDataObject;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextPointer _lastCaretPosition;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _cachedDocumentHighlightColor;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isInSaving;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Threading.DispatcherTimer _spellCheckActivationTimer;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.HashSet<global::System.Windows.Threading.DispatcherTimer> _pendingSpellCheckTimers;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _contextMenuOpening;
+    [global::Quire.Mirror.MirrorStub]
+    private int _textChangeCounter;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Text.RichTextBase, int> ScopeRefCounts;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.List<global::Quire.Controls.Text.RichTextBase> ActiveScopes;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Queue<global::Quire.Controls.Text.RichTextBase> SerializedObjectsToReleaseFromScope;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.ValueTuple<int, int>> _spellingErrorRange;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Undo.CommandScope _pastingCommandScope;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Undo.CommandScope _isInCopyUndesiredCommandScope;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Queue<double> _splitData;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.ValueTuple<int, int>> _cacheSelectedScriptElementsOffsets;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Func<global::System.Windows.Documents.Run, global::System.Windows.Documents.Run, bool> compareRuns;
     [global::Quire.Mirror.MirrorStub]
     protected int _changeLevel;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.ValueTuple<global::Quire.Controls.Text.ScriptState, double>> _reviveScriptAfterBackspaceData;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Windows.Documents.TextPointer> _cachedInsertionPoints;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Nullable<double> _cachedBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private double _cachedVerticalAlignmentOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.TextFormat _currentTextFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private string _oldTextFormatStyleKey;
+    [global::Quire.Mirror.MirrorStub]
+    private string _redoTextFormatStyleKey;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<string> _undoRunsTextStyleKey;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Markup.XmlLanguage _currentProofingLanguage;
     [global::Quire.Mirror.MirrorStub]
     public double[] CustomScriptsSizesForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -108,6 +162,8 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<object> SelectedEmbeddedObjects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private double Baseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public virtual double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsNotEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -130,6 +186,10 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Direction> RequestRemove;
     [global::Quire.Mirror.MirrorStub]
+    private void SetIsInSerialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearIsInSerialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool GetIsInSerialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetRevertCoerceAfterSerializationProcess() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -140,11 +200,17 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
     [global::Quire.Mirror.MirrorStub]
+    private static void ContextMenuOpened(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnIsInPrintingPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleIsInPrintingChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnIsInSavingCLRPropertyChanged(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnIsInCopyPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WrapUndoAtSerialization(bool bStartCommandScope) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void StartCommandScope() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -152,19 +218,63 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public RichTextBase() { }
     [global::Quire.Mirror.MirrorStub]
+    private void InitializePasteCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeFeatureFlagCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPasteExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPasteCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string ExtractXamlFromClipboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RaiseEvent(global::System.Windows.IDataObject data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LoadXamlContent(string pasteXaml) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCorrectSpellingError(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SpellingErrorCorrected() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnStyleChanged(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void SetStyleFromTextStyles(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ClearTextFormatCanExecute(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool ApplyTextStyleCanExecute(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool ToggleSubSuperscriptCommandCanExecute(object argsParameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleApplyTextStyle(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DoApplyTextStyle_internal(global::Quire.TextStyleData styleData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleClearTextFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearFormatPropertiesInRange(global::Quire.Core.TextFormat textFormat, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearSelectedRegionFormatProperties(global::Quire.Core.TextFormat textFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleToggleSubscriptCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleToggleSuperscriptCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleToggleSubSuperScriptCommand(global::System.Func<global::Quire.Controls.Text.ScriptState, global::Quire.Controls.Text.ScriptState> computeToggleToState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void ExecuteToggleScriptUndoCommand(global::System.Windows.Documents.TextRange toggleRange, global::Quire.Controls.Text.ScriptState toggleToState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void ToggleRunElementAccordingToScriptState(global::System.Windows.Controls.TextChangedEventArgs argsChanges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void RecalculateTextScriptState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void IsSelectedChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateCurrentFormats() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanSetCurrentProofingLanguage(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSetCurrentProofingLanguage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Serialization.TextRangeExtended GetWordRangeAtCaretPosition(out string wordText, global::Quire.Controls.Text.TextFromRunsStops stopFlags, bool allowCursorAtWordBoundary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -172,11 +282,19 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleIsOnVisiblePageChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void AttemptActivatingSpellCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StartOrStopSpellCheckActivationTimer(bool start) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void DisableSpellCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ApplySpellCheckValue(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.SpellingError GetSpellingErrorInPosition(ref global::System.Windows.Documents.TextPointer position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextPointer GetSpellingErrorAtPosition(ref global::System.Windows.Documents.TextPointer textPointer, out global::System.Windows.Controls.SpellingError spellingError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RefreshDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -184,7 +302,13 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public string GetWordToAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextPointer GetPointerToAddDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShouldNoOpOnSelection(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs args) => base.OnMouseMove(args);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void CopyingHandler(object sender, global::System.Windows.DataObjectCopyingEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -198,13 +322,23 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<double> DequeueSplitFontSizeData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ClearSplitFontSizeDataQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EnqueueSplitFontSizeData(double newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void PrePasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PostPasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal virtual void CopyImageToTempBitmap(global::System.Windows.Controls.Image image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnLoaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleSelectionChanged(object sender, global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CacheScriptStateInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool WasScriptElementDeletedOnChangeEvent(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void UpdateCurrentRuns(global::System.Windows.Documents.TextRange range, bool isNewRun = false, bool textRemoved = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -212,7 +346,11 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Markup.XmlLanguage ComputeProofingLanguage(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void AddBlockedSelectDirectionForNextElement(global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected static void OnInheritedOnlyPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnProhibitedPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected bool CaretShouldLeaveTextRegionInDirection(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -220,11 +358,21 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ExecuteTextChangedAndReactivateCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearTextFormatCache() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void ClearInsertionPointsCache() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewEnter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewTextInput(global::System.Windows.Input.TextCompositionEventArgs e) => base.OnPreviewTextInput(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void CacheSubscriptStateOnTypeOver(bool immediateAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void FireGotFocusEvent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -232,7 +380,11 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     public static string GetTextInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void CacheTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Core.TextFormat GetTextFormatForWholeDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void VerifyInsertionPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCaretOffsetAtContentEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -252,9 +404,39 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected bool FindInRange(global::System.Windows.Documents.TextPointer start, global::System.Windows.Documents.TextPointer end, string text, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SelectMatch(global::System.Windows.Documents.TextPointer matchStart, global::System.Windows.Documents.TextPointer matchEnd, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextRange SearchForward(global::System.Windows.Documents.TextRange originalRange, string rangeText, string text, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextRange SearchBackward(global::System.Windows.Documents.TextRange originalRange, string rangeText, string text, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextRange GetRangeIfMatch(global::System.Windows.Documents.TextRange originalRange, string text, int index, global::System.StringComparison comparisonType, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextRange SearchWholeWordRuns(global::System.Windows.Documents.TextRange originalRange, string text, global::System.Windows.Documents.LogicalDirection direction, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.ValueTuple<global::System.Windows.Documents.TextPointer, global::System.Windows.Documents.TextPointer>> GetSameTypeRunRanges(global::System.Collections.Generic.IReadOnlyList<global::System.Windows.Documents.Run> runs, global::System.Windows.Documents.TextRange originalRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextRange TryFindWholeWord(global::System.Windows.Documents.TextPointer start, global::System.Windows.Documents.TextPointer end, int originalRangeStartPoint, global::System.Windows.Documents.TextRange originalRange, string text, global::System.Windows.Documents.LogicalDirection direction, global::System.StringComparison comparisonType, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SubscriptsMatch(global::System.Windows.Documents.TextRange foundRange, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findTextSubscriptsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Documents.TextPointer GetPositionAtTextOffset(global::System.Windows.Documents.TextPointer from, int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void CanReplace(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReplaceText(string text, bool preserveScriptState, global::Quire.Controls.Text.ScriptState scriptState, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, int selectionStartOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReplaceTextInHyperlink(string text, global::System.Windows.Documents.Hyperlink hyperlink, bool preserveScriptState, global::Quire.Controls.Text.ScriptState scriptState, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, int selectionStartOffset, out bool shouldRestoreStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.ScriptState GetScriptType(global::System.Windows.Documents.Run run) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsInvalidOperation(global::Quire.Controls.Core.FindReplaceQuery query, global::System.Collections.Generic.List<global::System.Windows.Documents.Run> selectionRuns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToggleRangeToState(global::System.Windows.Documents.TextPointer startPointer, int startOffset, int endOffset, global::Quire.Controls.Text.ScriptState state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RestoreSelection(string text, int selectionStart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void SetFormattedContent(string content, string dataFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, global::Quire.Core.TextFormat textFormat = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -262,11 +444,17 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorStub]
     protected void FirePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private double CalculateBaseline() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleTextFormattingChanged(global::System.Windows.DependencyPropertyChangedEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateSplitFontSizeDataBeforeApplyPropOnRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -293,6 +481,8 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     internal static global::System.Windows.Documents.TextPointer GetTextBoundary(global::System.Windows.Documents.LogicalDirection direction, out string partialText, global::Quire.Controls.Text.TextFromRunsStops stopFlags, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetTextOnlyFromRuns(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanExecutePasteIntoTextRegion(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsFullySubscript(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -324,6 +514,24 @@ public partial class RichTextBase : global::System.Windows.Controls.RichTextBox,
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBase+SyncTextChangedCommand, Ptc.Controls.Text")]
     protected partial class SyncTextChangedCommand : global::Quire.Undo.UndoableCommand, global::Quire.Undo.IUndoableCommandWithSideEffects, global::Quire.Undo.IUndoableCommand
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly string _undoTextStyleKey;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Media.Brush _undoHighlightColor;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Windows.Media.Brush _redoHighlightColor;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly string _redoTextStyleKey;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Text.RichTextBase _owner;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Collections.Generic.IList<string> _undoRunsTextStyleKey;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IList<string> _redoRunsTextStyleKey;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _shouldWpfRecreateScriptsOnUndo;
+        [global::Quire.Mirror.MirrorStub]
+        private bool _shouldWpfRecreateScriptsOnRedo;
         [global::Quire.Mirror.MirrorStub]
         public SyncTextChangedCommand(global::Quire.Controls.Text.RichTextBase owner, string undoTextStyleKey, global::System.Collections.Generic.IList<string> undoRunsTextStyleKey, global::System.Windows.Media.Brush undoHighlightColor, string redoTextStyleKey, bool shouldWpfRecreateScriptsOnUndo) : base(default(string), default(global::Quire.DelegateFunction0<bool>), default(global::Quire.Delegate0)) { }
         [global::Quire.Mirror.MirrorStub]

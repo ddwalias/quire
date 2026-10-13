@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationMathRendering
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingOperators operatorsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyle[] mathStylesField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationMathRenderingSymbolics symbolicsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.mathFormattingType formattingField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.resultFormatType resultsField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.presentationMathRenderingOperators operators { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.presentationMathRenderingMathStyle[] mathStyles { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,10 @@ namespace Quire.mslisp;
 internal partial class FastApp1 : global::Quire.mslisp.FastApp
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Expression m_arg1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Func1 m_func;
+    [global::Quire.Mirror.MirrorStub]
     public FastApp1(global::Quire.mslisp.Func1 f, global::Quire.mslisp.Expression arg1) { }
     [global::Quire.Mirror.MirrorStub]
     public override object execute(global::Quire.mslisp.Env e, int trace_level) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

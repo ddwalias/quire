@@ -12,6 +12,12 @@ namespace Quire.Controls.Core.AttachedBehavior;
 public partial class MessagesDecorator : global::Quire.Controls.Core.AttachedBehavior.IAttachedBehavior
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement _elem;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Core.NodeMessageAdorner> _adornerList;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.AttachedBehavior.MessageList _messageList;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> AdornerList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MessagesDecorator(global::Quire.Controls.Core.AttachedBehavior.MessageList list) { }
@@ -19,4 +25,10 @@ public partial class MessagesDecorator : global::Quire.Controls.Core.AttachedBeh
     public void Attach(global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Detach(global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMessageListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearMessages() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

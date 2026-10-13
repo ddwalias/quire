@@ -12,6 +12,12 @@ namespace Quire.Controls;
 internal partial class SolveBlockCalculatable : global::Quire.Calculation.Core.Support.CalculatableWrapper, global::Quire.Controls.ISolveBlockCalculatable, global::Quire.Calculation.Core.Support.ICalculatableWrapper, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculationErrorOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.SolveBlockEquationTypes _equationType;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Text.RegularExpressions.Regex _definitionMatch;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Text.RegularExpressions.Regex _constraintMatch;
+    [global::Quire.Mirror.MirrorStub]
     protected static global::System.Text.RegularExpressions.Regex _solverMatch;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Calculation.Core.ICalculatable WrappedCalculatable { get => base.WrappedCalculatable; protected set => base.WrappedCalculatable = value; }

@@ -12,6 +12,10 @@ namespace Quire.Media3D;
 public partial class Cylinder : global::Quire.Media3D.ModelVisualBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.AxisAngleRotation3D rotate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.RotateTransform3D xform;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty Point1Property;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty Point2Property;

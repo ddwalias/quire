@@ -14,9 +14,17 @@ public partial class UIFunctionalityWithoutCommandAttachedBehavior : global::Qui
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty FunctionalityKeyProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey _uiElementBehaviorKey;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey FunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLoaded() => base.OnLoaded();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnFunctionalityServicePropertyChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetAndUpdateElementBehavior(global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey functionalityBehaviorKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonDropDownOnPreviewOpen(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public UIFunctionalityWithoutCommandAttachedBehavior() { }
 }

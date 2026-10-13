@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class UnaryDelegateFunction : global::Quire.Mpl.Run.DelegateFunction
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.F<object, object> m_F;
+    [global::Quire.Mirror.MirrorStub]
     public UnaryDelegateFunction(global::Quire.Mpl.Run.F<object, object> f) : base(default(global::System.Delegate), default(int)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void inv<R, A>(out R r, A aa) => base.inv<R, A>(out r, aa);

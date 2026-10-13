@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.WhiteboardItemManager, global::Quire.Controls.Worksheet.IWorksheetItemManager, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager, global::Quire.Controls.Core.Whiteboard.IContainerItemManager, global::Quire.Controls.Core.IFrameworkElementFacade, global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty WorksheetItemSizeChangedHandlerProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty SizeChangedEventArgsListProperty;
@@ -19,6 +21,14 @@ public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.Wh
     public static readonly global::System.Windows.DependencyProperty AddMoveRemoveTimestampProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SplitCheckIsRequiredProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Threading.DispatcherOperation _delayedSizeChangedNotification;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.SizeChangeNotificationDebugData _sizeChangedDebugData;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::System.WeakReference> _sizeChangedItemRefs;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _dispatchingSizeChangeNotifications;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler GetWorksheetItemSizeChangedHandler(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -45,6 +55,8 @@ public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.Wh
     public global::System.Windows.Point GetItemWorksheetLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetItemWorksheetLocation(global::Quire.Controls.Core.IWorksheetPageBreak pageBreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetItemWorksheetLocationForObject(object obj, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetItemWorksheetLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -78,7 +90,23 @@ public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.Wh
     [global::Quire.Mirror.MirrorStub]
     protected override void ClearItemSizeChangedHandler(global::Quire.Controls.Core.IWhiteboardItem item) => base.ClearItemSizeChangedHandler(item);
     [global::Quire.Mirror.MirrorStub]
+    private void ClearSizeChangedItemRefsIfNeeded(string operation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnItemSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs args) => base.OnItemSizeChanged(sender, args);
+    [global::Quire.Mirror.MirrorStub]
+    private void DispatchSizeChangeNotificationsAction(global::System.Windows.Threading.Dispatcher dispatcher) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FailAssertionReportingSizeChangeProcessingHistory(string title) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSizeChangedItemLayoutUpdated(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ProcessDispatchedSizeChangeNotifications(string operation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> CollectItemsForSizeChangedNotification() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddSizeChangedItem(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveSizeChangedItem(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.FrameworkElement elem, string operation, bool attemptToClearList = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IWhiteboardItem GetItemPrintView(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -91,6 +119,8 @@ public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.Wh
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SmartDescendantsSatisfyingCondition(global::Quire.Controls.Core.IWhiteboardItem startItem, global::System.Predicate<global::Quire.Controls.Core.IWhiteboardItem> condition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HookupAreaBorderChanged(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnAreaBorderStateChanged(global::Quire.Controls.Core.ICollapsibleAreaControl area) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public WorksheetItemManager() { }
 }

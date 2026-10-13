@@ -14,6 +14,8 @@ public partial class EquationControlErrorMessages : global::System.Windows.Resou
     [global::Quire.Mirror.MirrorStub]
     public const string MaxRecursionDepthExceeded = "EquationControl.Error.XmlParsing.MaxRecursionDepthExceeded";
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public EquationControlErrorMessages() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 public partial class ListBoxModel : global::Quire.Controls.InputControls.InputScriptableControlModelWithInputs, global::Quire.Controls.InputControls.IListBoxPropertiesEditorModel, global::Quire.Controls.InputControls.IInputControlEditorScriptableModel, global::Quire.Controls.InputControls.IInputControlEditorModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _itemsCache;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isSortChanged;
+    [global::Quire.Mirror.MirrorStub]
     public override object SelectedValue { get => base.SelectedValue; }
     [global::Quire.Mirror.MirrorStub]
     public bool IsSort { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,6 +29,10 @@ public partial class ListBoxModel : global::Quire.Controls.InputControls.InputSc
     public ListBoxModel(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) : base(default(global::Quire.Controls.InputControls.IInputControlEngineFactory), default(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue)) { }
     [global::Quire.Mirror.MirrorStub]
     public void OnDoubleClick(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleObjectProperties(ref object valueIndex, object objectProperties, bool isRecalculate = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSelectionChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandlePostInputFieldResultChanged(ref object valueIndex, object scriptObjectproperties, string errorException, bool isRecalculate = false) => base.HandlePostInputFieldResultChanged(ref valueIndex, scriptObjectproperties, errorException, isRecalculate);
     [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,12 @@ namespace Quire.gen;
 internal partial class ForeignMethod : global::Quire.gen.ResolvedForeignId
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodInfo m_mi;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_name;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.CallConv m_conv;
+    [global::Quire.Mirror.MirrorStub]
     public ForeignMethod(string id, string name, global::System.Reflection.MethodInfo mi, global::Quire.gen.CallConv conv) : base(default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public ForeignMethod(string id, string name, global::System.Reflection.MethodInfo mi) : base(default(string)) { }

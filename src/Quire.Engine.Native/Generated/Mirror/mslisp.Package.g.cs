@@ -12,6 +12,12 @@ namespace Quire.mslisp;
 internal partial class Package
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_name;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::Quire.mslisp.Symbol> m_internal;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::Quire.mslisp.Symbol> m_external;
+    [global::Quire.Mirror.MirrorStub]
     public Package(string name) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.mslisp.Symbol intern(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

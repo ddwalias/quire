@@ -12,6 +12,8 @@ namespace Quire.Engine;
 public partial class NormalDefinition : global::Quire.Engine.NodeData
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<string> m_defined;
+    [global::Quire.Mirror.MirrorStub]
     public NormalDefinition(int fnode, object[] defined, global::Quire.utl_mgd.Function add, global::Quire.utl_mgd.Function error, global::Quire.utl_mgd.Function remove) : base(default(int), default(global::Quire.utl_mgd.Function), default(global::Quire.utl_mgd.Function), default(global::Quire.utl_mgd.Function)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.List<string> GetDefinitions() => base.GetDefinitions();

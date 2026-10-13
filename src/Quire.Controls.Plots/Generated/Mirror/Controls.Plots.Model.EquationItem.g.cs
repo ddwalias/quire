@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Model;
 internal partial class EquationItem : global::Quire.Controls.Plots.Presenter.IEquationItem
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.ITraceModel> _traces;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotEquation Equation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

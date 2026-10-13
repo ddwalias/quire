@@ -22,5 +22,15 @@ internal partial class models
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Efi.genfit_delegate Fexpfit;
     [global::Quire.Mirror.MirrorStub]
+    private static unsafe sbyte* sinfit_funcs(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe sbyte* logfit_funcs(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe sbyte* pwrfit_funcs(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe sbyte* lgsfit_funcs(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static unsafe sbyte* expfit_funcs(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public models() { }
 }

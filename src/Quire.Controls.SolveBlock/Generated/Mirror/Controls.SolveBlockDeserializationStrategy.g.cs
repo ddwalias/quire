@@ -12,6 +12,8 @@ namespace Quire.Controls;
 public partial class SolveBlockDeserializationStrategy : global::Quire.Controls.Whiteboard.WhiteBoardDeserializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.SolveBlockControl _control;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public SolveBlockDeserializationStrategy(global::Quire.Controls.SolveBlockControl control) : base(default(global::Quire.Controls.Whiteboard.WhiteboardControl)) { }

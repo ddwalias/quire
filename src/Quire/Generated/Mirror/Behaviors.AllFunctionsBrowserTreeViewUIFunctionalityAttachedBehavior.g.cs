@@ -12,7 +12,33 @@ namespace Quire.Behaviors;
 public partial class AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior : global::Quire.Behaviors.BaseUIFunctionalityAttachedBehavior
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey> _treeViewCategoryItemsNamesToFunctionalityKeysDictionary;
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnLoaded() => base.OnLoaded();
+    [global::Quire.Mirror.MirrorStub]
+    private void FunctionBrowserFunctionViewByCategoryViewRefreshed(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitilizeTreeViewCategoryItemBehavior(global::System.Windows.Controls.TreeViewItem treeViewCategoryItem, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey categoryFunctionalityKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey GetCategoryFunctionalityKeyForTreeViewItem(global::System.Windows.Controls.ItemCollection treeViewCategoryItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IList<global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey> GetItemCategoriesFunctionalityKeys(object functionItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnFunctionalityServicePropertyChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateElementBehavior() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTreeViewItemExpanded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetIsExpandedValue(global::System.Windows.Controls.TreeViewItem treeViewItem, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CollapseAllLockedCategories() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TryGetTreeViewCategoryItemName(global::System.Windows.Controls.TreeViewItem treeViewCategoryItem, out string categoryName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool TryGetTreeViewCategoryFunctionalityKeyFromDictionary(global::System.Windows.Controls.TreeViewItem treeViewCategoryItem, out global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey categoryFunctionalityKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PerformActionForEachTreeViewCategoryItem(global::System.Action<global::System.Windows.Controls.TreeViewItem> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public AllFunctionsBrowserTreeViewUIFunctionalityAttachedBehavior() { }
 }

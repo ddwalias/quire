@@ -12,6 +12,10 @@ namespace Quire.Controls.Worksheet;
 public partial class HeaderFooterOptionsViewModel : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IWorksheetViewModel _worksheetViewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isUsingDefaultTotalPagesValue;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsFirstPageHeaderFooterDifferent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string InvalidTotalPagesMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,6 +29,8 @@ public partial class HeaderFooterOptionsViewModel : global::Quire.Controls.Core.
     public void HandlePageNumberChanged(object sender, global::Quire.Controls.Core.NumericUpDown pageNumberControl, global::Quire.Controls.Core.NumericUpDownWatermark totalPagesControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTotalPagesValidationMessage(global::Quire.Controls.Core.NumericUpDown totalPagesControl, int calculatedDefaultTotalPages) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool hasInvalidTotalPageAsMessage(global::Quire.Controls.Core.NumericUpDown totalPagesControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTotalPagesByStartingPage(object sender, global::Quire.Controls.Core.NumericUpDown pageNumberControl, global::Quire.Controls.Core.NumericUpDown totalPagesControl, int calculatedDefaultTotalPages) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

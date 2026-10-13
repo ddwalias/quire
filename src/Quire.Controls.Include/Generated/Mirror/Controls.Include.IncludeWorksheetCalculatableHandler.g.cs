@@ -12,6 +12,22 @@ namespace Quire.Controls.Include;
 internal partial class IncludeWorksheetCalculatableHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationContext;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Include.IncludedCalculatableWrapper> _allCalculatablesIncludedWrapped;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.ICalculatableInfo _currentErrorInfo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::Quire.Controls.Include.SystemVariableValuesHandler> _systemVariableValuesHandlers;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action<string> _errorOnChild;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action<string, object> _systemVariableValueChangeHandler;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
@@ -36,6 +52,10 @@ internal partial class IncludeWorksheetCalculatableHandler
     [global::Quire.Mirror.MirrorStub]
     public IncludeWorksheetCalculatableHandler(global::System.Action<string> errorOnChild, global::System.Action<string, object> systemVariableValueChangeHandler) { }
     [global::Quire.Mirror.MirrorStub]
+    private void ToggleHiddenState(global::Quire.Controls.Include.SystemVariableValuesHandler calc, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToggleHiddenState(global::Quire.Controls.Include.IncludedCalculatableWrapper calc, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void RemoveIncludedCalculatableWrappers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void RemoveAllCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -55,4 +75,26 @@ internal partial class IncludeWorksheetCalculatableHandler
     internal void UnHookSystemVariables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddIncludedCalculatableWrapper(global::Quire.Controls.Include.IncludedCalculatableWrapper calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveIncludedCalculatableWrapper(global::Quire.Controls.Include.IncludedCalculatableWrapper calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddSystemVariableValuesHandler(global::Quire.Controls.Include.SystemVariableValuesHandler item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveSystemVariableValuesHandler(global::Quire.Controls.Include.SystemVariableValuesHandler item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string UpdateCurrentErrorInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSetErrorChanged(global::Quire.Calculation.Core.EngineError arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSynchronizationStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> ExtractCalculatablesIncluded(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

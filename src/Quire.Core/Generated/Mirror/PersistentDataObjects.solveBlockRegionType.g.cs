@@ -12,6 +12,14 @@ namespace Quire.PersistentDataObjects;
 public partial class solveBlockRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private object itemField;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] mc14conversionlossannotationsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.solveBlockRegionTypeSolveblockcategory solveblockcategoryField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool solveblockcategoryFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type[] SupportedTypes;
     [global::Quire.Mirror.MirrorStub]
     public override object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

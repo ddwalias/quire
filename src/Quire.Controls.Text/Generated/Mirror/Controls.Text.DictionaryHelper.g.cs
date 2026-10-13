@@ -18,11 +18,15 @@ public static partial class DictionaryHelper
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri WpfSpellerCustomDictionaryUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static string WindowsSpellerCustomDictionaryPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsWindowsSpellerCustomDictionaryValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool AddWordToDictionary(string word) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool RemoveFromDictionary(string word) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool UpdateCustomDictionary(string wordToAdd, string wordToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static bool SynchronizeWindowsSpellerCustomDictionary(ref global::System.Collections.Generic.IList<string> lines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

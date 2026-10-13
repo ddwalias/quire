@@ -12,6 +12,20 @@ namespace Quire.Controls.Core;
 public static partial class WorksheetPropertiesManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey WorksheetPropertiesSourcePropertyKey;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey WorksheetPropertiesChangeInfoKey;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IWorksheetPropertiesSource GetWorksheetPropertiesSource(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetWorksheetPropertiesSource(global::System.Windows.DependencyObject dObj, global::Quire.Controls.Core.IWorksheetPropertiesSource propertiesSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.WorksheetPropertiesManager.WorksheetPropertiesChangeInfo GetWorksheetPropertiesChangeInfo(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetWorksheetPropertiesChangeInfo(global::System.Windows.DependencyObject dObj, global::Quire.Controls.Core.WorksheetPropertiesManager.WorksheetPropertiesChangeInfo newInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void SetOrRemoveWorksheetPropertiesSource<TSource>(TSource propertiesSourceElement, bool doSet) where TSource : global::System.Windows.FrameworkElement, global::Quire.Controls.Core.IWorksheetPropertiesSource => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetOrRemoveWorksheetPropertiesSource(global::System.Windows.FrameworkElement worksheetElement, global::Quire.Controls.Core.IWorksheetPropertiesSource propertiesSource, bool doSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -27,10 +41,20 @@ public static partial class WorksheetPropertiesManager
     public static global::System.Windows.FrameworkElement GetWorksheetFrameworkElement<TTargetVisual>(TTargetVisual visual) where TTargetVisual : global::System.Windows.Media.Visual => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Controls.ContentControl GetWorksheetContentControl<TTargetVisual>(TTargetVisual visual) where TTargetVisual : global::System.Windows.Media.Visual => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnWorksheetPropertyChanged(global::Quire.Controls.Core.WorksheetPropertiesManager.WorksheetPropertiesChangeInfo oldInfo, global::System.ComponentModel.PropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.WorksheetPropertiesManager.WorksheetPropertiesChangeInfo GetWorksheetPropertyChangeInfo<TTargetVisual>(TTargetVisual visual) where TTargetVisual : global::System.Windows.Media.Visual => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnWorksheetPropertyChangeInfoChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateTarget(global::Quire.Controls.Core.IWorksheetPropertiesTarget propertyTarget, string[] propertyNames, global::Quire.Controls.Core.IWorksheetProperties oldProperties, global::Quire.Controls.Core.IWorksheetProperties newProperties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.WorksheetPropertiesManager+WorksheetPropertiesChangeInfo, Ptc.Controls.Core")]
     private partial class WorksheetPropertiesChangeInfo : global::Quire.Controls.Core.PropertiesChangeInfo<global::Quire.Controls.Core.IWorksheetPropertiesSource>
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Core.IWorksheetPropertiesSource _cachedWorksheetProperties;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Controls.Core.IWorksheetPropertiesSource CachedWorksheetProperties { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
@@ -43,5 +67,7 @@ public static partial class WorksheetPropertiesManager
         public void RegisterToWorksheetPropertyChanges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void UnregisterFromWorksheetPropertyChanges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void OnWorksheetPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

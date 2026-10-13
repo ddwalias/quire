@@ -12,7 +12,31 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class DynamicAssemblyModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Emit.Quire.Mpl.DynamicAssemblyModel.TypeIndexInfo> _typeIndexes;
+    [global::Quire.Mirror.MirrorStub]
+    private int _typeIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _fieldIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private int _methodIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _moduleBuilder;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder _methodBodyStream;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
+    [global::Quire.Mirror.MirrorStub]
     public DynamicAssemblyModel(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder moduleBuilder, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referenceTracker, global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> typesList) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void AddTypeDefinition(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddFieldDefinition(global::System.Reflection.Emit.Quire.Mpl.FieldBuilder field) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddMethodDefinition(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddMethodBodiesOffsets(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int MethodIndex(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

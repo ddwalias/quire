@@ -12,6 +12,10 @@ namespace Quire.Controls.Worksheet;
 internal partial class HeaderFooterViewModel : global::Quire.Controls.Whiteboard.WhiteboardViewModel, global::Quire.Controls.Worksheet.IHeaderFooterViewModel, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Thickness _margin;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _strictMinimumSize;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.WhiteboardItemsCollection CommonItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.WhiteboardItemsCollection UniqueItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -40,9 +44,15 @@ internal partial class HeaderFooterViewModel : global::Quire.Controls.Whiteboard
     [global::Quire.Mirror.MirrorStub]
     public HeaderFooterViewModel(global::Quire.Controls.Whiteboard.IWhiteboardModel model, bool handleUserInput, global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Whiteboard.WhiteboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void HandleItemAdded(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemAdded(item);
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleItemRemoved(global::Quire.Controls.Core.IWhiteboardItem item) => base.HandleItemRemoved(item);
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRequestResizeToFitOrClearRestriction(global::Quire.Controls.Core.IResizeToFitWhiteboardItem element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResizeItemToFit(global::Quire.Controls.Core.IResizeToFitWhiteboardItem item, bool assertIsNotReady) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void DirectionalMoveHandler(global::Quire.Direction direction) => base.DirectionalMoveHandler(direction);
     [global::Quire.Mirror.MirrorStub]
@@ -55,6 +65,8 @@ internal partial class HeaderFooterViewModel : global::Quire.Controls.Whiteboard
     protected override void HandleCarriageReturn() => base.HandleCarriageReturn();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetItemsAccordingTabNavigateOrder(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsAccordingTabDirection, global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.Controls.Core.IWhiteboardItem startItem) => base.GetItemsAccordingTabNavigateOrder(itemsAccordingTabDirection, direction, startItem);
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsUniqueItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool IsValidLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> newLocations, bool allowGrowthDownOrRight) => base.IsValidLocation(item, newLocations, allowGrowthDownOrRight);
     [global::Quire.Mirror.MirrorStub]

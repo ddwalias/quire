@@ -2250,12 +2250,28 @@
   Quire.McdUnitSystemUS.values M public static Update`0() -> System.Void
   Quire.McdUnitSystemUS.values M public static op_L`0(System.Object) -> System.Object
   Quire.McdUnitSystemUS.values M public static op_M`0(System.Object) -> System.Object
+  Quire.depman.Aborter F private Quire.depman.ThreadData threadData
+  Quire.depman.Aborter F private Quire.utl.InterruptControl* interrupt_control_umgd
+  Quire.depman.Aborter F private Quire.utl_mgd.InterruptControl interrupt_control
+  Quire.depman.Aborter F private System.Threading.CancellationTokenSource cts
+  Quire.depman.Aborter F private System.Threading.Thread thread
+  Quire.depman.Aborter M private Do`0() -> System.Void
   Quire.depman.Aborter M public .ctor`0(System.Threading.Thread,Quire.utl_mgd.InterruptControl,Quire.utl.InterruptControl*,Quire.depman.ThreadData) -> System.Void
   Quire.depman.Aborter M public Abort`0() -> System.Void
   Quire.depman.Action M public virtual GetDefs`0() -> System.Collections.ICollection
   Quire.depman.Action M public virtual Invoke`0(Quire.depman.Environment,System.Object) -> Quire.depman.ActionResult
   Quire.depman.Action M public virtual IsChildOnly`0() -> System.Boolean
   Quire.depman.Action M public virtual IsUndefine`0() -> System.Boolean
+  Quire.depman.ActionChainMgd F private Quire.depman.Action m_action
+  Quire.depman.ActionChainMgd F private Quire.depman.ActionChain* m_chain_umgd
+  Quire.depman.ActionChainMgd F private Quire.depman.CachingEnv m_env
+  Quire.depman.ActionChainMgd F private System.Collections.Generic.Dictionary`2<Quire.depman.CacheKey,System.Collections.Generic.HashSet`1<Quire.depman.Scope>> m_deps
+  Quire.depman.ActionChainMgd F private System.Object m_result
+  Quire.depman.ActionChainMgd F private System.Object m_state
+  Quire.depman.ActionChainMgd M private _tildeActionChainMgd`0() -> System.Void
+  Quire.depman.ActionChainMgd M private depman`0() -> Quire.depman.DepManager*
+  Quire.depman.ActionChainMgd M private loc`0() -> Quire.depman.Position*
+  Quire.depman.ActionChainMgd M private next`0() -> Quire.depman.ActionChain*
   Quire.depman.ActionChainMgd M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.ActionChainMgd M public .ctor`0(Quire.depman.ActionChain*,Quire.depman.Action,Quire.depman.DepTrackingEnv,System.Object) -> System.Void
   Quire.depman.ActionChainMgd M public AddStaticDep`0(System.String) -> System.Void
@@ -2289,6 +2305,10 @@
   Quire.depman.BooleanMediator M public virtual RemoveCallback`0(Quire.Engine.BooleanCallback) -> System.Void
   Quire.depman.BooleanMediator M public virtual WaitValueTrue`0(System.Int32) -> System.Void
   Quire.depman.BooleanMediator P Value : System.Boolean virtual get:public
+  Quire.depman.BooleanMediatorImp F private Quire.Engine.BooleanCallback m_callback
+  Quire.depman.BooleanMediatorImp F private Quire.utl_mgd.SafeEvent m_event
+  Quire.depman.BooleanMediatorImp F private Quire.utl_mgd.TaskQueue m_task_queue
+  Quire.depman.BooleanMediatorImp F private System.Boolean m_value
   Quire.depman.BooleanMediatorImp M protected HandleMessage`0(Quire.depman.MediatorMsg) -> System.Void
   Quire.depman.BooleanMediatorImp M protected virtual set_value`0(System.Boolean) -> System.Void
   Quire.depman.BooleanMediatorImp M public .ctor`0(System.Boolean,Quire.utl_mgd.TaskQueue) -> System.Void
@@ -2297,6 +2317,8 @@
   Quire.depman.BooleanMediatorImp M public virtual RemoveCallback`0(Quire.Engine.BooleanCallback) -> System.Void
   Quire.depman.BooleanMediatorImp M public virtual WaitValueTrue`0(System.Int32) -> System.Void
   Quire.depman.BooleanMediatorImp P Value : System.Boolean virtual get:public
+  Quire.depman.BooleanMediatorImp+HandleMessageF F private Quire.depman.BooleanMediatorImp mediator
+  Quire.depman.BooleanMediatorImp+HandleMessageF F private Quire.depman.MediatorMsg m
   Quire.depman.BooleanMediatorImp+HandleMessageF M public .ctor`0(Quire.depman.BooleanMediatorImp,Quire.depman.MediatorMsg) -> System.Void
   Quire.depman.BooleanMediatorImp+HandleMessageF M public override Invoke`0(System.Object[]) -> System.Object
   Quire.depman.CacheKey F public Quire.depman.DSym ds
@@ -2306,6 +2328,15 @@
   Quire.depman.CacheKey M public override Equals`0(System.Object) -> System.Boolean
   Quire.depman.CacheKey M public override GetHashCode`0() -> System.Int32
   Quire.depman.CacheKey P name : System.String get:public
+  Quire.depman.CachingEnv F private Quire.depman.ActionChainMgd m_chain
+  Quire.depman.CachingEnv F private Quire.depman.DepTrackingEnv m_env
+  Quire.depman.CachingEnv F private System.Boolean m_needs_check
+  Quire.depman.CachingEnv F private System.Collections.Hashtable m_table
+  Quire.depman.CachingEnv M private GetDictCache`0(Quire.depman.DSym,Quire.depman.ScopingMode) -> System.Collections.IDictionary
+  Quire.depman.CachingEnv M private GetDict`0(Quire.depman.DSym,Quire.depman.ScopingMode) -> System.Collections.IDictionary
+  Quire.depman.CachingEnv M private IsFunction`0(System.Object) -> System.Boolean
+  Quire.depman.CachingEnv M private IsIdentical`0(Quire.depman.DSym,System.Collections.IDictionary,System.Collections.IDictionary) -> System.Boolean
+  Quire.depman.CachingEnv M private do_check`0() -> System.Boolean
   Quire.depman.CachingEnv M public .ctor`0(Quire.depman.DepTrackingEnv,Quire.depman.ActionChainMgd) -> System.Void
   Quire.depman.CachingEnv M public GetDepTrackingEnv`0() -> Quire.depman.DepTrackingEnv
   Quire.depman.CachingEnv M public GetSharedThreadContext`0() -> Quire.depman.SharedThreadContext
@@ -2321,6 +2352,8 @@
   Quire.depman.CachingEnv+CCacheKey M public .ctor`0(Quire.depman.DSym,Quire.depman.ScopingMode) -> System.Void
   Quire.depman.CachingEnv+CCacheKey M public override Equals`0(System.Object) -> System.Boolean
   Quire.depman.CachingEnv+CCacheKey M public override GetHashCode`0() -> System.Int32
+  Quire.depman.ConstAction F private System.Collections.Hashtable m_env
+  Quire.depman.ConstAction M private _tildeConstAction`0() -> System.Void
   Quire.depman.ConstAction M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.ConstAction M public .ctor`0(System.Object) -> System.Void
   Quire.depman.ConstAction M public Dispose`0() -> System.Void
@@ -2328,6 +2361,7 @@
   Quire.depman.ConstAction M public virtual Invoke`0(Quire.depman.Environment,System.Object) -> Quire.depman.ActionResult
   Quire.depman.ConstAction M public virtual IsChildOnly`0() -> System.Boolean
   Quire.depman.ConstAction M public virtual IsUndefine`0() -> System.Boolean
+  Quire.depman.DSym F private System.String m_full
   Quire.depman.DSym F public Quire.utl_mgd.LabelSet labels
   Quire.depman.DSym F public System.String name
   Quire.depman.DSym M public .ctor`0(System.String) -> System.Void
@@ -2336,15 +2370,38 @@
   Quire.depman.DSym P full : System.String get:public
   Quire.depman.DSym P wild : System.Boolean get:public
   Quire.depman.DepException M public .ctor`0() -> System.Void
+  Quire.depman.DepNeededException F private Quire.depman.Position* p
   Quire.depman.DepNeededException M internal .ctor`0(Quire.depman.Position*) -> System.Void
   Quire.depman.DepNeededException M internal loc`0() -> Quire.depman.Position*
   Quire.depman.DepNodeCallback D Invoke`0(System.Int32,System.Int32,Quire.Engine.NodeStatus) -> System.Void
+  Quire.depman.DepTrackingEnv F private Quire.depman.Position* m_loc
   Quire.depman.DepTrackingEnv M public .ctor`0(Quire.depman.Position*) -> System.Void
   Quire.depman.DepTrackingEnv M public GetSharedThreadContext`0() -> Quire.depman.SharedThreadContext
   Quire.depman.DepTrackingEnv M public loc`0() -> Quire.depman.Position*
   Quire.depman.DepTrackingEnv M public virtual GetRegionId`0() -> System.Int32
   Quire.depman.DepTrackingEnv M public virtual Lookup`0(System.String,Quire.depman.ScopingMode,Quire.depman.DependencyType,Quire.depman.OnDep) -> Quire.depman.Position*
+  Quire.depman.Depman F private Quire.depman.DepManager* m_dm
+  Quire.depman.Depman F private Quire.depman.DepNodeCallback m_node_callback
+  Quire.depman.Depman F private Quire.depman.InterruptCallback m_interrupt_cb
+  Quire.depman.Depman F private Quire.depman.NodeQueue m_queue
+  Quire.depman.Depman F private Quire.depman.PosCallback m_notify
+  Quire.depman.Depman F private Quire.depman.PosQueueCallback m_queue_cb
+  Quire.depman.Depman F private Quire.depman.SharedThreadContext m_thread_context
+  Quire.depman.Depman F private Quire.depman.TreatedReadyInvalidCallback m_treated_ready_invalid_cb
+  Quire.depman.Depman F private Quire.utl_mgd.SafeMutex m_node_order_mutex
+  Quire.depman.Depman F private Quire.utl_mgd.TaskQueue m_message_queue
+  Quire.depman.Depman F private System.Int32 m_max_handle
   Quire.depman.Depman M internal virtual UnLockP`0(Quire.depman.Position*) -> System.Void
+  Quire.depman.Depman M private GetPosition`0(System.Int32) -> Quire.depman.Position*
+  Quire.depman.Depman M private GetSharedThreadContext`0() -> Quire.depman.SharedThreadContext
+  Quire.depman.Depman M private SafeEnqueue`0(Quire.depman.Position*) -> System.Void
+  Quire.depman.Depman M private SetHandle`0(Quire.depman.Position*,System.Int32) -> System.Void
+  Quire.depman.Depman M private UnsetHandle`0(System.Int32) -> System.Void
+  Quire.depman.Depman M private _tildeDepman`0() -> System.Void
+  Quire.depman.Depman M private interrupt_cb`0(System.Int32) -> System.Void
+  Quire.depman.Depman M private notify`0(Quire.depman.Position*,Quire.Engine.NodeStatus) -> System.Void
+  Quire.depman.Depman M private queue_cb`0(Quire.depman.Position*) -> System.Void
+  Quire.depman.Depman M private treated_ready_invalid_cb`0(Quire.depman.Position*) -> System.Boolean
   Quire.depman.Depman M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.Depman M public .ctor`0(System.Int32) -> System.Void
   Quire.depman.Depman M public Dispose`0() -> System.Void
@@ -2484,6 +2541,7 @@
   Quire.depman.NQThreadData F public System.Threading.Thread Thread
   Quire.depman.NQThreadData M public .ctor`0(System.Threading.Thread,Quire.utl_mgd.Mailbox`1<Quire.depman.Msg>) -> System.Void
   Quire.depman.NQThreadDataStorage F public static System.Threading.ThreadLocal`1<Quire.depman.NQThreadData> s_data
+  Quire.depman.NQThreadDataStorage M private static make_thread_data`0() -> Quire.depman.NQThreadData
   Quire.depman.NQThreadDataStorage M public .ctor`0() -> System.Void
   Quire.depman.NodeCallbackF F public Quire.utl_mgd.Function f
   Quire.depman.NodeCallbackF M public .ctor`0(Quire.utl_mgd.Function) -> System.Void
@@ -2506,6 +2564,46 @@
   Quire.depman.NodeQueue M public virtual SetNumThreads`0(System.Int32) -> System.Void
   Quire.depman.NodeQueue M public virtual StartWorkers`0(System.Int32) -> System.Void
   Quire.depman.NodeQueue M public virtual StopWorkers`0() -> System.Void
+  Quire.depman.NodeQueueImp F private Quire.depman.BooleanMediatorImp m_busy_mediator
+  Quire.depman.NodeQueueImp F private Quire.depman.NQThreadData m_queue_thread
+  Quire.depman.NodeQueueImp F private Quire.depman.NQThreadData num_workers_listener
+  Quire.depman.NodeQueueImp F private Quire.depman.SharedThreadContext m_thread_context
+  Quire.depman.NodeQueueImp F private Quire.depman.UpToDateMediatorImp m_uptodate_mediator
+  Quire.depman.NodeQueueImp F private Quire.utl_mgd.SafeMutex m_node_order_mutex
+  Quire.depman.NodeQueueImp F private Quire.utl_mgd.TaskQueue m_callback_queue
+  Quire.depman.NodeQueueImp F private System.Boolean m_autocalc
+  Quire.depman.NodeQueueImp F private System.Boolean m_calcnow
+  Quire.depman.NodeQueueImp F private System.Collections.Hashtable m_available_workers
+  Quire.depman.NodeQueueImp F private System.Collections.Hashtable m_busy_workers
+  Quire.depman.NodeQueueImp F private System.Int32 m_in_transaction
+  Quire.depman.NodeQueueImp F private System.Int32 m_num_threads
+  Quire.depman.NodeQueueImp F private System.Int32 num_workers_desired
+  Quire.depman.NodeQueueImp M private AbortThread`0(Quire.depman.NQThreadData) -> System.Void
+  Quire.depman.NodeQueueImp M private BroadCastToWorkers`0(Quire.depman.Msg) -> System.Void
+  Quire.depman.NodeQueueImp M private CheckUptodate`0() -> System.Boolean
+  Quire.depman.NodeQueueImp M private EnqueueDeps`0(Quire.depman.Position*) -> System.Void
+  Quire.depman.NodeQueueImp M private FreeDeadNodes`0() -> System.Void
+  Quire.depman.NodeQueueImp M private MakeThreadAvailable`0(Quire.depman.NQThreadData) -> System.Void
+  Quire.depman.NodeQueueImp M private OnNodeCalcFinished`0(Quire.depman.Msg*) -> System.Void
+  Quire.depman.NodeQueueImp M private ProcessQueue`0() -> System.Void
+  Quire.depman.NodeQueueImp M private SetNumWorkers`0(System.Int32) -> System.Boolean
+  Quire.depman.NodeQueueImp M private SpawnThread`0(System.String,Quire.utl_mgd.MessageQueue`3+OnMessage<Quire.depman.NodeQueueImp,Quire.depman.NQThreadData,Quire.depman.Msg>) -> Quire.depman.NQThreadData
+  Quire.depman.NodeQueueImp M private _tildeNodeQueueImp`0() -> System.Void
+  Quire.depman.NodeQueueImp M private begin_transaction`0() -> System.Void
+  Quire.depman.NodeQueueImp M private dequeue`0() -> Quire.depman.Position*
+  Quire.depman.NodeQueueImp M private dequeue`0(Quire.depman.Position*) -> System.Int32
+  Quire.depman.NodeQueueImp M private end_transaction`0() -> System.Void
+  Quire.depman.NodeQueueImp M private enqueue`0(Quire.depman.Position*) -> System.Void
+  Quire.depman.NodeQueueImp M private is_heap_empty`0() -> System.Boolean
+  Quire.depman.NodeQueueImp M private on_busy`0(System.Boolean) -> System.Void
+  Quire.depman.NodeQueueImp M private on_uptodate`0(System.Boolean) -> System.Void
+  Quire.depman.NodeQueueImp M private reheap`0() -> System.Void
+  Quire.depman.NodeQueueImp M private static AddThreadData`0(System.Collections.Hashtable,Quire.depman.NQThreadData) -> System.Void
+  Quire.depman.NodeQueueImp M private static OnQueueMessage`0(Quire.depman.NodeQueueImp,Quire.depman.NQThreadData,Quire.depman.Msg) -> System.Boolean
+  Quire.depman.NodeQueueImp M private static OnThreadInit`0(Quire.depman.NodeQueueImp,Quire.depman.NQThreadData) -> System.Void
+  Quire.depman.NodeQueueImp M private static OnWorkerMessage`0(Quire.depman.NodeQueueImp,Quire.depman.NQThreadData,Quire.depman.Msg) -> System.Boolean
+  Quire.depman.NodeQueueImp M private static PopThreadData`0(System.Collections.Hashtable) -> Quire.depman.NQThreadData
+  Quire.depman.NodeQueueImp M private static RemoveThreadData`0(System.Collections.Hashtable,Quire.depman.NQThreadData) -> System.Void
   Quire.depman.NodeQueueImp M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.NodeQueueImp M public .ctor`0(Quire.depman.SharedThreadContext,Quire.utl_mgd.TaskQueue,Quire.utl_mgd.SafeMutex) -> System.Void
   Quire.depman.NodeQueueImp M public Dispose`0() -> System.Void
@@ -2528,9 +2626,13 @@
   Quire.depman.NodeQueueImp M public virtual SetPriority`0(Quire.depman.Position*,System.Int32) -> System.Void
   Quire.depman.NodeQueueImp M public virtual StartWorkers`0(System.Int32) -> System.Void
   Quire.depman.NodeQueueImp M public virtual StopWorkers`0() -> System.Void
+  Quire.depman.NodeQueueImp+CallBooleanF F private Quire.Engine.BooleanCallback m_cb
+  Quire.depman.NodeQueueImp+CallBooleanF F private System.Boolean m_value
   Quire.depman.NodeQueueImp+CallBooleanF M public .ctor`0(Quire.Engine.BooleanCallback,System.Boolean) -> System.Void
   Quire.depman.NodeQueueImp+CallBooleanF M public override Invoke`0(System.Object[]) -> System.Object
   Quire.depman.NodeTimer F internal Quire.utl.PerformanceTimer* m_timer
+  Quire.depman.NodeTimer M private _bangNodeTimer`0() -> System.Void
+  Quire.depman.NodeTimer M private _tildeNodeTimer`0() -> System.Void
   Quire.depman.NodeTimer M protected override Finalize`0() -> System.Void
   Quire.depman.NodeTimer M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.NodeTimer M public .ctor`0() -> System.Void
@@ -2541,6 +2643,9 @@
   Quire.depman.OnDep D Invoke`0(Quire.depman.Scope,Quire.depman.DSym,Quire.depman.ScopingMode,Quire.depman.DependencyType) -> System.Void
   Quire.depman.PosCallback D Invoke`0(Quire.depman.Position*,Quire.Engine.NodeStatus) -> System.Void
   Quire.depman.PosQueueCallback D Invoke`0(Quire.depman.Position*) -> System.Void
+  Quire.depman.PositionalEnv F private Quire.depman.DepManager* m_depman
+  Quire.depman.PositionalEnv F private Quire.depman.Position* m_pos
+  Quire.depman.PositionalEnv F private Quire.depman.SharedThreadContext m_thread_context
   Quire.depman.PositionalEnv M public .ctor`0(Quire.depman.DepManager*,Quire.depman.SharedThreadContext,Quire.depman.Position*) -> System.Void
   Quire.depman.PositionalEnv M public virtual GetRegionId`0() -> System.Int32
   Quire.depman.PositionalEnv M public virtual GetSharedThreadContext`0() -> Quire.depman.SharedThreadContext
@@ -2552,6 +2657,11 @@
   Quire.depman.SEnvironment M public virtual GetSharedThreadContext`0() -> Quire.depman.SharedThreadContext
   Quire.depman.SEnvironment M public virtual Lookup`0(Quire.depman.Scope,Quire.depman.DSym) -> Quire.depman.Position*
   Quire.depman.SafeAbortException M public static Instance`0() -> Quire.depman.SafeAbortException
+  Quire.depman.SafeRun F private Quire.Mcd.RuntimeOptions options
+  Quire.depman.SafeRun F private Quire.utl.InterruptControl* interrupt_control_umgd
+  Quire.depman.SafeRun F private Quire.utl_mgd.InterruptControl interrupt_control
+  Quire.depman.SafeRun F private System.Exception ex
+  Quire.depman.SafeRun F private System.Threading.ThreadStart ts
   Quire.depman.SafeRun M public .ctor`0(System.Threading.ThreadStart,Quire.Mcd.RuntimeOptions,Quire.utl_mgd.InterruptControl,Quire.utl.InterruptControl*) -> System.Void
   Quire.depman.SafeRun M public CheckErrors`0() -> System.Void
   Quire.depman.SafeRun M public Run`0() -> System.Void
@@ -2563,6 +2673,18 @@
   Quire.depman.ScopingMode V CHILD_ONLY = 1
   Quire.depman.ScopingMode V EXCLUDE_CHILD = 2
   Quire.depman.ScopingMode V NORMAL = 0
+  Quire.depman.SharedThreadContext F private Quire.Mcd.RuntimeOptions m_runtime_options
+  Quire.depman.SharedThreadContext F private Quire.utl_mgd.SafeMutex m_data_mutex
+  Quire.depman.SharedThreadContext F private Quire.utl_mgd.SafeMutex m_mutex
+  Quire.depman.SharedThreadContext F private System.Boolean m_abort_requested
+  Quire.depman.SharedThreadContext F private System.Collections.Hashtable m_thread_map
+  Quire.depman.SharedThreadContext F private System.Int32 m_worker_stack_size
+  Quire.depman.SharedThreadContext M private GetSharedThreadContext`0() -> Quire.depman.SharedThreadContext
+  Quire.depman.SharedThreadContext M private check_interrupt`0() -> System.Void
+  Quire.depman.SharedThreadContext M private clear_thread_data`0(System.Int32) -> System.Void
+  Quire.depman.SharedThreadContext M private get_thread_data`0() -> Quire.depman.ThreadData
+  Quire.depman.SharedThreadContext M private get_thread_data`0(System.Int32) -> Quire.depman.ThreadData
+  Quire.depman.SharedThreadContext M private interrupt`0(System.Int32) -> System.Void
   Quire.depman.SharedThreadContext M public .ctor`0(System.Int32) -> System.Void
   Quire.depman.SharedThreadContext M public Abort`0(System.Int32) -> System.Void
   Quire.depman.SharedThreadContext M public CheckInterrupt`0() -> System.Void
@@ -2583,11 +2705,17 @@
   Quire.depman.ThreadData F public System.Boolean coop_interrupt_only
   Quire.depman.ThreadData F public System.Boolean interrupt_requested
   Quire.depman.ThreadData F public System.Threading.Thread interruptible_task
+  Quire.depman.ThreadData M private _bangThreadData`0() -> System.Void
+  Quire.depman.ThreadData M private _tildeThreadData`0() -> System.Void
   Quire.depman.ThreadData M protected override Finalize`0() -> System.Void
   Quire.depman.ThreadData M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.ThreadData M public .ctor`0() -> System.Void
   Quire.depman.ThreadData M public Dispose`0() -> System.Void
   Quire.depman.TreatedReadyInvalidCallback D Invoke`0(Quire.depman.Position*) -> System.Boolean
+  Quire.depman.UndefineAction F private System.Boolean m_child_only
+  Quire.depman.UndefineAction F private System.Collections.ICollection m_vars
+  Quire.depman.UndefineAction F private System.Object m_value
+  Quire.depman.UndefineAction M private _tildeUndefineAction`0() -> System.Void
   Quire.depman.UndefineAction M protected virtual Dispose`0(System.Boolean) -> System.Void
   Quire.depman.UndefineAction M public .ctor`0(System.Collections.ICollection,System.Object,System.Boolean) -> System.Void
   Quire.depman.UndefineAction M public Dispose`0() -> System.Void
@@ -2595,6 +2723,8 @@
   Quire.depman.UndefineAction M public virtual Invoke`0(Quire.depman.Environment,System.Object) -> Quire.depman.ActionResult
   Quire.depman.UndefineAction M public virtual IsChildOnly`0() -> System.Boolean
   Quire.depman.UndefineAction M public virtual IsUndefine`0() -> System.Boolean
+  Quire.depman.UpToDateMediatorImp F private Quire.utl_mgd.SafeMutex m_mutex
+  Quire.depman.UpToDateMediatorImp F private System.Boolean m_in_sync
   Quire.depman.UpToDateMediatorImp M protected override set_value`0(System.Boolean) -> System.Void
   Quire.depman.UpToDateMediatorImp M public .ctor`0(System.Boolean,Quire.utl_mgd.TaskQueue) -> System.Void
   Quire.depman.UpToDateMediatorImp M public Sync`0() -> System.Void

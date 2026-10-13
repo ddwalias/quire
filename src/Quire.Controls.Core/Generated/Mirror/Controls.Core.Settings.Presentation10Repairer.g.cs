@@ -12,5 +12,19 @@ namespace Quire.Controls.Core.Settings;
 internal static partial class Presentation10Repairer
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string _sourceNamespaceURI = "http://schemas.mathsoft.com/worksheet50";
+    [global::Quire.Mirror.MirrorStub]
+    private const string _targetNamespaceURI = "http://schemas.ptc.com/mathcad/settings/presentation10";
+    [global::Quire.Mirror.MirrorStub]
     public static void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateNodeValue(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateNameSpace(global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> elements, global::System.Collections.Generic.ICollection<string> exceptions, string oldNameSpaceName, string newNameSpaceName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateNameSpace(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Linq.XElement CreateNewParent(global::System.Xml.Linq.XElement oldParent, global::System.Xml.Linq.XElement newAddAfter, string newParentLocalName, string newParentNS, global::System.Collections.Generic.IEnumerable<string> childrenLocalNames) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateNodeStruct(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

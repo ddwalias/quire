@@ -12,6 +12,8 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class al : global::Quire.EquationEditor.Tree.Scoping.LinearSegment
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Direction d_;
+    [global::Quire.Mirror.MirrorStub]
     public al(global::Quire.Native.PtcEquationEditor.al A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public al(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Direction A_1) { }

@@ -18,6 +18,22 @@ public partial class RubberBandHighlighter : global::Quire.Controls.Core.VisualA
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CornerStyleProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _brush;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Pen _pen;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Windows.UIElement> _excludedElements;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Direction[] _excludedElementsExtendDirections;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::System.Windows.UIElement>> _linesElements;
+    [global::Quire.Mirror.MirrorStub]
+    private const double PAD = 0d;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _areAllElementsEmpty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Windows.Rect> _boundsPerLine;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color BorderColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -28,6 +44,14 @@ public partial class RubberBandHighlighter : global::Quire.Controls.Core.VisualA
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.Windows.Rect> BoundsPerLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private bool IsParentVisibilitySensitive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualMathNode ResizableParentNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnColorChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnBorderColorChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public RubberBandHighlighter(global::System.Windows.UIElement commonContainer, params global::System.Windows.UIElement[] elements) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
     public RubberBandHighlighter(global::System.Windows.UIElement commonContainer, global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> elements) : base(default(global::System.Windows.UIElement), default(bool)) { }
@@ -36,13 +60,41 @@ public partial class RubberBandHighlighter : global::Quire.Controls.Core.VisualA
     [global::Quire.Mirror.MirrorStub]
     public RubberBandHighlighter(global::System.Windows.UIElement commonContainer, global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::System.Windows.UIElement>> elements, global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> excludedElements, global::Quire.Direction[] excludedElementsExtendDirections) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void InvalidateBoundsCache() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Windows.Rect> ComputeLinesRects(bool extendMonoLines = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ExtendToRight(global::System.Collections.Generic.List<global::System.Windows.Rect> linesRects, int startIndex, double right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UnionBlocksRange(global::System.Collections.Generic.List<global::System.Windows.Rect> linesRects, int startIndex, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool AreLinesRectanglesNotIntersect_DEBUG(global::System.Collections.Generic.List<global::System.Windows.Rect> linesRects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ContainsStepRangeAndItsDescendants(int idx, int otherIdx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect[] GetInteriorBounds(global::System.Windows.Rect bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void FitAroundElements(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::System.Windows.UIElement>> list, global::System.Collections.Generic.IList<global::System.Windows.UIElement> excludedList, global::Quire.Direction[] excludedElementsExtendDirections) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Add() => base.Add();
     [global::Quire.Mirror.MirrorStub]
     public override void Remove() => base.Remove();
     [global::Quire.Mirror.MirrorStub]
+    private void OnAdornedElementSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect GetBoundingRect(global::System.Collections.Generic.ICollection<global::System.Windows.UIElement> elements, double left = double.PositiveInfinity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect GetChildRect(global::System.Windows.UIElement child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetBrush(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetPen(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
+    [global::Quire.Mirror.MirrorStub]
+    private void RenderGeometry(global::System.Windows.Media.DrawingContext dc, global::System.Windows.Media.Pen borderPen, global::System.Windows.Media.Geometry bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

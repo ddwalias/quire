@@ -12,6 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ac : global::Quire.Native.PtcEquationEditor.t, global::Quire.Calculation.Core.IEagerMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Native.PtcEquationEditor.t> a_;
+    [global::Quire.Mirror.MirrorStub]
+    private int b;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.t this[int A_0, int A_1] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +27,8 @@ internal partial class ac : global::Quire.Native.PtcEquationEditor.t, global::Qu
     public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ac(int A_0, int A_1) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetElementAt(int r, int c, global::Quire.Calculation.Core.IResultNode element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

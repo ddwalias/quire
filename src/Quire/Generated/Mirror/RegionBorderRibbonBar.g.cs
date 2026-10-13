@@ -16,6 +16,8 @@ public partial class RegionBorderRibbonBar : global::Fluent.RibbonGroupBox, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_RegionBorderRibbonBar_SolveBlockLabels;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public RegionBorderRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots;
 public abstract partial class PlotGraphLinearAxisBase : global::Quire.Controls.Plots.PlotGraphAxis
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowArrowHeadProperty;
     [global::Quire.Mirror.MirrorStub]
     protected const double EdgeTickMarkScale = 0.08333333333333333d;
@@ -21,6 +23,8 @@ public abstract partial class PlotGraphLinearAxisBase : global::Quire.Controls.P
     public static global::System.Windows.DependencyProperty ScaleEdgeEvenlyProperty;
     [global::Quire.Mirror.MirrorStub]
     protected bool ShowArrowHead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry ArrowHeadGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ScaleEdgeEvenly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -36,9 +40,15 @@ public abstract partial class PlotGraphLinearAxisBase : global::Quire.Controls.P
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleOrientationChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry GetTickmarksGeometry(global::Quire.Controls.Plots.Presenter.TickScale scale, bool addFirstTick) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected double GetTickPosition(global::Quire.Controls.Plots.Presenter.TickScale scale, int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private double GetTickRelativePosition(global::Quire.Controls.Plots.Presenter.TickScale scale, int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.LineGeometry GetTickLine(double tickPosition, double size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry AxisLineGeometry(bool fullSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal double GetTickPositionByTickNumber(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -50,11 +60,17 @@ public abstract partial class PlotGraphLinearAxisBase : global::Quire.Controls.P
     [global::Quire.Mirror.MirrorStub]
     public void Draw(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush fill, global::System.Windows.Media.Brush numbersStroke, global::System.Windows.Media.Brush lineStroke, double strokeThickness) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void DrawNumbers(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush stroke) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
+    [global::Quire.Mirror.MirrorStub]
+    private void GetPositions(out global::System.Windows.Point firstEqnPosition, out global::System.Windows.Point secondEqnPosition, out global::System.Windows.Point lastEqnPosition, out global::System.Windows.Point firstLabelPosition, out global::System.Windows.Point secondLabelPosition, out global::System.Windows.Point last_labelPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected double GetRealOffset(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetRealRelaviveOffset(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
 }

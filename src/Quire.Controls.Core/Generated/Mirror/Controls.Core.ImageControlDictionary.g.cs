@@ -14,6 +14,8 @@ public partial class ImageControlDictionary : global::System.Windows.ResourceDic
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.ImageControlDictionary Instance;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ImageControlDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

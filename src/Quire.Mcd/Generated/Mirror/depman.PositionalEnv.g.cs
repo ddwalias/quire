@@ -12,6 +12,12 @@ namespace Quire.depman;
 internal partial class PositionalEnv : global::Quire.depman.SEnvironment
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.DepManager* m_depman;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.Position* m_pos;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.SharedThreadContext m_thread_context;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe PositionalEnv(global::Quire.depman.DepManager* d, global::Quire.depman.SharedThreadContext c, global::Quire.depman.Position* p) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual unsafe global::Quire.depman.Position* Lookup(global::Quire.depman.Scope s, global::Quire.depman.DSym sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

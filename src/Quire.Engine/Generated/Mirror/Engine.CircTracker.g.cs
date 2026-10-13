@@ -12,6 +12,10 @@ namespace Quire.Engine;
 internal partial class CircTracker
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<object, string> seen;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, int> counts;
+    [global::Quire.Mirror.MirrorStub]
     public CircTracker() { }
     [global::Quire.Mirror.MirrorStub]
     public string Seen(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

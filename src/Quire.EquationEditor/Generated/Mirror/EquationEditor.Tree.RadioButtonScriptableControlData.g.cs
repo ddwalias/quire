@@ -16,6 +16,10 @@ public partial class RadioButtonScriptableControlData : global::Quire.EquationEd
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 80;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Orientation c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FlowDirection d;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

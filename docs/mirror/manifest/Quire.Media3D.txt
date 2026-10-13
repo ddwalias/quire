@@ -14,6 +14,10 @@
   Quire.Media2D.ArrowLine P X2 : System.Double get:public set:public
   Quire.Media2D.ArrowLine P Y1 : System.Double get:public set:public
   Quire.Media2D.ArrowLine P Y2 : System.Double get:public set:public
+  Quire.Media2D.ArrowLineBase F private System.Windows.Media.PathFigure pathfigHead1
+  Quire.Media2D.ArrowLineBase F private System.Windows.Media.PathFigure pathfigHead2
+  Quire.Media2D.ArrowLineBase F private System.Windows.Media.PolyLineSegment polysegHead1
+  Quire.Media2D.ArrowLineBase F private System.Windows.Media.PolyLineSegment polysegHead2
   Quire.Media2D.ArrowLineBase F protected System.Windows.Media.PathFigure pathfigLine
   Quire.Media2D.ArrowLineBase F protected System.Windows.Media.PathGeometry pathgeo
   Quire.Media2D.ArrowLineBase F protected System.Windows.Media.PolyLineSegment polysegLine
@@ -21,6 +25,7 @@
   Quire.Media2D.ArrowLineBase F public static readonly System.Windows.DependencyProperty ArrowEndsProperty
   Quire.Media2D.ArrowLineBase F public static readonly System.Windows.DependencyProperty ArrowLengthProperty
   Quire.Media2D.ArrowLineBase F public static readonly System.Windows.DependencyProperty IsArrowClosedProperty
+  Quire.Media2D.ArrowLineBase M private CalculateArrow`0(System.Windows.Media.PathFigure,System.Windows.Point,System.Windows.Point) -> System.Windows.Media.PathFigure
   Quire.Media2D.ArrowLineBase M public .ctor`0() -> System.Void
   Quire.Media2D.ArrowLineBase P ArrowAngle : System.Double get:public set:public
   Quire.Media2D.ArrowLineBase P ArrowEnds : Quire.Media2D.ArrowEnds get:public set:public
@@ -35,6 +40,7 @@
   Quire.Media3D.AlgorithmicTransform M public abstract Transform`0(System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.AlgorithmicTransformCollection M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.AlgorithmicTransformCollection M public .ctor`0() -> System.Void
+  Quire.Media3D.Axes F private Quire.Media3D.TextGenerator txtgen
   Quire.Media3D.Axes F public static readonly System.Windows.DependencyProperty ExtentProperty
   Quire.Media3D.Axes F public static readonly System.Windows.DependencyProperty FontProperty
   Quire.Media3D.Axes F public static readonly System.Windows.DependencyProperty FontSizeProperty
@@ -42,6 +48,7 @@
   Quire.Media3D.Axes F public static readonly System.Windows.DependencyProperty LargeTickProperty
   Quire.Media3D.Axes F public static readonly System.Windows.DependencyProperty ShowNumbersProperty
   Quire.Media3D.Axes F public static readonly System.Windows.DependencyProperty SmallTickProperty
+  Quire.Media3D.Axes M private static ValidateLabels`0(System.Object) -> System.Boolean
   Quire.Media3D.Axes M protected override Generate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.Axes M public .ctor`0() -> System.Void
   Quire.Media3D.Axes P Extent : System.Double get:public set:public
@@ -66,6 +73,7 @@
   Quire.Media3D.Billboard F public static readonly System.Windows.DependencyProperty StacksProperty
   Quire.Media3D.Billboard F public static readonly System.Windows.DependencyProperty UpperLeftProperty
   Quire.Media3D.Billboard F public static readonly System.Windows.DependencyProperty UpperRightProperty
+  Quire.Media3D.Billboard M private static ValidateSlicesAndStacks`0(System.Object) -> System.Boolean
   Quire.Media3D.Billboard M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.Billboard M public .ctor`0() -> System.Void
   Quire.Media3D.Billboard P LowerLeft : System.Windows.Media.Media3D.Point3D get:public set:public
@@ -80,6 +88,7 @@
   Quire.Media3D.BoxMesh F public static readonly System.Windows.DependencyProperty SlicesProperty
   Quire.Media3D.BoxMesh F public static readonly System.Windows.DependencyProperty StacksProperty
   Quire.Media3D.BoxMesh F public static readonly System.Windows.DependencyProperty WidthProperty
+  Quire.Media3D.BoxMesh M private static ValidateDivisions`0(System.Object) -> System.Boolean
   Quire.Media3D.BoxMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.BoxMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.BoxMesh M public .ctor`0() -> System.Void
@@ -89,6 +98,8 @@
   Quire.Media3D.BoxMesh P Slices : System.Int32 get:public set:public
   Quire.Media3D.BoxMesh P Stacks : System.Int32 get:public set:public
   Quire.Media3D.BoxMesh P Width : System.Double get:public set:public
+  Quire.Media3D.CameraInfo F private static readonly System.Windows.DependencyPropertyKey ProjectionMatrixKey
+  Quire.Media3D.CameraInfo F private static readonly System.Windows.DependencyPropertyKey ViewMatrixKey
   Quire.Media3D.CameraInfo F public static readonly System.Windows.DependencyProperty CameraProperty
   Quire.Media3D.CameraInfo F public static readonly System.Windows.DependencyProperty InverseTransformProperty
   Quire.Media3D.CameraInfo F public static readonly System.Windows.DependencyProperty NameProperty
@@ -98,6 +109,8 @@
   Quire.Media3D.CameraInfo F public static readonly System.Windows.DependencyProperty ViewportHeightProperty
   Quire.Media3D.CameraInfo F public static readonly System.Windows.DependencyProperty ViewportWidthProperty
   Quire.Media3D.CameraInfo F public static readonly System.Windows.Media.Media3D.Matrix3D ZeroMatrix
+  Quire.Media3D.CameraInfo M private static CameraPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Media3D.CameraInfo M private static ViewportPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.CameraInfo M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.CameraInfo M public .ctor`0() -> System.Void
   Quire.Media3D.CameraInfo M public override ToString`0() -> System.String
@@ -108,11 +121,12 @@
   Quire.Media3D.CameraInfo P Camera : System.Windows.Media.Media3D.Camera get:public set:public
   Quire.Media3D.CameraInfo P InverseTransform : System.Windows.Media.Media3D.Matrix3D get:public set:protected
   Quire.Media3D.CameraInfo P Name : System.String get:public set:public
-  Quire.Media3D.CameraInfo P ProjectionMatrix : System.Windows.Media.Media3D.Matrix3D get:public
+  Quire.Media3D.CameraInfo P ProjectionMatrix : System.Windows.Media.Media3D.Matrix3D get:public set:private
   Quire.Media3D.CameraInfo P TotalTransform : System.Windows.Media.Media3D.Matrix3D get:public set:protected
-  Quire.Media3D.CameraInfo P ViewMatrix : System.Windows.Media.Media3D.Matrix3D get:public
+  Quire.Media3D.CameraInfo P ViewMatrix : System.Windows.Media.Media3D.Matrix3D get:public set:private
   Quire.Media3D.CameraInfo P ViewportHeight : System.Double get:public set:public
   Quire.Media3D.CameraInfo P ViewportWidth : System.Double get:public set:public
+  Quire.Media3D.CubeMesh F private static readonly System.Windows.Media.Media3D.Point3D[,] faces
   Quire.Media3D.CubeMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.CubeMesh M public .ctor`0() -> System.Void
   Quire.Media3D.CubeMesh P Faces : System.Windows.Media.Media3D.Point3D[,] override get:protected
@@ -123,6 +137,7 @@
   Quire.Media3D.Cuboid F public static readonly System.Windows.DependencyProperty SliversProperty
   Quire.Media3D.Cuboid F public static readonly System.Windows.DependencyProperty StacksProperty
   Quire.Media3D.Cuboid F public static readonly System.Windows.DependencyProperty WidthProperty
+  Quire.Media3D.Cuboid M private static ValidateSlices`0(System.Object) -> System.Boolean
   Quire.Media3D.Cuboid M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.Cuboid M public .ctor`0() -> System.Void
   Quire.Media3D.Cuboid P Depth : System.Double get:public set:public
@@ -132,6 +147,8 @@
   Quire.Media3D.Cuboid P Slivers : System.Int32 get:public set:public
   Quire.Media3D.Cuboid P Stacks : System.Int32 get:public set:public
   Quire.Media3D.Cuboid P Width : System.Double get:public set:public
+  Quire.Media3D.Cylinder F private System.Windows.Media.Media3D.AxisAngleRotation3D rotate
+  Quire.Media3D.Cylinder F private System.Windows.Media.Media3D.RotateTransform3D xform
   Quire.Media3D.Cylinder F public static readonly System.Windows.DependencyProperty EndStacksProperty
   Quire.Media3D.Cylinder F public static readonly System.Windows.DependencyProperty Fold1Property
   Quire.Media3D.Cylinder F public static readonly System.Windows.DependencyProperty Fold2Property
@@ -154,6 +171,8 @@
   Quire.Media3D.Cylinder P Stacks : System.Int32 get:public set:public
   Quire.Media3D.CylinderMesh F public static readonly System.Windows.DependencyProperty EndStacksProperty
   Quire.Media3D.CylinderMesh F public static readonly System.Windows.DependencyProperty FoldProperty
+  Quire.Media3D.CylinderMesh M private static ValidateEndStacks`0(System.Object) -> System.Boolean
+  Quire.Media3D.CylinderMesh M private static ValidateFold`0(System.Object) -> System.Boolean
   Quire.Media3D.CylinderMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.CylinderMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.CylinderMesh M public .ctor`0() -> System.Void
@@ -163,15 +182,30 @@
   Quire.Media3D.CylindricalMeshBase F public static readonly System.Windows.DependencyProperty RadiusProperty
   Quire.Media3D.CylindricalMeshBase F public static readonly System.Windows.DependencyProperty SlicesProperty
   Quire.Media3D.CylindricalMeshBase F public static readonly System.Windows.DependencyProperty StacksProperty
+  Quire.Media3D.CylindricalMeshBase M private static ValidateSlices`0(System.Object) -> System.Boolean
+  Quire.Media3D.CylindricalMeshBase M private static ValidateStacks`0(System.Object) -> System.Boolean
   Quire.Media3D.CylindricalMeshBase M protected .ctor`0() -> System.Void
   Quire.Media3D.CylindricalMeshBase P Length : System.Double get:public set:public
   Quire.Media3D.CylindricalMeshBase P Radius : System.Double get:public set:public
   Quire.Media3D.CylindricalMeshBase P Slices : System.Int32 get:public set:public
   Quire.Media3D.CylindricalMeshBase P Stacks : System.Int32 get:public set:public
+  Quire.Media3D.DodecahedronMesh F private static readonly System.Double A
+  Quire.Media3D.DodecahedronMesh F private static readonly System.Double B
+  Quire.Media3D.DodecahedronMesh F private static readonly System.Double G
+  Quire.Media3D.DodecahedronMesh F private static readonly System.Double H
+  Quire.Media3D.DodecahedronMesh F private static readonly System.Windows.Media.Media3D.Point3D[,] faces
   Quire.Media3D.DodecahedronMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.DodecahedronMesh M public .ctor`0() -> System.Void
   Quire.Media3D.DodecahedronMesh P Faces : System.Windows.Media.Media3D.Point3D[,] override get:protected
+  Quire.Media3D.FlatSurfaceMeshBase F private System.Int32[] indicesBase
+  Quire.Media3D.FlatSurfaceMeshBase F private System.Windows.Media.Media3D.Point3D[] verticesBase
+  Quire.Media3D.FlatSurfaceMeshBase F private System.Windows.Media.Media3D.Vector3D[] normalsBase
+  Quire.Media3D.FlatSurfaceMeshBase F private System.Windows.Point[] texturesBase
   Quire.Media3D.FlatSurfaceMeshBase F public static readonly System.Windows.DependencyProperty SlicesProperty
+  Quire.Media3D.FlatSurfaceMeshBase M private Point3DWeight`0(System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Double) -> System.Windows.Media.Media3D.Point3D
+  Quire.Media3D.FlatSurfaceMeshBase M private PointWeight`0(System.Windows.Point,System.Windows.Point,System.Double) -> System.Windows.Point
+  Quire.Media3D.FlatSurfaceMeshBase M private Vector3DWeight`0(System.Windows.Media.Media3D.Vector3D,System.Windows.Media.Media3D.Vector3D,System.Double) -> System.Windows.Media.Media3D.Vector3D
+  Quire.Media3D.FlatSurfaceMeshBase M private static ValidateSlices`0(System.Object) -> System.Boolean
   Quire.Media3D.FlatSurfaceMeshBase M protected .ctor`0() -> System.Void
   Quire.Media3D.FlatSurfaceMeshBase M protected TriangleSubdivide`0(System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.FlatSurfaceMeshBase P Slices : System.Int32 get:public set:public
@@ -183,9 +217,13 @@
   Quire.Media3D.HollowCylinderMesh M public .ctor`0() -> System.Void
   Quire.Media3D.IViewportsListManager M public virtual AddToList`0(System.Windows.Controls.Viewport3D) -> System.Void
   Quire.Media3D.IViewportsListManager M public virtual RemoveFromList`0(System.Windows.Controls.Viewport3D) -> System.Void
+  Quire.Media3D.IcosahedronMesh F private static readonly System.Double G
+  Quire.Media3D.IcosahedronMesh F private static readonly System.Windows.Media.Media3D.Point3D[,] faces
   Quire.Media3D.IcosahedronMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.IcosahedronMesh M public .ctor`0() -> System.Void
   Quire.Media3D.IcosahedronMesh P Faces : System.Windows.Media.Media3D.Point3D[,] override get:protected
+  Quire.Media3D.LineRange F private System.Windows.Media.Media3D.Point3D point1
+  Quire.Media3D.LineRange F private System.Windows.Media.Media3D.Point3D point2
   Quire.Media3D.LineRange M public .ctor`0(System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D) -> System.Void
   Quire.Media3D.LineRange M public PointFromX`0(System.Double) -> System.Windows.Media.Media3D.Point3D
   Quire.Media3D.LineRange M public PointFromY`0(System.Double) -> System.Windows.Media.Media3D.Point3D
@@ -197,17 +235,21 @@
   Quire.Media3D.LineSegment3D M public .ctor`0() -> System.Void
   Quire.Media3D.LineSegment3D M public override ToString`0() -> System.String
   Quire.Media3D.LineSegment3D P Point : System.Windows.Media.Media3D.Point3D get:public set:public
+  Quire.Media3D.Matrix3DPanel F private System.Windows.Controls.Primitives.UniformGrid unigrid
+  Quire.Media3D.Matrix3DPanel F private static readonly System.Windows.DependencyPropertyKey MatrixKey
   Quire.Media3D.Matrix3DPanel F public static readonly System.Windows.DependencyProperty MatrixProperty
   Quire.Media3D.Matrix3DPanel F public static readonly System.Windows.DependencyProperty MaximumProperty
   Quire.Media3D.Matrix3DPanel F public static readonly System.Windows.DependencyProperty MinimumProperty
+  Quire.Media3D.Matrix3DPanel M private ScrollBarOnValueChanged`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
   Quire.Media3D.Matrix3DPanel M protected override ArrangeOverride`0(System.Windows.Size) -> System.Windows.Size
   Quire.Media3D.Matrix3DPanel M protected override GetVisualChild`0(System.Int32) -> System.Windows.Media.Visual
   Quire.Media3D.Matrix3DPanel M protected override MeasureOverride`0(System.Windows.Size) -> System.Windows.Size
   Quire.Media3D.Matrix3DPanel M public .ctor`0() -> System.Void
-  Quire.Media3D.Matrix3DPanel P Matrix : System.Windows.Media.Media3D.Matrix3D get:public
+  Quire.Media3D.Matrix3DPanel P Matrix : System.Windows.Media.Media3D.Matrix3D get:public set:private
   Quire.Media3D.Matrix3DPanel P Maximum : System.Double get:public set:public
   Quire.Media3D.Matrix3DPanel P Minimum : System.Double get:public set:public
   Quire.Media3D.Matrix3DPanel P VisualChildrenCount : System.Int32 override get:protected
+  Quire.Media3D.MeshGeneratorBase F private static System.Windows.DependencyPropertyKey GeometryKey
   Quire.Media3D.MeshGeneratorBase F public static readonly System.Windows.DependencyProperty GeometryProperty
   Quire.Media3D.MeshGeneratorBase F public static readonly System.Windows.DependencyProperty NameProperty
   Quire.Media3D.MeshGeneratorBase M protected abstract Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
@@ -220,12 +262,19 @@
   Quire.Media3D.ModelVisual M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.ModelVisual M public .ctor`0() -> System.Void
   Quire.Media3D.ModelVisual P MeshGenerator : Quire.Media3D.MeshGeneratorBase get:public set:public
+  Quire.Media3D.ModelVisualBase F private Quire.Media3D.WireFrame wireframe
+  Quire.Media3D.ModelVisualBase F private System.Windows.Media.Media3D.Point3DCollection normalsAsPoints
+  Quire.Media3D.ModelVisualBase F private System.Windows.Media.Media3D.Point3DCollection verticesPreTransform
+  Quire.Media3D.ModelVisualBase F private System.Windows.Media.Media3D.Vector3DCollection normalsPreTransform
+  Quire.Media3D.ModelVisualBase F private static readonly System.Windows.DependencyPropertyKey GeometryKey
   Quire.Media3D.ModelVisualBase F public static readonly System.Windows.DependencyProperty AlgorithmicTransformsProperty
   Quire.Media3D.ModelVisualBase F public static readonly System.Windows.DependencyProperty BackMaterialProperty
   Quire.Media3D.ModelVisualBase F public static readonly System.Windows.DependencyProperty GeometryProperty
   Quire.Media3D.ModelVisualBase F public static readonly System.Windows.DependencyProperty IsWireFrameProperty
   Quire.Media3D.ModelVisualBase F public static readonly System.Windows.DependencyProperty MaterialProperty
   Quire.Media3D.ModelVisualBase F public static readonly System.Windows.DependencyProperty NameProperty
+  Quire.Media3D.ModelVisualBase M private MaterialPropertyChanged`0(System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Media3D.ModelVisualBase M private static MaterialPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.ModelVisualBase M protected abstract Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.ModelVisualBase M protected static PropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.ModelVisualBase M protected virtual PropertyChanged`0(System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
@@ -236,12 +285,18 @@
   Quire.Media3D.ModelVisualBase P IsWireFrame : System.Boolean get:public set:public
   Quire.Media3D.ModelVisualBase P Material : System.Windows.Media.Media3D.Material get:public set:public
   Quire.Media3D.ModelVisualBase P Name : System.String get:public set:public
+  Quire.Media3D.OctahedronMesh F private static readonly System.Windows.Media.Media3D.Point3D[,] faces
   Quire.Media3D.OctahedronMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.OctahedronMesh M public .ctor`0() -> System.Void
   Quire.Media3D.OctahedronMesh P Faces : System.Windows.Media.Media3D.Point3D[,] override get:protected
+  Quire.Media3D.PathFigure3D F private Quire.Media3D.PathFigure3D figFlattened
   Quire.Media3D.PathFigure3D F public static System.Int32 Approximation
   Quire.Media3D.PathFigure3D F public static readonly System.Windows.DependencyProperty SegmentsProperty
   Quire.Media3D.PathFigure3D F public static readonly System.Windows.DependencyProperty StartPointProperty
+  Quire.Media3D.PathFigure3D M private ConvertBezier`0(System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D) -> System.Void
+  Quire.Media3D.PathFigure3D M private SegmentsPropertyChanged`0() -> System.Void
+  Quire.Media3D.PathFigure3D M private static SegmentsPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Media3D.PathFigure3D M private static StartPointPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.PathFigure3D M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.PathFigure3D M public .ctor`0() -> System.Void
   Quire.Media3D.PathFigure3D M public GetFlattenedPathFigure`0() -> Quire.Media3D.PathFigure3D
@@ -289,6 +344,8 @@
   Quire.Media3D.PolyhedronMeshBase M public .ctor`0() -> System.Void
   Quire.Media3D.PolyhedronMeshBase P Faces : System.Windows.Media.Media3D.Point3D[,] abstract get:protected
   Quire.Media3D.PolyhedronMeshBase P TextureCoordinates : System.Windows.Media.PointCollection get:public set:public
+  Quire.Media3D.Sphere F private System.Windows.Media.Media3D.AxisAngleRotation3D rotate
+  Quire.Media3D.Sphere F private System.Windows.Media.Media3D.RotateTransform3D xform
   Quire.Media3D.Sphere F public static readonly System.Windows.DependencyProperty CenterProperty
   Quire.Media3D.Sphere F public static readonly System.Windows.DependencyProperty LatitudeFromProperty
   Quire.Media3D.Sphere F public static readonly System.Windows.DependencyProperty LatitudeToProperty
@@ -297,6 +354,10 @@
   Quire.Media3D.Sphere F public static readonly System.Windows.DependencyProperty RadiusProperty
   Quire.Media3D.Sphere F public static readonly System.Windows.DependencyProperty SlicesProperty
   Quire.Media3D.Sphere F public static readonly System.Windows.DependencyProperty StacksProperty
+  Quire.Media3D.Sphere M private static ValidateLatitude`0(System.Object) -> System.Boolean
+  Quire.Media3D.Sphere M private static ValidateLongitude`0(System.Object) -> System.Boolean
+  Quire.Media3D.Sphere M private static ValidateNonNegative`0(System.Object) -> System.Boolean
+  Quire.Media3D.Sphere M private static ValidatePositive`0(System.Object) -> System.Boolean
   Quire.Media3D.Sphere M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.Sphere M public .ctor`0() -> System.Void
   Quire.Media3D.Sphere P Center : System.Windows.Media.Media3D.Point3D get:public set:public
@@ -311,6 +372,8 @@
   Quire.Media3D.SphereMesh F public static readonly System.Windows.DependencyProperty RadiusProperty
   Quire.Media3D.SphereMesh F public static readonly System.Windows.DependencyProperty SlicesProperty
   Quire.Media3D.SphereMesh F public static readonly System.Windows.DependencyProperty StacksProperty
+  Quire.Media3D.SphereMesh M private static ValidateSlices`0(System.Object) -> System.Boolean
+  Quire.Media3D.SphereMesh M private static ValidateStacks`0(System.Object) -> System.Boolean
   Quire.Media3D.SphereMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.SphereMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.SphereMesh M public .ctor`0() -> System.Void
@@ -318,10 +381,16 @@
   Quire.Media3D.SphereMesh P Radius : System.Double get:public set:public
   Quire.Media3D.SphereMesh P Slices : System.Int32 get:public set:public
   Quire.Media3D.SphereMesh P Stacks : System.Int32 get:public set:public
+  Quire.Media3D.StrokeCharacter F private System.Int32 width
+  Quire.Media3D.StrokeCharacter F private System.Windows.Media.Geometry geo
   Quire.Media3D.StrokeCharacter M public .ctor`0(System.Int32,System.String) -> System.Void
   Quire.Media3D.StrokeCharacter P Geometry : System.Windows.Media.Geometry get:public set:public
   Quire.Media3D.StrokeCharacter P Width : System.Int32 get:public set:public
+  Quire.Media3D.TeapotMesh F private static System.Double[] normalsTeapot
+  Quire.Media3D.TeapotMesh F private static System.Double[] verticesTeapot
+  Quire.Media3D.TeapotMesh F private static System.Int32[] indicesTeapot
   Quire.Media3D.TeapotMesh F public static readonly System.Windows.DependencyProperty TriangleRangeProperty
+  Quire.Media3D.TeapotMesh M private static ValidateTriangleRange`0(System.Object) -> System.Boolean
   Quire.Media3D.TeapotMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.TeapotMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.TeapotMesh M public .ctor`0() -> System.Void
@@ -346,9 +415,12 @@
   Quire.Media3D.TeapotTriangleRangeConverter M public override CanConvertTo`0(System.ComponentModel.ITypeDescriptorContext,System.Type) -> System.Boolean
   Quire.Media3D.TeapotTriangleRangeConverter M public override ConvertFrom`0(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object) -> System.Object
   Quire.Media3D.TeapotTriangleRangeConverter M public override ConvertTo`0(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type) -> System.Object
+  Quire.Media3D.TetrahedronMesh F private static readonly System.Windows.Media.Media3D.Point3D[,] faces
   Quire.Media3D.TetrahedronMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.TetrahedronMesh M public .ctor`0() -> System.Void
   Quire.Media3D.TetrahedronMesh P Faces : System.Windows.Media.Media3D.Point3D[,] override get:protected
+  Quire.Media3D.TextGenerator F private const System.Double MaxHeight
+  Quire.Media3D.TextGenerator F private static Quire.Media3D.StrokeCharacter[,] chars
   Quire.Media3D.TextGenerator F public Quire.Media3D.Font Font
   Quire.Media3D.TextGenerator F public System.Double FontSize
   Quire.Media3D.TextGenerator F public System.Double Thickness
@@ -358,8 +430,14 @@
   Quire.Media3D.TextGenerator F public System.Windows.Media.Media3D.Vector3D BaselineDirection
   Quire.Media3D.TextGenerator F public System.Windows.Media.Media3D.Vector3D UpDirection
   Quire.Media3D.TextGenerator F public System.Windows.VerticalAlignment VerticalAlignment
+  Quire.Media3D.TextGenerator M private Convert`0(System.Windows.Point,System.Windows.Media.Media3D.Point3D) -> System.Windows.Media.Media3D.Point3D
+  Quire.Media3D.TextGenerator M private ProcessText`0(System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Point3D,System.String) -> System.Windows.Media.Media3D.Point3D
   Quire.Media3D.TextGenerator M public .ctor`0() -> System.Void
   Quire.Media3D.TextGenerator M public Generate`0(System.Windows.Media.Media3D.Point3DCollection,System.String) -> System.Void
+  Quire.Media3D.TextGenerator P NormalizedBaselineDirection : System.Windows.Media.Media3D.Vector3D get:private
+  Quire.Media3D.TextGenerator P NormalizedUpDirection : System.Windows.Media.Media3D.Vector3D get:private
+  Quire.Media3D.Tools3D F private static readonly System.Windows.Media.Media3D.Material _emptyMaterial
+  Quire.Media3D.Tools3D M private static Correct3DPointCoordinates`0(System.Windows.Media.Media3D.Point3D) -> System.Windows.Media.Media3D.Point3D
   Quire.Media3D.Tools3D M public static BoxCenter`0(System.Windows.Media.Media3D.Rect3D) -> System.Windows.Media.Media3D.Vector3D
   Quire.Media3D.Tools3D M public static GetLineGeometry`0(System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Double,System.Windows.Media.Media3D.Matrix3D,System.Windows.Media.Media3D.Matrix3D,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Int32Collection) -> System.Void
   Quire.Media3D.Tools3D M public static InverseVector`0(System.Windows.Media.Media3D.Vector3D) -> System.Windows.Media.Media3D.Vector3D
@@ -369,6 +447,8 @@
   Quire.Media3D.TorusMesh F public static readonly System.Windows.DependencyProperty SlicesProperty
   Quire.Media3D.TorusMesh F public static readonly System.Windows.DependencyProperty StacksProperty
   Quire.Media3D.TorusMesh F public static readonly System.Windows.DependencyProperty TubeRadiusProperty
+  Quire.Media3D.TorusMesh M private static ValidateSlices`0(System.Object) -> System.Boolean
+  Quire.Media3D.TorusMesh M private static ValidateStacks`0(System.Object) -> System.Boolean
   Quire.Media3D.TorusMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.TorusMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.TorusMesh M public .ctor`0() -> System.Void
@@ -379,16 +459,22 @@
   Quire.Media3D.TubeMesh F public static readonly System.Windows.DependencyProperty EndStacksProperty
   Quire.Media3D.TubeMesh F public static readonly System.Windows.DependencyProperty FoldProperty
   Quire.Media3D.TubeMesh F public static readonly System.Windows.DependencyProperty ThicknessProperty
+  Quire.Media3D.TubeMesh M private static ValidateEndStacks`0(System.Object) -> System.Boolean
+  Quire.Media3D.TubeMesh M private static ValidateFold`0(System.Object) -> System.Boolean
+  Quire.Media3D.TubeMesh M private static ValidateThickness`0(System.Object) -> System.Boolean
   Quire.Media3D.TubeMesh M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.TubeMesh M protected override Triangulate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Media3D.Vector3DCollection,System.Windows.Media.Int32Collection,System.Windows.Media.PointCollection) -> System.Void
   Quire.Media3D.TubeMesh M public .ctor`0() -> System.Void
   Quire.Media3D.TubeMesh P EndStacks : System.Int32 get:public set:public
   Quire.Media3D.TubeMesh P Fold : System.Double get:public set:public
   Quire.Media3D.TubeMesh P Thickness : System.Double get:public set:public
+  Quire.Media3D.Twister F private System.Windows.Media.Media3D.AxisAngleRotation3D axisRotate
+  Quire.Media3D.Twister F private System.Windows.Media.Media3D.RotateTransform3D xform
   Quire.Media3D.Twister F public static readonly System.Windows.DependencyProperty AngleProperty
   Quire.Media3D.Twister F public static readonly System.Windows.DependencyProperty AttenuationProperty
   Quire.Media3D.Twister F public static readonly System.Windows.DependencyProperty AxisProperty
   Quire.Media3D.Twister F public static readonly System.Windows.DependencyProperty CenterProperty
+  Quire.Media3D.Twister M private static ValidateAttenuation`0(System.Object) -> System.Boolean
   Quire.Media3D.Twister M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.Twister M public .ctor`0() -> System.Void
   Quire.Media3D.Twister M public override Transform`0(System.Windows.Media.Media3D.Point3DCollection) -> System.Void
@@ -396,9 +482,15 @@
   Quire.Media3D.Twister P Attenuation : System.Double get:public set:public
   Quire.Media3D.Twister P Axis : System.Windows.Media.Media3D.Vector3D get:public set:public
   Quire.Media3D.Twister P Center : System.Windows.Media.Media3D.Point3D get:public set:public
+  Quire.Media3D.ViewportInfo F private static readonly System.Windows.DependencyPropertyKey TransformKey
   Quire.Media3D.ViewportInfo F public static readonly System.Windows.DependencyProperty TransformProperty
   Quire.Media3D.ViewportInfo F public static readonly System.Windows.DependencyProperty Viewport3DProperty
   Quire.Media3D.ViewportInfo F public static readonly System.Windows.Media.Media3D.Matrix3D ZeroMatrix
+  Quire.Media3D.ViewportInfo M private Viewport3DChanged`0(System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Media3D.ViewportInfo M private static GetViewportTransform`0(System.Double,System.Double,System.Double,System.Double) -> System.Windows.Media.Media3D.Matrix3D
+  Quire.Media3D.ViewportInfo M private static IsViewportArranged`0(System.Windows.Controls.Viewport3D) -> System.Boolean
+  Quire.Media3D.ViewportInfo M private static IsViewportArranged`0(System.Windows.Media.Media3D.Viewport3DVisual) -> System.Boolean
+  Quire.Media3D.ViewportInfo M private static Viewport3DChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.ViewportInfo M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.ViewportInfo M public .ctor`0() -> System.Void
   Quire.Media3D.ViewportInfo M public static GetCameraTransform`0(System.Windows.Controls.Viewport3D) -> System.Windows.Media.Media3D.Matrix3D
@@ -413,19 +505,42 @@
   Quire.Media3D.ViewportInfo M public static Point3DtoPoint2D`0(System.Windows.Controls.Viewport3D,System.Windows.Media.Media3D.Point3D) -> System.Windows.Point
   Quire.Media3D.ViewportInfo P Transform : System.Windows.Media.Media3D.Matrix3D get:public set:protected
   Quire.Media3D.ViewportInfo P Viewport3D : System.Windows.Controls.Viewport3D get:public set:public
+  Quire.Media3D.ViewportsListManager F private static System.Boolean _renderingEnabled
+  Quire.Media3D.ViewportsListManager F private static System.Collections.Generic.List`1<System.WeakReference> _allViewportsNeverUseDirectly
+  Quire.Media3D.ViewportsListManager F private static System.Collections.Generic.List`1<System.WeakReference> _loadedViewportsNeverUseDirectly
   Quire.Media3D.ViewportsListManager F public static Quire.Media3D.ViewportsListManager Instance
+  Quire.Media3D.ViewportsListManager M private static AddToLoadedViewports`0(System.WeakReference) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static FindInAllViewports`0(System.Object) -> System.WeakReference
+  Quire.Media3D.ViewportsListManager M private static OnRendering`0() -> System.Void
+  Quire.Media3D.ViewportsListManager M private static OnRendering`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static OnRendering`0(System.Windows.Controls.Viewport3D) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static OnRendering`0(System.Windows.DependencyObject,System.Windows.Media.Media3D.Matrix3D) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static OnViewportLoaded`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static OnViewportUnloaded`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static RemoveFromLoadedViewports`0(System.WeakReference) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static RemoveOrRenderViewportRef`0(System.WeakReference,System.Collections.Generic.List`1<System.WeakReference>&) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static ReplaceAllViewports`0(System.Collections.Generic.List`1<System.WeakReference>) -> System.Void
+  Quire.Media3D.ViewportsListManager M private static ReplaceLoadedViewports`0(System.Collections.Generic.List`1<System.WeakReference>) -> System.Void
   Quire.Media3D.ViewportsListManager M public AddToList`0(System.Windows.Controls.Viewport3D) -> System.Void
   Quire.Media3D.ViewportsListManager M public RemoveFromList`0(System.Windows.Controls.Viewport3D) -> System.Void
+  Quire.Media3D.ViewportsListManager P AllViewportsAlive : System.Collections.Generic.IEnumerable`1<System.WeakReference> static get:private
+  Quire.Media3D.ViewportsListManager P LoadedViewports : System.Collections.Generic.IEnumerable`1<System.WeakReference> static get:private
   Quire.Media3D.ViewportsListManager P RenderingEnabled : System.Boolean static get:public set:public
+  Quire.Media3D.VisualInfo F private static readonly System.Windows.DependencyPropertyKey TotalTransformKey
   Quire.Media3D.VisualInfo F public static readonly System.Windows.DependencyProperty ModelVisual3DProperty
   Quire.Media3D.VisualInfo F public static readonly System.Windows.DependencyProperty TotalTransformProperty
   Quire.Media3D.VisualInfo F public static readonly System.Windows.Media.Media3D.Matrix3D ZeroMatrix
+  Quire.Media3D.VisualInfo M private ModelVisual3DChanged`0(System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Media3D.VisualInfo M private static ModelVisual3DChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.VisualInfo M protected override CreateInstanceCore`0() -> System.Windows.Freezable
   Quire.Media3D.VisualInfo M public .ctor`0() -> System.Void
   Quire.Media3D.VisualInfo M public override ToString`0() -> System.String
   Quire.Media3D.VisualInfo M public static GetTotalTransform`0(System.Windows.DependencyObject) -> System.Windows.Media.Media3D.Matrix3D
   Quire.Media3D.VisualInfo P ModelVisual3D : System.Windows.Media.Media3D.ModelVisual3D get:public set:public
   Quire.Media3D.VisualInfo P TotalTransform : System.Windows.Media.Media3D.Matrix3D get:public set:protected
+  Quire.Media3D.WireBase F private System.Boolean _needRecalculation
+  Quire.Media3D.WireBase F private readonly System.Windows.Media.RotateTransform rotate
+  Quire.Media3D.WireBase F private static readonly System.Windows.DependencyPropertyKey LineCollectionKey
   Quire.Media3D.WireBase F protected System.Windows.Media.Media3D.Matrix3D matxScreenToVisual
   Quire.Media3D.WireBase F protected System.Windows.Media.Media3D.Matrix3D matxVisualToScreen
   Quire.Media3D.WireBase F public static readonly System.Windows.DependencyProperty ArrowAngleProperty
@@ -436,6 +551,12 @@
   Quire.Media3D.WireBase F public static readonly System.Windows.DependencyProperty RoundingProperty
   Quire.Media3D.WireBase F public static readonly System.Windows.DependencyProperty ThicknessProperty
   Quire.Media3D.WireBase M internal virtual OnRendering`0(System.Windows.Media.Media3D.Matrix3D) -> System.Void
+  Quire.Media3D.WireBase M private AddRounding`0(System.Windows.Media.Media3D.Point3D,System.Windows.Vector,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Int32Collection,System.Int32&) -> System.Void
+  Quire.Media3D.WireBase M private CalculatePoint`0(System.Windows.Media.Media3D.Point3D,System.Windows.Vector,System.Double) -> System.Windows.Media.Media3D.Point3D
+  Quire.Media3D.WireBase M private DoArrow`0(System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Int32Collection,System.Int32&) -> System.Void
+  Quire.Media3D.WireBase M private DoLine`0(System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3DCollection,System.Windows.Media.Int32Collection,System.Int32&) -> System.Void
+  Quire.Media3D.WireBase M private static RecalcPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Media3D.WireBase M private static ThicknessChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.WireBase M protected .ctor`0() -> System.Void
   Quire.Media3D.WireBase M protected PropertyChanged`0(System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.WireBase M protected Widen`0(System.Windows.Media.Media3D.Point3D,System.Windows.Vector) -> System.Windows.Media.Media3D.Point3D
@@ -449,7 +570,7 @@
   Quire.Media3D.WireBase P ArrowEnds : Quire.Media2D.ArrowEnds get:public set:public
   Quire.Media3D.WireBase P ArrowLength : System.Double get:public set:public
   Quire.Media3D.WireBase P Color : System.Windows.Media.Color get:public set:public
-  Quire.Media3D.WireBase P LineCollection : System.Windows.Media.Media3D.Point3DCollection get:public
+  Quire.Media3D.WireBase P LineCollection : System.Windows.Media.Media3D.Point3DCollection get:public set:private
   Quire.Media3D.WireBase P NeedRecalculation : System.Boolean get:protected set:protected
   Quire.Media3D.WireBase P Rounding : System.Int32 get:public set:public
   Quire.Media3D.WireBase P Thickness : System.Double get:public set:public
@@ -484,6 +605,7 @@
   Quire.Media3D.WirePolyline M protected override Generate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.WirePolyline M public .ctor`0() -> System.Void
   Quire.Media3D.WirePolyline P Points : System.Windows.Media.Media3D.Point3DCollection get:public set:public
+  Quire.Media3D.WireText F private Quire.Media3D.TextGenerator txtgen
   Quire.Media3D.WireText F public static readonly System.Windows.DependencyProperty BaselineDirectionProperty
   Quire.Media3D.WireText F public static readonly System.Windows.DependencyProperty FontProperty
   Quire.Media3D.WireText F public static readonly System.Windows.DependencyProperty FontSizeProperty
@@ -503,9 +625,13 @@
   Quire.Media3D.WireText P UpDirection : System.Windows.Media.Media3D.Vector3D get:public set:public
   Quire.Media3D.WireText P VerticalAlignment : System.Windows.VerticalAlignment get:public set:public
   Quire.Media3D.Wires.WireDashes F public static readonly System.Windows.DependencyProperty PitchProperty
+  Quire.Media3D.Wires.WireDashes M private AddDashedLine`0(System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3D,System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.Wires.WireDashes M protected override Generate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.Wires.WireDashes M public .ctor`0() -> System.Void
   Quire.Media3D.Wires.WireDashes P Pitch : System.Double get:public set:public
+  Quire.Media3D.Wires.WirePoint F private readonly System.Windows.Media.Media3D.ScaleTransform3D _scale
+  Quire.Media3D.Wires.WirePoint F private readonly System.Windows.Media.Media3D.TranslateTransform3D _translate
+  Quire.Media3D.Wires.WirePoint F private static readonly System.Type TypeOfThis
   Quire.Media3D.Wires.WirePoint F public static readonly System.Windows.DependencyProperty CenterProperty
   Quire.Media3D.Wires.WirePoint M protected override Generate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.Wires.WirePoint M protected override Recalculate`0() -> System.Void
@@ -515,7 +641,11 @@
   Quire.Media3D.Wires.WirePointBase F protected static Quire.Media3D.SphereMesh Mesh
   Quire.Media3D.Wires.WirePointBase M protected .ctor`0() -> System.Void
   Quire.Media3D.Wires.WirePointBase M protected GetRadiusScale`0(System.Windows.Media.Media3D.Point3D) -> System.Double
+  Quire.Media3D.Wires.WirePoints F private readonly System.Windows.Media.Media3D.ScaleTransform3D _sphereScaleTransform
+  Quire.Media3D.Wires.WirePoints F private static readonly System.Type _typeOfThis
   Quire.Media3D.Wires.WirePoints F public static readonly System.Windows.DependencyProperty PositionsProperty
+  Quire.Media3D.Wires.WirePoints M private CreateSpheres`0() -> System.Void
+  Quire.Media3D.Wires.WirePoints M private static PositionsPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
   Quire.Media3D.Wires.WirePoints M protected override Generate`0(System.Windows.DependencyPropertyChangedEventArgs,System.Windows.Media.Media3D.Point3DCollection) -> System.Void
   Quire.Media3D.Wires.WirePoints M protected override Recalculate`0() -> System.Void
   Quire.Media3D.Wires.WirePoints M protected override UpdateColor`0() -> System.Void

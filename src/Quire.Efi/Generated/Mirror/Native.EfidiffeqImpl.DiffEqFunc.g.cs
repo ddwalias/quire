@@ -12,9 +12,23 @@ namespace Quire.Native.EfidiffeqImpl;
 internal partial class DiffEqFunc
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_mat;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_vec;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_num;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_siz;
+    [global::Quire.Mirror.MirrorStub]
+    private DiffEqFunc(global::Quire.Mpl.Run.Function f, int vcount, global::Quire.Mcd.Dim dim1, global::Quire.Mcd.Dim dim2) { }
+    [global::Quire.Mirror.MirrorStub]
+    private DiffEqFunc(global::Quire.Mpl.Run.Function f, int vcount) { }
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe object Invoke(double x, double* v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfidiffeqImpl.DiffEqDelegate Delegate(global::Quire.Mpl.Run.Function f, int vcount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfidiffeqImpl.DiffEqDelegate Delegate_dim(global::Quire.Mpl.Run.Function f, int vcount, global::Quire.Mcd.Dim dim1, global::Quire.Mcd.Dim dim2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private DiffEqFunc() { }
 }

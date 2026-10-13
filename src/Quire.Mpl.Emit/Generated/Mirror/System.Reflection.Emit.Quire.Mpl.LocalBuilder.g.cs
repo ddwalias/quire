@@ -12,6 +12,14 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class LocalBuilder : global::System.Reflection.LocalVariableInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly int m_localIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Type m_localType;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Reflection.MethodBase m_methodBuilder;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool m_isPinned;
+    [global::Quire.Mirror.MirrorStub]
     public override bool IsPinned { get => base.IsPinned; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Type LocalType { get => base.LocalType; }

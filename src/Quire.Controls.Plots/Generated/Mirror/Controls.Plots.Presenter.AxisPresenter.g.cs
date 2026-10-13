@@ -12,5 +12,33 @@ namespace Quire.Controls.Plots.Presenter;
 internal partial class AxisPresenter
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotAxisView _view;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _model;
+    [global::Quire.Mirror.MirrorStub]
     public AxisPresenter(global::Quire.Controls.Plots.Presenter.IPlotAxisView view, global::Quire.Controls.Plots.Presenter.IAxisModel model) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _view_PropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _view_LegendWidthChanged(double width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _model_ScalingChanged(global::Quire.Controls.Plots.Presenter.AxisScaling scaling) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _model_NumberFormatInitialized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _view_NumberFormatChanged(global::Quire.Controls.Core.NumberFormat numberFormat, bool isLocalValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewAxis_Changed() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation modelAxis_RequestAddEquation(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, global::System.Xml.XmlNode expression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelAxis_Changed() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelAxis_RangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StartExpression_HasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SecondTickExpression_HasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EndExpression_HasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

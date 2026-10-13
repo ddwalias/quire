@@ -16,6 +16,10 @@ public partial class BindingInfo
     [global::Quire.Mirror.MirrorStub]
     public const int Macro = 1;
     [global::Quire.Mirror.MirrorStub]
+    private uint m_handle;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_zone;
+    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.MplMacro macro { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public BindingInfo() { }

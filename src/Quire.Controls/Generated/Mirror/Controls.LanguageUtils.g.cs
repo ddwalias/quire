@@ -16,6 +16,14 @@ public static partial class LanguageUtils
     [global::Quire.Mirror.MirrorStub]
     public const string ChinesePrefix = "zh-";
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] _supportedLanguages;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Dictionary<string, string> _mathcadToChartAppL10N;
+    [global::Quire.Mirror.MirrorStub]
+    private const string ChartAppRegKey = "Software\\Quire\\Quire\\ChartApp";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ChartAppLangRegKeyName = "LANG";
+    [global::Quire.Mirror.MirrorStub]
     public static string GetCultureLanguage(bool replaceHypenByUnderscore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetChartAppL10N() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

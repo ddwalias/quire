@@ -191,7 +191,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
         if (m.NewSlot)
         {
             Modifiers[m] = m.Abstract ? Modifier.Abstract
-                : m.Final || t.Sealed || t.Kind == TypeKind.Struct ? Modifier.None
+                : m.Final || t.Sealed || t.Kind == TypeKind.Struct || m.Access == Access.Private ? Modifier.None // C# has no private virtual
                 : Modifier.Virtual;
             return;
         }
@@ -227,10 +227,13 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
         var args = ((NamedSig)t.BaseType).Args;
         bool sameProject = b.Project != null && b.Project == t.Project;
         bool friend = SeesInternals(b.Project, t.Project);
+        // A nested type can call its enclosing type's private constructors.
+        bool nestedInBase = sameProject && t.FullName.StartsWith(b.FullName + "+", StringComparison.Ordinal);
         bool Accessible(MethodModel c) =>
             c.Access is Access.Public or Access.Protected or Access.ProtectedInternal
             || (sameProject && c.Access is Access.PrivateProtected or Access.Internal)
-            || (friend && c.Access == Access.Internal);
+            || (friend && c.Access == Access.Internal)
+            || (nestedInBase && c.Access == Access.Private);
         // The base's constructors as they will exist: Mathcad's (generated, or skipped because hand-written code
         // declares them) plus any only hand-written code has.
         var handCtors = b.Project != null && handWritten.Find(b) is { } hb

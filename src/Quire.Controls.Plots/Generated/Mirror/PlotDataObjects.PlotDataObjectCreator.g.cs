@@ -14,6 +14,42 @@ internal static partial class PlotDataObjectCreator
     [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.PersistentDataObjects.plotType CreatePlotDataObject(global::Quire.Controls.Plots.PlotControl plotControl, global::Quire.Controls.Plots.Presenter.IPlotModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.plotBaseType CreatePolarPlotType(global::Quire.Controls.Plots.Presenter.IPlotView plotControl, global::Quire.Controls.Plots.Presenter.IPlotModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetXLegendPosition(global::Quire.Controls.Plots.Presenter.IPlotView plotControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetYLegendPosition(global::Quire.Controls.Plots.Presenter.IPlotView plotControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetPlotTitlePosition(global::Quire.Controls.Plots.Presenter.IPlotView plotControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.plotBaseType CreateXyPlotType(global::Quire.Controls.Plots.XYPlotControl plotControl, global::Quire.Controls.Plots.Presenter.IPlotModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.xyDomainType CreateXyDomainType(global::Quire.Controls.Plots.Presenter.IPlotAxisView axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.valueType CreateValueType(global::System.Xml.XmlNode regionXmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.BackgroundType ConvertBackgroundType(global::Quire.Controls.Core.BackgroundTypeE backgroundTypeE) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.scaleType ConvertScaling(global::Quire.Controls.Plots.Presenter.AxisScaling axisScaling) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FillAxisBaseType(global::Quire.PersistentDataObjects.axisBaseType axisBaseType, global::Quire.Controls.Plots.Presenter.IPlotAxisView axis, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Model.AxisMarker> markers, global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FillEquations(global::Quire.PersistentDataObjects.axisBaseTypePlotEquations axisBaseTypePlotEquations, global::Quire.Controls.Plots.Presenter.IPlotAxisView axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.resultFormatType CreateNumberFormat(global::Quire.Controls.Core.NumberFormat displayNumberFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.axisBaseTypeAxisLinePosition ConvertAxisPosition(global::Quire.Controls.Plots.Presenter.Positions position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FillPlotBaseType(global::Quire.PersistentDataObjects.plotBaseType plotBaseType, global::Quire.Controls.Plots.PlotControl plotControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.trace2DType CreateTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace plotTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.traceStyleType CreateTraceStyle(global::Quire.Controls.Plots.Presenter.IPlotTrace plotTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.traceStyleEnumCommonType ConvertTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.traceSymbolType ConvertSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol traceSymbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.PersistentDataObjects.traceLineStyle ConvertLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Presenter.LineStyle ConvertLineStyle(global::Quire.PersistentDataObjects.traceLineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,24 @@ namespace Quire.gen;
 internal partial class CtxtCase : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.DataRep m_data;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label[] m_label;
+    [global::Quire.Mirror.MirrorStub]
+    private bool[] m_occurs;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_default;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_alt_index;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_nalts;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_env;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label m_k_label;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_k_label_used;
+    [global::Quire.Mirror.MirrorStub]
     public static ulong MinTaggedSpan;
     [global::Quire.Mirror.MirrorStub]
     public CtxtCase(global::Quire.gen.Ctxt parent, global::Quire.gen.DataRep data, int nalts) : base(default(global::Quire.gen.Ctxt)) { }

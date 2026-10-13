@@ -16,7 +16,15 @@ public partial class BookmarkTagDialog : global::Quire.Controls.Core.ControlsWin
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button OkButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.BookmarkTags.BookmarkTagViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public static bool ShowBookmarkTagsDialog(global::Quire.Controls.Core.BookmarkTags.BookmarkTagViewModel viewModel, global::System.Windows.Window owner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private BookmarkTagDialog(global::Quire.Controls.Core.BookmarkTags.BookmarkTagViewModel viewModel) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void BookmarkTagDialogLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -25,6 +33,4 @@ public partial class BookmarkTagDialog : global::Quire.Controls.Core.ControlsWin
     internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private BookmarkTagDialog() { }
 }

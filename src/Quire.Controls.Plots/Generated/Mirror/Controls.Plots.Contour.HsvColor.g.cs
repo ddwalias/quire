@@ -12,7 +12,25 @@ namespace Quire.Controls.Plots.Contour;
 internal partial struct HsvColor
 {
     [global::Quire.Mirror.MirrorStub]
+    private float _hue;
+    [global::Quire.Mirror.MirrorStub]
+    private const float MinHue = 0f;
+    [global::Quire.Mirror.MirrorStub]
+    private const float MaxHue = 360f;
+    [global::Quire.Mirror.MirrorStub]
+    private float _saturation;
+    [global::Quire.Mirror.MirrorStub]
+    private const float MinSaturation = 0f;
+    [global::Quire.Mirror.MirrorStub]
     public const float MaxSaturation = 1f;
+    [global::Quire.Mirror.MirrorStub]
+    private float _value;
+    [global::Quire.Mirror.MirrorStub]
+    private const float MinValue = 0f;
+    [global::Quire.Mirror.MirrorStub]
+    private const float MaxValue = 1f;
+    [global::Quire.Mirror.MirrorStub]
+    private const float StandardGamma = 2.2f;
     [global::Quire.Mirror.MirrorStub]
     public float Hue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -22,7 +40,13 @@ internal partial struct HsvColor
     [global::Quire.Mirror.MirrorStub]
     public float Chroma { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private float HPrime { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private float X { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color Rgb { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private float MinRgb { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public float Gamma { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

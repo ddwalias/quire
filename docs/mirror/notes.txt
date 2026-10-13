@@ -1,32 +1,37 @@
 # Summary (count of notes by kind):
+#      503  renamed field: name clash (obfuscated names)
 #      251  accessor without property metadata declared as an explicit property
-#      212  renamed field: name clash (obfuscated names)
 #       85  added explicit interface stubs
-#       46  dropped method: unlisted
+#       50  dropped method: unlisted
 #       43  no base member for override
+#       32  dropped method: pending
 #       19  dropped method: deferred:
-#       19  dropped method: pending
+#       14  dropped method: deferred type
 #       14  dropped interface: deferred:
-#       13  dropped method: deferred type
+#       13  skipped overload: differs only by modifiers C# can't express
+#        9  dropped field: unlisted
 #        6  not generated: hand-written Enum
+#        6  renamed method: name clash (obfuscated names)
 #        5  property not generated: inherited from the hand-written base
-#        5  renamed method: name clash (obfuscated names)
+#        5  dropped property: deferred type
+#        4  dropped field: deferred type
 #        4  dropped property: deferred:
 #        4  hand-written base differs
-#        4  dropped property: deferred type
 #        4  constructor declared internal
 #        3  skipped indexed property: C# allows one indexer name per type
 #        3  hand-written access differs from Mathcad's
-#        3  skipped overload: differs only by modifiers C# can't express
+#        2  dropped method: no substitute for
 #        2  dropped interface: no substitute for
+#        2  dropped field: deferred:
 #        2  dropped method: implemented interface deferred:
 #        2  overload covered by a hand-written optional-parameter overload
 #        2  skipped method: name clash
 #        2  method UnLockP declared internal
-#        1  dropped field: deferred type
-#        1  dropped field: deferred:
+#        1  dropped field: no substitute for
+#        1  dropped property: no substitute for
 #        1  method not generated: inherited from the hand-written base
 #        1  event not generated: inherited from the hand-written base
+#        1  dropped field: pending
 #        1  hand-written code uses the name of event Changed for a different kind of member; not generated
 #        1  field m_type declared internal
 #        1  field m_blank declared internal
@@ -62,11 +67,18 @@
   no base member for override OnActivated; declared virtual instead
   no base member for override OnDeactivated; declared virtual instead
 
+[Quire] Quire.OptOutQualityAgentHandler  (Spirit.OptOutQualityAgentHandler, MathcadPrime)
+  dropped field _licenseManager: deferred type Ptc.License.ILicenseManager
+
 [Quire] Quire.OptionsWindow  (Spirit.OptionsWindow, MathcadPrime)
   dropped field LicenseOptionsPage: deferred type Spirit.License.LicenseOptionsPage
 
 [Quire] Quire.SpiritMainWindow  (Spirit.SpiritMainWindow, MathcadPrime)
+  dropped field _mainDockWindowGroup: no substitute for DevComponents.WpfDock.DockWindowGroup
+  dropped method OnRibbonControlBeforeAddToQat: no substitute for DevComponents.WpfRibbon.QatOperationAddEventArgs
   dropped method GetApplicationFullWindowTitle: deferred type Ptc.License.LicenseType
+  dropped property MainDockWindowGroup: no substitute for DevComponents.WpfDock.IDockWindowGroup
+  dropped method get_MainDockWindowGroup: no substitute for DevComponents.WpfDock.IDockWindowGroup
 
 [Quire] Quire.StickyDropDownSelector  (Spirit.StickyDropDownSelector, MathcadPrime)
   no base member for override OnClick; declared virtual instead
@@ -96,6 +108,7 @@
 
 [Quire.Automation.Native] Quire.Components.McxComponent  (Mathcad.Components.McxComponent, componentsmgd)
   dropped interface VSINTERFACESLib.IVSItemContainerExec: deferred: COM interop (VSINTERFACESLib.IVSItemContainerExec)
+  dropped field executive: deferred: COM interop (VSINTERFACESLib.IVSObjectExec2)
   dropped method Stepped: deferred: COM interop (VSINTERFACESLib.IVSObject)
   dropped method GetAppState: deferred: COM interop (VSINTERFACESLib.IVSObject)
   dropped method Error: deferred: COM interop (VSINTERFACESLib.IVSObject)
@@ -217,9 +230,15 @@
 
 [Quire.Controls.Core] Quire.Controls.Core.RtfDocConstructor  (Ptc.Controls.Core.RtfDocConstructor, Ptc.Controls.Core)
   dropped method PrepareRtf: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
+  dropped method InitTree: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
+  dropped method PopulateRtfTree: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
   dropped method NormalizeHighlightColor: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
 
 [Quire.Controls.Core] Quire.Controls.Core.RtfHelper  (Ptc.Controls.Core.RtfHelper, Ptc.Controls.Core)
+  dropped method AppendKeywordNode: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method InsertKeywordNode: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method AppendTextNode: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method AppendGroupNode: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
   dropped method InsertLocation: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
   dropped method AddImage: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
   dropped method AddPageBreak: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
@@ -227,7 +246,14 @@
   dropped method SetPageSize: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
   dropped method AddRegion: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
   dropped method AddRichTextbox: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method ApplyBackgroundColor: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method InsertFrameBorder: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method InsertTextBoxFrameBorder: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
   dropped method TextboxToRtf: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
+  dropped method TextToRtfTree: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
+  dropped method ReplaceBaselineTextTagForRtfTag: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
+  dropped method FixHyperlinksRtfSerialization: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
+  dropped method GenerateRtfKeyValueAddressFixPair: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfNodeCollection)
   dropped method ToEnumerable: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
 
 [Quire.Controls.EquationControl] Quire.Controls.EquationControl  (Ptc.Controls.EquationControl, Ptc.Controls.EquationControl)
@@ -673,6 +699,7 @@
   dropped method AddItemToDocumentInternal: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
 
 [Quire.Controls.Worksheet] Quire.Controls.Worksheet.RtfItemModel  (Ptc.Controls.Worksheet.RtfItemModel, Ptc.Controls.Worksheet)
+  dropped field _model: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
   dropped method .ctor: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTree)
   dropped method AddItemToDocumentInternal: pending D7: NRtfTree (Net.Sgoliver.NRtfTree.Core.RtfTreeNode)
 
@@ -706,10 +733,16 @@
 [Quire.Core] Quire.Properties.SettingsHelper  (Ptc.Properties.SettingsHelper, Ptc.Core)
   dropped method GetMathcadPrimeLicenseUriTypeAndPath: deferred type Ptc.License.LicenseUriType
 
+[Quire.Core] Quire.QualityAgentManager.QualityAgentManager  (Ptc.QualityAgentManager.QualityAgentManager, Ptc.Core)
+  dropped property LicenseManagerInstance: deferred type Ptc.License.ILicenseManager
+  dropped method get_LicenseManagerInstance: deferred type Ptc.License.ILicenseManager
+
 [Quire.Core] Quire.QualityAgentManager.QualityAgentReportData  (Ptc.QualityAgentManager.QualityAgentReportData, Ptc.Core)
+  dropped field _licenseType: deferred type Ptc.License.LicenseType
   dropped method .ctor: deferred type Ptc.License.LicenseType
 
 [Quire.Core] Quire.Services.FunctionalityServiceWrapper  (Ptc.Services.FunctionalityServiceWrapper, Ptc.Core)
+  dropped field _currentAppLicenseType: deferred type Ptc.License.LicenseType
   dropped property CurrentAppLicenseType: deferred type Ptc.License.LicenseType
   dropped method get_CurrentAppLicenseType: deferred type Ptc.License.LicenseType
   dropped method set_CurrentAppLicenseType: deferred type Ptc.License.LicenseType
@@ -736,6 +769,9 @@
 [Quire.Engine] Quire.Engine.EngMailbox  (Engine.EngMailbox, iengine)
   no base member for override Dispose; declared none instead
 
+[Quire.Engine] Quire.Engine.Logging  (Engine.Logging, engutils-mgd)
+  dropped method LogProperties: unlisted Mathcad type std.basic_ostream<char,std::char_traits<char> >
+
 [Quire.Engine] Quire.Engine.NodeCallback  (Engine.NodeCallback, iengine)
   not generated: hand-written Delegate
 
@@ -750,6 +786,7 @@
   constructor declared internal: its signature uses a non-public type
 
 [Quire.Engine.Native] Quire.Engine.CompileHelper  (Engine.CompileHelper, mccore12)
+  dropped field s: unlisted Mathcad type std.basic_streambuf<char,std::char_traits<char> >
   dropped method .ctor: unlisted Mathcad type std.basic_streambuf<char,std::char_traits<char> >
 
 [Quire.Engine.Native] Quire.Engine.CoreFactory  (Engine.CoreFactory, mccore12)
@@ -798,6 +835,7 @@
   no base member for override Dispose; declared none instead
 
 [Quire.Engine.Native] Quire.Engine.TranslateHelper  (Engine.TranslateHelper, mccore12)
+  dropped field s: unlisted Mathcad type std.basic_streambuf<char,std::char_traits<char> >
   dropped method .ctor: unlisted Mathcad type std.basic_streambuf<char,std::char_traits<char> >
 
 [Quire.Engine.Native] Quire.Mpl.IRegion  (Mpl.IRegion, msclr)
@@ -805,6 +843,7 @@
 
 [Quire.Engine.Native] Quire.Mpl.Region  (Mpl.Region, msclr)
   dropped method .ctor: unlisted Mathcad type ms.Range<Hex::Signature const >
+  dropped method NewSymbols: unlisted Mathcad type ms.Range<Hex::Signature const >
 
 [Quire.Engine.Native] Quire.gen.BoxConstructor  (gen.BoxConstructor, msgen)
   dropped method Deconstruct: unlisted Mathcad type ms.Range<void * const>
@@ -831,6 +870,8 @@
 [Quire.Engine.Native] Quire.gen.CtxtFix  (gen.CtxtFix, msgen)
   dropped method .ctor: unlisted Mathcad type ms.Range<void * const>
   dropped method DeclareFunction: unlisted Mathcad type ms.Range<void * const>
+  dropped method CreateEnv: unlisted Mathcad type ms.Range<void * const>
+  dropped method CreateClosure: unlisted Mathcad type ms.Range<void * const>
 
 [Quire.Engine.Native] Quire.gen.CtxtLam  (gen.CtxtLam, msgen)
   dropped method .ctor: unlisted Mathcad type ms.Range<void * const>
@@ -897,6 +938,35 @@
 [Quire.Engine.Utl] Quire.utl_mgd.SafeWaitHandle  (utl_mgd.SafeWaitHandle, utl-mgd)
   no base member for override Dispose; declared none instead
 
+[Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel  (Ptc.EquationEditor.Equation.EquationModel, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d__: name clash
+  renamed field e to e__: name clash
+  renamed field f to f__: name clash
+  renamed field g to g__: name clash
+  renamed field h to h__: name clash
+  renamed field i to i__: name clash
+  renamed field j to j__: name clash
+  renamed field k to k__: name clash
+  renamed field l to l__: name clash
+  renamed field m to m__: name clash
+  renamed field r to r__: name clash
+  renamed field s to s__: name clash
+  renamed field t to t__: name clash
+  renamed field u to u__: name clash
+  renamed field v to v__: name clash
+  renamed field w to w__: name clash
+  renamed field y to y__: name clash
+  renamed field z to z__: name clash
+  renamed field aa to aa__: name clash
+  renamed field ab to ab__: name clash
+  renamed field ac to ac__: name clash
+  renamed field ad to ad__: name clash
+  skipped overload a`0(System.String): differs only by modifiers C# can't express
+  skipped overload a`0(Quire.EquationEditor.Tree.MathNode,Quire.EquationEditor.Tree.MathNode): differs only by modifiers C# can't express
+
 [Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+a_+b_  (Ptc.EquationEditor.Equation.EquationModel+a+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
@@ -942,13 +1012,25 @@
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<System.String>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+b_  (Ptc.EquationEditor.Equation.EquationModel+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+c_  (Ptc.EquationEditor.Equation.EquationModel+c, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
 [Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+c_+a_  (Ptc.EquationEditor.Equation.EquationModel+c+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+d_  (Ptc.EquationEditor.Equation.EquationModel+d, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+e_  (Ptc.EquationEditor.Equation.EquationModel+e, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+f_  (Ptc.EquationEditor.Equation.EquationModel+f, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1017,14 +1099,34 @@
 [Quire.EquationEditor] Quire.EquationEditor.Equation.EquationModel+z_  (Ptc.EquationEditor.Equation.EquationModel+z, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.EquationPresenter  (Ptc.EquationEditor.EquationPresenter, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+  renamed field f to f_: name clash
+  renamed field g to g_: name clash
+  renamed field h to h_: name clash
+  renamed field i to i_: name clash
+  skipped overload a`0(System.Boolean): differs only by modifiers C# can't express
+
 [Quire.EquationEditor] Quire.EquationEditor.EquationPresenter+c_  (Ptc.EquationEditor.EquationPresenter+c, Ptc.EquationEditor)
   renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.MathNodeToVisualNodeMap  (Ptc.EquationEditor.MathNodeToVisualNodeMap, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.RedefinitionWarning  (Ptc.EquationEditor.RedefinitionWarning, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.ScriptingError  (Ptc.EquationEditor.ScriptingError, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IEngineError.Symbol
 
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper  (Ptc.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper, Ptc.EquationEditor)
   added 3 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.ICalculatable.SetResult, Quire.Calculation.Core.ICalculatable.RlChanged
+  renamed field a to a__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper+a_  (Ptc.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1032,6 +1134,11 @@
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper+b_  (Ptc.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
   renamed field b to b__: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableColumn  (Ptc.EquationEditor.SpecTable.Model.SpecTableColumn, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableColumn+c_  (Ptc.EquationEditor.SpecTable.Model.SpecTableColumn+c, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1044,6 +1151,8 @@
   interface accessor d has no property metadata; declared as an explicit property
   interface accessor f has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.IEquationModel>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field c to c_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableMemento+a_  (Ptc.EquationEditor.SpecTable.Model.SpecTableMemento+a, Ptc.EquationEditor)
@@ -1051,6 +1160,18 @@
 
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableModel  (Ptc.EquationEditor.SpecTable.Model.SpecTableModel, Ptc.EquationEditor)
   renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d__: name clash
+  renamed field e to e__: name clash
+  renamed field f to f__: name clash
+  renamed field g to g__: name clash
+  renamed field h to h__: name clash
+  renamed field i to i__: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableModel+a_  (Ptc.EquationEditor.SpecTable.Model.SpecTableModel+a, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.SpecTable.Model.SpecTableModel+l_  (Ptc.EquationEditor.SpecTable.Model.SpecTableModel+l, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1064,9 +1185,27 @@
   interface accessor d has no property metadata; declared as an explicit property
   interface accessor f has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field e to e_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.SpecTable.SpecTablePresenter  (Ptc.EquationEditor.SpecTable.SpecTablePresenter, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.AlgorithmOptions  (Ptc.EquationEditor.Tree.AlgorithmOptions, Ptc.EquationEditor)
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.ComboBoxControlNodeInfo+a_  (Ptc.EquationEditor.Tree.ComboBoxControlNodeInfo+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.ComboBoxInputControlData  (Ptc.EquationEditor.Tree.ComboBoxInputControlData, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.ComboBoxInputControlData+a_  (Ptc.EquationEditor.Tree.ComboBoxInputControlData+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1086,22 +1225,39 @@
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b__: name clash
   renamed field d to d_: name clash
   renamed field f to f_: name clash
+  renamed field g to g_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.DefaultDescriptorTable+c_  (Ptc.EquationEditor.Tree.DefaultDescriptorTable+c, Ptc.EquationEditor)
   renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.FormattedString  (Ptc.EquationEditor.Tree.FormattedString, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.FormattedString+a_  (Ptc.EquationEditor.Tree.FormattedString+a, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.IdentifierNodeInfo+a  (Ptc.EquationEditor.Tree.IdentifierNodeInfo+a, Ptc.EquationEditor)
   renamed field a to a_: name clash
   renamed field b to b_: name clash
   renamed method a to a__: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.Tree.InputControlNodeInfo  (Ptc.EquationEditor.Tree.InputControlNodeInfo, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
 [Quire.EquationEditor] Quire.EquationEditor.Tree.InputControlNodeInfo+a_  (Ptc.EquationEditor.Tree.InputControlNodeInfo+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.InputScriptableControlData  (Ptc.EquationEditor.Tree.InputScriptableControlData, Ptc.EquationEditor)
   renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.InputScriptableWithInputNodeInfo  (Ptc.EquationEditor.Tree.InputScriptableWithInputNodeInfo, Ptc.EquationEditor)
+  renamed field a to a__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.InputScriptableWithInputNodeInfo+a_  (Ptc.EquationEditor.Tree.InputScriptableWithInputNodeInfo+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1112,6 +1268,20 @@
 [Quire.EquationEditor] Quire.EquationEditor.Tree.LimitSideNodeInfo+a  (Ptc.EquationEditor.Tree.LimitSideNodeInfo+a, Ptc.EquationEditor)
   renamed field a to a_: name clash
   renamed method a to a__: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.MathNode  (Ptc.EquationEditor.Tree.MathNode, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d__: name clash
+  renamed field e to e__: name clash
+  renamed field h to h__: name clash
+  renamed field i to i__: name clash
+  renamed field j to j_: name clash
+  skipped overload a`0(System.Int32,Quire.EquationEditor.Tree.MathNodeDescriptor): differs only by modifiers C# can't express
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.MathNode+Utilities  (Ptc.EquationEditor.Tree.MathNode+Utilities, Ptc.EquationEditor)
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.MathNode+a_  (Ptc.EquationEditor.Tree.MathNode+a, Ptc.EquationEditor)
   renamed field a to a___: name clash
@@ -1124,6 +1294,9 @@
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b__: name clash
+  renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.MathNode+b_  (Ptc.EquationEditor.Tree.MathNode+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1145,19 +1318,31 @@
   interface accessor e has no property metadata; declared as an explicit property
   interface accessor g has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
   renamed field d to d_: name clash
+  renamed field f to f_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.MathNode+h_  (Ptc.EquationEditor.Tree.MathNode+h, Ptc.EquationEditor)
   interface accessor e has no property metadata; declared as an explicit property
   interface accessor g has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
   renamed field d to d_: name clash
+  renamed field f to f_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.MathNode+i_  (Ptc.EquationEditor.Tree.MathNode+i, Ptc.EquationEditor)
   interface accessor e has no property metadata; declared as an explicit property
   interface accessor g has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
   renamed field d to d_: name clash
+  renamed field f to f_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.MathNodeDescriptorTable+a  (Ptc.EquationEditor.Tree.MathNodeDescriptorTable+a, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1167,17 +1352,42 @@
   interface accessor d has no property metadata; declared as an explicit property
   interface accessor f has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.IMathNodeDescriptor>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field e to e_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.MathNodeDescriptorTable+c  (Ptc.EquationEditor.Tree.MathNodeDescriptorTable+c, Ptc.EquationEditor)
   interface accessor d has no property metadata; declared as an explicit property
   interface accessor f has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.IMathNodeDescriptor>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field e to e_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.MathNodeToStringTransformer  (Ptc.EquationEditor.Tree.MathNodeToStringTransformer, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.MatrixNodeInfo  (Ptc.EquationEditor.Tree.MatrixNodeInfo, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.LinearSegment  (Ptc.EquationEditor.Tree.Scoping.LinearSegment, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.NavigatorSegment  (Ptc.EquationEditor.Tree.Scoping.NavigatorSegment, Ptc.EquationEditor)
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.ScopedNodes+a_  (Ptc.EquationEditor.Tree.Scoping.ScopedNodes+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.ScopedNodes+b_  (Ptc.EquationEditor.Tree.Scoping.ScopedNodes+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.TypeoverState  (Ptc.EquationEditor.Tree.Scoping.TypeoverState, Ptc.EquationEditor)
+  renamed field c to c__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.TypeoverState+a_  (Ptc.EquationEditor.Tree.Scoping.TypeoverState+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1189,13 +1399,20 @@
   interface accessor e has no property metadata; declared as an explicit property
   interface accessor g has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c__: name clash
   renamed field d to d_: name clash
+  renamed field f to f_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Scoping.TypeoverState+d_  (Ptc.EquationEditor.Tree.Scoping.TypeoverState+d, Ptc.EquationEditor)
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field d to d__: name clash
+  renamed field f to f_: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.StringToComboBoxMathTransformer  (Ptc.EquationEditor.Tree.StringToComboBoxMathTransformer, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1212,12 +1429,56 @@
   method Format declared internal: its signature uses a non-public type
   method FormatResult declared internal: its signature uses a non-public type
 
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform  (Ptc.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+  renamed field f to f_: name clash
+  renamed field g to g_: name clash
+  renamed field h to h_: name clash
+  renamed field i to i_: name clash
+  renamed field j to j_: name clash
+  renamed field k to k_: name clash
+  skipped overload a`0(System.String,System.String): differs only by modifiers C# can't express
+
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform+a_  (Ptc.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
   renamed field b to b_: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.InlineToSExpressionTransform  (Ptc.EquationEditor.Tree.Transform.InlineToSExpressionTransform, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer  (Ptc.EquationEditor.Tree.Transform.MathNodeToRlTransformer, Ptc.EquationEditor)
   renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d__: name clash
+  renamed field e to e__: name clash
+  renamed field f to f__: name clash
+  renamed field g to g__: name clash
+  renamed field h to h__: name clash
+  renamed field i to i__: name clash
+  renamed field j to j__: name clash
+  renamed field k to k__: name clash
+  renamed field l to l__: name clash
+  renamed field m to m_: name clash
+  renamed field n to n_: name clash
+  renamed field o to o_: name clash
+  renamed field p to p_: name clash
+  renamed field q to q_: name clash
+  renamed field r to r_: name clash
+  renamed field s to s_: name clash
+  renamed field t to t_: name clash
+  renamed field u to u_: name clash
+  renamed field v to v_: name clash
+  renamed field w to w_: name clash
+  renamed field x to x_: name clash
+  renamed field y to y_: name clash
+  renamed field z to z_: name clash
+  renamed field aa to aa_: name clash
+  skipped overload a`0(Quire.EquationEditor.Tree.MathNode,System.String): differs only by modifiers C# can't express
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer+a_+a__  (Ptc.EquationEditor.Tree.Transform.MathNodeToRlTransformer+a+a, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1262,7 +1523,20 @@
   interface accessor d has no property metadata; declared as an explicit property
   interface accessor f has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.EquationEditor.Tree.MathNode>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
   renamed field e to e_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.MathNodeToSExpressionTransform  (Ptc.EquationEditor.Tree.Transform.MathNodeToSExpressionTransform, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform  (Ptc.EquationEditor.Tree.Transform.MathNodeToXmlTransform, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform+b_  (Ptc.EquationEditor.Tree.Transform.MathNodeToXmlTransform+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1298,7 +1572,17 @@
   renamed field d to d_: name clash
   renamed method b to b__: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.ParsedSExpressionToInlineTransform  (Ptc.EquationEditor.Tree.Transform.ParsedSExpressionToInlineTransform, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.ParsedSExpressionToInlineTransform+a_  (Ptc.EquationEditor.Tree.Transform.ParsedSExpressionToInlineTransform+a, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.SExpressionParser  (Ptc.EquationEditor.Tree.Transform.SExpressionParser, Ptc.EquationEditor)
   renamed field a to a__: name clash
   renamed field b to b_: name clash
   renamed field c to c_: name clash
@@ -1308,8 +1592,40 @@
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.SExpressionParser+a_  (Ptc.EquationEditor.Tree.Transform.SExpressionParser+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform  (Ptc.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.SExpressionToRlTransform  (Ptc.EquationEditor.Tree.Transform.SExpressionToRlTransform, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.SExpressionToRlTransform+a_  (Ptc.EquationEditor.Tree.Transform.SExpressionToRlTransform+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.SExpressionUtility  (Ptc.EquationEditor.Tree.Transform.SExpressionUtility, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.XmcdToMathNodeTransform  (Ptc.EquationEditor.Tree.Transform.XmcdToMathNodeTransform, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform  (Ptc.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
+  renamed field d to d__: name clash
+  renamed field e to e_: name clash
+  renamed field f to f_: name clash
+  renamed field g to g_: name clash
+  renamed field h to h_: name clash
+  renamed field i to i_: name clash
+  renamed field j to j_: name clash
+  renamed field k to k_: name clash
+  renamed field l to l_: name clash
+  renamed field m to m_: name clash
+  renamed field n to n_: name clash
+  skipped overload a`0(System.String,System.Int32): differs only by modifiers C# can't express
+  skipped overload a`0(System.String,System.String): differs only by modifiers C# can't express
 
 [Quire.EquationEditor] Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform+c_  (Ptc.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform+c, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1329,12 +1645,21 @@
   renamed field a to a_: name clash
   renamed field b to b_: name clash
 
+[Quire.EquationEditor] Quire.EquationEditor.VisualOperatorDescriptorTable  (Ptc.EquationEditor.VisualOperatorDescriptorTable, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a  (a, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a0  (a0, Ptc.EquationEditor)
+  renamed field a to a_: name clash
   renamed field b to b_: name clash
   renamed field c to c_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.a2  (a2, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a2+b_  (a2+b, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1349,22 +1674,38 @@
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.Native.PtcEquationEditor.a2+a_>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a2+f_  (a2+f, Ptc.EquationEditor)
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.Native.PtcEquationEditor.a2+a_>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a3  (a3, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.a4  (a4, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a5  (a5, Ptc.EquationEditor)
   renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+  renamed field f to f_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a6  (a6, Ptc.EquationEditor)
   renamed field a to a__: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.a6+a_  (a6+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1378,25 +1719,69 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ab  (ab, Ptc.EquationEditor)
   interface accessor b has no property metadata; declared as an explicit property
   added 7 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Item, Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable, Quire.Calculation.Core.IResultNode.ValueType
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ac  (ac, Ptc.EquationEditor)
   interface accessor b has no property metadata; declared as an explicit property
   added 7 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Item, Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable, Quire.Calculation.Core.IResultNode.ValueType
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ad  (ad, Ptc.EquationEditor)
   interface accessor b has no property metadata; declared as an explicit property
   added 7 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IMatrixResultNode.Item, Quire.Calculation.Core.IMatrixResultNode.Cols, Quire.Calculation.Core.IMatrixResultNode.DisplayValues, Quire.Calculation.Core.IMatrixResultNode.Units, Quire.Calculation.Core.IMatrixResultNode.ElementUnits, Quire.Calculation.Core.IMatrixResultNode.IsRangeTable, Quire.Calculation.Core.IResultNode.ValueType
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ae  (ae, Ptc.EquationEditor)
   renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.af  (af, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ah  (ah, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.EquationEditor.Tree.Transform.IResultTreeFormatter.Format
   renamed field a to a_: name clash
   renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+  renamed field f to f_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.ak  (ak, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
+  renamed field e to e_: name clash
+  renamed field f to f_: name clash
+  renamed field g to g_: name clash
+  renamed field h to h_: name clash
+  renamed field i to i_: name clash
+  renamed field j to j_: name clash
+  skipped overload a`0(System.Collections.Generic.LinkedList`1<Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>,System.Boolean): differs only by modifiers C# can't express
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.ak+a_  (ak+a, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.al  (al, Ptc.EquationEditor)
+  renamed field d to d_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.am  (am, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.an  (an, Ptc.EquationEditor)
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ao  (ao, Ptc.EquationEditor)
   renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.ap  (ap, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ap+c_  (ap+c, Ptc.EquationEditor)
   renamed field a to a_: name clash
@@ -1408,11 +1793,20 @@
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.Native.PtcEquationEditor.ap+a_>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ar  (ar, Ptc.EquationEditor)
   renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field c to c_: name clash
+  renamed field d to d_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.at  (at, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed field c to c__: name clash
   renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.at+b_  (at+b, Ptc.EquationEditor)
@@ -1422,6 +1816,8 @@
   interface accessor c has no property metadata; declared as an explicit property
   interface accessor e has no property metadata; declared as an explicit property
   added 2 explicit interface stub(s) for members no base provides: System.Collections.Generic.IEnumerator`1<Quire.Delegate2`2<System.Collections.Generic.LinkedListNode`1<Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>,Quire.Native.PtcEquationEditor.aq>>.Current, System.Collections.IEnumerator.Current
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
   renamed field d to d_: name clash
   renamed field f to f_: name clash
 
@@ -1439,7 +1835,9 @@
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ax  (ax, Ptc.EquationEditor)
   renamed field a to a__: name clash
+  renamed field b to b__: name clash
   skipped overload b`0(Quire.EquationEditor.Tree.MathNode,Quire.Native.PtcEquationEditor.aq): differs only by modifiers C# can't express
+  skipped overload a`0(Quire.EquationEditor.Tree.MathNode,Quire.Native.PtcEquationEditor.aq): differs only by modifiers C# can't express
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ax+a_  (ax+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1459,6 +1857,34 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.ax+f  (ax+f, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.ay  (ay, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.ba  (ba, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bb  (bb, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bc  (bc, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bd  (bd, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.be  (be, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bg  (bg, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bj  (bj, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.bj+a_  (bj+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
   renamed field b to b_: name clash
@@ -1466,9 +1892,27 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.bk+a_  (bk+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
 
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bl  (bl, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bo  (bo, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.bo+a_  (bo+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
   renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bp  (bp, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.bq  (bq, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.br  (br, Ptc.EquationEditor)
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.bs  (bs, Ptc.EquationEditor)
   renamed field a to a__: name clash
@@ -1480,13 +1924,26 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.f  (f, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.g  (g, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+  renamed field b to b__: name clash
+  renamed method g to g_: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.g+c_  (g+c, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.g+d_  (g+d, Ptc.EquationEditor)
   renamed field a to a_: name clash
 
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.j  (j, Ptc.EquationEditor)
+  renamed field a to a__: name clash
+
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.k  (k, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+  renamed field b to b_: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.l  (l, Ptc.EquationEditor)
+  renamed field b to b__: name clash
   skipped method l: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.l+a_  (l+a, Ptc.EquationEditor)
@@ -1523,11 +1980,18 @@
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.n+a_  (n+a, Ptc.EquationEditor)
   renamed field a to a__: name clash
 
+[Quire.EquationEditor] Quire.Native.PtcEquationEditor.q  (q, Ptc.EquationEditor)
+  renamed field a to a_: name clash
+
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.r  (r, Ptc.EquationEditor)
   renamed field a to a_: name clash
+  renamed field b to b_: name clash
+  renamed field c to c_: name clash
+  renamed field d to d_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.s  (s, Ptc.EquationEditor)
   renamed field a to a_: name clash
+  renamed field b to b_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.t  (t, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
@@ -1539,12 +2003,15 @@
   interface accessor b has no property metadata; declared as an explicit property
   interface accessor a has no property metadata; declared as an explicit property
   added 5 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IUnitedValueResultNode.Value, Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue, Quire.Calculation.Core.IUnitedValueResultNode.Units, Quire.Calculation.Core.IResultNode.ValueType
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.w  (w, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.x  (x, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
+  renamed field a to a_: name clash
 
 [Quire.EquationEditor] Quire.Native.PtcEquationEditor.y  (y, Ptc.EquationEditor)
   added 1 explicit interface stub(s) for members no base provides: Quire.Calculation.Core.IResultNode.ValueType
@@ -1563,6 +2030,9 @@
   method loc declared internal: its signature uses a non-public type
 
 [Quire.Mcd] Quire.depman.Depman  (depman.Depman, mcdepman)
+  dropped field m_nodes: unlisted Mathcad type OrderedList<depman::PositionBase>
+  dropped field m_moving: unlisted Mathcad type std.set<depman::Position *,std::less<depman::Position *>,std::allocator<depman::Position *> >
+  dropped field m_node_to_pos: unlisted Mathcad type std.map<long,depman::Position *,std::less<long>,std::allocator<std::pair<long const ,depman::Position *> > >
   no base member for override Dispose; declared none instead
   method UnLockP declared internal: its signature uses a non-public type
 
@@ -1575,6 +2045,10 @@
   method SetPriority declared internal: its signature uses a non-public type
 
 [Quire.Mcd] Quire.depman.NodeQueueImp  (depman.NodeQueueImp, mcdepman)
+  dropped field m_heap: unlisted Mathcad type std.vector<depman::qentry,std::allocator<depman::qentry> >
+  dropped field m_working_set: unlisted Mathcad type std.set<depman::Position *,std::less<depman::Position *>,std::allocator<depman::Position *> >
+  dropped field m_dead_set: unlisted Mathcad type std.set<depman::Position *,std::less<depman::Position *>,std::allocator<depman::Position *> >
+  dropped field m_priority_map: unlisted Mathcad type std.map<depman::Position *,int,std::less<depman::Position *>,std::allocator<std::pair<depman::Position * const,int> > >
   no base member for override Dispose; declared none instead
 
 [Quire.Mcd] Quire.depman.NodeTimer  (depman.NodeTimer, mcdepman)

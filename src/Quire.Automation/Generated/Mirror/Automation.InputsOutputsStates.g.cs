@@ -12,9 +12,15 @@ namespace Quire.Automation;
 public partial class InputsOutputsStates : global::Quire.Automation.IMathcadPrimeInputsOutputsStates
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeInputsOutputsStates _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMathcadPrimeInputsOutputsStates RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int ScalarInputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ScalarOutputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private InputsOutputsStates() { }
     [global::Quire.Mirror.MirrorStub]
     internal InputsOutputsStates(global::Quire.Automation.IMathcadPrimeInputsOutputsStates mathcadPrimeInputsOutputsStates) { }
     [global::Quire.Mirror.MirrorStub]

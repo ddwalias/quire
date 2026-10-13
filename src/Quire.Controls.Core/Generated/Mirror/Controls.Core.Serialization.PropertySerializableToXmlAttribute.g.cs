@@ -14,6 +14,12 @@ public partial class PropertySerializableToXmlAttribute : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Controls.Core.Serialization.SerializationInfo _serializationInfo;
     [global::Quire.Mirror.MirrorStub]
+    private bool ShouldSerializeDefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private object DefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanWriteXML { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public PropertySerializableToXmlAttribute(object o, string propertyName, string attributeName) : base(default(object), default(string), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public PropertySerializableToXmlAttribute(object o, string propertyName, string attributeName, global::Quire.Controls.Core.Serialization.SerializationInfo serializationInfo) : base(default(object), default(string), default(string)) { }

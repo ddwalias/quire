@@ -12,9 +12,17 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class OleComponentRlParser
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string DefineGroupName = "def";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Text.RegularExpressions.Regex _defineExpression;
+    [global::Quire.Mirror.MirrorStub]
     protected static string MatchPattern(string groupName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static string GroupNamePattern(string groupName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SeparateExpressionBySpaceOrBrackets(string expression, out string lhsExp, out string rhsExp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int FindPairCloseBracket(string def) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static bool ParseOleComponentEquationRl(string rl, global::System.Text.RegularExpressions.Regex leftRegex, global::System.Text.RegularExpressions.Regex rightRegex, out bool isInput, out string lhsExpression, out string rhsExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

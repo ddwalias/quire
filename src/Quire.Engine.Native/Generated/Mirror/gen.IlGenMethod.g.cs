@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class IlGenMethod
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.MethodInfo m_method;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ILGenerator m_il;
+    [global::Quire.Mirror.MirrorStub]
     public IlGenMethod(global::System.Reflection.Emit.Quire.Mpl.DynamicMethod dm) { }
     [global::Quire.Mirror.MirrorStub]
     public IlGenMethod(global::System.Reflection.Emit.Quire.Mpl.MethodBuilder mb) { }

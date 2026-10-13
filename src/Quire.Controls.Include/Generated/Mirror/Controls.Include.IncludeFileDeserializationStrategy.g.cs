@@ -12,6 +12,10 @@ namespace Quire.Controls.Include;
 public partial class IncludeFileDeserializationStrategy : global::Quire.Controls.Core.Serialization.DeserializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::System.Windows.UIElement> _calulatableRegions;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetFileManager _fileManager;
+    [global::Quire.Mirror.MirrorStub]
     public bool CacheValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

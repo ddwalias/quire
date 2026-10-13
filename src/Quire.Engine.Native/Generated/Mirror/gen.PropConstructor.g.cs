@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class PropConstructor : global::Quire.gen.Constructor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Callable m_constructor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Callable[] m_field;
+    [global::Quire.Mirror.MirrorStub]
     public PropConstructor(global::Quire.gen.IlAsm il, global::Quire.gen.Callable constructor, global::Quire.gen.Callable[] fields) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public override int Arity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

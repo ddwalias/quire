@@ -12,6 +12,14 @@ namespace Quire.Controls.Internal;
 internal partial class VisualGradientOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor GradientDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.GradientLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
+    private const int VariableListOperandIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int FunctionOperandIndex = 1;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Internal.VisualSymbolNode GradientSymbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

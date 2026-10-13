@@ -12,6 +12,12 @@ namespace Quire.Controls.Worksheet;
 public partial class RtfItemModel : global::Quire.Controls.Worksheet.RtfItemBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Brush _background;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _hasBorder;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Brush _borderColor;
+    [global::Quire.Mirror.MirrorStub]
     public string Rtf { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private RtfItemModel() { }

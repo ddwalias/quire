@@ -12,11 +12,17 @@ namespace Quire.DOE;
 public partial class Blocking : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private string[] m_bgens;
+    [global::Quire.Mirror.MirrorStub]
+    private double[,] m_dmat;
+    [global::Quire.Mirror.MirrorStub]
     public int noBlocks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Blocking(double[,] dmat, int nblocks) { }
     [global::Quire.Mirror.MirrorStub]
     public Blocking(double[,] dmat, string bgens) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int[] getBlocking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

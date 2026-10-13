@@ -12,6 +12,10 @@ namespace Quire;
 public partial class TextStylesRibbonBar : global::Fluent.RibbonGroupBox, global::System.Windows.Markup.IComponentConnector, global::System.Windows.Markup.IStyleConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int NumberOfStylesPerLine = 6;
+    [global::Quire.Mirror.MirrorStub]
+    private const int ContextMenuDeleteItemIndex = 1;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand EditTextStyleCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand CreateTextStyleCommand;
@@ -20,13 +24,19 @@ public partial class TextStylesRibbonBar : global::Fluent.RibbonGroupBox, global
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Gallery Gallery;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public TextStylesRibbonBar() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonDropDown_OnChecked(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleEditTextStyle(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleDeleteTextStyle(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleCreateTextStyle(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void StyleButtonOnContextMenuOpening(object sender, global::System.Windows.Controls.ContextMenuEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

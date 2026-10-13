@@ -17,4 +17,6 @@ public static partial class OleContainerMessageKeysDict
     public static readonly global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> ActivateMessageKeys;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> ResizeMessageKeys;
+    [global::Quire.Mirror.MirrorStub]
+    private static void ValidateMessageKeysDict(global::System.Collections.Generic.Dictionary<global::Quire.OLE.OleResult, string> dict) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

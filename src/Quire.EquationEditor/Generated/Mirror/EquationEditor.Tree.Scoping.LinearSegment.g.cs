@@ -12,6 +12,12 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class LinearSegment
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int a_ = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int b = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.s[] c;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode LeftNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode RightNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +41,8 @@ public partial class LinearSegment
     protected bool a(global::Quire.EquationEditor.Tree.MathNode A_0, global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsContinuousNaryChildren(global::Quire.EquationEditor.Tree.MathNode leftNode, global::Quire.EquationEditor.Tree.MathNode rightNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

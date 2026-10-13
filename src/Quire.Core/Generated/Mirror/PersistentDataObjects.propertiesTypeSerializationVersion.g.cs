@@ -12,6 +12,16 @@ namespace Quire.PersistentDataObjects;
 public partial class propertiesTypeSerializationVersion
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.propertiesTypeSerializationVersionArchitecture architectureField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool architectureFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private string cultureField;
+    [global::Quire.Mirror.MirrorStub]
+    private string uiCultureField;
+    [global::Quire.Mirror.MirrorStub]
+    private string valueField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.propertiesTypeSerializationVersionArchitecture architecture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool architectureSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

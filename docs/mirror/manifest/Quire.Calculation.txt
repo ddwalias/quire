@@ -7,8 +7,98 @@
   Quire.Calculation.CalculationBinder M public virtual BindTo`0(Quire.Calculation.Core.ICalculatableContext) -> System.Void
   Quire.Calculation.CalculationController E public System.EventHandler`1<System.Boolean> BusyChanged
   Quire.Calculation.CalculationController F internal static readonly System.Windows.Threading.DispatcherPriority WaitForCalculationInterruptPriority_Send
+  Quire.Calculation.CalculationController F private Quire.Calculation.Core.ICalculatableContext _context
+  Quire.Calculation.CalculationController F private Quire.Values.UnitSystem _unitSystem
+  Quire.Calculation.CalculationController F private System.Boolean _autoCalc
+  Quire.Calculation.CalculationController F private System.Boolean _calcRequested
+  Quire.Calculation.CalculationController F private System.Boolean _disposed
+  Quire.Calculation.CalculationController F private System.Boolean _evaluatingEnabled
+  Quire.Calculation.CalculationController F private System.Boolean _forceRequested
+  Quire.Calculation.CalculationController F private System.Boolean _simplifyUnitSystem
+  Quire.Calculation.CalculationController F private System.EventHandler`1<System.Boolean> BusyChanged
+  Quire.Calculation.CalculationController F private System.String customUnitSystemRl
+  Quire.Calculation.CalculationController F private System.Threading.CancellationTokenSource _calcCts
+  Quire.Calculation.CalculationController F private readonly Quire.Engine.IBuiltin _builtin
+  Quire.Calculation.CalculationController F private readonly Quire.Engine.IEngine _engine
+  Quire.Calculation.CalculationController F private readonly System.Collections.Concurrent.BlockingCollection`1<System.Action> _queue
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.Dictionary`2<Quire.Calculation.Core.ICalculatable,Quire.Calculation.CalculationController+CalculatableMapInfo> _iCalculatableToHandleMap
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.Dictionary`2<Quire.Calculation.Core.ICalculatable,System.Int32> _handles
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable> _calcs
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable> _handleToICalculatableMap
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.Dictionary`2<System.Int32,Quire.Engine.NodeResult> _lastResults
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.HashSet`1<Quire.Calculation.Core.ICalculatable> _subscribed
+  Quire.Calculation.CalculationController F private readonly System.Collections.Generic.List`1<System.Threading.Tasks.TaskCompletionSource> _idleWaiters
+  Quire.Calculation.CalculationController F private readonly System.Int32 _importRequestHandle
+  Quire.Calculation.CalculationController F private readonly System.Int32 _initialHandle
+  Quire.Calculation.CalculationController F private readonly System.Object _gate
+  Quire.Calculation.CalculationController F private readonly System.Threading.ManualResetEvent _interruptWaitForCalc
+  Quire.Calculation.CalculationController F private readonly System.Threading.ManualResetEvent _waitForCalc
+  Quire.Calculation.CalculationController F private readonly System.Threading.SynchronizationContext _ui
+  Quire.Calculation.CalculationController F private readonly System.Threading.Thread _worker
+  Quire.Calculation.CalculationController F private readonly System.Windows.Threading.Dispatcher _contextThreadDispatcher
+  Quire.Calculation.CalculationController F private static Quire.Calculation.EngineBuilder _engineBuilder
+  Quire.Calculation.CalculationController F private static System.Boolean _enableDebugWrites
+  Quire.Calculation.CalculationController F private static System.Collections.Generic.List`1<Quire.Calculation.CalculationController> _boundControllers
+  Quire.Calculation.CalculationController F private static readonly Quire.Calculation.Core.EmptySimpleResultNode _emptyResult
   Quire.Calculation.CalculationController F protected Quire.Calculation.CalculationController+EngineOptions _engineOptions
   Quire.Calculation.CalculationController M internal static EnableDebugWrites`0(System.Boolean) -> System.Void
+  Quire.Calculation.CalculationController M private AddCalculatableChild`0(Quire.Calculation.Core.ICalculatable,Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private CleanupAfterCalculatableRemoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private DumpGetHandleToCalculatableMap`0(System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable>) -> System.String
+  Quire.Calculation.CalculationController M private Enqueue`0(System.Action,System.Boolean) -> System.Boolean
+  Quire.Calculation.CalculationController M private GetDataExchangeOwnerAdded`0(Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable) -> Quire.Calculation.Core.ICalculatableWithDataExchange
+  Quire.Calculation.CalculationController M private GetDataExchangeOwnerRemoved`0(Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable) -> Quire.Calculation.Core.ICalculatableWithDataExchange
+  Quire.Calculation.CalculationController M private HandleAutoCalcChanged`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableAdded`0(Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableAdded`0(System.Object,Quire.Calculation.Core.CalculatableEventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableMoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableMoved`0(System.Object,Quire.Calculation.Core.CalculatableEventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableRemoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableRemoved`0(System.Object,Quire.Calculation.Core.CalculatableEventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableUpdated`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculatableUpdated`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculateNow`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculateNow`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCalculationOptionUpdated`0(System.String,System.Object) -> System.Void
+  Quire.Calculation.CalculationController M private HandleCommitAndNotifyDependentCalculatables`0(System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable>) -> System.Void
+  Quire.Calculation.CalculationController M private HandleContextUnloaded`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleEngineBusy`0(System.Boolean) -> System.Void
+  Quire.Calculation.CalculationController M private HandleEngineNeedsUIThreadMessagesProcessed`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleEngineNodeCallback`0(System.Int32,Quire.Engine.NodeResult) -> System.Void
+  Quire.Calculation.CalculationController M private HandleEngineNodeCallback`0(System.Int32,Quire.Engine.NodeStatus,System.Int32,System.Int32,System.Int32) -> System.Void
+  Quire.Calculation.CalculationController M private HandleEngineUpToDate`0(System.Boolean) -> System.Void
+  Quire.Calculation.CalculationController M private HandleGetEngineOption`0(System.String) -> System.Object
+  Quire.Calculation.CalculationController M private HandleGetEngineVersion`0() -> System.String
+  Quire.Calculation.CalculationController M private HandleGetValueOfIdentifierBefore`0(Quire.Calculation.Core.ICalculatable,System.String) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.CalculationController M private HandleRecalculateAll`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleRecalculateAll`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleSimplifyUnitSystemUpdated`0(System.Boolean) -> System.Void
+  Quire.Calculation.CalculationController M private HandleStartAutoCalc`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleStartEvaluating`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleStopAutoCalc`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleStopEvaluating`0() -> System.Void
+  Quire.Calculation.CalculationController M private HandleSystemVariableUpdated`0(System.String,System.Object) -> System.Void
+  Quire.Calculation.CalculationController M private HandleTreatCalculatableAsUpToDate`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HandleUnitSystemUpdated`0(Quire.Calculation.Core.UnitSystems,System.Collections.Generic.List`1<Quire.Calculation.Core.UnitDescriptor>,System.Collections.Generic.List`1<Quire.Calculation.Core.UnitDescriptor>) -> System.Void
+  Quire.Calculation.CalculationController M private HandleUnitSystemUpdated`0(System.Object,System.EventArgs) -> System.Void
+  Quire.Calculation.CalculationController M private HandleWaitForCalculationIdle`0(System.Int32,System.Windows.Threading.DispatcherPriority) -> System.Void
+  Quire.Calculation.CalculationController M private HookupAndInitializeEngine`0() -> System.Void
+  Quire.Calculation.CalculationController M private HookupCalculatableEvents`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private HookupContextEvents`0() -> System.Void
+  Quire.Calculation.CalculationController M private IsCalculatableInContext`0(Quire.Calculation.Core.ICalculatable) -> System.Boolean
+  Quire.Calculation.CalculationController M private PostBusy`0(System.Boolean) -> System.Void
+  Quire.Calculation.CalculationController M private Post`0(System.Int32,Quire.Engine.NodeResult) -> System.Void
+  Quire.Calculation.CalculationController M private RegisterDataExchange`0(Quire.Calculation.Core.ICalculatableWithDataExchange) -> System.Void
+  Quire.Calculation.CalculationController M private RunCalculation`0(System.Boolean) -> System.Void
+  Quire.Calculation.CalculationController M private UnhookFromCalculatableEvents`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Calculation.CalculationController M private UnhookFromContextEvents`0() -> System.Void
+  Quire.Calculation.CalculationController M private UnregisterDataExchange`0(Quire.Calculation.Core.ICalculatableWithDataExchange) -> System.Void
+  Quire.Calculation.CalculationController M private WorkerLoop`0() -> System.Void
+  Quire.Calculation.CalculationController M private static DebugEnter`0(System.String,System.String) -> System.Void
+  Quire.Calculation.CalculationController M private static DebugExit`0(System.String,System.String) -> System.Void
+  Quire.Calculation.CalculationController M private static DebugInfo`0(System.String) -> System.Void
+  Quire.Calculation.CalculationController M private static IsAggregate`0(Quire.Calculation.Core.ICalculatable) -> System.Boolean
+  Quire.Calculation.CalculationController M private static IsAggregate`0(Quire.Calculation.Core.ICalculatableContainer) -> System.Boolean
   Quire.Calculation.CalculationController M public .ctor`0(Quire.Calculation.Core.ICalculatableContext,Quire.Engine.IEngine,System.Int32,System.Int32) -> System.Void
   Quire.Calculation.CalculationController M public .ctor`0(Quire.Engine.IEngine,System.Threading.SynchronizationContext) -> System.Void
   Quire.Calculation.CalculationController M public BindTo`0(Quire.Calculation.Core.ICalculatableContext) -> System.Void
@@ -21,10 +111,16 @@
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler E public System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler E public System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler E public System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F private System.Action`1<Quire.Calculation.Core.ICalculatable> RequestEvaluation
+  Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F private System.Action`1<Quire.Calculation.Core.ICalculatable> TreatAsUpToDate
+  Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F private System.Func`3<Quire.Calculation.Core.ICalculatable,System.String,Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore
+  Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F private System.Int32 _cookie
+  Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F private readonly System.Text.RegularExpressions.Regex _resolvedIdRegEx
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F protected Quire.Calculation.CalculationController+EngineOptions _engineOptions
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F protected readonly Quire.Calculation.Core.ICalculatable _encapsulatedCalculatable
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F protected readonly System.Func`2<Quire.Calculation.Core.ICalculatable,System.Boolean> _isCalcInContext
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler F protected readonly System.Windows.Threading.Dispatcher _dispatcher
+  Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler M private ParentGlobalErrorResultsDictionary`0(System.Int32,Quire.Engine.IEngine,System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable>) -> System.Collections.IDictionary
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler M protected CloneError`0(Quire.Calculation.Core.EngineError) -> Quire.Calculation.Core.EngineError
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler M protected DispatchedSetSynchronizationStatus`0(Quire.Calculation.Core.SynchronizationStatus) -> System.Void
   Quire.Calculation.CalculationController+DispatchedEngineCallbackHandler M protected IncrementComponentCookie`0() -> System.Void
@@ -82,6 +178,11 @@
   Quire.Calculation.CalculationController+HandlersFactory M public static CreateDataExchangeHandler`0(Quire.Calculation.Core.ICalculatableWithDataExchange,System.Windows.Threading.Dispatcher,System.Action,Quire.Calculation.CalculationController+EngineOptions&) -> Quire.Calculation.IDataExchangeHandler
   Quire.Calculation.CalculationController+HandlersFactory M public static CreateEngineCallbackHandler`0(Quire.Calculation.Core.ICalculatable,System.Windows.Threading.Dispatcher,System.Func`2<Quire.Calculation.Core.ICalculatable,System.Boolean>,Quire.Calculation.CalculationController+EngineOptions) -> Quire.Calculation.CalculationController+IEngineCallbackHandler
   Quire.Calculation.CalculationController+IEngineCallbackHandler M public virtual SetResult`0(System.Int32,Quire.Engine.IEngine,System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable>) -> System.Void
+  Quire.Calculation.CollapsibleDispatchQueue F private readonly System.Collections.Generic.Dictionary`2<System.Object,System.Collections.Generic.List`1<Quire.Pair`2<System.Action,Quire.Calculation.CollapsibleDispatchQueue+Status>>> _queueSet
+  Quire.Calculation.CollapsibleDispatchQueue F private readonly System.ComponentModel.BackgroundWorker _worker
+  Quire.Calculation.CollapsibleDispatchQueue F private readonly System.Threading.ManualResetEventSlim _waitForNonEmpty
+  Quire.Calculation.CollapsibleDispatchQueue F private readonly System.Windows.Threading.Dispatcher _dispatcher
+  Quire.Calculation.CollapsibleDispatchQueue M private Run`0(System.Object,System.ComponentModel.DoWorkEventArgs) -> System.Void
   Quire.Calculation.CollapsibleDispatchQueue M public .ctor`0(System.Windows.Threading.Dispatcher) -> System.Void
   Quire.Calculation.CollapsibleDispatchQueue M public Enqueue`0(System.Object,System.Action) -> System.Void
   Quire.Calculation.CollapsibleDispatchQueue+Status V Completed = 2
@@ -106,16 +207,27 @@
   Quire.Calculation.DataExchangeHandler M public SetValue`0(System.String,Quire.IValue) -> System.Void
   Quire.Calculation.DataExchangeHandler M public ShouldSkipUnchangedValue`0(System.String) -> System.Boolean
   Quire.Calculation.DataExchangeHandler M public UnlockComponent`0() -> System.Void
+  Quire.Calculation.DataExchangeIValueHandler F private Quire.Calculation.IDataExchangeIValueModel _dataExchangeIValueModel
   Quire.Calculation.DataExchangeIValueHandler M protected override GetValueDispatch`0(System.String,System.Boolean,System.Boolean) -> Quire.IValue
   Quire.Calculation.DataExchangeIValueHandler M protected override SetValueDispatch`0(System.String,Quire.IValue,System.Boolean) -> System.Void
   Quire.Calculation.DataExchangeIValueHandler M public .ctor`0(Quire.Calculation.IDataExchangeIValueModel,System.Windows.Threading.Dispatcher,System.Action,Quire.Calculation.CalculationController+EngineOptions) -> System.Void
+  Quire.Calculation.DataExchangeScriptingHandler F private Quire.Calculation.Core.ICalculatableWithDataExchange _calculatableWithDataExchange
   Quire.Calculation.DataExchangeScriptingHandler M protected override CommitIfNeeded`0() -> System.Void
   Quire.Calculation.DataExchangeScriptingHandler M protected override GetValueDispatch`0(System.String,System.Boolean,System.Boolean) -> Quire.IValue
   Quire.Calculation.DataExchangeScriptingHandler M protected override SetValueDispatch`0(System.String,Quire.IValue,System.Boolean) -> System.Void
   Quire.Calculation.DataExchangeScriptingHandler M public .ctor`0(Quire.Calculation.Core.ICalculatableWithDataExchange,System.Windows.Threading.Dispatcher,System.Action,Quire.Calculation.CalculationController+EngineOptions) -> System.Void
+  Quire.Calculation.DataExchangeScriptingHandler P DataExchangeeScriptingModel : Quire.Calculation.Core.IDataExchangeScriptingModel get:private
+  Quire.Calculation.EngineBuilder F private const System.Int32 _workerStackSize
+  Quire.Calculation.EngineBuilder F private readonly Quire.Engine.IFactory _factory
+  Quire.Calculation.EngineBuilder F private static System.String unitRL
+  Quire.Calculation.EngineBuilder F private static System.String unitSystemDerivedRL
+  Quire.Calculation.EngineBuilder F private static System.String unitSystemEmptyDerivedRL
+  Quire.Calculation.EngineBuilder F private static System.String unitSystemRL
   Quire.Calculation.EngineBuilder F public const System.String IndexOriginVarName
   Quire.Calculation.EngineBuilder F public static System.String ImportRequestFormat
   Quire.Calculation.EngineBuilder F public static System.String RL_NIL
+  Quire.Calculation.EngineBuilder M private static GenerateDimensionUnitRL`0(System.Collections.Generic.List`1<Quire.Calculation.Core.UnitDescriptor>) -> System.String
+  Quire.Calculation.EngineBuilder M private static GenerateUnitSystemCustomRL`0(Quire.Calculation.Core.UnitSystems,System.Collections.Generic.List`1<Quire.Calculation.Core.UnitDescriptor>,System.Collections.Generic.List`1<Quire.Calculation.Core.UnitDescriptor>) -> System.String
   Quire.Calculation.EngineBuilder M public .ctor`0() -> System.Void
   Quire.Calculation.EngineBuilder M public CreateEngine`0(System.String,out System.Int32&,out System.Int32&) -> Quire.Engine.IEngine
   Quire.Calculation.EngineBuilder M public Dispose`0() -> System.Void
@@ -125,14 +237,20 @@
   Quire.Calculation.EngineConstants F public const System.String IdBoundLabelsKey
   Quire.Calculation.EngineConstants F public const System.String ResultKey
   Quire.Calculation.EngineConstants F public const System.String WarningRedefinitionKey
+  Quire.Calculation.EngineErrorHandler F private readonly System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable> _handleToICalculatableMap
+  Quire.Calculation.EngineErrorHandler M private HandleError`0(Quire.Mpl.Run.AppException) -> Quire.Calculation.Core.EngineError
   Quire.Calculation.EngineErrorHandler M public .ctor`0(System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable>) -> System.Void
   Quire.Calculation.EngineErrorHandler M public HandleErrors`0(System.Collections.IList) -> System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.EngineError>
+  Quire.Calculation.EngineWarningHandler F private readonly System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable> _handleToICalculatableMap
+  Quire.Calculation.EngineWarningHandler M private HandleWarning`0(Quire.Engine.RedefInfo) -> Quire.Calculation.Core.EngineRedefInfo
+  Quire.Calculation.EngineWarningHandler M private static ParseTypeString`0(System.String) -> Quire.Calculation.Core.EngineDefType
   Quire.Calculation.EngineWarningHandler M public .ctor`0(System.Collections.Generic.Dictionary`2<System.Int32,Quire.Calculation.Core.ICalculatable>) -> System.Void
   Quire.Calculation.EngineWarningHandler M public HandleWarnings`0(System.Collections.IList) -> System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.EngineRedefInfo>
   Quire.Calculation.IDataExchangeIValueModel M public virtual GetValue`0(System.String) -> Quire.IValue
   Quire.Calculation.IDataExchangeIValueModel M public virtual SetValue`0(System.String,Quire.IValue,Quire.Calculation.IValueToIResultNodeTransform) -> System.Void
   Quire.Calculation.IValueToIResultNodeTransform M public virtual Transform`0(Quire.Automation.IAutomationValue) -> Quire.Calculation.Core.IResultNode
   Quire.Calculation.IValueToIResultNodeTransform P SimplifyUnits : System.Boolean virtual get:public set:public
+  Quire.Calculation.MatrixValueDataAccessorWrapper M private static ConvertPlainDataTypeList`0(System.Collections.Generic.IList`1<Quire.Automation.PlainDataTypes>) -> System.Collections.Generic.List`1<Quire.Calculation.Core.PlainDataTypes>
   Quire.Calculation.MatrixValueDataAccessorWrapper M public .ctor`0(Quire.Automation.IMatrixValueDataAccessor) -> System.Void
   Quire.Calculation.MatrixValueDataAccessorWrapper M public GetColumnsPlainDataTypes`0() -> System.Collections.Generic.IList`1<Quire.Calculation.Core.PlainDataTypes>
   Quire.Calculation.MatrixValueDataAccessorWrapper M public GetColumnsPlainDataValues`0(System.Int32,System.Int32) -> System.Collections.Generic.IList`1<System.Collections.IList>
@@ -141,18 +259,34 @@
   Quire.Calculation.MatrixValueDataAccessorWrapper M public GetFirstNonPlainDataRowIndex`0() -> System.Int32
   Quire.Calculation.MatrixValueDataAccessorWrapper M public GetRowsPlainDataTypes`0() -> System.Collections.Generic.IList`1<Quire.Calculation.Core.PlainDataTypes>
   Quire.Calculation.MatrixValueDataAccessorWrapper M public GetRowsPlainDataValues`0(System.Int32,System.Int32) -> System.Collections.Generic.IList`1<System.Collections.IList>
+  Quire.Calculation.MatrixValueDataAccessorWrapper P AccessorProxy : Quire.Automation.IMatrixValueDataAccessor get:private set:private
+  Quire.Calculation.MatrixValueProxyWrapper F private static readonly Quire.Automation.PlainDataConversionOptions _conversionOptions
   Quire.Calculation.MatrixValueProxyWrapper M public .ctor`0(Quire.Automation.IMatrixValueProxy) -> System.Void
   Quire.Calculation.MatrixValueProxyWrapper M public GetPlainData`0() -> Quire.Calculation.Core.IMatrixValueDataAccessorWrapper
   Quire.Calculation.MatrixValueProxyWrapper M public Get`0(System.UInt32,System.UInt32) -> Quire.Calculation.Core.IValueProxyWrapper
   Quire.Calculation.MatrixValueProxyWrapper M public WriteXml`0(System.Xml.XmlWriter) -> System.Void
   Quire.Calculation.MatrixValueProxyWrapper P Cols : System.UInt32 get:public
   Quire.Calculation.MatrixValueProxyWrapper P IsUniform : System.Boolean get:public
+  Quire.Calculation.MatrixValueProxyWrapper P Proxy : Quire.Automation.IMatrixValueProxy get:private set:private
   Quire.Calculation.MatrixValueProxyWrapper P Rows : System.UInt32 get:public
   Quire.Calculation.MatrixValueProxyWrapper P Xml : System.String get:public
+  Quire.Calculation.ThreadExtensions F private static System.Globalization.CultureInfo appCulture
+  Quire.Calculation.ThreadExtensions F private static System.Globalization.CultureInfo appCultureUI
   Quire.Calculation.ThreadExtensions M internal static SyncWithUICulture`0(System.Threading.Thread) -> System.Void
   Quire.Calculation.ThreadExtensions M public static CaptureUiThreadCulture`0() -> System.Void
   Quire.Calculation.ValueProxyWrapper M public .ctor`0(Quire.Automation.IValueProxy) -> System.Void
-  Quire.Calculation.ValueProxyWrapper P Proxy : Quire.Automation.IValueProxy get:public
+  Quire.Calculation.ValueProxyWrapper P Proxy : Quire.Automation.IValueProxy get:public set:private
+  Quire.Calculation.ValueToIResultNodeTransform F private readonly Quire.Calculation.Core.IResultNodeFactory _resultNodeFactory
+  Quire.Calculation.ValueToIResultNodeTransform M private BuildLazyMatrix`0(Quire.Automation.IMatrixValueProxy) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private BuildScalar`0(Quire.Automation.IScalarValueProxy) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private MakeResultNode`0(Quire.Automation.IAutomationValue) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private MakeResultNode`0(Quire.Automation.IValueProxy) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private MakeResultNode`0(Quire.Calculation.Core.IValueProxyWrapper) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private MakeUnitedValue`0(Quire.Calculation.Core.IResultNode,Quire.Automation.UnitPower[]) -> Quire.Calculation.Core.IResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private static CleanLineBreake`0(System.String,System.String) -> System.String
+  Quire.Calculation.ValueToIResultNodeTransform M private static HasUnits`0(Quire.Automation.IValueProxy) -> System.Boolean
+  Quire.Calculation.ValueToIResultNodeTransform M private static MakeMatrix`0(Quire.Values.MatVal,Quire.Engine.DisplayTransform,System.Boolean,Quire.Values.UnitSystem) -> Quire.Calculation.Core.MatrixResultNode
+  Quire.Calculation.ValueToIResultNodeTransform M private static MakeTrace`0(Quire.Values.Trace,Quire.Values.UnitSystem) -> Quire.Calculation.Core.TraceData
   Quire.Calculation.ValueToIResultNodeTransform M public .ctor`0() -> System.Void
   Quire.Calculation.ValueToIResultNodeTransform M public .ctor`0(Quire.Calculation.Core.IResultNodeFactory) -> System.Void
   Quire.Calculation.ValueToIResultNodeTransform M public Transform`0(Quire.Automation.IAutomationValue) -> Quire.Calculation.Core.IResultNode

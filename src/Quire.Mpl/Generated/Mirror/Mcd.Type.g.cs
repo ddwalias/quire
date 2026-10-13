@@ -20,6 +20,8 @@ public abstract partial class Type
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Type this[int operand] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.Type.Product.Power[] Take(global::Quire.Mcd.Type.Product.Power[] array, int start, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public abstract void Accept(global::Quire.Mcd.Type.Visitor _);
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Type.Product GetDimensionTypeProduct() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -98,6 +100,10 @@ public abstract partial class Type
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Mcd.Type.Product.Power[] Powers;
         [global::Quire.Mirror.MirrorStub]
+        private int m_var;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_con;
+        [global::Quire.Mirror.MirrorStub]
         public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public bool IsMonomorphic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -145,6 +151,8 @@ public abstract partial class Type
     public partial class Factory
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Stack m_stk;
+        [global::Quire.Mirror.MirrorStub]
         public void Push(global::Quire.Mcd.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void Push(global::Quire.Mcd.Type type, int exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -178,6 +186,10 @@ public abstract partial class Type
     private partial class Lexer
     {
         [global::Quire.Mirror.MirrorStub]
+        private string m_src;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_off;
+        [global::Quire.Mirror.MirrorStub]
         public Lexer(string signature) { }
         [global::Quire.Mirror.MirrorStub]
         public char GetToken(out string lexeme) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -187,9 +199,31 @@ public abstract partial class Type
     private partial class Parser
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.Type.Factory m_fac;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.Type.Lexer m_lex;
+        [global::Quire.Mirror.MirrorStub]
+        private char m_tok;
+        [global::Quire.Mirror.MirrorStub]
+        private string m_val;
+        [global::Quire.Mirror.MirrorStub]
         public Parser(string signature) { }
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Mcd.Type Parse() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.Type ParseApplication() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.Type ParseAtomic() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private int ParseExponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool IsNextToken(string tokens) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private char GetNextToken() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private bool GetNextTokenIf(string tokens) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void SkipToken(char token) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Printer, mplrun")]
@@ -213,11 +247,17 @@ public abstract partial class Type
     private partial class Formatter : global::Quire.Mcd.Type.Printer
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.UnitSystem m_sys;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.Type.Factory m_fac;
+        [global::Quire.Mirror.MirrorStub]
         public Formatter(global::System.Text.StringBuilder builder, global::Quire.Mcd.UnitSystem system) : base(default(global::System.Text.StringBuilder)) { }
         [global::Quire.Mirror.MirrorStub]
         public override void Visit(global::Quire.Mcd.Type.Variable t) => base.Visit(t);
         [global::Quire.Mirror.MirrorStub]
         public override void Visit(global::Quire.Mcd.Type.Application t) => base.Visit(t);
+        [global::Quire.Mirror.MirrorStub]
+        private void OnFunction(global::Quire.Mcd.Type t, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Visit(global::Quire.Mcd.Type.Product t) => base.Visit(t);
     }

@@ -12,6 +12,10 @@ namespace Quire.Mpl.Run;
 public partial class Fn_clo<CLO> : global::Quire.Mpl.Run.Function
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_func;
+    [global::Quire.Mirror.MirrorStub]
+    private CLO m_clo;
+    [global::Quire.Mirror.MirrorStub]
     public override string Name { get => base.Name; }
     [global::Quire.Mirror.MirrorStub]
     public Fn_clo(global::System.Delegate f, CLO clo, int function_purity) : base(default(int), default(int)) { }

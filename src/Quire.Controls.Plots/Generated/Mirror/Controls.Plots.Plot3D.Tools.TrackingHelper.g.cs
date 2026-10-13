@@ -12,6 +12,18 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 internal partial class TrackingHelper : global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball _trackball;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Media.Media3D.Matrix3D> _wTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.ModelVisual3D _hitTestTarget;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Media3D.Wires.WirePoints[] _trackingPointsArray;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Media3D.WireLines[] _trackingLinesArray;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Viewport3D Viewport { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public TrackingHelper(global::Quire.Controls.Plots.Plot3D.Tools.IBaseTrackball trackball) { }
     [global::Quire.Mirror.MirrorStub]
     public void Attach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -19,6 +31,8 @@ internal partial class TrackingHelper : global::Quire.Controls.Plots.Plot3D.Tool
     public void Detach() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearTrackingVisuals() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TrackStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -41,4 +55,12 @@ internal partial class TrackingHelper : global::Quire.Controls.Plots.Plot3D.Tool
     public global::Quire.Controls.Plots.Plot3D.Tools.ITrackingHelper AddTrackingLine2D(global::System.Windows.Point from, global::System.Windows.Point to, int colorId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PerformHitTest(global::System.Windows.Point position, ref global::System.Nullable<global::System.Windows.Media.Media3D.Point3D> initialHit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.HitTestResultBehavior HitTestResultCallback(global::System.Windows.Media.HitTestResult result, out global::System.Nullable<global::System.Windows.Media.Media3D.Point3D> current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateHitTestTarget(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateHitTestTarget() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.Media3D.Point3DCollection GetHitTestTargetTransformed(global::System.Windows.Media.Media3D.Matrix3D htTransform, global::System.Windows.Media.Media3D.Point3DCollection hitTestTargetPoints) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

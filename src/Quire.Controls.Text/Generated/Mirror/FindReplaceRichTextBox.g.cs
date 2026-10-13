@@ -12,9 +12,43 @@ namespace Quire;
 public partial class FindReplaceRichTextBox : global::Quire.Controls.Text.RichTextBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int MaxCharactersLimit = 100;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex _constantRegex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex _unitRegex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex _variableRegex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex _variableSuperscriptRegex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex _variableIDRegex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex _variableSubscriptRegex;
+    [global::Quire.Mirror.MirrorStub]
     public FindReplaceRichTextBox() { }
     [global::Quire.Mirror.MirrorStub]
+    private void AddCommandsHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PreventTextWrapping() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandlePaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TruncateTextIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InsertPlainText(string formattedText, global::System.Windows.Documents.TextPointer insertPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ConvertSExpressionAndPasteText(string formattedText, global::System.Windows.Documents.TextPointer insertPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.ValueTuple<bool, string>> ParseFormattedTextToTextSegments(string formattedText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.MatchCollection ExtractSubscriptMatchesAndText(string formattedText, out string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PasteFormattedContent(string formattedText, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void SetFormattedContent(string content, string dataFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, global::Quire.Core.TextFormat textFormat = default) => base.SetFormattedContent(content, dataFormat, proofingLanguage, textFormat);
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveHyperlinksIfNeeded(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void PrePasting() => base.PrePasting();
     [global::Quire.Mirror.MirrorStub]
@@ -27,4 +61,6 @@ public partial class FindReplaceRichTextBox : global::Quire.Controls.Text.RichTe
     protected override void HandleReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => base.HandleReplace(sender, e);
     [global::Quire.Mirror.MirrorStub]
     public void GetSubscriptPositions(global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveAdditionalParagraphs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,18 @@ namespace Quire.utl_mgd;
 public partial class SafeMonitor
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Hashtable s_csecmap;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Stack s_csecpool;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.utl_mgd.SafeMutex s_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private static nint GetCriticalSection(object o, int inc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Free() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int on_exit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void Enter(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool TryEnter(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

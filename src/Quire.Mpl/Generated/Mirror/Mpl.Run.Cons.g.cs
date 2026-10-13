@@ -24,6 +24,8 @@ public partial class Cons
     [global::Quire.Mirror.MirrorStub]
     public static int Length(global::Quire.Mpl.Run.Cons x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private string FormatItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Cons destructive_append(global::Quire.Mpl.Run.Cons xs, global::Quire.Mpl.Run.Cons ys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

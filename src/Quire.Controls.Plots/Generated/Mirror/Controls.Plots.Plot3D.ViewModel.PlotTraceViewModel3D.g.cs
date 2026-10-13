@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 internal partial class PlotTraceViewModel3D : global::Quire.Controls.Plots.Plot3D.ViewModel.IPlotTraceViewModel3D, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Plots.Presenter.IPlotTraceStyle, global::Quire.Controls.Plots.Traces.ISymbolProperties, global::Quire.Controls.Plots.Model.IHasNumberOfPoints
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D _model;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.ICalculatableInfo CalculatableInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D VisualData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -46,11 +48,15 @@ internal partial class PlotTraceViewModel3D : global::Quire.Controls.Plots.Plot3
     [global::Quire.Mirror.MirrorStub]
     public PlotTraceViewModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) { }
     [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool ChangeSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UserChangedStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsOwnModel(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ChangeLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

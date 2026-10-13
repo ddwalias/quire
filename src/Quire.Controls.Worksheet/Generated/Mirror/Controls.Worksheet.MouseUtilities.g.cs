@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class MouseUtilities
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool GetCursorPos(ref global::Quire.Controls.Worksheet.MouseUtilities.Win32Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point GetMousePosition(global::System.Windows.Media.Visual relativeTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public MouseUtilities() { }

@@ -12,6 +12,14 @@ namespace Quire.Controls.Core;
 public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _message;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Controls.TextBox _messageTextBox;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Controls.Border _messageBorder;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.NodeMessageAdornerType _type;
+    [global::Quire.Mirror.MirrorStub]
     public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NodeMessageAdornerType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,13 +28,31 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size AdornedElementDesiredSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private void NodeMessageAdorner_SizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public NodeMessageAdorner(global::System.Windows.FrameworkElement adornedElement, string error, global::Quire.Controls.Core.NodeMessageAdornerType type) : base(default(global::System.Windows.UIElement)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void Setup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleAdornedElementWasMeasured(object sender, global::System.Windows.RoutedEventArgs routedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
+    private double CalculateDesiredMessageBorderWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Remove() => base.Remove();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> GetAllNodeMessageAdorners() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InvalidateArrangeForAllNodeMessageAdornersExcludingSelf() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetOffset(global::Quire.Controls.Core.NodeMessageAdorner current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double CalculateOffset(global::System.Collections.Generic.IList<global::Quire.Controls.Core.NodeMessageAdorner> adorners, int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void AddToAdornerLayer() => base.AddToAdornerLayer();
     [global::Quire.Mirror.MirrorStub]

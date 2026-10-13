@@ -14,6 +14,10 @@ internal partial class InputRadioButtonEngineJScript : global::Quire.Controls.In
     [global::Quire.Mirror.MirrorStub]
     public const string DefaultUserScriptObjectName = "RadioBtn";
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableRadioButton.JsRadioButtonDefaultScript.js";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableRadioButton.JsRadioButtonScriptInternalClass.js";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_SelectionChange(Inputs, Outputs)\r\n";

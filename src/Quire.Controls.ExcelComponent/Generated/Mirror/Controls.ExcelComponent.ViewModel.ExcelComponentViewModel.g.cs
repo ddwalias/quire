@@ -12,6 +12,10 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 public partial class ExcelComponentViewModel : global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel, global::Quire.Controls.ExcelComponent.ViewModel.IExcelComponentViewModel, global::Quire.Controls.ExcelComponent.ViewModel.IOleBaseComponentViewModel, global::Quire.Controls.Mathboard.IAggregateMathboardViewModel, global::Quire.Controls.Mathboard.IMathboardViewModel, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Whiteboard.IWhiteboardViewModel, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainerWithActiveItem, global::System.IDisposable, global::System.ICloneable, global::Quire.Controls.Core.IResizableElementViewModelWithDataStore
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.IExcelContainer ExcelContainerItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.ViewModel.IExcelContainerViewModel ExcelContainerItemViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<bool> IsAsIcon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool OutputSectionExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,6 +23,8 @@ public partial class ExcelComponentViewModel : global::Quire.Controls.ExcelCompo
     public ExcelComponentViewModel(global::Quire.Controls.ExcelComponent.Model.ExcelComponentModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     internal ExcelComponentViewModel(global::Quire.Controls.ExcelComponent.Model.ExcelComponentModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid grid) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private ExcelComponentViewModel(global::Quire.Controls.ExcelComponent.ViewModel.ExcelComponentViewModel original) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
     public void CollapseInputOutputAfterLoading() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

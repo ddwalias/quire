@@ -12,6 +12,12 @@ namespace Quire.PersistentDataObjects;
 public partial class str
 {
     [global::Quire.Mirror.MirrorStub]
+    private string expridField;
+    [global::Quire.Mirror.MirrorStub]
+    private string spaceField;
+    [global::Quire.Mirror.MirrorStub]
+    private string valueField;
+    [global::Quire.Mirror.MirrorStub]
     public string exprid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string space { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

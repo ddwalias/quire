@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 internal partial class HorizontalRightArrow : global::Quire.Controls.Internal.HorizontalFence
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly char[] _operatorChars;
+    [global::Quire.Mirror.MirrorStub]
     public HorizontalRightArrow() : base(default(char)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);

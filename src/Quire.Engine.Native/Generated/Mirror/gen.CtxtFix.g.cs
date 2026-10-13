@@ -12,6 +12,26 @@ namespace Quire.gen;
 internal partial class CtxtFix : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_free_env;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_fix_env;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_captured;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_continuation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label m_fix_body_label;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_assembling_body;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_assembling_lambda;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlEmit m_emit;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlAsm m_asm;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.Closure m_clo;
+    [global::Quire.Mirror.MirrorStub]
     public int Nfuncs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override unsafe global::Quire.gen.MetaObj lookup(void* var) => base.lookup(var);

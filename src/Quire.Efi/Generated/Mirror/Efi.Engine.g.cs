@@ -12,6 +12,8 @@ namespace Quire.Efi;
 internal partial class Engine
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly double AXIS_FUZZ;
+    [global::Quire.Mirror.MirrorStub]
     public readonly int origin;
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Efi.PlotOptions options;
@@ -20,11 +22,37 @@ internal partial class Engine
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Efi.AxisOptions Y;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.Trace[] traces;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.AxisStats xStats;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.YAxisStats yStats;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bHasGoodPoint;
+    [global::Quire.Mirror.MirrorStub]
     public Engine(global::Quire.Efi.PlotOptions popt, global::Quire.Efi.AxisOptions xopt, global::Quire.Efi.AxisOptions yopt, int orig) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeLimitsDifferent(global::Quire.Efi.AxisOptions options, ref double minV, ref double maxV) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ScaleAxis(global::Quire.Efi.AxisOptions axis, global::Quire.Efi.AxisStats stats, bool equalScales) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FixOutliers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ScalePlot() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ProcessPoint(double x, double y, int nCurrentTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void GetCoordinates(int nCurrentTrace, global::Quire.Efi.Pair<object> args, out double x, out double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int ProcessTrace(global::Quire.Efi.Trace trace, int nCurrentTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Run(object[] yTraces, int[] args, object[] xlimits, object[] ylimits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal CreatePointsVector(global::System.Collections.Generic.List<global::Quire.Efi.Pair<double>> points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal CreateTraceVector(global::Quire.Efi.Trace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal CreateStatsVector(global::Quire.Efi.AxisStats stats) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal CreateOutput(global::Quire.Efi.Engine yPlot, global::Quire.Efi.Engine y2Plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

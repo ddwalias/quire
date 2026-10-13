@@ -12,6 +12,10 @@ namespace Quire.Mpl.Run;
 public partial class CodeFunction : global::Quire.Mpl.Run.Code
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Code m_call;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Code[] m_args;
+    [global::Quire.Mirror.MirrorStub]
     public override void BegArg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il, int i) => base.BegArg(il, i);
     [global::Quire.Mirror.MirrorStub]
     public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);

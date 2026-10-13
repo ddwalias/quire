@@ -12,6 +12,20 @@ namespace Quire.Controls.Text;
 internal partial class EmbededItemsCommandWithKeepSelection : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IRichTextBase _texRegion;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Func<bool> _commandAction;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Undo.CompoundCommand _wrappingCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _selectionStart;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _selectionEnd;
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasCommandAction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasSelection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public EmbededItemsCommandWithKeepSelection(global::Quire.Controls.Core.IRichTextBase textRegion, string name, global::System.Func<bool> commandAction = default) { }
@@ -21,6 +35,8 @@ internal partial class EmbededItemsCommandWithKeepSelection : global::Quire.Undo
     public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MakeSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

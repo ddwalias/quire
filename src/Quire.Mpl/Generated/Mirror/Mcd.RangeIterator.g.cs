@@ -12,6 +12,12 @@ namespace Quire.Mcd;
 public partial class RangeIterator : global::Quire.Mcd.Iterator
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.RngVal m_rng;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_it;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_n;
+    [global::Quire.Mirror.MirrorStub]
     public RangeIterator(global::Quire.Mcd.RngVal r) { }
     [global::Quire.Mirror.MirrorStub]
     public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

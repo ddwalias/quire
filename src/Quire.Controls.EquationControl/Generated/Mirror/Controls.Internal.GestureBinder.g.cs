@@ -21,4 +21,12 @@ internal static partial class GestureBinder
     public static void Bind(global::Quire.Controls.Internal.VisualScoper editor, global::Quire.Controls.Internal.GestureManager manager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void LimitSideNodeGestureBind(global::Quire.Controls.Internal.VisualMathRegionNode editor, global::Quire.Controls.Internal.GestureManager manager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Internal.EditorCommand InsertOperatorCommand(global::Quire.Controls.Internal.VisualMathRegionNode editor, string nodeName, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionalityKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Internal.EditorCommand InsertOperatorCommand(global::Quire.Controls.Internal.VisualMathRegionNode view, global::Quire.Controls.VisualOperatorDescriptor descriptor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FireInsertOperatorWrapper(global::Quire.Controls.Internal.VisualMathRegionNode view, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionalityKey, global::System.Windows.Input.RoutedCommand command, object commandParameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Internal.EditorCommand InsertStringCommand(global::Quire.Controls.Internal.VisualMathRegionNode editor, string stringValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

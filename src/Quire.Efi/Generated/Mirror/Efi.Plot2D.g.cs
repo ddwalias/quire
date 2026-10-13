@@ -24,15 +24,47 @@ public partial class Plot2D
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.RngVal plot_range(double lo, double hi, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.RngVal plot_range(double lo, double hi) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.RngVal plot_range() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.RngVal plot_range(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.RngVal plot_range(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object parametric_quickplot(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object parametric_quickplot(global::Quire.Mcd.DimVal xf, global::Quire.Mcd.DimVal yf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object parametric_quickplot(global::Quire.Mcd.DimVal xf, global::Quire.Mcd.DimVal yf, double lo, double hi) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object parametric_quickplot(global::Quire.Mcd.DimVal xf, global::Quire.Mcd.DimVal yf, double lo, double hi, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object parametric_plot(global::Quire.Mcd.DimVal xf, global::Quire.Mcd.DimVal yf, global::Quire.Mcd.DimVal points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object format_xy_plot(global::Quire.Mcd.DimVal kind, global::Quire.Mcd.DimVal xs, global::Quire.Mcd.DimVal ys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void eval(global::Quire.Mpl.Run.Function fn, global::Quire.Mcd.DimVal p, int i, global::Quire.Mcd.MatVal xres, ref double xmin, ref double xmax) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object ev(global::Quire.Mpl.Run.Function f, global::Quire.Mcd.DimVal p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool try_calc_mt_values(global::Quire.Mpl.Run.Function xfn, global::Quire.Mpl.Run.Function yfn, int index_start, int size, global::Quire.Mcd.DimVal points, ref global::Quire.Mcd.MatVal xres, ref global::Quire.Mcd.MatVal yres) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public object eval_parametric_plot(uint x_tag, global::Quire.Mcd.DimVal xf, global::Quire.Mcd.DimVal yf, global::Quire.Mcd.DimVal points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static object eval(global::Quire.Mpl.Run.Function xf, object[] argsX) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool try_calc_mt_range(global::Quire.Mpl.Run.Function xf, global::Quire.Mpl.Run.Function yf, object[] args, global::Quire.Efi.Plot2D.arg_desc[] rngs, int nrngs, bool bmanyrng, out global::Quire.Mcd.DimVal xs, out int xrngs, out global::Quire.Mcd.DimVal ys, out int yrngs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object[] BuildArguments(global::System.Collections.Generic.IEnumerator<double>[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerator<object[]> MultiRangeEnumerator(global::System.Collections.Generic.IEnumerator<double>[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerator<object[]> ArgumentEnumerator(object[] ranges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void eval_range_plot(global::Quire.Mpl.Run.Function xf, global::Quire.Mpl.Run.Function yf, object[] args, out global::Quire.Mcd.DimVal xs, out int xrngs, out global::Quire.Mcd.DimVal ys, out int yrngs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void nan_fill(ref global::Quire.Mcd.MatVal x, ref global::Quire.Mcd.MatVal y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool isIdentityFunction(global::Quire.Mpl.Run.Function fn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -47,6 +79,12 @@ public partial class Plot2D
     [global::Quire.Mirror.MirrorOf("Efi.Plot2D+RangeEnumerator, efiplot_")]
     private partial class RangeEnumerator : global::System.Collections.Generic.IEnumerator<double>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Mcd.RngVal m_range;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int count;
+        [global::Quire.Mirror.MirrorStub]
+        private int step;
         [global::Quire.Mirror.MirrorStub]
         public double Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

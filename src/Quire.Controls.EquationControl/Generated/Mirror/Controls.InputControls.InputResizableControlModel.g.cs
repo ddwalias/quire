@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 public abstract partial class InputResizableControlModel : global::Quire.Controls.InputControls.InputControlModel, global::Quire.Controls.InputControls.IInputResizableControlModel, global::Quire.Controls.InputControls.IInputControlModel, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.IInputResizableControlData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public double Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

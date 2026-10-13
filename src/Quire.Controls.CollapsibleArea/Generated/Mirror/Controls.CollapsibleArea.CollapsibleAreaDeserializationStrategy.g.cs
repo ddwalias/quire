@@ -12,6 +12,8 @@ namespace Quire.Controls.CollapsibleArea;
 public partial class CollapsibleAreaDeserializationStrategy : global::Quire.Controls.Whiteboard.WhiteBoardDeserializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.CollapsibleArea.CollapsibleAreaControl _control;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CollapsibleAreaDeserializationStrategy(global::Quire.Controls.CollapsibleArea.CollapsibleAreaControl control) : base(default(global::Quire.Controls.Whiteboard.WhiteboardControl)) { }

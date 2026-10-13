@@ -12,6 +12,8 @@ namespace Quire.AutomationServiceEngNotePlus;
 public partial class AutomationSpiritMatrix : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly double[][] _matrix;
+    [global::Quire.Mirror.MirrorStub]
     public double[][] Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double this[int rowInd, int colInd] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +25,8 @@ public partial class AutomationSpiritMatrix : global::Quire.EngNotebookPlus.Auto
     public AutomationSpiritMatrix(int rows, int columns) { }
     [global::Quire.Mirror.MirrorStub]
     public AutomationSpiritMatrix(double[][] matrix) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void GetMatrixSize(out int rows, out int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int SetMatrixElement(int rowIndexArg, int columnIndexArg, double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

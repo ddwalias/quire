@@ -24,13 +24,27 @@ public sealed partial class Dim
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Mcd.Dim mixed_matrix_dim;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly int s_rank;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.IDictionary s_map;
+    [global::Quire.Mirror.MirrorStub]
     public static int[] s_vec;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] m_vec;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Type.Product Product { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int[] Coordinates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static void ThreadInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private Dim(int[] v) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Dim() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.Dim intern(int[] v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.Dim intern() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object o) => base.Equals(o);
     [global::Quire.Mirror.MirrorStub]
@@ -81,8 +95,6 @@ public sealed partial class Dim
     public static global::Quire.Mcd.Dim Pwr(global::Quire.Mcd.Dim x, double e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.Dim Root(global::Quire.Mcd.Dim x, double n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private Dim() { }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Dim+Hash, mplrun")]
     private sealed partial class Hash : global::System.Collections.IEqualityComparer

@@ -12,7 +12,187 @@ namespace Quire.EquationEditor.Tree;
 public partial class MathNodeDescriptor : global::Quire.EquationEditor.Tree.IMathNodeDescriptor
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly int[] a;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string b;
+    [global::Quire.Mirror.MirrorStub]
+    private int c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Parsing.Fixity d;
+    [global::Quire.Mirror.MirrorStub]
+    private int e;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] f;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] g;
+    [global::Quire.Mirror.MirrorStub]
+    private bool h;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] i;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] j;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex k;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Text.RegularExpressions.Regex l;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Parsing.IValueCleaner n;
+    [global::Quire.Mirror.MirrorStub]
+    private string o;
+    [global::Quire.Mirror.MirrorStub]
+    private string p;
+    [global::Quire.Mirror.MirrorStub]
+    private string q;
+    [global::Quire.Mirror.MirrorStub]
+    private string r;
+    [global::Quire.Mirror.MirrorStub]
+    private string s;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<char> t;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.SymbolMargin u;
+    [global::Quire.Mirror.MirrorStub]
+    private bool v;
+    [global::Quire.Mirror.MirrorStub]
+    private bool w;
+    [global::Quire.Mirror.MirrorStub]
+    private bool x;
+    [global::Quire.Mirror.MirrorStub]
+    private bool y;
+    [global::Quire.Mirror.MirrorStub]
+    private bool z;
+    [global::Quire.Mirror.MirrorStub]
+    private bool aa;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ab;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ac;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ad;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ae;
+    [global::Quire.Mirror.MirrorStub]
+    private bool af;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ag;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ah;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az ai;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az aj;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az ak;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az al;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az am;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az an;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az ao;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az ap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Native.PtcEquationEditor.az aq;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.EquationEditor.Tree.Parsing.Rule, global::Quire.EquationEditor.Tree.Parsing.Panacea> ar;
+    [global::Quire.Mirror.MirrorStub]
+    private bool @as;
+    [global::Quire.Mirror.MirrorStub]
+    private bool at;
+    [global::Quire.Mirror.MirrorStub]
+    private bool au;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.DirectionalPair<global::Quire.EquationEditor.Tree.Parsing.Panacea, global::Quire.Native.PtcEquationEditor.az>> av;
+    [global::Quire.Mirror.MirrorStub]
+    private bool aw;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> ax;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<int, string> ay;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Func<global::Quire.Native.PtcEquationEditor.r, global::Quire.EquationEditor.Tree.INodeInfo, global::Quire.EquationEditor.Tree.MathNode[], global::Quire.EquationEditor.Tree.MathNode> az;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a0;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.OperatorFamily> a1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Parsing.Associativity a2;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a3;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a4;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a5;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a6;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a7;
+    [global::Quire.Mirror.MirrorStub]
+    private bool a8;
+    [global::Quire.Mirror.MirrorStub]
+    private int a9;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] ba;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> bb;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bc;
+    [global::Quire.Mirror.MirrorStub]
+    private int bd;
+    [global::Quire.Mirror.MirrorStub]
+    private bool be;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Direction[] bf;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] bg;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] bh;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] bi;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] bj;
+    [global::Quire.Mirror.MirrorStub]
+    private string bk;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.Parsing.LineSpan bl;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.NodeValueType bm;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bn;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bo;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bp;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.EquationEditor.Tree.MathNodeGroups> bq;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type br;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bs;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bt;
+    [global::Quire.Mirror.MirrorStub]
+    private string bu;
+    [global::Quire.Mirror.MirrorStub]
+    private string bv;
+    [global::Quire.Mirror.MirrorStub]
+    private string bw;
+    [global::Quire.Mirror.MirrorStub]
+    private string bx;
+    [global::Quire.Mirror.MirrorStub]
+    private string by;
+    [global::Quire.Mirror.MirrorStub]
+    private bool bz;
+    [global::Quire.Mirror.MirrorStub]
+    private string b0;
+    [global::Quire.Mirror.MirrorStub]
+    private string b1;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool b2;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<char> OperatorSymbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

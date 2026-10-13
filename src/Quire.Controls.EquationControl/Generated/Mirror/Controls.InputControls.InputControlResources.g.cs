@@ -14,6 +14,8 @@ public partial class InputControlResources : global::System.Windows.ResourceDict
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.InputControls.InputControlResources Instance;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public InputControlResources() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

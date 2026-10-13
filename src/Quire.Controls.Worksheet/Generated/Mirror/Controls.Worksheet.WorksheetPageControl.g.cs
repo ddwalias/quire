@@ -14,6 +14,12 @@ public partial class WorksheetPageControl : global::System.Windows.Controls.Cont
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LabeledIdFormatProperty;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.WorksheetPageViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> _nonOwnedWhiteboardItems;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> WhiteboardItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> NonOwnedWhiteboardItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -63,6 +69,8 @@ public partial class WorksheetPageControl : global::System.Windows.Controls.Cont
     public void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleLabelIdChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]

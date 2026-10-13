@@ -12,9 +12,33 @@ namespace Quire.depman;
 internal partial class SharedThreadContext
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_thread_map;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_data_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_abort_requested;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.RuntimeOptions m_runtime_options;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_worker_stack_size;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.RuntimeOptions RuntimeOptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.utl_mgd.SafeMutex Mutex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.SharedThreadContext GetSharedThreadContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void interrupt(int threadId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void check_interrupt() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.ThreadData get_thread_data() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.ThreadData get_thread_data(int threadId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void clear_thread_data(int threadId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SharedThreadContext(int worker_stack_size) { }
     [global::Quire.Mirror.MirrorStub]

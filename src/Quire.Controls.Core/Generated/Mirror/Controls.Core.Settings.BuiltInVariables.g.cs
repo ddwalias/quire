@@ -12,5 +12,7 @@ namespace Quire.Controls.Core.Settings;
 public partial class BuiltInVariables : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string localName = "builtInVariables";
+    [global::Quire.Mirror.MirrorStub]
     public BuiltInVariables(object o, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
 }

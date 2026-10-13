@@ -12,6 +12,8 @@ namespace Quire;
 public static partial class EnumHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Dictionary<global::System.Type, global::System.Collections.IDictionary> _cache;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCacheAndAssert;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCache;
@@ -25,6 +27,10 @@ public static partial class EnumHelper
     public static bool TryParse<TEnum>(object value, out TEnum enumValue, bool assert) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool TryParse<TEnum>(object value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TryParseWithCache<TEnum>(string valueToParse, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TryParseWithoutCache<TEnum>(string value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static TOutputEnum[] TryConvertFlagsToList<TInputEnum, TOutputEnum>(TInputEnum flagsEnumString, global::Quire.EnumHelper.EnumHelperSettings enumSettings) where TInputEnum : struct where TOutputEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

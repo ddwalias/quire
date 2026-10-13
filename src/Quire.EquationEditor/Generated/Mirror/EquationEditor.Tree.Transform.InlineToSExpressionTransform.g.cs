@@ -14,7 +14,23 @@ public partial class InlineToSExpressionTransform
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.InlineToSExpressionTransform Default;
     [global::Quire.Mirror.MirrorStub]
+    private const string a_ = "(@ID {0})";
+    [global::Quire.Mirror.MirrorStub]
+    private const char b = '\u0028';
+    [global::Quire.Mirror.MirrorStub]
+    private const char c = '\u0020';
+    [global::Quire.Mirror.MirrorStub]
+    private const char d = '\u0029';
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Type, string> e;
+    [global::Quire.Mirror.MirrorStub]
     public string Transform(global::System.Windows.Documents.Inline inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::System.Windows.Documents.Inline A_0, ref int A_1, ref int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::System.Windows.Documents.Run A_0, ref int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::System.Windows.Documents.Span A_0, ref int A_1, ref int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public InlineToSExpressionTransform() { }
 }

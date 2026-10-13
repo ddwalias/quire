@@ -22,6 +22,8 @@ public partial class ColorPicker : global::System.Windows.Controls.UserControl, 
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand DisplayCustomColorPickerDialogCommand;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _lastUsed;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.ColorPicker _this;
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button NoColorCheckBox;
@@ -29,6 +31,8 @@ public partial class ColorPicker : global::System.Windows.Controls.UserControl, 
     internal global::Fluent.Button MoreColorsBtn;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ListBox ColorList;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Brush SelectedColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -48,7 +52,27 @@ public partial class ColorPicker : global::System.Windows.Controls.UserControl, 
     [global::Quire.Mirror.MirrorStub]
     public ColorPicker() { }
     [global::Quire.Mirror.MirrorStub]
+    private void DisableIfInQuickAccessToolbar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDisplayCustomColorPickerDialog(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void HandleSelectedCustomColor(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnColorListSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnColorListItemPreviewMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ApplySelectionLastUsed() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ApplySelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnNoColorCheckBoxClicked(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnSelectedColorChanged(global::System.Windows.DependencyObject target, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnDefaultColorChanged(global::System.Windows.DependencyObject target, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireProperyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -14,9 +14,9 @@ public partial class IsUnitCellConverter : global::System.Windows.Data.IMultiVal
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.InputControls.IsUnitCellConverter Instance;
     [global::Quire.Mirror.MirrorStub]
+    private IsUnitCellConverter() { }
+    [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private IsUnitCellConverter() { }
 }

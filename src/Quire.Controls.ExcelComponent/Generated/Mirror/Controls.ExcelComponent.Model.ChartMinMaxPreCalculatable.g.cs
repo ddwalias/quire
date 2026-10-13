@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent.Model;
 internal partial class ChartMinMaxPreCalculatable : global::Quire.Controls.ExcelComponent.Model.IChartMinMaxCommon, global::Quire.Controls.ExcelComponent.Model.IChartCalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild, global::Quire.Calculation.Core.ICalculatable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable _calc;
+    [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Pair<bool, bool> IsFragment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

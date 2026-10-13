@@ -20,6 +20,8 @@ public partial class LispEval : global::Quire.depman.Action
     [global::Quire.Mirror.MirrorStub]
     public LispEval(global::System.Collections.ICollection defs, global::Quire.utl_mgd.Function func, global::Quire.utl_mgd.Function finalizer) { }
     [global::Quire.Mirror.MirrorStub]
+    private void _tildeLispEval() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.ICollection GetDefs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

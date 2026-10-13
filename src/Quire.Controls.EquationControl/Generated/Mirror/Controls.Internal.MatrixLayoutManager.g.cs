@@ -14,7 +14,11 @@ internal partial class MatrixLayoutManager : global::Quire.Controls.Core.TableLa
     [global::Quire.Mirror.MirrorStub]
     public MatrixLayoutManager() { }
     [global::Quire.Mirror.MirrorStub]
+    private MatrixLayoutManager(global::Quire.Controls.Internal.MatrixLayoutManager other) { }
+    [global::Quire.Mirror.MirrorStub]
     public override object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.MaxMatrixWidth[] CalcMaxDecimalPerColumn(global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> cellsInfo, global::System.Windows.Controls.UIElementCollection cellsContent, int rows) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Internal.VisualTextNode ExtractVisualTextWidth(global::Quire.Controls.Internal.VisualMathNode visualMathNodeCell, out double visualLinearOperatorWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

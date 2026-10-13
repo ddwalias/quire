@@ -12,6 +12,10 @@ namespace Quire.Engine;
 internal partial class HandleFactory
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_count;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
     public HandleFactory() { }
     [global::Quire.Mirror.MirrorStub]
     public int NewHandle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

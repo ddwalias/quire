@@ -12,6 +12,22 @@ namespace Quire.QualityAgentManager;
 public partial struct QualityAgentReportData : global::Quire.QualityAgentManager.IQualityAgentReportData
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string DateTimeReportFormat = "R";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Nullable<global::System.DateTime> _licenseIssueDate;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.DateTime _startTime;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.DateTime _endTime;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.TimeZoneInfo _timeZone;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Version _mathcadReleaseVersion;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Globalization.CultureInfo _currentCulture;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Globalization.CultureInfo _currentUiCulture;
+    [global::Quire.Mirror.MirrorStub]
     public string HostID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DomainName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

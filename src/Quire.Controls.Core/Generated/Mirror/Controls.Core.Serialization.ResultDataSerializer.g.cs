@@ -12,6 +12,14 @@ namespace Quire.Controls.Core.Serialization;
 public partial class ResultDataSerializer : global::Quire.Controls.Core.Serialization.IPackageSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.IO.IPackageOperationsProvider _packageOpsProvider;
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResultUri = "/mathcad/result.xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ResultType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Serialization.SerializableXmlPackagePart _partSerializer;
+    [global::Quire.Mirror.MirrorStub]
     public const string Result10 = "http://schemas.mathsoft.com/result10";
     [global::Quire.Mirror.MirrorStub]
     public ResultDataSerializer(global::Quire.IO.IPackageOperationsProvider packageOpsProvider) { }

@@ -12,9 +12,45 @@ namespace Quire.Engine;
 public partial class NodeMap
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.Depman m_depman;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_top_ce_node;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.FScope m_top_scope;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_lasttoptop;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<int, int> m_ce_to_front;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection>> m_front_to_nc;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.LinkedList<global::Quire.Engine.NodeCollection> m_ce_nodes;
+    [global::Quire.Mirror.MirrorStub]
+    private int last_ce_node(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _DeleteCENode(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ll_move_before(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n1, global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ll_move_after(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n1, global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void scope_detach(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ce_sync(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ce_sync_child(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int get_children(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n, global::System.Collections.IList @out, int seek) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void RemoveFrontNode(int fnode, bool bChildrenOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void RemoveFrontNode(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n, bool bChildrenOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void DeleteCENodes(int fnode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteCENodes(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> First(global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> A_0, bool A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public NodeMap(global::Quire.depman.Depman d, int top_ce, global::Quire.depman.Scope top_scope) { }
     [global::Quire.Mirror.MirrorStub]

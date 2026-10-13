@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class Closure : global::Quire.gen.MetaObj
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlAsm m_ilasm;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Queue m_queue;
+    [global::Quire.Mirror.MirrorStub]
     public Closure(global::Quire.gen.IlAsm il) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual unsafe global::Quire.gen.MetaObj DefineVariable(void* f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -71,4 +75,6 @@ internal partial class Closure : global::Quire.gen.MetaObj
     protected void EmitInitializations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static global::System.Type[] FilterVoid(global::System.Type sta, global::System.Type clo, global::System.Type[] p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void QueueInitialization(global::Quire.gen.Callable func) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,18 @@ namespace Quire.Controls.Core;
 public partial class MatrixFormat : global::Quire.Controls.Core.IPropertyAggregate, global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TableSize _size;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TableCoordinate _offset;
+    [global::Quire.Mirror.MirrorStub]
+    private int _origin;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showIndices;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _collapseNestedMatrices;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NestedMatrixFormats _nestedMatrixFormats;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand SetMatrixFormatFieldCommand;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -30,7 +42,11 @@ public partial class MatrixFormat : global::Quire.Controls.Core.IPropertyAggrega
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
+    private void HandleMatrixFormatChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public MatrixFormat() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleNestedMatrixChanged(object sender, global::Quire.Matrices.SparseMatrix<global::Quire.Controls.Core.MatrixFormat>.SparseMatrixItemChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetValueByName(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

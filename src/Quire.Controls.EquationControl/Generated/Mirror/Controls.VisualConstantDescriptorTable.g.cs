@@ -12,7 +12,11 @@ namespace Quire.Controls;
 public partial class VisualConstantDescriptorTable : global::Quire.Controls.VisualDescriptorTableBase, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo _initInfo;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.VisualConstantDescriptorTable Default;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public VisualConstantDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]

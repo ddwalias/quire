@@ -12,6 +12,30 @@ namespace Quire.PersistentDataObjects;
 public partial class axisBaseType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.axisBaseTypeAxisLine axisLineField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.axisGridType axisGridField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.plotTitleType axisLabelField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.axisBaseTypeMarker[] markersField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.resultFormatType numberFormatField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.axisBaseTypePlotEquations plotEquationsField;
+    [global::Quire.Mirror.MirrorStub]
+    private double startField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool startFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private double endField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool endFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private string rankField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool enableField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.axisBaseTypeAxisLine axisLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.axisGridType axisGrid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

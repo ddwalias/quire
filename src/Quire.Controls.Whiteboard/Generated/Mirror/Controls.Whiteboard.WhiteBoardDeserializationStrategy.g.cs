@@ -12,6 +12,8 @@ namespace Quire.Controls.Whiteboard;
 public abstract partial class WhiteBoardDeserializationStrategy : global::Quire.Controls.Core.Serialization.DeserializationStrategyWithMathFormat
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Whiteboard.WhiteboardControl _whiteboard;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected WhiteBoardDeserializationStrategy(global::Quire.Controls.Whiteboard.WhiteboardControl control) { }

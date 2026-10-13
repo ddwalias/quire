@@ -12,9 +12,17 @@ namespace Quire.Controls.ExcelComponent.View;
 public partial class ChartComponentControl : global::Quire.Controls.ExcelComponent.View.OleBaseComponentControl, global::Quire.Controls.ExcelComponent.View.IChartComponentControl, global::Quire.Controls.ExcelComponent.View.IOleBaseComponentControl, global::Quire.Controls.Core.IOleBaseObjectControl, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Mathboard.IAggregateMathboardControl, global::Quire.Controls.Core.IMathboardControl, global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer, global::Quire.Controls.Core.Serialization.IHasRegionsWithConverterAnnotations, global::Quire.Controls.Core.IMathFormatDeserializationProvider, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::Quire.Controls.Core.IHasChildArrangeInfoProvider, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Core.IORegions.IIORegionContainer, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.Whiteboard.IHideFromCalculationButtonStatus, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Calculation.Core.ICalculatableInfo, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Controls.Core.IResizableElementWithDataStore, global::System.ICloneable, global::Quire.Serialization.IPersistentDataProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.Model.ChartComponentModel _chartModel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.ViewModel.ChartComponentViewModel _chartViewModel;
+    [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.Serialization.ISerializationStrategy SerializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.Serialization.IDeserializationStrategy DeserializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Threading.DispatcherOperation UpdateIdentifierLabelsOperation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.View.ChartContainer ChartContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.ExcelComponent.View.IChartContainer global::Quire.Controls.ExcelComponent.View.IChartComponentControl.ChartContainer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -22,13 +30,27 @@ public partial class ChartComponentControl : global::Quire.Controls.ExcelCompone
     [global::Quire.Mirror.MirrorStub]
     public ChartComponentControl(global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
+    private ChartComponentControl(bool createOleContainer, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private ChartComponentControl(global::Quire.Controls.ExcelComponent.View.ChartComponentControl original) : base(default(global::Quire.Controls.ExcelComponent.ViewModel.OleBaseComponentViewModel), default(global::System.Windows.ResourceDictionary)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void Init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRequestUpdateIdentifierLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.ExcelComponent.View.IOleContainerItem CreateOleContainerItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void SetStatusSynchronized() => base.SetStatusSynchronized();
     [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override string GetInternalHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string GetHelpContext() => base.GetHelpContext();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanInsertAxisExpression(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnInsertAxisExpression(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

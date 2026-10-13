@@ -12,6 +12,10 @@ namespace Quire.Engine;
 public partial class MCEngCallbacks
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ArrayList m_hwnds;
+    [global::Quire.Mirror.MirrorStub]
+    private uint m_threadId;
+    [global::Quire.Mirror.MirrorStub]
     public MCEngCallbacks() { }
     [global::Quire.Mirror.MirrorStub]
     public void OnNode(int h, global::Quire.Engine.NodeStatus s, int __unnamed002, int __unnamed003, int __unnamed004) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

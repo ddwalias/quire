@@ -12,6 +12,8 @@ namespace Quire.AutomationService;
 public partial class AutomationSpiritAliasesList
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<string> _aliases;
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public AutomationSpiritAliasesList(global::System.Collections.Generic.List<string> aliasesList) { }

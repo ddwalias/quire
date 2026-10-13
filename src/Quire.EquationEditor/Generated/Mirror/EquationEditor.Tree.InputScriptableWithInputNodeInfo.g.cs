@@ -12,6 +12,16 @@ namespace Quire.EquationEditor.Tree;
 public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEditor.Tree.MatrixNodeInfo, global::Quire.EquationEditor.Tree.IInputScriptableWithInputNodeInfo, global::Quire.EquationEditor.Tree.IInputControlNodeInfo, global::Quire.EquationEditor.Tree.INodeInfoNotifyModel, global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    private object a__;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] b;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.DelegateFunction0<bool>, string> c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> e;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsInputsAreaShown { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsInputsExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -41,6 +51,8 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     public InputScriptableWithInputNodeInfo(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue value, global::Quire.TableSize size, int origin, global::Quire.TableCoordinate offset, global::Quire.TableSize totalSize, bool isInResult, bool showResultMatrixIndices) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.MatrixNodeInfo Clone() => base.Clone();
+    [global::Quire.Mirror.MirrorStub]
+    private object[] a(global::Quire.EquationEditor.Tree.InputScriptableControlDataWithInputs A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected object a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

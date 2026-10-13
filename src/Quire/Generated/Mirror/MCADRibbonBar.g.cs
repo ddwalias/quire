@@ -22,6 +22,8 @@ public partial class MCADRibbonBar : global::Fluent.RibbonGroupBox, global::Syst
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_MCADRibbonBar_RequestToUpdateInputs;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MCADRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

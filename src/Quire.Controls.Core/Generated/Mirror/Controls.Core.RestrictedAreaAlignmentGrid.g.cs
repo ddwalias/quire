@@ -12,9 +12,15 @@ namespace Quire.Controls.Core;
 public partial class RestrictedAreaAlignmentGrid : global::Quire.Controls.Core.AlignmentGrid, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid, global::Quire.Controls.Core.IAlignmentGrid, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> _restrictedAreas;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> _protectedAreas;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> RestrictedAreas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> ProtectedAreas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Pair<double, double>> AreasToSkip { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public RestrictedAreaAlignmentGrid() { }
     [global::Quire.Mirror.MirrorStub]

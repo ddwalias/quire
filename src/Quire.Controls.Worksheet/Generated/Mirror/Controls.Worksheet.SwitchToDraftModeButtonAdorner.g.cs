@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class SwitchToDraftModeButtonAdorner : global::Quire.Controls.Core.VisualAdorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Shapes.Rectangle _rect;
+    [global::Quire.Mirror.MirrorStub]
     public SwitchToDraftModeButtonAdorner(global::System.Windows.UIElement adornedElement) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);

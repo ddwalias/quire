@@ -12,6 +12,12 @@ namespace Quire.Automation;
 public partial class InputsOutputsConflicts : global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private InputsOutputsConflicts() { }
+    [global::Quire.Mirror.MirrorStub]
     internal InputsOutputsConflicts(global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts mathcadPrimeInputsOutputsConflicts) { }
     [global::Quire.Mirror.MirrorStub]
     ~InputsOutputsConflicts() { } // stub finalizers must not throw: they also run for objects whose constructor threw

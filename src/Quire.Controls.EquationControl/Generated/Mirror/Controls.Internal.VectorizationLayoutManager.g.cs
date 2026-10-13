@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 public partial class VectorizationLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double OPERATOR_SYMBOL_BOTTOM_PADDING = 4d;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect OperatorSymbolRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect VectorizedExprRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

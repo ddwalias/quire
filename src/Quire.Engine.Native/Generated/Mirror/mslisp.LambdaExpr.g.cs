@@ -12,7 +12,15 @@ namespace Quire.mslisp;
 internal partial class LambdaExpr : global::Quire.utl_mgd.FunctionBase, global::Quire.mslisp.Expression
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.ArgSpec m_argspec;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Env m_parent_env;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Expression m_body;
+    [global::Quire.Mirror.MirrorStub]
     public LambdaExpr(global::Quire.mslisp.Analyzer i, global::Quire.mslisp.Env e, global::Quire.Engine.PCons args) { }
+    [global::Quire.Mirror.MirrorStub]
+    private LambdaExpr(global::Quire.mslisp.ArgSpec a, global::Quire.mslisp.Env e, global::Quire.mslisp.Expression body) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

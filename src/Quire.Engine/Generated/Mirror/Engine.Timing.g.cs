@@ -12,6 +12,8 @@ namespace Quire.Engine;
 public partial class Timing
 {
     [global::Quire.Mirror.MirrorStub]
+    private static unsafe global::Quire.utl.PerformanceTimer* GetTimer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void Start() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Stop() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

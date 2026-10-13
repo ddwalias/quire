@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationTextRendering
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.presentationTextRenderingTextStyle[] textStylesField;
+    [global::Quire.Mirror.MirrorStub]
+    private string proofingLanguageField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.presentationTextRenderingTextStyle[] textStyles { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ProofingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

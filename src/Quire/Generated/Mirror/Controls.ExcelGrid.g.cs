@@ -12,11 +12,15 @@ namespace Quire.Controls;
 public partial class ExcelGrid : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey RowsPropertyKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RowsProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyPropertyKey ColumnsPropertyKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ColumnsProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey SheetNamePropertyKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SheetNameProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -26,13 +30,19 @@ public partial class ExcelGrid : global::System.Windows.Controls.UserControl, gl
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SelectedRowsProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty SelectionValidProperty;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ZoomProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty WorksheetHasDataProperty;
     [global::Quire.Mirror.MirrorStub]
+    private bool _userSelection;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.ExcelGrid _this;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.DataGrid dataGrid1;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.Excel.ExcelRow> Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,7 +64,25 @@ public partial class ExcelGrid : global::System.Windows.Controls.UserControl, gl
     [global::Quire.Mirror.MirrorStub]
     public ExcelGrid() { }
     [global::Quire.Mirror.MirrorStub]
+    private static void SelectedRangeChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDataContextChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SelectAllDataIfNotEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSelectedCellsChanged(object sender, global::System.Windows.Controls.SelectedCellsChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSelectedCellsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void dataGrid1_PreviewMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SelectCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static void InvokeAddRegion(global::System.Windows.Controls.DataGrid dataGrid, int firstRow, int lastRow, int firstColumn, int lastColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetSelectedRange(int firstRow, int lastRow, string firstColumn, string lastColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

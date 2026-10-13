@@ -12,7 +12,23 @@ namespace Quire.EquationEditor.Tree;
 public partial class InputScriptableControlDataWithInputs : global::Quire.EquationEditor.Tree.InputScriptableControlData, global::Quire.EquationEditor.Tree.IInputScriptableControlDataWithInputs, global::Quire.EquationEditor.Tree.IInputScriptableControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable, global::Quire.EquationEditor.Tree.IInputResizableControlData, global::Quire.EquationEditor.Tree.IInputControlDataWithValues
 {
     [global::Quire.Mirror.MirrorStub]
+    private string e;
+    [global::Quire.Mirror.MirrorStub]
     protected int f;
+    [global::Quire.Mirror.MirrorStub]
+    private bool g;
+    [global::Quire.Mirror.MirrorStub]
+    private bool h;
+    [global::Quire.Mirror.MirrorStub]
+    private bool i;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<int> j;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] k;
+    [global::Quire.Mirror.MirrorStub]
+    private double l;
+    [global::Quire.Mirror.MirrorStub]
+    private double m;
     [global::Quire.Mirror.MirrorStub]
     public string InputFieldSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

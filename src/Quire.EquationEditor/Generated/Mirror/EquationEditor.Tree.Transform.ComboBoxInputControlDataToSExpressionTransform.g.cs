@@ -15,6 +15,10 @@ public static partial class ComboBoxInputControlDataToSExpressionTransform
     public static string Transform(global::Quire.EquationEditor.Tree.ComboBoxInputControlData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string Transform(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(global::System.Collections.Generic.IList<string> A_0, bool A_1 = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.ComboBoxInputControlDataToSExpressionTransform+a, Ptc.EquationEditor")]
     private sealed partial class a_

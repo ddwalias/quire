@@ -12,6 +12,24 @@ namespace Quire.EquationEditor.Tree;
 public static partial class MathNodeToStringTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string a_ = "NaN";
+    [global::Quire.Mirror.MirrorStub]
+    private const string b_ = "i";
+    [global::Quire.Mirror.MirrorStub]
+    private const string c = "j";
+    [global::Quire.Mirror.MirrorStub]
+    private static bool b(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(global::Quire.EquationEditor.Tree.MathNode A_0, global::System.Nullable<global::Quire.EquationEditor.Tree.ComboBoxCellDataType> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(global::Quire.EquationEditor.Tree.MathNode A_0, global::System.Nullable<global::Quire.EquationEditor.Tree.ComboBoxCellDataType> A_1, bool A_2 = false, bool A_3 = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(global::Quire.EquationEditor.Tree.MathNode A_0, out bool A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.ValueTuple<string, bool, string> a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string TransformToTitleViewString(this global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string TransformToUnitViewString(this global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

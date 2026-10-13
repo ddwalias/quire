@@ -12,6 +12,20 @@ namespace Quire.gen;
 internal partial class CtxtApp : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_ret;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] m_params;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_func;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_nargs;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_arg;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_tail;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Hex.Tag* m_einfo;
+    [global::Quire.Mirror.MirrorStub]
     public override void BegCtxt(global::Quire.gen.IlAsm bcasm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void EndCtxt(global::Quire.gen.IlAsm bcasm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

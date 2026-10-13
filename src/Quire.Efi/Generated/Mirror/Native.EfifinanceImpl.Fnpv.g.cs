@@ -14,5 +14,7 @@ internal partial class Fnpv
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Efi.delegate_cplx_to_cplx Fnpv_delegate;
     [global::Quire.Mirror.MirrorStub]
+    private static unsafe void npv_func(global::Quire.Efi.Managed.mcComplex* res, global::Quire.Efi.Managed.mcComplex* rate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public Fnpv() { }
 }

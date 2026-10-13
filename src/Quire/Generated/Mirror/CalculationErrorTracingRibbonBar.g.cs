@@ -22,6 +22,8 @@ public partial class CalculationErrorTracingRibbonBar : global::Fluent.RibbonGro
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_CalculationErrorTracingRibbonBar_Last;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public CalculationErrorTracingRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

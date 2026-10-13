@@ -16,6 +16,8 @@ public partial class AxisLimitLabel : global::System.Windows.Controls.Label, glo
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Media.Animation.BeginStoryboard ShowLabelBlackEnlarged;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.AxisLimitLabelType LabelType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public AxisLimitLabel() { }

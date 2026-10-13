@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class ListBoxEditorViewModel : global::Quire.Controls.InputControls.InputControlEditorViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.IListBoxPropertiesEditorModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool IsSort { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool RightToLeft { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

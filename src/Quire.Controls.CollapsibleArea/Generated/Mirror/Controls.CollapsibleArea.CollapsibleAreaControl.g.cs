@@ -24,6 +24,10 @@ public partial class CollapsibleAreaControl : global::Quire.Controls.Mathboard.M
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ControlMinHeightProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Wpf.IMessageBoxManager _messageBoxMngr;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public double ControlWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.Serialization.ISerializationStrategy SerializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -31,6 +35,10 @@ public partial class CollapsibleAreaControl : global::Quire.Controls.Mathboard.M
     protected override global::Quire.Controls.Core.Serialization.IDeserializationStrategy DeserializationStrategy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double ControlMinHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.CollapsibleArea.ICollapsibleAreaViewModel AreaViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Wpf.IMessageBoxManager MessageBoxManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -68,9 +76,19 @@ public partial class CollapsibleAreaControl : global::Quire.Controls.Mathboard.M
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.ICollapsibleAreaControl> BorderStateChanged;
     [global::Quire.Mirror.MirrorStub]
+    private static void ControlWidthChangedHandler(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ControlMinHeightChangedHandler(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public CollapsibleAreaControl() : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
     [global::Quire.Mirror.MirrorStub]
     public CollapsibleAreaControl(global::System.Nullable<global::System.Windows.Size> gridCellSize) : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void ShowWarningDialog(string messageKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private CollapsibleAreaControl(global::Quire.Controls.CollapsibleArea.CollapsibleAreaControl original) : base(default(global::Quire.Controls.Mathboard.IMathboardViewModel), default(global::System.Windows.ResourceDictionary)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void CanInsertVerticalSpace(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => base.CanInsertVerticalSpace(sender, e);
     [global::Quire.Mirror.MirrorStub]
@@ -85,6 +103,14 @@ public partial class CollapsibleAreaControl : global::Quire.Controls.Mathboard.M
     public override string GetBlockEquationTypeAttributeName(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void ViewModelPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => base.ViewModelPropertyChangedHandler(sender, e);
+    [global::Quire.Mirror.MirrorStub]
+    private void FireBorderVisibilityStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleProtectedStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireProtectedStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCollapsedStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnPreviewGotKeyboardFocus(e);
     [global::Quire.Mirror.MirrorStub]

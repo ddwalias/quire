@@ -12,6 +12,8 @@ namespace Quire.depman;
 internal partial class DepTrackingEnv
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.depman.Position* m_loc;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe DepTrackingEnv(global::Quire.depman.Position* p) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual unsafe global::Quire.depman.Position* Lookup(string name, global::Quire.depman.ScopingMode scoping_mode, global::Quire.depman.DependencyType deptype, global::Quire.depman.OnDep on_dep_callback) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

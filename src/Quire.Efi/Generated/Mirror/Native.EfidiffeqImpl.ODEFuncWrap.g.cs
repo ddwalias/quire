@@ -18,6 +18,22 @@ internal partial class ODEFuncWrap
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal m_MM;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_M;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_jac;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_t;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_y;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_dydt;
+    [global::Quire.Mirror.MirrorStub]
+    private void polydim(global::Quire.Mcd.DimVal v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void init_dims() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public ODEFuncWrap(global::Quire.Mpl.Run.Function func, global::Quire.Mpl.Run.Function jac, global::Quire.Mcd.MatVal M, int neq, global::Quire.Mcd.Dim t_dim) { }
     [global::Quire.Mirror.MirrorStub]
     public ODEFuncWrap(global::Quire.Mpl.Run.Function func, global::Quire.Mpl.Run.Function jac, global::Quire.Mpl.Run.Function M, int neq, int ut_size, global::Quire.Mcd.Dim t_dim) { }

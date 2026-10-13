@@ -12,6 +12,56 @@ namespace Quire.mslisp;
 internal partial class InterpreterImp : global::Quire.mslisp.Interpreter, global::Quire.mslisp.Analyzer
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.Reader m_reader;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::Quire.mslisp.Package> m_packages;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Stack<global::Quire.mslisp.Package> m_used_packages;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Package m_current_package;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Stack<global::Quire.mslisp.InterpreterState> m_state_stack;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol SETF;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol DEFMACRO;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol LAMBDA;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol QUOTE;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol IF;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol PROGN;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol CAR;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol CDR;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol UNWIND_PROTECT;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol IGNORE_ERRORS;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol HANDLER_CASE;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol BACKQUOTE;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol COMMA;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol COMMA_AT;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EngutilsMgd.PathCache m_paths;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Package get_package(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Package use_package(global::Quire.mslisp.Package p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Symbol global(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void push_state() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void pop_state() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual object read(string s, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual object read(global::System.IO.TextReader t, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -19,6 +69,8 @@ internal partial class InterpreterImp : global::Quire.mslisp.Interpreter, global
     public virtual object read(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual object read(global::System.IO.TextReader t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object read(global::Quire.Native.EngutilsMgd.PushbackReader r, global::Quire.Engine.TagFunction tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public InterpreterImp() { }
     [global::Quire.Mirror.MirrorStub]

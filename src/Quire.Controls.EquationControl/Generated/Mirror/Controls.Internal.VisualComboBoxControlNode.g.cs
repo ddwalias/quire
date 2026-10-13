@@ -12,11 +12,19 @@ namespace Quire.Controls.Internal;
 internal partial class VisualComboBoxControlNode : global::Quire.Controls.Internal.VisualInputControlNode, global::Quire.EquationEditor.View.IVisualComboBoxControlNode, global::Quire.EquationEditor.View.IVisualInputControlNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode, global::Quire.EquationEditor.View.ICanBlockFocus, global::System.Windows.IInputElement
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter _dataAdapter;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent RequestNavigateOutOfInputControlNodeEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent RequestActivateEquationForComboBoxNodeEvent;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _updateNeeded;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualComboBoxControlNode.DelayedAction _delayedAction;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.ComboBoxControl ComboBoxControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.EquationEditor.View.ICanBlockFocus.IsAdornerFocused { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -46,9 +54,13 @@ internal partial class VisualComboBoxControlNode : global::Quire.Controls.Intern
     [global::Quire.Mirror.MirrorStub]
     protected void OnViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void RequestRestoreInsertionPointOrActivateEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnControlLostKeyboardFocusOrDataChanged() => base.OnControlLostKeyboardFocusOrDataChanged();
     [global::Quire.Mirror.MirrorStub]
     public override bool NavigateInto(global::Quire.Direction direction) => base.NavigateInto(direction);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnIsVisibleChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void OpenEditingOnComboBoxIsVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -57,6 +69,10 @@ internal partial class VisualComboBoxControlNode : global::Quire.Controls.Intern
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
     [global::Quire.Mirror.MirrorStub]
     public void SetSelectedIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.ExtendedFont CreateOperatorExtendedFont(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IMathFormat GetUnitLabelFormatValues(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Internal.VisualComboBoxControlNode+RequestNavigateOutOfInputControlNodeHandler, Ptc.Controls.EquationControl")]
     public delegate void RequestNavigateOutOfInputControlNodeHandler(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.RoutedUICommand> args);

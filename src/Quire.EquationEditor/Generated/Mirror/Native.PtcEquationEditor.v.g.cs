@@ -12,6 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class v : global::Quire.Native.PtcEquationEditor.t, global::Quire.Calculation.Core.IUnitedValueResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.PtcEquationEditor.t a_;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> b;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public v() { }
@@ -21,6 +25,8 @@ internal partial class v : global::Quire.Native.PtcEquationEditor.t, global::Qui
     public void a(global::Quire.Native.PtcEquationEditor.t A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddUnit(string canonicalName, int powerNumerator, int powerDenominator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.MathNode bo(global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

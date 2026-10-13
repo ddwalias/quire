@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal partial class ModuleEnv : global::Quire.Mpl.Run.LocalEnv
 {
     [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.gen.umgdCompiler* m_cplr;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe ModuleEnv(global::Quire.gen.umgdCompiler* cplr) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.MplMacro LoadForeignMacro(string sig) => base.LoadForeignMacro(sig);

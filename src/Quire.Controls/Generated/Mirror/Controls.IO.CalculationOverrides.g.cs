@@ -12,6 +12,14 @@ namespace Quire.Controls.IO;
 internal partial class CalculationOverrides
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Support.ISimpleCalculatable _inputOriginalValueGetter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Support.ISimpleCalculatable _inputOverridenValueSetter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Support.ISimpleCalculatable _inputOverridenValueGetter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Support.ISimpleCalculatable _outputOverridenValueGetter;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.Support.ISimpleCalculatable GetCalculatableOfType(global::Quire.Controls.IO.CalculationOverridesTypes type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCalculatableOfType(global::Quire.Controls.IO.CalculationOverridesTypes type, global::Quire.Calculation.Core.Support.ISimpleCalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

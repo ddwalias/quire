@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class CctorFunction : global::Quire.gen.IlEmit
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder m_ctor;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe CctorFunction(global::Quire.gen.IlBuilderType clo) : base(default(void*), default(global::Quire.gen.IlEmit)) { }
     [global::Quire.Mirror.MirrorStub]
     public override int Arity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

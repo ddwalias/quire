@@ -12,7 +12,15 @@ namespace Quire.Controls.Worksheet;
 public partial class HeaderFooterZombie : global::System.Windows.Controls.ItemsControl, global::Quire.Controls.Worksheet.IHeaderFooterZombie, global::Quire.Controls.Worksheet.IHeaderFooter, global::Quire.Controls.Worksheet.IWorksheetPageSection, global::System.IDisposable, global::Quire.Controls.Core.IZombie, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IHeaderFooterZombieViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.SnappableZombieItemHelper _snappableHelper;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PageNumberProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public int PageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

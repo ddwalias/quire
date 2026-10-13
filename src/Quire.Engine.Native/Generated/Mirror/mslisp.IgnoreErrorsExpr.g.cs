@@ -12,6 +12,8 @@ namespace Quire.mslisp;
 internal partial class IgnoreErrorsExpr : global::Quire.mslisp.Expression
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Expression m_expr;
+    [global::Quire.Mirror.MirrorStub]
     public IgnoreErrorsExpr(global::Quire.mslisp.Analyzer i, global::Quire.mslisp.Env e, global::Quire.Engine.PCons args) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual object execute(global::Quire.mslisp.Env e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

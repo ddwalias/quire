@@ -12,6 +12,10 @@ namespace Quire.Wpf.Printing;
 public partial class PrintJob
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Xps.Packaging.XpsDocument _activeXpsDocument;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Xps.XpsDocumentWriter _docWriter;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Documents.IDocumentPaginatorSource PrintableDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsRunning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,6 +29,28 @@ public partial class PrintJob
     public void PrintToFile(string filePath, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CancelAsyncJob() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Write(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Printing.PrintTicket ticket) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteAsync(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Printing.PrintTicket ticket) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AttachWriteEventHandlers(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DetachWriteEventHandlers(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Xps.XpsDocumentWriter GetXpsDocumentWriter(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool JobInitialize(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void JobFinalize(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Windows.Documents.Serialization.WritingCompletedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWritingCancelled(object sender, global::System.Windows.Documents.Serialization.WritingCancelledEventArgs cancelledArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleWritingCompleted(object sender, global::System.Windows.Documents.Serialization.WritingCompletedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireJobStarted() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireJobCompleted(global::System.Windows.Documents.Serialization.WritingCompletedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public PrintJob() { }
 }

@@ -12,11 +12,19 @@ namespace Quire.Media3D.Wires;
 public partial class WirePoints : global::Quire.Media3D.Wires.WirePointBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PositionsProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Media3D.ScaleTransform3D _sphereScaleTransform;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Point3DCollection Positions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void PositionsPropertyChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void UpdateColor() => base.UpdateColor();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateSpheres() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Recalculate() => base.Recalculate();
     [global::Quire.Mirror.MirrorStub]

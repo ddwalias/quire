@@ -12,11 +12,51 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class at
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Native.PtcEquationEditor.at c;
+    private readonly global::Quire.Native.PtcEquationEditor.r a__;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> b__;
+    [global::Quire.Mirror.MirrorStub]
+    public static readonly global::Quire.Native.PtcEquationEditor.at c__;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string d_;
     [global::Quire.Mirror.MirrorStub]
     public at(global::Quire.Native.PtcEquationEditor.r A_0) { }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq>> a(global::Quire.Native.PtcEquationEditor.aq A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> a(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.Collections.Generic.LinkedList<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1, global::System.Collections.Generic.IEnumerable<global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq>> A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void j(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void i(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void h(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void g(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq> a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(string A_0, global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_1, global::Quire.Native.PtcEquationEditor.aq A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void f(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void e(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void d(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void c(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string a(string A_0, out string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void b(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(global::Quire.EquationEditor.Tree.MathNode A_0, bool A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle> A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("at+a, Ptc.EquationEditor")]
     private static partial class a_
@@ -44,7 +84,15 @@ internal partial class at
     private sealed partial class c_ : global::System.Collections.Generic.IEnumerable<global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq>>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq>>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private int a_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq> b_;
+        [global::Quire.Mirror.MirrorStub]
+        private int c;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.Native.PtcEquationEditor.at d_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Native.PtcEquationEditor.aq e;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Native.PtcEquationEditor.aq f_;
         [global::Quire.Mirror.MirrorStub]

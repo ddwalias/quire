@@ -12,5 +12,11 @@ namespace Quire.Controls;
 internal partial class DimensionSelectorController
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.IDimensionSelectorView _view;
+    [global::Quire.Mirror.MirrorStub]
     public DimensionSelectorController(global::Quire.Controls.IDimensionSelectorView view) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCommit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMouseOverCell(int numberOfColumns, int childIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,12 @@ namespace Quire.PersistentData;
 public partial class headerFooterRegions
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.headerFooterRegionType[] regionsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.applicationVersionType convertedfromField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool convertedfromFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.headerFooterRegionType[] regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.applicationVersionType convertedfrom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

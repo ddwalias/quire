@@ -12,6 +12,10 @@ namespace Quire.Automation;
 public partial class GetValueResult : global::Quire.Automation.IMathcadPrimeGetValueResult
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeGetValueResult _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMathcadPrimeGetValueResult RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.ValueResultTypes ResultType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +27,8 @@ public partial class GetValueResult : global::Quire.Automation.IMathcadPrimeGetV
     public string StringResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private GetValueResult() { }
     [global::Quire.Mirror.MirrorStub]
     internal GetValueResult(global::Quire.Automation.IMathcadPrimeGetValueResult mathcadPrimeGetValueResult) { }
     [global::Quire.Mirror.MirrorStub]

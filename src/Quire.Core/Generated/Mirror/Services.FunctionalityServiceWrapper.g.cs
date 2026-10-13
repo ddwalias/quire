@@ -12,13 +12,23 @@ namespace Quire.Services;
 public partial class FunctionalityServiceWrapper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Services.FunctionalityService _funcService;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Services.FunctionalityServiceWrapper _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.WeakMultiCastDelegate<global::System.EventHandler> _functionalityServiceLicenseTypeChanged;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Services.FunctionalityServiceWrapper Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.EventHandler FunctionalityServiceLicenseTypeChanged;
     [global::Quire.Mirror.MirrorStub]
+    private FunctionalityServiceWrapper() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLicenseTypeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireFunctionalityServiceLicenseTypeChanged(global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool IsFunctionalityEnabled(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey GetFunctionalityBehaviorKey(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private FunctionalityServiceWrapper() { }
 }

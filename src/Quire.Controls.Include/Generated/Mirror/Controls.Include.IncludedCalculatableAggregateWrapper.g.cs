@@ -24,7 +24,17 @@ public partial class IncludedCalculatableAggregateWrapper : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     public IncludedCalculatableAggregateWrapper(global::Quire.Calculation.Core.ICalculatableAggregate wrappedCalculatableAggregate) : base(default(global::Quire.Calculation.Core.ICalculatable)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void HookupAggregateContainerEvents(global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnhookAggregateContainerEvents(global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Dispose() => base.Dispose();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableAdded(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable newCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable removedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleCalculatableMoved(global::Quire.Calculation.Core.ICalculatable movedCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

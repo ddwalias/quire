@@ -12,6 +12,16 @@ namespace Quire.Controls.Core.Serialization;
 public partial class IntegrationDataSerializer : global::Quire.Controls.Core.Serialization.IPackageSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IORegions.IIORegionContainer _documentArea;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IEngineeringDocument _document;
+    [global::Quire.Mirror.MirrorStub]
+    private const string IntegrationUri = "/mathcad/integration.xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string IntegrationType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.integration+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.Serialization.SerializableXmlPackagePart _partSerializer;
+    [global::Quire.Mirror.MirrorStub]
     public const string Integration10 = "http://schemas.ptc.com/integration10";
     [global::Quire.Mirror.MirrorStub]
     public const string Regions = "regions";

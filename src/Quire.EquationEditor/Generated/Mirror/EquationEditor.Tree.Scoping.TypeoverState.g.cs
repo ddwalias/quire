@@ -14,6 +14,8 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Navigation.NavigatorState NavState;
     [global::Quire.Mirror.MirrorStub]
+    private bool c__;
+    [global::Quire.Mirror.MirrorStub]
     public bool IncludePrimalChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string SExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -48,9 +50,17 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Scoping.TypeoverState CloneForNewTree(global::Quire.EquationEditor.Tree.MathNode newRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool AreMatrixCellsInTypeover() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsMatrixInTypeover() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Scoping.TypeoverState+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -80,13 +90,27 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     private sealed partial class c_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private int a_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.EquationEditor.Tree.MathNode b_;
+        [global::Quire.Mirror.MirrorStub]
+        private int c__;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Scoping.TypeoverState d_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> e;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> f_;
         [global::Quire.Mirror.MirrorStub]
         public c_(int A_0) { }
         [global::Quire.Mirror.MirrorStub]
         void global::System.IDisposable.Dispose() { }
         [global::Quire.Mirror.MirrorStub]
         bool global::System.Collections.IEnumerator.MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         void global::System.Collections.IEnumerator.Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -103,7 +127,17 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     private sealed partial class d_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private int a_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.EquationEditor.Tree.MathNode b_;
+        [global::Quire.Mirror.MirrorStub]
+        private int c;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Scoping.TypeoverState d__;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.EquationEditor.Tree.MathNode e;
+        [global::Quire.Mirror.MirrorStub]
+        private int f_;
         [global::Quire.Mirror.MirrorStub]
         public d_(int A_0) { }
         [global::Quire.Mirror.MirrorStub]

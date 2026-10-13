@@ -12,7 +12,27 @@ namespace Quire.Engine;
 public partial class MplEval : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.IRegion m_reg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_result;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_redefs;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_algos;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type s_mat;
+    [global::Quire.Mirror.MirrorStub]
+    private object lookup(string name, global::Quire.depman.Environment env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary process_exports(global::Quire.Mpl.IRegion.Symbol[] A_0, object[] A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type symbolic_matrix_type() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void fix_matrix(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public MplEval(global::Quire.Mpl.IRegion A_0, global::System.Collections.IDictionary A_1, global::System.Collections.IDictionary A_2, global::System.Collections.IDictionary A_3) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeMplEval() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

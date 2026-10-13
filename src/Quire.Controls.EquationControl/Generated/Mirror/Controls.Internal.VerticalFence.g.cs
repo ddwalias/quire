@@ -42,6 +42,10 @@ internal partial class VerticalFence : global::Quire.Controls.Internal.Fence
     [global::Quire.Mirror.MirrorStub]
     public VerticalFence(char[] componentChars) { }
     [global::Quire.Mirror.MirrorStub]
+    private VerticalFence() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateGlyphGap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void ReformatComponents() => base.ReformatComponents();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();

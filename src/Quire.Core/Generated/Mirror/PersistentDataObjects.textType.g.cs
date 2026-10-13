@@ -12,6 +12,24 @@ namespace Quire.PersistentDataObjects;
 public partial class textType : global::Quire.PersistentData.RegionCollectionPreSerializer, global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IDeS11NConsumer, global::Quire.PersistentData.IRegionCollectionType, global::Quire.PersistentDataObjects.IHasPreSerialize, global::Quire.Core.ITextFormatCreation
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlElement anyField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.textEmbeddedRegionType[] regionsField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool istextblockField;
+    [global::Quire.Mirror.MirrorStub]
+    private string itemidrefField;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Version _lastVerToContainPageGaps;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Serialization.IS11NProvider _s11NProvider;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.FlowDocument _document;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Serialization.IDeS11NProvider _deS11NProvider;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _saveInline;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Any { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.textEmbeddedRegionType[] regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -28,6 +46,8 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Documents.FlowDocument Document { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.FlowDocument DocumentWithTextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool SaveInline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -40,9 +60,21 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     [global::Quire.Mirror.MirrorStub]
     public textType() { }
     [global::Quire.Mirror.MirrorStub]
+    private void SetDocument(global::System.Windows.Documents.FlowDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SerializeFlowDocument(global::Quire.Serialization.IS11NProvider s11NProvider, string regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.XmlElement CreateXamlFromFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetXaml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void AddAnnotation(global::Quire.PersistentDataObjects.MC14ConversionAnnotationType annotation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddFontName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.FlowDocument LoadFlowDocumentFromInnerXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemovePageGapContainers(global::System.Xml.XmlNode xmlNode, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ApplyTextFormatPropertyValueToControl(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.Block block = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -27,4 +27,10 @@ public partial class SymbolicValue : global::Quire.Automation.Value, global::Qui
     internal override void WriteValueXml(global::System.Xml.XmlWriter xml, global::Quire.Automation.UnitAction action, double scaleFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override void WriteValueRL(global::System.IO.TextWriter rl, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string EmitToXMLString(string prefix, object sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string EmitToRLString(object sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int ExpressionSize(object sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

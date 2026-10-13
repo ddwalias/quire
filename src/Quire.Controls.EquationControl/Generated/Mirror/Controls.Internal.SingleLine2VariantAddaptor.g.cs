@@ -12,6 +12,10 @@ namespace Quire.Controls.Internal;
 internal partial class SingleLine2VariantAddaptor : global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorValues
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode _mathNode;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _firstNode;
+    [global::Quire.Mirror.MirrorStub]
     public virtual double InBottomLineVOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual double InTopLineVOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

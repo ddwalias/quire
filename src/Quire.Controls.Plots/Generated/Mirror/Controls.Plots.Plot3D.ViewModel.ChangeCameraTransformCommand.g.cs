@@ -12,11 +12,27 @@ namespace Quire.Controls.Plots.Plot3D.ViewModel;
 public partial class ChangeCameraTransformCommand : global::Quire.Undo.ICollectableCommand, global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Plot3D.ViewModel.IHasCameraTransform _transformOwner;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Media.Media3D.Matrix3D _previousTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _applyTransformInDo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.DateTime _executed;
+    [global::Quire.Mirror.MirrorStub]
+    private const int CollectionTime = 500;
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsCollectable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Matrix3D AppliedTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ChangeCameraTransformCommand(global::Quire.Controls.Plots.Plot3D.ViewModel.IHasCameraTransform transformOwner, global::System.Nullable<global::System.Windows.Media.Media3D.Matrix3D> newTransform, global::System.Windows.Media.Media3D.Matrix3D previousTransform, bool isCollectable) { }
     [global::Quire.Mirror.MirrorStub]
     public bool CollectNewCommand(global::Quire.Undo.ICollectableCommand nextCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetTransform(global::System.Windows.Media.Media3D.Matrix3D transform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

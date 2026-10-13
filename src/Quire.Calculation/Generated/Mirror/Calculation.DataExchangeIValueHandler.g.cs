@@ -12,6 +12,8 @@ namespace Quire.Calculation;
 internal partial class DataExchangeIValueHandler : global::Quire.Calculation.DataExchangeHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.IDataExchangeIValueModel _dataExchangeIValueModel;
+    [global::Quire.Mirror.MirrorStub]
     public DataExchangeIValueHandler(global::Quire.Calculation.IDataExchangeIValueModel model, global::System.Windows.Threading.Dispatcher dispatcher, global::System.Action handleEngineNeedsUIThreadMessagesProcessed, global::Quire.Calculation.CalculationController.EngineOptions engineOptions) : base(default(global::Quire.Calculation.Core.IDataExchangeModel), default(global::System.Windows.Threading.Dispatcher), default(global::System.Action), default(global::Quire.Calculation.CalculationController.EngineOptions)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void SetValueDispatch(string id, global::Quire.IValue value, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

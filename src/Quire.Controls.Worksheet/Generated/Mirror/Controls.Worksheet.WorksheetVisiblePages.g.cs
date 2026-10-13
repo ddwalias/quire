@@ -12,6 +12,12 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetVisiblePages : global::Quire.Controls.Worksheet.IWorksheetVisiblePages, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Worksheet.IWorksheetPage> _pages;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.WorksheetVisiblePages.WorksheetVisiblePagesRange _visiblePagesRange;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Worksheet.IWorksheetPage> _visiblePages;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Worksheet.IWorksheetPage> VisiblePages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int FirstVisiblePageIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -38,11 +44,31 @@ public partial class WorksheetVisiblePages : global::Quire.Controls.Worksheet.IW
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
+    private double UpdateVisiblePages(int newFirstIndex, int newLastIndex, double pageHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdatePageItemsVisibility(global::Quire.Controls.Worksheet.IWorksheetPage page, bool isPageVisible) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void PageWhiteboardItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddToEnd(int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddToBeginning(int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveFromBeginning(int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveFromEnd(int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void PassFocusToAncestorIfNeeded(global::Quire.Controls.Worksheet.IWorksheetPage worksheetPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static void PassFocusToPagesAncestor(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetVisiblePages+WorksheetVisiblePagesRange, Ptc.Controls.Worksheet")]
     private partial class WorksheetVisiblePagesRange
     {
+        [global::Quire.Mirror.MirrorStub]
+        private const int InitialFirstIndex = 0;
+        [global::Quire.Mirror.MirrorStub]
+        private const int InitialLastIndex = -1;
         [global::Quire.Mirror.MirrorStub]
         internal int First { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

@@ -12,6 +12,16 @@ namespace Quire.Engine;
 internal partial class FScope : global::Quire.depman.Scope
 {
     [global::Quire.Mirror.MirrorStub]
+    private static int s_id;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_id;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> m_first;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> m_last;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.LinkedListNode<global::Quire.Engine.NodeCollection> m_owner;
+    [global::Quire.Mirror.MirrorStub]
     public override int Id { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.depman.Scope Parent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

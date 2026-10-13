@@ -12,6 +12,12 @@ namespace Quire.Mpl;
 internal partial class Region : global::Quire.Mpl.IRegion
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.FV<object[], object[]> m_ldr;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.IRegion.Symbol[] m_imp;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.IRegion.Symbol[] m_exp;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.IRegion.Symbol[] GetImports() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.IRegion.Symbol[] GetExports() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

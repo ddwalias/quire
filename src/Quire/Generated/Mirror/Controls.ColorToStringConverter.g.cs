@@ -12,6 +12,10 @@ namespace Quire.Controls;
 public partial class ColorToStringConverter : global::System.Windows.Data.IValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string AlphaColor = "#FF";
+    [global::Quire.Mirror.MirrorStub]
+    private const int ColorValueLength = 6;
+    [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

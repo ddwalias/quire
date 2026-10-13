@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public static partial class ResizableElementAttachedProperties
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsResizingProperty;
     [global::Quire.Mirror.MirrorStub]
     public static bool GetIsResizing(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

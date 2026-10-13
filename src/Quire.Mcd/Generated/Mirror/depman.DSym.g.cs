@@ -16,6 +16,8 @@ public partial struct DSym
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.utl_mgd.LabelSet labels;
     [global::Quire.Mirror.MirrorStub]
+    private string m_full;
+    [global::Quire.Mirror.MirrorStub]
     public string full { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool wild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

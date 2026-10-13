@@ -16,7 +16,11 @@ public partial class BooleanToVisibilityConverter : global::System.Windows.Data.
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.BooleanToVisibilityConverter InverseInstance;
     [global::Quire.Mirror.MirrorStub]
+    private readonly bool _valueForVisible;
+    [global::Quire.Mirror.MirrorStub]
     public BooleanToVisibilityConverter() { }
+    [global::Quire.Mirror.MirrorStub]
+    private BooleanToVisibilityConverter(bool valueForVisible) { }
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

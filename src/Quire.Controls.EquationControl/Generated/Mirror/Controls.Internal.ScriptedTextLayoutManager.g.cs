@@ -29,4 +29,6 @@ public partial class ScriptedTextLayoutManager
     public ScriptedTextLayoutManager(global::Quire.Controls.Internal.TextLayoutItem[] childItems, global::Quire.Controls.Internal.TextLayoutItem defaultSubscriptItem) { }
     [global::Quire.Mirror.MirrorStub]
     public void Arrange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetBaselines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

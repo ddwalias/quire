@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class SliderViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.SliderModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public double Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.VerticalAlignment VerticalAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

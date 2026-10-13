@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public sealed partial class ModuleTextAttribute : global::System.Attribute
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_txt;
+    [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();

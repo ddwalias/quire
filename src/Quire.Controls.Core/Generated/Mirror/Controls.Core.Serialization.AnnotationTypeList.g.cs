@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Serialization;
 public partial class AnnotationTypeList : global::System.Collections.Generic.ICollection<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType>, global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType>, global::System.Collections.IEnumerable, global::Quire.Controls.Core.Serialization.IFreezable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType> _annotationsList;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.MC14ConversionAnnotationType this[int idx] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

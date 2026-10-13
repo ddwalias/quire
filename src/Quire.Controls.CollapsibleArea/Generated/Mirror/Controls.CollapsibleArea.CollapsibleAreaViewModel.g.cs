@@ -16,6 +16,14 @@ public partial class CollapsibleAreaViewModel : global::Quire.Controls.Mathboard
     [global::Quire.Mirror.MirrorStub]
     public static readonly double CollapsedAreaHeight;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.CollapsibleArea.ICollapsibleAreaModel _model;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _areaHasErrors;
+    [global::Quire.Mirror.MirrorStub]
+    private double _areaHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _protectionOperationsEnabled;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsCollapsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsBorderVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -56,11 +64,31 @@ public partial class CollapsibleAreaViewModel : global::Quire.Controls.Mathboard
     [global::Quire.Mirror.MirrorStub]
     public CollapsibleAreaViewModel(global::Quire.Controls.CollapsibleArea.ICollapsibleAreaModel model, global::System.Nullable<global::System.Windows.Size> gridCellSize = default) : base(default(global::Quire.Controls.Mathboard.MathboardViewModel)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateProtectionOperationEnabled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private CollapsibleAreaViewModel(global::Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel original) : base(default(global::Quire.Controls.Mathboard.MathboardViewModel)) { }
+    [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanToggleCollapseState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ToggleCollapseState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BorderVisibilityCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnToggleCollapseState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void OnBorderVisibilityCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool CanToggleProtectState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnToggleProtectState(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => base.FindOncePrivate(text, startFromCaret, direction, options, subscriptPositions);
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsToggleButtonClicked(global::Quire.Controls.CollapsibleArea.CollapsibleAreaControl collapsibleAreaControl, object originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void PreviewMouseLeftButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => base.PreviewMouseLeftButtonDownHandler(sender, eventArgs);
     [global::Quire.Mirror.MirrorStub]
@@ -69,6 +97,10 @@ public partial class CollapsibleAreaViewModel : global::Quire.Controls.Mathboard
     public override void PreviewMouseRightButtonDownHandler(object sender, global::System.Windows.Input.MouseButtonEventArgs eventArgs) => base.PreviewMouseRightButtonDownHandler(sender, eventArgs);
     [global::Quire.Mirror.MirrorStub]
     public override void PreviewMouseRightButtonUpHandler(object sender, global::System.Windows.RoutedEventArgs eventArgs) => base.PreviewMouseRightButtonUpHandler(sender, eventArgs);
+    [global::Quire.Mirror.MirrorStub]
+    private bool ShouldBlockRightMouseClick(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ShouldBlockLeftMouseClick(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void HandleGridCellSizeChanged(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => base.HandleGridCellSizeChanged(oldSize, newSize);
     [global::Quire.Mirror.MirrorStub]
@@ -104,7 +136,11 @@ public partial class CollapsibleAreaViewModel : global::Quire.Controls.Mathboard
     [global::Quire.Mirror.MirrorStub]
     public void RestoreResizeData(global::Quire.Controls.Core.IResizeData resizeData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleCollapsibleStateChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void ModelPropertyChanged(string propertyName) => base.ModelPropertyChanged(propertyName);
+    [global::Quire.Mirror.MirrorStub]
+    private void ErrorPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.CollapsibleArea.CollapsibleAreaViewModel+PropertyNames, Ptc.Controls.CollapsibleArea")]
     public static partial class PropertyNames

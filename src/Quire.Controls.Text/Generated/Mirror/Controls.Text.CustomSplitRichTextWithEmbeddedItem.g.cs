@@ -12,6 +12,8 @@ namespace Quire.Controls.Text;
 public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Controls.Text.RichTextWithEmbeddedItem, global::Quire.Controls.Core.ICustomSplitItem, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.CustomSplitRichTextWithEmbeddedItem.FlowDocumentSplitData _splitData;
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.ICustomSplitItem> SplitItemIfNeeded;
     [global::Quire.Mirror.MirrorStub]
     internal CustomSplitRichTextWithEmbeddedItem() { }
@@ -32,6 +34,16 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
     protected partial class FlowDocumentSplitData
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Documents.TextPointer _firstLinePtr;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Documents.TextPointer _lastLinePtr;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Rect _firstLineRect;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.Rect _lastLineRect;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IList<global::Quire.Controls.Text.CustomSplitRichTextWithEmbeddedItem.FlowDocumentSplitData.LineData> _lines;
+        [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Rect FirstLineRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Rect LastLineRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -41,6 +53,8 @@ public partial class CustomSplitRichTextWithEmbeddedItem : global::Quire.Control
         public global::System.Windows.Rect GetLineRect(int iLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public int EnsureLines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private static global::System.Windows.Rect GetLineRect(global::System.Windows.Documents.TextPointer line, global::System.Windows.Documents.TextPointer nextLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.CustomSplitRichTextWithEmbeddedItem+FlowDocumentSplitData+LineData, Ptc.Controls.Text")]
         public partial class LineData

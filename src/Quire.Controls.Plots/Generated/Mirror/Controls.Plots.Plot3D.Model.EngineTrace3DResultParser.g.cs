@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 internal abstract partial class EngineTrace3DResultParser : global::Quire.Controls.Plots.Plot3D.Model.IEngineTrace3DResultParser
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Rect3D _traceBounds;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.TraceType3D TraceType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D EngineTraceType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -28,13 +30,21 @@ internal abstract partial class EngineTrace3DResultParser : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.Calculation.Core.EngineError Error { get; protected set; }
     [global::Quire.Mirror.MirrorStub]
+    private EngineTrace3DResultParser(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType, global::Quire.Controls.Plots.Plot3D.Model.TraceType3D traceType) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser CreatePrintParser(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser CreateParser(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateResult(global::Quire.Calculation.Core.IMatrixResultNode matrixResultNode, out global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser CreateUnknownParser() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser CreateErrorParser(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser CreateParser(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Calculation.Core.IResultNode StripUnits(global::Quire.Calculation.Core.IResultNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static bool GetCoordinates(global::Quire.Calculation.Core.IMatrixResultNode resultMatrix, out global::Quire.Calculation.Core.IMatrixResultNode xCoordinates, out global::Quire.Calculation.Core.IMatrixResultNode yCoordinates, out global::Quire.Calculation.Core.IMatrixResultNode zCoordinates) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -44,17 +54,23 @@ internal abstract partial class EngineTrace3DResultParser : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     protected static global::System.Windows.Media.Media3D.Point3D GetValue(global::Quire.Calculation.Core.IMatrixResultNode xCoordinates, global::Quire.Calculation.Core.IMatrixResultNode yCoordinates, global::Quire.Calculation.Core.IMatrixResultNode zCoordinates, int rowIndex, int columnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private EngineTrace3DResultParser() { }
+    private static double GetValue(global::Quire.Calculation.Core.IMatrixResultNode coordinates, int rowIndex, int columnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsValidAndInRange(double xCoordinate, double yCoordinate, double zCoordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsValid(double xCoordinate, double yCoordinate, double zCoordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser+Undefined, Ptc.Controls.Plots")]
     private partial class Undefined : global::Quire.Controls.Plots.Plot3D.Model.EngineTrace3DResultParser
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Calculation.Core.EngineError _error;
+        [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        internal Undefined(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) { }
+        internal Undefined(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) : base(default(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D), default(global::Quire.Controls.Plots.Plot3D.Model.TraceType3D)) { }
         [global::Quire.Mirror.MirrorStub]
-        internal Undefined(global::Quire.Calculation.Core.EngineError error) { }
+        internal Undefined(global::Quire.Calculation.Core.EngineError error) : base(default(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D), default(global::Quire.Controls.Plots.Plot3D.Model.TraceType3D)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D CreateVisualData(global::Quire.Calculation.Core.IMatrixResultNode xCoordinates, global::Quire.Calculation.Core.IMatrixResultNode yCoordinates, global::Quire.Calculation.Core.IMatrixResultNode zCoordinates, global::System.Windows.Media.Media3D.Transform3D transformForVisual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -65,7 +81,7 @@ internal abstract partial class EngineTrace3DResultParser : global::Quire.Contro
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        internal Surface(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) { }
+        internal Surface(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) : base(default(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D), default(global::Quire.Controls.Plots.Plot3D.Model.TraceType3D)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D CreateVisualData(global::Quire.Calculation.Core.IMatrixResultNode xCoordinates, global::Quire.Calculation.Core.IMatrixResultNode yCoordinates, global::Quire.Calculation.Core.IMatrixResultNode zCoordinates, global::System.Windows.Media.Media3D.Transform3D transformForVisual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -76,7 +92,7 @@ internal abstract partial class EngineTrace3DResultParser : global::Quire.Contro
         [global::Quire.Mirror.MirrorStub]
         public override global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        internal Curve(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) { }
+        internal Curve(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D engineTraceType3D) : base(default(global::Quire.Controls.Plots.Plot3D.Model.EngineTraceType3D), default(global::Quire.Controls.Plots.Plot3D.Model.TraceType3D)) { }
         [global::Quire.Mirror.MirrorStub]
         protected override global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D CreateVisualData(global::Quire.Calculation.Core.IMatrixResultNode xCoordinates, global::Quire.Calculation.Core.IMatrixResultNode yCoordinates, global::Quire.Calculation.Core.IMatrixResultNode zCoordinates, global::System.Windows.Media.Media3D.Transform3D transformForVisual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

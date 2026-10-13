@@ -12,6 +12,8 @@ namespace Quire.Wpf;
 public partial class CheckBoxData : global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isChecked;
+    [global::Quire.Mirror.MirrorStub]
     public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,6 +21,8 @@ public partial class CheckBoxData : global::System.ComponentModel.INotifyPropert
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public CheckBoxData(string message, bool isChecked) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.CheckBoxData+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames

@@ -26,6 +26,10 @@ internal partial class ThreadData : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     public ThreadData() { }
     [global::Quire.Mirror.MirrorStub]
+    private void _bangThreadData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeThreadData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void Dispose(bool A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }

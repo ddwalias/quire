@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 internal partial class BorderShape : global::System.Windows.Shapes.Shape
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect _rect;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RightEdgeVisibilityProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CornerRadiusProperty;
@@ -26,7 +28,11 @@ internal partial class BorderShape : global::System.Windows.Shapes.Shape
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Pen GetPen() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PathGeometry GetBorderGeometry() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public BorderShape() { }
 }

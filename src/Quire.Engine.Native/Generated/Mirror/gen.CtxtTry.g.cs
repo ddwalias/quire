@@ -12,6 +12,24 @@ namespace Quire.gen;
 internal partial class CtxtTry : global::Quire.gen.Ctxt
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool m_protected;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_type;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_BlockValue;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_ret;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_fallthrough;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label m_label_1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label m_label_2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_ExceptionObj;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void* m_ExceptionVar;
+    [global::Quire.Mirror.MirrorStub]
     public CtxtTry(global::Quire.gen.Ctxt parent, global::System.Type ty) : base(default(global::Quire.gen.Ctxt)) { }
     [global::Quire.Mirror.MirrorStub]
     public override unsafe global::Quire.gen.MetaObj lookup(void* key) => base.lookup(key);
@@ -27,4 +45,10 @@ internal partial class CtxtTry : global::Quire.gen.Ctxt
     public override void EmitReturn(global::Quire.gen.IlEmit emit) => base.EmitReturn(emit);
     [global::Quire.Mirror.MirrorStub]
     public override void EmitBranch(global::Quire.gen.IlEmit emit, global::Quire.gen.Closure e, global::System.Reflection.Emit.Label lab) => base.EmitBranch(emit, e, lab);
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label RetLabel(global::Quire.gen.IlEmit emit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label FallThroughLabel(global::Quire.gen.IlEmit emit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void EnterCatch(global::Quire.gen.IlAsm bcasm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

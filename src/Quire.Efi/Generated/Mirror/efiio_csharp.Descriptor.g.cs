@@ -34,11 +34,21 @@ public partial class Descriptor : global::Quire.efiio_csharp.ExcelSupport
     [global::Quire.Mirror.MirrorStub]
     protected int m_nc;
     [global::Quire.Mirror.MirrorStub]
+    private int m_Width;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_Height;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_IsRange;
+    [global::Quire.Mirror.MirrorStub]
     protected string m_SheetName;
     [global::Quire.Mirror.MirrorStub]
     protected int m_SheetIndex;
     [global::Quire.Mirror.MirrorStub]
     protected string m_Dimension;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_A1ref;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_R1C1ref;
     [global::Quire.Mirror.MirrorStub]
     public int Left { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -77,6 +87,8 @@ public partial class Descriptor : global::Quire.efiio_csharp.ExcelSupport
     public Descriptor(string descriptor) { }
     [global::Quire.Mirror.MirrorStub]
     public Descriptor(string descriptor, uint sheetarg) { }
+    [global::Quire.Mirror.MirrorStub]
+    private int ParseBlankParameter(object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int SetBlank(object blank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

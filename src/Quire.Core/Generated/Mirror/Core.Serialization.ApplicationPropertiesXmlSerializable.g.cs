@@ -12,6 +12,8 @@ namespace Quire.Core.Serialization;
 public partial class ApplicationPropertiesXmlSerializable : global::System.Xml.Serialization.IXmlSerializable, global::Quire.Serialization.IShouldValidate
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Serialization.ISerializationHelper _helper;
+    [global::Quire.Mirror.MirrorStub]
     public bool ShouldValidateOnWrite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldValidateOnRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +25,8 @@ public partial class ApplicationPropertiesXmlSerializable : global::System.Xml.S
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.PersistentDataObjects.propertiesType DeserializeAppProperties(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsFormatVersionCompatible(global::System.Version fileFormatVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

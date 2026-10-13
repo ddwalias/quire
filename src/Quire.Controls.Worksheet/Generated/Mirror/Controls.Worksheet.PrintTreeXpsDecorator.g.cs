@@ -12,7 +12,19 @@ namespace Quire.Controls.Worksheet;
 public static partial class PrintTreeXpsDecorator
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager _whiteboardItemMgr;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public static bool CanEnrichPrintingTree { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static void EnrichPrintingTree(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Worksheet.Printing.IPageSnapshot> pages, bool shouldEnrich) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void EnrichPagePart(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl pagePart, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void RecursiveSetItemsName(global::Quire.Controls.Core.IWhiteboardItem childItem, int index, global::System.Windows.UIElement parent, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Rect GetItemRectForPrint(global::Quire.Controls.Core.IWhiteboardItem clone, global::System.Windows.UIElement parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ProcessAddorners(global::System.Windows.FrameworkElement rootElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

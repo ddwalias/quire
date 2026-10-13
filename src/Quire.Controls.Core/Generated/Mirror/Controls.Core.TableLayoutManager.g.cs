@@ -12,7 +12,27 @@ namespace Quire.Controls.Core;
 public abstract partial class TableLayoutManager : global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _columns;
+    [global::Quire.Mirror.MirrorStub]
+    private double _paddingX;
+    [global::Quire.Mirror.MirrorStub]
+    private double _paddingY;
+    [global::Quire.Mirror.MirrorStub]
+    private double _matrixBaseline;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Windows.Rect> _cellArrangements;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baselineToMidPointAdjustment;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _matrixSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.TableLayoutManager.RowMetric[] _rowMetrics;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] _columnWidths;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> _cellsInfo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Thickness _padding;
     [global::Quire.Mirror.MirrorStub]
     public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -54,9 +74,21 @@ public abstract partial class TableLayoutManager : global::System.ICloneable
     [global::Quire.Mirror.MirrorStub]
     public double GetMaxRightFromColumn(int columnIndex, int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private double SearchOnColumn(int columnIndex, int cellIndexA, int cellIndexB, double currentCandidate, global::System.Func<int, int, double, double> nextCandidate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double MaxRight(int rowIndex, int columnIndex, double maxRight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double MaxBottom(int rowIndex, int columnIndex, double maxBottom) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double MinLeft(int rowIndex, int columnIndex, double minLeft) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double MinTop(int rowIndex, int columnIndex, double minTop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public double GetMinTopFromRow(int rowIndex, int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double GetMaxBottomFromRow(int rowIndex, int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double SearchOnRow(int rowIndex, int cellIndexA, int cellIndexB, double currentCandidate, global::System.Func<int, int, double, double> nextCandidate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int CellIndexFromPoint(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -67,6 +99,8 @@ public abstract partial class TableLayoutManager : global::System.ICloneable
     public void Measure(global::System.Windows.Controls.UIElementCollection cellsContent, global::Quire.Controls.Core.ColumnAlignments alignment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Controls.Core.MaxMatrixWidth[] CalcMaxDecimalPerColumn(global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> cellsInfo, global::System.Windows.Controls.UIElementCollection cellsContent, int rows);
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MaxMatrixWidth[] CalculateRowAndColumnMetrics(int rows, global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> cellsInfo, global::System.Windows.Controls.UIElementCollection cellsContent, bool isResultMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double GetRowBottom(int rowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

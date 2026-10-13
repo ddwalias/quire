@@ -31,4 +31,6 @@ public abstract partial class Trace2DResultConverterHelperBase : global::Quire.C
     public string ValidateColumnsAndUnits(int numberOfPointsInResult, int yResultColumns, global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> rangeUnits, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual string ValidateNumberOfPointsLimit(int numberOfPointsInResult, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string ValidateEnoughResultColumnsForTraceType(int numberOfResultColumns, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

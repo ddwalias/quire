@@ -12,9 +12,17 @@ namespace Quire.Controls.Internal;
 internal partial class VisualAtomicTextLeafEditor : global::Quire.Controls.Internal.VisualMathNodeEditor<global::Quire.Controls.Internal.VisualAtomicTextLeafNode>, global::Quire.EquationEditor.View.IVisualAtomicTextLeafEditor, global::Quire.EquationEditor.View.IVisualMathNodeEditor
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty SelectedProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _caretBrush;
+    [global::Quire.Mirror.MirrorStub]
     public bool Selected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void OnSelectedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public VisualAtomicTextLeafEditor(global::Quire.Controls.Internal.VisualAtomicTextLeafNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSelectedChanged(bool selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Remove() => base.Remove();
     [global::Quire.Mirror.MirrorStub]

@@ -14,13 +14,65 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     internal const string InternalLinkPrefix = "#";
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IDictionary<int, global::System.Collections.Generic.IDictionary<int, global::System.Windows.Media.Brush>> _hyperlinkDictionary;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand OpenFileCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Wpf.IMessageBoxManager _messageBoxMngr;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] _internetURLSchemes;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] _supportedURLSchemes;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Text.RichTextWithEmbeddedItem.PreviewKeyDownData> _keyDownData;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Thickness EmbeddedMathRootPadding;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent TabOutOfTextEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty HyperlinkCanHaveToolTipProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.WhiteboardItemsCollection _whiteboardItems;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Support.CalculatableChildHider _childManager;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.RichTextSerializationStrategy _serializationStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.RichTextDeserializationStrategy _deserializationStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItemInText, int> _itemOffsetMap;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NumberFormat _currentNumberFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MatrixFormat _currentMatrixFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MathFormat _currentMathFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationButtonEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationButtonChecked;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
+    [global::Quire.Mirror.MirrorStub]
+    private string _copyLinkText;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper _richTextWithEmbededItemCloneHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper _defaultCloneHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.ISnapToPixelHelper _snappingHelper;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Wpf.IMessageBoxManager MessageBoxManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string BaseRelativeDirectory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool SelectionFullyInsideHyperlink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HyperlinkCanHaveToolTip { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -70,6 +122,8 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> RegionsWithConverterAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SelectedWhiteboardItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     protected bool SelectionContainsEmbeddedItemsOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IMathFormat DeserializeMathFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -92,15 +146,67 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
     [global::Quire.Mirror.MirrorStub]
+    private void BindHyperlinkCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanOpenOrEditOrCopySingleHyperlink(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanOpenOrEditOrCopySingleHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CopyHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Hyperlink CheckAndGetExactlyOneHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanModifyHyperlink(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ModifyHyperlink(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void ModifyHyperlink(global::Quire.Controls.Text.ModifyHyperlinkCommandParameter param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Hyperlink EditLinkUndoableCommand(global::Quire.Controls.Text.HyperlinkEditState hyperlinkState, global::System.Windows.Documents.TextRange convertToLinkRange, bool skipOneInsertionPosition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanRemoveHyperlinks(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> GetContextLinks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveHyperlinks(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveHyperlinkUndoableCommand(global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveHyperlinkUndoableCommand(global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> links) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReproduceRemovedHyperlinkColors(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.TextRange GetWordRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool CanModifyHyperlink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool RangeContainsOnlyInlineElements(global::System.Windows.Documents.TextRange range, bool prohibitSelectionInBlockUiContainer = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal bool ContainsSimpleText(global::System.Windows.Documents.TextRange textRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void RequestNavigateHandler(object sender, global::System.Windows.Navigation.RequestNavigateEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NavigateToHyperLink(global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DisplayHyperlink(global::System.Windows.Documents.Hyperlink link, bool showAboutBox = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ShowQuestionWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey, string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey, string param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowWarningDialog(global::Quire.IO.NavigateUrlErrorWarningKeys messageKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OpenHyperlinkUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.IO.NavigateUrlErrorWarningKeys> ValidateURL(global::System.Uri absolutePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Uri ResolveUrl(global::System.Uri path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HasHyperlinkInMouseContext(object context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.Hyperlink GetHyperlinkFromTextPointer(global::System.Windows.Documents.TextPointer ptr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.Hyperlink GetHyperlinkAtCaretPositionIncludingEdges() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -112,7 +218,13 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
+    private bool HandleLinkOpsOnPreviewKeyDown(global::System.Windows.Input.Key key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void CollectKeyDataForPostChangeHyperlinkInsertion(global::System.Windows.Input.Key key, global::System.Windows.Input.ModifierKeys keyModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TryPostChangeHyperlinkInsertion(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.TextPointer GetPotentialLinkEndPosition(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes, global::System.Windows.Input.Key key, int insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UNITTEST_ExecuteAddItemToListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -124,13 +236,41 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void OnIsInCopyPropertyChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => base.OnIsInCopyPropertyChanged(args);
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateHyperlinkCanHaveToolTip() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal RichTextWithEmbeddedItem() { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewMoveUpByPage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void OnPreviewMoveDownByPage(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem GetDescendantItem(global::System.Windows.DependencyObject descendantObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewTabForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewTabBackward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanExecuteMathFormatCommands(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteIncreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteDecreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteChangeFontColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteChangeHighlightColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteCommandKeepingSelection(global::System.Func<bool> internalCommandDo, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void CopyingHandler(object sender, global::System.Windows.DataObjectCopyingEventArgs e) => base.CopyingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
     public void CopyWholeRangeXamlToDataObject(global::System.Windows.IDataObject dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string InlayXamlWithEmbeddedItems(global::System.Windows.Documents.TextRange rangeToSerialize, string xaml, out global::Quire.RichTextEmbeddedItemsInfo richTextEmbeddedItemsInfoData, global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> embeddedEquationItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetCombinedDocumentXaml(string xaml, global::System.Collections.Generic.IList<string> itemXamls) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void PastingHandler(object sender, global::System.Windows.DataObjectPastingEventArgs e) => base.PastingHandler(sender, e);
     [global::Quire.Mirror.MirrorStub]
@@ -140,17 +280,49 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<object> EnumerateEmbeddedObjectsInRange(global::System.Windows.Documents.TextRange range) => base.EnumerateEmbeddedObjectsInRange(range);
     [global::Quire.Mirror.MirrorStub]
+    private void AddItemToList(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveItemFromList(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteAddItemToListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteRemoveItemFromListCommand(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RestoreTextBoxContent(global::Quire.Controls.Core.IWhiteboardItemInText item, int offset, bool isItemActive, bool isRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateItemOffsetMap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsItemRemovedFromDocument(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
     [global::Quire.Mirror.MirrorStub]
+    private void HandleChildItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleChildItemRequestRemove(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleItemsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void MoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItemInText> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewEnter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResetCaretPositionWhenNecessary(global::System.Windows.Documents.TextPointer referenceLineStartPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewMoveUpByLine(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewMoveDownByLine(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewMoveLeftByCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPreviewMoveRightByCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void HandleTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs args) => base.HandleTextChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]
@@ -161,6 +333,14 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     public void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TabInto(global::System.Windows.Input.FocusNavigationDirection dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SaveState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearSavedState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RestoreSavedState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ClearState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText item, bool activate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -176,17 +356,35 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected override void OnDragOver(global::System.Windows.DragEventArgs e) => base.OnDragOver(e);
     [global::Quire.Mirror.MirrorStub]
+    private static bool DataObjectContainsAnyEmbeddedItems(global::System.Windows.IDataObject dataObject, global::Quire.RichTextEmbeddedItemsInfo filter = (global::Quire.RichTextEmbeddedItemsInfo)(3)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewDrop(global::System.Windows.DragEventArgs e) => base.OnPreviewDrop(e);
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanDrop(global::System.Windows.DragEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReplacePlaceholderWithEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText item, int symbolOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool RemoveInlineRecursively(global::System.Windows.Documents.InlineCollection inlines, global::System.Windows.Documents.Inline inlineToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void LogDocumentContents(string suffix = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public int GetEmbeddedObjectCaretOffset(object embeddedObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanBookmarkTag(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanRemoveBookmarkTag(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRemoveBookmarkTag(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CommitItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ActivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void DeactivateActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetItemContextMenuHandling(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Activate(bool isActive) => base.Activate(isActive);
     [global::Quire.Mirror.MirrorStub]
@@ -204,7 +402,17 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Documents.InlineUIContainer GetContainer(global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItemInText GetItem(global::System.Windows.Documents.InlineUIContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
+    [global::Quire.Mirror.MirrorStub]
+    private void RepairWrapperHosts() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Text.IWhiteboardItemInTextWrapper GetWrapper(object embeddedElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetItem(global::System.Windows.Documents.InlineUIContainer container, global::Quire.Controls.Core.IWhiteboardItemInText item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -212,19 +420,45 @@ public partial class RichTextWithEmbeddedItem : global::Quire.Controls.Text.Rich
     [global::Quire.Mirror.MirrorStub]
     protected void CloneContent(global::Quire.Controls.Text.RichTextWithEmbeddedItem original, global::Quire.Controls.Core.IEngineeringDocument engDoc, bool export = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanToggleHideFromCalculationContext(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateHideFromCalculationButton() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => base.FindOncePrivate(text, startFromCaret, direction, options, subscriptPositions);
     [global::Quire.Mirror.MirrorStub]
+    private static bool FindInEmbeddedItem(global::Quire.Controls.Core.IWhiteboardItemInText item, string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void SetSelection(int fromOffset, int toOffset) => base.SetSelection(fromOffset, toOffset);
     [global::Quire.Mirror.MirrorStub]
     public override void SelectTo(int toOffset) => base.SelectTo(toOffset);
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetWhiteboardItemsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void HandleSelectionChanged(object sender, global::System.EventArgs args) => base.HandleSelectionChanged(sender, args);
     [global::Quire.Mirror.MirrorStub]
     protected override void UpdateCurrentFormats() => base.UpdateCurrentFormats();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanSetNumberFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSetNumberFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSetMatrixFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DispatchCommandToItems(global::System.Windows.Input.RoutedCommand cmd, object parameter, global::Quire.Controls.Core.PropertiesForUpdate propertyForUpdate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeleteActiveOrSelectedItems(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanDeleteActiveOrSelectedItems(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ProhibitMouseClickOnItem(global::System.Windows.DependencyObject obj, bool prohibit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected static global::System.Windows.Documents.TextPointer GetLineStartPosition(global::System.Windows.Documents.TextPointer current, int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

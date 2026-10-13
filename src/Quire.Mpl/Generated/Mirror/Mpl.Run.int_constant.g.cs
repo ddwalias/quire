@@ -14,6 +14,8 @@ public partial class int_constant : global::Quire.Mpl.Run.Atom
     [global::Quire.Mirror.MirrorStub]
     public int Field1;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.Tok token;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok zero;
     [global::Quire.Mirror.MirrorStub]
     public override int IntCon { get => base.IntCon; }

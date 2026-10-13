@@ -12,6 +12,10 @@ namespace Quire.Controls.Plots;
 public partial class XYPlotControl
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.PlotGraphLinearAxis _xAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.PlotGraphLinearAxis _yAxis;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Model.AxisMarker> VerticalMarkersForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Model.AxisMarker> HorizontalMarkersForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -24,5 +28,9 @@ public partial class XYPlotControl
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PostInitializeResizeEventsAfterLoading() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ReleaseAxisSizes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual bool SetGraphSize(int numCells) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool FixateAxesSizeAtDeserialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

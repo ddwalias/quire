@@ -12,7 +12,15 @@ namespace Quire.Wpf;
 public partial class PropertyChangeUpdateMonitor : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, global::System.ValueTuple<object, object>> _propertiesUpdated;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.ComponentModel.INotifyPropertyChanged _objectToMonitor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Action<global::System.Collections.Generic.IDictionary<string, global::System.ValueTuple<object, object>>> _actionToPerform;
+    [global::Quire.Mirror.MirrorStub]
     public PropertyChangeUpdateMonitor(global::System.ComponentModel.INotifyPropertyChanged objectToMonitor, global::System.Action<global::System.Collections.Generic.IDictionary<string, global::System.ValueTuple<object, object>>> actionToPerform) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }

@@ -12,6 +12,10 @@ namespace Quire.Controls.Worksheet;
 public partial class AreaItemLocationInWorksheetStrategy : global::Quire.Controls.Worksheet.ItemLocationInWhiteboardStrategyBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Worksheet.IWorksheetItemManager _worksheetItemManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Point _areaRectLocation;
+    [global::Quire.Mirror.MirrorStub]
     public AreaItemLocationInWorksheetStrategy(global::Quire.Controls.Worksheet.IWorksheetPageManager worksheetPageManager, global::Quire.Controls.Worksheet.IWorksheetItemManager worksheetItemManager, global::System.Windows.Point areaRectLocation) : base(default(global::Quire.Controls.Worksheet.IWorksheetPageManager)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Point GetItemRectLocationInWhiteboard(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => base.GetItemRectLocationInWhiteboard(whiteboardItem);
@@ -19,4 +23,10 @@ public partial class AreaItemLocationInWorksheetStrategy : global::Quire.Control
     public override int GetPageIndex(global::System.Windows.Point topLeft) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Nullable<global::System.Windows.Rect> GetItemClipping(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::System.Windows.Rect contentBounds, out global::System.Nullable<global::System.Windows.Rect> stickingPartRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int CountItemParts(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Rect> GetItemClippingInternal(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, int partIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect CalculateVirtualClipping(global::System.Windows.Point location, int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

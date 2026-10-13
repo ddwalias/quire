@@ -12,6 +12,12 @@ namespace Quire.utl_mgd;
 public partial class Mailbox<T>
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_nonempty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Queue<T> m_queue;
+    [global::Quire.Mirror.MirrorStub]
     public Mailbox() { }
     [global::Quire.Mirror.MirrorStub]
     public T GetMessage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

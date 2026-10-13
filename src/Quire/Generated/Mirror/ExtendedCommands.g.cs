@@ -14,6 +14,8 @@ public partial class ExtendedCommands : global::System.Collections.Hashtable, gl
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.ExtendedCommands _this;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ExtendedCommands() { }
     [global::Quire.Mirror.MirrorStub]
     public void RegisterCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

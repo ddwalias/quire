@@ -12,6 +12,22 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class LegendResizeCommand : global::Quire.Controls.Plots.PlotCommands.LegendCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _maxWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _minWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _maxListWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _width;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMaxWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMinWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueMaxListWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _newValueWidth;
+    [global::Quire.Mirror.MirrorStub]
     public LegendResizeCommand(global::Quire.Controls.Plots.EquationList equationList) : base(default(global::Quire.Controls.Plots.EquationList), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

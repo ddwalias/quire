@@ -22,11 +22,19 @@ public static partial class TextRangeExtension
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) where T : global::System.Windows.Documents.Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.Block> blocks) where T : global::System.Windows.Documents.Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, global::System.Windows.Documents.InlineCollection inlines) where T : global::System.Windows.Documents.Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Documents.FlowDocument GetDocument(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static object GetFormattingPropertyFromRuns(global::System.Collections.Generic.List<global::System.Windows.Documents.Run> runs, global::System.Windows.DependencyProperty formattingProperty, global::System.Func<object, object, bool> comparer = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void FixAndCleanImportedHyperlinksData(this global::System.Windows.Documents.TextRange range, bool fixHyperlinkEmptyRuns = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string SerializeRangeContentToXamlString(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IntersectsWith(this global::System.Windows.Documents.TextRange range, global::System.Windows.Documents.TextElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<global::System.ValueTuple<int, int>> GetRangeItemsOffsets<TRun>(this global::System.Windows.Documents.TextRange range) where TRun : global::System.Windows.Documents.Run => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

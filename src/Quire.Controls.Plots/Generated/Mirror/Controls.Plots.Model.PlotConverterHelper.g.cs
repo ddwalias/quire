@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Model;
 internal partial class PlotConverterHelper : global::Quire.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Model.TraceModel _plotTraceOwner;
+    [global::Quire.Mirror.MirrorStub]
     public override bool DiscreteValuesAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool RangeUnitsAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

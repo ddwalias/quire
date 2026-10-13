@@ -12,6 +12,10 @@ namespace Quire.Native.EfisolverImpl;
 public partial class PartialDerivative
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_f;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_param;
+    [global::Quire.Mirror.MirrorStub]
     public PartialDerivative(global::Quire.Mpl.Run.Function f, int param) { }
     [global::Quire.Mirror.MirrorStub]
     public object Derive(object args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

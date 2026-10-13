@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.IORegions;
 public partial class IORegionCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ToggleInputRegion;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ToggleOutputRegion;

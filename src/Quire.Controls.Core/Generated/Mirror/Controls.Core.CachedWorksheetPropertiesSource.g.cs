@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public partial class CachedWorksheetPropertiesSource : global::Quire.Controls.Core.IWorksheetPropertiesSource, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IWorksheetProperties
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Thickness PageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

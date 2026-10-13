@@ -12,6 +12,58 @@ namespace Quire.Controls.Core;
 public partial class WorksheetPageLayout : global::System.ComponentModel.INotifyPropertyChanged, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.PageOrientation _pageOrientation;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Thickness _pageMargin;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Thickness _headerMargin;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Thickness _footerMargin;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.PageMarginType _marginType;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _gridCellSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _headerFooterGridCellSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.PageSize _pageSize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.PageSizeUnits _pageSizeUnits;
+    [global::Quire.Mirror.MirrorStub]
+    private double _pageWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _pageHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _pageBodyWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _pageBodyHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color _pageBackgroundColor;
+    [global::Quire.Mirror.MirrorStub]
+    private double _majorGridLines;
+    [global::Quire.Mirror.MirrorStub]
+    private double _displayHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.GridSize _gridSize;
+    [global::Quire.Mirror.MirrorStub]
+    private double _pageBodyContentWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _headerWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _headerHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _headerBodyWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _headerBodyHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _footerWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _footerHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _footerBodyWidth;
+    [global::Quire.Mirror.MirrorStub]
+    private double _footerBodyHeight;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly double DraftModeGutterWidthInDips;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.PageSize, global::Quire.Controls.Core.PageSizeInformation> BuiltInPageSizes;
@@ -74,6 +126,40 @@ public partial class WorksheetPageLayout : global::System.ComponentModel.INotify
     [global::Quire.Mirror.MirrorStub]
     public int LinesPerPage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size MetricGridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size MetricFineGridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size MetricHeaderFooterGridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size USGridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size USFineGridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size USHeaderFooterGridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static double MetricMajorGridLines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static double USMajorGridLines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness StandardMetricMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness StandardUSMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness LegacyMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness USHeaderMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness USFooterMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness MetricHeaderMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness MetricFooterMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point MetricInitialInsertionPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point USInitialInsertionPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size> GridCellSizeChanged;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Windows.Size, global::System.Windows.Size> HeaderFooterGridCellSizeChanged;
@@ -85,6 +171,8 @@ public partial class WorksheetPageLayout : global::System.ComponentModel.INotify
     public static global::Quire.Controls.Core.PageSize GetDefaultPageSizeForLocale() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public WorksheetPageLayout() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdatePropertyAndDelayNotification(global::System.Action<global::Quire.Controls.Core.WorksheetPageLayout> updateAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsPageSizeAllowed(global::Quire.Controls.Core.PageSize pageSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -98,15 +186,37 @@ public partial class WorksheetPageLayout : global::System.ComponentModel.INotify
     [global::Quire.Mirror.MirrorStub]
     public void SetPageMarginInPageSizeUnits(global::System.Windows.Thickness marginInPageSizeUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void SetPageMarginInDipsInternal(global::System.Windows.Thickness marginInDips) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetPageMarginInDips(global::System.Windows.Thickness marginInDips) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Thickness PageSizeUnitsToDipsMargins(global::System.Windows.Thickness marginsInPageSizeUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double PageSizeUnitsToDips(double numInPageSizeUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size ContentAreaSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.WorksheetPageLayout Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.WorksheetPageLayout CloneFrom(global::Quire.Controls.Core.WorksheetPageLayout from) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnSizeChanged(string propertyName, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetupDefaultPageSizeInformation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.PageMarginType, global::System.Windows.Thickness> SetupMarginMap(global::System.Windows.Thickness narrowMargin, global::System.Windows.Thickness standardMargin, global::System.Windows.Thickness wideMargin, global::System.Windows.Thickness legacyMargin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness WideMargin(global::System.Windows.Thickness startingMargin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness NarrowMargin(global::System.Windows.Thickness startingMargin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness ScaledMargin(global::System.Windows.Thickness startingMargin, double widthScale, double heightScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Size ScaledSize(global::System.Windows.Size size, double widthScale, double heightScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Size ContentAreaSize(global::System.Windows.Size pageSize, global::System.Windows.Thickness pageMargin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -117,6 +227,8 @@ public partial class WorksheetPageLayout : global::System.ComponentModel.INotify
     public static global::System.Windows.Size GetMaxPageMarginsRestriction(global::Quire.Controls.Core.WorksheetPageLayout pageLayout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Thickness GetMinPageMarginsRestriction(global::Quire.Controls.Core.WorksheetPageLayout pageLayout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Thickness CoercePageMargin(global::Quire.Controls.Core.PageSize pageSize, global::Quire.Controls.Core.PageOrientation orientation, global::System.Windows.Thickness marginsToCoerce) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.WorksheetPageLayout+PropertyNames, Ptc.Controls.Core")]
     public static partial class PropertyNames

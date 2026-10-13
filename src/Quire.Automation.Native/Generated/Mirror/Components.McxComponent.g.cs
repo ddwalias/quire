@@ -12,11 +12,31 @@ namespace Quire.Components;
 public partial class McxComponent : global::Quire.Components.IMcxComponent
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string[] PROGIDS;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly bool MultiThreaded;
+    [global::Quire.Mirror.MirrorStub]
+    private bool running;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Exception lastError;
+    [global::Quire.Mirror.MirrorStub]
+    private int key;
+    [global::Quire.Mirror.MirrorStub]
+    private static int ThreadsPerDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public object Origin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object CWD { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Exception LastError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool ShouldScale() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool FixInputs(ref object[] inputs, ref uint nInputs, ref uint nOutputs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateInputQueue(uint nInputs, ref global::Quire.Components.McxInput[] minputs, object[] inputs, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateOutputQueue(uint nOutputs, ref global::Quire.Components.McxOutput[] moutputs, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Initialize(object any) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

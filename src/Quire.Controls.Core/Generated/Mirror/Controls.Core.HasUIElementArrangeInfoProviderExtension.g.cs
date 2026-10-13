@@ -12,5 +12,7 @@ namespace Quire.Controls.Core;
 public static partial class HasUIElementArrangeInfoProviderExtension
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IFrameworkElementFacade _facade;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IUIElementArrangeInfoProvider ArrangeInfoProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

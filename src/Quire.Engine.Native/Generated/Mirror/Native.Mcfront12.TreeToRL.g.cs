@@ -12,6 +12,8 @@ namespace Quire.Native.Mcfront12;
 public partial class TreeToRL
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool Match(global::System.IO.TextReader @in, string str, ref string @out) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string Convert(string tl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TreeToRL() { }

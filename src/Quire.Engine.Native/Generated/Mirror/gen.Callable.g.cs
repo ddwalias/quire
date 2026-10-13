@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal abstract partial class Callable : global::Quire.gen.MetaObj
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.IlAsm m_ilasm;
+    [global::Quire.Mirror.MirrorStub]
     protected global::Quire.gen.MetaObj m_delegate;
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.gen.MetaObj m_function;

@@ -12,6 +12,16 @@ namespace Quire.Controls.Internal;
 internal partial class VisualLoopNode : global::Quire.Controls.Internal.VisualBinaryOperatorNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double OPERATOR_PAD = 4d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double BODY_LEFT_PAD = 8d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _operator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VerticalFence _operatorRightMinorPart;
+    [global::Quire.Mirror.MirrorStub]
+    private double _verticalOffset;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

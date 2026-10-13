@@ -42,6 +42,10 @@ internal partial class InputSliderEnginePython : global::Quire.Controls.InputCon
     [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_ValueChanged";
     [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableSlider.PythonSliderScriptInternalClass.py";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableSlider.PythonSliderDefaultScript.py";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

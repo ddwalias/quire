@@ -14,9 +14,13 @@ public static partial class TextRangeExtensionMethods
     [global::Quire.Mirror.MirrorStub]
     public static void LoadWithCustomContext(this global::System.Windows.Documents.TextRange range, global::System.IO.Stream packageStream, bool export = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.IO.Packaging.PackagePart GetXamlPart(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void LoadElementFromClipboard(this global::System.Windows.Documents.TextRange textRange, string pasteXaml) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void LoadElementFromFile(this global::System.Windows.Documents.TextRange textRange, object content) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void LoadElementToExport(this global::System.Windows.Documents.TextRange textRange, object content) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InsertBlock(global::System.Windows.Documents.TextRange textRange, global::System.Windows.Documents.Block block, ref global::System.Windows.Documents.Block firstInsertedBlock, ref global::System.Windows.Documents.Block lastInsertedBlock) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,16 @@ namespace Quire.gen;
 internal partial class ModuleRecordClo : global::Quire.gen.Closure
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj m_cloarg;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_slot;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_exports;
+    [global::Quire.Mirror.MirrorStub]
+    private object[] m_vals;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.DynamicMethodFunction m_update;
+    [global::Quire.Mirror.MirrorStub]
     public ModuleRecordClo(global::Quire.gen.IlAsm il) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public override unsafe global::Quire.gen.MetaObj DefineVariable(void* f) => base.DefineVariable(f);

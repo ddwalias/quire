@@ -12,6 +12,8 @@ namespace Quire.Media3D;
 public partial class WireText : global::Quire.Media3D.WireBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Media3D.TextGenerator txtgen;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TextProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FontProperty;

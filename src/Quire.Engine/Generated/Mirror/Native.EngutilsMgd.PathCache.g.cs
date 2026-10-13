@@ -12,6 +12,14 @@ namespace Quire.Native.EngutilsMgd;
 public partial class PathCache
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ArrayList m_paths;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_pathset;
+    [global::Quire.Mirror.MirrorStub]
+    private string AddPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string AddParentDir(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PathCache() { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.EngutilsMgd.PathCache AddPaths(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

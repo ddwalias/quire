@@ -12,6 +12,8 @@ namespace Quire.EquationEditor;
 public partial class VisualOperatorDescriptorTable : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool a_;
+    [global::Quire.Mirror.MirrorStub]
     public VisualOperatorDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

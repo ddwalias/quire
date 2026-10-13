@@ -12,6 +12,10 @@ namespace Quire.gen;
 internal partial class ModuleTypeClo : global::Quire.gen.IlBuilderType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MethodFunction m_update;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_finish;
+    [global::Quire.Mirror.MirrorStub]
     public ModuleTypeClo(global::Quire.gen.IlAsm il, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb) : base(default(global::Quire.gen.IlAsm), default(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder)) { }
     [global::Quire.Mirror.MirrorStub]
     public override unsafe global::Quire.gen.MetaObj DefineVariable(void* f) => base.DefineVariable(f);

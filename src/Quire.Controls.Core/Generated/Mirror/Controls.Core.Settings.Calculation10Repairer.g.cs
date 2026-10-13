@@ -12,5 +12,11 @@ namespace Quire.Controls.Core.Settings;
 internal static partial class Calculation10Repairer
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string _sourceNamespaceURI = "http://schemas.ptc.com/mathcad/settings/calculation10";
+    [global::Quire.Mirror.MirrorStub]
+    private const string _targetNamespaceURI = "http://schemas.ptc.com/mathcad/settings/calculation10";
+    [global::Quire.Mirror.MirrorStub]
     public static void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateNodeValue(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

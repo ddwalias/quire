@@ -14,6 +14,8 @@ public partial class GettingStartedTechnicalSupportRibbonBar : global::Fluent.Ri
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_GettingStartedTechnicalSupportRibbonBar_SupportCenter;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public GettingStartedTechnicalSupportRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

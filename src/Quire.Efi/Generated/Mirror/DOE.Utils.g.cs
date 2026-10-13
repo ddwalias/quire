@@ -12,6 +12,14 @@ namespace Quire.DOE;
 public partial class Utils
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<string, int> m_alphbetMap;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, string> m_ialphbetMap;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>> m_fractDefaults;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>>> m_blockDefaults;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.SortedDictionary<string, int> charMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.SortedDictionary<int, string> icharMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -21,6 +29,8 @@ public partial class Utils
     public global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::System.Collections.Generic.SortedDictionary<int, global::Quire.DOE.Utils.Gens_level2>>> blockDefaults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Utils() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static int recProduct(int n, int len) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int factorial(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

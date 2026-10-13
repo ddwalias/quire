@@ -12,11 +12,17 @@ namespace Quire.PersistentDataObjects;
 public partial class pictureType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.basePictureType itemField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.ItemChoiceType itemElementNameField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.basePictureType Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.ItemChoiceType ItemElementName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Uri PictureSourceUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

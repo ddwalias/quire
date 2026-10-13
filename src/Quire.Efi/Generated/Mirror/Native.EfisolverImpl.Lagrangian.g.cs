@@ -12,6 +12,8 @@ namespace Quire.Native.EfisolverImpl;
 public partial class Lagrangian
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfisolverImpl.ModelEvaluator m_eval;
+    [global::Quire.Mirror.MirrorStub]
     public Lagrangian(global::Quire.Native.EfisolverImpl.ModelEvaluator model) { }
     [global::Quire.Mirror.MirrorStub]
     public object eval(object args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,20 @@ namespace Quire.Controls.Plots;
 public partial class PlotItemPlaceholder : global::System.Windows.Controls.ContentControl
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.DoubleComparer _doubleComparer;
+    [global::Quire.Mirror.MirrorStub]
+    private const int Angle90 = 90;
+    [global::Quire.Mirror.MirrorStub]
+    private const int Angle270 = 270;
+    [global::Quire.Mirror.MirrorStub]
+    private const int Angle360 = 360;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _expectedRenderSize;
+    [global::Quire.Mirror.MirrorStub]
+    private const double CollapsedHeight = 0d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double CollapsedWidth = 0d;
+    [global::Quire.Mirror.MirrorStub]
     public bool SnapToGrid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size GridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -22,9 +36,15 @@ public partial class PlotItemPlaceholder : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     internal void AdjustPadding() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void AdjustPadding(global::System.Windows.Size expectedRenderSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsPlotTitleOrientationSwapped(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public double GetMinLegendPlaceholderWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double GetMinLegendPlaceholderHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double GetHalfPaddingValue(double contentDimension, double gridCellDimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public PlotItemPlaceholder() { }
 }

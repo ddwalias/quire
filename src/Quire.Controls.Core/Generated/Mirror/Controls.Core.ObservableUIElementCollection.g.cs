@@ -40,6 +40,14 @@ public partial class ObservableUIElementCollection : global::System.Windows.Cont
     [global::Quire.Mirror.MirrorStub]
     public override void RemoveRange(int index, int count) => base.RemoveRange(index, count);
     [global::Quire.Mirror.MirrorStub]
+    private void OnChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, bool range = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnItemChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertiesChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnPropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, bool range = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

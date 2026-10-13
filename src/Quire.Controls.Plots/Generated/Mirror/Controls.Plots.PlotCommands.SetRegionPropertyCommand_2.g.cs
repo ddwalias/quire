@@ -18,6 +18,10 @@ internal partial class SetRegionPropertyCommand<TRegion, TProperty> : global::Qu
     [global::Quire.Mirror.MirrorStub]
     protected readonly TProperty _oldPropValue;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction1<TProperty, TRegion> _getPropValue;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Delegate2<TRegion, TProperty> _setPropValue;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public SetRegionPropertyCommand(TRegion region, TProperty newPropValue, string name, global::Quire.DelegateFunction1<TProperty, TRegion> getPropValue, global::Quire.Delegate2<TRegion, TProperty> setPropValue) { }

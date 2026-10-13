@@ -12,6 +12,14 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ad : global::Quire.Native.PtcEquationEditor.t, global::Quire.Calculation.Core.ILazyMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    private int a_;
+    [global::Quire.Mirror.MirrorStub]
+    private int b_;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IMatrixValueProxyWrapper c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> d;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.t this[int A_0, int A_1] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -27,6 +35,14 @@ internal partial class ad : global::Quire.Native.PtcEquationEditor.t, global::Qu
     public global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> TransformValueToResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ad(global::Quire.Calculation.Core.IMatrixValueProxyWrapper A_0, global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> A_1) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void b(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::Quire.Calculation.Core.IMatrixValueProxyWrapper A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void a(global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.MathNode bo(global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

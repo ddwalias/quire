@@ -18,6 +18,8 @@ public partial class ScriptableInputControl : global::Quire.Controls.InputContro
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Grid gridCompositeControl;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ScriptableInputControl(global::System.Windows.UIElement compositeChildControl) { }
     [global::Quire.Mirror.MirrorStub]
     public void EditingCompleted(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

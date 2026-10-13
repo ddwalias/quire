@@ -24,6 +24,8 @@ public partial class SystemUnitEditDialog : global::Quire.Controls.Core.Controls
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button OkButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.SystemUnitEditDialogViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void HandleDialogAction(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -32,11 +34,13 @@ public partial class SystemUnitEditDialog : global::Quire.Controls.Core.Controls
     [global::Quire.Mirror.MirrorStub]
     public static bool ShowDialog(global::Quire.SpiritMainWindow owner, global::System.ComponentModel.ICollectionView visualUnitDescriptorTable, global::System.Collections.IDictionary visualCGSUnitDescriptorTable, global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> calculatorUnitDescriptors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private SystemUnitEditDialog(global::Quire.SystemUnitEditDialogViewModel viewModel) { }
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => base.OnOkButtonClick(sender, e);
+    [global::Quire.Mirror.MirrorStub]
+    private void CustomBaseOnSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private SystemUnitEditDialog() { }
 }

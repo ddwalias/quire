@@ -12,6 +12,20 @@ namespace Quire.gen;
 internal partial class ContinuationFunction : global::Quire.gen.IlEmit
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Label m_label;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_arity;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_return_type;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Type[] m_param_types;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MetaObj[] m_params;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MethodFunction m_method;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.ContinuationClo m_clo;
+    [global::Quire.Mirror.MirrorStub]
     public unsafe ContinuationFunction(void* f, global::Quire.gen.MethodFunction e, global::Quire.gen.ContinuationClo clo) : base(default(void*), default(global::Quire.gen.IlEmit)) { }
     [global::Quire.Mirror.MirrorStub]
     public override int Arity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,14 @@ namespace Quire.Controls.Internal;
 internal partial class VisualVectorizationOperatorNode : global::Quire.Controls.Internal.VisualUnaryOperatorNodeForEditor, global::Quire.EquationEditor.View.IVisualUnaryOperatorNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _vectorizationDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.Fence _operatorSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VectorizationLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

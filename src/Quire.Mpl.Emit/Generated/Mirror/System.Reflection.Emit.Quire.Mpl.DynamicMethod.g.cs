@@ -12,6 +12,20 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class DynamicMethod : global::System.Reflection.MethodInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Reflection.Emit.DynamicMethod _dynamicMethod;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.Emit.Quire.Mpl.DynamicMethod_ILGenerator _ilGenerator;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Reflection.Emit.Quire.Mpl.LocalVariableManager _localVariableManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _name;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _idxId;
+    [global::Quire.Mirror.MirrorStub]
+    private static int _s_counter;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Func<global::System.Reflection.Emit.Quire.Mpl.DynamicMethod, bool>, global::System.Func<global::System.Reflection.Emit.Quire.Mpl.DynamicMethod, global::System.Reflection.Emit.Quire.Mpl.DynamicMethod_ILGenerator>> extra_creators;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.LocalVariableManager LocalVariableManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Id { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

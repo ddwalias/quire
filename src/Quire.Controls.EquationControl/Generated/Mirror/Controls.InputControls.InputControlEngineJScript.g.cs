@@ -12,6 +12,12 @@ namespace Quire.Controls.InputControls;
 public abstract partial class InputControlEngineJScript : global::Quire.Controls.InputControls.PrimeControlClearScriptEngine
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string DataValueScriptInternalClassResourceKey = "Quire.Controls.InputControls.Engine.JsDataValueClass.js";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Default_Input_Init = "var Inputs = null;\r\n";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Default_Output_Init = "var Outputs = [{Value:\"\"}];\r\n";
+    [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_Click(Inputs, Outputs)\r\n";
     [global::Quire.Mirror.MirrorStub]
     public const string Event_Start = "Event_Start(Inputs, Outputs);\r\n";

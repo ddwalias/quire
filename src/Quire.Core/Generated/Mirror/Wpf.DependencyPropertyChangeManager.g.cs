@@ -12,6 +12,14 @@ namespace Quire.Wpf;
 public static partial class DependencyPropertyChangeManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfPropertyChangeManager;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey _propertyChangeNotifiersKey;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IDictionary<global::System.Windows.DependencyProperty, global::Quire.Wpf.DependencyPropertyChangeManager.DependencyPropertyChangeNotifier> GetPropertyChangeNotifiers(global::System.Windows.DependencyObject dObj, bool create) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ClearPropertyChangeNotifiers(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void AddPropertyChangedHandler(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void RemovePropertyChangedHandler(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -20,13 +28,23 @@ public static partial class DependencyPropertyChangeManager
     private partial class DependencyPropertyChangeNotifier : global::System.Windows.DependencyObject, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private static readonly global::System.Type _typeOfPropertyChangeNotifier;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.DependencyObject _sourceObject;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Windows.DependencyProperty _sourceProperty;
+        [global::Quire.Mirror.MirrorStub]
         public static readonly global::System.Windows.DependencyProperty ValueProperty;
         [global::Quire.Mirror.MirrorStub]
         public event global::System.Windows.DependencyPropertyChangedEventHandler SourcePropertyChanged;
         [global::Quire.Mirror.MirrorStub]
         public DependencyPropertyChangeNotifier(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject sourceObject) { }
         [global::Quire.Mirror.MirrorStub]
+        private static void HandleValueChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
         public bool HasSourcePropertyChangedHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void FireSourcePropertyChanged(object oldValue, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public void Dispose() { }
     }

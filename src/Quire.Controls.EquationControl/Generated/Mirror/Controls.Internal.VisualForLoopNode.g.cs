@@ -12,6 +12,32 @@ namespace Quire.Controls.Internal;
 internal partial class VisualForLoopNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double OPERATOR_PAD = 4d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double BODY_LEFT_PAD = 8d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _forOperator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _inOperator;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VerticalFence _operatorRightMinorPart;
+    [global::Quire.Mirror.MirrorStub]
+    private double _verticalOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _forOperatorTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _inOperatorTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _firstChildTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _secondChildTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _thirdChildTopLeft;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _operatorRightMinorPartTopLeft;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualSymbolNode ForOperator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

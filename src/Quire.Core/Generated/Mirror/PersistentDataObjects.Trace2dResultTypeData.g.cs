@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class Trace2dResultTypeData
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.Trace2dResultTypeDataRangePoints rangePointsField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.Trace2dResultTypeDataResultPoints resultPointsField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.Trace2dResultTypeDataRangePoints RangePoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.Trace2dResultTypeDataResultPoints ResultPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

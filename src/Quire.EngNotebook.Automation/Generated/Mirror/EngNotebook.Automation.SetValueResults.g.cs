@@ -12,7 +12,13 @@ namespace Quire.EngNotebook.Automation;
 public partial class SetValueResults : global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private SetValueResults() { }
     [global::Quire.Mirror.MirrorStub]
     internal SetValueResults(global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults mathcadPrimeSetValueResults) { }
     [global::Quire.Mirror.MirrorStub]

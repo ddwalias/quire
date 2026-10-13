@@ -28,6 +28,8 @@ public partial class DocumentInsertRibbonBar : global::Fluent.RibbonGroupBox, gl
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_DocumentInsertRibbonBar_DeletePage;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public DocumentInsertRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,8 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class z : global::Quire.Native.PtcEquationEditor.t, global::Quire.Calculation.Core.IStringResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    private string a;
+    [global::Quire.Mirror.MirrorStub]
     public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.MathNode bo(global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

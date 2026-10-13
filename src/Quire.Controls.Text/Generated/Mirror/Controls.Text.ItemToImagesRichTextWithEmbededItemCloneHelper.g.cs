@@ -12,6 +12,10 @@ namespace Quire.Controls.Text;
 public partial class ItemToImagesRichTextWithEmbededItemCloneHelper : global::Quire.Controls.Text.IRichTextWithEmbededItemCloneHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.IEngineeringDocument _engineeringDocument;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.ResourceDictionary _resourceDict;
+    [global::Quire.Mirror.MirrorStub]
     public ItemToImagesRichTextWithEmbededItemCloneHelper(global::Quire.Controls.Core.IEngineeringDocument engDoc) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.CopyWidgetBase CreatePopup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

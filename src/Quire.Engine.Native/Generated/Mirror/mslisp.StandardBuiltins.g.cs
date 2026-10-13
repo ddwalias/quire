@@ -14,6 +14,10 @@ public partial class StandardBuiltins
     [global::Quire.Mirror.MirrorStub]
     public static object True;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Engine.PCons maptree_accum1(global::System.Collections.Generic.Dictionary<object, bool> A_0, global::Quire.utl_mgd.Function A_1, global::Quire.Engine.PCons A_2, object A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double to_double(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static object _car(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Engine.PCons _cdr(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

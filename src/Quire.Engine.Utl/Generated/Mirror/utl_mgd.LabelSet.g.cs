@@ -12,6 +12,12 @@ namespace Quire.utl_mgd;
 public partial class LabelSet
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SortedStringSet m_labels;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_wild;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_cached_name;
+    [global::Quire.Mirror.MirrorStub]
     public LabelSet(global::Quire.utl_mgd.SortedStringSet labels, bool wild) { }
     [global::Quire.Mirror.MirrorStub]
     public bool Unifies(global::Quire.utl_mgd.LabelSet other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -22,6 +22,12 @@ public partial class WhiteboardControl : global::System.Windows.Controls.Content
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ChangedEvent;
     [global::Quire.Mirror.MirrorStub]
+    private const string InsertionPointPropertyName = "InsertionPoint";
+    [global::Quire.Mirror.MirrorStub]
+    private const string WhiteboardItemsForXamlSerializationPropertyName = "WhiteboardItemsForXamlSerialization";
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Core.ISnapToPixelHelper _snappingHelper;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager WhiteboardItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.Core.Whiteboard.IContainerItemManager global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer.ContainerItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -90,6 +96,10 @@ public partial class WhiteboardControl : global::System.Windows.Controls.Content
     [global::Quire.Mirror.MirrorStub]
     public void SeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleIsSelectedPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetIsSelected(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool GetIsSelected(global::System.Windows.UIElement item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsSelected(global::System.Windows.UIElement item, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -98,7 +108,27 @@ public partial class WhiteboardControl : global::System.Windows.Controls.Content
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsActive(global::System.Windows.UIElement item, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void OnIsInCopyPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected WhiteboardControl(global::Quire.Controls.Whiteboard.IWhiteboardViewModel viewModel) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupCustomEventHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BringIntoView(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCopyWhiteboardItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> whiteboardItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleRequestScrollTo(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl control, global::System.Windows.Rect areaOfInterest) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ChildCausedResizeHandler(global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RequestMaximumSizeHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetupBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CopySelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,7 +12,13 @@ namespace Quire.Automation;
 public partial class Outputs : global::Quire.Automation.IMathcadPrimeOutputs
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Automation.IMathcadPrimeOutputs _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Automation.IMathcadPrimeOutputs RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private Outputs() { }
     [global::Quire.Mirror.MirrorStub]
     internal Outputs(global::Quire.Automation.IMathcadPrimeOutputs mathcadPrimeOutputs) { }
     [global::Quire.Mirror.MirrorStub]

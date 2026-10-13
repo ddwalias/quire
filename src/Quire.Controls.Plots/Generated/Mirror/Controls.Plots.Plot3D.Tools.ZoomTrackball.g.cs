@@ -12,6 +12,12 @@ namespace Quire.Controls.Plots.Plot3D.Tools;
 public partial class ZoomTrackball : global::Quire.Controls.Plots.Plot3D.Tools.BasePanZoomTrackball
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Threading.DispatcherTimer _timer;
+    [global::Quire.Mirror.MirrorStub]
+    private const int CLICK_ZOOM_FACTOR = 3;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.SelectionDraggerRubberBand _selectionDraggerRubberBand;
+    [global::Quire.Mirror.MirrorStub]
     public ZoomTrackball() { }
     [global::Quire.Mirror.MirrorStub]
     protected override bool TrackStart(global::System.Windows.Point current, bool useTimer) => base.TrackStart(current, useTimer);
@@ -22,7 +28,13 @@ public partial class ZoomTrackball : global::Quire.Controls.Plots.Plot3D.Tools.B
     [global::Quire.Mirror.MirrorStub]
     public override void Detach() => base.Detach();
     [global::Quire.Mirror.MirrorStub]
+    private void Clean() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override bool TrackEnd(global::System.Windows.Point current) => base.TrackEnd(current);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Point CoercePosition(global::System.Windows.Point rawPosition) => base.CoercePosition(rawPosition);
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateSelectionRubberBand(global::System.Windows.Point current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveSelectionRubberBand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

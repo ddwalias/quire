@@ -12,7 +12,23 @@ namespace Quire.Native.EfifittingImpl;
 internal partial class Fmrqmin
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Efi.genfit_delegate Delegate(object f_, object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Mpl.Run.Function m_f;
     [global::Quire.Mirror.MirrorStub]
-    private Fmrqmin() { }
+    private global::Quire.Mcd.NumVal m_arg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_num;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_mat;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_arr;
+    [global::Quire.Mirror.MirrorStub]
+    private Fmrqmin(global::Quire.Mpl.Run.Function f, int na) { }
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* num_parameter(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* errmsg(object ret_) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe sbyte* mat_parameter(double x, double* a, double* y, double* dyda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public static global::Quire.Efi.genfit_delegate Delegate(object f_, object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -16,11 +16,17 @@ public partial class ViewportInfo : global::System.Windows.Media.Animation.Anima
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty Viewport3DProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey TransformKey;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TransformProperty;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.Viewport3D Viewport3D { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Matrix3D Transform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static void Viewport3DChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Viewport3DChanged(global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Media3D.Matrix3D GetTotalTransform(global::System.Windows.Media.Media3D.Viewport3DVisual vis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -33,6 +39,12 @@ public partial class ViewportInfo : global::System.Windows.Media.Animation.Anima
     public static global::System.Windows.Media.Media3D.Matrix3D GetViewportTransform(global::System.Windows.Media.Media3D.Viewport3DVisual vis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Media3D.Matrix3D GetViewportTransform(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Media.Media3D.Matrix3D GetViewportTransform(double width, double height, double left = 0d, double top = 0d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsViewportArranged(global::System.Windows.Media.Media3D.Viewport3DVisual vis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsViewportArranged(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point Point3DtoPoint2D(global::System.Windows.Controls.Viewport3D viewport, global::System.Windows.Media.Media3D.Point3D point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

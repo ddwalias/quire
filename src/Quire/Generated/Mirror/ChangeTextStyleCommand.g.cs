@@ -12,6 +12,12 @@ namespace Quire;
 internal partial class ChangeTextStyleCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.ITextStylesManager _textStylesManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.TextStyleData _newTextStyleData;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.TextStyleData _oldTextStyleData;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ChangeTextStyleCommand(global::Quire.TextStyleData oldTextStyleData, global::Quire.TextStyleData newTextStyleData, global::Quire.Controls.Core.ITextStylesManager textStyleManager) { }

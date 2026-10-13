@@ -12,6 +12,180 @@ namespace Quire.Engine;
 public partial class MCFront12 : global::System.MarshalByRefObject, global::Quire.Engine.IEnginePriv, global::Quire.Engine.IBuiltin, global::Quire.Engine.IMCEngine, global::Quire.Engine.IEngineUnstable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.IFactoryCallbacks m_factory;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeEvent m_initialized;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_deferred_tasks_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Queue<global::Quire.Engine.Task> m_deferred_tasks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.HandleFactory m_handle_factory;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.LabeledDictionary m_default_region_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.LabeledDictionary m_pending_region_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.LabeledDictionary m_null_region_value;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_symbolic_result_maximum_size;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Interpreter m_interpreter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.NodeCallback m_node_callback;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.MCEngCallbacks m_callbacks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.Depman m_depman;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.MCCore12 m_core;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Engine.Scan m_scan;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_engine_id;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Hashtable m_status_map;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_addafter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_addafter_and_set;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_addbefore;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_addbefore_and_set;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_moveafter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_movebefore;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_remove;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_update;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_priority;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_priority;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_auto_calc;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_synchronous_callbacks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_synchronous_callbacks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_sync;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_async;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_at;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_at_async;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_after;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_after_async;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_before;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_value_before_async;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_last_available;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_last_available_async;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_is_bound_at;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_treat_as_ready;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_protect_region_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_is_region_value_protected;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_region_after;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_region_before;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_child;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_child_and_set;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_adopt;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_replace;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_aggregate_after;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_aggregate_after_and_set;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_aggregate_before;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add_aggregate_before_and_set;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_children;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_child_count;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_child;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_parent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_top_nodes;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_permit_event_callbacks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_event_callbacks_permitted;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_enable_threading;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_stop_workers;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_num_threads;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_wait_up_to_date;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_start_workers;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_unload;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_option;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_option;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_options;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_request_echo;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_load_mpl_file_rec;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_mpl_module_name;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_defined;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_definition;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_dependencies;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_dependents;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_peek_value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_initialize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_recalculate_all;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_calculate_now;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_variable;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_set_variable;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_unset_variable;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_builtins;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_get_node_type;
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool IsUpToDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsBusy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,6 +194,24 @@ public partial class MCFront12 : global::System.MarshalByRefObject, global::Quir
     [global::Quire.Mirror.MirrorStub]
     public virtual event global::Quire.Engine.BooleanCallback OnBusy;
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.utl_mgd.Function lispf(global::Quire.mslisp.Interpreter i, string fname) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int to_handle(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void init(global::Quire.mslisp.Interpreter i, string appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary FilterDict(global::System.Collections.IDictionary d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private object FilterErrors(object v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Exception FilterException(global::System.Exception e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CheckTimestamps(string file, string dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool NewStatus(int fnode, global::Quire.Engine.NodeStatus s, global::System.Collections.Hashtable status_map) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int IncrementComputeCount(int fnode, int incr, global::System.Collections.Hashtable status_map) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public MCFront12(global::Quire.Engine.IFactoryCallbacks f, global::Quire.Engine.MCCore12 core, int engine_id, int worker_stack_size) { }
     [global::Quire.Mirror.MirrorStub]
     public override object InitializeLifetimeService() => base.InitializeLifetimeService();
@@ -27,6 +219,8 @@ public partial class MCFront12 : global::System.MarshalByRefObject, global::Quir
     public virtual void Initialize(string appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void DoInitialize(object _appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeMCFront12() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual int AddAfter(int h, string expr, int priority, int __unnamed003) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

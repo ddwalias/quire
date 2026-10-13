@@ -20,6 +20,10 @@ internal partial class InputListBoxEnginePython : global::Quire.Controls.InputCo
     [global::Quire.Mirror.MirrorStub]
     public const string Event_Click = "_SelChanged";
     [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableListBox.PythonListBoxDefaultScript.py";
+    [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableListBox.PythonListBoxScriptInternalClass.py";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

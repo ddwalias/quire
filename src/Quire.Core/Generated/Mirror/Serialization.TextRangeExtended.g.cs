@@ -12,6 +12,8 @@ namespace Quire.Serialization;
 public partial class TextRangeExtended : global::System.Windows.Documents.TextRange
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string StylePattern = " style=\"(?<style>[^.\"]+)\"";
+    [global::Quire.Mirror.MirrorStub]
     public TextRangeExtended(global::System.Windows.Documents.TextPointer tpStart, global::System.Windows.Documents.TextPointer tpEnd) : base(default(global::System.Windows.Documents.TextPointer), default(global::System.Windows.Documents.TextPointer)) { }
     [global::Quire.Mirror.MirrorStub]
     public void Save(global::System.IO.Stream st, string format, bool preserveTextElements, bool isConversion = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -21,4 +23,6 @@ public partial class TextRangeExtended : global::System.Windows.Documents.TextRa
     public void SaveInternal(global::System.IO.Stream st, bool preserveTextElements, bool isConversion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Load(global::System.IO.Stream st, string format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteExplicitFontAttributes(global::System.Text.StringBuilder sb, string xamlText, global::System.Windows.Documents.Run run, string runString, int j, ref int jOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,7 +12,39 @@ namespace Quire.Controls.Include;
 internal partial class IncludeWorksheetModel : global::System.IDisposable, global::Quire.Controls.Include.IMultiLevelInclusionItem
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _includedFilePath;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.CalculationVariables _parentDocCalculationVariables;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.CalculationOptions _parentDocCalculationOptions;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Windows.UIElement> _regions;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Threading.ManualResetEvent _waitForLoad;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<string> _parentFileNameList;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isParentDataUpdated;
+    [global::Quire.Mirror.MirrorStub]
+    private string _pathIndexes;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isTopLevel;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetFileManager _fileManager;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetCalculatableHandler _calculatableHandler;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.ErrorWarningHandlerModel _errorwarningHandlerModel;
+    [global::Quire.Mirror.MirrorStub]
+    private const string FakeFreemiumEqText = "freemium = ";
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Func<bool> IsInFreemiumMode;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _reloadedInFremium;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _forceAddingIncludedCalculatableWrappers;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _cacheValid;
     [global::Quire.Mirror.MirrorStub]
     public string IncludedFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -30,6 +62,8 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     [global::Quire.Mirror.MirrorStub]
     internal bool IsTopLevel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static bool InDeserialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool CircularInclusion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal string IncludedFullFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -45,6 +79,8 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     public bool OriginalMissingCacheUsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool CacheCorrupted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Windows.UIElement> RegionsToSerialize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<string> ParentFileNames { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -72,6 +108,8 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action ContentChanged;
     [global::Quire.Mirror.MirrorStub]
+    private event global::System.Action OnParentDataSet;
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<string, global::Quire.Controls.Include.ErrorsList> ErrorsUpdated;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<string, global::Quire.Controls.Include.WarningsList> WarningsUpdated;
@@ -86,15 +124,45 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     [global::Quire.Mirror.MirrorStub]
     public IncludeWorksheetModel(global::System.Windows.ResourceDictionary resources) { }
     [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireSynchronizationStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetParentDirectoryPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Pair<string, bool> BuildFileInfoArgs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string CreateIncludedFullFilePath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void ResetData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void ResetDataRecursivly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsEmptyFilePath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool CausesCircularReference() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool FileNotExist() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool ChildIncludeFilesNeedReload(out bool canReloadAllChildren) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CheckIfNeedReloadAndUpdateIncluded(out bool canReload) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void Reload() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireContentChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FixIncludedFileCalculationVariableCWD() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateLastSavedDateAndFileName() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void CleanCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateChildren(global::System.Action<global::Quire.Controls.Include.IMultiLevelInclusionItem> setter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateChildren(global::System.Action<global::Quire.Controls.Include.IMultiLevelInclusionItem> setter, bool recursely, bool fromTop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -102,17 +170,33 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     [global::Quire.Mirror.MirrorStub]
     public void RemoveParentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ReloadChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReloadIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool IsLastLoadedPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal bool IsLastLoadedPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool LastSavedDateIsUpToDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.DateTime GetLastSavedFileDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateEngineeringDocCalculationVariables(global::Quire.Controls.CalculationVariables newVariables) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateEngineeringDocCalculationOptions(global::Quire.Controls.CalculationOptions newOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool ShouldShowCalculationSettingsWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void HandleEngineeringDocCalculationSettingChanged(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<string> GetCalculationSettingsDiffsCodes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.EquationControl CreateFakeEquationControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Windows.UIElement> FindAndExcludeFakeRegion(global::System.Collections.Generic.IList<global::System.Windows.UIElement> regions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void ReadCachedPart(global::System.IO.Packaging.PackagePart part) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -121,6 +205,8 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     public bool CacheCorruptedForAnyChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void WaitForLoad(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateParentFileNameByCWDIfNeed(string CWD) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeserializeEpilog(bool isConvertedFromMathcad14) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -132,11 +218,21 @@ internal partial class IncludeWorksheetModel : global::System.IDisposable, globa
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Include.BackupData GetData(bool isInPrinting) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireResetWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireWarningOnChild(global::System.Collections.Generic.List<string> list, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void FireErrorOnChild(string errorCode, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireErrorsUpdated(string path, global::Quire.Controls.Include.ErrorsList arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireWarningsUpdated(string path, global::Quire.Controls.Include.WarningsList arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearErrors() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleSystemVariableValueChange(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HookupSystemVariables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

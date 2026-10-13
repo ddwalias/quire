@@ -12,11 +12,19 @@ namespace Quire.PersistentData;
 public partial class fieldTypePageNumber
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.pageNumberTemplate templateField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool templateFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> _enumSerializationValues;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.pageNumberTemplate template { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool templateSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.Dictionary<string, string> EnumSerializationValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> GetEnumSerializationValues(global::System.Type enumType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public fieldTypePageNumber() { }
 }

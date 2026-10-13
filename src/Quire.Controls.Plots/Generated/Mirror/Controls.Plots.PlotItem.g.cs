@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots;
 public partial class PlotItem : global::System.Windows.Controls.UserControl
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     internal const string DragBorder = "PART_DragBorder";
     [global::Quire.Mirror.MirrorStub]
     protected bool _dragStarted;

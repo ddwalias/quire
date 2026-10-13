@@ -14,6 +14,14 @@ public partial class SetPropertyCommand : global::Quire.Undo.IUndoableCommand
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.DependencyObject _dependencyObject;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.DependencyProperty _dependencyProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly object _newValue;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hasLocalValue;
+    [global::Quire.Mirror.MirrorStub]
+    private object _oldValue;
+    [global::Quire.Mirror.MirrorStub]
     protected virtual object Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

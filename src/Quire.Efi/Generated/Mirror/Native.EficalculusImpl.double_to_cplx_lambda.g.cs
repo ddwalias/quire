@@ -12,6 +12,10 @@ namespace Quire.Native.EficalculusImpl;
 internal partial class double_to_cplx_lambda
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_msg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.delegate_dbl_to_cplx m_func;
+    [global::Quire.Mirror.MirrorStub]
     public double_to_cplx_lambda(global::Quire.Mpl.Run.Function f) { }
     [global::Quire.Mirror.MirrorStub]
     public bool has_error() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

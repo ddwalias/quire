@@ -12,6 +12,8 @@ namespace Quire.Mpl.Run;
 public partial class FnConstant : global::Quire.Mpl.Run.Function
 {
     [global::Quire.Mirror.MirrorStub]
+    private object m_val;
+    [global::Quire.Mirror.MirrorStub]
     public override string Name { get => base.Name; }
     [global::Quire.Mirror.MirrorStub]
     public FnConstant(object val) : base(default(int), default(int)) { }

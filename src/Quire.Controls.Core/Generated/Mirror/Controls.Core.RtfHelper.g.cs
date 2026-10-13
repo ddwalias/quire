@@ -12,7 +12,29 @@ namespace Quire.Controls.Core;
 public static partial class RtfHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double DnOffsetCoefficient = 1.5d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double PixelsToTwips = 15d;
+    [global::Quire.Mirror.MirrorStub]
+    private const int DipsPerInch = 96;
+    [global::Quire.Mirror.MirrorStub]
+    private const int RegionMinimumShowingSpace = 96;
+    [global::Quire.Mirror.MirrorStub]
+    private const int WordWideMargin = 192;
+    [global::Quire.Mirror.MirrorStub]
+    private const int WordPageMaxWidth = 2112;
+    [global::Quire.Mirror.MirrorStub]
+    private const int RightPointRestriction = 27360;
+    [global::Quire.Mirror.MirrorStub]
+    private const int TextboxSideFrameWidth = 50;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly int TextboxFrameThicknessTwips;
+    [global::Quire.Mirror.MirrorStub]
     public const string BaselineOffsetTagName = "baselineOffsetTag";
+    [global::Quire.Mirror.MirrorStub]
+    private static int ConvertPixelsToTwips(double pixels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int NormalizeHorizontalPosition(double leftPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool FixHyperlinksRtfSerialization(ref string rtfStr, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

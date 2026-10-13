@@ -17,4 +17,8 @@ internal partial class BarsTraceRenderer : global::Quire.Controls.Plots.Traces.C
     public BarsTraceRenderer(global::Quire.Controls.Plots.Presenter.IPlotTrace ownerTrace, global::Quire.Controls.Plots.Traces.VerticalTraceOrderInfoProvider orderInfoProvider) : base(default(global::Quire.Controls.Plots.Presenter.IPlotTrace), default(global::Quire.Controls.Plots.Traces.ITraceOrderInfoProvider)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateBars(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.PointCollection pointCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry GetBarGeometry(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

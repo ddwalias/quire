@@ -12,6 +12,14 @@ namespace Quire.EquationEditor.Tree;
 public partial class ComboBoxControlNodeInfo : global::Quire.EquationEditor.Tree.ValueNodeInfo, global::Quire.EquationEditor.Tree.IComboBoxControlNodeInfo, global::Quire.EquationEditor.Tree.INodeInfoNotifyModel, global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.DelegateFunction0<bool>, string> a;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action b;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> c;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.ComboBoxInputControlData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.EquationEditor.Tree.ComboBoxInputControlData global::Quire.EquationEditor.Tree.IComboBoxControlNodeInfo.Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

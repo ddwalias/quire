@@ -32,6 +32,10 @@ public partial class FileUtils
     [global::Quire.Mirror.MirrorStub]
     public static string EvaluateRelativePath(string mainDirPath, string absoluteFilePath, bool stripSingleLeadingDot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string GetAppDataPathWithBase(string appDataPathBase, bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetProductNamePerVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string GetApplicationDataPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetLocalApplicationDataPath(bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

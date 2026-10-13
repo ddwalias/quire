@@ -12,6 +12,14 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel, global::Quire.Controls.ExcelComponent.Model.IChartComponentModel, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType, global::Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable> _defaultLimits;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.Model.ChartMinMaxCalculatable _chartMinMaxCalc;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.ExcelComponent.Model.ChartMinMaxPreCalculatable _chartMinMaxPreCalc;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.SortedDictionary<uint, global::Quire.Controls.ExcelComponent.Model.ChartTraceCalculatable> _traceCalculatables;
+    [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.Generic.IEnumerable<string> ComponentErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,6 +27,10 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     protected override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatablesConnectedToTheEngine { get => base.CalculatablesConnectedToTheEngine; }
     [global::Quire.Mirror.MirrorStub]
     internal override global::Quire.Controls.ExcelComponent.View.IOleContainerItem OleContainerItem { get => base.OleContainerItem; set => base.OleContainerItem = value; }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.ExcelComponent.Model.SimpleChartCalculatable> ConnectedDefaultLimits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.View.ChartContainer ChartContainerItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal event global::System.Action RequestUpdateIdentifierLabels;
     [global::Quire.Mirror.MirrorStub]
@@ -49,6 +61,16 @@ public partial class ChartComponentModel : global::Quire.Controls.ExcelComponent
     protected override void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleChildWrapperChartTypeChanged(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleChildWrapperRemovedOrChartTypeChanged(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, global::System.Nullable<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType> prevTypeWhenRemoving) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateAllTraces(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapperToCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateChartMinMaxCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InternalAddCalculatableAndEvaluate(global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableChild calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

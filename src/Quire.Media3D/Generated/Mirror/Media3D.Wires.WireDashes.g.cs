@@ -16,6 +16,8 @@ public partial class WireDashes : global::Quire.Media3D.WireLines
     [global::Quire.Mirror.MirrorStub]
     public double Pitch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private void AddDashedLine(global::System.Windows.Media.Media3D.Point3D start, global::System.Windows.Media.Media3D.Point3D end, global::System.Windows.Media.Media3D.Point3DCollection resultVertices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void Generate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection resultVertices) => base.Generate(args, resultVertices);
     [global::Quire.Mirror.MirrorStub]
     public WireDashes() { }

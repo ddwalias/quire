@@ -14,6 +14,16 @@ public partial class MatrixResizeWidget : global::System.Windows.Controls.UserCo
     [global::Quire.Mirror.MirrorStub]
     public const double OuterGrabAreaSize = 20d;
     [global::Quire.Mirror.MirrorStub]
+    private const double MaxWidgetSize = 100d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double MinimalSize = 10d;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isDragging;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Undo.CommandScope _commandScope;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.EquationControl _eqControl;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MatrixFormatProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TotalSizeProperty;
@@ -40,6 +50,8 @@ public partial class MatrixResizeWidget : global::System.Windows.Controls.UserCo
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button ExitButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public bool GotKeyPressEvent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -60,9 +72,37 @@ public partial class MatrixResizeWidget : global::System.Windows.Controls.UserCo
     [global::Quire.Mirror.MirrorStub]
     public double YErrorIndicator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private double CellStep { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     internal MatrixResizeWidget(global::Quire.Controls.EquationControl eqControl, global::Quire.Controls.Internal.VisualMatrixNode visualMatrix) { }
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Controls.Primitives.Popup CreatePopup(global::Quire.Controls.EquationControl eqControl, global::Quire.Controls.Internal.VisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void MatrixWidgetPopupClosed(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void MatrixFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleMatrixFormatChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void TotalSizeChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InnerMatrixMarginChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object NotLessThanMinimalSize(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Ignore(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculateInnerMatrixMargin() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateMatrixFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetHeightWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDragStart(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleDragEnd(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalulateDisplayedOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]

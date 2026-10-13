@@ -12,6 +12,10 @@ namespace Quire.Controls.Core.Serialization;
 public partial class MathFormatSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Core.XmlBooleanConverter converter;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _ignoreUnsetProperty;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MathFormat MathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MathFormatSerializer(string localName, string nameSpace, global::Quire.Controls.Core.MathFormat mathFormat, bool ignoreUnsetProperty = true) : base(default(global::System.Xml.Linq.XName), default(object[])) { }

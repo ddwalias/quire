@@ -12,7 +12,59 @@ namespace Quire.Native.EfidiffeqImpl;
 internal partial class DiffEqBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_DerivsFunction;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_JacobnFunction;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_LoadFunction;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_Load1Function;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_Load2Function;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_ScoreFunction;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfidiffeqImpl.DiffEqDelegate m_DerivsDelegate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfidiffeqImpl.DiffEqDelegate m_JacobnDelegate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfidiffeqImpl.DiffEqDelegate m_LoadDelegate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfidiffeqImpl.DiffEqDelegate m_Load1Delegate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfidiffeqImpl.DiffEqDelegate m_Load2Delegate;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfidiffeqImpl.DiffEqDelegate m_ScoreDelegate;
+    [global::Quire.Mirror.MirrorStub]
+    private int mm_NvarDims;
+    [global::Quire.Mirror.MirrorStub]
+    private int mm_N1Dims;
+    [global::Quire.Mirror.MirrorStub]
+    private int mm_N2Dims;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_ScoreReturnDims;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_nvar;
+    [global::Quire.Mirror.MirrorStub]
+    private double m_x1;
+    [global::Quire.Mirror.MirrorStub]
+    private double m_x2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim m_dim1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim m_dim2;
+    [global::Quire.Mirror.MirrorStub]
     public int error_param_no;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_N2Dims { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private int m_N1Dims { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private int m_NvarDims { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe object CMFunc(global::Quire.Mpl.Run.Function A_0, double A_1, double* A_2, int A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void init_dims() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public DiffEqBase(global::Quire.Mpl.Run.Function DerivsFunction, global::Quire.Mpl.Run.Function JacobnFunction, global::Quire.Mpl.Run.Function LoadFunction, global::Quire.Mpl.Run.Function Load1Function, global::Quire.Mpl.Run.Function Load2Function, global::Quire.Mpl.Run.Function ScoreFunction) { }
     [global::Quire.Mirror.MirrorStub]

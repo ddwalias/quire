@@ -14,6 +14,8 @@ public partial class HeaderAndFooterResources : global::System.Windows.ResourceD
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type[] KeysOwnerTypes;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public HeaderAndFooterResources() { }
     [global::Quire.Mirror.MirrorStub]
     public void UpdateElementSeparator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

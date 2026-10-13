@@ -20,5 +20,9 @@ public partial class RegionFactory : global::Quire.Controls.Core.IRegionFactory
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Serialization.IRegionPersistentData CreateFailedRegionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Serialization.IRegionPersistentData CreateTemplatedTextBoxTypedPersistentData(global::Quire.PersistentData.fieldType fieldType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Serialization.IRegionPersistentData CreatePlotTypedPersistentData(global::Quire.PersistentDataObjects.plotType plotData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public RegionFactory() { }
 }

@@ -15,4 +15,8 @@ public static partial class StackBehaviourExtensions
     public static int GetPushCount(this global::System.Reflection.Emit.StackBehaviour behaviour, object operand = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int GetPopCount(this global::System.Reflection.Emit.StackBehaviour behaviour, global::System.Reflection.Emit.OpCode opCode, object operand = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsDelegateInvoke(global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsDelegateInvocationOpCode(global::System.Reflection.Emit.OpCode opCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,9 +12,43 @@ namespace Quire.Native.EfidiffeqImpl;
 internal partial class eval_rhs
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_func;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_2ndOrderExists;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_arg0;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_arg1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_arg2;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_vec2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_arg3;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_vec3;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_arg4;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_vec4;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_arg5;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_vec5;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_npdae;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_ncodae;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_check_return;
+    [global::Quire.Mirror.MirrorStub]
+    private eval_rhs(global::Quire.Mpl.Run.Function pfunc, bool exists_2_order) { }
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void eval_rhs_pdae(global::Quire.Native.EfidiffeqImpl.PdaeSolver1d* solver, global::Quire.Native.EfidiffeqImpl.PdeDims pdedims) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void eval_rhs_codae(global::Quire.Native.EfidiffeqImpl.PdaeSolver1d* solver, global::Quire.Native.EfidiffeqImpl.PdeDims __unnamed001) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfidiffeqImpl.bc_delegate pdae(global::Quire.Mpl.Run.Function func, bool exists_2_order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfidiffeqImpl.bc_delegate codae(global::Quire.Mpl.Run.Function func, bool exists_2_order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private eval_rhs() { }
 }

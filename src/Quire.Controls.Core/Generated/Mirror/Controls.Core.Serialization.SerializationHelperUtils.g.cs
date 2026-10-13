@@ -22,5 +22,11 @@ public static partial class SerializationHelperUtils
     [global::Quire.Mirror.MirrorStub]
     public static void CopyObfuscatedStream(global::System.IO.Stream source, global::System.IO.Stream target, int maxBufferSize = 16384) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void FinalizeSeekableStream(global::System.IO.Stream seekableStream, string tempFilePath, global::System.IO.Stream originalStream = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string InitializeSeekableFileStream(global::System.IO.Stream originalStream, out global::System.IO.Stream seekableStream, bool makeCopy = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static void Obfuscate(byte[] arrData, int length = 2147483647) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static byte Mask(byte data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

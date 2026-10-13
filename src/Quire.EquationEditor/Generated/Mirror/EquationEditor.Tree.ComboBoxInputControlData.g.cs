@@ -12,6 +12,22 @@ namespace Quire.EquationEditor.Tree;
 public partial class ComboBoxInputControlData : global::Quire.EquationEditor.Tree.InputControlData, global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EquationEditor.Tree.ComboBoxMathCreator a__;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int b__;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int c;
+    [global::Quire.Mirror.MirrorStub]
+    private int d;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> e;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> f;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> g;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string h;
+    [global::Quire.Mirror.MirrorStub]
     public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -34,9 +50,15 @@ public partial class ComboBoxInputControlData : global::Quire.EquationEditor.Tre
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxInputControlData() { }
     [global::Quire.Mirror.MirrorStub]
+    private ComboBoxInputControlData(int A_0, int A_1, int A_2, string A_3, global::System.Collections.Generic.IEnumerable<string> A_4, global::System.Collections.Generic.IEnumerable<string> A_5, global::System.Collections.Generic.IEnumerable<string> A_6, global::Quire.EquationEditor.Tree.IStringToComboBoxMathTransformer A_7 = default) { }
+    [global::Quire.Mirror.MirrorStub]
     public ComboBoxInputControlData(global::Quire.EquationEditor.Tree.ComboBoxInputControlData other) { }
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxInputControlData(global::Quire.EquationEditor.Tree.IComboBoxInputControlDataAdapter data) { }
+    [global::Quire.Mirror.MirrorStub]
+    private ComboBoxInputControlData(int A_0, int A_1, int A_2, string A_3, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> A_4, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> A_5, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> A_6) { }
+    [global::Quire.Mirror.MirrorStub]
+    private bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsValid() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -44,11 +66,15 @@ public partial class ComboBoxInputControlData : global::Quire.EquationEditor.Tre
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::System.ValueTuple<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.Tree.MathNode>> GetUnitedValuesForSelectedRowRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode GetValueByRowCol(int row, int col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.IInputControlData other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -59,6 +85,12 @@ public partial class ComboBoxInputControlData : global::Quire.EquationEditor.Tre
     public void MakeReadOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void MakeEditable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode b(global::System.ValueTuple<string, global::System.Collections.Generic.IList<string>> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> a(global::System.ValueTuple<string, global::System.Collections.Generic.IList<string>> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.ValueTuple<string, global::System.Collections.Generic.IList<string>> a(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.ComboBoxInputControlData+a, Ptc.EquationEditor")]
     private sealed partial class a_
@@ -125,9 +157,21 @@ public partial class ComboBoxInputControlData : global::Quire.EquationEditor.Tre
     private sealed partial class b_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private int a_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.EquationEditor.Tree.MathNode b__;
+        [global::Quire.Mirror.MirrorStub]
+        private int c;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.ComboBoxInputControlData d_;
         [global::Quire.Mirror.MirrorStub]
+        private int e;
+        [global::Quire.Mirror.MirrorStub]
         public int f_;
+        [global::Quire.Mirror.MirrorStub]
+        private int g_;
+        [global::Quire.Mirror.MirrorStub]
+        private int h;
         [global::Quire.Mirror.MirrorStub]
         public b_(int A_0) { }
         [global::Quire.Mirror.MirrorStub]

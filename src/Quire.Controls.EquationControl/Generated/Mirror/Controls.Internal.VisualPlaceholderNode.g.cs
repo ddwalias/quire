@@ -14,6 +14,16 @@ internal partial class VisualPlaceholderNode : global::Quire.Controls.Internal.V
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty PlaceholderColorProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.FormattedText _char;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _strokeBrush;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Brush _fillBrush;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect _placeholderRect;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Shapes.Rectangle _placeholderBox;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size PlaceHolderBoxSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size PlaceHolderSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,13 +36,21 @@ internal partial class VisualPlaceholderNode : global::Quire.Controls.Internal.V
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void OnPlaceholderColorPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public VisualPlaceholderNode() { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Media.FormattedText CreateFormattedCharPlaceholder(global::System.Windows.Media.Typeface fontTypeface, double fontSize, global::System.Windows.Media.Brush foreground, global::System.Windows.DpiScale dpiScale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void BuildPlaceholderBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPlaceholderColorChanged(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnShowOperatorOnlyWhenActiveChanged(bool value) => base.OnShowOperatorOnlyWhenActiveChanged(value);
     [global::Quire.Mirror.MirrorStub]

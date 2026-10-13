@@ -12,6 +12,8 @@ namespace Quire.PersistentData;
 public partial class chartContainerType : global::Quire.PersistentData.oleBaseContainerType, global::Quire.PersistentData.IOleObjectPersistentData, global::Quire.PersistentData.IOleSizeData
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.IntegerSizeType sizeInPixelsField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.IntegerSizeType SizeInPixels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Serialization.ExternalObjectType ExternalObjectType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

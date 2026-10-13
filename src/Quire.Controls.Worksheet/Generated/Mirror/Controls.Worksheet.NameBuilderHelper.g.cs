@@ -12,7 +12,31 @@ namespace Quire.Controls.Worksheet;
 public partial class NameBuilderHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string PosPrefix = "pos";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SizePrefix = "sz";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DoublePairDelimiter = "x";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DoubleEmpty = "empty";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DoubleNegativeSign = "N";
+    [global::Quire.Mirror.MirrorStub]
+    private const char RegionNameSeparatorChar = '\u005F';
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly string _regionNameSeparator;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Globalization.NumberFormatInfo _numberFormatForRegionName;
+    [global::Quire.Mirror.MirrorStub]
     internal static string DoubleToString(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string PositionToString(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string RectToString(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string SizeToString(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string DoublePairToString(string prefix, double x, double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string StripDimensionsFromName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

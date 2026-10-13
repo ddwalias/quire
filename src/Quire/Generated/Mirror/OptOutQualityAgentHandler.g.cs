@@ -12,9 +12,23 @@ namespace Quire;
 public partial class OptOutQualityAgentHandler
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Properties.Settings _settings;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.QualityAgentManager.IQualityAgentManager _qualityAgentManager;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isReportSendingEnabled;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _disableQualityAgentManager;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsReportSendingEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool DisableQualityAgentManager { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public OptOutQualityAgentHandler(global::Quire.QualityAgentManager.IQualityAgentManager qualityAgentManager) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void BindToPropertyChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateIsReportSendingEnabled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

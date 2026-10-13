@@ -7,6 +7,7 @@
   Quire.Controls.CollapsibleArea.AreaHeaderKeys F public const System.String PasswordProtectedAreaHeaderKey
   Quire.Controls.CollapsibleArea.AreaHeaderKeys F public const System.String ProtectedAreaHeaderKey
   Quire.Controls.CollapsibleArea.AreaHeaderKeys M public .ctor`0() -> System.Void
+  Quire.Controls.CollapsibleArea.AreaProtectionDictionary F private System.Boolean _contentLoaded
   Quire.Controls.CollapsibleArea.AreaProtectionDictionary M public .ctor`0() -> System.Void
   Quire.Controls.CollapsibleArea.AreaProtectionDictionary M public InitializeComponent`0() -> System.Void
   Quire.Controls.CollapsibleArea.AreaProtectionDictionary X System.Windows.Markup.IComponentConnector::Connect
@@ -21,11 +22,25 @@
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl E public System.Action`1<Quire.Controls.Core.Protection.IProtectableControl> ProtectedStateChanged
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl F internal const System.String DragBorderName
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl F internal const System.String ToggleButtonCanvasName
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl F private System.Action HookupSizeChangedHandler
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl F private System.Action`1<Quire.Controls.Core.ICollapsibleAreaControl> BorderStateChanged
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl F private System.Action`1<Quire.Controls.Core.ICollapsibleAreaControl> CollapsedStateChanged
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl F private System.Action`1<Quire.Controls.Core.Protection.IProtectableControl> ProtectedStateChanged
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl F private System.Boolean _contentLoaded
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl F private static Quire.Wpf.IMessageBoxManager _messageBoxMngr
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl F public static readonly System.Windows.DependencyProperty ControlMinHeightProperty
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl F public static readonly System.Windows.DependencyProperty ControlWidthProperty
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl F public static readonly System.Windows.Input.RoutedUICommand AreaControlToggleCollapseState
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl F public static readonly System.Windows.Input.RoutedUICommand BorderVisibilityCommand
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl M internal static HandlePrintViewportChanged`0(Quire.Controls.Core.ICollapsibleAreaControl,System.Windows.Size) -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private BindCommands`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private FireBorderVisibilityStateChanged`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private FireCollapsedStateChanged`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private FireProtectedStateChanged`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private HandleProtectedStateChanged`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private static ControlMinHeightChangedHandler`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private static ControlWidthChangedHandler`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl M private static ShowWarningDialog`0(System.String) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl M protected override GetInternalHelpContext`0() -> System.String
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl M protected override OnContextMenuOpening`0(System.Windows.Controls.ContextMenuEventArgs) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl M protected override OnPreviewGotKeyboardFocus`0(System.Windows.Input.KeyboardFocusChangedEventArgs) -> System.Void
@@ -46,15 +61,17 @@
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P AreaDataForXamlSerialization : Quire.PersistentData.IAreaType get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P AreaHasErrors : System.Boolean get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P AreaHeight : System.Double get:public set:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl P AreaViewModel : Quire.Controls.CollapsibleArea.ICollapsibleAreaViewModel get:private
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P CanHideFromCalculationContext : System.Boolean override get:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P CollapsedAreaBounds : System.Windows.Rect get:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P ControlMinHeight : System.Double get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P ControlWidth : System.Double get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P DeserializationStrategy : Quire.Controls.Core.Serialization.IDeserializationStrategy override get:protected set:protected
-  Quire.Controls.CollapsibleArea.CollapsibleAreaControl P GridCellSizeChangedAction : System.Action set:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl P GridCellSizeChangedAction : System.Action get:private set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P HideFromCalculationContext : System.Boolean override get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P IsBorderVisible : System.Boolean get:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P IsCollapsed : System.Boolean get:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaControl P MessageBoxManager : Quire.Wpf.IMessageBoxManager static get:private
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P NotHookupSizeChangedHandlerUntilLoaded : System.Boolean get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P PrintViewport : System.Nullable`1<System.Windows.Rect> get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P ProtectionData : Quire.ProtectionData get:public
@@ -63,10 +80,15 @@
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl P TextStyleChangedHandler : Quire.ITextStyleChangedHandler get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl X System.ICloneable::Clone
   Quire.Controls.CollapsibleArea.CollapsibleAreaControl X System.Windows.Markup.IComponentConnector::Connect
+  Quire.Controls.CollapsibleArea.CollapsibleAreaDeserializationStrategy F private readonly Quire.Controls.CollapsibleArea.CollapsibleAreaControl _control
   Quire.Controls.CollapsibleArea.CollapsibleAreaDeserializationStrategy M public .ctor`0(Quire.Controls.CollapsibleArea.CollapsibleAreaControl) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaDeserializationStrategy M public override DeserializeRegionsEpilog`0(System.Xml.XmlDocument) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaDeserializationStrategy P RegionFactory : Quire.Controls.Core.IRegionFactory override get:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.CollapsibleArea.CollapsibleAreaModel F private System.Boolean _isBorderVisible
+  Quire.Controls.CollapsibleArea.CollapsibleAreaModel F private System.Boolean _isCollapsed
+  Quire.Controls.CollapsibleArea.CollapsibleAreaModel F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.CollapsibleArea.CollapsibleAreaModel M private FirePropertyChanged`0(System.String) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel M protected CopyStateTo`0(Quire.Controls.CollapsibleArea.CollapsibleAreaModel) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel M protected override InitializeChildManager`0() -> Quire.Calculation.Core.Support.CalculatableChildHider
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel M protected override ShouldCloneItem`0(Quire.Controls.Core.IWhiteboardItem) -> System.Boolean
@@ -80,20 +102,38 @@
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel M public override Clone`0() -> System.Object
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel P CanToggleCollapseState : System.Boolean get:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel P IsBorderVisible : System.Boolean get:public set:public
-  Quire.Controls.CollapsibleArea.CollapsibleAreaModel P IsCollapsed : System.Boolean get:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaModel P IsCollapsed : System.Boolean get:public set:private
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel P IsInPrinting : System.Boolean override get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel P PrintViewport : System.Nullable`1<System.Windows.Rect> get:public set:public
-  Quire.Controls.CollapsibleArea.CollapsibleAreaModel P ProtectionData : Quire.ProtectionData get:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaModel P ProtectionData : Quire.ProtectionData get:public set:private
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel X Quire.Controls.Core.Protection.IProtectableModel::get_HasOpenDescendantOleObjects
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel+PropertyNames F public const System.String IsBorderVisible
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel+PropertyNames F public const System.String IsCollapsed
   Quire.Controls.CollapsibleArea.CollapsibleAreaModel+PropertyNames F public const System.String ProtectionData
+  Quire.Controls.CollapsibleArea.CollapsibleAreaSerializationStrategy F private readonly Quire.DelegateFunction0`1<Quire.PersistentDataObjects.IRegionType> _regionCreator
   Quire.Controls.CollapsibleArea.CollapsibleAreaSerializationStrategy F protected readonly Quire.Controls.CollapsibleArea.CollapsibleAreaControl _control
   Quire.Controls.CollapsibleArea.CollapsibleAreaSerializationStrategy M protected override ConvertToRegionPersistantData`0(Quire.Serialization.IS11NProvider,Quire.Controls.Core.IWhiteboardItem) -> Quire.PersistentDataObjects.IRegionInWhiteboardType
   Quire.Controls.CollapsibleArea.CollapsibleAreaSerializationStrategy M public .ctor`0(Quire.Controls.CollapsibleArea.CollapsibleAreaControl,Quire.DelegateFunction0`1<Quire.PersistentDataObjects.IRegionType>) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaSerializationStrategy M public override SerializeRegionsEpilog`0(System.Xml.XmlDocument) -> System.Void
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel F internal const System.String DragBorderName
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel F private System.Boolean _areaHasErrors
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel F private System.Boolean _protectionOperationsEnabled
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel F private System.Double _areaHeight
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel F private readonly Quire.Controls.CollapsibleArea.ICollapsibleAreaModel _model
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel F public static readonly System.Double CollapsedAreaHeight
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private BindCommands`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private BorderVisibilityCommand`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private CanToggleCollapseState`0() -> System.Boolean
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private CanToggleProtectState`0() -> System.Boolean
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private ErrorPropertyChangedHandler`0(System.Object,System.ComponentModel.PropertyChangedEventArgs) -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private HandleCollapsibleStateChanged`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private OnToggleCollapseState`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private OnToggleProtectState`0(System.Object) -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private ShouldBlockLeftMouseClick`0(System.Object,System.Windows.RoutedEventArgs) -> System.Boolean
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private ShouldBlockRightMouseClick`0(System.Object,System.Windows.RoutedEventArgs) -> System.Boolean
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private ToggleCollapseState`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private UpdateProtectionOperationEnabled`0() -> System.Void
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M private static IsToggleButtonClicked`0(Quire.Controls.CollapsibleArea.CollapsibleAreaControl,System.Object) -> System.Boolean
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M protected override BoundsOutsideContentSize`0(System.Windows.Rect) -> System.Boolean
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M protected override CanMove`0(Quire.Direction) -> System.Boolean
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel M protected override HandleChildItemGotFocus`0(Quire.Controls.Core.IWhiteboardItem) -> System.Void
@@ -133,14 +173,14 @@
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P IsTabNavigatable : System.Boolean override get:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P PrintViewport : System.Nullable`1<System.Windows.Rect> get:public set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ProtectionData : Quire.ProtectionData get:public
-  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ProtectionOperationsEnabled : System.Boolean get:public
-  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ShowProtectionDialogRequest : System.Func`2<Quire.Controls.Core.Protection.ProtectionDialogState,System.Boolean> set:public
-  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ShowUnProtectDialogRequest : System.Func`2<System.Func`2<System.String,System.Boolean>,System.Boolean> set:public
-  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ShowWarningDialogRequest : System.Action`1<System.String> set:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ProtectionOperationsEnabled : System.Boolean get:public set:private
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ShowProtectionDialogRequest : System.Func`2<Quire.Controls.Core.Protection.ProtectionDialogState,System.Boolean> get:private set:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ShowUnProtectDialogRequest : System.Func`2<System.Func`2<System.String,System.Boolean>,System.Boolean> get:private set:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P ShowWarningDialogRequest : System.Action`1<System.String> get:private set:public
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel P StrictMinimumSize : System.Windows.Size override get:protected
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel X System.ICloneable::Clone
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel+CollapsibleAreaResizeData M public .ctor`0(System.Windows.Size) -> System.Void
-  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel+CollapsibleAreaResizeData P OldSize : System.Windows.Size get:public
+  Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel+CollapsibleAreaResizeData P OldSize : System.Windows.Size get:public set:private
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel+PropertyNames F public const System.String AreaHasErrors
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel+PropertyNames F public const System.String IsBorderVisible
   Quire.Controls.CollapsibleArea.CollapsibleAreaViewModel+PropertyNames F public const System.String IsCollapsed
@@ -167,11 +207,14 @@
   Quire.Controls.CollapsibleArea.ICollapsibleAreaViewModel P ShowProtectionDialogRequest : System.Func`2<Quire.Controls.Core.Protection.ProtectionDialogState,System.Boolean> virtual set:public
   Quire.Controls.CollapsibleArea.ICollapsibleAreaViewModel P ShowUnProtectDialogRequest : System.Func`2<System.Func`2<System.String,System.Boolean>,System.Boolean> virtual set:public
   Quire.Controls.CollapsibleArea.ICollapsibleAreaViewModel P ShowWarningDialogRequest : System.Action`1<System.String> virtual set:public
+  Quire.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand F private readonly Quire.Controls.CollapsibleArea.ICollapsibleAreaModel _model
   Quire.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand M public .ctor`0(Quire.Controls.CollapsibleArea.ICollapsibleAreaModel) -> System.Void
   Quire.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand M public Do`0() -> System.Boolean
   Quire.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand M public Redo`0() -> System.Void
   Quire.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand M public Undo`0() -> System.Void
   Quire.Controls.CollapsibleArea.ToggleBorderCollapseStateCommand P Name : System.String get:public
+  Quire.Controls.CollapsibleArea.ToggleCollapseStateCommand F private readonly Quire.Controls.CollapsibleArea.ICollapsibleAreaModel _model
+  Quire.Controls.CollapsibleArea.ToggleCollapseStateCommand F private readonly System.Boolean _isCollapsedCurrent
   Quire.Controls.CollapsibleArea.ToggleCollapseStateCommand M public .ctor`0(Quire.Controls.CollapsibleArea.ICollapsibleAreaModel) -> System.Void
   Quire.Controls.CollapsibleArea.ToggleCollapseStateCommand M public Do`0() -> System.Boolean
   Quire.Controls.CollapsibleArea.ToggleCollapseStateCommand M public Redo`0() -> System.Void

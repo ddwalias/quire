@@ -15,4 +15,8 @@ internal partial class VectorTrace : global::Quire.Efi.Trace
     public VectorTrace(global::Quire.Efi.Trace.Spec spec, global::Quire.Mcd.Dim xDim, global::Quire.Mcd.Dim yDim) : base(default(global::Quire.Efi.Trace.Spec), default(global::Quire.Mcd.Dim), default(global::Quire.Mcd.Dim)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Process(global::Quire.Efi.Engine engine, int currentTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void Fill(object[] array, object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerator<global::Quire.Efi.Pair<object>> PointEnumerator(object argument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,7 +12,9 @@ namespace Quire.Mpl.Run;
 internal partial class InstructionSeq : global::Quire.Mpl.Run.Code
 {
     [global::Quire.Mirror.MirrorStub]
-    public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
+    private global::Quire.Mpl.Run.Instruction[] m_ops;
     [global::Quire.Mirror.MirrorStub]
-    private InstructionSeq() { }
+    private InstructionSeq(global::Quire.Mpl.Run.Instruction[] ops) { }
+    [global::Quire.Mirror.MirrorStub]
+    public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
 }

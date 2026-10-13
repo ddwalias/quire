@@ -12,6 +12,26 @@ namespace Quire.Controls.Worksheet;
 public partial class ZombieCreator
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Rect> _itemBounds;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Size> _itemSize;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Worksheet.IWhiteboardItemZombie, int> _zombiePageIndexMap;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.WorksheetPageLayout _pageLayout;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private int PageIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IWhiteboardItem Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Rect ItemBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size ItemSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double PageBodyHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public ZombieCreator(global::Quire.Controls.Core.IWhiteboardItem item, int pageIndex, global::Quire.Controls.Core.WorksheetPageLayout pageLayout) { }
     [global::Quire.Mirror.MirrorStub]
     public static double RoundLocation(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -19,6 +39,14 @@ public partial class ZombieCreator
     public static int CompareLocation(double value1, double value2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.ICollection<global::Quire.Controls.Worksheet.IWhiteboardItemZombie> CreateZombies(out global::Quire.Controls.Worksheet.IWhiteboardItemZombie activeZombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CreateZombiesAboveItemPage(global::Quire.Controls.Worksheet.ZombieCreator.CreateZombiesData data, global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateItemClipAndOffset(global::Quire.Controls.Worksheet.ZombieCreator.CreateZombiesData data, global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.IWhiteboardItemZombie CreateZombiesBelowItemPage(global::Quire.Controls.Worksheet.ZombieCreator.CreateZombiesData data, global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point GetItemBoundsTopLeftRelativeToItemPage(global::System.Windows.Rect itemBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point GetItemBoundsTopLeftRelativeToItemPage(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect itemBounds, double pageHeight, int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -31,6 +59,22 @@ public partial class ZombieCreator
     public static global::System.Windows.Point ConvertPointFromItemToZombie(global::System.Windows.Point pt, global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double ConvertYcoordFromItemToZombie(double offset, global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double ConvertYcoordFromZombieToItem(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double ConvertYcoordFromItemToZombie(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double ConvertXcoordFromItemToZombie(double xCoord) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double ConvertYcoordFromTo(double offset, global::System.Windows.Rect itemBounds, bool fromItemToZombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double ConvertXcoordFromTo(double offset, global::System.Windows.Rect itemBounds, bool fromItemToZombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.Point ConvertPointFromTo(global::System.Windows.Point pt, global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie, bool fromItemToZombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ConvertPageLocationAndClipBoundsFromTo(global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie, bool fromItemToZombie, out global::System.Windows.Point targetPageLocation, out global::System.Nullable<global::System.Windows.Rect> targetClipBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Worksheet.IWhiteboardItemZombie CreateZombie(global::System.Windows.Point zombieLocation, int zombiePageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int GetZombiePageIndex(global::Quire.Controls.Worksheet.IWhiteboardItemZombie zombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

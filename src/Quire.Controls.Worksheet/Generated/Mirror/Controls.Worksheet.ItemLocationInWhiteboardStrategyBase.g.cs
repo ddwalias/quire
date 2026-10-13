@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public abstract partial class ItemLocationInWhiteboardStrategyBase : global::Quire.Controls.Worksheet.IItemLocationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Size _pageBodySize;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Controls.Core.Whiteboard.IWhiteboardItemManager WhiteboardItemManager;
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Controls.Worksheet.IWorksheetPageManager WorksheetPageManager;

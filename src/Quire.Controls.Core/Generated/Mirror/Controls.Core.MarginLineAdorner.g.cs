@@ -12,15 +12,19 @@ namespace Quire.Controls.Core;
 public partial class MarginLineAdorner : global::Quire.Controls.Core.VisualAdornerBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsDisplayed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void OnVisibilityChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.VisualAdornerBase Create(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private MarginLineAdorner(global::System.Windows.FrameworkElement element) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void AddToAdornerLayer() => base.AddToAdornerLayer();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Media.GeneralTransform GetDesiredTransform(global::System.Windows.Media.GeneralTransform transform) => base.GetDesiredTransform(transform);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
-    [global::Quire.Mirror.MirrorStub]
-    private MarginLineAdorner() : base(default(global::System.Windows.UIElement), default(bool)) { }
 }

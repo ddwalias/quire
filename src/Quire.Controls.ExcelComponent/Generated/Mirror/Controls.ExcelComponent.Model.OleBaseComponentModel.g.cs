@@ -12,11 +12,17 @@ namespace Quire.Controls.ExcelComponent.Model;
 public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mathboard.AggregateMathboardModel, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.ExcelComponent.IOleBaseComponentItemManager _oleComponentItemMgr;
+    [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.ICalculatable, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper> CalculatableWrapperMap;
     [global::Quire.Mirror.MirrorStub]
     internal const uint InputSectionIndex = 0u;
     [global::Quire.Mirror.MirrorStub]
     internal const uint OutputSectionIndex = 1u;
+    [global::Quire.Mirror.MirrorStub]
+    private const int SectionCount = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _error;
     [global::Quire.Mirror.MirrorStub]
     protected internal static global::Quire.Controls.ExcelComponent.IOleBaseComponentItemManager OleComponentItemMgr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -111,6 +117,10 @@ public abstract partial class OleBaseComponentModel : global::Quire.Controls.Mat
     protected virtual global::Quire.Calculation.Core.ICalculatable LookupCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected abstract void RemoveCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc);
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleChildCalcHiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleContainerChildrenChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

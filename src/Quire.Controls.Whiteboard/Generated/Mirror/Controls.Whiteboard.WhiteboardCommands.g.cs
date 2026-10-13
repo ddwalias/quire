@@ -12,6 +12,8 @@ namespace Quire.Controls.Whiteboard;
 public static partial class WhiteboardCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _ownerType;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteActiveItem;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteSelectedItems;

@@ -12,6 +12,12 @@ namespace Quire.EquationEditor.Tree;
 public abstract partial class InputControlNodeInfo : global::Quire.EquationEditor.Tree.ValueNodeInfo, global::Quire.EquationEditor.Tree.IInputControlNodeInfo, global::Quire.EquationEditor.Tree.INodeInfoNotifyModel, global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Action<global::Quire.DelegateFunction0<bool>, string> a__;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action b;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> c;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.InputControlTypes InputControlType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue global::Quire.EquationEditor.Tree.IInputControlNodeInfo.Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

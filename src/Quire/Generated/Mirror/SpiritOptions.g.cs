@@ -12,6 +12,10 @@ namespace Quire;
 public partial class SpiritOptions : global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.SpiritOptions _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _EnableGettingStartedTab;
+    [global::Quire.Mirror.MirrorStub]
     public const string EnableGettingStartedTabPropertyName = "EnableGettingStartedTab";
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.SpiritOptions Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

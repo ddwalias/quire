@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 internal partial class PlotEquationModel3D : global::Quire.Controls.Plots.Model.PlotEquationModelBase, global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D, global::Quire.Controls.Plots.Model.IPlotEquationModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation _equationProxy;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D Trace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotEquation EquationProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,11 +28,17 @@ internal partial class PlotEquationModel3D : global::Quire.Controls.Plots.Model.
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action RequestEvaluation;
     [global::Quire.Mirror.MirrorStub]
+    private void InvokeEquationProxyChanging() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InvokeEquationProxyChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.PersistentDataObjects.plotEquation value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.plotEquation GetDataObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRequestEvaluation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public PlotEquationModel3D() { }
 
@@ -38,6 +46,12 @@ internal partial class PlotEquationModel3D : global::Quire.Controls.Plots.Model.
     private partial class DoActionWhenEquationProxyChanged
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Action _action;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Plot3D.Model.PlotEquationModel3D _plotEquationModel;
+        [global::Quire.Mirror.MirrorStub]
         public DoActionWhenEquationProxyChanged(global::Quire.Controls.Plots.Plot3D.Model.PlotEquationModel3D plotEquationModel, global::System.Action action) { }
+        [global::Quire.Mirror.MirrorStub]
+        private void ActionWrapper() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

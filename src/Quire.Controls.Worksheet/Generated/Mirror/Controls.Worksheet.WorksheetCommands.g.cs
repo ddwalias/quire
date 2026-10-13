@@ -12,6 +12,10 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetCommands
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfWorksheetControl;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfIWorksheetControl;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand NewMathRegion;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand NewTextRegion;

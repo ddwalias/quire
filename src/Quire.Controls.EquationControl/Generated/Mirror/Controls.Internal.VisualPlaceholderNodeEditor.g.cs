@@ -14,6 +14,10 @@ internal partial class VisualPlaceholderNodeEditor : global::Quire.Controls.Inte
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty DirectionProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.RubberBandHighlighter _highlighter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.Caret _caret;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Direction Direction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public VisualPlaceholderNodeEditor(global::Quire.Controls.Internal.VisualMathNode node, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }

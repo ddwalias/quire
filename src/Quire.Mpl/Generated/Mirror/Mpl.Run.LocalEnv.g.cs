@@ -12,6 +12,12 @@ namespace Quire.Mpl.Run;
 public partial class LocalEnv : global::Quire.Mpl.Run.MplEnv
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_level;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.MplEnv m_parent;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<string, global::Quire.Mpl.Run.BindingInfo> m_table;
+    [global::Quire.Mirror.MirrorStub]
     public override int Level { get => base.Level; }
     [global::Quire.Mirror.MirrorStub]
     public LocalEnv(global::Quire.Mpl.Run.MplEnv parent) { }

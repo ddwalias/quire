@@ -12,6 +12,18 @@ namespace Quire.Undo;
 public partial class CommandScope : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Undo.CommandBuffer _parentBuffer;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Undo.CommandBuffer _buffer;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _name;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _canUndoTreeOperations;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Undo.CompoundCommand _targetCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Stack<global::Quire.Undo.CommandScope> _scopeStack;
+    [global::Quire.Mirror.MirrorStub]
     public static bool RequireTreeOperationsInUndoScope;
     [global::Quire.Mirror.MirrorStub]
     public static bool CanUndoTreeOperations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

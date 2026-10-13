@@ -12,6 +12,14 @@ namespace Quire.Xml;
 public partial class XmlNodeWriter : global::System.Xml.XmlWriter
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.XmlNode _xmlNode;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.WriteState _writeState;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlNode _currentNode;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.XmlDocument _xmlDocument;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Xml.WriteState WriteState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public XmlNodeWriter(global::System.Xml.XmlNode node) { }

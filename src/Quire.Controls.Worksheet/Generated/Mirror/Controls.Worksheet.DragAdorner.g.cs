@@ -12,6 +12,10 @@ namespace Quire.Controls.Worksheet;
 internal partial class DragAdorner : global::System.Windows.Documents.Adorner
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.UIElement _child;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Vector _borderOffset;
+    [global::Quire.Mirror.MirrorStub]
     protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
     [global::Quire.Mirror.MirrorStub]
     public DragAdorner(global::System.Windows.UIElement owner, global::System.Windows.UIElement adornElement) : base(default(global::System.Windows.UIElement)) { }

@@ -12,9 +12,25 @@ namespace Quire.Controls.Plots.ViewModel;
 internal partial class PlotViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Core.AttachedBehavior.IActivator
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotModel _model;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ActivateCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ShowAxisExpressionsCommand;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isActive;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> _selectedTraces;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Media.Color> _selectedColor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Plots.Presenter.LineStyle> _selectedLineStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<double> _selectedLineWeight;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Calculation.Core.Trace2DResults.TraceType> _selectedTracesType;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceSymbol> _selectedTracesSymbol;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.MarkersViewModel Markers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -38,7 +54,31 @@ internal partial class PlotViewModel : global::Quire.Controls.Core.ViewModelBase
     [global::Quire.Mirror.MirrorStub]
     public PlotViewModel(global::Quire.Controls.Plots.Presenter.IPlotModel model, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen) { }
     [global::Quire.Mirror.MirrorStub]
+    private void MarkersPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetValuesForStyleProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ShowAxisExpressionsCommandExecute(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void UpdateFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SelectTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TraceChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DeselectTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetValuesForSelectedTraceProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetValuesForActiveMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetNullValuesForSelectedTraceProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<T> GetAggregatedTracesProperty<T>(global::System.Func<global::Quire.Controls.Plots.Presenter.IPlotTrace, T> propertySelector) where T : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static TResult GetAggregatedProperty<TSource, T, TResult>(global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, T> propertySelector, global::System.Func<T, TResult> resultCorverter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.PlotViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

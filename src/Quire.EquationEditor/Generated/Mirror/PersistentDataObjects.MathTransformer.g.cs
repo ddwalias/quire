@@ -12,6 +12,36 @@ namespace Quire.PersistentDataObjects;
 public partial class MathTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform a;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform b;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Native.PtcEquationEditor.ax c;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Calculation.Core.XmcdToIResultNodeTransform d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.XmlNode e;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.IResultManager f;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Xml.XmlNamespaceManager g;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentDataObjects.IWorksheetMathPresentation h;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.XmlNode i;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EquationEditor.Tree.MathNode j;
+    [global::Quire.Mirror.MirrorStub]
+    private string k;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.IResultNode l;
+    [global::Quire.Mirror.MirrorStub]
+    private int m;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> n;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<bool> o;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode MathNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode Math50Xml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -23,6 +53,8 @@ public partial class MathTransformer
     public int ResultRefId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ResultRefIdSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasUnitOverride { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MathTransformer(global::System.Xml.XmlNode xmlNode, global::System.Xml.XmlNamespaceManager nameSpaceManager, global::Quire.Calculation.Core.IResultManager resultManager, global::Quire.PersistentDataObjects.IWorksheetMathPresentation worksheetMathPresentation) { }
 }

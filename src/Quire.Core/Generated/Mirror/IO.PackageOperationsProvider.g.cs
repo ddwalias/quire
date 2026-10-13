@@ -12,6 +12,18 @@ namespace Quire.IO;
 public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperationsProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string MainPartContentType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.main+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CoreMetadataContentType = "application/vnd.openxmlformats-package.core-properties+xml";
+    [global::Quire.Mirror.MirrorStub]
+    private const string MainPartRelashinshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    [global::Quire.Mirror.MirrorStub]
+    private const string CoreMetadataRelashinshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PackageMediaPath = "/mathcad/media/";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ImagePathFormat = "/mathcad/media/{0}.{1}";
+    [global::Quire.Mirror.MirrorStub]
     public const string IncludeRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/include";
     [global::Quire.Mirror.MirrorStub]
     public const string ImageRelationshipUri = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
@@ -28,6 +40,16 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.IO.IPackageOperationsProvider Instance;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Uri _worksheet;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Uri _header;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Uri _footer;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Uri _headersContainer;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Uri _footersContainer;
+    [global::Quire.Mirror.MirrorStub]
     public const string OleMimeType = "application/vnd.openxmlformats-officedocument.oleObject";
     [global::Quire.Mirror.MirrorStub]
     public const string ProtectedMimeType = "application/octet-stream";
@@ -42,7 +64,13 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public const string ResultType = "application/vnd.openxmlformats-officedocument.mathprocessingml.mathcad.result+xml";
     [global::Quire.Mirror.MirrorStub]
+    private const string ImageTypePrefix = "image/";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string[] _compressedTypes;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.CompressionOption CompressionLevel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private PackageOperationsProvider() { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.Package GetPackageForWrite(string packageName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -60,9 +88,13 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart GetFootersContainerPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.IO.Packaging.PackagePart GetPartIfExists(global::System.IO.Packaging.Package package, global::System.Uri partName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart GetCoreMetadataPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.PackagePart sourcePart, string relationshipType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Uri GetUriForFirstRelashionshipInCollection(global::System.Collections.Generic.IEnumerable<global::System.IO.Packaging.PackageRelationship> relshipCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.Package package, string relationshipType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -71,6 +103,10 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     public global::System.Collections.Generic.List<global::System.IO.Packaging.PackagePart> GetPartsByContentType(global::System.IO.Packaging.Package package, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int CountPartsByContentType(global::System.IO.Packaging.Package package, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.Packaging.PackagePart AddWorksheetPartToPackage(global::System.IO.Packaging.Package package, global::System.Uri uri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.Packaging.PackagePart CreatePackagePart(global::System.IO.Packaging.Package package, global::System.Uri uri, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart AddMainPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -96,5 +132,5 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public static global::System.IO.Stream GetSourceStream(global::System.IO.Packaging.PackagePart packagePart, string itemIdRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private PackageOperationsProvider() { }
+    private bool IsTypeToCompress(string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 internal partial class TextBoxViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.PropertyInfo _backgroundColor;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.TextBoxModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Brush Foreground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

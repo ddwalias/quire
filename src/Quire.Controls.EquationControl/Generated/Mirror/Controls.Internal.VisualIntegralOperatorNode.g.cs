@@ -12,6 +12,20 @@ namespace Quire.Controls.Internal;
 internal partial class VisualIntegralOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _integralDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.Fence _integralSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualSymbolNode _variableOfIntegrationPrefix;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.IntegralLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
+    private double AdjacentUpperLimitHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double AdjacentLowerLimitHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Internal.VisualMathNode[] NodeChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -36,6 +50,8 @@ internal partial class VisualIntegralOperatorNode : global::Quire.Controls.Inter
     [global::Quire.Mirror.MirrorStub]
     public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
     [global::Quire.Mirror.MirrorStub]
+    private void UpdateIntegralBoundsInactiveVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetVisibilityOfOperatorSymbol(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -43,4 +59,6 @@ internal partial class VisualIntegralOperatorNode : global::Quire.Controls.Inter
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeStaticLayout(global::System.Windows.Size finalSize) => base.ArrangeStaticLayout(finalSize);
+    [global::Quire.Mirror.MirrorStub]
+    private double LimitsAndIntegralSymbolWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

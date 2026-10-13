@@ -12,6 +12,8 @@ namespace Quire.Calculation.Core;
 public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IEagerMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Calculation.Core.SimpleResultNode> _children;
+    [global::Quire.Mirror.MirrorStub]
     public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,6 +28,8 @@ public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Cor
     [global::Quire.Mirror.MirrorStub]
     public EagerMatrixSimpleResultNode(int rowCount, int colCount) { }
     [global::Quire.Mirror.MirrorStub]
+    private EagerMatrixSimpleResultNode(global::Quire.Calculation.Core.IMatrixResultNode node) { }
+    [global::Quire.Mirror.MirrorStub]
     public void SetElementAt(int r, int c, global::Quire.Calculation.Core.IResultNode element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
@@ -35,6 +39,8 @@ public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Cor
     public static global::Quire.Calculation.Core.IEagerMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode matrixNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsChildrenEquals(global::Quire.Calculation.Core.EagerMatrixSimpleResultNode obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int global::Quire.Calculation.Core.IMatrixResultNode.Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

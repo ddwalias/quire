@@ -28,6 +28,10 @@ internal partial class InputTextBoxEngineJScript : global::Quire.Controls.InputC
     [global::Quire.Mirror.MirrorStub]
     public const string DefaultUserScriptObjectName = "TextBox";
     [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.JsTextBoxScriptInternalClass.js";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableTextBox.JsTextBoxDefaultScript.js";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

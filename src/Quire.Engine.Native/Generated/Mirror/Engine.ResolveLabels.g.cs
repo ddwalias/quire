@@ -12,7 +12,13 @@ namespace Quire.Engine;
 public partial class ResolveLabels : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_algos;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_result;
+    [global::Quire.Mirror.MirrorStub]
     public ResolveLabels(global::System.Collections.IDictionary A_0, global::System.Collections.IDictionary A_1) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeResolveLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

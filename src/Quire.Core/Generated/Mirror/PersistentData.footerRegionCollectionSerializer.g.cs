@@ -12,6 +12,8 @@ namespace Quire.PersistentData;
 public partial class footerRegionCollectionSerializer : global::Quire.PersistentData.RegionCollectionSerializer<global::Quire.PersistentData.footer>
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.footer _footer;
+    [global::Quire.Mirror.MirrorStub]
     public override string RootNodeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.footer RegionCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

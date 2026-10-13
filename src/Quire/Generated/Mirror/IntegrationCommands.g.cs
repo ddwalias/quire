@@ -14,6 +14,8 @@ public partial class IntegrationCommands : global::System.Windows.DependencyObje
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PTCPlacesEnableProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.IntegrationCommands _instance;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand AutoCheckIn;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand CustomCheckIn;
@@ -32,6 +34,8 @@ public partial class IntegrationCommands : global::System.Windows.DependencyObje
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand WorkgroupManagerHelp;
     [global::Quire.Mirror.MirrorStub]
+    private bool _wcEnable;
+    [global::Quire.Mirror.MirrorStub]
     public bool PTCPlacesEnable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.IntegrationCommands Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -41,4 +45,6 @@ public partial class IntegrationCommands : global::System.Windows.DependencyObje
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     private IntegrationCommands() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static void PtcPlacesEnableChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

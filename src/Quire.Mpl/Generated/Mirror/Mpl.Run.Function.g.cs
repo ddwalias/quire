@@ -24,6 +24,12 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     [global::Quire.Mirror.MirrorStub]
     protected string m_name;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_inverse_function;
+    [global::Quire.Mirror.MirrorStub]
+    private static object OptArg;
+    [global::Quire.Mirror.MirrorStub]
+    private static char[] label_delimiter;
+    [global::Quire.Mirror.MirrorStub]
     public int Purity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int MinArgs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -43,6 +49,8 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     public static string canonical_name(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected Function(int function_purity, int n) { }
+    [global::Quire.Mirror.MirrorStub]
+    private Function() { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function IgnoreVectorization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

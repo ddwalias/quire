@@ -49,13 +49,23 @@ public partial class MathNodeDescriptorTable : global::System.Collections.Generi
     private sealed partial class b : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.IMathNodeDescriptor>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.IMathNodeDescriptor>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private int a_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.EquationEditor.Tree.IMathNodeDescriptor b_;
+        [global::Quire.Mirror.MirrorStub]
+        private int c_;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNodeDescriptorTable d;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.IMathNodeDescriptor> e_;
         [global::Quire.Mirror.MirrorStub]
         public b(int A_0) { }
         [global::Quire.Mirror.MirrorStub]
         void global::System.IDisposable.Dispose() { }
         [global::Quire.Mirror.MirrorStub]
         bool global::System.Collections.IEnumerator.MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         void global::System.Collections.IEnumerator.Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -72,13 +82,23 @@ public partial class MathNodeDescriptorTable : global::System.Collections.Generi
     private sealed partial class c : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.IMathNodeDescriptor>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.IMathNodeDescriptor>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        private int a_;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.EquationEditor.Tree.IMathNodeDescriptor b_;
+        [global::Quire.Mirror.MirrorStub]
+        private int c_;
+        [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNodeDescriptorTable d;
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Collections.Generic.Dictionary<string, global::Quire.EquationEditor.Tree.MathNodeDescriptor>.ValueCollection.Enumerator e_;
         [global::Quire.Mirror.MirrorStub]
         public c(int A_0) { }
         [global::Quire.Mirror.MirrorStub]
         void global::System.IDisposable.Dispose() { }
         [global::Quire.Mirror.MirrorStub]
         bool global::System.Collections.IEnumerator.MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         void global::System.Collections.IEnumerator.Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]

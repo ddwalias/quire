@@ -16,9 +16,9 @@ public partial class MplDestructuringBind : global::Quire.Mpl.Run.MplMacro
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Mpl.Run.MplDestructuringBind singleton;
     [global::Quire.Mirror.MirrorStub]
+    private MplDestructuringBind() : base(default(global::Quire.Mpl.Run.Sym)) { }
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Sexpr as_pattern(global::Quire.Mpl.Run.Sexpr s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr form) => base.ExpandCall(e, form);
-    [global::Quire.Mirror.MirrorStub]
-    private MplDestructuringBind() : base(default(global::Quire.Mpl.Run.Sym)) { }
 }

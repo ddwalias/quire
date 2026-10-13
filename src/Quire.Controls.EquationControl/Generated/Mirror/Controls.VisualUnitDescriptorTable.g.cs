@@ -12,6 +12,10 @@ namespace Quire.Controls;
 public partial class VisualUnitDescriptorTable : global::Quire.Controls.VisualDescriptorTableBase, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.VisualDescriptorTableBase.InitializationInfo _initInfo;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public VisualUnitDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

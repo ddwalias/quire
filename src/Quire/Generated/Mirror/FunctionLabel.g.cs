@@ -18,6 +18,10 @@ public partial class FunctionLabel : global::System.Windows.Controls.Label, glob
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CommandParameterProperty;
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _canExecute;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.ICommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object CommandParameter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,4 +39,14 @@ public partial class FunctionLabel : global::System.Windows.Controls.Label, glob
     protected override void OnPreviewKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnPreviewKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseDoubleClick(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseDoubleClick(e);
+    [global::Quire.Mirror.MirrorStub]
+    private void ExecuteCommandWithParameter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCommandChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCommandChanged(global::System.Windows.Input.ICommand oldCommand, global::System.Windows.Input.ICommand newCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateCanExecute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CanExecuteChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -14,6 +14,8 @@ public partial class CollapsibleAreaSerializationStrategy : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.Controls.CollapsibleArea.CollapsibleAreaControl _control;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> _regionCreator;
+    [global::Quire.Mirror.MirrorStub]
     public CollapsibleAreaSerializationStrategy(global::Quire.Controls.CollapsibleArea.CollapsibleAreaControl control, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> regionCreator) : base(default(global::Quire.Controls.Whiteboard.WhiteboardControl)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.PersistentDataObjects.IRegionInWhiteboardType ConvertToRegionPersistantData(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

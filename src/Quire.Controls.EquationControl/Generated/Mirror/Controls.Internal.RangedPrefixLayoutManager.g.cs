@@ -12,6 +12,12 @@ namespace Quire.Controls.Internal;
 public partial class RangedPrefixLayoutManager : global::Quire.Controls.Internal.VisualLayoutManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double PRINCIPAL_LEFT_PADDING = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double RANGEBOUND_VERTICAL_PADDING = 1d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double RANGEBOUND_HORIZONTAL_PADDING = 3d;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect LowerRangeBoundRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Rect UpperRangeBoundRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,7 +12,13 @@ namespace Quire.Controls.Plots.Contour.View;
 public partial class ContourPlotControl : global::Quire.Controls.Plots.View.PlotControlBase, global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation>, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Controls.Core.IResizableElementInfo, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LabelFormatterProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineResult[] _engineResults;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.RoutedEvent _changedEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TraceLineStyleProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -28,17 +34,43 @@ public partial class ContourPlotControl : global::Quire.Controls.Plots.View.Plot
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand SetColorSchemeCommand;
     [global::Quire.Mirror.MirrorStub]
+    private const int NumberOfPoints_Min = 11;
+    [global::Quire.Mirror.MirrorStub]
+    private const int NumberOfPoints_Max = 101;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.ContourPlotCanvas _content;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Shapes.Rectangle _background;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Grid plotGrid;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.ContoursView _contourLines;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.PlotGridSplitter PART_ySplitter;
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotGraphLinearAxis _yAxis;
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.PlotGridSplitter PART_xSplitter;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotGraphLinearAxis _xAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.StackPanel _zAxisStackPanel;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.ItemsControl _zAxisColorBlocks;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotGraphLinearAxis _zAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.PlotEquation _zEquation;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatableInfo> CalculatableInfosWithErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Contour.View.ContourPlotViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Contour.View.VisualDataCollection VisualDataCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError PlotCalculatableError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.ViewModel.TickmarkFormatter LabelFormatter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -100,6 +132,22 @@ public partial class ContourPlotControl : global::Quire.Controls.Plots.View.Plot
     [global::Quire.Mirror.MirrorStub]
     public ContourPlotControl() { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnGridIsResizingChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ZAxisNumberFormatChanged(global::Quire.Controls.Core.NumberFormat numberFormat, bool isLocal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewModelPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReadDataOnDeserializationEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ViewModelModelChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetBindingsForVisualProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
     [global::Quire.Mirror.MirrorStub]
     public void AddEquations(global::Quire.Controls.Plots.XyzEquation xyzEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -114,6 +162,10 @@ public partial class ContourPlotControl : global::Quire.Controls.Plots.View.Plot
     [global::Quire.Mirror.MirrorStub]
     public override void ChangeOriginPositioning(bool newValue) => base.ChangeOriginPositioning(newValue);
     [global::Quire.Mirror.MirrorStub]
+    private static void ShowContourValuesExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ZEquation_OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void HandleLostFocus(global::System.Windows.DependencyObject oldFocused, global::System.Windows.DependencyObject newFocused) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void IsActiveRegionChanged(bool newValue) => base.IsActiveRegionChanged(newValue);
@@ -125,6 +177,8 @@ public partial class ContourPlotControl : global::Quire.Controls.Plots.View.Plot
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ZEquation_ScalingChanged(global::Quire.Controls.Plots.Presenter.IPlotEquationScaled equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

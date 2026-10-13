@@ -12,6 +12,8 @@ namespace Quire;
 public partial class PrintInProgressDialog : global::System.Windows.Window, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _dontBotherMeAgain;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBlock textBox1;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.CheckBox DontBotherCheckBox;
@@ -20,9 +22,15 @@ public partial class PrintInProgressDialog : global::System.Windows.Window, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button CancelButton;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public bool DontBotherMeAgain { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public PrintInProgressDialog() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void Ok_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Cancel_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

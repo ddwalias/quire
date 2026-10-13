@@ -30,6 +30,8 @@ public partial class TextAndRegionFormatRibbonBar : global::Fluent.RibbonGroupBo
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_TextAndRegionFormatRibbonBar_AlignJustify;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public TextAndRegionFormatRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

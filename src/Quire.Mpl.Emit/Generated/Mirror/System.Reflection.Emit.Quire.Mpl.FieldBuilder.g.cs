@@ -12,6 +12,8 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class FieldBuilder : global::System.Reflection.FieldInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type _declaringType;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Reflection.Module Module { get => base.Module; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Reflection.FieldAttributes Attributes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

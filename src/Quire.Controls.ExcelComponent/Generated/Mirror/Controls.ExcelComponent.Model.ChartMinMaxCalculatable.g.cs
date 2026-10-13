@@ -16,9 +16,27 @@ internal partial class ChartMinMaxCalculatable : global::Quire.Controls.ExcelCom
     [global::Quire.Mirror.MirrorStub]
     internal const string MinMaxPost = "MinMaxPost";
     [global::Quire.Mirror.MirrorStub]
+    private const double DefaultXMin = -10d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double DefaultXMax = 10d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double LimitsTooCloseThreshold = 1E-15d;
+    [global::Quire.Mirror.MirrorStub]
     internal const int NumLimitAxes = 4;
     [global::Quire.Mirror.MirrorStub]
     internal const int NumLimitSides = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly uint _matrixHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly uint _definitionHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly uint _subscriptHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly uint _idHandle;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly uint[,] _limitHandles;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType, global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper> _limitWrappers;
     [global::Quire.Mirror.MirrorStub]
     public string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -67,6 +85,14 @@ internal partial class ChartMinMaxCalculatable : global::Quire.Controls.ExcelCom
     public void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLimitsCalculationRelatedCustomError(string errorCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetLimitCalculationError(global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper wrapper, string errorMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetLimitRl(int iLimitAxis, int iLimitSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ChartWrapperType GetLimitType(int iLimitAxis, int iLimitSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.IChartComponentCalculatableWrapper GetWrapper(int iLimitAxis, int iLimitSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

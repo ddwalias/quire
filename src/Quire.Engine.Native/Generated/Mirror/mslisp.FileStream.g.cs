@@ -12,6 +12,18 @@ namespace Quire.mslisp;
 public partial class FileStream : global::Quire.mslisp.Stream
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, global::Quire.utl_mgd.SafeMutex> s_mutex_map;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.utl_mgd.SafeMutex s_map_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_file;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.SafeMutex m_mutex;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.utl_mgd.SafeMutex GetMutex(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool TryDelete(string f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public FileStream(string f) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual string Write(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

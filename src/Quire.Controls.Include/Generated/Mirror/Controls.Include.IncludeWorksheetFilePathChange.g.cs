@@ -12,6 +12,18 @@ namespace Quire.Controls.Include;
 internal partial class IncludeWorksheetFilePathChange : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Include.IncludeWorksheetControl _control;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _newText;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _oldText;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly int _index;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _cacheValid;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _regionsLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public IncludeWorksheetFilePathChange(global::Quire.Controls.Include.IncludeWorksheetControl control, string newText) { }

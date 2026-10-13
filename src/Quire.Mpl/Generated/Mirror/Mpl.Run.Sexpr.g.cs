@@ -62,6 +62,10 @@ public abstract partial class Sexpr : global::Quire.Mpl.Run.Tag
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Cons walk(global::Quire.Mpl.Run.MplEnv env, out global::Quire.Mpl.Run.MplEnv outenv) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.Cons walk_definitions(global::Quire.Mpl.Run.Cons decls, global::Quire.Mpl.Run.MplEnv env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mpl.Run.Sexpr walk_definition(global::Quire.Mpl.Run.SCons decl, global::Quire.Mpl.Run.MplEnv env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Cons walk_declaration_lhs(global::Quire.Mpl.Run.MplEnv env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Sexpr walk_pattern(global::Quire.Mpl.Run.MplEnv env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

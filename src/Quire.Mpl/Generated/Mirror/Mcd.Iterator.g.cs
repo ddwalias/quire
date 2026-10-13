@@ -40,6 +40,10 @@ public abstract partial class Iterator
     public partial class SeqIterator : global::Quire.Mcd.Iterator
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.Iterator[] m_its;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_curr;
+        [global::Quire.Mirror.MirrorStub]
         public SeqIterator(global::Quire.Mcd.Iterator[] its) { }
         [global::Quire.Mirror.MirrorStub]
         public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,6 +55,8 @@ public abstract partial class Iterator
     public partial class ScalarIterator : global::Quire.Mcd.Iterator
     {
         [global::Quire.Mirror.MirrorStub]
+        private object m_init;
+        [global::Quire.Mirror.MirrorStub]
         public ScalarIterator(object init) { }
         [global::Quire.Mirror.MirrorStub]
         public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -61,6 +67,12 @@ public abstract partial class Iterator
     [global::Quire.Mirror.MirrorOf("Mcd.Iterator+MatrixIterator, mplrun")]
     public partial class MatrixIterator : global::Quire.Mcd.Iterator
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Mcd.MatVal m_mat;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_row;
+        [global::Quire.Mirror.MirrorStub]
+        private int m_col;
         [global::Quire.Mirror.MirrorStub]
         public MatrixIterator(global::Quire.Mcd.MatVal mat) { }
         [global::Quire.Mirror.MirrorStub]

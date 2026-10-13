@@ -18,7 +18,13 @@ internal partial class VisualBinaryOperatorNodeEditor : global::Quire.Controls.I
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Brush _caretBrush;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Internal.RubberBandHighlighter> _highlighters;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Geometry _operatorGeometry;
+    [global::Quire.Mirror.MirrorStub]
+    private bool OperatorSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnOperatorSelectedPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public VisualBinaryOperatorNodeEditor(global::Quire.Controls.Internal.VisualBinaryOperatorNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region, bool isReadonly, bool addornOperator = false) : base(default(global::Quire.Controls.Internal.VisualMathNode), default(global::Quire.Controls.Internal.VisualMathRegionNode)) { }
     [global::Quire.Mirror.MirrorStub]

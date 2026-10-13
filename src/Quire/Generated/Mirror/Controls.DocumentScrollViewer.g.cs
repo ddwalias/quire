@@ -12,6 +12,10 @@ namespace Quire.Controls;
 public partial class DocumentScrollViewer : global::System.Windows.Controls.ScrollViewer
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string PartVerticalScrollBar = "PART_VerticalScrollBar";
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Primitives.ScrollBar _verticalScrollBar;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.Primitives.ScrollBar VerticalScrollBar { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string TooltipText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

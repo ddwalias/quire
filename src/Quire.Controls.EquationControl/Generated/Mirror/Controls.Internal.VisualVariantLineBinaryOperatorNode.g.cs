@@ -16,6 +16,12 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     [global::Quire.Mirror.MirrorStub]
     protected double _effectiveScriptBaseline;
     [global::Quire.Mirror.MirrorStub]
+    private double _inBottomLineVOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private double _inHOffset;
+    [global::Quire.Mirror.MirrorStub]
+    private double _inTopLineVOffset;
+    [global::Quire.Mirror.MirrorStub]
     protected double _blblCurrent;
     [global::Quire.Mirror.MirrorStub]
     protected double _blhCurrent;
@@ -26,6 +32,20 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     [global::Quire.Mirror.MirrorStub]
     protected double _tlwCurrent;
     [global::Quire.Mirror.MirrorStub]
+    private double _blbl0;
+    [global::Quire.Mirror.MirrorStub]
+    private double _tlbl0;
+    [global::Quire.Mirror.MirrorStub]
+    private double _blh0;
+    [global::Quire.Mirror.MirrorStub]
+    private double _tlh0;
+    [global::Quire.Mirror.MirrorStub]
+    private double _blw0;
+    [global::Quire.Mirror.MirrorStub]
+    private double _tlw0;
+    [global::Quire.Mirror.MirrorStub]
+    private double _th0;
+    [global::Quire.Mirror.MirrorStub]
     protected double _height;
     [global::Quire.Mirror.MirrorStub]
     protected double _width;
@@ -33,6 +53,8 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     protected global::System.Windows.Rect _operatorExtendedRectangle;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty DoRenderProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IList<global::System.Windows.Media.Color> _colorsTable;
     [global::Quire.Mirror.MirrorStub]
     public int MeasureCallFromRoot { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -80,6 +102,8 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     [global::Quire.Mirror.MirrorStub]
     public bool DoRender { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IList<global::System.Windows.Media.Color> ColorsTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public void ResetOffsets() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetMeasureCallFromRoot(int callNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -87,6 +111,8 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     protected override void OnFirstOperandChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnFirstOperandChanged(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSecondOperandChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnSecondOperandChanged(e);
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EquationEditor.View.IVisualVariantLineBinaryOperatorValues Convert2VariantLineNode(global::Quire.Controls.Internal.VisualMathNode mathNode, bool firstNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected VisualVariantLineBinaryOperatorNode() { }
     [global::Quire.Mirror.MirrorStub]
@@ -102,6 +128,8 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point GetHitPointRelativeToSubNode(global::System.Windows.Point hitPoint, global::System.Windows.Media.Visual subNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.HitTestResult GetDescendantOfOperand(global::System.Windows.Point hitPoint, global::Quire.Controls.Internal.VisualMathNode operand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => base.GetNodeAtPoint(hitPoint);
@@ -116,5 +144,11 @@ internal abstract partial class VisualVariantLineBinaryOperatorNode : global::Qu
     [global::Quire.Mirror.MirrorStub]
     protected void SetMeasureCallFromRootOnChildren(int callNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color GetColorForDepth(int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void ComputeDepth_DEBUG() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Init_EQUATION_WRAPPING_DEBUG_properties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRender_EQUATION_WRAPPING_DEBUG(global::System.Windows.Media.DrawingContext dc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

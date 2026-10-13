@@ -12,6 +12,10 @@ namespace Quire.Controls.Core.Ole;
 public partial class OleSizeDataWithNotification : global::Quire.PersistentData.IOleSizeData, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _autoResize;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _oleViewportSize;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size OleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasFakeOleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,6 +29,10 @@ public partial class OleSizeDataWithNotification : global::Quire.PersistentData.
     public void CopyFrom(global::Quire.PersistentData.IOleSizeData data, bool notify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public OleSizeDataWithNotification(bool autoResize) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPropertyChanged(string propName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateAndNotify(global::System.Action doUpdate, bool notify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Ole.OleSizeDataWithNotification+PropertyNames, Ptc.Controls.Core")]
     public static partial class PropertyNames

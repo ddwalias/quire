@@ -12,6 +12,24 @@ namespace Quire.Controls.Core.Serialization;
 public partial class MatrixFormatSerializer : global::System.Xml.Serialization.IXmlSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.MatrixFormat matrixFormat;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string nameSpace;
+    [global::Quire.Mirror.MirrorStub]
+    private const string NestedMatrixFormatsElemName = "nestedMatrixFormats";
+    [global::Quire.Mirror.MirrorStub]
+    private const string NestedMatrixFormatElemName = "nestedMatrixFormat";
+    [global::Quire.Mirror.MirrorStub]
+    private const string SizeAttrName = "size";
+    [global::Quire.Mirror.MirrorStub]
+    private const string OffsetAttrName = "offset";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ShowIndicesAttrName = "show-indices";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ExpandNestedArraysAttrName = "expand-nested-arrays";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PositionAttrName = "position";
+    [global::Quire.Mirror.MirrorStub]
     public bool MatrixFormatWasRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MatrixFormatSerializer(global::Quire.Controls.Core.MatrixFormat matrixFormat, string nameSpace) { }
@@ -20,5 +38,17 @@ public partial class MatrixFormatSerializer : global::System.Xml.Serialization.I
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void ReadMatrixFormatAttrs(global::System.Xml.XmlReader reader, global::Quire.Controls.Core.MatrixFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReadNestedMatrixFormats(global::System.Xml.XmlReader reader, global::Quire.Controls.Core.MatrixFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ReadNestedMatrixFormat(global::System.Xml.XmlReader reader, global::Quire.Controls.Core.MatrixFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteMatrixFormatAttrs(global::System.Xml.XmlWriter writer, global::Quire.Controls.Core.MatrixFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteNestedMatrixFormats(global::System.Xml.XmlWriter writer, global::Quire.Controls.Core.MatrixFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void WriteNestedMatrixFormat(global::System.Xml.XmlWriter writer, global::Quire.Controls.Core.MatrixFormat format, global::Quire.TableCoordinate position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

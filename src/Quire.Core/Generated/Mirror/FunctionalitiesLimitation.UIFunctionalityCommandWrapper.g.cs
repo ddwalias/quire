@@ -12,9 +12,13 @@ namespace Quire.FunctionalitiesLimitation;
 public partial class UIFunctionalityCommandWrapper : global::Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey _commandFunctionalityBehaviorKey;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.IInputElement CommandTarget { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FrameworkElement LockedUIItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override event global::System.EventHandler CanExecuteChanged { add => base.CanExecuteChanged += value; remove => base.CanExecuteChanged -= value; }
     [global::Quire.Mirror.MirrorStub]
@@ -24,9 +28,17 @@ public partial class UIFunctionalityCommandWrapper : global::Quire.Functionaliti
     [global::Quire.Mirror.MirrorStub]
     public UIFunctionalityCommandWrapper(global::Quire.FunctionalitiesLimitation.UIFunctionalityCommandWrapper previousUIFunctionalityCommandWrapper, global::System.Windows.FrameworkElement lockedUIItem) : base(default(global::System.Windows.Input.RoutedUICommand)) { }
     [global::Quire.Mirror.MirrorStub]
+    private void Initialize(global::System.Windows.FrameworkElement lockedUIItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnBaseCanExecuteChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Execute(object parameter) => base.Execute(parameter);
     [global::Quire.Mirror.MirrorStub]
     public void Execute(object parameter, out bool executed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool CanExecute(object parameter) => base.CanExecute(parameter);
+    [global::Quire.Mirror.MirrorStub]
+    private void OnFunctionalityServiceWrapperPropertyChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateFunctionalityBehaviour() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

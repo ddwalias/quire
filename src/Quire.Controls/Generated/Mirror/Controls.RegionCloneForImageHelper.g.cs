@@ -12,6 +12,14 @@ namespace Quire.Controls;
 internal partial class RegionCloneForImageHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.EngineeringDocument _doc;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.FrameworkElement _fe;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.RegionImageSettings _imageSettings;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::System.Windows.Rect> _boundsConstraint;
+    [global::Quire.Mirror.MirrorStub]
     public RegionCloneForImageHelper(global::Quire.Controls.EngineeringDocument doc, global::System.Windows.FrameworkElement fe, global::Quire.Controls.Core.RegionImageSettings imageSettings, global::System.Nullable<global::System.Windows.Rect> boundsConstraint) { }
     [global::Quire.Mirror.MirrorStub]
     public void ApplyLayoutSettings(global::System.Windows.Rect bounds, global::System.Windows.FrameworkElement feClone, global::System.Windows.Controls.Border border, global::Quire.Controls.Core.CopyWidgetBase popup) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -20,6 +20,8 @@ public partial class EditableComboBoxTableBorder : global::System.Windows.Contro
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Thickness EditableComboBoxBorderThickness;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.InputControls.EditableComboBoxVisualTable _editableComboBoxView;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ScrollViewer ECB_ScrollViewer;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Grid tableGrid;
@@ -28,6 +30,8 @@ public partial class EditableComboBoxTableBorder : global::System.Windows.Contro
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Shapes.Line verticalLine;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public bool IsEditModeActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.View.IEditableComboBoxVisualTable EditableTable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +39,8 @@ public partial class EditableComboBoxTableBorder : global::System.Windows.Contro
     public EditableComboBoxTableBorder(global::Quire.Controls.InputControls.EditableComboBoxVisualTable editableComboBoxView) { }
     [global::Quire.Mirror.MirrorStub]
     public void Refresh(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDragDeltaResizeTable(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);
     [global::Quire.Mirror.MirrorStub]

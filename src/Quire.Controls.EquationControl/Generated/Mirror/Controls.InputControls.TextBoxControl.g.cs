@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 public partial class TextBoxControl : global::System.Windows.Controls.TextBox, global::Quire.Controls.InputControls.IInputScriptableControl, global::Quire.Controls.InputControls.IInputScriptableControlBase, global::Quire.Controls.InputControls.IInputControl, global::Quire.Controls.InputControls.IInputControlBase, global::System.Windows.IFrameworkInputElement, global::System.Windows.IInputElement, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.InputControls.IInputControlViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TextBoxControl(global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue data) { }

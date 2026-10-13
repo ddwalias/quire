@@ -12,6 +12,10 @@ namespace Quire.Controls.InputControls;
 internal partial class InputCheckBoxEngineVBScript : global::Quire.Controls.InputControls.InputControlEngineVBScript
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string scriptInternalClassResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.VbCheckBoxScriptInternalClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
+    private const string defaultScriptResourceKey = "Quire.Controls.InputControls.implementations.ScriptableCheckBox.VbCheckBoxDefaultScript.vbs";
+    [global::Quire.Mirror.MirrorStub]
     protected static string _defaultScript;
     [global::Quire.Mirror.MirrorStub]
     public override string Script { get => base.Script; }

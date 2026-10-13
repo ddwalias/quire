@@ -12,9 +12,19 @@ namespace Quire.Calculation;
 internal partial class CollapsibleDispatchQueue
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<object, global::System.Collections.Generic.List<global::Quire.Pair<global::System.Action, global::Quire.Calculation.CollapsibleDispatchQueue.Status>>> _queueSet;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Threading.Dispatcher _dispatcher;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.ComponentModel.BackgroundWorker _worker;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Threading.ManualResetEventSlim _waitForNonEmpty;
+    [global::Quire.Mirror.MirrorStub]
     public CollapsibleDispatchQueue(global::System.Windows.Threading.Dispatcher dispatcher) { }
     [global::Quire.Mirror.MirrorStub]
     public void Enqueue(object keyObject, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Run(object sender, global::System.ComponentModel.DoWorkEventArgs doWorkEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CollapsibleDispatchQueue+Status, Ptc.Calculation")]
     private enum Status

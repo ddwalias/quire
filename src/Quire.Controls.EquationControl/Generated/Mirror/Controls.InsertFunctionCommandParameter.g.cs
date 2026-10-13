@@ -12,6 +12,10 @@ namespace Quire.Controls;
 public partial class InsertFunctionCommandParameter : global::Quire.Controls.InsertIdCommandParameter
 {
     [global::Quire.Mirror.MirrorStub]
+    private int _argsCount;
+    [global::Quire.Mirror.MirrorStub]
+    private string[] _args;
+    [global::Quire.Mirror.MirrorStub]
     public int ArgsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string[] Args { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

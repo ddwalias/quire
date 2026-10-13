@@ -24,6 +24,8 @@ internal partial class VisualLimitSideNode : global::Quire.Controls.Internal.Vis
     [global::Quire.Mirror.MirrorStub]
     public override double TextBaselineY { get => base.TextBaselineY; }
     [global::Quire.Mirror.MirrorStub]
+    private void CreateVisualChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnShowOperatorOnlyWhenActiveChanged(bool value) => base.OnShowOperatorOnlyWhenActiveChanged(value);

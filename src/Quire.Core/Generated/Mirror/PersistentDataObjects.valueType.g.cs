@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class valueType
 {
     [global::Quire.Mirror.MirrorStub]
+    private int resultRefField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool resultRefFieldSpecified;
+    [global::Quire.Mirror.MirrorStub]
     public int resultRef { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool resultRefSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

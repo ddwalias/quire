@@ -12,7 +12,39 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class Trace2DResultConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int FirstColumnIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int XResultIdx = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int YResultIdx = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const int XMinValueIdx = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private const int XMaxValueIdx = 3;
+    [global::Quire.Mirror.MirrorStub]
+    private const int YMinValueIdx = 4;
+    [global::Quire.Mirror.MirrorStub]
+    private const int YMaxValueIdx = 5;
+    [global::Quire.Mirror.MirrorStub]
+    private const int PlotTypeIdx = 6;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper _helper;
+    [global::Quire.Mirror.MirrorStub]
+    private bool ReadAsColumns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public Trace2DResultConverter(global::Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper helper) { }
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> DissectUnits(global::Quire.Calculation.Core.IResultNode node, out global::Quire.Calculation.Core.IMatrixResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool GetDataSourceType(global::Quire.Calculation.Core.IMatrixResultNode matrix, out global::Quire.Calculation.Core.Trace2DResultType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.ITrace2DResultNode ConvertToVectorsForm(global::Quire.Calculation.Core.IMatrixResultNode matrix, out string errorMessageCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Trace2DResults.TraceDataPoints BuildTraceData(global::Quire.Calculation.Core.IMatrixResultNode xResult, global::Quire.Calculation.Core.IMatrixResultNode yResult, global::Quire.Calculation.Core.Trace2DResults.TraceType traceTypeAuto, global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter xConverter, global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter yConverter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string TryParseResult(global::Quire.Calculation.Core.IMatrixResultNode matrix, out global::Quire.Calculation.Core.IMatrixResultNode xResult, out global::Quire.Calculation.Core.IMatrixResultNode yResult, out global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> rangeUnits, out global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> resultUnits, out global::Quire.Calculation.Core.Trace2DResultType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.Trace2DResults.TraceType GetTraceTypePreset(int xResultColumns, int yResultColumns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter GetMatrixToVectorsConverter(out bool isDiscrete, global::Quire.Calculation.Core.IMatrixResultNode resultMatrix, bool readAsColumns = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

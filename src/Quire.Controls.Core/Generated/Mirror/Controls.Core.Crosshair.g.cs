@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public partial class Crosshair : global::System.Windows.Controls.Canvas, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public Crosshair() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

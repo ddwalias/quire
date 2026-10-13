@@ -12,6 +12,20 @@ namespace Quire.Controls.Plots.Model;
 internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.Model.IPlotCalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Plots.Model.IHasNumberOfPoints, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.EngineError _error;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _hideFromCalculationContext;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper;
+    [global::Quire.Mirror.MirrorStub]
+    private int _numberOfPoints;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isNumOfPointsMutable;
+    [global::Quire.Mirror.MirrorStub]
     public abstract string Rl { get; }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -80,7 +94,11 @@ internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.
     [global::Quire.Mirror.MirrorStub]
     protected void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void OnChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool SetHideFromCalculationContext(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -101,6 +119,8 @@ internal abstract partial class PlotCalculatable : global::Quire.Controls.Plots.
     protected global::Quire.Calculation.Core.ICalculatable FindChildWithMatchingId(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsApplicationCustomError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

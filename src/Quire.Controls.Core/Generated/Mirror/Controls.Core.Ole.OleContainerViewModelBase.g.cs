@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Ole;
 public abstract partial class OleContainerViewModelBase : global::Quire.Controls.Core.ViewModelBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand ToggleActiveState;
     [global::Quire.Mirror.MirrorStub]
     protected OleContainerViewModelBase() { }

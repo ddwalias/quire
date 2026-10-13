@@ -12,6 +12,12 @@ namespace Quire.PersistentData;
 public abstract partial class RegionCollectionSerializer<TCollection> : global::Quire.PersistentData.RegionCollectionPreSerializer, global::Quire.PersistentData.IRegionCollectionSerializer where TCollection : class, global::Quire.PersistentData.IRegionCollectionType
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfCollection;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _worksheetXmlSerializerWithOverrides;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Xml.Serialization.XmlSerializer _worksheetXmlSerializerDefault;
+    [global::Quire.Mirror.MirrorStub]
     public abstract string RootNodeName { get; }
     [global::Quire.Mirror.MirrorStub]
     public abstract TCollection RegionCollection { get; protected set; }
@@ -20,7 +26,11 @@ public abstract partial class RegionCollectionSerializer<TCollection> : global::
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.IRegionType AddProtectionIfNeeded(global::Quire.PersistentDataObjects.IRegionType item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected RegionCollectionSerializer() { }
 }

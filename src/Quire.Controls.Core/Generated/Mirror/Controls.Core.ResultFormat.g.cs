@@ -12,7 +12,15 @@ namespace Quire.Controls.Core;
 public partial class ResultFormat : global::System.Windows.DependencyObject, global::System.Xml.Serialization.IXmlSerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly string ns;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty NumberFormatProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyProperty MatrixFormatProperty;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NumberFormat NumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool NumberFormatWasRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

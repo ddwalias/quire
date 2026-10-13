@@ -12,6 +12,8 @@ namespace Quire.Wpf;
 public partial class ObservableRangeCollection<T> : global::System.Collections.ObjectModel.ObservableCollection<T>, global::Quire.Wpf.IObservableRangeCollection<T>, global::System.Collections.Generic.ICollection<T>, global::System.Collections.Generic.IEnumerable<T>, global::System.Collections.IEnumerable, global::Quire.Wpf.INotifyCollectionRangeChanged<T>, global::Quire.Wpf.INotifyCollectionRangeChanged, global::System.Collections.Specialized.INotifyCollectionChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _fireRangeChangesAllowed;
+    [global::Quire.Mirror.MirrorStub]
     public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged;
@@ -20,7 +22,11 @@ public partial class ObservableRangeCollection<T> : global::System.Collections.O
     [global::Quire.Mirror.MirrorStub]
     public ObservableRangeCollection(global::System.Collections.Generic.IEnumerable<T> collection) { }
     [global::Quire.Mirror.MirrorStub]
+    private void FireRangeChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnRangeChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireRangeChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnRangeChanging(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -47,6 +53,10 @@ public partial class ObservableRangeCollection<T> : global::System.Collections.O
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ObservableRangeCollection`1+RangeChangeLock, Ptc.Core")]
     private partial class RangeChangeLock : global::System.IDisposable
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly bool _oldAllowed;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Wpf.ObservableRangeCollection<T> _collecton;
         [global::Quire.Mirror.MirrorStub]
         public RangeChangeLock(global::Quire.Wpf.ObservableRangeCollection<T> collection) { }
         [global::Quire.Mirror.MirrorStub]

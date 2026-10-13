@@ -36,6 +36,16 @@ public abstract partial class InputControlEngineVBScript : global::Quire.Control
     [global::Quire.Mirror.MirrorStub]
     public const string Event_Exec = "Event_Exec Inputs, Outputs\r\n";
     [global::Quire.Mirror.MirrorStub]
+    private const string Default_Input_Init = "Redim Inputs(0)\r\n";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Default_Output_Init = "Outputs = Array(New DataValue)\r\n";
+    [global::Quire.Mirror.MirrorStub]
+    private const string WorksheetScriptInternalClassResourceKey = "Quire.Controls.InputControls.Engine.VbWorksheetInternalClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
+    private const string FontScriptInternalClassResourceKey = "Quire.Controls.InputControls.Engine.VbFontClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DataValueScriptInternalClassResourceKey = "Quire.Controls.InputControls.Engine.VbDataValueClass.vbs";
+    [global::Quire.Mirror.MirrorStub]
     protected string _scriptInternalClass;
     [global::Quire.Mirror.MirrorStub]
     public InputControlEngineVBScript() { }

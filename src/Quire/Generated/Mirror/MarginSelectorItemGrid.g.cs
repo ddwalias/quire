@@ -12,9 +12,15 @@ namespace Quire;
 public partial class MarginSelectorItemGrid : global::System.Windows.Controls.Grid, global::System.ComponentModel.INotifyPropertyChanged, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private string _header;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.ImageSource _imageSource;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PageSizeUnitsProperty;
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.MarginSelectorItemGrid _this;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

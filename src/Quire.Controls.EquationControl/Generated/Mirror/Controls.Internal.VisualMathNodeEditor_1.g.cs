@@ -12,6 +12,8 @@ namespace Quire.Controls.Internal;
 internal abstract partial class VisualMathNodeEditor<TVisualNodeType> : global::Quire.Controls.Core.VisualAdorner, global::Quire.EquationEditor.View.IVisualMathNodeEditor where TVisualNodeType : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.CaretAdorner _caret;
+    [global::Quire.Mirror.MirrorStub]
     protected static readonly global::System.Windows.DependencyProperty CaretBlinkPeriodProperty;
     [global::Quire.Mirror.MirrorStub]
     protected static readonly global::System.Windows.DependencyProperty CaretBlinkProperty;
@@ -22,17 +24,35 @@ internal abstract partial class VisualMathNodeEditor<TVisualNodeType> : global::
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.Controls.Internal.VisualMathRegionNode Region;
     [global::Quire.Mirror.MirrorStub]
+    private bool _blink;
+    [global::Quire.Mirror.MirrorStub]
     public bool Blink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate2<double, double> LeftButtonDown;
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate2<double, double> LeftButtonDrag;
     [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretColorPropertyChanged(global::System.Windows.DependencyObject caret, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretBlinkPropertyChanged(global::System.Windows.DependencyObject caret, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCaretBlinkPeriodPropertyChanged(global::System.Windows.DependencyObject caret, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected VisualMathNodeEditor(global::Quire.Controls.Internal.VisualMathNode editNode, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     protected VisualMathNodeEditor(global::Quire.Controls.Internal.VisualMathNode editNode, global::System.Windows.FrameworkElement adornedElement, global::Quire.Controls.Internal.VisualMathRegionNode region) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
+    private bool TrySetClipEnabled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AdornedElementOnIsVisibleChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected void BindToSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HookupEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnLayoutUpdatedForDebug(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRegionDeactivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Remove() => base.Remove();
     [global::Quire.Mirror.MirrorStub]

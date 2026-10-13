@@ -12,9 +12,27 @@ namespace Quire;
 public partial class FontSizeComboBox : global::System.Windows.Controls.ComboBox
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool _handleSelection;
+    [global::Quire.Mirror.MirrorStub]
+    private object _lastValidFontSize;
+    [global::Quire.Mirror.MirrorStub]
+    private const int TextMaxLength = 4;
+    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
     [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontSizeComboBoxPreviewGotKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontSizePreviewLostKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontSizeComboBoxPreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontSizeComboBoxSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FontSizeComboBoxDropDownOpened(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FontSizeComboBoxDropDownClosed(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTagFontSizeDataSource() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

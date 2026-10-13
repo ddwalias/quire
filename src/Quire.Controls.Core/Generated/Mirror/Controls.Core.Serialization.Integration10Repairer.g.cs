@@ -12,5 +12,9 @@ namespace Quire.Controls.Core.Serialization;
 internal static partial class Integration10Repairer
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string TargetNamespaceUri = "http://schemas.ptc.com/integration10";
+    [global::Quire.Mirror.MirrorStub]
     public static void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void UpdateNameSpace(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

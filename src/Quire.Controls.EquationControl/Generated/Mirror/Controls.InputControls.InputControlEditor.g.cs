@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 public partial class InputControlEditor : global::Quire.Controls.Core.ControlsWindow, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.InputControls.IInputControlEditorViewModel _viewModel;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TabControl TabControl;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ComboBox cbLanguage;
@@ -20,11 +22,37 @@ public partial class InputControlEditor : global::Quire.Controls.Core.ControlsWi
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Grid gridPropertyEditor;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public InputControlEditor(string editorTitleResourceKey, global::System.Windows.Controls.Control compositePropertyTab, global::Quire.Controls.InputControls.IInputControlEditorModel model) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void PostInitializeComponent(string editorTitleResourceKey, global::System.Windows.Controls.Control compositePropertyTab, global::Quire.Controls.InputControls.IInputControlEditorModel model) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnOkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnCancelButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnApplyButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonUndo_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonRedo_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonFontSizeIncrease_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonFontSizeDecrease_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonFileOpen_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ButtonFileSave_OnClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TbScript_OnTextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TbScript_OnPreviewKeyDown(object sender, global::System.Windows.Input.InputEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InfoMsgHide(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InputControlEditor_OnClosing(object sender, global::System.ComponentModel.CancelEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

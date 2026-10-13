@@ -12,6 +12,8 @@ namespace Quire.DOE;
 public partial class Effects : global::Quire.DOE.DoeAnlyz
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_T;
+    [global::Quire.Mirror.MirrorStub]
     public Effects() { }
     [global::Quire.Mirror.MirrorStub]
     public Effects(global::Quire.Mcd.MatVal A, global::Quire.Mcd.MatVal Y) { }
@@ -19,6 +21,28 @@ public partial class Effects : global::Quire.DOE.DoeAnlyz
     public bool effectsTable(out global::Quire.Mcd.MatVal table, string effects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool effectsTable(out global::Quire.Mcd.MatVal table, int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void addBlocksRow(int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void effectsTable(bool doMain) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double[] interactionEffect(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int interactionsEffects(int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int interactionsEffects(string[] effects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FactorLabel(int f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FactorLabel(int[] f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FactorLabel(string factor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal general_block_effect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal general_main_effect(string factor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal general_interaction_effect(string factor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal get_general_effect(string factor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

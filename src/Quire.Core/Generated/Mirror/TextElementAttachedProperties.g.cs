@@ -12,9 +12,15 @@ namespace Quire;
 public static partial class TextElementAttachedProperties
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public const string DefaultTextStyle = "Normal";
     [global::Quire.Mirror.MirrorStub]
+    private const double FONT_SIZE_TOLERANCE = 0.0001d;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty StyleKeyProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private static void HandleTextStyleDataChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ClearTextStyleData(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -25,4 +31,10 @@ public static partial class TextElementAttachedProperties
     public static void SetTextStyleAndBind(global::System.Windows.DependencyObject element, global::Quire.TextStyleData styleData, bool isApply, bool isSelected, global::System.Windows.Controls.RichTextBox rtb = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetTextStyleOnElement(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetTextStyleOnParagraph(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetTextStyleMarker(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected, global::System.Windows.Documents.Block block, global::System.Windows.Controls.RichTextBox rtb = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetTextStyleOnTextRegion(global::System.Windows.FrameworkContentElement element, global::Quire.ITextStyle textStyle, bool isApply, bool isSelected, global::System.Windows.Controls.RichTextBox rtb = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

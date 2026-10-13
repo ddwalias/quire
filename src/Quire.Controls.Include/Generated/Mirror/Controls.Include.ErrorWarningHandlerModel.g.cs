@@ -12,6 +12,16 @@ namespace Quire.Controls.Include;
 internal partial class ErrorWarningHandlerModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.ErrorsList _errorsList;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.WarningsList _warningsList;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.ResourceDictionary _resources;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Func<string> _getCwd;
+    [global::Quire.Mirror.MirrorStub]
+    private string _pathIndexes;
+    [global::Quire.Mirror.MirrorStub]
     public const string WarningCodesSeparator = "#";
     [global::Quire.Mirror.MirrorStub]
     internal string PathIndexes { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -34,5 +44,39 @@ internal partial class ErrorWarningHandlerModel
     [global::Quire.Mirror.MirrorStub]
     internal void ClearWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FilterOutNotOwnErrorsWarnings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ValidateErrorsWarningsList(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Include.IncludeWorksheetErrorWarningData> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateErrorsWarnings(string pathIndexes, global::System.Collections.Generic.List<string> codes, global::Quire.Pair<string, bool> fileName, global::Quire.Controls.Core.NodeMessageAdornerType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsResetCode(global::System.Collections.Generic.IList<string> codes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsCalculationSuccedErrorCode(global::System.Collections.Generic.IList<string> codes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetFilePathRelativeToCwd(global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string FindInResource(string resourceCode, int inlineParamCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetErrorTextByCode(string errorCode, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ShouldRemovePreviousError(string newErrorCode, string oldErrorCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.IncludeWorksheetErrorWarningData CreateError(string indexes, global::System.Collections.Generic.List<string> codes, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateErrorStruct() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetWarningTextByCodes(global::System.Collections.Generic.List<string> codes, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Include.IncludeWorksheetErrorWarningData CreateWarning(string indexes, global::System.Collections.Generic.List<string> codes, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetWarningCodeForDiffSetting(global::System.Collections.Generic.List<string> codes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<string> ParseCode(string code) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string CleanUpLegacyWarnings(string warningCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateWarningStruct() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetWarningTextOnDiffSettings(global::System.Collections.Generic.List<string> codes, global::Quire.Pair<string, bool> fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

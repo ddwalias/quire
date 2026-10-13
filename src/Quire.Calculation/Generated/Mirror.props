@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
     <ProjectReference Include="..\Quire.Automation.Native\Quire.Automation.Native.csproj" />
+    <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
   </ItemGroup>

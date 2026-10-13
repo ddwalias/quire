@@ -12,7 +12,11 @@ namespace Quire.DOE;
 public partial class BoxBehnken : global::Quire.DOE.DoeBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.SortedDictionary<int, double[,]> m_designs;
+    [global::Quire.Mirror.MirrorStub]
     public BoxBehnken(int nfacts) { }
     [global::Quire.Mirror.MirrorStub]
     internal override double[,] getDesignMatrix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,6 +12,20 @@ namespace Quire.Engine;
 public partial class NodeData
 {
     [global::Quire.Mirror.MirrorStub]
+    private int m_fnode;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_add;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_error;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.Function m_remove;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_zone;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_error_msg;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_uptodate;
+    [global::Quire.Mirror.MirrorStub]
     public NodeData(int fnode, global::Quire.utl_mgd.Function add, global::Quire.utl_mgd.Function error, global::Quire.utl_mgd.Function remove) { }
     [global::Quire.Mirror.MirrorStub]
     public void SetZone(object zone) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

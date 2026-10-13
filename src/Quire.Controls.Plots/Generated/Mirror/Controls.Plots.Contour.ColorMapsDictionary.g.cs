@@ -14,6 +14,8 @@ internal partial class ColorMapsDictionary : global::System.Windows.ResourceDict
     [global::Quire.Mirror.MirrorStub]
     internal static readonly global::Quire.Controls.Plots.Contour.ColorMapsDictionary Instance;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public ColorMapsDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

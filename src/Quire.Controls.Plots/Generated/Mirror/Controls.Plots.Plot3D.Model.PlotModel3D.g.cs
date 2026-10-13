@@ -12,6 +12,40 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelBase, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string EquationIndexValueShouldBeValid = "Equation index Value should be valid";
+    [global::Quire.Mirror.MirrorStub]
+    private const string EquationListShouldBeNonEmpty = "Equation list should be non empty";
+    [global::Quire.Mirror.MirrorStub]
+    private const string DirectionShouldBeValid = "Direction should be valid";
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.IList<global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D> _traces;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D _equationListModel3D;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IAxisModel _xAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IAxisModel _yAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.IAxisModel _zAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private double _xStart;
+    [global::Quire.Mirror.MirrorStub]
+    private double _xEnd;
+    [global::Quire.Mirror.MirrorStub]
+    private double _yStart;
+    [global::Quire.Mirror.MirrorStub]
+    private double _yEnd;
+    [global::Quire.Mirror.MirrorStub]
+    private double _zStart;
+    [global::Quire.Mirror.MirrorStub]
+    private double _zEnd;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Transform3D _cameraTransform;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.CameraType3D _plotCameraType;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D> Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -38,7 +72,59 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => base.GetHiddenAndVisibleCalculatables();
     [global::Quire.Mirror.MirrorStub]
+    private static bool AssertThatAxisAndAxisCalculatableIsNotNull(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AttachAxisEventHandlers(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DetachAxisEventHandlers(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AttachOrDetachLimitEditorEventHandlers(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, string propertyName, bool attach) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateLimitsAndBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static double AxisLimitEditorCalculatedValue(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisExpressionHasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool AxisHasMinMaxErrors(global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetAxesHaveMinMaxErrors(bool axesHaveErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TracePlotCalculatableError(object sender, global::Quire.Controls.Plots.Model.EngineErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveTrace(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ComputeTotalTracesSynchronizationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void TracePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetRangeOnAxes(global::System.Windows.Media.Media3D.Rect3D newRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetRangeOnAxis(double start, double size, global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Rect3D GetCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetRangeOnTraces(global::System.Windows.Media.Media3D.Rect3D newRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Media3D.Rect3D CalculateInitialCommonRange(global::System.Windows.Media.Media3D.Rect3D commonTraceBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Rect3D GetAxesRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Interval GetCommonInterval(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, double lowerBoundOfTraces, double upperBoundOfTraces) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool HasValidUserDefinedValue(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ComputeTotalTracesCalculationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireTraceInserted(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireTraceRemoved(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
@@ -52,9 +138,25 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D AddNewEquation(int index, int previousIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool Contains(double xCordinate, double yCoordinate, double zCoordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D AddEquation(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D equationModel, int index, int previousIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void InsertTrace(int index, global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireEquationAdded(int index, int previousindex, global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D plotEquationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D RemoveEquation(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int deletedItemIndex, int previousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireEquationRemoved(int deletedItemIndex, int priviousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void CheckAndCorrectDirection(ref global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ConditionsAreValidForDeleteOperation(int index, int previousIndex, global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IndicesAreValidForAddOperation(int index, int previousIndex, global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CheckAndCorrectIndicesForAddOperation(ref int index, ref int previousIndex, global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public PlotModel3D() { }
 

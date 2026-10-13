@@ -14,5 +14,27 @@ public static partial class ChartComponentConstants
     [global::Quire.Mirror.MirrorStub]
     public const string ChartComponentHelpContext = "ChartComponentControl";
     [global::Quire.Mirror.MirrorStub]
+    private const string Xidentifier = "X";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Yidentifier = "Y";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Zidentifier = "Z";
+    [global::Quire.Mirror.MirrorStub]
+    private const string XMinIdentifier = "Xmin";
+    [global::Quire.Mirror.MirrorStub]
+    private const string XMaxIdentifier = "Xmax";
+    [global::Quire.Mirror.MirrorStub]
+    private const string YMinIdentifier = "Ymin";
+    [global::Quire.Mirror.MirrorStub]
+    private const string YMaxIdentifier = "Ymax";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Y2MinIdentifier = "Y2min";
+    [global::Quire.Mirror.MirrorStub]
+    private const string Y2MaxIdentifier = "Y2max";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ZMinIdentifier = "Zmin";
+    [global::Quire.Mirror.MirrorStub]
+    private const string ZMaxIdentifier = "Zmax";
+    [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.ExcelComponent.Model.ChartWrapperType, global::Quire.Pair<string, bool>> TypeToIdentifier;
 }

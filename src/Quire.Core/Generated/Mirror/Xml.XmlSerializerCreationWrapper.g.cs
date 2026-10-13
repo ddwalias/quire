@@ -12,6 +12,8 @@ namespace Quire.Xml;
 public partial class XmlSerializerCreationWrapper : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Hashtable _duplicatedEnvVars;
+    [global::Quire.Mirror.MirrorStub]
     public XmlSerializerCreationWrapper() { }
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }

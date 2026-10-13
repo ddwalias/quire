@@ -12,6 +12,12 @@ namespace Quire.Controls;
 internal partial class FootersContainerSerializationStrategy : global::Quire.Controls.Core.Serialization.ISerializationStrategy
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.WorksheetSectionSerializationStrategy _footerStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.WorksheetSectionSerializationStrategy _firstPageFooterStrategy;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.PersistentData.footersContainerRegionCollectionSerializer _containerSerializer;
+    [global::Quire.Mirror.MirrorStub]
     public FootersContainerSerializationStrategy(global::Quire.Controls.WorksheetSectionSerializationStrategy footerStrategy, global::Quire.Controls.WorksheetSectionSerializationStrategy firstPageFooterStrategy, global::Quire.PersistentData.footersContainerRegionCollectionSerializer containerSerializer) { }
     [global::Quire.Mirror.MirrorStub]
     public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,10 @@ namespace Quire.utl_mgd;
 public partial class _Hex
 {
     [global::Quire.Mirror.MirrorStub]
+    private static byte hexdig(int hd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int dighex(byte dh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static string ToHex(byte[] b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static byte[] FromHex(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

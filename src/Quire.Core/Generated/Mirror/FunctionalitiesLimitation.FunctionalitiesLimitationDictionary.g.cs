@@ -12,6 +12,10 @@ namespace Quire.FunctionalitiesLimitation;
 public partial class FunctionalitiesLimitationDictionary : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.FunctionalitiesLimitation.FunctionalitiesLimitationDictionary _default;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public FunctionalitiesLimitationDictionary() { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey GetParentFunctionalityKey(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionalityKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

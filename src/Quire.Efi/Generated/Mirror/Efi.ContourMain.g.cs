@@ -12,15 +12,49 @@ namespace Quire.Efi;
 public partial class ContourMain
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_F;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_mdata;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim m_Fdim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.Dim m_Ldim;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.glMesh m_mesh;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.LRect3 m_rect;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_rows;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_cols;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal clipMatrixData(int origin, global::Quire.Mcd.MatVal limits, global::Quire.Mcd.MatVal data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public ContourMain(object data_, int origin, global::Quire.Mcd.MatVal limits, object scaleFactor) { }
     [global::Quire.Mirror.MirrorStub]
     public ContourMain(object F_, object grid_, global::Quire.Mcd.MatVal limits, object scaleFactor) { }
     [global::Quire.Mirror.MirrorStub]
+    private void calculate_vertices_attempt(double xmin, double xmax, double ymin, double ymax, global::Quire.Mcd.Dim fdim, double pws, int max_tries, ref int ntries, ref double minZ, ref double maxZ, ref global::Quire.Efi.shpPoint3D[] vertices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool try_calc_mt_vertices(double xmin, double xmax, double ymin, double ymax, global::Quire.Mcd.Dim fdim, double pws, int max_tries, ref int ntries, ref double minZ, ref double maxZ, ref global::Quire.Efi.shpPoint3D[] vertices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void calculateVertices(int rows, int cols, int startRow, int endRow, global::System.Threading.CancellationToken token, double xmin, double xmax, double ymin, double ymax, global::Quire.Mcd.Dim fdim, double pws, global::Quire.Mpl.Run.Function F, ref double minZ, ref double maxZ, ref global::Quire.Efi.shpPoint3D[] vertices, ref bool retVal, out global::System.Exception outExc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal getContours(object levels_) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void sortContours(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> allcontours) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal storeContours1(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> allcontours) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal storeContours2(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> allcontours) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddBGpoint(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> allcontours, global::System.Collections.Generic.List<int> bCntrIdx, global::Quire.Efi.LRect3 rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Efi.ContourMain+NeedToTryAgainException, efiplot_")]
     private partial class NeedToTryAgainException : global::System.Exception
     {
+        [global::Quire.Mirror.MirrorStub]
+        private const string NEED_TRY_AGAIN_EXCEPTION_MESSAGE = "NeedToTryAgain";
         [global::Quire.Mirror.MirrorStub]
         public NeedToTryAgainException() { }
     }

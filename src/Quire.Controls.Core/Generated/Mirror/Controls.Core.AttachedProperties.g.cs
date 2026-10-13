@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public static partial class AttachedProperties
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RegisterCommandBindingsProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty PageElementXamlHelperProperty;
@@ -60,6 +62,10 @@ public static partial class AttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Input.CommandBindingCollection GetRegisterCommandBindings(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void OnRegisterCommandBindingChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Core.IPageElementXamlHelper GetPageElementXamlHelper(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.BackgroundTypeE GetPlotBackgroundType(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetPlotBackgroundType(global::System.Windows.DependencyObject depObj, global::Quire.Controls.Core.BackgroundTypeE value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -72,6 +78,8 @@ public static partial class AttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static void SetCalcIsDisabled(global::System.Windows.DependencyObject dObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleLabeledIdFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool GetProhibitMouseClick(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetProhibitSizeChangedEventHandler(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -81,6 +89,10 @@ public static partial class AttachedProperties
     public static void ClearProhibitSizeChangedEventHandler(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IWhiteboardItem GetPrintView(global::System.Windows.UIElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CanActivateCoerceValue(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void OnCanActivateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetCanActivate(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -94,11 +106,15 @@ public static partial class AttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static void ClearHandlesContextMenu(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void SupportsInputsOutputsPropertyChangedHandler(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool GetSupportsInputsOutputs(global::System.Windows.UIElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetSupportsInputsOutputs(global::System.Windows.UIElement elem, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ClearSupportsInputsOutputs(global::System.Windows.UIElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void IsOnVisiblePagePropertyChangedHandler(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetIsOnVisiblePage(global::System.Windows.UIElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -131,6 +147,8 @@ public static partial class AttachedProperties
     public static void SetContainedInCollapsedWhiteboard(global::System.Windows.DependencyObject obj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ClearContainedInCollapsedWhiteboard(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ContainedInCollapsedWhiteboardPropertyChangedHandler(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsBringToView(global::System.Windows.DependencyObject depObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

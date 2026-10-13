@@ -12,11 +12,59 @@ namespace Quire.AutomationServiceEngNote;
 public partial class CMathcadPrimeApplication : global::Quire.EngNotebook.Automation.IReleasableRealSubject, global::Quire.EngNotebook.Automation.IMathcadPrimeApplication, global::Quire.EngNotebook.Automation.IMathcadPrimeApplication2, global::Quire.EngNotebook.Automation.IMathcadPrimeApplication3
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets _worksheets;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isSubscribedApplicationEvents;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeEvents _events;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeEvents2 _events2;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.ICollection<global::Quire.EngNotebook.Automation.MathcadPrimeEvents> _subscribedEvents2;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly bool _isUiInteractiveModeDisabled;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Timers.Timer _timer;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isSubscribedPing;
+    [global::Quire.Mirror.MirrorStub]
+    private static int _isClosing;
+    [global::Quire.Mirror.MirrorStub]
+    private static bool _isPinging;
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsEventsInitialized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsEventsInitialized2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool Visible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet ActiveWorksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheets Worksheets { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private void SubscribesApplicationEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnsubscribesApplicationEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnMathcadPrimeExit(object sender, global::System.Windows.ExitEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentSaved(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentIOSelected(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::System.Collections.Generic.List<string> inputsList, global::System.Collections.Generic.List<string> outputsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentClosed(string documentFullName, string documentName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentModified(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentRenamed(string previousFullName, string currentFullName, string previousDocName, string currentDocName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentInputsOutputsStatesGeneratedWhenSave(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.Controls.Core.IORegions.IInputOutputItemsStates inputsOutputsStates, global::Quire.Controls.IO.IInputOutputItemsConflicts conflicts) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnDocumentInputsOutputsStatesGeneratingBeforeSave(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.Controls.Core.IORegions.IInputOutputItemsStates inputsOutputsStates, global::Quire.Controls.IO.IInputOutputItemsConflicts conflicts) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnRequestToUpdateInputs(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.Controls.Core.IORegions.IValuesSetter setter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnPingClient(object sender, global::System.Timers.ElapsedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public CMathcadPrimeApplication() { }
     [global::Quire.Mirror.MirrorStub]
@@ -24,15 +72,39 @@ public partial class CMathcadPrimeApplication : global::Quire.EngNotebook.Automa
     [global::Quire.Mirror.MirrorStub]
     public void ReleaseComEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool DoGetVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DoSetVisible(bool visibleMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DoActivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Quit(global::Quire.EngNotebook.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private bool DoTryToCloseMathcadPrime(global::Quire.EngNotebook.Automation.SaveOption saveOption) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet DoGetActiveWorksheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet Open(string documentPathArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string ShowPopupError(string documentPath, global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions readonlyOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheet DoOpen(string documentPath, global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions readonlyOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.IEngineeringDocument GetOpenedDocument(string documentFullName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int InitializeEvents(global::Quire.EngNotebook.Automation.IMathcadPrimeEvents eventsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetInputsOutputsSelectedEvent(global::System.Collections.Generic.List<string> inputsList, global::System.Collections.Generic.List<string> outputsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetSavedEvent(string documentName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnExitEvent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void CloseAll(global::Quire.EngNotebook.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DoCloseAll(global::Quire.EngNotebook.Automation.SaveOption saveOption) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -41,6 +113,24 @@ public partial class CMathcadPrimeApplication : global::Quire.EngNotebook.Automa
     public int SubscribeEvent(global::Quire.EngNotebook.Automation.MathcadPrimeEvents primeEventArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int UnsubscribeEvent(global::Quire.EngNotebook.Automation.MathcadPrimeEvents primeEventArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetSavedEvent2(string documentName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetClosedEvent2(string documentPath, string documentName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetModifiedEvent2(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetRenamedEvent2(string previousFullName, string currentFullName, string previousDocName, string currentDocName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetStatesGeneratedEvent2(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.EngNotebook.Automation.WorksheetOperations operation, global::Quire.Controls.Core.IORegions.IInputOutputItemsStates inputsOutputsStates, global::Quire.Controls.IO.IInputOutputItemsConflicts conflicts) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetStatesGeneratingEvent2(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.EngNotebook.Automation.WorksheetOperations operation, global::Quire.Controls.Core.IORegions.IInputOutputItemsStates inputsOutputsStates, global::Quire.Controls.IO.IInputOutputItemsConflicts conflicts) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnRequestToUpdateInputsEvent2(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::Quire.Controls.Core.IORegions.IValuesSetter setter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnWorksheetInputsOutputsSelectedEvent2(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument, global::System.Collections.Generic.List<string> inputsList, global::System.Collections.Generic.List<string> outputsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FireOnExitEvent2() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions CreateWorksheetReadonlyOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

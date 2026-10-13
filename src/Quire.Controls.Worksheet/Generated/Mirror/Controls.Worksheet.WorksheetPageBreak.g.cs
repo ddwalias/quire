@@ -12,7 +12,11 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetPageBreak : global::System.Windows.Controls.Control, global::Quire.Controls.Core.IWorksheetPageBreak, global::Quire.Serialization.IPersistentDataProvider, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _verticalPosition;
+    [global::Quire.Mirror.MirrorStub]
     public const double PageBreakHeight = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
     public double VerticalPosition { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

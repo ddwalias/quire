@@ -32,5 +32,7 @@ public partial class UIElementManager : global::Quire.Controls.Whiteboard.IUIEle
     [global::Quire.Mirror.MirrorStub]
     public object GetDependencyPropertyValueOnItem(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.DependencyProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.UIElement GetUIElement(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public UIElementManager() { }
 }

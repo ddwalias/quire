@@ -12,9 +12,17 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class ExcelComponentModel : global::Quire.Controls.ExcelComponent.Model.OleBaseComponentModel, global::Quire.Controls.ExcelComponent.Model.IExcelComponentModel, global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentModel, global::Quire.Controls.Mathboard.IAggregateMathboardModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatableAggregate, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICanContainSymbolicCalculation, global::Quire.Controls.Mathboard.IVerticalWhiteboardSections
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.NodeHandleMapper _nodeHandleMapper;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.HashSet<global::Quire.Controls.ExcelComponent.Model.IOleBaseComponentCalculatableWrapper> _wasOutput;
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.Generic.IEnumerable<string> ComponentErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> OutputsConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> InputsConnectedToTheEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<bool> QueryHiddenFromCalculationContext;
     [global::Quire.Mirror.MirrorStub]
@@ -28,21 +36,33 @@ public partial class ExcelComponentModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     protected void AddOrRemoveCalculatable(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleChildWrapperExcelComponentEquationTypeChanged(global::Quire.Calculation.Core.ICalculatable equation, global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType oldType, global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType newType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => base.SetIdentifierLabels(idLabelMap);
     [global::Quire.Mirror.MirrorStub]
     protected override void AddItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.AddItems(items);
     [global::Quire.Mirror.MirrorStub]
     protected override void RemoveItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => base.RemoveItems(items);
     [global::Quire.Mirror.MirrorStub]
+    private bool CheckComponentEnabledCalcItems(bool checkOutputOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableAdded(calculatable);
     [global::Quire.Mirror.MirrorStub]
     protected override void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => base.FireCalculatableRemoved(calculatable);
+    [global::Quire.Mirror.MirrorStub]
+    private string GetOutputList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetOutputDefineLeftHandSide(global::Quire.Calculation.Core.ICalculatable eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper GetExcelComponentCalculatableWrapper(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError GetError(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ExcelComponent.Model.ExcelComponentEquationType GetEquationType(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Clone() => base.Clone();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool IsValidItem(global::Quire.Controls.ExcelComponent.Model.IExcelComponentCalculatableWrapper wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public ExcelComponentModel() { }
     [global::Quire.Mirror.MirrorStub]

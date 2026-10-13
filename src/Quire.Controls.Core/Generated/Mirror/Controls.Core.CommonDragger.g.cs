@@ -24,6 +24,10 @@ public partial class CommonDragger
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Point _startPoint;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _currentPoint;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _started;
+    [global::Quire.Mirror.MirrorStub]
     protected bool _preserveDimensions;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.CommonDragger.DragStartHandler onDragStart;
@@ -32,11 +36,27 @@ public partial class CommonDragger
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.CommonDragger.DragProgressHandler onDragProgress;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Threading.DispatcherTimer bringIntoViewDispatcherTimer;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _pt;
+    [global::Quire.Mirror.MirrorStub]
     public CommonDragger(global::System.Windows.FrameworkElement container, global::System.Windows.Point startPosition, bool bAutoStart, global::Quire.Controls.Core.DragMode mode, params global::System.Windows.UIElement[] elementsToDrag) { }
     [global::Quire.Mirror.MirrorStub]
     public void StartCaptureEvents(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void EndCaptureEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MouseMove(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NotifyDragStart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NotifyDragEnd(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void NotifyDragProgress(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void BringIntoViewCallback(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void CacheOriginalWidths() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

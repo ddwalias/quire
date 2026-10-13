@@ -12,7 +12,19 @@ namespace Quire.Engine;
 public partial class DetectRedefs : global::Quire.depman.Action
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.IRegion m_region;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_redefs;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_algos;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.IDictionary m_result;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.ICollection _DetectRedefs(global::Quire.depman.Environment A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public DetectRedefs(global::Quire.Mpl.IRegion A_0, global::System.Collections.IDictionary A_1, global::System.Collections.IDictionary A_2, global::System.Collections.IDictionary A_3) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeDetectRedefs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.depman.ActionResult Invoke(global::Quire.depman.Environment env, object state) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

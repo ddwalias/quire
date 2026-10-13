@@ -12,6 +12,10 @@ namespace Quire.PersistentDataObjects;
 public partial class xyPlotTypeAxes
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.xAxis xAxisField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.yAxis[] yAxisField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.xAxis xAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.yAxis[] yAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

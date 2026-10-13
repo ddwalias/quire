@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.SpecTable.Model;
 public partial class SpecTableMemento : global::Quire.EquationEditor.SpecTable.Model.ISpecTableMemento
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.SpecTable.Model.IColumnMemento> a;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.EquationEditor.SpecTable.Model.IColumnMemento> ColumnMementoList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public SpecTableMemento(global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> columns) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> RestoreData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

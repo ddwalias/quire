@@ -12,6 +12,12 @@ namespace Quire.Controls.Core.IORegions;
 public partial class ToggleRegionsDesignationCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> _commandsToUndo;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> _commands;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly string _name;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ToggleRegionsDesignationCommand(global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> commands, string name) { }

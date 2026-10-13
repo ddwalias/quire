@@ -16,6 +16,14 @@ public partial class TextBoxScriptableControlData : global::Quire.EquationEditor
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 100;
     [global::Quire.Mirror.MirrorStub]
+    private bool c;
+    [global::Quire.Mirror.MirrorStub]
+    private bool d;
+    [global::Quire.Mirror.MirrorStub]
+    private bool n;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.TextAlignment o;
+    [global::Quire.Mirror.MirrorStub]
     public bool AcceptsReturn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

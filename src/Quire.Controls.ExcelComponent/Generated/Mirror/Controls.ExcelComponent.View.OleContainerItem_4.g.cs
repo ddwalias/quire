@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent.View;
 public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData> : global::Quire.Controls.Core.Ole.OleContainer<TViewModel, TModel, TIPublicModel, TPersistentData>, global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged where TViewModel : global::Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel<TModel, TIPublicModel, TPersistentData> where TModel : global::Quire.Controls.Core.Ole.OleContainerModel<TPersistentData>, TIPublicModel where TIPublicModel : global::Quire.Controls.Core.Ole.IPublicOleContainerModel<TPersistentData> where TPersistentData : global::Quire.PersistentData.IOleObjectPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Size _expectedSize;
+    [global::Quire.Mirror.MirrorStub]
     public double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -57,6 +59,8 @@ public abstract partial class OleContainerItem<TViewModel, TModel, TIPublicModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.View.OleContainerItem`4+DimensionsConverter, Ptc.Controls.ExcelComponent")]
     public partial class DimensionsConverter : global::System.Windows.Data.IValueConverter
     {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.ExcelComponent.View.OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData> _container;
         [global::Quire.Mirror.MirrorStub]
         public DimensionsConverter(global::Quire.Controls.ExcelComponent.View.OleContainerItem<TViewModel, TModel, TIPublicModel, TPersistentData> oleContainer) { }
         [global::Quire.Mirror.MirrorStub]

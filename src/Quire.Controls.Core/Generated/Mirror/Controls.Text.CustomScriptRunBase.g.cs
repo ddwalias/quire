@@ -12,6 +12,8 @@ namespace Quire.Controls.Text;
 public abstract partial class CustomScriptRunBase : global::System.Windows.Documents.Run, global::Quire.Wpf.ICustomFontSizeOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StyleKeyProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty WpfRecreateScriptsProperty;
@@ -19,6 +21,10 @@ public abstract partial class CustomScriptRunBase : global::System.Windows.Docum
     public static readonly global::System.Windows.DependencyProperty IsInSerializationProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RevertCoerceAfterSerializationProcessProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _deferInit;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Windows.DependencyPropertyKey FontSizeForReportPropertyKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FontSizeForReportProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -38,15 +44,25 @@ public abstract partial class CustomScriptRunBase : global::System.Windows.Docum
     [global::Quire.Mirror.MirrorStub]
     public void ClearRevertCoerceAfterSerializationProcess() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void HandleAnySerializationChanged(bool inSerialization) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected CustomScriptRunBase() { }
     [global::Quire.Mirror.MirrorStub]
     protected CustomScriptRunBase(string text) { }
     [global::Quire.Mirror.MirrorStub]
     protected CustomScriptRunBase(string text, global::System.Windows.Documents.TextPointer insertionPosition) { }
     [global::Quire.Mirror.MirrorStub]
+    private static object CoerceVariantsProperty(global::System.Windows.DependencyObject depObj, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static object CoerceCustomScriptFontSizeCallback(global::System.Windows.DependencyObject depObj, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ScriptBaseRun_DataContextChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool ToggleRangeText(global::System.Windows.Documents.TextRange range, global::Quire.Controls.Text.ScriptState switchToScript, double reviveFontSize = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void RecoverSubSuperscriptRunsInRange(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Collections.Generic.List<T> RecoverCustomScriptRunsInRange<T>(global::System.Windows.Documents.TextRange range, global::System.Func<global::System.Windows.Documents.Run, bool> shouldConvertPredicate) where T : global::Quire.Controls.Text.CustomScriptRunBase => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SetSpanPropToRunIfNeeded(global::System.Collections.Generic.List<global::System.Windows.Documents.Run> runsToConvert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

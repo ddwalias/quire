@@ -24,6 +24,8 @@ internal partial class VisualInputScriptableControlNode : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.ScrollViewer xamlScrollViewer;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public VisualInputScriptableControlNode() { }
     [global::Quire.Mirror.MirrorStub]
     public VisualInputScriptableControlNode(string mathNodeName, global::Quire.EquationEditor.Tree.MathNode mathNode, global::Quire.Controls.Internal.VisualMathRegionNode region) { }

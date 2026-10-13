@@ -14,7 +14,11 @@ public partial class MathFormatWithDebugTab : global::Fluent.RibbonTabItem, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Panel _barsPannel;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathFormatWithDebugTab() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void AddDebugBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

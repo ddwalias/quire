@@ -12,9 +12,35 @@ namespace Quire.Native.EfidiffeqImpl;
 internal partial class eval_bc
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_bfunc_left;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mpl.Run.Function m_bfunc_right;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.NumVal m_arg1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Mcd.MatVal m_arg2;
+    [global::Quire.Mirror.MirrorStub]
+    private double[] m_vec;
+    [global::Quire.Mirror.MirrorStub]
+    private int m_len;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_check_dirichlet_left;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_check_dirichlet_right;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_check_neumann_left;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_check_neumann_right;
+    [global::Quire.Mirror.MirrorStub]
+    private eval_bc(global::Quire.Mpl.Run.Function left, global::Quire.Mpl.Run.Function right) { }
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.Mcd.MatVal eval(global::Quire.Native.EfidiffeqImpl.PdaeSolver1d* solver, global::Quire.Native.EfidiffeqImpl.PdeDims pdedims, bool isDirichlet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void eval_dirichlet_bc(global::Quire.Native.EfidiffeqImpl.PdaeSolver1d* solver, global::Quire.Native.EfidiffeqImpl.PdeDims pdedims) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe void eval_neumann_bc(global::Quire.Native.EfidiffeqImpl.PdaeSolver1d* solver, global::Quire.Native.EfidiffeqImpl.PdeDims pdedims) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfidiffeqImpl.bc_delegate dirichlet(global::Quire.Mpl.Run.Function left, global::Quire.Mpl.Run.Function right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.EfidiffeqImpl.bc_delegate neumann(global::Quire.Mpl.Run.Function left, global::Quire.Mpl.Run.Function right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private eval_bc() { }
 }

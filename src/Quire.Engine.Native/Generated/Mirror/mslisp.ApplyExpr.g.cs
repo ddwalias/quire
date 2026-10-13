@@ -12,6 +12,18 @@ namespace Quire.mslisp;
 internal partial class ApplyExpr : global::Quire.mslisp.Expression
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Expression m_func;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.Expression[] m_args;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.mslisp.FastApp m_optimized;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_try_optimize;
+    [global::Quire.Mirror.MirrorStub]
+    private static int s_trace_level;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.mslisp.FastApp TryOptimize(object f, global::Quire.mslisp.Expression ff, global::Quire.mslisp.Expression[] args, bool bVerbose) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public ApplyExpr(global::Quire.mslisp.Analyzer i, global::Quire.mslisp.Env e, object f, global::Quire.Engine.PCons args) { }
     [global::Quire.Mirror.MirrorStub]
     public virtual object execute(global::Quire.mslisp.Env e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

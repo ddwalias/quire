@@ -12,9 +12,29 @@ namespace Quire.Mpl.Run;
 public static partial class Rts
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.ConstructorInfo m_tag_ctor;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.ConstructorInfo m_exception_ctor;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.ConstructorInfo m_rethrow_ctor;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Type m_fcn_type;
+    [global::Quire.Mirror.MirrorStub]
     public static int m_max_stack;
     [global::Quire.Mirror.MirrorStub]
     public static int m_worker_stack_size;
+    [global::Quire.Mirror.MirrorStub]
+    private static int m_stack_depth__;
+    [global::Quire.Mirror.MirrorStub]
+    private static int m_stack_depth_init__;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.FieldInfo m_stack_depth_field_info;
+    [global::Quire.Mirror.MirrorStub]
+    private static string[] s_paths;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Threading.CancellationTokenSource ms_thread_cancellation_token;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Threading.CancellationTokenSource ms_dummy_cancellation_token;
     [global::Quire.Mirror.MirrorStub]
     public static int m_stack_depth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -45,4 +65,6 @@ public static partial class Rts
     public static global::System.Type TagType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder GetTypeInitializer(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Reflection.Assembly OnResolveAssembly(object s, global::System.ResolveEventArgs a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

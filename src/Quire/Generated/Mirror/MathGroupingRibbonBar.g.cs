@@ -28,6 +28,8 @@ public partial class MathGroupingRibbonBar : global::Fluent.RibbonGroupBox, glob
     [global::Quire.Mirror.MirrorStub]
     internal global::Fluent.Button Part_MathGroupingRibbonBar_Reverse;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public MathGroupingRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

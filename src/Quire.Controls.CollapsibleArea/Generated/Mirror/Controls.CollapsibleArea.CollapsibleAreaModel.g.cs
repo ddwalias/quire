@@ -12,6 +12,10 @@ namespace Quire.Controls.CollapsibleArea;
 public partial class CollapsibleAreaModel : global::Quire.Controls.Mathboard.MathboardModel, global::Quire.Controls.CollapsibleArea.ICollapsibleAreaModel, global::Quire.Controls.Mathboard.IMathboardModel, global::Quire.Controls.Whiteboard.IWhiteboardModel, global::System.ICloneable, global::System.IDisposable, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Controls.Core.Protection.IProtectableModel, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _isCollapsed;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isBorderVisible;
+    [global::Quire.Mirror.MirrorStub]
     public bool CanToggleCollapseState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsCollapsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -47,6 +51,8 @@ public partial class CollapsibleAreaModel : global::Quire.Controls.Mathboard.Mat
     protected void CopyStateTo(global::Quire.Controls.CollapsibleArea.CollapsibleAreaModel copy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Calculation.Core.Support.CalculatableChildHider InitializeChildManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldCloneItem(global::Quire.Controls.Core.IWhiteboardItem item) => base.ShouldCloneItem(item);
 

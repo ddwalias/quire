@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 internal partial class WorksheetVisualHelper : global::Quire.Controls.Worksheet.IWorksheetVisualHelper
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool ShouldToggleSelect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldContiguousSelect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -56,7 +58,11 @@ internal partial class WorksheetVisualHelper : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     public void ScrollIntoView(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Rect workingRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private double AdjustScrollToOffset(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.Primitives.IScrollInfo GetScrollViewerRect(object child, out global::System.Windows.Rect mainScrollViewerBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetEngineeringDocumentZoomValue(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> GetDefaultLabeledIdFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -65,6 +71,8 @@ internal partial class WorksheetVisualHelper : global::Quire.Controls.Worksheet.
     public void BringItemsBoundingBoxIntoView(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::Quire.Controls.Core.PageLayoutMode mode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.Printing.IPageSnapshot CreatePageSnapshot(global::Quire.Controls.Worksheet.IWorksheetViewModel wsViewModel, int pageIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Controls.Worksheet.IHeaderFooterControl CreateHeaderFooterSnapshot(global::Quire.Controls.Worksheet.IHeaderFooterControl realHeaderFooter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ExecuteInThrowawayCommandScope(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -79,6 +87,10 @@ internal partial class WorksheetVisualHelper : global::Quire.Controls.Worksheet.
     public double TranslateScrollViewportLocationToWorksheet(global::System.Windows.Controls.Primitives.IScrollInfo scrollViewer, global::Quire.Controls.Worksheet.IWorksheetControl wc, double yLocationInScrollViewport, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double TranslateWorksheetLocationToScrollViewport(global::System.Windows.Controls.Primitives.IScrollInfo scrollViewer, global::Quire.Controls.Worksheet.IWorksheetControl wc, double yLocationInWorksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point TranslatePageLocationToScrollViewport(global::System.Windows.Controls.Primitives.IScrollInfo scrollInfo, global::Quire.Controls.Worksheet.IWorksheetPageBody pageBody, global::System.Windows.Point locationOnPage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsInScrollViewport(global::System.Windows.Controls.Primitives.IScrollInfo scrollInfo, global::System.Windows.Rect scrollViewPort, global::Quire.Controls.Worksheet.IWorksheetPageBody pageBody, global::System.Windows.Rect itemRectInPageBody) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool IsItemInView(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetControl parentWorksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

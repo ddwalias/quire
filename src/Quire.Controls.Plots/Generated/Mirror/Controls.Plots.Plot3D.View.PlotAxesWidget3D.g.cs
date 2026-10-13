@@ -12,6 +12,24 @@ namespace Quire.Controls.Plots.Plot3D.View;
 public partial class PlotAxesWidget3D : global::System.Windows.Controls.UserControl, global::System.ComponentModel.INotifyPropertyChanged, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.AxesType _activeAxisType;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Nullable<global::Quire.Controls.Plots.Presenter.AxesType> _highlightedAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.AxesType[] _axisTypesOrderedByXyz;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Controls.Grid _axisSelectorControl;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.Plot3DLinearAxis _xAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.Plot3DLinearAxis _yAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.Plot3DLinearAxis _zAxis;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Plot3D.View.AxisSelectorWidget AxisSelector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.PlotGraphAxis XAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.PlotGraphAxis YAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,6 +37,8 @@ public partial class PlotAxesWidget3D : global::System.Windows.Controls.UserCont
     internal global::Quire.Controls.Plots.PlotGraphAxis ZAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Plot3D.View.Plot3DLinearAxis ActiveAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private bool CanTraverse { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Presenter.AxesType ActiveAxisType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -28,9 +48,43 @@ public partial class PlotAxesWidget3D : global::System.Windows.Controls.UserCont
     [global::Quire.Mirror.MirrorStub]
     public PlotAxesWidget3D(global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel xAxisViewModel, global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel yAxisViewModel, global::Quire.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel zAxisViewModel) { }
     [global::Quire.Mirror.MirrorStub]
+    private void OnIsVisibleChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCanTraverseForward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTraverseForward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnCanTraverseBackwards(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTraverseBackward(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void OnTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void ActivateAxisEquation(global::Quire.Controls.EquationControl nextEquation, global::System.Nullable<global::System.Windows.Input.FocusNavigationDirection> direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.EquationControl GetNextTraversalItemOnAxis(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int GetCurrentFocusedEquationIndex(global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> equationsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> CollectAxesEquations(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotAxisView> axes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Plot3D.View.Plot3DLinearAxis GetAxis(global::Quire.Controls.Plots.Presenter.AxesType axisType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.View.Plot3DLinearAxis> AllAxes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void ActivateAxis(global::Quire.Controls.Plots.Presenter.AxesType axisTypeToActivate, global::System.Nullable<global::System.Windows.Input.FocusNavigationDirection> direction = (global::System.Windows.Input.FocusNavigationDirection)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ActivateAxisInternal(global::Quire.Controls.Plots.Presenter.AxesType axisTypeToActivate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Nullable<global::Quire.Controls.Plots.Presenter.AxesType> AxisForSender(object sender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisButtonClick(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisButtonMouseEnter(object sender, global::System.Windows.Input.MouseEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AxisButtonMouseLeave(object sender, global::System.Windows.Input.MouseEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

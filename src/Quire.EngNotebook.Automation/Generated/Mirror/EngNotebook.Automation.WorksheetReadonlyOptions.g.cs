@@ -12,7 +12,11 @@ namespace Quire.EngNotebook.Automation;
 public partial class WorksheetReadonlyOptions : global::Quire.EngNotebook.Automation.IProxyComRealSubject<global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions>, global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions _realSubjectInstance;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private WorksheetReadonlyOptions() { }
     [global::Quire.Mirror.MirrorStub]
     internal WorksheetReadonlyOptions(global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions mathcadPrimeWorksheetReadonlyOptions) { }
     [global::Quire.Mirror.MirrorStub]

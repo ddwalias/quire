@@ -30,7 +30,17 @@ public partial class MathNodeToSExpressionTransform
     [global::Quire.Mirror.MirrorStub]
     public static readonly string AlgoSexpFormat;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, string> a_;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction2<string, global::Quire.EquationEditor.Tree.MathNode, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode>>> b_;
+    [global::Quire.Mirror.MirrorStub]
+    private bool c_;
+    [global::Quire.Mirror.MirrorStub]
     public bool ShowResolvedIdLabels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, string> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction2<string, global::Quire.EquationEditor.Tree.MathNode, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode>>> a(global::Quire.EquationEditor.Tree.Transform.MathNodeToSExpressionTransform A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public MathNodeToSExpressionTransform() { }
     [global::Quire.Mirror.MirrorStub]
@@ -39,4 +49,22 @@ public partial class MathNodeToSExpressionTransform
     public string Transform(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string Transform(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> labelGenerator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string b(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string b(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string e(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string d(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string c(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string b(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

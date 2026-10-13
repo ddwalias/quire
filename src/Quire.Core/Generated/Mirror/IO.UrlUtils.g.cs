@@ -12,19 +12,39 @@ namespace Quire.IO;
 public static partial class UrlUtils
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly string mathcad15Extenstion;
+    [global::Quire.Mirror.MirrorStub]
+    private const string TemplatePrimeExtenstion = ".mctx";
+    [global::Quire.Mirror.MirrorStub]
+    private const string InternalLinkPrefix = "#";
+    [global::Quire.Mirror.MirrorStub]
+    private const string PrimeExtenstion = ".mcdx";
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.List<global::Quire.IO.UrlUtils.UriProtocolCreationData> _schemeDetectionList;
+    [global::Quire.Mirror.MirrorStub]
     public static string GetStringAddressFromUri(this global::System.Uri uri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int FindTagIndex(string url) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool HasTag(string url, out string filePathWithoutTag, out string tagName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool TryOpenUrl(string url, bool useBrowser, bool assert = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string makeValidExtension(string url) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool TryCreateAbsoluteUri(string basePath, string path, out global::System.Uri absoluteUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool TryCreateAbsoluteUri(string basePath, global::System.Uri relativeUri, out global::System.Uri absoluteUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static string GetStandardBrowserPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static string RetriveBrowserPath(global::Microsoft.Win32.RegistryKey root, string regKeyPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal static bool TryParseBrowserPath(string commandLine, out string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool TryCreateKnownUri(string text, out global::System.Uri newUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Uri CreateUriForScheme(string text, global::Quire.IO.UrlUtils.UriProtocolCreationData uriCreationData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+RegConstants, Ptc.Core")]
     private static partial class RegConstants
@@ -42,6 +62,8 @@ public static partial class UrlUtils
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+UriProtocols, Ptc.Core")]
     private static partial class UriProtocols
     {
+        [global::Quire.Mirror.MirrorStub]
+        private static readonly global::System.Collections.Generic.HashSet<string> Protocols;
         [global::Quire.Mirror.MirrorStub]
         public static bool Contains(string element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

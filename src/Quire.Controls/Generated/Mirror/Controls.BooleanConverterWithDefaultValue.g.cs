@@ -12,6 +12,10 @@ namespace Quire.Controls;
 internal partial class BooleanConverterWithDefaultValue : global::Quire.Controls.Core.XmlBooleanConverter
 {
     [global::Quire.Mirror.MirrorStub]
+    private string AttributeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<string, object> AttributeNameToDefaultValueDictionary { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public BooleanConverterWithDefaultValue(string attributeName, global::System.Collections.Generic.Dictionary<string, object> attributeNameToDefaultValueDictionary) { }
     [global::Quire.Mirror.MirrorStub]
     public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);

@@ -12,17 +12,27 @@ namespace Quire.Controls.Worksheet;
 public partial class PageNumberControl : global::Quire.Controls.Worksheet.TemplatedTextBox, global::Quire.Controls.Worksheet.IPageNumberControl, global::Quire.Controls.Worksheet.ITemplatedTextBox, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public bool ClearTextForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override string TemplateFormat { get => base.TemplateFormat; set => base.TemplateFormat = value; }
     [global::Quire.Mirror.MirrorStub]
     public string TemplateKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void HandleTagChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     public override object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => base.GetRegionPersistentData(s11NProvider);
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => base.SetRegionPersistentData(d11NProvider, data);
+    [global::Quire.Mirror.MirrorStub]
+    private static string GetPageNumberFormat(string template) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool IsValidTemplateKey(string template) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private string GetTemplateKeyFromGivenFormat(string format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public PageNumberControl() { }
 }

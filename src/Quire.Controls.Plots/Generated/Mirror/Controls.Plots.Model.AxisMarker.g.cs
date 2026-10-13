@@ -12,6 +12,14 @@ namespace Quire.Controls.Plots.Model;
 public partial class AxisMarker : global::Quire.Controls.Plots.Model.BaseMarker, global::Quire.Controls.Plots.Model.IAxisMarker, global::Quire.Controls.Plots.Model.IBaseMarker, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _value;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle;
+    [global::Quire.Mirror.MirrorStub]
+    private double _lineWeight;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Model.RealNumberCalculatable _realNumberCalculatable;
+    [global::Quire.Mirror.MirrorStub]
     public double Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.LineStyle LineStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,6 +33,8 @@ public partial class AxisMarker : global::Quire.Controls.Plots.Model.BaseMarker,
     public AxisMarker(global::Quire.PersistentDataObjects.axisBaseTypeMarker dataObject, global::Quire.Calculation.Core.IResultManager resultManager) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.axisBaseTypeMarker GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Model.AxisMarker+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

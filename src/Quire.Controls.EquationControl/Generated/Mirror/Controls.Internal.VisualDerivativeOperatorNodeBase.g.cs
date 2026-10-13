@@ -14,6 +14,18 @@ internal partial class VisualDerivativeOperatorNodeBase : global::Quire.Controls
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _derivativeDescriptor;
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualDerivativeSymbolNode _derivativeSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.DerivativeLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
+    private const int _variableOperandIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int _orderOperandIndex = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const int _expressionOperandIndex = 2;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> CoreElements { get => base.CoreElements; }
@@ -43,6 +55,10 @@ internal partial class VisualDerivativeOperatorNodeBase : global::Quire.Controls
     protected VisualDerivativeOperatorNodeBase(global::Quire.EquationEditor.Tree.MathNodeDescriptor descriptor) { }
     [global::Quire.Mirror.MirrorStub]
     public override void ModifyChildMathFormat(int childIndex, global::Quire.Controls.Core.MathFormatValues childMathFormat) => base.ModifyChildMathFormat(childIndex, childMathFormat);
+    [global::Quire.Mirror.MirrorStub]
+    private void CopyOrderOperandToOrderSymbol() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateOrderOperandInactiveVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetVisibilityOfOperatorSymbol(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

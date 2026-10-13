@@ -12,6 +12,8 @@ namespace Quire.mslisp;
 internal partial class Constructor : global::Quire.utl_mgd.FunctionBase, global::Quire.mslisp.GenCall
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Type m_type;
+    [global::Quire.Mirror.MirrorStub]
     public Constructor(global::System.Type t) { }
     [global::Quire.Mirror.MirrorStub]
     public override object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

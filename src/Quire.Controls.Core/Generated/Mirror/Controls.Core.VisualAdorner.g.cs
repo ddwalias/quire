@@ -12,6 +12,8 @@ namespace Quire.Controls.Core;
 public abstract partial class VisualAdorner : global::Quire.Controls.Core.VisualAdornerBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Windows.Controls.UIElementCollection _visualChildren;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.UIElementCollection VisualChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override int VisualChildrenCount { get => base.VisualChildrenCount; }

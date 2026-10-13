@@ -12,6 +12,8 @@ namespace Quire.Controls.ExcelComponent.ViewModel;
 public partial class ChartContainerViewModel : global::Quire.Controls.ExcelComponent.ViewModel.OleContainerItemViewModel<global::Quire.Controls.ExcelComponent.Model.ChartContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel, global::Quire.PersistentData.chartContainerType>, global::Quire.Controls.ExcelComponent.ViewModel.IChartContainerViewModel, global::Quire.Controls.ExcelComponent.ViewModel.IOleContainerItemViewModel, global::Quire.Controls.Core.Ole.IOleContainerViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.ExcelComponent.Model.ChartContainerModel _model;
+    [global::Quire.Mirror.MirrorStub]
     public ChartContainerViewModel(global::Quire.Controls.ExcelComponent.Model.ChartContainerModel model) : base(default(global::Quire.Controls.ExcelComponent.Model.ChartContainerModel), default(global::System.Windows.Size)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Size EstablishInitialSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

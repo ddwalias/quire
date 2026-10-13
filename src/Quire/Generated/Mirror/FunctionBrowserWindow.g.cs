@@ -14,6 +14,8 @@ public partial class FunctionBrowserWindow : global::AvalonDock.Layout.LayoutAnc
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.FunctionBrowser FunctionBrowser;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public FunctionBrowserWindow() { }
     [global::Quire.Mirror.MirrorStub]
     public void OpenAndActivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

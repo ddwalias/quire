@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class MathRegionPersistentData : global::Quire.Controls.Worksheet.RegionPersistentData
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.EquationControl _equationControl;
+    [global::Quire.Mirror.MirrorStub]
     public MathRegionPersistentData(global::Quire.Controls.EquationControl equationControl) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void DeserializeEpilog() => base.DeserializeEpilog();

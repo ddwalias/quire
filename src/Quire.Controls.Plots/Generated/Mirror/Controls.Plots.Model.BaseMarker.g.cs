@@ -12,6 +12,16 @@ namespace Quire.Controls.Plots.Model;
 public partial class BaseMarker : global::Quire.Controls.Plots.Model.IBaseMarker, global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Color _color;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _showCallout;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.IEquationSerializationProxy _equationProxy;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Model.IMarkerCalculatable _calculatable;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isUserSetValue;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Model.IMarkerCalculatable Calculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -25,6 +35,10 @@ public partial class BaseMarker : global::Quire.Controls.Plots.Model.IBaseMarker
     public global::System.Xml.XmlNode ExpressionXml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private event global::System.Action EquationProxyChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculatableRequestEvaluation(global::Quire.Calculation.Core.ICalculatable obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetIsUserSetValue(bool value, bool updateCalculatableHiddenState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -49,6 +63,12 @@ public partial class BaseMarker : global::Quire.Controls.Plots.Model.IBaseMarker
     private partial class DoActionWhenEquationProxyChanged
     {
         [global::Quire.Mirror.MirrorStub]
+        private readonly global::System.Action _action;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Model.BaseMarker _baseMarker;
+        [global::Quire.Mirror.MirrorStub]
         public DoActionWhenEquationProxyChanged(global::Quire.Controls.Plots.Model.BaseMarker baseMarker, global::System.Action action) { }
+        [global::Quire.Mirror.MirrorStub]
+        private void ActionWrapper() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

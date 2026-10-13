@@ -12,15 +12,27 @@ namespace Quire.Controls.Text;
 public partial class HyperlinkDialogViewModel : global::Quire.Controls.Core.ViewModelBaseWithDataErrors
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Text.HyperlinkContextValues _hyperlinkContextValues;
+    [global::Quire.Mirror.MirrorStub]
+    private string _userInputAddress;
+    [global::Quire.Mirror.MirrorStub]
+    private string _userInputText;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _isOkButtonEnabled;
+    [global::Quire.Mirror.MirrorStub]
     public bool UserCanModifyText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ContextText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string ContextLinkAddress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string UserInputAddress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string UserInputText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Text.LinkEditOperation PerformedLinkEditOperation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Uri UserInputUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsOkButtonEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -31,4 +43,6 @@ public partial class HyperlinkDialogViewModel : global::Quire.Controls.Core.View
     public global::Quire.Controls.Text.HyperlinkEditState GetState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdatePerformedLinkOperation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ValidateDialogInputsState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

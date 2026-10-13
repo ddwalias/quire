@@ -12,6 +12,20 @@ namespace Quire.Controls.Internal;
 internal partial class VisualDerivativeSymbolNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.Controls.Internal.IGeometryProvider
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double FRACTIONBAR_VERTICAL_PADDING = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private const double FRACTIONBAR_SIDE_OVERHANG = 2d;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.HorizontalFence _fractionBar;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _upperDerivativeSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _lowerDerivativeSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.VisualSymbolNode _orderSymbol;
+    [global::Quire.Mirror.MirrorStub]
     public override double EffectiveBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override double EffectiveScriptBaselineY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -29,6 +43,10 @@ internal partial class VisualDerivativeSymbolNode : global::Quire.Controls.Inter
     public VisualDerivativeSymbolNode(global::System.Nullable<char> derivativeSymbol) { }
     [global::Quire.Mirror.MirrorStub]
     internal override global::System.Windows.Media.HitTestResult GetNodeAtPoint(global::System.Windows.Point hitPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetOrderSymbolFontSize(global::Quire.Controls.Core.IMathFormat format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetOrderSymbolShowOperatorOnlyWhenActive(bool show) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

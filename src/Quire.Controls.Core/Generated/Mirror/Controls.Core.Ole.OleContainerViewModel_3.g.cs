@@ -14,6 +14,12 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     [global::Quire.Mirror.MirrorStub]
     protected readonly TModel Model;
     [global::Quire.Mirror.MirrorStub]
+    private bool _forceGrayVisibility;
+    [global::Quire.Mirror.MirrorStub]
+    private double _maxHeight;
+    [global::Quire.Mirror.MirrorStub]
+    private double _maxWidth;
+    [global::Quire.Mirror.MirrorStub]
     public TIPublicModel PublicModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsOleSiteRunning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -35,6 +41,8 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     public bool SiteCreated { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string WorksheetName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private string DisplayFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Visibility GrayVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -84,7 +92,11 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     [global::Quire.Mirror.MirrorStub]
     protected OleContainerViewModel(TModel model, global::System.Windows.Size defaultMinSize) { }
     [global::Quire.Mirror.MirrorStub]
+    private void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void UpdateOleSizeIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateContainerSizeIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnDispose() => base.OnDispose();
     [global::Quire.Mirror.MirrorStub]
@@ -122,6 +134,8 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     [global::Quire.Mirror.MirrorStub]
     internal void ForceGrayVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private void FireGrayVisibilityChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool CreateOleWithDialog(nint winHandler, string dialogTitle, string oleContainerPath, out bool isNew, out bool isLink, out bool isCanceled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual bool CreateOleFromProgId(string progId, bool activate, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -131,6 +145,8 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     public bool CreateWindowlessOle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PostCreationWindowless() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void PostCreation(bool activate, bool isLink, bool isNew) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void PostCreation(bool isNew) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -145,6 +161,8 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     protected global::System.Windows.Size ApplySizeRestrictions(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Size CoerceSize(global::System.Windows.Size size, double diagonal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CoerceAndUpdateSize(global::System.Windows.Size size, double diagonal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected double CalculateDiagonalLength(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

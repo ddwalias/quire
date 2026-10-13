@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class ControlFactory : global::Quire.Controls.Worksheet.IControlFactory, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
+    private const string DataFormatRichText = "Rich Text Format";
+    [global::Quire.Mirror.MirrorStub]
     public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IEquationControl CreateEquationControl(string sExpression = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -69,4 +71,6 @@ public partial class ControlFactory : global::Quire.Controls.Worksheet.IControlF
     public global::Quire.Controls.Core.IWorksheetPageBreak CreatePageBreakControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.IWhiteboardItemZombie CreateWhiteboardItemZombie(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void InitializeTextRegion(global::Quire.Controls.Core.IRichTextBase control, global::Quire.Core.TextFormat textFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, string content, string dataFormat, bool caretPositionAtTheEnd = false, bool isBorder = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

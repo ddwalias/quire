@@ -32,6 +32,8 @@ internal partial class Instruction : global::Quire.Mpl.Run.Code
     private partial class InstructionArgType : global::Quire.Mpl.Run.Instruction
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::System.Type m_type;
+        [global::Quire.Mirror.MirrorStub]
         public InstructionArgType(global::System.Reflection.Emit.OpCode op, global::System.Type ty) : base(default(global::System.Reflection.Emit.OpCode)) { }
         [global::Quire.Mirror.MirrorStub]
         public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
@@ -52,6 +54,8 @@ internal partial class Instruction : global::Quire.Mpl.Run.Code
     private partial class InstructionArgField : global::Quire.Mpl.Run.Instruction
     {
         [global::Quire.Mirror.MirrorStub]
+        private global::System.Reflection.FieldInfo m_field;
+        [global::Quire.Mirror.MirrorStub]
         public InstructionArgField(global::System.Reflection.Emit.OpCode op, global::System.Reflection.FieldInfo fi) : base(default(global::System.Reflection.Emit.OpCode)) { }
         [global::Quire.Mirror.MirrorStub]
         public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
@@ -60,6 +64,8 @@ internal partial class Instruction : global::Quire.Mpl.Run.Code
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction+InstructionArgCtor, mplrun")]
     private partial class InstructionArgCtor : global::Quire.Mpl.Run.Instruction
     {
+        [global::Quire.Mirror.MirrorStub]
+        private global::System.Reflection.ConstructorInfo m_ctor;
         [global::Quire.Mirror.MirrorStub]
         public InstructionArgCtor(global::System.Reflection.Emit.OpCode op, global::System.Reflection.ConstructorInfo ci) : base(default(global::System.Reflection.Emit.OpCode)) { }
         [global::Quire.Mirror.MirrorStub]

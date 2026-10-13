@@ -12,6 +12,12 @@ namespace Quire.Controls.Internal;
 internal partial class GestureManager : global::Quire.Controls.Internal.IGestureManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Internal.GestureManager.NullManager empty;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Wpf.EditorGesture, global::Quire.Controls.Internal.EditorCommand> _frame;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.IGestureManager _parent;
+    [global::Quire.Mirror.MirrorStub]
     public GestureManager() { }
     [global::Quire.Mirror.MirrorStub]
     public GestureManager(global::Quire.Controls.Internal.IGestureManager _parent) { }

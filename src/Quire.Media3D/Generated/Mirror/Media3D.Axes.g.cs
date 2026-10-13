@@ -12,6 +12,8 @@ namespace Quire.Media3D;
 public partial class Axes : global::Quire.Media3D.WireBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Media3D.TextGenerator txtgen;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ExtentProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowNumbersProperty;
@@ -41,6 +43,8 @@ public partial class Axes : global::Quire.Media3D.WireBase
     public string Labels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Axes() { }
+    [global::Quire.Mirror.MirrorStub]
+    private static bool ValidateLabels(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void Generate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection lines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -14,6 +14,8 @@ internal partial class XYPlotStrategy : global::Quire.Controls.Plots.IPlotStrate
     [global::Quire.Mirror.MirrorStub]
     public void InitializeAxes(global::Quire.Controls.Plots.PlotTitle xAxisTitle, global::Quire.Controls.Plots.PlotTitle yAxisTitle, global::Quire.Controls.Plots.PlotTitle title, global::Quire.Controls.Plots.EquationList rangeEquations, global::Quire.Controls.Plots.EquationList primaryResultEquations, out global::Quire.Controls.Plots.PlotGraphAxis rangeAxis, out global::Quire.Controls.Plots.PlotGraphAxis primaryResultAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static void InitializeAxisTitle(global::Quire.Controls.Plots.PlotGraphAxis rangeAxis, global::Quire.Controls.Plots.PlotGraphAxis primaryResultAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void InitializeLegendPositions(global::Quire.Controls.Plots.PlotControl plot, out global::Quire.Controls.Plots.PlotItemPlaceholder[] rangeLegendsPositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] resultLegendsPositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] titlePositions, out global::Quire.Controls.Plots.PlotItemPlaceholder[] plotLegendPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ApplyPlotTemplate(global::Quire.Controls.Plots.PlotControl plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

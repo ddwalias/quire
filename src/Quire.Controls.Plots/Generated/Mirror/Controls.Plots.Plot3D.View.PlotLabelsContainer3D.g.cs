@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Plot3D.View;
 internal partial class PlotLabelsContainer3D : global::System.Windows.Media.Media3D.ModelVisual3D
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type TypeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CameraLookDirectionProperty;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Vector3D CameraLookDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -22,7 +24,11 @@ internal partial class PlotLabelsContainer3D : global::System.Windows.Media.Medi
     [global::Quire.Mirror.MirrorStub]
     internal bool Remove(global::System.Windows.Media.Media3D.Viewport2DVisual3D label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static int SignEx(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void ReorderChildren() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double LabelDistanceFromCameraMagnitude(global::System.Windows.Media.Media3D.Viewport2DVisual3D label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public PlotLabelsContainer3D() { }
 }

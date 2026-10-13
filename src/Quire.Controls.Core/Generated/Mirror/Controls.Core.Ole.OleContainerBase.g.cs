@@ -12,6 +12,8 @@ namespace Quire.Controls.Core.Ole;
 public abstract partial class OleContainerBase : global::System.Windows.Controls.Control
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Imaging.BitmapSource _bitmap;
     [global::Quire.Mirror.MirrorStub]
     protected internal global::System.Windows.Media.Imaging.BitmapSource Bitmap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

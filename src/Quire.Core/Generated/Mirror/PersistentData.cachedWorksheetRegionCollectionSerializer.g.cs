@@ -12,6 +12,8 @@ namespace Quire.PersistentData;
 public partial class cachedWorksheetRegionCollectionSerializer : global::Quire.PersistentData.RegionCollectionSerializer<global::Quire.PersistentData.cachedWorksheetType>
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentData.cachedWorksheetType _cachedWorksheet;
+    [global::Quire.Mirror.MirrorStub]
     public override string RootNodeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.cachedWorksheetType RegionCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal partial class TraceSymbolCommand : global::Quire.Controls.Plots.PlotCommands.TraceLineOrSymbolCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.Presenter.TraceSymbol _newSymbol;
+    [global::Quire.Mirror.MirrorStub]
     public TraceSymbolCommand(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle> traceList, global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) : base(default(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotTraceStyle>), default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override bool DoTrace(global::Quire.Controls.Plots.Presenter.IPlotTraceStyle trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

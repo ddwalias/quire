@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class ButtonPropertiesEditorViewModel : global::Quire.Controls.InputControls.InputControlEditorViewModel
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.IButtonPropertiesEditorModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public string Text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ButtonPropertiesEditorViewModel(global::Quire.Controls.InputControls.IInputControlEditorModel model) : base(default(global::Quire.Controls.InputControls.IInputControlEditorModel)) { }

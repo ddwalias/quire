@@ -12,6 +12,18 @@ namespace Quire.depman;
 internal partial class Aborter
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.Thread thread;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.utl_mgd.InterruptControl interrupt_control;
+    [global::Quire.Mirror.MirrorStub]
+    private unsafe global::Quire.utl.InterruptControl* interrupt_control_umgd;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.depman.ThreadData threadData;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Threading.CancellationTokenSource cts;
+    [global::Quire.Mirror.MirrorStub]
+    private void Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public unsafe Aborter(global::System.Threading.Thread t, global::Quire.utl_mgd.InterruptControl c, global::Quire.utl.InterruptControl* uc, global::Quire.depman.ThreadData td) { }
     [global::Quire.Mirror.MirrorStub]
     public void Abort() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

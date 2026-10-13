@@ -14,13 +14,31 @@
   Quire.Controls.Include.BackupData P warningsList : Quire.Controls.Include.WarningsList get:public set:public
   Quire.Controls.Include.ErrorOnIncludeWorksheet M public .ctor`0() -> System.Void
   Quire.Controls.Include.ErrorWarningHandler F internal System.Collections.Generic.List`1<Quire.Controls.Core.NodeMessageAdorner> AdornersList
+  Quire.Controls.Include.ErrorWarningHandler F private readonly Quire.Controls.Include.ErrorsList _errorsList
+  Quire.Controls.Include.ErrorWarningHandler F private readonly Quire.Controls.Include.IncludeWorksheetControl _control
+  Quire.Controls.Include.ErrorWarningHandler F private readonly Quire.Controls.Include.WarningsList _warningsList
+  Quire.Controls.Include.ErrorWarningHandler M private AddAdorners`0(Quire.Controls.Core.NodeMessageAdornerType) -> System.Boolean
+  Quire.Controls.Include.ErrorWarningHandler M private AddErrorAdorners`0() -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler M private AddWarningAdorners`0() -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler M private RemoveAdorners`0(Quire.Controls.Core.NodeMessageAdornerType) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler M private RemoveNodeMessageAdorners`0(Quire.Controls.Core.NodeMessageAdornerType) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler M private static ElementIsLoadedAddErrorAdorners`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler M private static ElementIsLoadedAddWarningAdorners`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler M private static SetErrorFrame`0(System.Windows.UIElement) -> System.Void
   Quire.Controls.Include.ErrorWarningHandler M public .ctor`0(Quire.Controls.Include.IncludeWorksheetControl) -> System.Void
   Quire.Controls.Include.ErrorWarningHandler M public GetMergedErrorsList`0() -> Quire.Controls.Include.ErrorsList
   Quire.Controls.Include.ErrorWarningHandler M public GetMergedWarningsList`0() -> Quire.Controls.Include.WarningsList
   Quire.Controls.Include.ErrorWarningHandler M public ShowErrors`0(System.String,Quire.Controls.Include.ErrorsList) -> System.Void
   Quire.Controls.Include.ErrorWarningHandler M public ShowWarnings`0(System.String,Quire.Controls.Include.WarningsList) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandler+ExclamationPointAdorner F private readonly System.Double _height
+  Quire.Controls.Include.ErrorWarningHandler+ExclamationPointAdorner F private readonly System.Windows.Media.Pen _pen
   Quire.Controls.Include.ErrorWarningHandler+ExclamationPointAdorner M protected override OnRender`0(System.Windows.Media.DrawingContext) -> System.Void
   Quire.Controls.Include.ErrorWarningHandler+ExclamationPointAdorner M public .ctor`0(System.Windows.FrameworkElement) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel F private Quire.Controls.Include.ErrorsList _errorsList
+  Quire.Controls.Include.ErrorWarningHandlerModel F private Quire.Controls.Include.WarningsList _warningsList
+  Quire.Controls.Include.ErrorWarningHandlerModel F private System.String _pathIndexes
+  Quire.Controls.Include.ErrorWarningHandlerModel F private readonly System.Func`1<System.String> _getCwd
+  Quire.Controls.Include.ErrorWarningHandlerModel F private readonly System.Windows.ResourceDictionary _resources
   Quire.Controls.Include.ErrorWarningHandlerModel F public const System.String WarningCodesSeparator
   Quire.Controls.Include.ErrorWarningHandlerModel M internal .ctor`0(System.Windows.ResourceDictionary,System.Func`1<System.String>) -> System.Void
   Quire.Controls.Include.ErrorWarningHandlerModel M internal ClearErrors`0() -> System.Void
@@ -29,6 +47,23 @@
   Quire.Controls.Include.ErrorWarningHandlerModel M internal SetIncludeWorksheetErrorWarningData`0(Quire.PersistentDataObjects.includeWorksheetErrorWarningData[]) -> System.Collections.IList
   Quire.Controls.Include.ErrorWarningHandlerModel M internal UpdateErrors`0(System.String,System.String,Quire.Pair`2<System.String,System.Boolean>) -> System.Void
   Quire.Controls.Include.ErrorWarningHandlerModel M internal UpdateWarnings`0(System.String,System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel M private CreateError`0(System.String,System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>) -> Quire.Controls.Include.IncludeWorksheetErrorWarningData
+  Quire.Controls.Include.ErrorWarningHandlerModel M private CreateWarning`0(System.String,System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>) -> Quire.Controls.Include.IncludeWorksheetErrorWarningData
+  Quire.Controls.Include.ErrorWarningHandlerModel M private FilterOutNotOwnErrorsWarnings`0() -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel M private FindInResource`0(System.String,System.Int32) -> System.String
+  Quire.Controls.Include.ErrorWarningHandlerModel M private GetErrorTextByCode`0(System.String,Quire.Pair`2<System.String,System.Boolean>) -> System.String
+  Quire.Controls.Include.ErrorWarningHandlerModel M private GetFilePathRelativeToCwd`0(Quire.Pair`2<System.String,System.Boolean>) -> System.String
+  Quire.Controls.Include.ErrorWarningHandlerModel M private GetWarningTextByCodes`0(System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>) -> System.String
+  Quire.Controls.Include.ErrorWarningHandlerModel M private GetWarningTextOnDiffSettings`0(System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>) -> System.String
+  Quire.Controls.Include.ErrorWarningHandlerModel M private UpdateErrorStruct`0() -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel M private UpdateErrorsWarnings`0(System.String,System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>,Quire.Controls.Core.NodeMessageAdornerType) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel M private UpdateWarningStruct`0() -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel M private ValidateErrorsWarningsList`0(System.Collections.Generic.IEnumerable`1<Quire.Controls.Include.IncludeWorksheetErrorWarningData>) -> System.Void
+  Quire.Controls.Include.ErrorWarningHandlerModel M private static GetWarningCodeForDiffSetting`0(System.Collections.Generic.List`1<System.String>) -> System.String
+  Quire.Controls.Include.ErrorWarningHandlerModel M private static IsCalculationSuccedErrorCode`0(System.Collections.Generic.IList`1<System.String>) -> System.Boolean
+  Quire.Controls.Include.ErrorWarningHandlerModel M private static IsResetCode`0(System.Collections.Generic.IList`1<System.String>) -> System.Boolean
+  Quire.Controls.Include.ErrorWarningHandlerModel M private static ParseCode`0(System.String) -> System.Collections.Generic.List`1<System.String>
+  Quire.Controls.Include.ErrorWarningHandlerModel M private static ShouldRemovePreviousError`0(System.String,System.String) -> System.Boolean
   Quire.Controls.Include.ErrorWarningHandlerModel M public static CleanUpLegacyWarnings`0(System.String) -> System.String
   Quire.Controls.Include.ErrorWarningHandlerModel P ErrorsList : Quire.Controls.Include.ErrorsList get:internal set:internal
   Quire.Controls.Include.ErrorWarningHandlerModel P PathIndexes : System.String set:internal
@@ -58,6 +93,8 @@
   Quire.Controls.Include.IMultiLevelInclusionItem P ParentFileNames : System.Collections.Generic.List`1<System.String> virtual set:public
   Quire.Controls.Include.IMultiLevelInclusionItem P PathIndexes : System.String virtual set:public
   Quire.Controls.Include.IMultiLevelInclusionProvider P MultiLevelInclusionItem : Quire.Controls.Include.IMultiLevelInclusionItem virtual get:public
+  Quire.Controls.Include.IncludeFileDeserializationStrategy F private readonly Quire.Controls.Include.IncludeWorksheetFileManager _fileManager
+  Quire.Controls.Include.IncludeFileDeserializationStrategy F private readonly System.Collections.Generic.List`1<System.Windows.UIElement> _calulatableRegions
   Quire.Controls.Include.IncludeFileDeserializationStrategy M protected override IsRegionNotAffectingCalculation`0(Quire.PersistentDataObjects.IRegionType) -> System.Boolean
   Quire.Controls.Include.IncludeFileDeserializationStrategy M protected override IsRegionNotAffectingCalculation`0(System.Windows.UIElement) -> System.Boolean
   Quire.Controls.Include.IncludeFileDeserializationStrategy M public .ctor`0(Quire.Controls.Include.IncludeWorksheetFileManager) -> System.Void
@@ -68,6 +105,14 @@
   Quire.Controls.Include.IncludeFileDeserializationStrategy P CacheValid : System.Boolean get:public set:public
   Quire.Controls.Include.IncludeFileDeserializationStrategy P RegionFactory : Quire.Controls.Core.IRegionFactory override get:public
   Quire.Controls.Include.IncludeFileDeserializationStrategy P Regions : System.Collections.Generic.IList`1<System.Windows.UIElement> override get:public
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private Quire.Calculation.Core.CalculatingStatus _calculatingStatus
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private Quire.Calculation.Core.ICalculatableInfo _currentErrorInfo
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private Quire.Calculation.Core.SynchronizationStatus _synchronizationStatus
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private System.Boolean _hideFromCalculationContext
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private System.Collections.Generic.IList`1<Quire.Controls.Include.SystemVariableValuesHandler> _systemVariableValuesHandlers
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private readonly System.Action`1<System.String> _errorOnChild
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private readonly System.Action`2<System.String,System.Object> _systemVariableValueChangeHandler
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler F private readonly System.Collections.Generic.List`1<Quire.Controls.Include.IncludedCalculatableWrapper> _allCalculatablesIncludedWrapped
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler F public System.Action CalculatingStatusChanged
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler F public System.Action SynchronizationStatusChanged
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler F public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableAdded
@@ -82,13 +127,26 @@
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler M internal RemoveAllCalculatables`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler M internal RemoveIncludedCalculatableWrappers`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler M internal UnHookSystemVariables`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private AddIncludedCalculatableWrapper`0(Quire.Controls.Include.IncludedCalculatableWrapper) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private AddSystemVariableValuesHandler`0(Quire.Controls.Include.SystemVariableValuesHandler) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private FireCalculatableAdded`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private FireCalculatableRemoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private HandleCalculatingStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private HandleSetErrorChanged`0(Quire.Calculation.Core.EngineError) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private HandleSynchronizationStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private RemoveIncludedCalculatableWrapper`0(Quire.Controls.Include.IncludedCalculatableWrapper) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private RemoveSystemVariableValuesHandler`0(Quire.Controls.Include.SystemVariableValuesHandler) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private ToggleHiddenState`0(Quire.Controls.Include.IncludedCalculatableWrapper,System.Boolean) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private ToggleHiddenState`0(Quire.Controls.Include.SystemVariableValuesHandler,System.Boolean) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private UpdateCurrentErrorInfo`0() -> System.String
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler M private static ExtractCalculatablesIncluded`0(System.Collections.Generic.IEnumerable`1<System.Windows.UIElement>) -> System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable>
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler M public .ctor`0(System.Action`1<System.String>,System.Action`2<System.String,System.Object>) -> System.Void
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler P CalculatableChildren : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> get:internal
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler P CalculatingStatus : Quire.Calculation.Core.CalculatingStatus get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler P CanManipulateCalculatable : System.Boolean get:internal
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler P CurrentErrorInfo : Quire.Calculation.Core.ICalculatableInfo get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler P HideFromCalculationContext : System.Boolean get:internal set:internal
-  Quire.Controls.Include.IncludeWorksheetCalculatableHandler P ReloadedInFreemium : System.Boolean set:internal
+  Quire.Controls.Include.IncludeWorksheetCalculatableHandler P ReloadedInFreemium : System.Boolean get:private set:internal
   Quire.Controls.Include.IncludeWorksheetCalculatableHandler P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetConstants F public const System.String IncludeWorksheetHelpContext
   Quire.Controls.Include.IncludeWorksheetControl E public System.Action HookupSizeChangedHandler
@@ -99,6 +157,22 @@
   Quire.Controls.Include.IncludeWorksheetControl E public System.Action`2<Quire.Controls.Core.IWhiteboardItem,Quire.Direction> RequestRemove
   Quire.Controls.Include.IncludeWorksheetControl E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
   Quire.Controls.Include.IncludeWorksheetControl E public System.Func`2<System.String,System.IO.Packaging.PackagePart> GetPackagePartByRefId
+  Quire.Controls.Include.IncludeWorksheetControl F private Quire.Controls.Include.ErrorWarningHandler _errorwarningViewHandler
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Action HookupSizeChangedHandler
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableMoved
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Action`1<Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Action`2<Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable> CalculatableAdded
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Action`2<Quire.Controls.Core.IWhiteboardItem,Quire.Direction> RequestRemove
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Boolean _contentLoaded
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Boolean _isTopLevel
+  Quire.Controls.Include.IncludeWorksheetControl F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Func`2<System.String,System.IO.Packaging.PackagePart> GetPackagePartByRefId
+  Quire.Controls.Include.IncludeWorksheetControl F private System.Windows.UIElement _contentElement
+  Quire.Controls.Include.IncludeWorksheetControl F private const System.String DataPropertyName
+  Quire.Controls.Include.IncludeWorksheetControl F private readonly Quire.Controls.Include.IncludeWorksheetModel _model
+  Quire.Controls.Include.IncludeWorksheetControl F private static System.Windows.Threading.DispatcherOperation _lastDispatcherOperation
+  Quire.Controls.Include.IncludeWorksheetControl F private static readonly System.Type _typeOfThis
   Quire.Controls.Include.IncludeWorksheetControl F public static readonly System.Windows.DependencyProperty CalcIsDisabledProperty
   Quire.Controls.Include.IncludeWorksheetControl F public static readonly System.Windows.DependencyProperty IncludedFilePathProperty
   Quire.Controls.Include.IncludeWorksheetControl F public static readonly System.Windows.DependencyProperty IsCalculatingProperty
@@ -108,6 +182,34 @@
   Quire.Controls.Include.IncludeWorksheetControl F public static readonly System.Windows.Input.RoutedCommand IncludeReferenceCommand
   Quire.Controls.Include.IncludeWorksheetControl F public static readonly System.Windows.Input.RoutedCommand RefreshReferenceCommand
   Quire.Controls.Include.IncludeWorksheetControl F public static readonly System.Windows.Input.RoutedUICommand OpenFileCommand
+  Quire.Controls.Include.IncludeWorksheetControl M private CtrlButtonDown`0(System.Object,System.Windows.Input.KeyEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private CtrlButtonUp`0(System.Object,System.Windows.Input.KeyEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private FindInRange`0(System.Int32,System.Int32,System.String,System.Windows.Documents.LogicalDirection,Quire.Controls.Core.FindOptions) -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetControl M private GetWarningParameterList`0(Quire.Controls.Include.WarningOnIncludeWorksheet+FieldName) -> System.String[]
+  Quire.Controls.Include.IncludeWorksheetControl M private HandleCalculatingStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private HandleContentChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private HandleDocumentFilePathChanged`0(Quire.Controls.Core.IWorksheetProperties) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private HandleHideFromCalculationContext`0(System.Boolean) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private HandleSynchronizationStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private InsertFilePath`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private MouseDownOpenFile`0(System.Object,System.Windows.Input.MouseButtonEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private OnToggleHideFromCalculationContext`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private OpenIncludeDialog`0() -> System.String
+  Quire.Controls.Include.IncludeWorksheetControl M private RefreshWorksheet`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private ScrollViewerGotFocus`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private ScrollViewerLostFocus`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static CanvasLeftChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static CoerceCanvasLeft`0(System.Windows.DependencyObject,System.Object) -> System.Object
+  Quire.Controls.Include.IncludeWorksheetControl M private static CommitExecuted`0(System.Object,System.Windows.Input.ExecutedRoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static ElementIsLoadedGetInformationFromDocument`0(System.Object,System.Windows.RoutedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static GetCodeFromLongWarningCode`0(System.String) -> System.String
+  Quire.Controls.Include.IncludeWorksheetControl M private static GetDocumentFilePath`0(Quire.Controls.Core.IWorksheetProperties) -> System.String
+  Quire.Controls.Include.IncludeWorksheetControl M private static GetInformationFromDocument`0(Quire.Controls.Include.IncludeWorksheetControl) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static IncludedFilePathChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static IsActiveRegionChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static OnIsInCopyPropertyChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static PreRecalculateAllChanged`0(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetControl M private static ResetOldIncludedFilePathFromModel`0(Quire.Controls.Include.IncludeWorksheetControl) -> System.Void
   Quire.Controls.Include.IncludeWorksheetControl M protected override OnGotFocus`0(System.Windows.RoutedEventArgs) -> System.Void
   Quire.Controls.Include.IncludeWorksheetControl M protected override ShouldSerializeProperty`0(System.Windows.DependencyProperty) -> System.Boolean
   Quire.Controls.Include.IncludeWorksheetControl M public .ctor`0() -> System.Void
@@ -135,7 +237,7 @@
   Quire.Controls.Include.IncludeWorksheetControl M public virtual Dispose`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetControl M public virtual SimulateMouseClick`0(System.Windows.Point,System.Int32) -> System.Void
   Quire.Controls.Include.IncludeWorksheetControl P CacheValid : System.Boolean get:public set:public
-  Quire.Controls.Include.IncludeWorksheetControl P CalcIsDisabled : System.Boolean get:public
+  Quire.Controls.Include.IncludeWorksheetControl P CalcIsDisabled : System.Boolean get:public set:private
   Quire.Controls.Include.IncludeWorksheetControl P CalculatableChildren : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> get:public
   Quire.Controls.Include.IncludeWorksheetControl P CanHideFromCalculationContext : System.Boolean get:public
   Quire.Controls.Include.IncludeWorksheetControl P CurrentError : Quire.Calculation.Core.EngineError get:public
@@ -146,6 +248,7 @@
   Quire.Controls.Include.IncludeWorksheetControl P ErrorCount : System.Int32 get:public
   Quire.Controls.Include.IncludeWorksheetControl P ErrorWarningHandler : Quire.Controls.Include.ErrorWarningHandler get:public
   Quire.Controls.Include.IncludeWorksheetControl P ErrorsForXamlSerialization : Quire.Controls.Include.ErrorsList get:public set:public
+  Quire.Controls.Include.IncludeWorksheetControl P ErrorsList : Quire.Controls.Include.ErrorsList get:private
   Quire.Controls.Include.IncludeWorksheetControl P FileName : System.String get:public
   Quire.Controls.Include.IncludeWorksheetControl P FilePath : System.String get:public
   Quire.Controls.Include.IncludeWorksheetControl P FullFilePath : System.String get:public
@@ -163,7 +266,7 @@
   Quire.Controls.Include.IncludeWorksheetControl P MultiLevelInclusionItem : Quire.Controls.Include.IMultiLevelInclusionItem get:public
   Quire.Controls.Include.IncludeWorksheetControl P NodeMessageAdorners : System.Collections.Generic.IEnumerable`1<Quire.Controls.Core.NodeMessageAdorner> get:public
   Quire.Controls.Include.IncludeWorksheetControl P NotHookupSizeChangedHandlerUntilLoaded : System.Boolean get:public set:public
-  Quire.Controls.Include.IncludeWorksheetControl P ParentFileNames : System.Collections.Generic.List`1<System.String> set:internal
+  Quire.Controls.Include.IncludeWorksheetControl P ParentFileNames : System.Collections.Generic.List`1<System.String> get:private set:internal
   Quire.Controls.Include.IncludeWorksheetControl P RegionCountCalculatable : System.Int32 get:public
   Quire.Controls.Include.IncludeWorksheetControl P RegionErrorCodeList : System.String[] get:public
   Quire.Controls.Include.IncludeWorksheetControl P RegionErrorTextList : System.String[] get:public
@@ -180,8 +283,10 @@
   Quire.Controls.Include.IncludeWorksheetControl P WarningCount : System.Int32 get:public
   Quire.Controls.Include.IncludeWorksheetControl P WarningText : System.String get:public
   Quire.Controls.Include.IncludeWorksheetControl P WarningsForXamlSerialization : Quire.Controls.Include.WarningsList get:public set:public
+  Quire.Controls.Include.IncludeWorksheetControl P WarningsList : Quire.Controls.Include.WarningsList get:private
   Quire.Controls.Include.IncludeWorksheetControl X System.Windows.Markup.IComponentConnector::Connect
   Quire.Controls.Include.IncludeWorksheetControl X System.Windows.Markup.IStyleConnector::Connect
+  Quire.Controls.Include.IncludeWorksheetErrorWarningData F private static System.String[] conflictwarnings
   Quire.Controls.Include.IncludeWorksheetErrorWarningData F public const System.String ApproximateEqualityConflictWarningCode
   Quire.Controls.Include.IncludeWorksheetErrorWarningData F public const System.String CTOLConflictWarningCode
   Quire.Controls.Include.IncludeWorksheetErrorWarningData F public const System.String CWDConflictWarningCode
@@ -213,10 +318,30 @@
   Quire.Controls.Include.IncludeWorksheetErrorWarningData P IsPathRooted : System.Boolean get:public set:public
   Quire.Controls.Include.IncludeWorksheetErrorWarningData P PathIndexes : System.String get:public set:public
   Quire.Controls.Include.IncludeWorksheetErrorWarningData P Text : System.String get:public set:public
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.CalculationOptions _calcOptions
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.CalculationVariables _calcVariables
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.Core.Serialization.IMetadataModel _metadataModel
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.Core.Serialization.McdxSerializer _serializer
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.Core.Serialization.SerializationHelper _serializationHelper
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.Include.IncludeFileDeserializationStrategy _deserializationStrategy
+  Quire.Controls.Include.IncludeWorksheetFileManager F private Quire.Controls.Include.IncludeWorksheetSerializationStrategy _serializationStrategy
+  Quire.Controls.Include.IncludeWorksheetFileManager F private System.Boolean _isInCacheSerialization
+  Quire.Controls.Include.IncludeWorksheetFileManager F private const System.String IncludeMimeType
+  Quire.Controls.Include.IncludeWorksheetFileManager F private const System.String IncludeUri
+  Quire.Controls.Include.IncludeWorksheetFileManager F private readonly Quire.IO.IPackageOperationsProvider _packageOpsProvider
   Quire.Controls.Include.IncludeWorksheetFileManager M internal OpenFile`0(System.String,System.Boolean) -> System.Void
   Quire.Controls.Include.IncludeWorksheetFileManager M internal ReadIncludedWorksheetFromPackage`0(System.IO.Packaging.PackagePart) -> System.Void
   Quire.Controls.Include.IncludeWorksheetFileManager M internal Reset`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetFileManager M internal WriteIncludedWorksheetToPackage`0(System.IO.Packaging.Package) -> System.IO.Packaging.PackagePart
+  Quire.Controls.Include.IncludeWorksheetFileManager M private ConstructUniqueIdForIncluded`0(System.String) -> System.String
+  Quire.Controls.Include.IncludeWorksheetFileManager M private DeSerializeCalculationSettings`0(System.Xml.XmlDocument) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private InitializeSerialization`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private OpenPackage`0(System.String,System.Boolean) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private Open`0(System.IO.Packaging.Package,System.Boolean) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private ResetCalcSettings`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private SerializeCalculationSettings`0(System.Xml.XmlDocument) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private static GetCalculationData`0(Quire.PersistentDataObjects.calculation,out Quire.Controls.CalculationVariables&,out Quire.Controls.CalculationOptions&) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetFileManager M private static SetCalculationData`0(Quire.Controls.CalculationVariables,Quire.Controls.CalculationOptions) -> Quire.PersistentDataObjects.calculation
   Quire.Controls.Include.IncludeWorksheetFileManager M public .ctor`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetFileManager M public DeserializationEpilog`0(System.Xml.XmlDocument) -> System.Void
   Quire.Controls.Include.IncludeWorksheetFileManager M public PackExternalObject`0(System.String,System.String,Quire.Serialization.ExternalObjectType) -> System.String
@@ -237,11 +362,18 @@
   Quire.Controls.Include.IncludeWorksheetFileManager P TextStyleChangedHandler : Quire.ITextStyleChangedHandler get:public
   Quire.Controls.Include.IncludeWorksheetFileManager P UseOverrides : System.Boolean get:public
   Quire.Controls.Include.IncludeWorksheetFileManager P XmlContentDocument : System.Xml.XmlDocument get:public
+  Quire.Controls.Include.IncludeWorksheetFilePathChange F private readonly Quire.Controls.Include.IncludeWorksheetControl _control
+  Quire.Controls.Include.IncludeWorksheetFilePathChange F private readonly System.Boolean _cacheValid
+  Quire.Controls.Include.IncludeWorksheetFilePathChange F private readonly System.Boolean _regionsLoaded
+  Quire.Controls.Include.IncludeWorksheetFilePathChange F private readonly System.Int32 _index
+  Quire.Controls.Include.IncludeWorksheetFilePathChange F private readonly System.String _newText
+  Quire.Controls.Include.IncludeWorksheetFilePathChange F private readonly System.String _oldText
   Quire.Controls.Include.IncludeWorksheetFilePathChange M public .ctor`0(Quire.Controls.Include.IncludeWorksheetControl,System.String) -> System.Void
   Quire.Controls.Include.IncludeWorksheetFilePathChange M public Do`0() -> System.Boolean
   Quire.Controls.Include.IncludeWorksheetFilePathChange M public Redo`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetFilePathChange M public Undo`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetFilePathChange P Name : System.String get:public
+  Quire.Controls.Include.IncludeWorksheetModel E private System.Action OnParentDataSet
   Quire.Controls.Include.IncludeWorksheetModel E public System.Action CalculatingStatusChanged
   Quire.Controls.Include.IncludeWorksheetModel E public System.Action ContentChanged
   Quire.Controls.Include.IncludeWorksheetModel E public System.Action SynchronizationStatusChanged
@@ -249,6 +381,30 @@
   Quire.Controls.Include.IncludeWorksheetModel E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
   Quire.Controls.Include.IncludeWorksheetModel E public System.Action`2<System.String,Quire.Controls.Include.ErrorsList> ErrorsUpdated
   Quire.Controls.Include.IncludeWorksheetModel E public System.Action`2<System.String,Quire.Controls.Include.WarningsList> WarningsUpdated
+  Quire.Controls.Include.IncludeWorksheetModel F private Quire.Controls.CalculationOptions _parentDocCalculationOptions
+  Quire.Controls.Include.IncludeWorksheetModel F private Quire.Controls.CalculationVariables _parentDocCalculationVariables
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action CalculatingStatusChanged
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action ContentChanged
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action OnParentDataSet
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action SynchronizationStatusChanged
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableAdded
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action`2<System.String,Quire.Controls.Include.ErrorsList> ErrorsUpdated
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Action`2<System.String,Quire.Controls.Include.WarningsList> WarningsUpdated
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Boolean _cacheValid
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Boolean _forceAddingIncludedCalculatableWrappers
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Boolean _isParentDataUpdated
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Boolean _isTopLevel
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Boolean _reloadedInFremium
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Collections.Generic.IList`1<System.Windows.UIElement> _regions
+  Quire.Controls.Include.IncludeWorksheetModel F private System.Collections.Generic.List`1<System.String> _parentFileNameList
+  Quire.Controls.Include.IncludeWorksheetModel F private System.String _includedFilePath
+  Quire.Controls.Include.IncludeWorksheetModel F private System.String _pathIndexes
+  Quire.Controls.Include.IncludeWorksheetModel F private const System.String FakeFreemiumEqText
+  Quire.Controls.Include.IncludeWorksheetModel F private readonly Quire.Controls.Include.ErrorWarningHandlerModel _errorwarningHandlerModel
+  Quire.Controls.Include.IncludeWorksheetModel F private readonly Quire.Controls.Include.IncludeWorksheetCalculatableHandler _calculatableHandler
+  Quire.Controls.Include.IncludeWorksheetModel F private readonly Quire.Controls.Include.IncludeWorksheetFileManager _fileManager
+  Quire.Controls.Include.IncludeWorksheetModel F private readonly System.Threading.ManualResetEvent _waitForLoad
   Quire.Controls.Include.IncludeWorksheetModel F public System.Func`1<System.Boolean> IsInFreemiumMode
   Quire.Controls.Include.IncludeWorksheetModel M internal CleanCalculatables`0() -> System.Void
   Quire.Controls.Include.IncludeWorksheetModel M internal Commit`0() -> System.Void
@@ -262,6 +418,35 @@
   Quire.Controls.Include.IncludeWorksheetModel M internal SetData`0(Quire.Controls.Include.BackupData) -> System.Void
   Quire.Controls.Include.IncludeWorksheetModel M internal WaitForLoad`0(System.Int32) -> System.Void
   Quire.Controls.Include.IncludeWorksheetModel M internal WriteToPackage`0(System.IO.Packaging.Package,System.String) -> System.IO.Packaging.PackagePart
+  Quire.Controls.Include.IncludeWorksheetModel M private BuildFileInfoArgs`0() -> Quire.Pair`2<System.String,System.Boolean>
+  Quire.Controls.Include.IncludeWorksheetModel M private CausesCircularReference`0() -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private ChildIncludeFilesNeedReload`0(out System.Boolean&) -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private CreateFakeEquationControl`0() -> Quire.Controls.EquationControl
+  Quire.Controls.Include.IncludeWorksheetModel M private CreateIncludedFullFilePath`0(System.String) -> System.String
+  Quire.Controls.Include.IncludeWorksheetModel M private FileNotExist`0() -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private FindAndExcludeFakeRegion`0(System.Collections.Generic.IList`1<System.Windows.UIElement>) -> System.Collections.Generic.IList`1<System.Windows.UIElement>
+  Quire.Controls.Include.IncludeWorksheetModel M private FireCalculatableAdded`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireCalculatableRemoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireCalculatingStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireContentChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireErrorsUpdated`0(System.String,Quire.Controls.Include.ErrorsList) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireResetWarnings`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireSynchronizationStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireWarningOnChild`0(System.Collections.Generic.List`1<System.String>,Quire.Pair`2<System.String,System.Boolean>) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FireWarningsUpdated`0(System.String,Quire.Controls.Include.WarningsList) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private FixIncludedFileCalculationVariableCWD`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private GetCalculationSettingsDiffsCodes`0() -> System.Collections.Generic.List`1<System.String>
+  Quire.Controls.Include.IncludeWorksheetModel M private GetLastSavedFileDate`0() -> System.DateTime
+  Quire.Controls.Include.IncludeWorksheetModel M private GetParentDirectoryPath`0() -> System.String
+  Quire.Controls.Include.IncludeWorksheetModel M private HandleSystemVariableValueChange`0(System.String,System.Object) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private IsEmptyFilePath`0() -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private IsLastLoadedPath`0() -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private LastSavedDateIsUpToDate`0() -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private ReloadChildren`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private ShouldShowCalculationSettingsWarnings`0() -> System.Boolean
+  Quire.Controls.Include.IncludeWorksheetModel M private UpdateChildren`0(System.Action`1<Quire.Controls.Include.IMultiLevelInclusionItem>) -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private UpdateLastSavedDateAndFileName`0() -> System.Void
+  Quire.Controls.Include.IncludeWorksheetModel M private UpdateParentFileNameByCWDIfNeed`0(System.String) -> System.Void
   Quire.Controls.Include.IncludeWorksheetModel M public .ctor`0(System.Windows.ResourceDictionary) -> System.Void
   Quire.Controls.Include.IncludeWorksheetModel M public CacheCorruptedForAnyChildren`0() -> System.Boolean
   Quire.Controls.Include.IncludeWorksheetModel M public CheckIfNeedReloadAndUpdateIncluded`0(out System.Boolean&) -> System.Boolean
@@ -290,11 +475,12 @@
   Quire.Controls.Include.IncludeWorksheetModel P CurrentErrorInfo : Quire.Calculation.Core.ICalculatableInfo get:public
   Quire.Controls.Include.IncludeWorksheetModel P ErrorsList : Quire.Controls.Include.ErrorsList get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P HideFromCalculationContext : System.Boolean get:internal set:internal
+  Quire.Controls.Include.IncludeWorksheetModel P InDeserialization : System.Boolean static get:private set:private
   Quire.Controls.Include.IncludeWorksheetModel P IncludedFileCalculationOptions : Quire.Controls.CalculationOptions get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P IncludedFileCalculationVariables : Quire.Controls.CalculationVariables get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P IncludedFilePath : System.String get:public set:public
   Quire.Controls.Include.IncludeWorksheetModel P IncludedFullFilePath : System.String get:internal
-  Quire.Controls.Include.IncludeWorksheetModel P IsParentDataUpdated : System.Boolean set:public
+  Quire.Controls.Include.IncludeWorksheetModel P IsParentDataUpdated : System.Boolean get:private set:public
   Quire.Controls.Include.IncludeWorksheetModel P IsTopLevel : System.Boolean get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P LastSavedDate : System.DateTime get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P LastSavedFilePath : System.String get:internal set:internal
@@ -306,9 +492,12 @@
   Quire.Controls.Include.IncludeWorksheetModel P RegionFactory : Quire.Controls.Core.IRegionFactory get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P Regions : System.Collections.Generic.IList`1<System.Windows.UIElement> get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P RegionsLoaded : System.Boolean get:internal set:internal
+  Quire.Controls.Include.IncludeWorksheetModel P RegionsToSerialize : System.Collections.Generic.IList`1<System.Windows.UIElement> get:private
   Quire.Controls.Include.IncludeWorksheetModel P ReloadedInFreemium : System.Boolean get:internal set:internal
   Quire.Controls.Include.IncludeWorksheetModel P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus get:internal
   Quire.Controls.Include.IncludeWorksheetModel P WarningsList : Quire.Controls.Include.WarningsList get:internal set:internal
+  Quire.Controls.Include.IncludeWorksheetSerializationStrategy F private System.Collections.Generic.IList`1<System.Windows.UIElement> _regionsToSerialize
+  Quire.Controls.Include.IncludeWorksheetSerializationStrategy F private readonly Quire.Controls.Include.IncludeWorksheetFileManager _fileManager
   Quire.Controls.Include.IncludeWorksheetSerializationStrategy M public .ctor`0(Quire.Controls.Include.IncludeWorksheetFileManager) -> System.Void
   Quire.Controls.Include.IncludeWorksheetSerializationStrategy M public GetRegions`0(Quire.Serialization.IS11NProvider) -> System.Collections.Generic.IList`1<Quire.PersistentDataObjects.IRegionType>
   Quire.Controls.Include.IncludeWorksheetSerializationStrategy M public SerializeRegionsEpilog`0(System.Xml.XmlDocument) -> System.Void
@@ -325,6 +514,14 @@
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableMoved
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper E public System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper E public System.Action`2<Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable> CalculatableAdded
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper F private System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableMoved
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper F private System.Action`1<Quire.Calculation.Core.ICalculatable> CalculatableRemoved
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper F private System.Action`2<Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable> CalculatableAdded
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper M private HandleCalculatableAdded`0(Quire.Calculation.Core.ICalculatableContainer,Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper M private HandleCalculatableMoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper M private HandleCalculatableRemoved`0(Quire.Calculation.Core.ICalculatable) -> System.Void
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper M private HookupAggregateContainerEvents`0(Quire.Calculation.Core.ICalculatableAggregate) -> System.Void
+  Quire.Controls.Include.IncludedCalculatableAggregateWrapper M private UnhookAggregateContainerEvents`0(Quire.Calculation.Core.ICalculatableAggregate) -> System.Void
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper M public .ctor`0(Quire.Calculation.Core.ICalculatableAggregate) -> System.Void
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper M public override Dispose`0() -> System.Void
   Quire.Controls.Include.IncludedCalculatableAggregateWrapper P CalculatableChildren : System.Collections.Generic.IEnumerable`1<Quire.Calculation.Core.ICalculatable> get:public
@@ -336,6 +533,15 @@
   Quire.Controls.Include.IncludedCalculatableWrapper E public System.Action CalculatingStatusChangedEvent
   Quire.Controls.Include.IncludedCalculatableWrapper E public System.Action SynchronizationStatusChangedEvent
   Quire.Controls.Include.IncludedCalculatableWrapper E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.Include.IncludedCalculatableWrapper F private Quire.Delegate1`1<Quire.Calculation.Core.EngineError> SetErrorChanged
+  Quire.Controls.Include.IncludedCalculatableWrapper F private System.Action CalculatingStatusChangedEvent
+  Quire.Controls.Include.IncludedCalculatableWrapper F private System.Action SynchronizationStatusChangedEvent
+  Quire.Controls.Include.IncludedCalculatableWrapper F private System.Boolean _isCommited
+  Quire.Controls.Include.IncludedCalculatableWrapper F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.Include.IncludedCalculatableWrapper M private FireCalculatingStatusChanged`0() -> System.Void
+  Quire.Controls.Include.IncludedCalculatableWrapper M private FirePropertyChanged`0(System.ComponentModel.PropertyChangedEventArgs) -> System.Void
+  Quire.Controls.Include.IncludedCalculatableWrapper M private FireSetErrorChanged`0(Quire.Calculation.Core.EngineError) -> System.Void
+  Quire.Controls.Include.IncludedCalculatableWrapper M private FireSynchronizationStatusChanged`0() -> System.Void
   Quire.Controls.Include.IncludedCalculatableWrapper M public .ctor`0(Quire.Calculation.Core.ICalculatable) -> System.Void
   Quire.Controls.Include.IncludedCalculatableWrapper M public ContainsError`0(Quire.Calculation.Core.EngineError) -> System.Boolean
   Quire.Controls.Include.IncludedCalculatableWrapper M public ShowError`0(Quire.Calculation.Core.EngineError) -> System.Void
@@ -353,6 +559,8 @@
   Quire.Controls.Include.IncludedCalculatableWrapper P IsCommitted : System.Boolean get:public set:public
   Quire.Controls.Include.IncludedCalculatableWrapper P IsInternalCalc : System.Boolean get:public set:public
   Quire.Controls.Include.IncludedCalculatableWrapper P SynchronizationStatus : Quire.Calculation.Core.SynchronizationStatus get:public
+  Quire.Controls.Include.Properties.Resources F private static System.Globalization.CultureInfo resourceCulture
+  Quire.Controls.Include.Properties.Resources F private static System.Resources.ResourceManager resourceMan
   Quire.Controls.Include.Properties.Resources M internal .ctor`0() -> System.Void
   Quire.Controls.Include.Properties.Resources P Culture : System.Globalization.CultureInfo static get:internal set:internal
   Quire.Controls.Include.Properties.Resources P ResourceManager : System.Resources.ResourceManager static get:internal
@@ -360,6 +568,12 @@
   Quire.Controls.Include.RegionsList M public .ctor`0(System.Collections.Generic.IEnumerable`1<System.Windows.UIElement>) -> System.Void
   Quire.Controls.Include.SystemVariableValuesHandler E public System.Action`2<System.String,System.Object> SystemVariableValueChanged
   Quire.Controls.Include.SystemVariableValuesHandler E public System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.Include.SystemVariableValuesHandler F private System.Action`2<System.String,System.Object> SystemVariableValueChanged
+  Quire.Controls.Include.SystemVariableValuesHandler F private System.ComponentModel.PropertyChangedEventHandler PropertyChanged
+  Quire.Controls.Include.SystemVariableValuesHandler F private const System.String EvalExpressionRlFormat
+  Quire.Controls.Include.SystemVariableValuesHandler F private readonly System.String _variableName
+  Quire.Controls.Include.SystemVariableValuesHandler M private ConstractRl`0() -> System.Void
+  Quire.Controls.Include.SystemVariableValuesHandler M private GetComputedValue`0() -> System.Object
   Quire.Controls.Include.SystemVariableValuesHandler M public .ctor`0(System.String) -> System.Void
   Quire.Controls.Include.SystemVariableValuesHandler M public override SetResult`0(Quire.Calculation.Core.IResultNode) -> System.Void
   Quire.Controls.Include.SystemVariableValuesHandler P CanHideFromCalculationContext : System.Boolean get:public

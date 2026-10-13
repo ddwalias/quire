@@ -12,17 +12,43 @@ namespace Quire.Controls.Plots.Model;
 internal partial class PlottingPointsFilter : global::System.ComponentModel.ISupportInitialize
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::System.Windows.Point> _plottingPoints;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::System.Func<global::System.Windows.Point, bool> _containes;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _filteringAllowed;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.PointCollection _filteredPointCollection;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Action _propertyChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _propertyWasChangedDuringInitialization;
+    [global::Quire.Mirror.MirrorStub]
+    private int _notNullPointsCount;
+    [global::Quire.Mirror.MirrorStub]
     internal global::System.Action FilteredPlottingPointsChanged;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IList<global::System.Windows.Point> PlottingPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int NotNullPointsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private int PlottingPointsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     internal bool FilteringAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<global::System.Windows.Point> FilteredPointsEnumeration { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Media.PointCollection FilteredPointsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal PlottingPointsFilter(global::System.Collections.Generic.IList<global::System.Windows.Point> plottingPoints, global::System.Func<global::System.Windows.Point, bool> containes, bool filteringAllowed) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Trace2DResults.TraceTypeRange> GetIndexesOfPointsInRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static int ScanPoints(global::System.Collections.Generic.IList<global::System.Windows.Point> plottingPoints, int currentIndex, int plottingPointsCount, global::System.Func<global::System.Windows.Point, bool> containes, bool inRange, ref int counNotNaNs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static bool InRangeOrNone(global::System.Func<global::System.Windows.Point, bool> containes, global::System.Windows.Point plottingPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateFilteredPointCollection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void BeginInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

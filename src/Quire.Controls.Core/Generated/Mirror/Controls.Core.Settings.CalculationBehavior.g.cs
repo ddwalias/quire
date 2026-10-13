@@ -14,5 +14,7 @@ internal partial class CalculationBehavior : global::Quire.Controls.Core.Seriali
     [global::Quire.Mirror.MirrorStub]
     public const string LocalName = "calculationBehavior";
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Controls.Core.XmlBooleanConverter BoolConverter;
+    [global::Quire.Mirror.MirrorStub]
     public CalculationBehavior(object o, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
 }

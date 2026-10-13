@@ -12,6 +12,26 @@ namespace Quire.Controls.Internal;
 internal partial class VisualLimitOperatorNode : global::Quire.Controls.Internal.VisualMathNode
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.EquationEditor.Tree.MathNodeDescriptor _limitDescriptor;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualMathNode[] _nodeChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualSymbolNode _limitSymbol;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VisualSymbolNode _limitArrow;
+    [global::Quire.Mirror.MirrorStub]
+    private const int OperatorPartCount = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Internal.LimitLayoutManager _layout;
+    [global::Quire.Mirror.MirrorStub]
+    private const int LimitVariableOperandIndex = 0;
+    [global::Quire.Mirror.MirrorStub]
+    private const int LimitVariableExpressionOperandIndex = 1;
+    [global::Quire.Mirror.MirrorStub]
+    private const int LimitSideOperandIndex = 2;
+    [global::Quire.Mirror.MirrorStub]
+    private const int LimitExpressionOperandIndex = 3;
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.View.IVisualMathNode[] NavigatableParts { get => base.NavigatableParts; }

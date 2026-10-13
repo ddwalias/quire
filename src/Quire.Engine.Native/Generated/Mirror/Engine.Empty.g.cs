@@ -12,6 +12,10 @@ namespace Quire.Engine;
 internal partial class Empty
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.List<string> s_empty_list;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.HashSet<string> s_empty_set;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<string> List() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.HashSet<string> Set() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,7 +12,25 @@ namespace Quire;
 public partial class FontFamilyComboBox : global::System.Windows.Controls.ComboBox
 {
     [global::Quire.Mirror.MirrorStub]
+    private static bool _handleSelection;
+    [global::Quire.Mirror.MirrorStub]
+    private object _lastValidFontFamily;
+    [global::Quire.Mirror.MirrorStub]
     public override void EndInit() => base.EndInit();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontFamilyPreviewGotKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontFamilyPreviewLostKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontFamilyPreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void FontFamilyComboBoxSelectionChanged(object sender, global::System.Windows.Controls.SelectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FontFamilyComboBoxDropDownOpened(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void FontFamilyComboBoxDropDownClosed(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateFontFamilyDataSource(global::Quire.FontFamilyComboBox fontFamilyComboBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public FontFamilyComboBox() { }
 }

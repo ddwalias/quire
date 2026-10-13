@@ -16,5 +16,7 @@ public partial class MruAccessKeyConverter : global::System.Windows.Data.IMultiV
     [global::Quire.Mirror.MirrorStub]
     public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private string GetDisplayedName(string fullPathAndFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public MruAccessKeyConverter() { }
 }

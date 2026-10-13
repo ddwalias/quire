@@ -12,6 +12,22 @@ namespace Quire.PersistentDataObjects;
 public partial class resultFormatGeneralType
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.radixType radixField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool showtrailingzerosField;
+    [global::Quire.Mirror.MirrorStub]
+    private bool useengineeringformatField;
+    [global::Quire.Mirror.MirrorStub]
+    private string exponentialthresholdField;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.PersistentDataObjects.resultFormatGeneralTypeImaginaryvalue imaginaryvalueField;
+    [global::Quire.Mirror.MirrorStub]
+    private string precisionField;
+    [global::Quire.Mirror.MirrorStub]
+    private string complexthresholdField;
+    [global::Quire.Mirror.MirrorStub]
+    private string zerothresholdField;
+    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.radixType radix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool showtrailingzeros { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

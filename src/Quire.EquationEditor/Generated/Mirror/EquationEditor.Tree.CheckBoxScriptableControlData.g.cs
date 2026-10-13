@@ -16,6 +16,8 @@ public partial class CheckBoxScriptableControlData : global::Quire.EquationEdito
     [global::Quire.Mirror.MirrorStub]
     protected const int b = 100;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.FlowDirection c;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.FlowDirection FlowDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CheckBoxScriptableControlData(string mathNodeName, global::Quire.Controls.Core.InputControlTypes inputControlTypes) : base(default(string), default(global::Quire.Controls.Core.InputControlTypes)) { }

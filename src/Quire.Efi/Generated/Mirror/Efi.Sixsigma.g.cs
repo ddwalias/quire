@@ -19,9 +19,15 @@ public partial struct Sixsigma
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal verify2LCodedDMatrix(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static int[] verifyBlocking(global::Quire.Mcd.MatVal A) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public static bool is_Y_UniformScalar(global::Quire.Mcd.MatVal Y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal randomize(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal fullfact_(object arg1, object arg2, bool keepOldOrder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal fractfact_(object arg1, object arg2, bool keepOldOrder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal foldover(object arg1, object arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -32,6 +38,8 @@ public partial struct Sixsigma
     public static global::Quire.Mcd.MatVal fractalias(object arg1, object arg2, object arg3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal BoxBehnken(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.Mcd.MatVal BoxWilson_(object arg1, object arg2, object arg3, bool keepOldOrder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatVal PlackettBurman(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

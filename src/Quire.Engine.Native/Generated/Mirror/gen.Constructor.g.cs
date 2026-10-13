@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal abstract partial class Constructor : global::Quire.gen.Callable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.gen.MethodFunction m_method_function;
+    [global::Quire.Mirror.MirrorStub]
     public Constructor(global::Quire.gen.IlAsm il) : base(default(global::Quire.gen.IlAsm)) { }
     [global::Quire.Mirror.MirrorStub]
     public Constructor(global::Quire.gen.IlAsm il, string nm) : base(default(global::Quire.gen.IlAsm)) { }

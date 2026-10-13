@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal partial class NullaryConstructor : global::Quire.gen.RecordConstructor
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.FieldInfo m_singleton;
+    [global::Quire.Mirror.MirrorStub]
     public NullaryConstructor(global::Quire.gen.IlAsm il, global::Quire.gen.RecordClosure clo) : base(default(global::Quire.gen.IlAsm), default(global::Quire.gen.RecordClosure)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void LdVal(global::Quire.gen.IlEmit emit) => base.LdVal(emit);

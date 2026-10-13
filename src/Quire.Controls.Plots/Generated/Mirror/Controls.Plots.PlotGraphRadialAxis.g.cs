@@ -12,6 +12,16 @@ namespace Quire.Controls.Plots;
 internal sealed partial class PlotGraphRadialAxis : global::Quire.Controls.Plots.PlotGraphAxis
 {
     [global::Quire.Mirror.MirrorStub]
+    private double _radius;
+    [global::Quire.Mirror.MirrorStub]
+    private double Radius { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double TickOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private double RadiusWTickOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry ArrowHeadGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Plots.Presenter.Positions Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Plots.PlotGraphAxis.Point2ScreenHelper Helper { get => base.Helper; }
@@ -19,6 +29,8 @@ internal sealed partial class PlotGraphRadialAxis : global::Quire.Controls.Plots
     public override global::Quire.Pair<double, double> ClipBounds { get => base.ClipBounds; }
     [global::Quire.Mirror.MirrorStub]
     internal PlotGraphRadialAxis(global::Quire.Controls.Plots.EquationList equationList) : base(default(global::Quire.Controls.Plots.EquationList), default(int), default(double)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point GetTickMarkElementPosition(int index, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
@@ -28,7 +40,17 @@ internal sealed partial class PlotGraphRadialAxis : global::Quire.Controls.Plots
     [global::Quire.Mirror.MirrorStub]
     public void Draw(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush fill, global::System.Windows.Media.Brush stroke, double strokeThickness) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry GetTickmarksGeometry(global::Quire.Controls.Plots.Presenter.TickScale scale) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point GetTickMarkPositionByRange(double range, double tickWidth, double tickHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetTickMarkPositionByIndex(int index, double tickWidth, double tickHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry GetTickLine(double range, int size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry AxisLineGeometry() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DrawNumbers(global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush stroke) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override double GetAxisStartPosition() => base.GetAxisStartPosition();
     [global::Quire.Mirror.MirrorStub]

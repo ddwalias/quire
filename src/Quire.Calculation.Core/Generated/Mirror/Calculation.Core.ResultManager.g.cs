@@ -12,11 +12,29 @@ namespace Quire.Calculation.Core;
 public partial class ResultManager : global::Quire.Calculation.Core.IResultManager
 {
     [global::Quire.Mirror.MirrorStub]
+    private const int ResultRefIdMinusOne = -1;
+    [global::Quire.Mirror.MirrorStub]
+    private static readonly global::Quire.Calculation.Core.IResultManager _instance;
+    [global::Quire.Mirror.MirrorStub]
+    private int _resultKey;
+    [global::Quire.Mirror.MirrorStub]
+    private int _oldResultKey;
+    [global::Quire.Mirror.MirrorStub]
+    private int forceAddIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Dictionary<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>> _results;
+    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Calculation.Core.IResultManager Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>>> Results { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private ResultManager() { }
+    [global::Quire.Mirror.MirrorStub]
     public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddResult(int key, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int AddResult(global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReplaceCalculatableAndResult(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -25,6 +43,10 @@ public partial class ResultManager : global::Quire.Calculation.Core.IResultManag
     public static global::Quire.Calculation.Core.EngineResult GetEngineResultForSerializationFromCalculatable(global::Quire.Calculation.Core.ICalculatableResultOwner resultOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ErrorHandlesToSerialNumber(global::Quire.Calculation.Core.EngineError error, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void SerialNumberToErrorHandles(global::Quire.Calculation.Core.EngineError error, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private static void VerifyNodeHandle(bool found, global::Quire.Calculation.Core.EngineError error, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void DispatchResult(global::Quire.Calculation.Core.ICalculatableResultOwner resultOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -44,11 +66,11 @@ public partial class ResultManager : global::Quire.Calculation.Core.IResultManag
     [global::Quire.Mirror.MirrorStub]
     public bool UpdateResultRef(global::System.Xml.XmlNode xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private int AddOldResult(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public void SetEngineResult(int resultId, global::Quire.Calculation.Core.EngineResult engineResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.ICalculatable FindCalculatable(int resultId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PushResultsToOwners(bool isScriptingRunWorksheetOpen = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private ResultManager() { }
 }

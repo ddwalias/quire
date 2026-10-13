@@ -12,6 +12,34 @@ namespace Quire.Controls.ControlAdorners;
 public partial class MatrixResizeAdorner : global::Quire.Controls.Core.VisualAdorner, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private const double DefaultThickness = 10d;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.EquationControl _eqControl;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.VisualDragger _activeDragger;
+    [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Internal.VerticalFence _rightBracket;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _matrixSizeChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Point _positionBeforeSizeChanged;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _rowAdded;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _columnAdded;
+    [global::Quire.Mirror.MirrorStub]
+    private double _rowAddThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private double _rowRemoveThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private double _columnAddThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private double _columnRemoveThreshold;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Undo.CommandScope _commandScope;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.TableSize _startDragTableSize;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ThicknessProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty VisualMatrixProperty;
@@ -34,6 +62,10 @@ public partial class MatrixResizeAdorner : global::Quire.Controls.Core.VisualAdo
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Media.Animation.BeginStoryboard BeginFadeoutDraggers;
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<int> MatrixPathFromRoot { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double Thickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -44,7 +76,35 @@ public partial class MatrixResizeAdorner : global::Quire.Controls.Core.VisualAdo
     [global::Quire.Mirror.MirrorStub]
     internal MatrixResizeAdorner(global::Quire.Controls.EquationControl equationControl, global::Quire.Controls.Internal.VisualMatrixNode visualMatrix) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
+    private static void VisualMatrixChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Dragger_DragStart(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Dragger_DragEnd(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void Dragger_Drag(object sender, global::Quire.Controls.Core.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DragUpDown(global::System.Windows.Vector vector, ref global::Quire.TableSize newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddRow(ref global::Quire.TableSize newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveRow(ref global::Quire.TableSize newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void DragLeftRight(global::System.Windows.Vector vector, ref global::Quire.TableSize newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void AddColumn(ref global::Quire.TableSize newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void RemoveColumn(ref global::Quire.TableSize newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleVisualMatrixChanged(global::Quire.Controls.Internal.VisualMatrixNode oldMatrix, global::Quire.Controls.Internal.VisualMatrixNode newMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public override void Remove() => base.Remove();
+    [global::Quire.Mirror.MirrorStub]
+    private void SetRightBracketSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CalculateThresholds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void ResetDraggingStartPoint() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]

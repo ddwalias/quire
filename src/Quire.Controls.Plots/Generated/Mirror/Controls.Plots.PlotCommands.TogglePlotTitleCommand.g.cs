@@ -12,6 +12,12 @@ namespace Quire.Controls.Plots.PlotCommands;
 internal sealed partial class TogglePlotTitleCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Quire.Controls.Plots.PlotControl _plot;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _oldValue;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _newValue;
+    [global::Quire.Mirror.MirrorStub]
     public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TogglePlotTitleCommand(global::Quire.Controls.Plots.PlotControl plot) { }

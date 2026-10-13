@@ -12,6 +12,8 @@ namespace Quire.Controls.InputControls;
 internal partial class CheckBoxViewModel : global::Quire.Controls.InputControls.InputScriptableControlViewModelWithInputs
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.InputControls.CheckBoxModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    [global::Quire.Mirror.MirrorStub]
     public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string ImagePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

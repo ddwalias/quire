@@ -12,6 +12,16 @@ namespace Quire.mslisp;
 internal partial class SymbolImp : global::Quire.mslisp.Symbol, global::System.Runtime.Serialization.ISerializable
 {
     [global::Quire.Mirror.MirrorStub]
+    private string m_name;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_package;
+    [global::Quire.Mirror.MirrorStub]
+    private object m_value;
+    [global::Quire.Mirror.MirrorStub]
+    private string m_fullname;
+    [global::Quire.Mirror.MirrorStub]
+    private bool m_not_set;
+    [global::Quire.Mirror.MirrorStub]
     public virtual bool Wild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.utl_mgd.LabelSet Labels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

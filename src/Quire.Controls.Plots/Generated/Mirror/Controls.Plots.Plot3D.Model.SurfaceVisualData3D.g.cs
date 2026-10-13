@@ -12,6 +12,8 @@ namespace Quire.Controls.Plots.Plot3D.Model;
 internal partial class SurfaceVisualData3D : global::Quire.Controls.Plots.Plot3D.Model.PlotTraceVisualData3D
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3DCollection _filteredVertices;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.BitArray FilteredVerticesMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool HasNoData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -19,4 +21,6 @@ internal partial class SurfaceVisualData3D : global::Quire.Controls.Plots.Plot3D
     public override global::System.Windows.Media.Media3D.Point3DCollection FilteredVertices { get => base.FilteredVertices; }
     [global::Quire.Mirror.MirrorStub]
     public SurfaceVisualData3D(global::System.Windows.Media.Media3D.Transform3D transform3D, int verticesCount) : base(default(global::Quire.Controls.Plots.Plot3D.Model.TraceType3D), default(global::System.Windows.Media.Media3D.Transform3D), default(int)) { }
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3DCollection GetFilteredVerticesPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

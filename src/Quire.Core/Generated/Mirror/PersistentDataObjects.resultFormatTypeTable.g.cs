@@ -12,6 +12,8 @@ namespace Quire.PersistentDataObjects;
 public partial class resultFormatTypeTable
 {
     [global::Quire.Mirror.MirrorStub]
+    private string itemidrefField;
+    [global::Quire.Mirror.MirrorStub]
     public string itemidref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public resultFormatTypeTable() { }

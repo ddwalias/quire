@@ -12,9 +12,13 @@ namespace Quire.Efi;
 public partial class glMesh
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.LRect3 rect;
+    [global::Quire.Mirror.MirrorStub]
     public int m_rows;
     [global::Quire.Mirror.MirrorStub]
     public int m_cols;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.shpPoint3D[] m_vertices;
     [global::Quire.Mirror.MirrorStub]
     public glMesh(global::Quire.Efi.LRect3 rc, int rows, int cols, global::Quire.Efi.shpPoint3D[] vertices) { }
     [global::Quire.Mirror.MirrorStub]

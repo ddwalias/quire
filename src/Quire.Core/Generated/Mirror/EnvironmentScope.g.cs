@@ -12,6 +12,10 @@ namespace Quire;
 public partial class EnvironmentScope
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::Quire.EnvironmentScope _currentInstance;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.Stack<global::Quire.ActionItem> _actionItemsStack;
+    [global::Quire.Mirror.MirrorStub]
     public static bool IsCurrentlyInsideUndo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool IsCurrentlyInsideRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -20,9 +24,15 @@ public partial class EnvironmentScope
     [global::Quire.Mirror.MirrorStub]
     public bool Contains(global::Quire.DelegateFunction1<bool, global::Quire.ActionItem> predicate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private EnvironmentScope() { }
+    [global::Quire.Mirror.MirrorStub]
     public static void RegisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void UnregisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private EnvironmentScope() { }
+    private void ClearStaleCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleBeforeCommand(object sender, global::Quire.Undo.CommandEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleAfterCommand(object sender, global::Quire.Undo.CommandEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

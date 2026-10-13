@@ -12,6 +12,10 @@ namespace Quire.Native.EngutilsMgd;
 public partial class PushbackReader
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Stack m_stack;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.IO.TextReader m_reader;
+    [global::Quire.Mirror.MirrorStub]
     public PushbackReader(global::System.IO.TextReader r) { }
     [global::Quire.Mirror.MirrorStub]
     public void Unread(int c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

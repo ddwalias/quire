@@ -12,6 +12,8 @@ namespace Quire.gen;
 internal partial class ForeignField : global::Quire.gen.ResolvedForeignId
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Reflection.FieldInfo m_fi;
+    [global::Quire.Mirror.MirrorStub]
     public ForeignField(string id, global::System.Reflection.FieldInfo fi) : base(default(string)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.gen.MetaObj CreateMetaObj(global::Quire.gen.IlAsm bcasm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

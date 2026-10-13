@@ -12,6 +12,8 @@ namespace Quire.Controls.Text;
 public partial class TextRegion : global::Quire.Controls.Text.RichTextWithEmbeddedItem, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
+    private bool _contentLoaded;
+    [global::Quire.Mirror.MirrorStub]
     public TextRegion() { }
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldLeaveTextRegionOnCaretMove(global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection direction) => base.ShouldLeaveTextRegionOnCaretMove(direction);

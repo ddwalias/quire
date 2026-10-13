@@ -14,7 +14,7 @@ public partial class TraceColorTable : global::System.Collections.Generic.List<g
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Plots.TraceColorTable Default;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color parseColor(string color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private TraceColorTable() { }
+    [global::Quire.Mirror.MirrorStub]
+    public static global::System.Windows.Media.Color parseColor(string color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

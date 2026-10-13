@@ -12,6 +12,10 @@ namespace Quire.EquationEditor.Tree;
 public partial class LimitSideNodeInfo : global::Quire.EquationEditor.Tree.ValueNodeInfo
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.IDictionary<global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide, string> b;
+    [global::Quire.Mirror.MirrorStub]
+    private static global::System.Collections.Generic.IDictionary<string, global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide> c;
+    [global::Quire.Mirror.MirrorStub]
     public override string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

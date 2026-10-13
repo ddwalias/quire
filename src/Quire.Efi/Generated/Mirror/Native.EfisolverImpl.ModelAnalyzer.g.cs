@@ -12,7 +12,19 @@ namespace Quire.Native.EfisolverImpl;
 internal partial class ModelAnalyzer : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Native.EfisolverImpl.ModelEvaluator m_eval;
+    [global::Quire.Mirror.MirrorStub]
+    private double m_zerothresh;
+    [global::Quire.Mirror.MirrorStub]
+    private bool[] m_constrLinear;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] m_constrMap;
+    [global::Quire.Mirror.MirrorStub]
+    private int[] m_constrResLen;
+    [global::Quire.Mirror.MirrorStub]
     public ModelAnalyzer(global::Quire.Native.EfisolverImpl.ModelEvaluator me) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void _tildeModelAnalyzer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool is_model_linear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -29,6 +41,14 @@ internal partial class ModelAnalyzer : global::System.IDisposable
     public unsafe bool lin_coeffs(double* coeffs, int ind, bool bobj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public double lin_cnst(int ind, bool bobj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double scramble(double dbi, double dbj, double ig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void MapConstraints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void CheckConstraintsLinearity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private bool isConstrLinear(int cindx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void Dispose(bool A_0) { }
     [global::Quire.Mirror.MirrorStub]

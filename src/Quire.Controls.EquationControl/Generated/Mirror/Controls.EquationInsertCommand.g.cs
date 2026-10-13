@@ -16,6 +16,8 @@ public partial class EquationInsertCommand : global::Quire.Wpf.RoutedUICommandWi
     [global::Quire.Mirror.MirrorStub]
     public const string InsertId = "InsertId";
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey> _sExpressionToFunctionalityKeyDictionary;
+    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey>> ParameterToFunctionalityKeyDictionaryList { get => base.ParameterToFunctionalityKeyDictionaryList; }
     [global::Quire.Mirror.MirrorStub]
     public EquationInsertCommand() { }

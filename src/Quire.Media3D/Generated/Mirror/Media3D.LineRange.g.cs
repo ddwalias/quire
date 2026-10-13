@@ -12,6 +12,10 @@ namespace Quire.Media3D;
 public partial struct LineRange
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D point1;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Media3D.Point3D point2;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Point3D Point1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Media3D.Point3D Point2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

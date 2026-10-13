@@ -12,6 +12,10 @@ namespace Quire.Controls.Internal;
 internal partial class VisualExponentNode : global::Quire.Controls.Internal.VisualSuperscriptBinaryNode<global::Quire.Controls.Internal.VisualExponentSymbolNode>
 {
     [global::Quire.Mirror.MirrorStub]
+    private static global::System.Windows.DependencyProperty VerticalAdjustProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private const double PAD = 1d;
+    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);

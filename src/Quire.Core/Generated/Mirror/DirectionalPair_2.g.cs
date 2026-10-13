@@ -12,6 +12,8 @@ namespace Quire;
 public partial struct DirectionalPair<TLeft, TRight>
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Pair<TLeft, TRight> _pair;
+    [global::Quire.Mirror.MirrorStub]
     public TLeft Left;
     [global::Quire.Mirror.MirrorStub]
     public TRight Right;

@@ -20,13 +20,25 @@ internal partial class Caret : global::System.Windows.FrameworkElement
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty BlinkPeriodProperty;
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Shapes.Line _line;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _blink;
+    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Shapes.Line Line { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool Blink { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Drawing.Color Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void OnBlinkPropertyChanged(global::System.Windows.DependencyObject caret, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public Caret() { }
+    [global::Quire.Mirror.MirrorStub]
+    private void BindProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void InitializeLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateCaretBlinking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected bool IsCaretBlinkEnabled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

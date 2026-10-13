@@ -14,6 +14,8 @@ public static partial class DevelopmentEnvironmentState
     [global::Quire.Mirror.MirrorStub]
     public const string EnableRtEnvValue = "true";
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Collections.Generic.Dictionary<string, bool> RtStateCache;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<bool>> RtNameToWrapperFuncMap;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<string> FelinesRtEnvs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

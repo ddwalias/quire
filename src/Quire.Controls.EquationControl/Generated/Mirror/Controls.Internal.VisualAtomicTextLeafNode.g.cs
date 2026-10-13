@@ -12,6 +12,12 @@ namespace Quire.Controls.Internal;
 internal partial class VisualAtomicTextLeafNode : global::Quire.Controls.Internal.VisualMathNode, global::Quire.EquationEditor.View.IVisualAtomicTextLeafNode, global::Quire.EquationEditor.View.IVisualMathNode, global::Quire.EquationEditor.View.IVisualNode, global::Quire.Controls.Internal.IGeometryProvider, global::Quire.EquationEditor.View.IVisualSymbolNode, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.FormattedText _formattedText;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Media.Geometry _geometry;
+    [global::Quire.Mirror.MirrorStub]
+    private double _baseline;
+    [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Rect _inkBounds;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.EquationEditor.Tree.INodeInfo NodeInfo { get => base.NodeInfo; set => base.NodeInfo = value; }
@@ -37,6 +43,10 @@ internal partial class VisualAtomicTextLeafNode : global::Quire.Controls.Interna
     public VisualAtomicTextLeafNode() { }
     [global::Quire.Mirror.MirrorStub]
     protected void SetHorizontalMargins(double newMargin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double GetXCoordinate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UpdateText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureStaticLayout(global::System.Windows.Size availableSize) => base.MeasureStaticLayout(availableSize);
     [global::Quire.Mirror.MirrorStub]

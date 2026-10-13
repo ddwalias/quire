@@ -12,13 +12,63 @@ namespace Quire.Efi;
 internal partial class pltGridCell
 {
     [global::Quire.Mirror.MirrorStub]
+    private int myNcols;
+    [global::Quire.Mirror.MirrorStub]
+    private int myNrows;
+    [global::Quire.Mirror.MirrorStub]
+    private int myStartCol;
+    [global::Quire.Mirror.MirrorStub]
+    private int myStartRow;
+    [global::Quire.Mirror.MirrorStub]
+    private double myZmin;
+    [global::Quire.Mirror.MirrorStub]
+    private double myZmax;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltContour myContPlot;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D> myTrace;
+    [global::Quire.Mirror.MirrorStub]
+    private int myTraceCount;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID myStartEdge;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID myStopEdge;
+    [global::Quire.Mirror.MirrorStub]
+    private int myCol;
+    [global::Quire.Mirror.MirrorStub]
+    private int myRow;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID myEntryEdge;
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID myExitEdge;
+    [global::Quire.Mirror.MirrorStub]
+    private double myLevel;
+    [global::Quire.Mirror.MirrorStub]
+    private double myLLz;
+    [global::Quire.Mirror.MirrorStub]
+    private double myLRz;
+    [global::Quire.Mirror.MirrorStub]
+    private double myULz;
+    [global::Quire.Mirror.MirrorStub]
+    private double myURz;
+    [global::Quire.Mirror.MirrorStub]
+    private int myIndex;
+    [global::Quire.Mirror.MirrorStub]
+    private double myZavg;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Array cellMap;
+    [global::Quire.Mirror.MirrorStub]
     public pltGridCell(int nGridCols, int nGridRows, double zMin, double zMax, global::Quire.Efi.pltContour cont) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void init() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void newCell(int col, int row, double level, global::Quire.Efi.glMesh surfMat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool getCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void startEdge(global::Quire.Efi.pltGridCell.EdgeID edge) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.pltGridCell.EdgeID startEdge() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void startCell(int startCol, int startRow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -53,6 +103,16 @@ internal partial class pltGridCell
     public int startCol() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int startRow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private int[] mapRow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void computeMapIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double X(double u, double v, double x0, double x1, double x2, double x3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private double Y(double u, double v, double y0, double y1, double y2, double y3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Efi.shpPoint3D getPoint(int ptNum) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Efi.pltGridCell+EdgeID, efiplot_")]
     public enum EdgeID

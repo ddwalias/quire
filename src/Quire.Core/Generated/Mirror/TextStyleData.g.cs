@@ -12,9 +12,13 @@ namespace Quire;
 public partial class TextStyleData : global::System.Windows.DependencyObject
 {
     [global::Quire.Mirror.MirrorStub]
+    private static readonly global::System.Type _typeOfThis;
+    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty StyleProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty StyleNameProperty;
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Windows.Style _oldStyle;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Style OldStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -41,6 +45,8 @@ public partial class TextStyleData : global::System.Windows.DependencyObject
     internal static void SetStyleName(global::System.Windows.DependencyObject element, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TextStyleData(string name, string key, global::System.Windows.Style style, string baseOnKey = default) { }
+    [global::Quire.Mirror.MirrorStub]
+    private void BasedOnStyleChanged(global::Quire.TextStyleData basedOn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TextStyleData() { }
     [global::Quire.Mirror.MirrorStub]

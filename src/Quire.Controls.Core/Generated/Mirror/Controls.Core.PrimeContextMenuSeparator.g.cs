@@ -16,5 +16,7 @@ public partial class PrimeContextMenuSeparator : global::System.Windows.Controls
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Style PrimeContextMenuSeparatorStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
+    private static void HandlePrimeContextMenuSeparatorStyleChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     public PrimeContextMenuSeparator() { }
 }
