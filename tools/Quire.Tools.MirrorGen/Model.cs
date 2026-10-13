@@ -33,28 +33,50 @@ public sealed record GenericParam(string Name, int Variance, bool Class, bool St
 
 public sealed record ParamModel(string Name, TypeSig Type, bool In, bool Out, bool Params, bool HasDefault, object? Default);
 
-public sealed record FieldModel(string Name, TypeSig Type, Access Access, bool Static, bool ReadOnly, bool Const, object? Value)
+/// <summary>
+/// A mirrored member's state (PLAN.md §3c rule 5), from its attributes. Unclassified means hand-written code that
+/// predates the per-method rule and still has to be verified, documented, blocked or marked Quire-only.
+/// </summary>
+public enum MemberStatus { Unclassified, Stub, Blocked, Verified, Documented, QuireOnly }
+
+/// <summary>A member's status and the attribute text behind it (reason, test class or source).</summary>
+public interface IHasStatus
 {
-    public bool Stub { get; init; }
+    MemberStatus Status { get; }
+    string? Evidence { get; }
+    bool Stub => Status == MemberStatus.Stub;
+}
+
+public sealed record FieldModel(string Name, TypeSig Type, Access Access, bool Static, bool ReadOnly, bool Const, object? Value) : IHasStatus
+{
+    public MemberStatus Status { get; init; }
+    public string? Evidence { get; init; }
+    public bool Stub => Status == MemberStatus.Stub;
 }
 
 public sealed record MethodModel(
     string Name, Access Access, bool Static, bool Abstract, bool Virtual, bool NewSlot, bool Final, bool SpecialName,
     TypeSig Return, ImmutableArray<ParamModel> Params, ImmutableArray<GenericParam> GenericParams,
-    ImmutableArray<(TypeSig Interface, string Method)> Implements, bool Extern, bool Extension, bool InitOnly)
+    ImmutableArray<(TypeSig Interface, string Method)> Implements, bool Extern, bool Extension, bool InitOnly) : IHasStatus
 {
     public bool IsConstructor => Name is ".ctor" or ".cctor";
-    public bool Stub { get; init; }
+    public MemberStatus Status { get; init; }
+    public string? Evidence { get; init; }
+    public bool Stub => Status == MemberStatus.Stub;
 }
 
-public sealed record PropertyModel(string Name, TypeSig Type, MethodModel? Getter, MethodModel? Setter, ImmutableArray<ParamModel> Index)
+public sealed record PropertyModel(string Name, TypeSig Type, MethodModel? Getter, MethodModel? Setter, ImmutableArray<ParamModel> Index) : IHasStatus
 {
-    public bool Stub { get; init; }
+    public MemberStatus Status { get; init; }
+    public string? Evidence { get; init; }
+    public bool Stub => Status == MemberStatus.Stub;
 }
 
-public sealed record EventModel(string Name, TypeSig Type, MethodModel? Adder, MethodModel? Remover)
+public sealed record EventModel(string Name, TypeSig Type, MethodModel? Adder, MethodModel? Remover) : IHasStatus
 {
-    public bool Stub { get; init; }
+    public MemberStatus Status { get; init; }
+    public string? Evidence { get; init; }
+    public bool Stub => Status == MemberStatus.Stub;
 }
 
 public sealed class TypeModel

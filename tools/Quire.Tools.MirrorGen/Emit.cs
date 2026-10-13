@@ -265,6 +265,7 @@ public static class Emit
         foreach (var f in d.Friends) sb.AppendLine($@"    <InternalsVisibleTo Include=""{f}"" />");
         sb.AppendLine(@"    <InternalsVisibleTo Include=""$(AssemblyName).Tests"" />");
         sb.AppendLine(@"    <InternalsVisibleTo Include=""Quire.Mirror.Tests"" />");
+        sb.AppendLine(@"    <InternalsVisibleTo Include=""Quire.Differential.Tests"" />");
         sb.AppendLine("  </ItemGroup>");
         sb.AppendLine("</Project>");
         WriteIfChanged(Path.Combine(dir, GeneratedDir, "Mirror.props"), sb.ToString());

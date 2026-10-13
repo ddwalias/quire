@@ -2,12 +2,12 @@ using Quire.Tools.MirrorGen;
 
 if (args.Length < 1)
 {
-    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|native-inventory|scope-diff|collisions|graph|stats|dump <asm> <type>|types <dll> <filter>>");
+    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|classify [--list]|native-inventory|scope-diff|collisions|graph|stats|dump <asm> <type>|types <dll> <filter>>");
     return 2;
 }
 
 string repo = FindRepoRoot();
-string install = Environment.GetEnvironmentVariable("MATHCAD_DIR") ?? @"C:\Program Files\PTC\Mathcad Prime 12.0.1.0";
+string install = Universe.InstallDir;
 var rules = args[0] == "types" ? null! : Rules.Load(Path.Combine(repo, "docs", "mirror", "type-map.csv"));
 
 switch (args[0])
@@ -69,6 +69,9 @@ switch (args[0])
         // Non-private methods (accessors included) per type, for cross-checking the reader against other tools.
         foreach (var t in MetadataLoader.Load(args[1])!.Types.OrderBy(t => t.FullName, StringComparer.Ordinal))
             Console.WriteLine($"{t.FullName}\t{Planner.AllMethods(t).Count(m => m.Access != Access.Private)}\t{Planner.AllMethods(t).Count()}");
+        return 0;
+    case "classify":
+        Classify.Run(repo, Universe.LoadMathcad(install, rules), rules, args.Contains("--list"));
         return 0;
     case "manifest":
         return Shape.WriteManifestAndCoverage(repo, args.Contains("--accept-removals")) ? 0 : 1;

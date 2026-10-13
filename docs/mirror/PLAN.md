@@ -1,20 +1,30 @@
 # Class-for-class mirroring plan
 
 **Goal.** Give Quire the same type structure as Mathcad Prime 12. Each in-scope Mathcad type gets a Quire type with
-the same name, kind, inheritance and member signatures. Only the root namespace and the app name change. Fidelity is
-per method, not just per class: each mirrored method holds the behaviour its Mathcad counterpart has (§3c).
+the same name, kind, inheritance and member signatures. Only the root namespace and the app name change. Method-level
+behavioral equivalence is the goal (§3c); accepted intentional departures are recorded separately and are not called
+matches.
 
-**Boundary.** The structure comes only from assembly metadata: type and member names, signatures, base types and
-interfaces, read as data. No method bodies are decompiled or copied. Every implementation is written independently,
-as the current code was. Method-level behaviour is established from documentation and black-box testing (§3c),
-never by porting decompiled code (D9). Widening this boundary, for example to read method bodies or native
-implementations, needs explicit approval first.
+**Boundary.** MirrorGen establishes structure from assembly metadata: type and member names, signatures, base types
+and interfaces, read as data. The generator itself does not load or run Mathcad methods or read their bodies. For
+behavior, agents must use REA MCP to analyze the original counterpart before implementing or changing mirrored
+behavior (§3c, D9): inspect managed method bodies as IL or decompiled pseudocode, and use native REA analysis for
+counterparts in native DLLs where supported. User approval for this analysis is already given and does not need
+renewal per method. Use the analysis as evidence, then write Quire implementations independently; do not paste
+proprietary method bodies or pseudocode verbatim. Approval does not establish licensing rights: applicable license
+and legal constraints for analysis and distribution still need confirming. If REA is unavailable, unreadable or
+ambiguous, record the method as blocked and ask for access or clarification instead of guessing or claiming
+equivalence. Any intentional structural or behavioral departure from an established Mathcad contract must be
+recorded in [`deviations.md`](deviations.md) before Quire relies on it; unknown behavior and suspected bugs are not
+intentional deviations.
 
-**Status.** Phase 0 is done (§3). Phase 1 is done at type level (§3a) but reopened at method level (§3c). All 5,378 in-scope types exist as generated stubs or merged hand-written
-code. The engine runtime (`Mpl.Run`, `Mcd`, `Engine.IEngine`) is real, the solution builds, and the 213 behaviour tests
-plus 31 shape tests pass. The engine's result dictionaries match Mathcad's signatures, but their contents are still
-provisional (§3b). [`type-map.csv`](type-map.csv) lists every Mathcad type with its Quire target name, its status and
-its phase.
+**Status.** Phase 0 is done (§3). Phase 1 is done at type level (§3a) but reopened at method level (§3c). All 5,378
+in-scope types exist as generated stubs or merged hand-written code. The engine runtime (`Mpl.Run`, `Mcd`,
+`Engine.IEngine`) is implemented, the solution builds, and the 213 behaviour tests plus 31 shape tests pass. This
+does not establish that all mirrored methods match Mathcad; individual method equivalence remains open until its
+evidence and tests are recorded. The engine's result dictionaries match Mathcad's signatures, but their contents are
+still provisional (§3b). [`type-map.csv`](type-map.csv) lists every Mathcad type with its Quire target name, its
+status and its phase.
 
 ## 1. Scope
 
@@ -92,7 +102,7 @@ Licence entries marked *verify* still need confirming before release.
 
 | Component | What is visible | Size | Treatment |
 |---|---|---|---|
-| `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` (native-only PTC DLLs) | Exported symbols only | ≈ 1,390 exports, ≈ 42 exported classes | Mirror the exported surface (decoded C++ names become classes and methods). Non-exported internals aren't visible and are designed independently. |
+| `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` (native-only PTC DLLs) | Exported symbols; REA native analysis where supported | ≈ 1,390 exports, ≈ 42 exported classes | Mirror the exported surface (decoded C++ names become classes and methods). REA may expose additional internals for analysis; inspect the original counterpart before implementing behavior where supported, and record unavailable or ambiguous internals as limits/blocked rather than assuming behavior. |
 | `MathcadPrime.exe`, `LicenseWizard.exe` (native hosts) | No exports: application host stubs | n/a | `Quire.exe` already covers the app host; licensing is deferred |
 | `axiom/MC*.NRLIB` | 64 compiled Axiom packages written by Mathcad | 64 packages | Mirror as independently written FriCAS (SPAD) packages, keeping the package and operation names |
 | The 22 non-`MC` `axiom/*.NRLIB` modules (`EXPR`, `GF`, `ALG2`, `KLEENEAN`, …) | Standard Axiom names | 22 | *Verify*: identical to upstream means dependency (FriCAS); modified by PTC means mirror |
@@ -235,15 +245,17 @@ The four §5 "moves into mirrored types" stay for each phase; Phase 0 only made 
 ## 3a. Phase 1: engine runtime (type level done; method level open, §3c)
 
 `Quire.Values` and the old `Quire.Mpl.Rl` S-expressions are gone. Their behaviour now lives in the mirrored `Mcd` and
-`Mpl.Run` types inside `Quire.Mpl`. The interpreter sits behind Mathcad's `Engine.IEngine`/`IFactory` API. Stubs fell
+`Mpl.Run` types inside `Quire.Mpl`. The interpreter sits behind Mathcad's `Engine.IEngine`/`IFactory` API. These
+describe current Quire behavior, not blanket method-by-method equivalence; Phase 1's method-level review remains open
+under §3c. Stubs fell
 from 56,114 to 55,766. `Quire.Mpl` is now 21.1% implemented and `Quire.Engine` 13.7% (see
 [`coverage.md`](coverage.md)).
 
-### What is real
+### Quire behavior currently implemented (method-level equivalence not established)
 
 | Mirrored type(s) | Behaviour |
 |---|---|
-| `Mcd.Dim` | Interned, so two dimensions are equal only when they are the same object, as in Mathcad. Seven base exponents (length, mass, time, current, temperature, substance, luminosity) are stored as multiples of 1/2520, so roots and fractional powers stay exact; `Pwr` throws when the result isn't exact. The special markers are `identity`, `polymorphic` (null), `mcd_zero`, `string_dim`, `function_dim` and `mixed_matrix_dim`. |
+| `Mcd.Dim` | Current Quire behavior interns dimensions, so two dimensions are equal only when they are the same object. Seven base exponents (length, mass, time, current, temperature, substance, luminosity) are stored as multiples of 1/2520, so roots and fractional powers stay exact; `Pwr` throws when the result isn't exact. The special markers are `identity`, `polymorphic` (null), `mcd_zero`, `string_dim`, `function_dim` and `mixed_matrix_dim`. |
 | `Mcd.Type`, `Named`, `Constant`, `Product` | Dimension signatures such as `length*mass/time^2` (`1` = dimensionless). `Dim.New(Product)` interns one. |
 | `Mcd.Rational` | Reduced fractions, plus a continued-fraction approximation from `double`. |
 | `Mcd.Unit`, `Units`, `UnitSystem` | Units carry a signature `Type` and an SI magnitude. `UnitSystem.Simplify` returns the system's default unit for an exact dimension match, and otherwise base units with rational exponents. |
@@ -338,23 +350,24 @@ above are Quire's assumptions.
 
 ### How to do the work
 
-1. **Investigate the contract within the current boundary.** Possible evidence sources:
-   - shipped API documentation, such as `Ptc.MathcadPrime.Automation.xml` and any other XML docs in the install;
-   - public examples and PTC documentation;
-   - declared metadata constants: literal fields, enum members and attribute arguments in `iengine`,
-     `Ptc.Calculation`, `Ptc.Calculation.Core` and their neighbours, read with `MirrorGen dump`;
-   - black-box interoperability tests
-
-   None of these has been examined for this question yet. Don't assume in advance that static analysis can or
-   can't find the keys; record what each source actually showed.
-2. **Keep the metadata-only boundary.** If inspecting method bodies or native implementations turns out to be
-   necessary, write down why the sources above weren't enough and get approval before changing the boundary.
-3. **Record findings below.** For each fact, record what was verified, the evidence source, and what remains
-   unresolved. Leave a detail unresolved rather than guess a key.
-4. **Change Quire only on evidence.** Once the contract is established, update the engine and its consumers
-   (`ValueToIResultNodeTransform`, `CalculationController`, tests) together. Alternatively, add a compatibility
-   adapter between the internal results and the public dictionaries. Runtime keys don't change before then.
-5. **Test the contract exactly.** Cover:
+1. **Analyze the original counterpart with REA MCP before implementing or changing mirrored behavior.** Use the
+   available REA MCP capabilities to inspect managed method bodies as IL or decompiled pseudocode. For behavior in a
+   native DLL, use native REA analysis where supported. Trace relevant helpers, callers and callees as needed to
+   establish the contract, including dictionary keys and value types, status transitions, errors and aggregate
+   nesting. Do not assume a body is inaccessible because a member is private or cannot be called externally; analyze
+   it through REA where possible. If REA is unavailable, unreadable or ambiguous, record the member as blocked and
+   ask for access or clarification. Do not guess or claim equivalence.
+2. **Corroborate and record evidence.** Documentation, public examples, metadata constants and black-box observations
+   can clarify or corroborate the REA findings, but do not replace required REA analysis. Record the original assembly
+   and version, type and member/signature, REA finding, confidence and limits, and test cases with observed versus
+   inferred behavior clearly distinguished. No REA findings for this contract are recorded yet; this section is a
+   plan, not a claim of completed analysis.
+3. **Implement independently on evidence.** Update the engine and consumers (`ValueToIResultNodeTransform`,
+   `CalculationController`, tests) together, or add a compatibility adapter between internal results and the public
+   dictionaries. Do not paste proprietary code or decompiled pseudocode. Runtime keys do not change until findings
+   are recorded.
+4. **Test the contract exactly.** REA analysis alone is not proof. Add behavior/regression tests, and compare directly
+   with the original by differential test where feasible. Cover:
    - exact key sets;
    - value types;
    - statuses for ready, failed, stale and in-progress nodes;
@@ -363,8 +376,9 @@ above are Quire's assumptions.
    - the scope look-ups.
 
    Existing calculation behaviour must not change; the current engine and controller tests stay green.
-6. **Claim only what was verified.** Docs, comments and tests should say "Mathcad-compatible" only for the parts
-   of the contract that were actually established, and name the rest as Quire-specific.
+5. **Claim only what the evidence supports.** Docs, comments and tests should say "Mathcad-compatible" only for the
+   contract parts supported by recorded analysis and tests. Keep observed results separate from inferred behavior,
+   and name unresolved or Quire-specific parts accordingly.
 
 ### Findings
 
@@ -376,7 +390,8 @@ above are Quire's assumptions.
 
 **Status: adopted 2026-10-14, not yet started.** Phases 0 and 1 matched Mathcad class by class: every type and
 member signature exists. Behaviour, however, mostly lives in Quire-only internals, and most mirrored members are
-still stubs. From now on, a phase matches Mathcad method by method.
+still stubs. This is a method-level target, not a claim that existing methods already match. Each mirrored behavior
+must be analyzed with REA MCP before implementation or change, then independently implemented and tested.
 
 ### Rules
 
@@ -385,38 +400,57 @@ still stubs. From now on, a phase matches Mathcad method by method.
    - arithmetic and comparisons in `Ops`/`MatrixOps` go onto `DimVal`, `NumVal` and `MatVal` members;
    - built-ins move into the `Function` hierarchy.
 
-   Each move is confirmed per method from the name, signature and the evidence below, not assumed in bulk.
-   Quire-only code shrinks to what has no Mathcad counterpart, and the manifest keeps listing what remains.
-2. **Implementations are independent (D9).** No decompiled method bodies are read or ported. A method's
-   behaviour is established from:
-   - shipped documentation (for example `Ptc.MathcadPrime.Automation.xml`);
-   - declared metadata (constants, enum members, attribute arguments);
-   - public examples;
-   - black-box differential tests against the installed Mathcad assemblies, where the licence permits them.
-3. **Differential tests are the per-method check.** A harness loads `mplrun.dll`/`iengine.dll` from the Mathcad
-   install, calls a public member with generated inputs, and compares the result with Quire's. Not yet checked:
-   - whether those assemblies load outside Mathcad (they may target .NET Framework, or be mixed-mode);
-   - which members are reachable that way;
-   - whether the licence permits the tests.
+   Each move is confirmed per method from REA analysis and the evidence below, not assumed from names, signatures or
+   in bulk. Quire-only code shrinks to what has no Mathcad counterpart, and the manifest keeps listing what remains.
+2. **REA analysis is required before implementation or behavior changes.** Use REA MCP to inspect/decompile managed
+   method bodies as IL or pseudocode. For a counterpart in a native DLL, use native REA analysis where supported.
+   Trace relevant helpers and callers/callees needed to understand contracts such as keys/value types/status
+   transitions, numeric edge cases and errors, mutation, constructors, events and lifecycle. Record the original
+   assembly/version, type and member/signature, findings, confidence/limits, and test cases with observed and inferred
+   behavior distinguished. Quire code is independently written; do not paste proprietary bodies or pseudocode. If REA
+   cannot expose or clarify the counterpart, record it as blocked and ask for access or clarification rather than
+   guessing.
+3. **Tests are mandatory; differential tests are additional evidence.** Add behavior and regression tests for the
+   analyzed contract. Compare with the original by differential test where feasible, but do not claim a test
+   differential-verified unless it directly compared that behavior. REA analysis and tests against inferred cases
+   alone do not prove full equivalence. No differential harness or tool setup is currently claimed here.
+4. **No silent deviations.** An intentional departure must be entered in [`deviations.md`](deviations.md) before
+   relying on it. The ledger entry must cite evidence for the original contract, independently describe Quire's
+   behavior and rationale, state compatibility/user impact and duration/revisit plan, list tests, and record an
+   explicit decision. Unknown Mathcad behavior is an open/blocked candidate, not an intentional deviation. A known
+   bug or accidental mismatch must be tracked and fixed, not justified as a deviation unless an evidenced exception
+   is explicitly decided. Never describe an accepted divergence as matching Mathcad.
+5. **Private or externally unreachable does not automatically mean stub.** Analyze the body through REA where
+   possible. If REA is unavailable, the body cannot be read, or behavior remains ambiguous, record the limit and
+   block the member; do not guess or claim it equivalent.
+6. **Per-method status and evidence are tracked.** Use distinct statuses:
+   - **REA-analyzed**: original counterpart analysis is recorded; Quire behavior tests have not yet passed.
+   - **REA-analyzed + behavior-tested**: independently implemented behavior/regression tests pass, but no direct
+     comparison with Mathcad is claimed.
+   - **documentation-only**: behavior is supported only by documentation; this is insufficient for completion and
+     remains open/blocked pending required REA analysis or clarification.
+   - **differential-verified**: direct comparisons with the original passed for the recorded cases only; this does
+     not establish untested inputs or branches.
+   - **intentional-deviation (accepted)**: an explicit `accepted-temporary` or `accepted-permanent` entry exists in
+     `deviations.md`, with original-contract evidence, rationale, impact, tests and a decision record. This status is
+     divergence, never equivalence.
+   - **stub**, **blocked** (with reason), or **Quire-only**.
 
-   A spike on one small type (`Mcd.Rational` or `Mcd.Dim`) comes first.
-4. **Unknown behaviour stays a stub.** Some members aren't reachable from outside or have unclear behaviour, such
-   as private members or `Dim.Eq_b1` and `Dim.FixDimension`. These stay stubs, with the reason recorded the same way
-   §3b records the result-dictionary contract. Behaviour is not guessed.
-5. **Per-method status is tracked.** Each member is one of:
-   - **real**: verified by differential test;
-   - **real**: implemented from documentation;
-   - **stub**;
-   - **blocked**, with a reason;
-   - **Quire-only**.
-
-   MirrorGen's manifest and `coverage.md` need to report this. Today they only distinguish stubs from implemented
-   members.
-6. **A phase is done** only when every mirrored member on its types is real or blocked with a recorded reason.
+   Record status and evidence per member, including observed versus inferred behavior. MirrorGen's manifest and
+   `coverage.md` currently distinguish only stubs from implemented members; they do not establish these statuses.
+7. **Phase completion distinguishes equivalence from divergence.** Every mirrored member must either be independently
+   implemented and behavior-tested against an evidence-backed original contract (with differential verification
+   claimed only for directly compared cases), or have an accepted, tested intentional deviation recorded in
+   `deviations.md`. Accepted deviations are completion exceptions only as transparently recorded divergences, never
+   matches. A phase-complete label is not blanket Mathcad equivalence: describe equivalence only for behavior supported
+   by recorded evidence and tests, and report accepted deviations separately. Blocked members remain unresolved and
+   prevent full behavioral completion; any administrative closure with blockers must say so and must not claim
+   equivalence.
 
 ### Phase 1 gap (2026-10-14)
 
-Remaining stubs on Phase 1's headline types, counted from the generated files against the manifest:
+Remaining stubs on Phase 1's headline types, counted from the generated files against the manifest. Stub counts are
+shape data only: zero stubs does not establish method-level equivalence or fix remaining behavioral issues.
 
 | Type | Stubs / members | Type | Stubs / members |
 |---|---:|---|---:|
@@ -430,8 +464,9 @@ Remaining stubs on Phase 1's headline types, counted from the generated files ag
 | **Total** | **578 / 964** | | |
 
 The rest of `mplrun` and `iengine` (`IEnginePriv`, `IEngineUnstable`, `IMCEngine`, `MplEnv`, …) still has to be
-counted. Before the work starts, decide the order: finish Phase 1 at method level first, or carry the method-level
-rule into Phase 2 and come back to it.
+counted and analyzed. Phase 1 remains open at method level; decide whether to finish it before Phase 2 or carry the
+method-level rule into Phase 2 and return to Phase 1 later. No method-level equivalence is asserted by the current
+implementation, stub counts or test totals.
 
 ## 4. Phases: turning stubs into real code
 
@@ -486,7 +521,16 @@ writing a numerical library and a computer-algebra system.
 - **D3:** visibility is faithful. Mathcad's `internal` types stay `internal`, and test projects get
   `InternalsVisibleTo`.
 - **D8:** `System.Reflection.Emit.PTC.Mathcad.Mpl` → `System.Reflection.Emit.Quire.Mpl` (literal).
-- **D9 (2026-10-14):** fidelity is method by method (§3c).
+- **D9 (2026-10-14):** Before implementing or changing mirrored behavior, agents must use REA MCP to analyze the
+  original counterpart (§3c): managed method bodies as IL or decompiled pseudocode, and native REA analysis for
+  native-DLL counterparts where supported. Trace relevant helpers/callers/callees for the contract; record
+  assembly/version, type and member/signature, findings, confidence/limits, and observed versus inferred test cases.
+  Write Quire independently; do not paste proprietary code. If REA is unavailable, unreadable or ambiguous, block the
+  member and ask for access/clarification rather than guessing or claiming equivalence. User approval covers this
+  analysis without per-method renewal; applicable licensing/legal constraints still need confirming. REA analysis
+  alone is not proof: behavior/regression tests are mandatory, with differential tests where feasible. Any intentional
+  departure must be recorded in [`deviations.md`](deviations.md) before relying on it; unknowns and bugs are not
+  deviations, and accepted deviations never count as Mathcad-equivalent.
 
 ### Still open (none of these block Phase 0)
 
@@ -506,12 +550,27 @@ writing a numerical library and a computer-algebra system.
 
 1. Regenerate the skeleton for the phase's assemblies, as in §3 "Regenerating". The generator is idempotent and never edits hand-written files.
 2. Move the existing code with `git mv` and namespace updates, then fix callers.
-3. Implement the stubs the phase needs, with tests written against behaviour, not against Mathcad's internals.
-4. Gates:
+3. Before implementing or changing any mirrored behavior, use REA MCP to analyze the original counterpart as required
+   by §3c, including managed IL/decompiled pseudocode or native analysis where supported. Record assembly/version,
+   type and member/signature, findings, confidence/limits and observed versus inferred test cases. If REA is
+   unavailable, unreadable or ambiguous, record the member as blocked and ask for access/clarification; do not guess
+   or claim equivalence. Independently implement the behavior without copying proprietary code.
+4. Add behavior/regression tests; compare directly with the original by differential test where feasible. REA
+   analysis alone is not proof, and documentation-only evidence is not sufficient to close a method.
+   If behavior intentionally deviates from the established original contract, create and review its ledger entry in
+   [`deviations.md`](deviations.md) before relying on it. Do not treat unresolved contracts or known bugs as
+   intentional differences; track them as blocked/open work or bugs to fix.
+5. Gates:
    - `dotnet test Quire.slnx` passes.
    - The manifest-shape test passes.
    - The stub count for the phase's assemblies falls as planned.
    - Screenshot check via `Quire.exe --render`.
-   - Every mirrored member on the phase's types is real or blocked with a recorded reason (§3c). Differential
-     tests pass where the harness can reach the member.
-5. A reviewer pass, separate from the author, before each phase is committed.
+   - Every mirrored member on the phase's types has a distinct status/evidence record (§3c): REA-analyzed and
+     behavior-tested, documentation-only (not complete), differential-verified for recorded cases, accepted
+     intentional deviation linked to `deviations.md`, stub, blocked, or Quire-only. No unlogged intentional
+     divergence; accepted divergence must include original-contract evidence, rationale, compatibility impact,
+     tests and explicit decision. Blocked members remain unresolved and cannot be counted as equivalent or fully
+     behavior-complete.
+   - Differential tests pass for recorded cases where direct comparison is feasible; do not describe REA-derived
+     assumptions as differential-verified.
+6. A reviewer pass, separate from the author, before each phase is committed.

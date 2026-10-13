@@ -11,62 +11,68 @@ namespace Quire.Tools.MirrorGen;
 /// </summary>
 public static class Shape
 {
-    public static IEnumerable<string> Lines(TypeModel t)
+    public static IEnumerable<string> Lines(TypeModel t) => Entries(t).Select(e => e.Line);
+
+    /// <summary>
+    /// The shape lines with the member each describes. Member is null for the type line, enum values, delegate
+    /// signatures and explicit interface implementations; those aren't counted as members.
+    /// </summary>
+    public static IEnumerable<(string Line, IHasStatus? Member)> Entries(TypeModel t)
     {
         string mods = (t.Abstract && !t.IsStatic ? " abstract" : "") + (t.Sealed && !t.IsStatic && t.Kind == TypeKind.Class ? " sealed" : "")
             + (t.IsStatic ? " static" : "");
         string bases = t.Kind == TypeKind.Class && t.BaseType is NamedSig b && b.Name != "System.Object" ? b.ToString() : "";
         string ifaces = string.Join(", ", t.Interfaces.Select(i => i.ToString()).Order(StringComparer.Ordinal));
-        yield return $"T {t.FullName} {t.Kind.ToString().ToLowerInvariant()} {Text(t.Access)}{mods} : {bases} | {ifaces}";
+        yield return ($"T {t.FullName} {t.Kind.ToString().ToLowerInvariant()} {Text(t.Access)}{mods} : {bases} | {ifaces}", null);
         string prefix = "  " + t.FullName + " ";
 
         if (t.Kind == TypeKind.Enum)
         {
-            foreach (var f in t.Fields.Where(f => f.Const)) yield return $"{prefix}V {f.Name} = {f.Value}";
+            foreach (var f in t.Fields.Where(f => f.Const)) yield return ($"{prefix}V {f.Name} = {f.Value}", null);
             yield break;
         }
         if (t.Kind == TypeKind.Delegate)
         {
-            if (t.Methods.FirstOrDefault(m => m.Name == "Invoke") is { } invoke) yield return prefix + "D " + Signature(invoke);
+            if (t.Methods.FirstOrDefault(m => m.Name == "Invoke") is { } invoke) yield return (prefix + "D " + Signature(invoke), null);
             yield break;
         }
 
         foreach (var f in t.Fields.Where(f => Visible(f.Access, f.Name)))
-            yield return $"{prefix}F {Text(f.Access)}{(f.Static && !f.Const ? " static" : "")}{(f.Const ? " const" : "")}{(f.ReadOnly ? " readonly" : "")} {f.Type} {f.Name}";
+            yield return ($"{prefix}F {Text(f.Access)}{(f.Static && !f.Const ? " static" : "")}{(f.Const ? " const" : "")}{(f.ReadOnly ? " readonly" : "")} {f.Type} {f.Name}", f);
         foreach (var p in t.Properties)
         {
             var acc = new[] { p.Getter, p.Setter }.OfType<MethodModel>().ToList();
             if (p.Name.Contains('.'))
             {
                 foreach (var i in acc.SelectMany(a => a.Implements).Select(i => $"{i.Interface}::{i.Method}").Distinct())
-                    yield return $"{prefix}X {i}";
+                    yield return ($"{prefix}X {i}", null);
                 continue;
             }
             if (!acc.Any(a => Visible(a.Access, a.Name))) continue;
             string index = p.Index.IsEmpty ? "" : "[" + string.Join(",", p.Index.Select(i => i.Type)) + "]";
             string get = p.Getter is { } g && Visible(g.Access, g.Name) ? $" get:{Text(g.Access)}" : "";
             string set = p.Setter is { } s && Visible(s.Access, s.Name) ? $" set:{Text(s.Access)}" : "";
-            yield return $"{prefix}P {p.Name}{index} : {p.Type}{(acc[0].Static ? " static" : "")}{Virtuality(acc[0])}{get}{set}";
+            yield return ($"{prefix}P {p.Name}{index} : {p.Type}{(acc[0].Static ? " static" : "")}{Virtuality(acc[0])}{get}{set}", p);
         }
         foreach (var e in t.Events)
         {
             if (e.Name.Contains('.'))
             {
-                foreach (var i in e.Adder?.Implements ?? []) yield return $"{prefix}X {i.Interface}::{i.Method}";
+                foreach (var i in e.Adder?.Implements ?? []) yield return ($"{prefix}X {i.Interface}::{i.Method}", null);
                 continue;
             }
             if (e.Adder is { } a && Visible(a.Access, a.Name))
-                yield return $"{prefix}E {Text(a.Access)}{(a.Static ? " static" : "")}{Virtuality(a)} {e.Type} {e.Name}";
+                yield return ($"{prefix}E {Text(a.Access)}{(a.Static ? " static" : "")}{Virtuality(a)} {e.Type} {e.Name}", e);
         }
         foreach (var m in t.Methods)
         {
             if (m.Name == ".cctor" || m.Name.StartsWith('<')) continue;
             if (m.Access == Access.Private && m.Name.Contains('.'))
             {
-                foreach (var i in m.Implements) yield return $"{prefix}X {i.Interface}::{i.Method}";
+                foreach (var i in m.Implements) yield return ($"{prefix}X {i.Interface}::{i.Method}", null);
                 continue;
             }
-            yield return $"{prefix}M {Text(m.Access)}{(m.Static ? " static" : "")}{Virtuality(m)} {Signature(m)}";
+            yield return ($"{prefix}M {Text(m.Access)}{(m.Static ? " static" : "")}{Virtuality(m)} {Signature(m)}", m);
         }
     }
 
@@ -94,23 +100,34 @@ public static class Shape
         return lines;
     }
 
-    // ------------------------------------------------------------------ manifest and coverage
+    // ------------------------------------------------------------------ manifest, coverage and status
 
-    /// <summary>Writes docs/mirror/manifest/&lt;Project&gt;.txt and docs/mirror/coverage.md from the current build.</summary>
+    private static readonly MemberStatus[] Statuses =
+        [MemberStatus.Stub, MemberStatus.Blocked, MemberStatus.Verified, MemberStatus.Documented, MemberStatus.Unclassified, MemberStatus.QuireOnly];
+
+    private static string Text(MemberStatus s) => s switch
+    {
+        MemberStatus.QuireOnly => "quire-only",
+        _ => s.ToString().ToLowerInvariant(),
+    };
+
     /// <summary>
-    /// Returns false (and writes nothing for that project) when lines of an existing manifest would disappear, unless
-    /// <paramref name="acceptRemovals"/>: a regeneration must not silently drop mirrored shape.
+    /// Writes docs/mirror/manifest/&lt;Project&gt;.txt, docs/mirror/status/&lt;Project&gt;.txt and docs/mirror/coverage.md
+    /// from the current build. Returns false (and writes nothing for that project) when lines of an existing manifest
+    /// would disappear, unless <paramref name="acceptRemovals"/>: a regeneration must not silently drop mirrored shape.
     /// </summary>
     public static bool WriteManifestAndCoverage(string repo, bool acceptRemovals)
     {
         bool ok = true;
         string manifestDir = Path.Combine(repo, "docs", "mirror", "manifest");
+        string statusDir = Path.Combine(repo, "docs", "mirror", "status");
         Directory.CreateDirectory(manifestDir);
-        var rows = new List<(string Project, int Types, int Members, int Stubs)>();
+        Directory.CreateDirectory(statusDir);
+        var rows = new List<(string Project, int Types, Dictionary<MemberStatus, int> Counts)>();
         foreach (var (project, dll) in BuiltProjects(repo))
         {
             var model = MetadataLoader.Load(dll)!;
-            var mirrored = model.Types.Where(t => t.MirrorOf != null).ToList();
+            var mirrored = model.Types.Where(t => t.MirrorOf != null).OrderBy(t => t.FullName, StringComparer.Ordinal).ToList();
             if (mirrored.Count == 0) continue;
             var lines = mirrored.SelectMany(Lines).ToList();
             lines.Sort(StringComparer.Ordinal);
@@ -130,32 +147,59 @@ public static class Shape
             File.WriteAllText(file,
                 $"# Mirrored shape of {project}. Generated by MirrorGen manifest; checked by Quire.Mirror.Tests.\n" + string.Join("\n", lines) + "\n",
                 new UTF8Encoding(false));
-            int members = 0, stubs = 0;
+
+            var counts = Statuses.ToDictionary(s => s, _ => 0);
+            var status = new StringBuilder();
+            status.Append($"# Per-member status of {project} (PLAN.md §3c). Generated by MirrorGen manifest.\n");
+            status.Append("# Each type with a non-stub member: its counts, then every member that isn't a stub, with the reason,\n");
+            status.Append("# test class or source its attribute gives. Stubs are listed in ../manifest.\n");
             foreach (var t in mirrored)
             {
-                foreach (var m in t.Methods.Where(m => !m.Name.Contains('.') && !m.Name.StartsWith('<') || m.Name == ".ctor")) { members++; if (m.Stub) stubs++; }
-                foreach (var p in t.Properties.Where(p => !p.Name.Contains('.'))) { members++; if (p.Stub) stubs++; }
-                foreach (var e in t.Events.Where(e => !e.Name.Contains('.'))) { members++; if (e.Stub) stubs++; }
-                foreach (var f in t.Fields.Where(f => !f.Name.StartsWith('<') && t.Kind != TypeKind.Enum)) { members++; if (f.Stub) stubs++; }
+                var members = Entries(t).Where(e => e.Member != null).ToList();
+                foreach (var (_, m) in members) counts[m!.Status]++;
+                if (members.All(e => e.Member!.Stub)) continue;
+                status.Append($"\nT {t.FullName}  {members.Count} members: "
+                    + string.Join(", ", Statuses.Select(s => (s, n: members.Count(e => e.Member!.Status == s))).Where(x => x.n > 0).Select(x => $"{Text(x.s)} {x.n}"))
+                    + "\n");
+                foreach (var (line, m) in members.Where(e => !e.Member!.Stub).OrderBy(e => e.Member!.Status).ThenBy(e => e.Line, StringComparer.Ordinal))
+                    status.Append($"  {Text(m!.Status),-12} {line.TrimStart()[(t.FullName.Length + 1)..]}{(m.Evidence is { } ev ? "  [" + ev + "]" : "")}\n");
             }
-            rows.Add((project, mirrored.Count, members, stubs));
+            File.WriteAllText(Path.Combine(statusDir, project + ".txt"), status.ToString(), new UTF8Encoding(false));
+            rows.Add((project, mirrored.Count, counts));
         }
 
         var sb = new StringBuilder();
         sb.AppendLine("# Mirror coverage");
         sb.AppendLine();
-        sb.AppendLine("Generated by `MirrorGen manifest` from the current build. A member counts as a stub while it carries");
-        sb.AppendLine("`[MirrorStub]`; implementing it removes the attribute. Explicit interface implementations and enum values");
-        sb.AppendLine("are not counted.");
+        sb.AppendLine("Generated by `MirrorGen manifest` from the current build. Each member of a mirrored type has one status");
+        sb.AppendLine("(PLAN.md §3c), from its attributes:");
         sb.AppendLine();
-        sb.AppendLine("| Project | Mirrored types | Members | Stubs | Implemented |");
-        sb.AppendLine("|---|---:|---:|---:|---:|");
-        foreach (var r in rows.OrderBy(r => r.Project, StringComparer.Ordinal))
-            sb.AppendLine($"| {r.Project} | {r.Types:N0} | {r.Members:N0} | {r.Stubs:N0} | {Percent(r.Members - r.Stubs, r.Members)} |");
-        int tt = rows.Sum(r => r.Types), tm = rows.Sum(r => r.Members), ts = rows.Sum(r => r.Stubs);
-        sb.AppendLine($"| **Total** | **{tt:N0}** | **{tm:N0}** | **{ts:N0}** | **{Percent(tm - ts, tm)}** |");
+        sb.AppendLine("- **Stub** `[MirrorStub]`: generated, throws.");
+        sb.AppendLine("- **Blocked** `[MirrorBlocked(reason)]`: behaviour can't be established yet; throws, reason recorded.");
+        sb.AppendLine("- **Verified** `[MirrorVerified(test)]`: confirmed by a differential test against the installed Mathcad.");
+        sb.AppendLine("- **Documented** `[MirrorDocumented(source)]`: implemented from documentation or declared metadata.");
+        sb.AppendLine("- **Unclassified** (no attribute): hand-written before §3c; still to be verified, documented, blocked or marked.");
+        sb.AppendLine("- **Quire-only** `[QuireOnly]`: no Mathcad counterpart.");
+        sb.AppendLine();
+        sb.AppendLine("*Settled* is Blocked + Verified + Documented + Quire-only: a phase is done when all its members are settled.");
+        sb.AppendLine("Explicit interface implementations, enum values and delegate signatures are not counted. Per-member detail is");
+        sb.AppendLine("in [`status/`](status/).");
+        sb.AppendLine();
+        sb.AppendLine("| Project | Types | Members | Stub | Blocked | Verified | Documented | Unclassified | Quire-only | Settled |");
+        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+        void Row(string name, int types, Dictionary<MemberStatus, int> c, string b)
+        {
+            int members = c.Values.Sum();
+            int settled = c[MemberStatus.Blocked] + c[MemberStatus.Verified] + c[MemberStatus.Documented] + c[MemberStatus.QuireOnly];
+            sb.AppendLine($"| {b}{name}{b} | {b}{types:N0}{b} | {b}{members:N0}{b} | "
+                + string.Join(" | ", Statuses.Select(s => $"{b}{c[s]:N0}{b}")) + $" | {b}{Percent(settled, members)}{b} |");
+        }
+        foreach (var r in rows.OrderBy(r => r.Project, StringComparer.Ordinal)) Row(r.Project, r.Types, r.Counts, "");
+        var total = Statuses.ToDictionary(s => s, s => rows.Sum(r => r.Counts[s]));
+        Row("Total", rows.Sum(r => r.Types), total, "**");
         File.WriteAllText(Path.Combine(repo, "docs", "mirror", "coverage.md"), sb.ToString(), new UTF8Encoding(false));
-        Console.WriteLine($"manifest: {rows.Count} projects, {tt} mirrored types, {tm} members, {ts} stubs");
+        Console.WriteLine($"manifest: {rows.Count} projects, {rows.Sum(r => r.Types)} mirrored types, {total.Values.Sum()} members, "
+            + string.Join(", ", Statuses.Select(s => $"{total[s]} {Text(s)}")));
         return ok;
     }
 

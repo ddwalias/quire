@@ -169,7 +169,7 @@ public sealed class MetadataLoader
             var setter = a.Setter.IsNil ? null : methods[a.Setter];
             var index = (getter?.Params ?? setter?.Params.RemoveAt(setter.Params.Length - 1) ?? []);
             type.Properties.Add(new PropertyModel(_md.GetString(p.Name), sig.ReturnType, getter, setter, index)
-                { Stub = AttributeNames(p.GetCustomAttributes()).Contains(StubAttribute) });
+                { Status = Status(p.GetCustomAttributes(), out var pe), Evidence = pe });
         }
         foreach (var eh in td.GetEvents())
         {
@@ -178,7 +178,7 @@ public sealed class MetadataLoader
             accessors.Add(a.Adder); accessors.Add(a.Remover);
             type.Events.Add(new EventModel(_md.GetString(e.Name), DecodeEntity(e.Type)!,
                 a.Adder.IsNil ? null : methods[a.Adder], a.Remover.IsNil ? null : methods[a.Remover])
-                { Stub = AttributeNames(e.GetCustomAttributes()).Contains(StubAttribute) });
+                { Status = Status(e.GetCustomAttributes(), out var ee), Evidence = ee });
         }
         // Obfuscated assemblies can lose property and event rows while keeping their special-name accessors.
         // Rebuild them, so the accessors are declared as the properties and events they were written as.
@@ -217,7 +217,7 @@ public sealed class MetadataLoader
             object? value = (fa & FieldAttributes.Literal) != 0 && !f.GetDefaultValue().IsNil ? ReadConstant(f.GetDefaultValue()) : null;
             type.Fields.Add(new FieldModel(name, f.DecodeSignature(_sigs, null), FieldAccess(fa),
                 (fa & FieldAttributes.Static) != 0, (fa & FieldAttributes.InitOnly) != 0, (fa & FieldAttributes.Literal) != 0, value)
-                { Stub = AttributeNames(f.GetCustomAttributes()).Contains(StubAttribute) });
+                { Status = Status(f.GetCustomAttributes(), out var fe), Evidence = fe });
         }
         return type;
     }
@@ -296,10 +296,32 @@ public sealed class MetadataLoader
             impls.TryGetValue(mh, out var list) ? [.. list] : [],
             (a & MethodAttributes.PinvokeImpl) != 0 || (m.ImplAttributes & MethodImplAttributes.InternalCall) != 0,
             methodAttrs.Contains("System.Runtime.CompilerServices.ExtensionAttribute"),
-            initOnly) { Stub = methodAttrs.Contains(StubAttribute) };
+            initOnly) { Status = Status(m.GetCustomAttributes(), out var me), Evidence = me };
     }
 
-    private const string StubAttribute = "Quire.Mirror.MirrorStubAttribute";
+    /// <summary>The member's §3c status from its Quire.Mirror attributes, with the attribute's text argument.</summary>
+    private MemberStatus Status(CustomAttributeHandleCollection handles, out string? evidence)
+    {
+        evidence = null;
+        foreach (var h in handles)
+        {
+            var ca = _md.GetCustomAttribute(h);
+            var status = AttributeName(ca) switch
+            {
+                "Quire.Mirror.MirrorStubAttribute" => MemberStatus.Stub,
+                "Quire.Mirror.MirrorBlockedAttribute" => MemberStatus.Blocked,
+                "Quire.Mirror.MirrorVerifiedAttribute" => MemberStatus.Verified,
+                "Quire.Mirror.MirrorDocumentedAttribute" => MemberStatus.Documented,
+                "Quire.Mirror.QuireOnlyAttribute" => MemberStatus.QuireOnly,
+                _ => MemberStatus.Unclassified,
+            };
+            if (status == MemberStatus.Unclassified) continue;
+            if (status is not (MemberStatus.Stub or MemberStatus.QuireOnly))
+                evidence = ca.DecodeValue(_sigs).FixedArguments[0].Value as string;
+            return status;
+        }
+        return MemberStatus.Unclassified;
+    }
 
     private ImmutableArray<GenericParam> GenericParams(GenericParameterHandleCollection handles)
     {
