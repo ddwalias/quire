@@ -527,20 +527,6 @@
   Quire.Engine.MCFront12 M public virtual raise_OnUpToDate`0(System.Boolean) -> System.Void
   Quire.Engine.MCFront12 P IsBusy : System.Boolean virtual get:public
   Quire.Engine.MCFront12 P IsUpToDate : System.Boolean virtual get:public
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::AddRegionAfter
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::AddRegionBefore
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::CalculateNow
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::GetResult
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::GetValueBefore
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::MoveAfter
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::MoveBefore
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::RemoveRegion
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::UpdateRegion
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::add_BusyChanged
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::add_NodeUpdated
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::get_AutoCalc
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::get_Handles
-  Quire.Engine.MCFront12 X Quire.Engine.IEngine::set_AutoCalc
   Quire.Engine.MergeState M public .ctor`0() -> System.Void
   Quire.Engine.MergeState M public override Invoke`0(System.Object[]) -> System.Object
   Quire.Engine.MplCompile F private Quire.Hex.Environment* m_modenv

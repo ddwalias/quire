@@ -104,6 +104,20 @@ public class CalculationControllerTests
     }
 
     [Fact]
+    public async Task An_unchanged_edit_does_not_stay_pending()
+    {
+        var (ctx, ctl) = await Bound();
+        var e = ctx.Add("(eval 3)");
+        await ctl.WhenIdle();
+
+        e.Rl = "(eval 3)";
+        Assert.Equal(SynchronizationStatus.Pending, e.SynchronizationStatus);
+        await ctl.WhenIdle();
+        Assert.Equal(SynchronizationStatus.Synchronized, e.SynchronizationStatus);
+        Assert.Equal(3, e.Value);
+    }
+
+    [Fact]
     public async Task Removing_a_definition_reports_undefined()
     {
         var (ctx, ctl) = await Bound();

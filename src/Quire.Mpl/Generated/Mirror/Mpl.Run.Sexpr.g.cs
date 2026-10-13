@@ -12,12 +12,6 @@ namespace Quire.Mpl.Run;
 public abstract partial class Sexpr : global::Quire.Mpl.Run.Tag
 {
     [global::Quire.Mirror.MirrorStub]
-    public const int NulTag = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int ConsTag = 1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int TokTag = 2;
-    [global::Quire.Mirror.MirrorStub]
     public const int QtTag = 3;
     [global::Quire.Mirror.MirrorStub]
     public const int BqTag = 4;
@@ -30,13 +24,7 @@ public abstract partial class Sexpr : global::Quire.Mpl.Run.Tag
     [global::Quire.Mirror.MirrorStub]
     public const int SListTag = 8;
     [global::Quire.Mirror.MirrorStub]
-    public virtual uint handle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Sym Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.Sym sym { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string str { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Sym AsSym { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -47,12 +35,6 @@ public abstract partial class Sexpr : global::Quire.Mpl.Run.Tag
     public virtual global::Quire.Mpl.Run.Sexpr quotation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Sexpr quote { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.SCons scons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Sexpr(int tag) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string FormatTail() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual string FormatAppend() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

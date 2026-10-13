@@ -5,7 +5,7 @@ using Quire.Engine;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Parsing;
 using Quire.EquationEditor.Tree.Transform;
-using Quire.Values;
+using Quire.Mpl.Internal;
 using Quire.Controls.Core;
 
 namespace Quire.EquationEditor.Tests;
@@ -107,11 +107,11 @@ public class TransformTests
     [InlineData(new[] { "P := 1 atm", "P =" }, "1.013·10^5 Pa")]
     public void End_to_end_display(string[] lines, string expected)
     {
-        var engine = EngineFactory.CreateEngine();
+        using var engine = new Factory().NewFactory().NewEngine();
         int h = 0;
         foreach (var line in lines)
-            h = engine.AddRegionAfter(h, MathNodeToRlTransform.Transform(LinearParser.ParseStatement(line)));
-        var result = ValueToIResultNodeTransform.Transform(engine.GetResult(h)!, UnitSystem.SI);
+            h = engine.AddAfter(h, MathNodeToRlTransform.Transform(LinearParser.ParseStatement(line)), 0, 0);
+        var result = ValueToIResultNodeTransform.Transform(engine.GetValueSync(h, 0), BuiltinUnits.SI);
         Assert.Null(result.Error);
         var tree = ResultFormatter.Instance.Format(result.Value, ResultFormatOptions.Default)!;
         Assert.Equal(expected, MathNodeToLinearTransform.Write(tree).Replace("*10^", "·10^"));

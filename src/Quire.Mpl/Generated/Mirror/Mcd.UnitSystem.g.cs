@@ -12,18 +12,6 @@ namespace Quire.Mcd;
 public partial class UnitSystem : global::System.MarshalByRefObject
 {
     [global::Quire.Mirror.MirrorStub]
-    private string m_name;
-    [global::Quire.Mirror.MirrorStub]
-    private uint m_code;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_ro_number;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_guid;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_rank;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.Unit[] m_base;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Mcd.Type[] m_dims;
     [global::Quire.Mirror.MirrorStub]
     private double[,] m_ltog;
@@ -32,47 +20,15 @@ public partial class UnitSystem : global::System.MarshalByRefObject
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Hashtable m_defs;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.Unit[] m_basis_orig;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.Unit[] m_defaults_orig;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Hashtable m_unit_syms;
     [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint Code { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Guid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Rank { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Type[] Dimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Unit[] Basis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Unit[] Defaults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int RO_number { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public UnitSystem(string name, uint code, string guid, global::Quire.Mcd.Unit[] basis, global::Quire.Mcd.Unit[] defaults) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.UnitSystem Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units Simplify(string signature) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units Simplify(global::Quire.Mcd.Type.Product product) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units Simplify(int[] global) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Units Normalize(string signature) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Units Normalize(global::Quire.Mcd.Type.Product product) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Units Normalize(int[] global) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int[] GetCoordinates(global::Quire.Mcd.Type.Product product) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Units GetUnits(double[] local) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

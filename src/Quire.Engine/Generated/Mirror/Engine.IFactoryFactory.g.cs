@@ -13,6 +13,4 @@ public partial interface IFactoryFactory
 {
     [global::Quire.Mirror.MirrorStub]
     void AppendPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Engine.IFactory NewFactory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,23 +12,15 @@ namespace Quire.Mpl.Run;
 public partial class int_constant : global::Quire.Mpl.Run.Atom
 {
     [global::Quire.Mirror.MirrorStub]
-    public int Field1;
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Mpl.Run.Tok token;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok zero;
     [global::Quire.Mirror.MirrorStub]
-    public override int IntCon { get => base.IntCon; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote_atom { get => base.quote_atom; }
     [global::Quire.Mirror.MirrorStub]
-    public int_constant(string name) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public int_constant(int num) : base(default(int)) { }
+    public int_constant(string name) : this(default(int)) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(int num, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(string nm, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

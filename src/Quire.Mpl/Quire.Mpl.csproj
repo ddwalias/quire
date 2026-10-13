@@ -2,5 +2,15 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- Quire's built-in unit table (Quire.Mpl.Internal) has no Mathcad counterpart in metadata. -->
+    <InternalsVisibleTo Include="Quire.Engine" />
+    <InternalsVisibleTo Include="Quire.Calculation" />
+    <InternalsVisibleTo Include="Quire.EquationEditor" />
+    <InternalsVisibleTo Include="Quire" />
+    <InternalsVisibleTo Include="Quire.Engine.Tests" />
+    <InternalsVisibleTo Include="Quire.EquationEditor.Tests" />
+    <InternalsVisibleTo Include="Quire.Calculation.Tests" />
+  </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

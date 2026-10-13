@@ -11,12 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.num_val, mplrun")]
 public partial struct num_val
 {
-    [global::Quire.Mirror.MirrorStub]
-    public double rp;
-    [global::Quire.Mirror.MirrorStub]
-    public double ip;
-    [global::Quire.Mirror.MirrorStub]
-    public num_val(double r) { }
-    [global::Quire.Mirror.MirrorStub]
-    public num_val(double r, double i) { }
 }

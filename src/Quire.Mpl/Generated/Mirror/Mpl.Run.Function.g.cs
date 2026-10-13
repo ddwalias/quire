@@ -12,45 +12,19 @@ namespace Quire.Mpl.Run;
 public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
 {
     [global::Quire.Mirror.MirrorStub]
-    protected int m_purity;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_n;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool m_no_vectorize;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_minargs;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool m_varargs;
-    [global::Quire.Mirror.MirrorStub]
-    protected string m_name;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Mpl.Run.Function m_inverse_function;
     [global::Quire.Mirror.MirrorStub]
     private static object OptArg;
     [global::Quire.Mirror.MirrorStub]
     private static char[] label_delimiter;
     [global::Quire.Mirror.MirrorStub]
-    public int Purity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int MinArgs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Varargs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function InverseFunction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Function IsFunction { get => base.IsFunction; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public static string format_vector(object[] v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string canonical_name(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected Function(int function_purity, int n) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Function() { }
+    private Function() : this(default(int), default(int)) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function IgnoreVectorization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -252,8 +226,6 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     [global::Quire.Mirror.MirrorStub]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public abstract void invVec<R>(out R r, object[] args);
-    [global::Quire.Mirror.MirrorStub]
     public virtual void inv<R>(out R r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void inv<R, A>(out R r, A aa) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -301,8 +273,6 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     public R Call_vec<R>(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object Apply(object[] args) => base.Apply(args);
-    [global::Quire.Mirror.MirrorStub]
-    public object InvokeVec(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function CurryMatVal() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -11,20 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.Unit, mplrun")]
 public partial class Unit
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly string Name;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly string Symbol;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly string Quantity;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly double Magnitude;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Mcd.Type Type;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Type.Product Dimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Unit(string name, string symbol, string quantity, double magnitude, string signature) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

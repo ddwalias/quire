@@ -1,42 +1,42 @@
-using Quire.Engine;
-using Quire.Values;
+using Quire.Engine.Internal;
+using Quire.Mcd;
 
 namespace Quire.Engine.Tests;
 
 public abstract class EngineTestBase
 {
-    protected readonly IEngine Engine = EngineFactory.CreateEngine();
+    internal readonly WorksheetEngine Engine = new();
 
     /// <summary>Appends regions (Rl strings) and returns their results in order.</summary>
-    protected IReadOnlyList<NodeResult> Run(params string[] regions)
+    internal IReadOnlyList<NodeResult> Run(params string[] regions)
     {
         int last = Engine.Handles.LastOrDefault();
         var handles = new List<int>();
         foreach (var rl in regions)
         {
-            last = Engine.AddRegionAfter(last, rl);
+            last = Engine.AddAfter(last, rl, 0, 0);
             handles.Add(last);
         }
-        Engine.CalculateNow();
+        Engine.CalculateNow(0);
         return handles.Select(h => Engine.GetResult(h)!).ToList();
     }
 
-    protected NodeResult Last(params string[] regions) => Run(regions)[^1];
+    internal NodeResult Last(params string[] regions) => Run(regions)[^1];
 
-    protected static NumVal Num(NodeResult r)
+    internal static NumVal Num(NodeResult r)
     {
         Assert.Null(r.Error);
         return Assert.IsType<NumVal>(r.Value);
     }
 
-    protected static void AssertNum(NodeResult r, double expected, Dim? dim = null, double relTol = 1e-9)
+    internal static void AssertNum(NodeResult r, double expected, Dim? dim = null, double relTol = 1e-9)
     {
         var n = Num(r);
-        Assert.True(Math.Abs(n.V - expected) <= relTol * Math.Max(1, Math.Abs(expected)), $"expected {expected}, got {n.V}");
-        Assert.Equal(dim ?? Dim.None, n.D);
+        Assert.True(Math.Abs(n.Real - expected) <= relTol * Math.Max(1, Math.Abs(expected)), $"expected {expected}, got {n.Real}");
+        Assert.Same(dim ?? Dim.identity, n.m_dim);
     }
 
-    protected static void AssertError(NodeResult r, string fragment)
+    internal static void AssertError(NodeResult r, string fragment)
     {
         Assert.NotNull(r.Error);
         Assert.Contains(fragment, r.Error!.Message, StringComparison.OrdinalIgnoreCase);

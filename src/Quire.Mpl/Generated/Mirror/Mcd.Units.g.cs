@@ -11,25 +11,9 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.Units, mplrun")]
 public partial class Units
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.Mcd.Units.Power[] Powers;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly double Magnitude;
-    [global::Quire.Mirror.MirrorStub]
-    public double magnitude { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Units(global::Quire.Mcd.Units.Power[] powers) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Units(global::Quire.Mcd.Unit unit, global::Quire.Mcd.Rational exponent) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 
     [global::Quire.Mirror.MirrorOf("Mcd.Units+Power, mplrun")]
     public partial struct Power
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Unit Base;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Rational Exponent;
     }
 }

@@ -1,7 +1,7 @@
-namespace Quire.Engine;
+namespace Quire.Engine.Internal;
 
 /// <summary>A calculation error raised while evaluating a node. <see cref="Symbol"/> names the offending identifier, if any.</summary>
-public sealed class CalcException(string message, string? symbol = null) : Exception(message)
+internal sealed class CalcException(string message, string? symbol = null) : Exception(message)
 {
     public string? Symbol { get; } = symbol;
 

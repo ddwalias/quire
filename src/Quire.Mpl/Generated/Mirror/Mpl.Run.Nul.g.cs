@@ -12,17 +12,9 @@ namespace Quire.Mpl.Run;
 public partial class Nul : global::Quire.Mpl.Run.Sexpr
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Nul singleton;
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok token;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.SCons scons { get => base.scons; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }
-    [global::Quire.Mirror.MirrorStub]
-    public Nul() : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public override string FormatTail() => base.FormatTail();
 }

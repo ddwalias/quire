@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Tag, mplrun")]
 public partial class Tag : global::Quire.Mcd.DimVal
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int m_tag;
-    [global::Quire.Mirror.MirrorStub]
-    public Tag(int tag) { }
 }

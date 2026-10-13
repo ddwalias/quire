@@ -1,5 +1,6 @@
-using Quire.Engine;
-using Quire.Values;
+using Quire.Engine.Internal;
+using Quire.Mcd;
+using Quire.Mpl.Internal;
 
 namespace Quire.Engine.Tests;
 
@@ -61,7 +62,7 @@ public class EvaluationTests : EngineTestBase
 
     [Fact]
     public void Strings_concatenate() =>
-        Assert.Equal("ab", Assert.IsType<StrVal>(Last("(eval (op_apply concat \"a\" \"b\"))").Value).S);
+        Assert.Equal("ab", Assert.IsType<StrVal>(Last("(eval (op_apply concat \"a\" \"b\"))").Value).Field1);
 
     [Fact]
     public void Undefined_symbol_names_the_symbol()
@@ -85,21 +86,21 @@ public class ReviewRegressionTests : EngineTestBase
     [Fact]
     public void Min_and_sec_are_time_units_in_value_position()
     {
-        AssertNum(Last("(eval (op_mult 5 min))"), 300, Dim.Time);
-        AssertNum(Last("(eval (op_mult 2 sec))"), 2, Dim.Time);
+        AssertNum(Last("(eval (op_mult 5 min))"), 300, Dim.Parse("time"));
+        AssertNum(Last("(eval (op_mult 2 sec))"), 2, Dim.Parse("time"));
         AssertNum(Last("(eval (op_apply min 3 1 2))"), 1);
     }
 
     [Fact]
     public void Affine_temperature_applies_to_unitless_expressions()
     {
-        AssertNum(Last("(define t 20)", "(eval (op_mult t °C))"), 293.15, Dim.Temperature);
-        AssertNum(Last("(eval (op_mult (op_add 20 5) °C))"), 298.15, Dim.Temperature);
+        AssertNum(Last("(define t 20)", "(eval (op_mult t °C))"), 293.15, Dim.Parse("temperature"));
+        AssertNum(Last("(eval (op_mult (op_add 20 5) °C))"), 298.15, Dim.Parse("temperature"));
     }
 
     [Fact]
     public void Affine_unit_after_dimensioned_operand_is_a_difference() =>
-        AssertNum(Last("(eval (op_div J (op_mult kg °C)))"), 1, new Dim(2, 0, -2, 0, -1));
+        AssertNum(Last("(eval (op_div J (op_mult kg °C)))"), 1, Dim.Parse("length^2/time^2/temperature"));
 
     [Fact]
     public void Derivative_iterates_a_range_variable()
@@ -107,13 +108,13 @@ public class ReviewRegressionTests : EngineTestBase
         var r = Last("(define x (op_range2 0 3))", "(eval (op_deriv_1 (op_power x 2) x))");
         Assert.True(r.IsRangeTable);
         var m = Assert.IsType<MatVal>(r.Value);
-        Assert.Equal([0.0, 2, 4, 6], m.Elements.Select(e => Math.Round(e.V, 6)));
+        Assert.Equal([0.0, 2, 4, 6], m.Elements().Select(e => Math.Round(e.Real, 6)));
     }
 
     [Fact]
     public void Indexed_definition_pads_with_matching_units()
     {
-        AssertNum(Last("(define (op_index v 2) (op_mult 5 m))", "(eval (op_apply sum v))"), 5, Dim.Length);
+        AssertNum(Last("(define (op_index v 2) (op_mult 5 m))", "(eval (op_apply sum v))"), 5, Dim.Parse("length"));
     }
 
     [Fact]
@@ -123,12 +124,12 @@ public class ReviewRegressionTests : EngineTestBase
     [Fact]
     public void Moving_a_node_relative_to_itself_or_an_unknown_node_keeps_it()
     {
-        int a = Engine.AddRegionAfter(0, "(define a 1)");
-        int b = Engine.AddRegionAfter(a, "(eval a)");
-        Engine.MoveAfter(b, b);
-        Assert.Throws<ArgumentException>(() => Engine.MoveAfter(b, 999));
+        int a = Engine.AddAfter(0, "(define a 1)", 0, 0);
+        int b = Engine.AddAfter(a, "(eval a)", 0, 0);
+        Engine.MoveAfter(b, b, 0);
+        Assert.Throws<ArgumentException>(() => Engine.MoveAfter(b, 999, 0));
         Assert.Equal([a, b], Engine.Handles);
-        Assert.Equal(1, ((NumVal)Engine.GetResult(b)!.Value!).V);
+        Assert.Equal(1, ((NumVal)Engine.GetResult(b)!.Value!).Real);
     }
 }
 

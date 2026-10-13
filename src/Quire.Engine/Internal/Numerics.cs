@@ -1,7 +1,7 @@
-namespace Quire.Engine;
+namespace Quire.Engine.Internal;
 
 /// <summary>Plain-double numerical routines; callers handle units.</summary>
-public static class Numerics
+internal static class Numerics
 {
     /// <summary>Solves A·X = B with partial pivoting. Throws <see cref="CalcException"/> when singular.</summary>
     public static double[,] LuSolve(double[,] a, double[,] b)

@@ -1,7 +1,7 @@
 # Summary (count of notes by kind):
 #      503  renamed field: name clash (obfuscated names)
 #      251  accessor without property metadata declared as an explicit property
-#       85  added explicit interface stubs
+#       84  added explicit interface stubs
 #       50  dropped method: unlisted
 #       43  no base member for override
 #       32  dropped method: pending
@@ -25,6 +25,7 @@
 #        2  dropped field: deferred:
 #        2  dropped method: implemented interface deferred:
 #        2  overload covered by a hand-written optional-parameter overload
+#        2  not generated: hand-written Delegate
 #        2  skipped method: name clash
 #        2  method UnLockP declared internal
 #        1  dropped field: no substitute for
@@ -36,7 +37,6 @@
 #        1  field m_type declared internal
 #        1  field m_blank declared internal
 #        1  method NumberFormat declared internal
-#        1  not generated: hand-written Delegate
 #        1  method GetModuleEnv declared internal
 #        1  method SetOption declared internal
 #        1  method GetOption declared internal
@@ -766,6 +766,9 @@
 [Quire.Efi] Quire.Native.EfisolverImpl.ModelEvaluator  (ModelEvaluator, efisolver_)
   no base member for override Dispose; declared none instead
 
+[Quire.Engine] Quire.Engine.BooleanCallback  (Engine.BooleanCallback, iengine)
+  not generated: hand-written Delegate
+
 [Quire.Engine] Quire.Engine.EngMailbox  (Engine.EngMailbox, iengine)
   no base member for override Dispose; declared none instead
 
@@ -819,7 +822,6 @@
 
 [Quire.Engine.Native] Quire.Engine.MCFront12  (Engine.MCFront12, mcfront12)
   no base member for override Dispose; declared none instead
-  added 16 explicit interface stub(s) for members no base provides: Quire.Engine.IEngine.AddRegionAfter, Quire.Engine.IEngine.AddRegionBefore, Quire.Engine.IEngine.UpdateRegion, Quire.Engine.IEngine.RemoveRegion, Quire.Engine.IEngine.MoveAfter, Quire.Engine.IEngine.MoveBefore, Quire.Engine.IEngine.CalculateNow, Quire.Engine.IEngine.GetResult
 
 [Quire.Engine.Native] Quire.Engine.MplCompile  (Engine.MplCompile, mccore12)
   no base member for override Dispose; declared none instead

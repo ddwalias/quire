@@ -12,49 +12,17 @@ namespace Quire.Mpl.Run;
 public partial class SCons : global::Quire.Mpl.Run.Sexpr
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field2;
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok token;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Sym apply;
     [global::Quire.Mirror.MirrorStub]
     public override uint handle { get => base.handle; }
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.SCons scons { get => base.scons; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr head { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.SCons tail { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr car { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr cdr { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sym Key { get => base.Key; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr first { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr second { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr third { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr fourth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr fifth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint Length { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }
     [global::Quire.Mirror.MirrorStub]
-    public SCons(object first, object rest) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SCons(global::Quire.Mpl.Run.Sexpr first, global::Quire.Mpl.Run.Sexpr rest) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string FormatTail() => base.FormatTail();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
+    public SCons(object first, object rest) : this(default(global::Quire.Mpl.Run.Sexpr), default(global::Quire.Mpl.Run.Sexpr)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Cons walk_declaration_lhs(global::Quire.Mpl.Run.MplEnv env) => base.walk_declaration_lhs(env);
     [global::Quire.Mirror.MirrorStub]
@@ -65,14 +33,6 @@ public partial class SCons : global::Quire.Mpl.Run.Sexpr
     public static global::Quire.Mpl.Run.Sexpr walk_expressions(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons exps) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr walk_expression(global::Quire.Mpl.Run.MplEnv env) => base.walk_expression(env);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons list1(global::Quire.Mpl.Run.Sexpr x1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons list2(global::Quire.Mpl.Run.Sexpr x1, global::Quire.Mpl.Run.Sexpr x2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons list3(global::Quire.Mpl.Run.Sexpr x1, global::Quire.Mpl.Run.Sexpr x2, global::Quire.Mpl.Run.Sexpr x3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons list4(global::Quire.Mpl.Run.Sexpr x1, global::Quire.Mpl.Run.Sexpr x2, global::Quire.Mpl.Run.Sexpr x3, global::Quire.Mpl.Run.Sexpr x4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Sexpr as_Sexpr(global::Quire.Mpl.Run.Cons list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -12,13 +12,7 @@ namespace Quire.Mcd;
 public partial struct mat_val
 {
     [global::Quire.Mirror.MirrorStub]
-    public int m_anr;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Flags m_flags;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_rows;
-    [global::Quire.Mirror.MirrorStub]
-    public int m_cols;
     [global::Quire.Mirror.MirrorStub]
     public nint m_rv;
     [global::Quire.Mirror.MirrorStub]

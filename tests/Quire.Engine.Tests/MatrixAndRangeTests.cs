@@ -1,5 +1,6 @@
-using Quire.Engine;
-using Quire.Values;
+using Quire.Engine.Internal;
+using Quire.Mcd;
+using Quire.Mpl.Internal;
 
 namespace Quire.Engine.Tests;
 
@@ -9,19 +10,19 @@ public class MatrixAndRangeTests : EngineTestBase
     public void Matrix_literals_are_row_major()
     {
         var m = Assert.IsType<MatVal>(Last("(eval (matrix 2 2 1 2 3 4))").Value);
-        Assert.Equal(2, m[0, 1].V);
-        Assert.Equal(3, m[1, 0].V);
+        Assert.Equal(2, m.At(0, 1).Real);
+        Assert.Equal(3, m.At(1, 0).Real);
     }
 
     [Fact]
     public void Matrix_product_and_inverse()
     {
         var inv = Assert.IsType<MatVal>(Last("(define M (matrix 2 2 4 7 2 6))", "(eval (op_power M -1))").Value);
-        Assert.Equal(0.6, inv[0, 0].V, 12);
-        Assert.Equal(-0.7, inv[0, 1].V, 12);
+        Assert.Equal(0.6, inv.At(0, 0).Real, 12);
+        Assert.Equal(-0.7, inv.At(0, 1).Real, 12);
         var id = Assert.IsType<MatVal>(Last("(eval (op_mult M (op_power M -1)))").Value);
-        Assert.Equal(1, id[1, 1].V, 12);
-        Assert.Equal(0, id[0, 1].V, 12);
+        Assert.Equal(1, id.At(1, 1).Real, 12);
+        Assert.Equal(0, id.At(0, 1).Real, 12);
     }
 
     [Fact]
@@ -33,8 +34,8 @@ public class MatrixAndRangeTests : EngineTestBase
     {
         AssertNum(Last("(eval (op_abs (matrix 2 2 1 2 3 4)))"), -2);
         var x = Assert.IsType<MatVal>(Last("(eval (op_apply lsolve (matrix 2 2 2 1 1 3) (matrix 2 1 3 5)))").Value);
-        Assert.Equal(0.8, x[0].V, 12);
-        Assert.Equal(1.4, x[1].V, 12);
+        Assert.Equal(0.8, x.At(0).Real, 12);
+        Assert.Equal(1.4, x.At(1).Real, 12);
     }
 
     [Fact]
@@ -54,7 +55,7 @@ public class MatrixAndRangeTests : EngineTestBase
         var r = Last("(define x (op_range2 1 4))", "(eval (op_power x 2))");
         Assert.True(r.IsRangeTable);
         var m = Assert.IsType<MatVal>(r.Value);
-        Assert.Equal([1.0, 4, 9, 16], m.Elements.Select(e => e.V));
+        Assert.Equal([1.0, 4, 9, 16], m.Elements().Select(e => e.Real));
     }
 
     [Fact]
@@ -62,8 +63,8 @@ public class MatrixAndRangeTests : EngineTestBase
     {
         var r = Last("(define t (op_range3 (op_mult 0 s) (op_mult 0.5 s) (op_mult 2 s)))", "(eval t)");
         var m = Assert.IsType<MatVal>(r.Value);
-        Assert.Equal(5, m.Length);
-        Assert.Equal(Dim.Time, m[4].D);
+        Assert.Equal(5, m.Length());
+        Assert.Equal(Dim.Parse("time"), m.At(4).m_dim);
     }
 
     [Fact]
@@ -74,7 +75,7 @@ public class MatrixAndRangeTests : EngineTestBase
     public void Indexed_definition_over_a_range_builds_a_vector()
     {
         var m = Assert.IsType<MatVal>(Last("(define i (op_range2 0 4))", "(define (op_index v i) (op_power i 2))", "(eval v)").Value);
-        Assert.Equal([0.0, 1, 4, 9, 16], m.Elements.Select(e => e.V));
+        Assert.Equal([0.0, 1, 4, 9, 16], m.Elements().Select(e => e.Real));
     }
 
     [Fact]
@@ -85,7 +86,7 @@ public class MatrixAndRangeTests : EngineTestBase
             "(define (op_index M i j) (op_add (op_mult 10 i) j))", "(eval M)").Value);
         Assert.Equal(2, m.Rows);
         Assert.Equal(3, m.Cols);
-        Assert.Equal(12, m[1, 2].V);
+        Assert.Equal(12, m.At(1, 2).Real);
     }
 
     [Fact]

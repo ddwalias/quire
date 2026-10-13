@@ -9,7 +9,7 @@ are not counted.
 | Quire | 358 | 3,566 | 3,474 | 2.6% |
 | Quire.Automation | 63 | 512 | 507 | 1.0% |
 | Quire.Automation.Native | 64 | 505 | 505 | 0.0% |
-| Quire.Calculation | 32 | 288 | 241 | 16.3% |
+| Quire.Calculation | 32 | 289 | 240 | 17.0% |
 | Quire.Calculation.Core | 127 | 871 | 832 | 4.5% |
 | Quire.Controls | 93 | 959 | 935 | 2.5% |
 | Quire.Controls.CollapsibleArea | 18 | 221 | 216 | 2.3% |
@@ -26,14 +26,14 @@ are not counted.
 | Quire.Efi | 831 | 4,885 | 4,749 | 2.8% |
 | Quire.EngNotebook.Automation | 62 | 495 | 490 | 1.0% |
 | Quire.EngNotebookPlus.Automation | 62 | 493 | 488 | 1.0% |
-| Quire.Engine | 33 | 249 | 230 | 7.6% |
+| Quire.Engine | 32 | 233 | 201 | 13.7% |
 | Quire.Engine.Native | 263 | 2,182 | 2,088 | 4.3% |
 | Quire.Engine.Utl | 34 | 459 | 451 | 1.7% |
 | Quire.EquationEditor | 491 | 5,866 | 5,791 | 1.3% |
 | Quire.Mcd | 72 | 2,751 | 2,723 | 1.0% |
 | Quire.Media3D | 67 | 651 | 651 | 0.0% |
-| Quire.Mpl | 186 | 2,287 | 2,131 | 6.8% |
+| Quire.Mpl | 186 | 2,299 | 1,813 | 21.1% |
 | Quire.Mpl.Emit | 48 | 709 | 709 | 0.0% |
 | Quire.Mpl.Modules | 82 | 1,312 | 1,312 | 0.0% |
 | Quire.Utils | 12 | 42 | 42 | 0.0% |
-| **Total** | **5,385** | **57,774** | **56,114** | **2.9%** |
+| **Total** | **5,384** | **57,771** | **55,766** | **3.5%** |

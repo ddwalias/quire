@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Quire.Values;
+using Quire.Mpl.Internal;
 
 namespace Quire;
 
@@ -57,9 +57,9 @@ internal static class Palettes
 
     public static void BuildUnits(Panel host, Action<string> insert)
     {
-        foreach (var group in Units.All.Values.GroupBy(u => u.Quantity).OrderBy(g => g.Key))
+        foreach (var group in BuiltinUnits.All.Values.GroupBy(u => u.Quantity).OrderBy(g => g.Key))
             Section(host, group.Key, group.Where(u => !u.Name.StartsWith('Δ')).Select(u =>
-                (u.Name, " " + (u.Name.Contains('·') ? $"`{u.Name}`" : u.Name), $"{u.Name} = {u.Factor:G6} SI")), insert);
+                (u.Name, " " + (u.Name.Contains('·') ? $"`{u.Name}`" : u.Name), $"{u.Name} = {u.Magnitude:G6} SI")), insert);
         Section(host, "Temperature scales", [("°C", " °C", "Celsius (absolute temperatures)"), ("°F", " °F", "Fahrenheit (absolute temperatures)")], insert);
     }
 

@@ -12,31 +12,13 @@ namespace Quire.Mpl.Run;
 public partial class Tok : global::Quire.Mpl.Run.Sexpr
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Atom Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public uint Field2;
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Mpl.Run.Sym tok;
-    [global::Quire.Mirror.MirrorStub]
-    public override uint handle { get => base.handle; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Atom atom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sym Key { get => base.Key; }
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sym sym { get => base.sym; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string str { get => base.str; }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }
     [global::Quire.Mirror.MirrorStub]
-    public Tok(object a, int tag) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Tok(global::Quire.Mpl.Run.Atom a, int tag) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Tok(global::Quire.Mpl.Run.Atom a, uint tag) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
+    public Tok(object a, int tag) : this(default(global::Quire.Mpl.Run.Atom), default(uint)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr walk_pattern(global::Quire.Mpl.Run.MplEnv env) => base.walk_pattern(env);
     [global::Quire.Mirror.MirrorStub]

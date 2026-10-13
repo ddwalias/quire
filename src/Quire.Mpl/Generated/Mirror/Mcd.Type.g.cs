@@ -12,8 +12,6 @@ namespace Quire.Mcd;
 public abstract partial class Type
 {
     [global::Quire.Mirror.MirrorStub]
-    public abstract string Name { get; }
-    [global::Quire.Mirror.MirrorStub]
     public char Root { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsImplicitArgument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -26,33 +24,15 @@ public abstract partial class Type
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Type.Product GetDimensionTypeProduct() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
     public string Format() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Format(global::System.Text.StringBuilder builder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Format(global::System.Text.StringBuilder builder, global::Quire.Mcd.UnitSystem system) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Type Parse(string signature) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected Type() { }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Named, mplrun")]
     public abstract partial class Named : global::Quire.Mcd.Type, global::System.IComparable
     {
-        [global::Quire.Mirror.MirrorStub]
-        public string m_nam;
-        [global::Quire.Mirror.MirrorStub]
-        public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object o) => base.Equals(o);
-        [global::Quire.Mirror.MirrorStub]
-        public virtual int CompareTo(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected Named() { }
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Constant, mplrun")]
@@ -60,8 +40,6 @@ public abstract partial class Type
     {
         [global::Quire.Mirror.MirrorStub]
         public override bool IsImplicitArgument { get => base.IsImplicitArgument; }
-        [global::Quire.Mirror.MirrorStub]
-        public Constant(string n) { }
         [global::Quire.Mirror.MirrorStub]
         public override void Accept(global::Quire.Mcd.Type.Visitor v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
@@ -98,35 +76,19 @@ public abstract partial class Type
     public partial class Product : global::Quire.Mcd.Type
     {
         [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type.Product.Power[] Powers;
-        [global::Quire.Mirror.MirrorStub]
-        private int m_var;
-        [global::Quire.Mirror.MirrorStub]
-        private int m_con;
-        [global::Quire.Mirror.MirrorStub]
-        public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public bool IsMonomorphic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public bool IsPolymorphic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public bool IsDimensionless { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public global::Quire.Mcd.Type.Product.Power[] Variables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Mcd.Type.Product.Power[] Constants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public Product(global::Quire.Mcd.Type.Product.Power[] p, int v) { }
         [global::Quire.Mirror.MirrorStub]
         public override void Accept(global::Quire.Mcd.Type.Visitor v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Mcd.Type+Product+Power, mplrun")]
         public partial struct Power
         {
-            [global::Quire.Mirror.MirrorStub]
-            public global::Quire.Mcd.Type Base;
-            [global::Quire.Mirror.MirrorStub]
-            public int Exponent;
         }
     }
 

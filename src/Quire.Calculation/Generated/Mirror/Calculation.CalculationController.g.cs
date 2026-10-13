@@ -64,8 +64,6 @@ public partial class CalculationController
     [global::Quire.Mirror.MirrorStub]
     private void HandleEngineBusy(bool isBusy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleEngineNodeCallback(int handle, global::Quire.Engine.NodeStatus status, int clientCookie, int triggerHandle, int triggerCookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string HandleGetEngineVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleStartEvaluating() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,17 +12,9 @@ namespace Quire.Mpl.Run;
 public partial class str_constant : global::Quire.Mpl.Run.Atom
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Field1;
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Mpl.Run.Tok token;
-    [global::Quire.Mirror.MirrorStub]
-    public override string StrCon { get => base.StrCon; }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote_atom { get => base.quote_atom; }
     [global::Quire.Mirror.MirrorStub]
-    public str_constant(string v) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(string v, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

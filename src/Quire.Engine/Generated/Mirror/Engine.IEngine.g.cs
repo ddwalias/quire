@@ -12,35 +12,11 @@ namespace Quire.Engine;
 public partial interface IEngine : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    bool IsBusy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Engine.BooleanCallback OnUpToDate { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Engine.BooleanCallback OnBusy { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    int AddAfter(int h, string expr, int priority, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsUpToDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     int AddAfterAndSet(int h, string expr, int priority, int client_cookie, string valuespec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    int AddBefore(int h, string expr, int priority, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     int AddBeforeAndSet(int h, string expr, int priority, int client_cookie, string valuespec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void MoveAfter(int h1, int h2, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void MoveBefore(int h1, int h2, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Remove(int h, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Update(int h, string expr, int priority, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetPriority(int h, int priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetPriority(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetAutoCalc(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool GetAutoCalc() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void SetSynchronousCallbacks(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -48,25 +24,17 @@ public partial interface IEngine : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     int GetMessageQueueSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IDictionary GetValueSync(int h, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IDictionary GetValueAsync(int h, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IDictionary GetValueAfter(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IDictionary GetValueAfterAsync(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IDictionary GetValueAt(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IDictionary GetValueAtAsync(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IDictionary GetValueBeforeAsync(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Collections.IDictionary GetValueBefore(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IDictionary GetLastAvailable(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::System.Collections.IDictionary GetLastAvailableAsync(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int IsBoundAt(int h, string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void SetValue(int h, string valuespec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -86,8 +54,6 @@ public partial interface IEngine : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     void Adopt(int parent, int child, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    void Replace(int h, string expr, int priority, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     int AddAggregateAfter(int h, string parent, global::System.Collections.ICollection children, int priority, int client_cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int AddAggregateAfterAndSet(int h, string parent, global::System.Collections.ICollection children, int priority, int client_cookie, string valuespec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -104,8 +70,6 @@ public partial interface IEngine : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     int Parent(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IList GetTopNodes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void PermitEventCallbacks(int h, bool bPermitted) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     bool EventCallbacksPermitted(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -118,15 +82,11 @@ public partial interface IEngine : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     int GetNumThreads() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    string GetVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void SetOption(string A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     object GetOption(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void SetOptions(object[] A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddNodeCallback(global::Quire.Engine.NodeCallback A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void WaitUpToDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -135,8 +95,6 @@ public partial interface IEngine : global::System.IDisposable
     void LoadMplFileRec(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     string GetMplModuleName(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IList GetDefined(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int GetDefinition(string nm, int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -156,5 +114,5 @@ public partial interface IEngine : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Engine.IMathcadComponent UnregisterComponent(int handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    void CalculateNow(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void RecalculateAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

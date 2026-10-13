@@ -6,7 +6,6 @@
   Quire.Engine.AlgoInfo P Name : System.String get:public set:public
   Quire.Engine.AlgoInfo P Region : System.Int32 get:public set:public
   Quire.Engine.AlgoInfo P Tag : System.Int32 get:public set:public
-  Quire.Engine.BooleanCallback D Invoke`0(System.Boolean) -> System.Void
   Quire.Engine.CachingWrapper F private Quire.Engine.IMathcadComponent m_component
   Quire.Engine.CachingWrapper F private System.Boolean m_locked
   Quire.Engine.CachingWrapper F private System.Boolean m_needs_commit
@@ -68,41 +67,44 @@
   Quire.Engine.IBuiltin M public virtual GetVariable`0(System.String) -> System.Object
   Quire.Engine.IBuiltin M public virtual SetVariable`0(System.String,System.Object) -> System.Void
   Quire.Engine.IBuiltin M public virtual UnsetVariable`0(System.String) -> System.Void
-  Quire.Engine.IEngine E public abstract Quire.Engine.NodeCallback NodeUpdated
-  Quire.Engine.IEngine E public abstract System.Action`1<System.Boolean> BusyChanged
-  Quire.Engine.IEngine E public virtual Quire.Engine.BooleanCallback OnBusy
-  Quire.Engine.IEngine E public virtual Quire.Engine.BooleanCallback OnUpToDate
-  Quire.Engine.IEngine M public abstract AddRegionAfter`0(System.Int32,System.String) -> System.Int32
-  Quire.Engine.IEngine M public abstract AddRegionBefore`0(System.Int32,System.String) -> System.Int32
-  Quire.Engine.IEngine M public abstract CalculateNow`0(System.Threading.CancellationToken) -> System.Void
-  Quire.Engine.IEngine M public abstract GetResult`0(System.Int32) -> Quire.Engine.NodeResult
-  Quire.Engine.IEngine M public abstract GetValueBefore`0(System.Int32,System.String) -> Quire.Values.Value
-  Quire.Engine.IEngine M public abstract MoveAfter`0(System.Int32,System.Int32) -> System.Void
-  Quire.Engine.IEngine M public abstract MoveBefore`0(System.Int32,System.Int32) -> System.Void
-  Quire.Engine.IEngine M public abstract RecalculateAll`0() -> System.Void
-  Quire.Engine.IEngine M public abstract RemoveRegion`0(System.Int32) -> System.Void
-  Quire.Engine.IEngine M public abstract UpdateRegion`0(System.Int32,System.String) -> System.Void
+  Quire.Engine.IEngine E public abstract Quire.Engine.BooleanCallback OnBusy
+  Quire.Engine.IEngine E public abstract Quire.Engine.BooleanCallback OnUpToDate
+  Quire.Engine.IEngine M public abstract AddAfter`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Int32
+  Quire.Engine.IEngine M public abstract AddBefore`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Int32
+  Quire.Engine.IEngine M public abstract AddNodeCallback`0(Quire.Engine.NodeCallback) -> System.Void
+  Quire.Engine.IEngine M public abstract CalculateNow`0(System.Int32) -> System.Void
+  Quire.Engine.IEngine M public abstract GetAutoCalc`0() -> System.Boolean
+  Quire.Engine.IEngine M public abstract GetDefined`0(System.Int32) -> System.Collections.IList
+  Quire.Engine.IEngine M public abstract GetPriority`0(System.Int32) -> System.Int32
+  Quire.Engine.IEngine M public abstract GetTopNodes`0() -> System.Collections.IList
+  Quire.Engine.IEngine M public abstract GetValueAfter`0(System.Int32,System.String) -> System.Collections.IDictionary
+  Quire.Engine.IEngine M public abstract GetValueAsync`0(System.Int32,System.Int32) -> System.Collections.IDictionary
+  Quire.Engine.IEngine M public abstract GetValueBeforeAsync`0(System.Int32,System.String) -> System.Collections.IDictionary
+  Quire.Engine.IEngine M public abstract GetValueSync`0(System.Int32,System.Int32) -> System.Collections.IDictionary
+  Quire.Engine.IEngine M public abstract GetVersion`0() -> System.String
+  Quire.Engine.IEngine M public abstract IsBoundAt`0(System.Int32,System.String) -> System.Int32
+  Quire.Engine.IEngine M public abstract MoveAfter`0(System.Int32,System.Int32,System.Int32) -> System.Void
+  Quire.Engine.IEngine M public abstract MoveBefore`0(System.Int32,System.Int32,System.Int32) -> System.Void
+  Quire.Engine.IEngine M public abstract Remove`0(System.Int32,System.Int32) -> System.Void
+  Quire.Engine.IEngine M public abstract Replace`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Void
+  Quire.Engine.IEngine M public abstract SetAutoCalc`0(System.Boolean) -> System.Void
+  Quire.Engine.IEngine M public abstract SetPriority`0(System.Int32,System.Int32) -> System.Void
+  Quire.Engine.IEngine M public abstract Update`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual AddAfterAndSet`0(System.Int32,System.String,System.Int32,System.Int32,System.String) -> System.Int32
-  Quire.Engine.IEngine M public virtual AddAfter`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual AddAggregateAfterAndSet`0(System.Int32,System.String,System.Collections.ICollection,System.Int32,System.Int32,System.String) -> System.Int32
   Quire.Engine.IEngine M public virtual AddAggregateAfter`0(System.Int32,System.String,System.Collections.ICollection,System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual AddAggregateBeforeAndSet`0(System.Int32,System.String,System.Collections.ICollection,System.Int32,System.Int32,System.String) -> System.Int32
   Quire.Engine.IEngine M public virtual AddAggregateBefore`0(System.Int32,System.String,System.Collections.ICollection,System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual AddBeforeAndSet`0(System.Int32,System.String,System.Int32,System.Int32,System.String) -> System.Int32
-  Quire.Engine.IEngine M public virtual AddBefore`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual AddChildAndSet`0(System.Int32,System.String,System.Int32,System.Int32,System.String) -> System.Int32
   Quire.Engine.IEngine M public virtual AddChild`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Int32
-  Quire.Engine.IEngine M public virtual AddNodeCallback`0(Quire.Engine.NodeCallback) -> System.Void
   Quire.Engine.IEngine M public virtual AddRegionAfter`0(System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual AddRegionBefore`0(System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual Adopt`0(System.Int32,System.Int32,System.Int32) -> System.Void
-  Quire.Engine.IEngine M public virtual CalculateNow`0(System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual ChildCount`0(System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual Child`0(System.Int32,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual Children`0(System.Int32) -> System.Collections.IList
   Quire.Engine.IEngine M public virtual EventCallbacksPermitted`0(System.Int32) -> System.Boolean
-  Quire.Engine.IEngine M public virtual GetAutoCalc`0() -> System.Boolean
-  Quire.Engine.IEngine M public virtual GetDefined`0(System.Int32) -> System.Collections.IList
   Quire.Engine.IEngine M public virtual GetDefinition`0(System.String,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual GetDependencies`0(System.Int32) -> System.Collections.IList
   Quire.Engine.IEngine M public virtual GetDependents`0(System.String,System.Int32) -> System.Collections.IList
@@ -112,59 +114,44 @@
   Quire.Engine.IEngine M public virtual GetMplModuleName`0(System.String) -> System.String
   Quire.Engine.IEngine M public virtual GetNumThreads`0() -> System.Int32
   Quire.Engine.IEngine M public virtual GetOption`0(System.String) -> System.Object
-  Quire.Engine.IEngine M public virtual GetPriority`0(System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual GetSynchronousCallbacks`0() -> System.Boolean
-  Quire.Engine.IEngine M public virtual GetTopNodes`0() -> System.Collections.IList
   Quire.Engine.IEngine M public virtual GetValueAfterAsync`0(System.Int32,System.String) -> System.Collections.IDictionary
-  Quire.Engine.IEngine M public virtual GetValueAfter`0(System.Int32,System.String) -> System.Collections.IDictionary
-  Quire.Engine.IEngine M public virtual GetValueAsync`0(System.Int32,System.Int32) -> System.Collections.IDictionary
   Quire.Engine.IEngine M public virtual GetValueAtAsync`0(System.Int32,System.String) -> System.Collections.IDictionary
   Quire.Engine.IEngine M public virtual GetValueAt`0(System.Int32,System.String) -> System.Collections.IDictionary
-  Quire.Engine.IEngine M public virtual GetValueBeforeAsync`0(System.Int32,System.String) -> System.Collections.IDictionary
-  Quire.Engine.IEngine M public virtual GetValueSync`0(System.Int32,System.Int32) -> System.Collections.IDictionary
-  Quire.Engine.IEngine M public virtual GetVersion`0() -> System.String
-  Quire.Engine.IEngine M public virtual IsBoundAt`0(System.Int32,System.String) -> System.Int32
+  Quire.Engine.IEngine M public virtual GetValueBefore`0(System.Int32,System.String) -> System.Collections.IDictionary
   Quire.Engine.IEngine M public virtual IsRegionValueProtected`0(System.Int32) -> System.Boolean
   Quire.Engine.IEngine M public virtual LoadMplFileRec`0(System.String) -> System.Void
   Quire.Engine.IEngine M public virtual LookupComponent`0(System.Int32) -> Quire.Engine.IMathcadComponent
-  Quire.Engine.IEngine M public virtual MoveAfter`0(System.Int32,System.Int32,System.Int32) -> System.Void
-  Quire.Engine.IEngine M public virtual MoveBefore`0(System.Int32,System.Int32,System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual Parent`0(System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual PeekValue`0(System.Int32,System.Int32) -> System.Collections.IDictionary
   Quire.Engine.IEngine M public virtual PeekValue`0(System.Int32,System.Int32,System.Boolean) -> System.Collections.IDictionary
   Quire.Engine.IEngine M public virtual PermitEventCallbacks`0(System.Int32,System.Boolean) -> System.Void
   Quire.Engine.IEngine M public virtual ProtectRegionValue`0(System.Int32) -> System.Void
+  Quire.Engine.IEngine M public virtual RecalculateAll`0() -> System.Void
   Quire.Engine.IEngine M public virtual RegisterComponent`0(Quire.Engine.IMathcadComponent) -> System.Int32
   Quire.Engine.IEngine M public virtual RegisterComponent`0(Quire.Engine.IMathcadComponent,System.Int32) -> System.Int32
-  Quire.Engine.IEngine M public virtual Remove`0(System.Int32,System.Int32) -> System.Void
-  Quire.Engine.IEngine M public virtual Replace`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Void
-  Quire.Engine.IEngine M public virtual SetAutoCalc`0(System.Boolean) -> System.Void
   Quire.Engine.IEngine M public virtual SetNumThreads`0(System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual SetOption`0(System.String,System.Object) -> System.Void
   Quire.Engine.IEngine M public virtual SetOptions`0(System.Object[]) -> System.Void
-  Quire.Engine.IEngine M public virtual SetPriority`0(System.Int32,System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual SetSynchronousCallbacks`0(System.Boolean) -> System.Void
   Quire.Engine.IEngine M public virtual SetValue`0(System.Int32,System.String) -> System.Void
   Quire.Engine.IEngine M public virtual StartWorkers`0() -> System.Void
   Quire.Engine.IEngine M public virtual StopWorkers`0() -> System.Void
   Quire.Engine.IEngine M public virtual TreatAsReady`0(System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual UnregisterComponent`0(System.Int32) -> Quire.Engine.IMathcadComponent
-  Quire.Engine.IEngine M public virtual Update`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual WaitUpToDateWithTimeout`0(System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual WaitUpToDate`0() -> System.Void
-  Quire.Engine.IEngine P AutoCalc : System.Boolean abstract get:public set:public
-  Quire.Engine.IEngine P Handles : System.Collections.Generic.IReadOnlyList`1<System.Int32> abstract get:public
-  Quire.Engine.IEngine P IsBusy : System.Boolean virtual get:public
-  Quire.Engine.IEngine P IsUpToDate : System.Boolean abstract get:public
+  Quire.Engine.IEngine P IsBusy : System.Boolean abstract get:public
+  Quire.Engine.IEngine P IsUpToDate : System.Boolean virtual get:public
   Quire.Engine.IEnginePriv M public virtual Initialize`0(System.String) -> System.Void
   Quire.Engine.IEngineUnstable M public virtual GetNodeType`0(System.Int32) -> System.Int32
-  Quire.Engine.IFactory M public virtual GetEngines`0() -> System.Collections.ICollection
+  Quire.Engine.IFactory M public abstract GetEngines`0() -> System.Collections.ICollection
+  Quire.Engine.IFactory M public abstract NewEngine`0() -> Quire.Engine.IEngine
   Quire.Engine.IFactory M public virtual Initialize`0(System.String) -> System.Void
-  Quire.Engine.IFactory M public virtual NewEngine`0() -> Quire.Engine.IEngine
   Quire.Engine.IFactory M public virtual VerifyIntegrity`0() -> System.Boolean
-  Quire.Engine.IFactory P WorkerStackSize : System.Int32 virtual get:public set:public
+  Quire.Engine.IFactory P WorkerStackSize : System.Int32 abstract get:public set:public
+  Quire.Engine.IFactoryFactory M public abstract NewFactory`0() -> Quire.Engine.IFactory
   Quire.Engine.IFactoryFactory M public virtual AppendPath`0(System.String) -> System.Void
-  Quire.Engine.IFactoryFactory M public virtual NewFactory`0() -> Quire.Engine.IFactory
   Quire.Engine.IMCEngine M public virtual AddNotify`0(System.IntPtr) -> System.Void
   Quire.Engine.IMCEngine M public virtual RemoveNotify`0(System.IntPtr) -> System.Void
   Quire.Engine.IMCEngine M public virtual StartNotify`0() -> System.Void
@@ -246,7 +233,6 @@
   Quire.Native.EngutilsMgd.PushbackReader M public Read`0() -> System.Int32
   Quire.Native.EngutilsMgd.PushbackReader M public Unread`0(System.Int32) -> System.Void
 T Quire.Engine.AlgoInfo class public sealed :  | 
-T Quire.Engine.BooleanCallback delegate public :  | 
 T Quire.Engine.CachingWrapper class internal :  | Quire.Engine.IMathcadComponent2
 T Quire.Engine.CircTracker class internal :  | 
 T Quire.Engine.CollectionUtils class public :  | 

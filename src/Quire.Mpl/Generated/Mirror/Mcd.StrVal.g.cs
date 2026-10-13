@@ -12,19 +12,5 @@ namespace Quire.Mcd;
 public partial class StrVal : global::Quire.Mcd.DimVal
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public override string IsString { get => base.IsString; }
-    [global::Quire.Mirror.MirrorStub]
-    public string m_string { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override string asString(string m, uint a) => base.asString(m, a);
-    [global::Quire.Mirror.MirrorStub]
-    public StrVal(string str) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
 }

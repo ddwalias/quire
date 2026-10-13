@@ -12,33 +12,15 @@ namespace Quire.Mpl.Run;
 public abstract partial class Atom : global::Quire.Mpl.Run.Tag
 {
     [global::Quire.Mirror.MirrorStub]
-    public const int SymTag = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public const int IntTag = 1;
-    [global::Quire.Mirror.MirrorStub]
-    public const int RealTag = 2;
-    [global::Quire.Mirror.MirrorStub]
     public const int CharTag = 3;
-    [global::Quire.Mirror.MirrorStub]
-    public const int StrTag = 4;
     [global::Quire.Mirror.MirrorStub]
     public const int KeyTag = 5;
     [global::Quire.Mirror.MirrorStub]
     public virtual int KeyNum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public virtual double RealCon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int IntCon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual char CharCon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string StrCon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Sexpr quote_atom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sym sym { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Keyword Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Atom(int tag) : base(default(int)) { }
 }

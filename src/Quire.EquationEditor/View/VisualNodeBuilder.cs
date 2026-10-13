@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Media;
 using Quire.EquationEditor.Tree;
-using Quire.Values;
+using Quire.Mpl.Internal;
 
 namespace Quire.EquationEditor.View;
 
@@ -234,7 +234,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
 
     private static bool IsUnit(MathExpr n) => n switch
     {
-        IdNode id => Units.IsUnit(id.Name),
+        IdNode id => BuiltinUnits.IsUnit(id.Name),
         BinaryNode { Op: "pow" } p => IsUnit(p.Left),
         BinaryNode { Op: "div" or "mult" } b => IsUnit(b.Left) && IsUnit(b.Right),
         _ => false,
@@ -243,7 +243,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
     private Box Identifier(IdNode id, bool function = false)
     {
         var highlight = errorSymbol != null && id.Name == errorSymbol ? style.ErrorHighlight : null;
-        var brush = !function && Units.IsUnit(id.Name) ? style.UnitBrush : style.Foreground;
+        var brush = !function && BuiltinUnits.IsUnit(id.Name) ? style.UnitBrush : style.Foreground;
         var sub = id.Subscript;
         if (sub == null) return Text(Display(id.Name), brush, highlight);
         var baseBox = Text(Display(id.BaseName), brush, highlight);

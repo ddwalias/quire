@@ -12,25 +12,15 @@ namespace Quire.Mpl.Run;
 public partial class Sym : global::Quire.Mpl.Run.Atom
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public string Field2;
-    [global::Quire.Mirror.MirrorStub]
     private uint m_umgd;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Mpl.Run.Tok make_sym;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Mpl.Run.Tok make_symq;
     [global::Quire.Mirror.MirrorStub]
-    public string name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string qualifier { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool UpId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool LowId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string long_name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public uint uid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -38,13 +28,9 @@ public partial class Sym : global::Quire.Mpl.Run.Atom
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr quote_atom { get => base.quote_atom; }
     [global::Quire.Mirror.MirrorStub]
-    public Sym(object nm) : base(default(int)) { }
+    public Sym(string nm, string q, uint id) : this(default(object)) { }
     [global::Quire.Mirror.MirrorStub]
-    public Sym(string nm, string q) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Sym(string nm, string q, uint id) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Sym(string nm, string q, int tag) : base(default(int)) { }
+    public Sym(string nm, string q, int tag) : this(default(object)) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(string nm, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -54,11 +40,7 @@ public partial class Sym : global::Quire.Mpl.Run.Atom
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(string nm, string q, uint uid, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok MakeSym(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok MakeSymQ(string nm, string q) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Cons walk_declaration_as(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons form) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

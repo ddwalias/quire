@@ -32,19 +32,11 @@ public static partial class Rts
     [global::Quire.Mirror.MirrorStub]
     private static string[] s_paths;
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Threading.CancellationTokenSource ms_thread_cancellation_token;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Threading.CancellationTokenSource ms_dummy_cancellation_token;
-    [global::Quire.Mirror.MirrorStub]
     public static int m_stack_depth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.FieldInfo StackDepth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string AssemblyPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static void RegisterThreadForCancellationChecking(global::System.Threading.CancellationTokenSource src) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsCancellationRequested() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ResetStackDepth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

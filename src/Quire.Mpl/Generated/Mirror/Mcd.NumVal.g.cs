@@ -16,17 +16,9 @@ public sealed partial class NumVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public const double machine_eps = 2.220446049250313E-16d;
     [global::Quire.Mirror.MirrorStub]
-    public const double default_fuzz = 5E-13d;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.num_val Data;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.NumVal Zero;
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.NumVal ZeroId;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.NumVal ZeroPoly;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.NumVal One;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.NotAVal NoValue;
     [global::Quire.Mirror.MirrorStub]
@@ -40,33 +32,11 @@ public sealed partial class NumVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public static double NoNoNaN;
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.Dim PhysicalDimension { get => base.PhysicalDimension; }
-    [global::Quire.Mirror.MirrorStub]
     public object IsPureReal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object IsPureImag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double Real { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Imag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public int IsInt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int IsReal { get => base.IsReal; }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal() { }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal(int i) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal(global::Quire.Mcd.NumVal n) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal(global::Quire.Mcd.NumVal n, global::Quire.Mcd.Dim d) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal(double r) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal(double r, double i) { }
-    [global::Quire.Mirror.MirrorStub]
-    public NumVal(double r, double i, global::Quire.Mcd.Dim d) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.NumVal NumDv(double r, double i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -79,18 +49,6 @@ public sealed partial class NumVal : global::Quire.Mcd.DimVal
     public global::Quire.Mcd.NumVal Set(double r, double i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.NumVal Set(int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ExactEquals(global::Quire.Mcd.NumVal x, global::Quire.Mcd.NumVal y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FuzzyEquals(double x, double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FuzzyEquals(double x, double y, double fuzz) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FuzzyEquals(global::Quire.Mcd.NumVal x, global::Quire.Mcd.NumVal y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FuzzyEquals(global::Quire.Mcd.NumVal x, global::Quire.Mcd.NumVal y, double fuzz) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
     [global::Quire.Mirror.MirrorStub]
     public bool Equals1(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -112,25 +70,17 @@ public sealed partial class NumVal : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public static bool GreaterEqThan(global::Quire.Mcd.NumVal n1, global::Quire.Mcd.NumVal n2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.DimVal SetDim(global::Quire.Mcd.Dim d) => base.SetDim(d);
-    [global::Quire.Mirror.MirrorStub]
     private static unsafe bool isNearInt(int* res, double r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override unsafe bool isInt(int* res) => base.isInt(res);
     [global::Quire.Mirror.MirrorStub]
     public override double asReal(string m, uint a) => base.asReal(m, a);
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.NumVal McdBool(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.NumVal ibv(int o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string Format(string numeric_format, bool show_dimension, bool simplify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string Format(global::System.IFormatProvider culture, string numeric_format, bool show_dimension, bool simplify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string Format(bool show_dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string Format(bool show_dimension, bool simplify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -141,8 +91,6 @@ public sealed partial class NumVal : global::Quire.Mcd.DimVal
     public string ToString(string numeric_format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString(global::System.IFormatProvider culture) => base.ToString(culture);
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mcd.DimVal asResult() => base.asResult();
     [global::Quire.Mirror.MirrorStub]

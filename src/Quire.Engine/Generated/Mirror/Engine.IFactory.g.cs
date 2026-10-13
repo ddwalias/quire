@@ -12,13 +12,7 @@ namespace Quire.Engine;
 public partial interface IFactory : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    int WorkerStackSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     void Initialize(string appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     bool VerifyIntegrity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Engine.IEngine NewEngine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.ICollection GetEngines() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

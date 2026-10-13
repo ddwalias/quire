@@ -45,8 +45,8 @@ The assembly layout mirrors the structure observed (by static inspection) in Mat
 
 | Quire assembly | Responsibility | Mathcad Prime counterpart |
 |---|---|---|
-| `Quire.Mpl` | S-expression ("Rl") reader/writer; values, dimensions, units, unit systems | `mplrun` (`Mpl.Run`, `Mcd`) |
-| `Quire.Engine` | `IEngine`: ordered node list, incremental recalculation, interpreter, built-ins, numerics, solve blocks | `iengine`, `mceng` |
+| `Quire.Mpl` | Mathcad's runtime types: `Mpl.Run` S-expressions and functions, `Mcd` values (`NumVal`, `MatVal`, `RngVal`, `StrVal`), interned dimensions, units and unit systems | `mplrun` (`Mpl.Run`, `Mcd`) |
+| `Quire.Engine` | Mathcad's `IEngine`/`Factory` API over an internal worksheet engine: ordered node list, incremental recalculation, Rl reader, interpreter, built-ins, numerics, solve blocks | `iengine`, `mceng` |
 | `Quire.Calculation.Core` | `ICalculatable`, `ICalculatableContext`, result nodes, `EngineResult` | `Ptc.Calculation.Core` |
 | `Quire.Calculation` | `CalculationController` (worker thread, cancellation), `ValueToIResultNodeTransform` | `Ptc.Calculation` |
 | `Quire.EquationEditor` | `MathNode` tree, `LinearParser`, transforms (Rl, XML, linear text), result formatting, 2D box-layout renderer | `Ptc.EquationEditor` |

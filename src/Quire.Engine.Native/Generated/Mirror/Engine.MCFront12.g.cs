@@ -497,30 +497,4 @@ public partial class MCFront12 : global::System.MarshalByRefObject, global::Quir
     protected virtual void Dispose(bool A_0) { }
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    int global::Quire.Engine.IEngine.AddRegionAfter(int afterHandle, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int global::Quire.Engine.IEngine.AddRegionBefore(int beforeHandle, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Engine.IEngine.UpdateRegion(int handle, string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Engine.IEngine.RemoveRegion(int handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Engine.IEngine.MoveAfter(int handle, int afterHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Engine.IEngine.MoveBefore(int handle, int beforeHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::Quire.Engine.IEngine.CalculateNow(global::System.Threading.CancellationToken cancellation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Engine.NodeResult global::Quire.Engine.IEngine.GetResult(int handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Values.Value global::Quire.Engine.IEngine.GetValueBefore(int handle, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool global::Quire.Engine.IEngine.AutoCalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IReadOnlyList<int> global::Quire.Engine.IEngine.Handles { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Engine.NodeCallback global::Quire.Engine.IEngine.NodeUpdated { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<bool> global::Quire.Engine.IEngine.BusyChanged { add { } remove { } }
 }

@@ -12,31 +12,13 @@ namespace Quire.Mcd;
 public abstract partial class DimVal
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Dim m_dim;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsPolymorphic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mcd.NumVal PhysicalUnit { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mcd.Dim PhysicalDimension { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mcd.Dim UniformDimension { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mcd.MatDim MatrixDimension { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public virtual string IsString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int IsReal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsDimless { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual bool IsDimlessReal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mcd.MatVal IsMatrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.Function IsFunction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int Rsize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.DimVal Rfinal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -50,21 +32,15 @@ public abstract partial class DimVal
     [global::Quire.Mirror.MirrorStub]
     public virtual bool nearly_equal(global::Quire.Mcd.DimVal obj, double fuzz) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual string ToString(global::System.IFormatProvider culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.Units GetUnits(global::Quire.Mcd.Dim d, bool simplify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.Units GetUnits(bool simplify) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim DimOf(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.MatDim MatDimOf(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsDimOf(object o, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object DimCast(object o, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mcd.DimVal SetDim(global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsUniformDimOf(global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -106,8 +82,6 @@ public abstract partial class DimVal
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal asVector(uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mcd.MatVal asVector(string m, uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal asRealVector() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal asRealVector(uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -145,8 +119,6 @@ public abstract partial class DimVal
     public global::Quire.Mpl.Run.Function asFunctionN(int argc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.Function asFunctionN(int argc, uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mcd.DimVal range_get(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mcd.DimVal iterator_get(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -259,6 +231,4 @@ public abstract partial class DimVal
     public virtual object VecCall(object b, object c, object d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual object VecApply(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected DimVal() { }
 }

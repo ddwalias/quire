@@ -45,6 +45,4 @@ public abstract partial class FunctionUtilities : global::Quire.Mcd.DimVal
     public static object[] Push(object[] a, object b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object[] Push(object[] a, object b, object c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected FunctionUtilities() { }
 }

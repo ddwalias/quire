@@ -12,35 +12,11 @@ namespace Quire.Mcd;
 public partial class RngVal : global::Quire.Mcd.DimVal
 {
     [global::Quire.Mirror.MirrorStub]
-    protected double m_init;
-    [global::Quire.Mirror.MirrorStub]
-    protected double m_incr;
-    [global::Quire.Mirror.MirrorStub]
-    protected int m_n;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool m_integral;
-    [global::Quire.Mirror.MirrorStub]
-    public bool Integral { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.Dim PhysicalDimension { get => base.PhysicalDimension; }
-    [global::Quire.Mirror.MirrorStub]
-    public override int Rsize { get => base.Rsize; }
-    [global::Quire.Mirror.MirrorStub]
     public override int Isize { get => base.Isize; }
     [global::Quire.Mirror.MirrorStub]
-    protected RngVal(double init, double incr, int n, global::Quire.Mcd.Dim d) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected RngVal(global::Quire.Mcd.RngVal r) { }
+    protected RngVal(global::Quire.Mcd.RngVal r) : this(default(double), default(double), default(int), default(global::Quire.Mcd.Dim)) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mcd.DimVal asResult() => base.asResult();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual double get(int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.DimVal range_get(int n) => base.range_get(n);
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mcd.DimVal iterator_get(int n) => base.iterator_get(n);
     [global::Quire.Mirror.MirrorStub]
@@ -59,10 +35,6 @@ public partial class RngVal : global::Quire.Mcd.DimVal
     public static global::Quire.Mcd.RngVal IncrRange(double first, double incr, double last, global::Quire.Mcd.Dim d, string m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mcd.RngVal IncrRange(double first, double incr, double last, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal IncrRange(double first, double incr, int n, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.MatVal asVector(string m, uint a) => base.asVector(m, a);
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mcd.MatVal asMatrix(string m, uint a) => base.asMatrix(m, a);
     [global::Quire.Mirror.MirrorStub]
