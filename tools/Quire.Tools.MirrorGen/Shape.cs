@@ -103,7 +103,12 @@ public static class Shape
     // ------------------------------------------------------------------ manifest, coverage and status
 
     private static readonly MemberStatus[] Statuses =
-        [MemberStatus.Stub, MemberStatus.Blocked, MemberStatus.Verified, MemberStatus.Documented, MemberStatus.Unclassified, MemberStatus.QuireOnly];
+        [MemberStatus.Stub, MemberStatus.Unclassified, MemberStatus.Blocked, MemberStatus.Documented, MemberStatus.Analyzed,
+         MemberStatus.Tested, MemberStatus.Verified, MemberStatus.Deviation, MemberStatus.QuireOnly];
+
+    /// <summary>Statuses that close a member for a phase (§3c rule 7). Deviations close it as a recorded divergence.</summary>
+    public static bool Settled(MemberStatus s) =>
+        s is MemberStatus.Tested or MemberStatus.Verified or MemberStatus.Deviation or MemberStatus.QuireOnly;
 
     private static string Text(MemberStatus s) => s switch
     {
@@ -175,22 +180,26 @@ public static class Shape
         sb.AppendLine("(PLAN.md §3c), from its attributes:");
         sb.AppendLine();
         sb.AppendLine("- **Stub** `[MirrorStub]`: generated, throws.");
-        sb.AppendLine("- **Blocked** `[MirrorBlocked(reason)]`: behaviour can't be established yet; throws, reason recorded.");
-        sb.AppendLine("- **Verified** `[MirrorVerified(test)]`: confirmed by a differential test against the installed Mathcad.");
-        sb.AppendLine("- **Documented** `[MirrorDocumented(source)]`: implemented from documentation or declared metadata.");
-        sb.AppendLine("- **Unclassified** (no attribute): hand-written before §3c; still to be verified, documented, blocked or marked.");
+        sb.AppendLine("- **Unclassified** (no attribute): hand-written before §3c; still to be analyzed with REA, or marked Quire-only.");
+        sb.AppendLine("- **Blocked** `[MirrorBlocked(reason)]`: REA couldn't expose or settle the original; throws, reason recorded.");
+        sb.AppendLine("- **Documented** `[MirrorDocumented(source)]`: documentation-only; not sufficient for completion.");
+        sb.AppendLine("- **Analyzed** `[MirrorAnalyzed(evidence)]`: REA analysis recorded in [`evidence/`](evidence/); no passing behaviour test yet.");
+        sb.AppendLine("- **Tested** `[MirrorTested(evidence)]`: REA-analyzed, implemented independently, behaviour tests pass.");
+        sb.AppendLine("- **Verified** `[MirrorVerified(test)]`: differential-verified against the installed Mathcad, for the recorded cases only.");
+        sb.AppendLine("- **Deviation** `[MirrorDeviation(id)]`: an accepted entry in [`deviations.md`](deviations.md); a divergence, never a match.");
         sb.AppendLine("- **Quire-only** `[QuireOnly]`: no Mathcad counterpart.");
         sb.AppendLine();
-        sb.AppendLine("*Settled* is Blocked + Verified + Documented + Quire-only: a phase is done when all its members are settled.");
+        sb.AppendLine("*Settled* is Tested + Verified + Deviation + Quire-only (§3c rule 7). Blocked, documented and analyzed members");
+        sb.AppendLine("are open. Settled says nothing about untested inputs, and deviations are counted apart from matches.");
         sb.AppendLine("Explicit interface implementations, enum values and delegate signatures are not counted. Per-member detail is");
         sb.AppendLine("in [`status/`](status/).");
         sb.AppendLine();
-        sb.AppendLine("| Project | Types | Members | Stub | Blocked | Verified | Documented | Unclassified | Quire-only | Settled |");
-        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+        sb.AppendLine("| Project | Types | Members | Stub | Unclassified | Blocked | Documented | Analyzed | Tested | Verified | Deviation | Quire-only | Settled |");
+        sb.AppendLine("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
         void Row(string name, int types, Dictionary<MemberStatus, int> c, string b)
         {
             int members = c.Values.Sum();
-            int settled = c[MemberStatus.Blocked] + c[MemberStatus.Verified] + c[MemberStatus.Documented] + c[MemberStatus.QuireOnly];
+            int settled = c.Where(kv => Settled(kv.Key)).Sum(kv => kv.Value);
             sb.AppendLine($"| {b}{name}{b} | {b}{types:N0}{b} | {b}{members:N0}{b} | "
                 + string.Join(" | ", Statuses.Select(s => $"{b}{c[s]:N0}{b}")) + $" | {b}{Percent(settled, members)}{b} |");
         }

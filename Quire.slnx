@@ -36,9 +36,11 @@
     <Project Path="tests/Quire.Calculation.Tests/Quire.Calculation.Tests.csproj" />
     <Project Path="tests/Quire.Controls.Tests/Quire.Controls.Tests.csproj" />
     <Project Path="tests/Quire.Core.Tests/Quire.Core.Tests.csproj" />
+    <Project Path="tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj" />
     <Project Path="tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj" />
     <Project Path="tests/Quire.EquationEditor.Tests/Quire.EquationEditor.Tests.csproj" />
     <Project Path="tests/Quire.Mirror.Tests/Quire.Mirror.Tests.csproj" />
+    <Project Path="tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj" />
   </Folder>
   <Folder Name="/tools/">
     <Project Path="tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj" />

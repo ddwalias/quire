@@ -35,7 +35,7 @@ public static class Classify
         members.Select(m => (m, problem: m.Status switch
         {
             MemberStatus.QuireOnly when m.HasCounterpart => "is [QuireOnly], but Mathcad declares it",
-            MemberStatus.Verified or MemberStatus.Documented or MemberStatus.Blocked when !m.HasCounterpart =>
+            not (MemberStatus.QuireOnly or MemberStatus.Unclassified or MemberStatus.Stub) when !m.HasCounterpart =>
                 $"is {m.Status}, but Mathcad has no such member (mark it [QuireOnly])",
             _ => null,
         })).Where(x => x.problem != null).Select(x => $"{x.m.Project}: {x.m.Type} {x.m.Text} {x.problem}");

@@ -132,34 +132,32 @@ T Quire.Mcd.NumVal  70 members: stub 44, unclassified 26
   unclassified P PhysicalDimension : Quire.Mcd.Dim override get:public
   unclassified P Real : System.Double get:public set:public
 
-T Quire.Mcd.Rational  27 members: unclassified 27
+T Quire.Mcd.Rational  25 members: unclassified 2, verified 23
   unclassified F public readonly System.Int32 Denominator
   unclassified F public readonly System.Int32 Numerator
-  unclassified M private static Compare`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Int32
-  unclassified M private static Gcd`0(System.Int64,System.Int64) -> System.Int64
-  unclassified M public .ctor`0(System.Double) -> System.Void
-  unclassified M public .ctor`0(System.Double,System.Double) -> System.Void
-  unclassified M public .ctor`0(System.Int32) -> System.Void
-  unclassified M public .ctor`0(System.Int32,System.Int32) -> System.Void
-  unclassified M public override Equals`0(System.Object) -> System.Boolean
-  unclassified M public override GetHashCode`0() -> System.Int32
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public static GCD`0(System.Int32,System.Int32) -> System.Int32
-  unclassified M public static op_Division`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> Quire.Mcd.Rational
-  unclassified M public static op_Division`0(Quire.Mcd.Rational,System.Int32) -> Quire.Mcd.Rational
-  unclassified M public static op_Equality`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean
-  unclassified M public static op_Explicit`0(Quire.Mcd.Rational) -> System.Int32
-  unclassified M public static op_GreaterThanOrEqual`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean
-  unclassified M public static op_GreaterThan`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean
-  unclassified M public static op_Implicit`0(Quire.Mcd.Rational) -> System.Double
-  unclassified M public static op_Implicit`0(System.Double) -> Quire.Mcd.Rational
-  unclassified M public static op_Implicit`0(System.Int32) -> Quire.Mcd.Rational
-  unclassified M public static op_Inequality`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean
-  unclassified M public static op_LessThanOrEqual`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean
-  unclassified M public static op_LessThan`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean
-  unclassified M public static op_Multiply`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> Quire.Mcd.Rational
-  unclassified M public static op_Multiply`0(Quire.Mcd.Rational,System.Int32) -> Quire.Mcd.Rational
-  unclassified P IsIntegral : System.Boolean get:public
+  verified     M public .ctor`0(System.Double) -> System.Void  [RationalDifferentialTests]
+  verified     M public .ctor`0(System.Double,System.Double) -> System.Void  [RationalDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [RationalDifferentialTests]
+  verified     M public .ctor`0(System.Int32,System.Int32) -> System.Void  [RationalDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [RationalDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [RationalDifferentialTests]
+  verified     M public static GCD`0(System.Int32,System.Int32) -> System.Int32  [RationalDifferentialTests]
+  verified     M public static op_Division`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> Quire.Mcd.Rational  [RationalDifferentialTests]
+  verified     M public static op_Division`0(Quire.Mcd.Rational,System.Int32) -> Quire.Mcd.Rational  [RationalDifferentialTests]
+  verified     M public static op_Equality`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public static op_Explicit`0(Quire.Mcd.Rational) -> System.Int32  [RationalDifferentialTests]
+  verified     M public static op_GreaterThanOrEqual`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public static op_GreaterThan`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public static op_Implicit`0(Quire.Mcd.Rational) -> System.Double  [RationalDifferentialTests]
+  verified     M public static op_Implicit`0(System.Double) -> Quire.Mcd.Rational  [RationalDifferentialTests]
+  verified     M public static op_Implicit`0(System.Int32) -> Quire.Mcd.Rational  [RationalDifferentialTests]
+  verified     M public static op_Inequality`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public static op_LessThanOrEqual`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public static op_LessThan`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Boolean  [RationalDifferentialTests]
+  verified     M public static op_Multiply`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> Quire.Mcd.Rational  [RationalDifferentialTests]
+  verified     M public static op_Multiply`0(Quire.Mcd.Rational,System.Int32) -> Quire.Mcd.Rational  [RationalDifferentialTests]
+  verified     P IsIntegral : System.Boolean get:public  [RationalDifferentialTests]
 
 T Quire.Mcd.RngVal  31 members: stub 16, unclassified 15
   unclassified F protected System.Boolean m_integral

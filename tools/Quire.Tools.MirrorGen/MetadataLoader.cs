@@ -310,7 +310,10 @@ public sealed class MetadataLoader
             {
                 "Quire.Mirror.MirrorStubAttribute" => MemberStatus.Stub,
                 "Quire.Mirror.MirrorBlockedAttribute" => MemberStatus.Blocked,
+                "Quire.Mirror.MirrorAnalyzedAttribute" => MemberStatus.Analyzed,
+                "Quire.Mirror.MirrorTestedAttribute" => MemberStatus.Tested,
                 "Quire.Mirror.MirrorVerifiedAttribute" => MemberStatus.Verified,
+                "Quire.Mirror.MirrorDeviationAttribute" => MemberStatus.Deviation,
                 "Quire.Mirror.MirrorDocumentedAttribute" => MemberStatus.Documented,
                 "Quire.Mirror.QuireOnlyAttribute" => MemberStatus.QuireOnly,
                 _ => MemberStatus.Unclassified,

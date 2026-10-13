@@ -1,99 +1,137 @@
-using System.Globalization;
+using Quire.Mirror;
 
 namespace Quire.Mcd;
 
-/// <summary>An exact fraction in lowest terms with a positive denominator; unit exponents use it.</summary>
+/// <summary>
+/// A fraction of two ints; unit exponents use it. Behaviour follows mplrun 12.0.1.0 member by member
+/// (docs/mirror/evidence/Mcd.Rational.md), including its quirks: arithmetic wraps on overflow, comparisons go through
+/// doubles, and <c>&lt;</c> answers <c>a &gt; b</c>.
+/// </summary>
 public partial struct Rational
 {
     public readonly int Numerator;
     public readonly int Denominator;
 
-    public Rational(int numerator) : this(numerator, 1) { }
+    [MirrorVerified("RationalDifferentialTests")]
+    public Rational(int numerator)
+    {
+        Numerator = numerator;
+        Denominator = 1;
+    }
 
+    /// <summary>
+    /// Reduces by the gcd, moving the sign to the numerator. A zero denominator is kept (<c>5/0</c> becomes
+    /// <c>1/0</c>), but <c>0/0</c> divides by a zero gcd and throws.
+    /// </summary>
+    [MirrorVerified("RationalDifferentialTests")]
     public Rational(int numerator, int denominator)
     {
-        if (denominator == 0) throw new DivideByZeroException("A rational number can't have a zero denominator");
-        // In long, so that negating int.MinValue can't overflow before reducing.
-        long n = numerator, d = denominator;
-        if (d < 0) { n = -n; d = -d; }
-        long g = Gcd(n, d);
-        Numerator = checked((int)(n / g));
-        Denominator = checked((int)(d / g));
+        int g = GCD(numerator, denominator);
+        if (denominator < 0) g = -g;
+        Numerator = numerator / g;
+        Denominator = denominator / g;
     }
 
-    public Rational(double xx) : this(xx, 1e-9) { }
+    [MirrorVerified("RationalDifferentialTests")]
+    public Rational(double xx) : this(xx, 1E-05) { }
 
-    /// <summary>The fraction with the smallest denominator within <paramref name="err"/> of <paramref name="xx"/>,
-    /// found from the continued-fraction expansion.</summary>
+    /// <summary>
+    /// The continued-fraction convergent of |<paramref name="xx"/>| that first comes within <paramref name="err"/>,
+    /// with the sign applied last. Only the fractional part is expanded; expansion also stops once the remainder
+    /// falls to 2^-30 or the next denominator (scaled by the whole part) would pass int.MaxValue.
+    /// </summary>
+    [MirrorVerified("RationalDifferentialTests")]
     public Rational(double xx, double err)
     {
-        if (double.IsNaN(xx) || double.IsInfinity(xx) || Math.Abs(xx) > int.MaxValue)
-            throw new OverflowException($"{xx} can't be represented as a rational number");
-        long h0 = 0, h1 = 1, k0 = 1, k1 = 0;
-        double x = xx;
-        for (int i = 0; i < 64; i++)
+        double whole = Math.Floor(Math.Abs(xx));
+        double frac = Math.Abs(xx) - whole;
+        // Convergents p/q of frac; (pPrev, qPrev) is the one before.
+        double p = 0, q = 1, pPrev = 1, qPrev = 0;
+        for (double rest = frac; Math.Abs(p / q - frac) > err && rest > 1.0 / (1 << 30);)
         {
-            double a = Math.Floor(x);
-            long h2 = (long)a * h1 + h0, k2 = (long)a * k1 + k0;
-            if (Math.Abs(h2) > int.MaxValue || k2 > int.MaxValue) break;
-            (h0, h1, k0, k1) = (h1, h2, k1, k2);
-            if (Math.Abs(xx - (double)h1 / k1) <= err || x == a) break;
-            x = 1 / (x - a);
+            rest = 1 / rest;
+            double a = Math.Floor(rest);
+            rest -= a;
+            double pNext = a * p + pPrev, qNext = a * q + qPrev;
+            // The bound pairs the current numerator with the next denominator, so a numerator just past
+            // int.MaxValue can get through and saturate below.
+            if (Math.Max(p + whole * qNext, qNext) > int.MaxValue) break;
+            (pPrev, qPrev, p, q) = (p, q, pNext, qNext);
         }
-        this = new Rational((int)h1, (int)k1);
+        // double → int saturates (and NaN gives 0) on .NET 9 and later, as it does under Mathcad's runtime.
+        Numerator = (int)(p + whole * q);
+        Denominator = (int)q;
+        if (xx < 0) Numerator = -Numerator;
     }
 
+    [MirrorVerified("RationalDifferentialTests")]
     public bool IsIntegral => Denominator == 1;
 
+    [MirrorVerified("RationalDifferentialTests")]
     public static implicit operator Rational(int i) => new(i);
+
+    [MirrorVerified("RationalDifferentialTests")]
     public static implicit operator Rational(double d) => new(d);
+
+    [MirrorVerified("RationalDifferentialTests")]
     public static implicit operator double(Rational r) => (double)r.Numerator / r.Denominator;
 
-    public static explicit operator int(Rational r) =>
-        r.IsIntegral ? r.Numerator : throw new InvalidCastException($"{r} is not an integer");
+    /// <summary>Truncating division; throws for a zero denominator.</summary>
+    [MirrorVerified("RationalDifferentialTests")]
+    public static explicit operator int(Rational r) => r.Numerator / r.Denominator;
 
+    /// <summary>Field by field, so unreduced values such as <c>default</c> (0/0) compare by representation.</summary>
+    [MirrorVerified("RationalDifferentialTests")]
     public static bool operator ==(Rational a, Rational b) => a.Numerator == b.Numerator && a.Denominator == b.Denominator;
-    public static bool operator !=(Rational a, Rational b) => !(a == b);
-    public static bool operator <=(Rational a, Rational b) => Compare(a, b) <= 0;
-    public static bool operator >=(Rational a, Rational b) => Compare(a, b) >= 0;
-    public static bool operator <(Rational a, Rational b) => Compare(a, b) < 0;
-    public static bool operator >(Rational a, Rational b) => Compare(a, b) > 0;
 
-    public static Rational operator *(Rational a, int b) => a * new Rational(b);
-    public static Rational operator /(Rational a, int b) => a / new Rational(b);
+    [MirrorVerified("RationalDifferentialTests")]
+    public static bool operator !=(Rational a, Rational b) => a.Numerator != b.Numerator || a.Denominator != b.Denominator;
 
-    /// <summary>Cancels across before multiplying, so the product overflows only when the result doesn't fit.</summary>
-    public static Rational operator *(Rational a, Rational b)
+    [MirrorVerified("RationalDifferentialTests")]
+    public static bool operator <=(Rational a, Rational b) => (double)a <= (double)b;
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public static bool operator >=(Rational a, Rational b) => (double)a >= (double)b;
+
+    /// <summary>Mathcad's operator answers <c>a &gt; b</c>, and Quire keeps that. Compare the doubles for a real less-than.</summary>
+    [MirrorVerified("RationalDifferentialTests")]
+    public static bool operator <(Rational a, Rational b) => (double)a > (double)b;
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public static bool operator >(Rational a, Rational b) => (double)a > (double)b;
+
+    // The products below wrap on overflow (unchecked), then reduce.
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public static Rational operator *(Rational a, int b) => new(unchecked(a.Numerator * b), a.Denominator);
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public static Rational operator /(Rational a, int b) => new(a.Numerator, unchecked(a.Denominator * b));
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public static Rational operator *(Rational a, Rational b) =>
+        new(unchecked(a.Numerator * b.Numerator), unchecked(a.Denominator * b.Denominator));
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public static Rational operator /(Rational a, Rational b) =>
+        new(unchecked(a.Numerator * b.Denominator), unchecked(a.Denominator * b.Numerator));
+
+    [MirrorVerified("RationalDifferentialTests")]
+    public override bool Equals(object? o) => o is Rational r && this == r;
+
+    /// <summary>The truncated value, so it throws for a zero denominator, <c>default</c> included.</summary>
+    [MirrorVerified("RationalDifferentialTests")]
+    public override int GetHashCode() => Numerator / Denominator;
+
+    /// <summary>"N", or "N/D" when the denominator isn't 1, in the current culture.</summary>
+    [MirrorVerified("RationalDifferentialTests")]
+    public override string ToString() => IsIntegral ? Numerator.ToString() : $"{Numerator}/{Denominator}";
+
+    /// <summary>Euclid on the signed values; the result's sign is dropped at the end. GCD(0, 0) is 0.</summary>
+    [MirrorVerified("RationalDifferentialTests")]
+    public static int GCD(int m, int n)
     {
-        long g1 = Gcd(a.Numerator, b.Denominator), g2 = Gcd(b.Numerator, a.Denominator);
-        return new(checked((int)(a.Numerator / g1 * (b.Numerator / g2))), checked((int)(a.Denominator / g2 * (b.Denominator / g1))));
-    }
-
-    public static Rational operator /(Rational a, Rational b)
-    {
-        if (b.Numerator == 0) throw new DivideByZeroException("Division of a rational number by zero");
-        long g1 = Gcd(a.Numerator, b.Numerator), g2 = Gcd(a.Denominator, b.Denominator);
-        return new(checked((int)(a.Numerator / g1 * (b.Denominator / g2))), checked((int)(a.Denominator / g2 * (b.Numerator / g1))));
-    }
-
-    private static int Compare(Rational a, Rational b) =>
-        ((long)a.Numerator * b.Denominator).CompareTo((long)b.Numerator * a.Denominator);
-
-    public override bool Equals(object o) => o is Rational r && this == r;
-
-    public override int GetHashCode() => HashCode.Combine(Numerator, Denominator);
-
-    public override string ToString() =>
-        IsIntegral
-            ? Numerator.ToString(CultureInfo.InvariantCulture)
-            : $"{Numerator.ToString(CultureInfo.InvariantCulture)}/{Denominator.ToString(CultureInfo.InvariantCulture)}";
-
-    public static int GCD(int m, int n) => checked((int)Gcd(m, n));
-
-    private static long Gcd(long m, long n)
-    {
-        m = Math.Abs(m); n = Math.Abs(n);
         while (n != 0) (m, n) = (n, m % n);
-        return m;
+        return Math.Abs(m);
     }
 }

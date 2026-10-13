@@ -11,5 +11,6 @@
     <PackageReference Include="pythonnet" Version="3.0.5" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
+    <InternalsVisibleTo Include="Quire.Differential.Tests" />
   </ItemGroup>
 </Project>

@@ -768,8 +768,6 @@
   Quire.Mcd.RangeIterator M public ri_next`0() -> Quire.Mcd.Iterator
   Quire.Mcd.Rational F public readonly System.Int32 Denominator
   Quire.Mcd.Rational F public readonly System.Int32 Numerator
-  Quire.Mcd.Rational M private static Compare`0(Quire.Mcd.Rational,Quire.Mcd.Rational) -> System.Int32
-  Quire.Mcd.Rational M private static Gcd`0(System.Int64,System.Int64) -> System.Int64
   Quire.Mcd.Rational M public .ctor`0(System.Double) -> System.Void
   Quire.Mcd.Rational M public .ctor`0(System.Double,System.Double) -> System.Void
   Quire.Mcd.Rational M public .ctor`0(System.Int32) -> System.Void

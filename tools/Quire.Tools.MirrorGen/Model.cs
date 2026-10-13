@@ -34,12 +34,12 @@ public sealed record GenericParam(string Name, int Variance, bool Class, bool St
 public sealed record ParamModel(string Name, TypeSig Type, bool In, bool Out, bool Params, bool HasDefault, object? Default);
 
 /// <summary>
-/// A mirrored member's state (PLAN.md §3c rule 5), from its attributes. Unclassified means hand-written code that
-/// predates the per-method rule and still has to be verified, documented, blocked or marked Quire-only.
+/// A mirrored member's state (PLAN.md §3c rule 6), from its attributes. Unclassified means hand-written code that
+/// predates the per-method rule and still has to be analyzed, or marked Quire-only.
 /// </summary>
-public enum MemberStatus { Unclassified, Stub, Blocked, Verified, Documented, QuireOnly }
+public enum MemberStatus { Unclassified, Stub, Blocked, Analyzed, Documented, Tested, Verified, Deviation, QuireOnly }
 
-/// <summary>A member's status and the attribute text behind it (reason, test class or source).</summary>
+/// <summary>A member's status and the attribute text behind it (reason, evidence record, test class, deviation or source).</summary>
 public interface IHasStatus
 {
     MemberStatus Status { get; }

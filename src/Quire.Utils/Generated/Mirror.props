@@ -11,5 +11,6 @@
     <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
+    <InternalsVisibleTo Include="Quire.Differential.Tests" />
   </ItemGroup>
 </Project>

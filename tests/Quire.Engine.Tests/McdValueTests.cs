@@ -48,23 +48,6 @@ public class McdValueTests
     }
 
     [Fact]
-    public void Rationals_reduce_and_approximate()
-    {
-        Assert.Equal(new Rational(1, 2), new Rational(-3, -6));
-        Assert.Equal("-2/3", new Rational(4, -6).ToString());
-        Assert.Equal(new Rational(1, 3), new Rational(1.0 / 3));
-        Assert.True(new Rational(1, 3) < new Rational(1, 2));
-        Assert.Equal(0.75, (double)(new Rational(3, 2) * new Rational(1, 2)));
-        Assert.Equal(new Rational(1), new Rational(int.MaxValue, 2) * new Rational(2, int.MaxValue));
-        Assert.Equal(new Rational(2), new Rational(int.MaxValue, 3) / new Rational(int.MaxValue, 6));
-        Assert.Equal(int.MinValue, new Rational(int.MinValue, 1).Numerator);
-        Assert.Throws<OverflowException>(() => new Rational(int.MinValue, -1));
-        Assert.Equal(new Rational(1), new Rational(int.MinValue) / new Rational(int.MinValue));
-        Assert.Equal(new Rational(-3, 2), new Rational(2, 3) / new Rational(-4, 9));
-        Assert.Throws<DivideByZeroException>(() => new Rational(1, 2) / new Rational(0));
-    }
-
-    [Fact]
     public void Numbers_carry_complex_parts_and_dimensions()
     {
         var n = new NumVal(3, -4, Dim.Parse("length"));
