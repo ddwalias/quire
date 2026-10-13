@@ -69,7 +69,8 @@ internal sealed class NodeResult
     }
 }
 
-/// <summary>The entries of a result dictionary from <see cref="IEngine.GetValueSync"/>.</summary>
+/// <summary>The entries of a result dictionary from <see cref="IEngine.GetValueSync"/>. These are provisional Quire
+/// keys, not verified Mathcad equivalents; see docs/mirror/PLAN.md §3b before relying on or changing them.</summary>
 internal static class ResultKeys
 {
     /// <summary><see cref="NodeStatus"/>.</summary>

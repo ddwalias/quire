@@ -5,12 +5,14 @@ the same name, kind, inheritance and member signatures. Only the root namespace 
 
 **Boundary.** The structure comes only from assembly metadata: type and member names, signatures, base types and
 interfaces, read as data. No method bodies are decompiled or copied. Every implementation is written independently,
-as the current code was.
+as the current code was. Widening this boundary, for example to read method bodies or native implementations,
+needs explicit approval first.
 
 **Status.** Phases 0 and 1 are done (§3, §3a). All 5,378 in-scope types exist as generated stubs or merged hand-written
 code. The engine runtime (`Mpl.Run`, `Mcd`, `Engine.IEngine`) is real, the solution builds, and the 213 behaviour tests
-plus 31 shape tests pass. [`type-map.csv`](type-map.csv) lists every Mathcad type with its Quire target name, its status
-and its phase.
+plus 31 shape tests pass. The engine's result dictionaries match Mathcad's signatures, but their contents are still
+provisional (§3b). [`type-map.csv`](type-map.csv) lists every Mathcad type with its Quire target name, its status and
+its phase.
 
 > **Legal note.** Mirroring a proprietary product's internal type structure in detail is a step towards a derivative
 > work, and PTC's licence agreement probably restricts reverse engineering. Get this checked before distributing Quire.
@@ -249,13 +251,14 @@ from 56,114 to 55,766. `Quire.Mpl` is now 21.1% implemented and `Quire.Engine` 1
 | `Mcd.DimVal`, `NumVal` (+ `num_val`), `StrVal`, `RngVal`, `MatVal` (+ `mat_val`) | `NumVal` is complex (`rp`/`ip`) with a `Dim`. `MatVal` is column-major (`m_rarr`/`m_iarr`, `Index = offset + c·anr + r`). Elements whose dimension differs from the matrix's, or that aren't numbers (nested matrices, strings, functions), go in the `m_parr` pointer table, with NaN in their slot. A matrix holding any such element has `mixed_matrix_dim`. `RngVal` is arithmetic (`m_init`, `m_incr`, `m_n`). |
 | `Mpl.Run.Tag`, `Sexpr`, `Nul`, `SCons`, `Tok`, `Atom`, `Sym`, `int_constant`, `real_constant`, `str_constant` | Lists are `SCons`/`Nul`. Each atom is wrapped in a `Tok` that also holds its source handle (1-based offset). |
 | `Mpl.Run.FunctionUtilities`, `Function`, `Rts` | User functions and built-ins are `Function`s. `Rts.RegisterThreadForCancellationChecking`/`IsCancellationRequested` carry cancellation per thread. |
-| `Engine.Factory`, `IFactoryFactory`, `IFactory`, `IEngine`, `NodeCallback`, `BooleanCallback`, `NodeStatus`, `NodeType` | Mathcad's API only: `AddAfter`/`AddBefore`/`Move*`/`Update`/`Replace`/`Remove` with priorities and client cookies, `SetAutoCalc`, `CalculateNow`, and `GetValueSync`/`GetValueBeforeAsync`/`IsBoundAt`/`GetTopNodes`/`GetDefined`. Node callbacks report `(handle, status, cookie)`; the trigger arguments are always 0. |
+| `Engine.Factory`, `IFactoryFactory`, `IFactory`, `IEngine`, `NodeCallback`, `BooleanCallback`, `NodeStatus`, `NodeType` | Mathcad's API only: `AddAfter`/`AddBefore`/`Move*`/`Update`/`Replace`/`Remove` with priorities and client cookies, `SetAutoCalc`, `CalculateNow`, and `GetValueSync`/`GetValueBeforeAsync`/`IsBoundAt`/`GetTopNodes`/`GetDefined`. Node callbacks report `(handle, status, cookie)`; the trigger arguments are always 0. The member signatures are Mathcad's. The *contents* of the returned dictionaries and the meaning of each status are not yet verified (§3b). |
 
 ### Decisions made during Phase 1
 
-- **Results are `IDictionary`s**, as in Mathcad's `GetValueSync`. The keys are Quire's own, listed in
-  `Quire.Engine.Internal.ResultKeys` (`status`, `value`, `defined`, `error`, `symbol`, `display-scale`,
-  `children`, …), because Mathcad's key names aren't in metadata. `Quire.Calculation` reads them.
+- **Results are `IDictionary`s**, because Mathcad's `GetValueSync` and its relatives are declared to return
+  `IDictionary`. That matches the signature only. The keys, value types, optional entries, nesting and status
+  meanings are Quire's provisional choices (`Quire.Engine.Internal.ResultKeys`), not verified Mathcad equivalents.
+  Establishing the real contract is tracked as unfinished work in §3b.
 - **The interpreter is still real-only.** `NumVal` has an imaginary part, but no operation produces one yet.
 - **Mathcad's `NodeType` is the auto-eval flag** (`AUTO_EVAL_ON`/`OFF`). The engine's old region-kind enum is
   now the internal `NodeKind`.
@@ -299,6 +302,77 @@ On mirrored types, the Quire-only members are:
 
 The manifest lists all of them.
 
+## 3b. Unfinished: engine result-dictionary compatibility
+
+**Status: open. Scheduled at the start of Phase 2**, before any of the result-node hierarchy, `ResultManager` or the
+Calculation handlers are built on top of it. Until it is done, nothing in Quire may claim that its engine results are
+Mathcad-compatible.
+
+A matching return signature (`IDictionary GetValueSync(int, int)`, `GetValueAsync`, `GetValueAfter`,
+`GetValueBeforeAsync`) says nothing about what the dictionary holds. The keys, the type of each value, which entries
+are optional, how aggregate results nest, and what each `NodeStatus` means are all part of the contract. A
+Mathcad-shaped consumer would depend on all of them. Quire's current answers were chosen for Quire, not verified.
+
+### What Quire produces today (provisional)
+
+The keys are defined in `Quire.Engine.Internal.ResultKeys`. They are written by `NodeResult.ToDictionary` and
+`WorksheetEngine.ValueDictionary`, and read by `Quire.Calculation.ValueToIResultNodeTransform`.
+
+| Key | Value | Present |
+|---|---|---|
+| `status` | `NodeStatus` | Always |
+| `value` | `DimVal` or null | Node results and scope look-ups |
+| `table` | `bool` | Node results |
+| `defined` | `string[]` | Node results |
+| `error`, `symbol` | `string`, `string` or null | When the node failed |
+| `warning` | `string` | When there is a warning |
+| `display-scale`, `display-offset` | `double` | When the region has a unit override |
+| `children` | `ArrayList` of nested dictionaries with the same keys | Aggregates such as solve blocks |
+
+The statuses Quire uses are:
+- `NODE_READY`: calculated.
+- `NODE_INVALID`: failed, or the name is unbound in a scope look-up.
+- `NODE_NOT_COMPUTING`: never calculated, or out of date, possibly with the previous value.
+
+Quire never produces `NODE_COMPUTING` or `NODE_TREATED_READY`. The member names come from metadata; the meanings
+above are Quire's assumptions.
+
+### How to do the work
+
+1. **Investigate the contract within the current boundary.** Possible evidence sources:
+   - shipped API documentation, such as `Ptc.MathcadPrime.Automation.xml` and any other XML docs in the install;
+   - public examples and PTC documentation;
+   - declared metadata constants: literal fields, enum members and attribute arguments in `iengine`,
+     `Ptc.Calculation`, `Ptc.Calculation.Core` and their neighbours, read with `MirrorGen dump`;
+   - black-box interoperability tests, where the licence permits them (see the legal note above).
+
+   None of these has been examined for this question yet. Don't assume in advance that static analysis can or
+   can't find the keys; record what each source actually showed.
+2. **Keep the metadata-only boundary.** If inspecting method bodies or native implementations turns out to be
+   necessary, write down why the sources above weren't enough and get approval before changing the boundary.
+3. **Record findings below.** For each fact, record what was verified, the evidence source, and what remains
+   unresolved. Leave a detail unresolved rather than guess a key.
+4. **Change Quire only on evidence.** Once the contract is established, update the engine and its consumers
+   (`ValueToIResultNodeTransform`, `CalculationController`, tests) together. Alternatively, add a compatibility
+   adapter between the internal results and the public dictionaries. Runtime keys don't change before then.
+5. **Test the contract exactly.** Cover:
+   - exact key sets;
+   - value types;
+   - statuses for ready, failed, stale and in-progress nodes;
+   - error entries;
+   - nested aggregate results;
+   - the scope look-ups.
+
+   Existing calculation behaviour must not change; the current engine and controller tests stay green.
+6. **Claim only what was verified.** Docs, comments and tests should say "Mathcad-compatible" only for the parts
+   of the contract that were actually established, and name the rest as Quire-specific.
+
+### Findings
+
+| Item | Verified fact | Evidence source | Unresolved |
+|---|---|---|---|
+| (none yet) | | | Keys, value types, optional entries, nesting, status meanings |
+
 ## 4. Phases: turning stubs into real code
 
 Phases are ordered by dependency, from the engine up to the app. Each phase:
@@ -312,7 +386,7 @@ Counts are in-scope types, followed by how many are already mirrored.
 | Phase | Mathcad assemblies | Types | Becomes real |
 |---|---|---:|---|
 | **1. Engine runtime** | `mplrun` 186 (12), `iengine` 18 (4) | 204 | `Mpl.Run` S-expression types (`Sexpr`, `SCons`, `SList`, `Sym`, `Atom`, `Keyword`, `MplEnv`, `Function`…), `Mcd` values (`NumVal`, `MatVal`, `StrVal`, `RngVal`, `Dim`, `Unit`, `Units`, `UnitSystem`, `Rational`), `Engine.IEngine`/`IFactory`/`NodeCallback`/`NodeStatus`. Today's interpreter moves behind them. |
-| **2. Calculation** | `Ptc.Calculation.Core` 129 (18), `Ptc.Calculation` 32 (2) | 161 | The result node hierarchy, `EngineError`, `ResultManager`, `UnitDescriptor`, `CalculationController` with Mathcad's handler set, `EngineBuilder`, `CollapsibleDispatchQueue`, `DataExchangeHandler`. |
+| **2. Calculation** | `Ptc.Calculation.Core` 129 (18), `Ptc.Calculation` 32 (2) | 161 | First, the engine result-dictionary contract (§3b). Then the result node hierarchy, `EngineError`, `ResultManager`, `UnitDescriptor`, `CalculationController` with Mathcad's handler set, `EngineBuilder`, `CollapsibleDispatchQueue`, `DataExchangeHandler`. |
 | **3. Core** | `Ptc.Core` 677 | 677 | `Ptc.PersistentDataObjects` and `Ptc.Serialization` (Quire's `.qwx` and `.mcdx` I/O move here), `Ptc.Wpf` helpers that are actually used. Many `Ptc.Wpf` types stay stubs until a later phase needs them. |
 | **4. Equation editor** | `Ptc.EquationEditor` 491 (2) | 491 | `EquationModel`, `MathNode` tree and descriptor tables, `Tree.Parsing` (Mathcad's rule-based parser shape around the existing grammar), `Tree.Transform` (MathNode→Rl, Xml→MathNode), the `View` visual-node hierarchy. **This is where direct 2D editing arrives**: the `IVisual*Editor`, navigator and typeover types. |
 | **5. Control infrastructure** | `Ptc.Controls.Core` 483 (2), `Ptc.Controls` 92 | 575 | Region base classes, commands, adorners, settings (`ResultFormat`, `MathStyle`), `Ptc.Controls.IO`. |
