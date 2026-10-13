@@ -5,9 +5,9 @@ using Quire.PersistentDataObjects;
 
 namespace Quire.Controls.Worksheet;
 
-public interface IControlFactory
+public partial interface IControlFactory
 {
-    RegionControl CreateRegion(RegionPersistentData data);
+    RegionControl CreateRegion(PersistentDataObjects.RegionPersistentData data);
     EquationControl CreateEquation();
     TextRegionControl CreateText();
     XYPlotControl CreateXYPlot();
@@ -15,15 +15,15 @@ public interface IControlFactory
     SolveBlockControl CreateSolveBlock();
 }
 
-public sealed class ControlFactory : IControlFactory
+public sealed partial class ControlFactory : IControlFactory
 {
     public static readonly ControlFactory Instance = new();
 
-    public RegionControl CreateRegion(RegionPersistentData data) => data switch
+    public RegionControl CreateRegion(PersistentDataObjects.RegionPersistentData data) => data switch
     {
-        MathRegionPersistentData m => EquationControl.FromData(m),
+        PersistentDataObjects.MathRegionPersistentData m => EquationControl.FromData(m),
         TextRegionPersistentData t => new TextRegionControl(t),
-        PlotRegionPersistentData p => new XYPlotControl(p),
+        PersistentDataObjects.PlotRegionPersistentData p => new XYPlotControl(p),
         SolveBlockRegionPersistentData s => new SolveBlockControl(s),
         _ => throw new ArgumentException($"Unknown region type {data.GetType().Name}"),
     };
@@ -34,7 +34,7 @@ public sealed class ControlFactory : IControlFactory
 
     public XYPlotControl CreateXYPlot() => new();
 
-    public XYPlotControl CreatePolarPlot() => new(new PlotRegionPersistentData { Kind = PlotKind.Polar, Width = 280, Height = 280 });
+    public XYPlotControl CreatePolarPlot() => new(new PersistentDataObjects.PlotRegionPersistentData { Kind = PlotKind.Polar, Width = 280, Height = 280 });
 
     public SolveBlockControl CreateSolveBlock() => new();
 }

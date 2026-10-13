@@ -8,8 +8,8 @@ namespace Quire.EquationEditor.View;
 public class MathView : FrameworkElement
 {
     public static readonly DependencyProperty StatementProperty = Register(nameof(Statement), typeof(Statement));
-    public static readonly DependencyProperty ExpressionProperty = Register(nameof(Expression), typeof(MathNode));
-    public static readonly DependencyProperty ResultProperty = Register(nameof(Result), typeof(MathNode));
+    public static readonly DependencyProperty ExpressionProperty = Register(nameof(Expression), typeof(MathExpr));
+    public static readonly DependencyProperty ResultProperty = Register(nameof(Result), typeof(MathExpr));
     public static readonly DependencyProperty ResultIsTableProperty = Register(nameof(ResultIsTable), typeof(bool), false);
     public static readonly DependencyProperty ErrorSymbolProperty = Register(nameof(ErrorSymbol), typeof(string));
     public static readonly DependencyProperty MathStyleProperty = Register(nameof(MathStyle), typeof(MathStyle), MathStyle.Default);
@@ -22,8 +22,8 @@ public class MathView : FrameworkElement
     private Box? _box;
 
     public Statement? Statement { get => (Statement?)GetValue(StatementProperty); set => SetValue(StatementProperty, value); }
-    public MathNode? Expression { get => (MathNode?)GetValue(ExpressionProperty); set => SetValue(ExpressionProperty, value); }
-    public MathNode? Result { get => (MathNode?)GetValue(ResultProperty); set => SetValue(ResultProperty, value); }
+    public MathExpr? Expression { get => (MathExpr?)GetValue(ExpressionProperty); set => SetValue(ExpressionProperty, value); }
+    public MathExpr? Result { get => (MathExpr?)GetValue(ResultProperty); set => SetValue(ResultProperty, value); }
     public bool ResultIsTable { get => (bool)GetValue(ResultIsTableProperty); set => SetValue(ResultIsTableProperty, value); }
     public string? ErrorSymbol { get => (string?)GetValue(ErrorSymbolProperty); set => SetValue(ErrorSymbolProperty, value); }
     public MathStyle MathStyle { get => (MathStyle)GetValue(MathStyleProperty); set => SetValue(MathStyleProperty, value); }

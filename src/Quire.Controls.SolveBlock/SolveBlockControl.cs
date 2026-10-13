@@ -21,7 +21,7 @@ public enum SolveBlockEquationTypes
 /// Solve block: guess values, constraints and a solver line (<c>s := find(x, y)</c>). The block is a single
 /// engine node; only the solver line's definitions are visible to the rest of the worksheet.
 /// </summary>
-public class SolveBlockControl : CalculatableRegionControl
+public partial class SolveBlockControl : CalculatableRegionControl
 {
     private static readonly Brush HeaderBrush = Frozen(Color.FromRgb(0x5A, 0x6B, 0x80));
     private static readonly Brush FrameBrush = Frozen(Color.FromRgb(0xA8, 0xB8, 0xCC));
@@ -153,7 +153,7 @@ public class SolveBlockControl : CalculatableRegionControl
 
     public override bool IsEmpty => _lines.All(l => l.Line.IsEmpty);
 
-    protected override void OnResult(EngineResult result)
+    protected override void OnResult(CalculationResult result)
     {
         var children = result.Children ?? [];
         int nonEmpty = 0;

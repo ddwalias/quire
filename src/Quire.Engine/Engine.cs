@@ -1,4 +1,4 @@
-using Quire.Mpl.Run;
+using Quire.Mpl.Rl;
 using Quire.Values;
 
 namespace Quire.Engine;
@@ -28,6 +28,9 @@ public sealed class Engine : IEngine
     private int _dirtyFrom;
     private bool _globalsDirty = true;
     private Env _globalEnv = Env.Empty;
+
+    /// <summary>The engine holds no unmanaged resources, so there is nothing to release.</summary>
+    public void Dispose() { }
     private readonly Dictionary<int, NodeResult> _globalResults = [];
 
     public event NodeCallback? NodeUpdated;

@@ -1,0 +1,11 @@
+<Project>
+  <!--
+    Build with -p:MirrorStubs=false to compile only hand-written code. MirrorGen reads that build to find which
+    members hand-written partials already declare, so it can leave them out of the generated stubs.
+  -->
+  <ItemGroup Condition="'$(MirrorStubs)' == 'false'">
+    <Compile Remove="Generated\Mirror\**" />
+    <!-- MirrorGen refuses to read any other build as "hand-written". -->
+    <AssemblyMetadata Include="Quire.MirrorStubs" Value="false" />
+  </ItemGroup>
+</Project>

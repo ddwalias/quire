@@ -2,7 +2,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Quire.Calculation.Core;
-using Quire.EquationEditor.Tree.Transform;
 using Quire.PersistentDataObjects;
 
 namespace Quire.Controls.Core;
@@ -78,9 +77,9 @@ public abstract class RegionControl : ContentControl
     }
 
     /// <summary>Worksheet number display settings; regions showing results re-render when it changes.</summary>
-    public ResultFormat ResultFormat { get; private set; } = ResultFormat.Default;
+    public ResultFormatOptions ResultFormat { get; private set; } = ResultFormatOptions.Default;
 
-    public void ApplyResultFormat(ResultFormat format)
+    public void ApplyResultFormat(ResultFormatOptions format)
     {
         ResultFormat = format;
         OnResultFormatChanged();
@@ -142,7 +141,7 @@ public abstract class CalculatableRegionControl : RegionControl, ICalculatable
 
     public SynchronizationStatus SynchronizationStatus { get; private set; } = SynchronizationStatus.Pending;
 
-    public EngineResult? Result { get; private set; }
+    public CalculationResult? Result { get; private set; }
 
     public void SetSynchronizationStatus(SynchronizationStatus status)
     {
@@ -150,13 +149,13 @@ public abstract class CalculatableRegionControl : RegionControl, ICalculatable
         Opacity = status == SynchronizationStatus.Pending ? 0.75 : 1;
     }
 
-    public void SetResult(EngineResult result)
+    public void SetResult(CalculationResult result)
     {
         Result = result;
         OnResult(result);
     }
 
-    protected abstract void OnResult(EngineResult result);
+    protected abstract void OnResult(CalculationResult result);
 
     /// <summary>Re-apply the last result, e.g. after the display format changed.</summary>
     protected override void OnResultFormatChanged()

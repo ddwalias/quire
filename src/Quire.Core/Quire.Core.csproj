@@ -3,7 +3,5 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />
-  </ItemGroup>
+  <Import Project="Generated\Mirror.props" />
 </Project>

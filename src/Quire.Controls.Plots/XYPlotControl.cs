@@ -17,7 +17,7 @@ namespace Quire.Controls.Plots;
 /// XY or polar plot region. The y-axis holds one expression per trace and the x-axis one expression
 /// (a range variable, a vector, or an undefined name for a QuickPlot over −10..10).
 /// </summary>
-public class XYPlotControl : CalculatableRegionControl
+public partial class XYPlotControl : CalculatableRegionControl
 {
     private readonly PlotGraph _graph = new();
     private readonly StackPanel _yLabels = new() { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 4, 0) };
@@ -197,7 +197,7 @@ public class XYPlotControl : CalculatableRegionControl
         }
     }
 
-    private static MathNode? Expr(string text) => string.IsNullOrWhiteSpace(text) ? null : LinearParser.ParseExpression(text.Trim());
+    private static MathExpr? Expr(string text) => string.IsNullOrWhiteSpace(text) ? null : LinearParser.ParseExpression(text.Trim());
 
     private static double? Limit(string text) =>
         string.IsNullOrWhiteSpace(text) ? null : double.Parse(text.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture);
@@ -206,7 +206,7 @@ public class XYPlotControl : CalculatableRegionControl
 
     // ---------------------------------------------------------------- results
 
-    protected override void OnResult(EngineResult result)
+    protected override void OnResult(CalculationResult result)
     {
         _graph.Format = ResultFormat;
         if (result.Error != null)

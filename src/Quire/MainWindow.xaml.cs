@@ -11,6 +11,7 @@ using Quire.Controls.Worksheet;
 using Quire.Core;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.PersistentDataObjects;
+using Quire.Controls.Core;
 
 namespace Quire;
 

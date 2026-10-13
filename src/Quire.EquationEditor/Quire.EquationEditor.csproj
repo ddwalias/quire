@@ -6,5 +6,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
     <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
+    <ProjectReference Include="..\Quire.Controls.Core\Quire.Controls.Core.csproj" />
   </ItemGroup>
+  <Import Project="Generated\Mirror.props" />
 </Project>

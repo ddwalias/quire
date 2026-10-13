@@ -8,7 +8,7 @@ public delegate void NodeCallback(int handle, NodeResult result);
 /// The calculation engine keeps an ordered list of nodes (one per region, in worksheet order).
 /// A node sees every definition made by the nodes before it, plus all global definitions.
 /// </summary>
-public interface IEngine
+public partial interface IEngine
 {
     /// <summary>Raised for each node whose result was (re)computed.</summary>
     event NodeCallback? NodeUpdated;

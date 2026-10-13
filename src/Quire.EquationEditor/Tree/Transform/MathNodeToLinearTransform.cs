@@ -24,9 +24,9 @@ public static class MathNodeToLinearTransform
         ["add"] = (" + ", 5), ["sub"] = (" - ", 5), ["mult"] = ("*", 6), ["div"] = ("/", 6), ["pow"] = ("^", 8),
     };
 
-    public static string Write(MathNode node) => Write(node, 0);
+    public static string Write(MathExpr node) => Write(node, 0);
 
-    private static string Write(MathNode node, int parentPrec)
+    private static string Write(MathExpr node, int parentPrec)
     {
         switch (node)
         {

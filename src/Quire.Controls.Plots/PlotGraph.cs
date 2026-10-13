@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Quire.Calculation.Core;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.PersistentDataObjects;
+using Quire.Controls.Core;
 
 namespace Quire.Controls.Plots;
 
@@ -29,7 +30,7 @@ public sealed class PlotGraph : FrameworkElement
     public double? XMax { get; set; }
     public double? YMin { get; set; }
     public double? YMax { get; set; }
-    public ResultFormat Format { get; set; } = ResultFormat.Default;
+    public ResultFormatOptions Format { get; set; } = ResultFormatOptions.Default;
 
     public PlotGraph()
     {

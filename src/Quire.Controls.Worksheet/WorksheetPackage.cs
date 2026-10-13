@@ -159,7 +159,7 @@ public static class WorksheetPackage
     private static Statement Stmt(XElement? mathEl) =>
         mathEl?.Elements().FirstOrDefault() is { } x ? XmlMathTransform.StatementFromXml(x) : EmptyStatement.Instance;
 
-    private static MathNode? Node(XElement? holder) =>
+    private static MathExpr? Node(XElement? holder) =>
         holder?.Elements().FirstOrDefault() is { } x ? XmlMathTransform.NodeFromXml(x) : null;
 
     private static RegionPersistentData? RegionFromXml(XElement r)

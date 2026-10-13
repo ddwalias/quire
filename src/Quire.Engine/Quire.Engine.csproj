@@ -5,4 +5,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Quire.Mpl\Quire.Mpl.csproj" />
   </ItemGroup>
+  <Import Project="Generated\Mirror.props" />
 </Project>

@@ -1,6 +1,6 @@
 namespace Quire.Calculation.Core;
 
-public interface IEngineError
+public partial interface IEngineError
 {
     string Message { get; }
 
@@ -8,7 +8,17 @@ public interface IEngineError
     string? Symbol { get; }
 }
 
-public sealed record EngineError(string Message, string? Symbol = null) : IEngineError;
+public sealed partial class EngineError : IEngineError
+{
+    public EngineError(string message, string? symbol = null)
+    {
+        Message = message;
+        Symbol = symbol;
+    }
+
+    public string Message { get; }
+    public string? Symbol { get; }
+}
 
 /// <summary>A unit factor in a displayed result, e.g. ("m", 1), ("s", -2).</summary>
 public sealed record UnitPower(string Name, double Exponent);
@@ -24,14 +34,14 @@ public enum ResultValueType
 }
 
 /// <summary>Display-ready result tree; values are already converted to their display units.</summary>
-public interface IResultNode
+public partial interface IResultNode
 {
     ResultValueType ValueType { get; }
 }
 
-public interface IEmptyResultNode : IResultNode;
+public partial interface IEmptyResultNode : IResultNode;
 
-public interface IUnitedValueResultNode : IResultNode
+public partial interface IUnitedValueResultNode : IResultNode
 {
     double DisplayValue { get; }
 
@@ -39,12 +49,12 @@ public interface IUnitedValueResultNode : IResultNode
     IReadOnlyList<UnitPower> Units { get; }
 }
 
-public interface IStringResultNode : IResultNode
+public partial interface IStringResultNode : IResultNode
 {
     string Value { get; }
 }
 
-public interface IMatrixResultNode : IResultNode
+public partial interface IMatrixResultNode : IResultNode
 {
     int Rows { get; }
     int Cols { get; }
@@ -62,14 +72,14 @@ public interface IMatrixResultNode : IResultNode
     bool IsRangeTable { get; }
 }
 
-public interface IFunctionResultNode : IResultNode
+public partial interface IFunctionResultNode : IResultNode
 {
     string Signature { get; }
 }
 
 public sealed record TraceData(string Label, double[] X, double[] Y, IReadOnlyList<UnitPower> XUnits, IReadOnlyList<UnitPower> YUnits);
 
-public interface ITrace2DResultNode : IResultNode
+public partial interface ITrace2DResultNode : IResultNode
 {
     IReadOnlyList<TraceData> Traces { get; }
 }
@@ -107,16 +117,16 @@ public sealed record Trace2DResultNode(IReadOnlyList<TraceData> Traces) : ITrace
 }
 
 /// <summary>The engine's answer for one calculatable.</summary>
-public sealed class EngineResult
+public sealed class CalculationResult
 {
     public IResultNode Value { get; init; } = EmptyResultNode.Instance;
     public IEngineError? Error { get; init; }
     public string? Warning { get; init; }
 
     /// <summary>Per-child results for aggregates (solve blocks), in the order of their children.</summary>
-    public IReadOnlyList<EngineResult>? Children { get; init; }
+    public IReadOnlyList<CalculationResult>? Children { get; init; }
 
     public bool HasError => Error != null || (Children?.Any(c => c.HasError) ?? false);
 
-    public static readonly EngineResult Empty = new();
+    public static readonly CalculationResult Empty = new();
 }

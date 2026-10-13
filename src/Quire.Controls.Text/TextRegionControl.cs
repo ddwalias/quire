@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.PersistentDataObjects;
+using DocumentTextRange = System.Windows.Documents.TextRange;
 
 namespace Quire.Controls;
 
@@ -50,14 +51,14 @@ public class TextRegionControl : RegionControl
         set => _box.Width = value;
     }
 
-    public override bool IsEmpty => string.IsNullOrWhiteSpace(new TextRange(_box.Document.ContentStart, _box.Document.ContentEnd).Text);
+    public override bool IsEmpty => string.IsNullOrWhiteSpace(new DocumentTextRange(_box.Document.ContentStart, _box.Document.ContentEnd).Text);
 
-    public string PlainText => new TextRange(_box.Document.ContentStart, _box.Document.ContentEnd).Text.TrimEnd();
+    public string PlainText => new DocumentTextRange(_box.Document.ContentStart, _box.Document.ContentEnd).Text.TrimEnd();
 
     private void LoadXaml(string xaml)
     {
         if (string.IsNullOrWhiteSpace(xaml)) return;
-        var range = new TextRange(_box.Document.ContentStart, _box.Document.ContentEnd);
+        var range = new DocumentTextRange(_box.Document.ContentStart, _box.Document.ContentEnd);
         try
         {
             using var ms = new MemoryStream(Encoding.UTF8.GetBytes(xaml));
@@ -71,7 +72,7 @@ public class TextRegionControl : RegionControl
 
     private string SaveXaml()
     {
-        var range = new TextRange(_box.Document.ContentStart, _box.Document.ContentEnd);
+        var range = new DocumentTextRange(_box.Document.ContentStart, _box.Document.ContentEnd);
         using var ms = new MemoryStream();
         range.Save(ms, DataFormats.Xaml);
         return Encoding.UTF8.GetString(ms.ToArray());

@@ -7,7 +7,8 @@ the same name, kind, inheritance and member signatures. Only the root namespace 
 interfaces, read as data. No method bodies are decompiled or copied. Every implementation is written independently,
 as the current code was.
 
-**Status.** Plan committed; decisions D1–D3 and D8 made. Phase 0 in progress. [`type-map.csv`](type-map.csv) lists every Mathcad type with its
+**Status.** Phase 0 is done (§3): all 5,378 in-scope types exist as generated stubs or merged hand-written code, the
+solution builds, and the 192 behaviour tests plus 31 shape tests pass. [`type-map.csv`](type-map.csv) lists every Mathcad type with its
 Quire target name, its status and its phase.
 
 > **Legal note.** Mirroring a proprietary product's internal type structure in detail is a step towards a derivative
@@ -114,6 +115,7 @@ depends on them.
 |---|---|---|
 | `Ptc.X` | `Quire.X` | e.g. `Ptc.Controls.Worksheet.WorksheetModel` → `Quire.Controls.Worksheet.WorksheetModel` |
 | `Spirit.X` (the codename inside `MathcadPrime.dll`) | `Quire.X` | The app name change, e.g. `Spirit.MruFiles` → `Quire.MruFiles` |
+| `Ptc.MathcadPrime.X`, `Mathcad.X`, `Mathsoft.X`, `MathcadAutomationPrivate.X` | `Quire.X`, `Quire.AutomationPrivate.X` | Also the app (or former company) name; no collisions result |
 | `Mpl.Run.X`, `Mpl.X` | `Quire.Mpl.Run.X`, `Quire.Mpl.X` | |
 | `Mcd.X` | `Quire.Mcd.X` | **D1 (decided).** Today's `Quire.Values` code moves here in phase 1 |
 | `Engine.X` (`iengine`, `mccore12`, `mceng`) | `Quire.Engine.X` | |
@@ -121,54 +123,104 @@ depends on them.
 | `Efi.X`, `Hex.X`, `mslisp.X`, `Mathcad.Automation.X`, other roots | `Quire.<root>.X` | |
 | Global-namespace types in native wrappers | `Quire.Native.<Assembly>.X` | e.g. `efiio_.dll` → `Quire.Native.EfiioImpl` |
 | Nested types (`A+B`) | Nested types | |
-| Mathcad assembly | Quire project of the same name | Except the native wrappers, which are consolidated (**D2**) |
+| Mathcad assembly | Quire project of the same name | Except the engine assemblies, which are consolidated (**D2**, below) |
+| Names C# can't spell (Mpl operators `==.`, primes `abs'`) | Spelled out: `_eq_eq_dot`, `abs_prime` | `[MirrorOf]` keeps the original; see `Identifier.cs` |
 
-**Collisions.** 33 target names collide, all of them shared native-header types such as `Efi.gc.Value` and
-`mcComplex`. Each is defined once in `Quire.Efi.Common`.
+**D2 layout, as built.** The consolidated projects follow the layers of Mathcad's own assembly graph, which keeps
+them acyclic: `Quire.Mpl.Emit` (mplasb) → `Quire.Mpl` (mplrun) → `Quire.Mpl.Modules` (compiled Mpl modules:
+`mpl*`, `hashtable`, `mcdrun`, `mcdstaticunitsystem*`) → `Quire.Engine.Utl` (utl-mgd, mcmisc) → `Quire.Efi`
+(efi*) → `Quire.Automation.Native` (automation, automationmgd, componentsmgd) → `Quire.Engine` (iengine,
+engutils-mgd) → `Quire.Mcd` (the other mcd*) → `Quire.Engine.Native` (mccore12, mcfront12, mceng, msclr, msgen,
+mslisp, mspcons-mgd). `Quire.Utils` holds utilsmgd.
+
+**Duplicates.** A type compiled into several assemblies from a shared header is defined once per Quire project when
+it is internal (as Mathcad has it, one copy per DLL), and once overall when it is public, in the lowest project of the
+assemblies that contain it. No separate `Quire.Efi.Common` project turned out to be needed.
 
 **Existing Quire types with no Mathcad counterpart.** `LinearParser`, `Interpreter`, `Numerics`, `Boxes`,
 `VisualNodeBuilder`, `PlotGraph` and others become `internal` implementation types under a `…Internal` namespace of
 their assembly. They have to exist: Mathcad's equivalents are native or BAML code that isn't visible in metadata.
 
-## 3. Phase 0: tooling (generated, nothing hand-written)
+## 3. Phase 0: tooling and skeleton (done)
 
-1. **`tools/Quire.Tools.MirrorGen`**: a .NET console tool built on `System.Reflection.Metadata`. It reads the PTC
-   DLLs as data and never loads or executes them. It writes `mirror-manifest.json` for each assembly, containing:
-   - types (kind, visibility, abstract/sealed/static, generic parameters, base type, interfaces, nesting)
-   - fields, properties, events and methods, with fully decoded signatures and enum values
-   - custom attributes that affect shape: `[Flags]`, `DispId`, `ComVisible`, `DependencyProperty` registrations
-     inferred from static fields
-   - **a duplicate check**: types with the same name in several assemblies are compared by native size, fields and
-     members. Identical copies merge into one shared definition (`Quire.Efi.Common` and similar); copies that
-     differ stay separate types and are reported for review
+### What was built
 
-   It replaces the Python inventory used for this plan and applies the mapping rules above from one rules file.
-2. **`src/Quire.Mirror`**: a tiny assembly referenced by every mirrored project. It holds `[MirrorOf("Ptc…")]`,
-   `[MirrorStub]` and `MirrorStub.NotImplemented(…)`.
-3. **The skeleton emitter** writes `Generated/Mirror/<Type>.g.cs` as `partial` types:
-   - Every stub member throws `MirrorStub.NotImplemented()` and carries `[MirrorStub]`.
-   - The emitter skips any member that a hand-written partial already defines, by compiling first and comparing.
-     Re-running it therefore never overwrites real code.
-   - XAML-backed Mathcad classes (UserControls, `InitializeComponent`) are emitted as code-only partials. No BAML or
-     XAML is copied, and where a view is needed Quire writes its own XAML.
-4. **Coverage report and test** (`tests/Quire.Mirror.Tests`):
-   - The report lists, per assembly, how many mirrored types and members are real and how many are stubs.
-   - The test fails when a manifest type is missing from Quire, or when its shape (base type, interfaces, member
-     signatures) differs.
-5. **A native and script inventory.** This covers what §1.3 found outside .NET metadata:
-   - PE export tables, with MSVC-decorated names decoded into class and method signatures
-   - Axiom package and operation names from the `MC*.NRLIB` index files
-   - Lisp function and Prolog predicate signatures, with names and arities recorded as data; source bodies are
-     never copied
-   - The `MCADINCL.H` C API
+| Piece | What it does |
+|---|---|
+| `tools/Quire.Tools.MirrorGen` | Reads Mathcad's assemblies with `System.Reflection.Metadata` (as data; nothing is loaded or run, no method bodies are read), maps names by §2, and plans and writes the stubs. `type-map.csv` is the reviewed scope it reads. Commands: `emit`, `manifest`, `native-inventory`, plus diagnostics (`scope-diff`, `collisions`, `graph`, `stats`, `dump`). |
+| `src/Quire.Mirror` | `[MirrorOf("Ptc…, Assembly")]` on each mirrored type, `[MirrorStub]` on each unimplemented member, and `MirrorStub.NotImplemented()`. |
+| `src/*/Generated/Mirror/*.g.cs` | 4,652 files of `partial` declarations: one per top-level type, nested types inside. |
+| `src/*/Generated/Mirror.props` | Per project: project and package references, WPF/WinForms/unsafe settings and `InternalsVisibleTo`, all derived from Mathcad's own references. |
+| `docs/mirror/manifest/*.txt` | The mirrored shape of each project, one line per type and member. |
+| `docs/mirror/coverage.md` | Mirrored types, members and stubs per project: 5,385 types, 43,763 members, 42,896 stubs. The non-stub 2% are hand-written members, including Quire-only ones. |
+| `docs/mirror/notes.txt` | Every place the generated C# differs from Mathcad's metadata, and why. |
+| `docs/mirror/native/` | The §1.3 inventory: 1,389 exports from 11 native DLLs (47 exported classes), 464 Lisp definitions, 712 Prolog predicates, 86 Axiom packages with 2,497 operations, and the `MCADINCL.H` API. Names and signatures only. |
+| `tests/Quire.Mirror.Tests` | Fails when a manifest line changes or disappears, or when an in-scope Mathcad type has no Quire type. It guards against drift; fidelity to Mathcad is the generator's job, and `notes.txt` lists every known difference. |
 
-   All of it goes into the same manifest and coverage report.
-6. **Exit criteria:**
-   - The solution builds with all 5,377 types present.
-   - The existing 192 behaviour tests still pass, because the working code keeps running through the moved types.
-   - The coverage report is checked in.
+The reader was cross-checked with REA: for `Ptc.Controls.SolveBlock.dll` the method counts of all 23 named types
+match REA's managed-member inventory, and for `mshex.dll` the 380 exports match exactly.
 
-The generated stubs are scaffolding, not finished work. Every phase report states the stub count.
+### How stubs behave
+
+- Methods and properties throw `NotImplementedException` naming the member.
+- Nothing that frameworks call implicitly throws:
+  - Constructors succeed, so objects can be created by WPF or as the base of hand-written classes. On a type with a
+    hand-written part, they chain to its constructor so its initialisation runs.
+  - Events are field-like, so subscribing (as WPF does to `PropertyChanged`) works.
+  - `Dispose` and finalizers do nothing.
+- An override of a concrete base member calls the base, so stubs don't break inherited behaviour (for example
+  `OnTemplateChanged`).
+- Interface members get throwing default bodies, so hand-written classes that implement a mirrored interface keep
+  compiling until the member is implemented.
+
+### Merging with hand-written code
+
+The generator never edits hand-written files. It reads a build of the hand-written code alone
+(`dotnet build -p:MirrorStubs=false`, which leaves `Generated/Mirror` out) and skips every member already declared
+there. Where hand-written code differs, it wins and the difference goes into `notes.txt`. This covers a different
+base class (four region controls), a different access, and overloads covered by optional parameters.
+
+Existing code that clashed with Mathcad's design was moved or renamed, not merged:
+
+| Change | Why |
+|---|---|
+| `ResultFormat` → `Quire.Controls.Core.ResultFormatOptions` | Mathcad's `ResultFormat` is a `DependencyObject`; Quire's is an options record |
+| `MathNode` → `MathExpr` | Mathcad's `MathNode` is a class; Quire's linear-editor tree is records |
+| `EngineResult` → `CalculationResult` | Mathcad's `EngineResult` is a struct |
+| `Quire.Mpl.Run.Sexpr`/`Sym`/`Atom`/`SList` → `Quire.Mpl.Rl` | Mathcad's `Mpl.Run` types have a different design (`Atom` is abstract, `Sexpr` takes a tag) |
+| Persistent data holding equation trees → `Quire.Controls.EquationControl`; `WorksheetPackage`/`WorksheetConverter` → `Quire.Controls.Worksheet` | Mathcad's `Ptc.Core` is the bottom layer; Quire's `Quire.Core` depended on the equation editor |
+
+The four §5 "moves into mirrored types" stay for each phase; Phase 0 only made the names coexist.
+
+### Things the metadata needed
+
+- **Obfuscation.** `Ptc.EquationEditor` is obfuscated: 268 of its 491 types, and many internal members, have names
+  such as `a` and `g+a`. They are mirrored verbatim.
+  - Where C# forbids a clash that IL allows, the member or the nested type gets a `_` suffix (217 cases).
+  - Overrides that the obfuscator renamed are declared under their base member's name.
+  - Properties and events whose metadata rows were stripped are rebuilt from their special-name accessors.
+  - Interface accessors implemented without a property become explicit properties (251 notes).
+- **C++/CLI.** The wrappers only list direct interfaces, and some public types are built on internal ones. The
+  planner walks interface closures, and lowers access where C# requires it (notes say where).
+- **Excluded types in signatures.**
+  - Members whose signatures use deferred types (COM interop, licensing), NRtfTree (pending D7) or unlisted C++
+    templates are left out with a note (about 120 members).
+  - Pointers to native toolchain types become `nint`.
+  - The DevComponents base classes map to their Fluent.Ribbon/AvalonDock equivalents (D6).
+
+### Regenerating
+
+`dotnet build -p:MirrorStubs=false` → `MirrorGen emit` → `dotnet build` → `MirrorGen manifest` → `dotnet test`.
+
+- `emit` needs the Mathcad install (`MATHCAD_DIR` overrides its path); the tests do not.
+- `emit` refuses to read a build that includes the stubs, which `Directory.Build.targets` stamps.
+- `manifest` refuses to drop lines from the checked-in manifest unless given `--accept-removals`, so every shape
+  change is reviewed.
+- Hand-written partials declare their constructors explicitly. Once the generated part declares Mathcad's
+  constructors, C# no longer supplies the implicit one.
+
+`PositionComparer.Compare` is the first stub made real: Quire's worksheet ordering moved there from
+`WorksheetItemPositionComparer`, which now inherits it, as in Mathcad.
 
 ## 4. Phases: turning stubs into real code
 
@@ -240,7 +292,7 @@ writing a numerical library and a computer-algebra system.
 
 ## 7. Per-phase workflow and quality gates
 
-1. Regenerate the skeleton for the phase's assemblies. The generator is idempotent.
+1. Regenerate the skeleton for the phase's assemblies, as in §3 "Regenerating". The generator is idempotent and never edits hand-written files.
 2. Move the existing code with `git mv` and namespace updates, then fix callers.
 3. Implement the stubs the phase needs, with tests written against behaviour, not against Mathcad's internals.
 4. Gates:

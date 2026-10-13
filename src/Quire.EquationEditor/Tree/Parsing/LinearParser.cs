@@ -53,7 +53,7 @@ public sealed class LinearParser
 
     public static Statement ParseStatement(string src) => new LinearParser(src).Statement();
 
-    public static MathNode ParseExpression(string src)
+    public static MathExpr ParseExpression(string src)
     {
         var p = new LinearParser(src);
         var e = p.Expr();
@@ -177,7 +177,7 @@ public sealed class LinearParser
             var target = ToTarget(lhs, lhsPos);
             var value = RangeOrExpr();
             bool show = false;
-            MathNode? unit = null;
+            MathExpr? unit = null;
             if (Eat("="))
             {
                 show = true;
@@ -196,7 +196,7 @@ public sealed class LinearParser
         return new ExprStatement(lhs);
     }
 
-    private static MathNode ToTarget(MathNode lhs, int pos) => lhs switch
+    private static MathExpr ToTarget(MathExpr lhs, int pos) => lhs switch
     {
         IdNode => lhs,
         CallNode c when c.Args.All(a => a is IdNode) => lhs,
@@ -204,7 +204,7 @@ public sealed class LinearParser
         _ => throw new ParseException("The left side of a definition must be a name, f(x, …) or v[i]", pos),
     };
 
-    private MathNode RangeOrExpr()
+    private MathExpr RangeOrExpr()
     {
         var first = Expr();
         if (Is(",") && _toks.Skip(_i).Any(t => t.Kind == TokenKind.Op && t.Text == ".."))
@@ -218,29 +218,29 @@ public sealed class LinearParser
         return first;
     }
 
-    private MathNode Expr() => Or();
+    private MathExpr Expr() => Or();
 
-    private MathNode Or()
+    private MathExpr Or()
     {
         var l = And();
         while (Is("or") || IsWord("or")) { Next(); l = new BinaryNode("or", l, And()); }
         return l;
     }
 
-    private MathNode And()
+    private MathExpr And()
     {
         var l = Not();
         while (Is("and") || IsWord("and")) { Next(); l = new BinaryNode("and", l, Not()); }
         return l;
     }
 
-    private MathNode Not()
+    private MathExpr Not()
     {
         if (Is("not") || IsWord("not")) { Next(); return new UnaryNode("not", Not()); }
         return Comparison();
     }
 
-    private MathNode Comparison()
+    private MathExpr Comparison()
     {
         var l = Additive();
         if (Peek.Kind == TokenKind.Op && ComparisonOps.TryGetValue(Peek.Text, out var op))
@@ -251,7 +251,7 @@ public sealed class LinearParser
         return l;
     }
 
-    private MathNode Additive()
+    private MathExpr Additive()
     {
         var l = Multiplicative();
         while (Is("+") || Is("-"))
@@ -262,7 +262,7 @@ public sealed class LinearParser
         return l;
     }
 
-    private MathNode Multiplicative()
+    private MathExpr Multiplicative()
     {
         var l = Unary();
         for (;;)
@@ -289,14 +289,14 @@ public sealed class LinearParser
         };
     }
 
-    private MathNode Unary()
+    private MathExpr Unary()
     {
         if (Eat("-")) return new UnaryNode("neg", Unary());
         if (Eat("+")) return Unary();
         return Power();
     }
 
-    private MathNode Power()
+    private MathExpr Power()
     {
         var b = Postfix();
         if (!Eat("^")) return b;
@@ -304,7 +304,7 @@ public sealed class LinearParser
         return new BinaryNode("pow", b, exp);
     }
 
-    private MathNode Postfix()
+    private MathExpr Postfix()
     {
         var x = Primary();
         for (;;)
@@ -320,16 +320,16 @@ public sealed class LinearParser
         }
     }
 
-    private List<MathNode> List(string close)
+    private List<MathExpr> List(string close)
     {
-        var items = new List<MathNode>();
+        var items = new List<MathExpr>();
         if (Eat(close)) return items;
         do items.Add(Expr()); while (Eat(","));
         Expect(close);
         return items;
     }
 
-    private MathNode Primary()
+    private MathExpr Primary()
     {
         var t = Next();
         switch (t.Kind)
@@ -377,7 +377,7 @@ public sealed class LinearParser
 
     private MatrixNode Matrix(int pos)
     {
-        var rows = new List<List<MathNode>> { new() };
+        var rows = new List<List<MathExpr>> { new() };
         if (Eat("]")) throw new ParseException("Empty matrix", pos);
         for (;;)
         {

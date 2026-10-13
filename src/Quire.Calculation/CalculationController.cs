@@ -10,7 +10,7 @@ namespace Quire.Calculation;
 /// worker thread; results are marshalled back through the captured <see cref="SynchronizationContext"/>.
 /// A new edit cancels an in-flight calculation, which resumes from the first out-of-date region.
 /// </summary>
-public sealed class CalculationController : IDisposable
+public sealed partial class CalculationController : IDisposable
 {
     private readonly IEngine _engine;
     private readonly SynchronizationContext? _ui;

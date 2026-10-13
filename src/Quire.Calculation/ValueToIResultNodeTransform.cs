@@ -5,9 +5,12 @@ using Quire.Values;
 namespace Quire.Calculation;
 
 /// <summary>Converts engine values (SI) into display-ready result nodes for a unit system.</summary>
-public static class ValueToIResultNodeTransform
+public partial class ValueToIResultNodeTransform
 {
-    public static EngineResult Transform(NodeResult node, UnitSystem system) => new()
+    /// <summary>Declared explicitly: the mirrored part adds Mathcad's constructors, which would hide the implicit one.</summary>
+    public ValueToIResultNodeTransform() { }
+
+    public static CalculationResult Transform(NodeResult node, UnitSystem system) => new()
     {
         Value = node.Value == null ? EmptyResultNode.Instance : MakeNode(node.Value, node.Display, node.IsRangeTable, system),
         Error = node.Error == null ? null : new Core.EngineError(node.Error.Message, node.Error.Symbol),

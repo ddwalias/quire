@@ -14,5 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Quire.Core\Quire.Core.csproj" />
     <ProjectReference Include="..\..\src\Quire.EquationEditor\Quire.EquationEditor.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Worksheet\Quire.Controls.Worksheet.csproj" />
   </ItemGroup>
 </Project>

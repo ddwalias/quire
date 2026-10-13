@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The generator's metadata reader and shape rules, and every mirrored project so its assembly is in the output. -->
+    <ProjectReference Include="..\..\tools\Quire.Tools.MirrorGen\Quire.Tools.MirrorGen.csproj" />
+    <ProjectReference Include="..\..\src\Quire\Quire.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Automation.Native\Quire.Automation.Native.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Automation\Quire.Automation.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Calculation\Quire.Calculation.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.CollapsibleArea\Quire.Controls.CollapsibleArea.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Core\Quire.Controls.Core.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.EquationControl\Quire.Controls.EquationControl.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.ExcelComponent\Quire.Controls.ExcelComponent.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Include\Quire.Controls.Include.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Plots\Quire.Controls.Plots.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.SolveBlock\Quire.Controls.SolveBlock.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Text\Quire.Controls.Text.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Whiteboard\Quire.Controls.Whiteboard.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls.Worksheet\Quire.Controls.Worksheet.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Controls\Quire.Controls.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Core\Quire.Core.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Efi\Quire.Efi.csproj" />
+    <ProjectReference Include="..\..\src\Quire.EngNotebook.Automation\Quire.EngNotebook.Automation.csproj" />
+    <ProjectReference Include="..\..\src\Quire.EngNotebookPlus.Automation\Quire.EngNotebookPlus.Automation.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Engine.Native\Quire.Engine.Native.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Engine.Utl\Quire.Engine.Utl.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Engine\Quire.Engine.csproj" />
+    <ProjectReference Include="..\..\src\Quire.EquationEditor\Quire.EquationEditor.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mcd\Quire.Mcd.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Media3D\Quire.Media3D.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mirror\Quire.Mirror.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mpl.Emit\Quire.Mpl.Emit.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mpl.Modules\Quire.Mpl.Modules.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Mpl\Quire.Mpl.csproj" />
+    <ProjectReference Include="..\..\src\Quire.Utils\Quire.Utils.csproj" />
+  </ItemGroup>
+</Project>

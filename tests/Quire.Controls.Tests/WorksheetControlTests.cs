@@ -9,6 +9,8 @@ using Quire.Controls.Worksheet;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Parsing;
 using Quire.PersistentDataObjects;
+using MathRegionPersistentData = Quire.PersistentDataObjects.MathRegionPersistentData;
+using PlotRegionPersistentData = Quire.PersistentDataObjects.PlotRegionPersistentData;
 
 namespace Quire.Controls.Tests;
 

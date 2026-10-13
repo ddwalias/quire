@@ -1,11 +1,12 @@
 using System.Globalization;
 using System.Text;
 
-namespace Quire.Mpl.Run;
+namespace Quire.Mpl.Rl;
 
 /// <summary>
 /// S-expression node. The UI layer serialises every calculatable region into an
 /// "Rl" S-expression such as <c>(define x (op_mult 5 m))</c> which the engine evaluates.
+/// Mathcad's own S-expression types are mirrored separately, in Quire.Mpl.Run.
 /// </summary>
 public abstract class Sexpr
 {

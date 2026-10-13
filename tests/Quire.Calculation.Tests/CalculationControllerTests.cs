@@ -13,9 +13,9 @@ internal sealed class FakeCalculatable(string rl) : ICalculatable
     }
     public event EventHandler? RlChanged;
     public SynchronizationStatus SynchronizationStatus { get; private set; }
-    public EngineResult? Result { get; private set; }
+    public CalculationResult? Result { get; private set; }
     public void SetSynchronizationStatus(SynchronizationStatus status) => SynchronizationStatus = status;
-    public void SetResult(EngineResult result) => Result = result;
+    public void SetResult(CalculationResult result) => Result = result;
     public double Value => ((IUnitedValueResultNode)Result!.Value).DisplayValue;
 }
 

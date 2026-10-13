@@ -60,12 +60,12 @@ public static class XmlMathTransform
         return new XElement(Ns + (d.Global ? "globalDefine" : "define"), target, ToXml(d.Value));
     }
 
-    private static XElement EvalElement(XElement inner, MathNode? unit) =>
+    private static XElement EvalElement(XElement inner, MathExpr? unit) =>
         new(Ns + "eval", inner, unit == null ? null : new XElement(Ns + "unitOverride", ToXml(unit)));
 
     private static XElement Id(string name) => new(Ns + "id", new XAttribute(XNamespace.Xml + "space", "preserve"), name);
 
-    public static XElement ToXml(MathNode node) => node switch
+    public static XElement ToXml(MathExpr node) => node switch
     {
         IdNode id => Id(id.Name),
         NumberNode n => new XElement(Ns + "real", n.Text),
@@ -86,7 +86,7 @@ public static class XmlMathTransform
         _ => throw new ArgumentException(node.GetType().Name),
     };
 
-    private static XElement Apply(string op, MathNode operand) => new(Ns + "apply", new XElement(Ns + op), ToXml(operand));
+    private static XElement Apply(string op, MathExpr operand) => new(Ns + "apply", new XElement(Ns + op), ToXml(operand));
 
     // ---------------------------------------------------------------- XML -> tree
 
@@ -122,12 +122,12 @@ public static class XmlMathTransform
         }
     }
 
-    private static MathNode TargetFromXml(XElement e)
+    private static MathExpr TargetFromXml(XElement e)
     {
         if (e.Name.LocalName != "function") return NodeFromXml(e);
         var kids = e.Elements().ToArray();
         var name = IdText(kids[0]);
-        var vars = kids.FirstOrDefault(k => k.Name.LocalName == "boundVars")?.Elements().Select(v => (MathNode)new IdNode(IdText(v))).ToArray() ?? [];
+        var vars = kids.FirstOrDefault(k => k.Name.LocalName == "boundVars")?.Elements().Select(v => (MathExpr)new IdNode(IdText(v))).ToArray() ?? [];
         return new CallNode(name, vars);
     }
 
@@ -148,7 +148,7 @@ public static class XmlMathTransform
         return string.IsNullOrEmpty(sub) ? text : $"{text}_{sub}";
     }
 
-    public static MathNode NodeFromXml(XElement e)
+    public static MathExpr NodeFromXml(XElement e)
     {
         var kids = e.Elements().ToArray();
         switch (e.Name.LocalName)
@@ -169,7 +169,7 @@ public static class XmlMathTransform
                 int cols = int.Parse(e.Attribute("cols")!.Value, CultureInfo.InvariantCulture);
                 var colMajor = kids.Select(NodeFromXml).ToArray();
                 if (colMajor.Length != rows * cols) throw new UnsupportedMathXmlException("matrix");
-                var rowMajor = new MathNode[rows * cols];
+                var rowMajor = new MathExpr[rows * cols];
                 for (int c = 0; c < cols; c++)
                     for (int r = 0; r < rows; r++)
                         rowMajor[r * cols + c] = colMajor[c * rows + r];
@@ -192,7 +192,7 @@ public static class XmlMathTransform
         }
     }
 
-    private static MathNode ApplyFromXml(XElement e, XElement[] kids)
+    private static MathExpr ApplyFromXml(XElement e, XElement[] kids)
     {
         if (kids.Length == 0) throw new UnsupportedMathXmlException("apply");
         var op = kids[0];
@@ -227,7 +227,7 @@ public static class XmlMathTransform
     }
 
     /// <summary>Reads either our flat form (body, var, lo, hi) or a lambda/bounds form.</summary>
-    private static MathNode IteratedFromXml(string fn, XElement[] args)
+    private static MathExpr IteratedFromXml(string fn, XElement[] args)
     {
         var lambda = args.FirstOrDefault(a => a.Name.LocalName == "lambda");
         if (lambda == null) return new CallNode(fn, args.Select(NodeFromXml).ToArray());
@@ -235,7 +235,7 @@ public static class XmlMathTransform
                 ?? throw new UnsupportedMathXmlException("lambda");
         var body = lambda.Elements().FirstOrDefault(x => x.Name.LocalName != "boundVars")
                    ?? throw new UnsupportedMathXmlException("lambda");
-        var list = new List<MathNode> { NodeFromXml(body), new IdNode(IdText(v)) };
+        var list = new List<MathExpr> { NodeFromXml(body), new IdNode(IdText(v)) };
         var bounds = args.FirstOrDefault(a => a.Name.LocalName == "bounds");
         if (bounds != null)
         {

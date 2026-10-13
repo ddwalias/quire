@@ -13,7 +13,7 @@ public enum CalculatingStatus
 }
 
 /// <summary>A worksheet item the engine calculates (math region, plot, solve block…).</summary>
-public interface ICalculatable
+public partial interface ICalculatable
 {
     /// <summary>The region serialised as an engine S-expression ("Rl").</summary>
     string Rl { get; }
@@ -25,7 +25,7 @@ public interface ICalculatable
 
     void SetSynchronizationStatus(SynchronizationStatus status);
 
-    void SetResult(EngineResult result);
+    void SetResult(CalculationResult result);
 }
 
 public sealed class CalculatableEventArgs(ICalculatable calculatable, ICalculatable? previous) : EventArgs
@@ -37,13 +37,13 @@ public sealed class CalculatableEventArgs(ICalculatable calculatable, ICalculata
 }
 
 /// <summary>An ordered collection of calculatables, typically one worksheet.</summary>
-public interface ICalculatableContext
+public partial interface ICalculatableContext
 {
     IReadOnlyList<ICalculatable> Calculatables { get; }
 
-    event EventHandler<CalculatableEventArgs>? CalculatableAdded;
-    event EventHandler<CalculatableEventArgs>? CalculatableRemoved;
-    event EventHandler<CalculatableEventArgs>? CalculatableMoved;
+    new event EventHandler<CalculatableEventArgs>? CalculatableAdded;
+    new event EventHandler<CalculatableEventArgs>? CalculatableRemoved;
+    new event EventHandler<CalculatableEventArgs>? CalculatableMoved;
 
     event EventHandler? RecalculateAllRequested;
     event EventHandler? CalculateNowRequested;

@@ -6,6 +6,7 @@ using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Parsing;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.Values;
+using Quire.Controls.Core;
 
 namespace Quire.EquationEditor.Tests;
 
@@ -84,11 +85,11 @@ public class TransformTests
     [InlineData(-42, "-42")]
     [InlineData(0, "0")]
     public void Number_formatting(double v, string expected) =>
-        Assert.Equal(expected, ResultFormatter.NumberText(v, ResultFormat.Default));
+        Assert.Equal(expected, ResultFormatter.NumberText(v, ResultFormatOptions.Default));
 
     [Fact]
     public void Trailing_zeros_can_be_shown() =>
-        Assert.Equal("2.500", ResultFormatter.NumberText(2.5, ResultFormat.Default with { ShowTrailingZeros = true }));
+        Assert.Equal("2.500", ResultFormatter.NumberText(2.5, ResultFormatOptions.Default with { ShowTrailingZeros = true }));
 
     [Fact]
     public void Units_render_with_denominator()
@@ -112,19 +113,19 @@ public class TransformTests
             h = engine.AddRegionAfter(h, MathNodeToRlTransform.Transform(LinearParser.ParseStatement(line)));
         var result = ValueToIResultNodeTransform.Transform(engine.GetResult(h)!, UnitSystem.SI);
         Assert.Null(result.Error);
-        var tree = ResultFormatter.Instance.Format(result.Value, ResultFormat.Default)!;
+        var tree = ResultFormatter.Instance.Format(result.Value, ResultFormatOptions.Default)!;
         Assert.Equal(expected, MathNodeToLinearTransform.Write(tree).Replace("*10^", "·10^"));
     }
 }
 
 public class ReviewRegressionTransformTests
 {
-    private static string Rl(MathNode n) => MathNodeToRlTransform.Expr(n);
+    private static string Rl(MathExpr n) => MathNodeToRlTransform.Expr(n);
 
     [Fact]
     public void Implicit_multiplication_by_negation_or_abs_round_trips()
     {
-        foreach (var right in new MathNode[] { new UnaryNode("neg", new IdNode("x")), new CallNode("abs", [new IdNode("x")]) })
+        foreach (var right in new MathExpr[] { new UnaryNode("neg", new IdNode("x")), new CallNode("abs", [new IdNode("x")]) })
         {
             var tree = new BinaryNode("mult", new NumberNode("2"), right, Implicit: true);
             var text = MathNodeToLinearTransform.Write(tree);

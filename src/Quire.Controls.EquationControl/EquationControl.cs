@@ -16,7 +16,7 @@ namespace Quire.Controls;
 /// A math region. It displays its statement in 2D and, while editing, the linear keyboard text with a
 /// live 2D preview underneath. Typing <c>:</c> produces <c>:=</c> and Ctrl+= produces the comparison <c>==</c>.
 /// </summary>
-public class EquationControl : CalculatableRegionControl
+public partial class EquationControl : CalculatableRegionControl
 {
     private static readonly Brush WarningBrush = Frozen(Color.FromRgb(0xB0, 0x70, 0x00));
 
@@ -76,7 +76,7 @@ public class EquationControl : CalculatableRegionControl
     public bool HasSyntaxError => _parseError != null;
 
     /// <summary>The formatted result currently shown after "=", if any.</summary>
-    public MathNode? DisplayedResult => _view.Result;
+    public MathExpr? DisplayedResult => _view.Result;
 
     /// <summary>Raised whenever the committed statement changes.</summary>
     public event EventHandler? StatementChanged;
@@ -221,7 +221,7 @@ public class EquationControl : CalculatableRegionControl
 
     // ---------------------------------------------------------------- results
 
-    protected override void OnResult(EngineResult result)
+    protected override void OnResult(CalculationResult result)
     {
         if (_parseError != null) return;
         var formatted = ResultFormatter.Instance.Format(result.Value, ResultFormat);

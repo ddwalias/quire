@@ -1,17 +1,12 @@
 using System.Globalization;
 using Quire.Calculation.Core;
+using Quire.Controls.Core;
 
 namespace Quire.EquationEditor.Tree.Transform;
 
-/// <summary>Number display settings (worksheet-wide).</summary>
-public sealed record ResultFormat(int Decimals = 3, int ExponentialThreshold = 3, bool ShowTrailingZeros = false)
+public partial interface IResultTreeFormatter
 {
-    public static readonly ResultFormat Default = new();
-}
-
-public interface IResultTreeFormatter
-{
-    MathNode? Format(IResultNode result, ResultFormat format);
+    MathExpr? Format(IResultNode result, ResultFormatOptions format);
 }
 
 /// <summary>Turns display-ready results into trees so they render like any other math.</summary>
@@ -19,7 +14,10 @@ public sealed class ResultFormatter : IResultTreeFormatter
 {
     public static readonly ResultFormatter Instance = new();
 
-    public MathNode? Format(IResultNode result, ResultFormat format) => result switch
+    /// <summary>The formatter is stateless, so a clone is the same instance.</summary>
+    public object Clone() => this;
+
+    public MathExpr? Format(IResultNode result, ResultFormatOptions format) => result switch
     {
         IUnitedValueResultNode u => WithUnits(Number(u.DisplayValue, format), u.Units),
         IMatrixResultNode m => WithUnits(Matrix(m, format), m.Units),
@@ -28,22 +26,22 @@ public sealed class ResultFormatter : IResultTreeFormatter
         _ => null,
     };
 
-    private static MatrixNode Matrix(IMatrixResultNode m, ResultFormat format) =>
+    private static MatrixNode Matrix(IMatrixResultNode m, ResultFormatOptions format) =>
         new(m.Rows, m.Cols, m.DisplayValues.Select((v, i) =>
             m.ElementUnits is { } eu ? WithUnits(Number(v, format), eu[i]) : Number(v, format)).ToArray());
 
-    public static MathNode WithUnits(MathNode value, IReadOnlyList<UnitPower> units)
+    public static MathExpr WithUnits(MathExpr value, IReadOnlyList<UnitPower> units)
     {
         var u = UnitExpression(units);
         return u == null ? value : new BinaryNode("mult", value, u, Implicit: true);
     }
 
     /// <summary>m·s⁻² becomes m / s^2.</summary>
-    public static MathNode? UnitExpression(IReadOnlyList<UnitPower> units)
+    public static MathExpr? UnitExpression(IReadOnlyList<UnitPower> units)
     {
-        MathNode? Product(IEnumerable<UnitPower> ps) => ps
-            .Select(p => p.Exponent == 1 ? (MathNode)new IdNode(p.Name) : new BinaryNode("pow", new IdNode(p.Name), Exponent(p.Exponent)))
-            .Aggregate((MathNode?)null, (acc, x) => acc == null ? x : new BinaryNode("mult", acc, x));
+        MathExpr? Product(IEnumerable<UnitPower> ps) => ps
+            .Select(p => p.Exponent == 1 ? (MathExpr)new IdNode(p.Name) : new BinaryNode("pow", new IdNode(p.Name), Exponent(p.Exponent)))
+            .Aggregate((MathExpr?)null, (acc, x) => acc == null ? x : new BinaryNode("mult", acc, x));
 
         var num = Product(units.Where(p => p.Exponent > 0));
         var den = Product(units.Where(p => p.Exponent < 0).Select(p => p with { Exponent = -p.Exponent }));
@@ -51,11 +49,11 @@ public sealed class ResultFormatter : IResultTreeFormatter
         return new BinaryNode("div", num ?? new NumberNode("1"), den);
     }
 
-    private static MathNode Exponent(double e) =>
+    private static MathExpr Exponent(double e) =>
         new NumberNode(e.ToString("0.###", CultureInfo.InvariantCulture));
 
     /// <summary>Formats a number, switching to a·10ⁿ outside the exponential threshold.</summary>
-    public static MathNode Number(double v, ResultFormat f)
+    public static MathExpr Number(double v, ResultFormatOptions f)
     {
         if (double.IsNaN(v)) return new IdNode("NaN");
         if (double.IsPositiveInfinity(v)) return new IdNode("∞");
@@ -74,7 +72,7 @@ public sealed class ResultFormatter : IResultTreeFormatter
         return new BinaryNode("mult", new NumberNode(Fixed(mant, f)), power);
     }
 
-    private static string Fixed(double v, ResultFormat f)
+    private static string Fixed(double v, ResultFormatOptions f)
     {
         var s = v.ToString("F" + Math.Clamp(f.Decimals, 0, 15), CultureInfo.InvariantCulture);
         if (!f.ShowTrailingZeros && s.Contains('.')) s = s.TrimEnd('0').TrimEnd('.');
@@ -82,5 +80,5 @@ public sealed class ResultFormatter : IResultTreeFormatter
     }
 
     /// <summary>Plain-text form of a formatted number (used for tables and plot ticks).</summary>
-    public static string NumberText(double v, ResultFormat f) => MathNodeToLinearTransform.Write(Number(v, f)).Replace("*10^", "·10^");
+    public static string NumberText(double v, ResultFormatOptions f) => MathNodeToLinearTransform.Write(Number(v, f)).Replace("*10^", "·10^");
 }

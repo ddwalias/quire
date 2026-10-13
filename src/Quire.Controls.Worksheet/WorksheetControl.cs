@@ -18,7 +18,7 @@ namespace Quire.Controls.Worksheet;
 /// Typing on empty space creates a math region at the crosshair (<c>"</c> creates a text region);
 /// click a region to edit it, drag it to move it, and drag on empty space to select several.
 /// </summary>
-public class WorksheetControl : UserControl, IDisposable
+public partial class WorksheetControl : UserControl, IDisposable
 {
     public const double PageWidth = 816, PageHeight = 1056, Margin_ = 48, Grid = 8;
     private const double ContentWidth = PageWidth - 2 * Margin_, ContentHeight = PageHeight - 2 * Margin_;
@@ -141,7 +141,7 @@ public class WorksheetControl : UserControl, IDisposable
             foreach (var r in _model.Items.ToArray()) RemoveRegionCore(r);
             _model.SetUnitSystem(doc.Settings.UnitSystem);
             _model.SetAutoCalc(doc.Settings.AutoCalc);
-            _model.SetResultFormat(new ResultFormat(doc.Settings.Decimals, doc.Settings.ExponentialThreshold, doc.Settings.ShowTrailingZeros));
+            _model.SetResultFormat(new ResultFormatOptions(doc.Settings.Decimals, doc.Settings.ExponentialThreshold, doc.Settings.ShowTrailingZeros));
             foreach (var data in doc.Regions)
             {
                 try { AddRegionCore(_factory.CreateRegion(data), new Point(data.Left, data.Top)); }
@@ -181,7 +181,7 @@ public class WorksheetControl : UserControl, IDisposable
 
     public void SetUnitSystem(string name) { _model.SetUnitSystem(name); Changed(); }
     public void SetAutoCalc(bool on) { _model.SetAutoCalc(on); Changed(); }
-    public void SetResultFormat(ResultFormat format) { _model.SetResultFormat(format); Changed(); }
+    public void SetResultFormat(ResultFormatOptions format) { _model.SetResultFormat(format); Changed(); }
     public void CalculateNow() => _model.CalculateNow();
     public void RecalculateAll() => _model.RecalculateAll();
 
@@ -458,7 +458,7 @@ public class WorksheetControl : UserControl, IDisposable
             ClearSelection();
             foreach (var data in doc.Regions)
             {
-                data.Id = RegionPersistentData.NewId();
+                data.Id = PersistentDataObjects.RegionPersistentData.NewId();
                 var region = _factory.CreateRegion(data);
                 AddRegionCore(region, new Point(_cursor.X + data.Left, _cursor.Y + data.Top));
                 Select(region, add: true);

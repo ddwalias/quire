@@ -55,7 +55,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
 
     /// <param name="result">Formatted result tree to show after "=", if any.</param>
     /// <param name="resultIsTable">Render a column result as a framed table.</param>
-    public Box BuildStatement(Statement statement, MathNode? result = null, bool resultIsTable = false)
+    public Box BuildStatement(Statement statement, MathExpr? result = null, bool resultIsTable = false)
     {
         _size = style.FontSize;
         switch (statement)
@@ -77,7 +77,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
         }
     }
 
-    private IEnumerable<Box> ResultParts(MathNode? result, MathNode? unit, bool table)
+    private IEnumerable<Box> ResultParts(MathExpr? result, MathExpr? unit, bool table)
     {
         yield return Op(" = ");
         if (result == null)
@@ -93,7 +93,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
         }
     }
 
-    private Box BuildTarget(MathNode target) => target switch
+    private Box BuildTarget(MathExpr target) => target switch
     {
         IdNode id => Identifier(id, function: true),
         CallNode c => new HBox(Identifier(new IdNode(c.Name)), Fence(Join(c.Args.Select(a => Build(a, 0))), '(', ')')),
@@ -102,13 +102,13 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
 
     // ---------------------------------------------------------------- expressions
 
-    public Box BuildExpression(MathNode node)
+    public Box BuildExpression(MathExpr node)
     {
         _size = style.FontSize;
         return Build(node, 0);
     }
 
-    private static int Precedence(MathNode n) => n switch
+    private static int Precedence(MathExpr n) => n switch
     {
         BinaryNode b => BinaryDisplay[b.Op].Prec,
         UnaryNode { Op: "neg" } => 7,
@@ -117,13 +117,13 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
         _ => 10,
     };
 
-    private Box Build(MathNode node, int minPrec)
+    private Box Build(MathExpr node, int minPrec)
     {
         var box = BuildCore(node);
         return Precedence(node) < minPrec ? Fence(box, '(', ')') : box;
     }
 
-    private Box BuildCore(MathNode node)
+    private Box BuildCore(MathExpr node)
     {
         switch (node)
         {
@@ -175,7 +175,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
         }
     }
 
-    private static MathNode Unwrap(MathNode n) => n is ParensNode p ? p.Inner : n;
+    private static MathExpr Unwrap(MathExpr n) => n is ParensNode p ? p.Inner : n;
 
     private Box Call(CallNode c)
     {
@@ -232,7 +232,7 @@ public sealed class VisualNodeBuilder(MathStyle style, string? errorSymbol = nul
 
     private static string Display(string name) => DisplayNames.GetValueOrDefault(name, name);
 
-    private static bool IsUnit(MathNode n) => n switch
+    private static bool IsUnit(MathExpr n) => n switch
     {
         IdNode id => Units.IsUnit(id.Name),
         BinaryNode { Op: "pow" } p => IsUnit(p.Left),

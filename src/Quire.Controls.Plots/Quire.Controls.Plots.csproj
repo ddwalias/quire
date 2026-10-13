@@ -9,4 +9,5 @@
     <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />
     <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
   </ItemGroup>
+  <Import Project="Generated\Mirror.props" />
 </Project>

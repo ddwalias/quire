@@ -41,14 +41,14 @@ public static class MathNodeToRlTransform
         return $"({head} {target} {Expr(d.Value)}{unit})";
     }
 
-    public static string Expr(MathNode node)
+    public static string Expr(MathExpr node)
     {
         var sb = new StringBuilder();
         Write(node, sb);
         return sb.ToString();
     }
 
-    private static void Write(MathNode node, StringBuilder sb)
+    private static void Write(MathExpr node, StringBuilder sb)
     {
         switch (node)
         {
@@ -115,7 +115,7 @@ public static class MathNodeToRlTransform
         sb.Append(')');
     }
 
-    private static void List(StringBuilder sb, string head, params MathNode[] args)
+    private static void List(StringBuilder sb, string head, params MathExpr[] args)
     {
         sb.Append('(').Append(head);
         foreach (var x in args) { sb.Append(' '); Write(x, sb); }

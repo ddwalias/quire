@@ -7,18 +7,12 @@ using Quire.PersistentDataObjects;
 namespace Quire.Controls.Worksheet;
 
 /// <summary>Orders worksheet items the way they are calculated: top to bottom, then left to right.</summary>
-public sealed class WorksheetItemPositionComparer : IComparer<Point>
+public sealed partial class WorksheetItemPositionComparer : Whiteboard.PositionComparer, IComparer<Point>
 {
     public static readonly WorksheetItemPositionComparer Instance = new();
-
-    public int Compare(Point a, Point b)
-    {
-        int c = Math.Round(a.Y, 2).CompareTo(Math.Round(b.Y, 2));
-        return c != 0 ? c : Math.Round(a.X, 2).CompareTo(Math.Round(b.X, 2));
-    }
 }
 
-public interface IWorksheetModel : ICalculatableContext
+public partial interface IWorksheetModel : ICalculatableContext
 {
     IReadOnlyList<RegionControl> Items { get; }
     Point GetItemWorksheetLocation(RegionControl item);
@@ -30,10 +24,13 @@ public interface IWorksheetModel : ICalculatableContext
 /// <summary>
 /// The worksheet's regions in calculation order, exposed to the engine as an <see cref="ICalculatableContext"/>.
 /// </summary>
-public sealed class WorksheetModel : IWorksheetModel
+public sealed partial class WorksheetModel : IWorksheetModel
 {
     private readonly List<RegionControl> _items = [];
     private readonly Dictionary<RegionControl, Point> _locations = [];
+
+    /// <summary>Declared explicitly: the mirrored part adds Mathcad's constructors, which would hide the implicit one.</summary>
+    public WorksheetModel() { }
 
     public IReadOnlyList<RegionControl> Items => _items;
 
@@ -49,7 +46,7 @@ public sealed class WorksheetModel : IWorksheetModel
 
     public bool IsAutoCalcOn { get; private set; } = true;
     public string UnitSystem { get; private set; } = "si";
-    public ResultFormat ResultFormat { get; private set; } = ResultFormat.Default;
+    public ResultFormatOptions ResultFormat { get; private set; } = ResultFormatOptions.Default;
 
     public WorksheetSettings Settings => new()
     {
@@ -119,7 +116,7 @@ public sealed class WorksheetModel : IWorksheetModel
         AutoCalcChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SetResultFormat(ResultFormat format)
+    public void SetResultFormat(ResultFormatOptions format)
     {
         ResultFormat = format;
         foreach (var item in _items) item.ApplyResultFormat(format);

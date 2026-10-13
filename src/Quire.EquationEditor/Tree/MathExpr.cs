@@ -1,46 +1,46 @@
 namespace Quire.EquationEditor.Tree;
 
 /// <summary>Expression tree edited by the equation editor and rendered in 2D.</summary>
-public abstract record MathNode;
+public abstract record MathExpr;
 
 /// <summary>An identifier. A trailing <c>_part</c> is a literal subscript (x_max renders as x with subscript max).</summary>
-public sealed record IdNode(string Name) : MathNode
+public sealed record IdNode(string Name) : MathExpr
 {
     public string BaseName => Name.Contains('_') && Name.IndexOf('_') > 0 ? Name[..Name.IndexOf('_')] : Name;
     public string? Subscript => Name.IndexOf('_') is var i && i > 0 && i < Name.Length - 1 ? Name[(i + 1)..] : null;
 }
 
 /// <summary>A numeric literal; <see cref="Text"/> keeps what the user typed.</summary>
-public sealed record NumberNode(string Text) : MathNode
+public sealed record NumberNode(string Text) : MathExpr
 {
     public double Value => double.Parse(Text, System.Globalization.CultureInfo.InvariantCulture);
 }
 
-public sealed record StringNode(string Value) : MathNode;
+public sealed record StringNode(string Value) : MathExpr;
 
 /// <summary>Prefix or postfix operator: <c>neg</c>, <c>not</c>, <c>factorial</c>.</summary>
-public sealed record UnaryNode(string Op, MathNode Operand) : MathNode;
+public sealed record UnaryNode(string Op, MathExpr Operand) : MathExpr;
 
 /// <summary>Binary operator: add, sub, mult, div, pow, eq, neq, lt, gt, leq, geq, and, or.</summary>
-public sealed record BinaryNode(string Op, MathNode Left, MathNode Right, bool Implicit = false) : MathNode;
+public sealed record BinaryNode(string Op, MathExpr Left, MathExpr Right, bool Implicit = false) : MathExpr;
 
-public sealed record ParensNode(MathNode Inner) : MathNode;
+public sealed record ParensNode(MathExpr Inner) : MathExpr;
 
 /// <summary>Function application. Some names render specially: sqrt, nthroot, abs, transpose, sum, prod, integral, deriv.</summary>
-public sealed record CallNode(string Name, IReadOnlyList<MathNode> Args) : MathNode;
+public sealed record CallNode(string Name, IReadOnlyList<MathExpr> Args) : MathExpr;
 
-public sealed record IndexNode(MathNode Target, IReadOnlyList<MathNode> Indices) : MathNode;
+public sealed record IndexNode(MathExpr Target, IReadOnlyList<MathExpr> Indices) : MathExpr;
 
 /// <summary>Row-major matrix literal.</summary>
-public sealed record MatrixNode(int Rows, int Cols, IReadOnlyList<MathNode> Elements) : MathNode
+public sealed record MatrixNode(int Rows, int Cols, IReadOnlyList<MathExpr> Elements) : MathExpr
 {
-    public MathNode this[int r, int c] => Elements[r * Cols + c];
+    public MathExpr this[int r, int c] => Elements[r * Cols + c];
 }
 
-public sealed record RangeNode(MathNode Start, MathNode? Second, MathNode End) : MathNode;
+public sealed record RangeNode(MathExpr Start, MathExpr? Second, MathExpr End) : MathExpr;
 
 /// <summary>An empty slot the user still has to fill.</summary>
-public sealed record PlaceholderNode : MathNode
+public sealed record PlaceholderNode : MathExpr
 {
     public static readonly PlaceholderNode Instance = new();
 }
@@ -54,13 +54,13 @@ public sealed record EmptyStatement : Statement
 }
 
 /// <summary><c>target := value</c> (or <c>≡</c> when global). <see cref="ShowResult"/> appends <c>= result</c>.</summary>
-public sealed record DefineStatement(MathNode Target, MathNode Value, bool Global = false, bool ShowResult = false, MathNode? Unit = null) : Statement;
+public sealed record DefineStatement(MathExpr Target, MathExpr Value, bool Global = false, bool ShowResult = false, MathExpr? Unit = null) : Statement;
 
 /// <summary><c>expr = result</c>, optionally with a unit override placeholder.</summary>
-public sealed record EvalStatement(MathNode Expr, MathNode? Unit = null) : Statement;
+public sealed record EvalStatement(MathExpr Expr, MathExpr? Unit = null) : Statement;
 
 /// <summary>A bare expression, e.g. a solve-block constraint.</summary>
-public sealed record ExprStatement(MathNode Expr) : Statement;
+public sealed record ExprStatement(MathExpr Expr) : Statement;
 
 /// <summary>Keyboard text that doesn't parse yet; kept verbatim so nothing the user typed is lost.</summary>
 public sealed record UnparsedStatement(string Source) : Statement;
