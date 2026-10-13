@@ -1,21 +1,20 @@
 # Class-for-class mirroring plan
 
 **Goal.** Give Quire the same type structure as Mathcad Prime 12. Each in-scope Mathcad type gets a Quire type with
-the same name, kind, inheritance and member signatures. Only the root namespace and the app name change.
+the same name, kind, inheritance and member signatures. Only the root namespace and the app name change. Fidelity is
+per method, not just per class: each mirrored method holds the behaviour its Mathcad counterpart has (§3c).
 
 **Boundary.** The structure comes only from assembly metadata: type and member names, signatures, base types and
 interfaces, read as data. No method bodies are decompiled or copied. Every implementation is written independently,
-as the current code was. Widening this boundary, for example to read method bodies or native implementations,
-needs explicit approval first.
+as the current code was. Method-level behaviour is established from documentation and black-box testing (§3c),
+never by porting decompiled code (D9). Widening this boundary, for example to read method bodies or native
+implementations, needs explicit approval first.
 
-**Status.** Phases 0 and 1 are done (§3, §3a). All 5,378 in-scope types exist as generated stubs or merged hand-written
+**Status.** Phase 0 is done (§3). Phase 1 is done at type level (§3a) but reopened at method level (§3c). All 5,378 in-scope types exist as generated stubs or merged hand-written
 code. The engine runtime (`Mpl.Run`, `Mcd`, `Engine.IEngine`) is real, the solution builds, and the 213 behaviour tests
 plus 31 shape tests pass. The engine's result dictionaries match Mathcad's signatures, but their contents are still
 provisional (§3b). [`type-map.csv`](type-map.csv) lists every Mathcad type with its Quire target name, its status and
 its phase.
-
-> **Legal note.** Mirroring a proprietary product's internal type structure in detail is a step towards a derivative
-> work, and PTC's licence agreement probably restricts reverse engineering. Get this checked before distributing Quire.
 
 ## 1. Scope
 
@@ -233,7 +232,7 @@ The four §5 "moves into mirrored types" stay for each phase; Phase 0 only made 
 `PositionComparer.Compare` is the first stub made real: Quire's worksheet ordering moved there from
 `WorksheetItemPositionComparer`, which now inherits it, as in Mathcad.
 
-## 3a. Phase 1: engine runtime (done)
+## 3a. Phase 1: engine runtime (type level done; method level open, §3c)
 
 `Quire.Values` and the old `Quire.Mpl.Rl` S-expressions are gone. Their behaviour now lives in the mirrored `Mcd` and
 `Mpl.Run` types inside `Quire.Mpl`. The interpreter sits behind Mathcad's `Engine.IEngine`/`IFactory` API. Stubs fell
@@ -344,7 +343,7 @@ above are Quire's assumptions.
    - public examples and PTC documentation;
    - declared metadata constants: literal fields, enum members and attribute arguments in `iengine`,
      `Ptc.Calculation`, `Ptc.Calculation.Core` and their neighbours, read with `MirrorGen dump`;
-   - black-box interoperability tests, where the licence permits them (see the legal note above).
+   - black-box interoperability tests
 
    None of these has been examined for this question yet. Don't assume in advance that static analysis can or
    can't find the keys; record what each source actually showed.
@@ -372,6 +371,67 @@ above are Quire's assumptions.
 | Item | Verified fact | Evidence source | Unresolved |
 |---|---|---|---|
 | (none yet) | | | Keys, value types, optional entries, nesting, status meanings |
+
+## 3c. Method-by-method fidelity
+
+**Status: adopted 2026-10-14, not yet started.** Phases 0 and 1 matched Mathcad class by class: every type and
+member signature exists. Behaviour, however, mostly lives in Quire-only internals, and most mirrored members are
+still stubs. From now on, a phase matches Mathcad method by method.
+
+### Rules
+
+1. **Behaviour lives in the Mathcad method that owns it.** Logic moves out of Quire-only helpers into the
+   mirrored member whose name and signature say it does that job. For example:
+   - arithmetic and comparisons in `Ops`/`MatrixOps` go onto `DimVal`, `NumVal` and `MatVal` members;
+   - built-ins move into the `Function` hierarchy.
+
+   Each move is confirmed per method from the name, signature and the evidence below, not assumed in bulk.
+   Quire-only code shrinks to what has no Mathcad counterpart, and the manifest keeps listing what remains.
+2. **Implementations are independent (D9).** No decompiled method bodies are read or ported. A method's
+   behaviour is established from:
+   - shipped documentation (for example `Ptc.MathcadPrime.Automation.xml`);
+   - declared metadata (constants, enum members, attribute arguments);
+   - public examples;
+   - black-box differential tests against the installed Mathcad assemblies, where the licence permits them.
+3. **Differential tests are the per-method check.** A harness loads `mplrun.dll`/`iengine.dll` from the Mathcad
+   install, calls a public member with generated inputs, and compares the result with Quire's. Not yet checked:
+   - whether those assemblies load outside Mathcad (they may target .NET Framework, or be mixed-mode);
+   - which members are reachable that way;
+   - whether the licence permits the tests.
+
+   A spike on one small type (`Mcd.Rational` or `Mcd.Dim`) comes first.
+4. **Unknown behaviour stays a stub.** Some members aren't reachable from outside or have unclear behaviour, such
+   as private members or `Dim.Eq_b1` and `Dim.FixDimension`. These stay stubs, with the reason recorded the same way
+   §3b records the result-dictionary contract. Behaviour is not guessed.
+5. **Per-method status is tracked.** Each member is one of:
+   - **real**: verified by differential test;
+   - **real**: implemented from documentation;
+   - **stub**;
+   - **blocked**, with a reason;
+   - **Quire-only**.
+
+   MirrorGen's manifest and `coverage.md` need to report this. Today they only distinguish stubs from implemented
+   members.
+6. **A phase is done** only when every mirrored member on its types is real or blocked with a recorded reason.
+
+### Phase 1 gap (2026-10-14)
+
+Remaining stubs on Phase 1's headline types, counted from the generated files against the manifest:
+
+| Type | Stubs / members | Type | Stubs / members |
+|---|---:|---|---:|
+| `Mcd.DimVal` | 110 / 125 | `Mpl.Run.Function` | 122 / 166 |
+| `Mcd.MatVal` | 224 / 296 | `Mpl.Run.Sexpr` | 28 / 43 |
+| `Mcd.NumVal` | 29 / 70 | `Mpl.Run.Rts` | 14 / 28 |
+| `Mcd.UnitSystem` | 16 / 43 | `Mpl.Run.Sym` | 11 / 27 |
+| `Mcd.Dim` | 13 / 45 | `Mpl.Run.SCons` | 3 / 32 |
+| `Mcd.RngVal` | 8 / 31 | `Mpl.Run.Tok` | 0 / 15 |
+| `Mcd.StrVal`, `Unit`, `Units`, `Rational` | 0 | | |
+| **Total** | **578 / 964** | | |
+
+The rest of `mplrun` and `iengine` (`IEnginePriv`, `IEngineUnstable`, `IMCEngine`, `MplEnv`, …) still has to be
+counted. Before the work starts, decide the order: finish Phase 1 at method level first, or carry the method-level
+rule into Phase 2 and come back to it.
 
 ## 4. Phases: turning stubs into real code
 
@@ -426,6 +486,7 @@ writing a numerical library and a computer-algebra system.
 - **D3:** visibility is faithful. Mathcad's `internal` types stay `internal`, and test projects get
   `InternalsVisibleTo`.
 - **D8:** `System.Reflection.Emit.PTC.Mathcad.Mpl` → `System.Reflection.Emit.Quire.Mpl` (literal).
+- **D9 (2026-10-14):** fidelity is method by method (§3c).
 
 ### Still open (none of these block Phase 0)
 
@@ -451,4 +512,6 @@ writing a numerical library and a computer-algebra system.
    - The manifest-shape test passes.
    - The stub count for the phase's assemblies falls as planned.
    - Screenshot check via `Quire.exe --render`.
+   - Every mirrored member on the phase's types is real or blocked with a recorded reason (§3c). Differential
+     tests pass where the harness can reach the member.
 5. A reviewer pass, separate from the author, before each phase is committed.
