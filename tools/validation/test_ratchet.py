@@ -15,12 +15,11 @@ def counts(**changes):
 class RatchetTests(unittest.TestCase):
     def setUp(self):
         self.baseline = {'schema': SCHEMA, 'profile': 'focused', 'types': {'Quire.T': counts(compared=3, missing=2)},
-                         'methods': METHODS, 'lint': ['a.cs | goto statement | goto x;'], 'listing_errors': ['e1']}
+                         'methods': METHODS, 'lint': ['a.cs | goto statement | goto x;']}
 
-    def current(self, lint=('a.cs | goto statement | goto x;',), listing_errors=('e1',), profile='focused', methods=None,
-                **types):
+    def current(self, lint=('a.cs | goto statement | goto x;',), profile='focused', methods=None, **types):
         return {'profile': profile, 'types': types, 'methods': METHODS if methods is None else methods,
-                'lint': list(lint), 'listing_errors': list(listing_errors)}
+                'lint': list(lint)}
 
     def test_improvement_and_equal_pass(self):
         better = dict(METHODS, **{'Quire.T::B()': 'compared'})
@@ -39,14 +38,18 @@ class RatchetTests(unittest.TestCase):
         same = {'Quire.T': counts(compared=3, missing=2)}
         self.assertEqual(compare(self.baseline, self.current(lint=['b.cs | goto statement | goto y;'], **same)),
                          ['new lint: b.cs | goto statement | goto y;'])
-        self.assertEqual(compare(self.baseline, self.current(listing_errors=['e2'], **same)), ['new listing errors: e2'])
+        twice = ['a.cs | goto statement | goto x;'] * 2
+        self.assertEqual(compare(self.baseline, self.current(lint=twice, **same)), ['new lint: a.cs | goto statement | goto x;'])
         swapped = {'Quire.T::A()': 'missing', 'Quire.T::B()': 'compared'}
         self.assertEqual(compare(self.baseline, self.current(methods=swapped, **same)), ['Quire.T::A(): compared became missing'])
 
-    def test_deleted_methods_and_new_exclusions_fail(self):
+    def test_deleted_methods_fail_but_lambdas_may_come_and_go(self):
         baseline = dict(self.baseline, types={'Quire.T': counts(total=5, compared=3, missing=2)})
         self.assertIn('total fell', compare(baseline, self.current(**{'Quire.T': counts(total=4, compared=3, missing=1)}))[0])
-        self.assertIn('excluded rose', compare(self.baseline, self.current(**{'Quire.T': counts(compared=3, missing=2, excluded=1)}))[0])
+        lambdas = dict(METHODS, **{'Quire.T+<>c::<A>b__0_0()': 'excluded'})
+        self.assertEqual(compare(self.baseline, self.current(methods=lambdas, **{'Quire.T': counts(total=1, compared=3, missing=2, excluded=1)})), [])
+        before = dict(self.baseline, methods=lambdas, types={'Quire.T': counts(total=6, compared=3, missing=2, excluded=1)})
+        self.assertEqual(compare(before, self.current(**{'Quire.T': counts(total=5, compared=3, missing=2)})), [])
         gone = {'Quire.T::A()': 'compared'}
         self.assertIn('Quire.T::B(): method disappeared from the inventory', compare(self.baseline, self.current(methods=gone, **{'Quire.T': counts(compared=3, missing=2)})))
 
@@ -70,10 +73,16 @@ class RatchetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             coverage = {'by_type': {'Quire.T': counts()}, 'methods': [
                 {'type': 'Quire.T', 'signature': 'A()', 'validation': 'compared', 'original': {'token': 1}}]}
-            integrity = {'lint': [], 'listings': {'errors': []}}
+            integrity = {'lint': []}
             report = check(coverage, integrity, False, 'focused', Path(directory) / 'none.json')
             self.assertFalse(report['ok'])
             self.assertEqual(report['snapshot']['methods'], {'Quire.T::A()': 'compared'})
+            lambda_ = {'type': 'Quire.T+<>c', 'signature': '<A>b__0_0()', 'validation': 'excluded', 'cases': []}
+            invented = {'type': 'Quire.T', 'signature': 'B()', 'validation': 'missing', 'cases': []}
+            snapshot = check(dict(coverage, methods=coverage['methods'] + [lambda_, invented]), integrity, False,
+                             'focused', Path(directory) / 'none.json')['snapshot']
+            self.assertEqual((snapshot['methods']['Quire.T+<>c::<A>b__0_0()'], snapshot['methods']['Quire.T::B()']),
+                             ('excluded', 'no_counterpart'))
             path = Path(directory) / 'baseline.json'
             path.write_text(json.dumps(report['snapshot']))
             self.assertTrue(check(coverage, integrity, False, 'focused', path)['ok'])

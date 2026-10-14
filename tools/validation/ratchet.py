@@ -1,22 +1,26 @@
 """Validation may only improve: compare a run's per-method states, per-type totals and integrity findings with the
 committed baseline."""
+from collections import Counter
 import json
 from pathlib import Path
-from validate import ROOT
+from validate import ROOT, test_class
 
 BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
 SCHEMA = 2
-GOOD = ('compared', 'total')  # total: deleting methods (even stubs) must not shrink 'missing'
-BAD = ('missing', 'structure_mismatch', 'uncovered', 'verified_unsupported', 'excluded')
+GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
+# Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
+BAD = ('missing', 'structure_mismatch', 'uncovered', 'verified_unsupported')
 
 
 def snapshot(coverage, integrity, profile):
     """Identities, not just counts, so fixing one finding cannot pay for a new one."""
     return {'schema': SCHEMA, 'profile': profile, 'types': coverage['by_type'],
-            'methods': {f"{m['type']}::{m['signature']}": m['validation'] if m.get('original') else 'no_counterpart'
+            'methods': {f"{m['type']}::{m['signature']}":
+                        m['validation'] if m.get('original') or m['validation'] == 'excluded' else 'no_counterpart'
                         for m in coverage['methods']},
-            'lint': sorted({f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint']}),
-            'listing_errors': sorted(set(integrity['listings']['errors']))}
+            'tests': {f"{m['type']}::{m['signature']}": sorted({test_class(c['test']) for c in m['cases']})
+                      for m in coverage['methods'] if m.get('cases')},
+            'lint': sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint'])}
 
 
 def compare(baseline, current, scoped=False):
@@ -32,7 +36,8 @@ def compare(baseline, current, scoped=False):
         for name in sorted(set(old_types) - set(new_types)):
             regressions.append(f'{name}: type disappeared from the inventory')
         for name in sorted(set(old_methods) - set(new_methods)):
-            regressions.append(f'{name}: method disappeared from the inventory')
+            if old_methods[name] != 'excluded':
+                regressions.append(f'{name}: method disappeared from the inventory')
     for name, state in sorted(new_methods.items()):
         old = old_methods.get(name)
         if old is None and state == 'no_counterpart':
@@ -44,15 +49,17 @@ def compare(baseline, current, scoped=False):
         if old is None:
             continue  # A new type starts its own baseline; its stubs show as missing.
         for key in GOOD:
-            if counts[key] < old.get(key, 0):
-                regressions.append(f'{name}: {key} fell from {old.get(key, 0)} to {counts[key]}')
+            # Hand-written methods only: lambdas may disappear when code is rewritten.
+            now, before = (counts[key] - counts.get('excluded', 0), old.get(key, 0) - old.get('excluded', 0)) \
+                if key == 'total' else (counts[key], old.get(key, 0))
+            if now < before:
+                regressions.append(f'{name}: {key} fell from {before} to {now}')
         for key in BAD:
             if counts[key] > old.get(key, 0):
                 regressions.append(f'{name}: {key} rose from {old.get(key, 0)} to {counts[key]}')
     if not scoped:
-        for key in ('lint', 'listing_errors'):
-            for finding in sorted(set(current[key]) - set(baseline.get(key, []))):
-                regressions.append(f'new {key.replace("_", " ")}: {finding}')
+        for finding in sorted((Counter(current['lint']) - Counter(baseline.get('lint', []))).elements()):
+            regressions.append(f'new lint: {finding}')
     return regressions
 
 

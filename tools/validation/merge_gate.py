@@ -52,6 +52,13 @@ def case_collisions(paths):
     return sorted(' / '.join(sorted(names)) for names in seen.values() if len(names) > 1)
 
 
+def unvalidated_paths(paths):
+    """Source and test paths the focused profile neither builds nor runs."""
+    focused = ('src/quire.mpl/', 'tests/quire.mpl.tests/', 'tests/quire.differential.tests/',
+               'tests/quire.harness.tests/', 'tests/quire.focused.differential.tests/')
+    return sorted(p for p in paths if p.lower().startswith(('src/', 'tests/')) and not p.lower().startswith(focused))
+
+
 def changed_paths(base, tip):
     """Every added, changed, deleted or renamed path, both sides of a rename, unquoted."""
     return sorted({p for p in git('diff', '-z', '--no-renames', '--name-only', f'{base}...{tip}').split('\0') if p})
@@ -107,10 +114,10 @@ def main():
     if collisions:
         print('BLOCKED: paths differ only in case and would merge into one file on Windows:\n  ' + '\n  '.join(collisions))
         return 1
-    unvalidated = sorted(p for p in changed if p.lower().startswith('src/') and not p.lower().startswith('src/quire.mpl/'))
+    unvalidated = unvalidated_paths(changed)
     if unvalidated and not args.allow_unvalidated:
-        print('BLOCKED: the gate validates only Quire.Mpl (focused profile); these need the Windows phase profile '
-              'and a maintainer merge:\n  ' + '\n  '.join(unvalidated))
+        print('BLOCKED: the gate validates only Quire.Mpl and its tests (focused profile); these need the Windows '
+              'phase profile and a maintainer merge:\n  ' + '\n  '.join(unvalidated))
         return 1
 
     if args.results and args.results.exists():

@@ -6,48 +6,42 @@ have a record here too. `Quire.Mirror.Tests` fails when a referenced record is m
 
 ## How the analysis is done
 
-1. **REA, managed.** `inspect_managed_members` on the original assembly gives each method's metadata token,
-   signature, IL size, IL and normalized-IL SHA-256, call edges, field accesses and operand-bearing instruction
-   anchors. Its Evidence ID and the artifact's SHA-256 and MVID go in the record header; each member row cites its
-   token and normalized-IL hash, so the finding is bound to one exact body. Equal normalized-IL hashes prove two bodies
-   identical, which REA reports without any decompiler.
-2. **Decompiled view.** REA's anchors omit operand-less instructions (arithmetic, `ldarg`, `ret`), so the body's
-   control and data flow is read from an ILSpy decompilation (`ilspycmd`, recorded per record) of the same file.
-   REA's `import_managed_reconstruction` is the tool for binding such output to its Evidence, but it takes the full
-   member Evidence (megabytes per assembly) as input, so the binding is recorded here by token and hash instead.
-   Raw decompiled C# stays outside the repository; the IL listing below is committed.
-3. **IL listing.** Commit the top-level type's IL, nested types included, as
-   `docs/mirror/il/<assembly>/<Mathcad type>.il`, produced by `ilspycmd --ilcode -t <type>` from the pinned
-   artifact. The validator requires these consecutive header lines (lowercase hex):
-   ```
-   // Tool: ilspycmd <version>
-   // SHA-256: <assembly sha-256>
-   // MVID: <module mvid>
-   ```
-   Regenerate it whenever the artifact identity changes.
-4. **Native.** For bodies in native code, REA's Ghidra provider (`analyze_function`, `procedure_pseudo_code`).
-5. **Contract and reconstruction.** Summarize each member as a contract: inputs, outputs, errors, mutation, edge
-   cases and every branch, which test cases are chosen from. Quire's body is a reconstruction from the IL of the
-   original source: same control flow, evaluation order, calls, locals, exceptions and mutation, written as
-   idiomatic C# with the constructs the compiler evidently lowered (`foreach`, `using`, `switch`, `??`, lambdas,
-   iterators, properties). No `goto`, compiler-generated names or other decompiler artifacts. Where the IL admits
-   several source forms, choose the most idiomatic one and note material ambiguity under Confidence / limits.
-   The [structural gate](../validation.md#reconstruction-integrity) compares the result with the original IL. Branch
-   layout counts: `if`/`return` and `?:` order their arms oppositely, so pick the form whose IL order matches. Where
-   the IL shows an older lowering (`string.Format` for interpolation), write that call.
+1. **Reference.** `python3 tools/reference/reference.py <Mathcad type> [--il]` writes, under the gitignored
+   `.mirror-cache/<assembly>/<sha>/`, the type's ILSpy C# view, a member index (token, owner, signature, access of
+   every method, nested types included) headed by the artifact's version, SHA-256 and MVID, and with `--il` the
+   type's IL. Read the C# view; turn to the IL where the C# hides a detail: evaluation order, `checked` arithmetic,
+   numeric conversions (`conv.r4`/`conv.r8`), how `==` was lowered, exception filters, branch layout. None of it is
+   ever committed: the merge gate rejects `.il` files, `docs/mirror/il/` and `.mirror-cache/`.
+2. **REA.** `mplrun.dll` is IL-only, so step 1 reads all of it. `iengine.dll` is mixed-mode C++/CLI: ILSpy cannot
+   decompile its native code and renders its managed C++/CLI poorly, so analyze it with REA (`inspect_managed_members`
+   for managed bodies, the Ghidra provider's `analyze_function` / `procedure_pseudo_code` for native ones) and cite
+   the REA evidence id in the record. For any assembly, REA's cross-references and call paths (`xrefs`,
+   `build_call_path`, `get_call_graph`) establish ownership and callers before behaviour moves (PLAN §3c rule 1).
+3. **Contract and reconstruction.** Summarize each member as a contract: inputs, outputs, errors, mutation, edge
+   cases and every branch, which test cases are chosen from. Quire's body is a reconstruction of the original
+   source: same control flow, evaluation order, calls, locals, exceptions and mutation, written as idiomatic C#
+   with the constructs the compiler evidently lowered (`foreach`, `using`, `switch`, `??`, lambdas, iterators,
+   properties). No `goto`, compiler-generated names or other decompiler artifacts; the decompiled view is a
+   reading aid, never the implementation. Where the original admits several source forms, choose the most
+   idiomatic one and note material ambiguity under Confidence / limits. The
+   [structural gate](../validation.md#reconstruction-integrity) compares the result with the original IL read
+   from the artifact. Branch layout counts: `if`/`return` and `?:` order their arms oppositely, so pick the form
+   whose IL order matches. Where the IL shows an older lowering (`string.Format` for interpolation), write that call.
 
 ## Record format
+
+The validator binds every direct comparison to this record: the record must name the original's SHA-256 and MVID
+and the token of each compared member, all copied from the member index.
 
 ```markdown
 # <Mathcad type>
 
 - **Original:** <assembly> <version>, SHA-256 <…>, MVID <…>
-- **REA:** <evidence id> (inspect_managed_members); decompiled view: ilspycmd <version>
-- **IL:** il/<assembly>/<Mathcad type>.il
+- **Reference:** ilspycmd <version> (tools/reference), and/or REA <evidence id> for native or C++/CLI bodies
 - **Quire:** <source path(s)>; tests: <test classes>
 
-| Member | Token | Normalized IL (prefix) | Contract | Confidence / limits | Status |
-|---|---|---|---|---|---|
+| Member | Token | Contract | Confidence / limits | Status |
+|---|---|---|---|---|
 
 ## Test cases
 Observed (differential or black-box against Mathcad) versus inferred (expected values worked out from the contract).
@@ -55,6 +49,9 @@ Observed (differential or black-box against Mathcad) versus inferred (expected v
 ## Open
 Anything not settled; such members stay Analyzed or Blocked.
 ```
+
+Older IL-only records also carry an REA evidence id and a normalized-IL hash column; they are no longer required
+there and may be dropped when a record is next edited.
 
 A member is **Tested** when Quire's behaviour tests for its contract pass, and **Verified** only for the cases a
 differential test compared with the installed Mathcad.

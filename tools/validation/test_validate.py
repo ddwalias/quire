@@ -52,6 +52,12 @@ class ChangedTypeTests(unittest.TestCase):
         self.coverage['methods'][1]['cases'] = [dict(test='Quire.Differential.Tests.NumValDifferentialTests+More.Compare')]
         self.assertEqual(self.types('tests/Quire.Differential.Tests/numvaldifferentialtests.cs'), {'Quire.Mcd.NumVal'})
 
+    def test_cases_removed_from_a_changed_file_still_select_their_type(self):
+        from validate import changed_types
+        previous = {'Quire.Mcd.Dim::Pwr()': ['dimdifferentialtests'], 'Quire.Gone::X()': ['dimdifferentialtests']}
+        names = 'tests/Quire.Differential.Tests/DimDifferentialTests.cs\0'
+        self.assertEqual(changed_types(self.coverage, 'base', lambda *a: names, previous), {'Quire.Mcd.Dim'})
+
     def test_source_without_methods_selects_nothing(self):
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Kinds.cs'), set())
 
@@ -59,6 +65,37 @@ class ChangedTypeTests(unittest.TestCase):
         self.coverage['methods'][0]['source'][0]['file'] = '/elsewhere/Dim.cs'
         with self.assertRaises(ValueError):
             self.types('src/Quire.Mpl/Mcd/Dim.cs')
+
+
+class SealTests(unittest.TestCase):
+    def test_changes_to_protected_files_or_outputs_detected(self):
+        import subprocess
+        from validate import Seal
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(['git', 'init', '-q'], cwd=root, check=True)
+            (root / 'tools').mkdir()
+            (root / 'tools/ratchet.py').write_text('real')
+            (root / 'src').mkdir()
+            (root / 'src/Work.cs').write_text('work')
+            (root / 'bin').mkdir()
+            (root / 'bin/Harness.dll').write_bytes(b'a')
+            (root / '.gitignore').write_text('bin/\n')
+            subprocess.run(['git', 'add', '-A'], cwd=root, check=True)
+            subprocess.run(['git', '-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-qm', 'x'], cwd=root, check=True)
+            (root / 'src/Work.cs').write_text('already modified before the run')
+            seal = Seal(root, [root / 'bin'])
+            seal.verify('run')
+            for change in (lambda: (root / 'tools/ratchet.py').write_text('forged'),
+                           lambda: (root / 'src/Work.cs').write_text('rewritten during the run'),
+                           lambda: (root / 'src/New.cs').write_text('planted'),
+                           lambda: (root / 'Directory.Build.targets').write_text('<Project/>'),
+                           lambda: (root / 'bin/Harness.dll').write_bytes(b'b'),
+                           lambda: (root / 'bin/planted.dll').write_bytes(b'c')):
+                seal = Seal(root, [root / 'bin'])
+                change()
+                with self.subTest(change=change), self.assertRaises(ValueError):
+                    seal.verify('run')
 
 
 if __name__ == "__main__":

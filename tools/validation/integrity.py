@@ -1,5 +1,6 @@
-"""Reconstruction integrity: decompiler-artifact lint and committed IL listings bound to the original artifact."""
+"""Reconstruction integrity: decompiler-artifact and harness-escape lint, and the differential test assembly's types."""
 import argparse
+from collections import Counter
 import json
 import os
 from pathlib import Path
@@ -28,7 +29,7 @@ TEST_RULES = [
     ('forbidden test API', re.compile(
         r'\b(?:Environment|AppContext|Location|System\.IO|File|Directory|Path|Process|ModuleInitializer|DllImport|'
         r'LibraryImport|Emit|AssemblyLoadContext|Marshal|GetMethodBody|GetILAsByteArray|GetTypes|GetAssemblies|'
-        r'GetEnvironmentVariable|Sleep|SpinWait|Delay|XunitException|Xunit\.Sdk|MethodComparison\s*\)|'
+        r'(?:Get|Expand)EnvironmentVariables?|Sleep|SpinWait|Delay|XunitException|Xunit\.Sdk|MethodComparison\s*\)|'
         r'Type\.GetType|Unsafe|GCHandle)\b|QUIRE_|typeof\s*\(\s*(?:MethodComparison|Reflect|'
         r'Mathcad|Runtime|Side|Scenario|MplRunSides|HarnessException)\s*\)')),
 ]
@@ -36,24 +37,25 @@ TEST_RULES = [
 SRC_RULES = [
     ('forbidden harness reach', re.compile(
         r'\b(?:ModuleInitializer|Xunit|MethodComparison|GetMethodBody|GetILAsByteArray|GetAssemblies|'
-        r'GetEnvironmentVariable)\b|QUIRE_(?!MIRROR_)')),
+        r'(?:Get|Expand)EnvironmentVariables?|EnvironmentVariables)\b|QUIRE_(?!MIRROR_)|Quire\.Differential')),
 ]
 TESTS = 'tests/Quire.Differential.Tests'
-HEADER = re.compile(r'^// Tool: ilspycmd \S+\n// SHA-256: ([0-9a-f]{64})\n// MVID: ([0-9a-f-]{36})\n', re.M)
-CODE = re.compile(r'//[^\n]*|/\*.*?\*/|@"(?:[^"]|"")*"|\$?"(?:[^"\\\n]|\\.)*"|\'(?:[^\'\\\n]|\\.)+\'', re.S)
+CODE = re.compile(r'//[^\n]*|/\*.*?\*/|\$*("{3,}).*?\1|\$*@"(?:[^"]|"")*"|@?\$*"(?:[^"\\\n]|\\.)*"|'
+                  r"'(?:[^'\\\n]|\\.)+'", re.S)
 
 
 def allowed(path=ALLOWED):
     """Maintainer-reviewed exceptions: `<repo path> | <rule> | <exact line, trimmed>` per line, reasons in `#`
-    comment lines above (protected file). Keyed on the whole line, so an exception never covers new code."""
+    comment lines above (protected file). Keyed on the whole line and counted, so an entry covers one occurrence of
+    that line: an edited, new or copied line needs its own review."""
+    entries = Counter()
     if not Path(path).is_file():
-        return set()
-    entries = set()
+        return entries
     for line in Path(path).read_text().splitlines():
         if line.strip() and not line.startswith('#'):
             fields = [f.strip() for f in line.split(' | ', 2)]
             if len(fields) == 3:
-                entries.add(tuple(fields))
+                entries[tuple(fields)] += 1
     return entries
 
 
@@ -102,12 +104,12 @@ def agent_tests(repo):
 def lint(repo=ROOT, allow=None):
     """Decompiler artifacts in hand-written source and harness escapes in differential tests and Quire.Mpl."""
     repo = Path(repo)
-    allow = allowed(repo / 'docs/mirror/lint-allowed.txt') if allow is None else allow
+    allow = Counter(allowed(repo / 'docs/mirror/lint-allowed.txt') if allow is None else allow)
     sources = []
     for directory, subdirectories, files in os.walk(repo / 'src'):
         subdirectories[:] = [d for d in subdirectories if d not in SKIPPED]
         mpl = Path(directory).relative_to(repo).as_posix().lower().startswith('src/quire.mpl')
-        sources += [(Path(directory) / f, ARTIFACTS + (SRC_RULES if mpl else [])) for f in files if f.endswith('.cs')]
+        sources += [(Path(directory) / f, ARTIFACTS + (SRC_RULES if mpl else [])) for f in files if f.lower().endswith('.cs')]
     tests = agent_tests(repo) if (repo / TESTS).is_dir() else []
     sources += [(path, ARTIFACTS + TEST_RULES) for path in tests]
     findings = []
@@ -119,54 +121,55 @@ def lint(repo=ROOT, allow=None):
                          for p in shape(path, text)]
         for number, line in enumerate(text.splitlines(), 1):
             for rule, pattern in rules:
-                for match in pattern.finditer(line):
-                    if (name, rule, line.strip()) not in allow:
-                        findings.append({'file': name, 'line': number, 'rule': rule, 'match': match[0].strip(), 'text': line.strip()})
+                matches = list(pattern.finditer(line))
+                if matches and allow[(name, rule, line.strip())] > 0:
+                    allow[(name, rule, line.strip())] -= 1
+                    continue
+                findings += [{'file': name, 'line': number, 'rule': rule, 'match': m[0].strip(), 'text': line.strip()}
+                             for m in matches]
     return findings
 
 
-def listings(inventory, repo=ROOT, types=()):
-    """Every analyzed-or-later Mathcad type needs a listing whose header names the artifact the inventory loaded."""
-    directory = Path(repo) / 'docs/mirror/il'
-    artifacts, required = {}, {}
-    for method in inventory['methods']:
-        original = method.get('original')
-        if not original:
+def test_types(inventory, repo=ROOT):
+    """Each top-level type compiled into the differential test assembly comes only from maintainer-owned files, or
+    is the one class an agent test file is named after. Read from the binary, so no source trick can hide a type."""
+    from merge_gate import is_protected, patterns
+    rules = patterns((Path(__file__).parent / 'protected.txt').read_text())
+    root = Path(repo).resolve().as_posix() + '/'
+    findings = []
+    for entry in inventory.get('test_types', []):
+        name, documents = entry['name'], entry['documents']
+        def problem(text):
+            findings.append({'file': 'Quire.Differential.Tests.dll', 'line': 0, 'rule': 'test assembly type',
+                             'match': name, 'text': f'{name}: {text}'})
+        if name.startswith('<'):
+            continue  # Only a compiler can produce these names.
+        if not documents:
+            problem('no source lines; cannot attribute the type to a file')
             continue
-        artifacts[original['assembly']] = (original['sha256'].lower(), original['mvid'].lower())
-        if method['status'] in ('Stub', 'Unclassified') or (types and method['type'] not in types):
+        outside = [d for d in documents if not Path(d).as_posix().startswith(root)]
+        if outside and (name.startswith('Quire.') or not all('/.nuget/packages/' in Path(d).as_posix().lower() for d in outside)):
+            problem(f'source outside the repository: {outside[0]}')
             continue
-        top = original['type'].split('+')[0]
-        required.setdefault((original['assembly'], top), method['type'])
-    errors, unchecked = [], []
-    for (assembly, top), quire in sorted(required.items()):
-        if not (directory / assembly / f'{top}.il').is_file():
-            errors.append(f'{quire}: missing IL listing il/{assembly}/{top}.il')
-    for path in sorted(directory.glob('*/*.il')):
-        name = path.relative_to(directory).as_posix()
-        if path.parent.name not in artifacts:
-            unchecked.append(f'{name}: assembly not loaded by this audit')
-            continue
-        match = HEADER.search(path.read_text(encoding='utf-8', errors='replace')[:4096])
-        if not match:
-            errors.append(f'{name}: header lacks the "// Tool / SHA-256 / MVID" lines')
-        elif (match[1], match[2]) != artifacts[path.parent.name]:
-            errors.append(f'{name}: header names another artifact; regenerate from the pinned original')
-    return {'required': len(required), 'errors': errors, 'unchecked': unchecked}
+        if outside:
+            continue  # Restored package sources, such as the test SDK's entry point.
+        relative = [Path(d).as_posix()[len(root):] for d in documents]
+        writable = [r for r in relative if not is_protected(r, rules)]
+        if writable and (len(relative) != 1 or name != f'Quire.Differential.Tests.{Path(writable[0]).stem}'):
+            problem(f'declared in agent-writable {writable[0]}, which may contribute only its own class')
+    return findings
 
 
-def check(inventory, repo=ROOT, types=()):
-    findings = lint(repo)
-    il = listings(inventory, repo, types)
-    return {'complete': not findings and not il['errors'], 'lint': findings, 'listings': il}
+def check(inventory, repo=ROOT):
+    findings = lint(repo) + test_types(inventory, repo)
+    return {'complete': not findings, 'lint': findings}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inventory', required=True, type=Path)
-    parser.add_argument('--type', action='append', default=[], help='exact Quire declaring type; omit for all')
     args = parser.parse_args()
-    report = check(json.loads(args.inventory.read_text()), types=args.type)
+    report = check(json.loads(args.inventory.read_text()))
     print(json.dumps(report, indent=2))
     return 0 if report['complete'] else 1
 

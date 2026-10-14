@@ -28,16 +28,19 @@ Stable rule numbers/anchor for D9 and existing reports.
 
 1. **Ownership:** Confirm original owning member before moving behavior. Preserve private/nested members;
    evidence remaining Quire-only code. No name-based or bulk helper migration.
-2. **Evidence:** Before behavior changes, use REA managed IL plus same-artifact decompilation, or native REA;
-   follow [evidence/README.md](evidence/README.md). Record per-member contract, confidence/limits, observed/inferred
+2. **Evidence:** Before behavior changes, read the original with the tool its artifact needs, per
+   [evidence/README.md](evidence/README.md): for IL-only assemblies (`mplrun`) the local reference
+   (`tools/reference/reference.py`: ILSpy C#, member tokens, IL on request); for native and mixed-mode C++/CLI
+   assemblies (`iengine`) REA, including its native decompiler. Use REA cross-references and call paths to settle
+   ownership (rule 1) and trace callers. Record per-member contract, confidence/limits, observed/inferred
    cases; trace relevant helpers, calls, errors, mutation, edge cases, initialization/events/lifecycle.
-   Documentation/black-box results corroborate; documentation alone is incomplete. Commit each analyzed type's IL
-   listing under [il/](il/) per [evidence/README.md](evidence/README.md). Analysis already authorized;
+   Documentation/black-box results corroborate; documentation alone is incomplete. Original code (IL or
+   decompiled) stays in the gitignored `.mirror-cache/` and is never committed. Analysis already authorized;
    applicable licensing/legal constraints still need confirming.
-3. **Tests:** Reconstruct each body from its committed IL as the original source most likely was: same control
+3. **Tests:** Reconstruct each body from the original as its source most likely was: same control
    flow, evaluation order, calls, locals, exceptions and mutation, written as idiomatic C# (no decompiler
    artifacts). Raw decompiler output is not the implementation. Behavior/regression tests
-   mandatory. Verified means direct Mathcad comparison for recorded cases only; skips, REA, or inferred cases
+   mandatory. Verified means direct Mathcad comparison for recorded cases only; skips, analysis, or inferred cases
    do not prove equivalence. Run the [direct-method validation gate](validation.md#direct-comparison-for-every-method)
    for the selected scope: every method with a body, including private methods, needs an artifact-bound direct
    Mathcad comparison from a passing test in the current run. Public-caller coverage does not satisfy private
@@ -45,9 +48,9 @@ Stable rule numbers/anchor for D9 and existing reports.
 4. **Deviation:** Before relying on a departure, require an explicitly accepted, tested
    [ledger entry](deviations.md) with evidence, behavior, rationale, impact, revisit plan, decision.
    Report separately from matches. Notes authorize nothing; unknowns stay open, bugs need fixing.
-5. **Blocked:** Private/unreachable members still need analysis. Missing/unreadable/ambiguous REA:
+5. **Blocked:** Private/unreachable members still need analysis. Missing/unreadable/ambiguous original:
    record exact member/reason, request needed access/clarification, continue independent work; never guess.
-6. **Status:** One supported status/member ([definitions](coverage.md)): Stub/Unclassified → Analyzed (REA)
+6. **Status:** One supported status/member ([definitions](coverage.md)): Stub/Unclassified → Analyzed
    → Tested (independent tests pass) → Verified (direct cases). Blocked/Documented incomplete; Deviation follows
    rule 4; Abstract checks original declaration; Quire-only proves no counterpart. Include fields/accessors,
    constructors/events/lifecycle; separately check coverage-excluded explicit interfaces, enum values, delegates.
@@ -74,5 +77,5 @@ separate from author before phase commit. Passing tests/type presence alone neve
 
 Coverage/status own live classifications; CSV `missing`/`exists` are inventory labels. Licensing/COM assemblies
 remain deferred; native/scripts/Axiom/user-function C API remain in scope. Substitutes require recorded decisions.
-MirrorGen reads structural metadata; it neither executes methods nor analyzes bodies. Except [il/](il/) listings,
-keep raw analysis/logs outside checkpoint/repository; never reload whole inventories/generated trees/history by default.
+MirrorGen reads structural metadata; it neither executes methods nor analyzes bodies. Keep original code, raw
+analysis and logs outside checkpoint/repository; never reload whole inventories/generated trees/history by default.

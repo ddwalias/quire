@@ -27,6 +27,10 @@ def finish(failed, *recorded):
 
 if image[0] == 0xFF:
     finish(True)  # a broken suite: even the control run fails
+if args[args.index('--filter') + 1] == 'FullyQualifiedName=Ns.Tests.Alone':
+    finish(True, 'mvid:100663299')  # passes after its siblings, mismatches when run alone
+if image[0] == 0xFD:
+    (Path(args[2]).parent / 'planted.dll').write_bytes(b'x')  # a test rewrites the output later runs load
 if image[0] == 0xFE:
     finish(False, 'mvid:100663297')  # a test swallows an always-mismatching comparison
 if image[4] == 0x59:  # add -> sub: the method's own comparison mismatches and the harness records it
@@ -71,6 +75,15 @@ class MutationTests(unittest.TestCase):
     def test_only_compared_methods_of_selected_types(self):
         self.assertEqual(len(select(self.coverage, {'Quire.T'})), 3)
 
+    def test_compiler_generated_methods_use_their_compared_owner_tests(self):
+        lambda_ = dict(self.method, type='Quire.T+<>c', signature='<M>b__0_0()', validation='excluded', cases=[],
+                       owner=dict(type='Quire.T', name='M'), token=0x06000005)
+        orphan = dict(lambda_, signature='<Stub>b__1_0()', owner=dict(type='Quire.T', name='Stub'))
+        self.coverage['methods'] += [lambda_, orphan]
+        chosen = [(m['signature'], m['cases']) for m, _ in select(self.coverage, {'Quire.T'})]
+        self.assertIn(('<M>b__0_0()', [dict(test='Ns.Tests.Compare')]), chosen)
+        self.assertNotIn('<Stub>b__1_0()', [name for name, _ in chosen])  # its owner is not compared
+
     def test_survivor_fails_until_accepted(self):
         for jobs in (1, 2):
             with self.subTest(jobs=jobs):
@@ -99,6 +112,17 @@ class MutationTests(unittest.TestCase):
     def test_control_run_with_a_swallowed_mismatch_rejected(self):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFE]) + self.image[1:])
         with self.assertRaisesRegex(ValueError, 'swallowed'):
+            self.mutate()
+
+    def test_each_test_subset_needs_a_passing_control(self):
+        alone = dict(self.method, signature='N()', token=0x06000003, cases=[dict(test='Ns.Tests.Alone')])
+        self.coverage['methods'].append(alone)
+        with self.assertRaisesRegex(ValueError, "control run of \\['Ns.Tests.Alone'\\] failed"):
+            self.mutate()
+
+    def test_tests_rewriting_their_output_rejected(self):
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFD]) + self.image[1:])
+        with self.assertRaisesRegex(ValueError, 'changed their own build output'):
             self.mutate()
 
     def test_failing_control_run_rejected(self):

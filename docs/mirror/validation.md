@@ -137,9 +137,11 @@ The same run also checks each reconstruction against the original IL:
   conditional-branch and switch-target counts, `throw`/`rethrow` counts. Quire types/methods are named after their
   Mathcad binding; locals, nops, stack shuffling, branch encoding and compiler-generated names are ignored, so a
   Debug build can match. A difference makes the method `structure_mismatch` with the first differing item. Only a
-  `Deviation` status may differ. A matching structure never substitutes for a direct comparison.
-- **Lint** (`integrity.json`): hand-written `src/` code and agent-writable differential test files (every `.cs`
-  under `tests/Quire.Differential.Tests` that `protected.txt` leaves writable, whatever its case) must not contain
+  `Deviation` status whose accepted ledger row names the member may differ (see Status below). A matching structure
+  never substitutes for a direct comparison.
+- **Lint** (`integrity.json`): hand-written `src/` code (any `.cs` file, whatever its case) and agent-writable
+  differential test files (every `.cs` under `tests/Quire.Differential.Tests` that `protected.txt` leaves writable,
+  whatever its case) must not contain
   `goto`, compiler-generated names, IL labels, decompiler comments, decompiler-style locals (`num2`, `type2`,
   `obj1`), `#line` or `#pragma checksum`. Differential test files compile into the harness assembly, so each must
   declare exactly `namespace Quire.Differential.Tests;` and one top-level type, `class <file name>` (checked outside
@@ -147,22 +149,25 @@ The same run also checks each reconstruction against the original IL:
   avoid `global using`, and not name the environment, files, processes, assembly locations, `QUIRE_*` variables,
   code generation, marshalling, method bodies/IL, assembly or type enumeration, `Type.GetType`, harness types via
   `typeof`, xUnit exceptions, sleeps or delays. `src/Quire.Mpl` code, which runs in the same process, must not name
-  module initializers, xUnit, `MethodComparison`, method IL, assembly enumeration, environment variables or
-  `QUIRE_*` variables. These token rules are defence in depth, not containment (string building and reflection can
-  evade them), so test diffs still need review. Exceptions are maintainer-reviewed entries in
-  `docs/mirror/lint-allowed.txt` (`<path> | <rule> | <exact trimmed line>`), keyed on the whole line so an
-  exception never covers edited or new code.
-- **IL listings** (`integrity.json`): every type with a selected non-stub, classified method needs its listing in
-  [il/](il/), whose header must name the SHA-256 and MVID of the artifact the audit loaded. Listings for assemblies
-  the run did not load are reported as unchecked.
+  module initializers, xUnit, `MethodComparison`, the `Quire.Differential` namespace, method IL, assembly
+  enumeration, environment variables or `QUIRE_*` variables. These token rules are defence in depth, not containment
+  (string building and reflection can evade them), so test diffs still need review. Exceptions are
+  maintainer-reviewed entries in `docs/mirror/lint-allowed.txt` (`<path> | <rule> | <exact trimmed line>`), keyed on
+  the whole line and counted: each entry covers one occurrence, so an edited, new or copied line needs its own entry.
+- **Test assembly types** (`integrity.json`): MethodAudit lists every top-level type compiled into
+  `Quire.Differential.Tests.dll` with the PDB source files of its methods. Each must come only from maintainer-owned
+  files, or be the single class an agent test file is named after; types without source lines or with sources
+  outside the repository (other than restored NuGet packages, outside `Quire.*`) are rejected. This reads the
+  binary, so no source-level trick can add a shadowing `Assert` or harness type.
 
-`python3 tools/validation/integrity.py --inventory <run>/method-inventory.json` repeats the lint/listing checks.
+`python3 tools/validation/integrity.py --inventory <run>/method-inventory.json` repeats the lint and test-type checks.
+No original code is committed; the structure check reads the original IL from the artifact itself.
 The structure comparison is a fingerprint, not a proof: identical structure with different arithmetic or operand
 order passes it, which the direct comparisons must catch.
 
 ### Branch coverage, mutation and status
 
-- **Branch coverage:** the differential tests run a second time, unrecorded and `--no-build`, under the Microsoft
+- **Branch coverage:** the differential tests run a second time, unrecorded, under the Microsoft
   code-coverage collector (cobertura). Instrumentation rewrites the module and corrupts the method tokens that
   comparison records carry, so it never runs in the recorded pass. A compared method whose PDB statement lines (in
   every source document) are not all executed, or whose branch conditions are partly covered, becomes `uncovered`,
@@ -171,9 +176,11 @@ order passes it, which the direct comparisons must catch.
 - **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
   byte changes in each compared method: negated branches; swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
   `cgt`/`clt`; `ceq` → `cgt.un`; `0`/`1` swapped; other integer constants plus one; floating constants plus one
-  (doubled where rounding absorbs it; NaN and infinities skipped). An unmutated control run of the same tests must
-  pass first and record no mismatch (a recorded mismatch in a passing run means a test swallowed it). Each mutant is
-  applied to a copy of the test output and only the tests whose direct comparisons covered that method are rerun.
+  (doubled where rounding absorbs it; NaN and infinities skipped). Unmutated control runs, of all selected tests and
+  of each distinct per-method test subset, must pass and record no mismatch (a recorded mismatch in a passing run
+  means a test swallowed it; a subset that fails alone would kill every mutant). Each mutant is applied to a copy of
+  the test output and only the tests whose direct comparisons covered that method are rerun; the copy is
+  fingerprinted and checked after every run.
   It counts as killed only when `MethodComparison` records an outcome or state mismatch on a method of the mutated
   assembly **in a test that the TRX report shows failed**; the record and report live in a scratch directory outside
   the test output. The mismatch is usually the mutated method's own, but the first mismatch ends a test, so it may
@@ -184,23 +191,27 @@ order passes it, which the direct comparisons must catch.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
   `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
-  nothing) or whose comparisons live in a changed differential test file (by its single top-level class, nested
-  classes included), and fails when PDB paths lie outside the repository.
+  nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in a changed
+  differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie
+  outside the repository.
 - **Status:** a `Verified` method that this run does not show as compared (or declaration-only) counts as
   `verified_unsupported`. A `Deviation` status skips the structure check only when the `deviations.md` index lists
   its id with `accepted-temporary` or `accepted-permanent` and names the method as `Quire.Type::Member` in the scope
   column (every overload of that name).
-- **Limits:** lambda, iterator and async bodies live in compiler-generated methods, which are excluded from structure,
-  coverage and mutation; an iterator or async kickoff method has no statement lines and stays `uncovered`. Only names
-  a compiler can produce (containing `<`) are excluded.
+- **Compiler-generated methods:** lambdas, local functions, iterator and async bodies compile into methods with
+  names only a compiler can produce (containing `<`). They are `excluded` from structure and coverage, but MethodAudit
+  records the hand-written method that owns each one, and mutation mutates it against the owner's tests whenever the
+  owner is compared and selected, so idiomatic code keeps its logic under test. They may appear and disappear
+  freely in the ratchet. An iterator or async kickoff method has no statement lines and stays `uncovered`; shared
+  closure plumbing (constructors of `<>c`) has no owner and is not mutated.
 
 ### Ratchet
 
 `ratchet.json` compares a run with `docs/mirror/validation-baseline.json` (schema 2), which records its profile,
-per-type counts, each method's state and each lint finding and listing error by identity. `compared` and each type's
-method `total` may not fall; `missing`, `structure_mismatch`, `uncovered`, `verified_unsupported` and `excluded` may
+per-type counts, each method's state and test classes, and each lint finding by identity (counted). `compared` and each type's
+hand-written method total may not fall; `missing`, `structure_mismatch`, `uncovered` and `verified_unsupported` may
 not rise; a method may only change state by becoming `compared`; a new method without a Mathcad counterpart is
-rejected. Unscoped runs also forbid any new lint finding or listing error (fixing one does not pay for another) and
+rejected. Unscoped runs also forbid any new lint finding (fixing one does not pay for another) and
 disappearing types or methods. New types with counterparts start their own baseline. A baseline from another profile
 or schema is rejected. `--write-baseline PATH` writes a run's snapshot (unscoped runs only). A maintainer creates the first baseline from an
 unscoped focused run on `main`; afterwards only the merge gate updates it.
@@ -219,11 +230,18 @@ The gate blocks a branch that is not based on current `main`, has no changes, or
 case. It also blocks any added, changed, deleted or renamed path matching `tools/validation/protected.txt` (all of
 `tools/`, the harness and comparison helper files, test subdirectories, generated sources, every project, props,
 targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned records), unless a maintainer passes
-`--allow-protected`. Because the gate runs the focused profile, which audits only
-`Quire.Mpl`, it blocks `src/` changes outside `src/Quire.Mpl` unless a maintainer passes `--allow-unvalidated`
-after a Windows phase run. Otherwise it validates a detached worktree of the branch **with `main`'s copies of every
+`--allow-protected`. Because the gate runs the focused profile, which builds and audits only `Quire.Mpl` and runs
+only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
+`--allow-unvalidated` after a Windows phase run. Otherwise it validates a detached worktree of the branch **with `main`'s copies of every
 protected file**: an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
 ratchet holds and no mutant survives. `gate.json` beside the results records the decision.
+
+Code under test runs inside every `dotnet test`, so `validate.py` loads its modules and builds MethodAudit (into a
+directory outside the tree) and all test projects before any test runs, then runs tests with `--no-build`. After
+every test, coverage and mutation run it checks fingerprints of every maintainer-owned file and of the built test
+outputs and fails on any change. Code in the test process can still forge records it writes during its own run
+(case records, mismatch records), which is why the lint keeps file, environment and reflection APIs out of agent
+code and test diffs still need review.
 
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.

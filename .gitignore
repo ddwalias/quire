@@ -6,3 +6,4 @@ TestResults/
 *.qwx.bak
 .omc/
 __pycache__/
+.mirror-cache/

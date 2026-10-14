@@ -1,6 +1,6 @@
 # Maintainer-reviewed lint exceptions (tools/validation/integrity.py).
-# One per line: <repo path> | <rule> | <exact line, trimmed>. Keyed on the whole line, so editing an allowed line
-# or adding another use needs a new review. Reasons go in comment lines above each group.
+# One per line: <repo path> | <rule> | <exact line, trimmed>. Keyed on the whole line and counted: each entry
+# covers one occurrence, so an edited, new or copied line needs its own review. Reasons go in comment lines.
 
 # dynamic subclass reaches a protected constructor on both sides
 tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | using System.Reflection.Emit;

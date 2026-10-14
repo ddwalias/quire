@@ -2,6 +2,7 @@
 from concurrent.futures import ThreadPoolExecutor
 import os
 import queue
+import re
 import signal
 from pathlib import Path
 import shutil
@@ -11,7 +12,7 @@ import threading
 import time
 import uuid
 import xml.etree.ElementTree as ET
-from validate import NS, ROOT
+from validate import NS, ROOT, digest, files_under
 
 ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
 
@@ -29,9 +30,21 @@ def accepted(path=ACCEPTED):
 
 
 def select(coverage, types):
-    """Mutants of compared methods in the selected types."""
-    return [(m, mutant) for m in coverage['methods'] if m['type'] in types and m['validation'] == 'compared'
-            for mutant in m.get('mutants', [])]
+    """Mutants of compared methods in the selected types, and of the compiler-generated methods (lambdas, local
+    functions, iterator and async bodies) those methods own, run against the owner's tests."""
+    owners = {}
+    for m in coverage['methods']:
+        if m['validation'] == 'compared':
+            owners.setdefault((m['type'], re.split(r'[`(]', m['signature'])[0]), []).append(m)
+    chosen = []
+    for m in coverage['methods']:
+        if m['validation'] == 'compared' and m['type'] in types:
+            chosen.append(m)
+        elif m['validation'] == 'excluded' and m.get('owner') and m['owner']['type'] in types:
+            compared = owners.get((m['owner']['type'], m['owner']['name']), [])
+            if compared:
+                chosen.append(dict(m, cases=[c for o in compared for c in o['cases']]))
+    return [(m, mutant) for m in chosen for mutant in m.get('mutants', [])]
 
 
 def execute(command, env, timeout):
@@ -85,6 +98,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     copies = [Path(tempfile.mkdtemp(prefix='quire-mutant-')) for _ in range(max(1, jobs))]
     for copy in copies:
         shutil.copytree(test_dll.parent, copy, dirs_exist_ok=True)
+    pristine = digest(files_under(test_dll.parent), test_dll.parent)
     env = os.environ.copy()
     env['QUIRE_REQUIRE_MATHCAD'] = '1'
     env.pop('QUIRE_METHOD_CASES', None)
@@ -103,24 +117,49 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             kills.replace(scratch / 'kills.txt')
         return code, scratch
 
-    mutant_timeout = timeout
-    if selected:
-        # Control: the unmutated copy must pass the same tests without recording any mismatch, or no failure below
-        # would mean anything; a recorded mismatch in a passing run means a test swallowed it.
-        tests = {case['test'] for method, _ in selected for case in method['cases']}
-        started = time.monotonic()
-        code, scratch = test_run(copies[0], tests, timeout)
+    def unchanged(copy):
+        """Code under test runs from the copy; it must not have rewritten it for later runs."""
+        if digest(files_under(copy), copy) != pristine:
+            raise ValueError(f'Tests changed their own build output in {copy}; mutation results would be meaningless')
+
+    def control(copy, tests, limit):
+        """The unmutated copy must pass these tests without recording any mismatch, or no failure under a mutant
+        would mean anything; a recorded mismatch in a passing run means a test swallowed it."""
+        code, scratch = test_run(copy, tests, limit)
         swallowed = (scratch / 'kills.txt').is_file()
         shutil.rmtree(scratch, ignore_errors=True)
+        unchanged(copy)
         if code != 0 or swallowed:
+            reason = f'failed (exit {code})' if code != 0 else 'recorded a mismatch that a test swallowed'
+            raise ValueError(f'Unmutated control run of {sorted(tests)} {reason}; mutation results would be meaningless')
+
+    mutant_timeout = timeout
+    if selected:
+        started = time.monotonic()
+        try:
+            control(copies[0], {case['test'] for method, _ in selected for case in method['cases']}, timeout)
+        except ValueError:
             for copy in copies:
                 shutil.rmtree(copy, ignore_errors=True)
-            reason = f'failed (exit {code})' if code != 0 else 'recorded a mismatch that a test swallowed'
-            raise ValueError(f'Unmutated control run {reason}; mutation results would be meaningless')
+            raise
         # A mutant that loops forever is cut off relative to how long all its tests take unmutated.
         mutant_timeout = min(timeout, max(30, 5 * (time.monotonic() - started)))
+    # Each mutant reruns only its method's tests in a fresh process, so that subset also needs its own control:
+    # a test that passes after its siblings but mismatches alone would otherwise kill every mutant.
+    controlled, control_lock = {}, threading.Lock()
 
     def attempt(copy, method, mutant):
+        tests = frozenset(case['test'] for case in method['cases'])
+        with control_lock:
+            first = tests not in controlled
+            done_control = controlled.setdefault(tests, threading.Event())
+        if first:
+            try:
+                control(copy, tests, timeout)
+            finally:
+                done_control.set()
+        else:
+            done_control.wait()
         target = copy / f'{project}.dll'
         image = bytearray(target.read_bytes())
         original, replacement = bytes.fromhex(mutant['original']), bytes.fromhex(mutant['replacement'])
@@ -131,9 +170,10 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         patched[offset:offset + len(original)] = replacement
         target.write_bytes(patched)
         try:
-            code, scratch = test_run(copy, sorted({case['test'] for case in method['cases']}), mutant_timeout)
+            code, scratch = test_run(copy, tests, mutant_timeout)
         finally:
             target.write_bytes(image)
+        unchanged(copy)
         # Killed only when a comparison against Mathcad mismatched in a test that failed. The first mismatch ends its
         # test, so it may be recorded for a caller compared earlier; failures with no such mismatch prove nothing.
         found = mismatches(scratch, method['quire_mvid']) if code else set()

@@ -1,6 +1,6 @@
 from pathlib import Path
 import unittest
-from merge_gate import case_collisions, patterns, protected, verdict
+from merge_gate import case_collisions, patterns, protected, unvalidated_paths, verdict
 
 RULES = patterns((Path(__file__).parent / 'protected.txt').read_text())
 PASSED = {'projects': [{'project': 'P', 'exit_code': 0, 'passed': 3, 'failed': 0, 'skipped': 0}],
@@ -27,16 +27,24 @@ class MergeGateTests(unittest.TestCase):
         self.assertEqual(protected([
             'src/Quire.Mpl/Mcd/NumVal.cs', 'tests/Quire.Differential.Tests/NumValDifferentialTests.cs',
             'tests/Quire.Mpl.Tests/Mcd/NumValTests.cs', 'docs/mirror/evidence/Mcd.NumVal.md',
-            'docs/mirror/il/mplrun/Mcd.NumVal.il', 'docs/mirror/WORK.md', 'docs/mirror/status/Quire.Mpl.txt'], RULES), [])
+            'docs/mirror/WORK.md', 'docs/mirror/status/Quire.Mpl.txt'], RULES), [])
 
     def test_case_variants_and_subdirectories_stay_protected(self):
         self.assertEqual(protected([
             'tests/Quire.Differential.Tests/Sub/EvilDifferentialTests.cs', 'src/Quire.Mpl/Generated/Mirror/X.cs',
-            'src/Quire.Mpl/Mcd/Generated/Y.cs', 'TOOLS/validation/validate.py'], RULES), sorted([
+            'src/Quire.Mpl/Mcd/Generated/Y.cs', 'TOOLS/validation/validate.py', 'src/Quire.Mpl/Mcd/bin/Evil.cs',
+            '.gitattributes', 'docs/mirror/il/mplrun/Mcd.NumVal.il', 'docs/x/Mcd.Dim.IL', '.mirror-cache/a/Mcd.Dim.cs'], RULES), sorted([
             'tests/Quire.Differential.Tests/Sub/EvilDifferentialTests.cs', 'src/Quire.Mpl/Generated/Mirror/X.cs',
-            'src/Quire.Mpl/Mcd/Generated/Y.cs', 'TOOLS/validation/validate.py']))
+            'src/Quire.Mpl/Mcd/Generated/Y.cs', 'TOOLS/validation/validate.py', 'src/Quire.Mpl/Mcd/bin/Evil.cs',
+            '.gitattributes', 'docs/mirror/il/mplrun/Mcd.NumVal.il', 'docs/x/Mcd.Dim.IL', '.mirror-cache/a/Mcd.Dim.cs']))
         # Writable, so integrity.py lints every such file whatever its case.
         self.assertEqual(protected(['tests/Quire.Differential.Tests/Evildifferentialtests.cs'], RULES), [])
+
+    def test_paths_outside_the_focused_profile_are_unvalidated(self):
+        self.assertEqual(unvalidated_paths([
+            'src/Quire.Mpl/Mcd/A.cs', 'Src/Quire.Engine/B.cs', 'tests/Quire.Engine.Tests/C.cs',
+            'tests/Quire.Mpl.Tests/D.cs', 'tests/Quire.Differential.Tests/EDifferentialTests.cs', 'docs/x.md']),
+            ['Src/Quire.Engine/B.cs', 'tests/Quire.Engine.Tests/C.cs'])
 
     def test_case_collisions_found(self):
         self.assertEqual(case_collisions(['src/Quire.Mpl/A.cs', 'Src/Quire.Engine/B.cs', 'docs/x.md']), ['Src / src'])

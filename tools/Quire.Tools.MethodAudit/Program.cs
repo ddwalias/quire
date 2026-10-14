@@ -7,6 +7,17 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using Quire.Tools.MirrorGen;
 
+// `members ASSEMBLY TYPE`: the identity of an original artifact and the token and signature of every method of a type
+// and its nested types, which an evidence record cites (tools/reference/reference.py).
+if (args is ["members", var assemblyPath, var typeName])
+{
+    var artifact = new Artifact(assemblyPath);
+    Console.WriteLine($"# {artifact.Name} {artifact.Version}\n# SHA-256: {artifact.Hash}\n# MVID: {artifact.Mvid}");
+    var members = artifact.Methods.Where(m => m.Owner == typeName || m.Owner.StartsWith(typeName + "+")).ToList();
+    foreach (var m in members)
+        Console.WriteLine($"0x{m.Token:x8}\t{m.Owner}\t{m.Key}\t{m.Access}{(m.BodyRva == 0 ? "\tno body" : "")}");
+    return members.Count > 0 ? 0 : 1;
+}
 var options = new Dictionary<string, List<string>>();
 for (int i = 0; i < args.Length; i += 2)
 {
@@ -126,6 +137,7 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
         id = artifact.Name + "::" + raw.Owner + "::" + raw.Key, project = artifact.Name, type = raw.Owner, signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
         is_static = method.Static, is_constructor = method.IsConstructor, access = method.Access.ToString(), status = status.Status.ToString(), evidence = status.Evidence,
         quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid, exclusion,
+        owner = exclusion == null ? null : Owner(raw.Owner, raw.Name),
         original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,
             version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
         declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
@@ -134,16 +146,52 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
-        mutants = raw.BodyRva == 0 || exclusion != null ? []
+        mutants = raw.BodyRva == 0 || exclusion != null && Owner(raw.Owner, raw.Name) == null ? []
             : Mutants.Find(artifact.Pe, artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)))
                 .Select(m => new { il_offset = m.IlOffset, file_offset = m.FileOffset, original = m.Original,
                     replacement = m.Replacement, description = m.Description }).ToList()
     });
 }
+// Top-level types compiled into the differential test assembly, with the source files their methods come from, so
+// the validator can reject any type an agent test file adds beside its own class (such as a shadowing Assert).
+var testTypes = new List<object>();
+string testAssembly = Path.Combine(assemblies, "Quire.Differential.Tests.dll");
+if (File.Exists(testAssembly))
+{
+    using var pe = new PEReader(File.OpenRead(testAssembly));
+    var md = pe.GetMetadataReader();
+    string testPdb = Path.ChangeExtension(testAssembly, ".pdb");
+    using var pdbProvider = File.Exists(testPdb) ? MetadataReaderProvider.FromPortablePdbStream(File.OpenRead(testPdb)) : null;
+    var pdb = pdbProvider?.GetMetadataReader();
+    IEnumerable<string> Documents(TypeDefinition type) => type.GetMethods()
+        .SelectMany(h => pdb == null ? [] : pdb.GetMethodDebugInformation(h.ToDebugInformationHandle()).GetSequencePoints())
+        .Where(p => !p.IsHidden).Select(p => pdb!.GetString(pdb.GetDocument(p.Document).Name))
+        .Concat(type.GetNestedTypes().SelectMany(n => Documents(md.GetTypeDefinition(n))));
+    foreach (var handle in md.TypeDefinitions)
+    {
+        var type = md.GetTypeDefinition(handle);
+        if (!type.GetDeclaringType().IsNil) continue;
+        string name = md.GetString(type.Namespace) is { Length: > 0 } ns ? ns + "." + md.GetString(type.Name) : md.GetString(type.Name);
+        if (name == "<Module>") continue;
+        testTypes.Add(new { name, documents = Documents(type).Distinct().Order().ToArray() });
+    }
+}
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
-File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
+File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows, test_types = testTypes }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
 Console.WriteLine($"Method inventory: {rows.Count} declarations, {errors.Count} inspection errors; {output}");
 return errors.Count == 0 && rows.Count > 0 ? 0 : 1;
+
+// The hand-written method a compiler-generated one implements: a lambda or local function `<Name>b__…`/`<Name>g__…`
+// (in the type or a `<>c…` closure class), or an iterator/async state machine `<Name>d__…`. Null for shared closure
+// plumbing such as the constructors of `<>c`.
+static object? Owner(string typeName, string methodName)
+{
+    var parts = typeName.Split('+');
+    string type = string.Join('+', parts.TakeWhile(p => !p.StartsWith('<')));
+    string? Inner(string name) => name.StartsWith('<') && name.IndexOf('>') is > 1 and var end ? name[1..end] : null;
+    string? name = Inner(methodName) ?? parts.Select(Inner).LastOrDefault(n => n != null);
+    return type.Length == 0 || name == null ? null : new { type, name };
+}
 
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva);
 sealed class Artifact
