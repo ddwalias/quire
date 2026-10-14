@@ -69,7 +69,7 @@ public abstract partial class Function : FunctionUtilities
             return "[]";
         if (v.Length == 1)
             return $"[{v[0]}]";
-        string text = v[0]?.ToString() ?? "";
+        string text = v[0].ToString();
         for (int i = 1; i < v.Length; i++)
             text = $"{text},{v[i]}";
         return $"[{text}]";
