@@ -94,6 +94,10 @@ public class MatValGrowthDifferentialTests
             [2, 1, Number(Side.Quire, 7)], [2, 1, Number(Side.Mathcad, 7)]);
         CompareInstance("mcd_set_2 column growth", "mcd_set_2", [typeof(int), typeof(int), typeof(object)], qRows, mRows,
             [3, 2, Number(Side.Quire, 8)], [3, 2, Number(Side.Mathcad, 8)]);
+        var qFirstColumn = Matrix(Side.Quire, 2, 2);
+        var mFirstColumn = Matrix(Side.Mathcad, 2, 2);
+        CompareInstance("mcd_set_2 accepts zero-based column", "mcd_set_2", [typeof(int), typeof(int), typeof(object)],
+            qFirstColumn, mFirstColumn, [1, 0, Number(Side.Quire, 6)], [1, 0, Number(Side.Mathcad, 6)]);
 
         var qCapacity = Matrix(Side.Quire, 2, 2);
         var mCapacity = Matrix(Side.Mathcad, 2, 2);
@@ -108,6 +112,8 @@ public class MatValGrowthDifferentialTests
             Set(m, "m_dim", Side.Mathcad.D(dimension));
             Call(q, "set_ptrs_2", 0, 0, "pointer");
             Call(m, "set_ptrs_2", 0, 0, "pointer");
+            CompareInstance("extend_2 accepts zero-based column " + dimension, "extend_2", [typeof(int), typeof(int)],
+                q, m, [0, 0], [0, 0]);
             CompareInstance("extend_2 unit growth " + dimension, "extend_2", [typeof(int), typeof(int)], q, m, [1, 1], [1, 1]);
 
             var qBadRow = Matrix(Side.Quire, 1, 1);

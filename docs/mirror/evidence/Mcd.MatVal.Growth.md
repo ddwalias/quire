@@ -53,7 +53,7 @@
 
 ## Test cases
 
-Observed direct comparisons in `MatValGrowthDifferentialTests` cover vector growth, immutable/shared copy-on-write, `mcd_upd_1(int,double)` mutation on an immutable matrix, row and column growth, matrix and null-input `realloc`, and `extend_2` mutable growth, both negative-index branches and immutable-copy behavior across the named dimensions. Assignment cases compare `setblock`, `setcolumn`, `mcd_setrow`, immutable scalar `mcd_setcolumn`, and `StretchWithColumnFill`; error cases cover multicolumn `extend_1`, negative first and second indices plus immutable copy for `mcd_set_2`, negative `mcd_set_1`, and a multicolumn `setcolumn` source. State renderers include shape, stride, offset, flags, dimension, real/imaginary backing and pointer entries. The observations establish only these inputs and mutations.
+Observed direct comparisons in `MatValGrowthDifferentialTests` cover vector growth, immutable/shared copy-on-write, `mcd_upd_1(int,double)` mutation on an immutable matrix, row and column growth, matrix and null-input `realloc`, and `extend_2` mutable growth, zero-based column, both negative-index branches and immutable-copy behavior across the named dimensions. Assignment cases compare `setblock`, `setcolumn`, `mcd_setrow`, immutable scalar `mcd_setcolumn`, and `StretchWithColumnFill`; `mcd_set_2` cases include zero-based column, growth, negative first and second indices, and immutable copy; other errors cover multicolumn `extend_1`, negative `mcd_set_1`, and a multicolumn `setcolumn` source. State renderers include shape, stride, offset, flags, dimension, real/imaginary backing and pointer entries. The observations establish only these inputs and mutations.
 
 ## Open
 
@@ -69,6 +69,6 @@ Direct cases pass for the listed inputs, but reconstruction integrity leaves the
 - `setblock(int,int,object)` (`0x06000502`): calls differ at #0 (`Quire get_Rows` vs `Mathcad Stretch`).
 - `StretchWithColumnFill(int,int,DimVal)` (`0x0600053d`): calls differ at #0 (`Quire get_Rows` vs `Mathcad get_Cols`).
 
-`extend_2(int,int)` and `mcd_set_2(int,int,object)` had uncovered branch paths in the audit: negative first index and immutable-copy branches were missing. The direct cases now include those paths. `set_ptrs_2` is used only to construct pointer-bearing inputs; token `0x06000518` is not listed in this record, so it is not compared under this contract. The other methods in this record remain outside these cases.
+The mutation audit found that replacing the `j < 0` comparison with `j < 1` survived for both `extend_2(int,int)` and `mcd_set_2(int,int,object)`. The direct cases now include `j == 0` to distinguish these boundary mutations, as well as the negative-index and immutable-copy paths. `set_ptrs_2` is used only to construct pointer-bearing inputs; token `0x06000518` is not listed in this record, so it is not compared under this contract. The other methods in this record remain outside these cases.
 
 Wrapper dispatch depends on DimVal matrix_set_1/2 and matrix_set_1/2_ob. Shared Singleton, FillArr, numeric and pointer setter implementations are validated with the combined batch. Nonzero offset growth intentionally retains the original offset behavior; bounded cases do not establish all malformed storage cases.
