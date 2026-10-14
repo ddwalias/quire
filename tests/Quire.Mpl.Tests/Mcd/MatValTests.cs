@@ -1,10 +1,12 @@
 using System.Collections;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValTests
 {
+    public MatValTests() => RuntimeThread.Ensure();
     [Fact]
     public void Constructors_preserve_storage_shape_and_dimension_rules()
     {

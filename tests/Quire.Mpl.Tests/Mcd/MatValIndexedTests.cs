@@ -1,10 +1,12 @@
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValIndexedTests
 {
+    public MatValIndexedTests() => RuntimeThread.Ensure();
     [Fact]
     public void Checked_access_reports_original_argument_positions()
     {

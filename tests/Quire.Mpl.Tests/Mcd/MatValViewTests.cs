@@ -1,11 +1,13 @@
 using System.Reflection;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValViewTests
 {
+    public MatValViewTests() => RuntimeThread.Ensure();
     [Fact]
     public void Mutable_columns_copy_and_immutable_uniform_columns_alias_with_shared_flags()
     {

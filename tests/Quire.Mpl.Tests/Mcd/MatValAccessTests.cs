@@ -1,11 +1,13 @@
 using System.Collections;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValAccessTests
 {
+    public MatValAccessTests() => RuntimeThread.Ensure();
     private static Dim Length => Dim.Parse("V{Length 60000}");
     private static Dim Time => Dim.Parse("V{Time 60000}");
     private static MatVal View() => new(new double[8], new double[8], 2, 2, 3, new Hashtable(), Flags.MatrixTag, 1);

@@ -1,9 +1,11 @@
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValDimensionTests
 {
+    public MatValDimensionTests() => RuntimeThread.Ensure();
     private static Dim Length => Dim.Parse("V{Length 60000}");
     private static Dim Time => Dim.Parse("V{Time 60000}");
 

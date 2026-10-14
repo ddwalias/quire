@@ -1,11 +1,13 @@
 using System.Collections;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValGrowthTests
 {
+    public MatValGrowthTests() => RuntimeThread.Ensure();
     [Fact]
     public void Vector_growth_doubles_capacity_and_set_preserves_copy_on_write()
     {

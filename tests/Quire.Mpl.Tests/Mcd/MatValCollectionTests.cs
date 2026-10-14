@@ -1,10 +1,12 @@
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatValCollectionTests
 {
+    public MatValCollectionTests() => RuntimeThread.Ensure();
     [Fact]
     public void Reserve_tracks_capacity_and_raw_push_increments_before_failure()
     {

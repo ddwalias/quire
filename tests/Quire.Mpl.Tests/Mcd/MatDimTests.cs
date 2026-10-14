@@ -1,9 +1,11 @@
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 
 namespace Quire.Mpl.Tests.Mcd;
 
 public class MatDimTests
 {
+    public MatDimTests() => RuntimeThread.Ensure();
     private sealed class Grid : MatDim
     {
         private readonly Dim[,] values;
