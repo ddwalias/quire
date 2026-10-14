@@ -18,9 +18,9 @@ tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden te
 tests/Quire.Differential.Tests/MatValDifferentialTests.cs | forbidden test API | log.Log(s,"native struct size",()=>System.Runtime.InteropServices.Marshal.SizeOf(t));
 tests/Quire.Differential.Tests/MatValDifferentialTests.cs | forbidden test API | log.Log(s,f+" offset",()=>System.Runtime.InteropServices.Marshal.OffsetOf(t,f));
 
-# temporary probe assembly directory and copy for Rts assembly loading
+# temporary probe assembly directory, copy and search path for Rts assembly loading
 tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | string dir = Path.Combine(Path.GetTempPath(), "quire-rts-" + Guid.NewGuid().ToString("N"));
 tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | Directory.CreateDirectory(dir);
 tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | File.Copy(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.Location, Path.Combine(dir, "Probe.dll"));
-tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | Set(rts, "AssemblyPath", Path.Combine(dir, "missing") + ";" + dir);
+tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | string searchPath = Path.Combine(dir, "missing") + ";" + dir;
 tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | try { Directory.Delete(dir, true); } catch (IOException) { } catch (UnauthorizedAccessException) { }

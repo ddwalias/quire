@@ -4,7 +4,6 @@
   MVID `17a0933b-4988-4c18-963d-563998321cc8`
 - **REA:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (inspect_managed_members, 2026-10-14);
   decompiled view: ilspycmd 11.1.0.9782
-- **IL:** `docs/mirror/il/mplrun/Mpl.Run.Rts.il`
 - **Quire:** `src/Quire.Mpl/Run/Rts.cs`, `src/Quire.Mpl/Run/True.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Rts.g.cs`
   (stub); tests: `Quire.Mpl.Tests.Run.RtsTests`, `Quire.Differential.Tests.RtsDifferentialTests`
 
