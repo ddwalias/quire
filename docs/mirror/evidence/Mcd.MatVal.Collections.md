@@ -49,7 +49,7 @@
 
 ## Test cases
 
-Observed direct comparisons in `MatValCollectionDifferentialTests.Construction_push_shape_and_fill` compare `MakeVector` and `MakeVector0` with polymorphic, unitful and NaN numeric values, plus `MakeVector0` with the exact `NumVal.Zero` singleton; `Replicate` with polymorphic, identity and length dimensions; one-argument `reserve`; `PushRaw(double)`, `PushReal(double)`, `PushZero()`, `PushRawIndex(object)` and `Reshape(int,int)` on a shared vector; and `Fill(object,int,int,int)` with pointer, complex unitful, polymorphic real and immutable-matrix inputs. Instance renderers compare rows, columns, stride, offset, flags, dimension, backing arrays and pointer tables before and after each call. These observations support only the enumerated cases.
+Observed direct comparisons in `MatValCollectionDifferentialTests.Construction_push_shape_and_fill` compare `MakeVector` and `MakeVector0` with polymorphic, unitful and NaN numeric values, plus `MakeVector0` with the exact `NumVal.Zero` singleton; `Replicate` with polymorphic, identity and length dimensions; one-argument `reserve`; `PushRaw(double)`, `PushReal(double)`, `PushZero()`, `PushRawIndex(object)` and `Reshape(int,int)` on a shared vector; and `Fill(object,int,int,int)` with pointer, complex unitful, polymorphic real, a product-sensitive extent where the final fill index is 8, and immutable-matrix inputs. Instance renderers compare rows, columns, stride, offset, flags, dimension, backing arrays and pointer tables before and after each call. These observations support only the enumerated cases.
 
 ## Open
 

@@ -94,6 +94,14 @@ public class MatValCollectionDifferentialTests
         CompareInstance("Fill polymorphic real", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)], qFill, mFill,
             [Side.Quire.Num(1, 0, "poly"), 0, 2, 3], [Side.Mathcad.Num(1, 0, "poly"), 0, 2, 3]);
 
+        var qProductExtent = New(QMat, new double[2], new double[2], 2, 1, 2,
+            new System.Collections.Hashtable(), Enum.ToObject(Side.Quire.T("Mcd.Flags"), 2146697216), 0);
+        var mProductExtent = New(MMat, new double[2], new double[2], 2, 1, 2,
+            new System.Collections.Hashtable(), Enum.ToObject(Side.Mathcad.T("Mcd.Flags"), 2146697216), 0);
+        // The final write is at index 8. Division instead of multiplication computes extent 3.
+        CompareInstance("Fill product determines extent", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)],
+            qProductExtent, mProductExtent, ["fill", 0, 4, 3], ["fill", 0, 4, 3]);
+
         var qImmutable = New(QMat, 5, 1, true);
         var mImmutable = New(MMat, 5, 1, true);
         Set(qImmutable, "Immutable", true);
