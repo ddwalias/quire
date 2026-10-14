@@ -15,10 +15,26 @@ have a record here too. `Quire.Mirror.Tests` fails when a referenced record is m
    control and data flow is read from an ILSpy decompilation (`ilspycmd`, recorded per record) of the same file.
    REA's `import_managed_reconstruction` is the tool for binding such output to its Evidence, but it takes the full
    member Evidence (megabytes per assembly) as input, so the binding is recorded here by token and hash instead.
-   Decompiled text never enters the repository.
-3. **Native.** For bodies in native code, REA's Ghidra provider (`analyze_function`, `procedure_pseudo_code`).
-4. **Findings are written in our own words**, as a contract: inputs, outputs, errors, mutation, edge cases. No
-   decompiled code or pseudocode is pasted. Quire's implementation is written from the contract.
+   Raw decompiled C# stays outside the repository; the IL listing below is committed.
+3. **IL listing.** Commit the top-level type's IL, nested types included, as
+   `docs/mirror/il/<assembly>/<Mathcad type>.il`, produced by `ilspycmd --ilcode -t <type>` from the pinned
+   artifact. The validator requires these consecutive header lines (lowercase hex):
+   ```
+   // Tool: ilspycmd <version>
+   // SHA-256: <assembly sha-256>
+   // MVID: <module mvid>
+   ```
+   Regenerate it whenever the artifact identity changes.
+4. **Native.** For bodies in native code, REA's Ghidra provider (`analyze_function`, `procedure_pseudo_code`).
+5. **Contract and reconstruction.** Summarize each member as a contract: inputs, outputs, errors, mutation, edge
+   cases and every branch, which test cases are chosen from. Quire's body is a reconstruction from the IL of the
+   original source: same control flow, evaluation order, calls, locals, exceptions and mutation, written as
+   idiomatic C# with the constructs the compiler evidently lowered (`foreach`, `using`, `switch`, `??`, lambdas,
+   iterators, properties). No `goto`, compiler-generated names or other decompiler artifacts. Where the IL admits
+   several source forms, choose the most idiomatic one and note material ambiguity under Confidence / limits.
+   The [structural gate](../validation.md#reconstruction-integrity) compares the result with the original IL. Branch
+   layout counts: `if`/`return` and `?:` order their arms oppositely, so pick the form whose IL order matches. Where
+   the IL shows an older lowering (`string.Format` for interpolation), write that call.
 
 ## Record format
 
@@ -27,6 +43,7 @@ have a record here too. `Quire.Mirror.Tests` fails when a referenced record is m
 
 - **Original:** <assembly> <version>, SHA-256 <…>, MVID <…>
 - **REA:** <evidence id> (inspect_managed_members); decompiled view: ilspycmd <version>
+- **IL:** il/<assembly>/<Mathcad type>.il
 - **Quire:** <source path(s)>; tests: <test classes>
 
 | Member | Token | Normalized IL (prefix) | Contract | Confidence / limits | Status |

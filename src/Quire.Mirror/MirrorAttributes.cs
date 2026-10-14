@@ -50,7 +50,7 @@ public sealed class MirrorAnalyzedAttribute(string evidence) : Attribute
 }
 
 /// <summary>
-/// REA-analyzed + behaviour-tested: implemented independently from the analysis recorded in
+/// REA-analyzed + behaviour-tested: reconstructed from the IL and analysis recorded in
 /// docs/mirror/evidence/<paramref name="evidence"/>.md, whose tests pass. No direct comparison with Mathcad is claimed.
 /// </summary>
 [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Field,

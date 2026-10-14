@@ -184,7 +184,7 @@ public static class Shape
         sb.AppendLine("- **Blocked** `[MirrorBlocked(reason)]`: REA couldn't expose or settle the original; throws, reason recorded.");
         sb.AppendLine("- **Documented** `[MirrorDocumented(source)]`: documentation-only; not sufficient for completion.");
         sb.AppendLine("- **Analyzed** `[MirrorAnalyzed(evidence)]`: REA analysis recorded in [`evidence/`](evidence/); no passing behaviour test yet.");
-        sb.AppendLine("- **Tested** `[MirrorTested(evidence)]`: REA-analyzed, implemented independently, behaviour tests pass.");
+        sb.AppendLine("- **Tested** `[MirrorTested(evidence)]`: REA-analyzed, reconstructed from IL, behaviour tests pass.");
         sb.AppendLine("- **Verified** `[MirrorVerified(test)]`: differential-verified against the installed Mathcad, for the recorded cases only.");
         sb.AppendLine("- **Deviation** `[MirrorDeviation(id)]`: an accepted entry in [`deviations.md`](deviations.md); a divergence, never a match.");
         sb.AppendLine("- **Abstract** (no attribute, no body): an abstract or interface member without a default body. Mathcad's has");

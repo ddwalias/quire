@@ -41,7 +41,8 @@ used for visual checks.
 
 ## Architecture
 
-The assembly layout mirrors the structure observed (by static inspection) in Mathcad Prime 12; no code was copied.
+The assembly layout mirrors Mathcad Prime 12, and mirrored method bodies are reconstructed from the original
+assemblies' IL (see [docs/mirror](docs/mirror/PLAN.md)).
 
 | Quire assembly | Responsibility | Mathcad Prime counterpart |
 |---|---|---|
