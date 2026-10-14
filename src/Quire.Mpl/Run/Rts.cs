@@ -49,13 +49,14 @@ public static partial class Rts
     static Rts()
     {
         m_max_stack = 250;
-        s_paths = [];
+        s_paths = new string[0];
         ms_dummy_cancellation_token = new CancellationTokenSource();
-        m_tag_ctor = typeof(Tag).GetConstructor([typeof(int)]);
-        m_exception_ctor = typeof(AppException).GetConstructor([typeof(string)]);
-        m_rethrow_ctor = typeof(AppException).GetConstructor([typeof(Exception), typeof(uint)]);
+        m_tag_ctor = typeof(Tag).GetConstructor(new System.Type[1] { typeof(int) });
+        m_exception_ctor = typeof(AppException).GetConstructor(new System.Type[1] { typeof(string) });
+        m_rethrow_ctor = typeof(AppException).GetConstructor(new System.Type[2] { typeof(Exception), typeof(uint) });
         m_fcn_type = typeof(object);
-        AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
+        _ = AppDomain.CurrentDomain;
+        AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(OnResolveAssembly);
     }
 
     /// <summary>The calling thread's remaining stack budget, starting at <see cref="m_max_stack"/>.</summary>
@@ -76,7 +77,17 @@ public static partial class Rts
 
     /// <summary>Looks up a field named <c>m_stack_depth</c>, which is a property, so this is always null.</summary>
     [MirrorVerified("RtsDifferentialTests")]
-    public static FieldInfo StackDepth => m_stack_depth_field_info ??= typeof(Rts).GetField("m_stack_depth");
+    public static FieldInfo StackDepth
+    {
+        get
+        {
+            if (m_stack_depth_field_info == null)
+            {
+                m_stack_depth_field_info = typeof(Rts).GetField("m_stack_depth");
+            }
+            return m_stack_depth_field_info;
+        }
+    }
 
     /// <summary>Directories searched for unresolved assemblies, separated by semicolons.</summary>
     [MirrorVerified("RtsDifferentialTests")]
@@ -94,13 +105,23 @@ public static partial class Rts
     /// True once when the calling thread's registered source is cancelled: the thread then switches to a source
     /// that never is, so later calls return false until another source is registered.
     /// </summary>
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     [MirrorVerified("RtsDifferentialTests")]
     public static bool IsCancellationRequested()
     {
-        var src = ms_thread_cancellation_token;
-        if (src == null || src == ms_dummy_cancellation_token || !src.Token.IsCancellationRequested) return false;
-        ms_thread_cancellation_token = ms_dummy_cancellation_token;
-        return true;
+        if (ms_thread_cancellation_token != null)
+        {
+            if (ms_thread_cancellation_token == ms_dummy_cancellation_token)
+            {
+                return false;
+            }
+            if (ms_thread_cancellation_token.Token.IsCancellationRequested)
+            {
+                ms_thread_cancellation_token = ms_dummy_cancellation_token;
+                return true;
+            }
+        }
+        return false;
     }
 
     [MirrorVerified("RtsDifferentialTests")]

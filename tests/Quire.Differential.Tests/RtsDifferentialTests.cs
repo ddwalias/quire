@@ -1,5 +1,6 @@
 using System.Reflection;
 using Quire.Mpl.Run;
+using Xunit;
 using static Quire.Differential.Tests.Reflect;
 
 namespace Quire.Differential.Tests;
@@ -10,15 +11,35 @@ namespace Quire.Differential.Tests;
 /// </summary>
 public class RtsDifferentialTests
 {
-    private static System.Type M => Mathcad.Type("mplrun", "Mpl.Run.Rts");
+    private const string Contract = "Mpl.Run.Rts";
+    private const BindingFlags DeclaredStaticPublic = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
+    private const BindingFlags DeclaredStaticNonPublic = BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly;
+
+    private static System.Type QRts => typeof(Rts);
+    private static System.Type MRts => Mathcad.Type("mplrun", "Mpl.Run.Rts");
     private static System.Type MTrue => Mathcad.Type("mplrun", "Mpl.Run.True");
+
+    private static (MethodInfo q, MethodInfo m) Method(string name, BindingFlags flags, params System.Type[] paramTypes)
+    {
+        var q = QRts.GetMethod(name, flags, paramTypes)
+            ?? throw new HarnessException($"Quire method not found: Rts.{name}");
+        var m = MRts.GetMethod(name, flags, paramTypes)
+            ?? throw new HarnessException($"Mathcad method not found: Rts.{name}");
+        return (q, m);
+    }
+
+    private static string Strip(string? name) => name?.StartsWith("Quire.") == true ? name[6..] : (name ?? "null");
 
     private static string Member(object? o) => o switch
     {
         null => "null",
-        ConstructorInfo c => $"{c.DeclaringType!.Name}({string.Join(", ", c.GetParameters().Select(p => p.ParameterType.Name))})",
-        FieldInfo f => $"{f.DeclaringType!.Name}.{f.Name}: {f.FieldType.Name} static={f.IsStatic}",
-        System.Type t => t.Namespace?.StartsWith("Quire.") == true ? t.FullName![6..] : t.FullName!,
+        ConstructorInfo c => $"{Strip(c.DeclaringType!.FullName)}({string.Join(", ", c.GetParameters().Select(p => Strip(p.ParameterType.FullName ?? p.ParameterType.Name)))})",
+        FieldInfo f => $"{Strip(f.DeclaringType!.FullName)}.{f.Name}: {Strip(f.FieldType.FullName ?? f.FieldType.Name)} static={f.IsStatic}",
+        System.Type t => Strip(t.FullName ?? t.Name),
+        Assembly a => a.GetName().Name ?? "null",
+        ResolveEventArgs r => $"ResolveEventArgs({Text(r.Name)})",
+        AppDomain => "AppDomain",
+        CancellationTokenSource cts => $"CancellationTokenSource(cancelled={cts.IsCancellationRequested})",
         _ => Text(o),
     };
 
@@ -26,60 +47,165 @@ public class RtsDifferentialTests
     public void Handles_and_settings()
     {
         Runtime.Sync();
-        var diffs = new List<string>();
-        foreach (var f in new[] { "ExceptionCtor", "RethrowCtor", "TagCtor", "FcnType", "BoolTrue", "TagField", "VoidType", "TagType" })
-            Same(diffs, f, () => Call(typeof(Rts), f), () => Call(M, f), Member);
-        foreach (var p in new[] { "m_max_stack", "m_worker_stack_size", "StackDepth", "AssemblyPath" })
-            Same(diffs, p, () => Get(typeof(Rts), p), () => Get(M, p), Member);
+        var qs = Member;
+        var ms = Member;
+
+        // Static constructor (.cctor)
+        var qCctor = QRts.TypeInitializer ?? QRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
+        var mCctor = MRts.TypeInitializer ?? MRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
+        MethodComparison.Compare(".cctor() initialization", Contract,
+            qCctor, null, [], mCctor, null, [], qs, ms);
+
+        // Reflection handles
+        var (qExceptionCtor, mExceptionCtor) = Method("ExceptionCtor", DeclaredStaticPublic);
+        MethodComparison.Compare("ExceptionCtor()", Contract,
+            qExceptionCtor, null, [], mExceptionCtor, null, [], qs, ms);
+
+        var (qRethrowCtor, mRethrowCtor) = Method("RethrowCtor", DeclaredStaticPublic);
+        MethodComparison.Compare("RethrowCtor()", Contract,
+            qRethrowCtor, null, [], mRethrowCtor, null, [], qs, ms);
+
+        var (qTagCtor, mTagCtor) = Method("TagCtor", DeclaredStaticPublic);
+        MethodComparison.Compare("TagCtor()", Contract,
+            qTagCtor, null, [], mTagCtor, null, [], qs, ms);
+
+        var (qFcnType, mFcnType) = Method("FcnType", DeclaredStaticPublic);
+        MethodComparison.Compare("FcnType()", Contract,
+            qFcnType, null, [], mFcnType, null, [], qs, ms);
+
+        var (qBoolTrue, mBoolTrue) = Method("BoolTrue", DeclaredStaticPublic);
+        MethodComparison.Compare("BoolTrue()", Contract,
+            qBoolTrue, null, [], mBoolTrue, null, [], qs, ms);
+
+        var (qTagField, mTagField) = Method("TagField", DeclaredStaticPublic);
+        MethodComparison.Compare("TagField()", Contract,
+            qTagField, null, [], mTagField, null, [], qs, ms);
+
+        var (qVoidType, mVoidType) = Method("VoidType", DeclaredStaticPublic);
+        MethodComparison.Compare("VoidType()", Contract,
+            qVoidType, null, [], mVoidType, null, [], qs, ms);
+
+        var (qTagType, mTagType) = Method("TagType", DeclaredStaticPublic);
+        MethodComparison.Compare("TagType()", Contract,
+            qTagType, null, [], mTagType, null, [], qs, ms);
+
+        // StackDepth property getter (initial and cached)
+        var (qGetStackDepth, mGetStackDepth) = Method("get_StackDepth", DeclaredStaticPublic);
+        MethodComparison.Compare("StackDepth initial lookup", Contract,
+            qGetStackDepth, null, [], mGetStackDepth, null, [], qs, ms);
+        MethodComparison.Compare("StackDepth cached lookup", Contract,
+            qGetStackDepth, null, [], mGetStackDepth, null, [], qs, ms);
+
+        // AssemblyPath property getter and setter
+        var (qGetAssemblyPath, mGetAssemblyPath) = Method("get_AssemblyPath", DeclaredStaticPublic);
+        var (qSetAssemblyPath, mSetAssemblyPath) = Method("set_AssemblyPath", DeclaredStaticPublic, typeof(string));
+
         foreach (var path in new[] { "a;b", "", "single", ";;", @"C:\x;D:\y;" })
         {
-            Same(diffs, $"AssemblyPath = {Text(path)}", () => { Set(typeof(Rts), "AssemblyPath", path); return Get(typeof(Rts), "AssemblyPath"); },
-                () => { Set(M, "AssemblyPath", path); return Get(M, "AssemblyPath"); });
+            MethodComparison.Compare($"set_AssemblyPath({Text(path)})", Contract,
+                qSetAssemblyPath, null, [path], mSetAssemblyPath, null, [path], qs, ms);
+            MethodComparison.Compare($"get_AssemblyPath() after {Text(path)}", Contract,
+                qGetAssemblyPath, null, [], mGetAssemblyPath, null, [], qs, ms);
         }
-        Same(diffs, "AssemblyPath = null", () => { Set(typeof(Rts), "AssemblyPath", null); return "ok"; }, () => { Set(M, "AssemblyPath", null); return "ok"; });
-        Set(typeof(Rts), "AssemblyPath", "");
-        Set(M, "AssemblyPath", "");
-        Same(diffs, "True.singleton", () => Get(typeof(True), "singleton")?.ToString(), () => Get(MTrue, "singleton")?.ToString());
-        Same(diffs, "new True()", () => new True().ToString(), () => Activator.CreateInstance(MTrue)!.ToString());
-        NoDiffs(diffs);
-    }
 
-    private static string Scenario(System.Type rts)
-    {
-        var log = new List<string>();
-        var t = new Thread(() =>
-        {
-            log.Add("cancel unregistered " + Call(rts, "IsCancellationRequested"));
-            log.Add("depth " + Get(rts, "m_stack_depth"));
-            Set(rts, "m_stack_depth", 3);
-            log.Add("set depth " + Get(rts, "m_stack_depth"));
-            Call(rts, "ResetStackDepth");
-            log.Add("reset depth " + Get(rts, "m_stack_depth"));
-            var cts = new CancellationTokenSource();
-            Call(rts, "RegisterThreadForCancellationChecking", cts);
-            log.Add("registered " + Call(rts, "IsCancellationRequested"));
-            cts.Cancel();
-            log.Add("cancelled " + Call(rts, "IsCancellationRequested") + " then " + Call(rts, "IsCancellationRequested"));
-            Call(rts, "RegisterThreadForCancellationChecking", cts);
-            log.Add("re-registered cancelled " + Call(rts, "IsCancellationRequested"));
-            Call(rts, "RegisterThreadForCancellationChecking", new object?[] { null });
-            log.Add("null source " + Call(rts, "IsCancellationRequested"));
-            var disposed = new CancellationTokenSource();
-            disposed.Dispose();
-            Call(rts, "RegisterThreadForCancellationChecking", disposed);
-            log.Add("disposed " + Outcome(() => Call(rts, "IsCancellationRequested")));
-        });
-        t.Start();
-        t.Join();
-        return string.Join("\n", log);
+        MethodComparison.Compare("set_AssemblyPath(null) throws", Contract,
+            qSetAssemblyPath, null, [null], mSetAssemblyPath, null, [null], qs, ms);
+        MethodComparison.Compare("set_AssemblyPath('') reset", Contract,
+            qSetAssemblyPath, null, [""], mSetAssemblyPath, null, [""], qs, ms);
+
+        // Non-comparison assertions for fields
+        Assert.Equal(Get(MRts, "m_max_stack"), Get(QRts, "m_max_stack"));
+        Assert.Equal(Get(MRts, "m_worker_stack_size"), Get(QRts, "m_worker_stack_size"));
+        Assert.Equal(Get(MTrue, "singleton")?.ToString(), Get(typeof(True), "singleton")?.ToString());
+
+        // True constructor and ToString
+        var qTrueCtor = typeof(True).GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, [], null)!;
+        var mTrueCtor = MTrue.GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, [], null)!;
+        MethodComparison.Compare("True() constructor", Contract,
+            qTrueCtor, null, [], mTrueCtor, null, [], qs, ms);
+
+        var qTrueToString = typeof(True).GetMethod("ToString", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, [])!;
+        var mTrueToString = MTrue.GetMethod("ToString", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, [])!;
+        var qTrueInstance = new True();
+        var mTrueInstance = Activator.CreateInstance(MTrue)!;
+        MethodComparison.Compare("True.ToString()", Contract,
+            qTrueToString, qTrueInstance, [], mTrueToString, mTrueInstance, [], qs, ms, qs, ms);
     }
 
     [SkippableFact]
     public void Stack_depth_and_cancellation_latch()
     {
         Runtime.Sync();
-        Assert.Equal(Scenario(M), Scenario(typeof(Rts)));
-        // the budget a new thread starts with follows m_max_stack
+        var qs = Member;
+        var ms = Member;
+
+        var (qGetStackDepthProp, mGetStackDepthProp) = Method("get_m_stack_depth", DeclaredStaticPublic);
+        var (qSetStackDepthProp, mSetStackDepthProp) = Method("set_m_stack_depth", DeclaredStaticPublic, typeof(int));
+        var (qResetStackDepth, mResetStackDepth) = Method("ResetStackDepth", DeclaredStaticPublic);
+        var (qRegisterThread, mRegisterThread) = Method("RegisterThreadForCancellationChecking", DeclaredStaticPublic, typeof(CancellationTokenSource));
+        var (qIsCancellationRequested, mIsCancellationRequested) = Method("IsCancellationRequested", DeclaredStaticPublic);
+
+        // 1. Unregistered cancellation: branch ms_thread_cancellation_token == null
+        MethodComparison.Compare("IsCancellationRequested() unregistered", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // 2. Initial stack depth read: branch m_stack_depth_init__ == 0 -> initializes to m_max_stack
+        MethodComparison.Compare("get_m_stack_depth() uninitialized", Contract,
+            qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
+
+        // 3. Set stack depth
+        MethodComparison.Compare("set_m_stack_depth(3)", Contract,
+            qSetStackDepthProp, null, [3], mSetStackDepthProp, null, [3], qs, ms);
+        MethodComparison.Compare("get_m_stack_depth() after set to 3", Contract,
+            qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
+
+        // 4. ResetStackDepth(): resets to m_max_stack
+        MethodComparison.Compare("ResetStackDepth()", Contract,
+            qResetStackDepth, null, [], mResetStackDepth, null, [], qs, ms);
+        MethodComparison.Compare("get_m_stack_depth() after reset", Contract,
+            qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
+
+        // 5. Register active source: branch Token.IsCancellationRequested == false
+        var cts = new CancellationTokenSource();
+        MethodComparison.Compare("RegisterThreadForCancellationChecking(cts live)", Contract,
+            qRegisterThread, null, [cts], mRegisterThread, null, [cts], qs, ms);
+        MethodComparison.Compare("IsCancellationRequested() live uncancelled", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // 6. Cancel source: branch Token.IsCancellationRequested == true -> latches to ms_dummy_cancellation_token and returns true
+        cts.Cancel();
+        MethodComparison.Compare("IsCancellationRequested() once cancelled", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // 7. Latch check: branch ms_thread_cancellation_token == ms_dummy_cancellation_token -> returns false
+        MethodComparison.Compare("IsCancellationRequested() second call after latch", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // 8. Re-register cancelled source: returns true again
+        MethodComparison.Compare("RegisterThreadForCancellationChecking(cts re-registered)", Contract,
+            qRegisterThread, null, [cts], mRegisterThread, null, [cts], qs, ms);
+        MethodComparison.Compare("IsCancellationRequested() re-registered cancelled", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // 9. Register null source: branch null
+        MethodComparison.Compare("RegisterThreadForCancellationChecking(null)", Contract,
+            qRegisterThread, null, [null], mRegisterThread, null, [null], qs, ms);
+        MethodComparison.Compare("IsCancellationRequested() after null register", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // 10. Disposed source: accessing Token throws ObjectDisposedException
+        var disposed = new CancellationTokenSource();
+        disposed.Dispose();
+        MethodComparison.Compare("RegisterThreadForCancellationChecking(disposed)", Contract,
+            qRegisterThread, null, [disposed], mRegisterThread, null, [disposed], qs, ms);
+        MethodComparison.Compare("IsCancellationRequested() disposed source throws", Contract,
+            qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
+
+        // Cleanup cancellation token
+        qRegisterThread.Invoke(null, [null]);
+        mRegisterThread.Invoke(null, [null]);
+
+        // Non-comparison assertion: the budget a new thread starts with follows m_max_stack
         string NewThreadDepth(System.Type rts)
         {
             object old = Get(rts, "m_max_stack")!;
@@ -91,36 +217,56 @@ public class RtsDifferentialTests
             Set(rts, "m_max_stack", old);
             return result;
         }
-        Assert.Equal(NewThreadDepth(M), NewThreadDepth(typeof(Rts)));
+        Assert.Equal(NewThreadDepth(MRts), NewThreadDepth(QRts));
     }
 
     [SkippableFact]
     public void Resolves_assemblies_from_the_search_path()
     {
         Runtime.Sync();
-        var diffs = new List<string>();
+        var qs = Member;
+        var ms = Member;
+
+        var (qSetAssemblyPath, mSetAssemblyPath) = Method("set_AssemblyPath", DeclaredStaticPublic, typeof(string));
+        var (qOnResolve, mOnResolve) = Method("OnResolveAssembly", DeclaredStaticNonPublic, typeof(object), typeof(ResolveEventArgs));
+
         string dir = Path.Combine(Path.GetTempPath(), "quire-rts-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(dir);
         try
         {
             File.Copy(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.Location, Path.Combine(dir, "Probe.dll"));
-            string Resolve(System.Type rts, object? sender, string name)
+            string searchPath = Path.Combine(dir, "missing") + ";" + dir;
+            qSetAssemblyPath.Invoke(null, [searchPath]);
+            mSetAssemblyPath.Invoke(null, [searchPath]);
+            try
             {
-                Set(rts, "AssemblyPath", Path.Combine(dir, "missing") + ";" + dir);
-                try { return Outcome(() => Call(rts, "OnResolveAssembly", sender, new ResolveEventArgs(name)), a => ((Assembly?)a)?.GetName().Name ?? "null"); }
-                finally { Set(rts, "AssemblyPath", ""); }
+                foreach (var name in new[] { "Probe", "Probe, Version=1.0.0.0, Culture=neutral", "Absent", "" })
+                {
+                    var qArgs = new object?[] { AppDomain.CurrentDomain, new ResolveEventArgs(name) };
+                    var mArgs = new object?[] { AppDomain.CurrentDomain, new ResolveEventArgs(name) };
+                    MethodComparison.Compare($"OnResolveAssembly('{name}') current domain", Contract,
+                        qOnResolve, null, qArgs, mOnResolve, null, mArgs, qs, ms);
+
+                    var qArgsNull = new object?[] { null, new ResolveEventArgs(name) };
+                    var mArgsNull = new object?[] { null, new ResolveEventArgs(name) };
+                    MethodComparison.Compare($"OnResolveAssembly('{name}') null sender", Contract,
+                        qOnResolve, null, qArgsNull, mOnResolve, null, mArgsNull, qs, ms);
+                }
+
+                var qArgsNonDomain = new object?[] { "x", new ResolveEventArgs("Probe") };
+                var mArgsNonDomain = new object?[] { "x", new ResolveEventArgs("Probe") };
+                MethodComparison.Compare("OnResolveAssembly non-domain sender throws", Contract,
+                    qOnResolve, null, qArgsNonDomain, mOnResolve, null, mArgsNonDomain, qs, ms);
             }
-            foreach (var name in new[] { "Probe", "Probe, Version=1.0.0.0, Culture=neutral", "Absent", "" })
+            finally
             {
-                Same(diffs, $"resolve {Text(name)}", Resolve(typeof(Rts), AppDomain.CurrentDomain, name), Resolve(M, AppDomain.CurrentDomain, name));
-                Same(diffs, $"resolve {Text(name)} null sender", Resolve(typeof(Rts), null, name), Resolve(M, null, name));
+                qSetAssemblyPath.Invoke(null, [""]);
+                mSetAssemblyPath.Invoke(null, [""]);
             }
-            Same(diffs, "non-domain sender", Resolve(typeof(Rts), "x", "Probe"), Resolve(M, "x", "Probe"));
         }
         finally
         {
             try { Directory.Delete(dir, true); } catch (IOException) { } catch (UnauthorizedAccessException) { }
         }
-        NoDiffs(diffs);
     }
 }
