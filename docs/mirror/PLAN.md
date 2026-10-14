@@ -51,8 +51,9 @@ Stable rule numbers/anchor for D9 and existing reports.
    Separate matches, case-limited verification, deviations; disclose unresolved work at administrative closure.
 
 **Phase closure only:** `dotnet test Quire.slnx`, manifest-shape/status-record checks, planned stub reduction,
-coverage-excluded checks, `Quire.exe --render` screenshot validation, and reviewer pass separate from author
-before phase commit. Passing tests/type presence alone never establish equivalence.
+coverage-excluded checks, `Quire.exe --render` screenshot validation, a passing direct-method gate for the
+phase's projects (existing differential tests migrated to `MethodComparison.Compare`), and reviewer pass
+separate from author before phase commit. Passing tests/type presence alone never establish equivalence.
 
 ## References: open only on trigger
 
