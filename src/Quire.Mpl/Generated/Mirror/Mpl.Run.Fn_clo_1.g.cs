@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Fn_clo`1, mplrun")]
 public partial class Fn_clo<CLO> : global::Quire.Mpl.Run.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    public Fn_clo(global::System.Delegate f, CLO clo, int function_purity) : this(default(global::Quire.Mpl.Run.Function), default(CLO)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Function Fixpoint(global::Quire.Mpl.Run.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

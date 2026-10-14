@@ -21,7 +21,7 @@ public sealed class Side
 
     public string Name { get; }
 
-    public static Side Quire { get; } = new("Quire", n => typeof(global::Quire.Mcd.Dim).Assembly.GetType("Quire." + n, true)!);
+    public static Side Quire { get; } = new("Quire", n => typeof(global::Quire.Mcd.Dim).Assembly.GetType("Quire." + n) ?? throw new HarnessException($"Quire type not found: Quire.{n}"));
 
     public static Side Mathcad { get; } = new("Mathcad", n => global::Quire.Differential.Tests.Mathcad.Type("mplrun", n));
 
@@ -142,6 +142,7 @@ public static class Scenario
         var m = new List<string>();
         scenario(Side.Quire, q);
         scenario(Side.Mathcad, m);
+        Assert.True(q.Count > 0 && m.Count > 0, "Differential scenario must record outcomes on both sides");
         var diffs = new List<string>();
         Same(diffs, "line count", q.Count.ToString(), m.Count.ToString());
         for (int i = 0; i < Math.Min(q.Count, m.Count); i++)

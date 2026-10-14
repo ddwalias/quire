@@ -133,7 +133,7 @@ public class DimValDifferentialTests
                 object? x = xs[i], y = xs[j];
                 log.Log(s, $"NearlyEqual({i}, {j})", () => Call(dv, "NearlyEqual", x, y, 0.1));
                 if (x != null && x.GetType().Name is "StrVal" or "NotAVal")
-                    log.Log(s, $"nearly_equal({i}, {j})", () => CallSig(x, "nearly_equal", ["DimVal"], y is string or double ? null : y, 0.1));
+                    log.Log(s, $"nearly_equal({i}, {j})", () => CallSig(x, "nearly_equal", ["DimVal", "Double"], y is string or double ? null : y, 0.1));
             }
         var d = s.NotAVal();
         log.Log(s, "dv is this", () => ReferenceEquals(Call(d, "dv", s.D("T")), d));

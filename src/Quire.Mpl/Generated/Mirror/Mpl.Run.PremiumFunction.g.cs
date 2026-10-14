@@ -11,44 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.PremiumFunction, mplrun")]
 public partial class PremiumFunction : global::Quire.Mpl.Run.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Function m_func;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => base.Name; }
-    [global::Quire.Mirror.MirrorStub]
-    public PremiumFunction(global::Quire.Mpl.Run.Function f) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa) => base.DynCall(aa);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb) => base.DynCall(aa, bb);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc) => base.DynCall(aa, bb, cc);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd) => base.DynCall(aa, bb, cc, dd);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee) => base.DynCall(aa, bb, cc, dd, ee);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff) => base.DynCall(aa, bb, cc, dd, ee, ff);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg) => base.DynCall(aa, bb, cc, dd, ee, ff, gg);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj, object kk) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj, object kk, object ll) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj, object kk, object ll, object mm) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj, object kk, object ll, object mm, object nn) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj, object kk, object ll, object mm, object nn, object oo) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd, object ee, object ff, object gg, object hh, object ii, object jj, object kk, object ll, object mm, object nn, object oo, object pp) => base.DynCall(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp);
 }

@@ -3,6 +3,8 @@ using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
+public sealed class HarnessException(string message, Exception? inner = null) : Exception(message, inner);
+
 /// <summary>
 /// Reflection helpers for calling the same member on Mathcad's and Quire's types, which share names, and for
 /// reducing results to comparable text.
@@ -16,62 +18,55 @@ public static class Reflect
     public static object? Call(object target, string name, params object?[] args)
     {
         var type = target as System.Type ?? target.GetType();
-        var method = Methods(type, name).Single(m => Fits(m.GetParameters(), args));
-        try { return method.Invoke(target is System.Type ? null : target, args); }
-        catch (TargetInvocationException e) when (e.InnerException != null)
-        {
-            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
-            throw;
-        }
+        var method = Select(Methods(type, name).Where(m => m.IsStatic == (target is System.Type) && !m.ContainsGenericParameters).Where(m => Fits(m.GetParameters(), args)), $"{type.FullName}.{name}");
+        return Invoke(() => method.Invoke(target is System.Type ? null : target, args), method.ToString()!);
     }
 
     /// <summary>Calls an overload chosen by its parameter type names, for overloads that the arguments don't settle.</summary>
     public static object? CallSig(object target, string name, string[] parameterTypes, params object?[] args)
     {
         var type = target as System.Type ?? target.GetType();
-        var method = Methods(type, name).Single(m => m.GetParameters().Select(p => p.ParameterType.Name).SequenceEqual(parameterTypes));
-        try { return method.Invoke(target is System.Type ? null : target, args); }
-        catch (TargetInvocationException e) when (e.InnerException != null)
-        {
-            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
-            throw;
-        }
+        var method = Select(Methods(type, name).Where(m => m.IsStatic == (target is System.Type) && !m.ContainsGenericParameters).Where(m => m.GetParameters().Select(p => p.ParameterType.Name).SequenceEqual(parameterTypes)), $"{type.FullName}.{name}({string.Join(", ", parameterTypes)})");
+        if (!Fits(method.GetParameters(), args))
+            throw new HarnessException($"Arguments do not fit {method}");
+        return Invoke(() => method.Invoke(target is System.Type ? null : target, args), method.ToString()!);
     }
 
     /// <summary>The methods named <paramref name="name"/>, most derived first; an override hides what it overrides.</summary>
     private static IEnumerable<MethodInfo> Methods(System.Type type, string name)
     {
-        var overridden = new HashSet<MethodInfo>();
+        var slots = new HashSet<MethodInfo>();
         for (var t = type; t != null; t = t.BaseType)
             foreach (var m in t.GetMethods(All | BindingFlags.DeclaredOnly).Where(m => m.Name == name))
             {
-                if (overridden.Contains(m)) continue;
-                for (var b = m; b.GetBaseDefinition() != b && b.DeclaringType!.BaseType != null; )
-                {
-                    var parent = b.DeclaringType.BaseType.GetMethod(b.Name, All, b.GetParameters().Select(p => p.ParameterType).ToArray());
-                    if (parent == null || parent == b) break;
-                    overridden.Add(parent);
-                    b = parent;
-                }
+                if (m.IsVirtual && !slots.Add(m.GetBaseDefinition())) continue;
                 yield return m;
             }
     }
 
+    private static T Select<T>(IEnumerable<T> candidates, string member)
+    {
+        var matches = candidates.Take(2).ToArray();
+        if (matches.Length != 1)
+            throw new HarnessException($"{member}: expected exactly one matching declaration, found {(matches.Length == 2 ? "multiple" : "none")}. Use CallSig for ambiguous arguments.");
+        return matches[0];
+    }
+
     private static bool Fits(ParameterInfo[] ps, object?[] args) =>
-        ps.Length == args.Length && ps.Zip(args).All(p => p.Second == null ? !p.First.ParameterType.IsValueType
-            : p.First.ParameterType.IsInstanceOfType(p.Second) || p.First.ParameterType.IsByRef);
+        ps.Length == args.Length && ps.Zip(args).All(p =>
+        {
+            var parameterType = p.First.ParameterType;
+            if (parameterType.IsByRef) parameterType = parameterType.GetElementType()!;
+            return p.Second == null ? p.First.IsOut || !parameterType.IsValueType
+                : parameterType.IsInstanceOfType(p.Second);
+        });
 
     /// <summary>Creates an instance through the constructor whose parameters match the arguments; private ones too.</summary>
     public static object New(System.Type type, params object?[] args)
     {
-        var ctor = type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-            .Single(c => Fits(c.GetParameters(), args));
-        try { return ctor.Invoke(args); }
-        catch (TargetInvocationException e) when (e.InnerException != null)
-        {
-            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
-            throw;
-        }
+        var ctor = Select(type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .Where(c => Fits(c.GetParameters(), args)), $"{type.FullName} constructor");
+        return Invoke(() => ctor.Invoke(args), type.FullName + " constructor")!;
     }
 
     /// <summary>A field or property value, public or not, instance or static.</summary>
@@ -81,18 +76,12 @@ public static class Reflect
         object? instance = target is System.Type ? null : target;
         for (var t = type; t != null; t = t.BaseType)
         {
-            if (t.GetField(name, All | BindingFlags.DeclaredOnly) is { } f) return f.GetValue(instance);
+            if (t.GetField(name, All | BindingFlags.DeclaredOnly) is { } f)
+                return Invoke(() => f.GetValue(instance), $"{type.FullName}.{name}");
             if (t.GetProperty(name, All | BindingFlags.DeclaredOnly) is { } p)
-            {
-                try { return p.GetValue(instance); }
-                catch (TargetInvocationException e) when (e.InnerException != null)
-                {
-                    System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
-                    throw;
-                }
-            }
+                return Invoke(() => p.GetValue(instance), $"{type.FullName}.{name}");
         }
-        throw new MissingMemberException(type.FullName, name);
+        throw new HarnessException($"Missing member: {type.FullName}.{name}");
     }
 
     public static void Set(object target, string name, object? value)
@@ -101,31 +90,54 @@ public static class Reflect
         object? instance = target is System.Type ? null : target;
         for (var t = type; t != null; t = t.BaseType)
         {
-            if (t.GetField(name, All | BindingFlags.DeclaredOnly) is { } f) { f.SetValue(instance, value); return; }
+            if (t.GetField(name, All | BindingFlags.DeclaredOnly) is { } f)
+            {
+                Invoke(() => { f.SetValue(instance, value); return null; }, $"{type.FullName}.{name}");
+                return;
+            }
             if (t.GetProperty(name, All | BindingFlags.DeclaredOnly) is { } p)
             {
-                try { p.SetValue(instance, value); return; }
-                catch (TargetInvocationException e) when (e.InnerException != null)
-                {
-                    System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
-                    throw;
-                }
+                Invoke(() => { p.SetValue(instance, value); return null; }, $"{type.FullName}.{name}");
+                return;
             }
         }
-        throw new MissingMemberException(type.FullName, name);
+        throw new HarnessException($"Missing member: {type.FullName}.{name}");
+    }
+
+    private static object? Invoke(Func<object?> invocation, string member)
+    {
+        try { return invocation(); }
+        catch (TargetInvocationException e) when (e.InnerException != null)
+        {
+            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e.InnerException).Throw();
+            throw;
+        }
+        catch (Exception e)
+        {
+            throw new HarnessException($"Reflection invocation failed for {member}: {e.Message}", e);
+        }
     }
 
     /// <summary>A nested type, private ones included.</summary>
     public static System.Type Nested(System.Type outer, string name) =>
-        outer.GetNestedType(name, BindingFlags.Public | BindingFlags.NonPublic) ?? throw new MissingMemberException(outer.FullName, name);
+        outer.GetNestedType(name, BindingFlags.Public | BindingFlags.NonPublic) ?? throw new HarnessException($"Missing nested type: {outer.FullName}.{name}");
 
     /// <summary>The outcome of <paramref name="f"/> as text: <paramref name="show"/> of the value, or the exception's
     /// type and message.</summary>
     public static string Outcome(Func<object?> f, Func<object?, string>? show = null)
     {
-        try { return (show ?? Text)(f()); }
+        object? value;
+        try { value = Materialize(f()); }
+        catch (HarnessException) { throw; }
         catch (Exception e) { return Thrown(e); }
+        // A broken result renderer is a harness failure, never a runtime outcome.
+        return (show ?? Text)(value);
     }
+
+    // Iterator execution belongs to the runtime operation. Render only its captured values,
+    // so iterator exceptions are compared but formatter bugs still fail the test.
+    private static object? Materialize(object? value) => value is IEnumerable sequence && value is not string && value is not Array
+        ? sequence.Cast<object?>().Select(Materialize).ToArray() : value;
 
     public static string Thrown(Exception e)
     {

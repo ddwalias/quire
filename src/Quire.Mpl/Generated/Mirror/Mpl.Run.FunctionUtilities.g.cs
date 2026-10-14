@@ -11,30 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.FunctionUtilities, mplrun")]
 public abstract partial class FunctionUtilities : global::Quire.Mcd.DimVal
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int maxargs = 16;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo FcnCtor;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo CloCtorGeneric;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo MethCtor;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo ObjMethCtor;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo[] CallMethod;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo CloCtor(global::System.Type ty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo InstMethCtor(global::System.Type ty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo GetCallMethod(global::System.Type r, global::System.Type[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object[] concat(object[] a, object[] b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object[] PushFront(object b, object c, object[] a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object[] Push(object[] a, object b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object[] Push(object[] a, object b, object c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

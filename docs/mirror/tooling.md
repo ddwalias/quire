@@ -90,3 +90,5 @@ The four §5 "moves into mirrored types" stay for each phase; Phase 0 only made 
 `WorksheetItemPositionComparer`, which now inherits it, as in Mathcad.
 
 Coverage counts in the original tooling inventory above are historical. Current totals and per-member classifications are generated in [coverage.md](coverage.md) and [status/](status/). MirrorGen reads metadata for structure; behavior analysis is a separate workflow in [evidence/README.md](evidence/README.md).
+
+For repeatable batch commands, strict result reporting, harness checks and platform limits, see [validation.md](validation.md).

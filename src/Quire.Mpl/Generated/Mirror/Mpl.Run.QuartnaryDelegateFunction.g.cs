@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.QuartnaryDelegateFunction, mplrun")]
 public partial class QuartnaryDelegateFunction : global::Quire.Mpl.Run.DelegateFunction
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.F<object, object, object, object, object> m_F;
-    [global::Quire.Mirror.MirrorStub]
-    public QuartnaryDelegateFunction(global::Quire.Mpl.Run.F<object, object, object, object, object> f) : base(default(global::System.Delegate), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => base.inv<R, A, B, C, D>(out r, aa, bb, cc, dd);
-    [global::Quire.Mirror.MirrorStub]
-    public override void app<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => base.app<R, A, B, C, D>(out r, aa, bb, cc, dd);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynCall(object aa, object bb, object cc, object dd) => base.DynCall(aa, bb, cc, dd);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Function Premium() => base.Premium();
 }

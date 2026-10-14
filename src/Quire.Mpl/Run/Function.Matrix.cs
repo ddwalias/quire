@@ -275,36 +275,6 @@ public abstract partial class Function
     }
 }
 
-public abstract partial class FunctionUtilities
-{
-    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public static object[] empty_vec = new object[0];
-    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public static T[] take<T>(int i, T[] a)
-    {
-        if (i >= a.Length) return a;
-        var result = new T[i];
-        Array.Copy(a, result, i);
-        return result;
-    }
-    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public static T[] but<T>(int i, T[] a)
-    {
-        if (i >= a.Length) return new T[0];
-        var result = new T[a.Length - i];
-        Array.Copy(a, i, result, 0, result.Length);
-        return result;
-    }
-    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public static object[] PushFront(object b, object[] a)
-    {
-        var result = new object[a.Length + 1];
-        a.CopyTo(result, 1);
-        result[0] = b;
-        return result;
-    }
-}
-
 public partial class Fn_clo<CLO> : Function
 {
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
@@ -316,7 +286,20 @@ public partial class Fn_clo<CLO> : Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public Fn_clo(Function f, CLO clo) : base(f.Purity, 1) { m_func = f; m_clo = clo; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public override void invVec<R>(out R result, object[] args) => m_func.appVec(out result, PushFront(m_clo, args));
+    public Fn_clo(Delegate f, CLO clo, int function_purity) : base(function_purity, 1)
+    {
+        m_func = DelegateFunction.make(f, function_purity);
+        m_clo = clo;
+    }
+    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
+    public new static Function Fixpoint(Function f)
+    {
+        Fn_clo<object> fn_clo = new Fn_clo<object>(f, null);
+        fn_clo.m_clo = fn_clo;
+        return fn_clo;
+    }
+    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
+    public override void invVec<R>(out R result, object[] args) => m_func.appVec(out result, FunctionUtilities.PushFront(m_clo, args));
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public override void inv<R>(out R result) => m_func.app(out result, m_clo);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]

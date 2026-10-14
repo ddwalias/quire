@@ -159,6 +159,7 @@ public class UnitSystemDifferentialTests
     private static object? ProductOf(string signature, bool mathcad)
     {
         try { return Call(Call(mathcad ? MType : typeof(Q.Type), "Parse", signature)!, "GetDimensionTypeProduct"); }
+        catch (HarnessException) { throw; }
         catch { return null; }
     }
 

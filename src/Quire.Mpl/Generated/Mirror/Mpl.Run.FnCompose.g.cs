@@ -11,22 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.FnCompose, mplrun")]
 public partial class FnCompose : global::Quire.Mpl.Run.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Function m_f;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Function m_g;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => base.Name; }
-    [global::Quire.Mirror.MirrorStub]
-    public FnCompose(global::Quire.Mpl.Run.Function f, global::Quire.Mpl.Run.Function g) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A>(out R r, A aa) => base.inv<R, A>(out r, aa);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B>(out R r, A aa, B bb) => base.inv<R, A, B>(out r, aa, bb);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc) => base.inv<R, A, B, C>(out r, aa, bb, cc);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => base.inv<R, A, B, C, D>(out r, aa, bb, cc, dd);
 }

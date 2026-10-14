@@ -71,7 +71,7 @@ public class FunctionMatrixDifferentialTests
                 log.Log(s, "fully " + count, () => Call(f, "IsFullyApplied", count));
                 log.Log(s, "assert " + count, () => Call(f, "AssertFullApp", count, 7u));
                 if (count >= setup.Item3 || setup.Item4)
-                    log.Log(s, "apply " + count, () => Call(f, "Apply", (object)new object[Math.Max(0, count)]));
+                    log.Log(s, "apply " + count, () => CallSig(f, "Apply", ["Object[]"], (object)new object[Math.Max(0, count)]));
             }
             log.Log(s, "delegate1", () => ((Delegate)Call(f, "AsDelegate_1")!).DynamicInvoke(42));
             log.Log(s, "delegate2", () => ((Delegate)Call(f, "AsDelegate_2")!).DynamicInvoke(42, 43));
