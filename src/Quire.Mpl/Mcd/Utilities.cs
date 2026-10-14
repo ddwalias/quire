@@ -58,10 +58,7 @@ public sealed partial class Utilities
     {
         if (scalar != 1.0)
         {
-            if (scalar == 0.0)
-            {
-                AppException.Raise("illegal factor");
-            }
+            if (scalar == 0.0) AppException.Raise("illegal factor");
             if (value is NumVal nv)
             {
                 return nv / scalar;
