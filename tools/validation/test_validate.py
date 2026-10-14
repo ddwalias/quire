@@ -94,5 +94,17 @@ class SealTests(unittest.TestCase):
                     sealed.verify('run')
 
 
+class PrivateCopyTests(unittest.TestCase):
+    def test_validator_runs_isolated_from_a_copy(self):
+        import os, shutil, subprocess, sys
+        with tempfile.TemporaryDirectory() as directory:
+            copy = Path(directory) / "validation"
+            shutil.copytree(Path(__file__).parent, copy, ignore=shutil.ignore_patterns("__pycache__"))
+            result = subprocess.run([sys.executable, "-I", "-B", str(copy / "validate.py"), "--help"],
+                                    env=dict(os.environ, QUIRE_VALIDATOR_REPO=directory), capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(list(copy.rglob("*.pyc")))
+
+
 if __name__ == "__main__":
     unittest.main()

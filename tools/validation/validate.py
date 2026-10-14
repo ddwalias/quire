@@ -11,6 +11,9 @@ import tempfile
 import uuid
 import xml.etree.ElementTree as ET
 
+# `python -I` (how the private copy runs) leaves the script's directory off the path; the sibling modules live there.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 # The repository under validation; set when running from the private copy (see main).
 ROOT = Path(os.environ.get("QUIRE_VALIDATOR_REPO") or Path(__file__).resolve().parents[2])
 NS = {"t": "http://microsoft.com/schemas/VisualStudio/TeamTest/2010"}
@@ -119,6 +122,9 @@ def main():
                                   env=dict(os.environ, QUIRE_VALIDATOR_REPO=str(ROOT))).returncode
         finally:
             shutil.rmtree(copy, ignore_errors=True)
+    # Every module the verdict uses is loaded now, before anything else runs.
+    import branch_coverage, merge_gate, method_coverage, mutate, ratchet  # noqa: F401
+    import integrity as integrity_module
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", choices=["focused", "phase"], default="focused")
     parser.add_argument("--method-type", action="append", default=[], help="exact type(s) for a batch method gate; default: all project methods")
@@ -175,8 +181,6 @@ def main():
     try:
         # Everything the verdict depends on is loaded or built before any code under test runs; afterwards the seal
         # catches tests that rewrite maintainer-owned files or built outputs on disk.
-        import branch_coverage, merge_gate, method_coverage, mutate, ratchet  # noqa: F401
-        import integrity as integrity_module
         # Verdict inputs are read, and the source lint run, before any code under test can touch them.
         baseline_path = args.baseline or ratchet.BASELINE
         baseline = json.loads(baseline_path.read_text()) if baseline_path.is_file() else None
