@@ -45,25 +45,36 @@ public partial struct Rational
     [MirrorVerified("RationalDifferentialTests")]
     public Rational(double xx, double err)
     {
-        double whole = Math.Floor(Math.Abs(xx));
-        double frac = Math.Abs(xx) - whole;
-        // Convergents p/q of frac; (pPrev, qPrev) is the one before.
-        double p = 0, q = 1, pPrev = 1, qPrev = 0;
-        for (double rest = frac; Math.Abs(p / q - frac) > err && rest > 1.0 / (1 << 30);)
+        double abs = Math.Abs(xx);
+        double whole = Math.Floor(abs);
+        double frac = abs - whole;
+        double rest = frac;
+        double pPrev = 1.0;
+        double qPrev = 0.0;
+        double p = 0.0;
+        double q = 1.0;
+        while (Math.Abs(p / q - frac) > err && rest > 9.313225746154785E-10)
         {
-            rest = 1 / rest;
+            rest = 1.0 / rest;
             double a = Math.Floor(rest);
             rest -= a;
-            double pNext = a * p + pPrev, qNext = a * q + qPrev;
-            // The bound pairs the current numerator with the next denominator, so a numerator just past
-            // int.MaxValue can get through and saturate below.
-            if (Math.Max(p + whole * qNext, qNext) > int.MaxValue) break;
-            (pPrev, qPrev, p, q) = (p, q, pNext, qNext);
+            double pNext = a * p + pPrev;
+            double qNext = a * q + qPrev;
+            if (Math.Max(p + whole * qNext, qNext) > 2147483647.0)
+            {
+                break;
+            }
+            pPrev = p;
+            qPrev = q;
+            p = pNext;
+            q = qNext;
         }
-        // double → int saturates (and NaN gives 0) on .NET 9 and later, as it does under Mathcad's runtime.
         Numerator = (int)(p + whole * q);
         Denominator = (int)q;
-        if (xx < 0) Numerator = -Numerator;
+        if (xx < 0.0)
+        {
+            Numerator = ~(Numerator + -1);
+        }
     }
 
     [MirrorVerified("RationalDifferentialTests")]
@@ -127,7 +138,14 @@ public partial struct Rational
 
     /// <summary>"N", or "N/D" when the denominator isn't 1, in the current culture.</summary>
     [MirrorVerified("RationalDifferentialTests")]
-    public override string ToString() => IsIntegral ? Numerator.ToString() : $"{Numerator}/{Denominator}";
+    public override string ToString()
+    {
+        if (IsIntegral)
+        {
+            return Numerator.ToString();
+        }
+        return string.Format("{0}/{1}", Numerator, Denominator);
+    }
 
     /// <summary>Euclid on the signed values; the result's sign is dropped at the end. GCD(0, 0) is 0.</summary>
     [MirrorVerified("RationalDifferentialTests")]

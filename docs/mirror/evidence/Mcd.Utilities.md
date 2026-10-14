@@ -7,14 +7,14 @@
 - **Quire:** `src/Quire.Mpl/Mcd/Utilities.cs`, `src/Quire.Mpl/Generated/Mirror/Mcd.Utilities.g.cs` (stubs);
   tests: `Quire.Mpl.Tests.Mcd.UtilitiesTests`, `Quire.Differential.Tests.UtilitiesDifferentialTests`
 
-A sealed class of static numeric helpers with a public parameterless constructor and no state. The implemented
-members are differential-verified for the cases in "Test cases"; `Divide` and `Multiply` are generated stubs.
+A sealed class of static numeric helpers with a public parameterless constructor and no state. Every
+member below is differential-verified for the cases in "Test cases".
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
 | `ScaleVector(double[], double)` | 0x06000708 | `6a15fd7e` | Divides every element by the scalar in place, last to first, with IEEE results (division by 0 gives ±∞ or NaN). Touches element 0 first, so an empty array throws `IndexOutOfRangeException` and null `NullReferenceException`. | High | Verified |
-| `Divide(object, double)` | 0x06000709 | `6157f65c` | Not implemented: the generated stub throws. | — | Stub |
-| `Multiply(object, double)` | 0x0600070a | `37ec8044` | Not implemented: the generated stub throws. | — | Stub |
+| `Divide(object, double)` | 0x06000709 | `6157f65c` | Returns value unchanged when scalar is 1. Raises AppException "illegal factor" when scalar is 0. Divides NumVal or MatVal by scalar, and returns any other value unchanged. | High | Verified |
+| `Multiply(object, double)` | 0x0600070a | `37ec8044` | Returns value unchanged when scalar is 1; otherwise delegates to Divide(value, 1.0 / scalar). | High | Verified |
 | `GetUnits(Type.Product)` | 0x0600070b | `320efee7` | Null for a dimensionless or polymorphic product; otherwise the product normalized to basis units in the calling thread's unit system. A null product throws `NullReferenceException`; an unknown dimension `ArgumentException` "bad dimension". | High; needs a synced thread | Verified |
 | `IsFinite(double)` | 0x0600070c | `9f109053` | Neither infinite nor NaN (any NaN payload). | High | Verified |
 | `AssertFinite(double)` | 0x0600070d | `ffc796c4` | Raises `AppException` "floating point error" (no argument) for an infinite or NaN value; returns otherwise. | High | Verified |
@@ -25,11 +25,13 @@ members are differential-verified for the cases in "Test cases"; `Divide` and `M
 
 **Observed** (`UtilitiesDifferentialTests`, against the installed `mplrun.dll`; outcomes compared as values or
 exception type and message):
-- `IsFinite` and `AssertFinite(double)` on 13 doubles: ±0, ±1, ±1e308, `double.MaxValue`, `double.Epsilon`, NaN, ±∞,
-  a signalling-NaN bit pattern and a negative quiet NaN;
+- `IsFinite` and `AssertFinite(double)` on 17 doubles: ±0, ±1, ±1e308, `double.MaxValue`, `double.Epsilon`, NaN, ±∞,
+  a signalling-NaN bit pattern, a negative quiet NaN, and NaNs with bit 32 set;
 - `AssertFinite(num_val)` on each of those as the real part with imaginary parts 0, NaN and +∞;
-- `ScaleVector` on `[1, 2, 3]`, `[]`, `[NaN, 0]` and `[-4]` by 2, 0, −0.5 and NaN, comparing the array afterwards,
+- `ScaleVector` on `[1, 2, 3]`, `[1, 2]`, `[]`, `[NaN, 0]` and `[-4]` by 2, 0, −0.5 and NaN, comparing the array afterwards,
   and on null;
+- `Divide` on `NumVal`, `MatVal`, string and double by 1, 0, 2, -0.5 and NaN;
+- `Multiply` on `NumVal`, `MatVal`, string and double by 1, 0, 2, -0.5 and NaN;
 - `GetUnits` of the products of `V{Length 60000}`, `V{}`, `V{a Length 60000}`, `V{Length 30000 Time-60000}`,
   `V{Foo 60000}` and `V{Money 60000 Mass-120000}`, and of null, on the default SI system;
 - the constructor.
@@ -38,5 +40,4 @@ exception type and message):
 
 ## Open
 
-- `Divide` and `Multiply` stay stubs until `num_val`/`mat_val` arithmetic (next batch) exists.
 - `GetUnits` was compared only under the default SI system.

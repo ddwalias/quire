@@ -13,10 +13,16 @@ public sealed partial class Utilities
     /// <summary>Divides every element by <paramref name="scalar"/> in place, last to first; an empty vector throws
     /// <see cref="IndexOutOfRangeException"/>.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
-    public static void ScaleVector(double[] vector, double scalar)
+    public unsafe static void ScaleVector(double[] vector, double scalar)
     {
-        _ = vector[0];
-        for (int i = vector.Length - 1; i >= 0; i--) vector[i] /= scalar;
+        fixed (double* p = &vector[0])
+        {
+            int idx = vector.Length;
+            while (--idx >= 0)
+            {
+                p[idx] /= scalar;
+            }
+        }
     }
 
     /// <summary>Null for a dimensionless or polymorphic product; otherwise its basis units in the calling thread's
@@ -27,7 +33,10 @@ public sealed partial class Utilities
 
     /// <summary>Neither infinite nor NaN.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
-    public static bool IsFinite(double d) => double.IsFinite(d);
+    public unsafe static bool IsFinite(double d)
+    {
+        return (((int*)(&d))[1] & 0x7FF00000) != 2146435072;
+    }
 
     /// <summary>Raises "floating point error" for an infinite or NaN value.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
@@ -44,13 +53,34 @@ public sealed partial class Utilities
         AssertFinite(v.ip);
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("UtilitiesDifferentialTests")]
     public static object Divide(object value, double scalar)
     {
-        if (scalar == 1) return value;
-        if (scalar == 0) AppException.Raise("illegal factor");
-        return value switch { NumVal n => n / scalar, MatVal m => m / scalar, _ => value };
+        if (scalar != 1.0)
+        {
+            if (scalar == 0.0)
+            {
+                AppException.Raise("illegal factor");
+            }
+            if (value is NumVal nv)
+            {
+                return nv / scalar;
+            }
+            if (value is MatVal mv)
+            {
+                return mv / scalar;
+            }
+        }
+        return value;
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
-    public static object Multiply(object value, double scalar) => scalar == 1 ? value : Divide(value, 1 / scalar);
+
+    [MirrorVerified("UtilitiesDifferentialTests")]
+    public static object Multiply(object value, double scalar)
+    {
+        if (scalar != 1.0)
+        {
+            return Divide(value, 1.0 / scalar);
+        }
+        return value;
+    }
 }
