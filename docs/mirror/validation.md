@@ -151,7 +151,10 @@ The same run also checks each reconstruction against the original IL:
   `typeof`, xUnit exceptions, sleeps or delays. `src/Quire.Mpl` code, which runs in the same process, must not name
   module initializers, xUnit, `MethodComparison`, the `Quire.Differential` namespace, method IL, assembly
   enumeration, environment variables or `QUIRE_*` variables. These token rules are defence in depth, not containment
-  (string building and reflection can evade them), so test diffs still need review. Exceptions are
+  (string building and reflection can evade them), so test diffs still need review. `file`-local types are matched
+  on each raw line and on the line with comments and strings blanked, skipping only `//` comments and simple one-line
+  strings; after anything a simple lexer cannot follow (verbatim, raw or nested-quote strings, block comments) nothing
+  later in the file is skipped, so such constructs cause findings rather than hide them. Exceptions are
   maintainer-reviewed entries in `docs/mirror/lint-allowed.txt` (`<path> | <rule> | <exact trimmed line>`), keyed on
   the whole line and counted: each entry covers one occurrence, so an edited, new or copied line needs its own entry.
 - **Test assembly types** (`integrity.json`): MethodAudit lists every top-level type compiled into
@@ -249,20 +252,22 @@ limit what it can reach:
   before any test starts.
 - Tests run from their built assemblies, not their projects, so no MSBuild evaluation follows code under test.
   Coverage results go to a fresh temporary directory.
-- Every `dotnet` command runs from a private temporary directory holding a copy of the repository's `global.json`
-  taken before any test runs (or an empty `{}` one, the CLI's defaults, when the repository has none), with absolute
-  paths to projects and assemblies, so a `global.json` planted in the checkout, or above the private directory,
-  cannot change the SDK or test runner a later command picks. The validator refuses to run when a directory above
-  that private one already holds a `global.json`.
+- Every `dotnet` command runs from its own new temporary directory, removed afterwards, holding the repository's
+  `global.json` as read before any test runs (or an empty `{}` one, the CLI's defaults, when the repository has
+  none), with absolute paths to projects and assemblies. The nearest `global.json` wins, so one planted in the
+  checkout or above cannot change the SDK or test runner a later command picks. A process left running would have to
+  find and rewrite a brand-new directory between its creation and the `dotnet` muxer reading it; that race remains.
+  `--dotnet` is resolved once on `PATH` before any test runs (on Windows a bare name would otherwise be looked up in
+  the repository first) and refused if it lies inside the repository.
 - The few files read afterwards (type map, every file at any depth under `docs/mirror/evidence` and
   `docs/mirror/manifest`, built test outputs, the MethodAudit build) are fingerprinted and checked after every test,
   coverage and mutation run and at the end, so a record added, nested, changed or deleted mid-run is caught.
-- The merge gate validates in a separate clone (`git clone --no-local`, with the `origin` remote removed so it does
-  not record this repository's path), never sharing this repository's `.git`, hooks or config; blocks unless the
-  validator exits normally (0, or 3 when only the completeness goal is unmet); re-reads the new baseline, which the
-  validator writes only after its last test run, and requires it to parse and hold the ratchet against the base's
-  committed baseline; and builds the merge commit from the tip's committed tree plus that baseline with hooks
-  disabled, so nothing done to the checkout during validation can reach `main`.
+- The merge gate validates in a separate clone (`git clone --no-local`, with the `origin` remote and the reflogs
+  removed so it does not record this repository's path), never sharing this repository's `.git`, hooks or config; blocks unless the
+  validator exits normally (0, or 3 when only the completeness goal is unmet); reads the new baseline once, which
+  the validator writes only after its last test run, and requires those bytes to parse and hold the ratchet against
+  the base's committed baseline; and builds the merge commit from the tip's committed tree plus exactly those bytes
+  with hooks disabled, so nothing done to the checkout or the baseline file during validation can reach `main`.
 
 Not covered: test processes are not sandboxed. Code under test can forge records it writes during its own run
 (case, mismatch and coverage records), and a process it leaves running could interfere with a later stage of the

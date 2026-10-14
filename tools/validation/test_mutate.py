@@ -4,6 +4,7 @@ import sys
 import tempfile
 from pathlib import Path
 import unittest
+from unittest import mock
 from mutate import key, run, select
 
 FAKE_DOTNET = """#!{python}
@@ -14,6 +15,9 @@ image = (Path(args[2]).parent / 'Quire.Mpl.dll').read_bytes()
 scratch = Path(args[args.index('--results-directory') + 1])
 kills = Path(os.environ['QUIRE_MUTATION_KILLS'])
 TEST = 'Ns.Tests.Compare'
+if 'FAKE_DOTNET_LOG' in os.environ:
+    with open(os.environ['FAKE_DOTNET_LOG'], 'a') as log:
+        log.write(os.getcwd() + '|' + Path('global.json').read_text() + '\\n')
 
 def finish(failed, *recorded):
     if recorded:
@@ -136,6 +140,17 @@ class MutationTests(unittest.TestCase):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFF]) + self.image[1:])
         with self.assertRaises(ValueError):
             self.mutate()
+
+    def test_each_run_gets_a_new_directory_holding_the_global_json(self):
+        log = Path(self.directory.name) / 'runs.log'
+        with mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log)):
+            run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl', str(self.dotnet),
+                accepted_keys=frozenset(), global_json=b'{"sdk": {}}')
+        runs = [line.split('|') for line in log.read_text().splitlines()]
+        self.assertEqual(len(runs), 5)  # two controls and three mutants
+        self.assertEqual(len({cwd for cwd, _ in runs}), 5)
+        self.assertEqual({content for _, content in runs}, {'{"sdk": {}}'})
+        self.assertFalse([cwd for cwd, _ in runs if Path(cwd).exists()])
 
     def test_original_assembly_left_unchanged(self):
         self.mutate()

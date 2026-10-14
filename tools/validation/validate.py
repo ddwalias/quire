@@ -1,5 +1,6 @@
 """Run maintained test projects and reject empty, skipped, aborted or failing runs."""
 import argparse
+import contextlib
 import hashlib
 import json
 import os
@@ -74,22 +75,30 @@ class Seal:
             raise ValueError(f"{after} changed files the validator reads: {', '.join(changed[:10])}")
 
 
-def sdk_directory(root, parent=None):
-    """A private working directory for every dotnet command. The CLI picks its SDK, and `dotnet test` its runner,
-    from the first global.json at or above its working directory; this one holds a copy of the repository's, taken
-    before any test runs, so one planted later in the checkout cannot change either. Without one, it holds an empty
-    global.json (the CLI's defaults), so one planted later above it, say in the shared temporary directory, is never
-    reached; one there already is refused."""
-    directory = Path(tempfile.mkdtemp(prefix="quire-dotnet-", dir=parent))
-    planted = [str(p / "global.json") for p in directory.parents if (p / "global.json").exists()]
-    if planted:
+@contextlib.contextmanager
+def sdk_directory(global_json):
+    """A new working directory for one dotnet command. The CLI picks its SDK, and `dotnet test` its runner, from the
+    nearest global.json at or above its working directory; this one holds `global_json`, the repository's read before
+    any test runs (or `{}`, the CLI's defaults), so none planted in the checkout or above is consulted. Being new for
+    each command, a process left running by an earlier test cannot have rewritten it in advance."""
+    directory = Path(tempfile.mkdtemp(prefix="quire-dotnet-"))
+    try:
+        (directory / "global.json").write_bytes(global_json)
+        yield directory
+    finally:
         shutil.rmtree(directory, ignore_errors=True)
-        raise ValueError(f"{planted[0]} would select the SDK for every dotnet command; remove it")
-    if (Path(root) / "global.json").is_file():
-        shutil.copyfile(Path(root) / "global.json", directory / "global.json")
-    else:
-        (directory / "global.json").write_text("{}\n")
-    return directory
+
+
+def resolve_dotnet(name, root):
+    """The absolute CLI path, found now: dotnet runs from a new directory each time, and on Windows a bare name would
+    be looked up in the current directory (the repository) before PATH. One inside the repository is refused."""
+    found = shutil.which(name)
+    if not found:
+        raise ValueError(f"dotnet CLI {name!r} not found")
+    path = Path(found).resolve()
+    if path.is_relative_to(Path(root).resolve()):
+        raise ValueError(f"dotnet CLI {path} lies inside the repository under validation")
+    return str(path)
 
 
 def changed_types(coverage, name_status, previous=None):
@@ -177,9 +186,7 @@ def main():
         parser.error("phase closure must run the full differential suite; omit --diff-filter")
     if args.profile == "phase" and args.allow_differential_skips:
         parser.error("phase validation requires differential execution; omit --allow-differential-skips")
-    # dotnet runs from a private directory (see sdk_directory), so every path it is given must be absolute.
-    if os.sep in args.dotnet or "/" in args.dotnet:
-        args.dotnet = str(Path(args.dotnet).resolve())
+    # dotnet runs from a new directory each time (see sdk_directory), so every path it is given must be absolute.
     args.baseline = args.baseline and args.baseline.resolve()
     args.write_baseline = args.write_baseline and args.write_baseline.resolve()
     output = args.results.resolve() if args.results else Path(tempfile.mkdtemp(prefix="quire-validation-"))
@@ -211,7 +218,8 @@ def main():
         deviations = method_coverage.accepted_deviations(ROOT)
         accepted_mutants = mutate.accepted()
         lint_findings = integrity_module.lint(ROOT)
-        sdk = holder["sdk"] = sdk_directory(ROOT)
+        global_json = (ROOT / "global.json").read_bytes() if (ROOT / "global.json").is_file() else b"{}\n"
+        args.dotnet = resolve_dotnet(args.dotnet, ROOT)
         changed_names = None
         if args.mutate_since:
             changed_names = git_output("diff", "-z", "--no-renames", "--name-status", args.mutate_since)
@@ -225,8 +233,9 @@ def main():
         with (output / "build.log").open("w") as log:
             for target, extra in [(tool, ["-o", str(tool_dir)])] + [
                     (ROOT / "tests" / p / f"{p}.csproj", []) for p in projects]:
-                result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=sdk,
-                                        stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
+                with sdk_directory(global_json) as sdk:
+                    result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=sdk,
+                                            stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
                 if result.returncode:
                     raise ValueError(f"build of {target.name} failed; inspect build.log")
         tool_digest = digest(files_under(tool_dir), tool_dir)
@@ -234,9 +243,10 @@ def main():
         # imports obj/*.props and *.targets that earlier tests could plant) happens after code under test has run.
         assemblies = {}
         for project in projects:
-            path = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
-                                   "-getProperty:TargetPath", "-nologo"], cwd=sdk, capture_output=True, text=True,
-                                  timeout=args.timeout).stdout.strip()
+            with sdk_directory(global_json) as sdk:
+                path = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
+                                       "-getProperty:TargetPath", "-nologo"], cwd=sdk, capture_output=True, text=True,
+                                      timeout=args.timeout).stdout.strip()
             if not path or not Path(path).is_file():
                 raise ValueError(f"{project}: built assembly not found ({path!r})")
             assemblies[project] = Path(path)
@@ -259,7 +269,7 @@ def main():
             print(f"Running {project}; log: {output / (project + '.log')}", flush=True)
             item = {"project": project, "command": command, "trx": str(trx)}
             report["projects"].append(item)
-            with (output / f"{project}.log").open("w") as log:
+            with (output / f"{project}.log").open("w") as log, sdk_directory(global_json) as sdk:
                 result = subprocess.run(command, cwd=sdk, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
             item["exit_code"] = result.returncode
             seal.verify(project)
@@ -278,7 +288,7 @@ def main():
                 coverage_command += ["--collect", "Code Coverage;Format=cobertura"]
                 item["coverage_command"] = coverage_command
                 print(f"Measuring branch coverage of {project}", flush=True)
-                with (output / f"{project}.coverage.log").open("w") as log:
+                with (output / f"{project}.coverage.log").open("w") as log, sdk_directory(global_json) as sdk:
                     result = subprocess.run(coverage_command, cwd=sdk, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
                 seal.verify(f"{project} coverage run")
                 if result.returncode:
@@ -299,7 +309,7 @@ def main():
             scan += ["--project", "Quire.Mpl"]
         report["method_commands"] = [scan]
         print("Auditing every selected method, including private methods and accessors", flush=True)
-        with (output / "method-audit.log").open("w") as log:
+        with (output / "method-audit.log").open("w") as log, sdk_directory(global_json) as sdk:
             result = subprocess.run(scan, cwd=sdk, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
             if result.returncode:
                 raise ValueError("Method inventory failed; inspect method-audit.log")
@@ -330,7 +340,7 @@ def main():
         if mutate_types:
             print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
-                                  args.dotnet, args.jobs, args.timeout, accepted_mutants, cwd=sdk)
+                                  args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors")}

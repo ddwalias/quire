@@ -92,10 +92,20 @@ class IntegrityTests(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertIn(rule, self.differential(text))
 
-    def test_file_in_comments_and_strings_is_not_a_file_local_type(self):
+    def test_file_in_line_comments_and_simple_strings_is_not_a_file_local_type(self):
         text = 'namespace Quire.Differential.Tests;\npublic class XDifferentialTests\n{\n' \
-               '    // one file record per case\n    /* a file class */ string s = "file struct";\n}\n'
+               '    // one file record per case\n    string s = "file struct", t = $"{n} file class"; // file enum\n}\n'
         self.assertEqual(self.differential(text), [])
+
+    def test_constructs_that_fool_a_lexer_cannot_hide_a_file_local_type(self):
+        header = 'namespace Quire.Differential.Tests;\npublic class XDifferentialTests { }\n'
+        for text in ['[A($"{M("/*")}")]\nfile class Assert { }\n// */',  # nested quotes in an interpolation hole
+                     '#region @"\nfile class Assert { }\n#endregion "',  # preprocessor text is not a string
+                     '[A(@$"\\")] file class Assert { } //")]',  # @$ is verbatim: the backslash escapes nothing
+                     '[A(@$"\nx")] file class Assert { } // "',  # the line starts inside a verbatim string
+                     '/* a file class */', 'file/**/class Assert { }']:  # block comments no longer hide prose
+            with self.subTest(text=text):
+                self.assertIn('file-local type', self.differential(header + text))
 
     def test_compiled_test_types_must_come_from_their_own_file(self):
         root = self.repo.resolve().as_posix()

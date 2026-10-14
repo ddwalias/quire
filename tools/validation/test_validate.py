@@ -1,7 +1,7 @@
-import shutil
 import tempfile
 from pathlib import Path
 import unittest
+import unittest.mock
 from validate import read_trx
 
 
@@ -115,27 +115,35 @@ class SealTreeTests(unittest.TestCase):
 
 
 class SdkDirectoryTests(unittest.TestCase):
-    def test_private_directory_holds_the_repository_global_json_read_now(self):
+    def test_each_command_gets_a_new_directory_holding_the_global_json_read_before_tests(self):
         from validate import sdk_directory
-        with tempfile.TemporaryDirectory() as directory:
-            repo = Path(directory)
-            empty = sdk_directory(repo)
-            self.addCleanup(shutil.rmtree, empty, True)
-            self.assertEqual((empty / 'global.json').read_text(), '{}\n')  # stops the search for one above it
-            (repo / 'global.json').write_text('{"sdk": {"version": "10.0.100"}}')
-            pinned = sdk_directory(repo)
-            self.addCleanup(shutil.rmtree, pinned, True)
-            (repo / 'global.json').write_text('{"sdk": {"version": "1.0.0"}}')  # planted after the copy
-            self.assertEqual((pinned / 'global.json').read_text(), '{"sdk": {"version": "10.0.100"}}')
-            self.assertFalse(repo in pinned.parents)
+        with sdk_directory(b'{"sdk": {"version": "10.0.100"}}\r\n') as first:
+            self.assertEqual((first / 'global.json').read_bytes(), b'{"sdk": {"version": "10.0.100"}}\r\n')
+            (first / 'global.json').write_text('{"sdk": {"paths": ["/fake"]}}')  # rewritten by a lingering process
+        self.assertFalse(first.exists())
+        with sdk_directory(b'{}\n') as second:
+            self.assertNotEqual(second, first)
+            self.assertEqual((second / 'global.json').read_bytes(), b'{}\n')
+        self.assertFalse(second.exists())
 
-    def test_global_json_above_the_private_directory_refused(self):
-        from validate import sdk_directory
-        with tempfile.TemporaryDirectory() as repo, tempfile.TemporaryDirectory() as parent:
-            (Path(parent) / 'global.json').write_text('{}')
-            with self.assertRaisesRegex(ValueError, 'global.json'):
-                sdk_directory(repo, parent)
-            self.assertEqual([p.name for p in Path(parent).iterdir()], ['global.json'])
+
+class DotnetTests(unittest.TestCase):
+    def test_cli_resolved_to_an_absolute_path_outside_the_repository(self):
+        import os, stat, sys
+        from validate import resolve_dotnet
+        with tempfile.TemporaryDirectory() as repo, tempfile.TemporaryDirectory() as tools:
+            for directory in (repo, tools):
+                cli = Path(directory) / 'dotnet'
+                cli.write_text('#!/bin/sh\n')
+                cli.chmod(cli.stat().st_mode | stat.S_IEXEC)
+            self.assertEqual(resolve_dotnet(str(Path(tools) / 'dotnet'), repo), str((Path(tools) / 'dotnet').resolve()))
+            with unittest.mock.patch.dict(os.environ, PATH=tools):
+                self.assertEqual(resolve_dotnet('dotnet', repo), str((Path(tools) / 'dotnet').resolve()))
+            with unittest.mock.patch.dict(os.environ, PATH=os.pathsep.join([repo, tools])), \
+                    self.assertRaisesRegex(ValueError, 'inside the repository'):
+                resolve_dotnet('dotnet', repo)
+            with self.assertRaisesRegex(ValueError, 'not found'):
+                resolve_dotnet(str(Path(tools) / 'missing'), repo)
 
 
 class PrivateCopyTests(unittest.TestCase):

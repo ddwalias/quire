@@ -72,15 +72,12 @@ class MergeGateTests(unittest.TestCase):
             (repo / 'src.cs').write_text('tampered in the checkout')
             hooks = repo / '.git/hooks'
             (hooks / 'pre-commit').write_text('#!/bin/sh\nexit 1\n'); (hooks / 'pre-commit').chmod(0o755)
-            baseline = repo.parent / f'{repo.name}-baseline.json'
-            baseline.write_text('{}')
-            try:
-                commit = baseline_commit(tip, baseline, 'b', 'r', repo)
-            finally:
-                baseline.unlink()
+            commit = baseline_commit(tip, b'{}\r\n', 'b', 'r', repo)
             self.assertEqual(git('rev-parse', f'{commit}^'), tip)
             self.assertEqual(git('show', f'{commit}:src.cs'), 'committed')
-            self.assertEqual(git('show', f'{commit}:docs/mirror/validation-baseline.json'), '{}')
+            # Exactly the bytes checked, not a file re-read later nor a text-mode conversion of them.
+            self.assertEqual(subprocess.run(['git', 'cat-file', 'blob', f'{commit}:docs/mirror/validation-baseline.json'],
+                                            cwd=repo, check=True, capture_output=True).stdout, b'{}\r\n')
 
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])
@@ -122,29 +119,27 @@ class RepositoryTests(unittest.TestCase):
         (self.repo / 'docs/x.md').write_text('work')
         self.git('add', '-A'); self.git('commit', '-qm', 'work')
         self.git('checkout', '-q', 'main')
-        self.new = Path(directory.name) / 'baseline.json'
 
     def git(self, *args):
         return subprocess.run(['git', '-c', 'user.name=t', '-c', 'user.email=t@t', *args], cwd=self.repo, check=True,
                               capture_output=True, text=True).stdout.strip()
 
     def regressions(self, baseline):
-        self.new.write_text(baseline if isinstance(baseline, str) else json.dumps(baseline))
-        return baseline_regressions(self.base, self.new, self.repo)
+        return baseline_regressions(self.base, (baseline if isinstance(baseline, str) else json.dumps(baseline)).encode(),
+                                    self.repo)
 
     def test_new_baseline_must_parse_and_hold_the_ratchet(self):
         self.assertEqual(self.regressions(self.BASELINE), [])
         self.assertEqual(self.regressions(dict(self.BASELINE, methods={'T::A()': 'compared', 'T::B()': 'compared'})), [])
         for baseline, reason in [
-                ('{"schema": 2,', 'unusable'), ('[]', 'unusable'), ({'profile': 'focused'}, 'schema'),
+                ('{"schema": 2,', 'unusable'), ('[]', 'unusable'), ('', 'unusable'), ({'profile': 'focused'}, 'schema'),
                 (dict(self.BASELINE, methods={'T::A()': 'missing', 'T::B()': 'missing'}), 'compared became missing'),
                 (dict(self.BASELINE, types={}), 'type disappeared'),
                 (dict(self.BASELINE, lint=['a.cs | goto statement | goto x;']), 'new lint'),
                 ({k: v for k, v in self.BASELINE.items() if k != 'types'}, 'unusable')]:
             with self.subTest(reason=reason):
                 self.assertTrue(any(reason in r for r in self.regressions(baseline)), self.regressions(baseline))
-        self.new.unlink()
-        self.assertIn('unusable', baseline_regressions(self.base, self.new, self.repo)[0])
+        self.assertIn('unusable', baseline_regressions(self.base, b'\xff', self.repo)[0])
 
     def test_only_commits_on_a_local_branch_can_be_cloned(self):
         self.assertTrue(on_branch(self.git('rev-parse', 'work'), self.repo))
@@ -176,13 +171,12 @@ class RepositoryTests(unittest.TestCase):
                 self.assertEqual(gate['reasons'], [f'cannot prepare the validation clone: git {command}: failed'])
                 (self.repo.parent / 'results/gate.json').unlink(); (self.repo.parent / 'results').rmdir()
 
-    def test_clone_steps_leave_no_repository_path_and_check_out_the_tip(self):
-        tree, git = self.repo.parent / 'tree', merge_gate.git
-        git('clone', '-q', '--no-local', '--no-checkout', str(self.repo), str(tree), cwd=self.repo)
-        git('remote', 'remove', 'origin', cwd=tree)
-        git('-c', 'advice.detachedHead=false', 'checkout', '-q', self.git('rev-parse', 'work'), cwd=tree)
-        self.assertNotIn(str(self.repo), (tree / '.git/config').read_text())
+    def test_clone_leaves_no_repository_path_and_checks_out_the_tip(self):
+        tree = self.repo.parent / 'tree'
+        merge_gate.clone(self.git('rev-parse', 'work'), tree, self.repo)
         self.assertEqual((tree / 'docs/x.md').read_text(), 'work')
+        recorded = [p for p in (tree / '.git').rglob('*') if p.is_file() and str(self.repo).encode() in p.read_bytes()]
+        self.assertEqual(recorded, [])  # config, reflogs, FETCH_HEAD, packed-refs...
 
 
 if __name__ == '__main__':

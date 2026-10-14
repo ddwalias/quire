@@ -46,8 +46,12 @@ TESTS = 'tests/Quire.Differential.Tests'
 # C# ends a line comment at any of its line terminators, so code after one cannot hide as comment.
 CODE = re.compile(r'//[^\n\r\x85\u2028\u2029]*|/\*.*?\*/|\$*("{3,}).*?\1|\$*@"(?:[^"]|"")*"|@?\$*"(?:[^"\\\n]|\\.)*"|'
                   r"'(?:[^'\\\n]|\\.)+'", re.S)
-# Rules matched against code only, with comments and string literals blanked: `file` is also an English word.
-CODE_ONLY = {'file-local type'}
+# `file` is also an English word: these rules skip prose in `//` comments and simple one-line strings (see prose).
+PROSE_RULES = {'file-local type'}
+# One-line tokens: a line comment; a token this lexer cannot follow (raw, verbatim or block comment); a simple
+# string, interpolated string without nested quotes, or character; a stray quote or `$`; anything else.
+TOKEN = re.compile(r"""//.*|(?P<stop>"{3}|@["$]|/\*)|"(?:[^"\\]|\\.)*"|\$"(?:[^"\\{}]|\\.|\{\{|\}\}|\{[^"'/@{}$\\]*\})*"|"""
+                   r"""'(?:[^'\\]|\\.)+'|(?P<stray>["'$])|[^"'@$/]+|[@/]""")
 NOT_LINE_BREAK = re.compile('[^\n\r\v\f\x1c-\x1e\x85\u2028\u2029]')
 
 
@@ -64,6 +68,24 @@ def allowed(path=ALLOWED):
             if len(fields) == 3:
                 entries[tuple(fields)] += 1
     return entries
+
+
+def prose(lines):
+    """Per line, the spans of `//` comments and simple one-line literals. Only what a simple lexer reads for certain
+    counts: after the first token it cannot follow, no later span in the file does, and preprocessor lines (whose
+    text is not tokens) have none, so a construct that fools it can only cause a finding, never hide one."""
+    spans, certain = [], True
+    for line in lines:
+        found = []
+        if certain and not re.match(r'\s*#', line):
+            for m in TOKEN.finditer(line):
+                if m['stop'] or m['stray']:
+                    certain = False
+                    break
+                if m[0].startswith(('//', '"', '$', "'")):
+                    found.append(m.span())
+        spans.append(found)
+    return spans
 
 
 def top_level(text):
@@ -127,10 +149,17 @@ def lint(repo=ROOT, allow=None):
             findings += [{'file': name, 'line': 0, 'rule': 'test file shape', 'match': p, 'text': ''}
                          for p in shape(path, text)]
         # Blanking keeps every line break, so code lines align with the text's.
+        lines = text.splitlines()
         code = CODE.sub(lambda m: NOT_LINE_BREAK.sub(' ', m[0]), text).splitlines()
-        for number, line in enumerate(text.splitlines(), 1):
+        spans = prose(lines)
+        for number, line in enumerate(lines, 1):
             for rule, pattern in rules:
-                matches = list(pattern.finditer(code[number - 1] if rule in CODE_ONLY else line))
+                matches = list(pattern.finditer(line))
+                if rule in PROSE_RULES:
+                    # The raw line, less prose; or the blanked code, which sees through comments between tokens.
+                    matches = {m.start(): m for m in pattern.finditer(code[number - 1])} | {
+                        m.start(): m for m in matches if not any(a <= m.start() < b for a, b in spans[number - 1])}
+                    matches = [matches[k] for k in sorted(matches)]
                 if matches and allow[(name, rule, line.strip())] > 0:
                     allow[(name, rule, line.strip())] -= 1
                     continue

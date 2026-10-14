@@ -12,7 +12,7 @@ import threading
 import time
 import uuid
 import xml.etree.ElementTree as ET
-from validate import NS, ROOT, digest, files_under
+from validate import NS, ROOT, digest, files_under, sdk_directory
 
 ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
 
@@ -88,10 +88,12 @@ def mismatches(scratch, mvid):
     return {identity for test, identity in recorded if test in failed and identity.startswith(f'{mvid}:')}
 
 
-def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None, cwd=None):
+def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None,
+        global_json=b'{}\n'):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test. Other test
-    failures, and mismatches a test swallows, cannot kill it. `cwd`: where dotnet runs (its global.json choice)."""
+    failures, and mismatches a test swallows, cannot kill it. `global_json`: the SDK choice each run gets (see
+    validate.sdk_directory)."""
     selected = select(coverage, types)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
@@ -112,7 +114,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         command = [dotnet, 'test', str(copy / test_dll.name), '--filter', test_filter(tests),
                    '--logger', 'trx;LogFileName=run.trx', '--results-directory', str(scratch)]
         kills = scratch / f'kills-{uuid.uuid4().hex}.txt'
-        code = execute(command, dict(env, QUIRE_MUTATION_KILLS=str(kills)), limit, cwd)
+        with sdk_directory(global_json) as cwd:
+            code = execute(command, dict(env, QUIRE_MUTATION_KILLS=str(kills)), limit, cwd)
         if kills.is_file():
             kills.replace(scratch / 'kills.txt')
         return code, scratch

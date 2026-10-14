@@ -72,17 +72,26 @@ def on_branch(commit, repo=ROOT):
 
 
 def baseline_regressions(base, baseline, repo=ROOT):
-    """Reasons the validator's new baseline may not become main's. It is written after the last test run, but a
-    process code under test left running could still rewrite it, so it must parse, keep the schema and hold the
-    ratchet against the base's committed baseline."""
+    """Reasons the validator's new baseline (its bytes, read once) may not become main's. It is written after the last
+    test run, but a process code under test left running could still rewrite it, so it must parse, keep the schema
+    and hold the ratchet against the base's committed baseline."""
     try:
         old = json.loads(git('show', f'{base}:docs/mirror/validation-baseline.json', cwd=repo))
-        new = json.loads(Path(baseline).read_text())
+        new = json.loads(baseline)
         if new.get('schema') != ratchet.SCHEMA:
             return [f"new baseline schema {new.get('schema')!r} is not {ratchet.SCHEMA}"]
         return [f'new baseline: {r}' for r in ratchet.compare(old, new)]
     except (OSError, ValueError, RuntimeError, KeyError, TypeError, AttributeError) as error:
         return [f'new baseline unusable: {error!r}']
+
+
+def clone(tip, tree, repo=ROOT):
+    """A separate clone at `tip`, not a worktree: code under test never sees this repository's .git, hooks or config,
+    nor, without the origin remote and the reflogs (`clone: from <path>`), its path."""
+    git('clone', '-q', '--no-local', '--no-checkout', str(repo), str(tree), cwd=repo)
+    git('remote', 'remove', 'origin', cwd=tree)
+    shutil.rmtree(Path(tree) / '.git/logs')
+    git('-c', 'advice.detachedHead=false', 'checkout', '-q', tip, cwd=tree)
 
 
 def verdict(summary):
@@ -152,18 +161,14 @@ def main():
     results = outputs / 'run'
     try:
         try:
-            # A separate clone, not a worktree: code under test never sees this repository's .git, hooks or config,
-            # nor, without the origin remote, its path.
-            git('clone', '-q', '--no-local', '--no-checkout', str(ROOT), str(tree))
-            git('remote', 'remove', 'origin', cwd=tree)
-            git('-c', 'advice.detachedHead=false', 'checkout', '-q', tip, cwd=tree)
+            clone(tip, tree, ROOT)
             if not args.allow_protected:
                 # Validate with main's harness, whatever the branch contains.
                 base_files = git('ls-tree', '-r', '--name-only', base).splitlines()
                 restore = protected(base_files, rules)
                 if restore:
                     git('checkout', base, '--', *restore, cwd=tree)
-        except RuntimeError as error:
+        except (RuntimeError, OSError) as error:
             code, reasons = None, [f'cannot prepare the validation clone: {error}']
         else:
             command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
@@ -178,7 +183,13 @@ def main():
             if code not in (0, 3):
                 reasons.insert(0, f'validator exited {code}')
             if not reasons:
-                reasons = baseline_regressions(base, outputs / 'baseline.json')
+                # Checked and committed from these bytes: a lingering process may rewrite the file in between.
+                try:
+                    baseline = (outputs / 'baseline.json').read_bytes()
+                except OSError as error:
+                    reasons = [f'new baseline unusable: {error!r}']
+                else:
+                    reasons = baseline_regressions(base, baseline)
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
                   'results': str(results), 'validator_exit': code, 'reasons': reasons}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
@@ -187,7 +198,7 @@ def main():
             return 1
         print(f'PASSED: {args.branch} ({tip[:12]}); results {results}')
         if args.apply:
-            merged = baseline_commit(tip, outputs / 'baseline.json', args.branch, results)
+            merged = baseline_commit(tip, baseline, args.branch, results)
             git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', merged)
             print(f'MERGED: {args.base} -> {merged[:12]}')
         return 0
@@ -196,15 +207,15 @@ def main():
 
 
 def baseline_commit(tip, baseline, branch, results, repo=ROOT):
-    """The tip's committed tree plus the new baseline, built from objects rather than any working tree, so nothing
-    the validated code did to its checkout can reach the merge."""
+    """The tip's committed tree plus the new baseline (the bytes checked), built from objects rather than any working
+    tree, so nothing the validated code did to its checkout can reach the merge."""
     with tempfile.TemporaryDirectory() as scratch:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(scratch) / 'index'))
-        def run(*command):
+        def run(*command, data=None):
             return subprocess.run(['git', '-c', 'core.hooksPath=/dev/null', *command], cwd=repo, env=env, check=True,
-                                  capture_output=True, text=True).stdout.strip()
+                                  capture_output=True, input=data).stdout.decode().strip()
         run('read-tree', tip)
-        blob = run('hash-object', '-w', str(baseline))
+        blob = run('hash-object', '-w', '--stdin', data=baseline)
         run('update-index', '--add', '--cacheinfo', f'100644,{blob},docs/mirror/validation-baseline.json')
         tree = run('write-tree')
         if tree == run('rev-parse', f'{tip}^{{tree}}'):
