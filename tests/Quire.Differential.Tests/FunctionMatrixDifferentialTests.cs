@@ -34,9 +34,37 @@ public class FunctionMatrixDifferentialTests
         return (qCtor.Invoke([d, purity]), mCtor.Invoke([d, purity]));
     }
 
+    private static (object q, object m) FunctionPair(int purity, Delegate d)
+    {
+        var qCtor = typeof(DelegateFunction).GetConstructor(Instance, null, [typeof(Delegate), typeof(int)], null)!;
+        var mType = Mathcad.Type("mplrun", "Mpl.Run.DelegateFunction");
+        var mCtor = mType.GetConstructor(Instance, null, [typeof(Delegate), typeof(int)], null)!;
+        return (qCtor.Invoke([d, purity]), mCtor.Invoke([d, purity]));
+    }
+
     private static object Identity(object value) => value;
     private static object Pair(object first, object second) => $"{first ?? "null"}|{second ?? "null"}";
     private static object Triple(object first, object second, object third) => $"{first}|{second}|{third}";
+    private static string DescribeArgument(object? value) =>
+        value is MatVal || value?.GetType().FullName == "Mcd.MatVal" ? "<matrix>" : value?.ToString() ?? "<null>";
+    private static object MarkUnary(object value) => $"unary:{DescribeArgument(value)}";
+    private static object MarkBinary(object first, object second) => $"binary:{DescribeArgument(first)}|{DescribeArgument(second)}";
+    private static object MarkTernary(object first, object second, object third) =>
+        $"ternary:{DescribeArgument(first)}|{DescribeArgument(second)}|{DescribeArgument(third)}";
+
+    private static (object[] q, object[] m) Inputs(int arity, int matrixMask)
+    {
+        var q = new object[arity];
+        var m = new object[arity];
+        for (int i = 0; i < arity; i++)
+        {
+            if ((matrixMask & (1 << i)) != 0)
+                (q[i], m[i]) = MatrixPair();
+            else
+                q[i] = m[i] = $"value-{i}";
+        }
+        return (q, m);
+    }
 
     private static (object q, object m) MatrixPair()
     {
@@ -73,6 +101,13 @@ public class FunctionMatrixDifferentialTests
         MethodComparison.Compare("AsDelegate_1", Contract, qAsOne, qFn, [], mAsOne, mFn, [], qs, ms, qs, ms);
         MethodComparison.Compare("AsDelegate_2", Contract, qAsTwo, qFn, [], mAsTwo, mFn, [], qs, ms, qs, ms);
 
+        var (qTooFewForOne, mTooFewForOne) = FunctionPair(2);
+        MethodComparison.Compare("AsDelegate_1 reports its own error position", Contract,
+            qAsOne, qTooFewForOne, [], mAsOne, mTooFewForOne, [], qs, ms, qs, ms);
+        var (qTooFewForTwo, mTooFewForTwo) = FunctionPair(3);
+        MethodComparison.Compare("AsDelegate_2 reports its own error position", Contract,
+            qAsTwo, qTooFewForTwo, [], mAsTwo, mTooFewForTwo, [], qs, ms, qs, ms);
+
         var (qVarargs, mVarargs) = FunctionPair(1);
         SetVarargs(QFunction, qVarargs, true);
         SetVarargs(MFunction, mVarargs, true);
@@ -101,51 +136,44 @@ public class FunctionMatrixDifferentialTests
         var qs = Show;
         var ms = Show;
 
+        (MethodInfo q, MethodInfo m)[] calls = [ (qVecOne, mVecOne), (qVecTwo, mVecTwo), (qVecThree, mVecThree) ];
+        Delegate[] markerDelegates =
+        [
+            (Func<object, object>)MarkUnary,
+            (Func<object, object, object>)MarkBinary,
+            (Func<object, object, object, object>)MarkTernary,
+        ];
+        for (int arity = 1; arity <= 3; arity++)
+        {
+            var (qFn, mFn) = FunctionPair(arity, markerDelegates[arity - 1]);
+            int maskLimit = 1 << arity;
+            for (int mask = 0; mask < maskLimit; mask++)
+            {
+                var (qInputs, mInputs) = Inputs(arity, mask);
+                MethodComparison.Compare($"VecCall arity {arity} enabled matrix mask {mask}", Contract,
+                    calls[arity - 1].q, qFn, qInputs, calls[arity - 1].m, mFn, mInputs, qs, ms, qs, ms);
+            }
+
+            var (qIgnored, mIgnored) = FunctionPair(arity, markerDelegates[arity - 1]);
+            MethodComparison.Compare($"IgnoreVectorization(true), arity {arity}", Contract,
+                qIgnore, qIgnored, [true], mIgnore, mIgnored, [true], qs, ms, qs, ms);
+            for (int mask = 1; mask < maskLimit; mask++)
+            {
+                var (qInputs, mInputs) = Inputs(arity, mask);
+                MethodComparison.Compare($"VecCall arity {arity} ignored matrix mask {mask}", Contract,
+                    calls[arity - 1].q, qIgnored, qInputs, calls[arity - 1].m, mIgnored, mInputs, qs, ms, qs, ms);
+            }
+        }
+
         var (qUnary, mUnary) = FunctionPair(1);
         var (qMatrix, mMatrix) = MatrixPair();
-        MethodComparison.Compare("VecCall unary matrix bridge", Contract,
-            qVecOne, qUnary, [qMatrix], mVecOne, mUnary, [mMatrix], qs, ms, qs, ms);
-        MethodComparison.Compare("VecCall unary scalar branch", Contract,
-            qVecOne, qUnary, ["scalar"], mVecOne, mUnary, ["scalar"], qs, ms, qs, ms);
+        var (qIgnoredApply, mIgnoredApply) = FunctionPair(1);
+        MethodComparison.Compare("IgnoreVectorization(true)", Contract,
+            qIgnore, qIgnoredApply, [true], mIgnore, mIgnoredApply, [true], qs, ms, qs, ms);
         MethodComparison.Compare("VecApply matrix bridge", Contract,
             qVecApply, qUnary, [new[] { qMatrix }], mVecApply, mUnary, [new[] { mMatrix }], qs, ms, qs, ms);
-
-        var (qBinary, mBinary) = FunctionPair(2);
-        var (qMatrix2, mMatrix2) = MatrixPair();
-        MethodComparison.Compare("VecCall binary bridge with second matrix", Contract,
-            qVecTwo, qBinary, ["left", qMatrix2], mVecTwo, mBinary, ["left", mMatrix2], qs, ms, qs, ms);
-        MethodComparison.Compare("VecCall binary scalar branch", Contract,
-            qVecTwo, qBinary, ["left", "right"], mVecTwo, mBinary, ["left", "right"], qs, ms, qs, ms);
-
-        var (qTernary, mTernary) = FunctionPair(3);
-        var (qMatrix3, mMatrix3) = MatrixPair();
-        MethodComparison.Compare("VecCall ternary bridge with third matrix", Contract,
-            qVecThree, qTernary, ["a", "b", qMatrix3], mVecThree, mTernary, ["a", "b", mMatrix3], qs, ms, qs, ms);
-        MethodComparison.Compare("VecCall ternary scalar branch", Contract,
-            qVecThree, qTernary, ["a", "b", "c"], mVecThree, mTernary, ["a", "b", "c"], qs, ms, qs, ms);
-
-        var (qIgnored, mIgnored) = FunctionPair(1);
-        MethodComparison.Compare("IgnoreVectorization(true)", Contract,
-            qIgnore, qIgnored, [true], mIgnore, mIgnored, [true], qs, ms, qs, ms);
-        var (qIgnoredMatrix, mIgnoredMatrix) = MatrixPair();
-        MethodComparison.Compare("VecCall unary matrix bypass after IgnoreVectorization", Contract,
-            qVecOne, qIgnored, [qIgnoredMatrix], mVecOne, mIgnored, [mIgnoredMatrix], qs, ms, qs, ms);
         var (qIgnoredApplyMatrix, mIgnoredApplyMatrix) = MatrixPair();
         MethodComparison.Compare("VecApply bypasses matrix bridge after IgnoreVectorization", Contract,
-            qVecApply, qIgnored, [new[] { qIgnoredApplyMatrix }], mVecApply, mIgnored, [new[] { mIgnoredApplyMatrix }], qs, ms, qs, ms);
-
-        var (qBinaryIgnored, mBinaryIgnored) = FunctionPair(2);
-        MethodComparison.Compare("IgnoreVectorization(true) binary", Contract,
-            qIgnore, qBinaryIgnored, [true], mIgnore, mBinaryIgnored, [true], qs, ms, qs, ms);
-        var (qIgnoredMatrix2, mIgnoredMatrix2) = MatrixPair();
-        MethodComparison.Compare("VecCall binary matrix bypass after IgnoreVectorization", Contract,
-            qVecTwo, qBinaryIgnored, ["left", qIgnoredMatrix2], mVecTwo, mBinaryIgnored, ["left", mIgnoredMatrix2], qs, ms, qs, ms);
-
-        var (qTernaryIgnored, mTernaryIgnored) = FunctionPair(3);
-        MethodComparison.Compare("IgnoreVectorization(true) ternary", Contract,
-            qIgnore, qTernaryIgnored, [true], mIgnore, mTernaryIgnored, [true], qs, ms, qs, ms);
-        var (qIgnoredMatrix3, mIgnoredMatrix3) = MatrixPair();
-        MethodComparison.Compare("VecCall ternary matrix bypass after IgnoreVectorization", Contract,
-            qVecThree, qTernaryIgnored, ["a", "b", qIgnoredMatrix3], mVecThree, mTernaryIgnored, ["a", "b", mIgnoredMatrix3], qs, ms, qs, ms);
+            qVecApply, qIgnoredApply, [new[] { qIgnoredApplyMatrix }], mVecApply, mIgnoredApply, [new[] { mIgnoredApplyMatrix }], qs, ms, qs, ms);
     }
 }
