@@ -130,7 +130,12 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
             && (method.Abstract && counterpart.Abstract || type.Kind == TypeKind.Delegate),
         shape_matches = counterpart != null && method.Access.ToString() == counterpart.Access,
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
-        structure_differences = differences ?? []
+        structure_differences = differences ?? [],
+        source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
+        mutants = raw.BodyRva == 0 || exclusion != null ? []
+            : Mutants.Find(artifact.Pe, artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)))
+                .Select(m => new { il_offset = m.IlOffset, file_offset = m.FileOffset, original = m.Original,
+                    replacement = m.Replacement, description = m.Description }).ToList()
     });
 }
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
@@ -148,6 +153,18 @@ sealed class Artifact
     public string Version { get; }
     public List<RawMethod> Methods { get; } = [];
     public PEReader Pe { get; }
+    private readonly MetadataReader? _debug;
+
+    /// <summary>Source file and statement lines of a method from its portable PDB; null without one.</summary>
+    public object? Source(int token)
+    {
+        if (_debug == null) return null;
+        var points = _debug.GetMethodDebugInformation(MetadataTokens.MethodDefinitionHandle(token).ToDebugInformationHandle())
+            .GetSequencePoints().Where(p => !p.IsHidden).ToList();
+        if (points.Count == 0) return null;
+        return new { file = _debug.GetString(_debug.GetDocument(points[0].Document).Name),
+            lines = points.Select(p => p.StartLine).Distinct().Order().ToArray() };
+    }
     public MetadataReader Metadata { get; }
     public Artifact(string path)
     {
@@ -156,6 +173,9 @@ sealed class Artifact
         Hash = Convert.ToHexString(SHA256.HashData(image)).ToLowerInvariant();
         Pe = new PEReader(new MemoryStream(image));
         var md = Metadata = Pe.GetMetadataReader();
+        string pdb = Path.ChangeExtension(path, ".pdb");
+        if (File.Exists(pdb))
+            _debug = MetadataReaderProvider.FromPortablePdbStream(new MemoryStream(File.ReadAllBytes(pdb))).GetMetadataReader();
         Mvid = md.GetGuid(md.GetModuleDefinition().Mvid).ToString();
         Version = md.GetAssemblyDefinition().Version.ToString();
         var decoder = new SigProvider(Name);

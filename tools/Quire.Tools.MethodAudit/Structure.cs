@@ -45,7 +45,7 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
 sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, SigProvider decoder,
     Func<string, string> typeName, Func<int, string?> methodName)
 {
-    private static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
+    internal static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
         .Select(f => (OpCode)f.GetValue(null)!)
         .ToDictionary(o => unchecked((ushort)o.Value));

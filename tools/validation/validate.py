@@ -48,11 +48,22 @@ def main():
     parser.add_argument("--dotnet", default="dotnet", help="path to the .NET 10 CLI")
     parser.add_argument("--timeout", type=int, default=600, help="maximum seconds per test project (default: 600)")
     parser.add_argument("--results", type=Path, help="new result directory (must not exist)")
+    parser.add_argument("--mutate", action="store_true", help="IL-mutate compared methods of the --method-type types")
+    parser.add_argument("--mutate-since", metavar="REV", help="IL-mutate compared methods of types whose source changed since REV")
+    parser.add_argument("--jobs", type=int, default=2, help="parallel mutant test runs (default: 2)")
+    parser.add_argument("--baseline", type=Path, help="ratchet baseline (default: docs/mirror/validation-baseline.json)")
+    parser.add_argument("--write-baseline", type=Path, help="write this run's counts as a baseline (unscoped runs only)")
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
     if args.results and args.results.exists():
         parser.error("--results must name a new directory")
+    if args.mutate and not args.method_type:
+        parser.error("--mutate needs --method-type; use --mutate-since for unscoped runs")
+    if (args.mutate or args.mutate_since) and args.profile != "focused":
+        parser.error("mutation runs in the focused profile")
+    if args.write_baseline and args.method_type:
+        parser.error("--write-baseline needs an unscoped run")
     if args.profile == "phase" and os.name != "nt":
         parser.error("phase tests require Windows and the Windows Desktop runtime; use focused for the portable runtime slice")
     if args.profile == "phase" and args.method_type:
@@ -74,7 +85,7 @@ def main():
 
     run = str(uuid.uuid4())
     report = {"run": run, "method_types": args.method_type, "revision": git_output("rev-parse", "HEAD"), "working_tree": git_output("status", "--porcelain"), "profile": args.profile, "diff_filter": args.diff_filter,
-              "complete": False, "projects": [], "limitations":
+              "complete": False, "gate_passed": False, "projects": [], "limitations":
               "Passing comparisons establish equivalence only for executed cases. Phase also requires render, coverage-excluded checks and independent review."}
     install = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0"
                    if os.name == "nt" else "/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0"))
@@ -106,6 +117,22 @@ def main():
                 raise ValueError(f"{project}: dotnet test exited {result.returncode}; inspect its log")
             item.update(read_trx(trx, differential and args.allow_differential_skips))
             print(f"{project}: {item['passed']} passed / {item['failed']} failed / {item['skipped']} skipped", flush=True)
+            if differential:
+                # Coverage instrumentation rewrites the module, so recorded method tokens would be wrong:
+                # the same tests run again, unrecorded, only to measure lines and branches.
+                env.pop("QUIRE_METHOD_CASES", None)
+                env.pop("QUIRE_VALIDATION_RUN", None)
+                coverage_trx = output / f"{project}.coverage.trx"
+                coverage_command = [c if not c.startswith("trx;") else f"trx;LogFileName={coverage_trx.name}" for c in command]
+                coverage_command[coverage_command.index("--results-directory") + 1] = str(output / "coverage")
+                coverage_command += ["--no-build", "--collect", "Code Coverage;Format=cobertura"]
+                item["coverage_command"] = coverage_command
+                print(f"Measuring branch coverage of {project}", flush=True)
+                with (output / f"{project}.coverage.log").open("w") as log:
+                    result = subprocess.run(coverage_command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
+                if result.returncode:
+                    raise ValueError(f"{project}: coverage run exited {result.returncode}; inspect its log")
+                read_trx(output / "coverage" / coverage_trx.name, args.allow_differential_skips)
         if any(p["skipped"] for p in report["projects"]):
             return 2
         from method_coverage import audit, passed_tests
@@ -128,8 +155,12 @@ def main():
                     raise ValueError("Method inventory failed; inspect method-audit.log")
         records = [json.loads(line) for path in (output / "method-cases").glob("*.jsonl")
                    for line in path.read_text().splitlines() if line]
+        from branch_coverage import read_cobertura
+        cobertura = sorted((output / "coverage").rglob("*.cobertura.xml"))
+        report["coverage_reports"] = [str(p) for p in cobertura]
         coverage = audit(json.loads(inventory_path.read_text()), records,
-                         passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type)
+                         passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type,
+                         lines=read_cobertura(cobertura))
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
         report["method_coverage"] = coverage["counts"]
         print(f"Method coverage: {coverage['counts']}; {output / 'method-coverage.json'}", flush=True)
@@ -138,8 +169,37 @@ def main():
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
         report["integrity"] = {"lint": len(integrity["lint"]), "listing_errors": len(integrity["listings"]["errors"]),
                                "listings_unchecked": len(integrity["listings"]["unchecked"])}
-        report["complete"] = coverage["complete"] and integrity["complete"]
         print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
+        import ratchet
+        ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.baseline or ratchet.BASELINE)
+        (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
+        report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"]}
+        print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
+        if args.write_baseline:
+            args.write_baseline.write_text(json.dumps(ratchet_report["snapshot"], indent=2, sort_keys=True) + "\n")
+        mutation_ok = True
+        mutate_types = set(args.method_type) if args.mutate else set()
+        if args.mutate_since:
+            changed = git_output("diff", "--name-only", args.mutate_since, "--", "src")
+            if changed is None:
+                raise ValueError(f"cannot diff against {args.mutate_since}")
+            changed = {(ROOT / name).resolve().as_posix() for name in changed.splitlines()}
+            mutate_types |= {m["type"] for m in coverage["methods"]
+                             if m.get("source") and Path(m["source"]["file"]).resolve().as_posix() in changed}
+            report["mutate_since"] = args.mutate_since
+        if mutate_types:
+            import mutate
+            print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
+            host_dir = ROOT / "tests/Quire.Focused.Differential.Tests/bin/Debug/net10.0"
+            mutation = mutate.run(coverage, mutate_types, host_dir / "Quire.Differential.Tests.dll", "Quire.Mpl",
+                                  args.dotnet, args.jobs, args.timeout)
+            (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
+            report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors")}
+            mutation_ok = mutation["complete"]
+            print(f"Mutation: {mutation['killed']}/{mutation['total']} killed; survivors {len(mutation['survivors'])}", flush=True)
+        report["complete"] = coverage["complete"] and integrity["complete"] and mutation_ok
+        # The merge gate needs green tests, no regression and no surviving mutant; completeness is the end goal.
+        report["gate_passed"] = ratchet_report["ok"] and mutation_ok
         return 0 if report["complete"] else 1
     except (OSError, ValueError, KeyError, TypeError, ET.ParseError, subprocess.TimeoutExpired) as error:
         report["error"] = str(error)

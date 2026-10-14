@@ -149,6 +149,46 @@ The same run also checks each reconstruction against the original IL:
 The structure comparison is a fingerprint, not a proof: identical structure with different arithmetic or operand
 order passes it, which the direct comparisons must catch.
 
+### Branch coverage, mutation and status
+
+- **Branch coverage:** the differential tests run a second time, unrecorded and `--no-build`, under the Microsoft
+  code-coverage collector (cobertura). Instrumentation rewrites the module and corrupts the method tokens that
+  comparison records carry, so it never runs in the recorded pass. A compared method whose PDB statement lines are not all executed, or whose branch conditions are partly covered,
+  becomes `uncovered`, with the lines named. Coverage counts any execution during the differential run, including
+  test setup, so mutation is the attributable check.
+- **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
+  byte changes in each compared method (negated branches, swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
+  `cgt`/`clt`, `0`/`1` swapped, other constants moved by one). Each mutant is applied to a copy of the test output and **only the tests
+  whose direct comparisons covered that method** are rerun; one must fail. `mutation.json` lists survivors. A
+  survivor means a missing case or a lossy renderer. Equivalent mutants are accepted only by a maintainer in
+  `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
+- **Status:** a `Verified` method that this run does not show as compared (or declaration-only) counts as
+  `verified_unsupported`.
+
+### Ratchet
+
+`ratchet.json` compares per-type counts with `docs/mirror/validation-baseline.json`: `compared` may not fall;
+`missing`, `structure_mismatch`, `uncovered` and `verified_unsupported` may not rise; unscoped runs also forbid more
+lint findings or listing errors and disappearing types. New types start their own baseline. `--write-baseline PATH`
+writes a run's counts (unscoped runs only). Only the merge gate or a maintainer updates the committed baseline.
+
+### Merge gate
+
+Work happens on one branch per work unit, based on current `main`. Agents never commit to `main`. From the checkout
+that has `main` checked out:
+
+```sh
+python3 tools/validation/merge_gate.py <branch>            # check only
+python3 tools/validation/merge_gate.py <branch> --apply    # check, fast-forward main, commit the new baseline
+```
+
+The gate blocks a branch that is not based on current `main`, has no changes, or changes a maintainer-owned path in
+`tools/validation/protected.txt` (harness, MethodAudit, MirrorGen, comparison helper, pinned identity, mirror
+attributes, build props, PLAN/validation/deviations/decisions, baseline, accepted mutants). A maintainer may pass
+`--allow-protected`. Otherwise it validates a detached worktree of the branch **with `main`'s copies of every
+protected file**, unscoped, mutating types whose source changed. It merges only when all tests pass, the ratchet
+holds and no mutant survives. `gate.json` beside the results records the decision.
+
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.
 Review test quality and retain the analysis and independent-review requirements of PLAN.

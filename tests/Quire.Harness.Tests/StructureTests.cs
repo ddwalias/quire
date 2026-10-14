@@ -58,6 +58,20 @@ public class StructureTests
     }
 
     [Fact]
+    public void Mutants_point_at_the_instructions_they_change()
+    {
+        var md = Pe.GetMetadataReader();
+        var method = md.GetMethodDefinition(md.MethodDefinitions.Single(h => md.GetString(md.GetMethodDefinition(h).Name) == "Constant"
+            && SigProvider.FullName(md, md.GetMethodDefinition(h).GetDeclaringType()) == typeof(StructureTests).FullName));
+        var mutants = Mutants.Find(Pe, method);
+        var image = File.ReadAllBytes(typeof(StructureTests).Assembly.Location);
+        Assert.Contains(mutants, m => m.Description == "ldc.i4.3 -> ldc.i4.4");
+        Assert.Contains(mutants, m => m.Description.StartsWith("bgt") || m.Description.StartsWith("ble") || m.Description.StartsWith("cgt"));
+        foreach (var m in mutants)
+            Assert.Equal(m.Original, Convert.ToHexString(image, (int)m.FileOffset, m.Original.Length / 2));
+    }
+
+    [Fact]
     public void Quire_types_are_named_after_their_Mathcad_binding()
     {
         var mapped = Read("Ternary", n => n == typeof(StructureTests).FullName ? "Mcd.Fixture" : n);

@@ -1,0 +1,21 @@
+# Maintainer-owned paths (fnmatch patterns; * crosses directories). The merge gate rejects a branch that changes
+# any of them unless a maintainer passes --allow-protected, and always validates with main's copies.
+tools/validation/*
+tools/Quire.Tools.MethodAudit/*
+tools/Quire.Tools.MirrorGen/*
+tests/Quire.Harness.Tests/*
+tests/Quire.Focused.Differential.Tests/*
+tests/Quire.Differential.Tests/MethodComparison.cs
+tests/Quire.Differential.Tests/Mathcad.cs
+tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj
+src/Quire.Mirror/*
+Directory.Build.props
+Directory.Build.targets
+Quire.slnx
+docs/mirror/PLAN.md
+docs/mirror/validation.md
+docs/mirror/evidence/README.md
+docs/mirror/deviations.md
+docs/mirror/decisions.md
+docs/mirror/validation-baseline.json
+docs/mirror/accepted-mutants.txt

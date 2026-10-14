@@ -1,0 +1,2 @@
+# Maintainer-reviewed equivalent mutants (validation.md, "Branch coverage, mutation and status").
+# One per line: <Quire type>::<signature>@IL_<offset> <description> # reason

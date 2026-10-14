@@ -1,11 +1,13 @@
 """Reconstruction integrity: decompiler-artifact lint and committed IL listings bound to the original artifact."""
 import argparse
 import json
+import os
 from pathlib import Path
 import re
 from validate import ROOT
 
 ALLOW = 'quire-lint: allow'
+SKIPPED = {'Generated', 'bin', 'obj'}
 ARTIFACTS = [
     ('goto statement', re.compile(r'\bgoto\b')),
     ('compiler-generated name', re.compile(r'CS\$|<>[A-Za-z0-9_]|<[A-Za-z_]\w*>[a-z]__')),
@@ -22,10 +24,11 @@ HEADER = re.compile(r'^// Tool: ilspycmd \S+\n// SHA-256: ([0-9a-f]{64})\n// MVI
 def lint(repo=ROOT):
     """Decompiler artifacts in hand-written source; generated mirror stubs and build output are skipped."""
     findings = []
-    for path in sorted((Path(repo) / 'src').rglob('*.cs')):
-        parts = set(path.relative_to(repo).parts)
-        if parts & {'Generated', 'bin', 'obj'}:
-            continue
+    sources = []
+    for directory, subdirectories, files in os.walk(Path(repo) / 'src'):
+        subdirectories[:] = [d for d in subdirectories if d not in SKIPPED]
+        sources += [Path(directory) / f for f in files if f.endswith('.cs')]
+    for path in sorted(sources):
         for number, line in enumerate(path.read_text(encoding='utf-8-sig').splitlines(), 1):
             if ALLOW in line:
                 continue

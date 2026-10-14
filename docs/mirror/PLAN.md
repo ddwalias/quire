@@ -7,7 +7,7 @@ only rename under [mapping.md](mapping.md). Applies to all phases and existing h
 (WSL: `/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0`); `MATHCAD_DIR` overrides defaults.
 Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; invalidate on artifact changes.
 
-## Execute: load → mirror → checkpoint
+## Execute: load → mirror → checkpoint → merge
 
 1. **Load:** Read PLAN + [WORK.md](WORK.md). Take WORK's next batch; extract only its source,
    manifest/status rows, evidence, dependencies/callers, and tests. Confirm artifact identity; reuse valid
@@ -19,6 +19,8 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 3. **Checkpoint:** Update member evidence/status, then replace WORK with remaining exact members, next action,
    changed/evidence paths, blockers, and validation command + passed/failed/skipped counts/case limits.
    Reference durable records rather than repeating findings or old logs. Stop at the evidence-supported boundary.
+4. **Merge:** Work on a branch per batch, based on current `main`; only the [merge gate](validation.md#merge-gate)
+   merges into `main`.
 
 ## 3c. Method-by-method fidelity
 
