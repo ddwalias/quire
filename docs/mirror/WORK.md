@@ -39,34 +39,8 @@ Resume with [PLAN.md](PLAN.md). Phase 1 remains open and uncommitted; phase clos
 
 ---
 
-## Current batch 2e: Remaining Mpl.Run unclassified & IEngine interfaces
+## Active Work Lanes
 
-**Scope and objectives:**
-1. Settle remaining unclassified / stub members in `Quire.Mpl`:
-   - `Mcd.DimVal.ApplyMatVal`
-   - `Mpl.Run.Rts.GetTypeInitializer`
-   - Annotate/settle remaining unclassified fields and helpers in `MatVal`, `NumVal`, `RngVal`, `Function`, `FunctionUtilities`.
-2. Implement core engine interfaces in `Quire.Engine` / `Quire.Mpl` (`IEngine`, `IFactory`, `NodeCallback`, `NodeStatus`).
-
-**Next action:**
-1. Inspect decompiled contracts and REA metadata for `ApplyMatVal`, `GetTypeInitializer`, and the unclassified members in `mplrun.dll`.
-2. Implement or annotate exact contracts in `src/Quire.Mpl/`.
-3. Add tests and regenerate manifest status. Write new differential cases with `MethodComparison.Compare`
-   so they count toward the [direct-method gate](validation.md#direct-comparison-for-every-method).
-
----
-
-## Direct-method gate backlog
-
-The gate added in `f7b66f5` (PLAN §3c rule 3) accepts only `MethodComparison.Compare` cases that pass in the
-current run. The validation results recorded above predate it and do not show that the gate passes.
-
-- **Unmigrated tests:** all 22 `tests/Quire.Differential.Tests/*DifferentialTests.cs` files use the earlier
-  helpers; only `PrivateMethodCoverageTests.cs` uses the new API. Their methods count as missing until migrated.
-- **Coverage gap:** the isolated-baseline audit (`18bec37`, [validation.md](validation.md#direct-method-gate-audit-2026-10-14))
-  reported 1 compared / 165 declaration-only / 67 compiler exclusions / 1,814 missing of 2,047 methods
-  (155 private missing). Refresh from `method-coverage.json` on the current tree.
-- **No VSTest run yet:** the gate has only run in a sandbox where VSTest was unavailable. Run
-  `python3 tools/validation/validate.py` where VSTest can open its socket and record counts here.
-- **Order:** migrate per type alongside its batch, beginning with Verified types (`Dim`, `DimVal`, `NumVal`,
-  `RngVal`, `Rts`, S-expression types), whose status relies on the earlier helpers.
+Phase 1 mirror work is partitioned into parallel lanes:
+- **Lane A:** see [docs/mirror/work/lane-a.md](work/lane-a.md) for current status and backlog.
+- **Lane B:** see [docs/mirror/work/lane-b.md](work/lane-b.md) for current status and backlog.

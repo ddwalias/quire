@@ -18,6 +18,7 @@ An int atom.
 | `NewTok(int, uint), NewTok(string, uint)` | 0x060000f2, 0x060000f3 | `7cd82ae1` | A token of the new constant. | High | Verified |
 | `IntCon` | 0x060000f4 | `d322a4b8` | `Field1`. | High | Verified |
 | `quote_atom` | 0x060000f5 | `fffea6cc` | `(IntCon n)`. | High | Verified |
+| `.cctor` | 0x060000ef | — | Initialises token and zero. | High | Verified |
 | `ToString()` | 0x060000f6 | `8321ec47` | `Field1.ToString()`, current culture. | High | Verified |
 
 ## Test cases

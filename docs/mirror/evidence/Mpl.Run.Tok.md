@@ -24,6 +24,7 @@ An atom with the source handle it came from.
 | `Key, sym` | 0x06000064, 0x06000065 | `41f3eb74` | `Field1 as Sym` (identical IL). | High | Verified |
 | `str` | 0x06000066 | `d29e20e9` | `Field1.StrCon`: null for non-string atoms (no exception), `NullReferenceException` for a null atom. | High | Verified |
 | `quote` | 0x06000067 | `8146d0d4` | `list3(new Tok(tok, Field2), Field1.quote_atom, int_constant.zero)`. | High | Verified |
+| `.cctor` | 0x06000068 | — | Initialises tok. | High | Verified |
 | `ToString()` | 0x0600006c | `3d4570c0` | The atom's text; with a non-zero handle, `"#T" + handle in upper-case hex + " " + atom`. A null atom throws (pre-§3c Quire printed ""). | High | Verified |
 | `walk_pattern(MplEnv)` | 0x0600006d | `7fcc54c9` | Not a symbol: this. An upper-case symbol: its macro's `ExpandRef` walked as a pattern, or this with no macro. Any other symbol: `env.AddLocal(key, handle)`, then this. Empty or null names throw from the case test. | High; the macro branch calls `MplEnv.LoadMacro`, still a stub in Quire (Keyword/env batch), so only the other branches ran | Analyzed |
 | `walk_expression(MplEnv)` | 0x0600006e | `d60e61f0` | Not a symbol, or not lower case: this. A lower-case symbol: its macro's `ExpandRef` walked as an expression, or this. | High; the macro branch calls `MplEnv.LoadMacro`, still a stub in Quire (Keyword/env batch), so only the other branches ran | Analyzed |

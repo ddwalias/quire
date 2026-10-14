@@ -17,6 +17,7 @@ A double atom.
 | `NewTok(double, uint), NewTok(string, uint)` | 0x060000fa, 0x060000fb | `7fc3318a` | A token of the new constant. | High | Verified |
 | `RealCon` | 0x060000fc | `915d02c4` | `Field1`. | High | Verified |
 | `quote_atom` | 0x060000fd | `ee05ae03` | `(RealCon x)`. | High | Verified |
+| `.cctor` | 0x060000f7 | — | Initialises token. | High | Verified |
 | `ToString()` | 0x060000fe | `c0fd06e5` | `Field1.ToString()`: current culture, shortest round-trip (pre-§3c Quire used invariant "R"). | High | Verified |
 
 ## Test cases

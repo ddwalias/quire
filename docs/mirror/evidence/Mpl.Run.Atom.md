@@ -11,7 +11,7 @@ Base of symbols and constants. The typed accessors build an `AppException` and d
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
 | `SymTag … KeyTag` | 0x04000020–0x04000025 | — | Constants 0 (Sym), 1 (Int), 2 (Real), 3 (Char), 4 (Str), 5 (Key). | High | Verified |
-| `.ctor(int)` | 0x06000077 | `3a7dcc25` | Passes the tag on. | High | Verified |
+| `.ctor(int)` | 0x06000077 | `3a7dcc25` | Passes the tag on. | High | Tested |
 | `KeyNum` | 0x06000078 | `86eff5bd` | Builds `AppException("not a keyword", tag)`, returns 0. | High | Verified |
 | `RealCon` | 0x06000079 | `083d7686` | Builds `AppException("not a real constant", tag)`, returns 0.0. | High | Verified |
 | `IntCon` | 0x0600007a | `64f77b8f` | Builds `AppException("not an integer constant", tag)`, returns 0. | High | Verified |

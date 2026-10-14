@@ -26,8 +26,9 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 | `tail` | 0x06000037 | `7ec9436b` | `Field2 as SCons`. | High | Verified |
 | `cdr` | 0x06000039 | `37b87db1` | `Field2`. | High | Verified |
 | `Key` | 0x0600003a | `ee30badb` | `Field1.sym`; null head throws. | High | Verified |
-| `second … fifth` | 0x0600003c–0x0600003f | `53a1c294` (first) | `tail.head`, `tail.tail.head`, …: a shorter list throws `NullReferenceException` (pre-§3c Quire returned null). | High | Verified |
+| `second … fifth` | 0x0600003c, 0x0600003d, 0x0600003e, 0x0600003f | `53a1c294` (first) | `tail.head`, `tail.tail.head`, …: a shorter list throws `NullReferenceException` (pre-§3c Quire returned null). | High | Verified |
 | `Length` | 0x06000040 | `a13d6ec4` | Counts this cell and every cell reached through `tail`; an improper tail stops the count. | High | Verified |
+| `.cctor` | 0x06000041 | — | Initialises token and apply. | High | Verified |
 | `quote` | 0x06000044 | `a3eca7e8` | `list3(token, Field1.quote, Field2.quote)`. | High | Verified |
 | `FormatTail()` | 0x06000045 | `7067159c` | `" " + Field1 + Field2.FormatTail()`. | High | Verified |
 | `ToString()` | 0x06000046 | `7de30975` | `"(" + Field1 + Field2.FormatTail() + ")"`; a null `Field2` throws. | High | Verified |
@@ -36,7 +37,7 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 | `walk_pattern(MplEnv)` | 0x06000049 | `4ddb05a3` | No head symbol: `BadPattern`. A head symbol that isn't lower case: a new cell of the head and `walk_patterns(tail)` (always a new top cell). A lower-case one: its macro expands the form and walks the result as a pattern; with no macro a one-element list adds a local `(key, handle)` and returns this, a longer one is `BadPattern`. | High; the macro branch calls `MplEnv.LoadMacro`, still a stub in Quire (Keyword/env batch), so only the other branches ran | Analyzed |
 | `walk_expressions(MplEnv, SCons)` | 0x0600004a | `cba4af7e` | As `walk_patterns`, with `walk_expression`. | High | Verified |
 | `walk_expression(MplEnv)` | 0x0600004b | `15e2b46a` | A head symbol walks the form (`Key.walk_expression_as`). Otherwise the result is `(apply e1 e2 …)`: a new cell headed by `new Tok(apply, handle)` over `walk_expressions(env, this)`. The null-head `BadApplication` check is unreachable because `Key` already dereferences the head. An improper tail is dropped. | High | Verified |
-| `list1 … list4` | 0x0600004c–0x0600004f | `38a6bf2f` (first) | Proper lists ending in `Nul.singleton`. | High | Verified |
+| `list1 … list4` | 0x0600004c, 0x0600004d, 0x0600004e, 0x0600004f | `38a6bf2f` (first) | Proper lists ending in `Nul.singleton`. | High | Verified |
 | `as_Sexpr(Cons)` | 0x06000050 | `f12a10a3` | null gives `Nul.singleton`; otherwise a cell per item through the `(object, object)` constructor, so items that aren't S-expressions become null. | High | Verified |
 
 ## Test cases

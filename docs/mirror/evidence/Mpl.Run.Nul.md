@@ -12,6 +12,7 @@ The empty list. Its debugging text is `Nul`.
 |---|---|---|---|---|---|
 | `singleton` | 0x0400000e | — | Public static mutable field, set once by the static constructor. `SList.ToString` tests against this instance, so other `Nul` objects don't count as the end. | High | Verified |
 | `token` | 0x0400000f | — | `Sym.NewTok("Nul", "MplMacro", 0)`: the qualifier is dropped (see `Sym`). | High | Verified |
+| `.cctor` | 0x0600002e | — | Initialises singleton and token. | High | Verified |
 | `.ctor()` | 0x0600002f | `54b9255c` | Tag 0. | High | Verified |
 | `scons` | 0x06000030 | `ce2965e0` | null. | High | Verified |
 | `quote` | 0x06000031 | `b83d494f` | `token` itself. | High | Verified |

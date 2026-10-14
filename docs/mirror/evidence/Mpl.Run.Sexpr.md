@@ -16,7 +16,7 @@ Abstract base of the S-expression family. It overrides nothing from `object`, so
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
 | `NulTag … SListTag` | 0x04000005–0x0400000d | — | Constants 0 (Nul), 1 (Cons), 2 (Tok), 3 (Qt), 4 (Bq), 5 (Cm), 6 (Ca), 7 (SAppend), 8 (SList). | High | Verified |
-| `.ctor(int)` | 0x0600000c | `3a7dcc25` | Passes the tag to `Tag`. Same normalized IL as `Atom`'s constructor. | High | Verified |
+| `.ctor(int)` | 0x0600000c | `3a7dcc25` | Passes the tag to `Tag`. Same normalized IL as `Atom`'s constructor. | High | Tested |
 | `handle` | 0x0600000d | `5b55b32c` | 0. | High | Verified |
 | `Key` | 0x0600000e | `ce2965e0` | null. Same IL as `sym`, `str` and `walk_declaration_lhs`. | High | Verified |
 | `sym` | 0x0600000f | `ce2965e0` | null. | High | Verified |
@@ -38,7 +38,7 @@ Abstract base of the S-expression family. It overrides nothing from `object`, so
 | `walk_pattern(MplEnv)` | 0x0600001f | `a1b033ff` | `BadPattern(this)`. | High | Verified |
 | `walk_expression(MplEnv)` | 0x06000020 | `f11dedb3` | `BadExpression(this)`. | High | Verified |
 | `walk_with_bindings(MplEnv, SCons, out Sexpr)` | 0x06000021 | `07826449` | In `new LocalEnv(env)`: the out value is `SCons.walk_patterns(scope, pats)`, the result `walk_expression(scope)` on this. | High | Verified |
-| `BadDeclaration … QuotationNotImplemented` | 0x06000022–0x0600002d | `9751fe68` (first) | Each throws `new AppException(message, 0, form.handle)` with its message: "illegal declaration", "bad pattern", "bad expression", "expected a list", "syntax error", "bad application", "expected a symbol", "expected a string", "expected a keyword", "not implemented", "not a quotation", "quotation not implemented". A null form throws `NullReferenceException` first. | High; messages not compared (Quire `AppException` is a stub) | Verified |
+| `BadDeclaration … QuotationNotImplemented` | 0x06000022, 0x06000023, 0x06000024, 0x06000025, 0x06000026, 0x06000027, 0x06000028, 0x06000029, 0x0600002a, 0x0600002b, 0x0600002c, 0x0600002d | `9751fe68` (first) | Each throws `new AppException(message, 0, form.handle)` with its message: "illegal declaration", "bad pattern", "bad expression", "expected a list", "syntax error", "bad application", "expected a symbol", "expected a string", "expected a keyword", "not implemented", "not a quotation", "quotation not implemented". A null form throws `NullReferenceException` first. | High; messages not compared (Quire `AppException` is a stub) | Verified |
 
 ## Test cases
 

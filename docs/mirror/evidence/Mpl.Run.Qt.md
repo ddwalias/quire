@@ -12,6 +12,7 @@ A quoted expression, printed `'x`.
 |---|---|---|---|---|---|
 | `Field1` | 0x04000014 | — | Public mutable. | High | Verified |
 | `Qt_constructor` | 0x04000015 | — | Private static `new Sym("Qt", "MplMacro")` (qualifier dropped). | High | Verified |
+| `.cctor` | 0x06000051 | — | Initialises Qt_constructor. | High | Verified |
 | `.ctor(object), .ctor(Sexpr)` | 0x06000052, 0x06000053 | `461fd68e` | Tag 3; the object overload converts with `as Sexpr`. | High | Verified |
 | `quotation` | 0x06000054 | `c70b14a1` | `Field1.quote`. | High | Verified |
 | `quote` | 0x06000055 | `633f25d6` | `list2(new Tok(Qt_constructor, m_tag), Field1.quote)`: the token's handle is the tag, 3. | High | Verified |

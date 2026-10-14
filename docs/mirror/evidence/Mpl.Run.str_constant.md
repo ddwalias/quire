@@ -16,6 +16,7 @@ A string atom.
 | `NewTok(string, uint)` | 0x06000101 | `749e31f1` | A token of the new constant. | High | Verified |
 | `StrCon` | 0x06000102 | `0aedc00d` | `Field1` (same IL as `ToString`). | High | Verified |
 | `quote_atom` | 0x06000103 | `f057118f` | `(StrCon s)`. | High | Verified |
+| `.cctor` | 0x060000ff | — | Initialises token. | High | Verified |
 | `ToString()` | 0x06000104 | `0aedc00d` | The raw text: no quotes, no escapes (pre-§3c Quire quoted and escaped). | High | Verified |
 
 ## Test cases

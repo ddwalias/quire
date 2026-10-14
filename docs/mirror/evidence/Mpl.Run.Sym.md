@@ -38,6 +38,7 @@ names into "".
 | `NewTok(string, string, uint, uint)` | 0x06000090 | `bc4e9ca2` | With the uid; qualifier dropped. | High | Verified |
 | `MakeSym(string)` | 0x06000091 | `4be6555b` | `NewTok(nm, 0)`. | High | Verified |
 | `MakeSymQ(string, string)` | 0x06000092 | `26421653` | `NewTok(nm, q, 0)`. | High | Verified |
+| `.cctor` | 0x06000088 | — | Initialises make_sym and make_symq. | High | Verified |
 | `ToString()` | 0x06000093 | `e71fa0d7` | The name alone (same IL as `name`); null for a null name. | High | Verified |
 | `quote_atom` | 0x06000094 | `4b6bb7cf` | Qualified: `(make_symbolq "name" "qualifier")`; else `(Sym "name")`, the strings as `str_constant` tokens with handle 0. | High | Verified |
 | `walk_declaration_as(MplEnv, SCons)` | 0x06000095 | `3df98eb8` | The symbol's macro (`env.LoadMacro(this)`) expands the form, whose left-hand side is then walked; with no macro, `BadDeclaration(form)`. | High; every path calls `MplEnv.LoadMacro`, a stub in Quire | Analyzed |
