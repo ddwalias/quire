@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.SList, mplrun")]
 public partial class SList : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Cons Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field2;
-    [global::Quire.Mirror.MirrorStub]
-    public SList(object first, object tail) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SList(global::Quire.Mpl.Run.Cons first, global::Quire.Mpl.Run.Sexpr tail) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private static string FormatCons(global::Quire.Mpl.Run.Cons c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

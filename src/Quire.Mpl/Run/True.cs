@@ -6,15 +6,15 @@ namespace Quire.Mpl.Run;
 /// <summary>Mpl's boolean true, a singleton (docs/mirror/evidence/Mpl.Run.Rts.md).</summary>
 public partial class True
 {
-    [MirrorVerified("RtsDifferentialTests")]
+    [MirrorVerified("MplRunHelpersDifferentialTests")]
     public static True singleton;
 
-    [MirrorVerified("RtsDifferentialTests")]
+    [MirrorVerified("MplRunHelpersDifferentialTests")]
     static True() { singleton = new True(); }
 
-    [MirrorVerified("RtsDifferentialTests")]
+    [MirrorVerified("MplRunHelpersDifferentialTests")]
     public True() { }
 
-    [MirrorVerified("RtsDifferentialTests")]
+    [MirrorVerified("MplRunHelpersDifferentialTests")]
     public override string ToString() => "True";
 }

@@ -2,50 +2,53 @@
 
 Resume with [PLAN.md](PLAN.md). Phase 1 remains open and uncommitted; phase closure checks have not run.
 
-## Batch 2c: Function, FunctionUtilities, and Delegates (completed)
+## Batch 2d: S-expression runtime types and helpers (completed)
 
-**Completed work:** [Mpl.Run.Function](evidence/Mpl.Run.Function.md), [Mpl.Run.FunctionUtilities](evidence/Mpl.Run.FunctionUtilities.md),
-[Mpl.Run.Delegates](evidence/Mpl.Run.Delegates.md), and [Mpl.Run.Function.Matrix](evidence/Mpl.Run.Function.Matrix.md) bind exact signatures/tokens/hashes to the installed original.
-- All original `Function` (86 members), `FunctionUtilities` (18 members), `Delegates` (47 members), and delegate function subclasses (`DelegateFunction`, `UnaryDelegateFunction`, `BinaryDelegateFunction`, `TernaryDelegateFunction`, `QuartnaryDelegateFunction`, `PremiumFunction`, `FnCompose`, `FnConstant`, `Fn_varargs`, `Fn_clo<CLO>`) have been fully implemented.
-- Dynamic dispatch (0 to 16 arguments), generic dispatch (`Call_0`..`Call_16`), vector calling (`Call_vec`, `Apply`, `DynApply`, `VecApply`, `VecCall`), inverse declaration, vectorization flags, currying, closure generation, and projection functions are operational.
-- Evidence records created: `docs/mirror/evidence/Mpl.Run.Function.md`, `docs/mirror/evidence/Mpl.Run.FunctionUtilities.md`, and `docs/mirror/evidence/Mpl.Run.Delegates.md`.
+**Completed work:** [Mpl.Run.Sexpr](evidence/Mpl.Run.Sexpr.md), [Mpl.Run.SCons](evidence/Mpl.Run.SCons.md),
+[Mpl.Run.SList](evidence/Mpl.Run.SList.md), [Mpl.Run.Sym](evidence/Mpl.Run.Sym.md), [Mpl.Run.Atom](evidence/Mpl.Run.Atom.md),
+[Mpl.Run.Tok](evidence/Mpl.Run.Tok.md), [Mpl.Run.Nul](evidence/Mpl.Run.Nul.md), [Mpl.Run.Qt](evidence/Mpl.Run.Qt.md),
+[Mpl.Run.Bq](evidence/Mpl.Run.Bq.md), [Mpl.Run.Cm](evidence/Mpl.Run.Cm.md), [Mpl.Run.Ca](evidence/Mpl.Run.Ca.md),
+[Mpl.Run.SAppend](evidence/Mpl.Run.SAppend.md), [Mpl.Run.Tag](evidence/Mpl.Run.Tag.md),
+[Mpl.Run.char_constant](evidence/Mpl.Run.char_constant.md), [Mpl.Run.int_constant](evidence/Mpl.Run.int_constant.md),
+[Mpl.Run.real_constant](evidence/Mpl.Run.real_constant.md), [Mpl.Run.str_constant](evidence/Mpl.Run.str_constant.md),
+[Mpl.Run.Cons](evidence/Mpl.Run.Cons.md), [Mpl.Run.VecBuilder](evidence/Mpl.Run.VecBuilder.md),
+[Mpl.Run.True](evidence/Mpl.Run.True.md), [Mpl.Run.Tuple](evidence/Mpl.Run.Tuple.md), and
+[Mpl.MplSignature](evidence/Mpl.MplSignature.md) bind exact signatures/tokens/hashes to the installed original.
+- S-expression hierarchy with `Tag`, `Sexpr`, `Nul`, `SCons`, `SList`, `Atom`, `Sym`, `Tok`, `Qt`, `Bq`, `Cm`, `Ca`, `SAppend`, and the constant tokens.
+- Syntax tree walking, quoting, unquoting, pattern matching, constructor emission, and lexical symbol resolution.
+- Runtime helpers: `Cons` lists with in-place mutation and length calculation, `VecBuilder` front-buffered arrays, `Tuple` / generic tuple wrappers `Tuple<T1..T5>`, and `MplSignature`.
+- Quire engine Rl serialization cleanly separated into `Quire.Engine.Internal.Rl.Write` preserving original `ToString()` debugging semantics.
+- Evidence records created: 22 records in `docs/mirror/evidence/`.
 - Status references and metadata shape gate fully resolved: 0 missing status references, 0 missing manifest members across 30 projects.
 
 **Live status:** `status/Quire.Mpl.txt` and `coverage.md`:
 - Manifest across 30 projects: 5,384 mirrored types, 56,862 members:
-  54,319 Stub, 1,027 Unclassified, 0 Blocked, 0 Documented, 788 Analyzed, 105 Tested, 546 Verified, 0 Deviation, 77 Abstract, 0 Quire-only.
-- Settled members: 982 (1.7%).
+  54,137 Stub, 953 Unclassified, 0 Blocked, 0 Documented, 786 Analyzed, 108 Tested, 801 Verified, 0 Deviation, 77 Abstract, 0 Quire-only.
+- Settled members: 986 (1.7%).
 - Shape test / manifest drift check: 30 projects, 0 missing manifest members.
 - Status reference gate: 0 missing status references.
 
 **Recorded validation:**
-- In-process behavior tests (`Quire.Mpl.Tests`): **131 passed / 0 failed / 0 skipped**.
-- Focused differential tests (`Quire.Focused.Differential.Tests` against Mathcad Prime 12.0.1.0): **27 passed / 0 failed / 0 skipped**.
-- In-process engine tests (`Quire.Engine.Tests`): **74 passed / 0 failed / 0 skipped**.
+- In-process behavior tests (`Quire.Mpl.Tests` via `run.dll`): **159 passed / 0 failed / 0 skipped**.
+- Focused differential tests (`Quire.Focused.Differential.Tests` via `run.dll` against Mathcad Prime 12.0.1.0): **72 passed / 0 failed / 0 skipped**.
+- In-process engine tests (`Quire.Engine.Tests` via `run.dll`): **94 passed / 0 failed / 0 skipped**.
+- Harness tests (`Quire.Harness.Tests` via `run.dll`): **11 passed / 0 failed / 0 skipped**.
+- Python validation unit tests (`tools/validation`): **3 passed / 0 failed / 0 skipped**.
 - Metadata and shape check (`check.dll`): **passed, 0 mismatches, 0 missing references**.
-- `git diff --check`: passed cleanly.
+- `git diff --check`: **passed cleanly**.
 
 ---
 
-## Current batch 2d: S-expression runtime types (Mpl.Run S-expressions)
+## Current batch 2e: Remaining Mpl.Run unclassified & IEngine interfaces
 
 **Scope and objectives:**
-Implement the core S-expression types in `Mpl.Run` to complete symbolic S-expression representation and list manipulation in `Quire.Mpl`.
-
-**Next exact types:**
-1. `Mpl.Run.Sexpr` (abstract base for S-expressions, evaluation, printing, and list head/tail operations)
-2. `Mpl.Run.SCons` (cons cell representation for S-expressions)
-3. `Mpl.Run.SList` (list representation and list utility operations)
-4. `Mpl.Run.Atom` (atomic expressions base)
-5. `Mpl.Run.Sym` (symbol resolution, interning, and lexical binding)
-6. `Mpl.Run.Keyword` (keyword symbols)
-7. `Mpl.Run.Nul` (nil/empty list representation)
-8. `Mpl.Run.Qt` (quoted expression wrapper)
-9. `Mpl.Run.Tag` (base tag classification)
+1. Settle remaining unclassified / stub members in `Quire.Mpl`:
+   - `Mcd.DimVal.ApplyMatVal`
+   - `Mpl.Run.Rts.GetTypeInitializer`
+   - Annotate/settle remaining unclassified fields and helpers in `MatVal`, `NumVal`, `RngVal`, `Function`, `FunctionUtilities`.
+2. Implement core engine interfaces in `Quire.Engine` / `Quire.Mpl` (`IEngine`, `IFactory`, `NodeCallback`, `NodeStatus`).
 
 **Next action:**
-1. Inspect decompiled contracts and REA metadata for `Mpl.Run.Sexpr`, `SCons`, `SList`, `Sym`, `Atom`, `Keyword`, `Nul`, and `Qt` in `mplrun.dll`.
-2. Implement handwritten partial classes in `src/Quire.Mpl/Run/` and clear stub bodies from generated files.
-3. Create evidence records in `docs/mirror/evidence/`.
-4. Add unit and differential tests asserting equivalence against Mathcad Prime 12.0.1.0.
-5. Refresh `MirrorGen manifest` and confirm shape and status gates pass.
+1. Inspect decompiled contracts and REA metadata for `ApplyMatVal`, `GetTypeInitializer`, and the unclassified members in `mplrun.dll`.
+2. Implement or annotate exact contracts in `src/Quire.Mpl/`.
+3. Add tests and regenerate manifest status.

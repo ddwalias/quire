@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.int_constant, mplrun")]
 public partial class int_constant : global::Quire.Mpl.Run.Atom
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mpl.Run.Tok token;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok zero;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr quote_atom { get => base.quote_atom; }
-    [global::Quire.Mirror.MirrorStub]
-    public int_constant(string name) : this(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(int num, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(string nm, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -110,7 +110,7 @@ internal sealed partial class Interpreter
             return EvalSpecial(callee, args, env);
 
         var f = (callee != null ? env.LookupFunction(callee) : Eval(items[1], env)) as Function
-                ?? throw new CalcException($"'{callee ?? items[1].ToString()}' is not a function", callee);
+                ?? throw new CalcException($"'{callee ?? Rl.Write(items[1])}' is not a function", callee);
         var values = args.Select(a => Eval(a, env)).ToArray();
         var saved = CallSiteEnv;
         CallSiteEnv = env;

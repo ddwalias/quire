@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Tok, mplrun")]
 public partial class Tok : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mpl.Run.Sym tok;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sym Key { get => base.Key; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }
-    [global::Quire.Mirror.MirrorStub]
-    public Tok(object a, int tag) : this(default(global::Quire.Mpl.Run.Atom), default(uint)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_pattern(global::Quire.Mpl.Run.MplEnv env) => base.walk_pattern(env);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_expression(global::Quire.Mpl.Run.MplEnv env) => base.walk_expression(env);
 }

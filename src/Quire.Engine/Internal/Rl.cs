@@ -38,6 +38,72 @@ internal static class Rl
     /// <summary>The sub-list headed by <paramref name="name"/> among the elements of <paramref name="l"/>.</summary>
     public static SCons? Part(SCons l, string name) =>
         Items(l).OfType<SCons>().FirstOrDefault(s => Head(s) == name);
+
+    /// <summary>
+    /// Rl text for an expression, readable back by <see cref="RlReader"/>: handles are left out, the empty list is
+    /// <c>()</c>, strings are quoted and symbols that would read as something else go between bars. Mathcad's own
+    /// <c>ToString</c> on S-expressions is debugging text and doesn't do this.
+    /// </summary>
+    public static string Write(Sexpr e)
+    {
+        var sb = new StringBuilder();
+        Write(sb, e);
+        return sb.ToString();
+    }
+
+    private static void Write(StringBuilder sb, Sexpr e)
+    {
+        switch (e)
+        {
+            case Nul:
+                sb.Append("()");
+                break;
+            case SCons c:
+                sb.Append('(');
+                Write(sb, c.Field1);
+                Sexpr rest = c.Field2;
+                for (; rest is SCons r; rest = r.Field2)
+                {
+                    sb.Append(' ');
+                    Write(sb, r.Field1);
+                }
+                if (rest is not Nul)
+                {
+                    sb.Append(" . ");
+                    Write(sb, rest);
+                }
+                sb.Append(')');
+                break;
+            case Tok { Field1: Sym s }:
+                sb.Append(Symbol(s.name ?? ""));
+                break;
+            case Tok { Field1: str_constant s }:
+                sb.Append('"');
+                foreach (char ch in s.Field1 ?? "")
+                {
+                    if (ch is '\\' or '"') sb.Append('\\');
+                    sb.Append(ch);
+                }
+                sb.Append('"');
+                break;
+            case Tok { Field1: real_constant r }:
+                sb.Append(r.Field1.ToString("R", CultureInfo.InvariantCulture));
+                break;
+            case Tok { Field1: int_constant i }:
+                sb.Append(i.Field1.ToString(CultureInfo.InvariantCulture));
+                break;
+            default:
+                sb.Append(e?.ToString());
+                break;
+        }
+    }
+
+    private static string Symbol(string nm)
+    {
+        bool quote = nm.Length == 0 || nm.Any(c => char.IsWhiteSpace(c) || c is '(' or ')' or '"' or '|' or '\\')
+            || double.TryParse(nm, NumberStyles.Float, CultureInfo.InvariantCulture, out _);
+        return quote ? "|" + nm.Replace("\\", "\\\\").Replace("|", "\\|") + "|" : nm;
+    }
 }
 
 /// <summary>

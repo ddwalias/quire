@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.char_constant, mplrun")]
 public partial class char_constant : global::Quire.Mpl.Run.Atom
 {
-    [global::Quire.Mirror.MirrorStub]
-    public char Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public override char CharCon { get => base.CharCon; }
-    [global::Quire.Mirror.MirrorStub]
-    public char_constant(char v) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(char v, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

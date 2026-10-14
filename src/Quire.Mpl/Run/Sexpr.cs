@@ -1,15 +1,20 @@
 #nullable disable
-using System.Globalization;
-using System.Text;
 using Quire.Mcd;
+using Quire.Mirror;
 
 namespace Quire.Mpl.Run;
+
+// The S-expression family of mplrun 12.0.1.0, member by member (docs/mirror/evidence/Mpl.Run.Sexpr.md and the records
+// of each subclass). Printing is Mathcad's debugging text, not Rl: tokens with a handle print as "#T<hex> atom", the
+// empty list prints as "Nul" and strings print raw. Quire's Rl writer is Quire.Engine.Internal.Rl.Write.
 
 /// <summary>A value carrying a small integer tag that tells its subclasses apart.</summary>
 public partial class Tag : DimVal
 {
+    [MirrorVerified("SexprDifferentialTests")]
     public int m_tag;
 
+    [MirrorVerified("SexprDifferentialTests")]
     public Tag(int tag) { m_tag = tag; }
 }
 
@@ -20,201 +25,627 @@ public partial class Tag : DimVal
 /// </summary>
 public abstract partial class Sexpr : Tag
 {
-    public const int NulTag = 0;
-    public const int ConsTag = 1;
-    public const int TokTag = 2;
+    [MirrorVerified("SexprDifferentialTests")] public const int NulTag = 0;
+    [MirrorVerified("SexprDifferentialTests")] public const int ConsTag = 1;
+    [MirrorVerified("SexprDifferentialTests")] public const int TokTag = 2;
+    [MirrorVerified("SexprDifferentialTests")] public const int QtTag = 3;
+    [MirrorVerified("SexprDifferentialTests")] public const int BqTag = 4;
+    [MirrorVerified("SexprDifferentialTests")] public const int CmTag = 5;
+    [MirrorVerified("SexprDifferentialTests")] public const int CaTag = 6;
+    [MirrorVerified("SexprDifferentialTests")] public const int SAppendTag = 7;
+    [MirrorVerified("SexprDifferentialTests")] public const int SListTag = 8;
 
+    [MirrorVerified("SexprDifferentialTests")]
     public Sexpr(int tag) : base(tag) { }
 
-    /// <summary>The source handle of a token; 0 when there is none.</summary>
+    /// <summary>The source handle; 0 unless a token (or a list, through its first element) carries one.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
     public virtual uint handle => 0;
 
-    /// <summary>The symbol of a symbol token, otherwise null.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sym Key => null;
+
+    [MirrorVerified("SexprDifferentialTests")]
     public virtual Sym sym => null;
 
-    /// <summary>The text of a string token, otherwise null.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
     public virtual string str => null;
 
-    /// <summary>The cons cell when this is a non-empty list, otherwise null.</summary>
-    public virtual SCons scons => null;
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sym AsSym
+    {
+        get
+        {
+            Sym s = sym;
+            if (s == null) NotASymbol(this);
+            return s;
+        }
+    }
 
-    /// <summary>The rest of a list being printed, closing parenthesis included.</summary>
-    public virtual string FormatTail() => " . " + ToString() + ")";
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual string AsStr
+    {
+        get
+        {
+            string s = str;
+            if (s == null) NotAString(this);
+            return s;
+        }
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sym AsKey
+    {
+        get
+        {
+            Sym k = Key;
+            if (k == null) NotAKeyword(this);
+            return k;
+        }
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sexpr quotation
+    {
+        get
+        {
+            NotAQuotation(this);
+            return null;
+        }
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sexpr quote
+    {
+        get
+        {
+            QuotationNotImplemented(this);
+            return null;
+        }
+    }
+
+    /// <summary>The cons cell of a non-empty list; <see cref="Nul"/> gives null and anything else throws.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual SCons scons
+    {
+        get
+        {
+            ExpectedAList(this);
+            return null;
+        }
+    }
+
+    /// <summary>How this prints after the first element of a list: a dotted tail, without the closing parenthesis.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual string FormatTail() => " . " + ToString();
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual string FormatAppend() => " " + ToString();
+
+    /// <summary><see cref="walk"/>, returning the new environment and the definitions as a pair.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public static object[] Walk(MplEnv env, Sexpr block)
+    {
+        Cons defs = block.walk(env, out MplEnv outenv);
+        return [outenv, defs];
+    }
+
+    [MirrorAnalyzed("Mpl.Run.Sexpr")]
+    public static Sexpr WalkModule(MplEnv env, Sexpr block)
+    {
+        Cons defs = block.walk(env, out _);
+        return new SCons(block_keyword.NewTok(0u), SCons.as_Sexpr(defs));
+    }
+
+    /// <summary>
+    /// Walks a block of declarations in a fresh <see cref="LocalEnv"/> over <paramref name="env"/>: first the
+    /// left-hand sides, then each definition in place.
+    /// </summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public Cons walk(MplEnv env, out MplEnv outenv)
+    {
+        outenv = new LocalEnv(env);
+        return walk_definitions(walk_declaration_lhs(outenv), outenv);
+    }
+
+    [MirrorTested("Mpl.Run.Sexpr")]
+    private static Cons walk_definitions(Cons decls, MplEnv env)
+    {
+        for (Cons c = decls; c != null; c = c.Field2 as Cons)
+            c.Field1 = walk_definition(c.Field1 as SCons, env);
+        return decls;
+    }
+
+    [MirrorTested("Mpl.Run.Sexpr")]
+    private static Sexpr walk_definition(SCons decl, MplEnv env) => decl.Key.walk_definition_as(env, decl);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Cons walk_declaration_lhs(MplEnv env) => null;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sexpr walk_pattern(MplEnv env)
+    {
+        BadPattern(this);
+        return null;
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public virtual Sexpr walk_expression(MplEnv env)
+    {
+        BadExpression(this);
+        return null;
+    }
+
+    /// <summary>Walks <paramref name="pats"/> as patterns into a new local scope, then this expression in it.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr walk_with_bindings(MplEnv env, SCons pats, out Sexpr xpats)
+    {
+        var scope = new LocalEnv(env);
+        xpats = SCons.walk_patterns(scope, pats);
+        return walk_expression(scope);
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void BadDeclaration(Sexpr form) => throw new AppException("illegal declaration", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void BadPattern(Sexpr form) => throw new AppException("bad pattern", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void BadExpression(Sexpr form) => throw new AppException("bad expression", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void ExpectedAList(Sexpr form) => throw new AppException("expected a list", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void SyntaxError(Sexpr form) => throw new AppException("syntax error", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void BadApplication(Sexpr form) => throw new AppException("bad application", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void NotASymbol(Sexpr form) => throw new AppException("expected a symbol", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void NotAString(Sexpr form) => throw new AppException("expected a string", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void NotAKeyword(Sexpr form) => throw new AppException("expected a keyword", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void NotImplemented(Sexpr form) => throw new AppException("not implemented", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void NotAQuotation(Sexpr form) => throw new AppException("not a quotation", 0u, form.handle);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static void QuotationNotImplemented(Sexpr form) =>
+        throw new AppException("quotation not implemented", 0u, form.handle);
 }
 
-/// <summary>The empty list.</summary>
+/// <summary>The empty list. It prints as <c>Nul</c>, and as nothing at the end of a list.</summary>
 public partial class Nul : Sexpr
 {
-    public static Nul singleton = new();
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Nul singleton;
 
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Tok token;
+
+    static Nul()
+    {
+        singleton = new Nul();
+        token = Sym.NewTok("Nul", "MplMacro", 0u);
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
     public Nul() : base(NulTag) { }
 
-    public override string ToString() => "()";
+    [MirrorVerified("SexprDifferentialTests")]
+    public override SCons scons => null;
 
-    public override string FormatTail() => ")";
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr quote => token;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => "Nul";
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string FormatTail() => "";
 }
 
 /// <summary>A list cell: <see cref="car"/> is the element and <see cref="cdr"/> the rest of the list.</summary>
 public partial class SCons : Sexpr
 {
+    [MirrorVerified("SexprDifferentialTests")]
     public Sexpr Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
     public Sexpr Field2;
 
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Tok token;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Sym apply;
+
+    static SCons()
+    {
+        token = Sym.NewTok("Cons", "MplMacro", 0u);
+        apply = new Sym("apply", "MplMacro");
+    }
+
+    /// <summary>Arguments that aren't S-expressions become null.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public SCons(object first, object rest) : base(ConsTag)
+    {
+        Field1 = first as Sexpr;
+        Field2 = rest as Sexpr;
+    }
+
+    /// <summary>A null <paramref name="rest"/> is kept as null, not read as the empty list.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
     public SCons(Sexpr first, Sexpr rest) : base(ConsTag)
     {
         Field1 = first;
-        Field2 = rest ?? Nul.singleton;
+        Field2 = rest;
     }
 
+    /// <summary>The handle of the first element.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override uint handle => Field1.handle;
+
+    [MirrorVerified("SexprDifferentialTests")]
     public override SCons scons => this;
 
-    public Sexpr car => Field1;
-    public Sexpr cdr => Field2;
+    [MirrorVerified("SexprDifferentialTests")]
     public Sexpr head => Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
     public SCons tail => Field2 as SCons;
 
-    public Sexpr first => Field1;
-    public Sexpr second => tail?.Field1;
-    public Sexpr third => tail?.tail?.Field1;
-    public Sexpr fourth => tail?.tail?.tail?.Field1;
-    public Sexpr fifth => tail?.tail?.tail?.tail?.Field1;
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr car => Field1;
 
-    /// <summary>The number of elements in the list this cell starts.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr cdr => Field2;
+
+    /// <summary>The symbol heading the list, or null.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sym Key => Field1.sym;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr first => Field1;
+
+    /// <summary>Throws <see cref="NullReferenceException"/> when the list is shorter, like the later positions.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr second => tail.head;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr third => tail.tail.head;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr fourth => tail.tail.tail.head;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr fifth => tail.tail.tail.tail.head;
+
+    /// <summary>The number of cells reachable through <see cref="tail"/>, this one included.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
     public uint Length
     {
         get
         {
             uint n = 0;
-            for (Sexpr e = this; e is SCons c; e = c.Field2) n++;
+            for (SCons c = this; c != null; c = c.tail) n++;
             return n;
         }
     }
 
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr quote => list3(token, Field1.quote, Field2.quote);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string FormatTail() => " " + Field1.ToString() + Field2.FormatTail();
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => "(" + Field1.ToString() + Field2.FormatTail() + ")";
+
+    [MirrorTested("Mpl.Run.SCons")]
+    public override Cons walk_declaration_lhs(MplEnv env)
+    {
+        Sym key = Key;
+        if (key == null) BadDeclaration(this);
+        return key.walk_declaration_as(env, this);
+    }
+
+    /// <summary>Walks each element as a pattern, reusing the original cells when nothing changed.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Sexpr walk_patterns(MplEnv env, SCons pats)
+    {
+        if (pats == null) return Nul.singleton;
+        Sexpr h = pats.head.walk_pattern(env);
+        Sexpr t = walk_patterns(env, pats.tail);
+        return h == pats.head && t == pats.Field2 ? pats : new SCons(h, t);
+    }
+
+    [MirrorAnalyzed("Mpl.Run.SCons")]
+    public override Sexpr walk_pattern(MplEnv env)
+    {
+        Sym key = Key;
+        if (key == null) BadPattern(this);
+        if (!key.LowId) return new SCons(head, walk_patterns(env, tail));
+        MplMacro macro = env.LoadMacro(key);
+        if (macro != null) return macro.ExpandCall(env, this).walk_pattern(env);
+        if (Length != 1) BadPattern(this);
+        env.AddLocal(key, handle);
+        return this;
+    }
+
+    /// <summary>Walks each element as an expression, reusing the original cells when nothing changed.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Sexpr walk_expressions(MplEnv env, SCons exps)
+    {
+        if (exps == null) return Nul.singleton;
+        Sexpr h = exps.head.walk_expression(env);
+        Sexpr t = walk_expressions(env, exps.tail);
+        return h == exps.head && t == exps.Field2 ? exps : new SCons(h, t);
+    }
+
+    /// <summary>
+    /// A list headed by a symbol is walked by that symbol; any other list becomes an <c>apply</c> of all its
+    /// elements. The null-head check can't fire: <see cref="Key"/> already dereferences the head.
+    /// </summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr walk_expression(MplEnv env)
+    {
+        Sym key = Key;
+        if (key != null) return key.walk_expression_as(env, this);
+        if (head == null) BadApplication(this);
+        return new SCons(new Tok(apply, handle), walk_expressions(env, this));
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
     public static SCons list1(Sexpr x1) => new(x1, Nul.singleton);
+
+    [MirrorVerified("SexprDifferentialTests")]
     public static SCons list2(Sexpr x1, Sexpr x2) => new(x1, list1(x2));
+
+    [MirrorVerified("SexprDifferentialTests")]
     public static SCons list3(Sexpr x1, Sexpr x2, Sexpr x3) => new(x1, list2(x2, x3));
+
+    [MirrorVerified("SexprDifferentialTests")]
     public static SCons list4(Sexpr x1, Sexpr x2, Sexpr x3, Sexpr x4) => new(x1, list3(x2, x3, x4));
 
-    public override string FormatTail() => " " + Field1 + Field2.FormatTail();
-
-    public override string ToString() => "(" + Field1 + Field2.FormatTail();
+    /// <summary>An S-expression list of a <see cref="Cons"/> list; items that aren't S-expressions become null.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Sexpr as_Sexpr(Cons list) =>
+        list == null ? Nul.singleton : new SCons(list.head, (object)as_Sexpr(list.tail));
 }
 
 /// <summary>An atom in an S-expression, with the source handle it came from.</summary>
 public partial class Tok : Sexpr
 {
+    [MirrorVerified("SexprDifferentialTests")]
     public Atom Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
     public uint Field2;
 
+    [MirrorVerified("SexprDifferentialTests")]
+    private static Sym tok;
+
+    static Tok()
+    {
+        tok = new Sym("Tok", "MplMacro");
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Tok(object a, int tag) : this(a as Atom, tag) { }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Tok(Atom a, int tag) : base(TokTag)
+    {
+        Field1 = a;
+        Field2 = (uint)tag;
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
     public Tok(Atom a, uint tag) : base(TokTag)
     {
         Field1 = a;
         Field2 = tag;
     }
 
-    public Tok(Atom a, int tag) : this(a, (uint)tag) { }
-
-    public Atom atom => Field1;
-
+    [MirrorVerified("SexprDifferentialTests")]
     public override uint handle => Field2;
 
+    [MirrorVerified("SexprDifferentialTests")]
+    public Atom atom => Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sym Key => Field1 as Sym;
+
+    [MirrorVerified("SexprDifferentialTests")]
     public override Sym sym => Field1 as Sym;
 
-    public override string str => (Field1 as str_constant)?.Field1;
+    /// <summary>The atom's <see cref="Atom.StrCon"/>: null unless it is a string constant.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string str => Field1.StrCon;
 
-    public override string ToString() => Field1?.ToString() ?? "";
-}
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr quote => SCons.list3(new Tok(tok, Field2), Field1.quote_atom, int_constant.zero);
 
-/// <summary>An indivisible S-expression value: a symbol or a constant.</summary>
-public abstract partial class Atom : Tag
-{
-    public const int SymTag = 0;
-    public const int IntTag = 1;
-    public const int RealTag = 2;
-    public const int StrTag = 4;
+    /// <summary>The atom, prefixed with <c>#T</c> and the handle in hex when the handle isn't 0.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() =>
+        Field2 == 0 ? Field1.ToString() : "#T" + Field2.ToString("X") + " " + Field1.ToString();
 
-    public Atom(int tag) : base(tag) { }
-
-    public virtual double RealCon => throw new InvalidCastException($"{this} is not a real constant");
-
-    public virtual int IntCon => throw new InvalidCastException($"{this} is not an integer constant");
-
-    public virtual string StrCon => throw new InvalidCastException($"{this} is not a string constant");
-
-    public Sym sym => this as Sym;
-}
-
-/// <summary>A symbol, optionally qualified by a module name.</summary>
-public partial class Sym : Atom
-{
-    public string Field1;
-    public string Field2;
-
-    public Sym(object nm) : this(nm as string ?? nm?.ToString() ?? "", null) { }
-
-    public Sym(string nm, string q) : base(SymTag)
+    [MirrorAnalyzed("Mpl.Run.Tok")]
+    public override Sexpr walk_pattern(MplEnv env)
     {
-        Field1 = nm ?? "";
-        Field2 = q;
-    }
-
-    public string name => Field1;
-
-    public string qualifier => Field2;
-
-    public string long_name => Field2 == null ? Field1 : Field2 + "." + Field1;
-
-    /// <summary>A token for the unqualified symbol <paramref name="nm"/>.</summary>
-    public static Tok MakeSym(string nm) => new(new Sym(nm, null), 0);
-
-    /// <summary>The name, between bars when it would otherwise read as something else.</summary>
-    public override string ToString()
-    {
-        string nm = long_name;
-        bool quote = nm.Length == 0 || nm.Any(c => char.IsWhiteSpace(c) || c is '(' or ')' or '"' or '|' or '\\')
-            || double.TryParse(nm, NumberStyles.Float, CultureInfo.InvariantCulture, out _);
-        return quote ? "|" + nm.Replace("\\", "\\\\").Replace("|", "\\|") + "|" : nm;
-    }
-}
-
-public partial class int_constant : Atom
-{
-    public int Field1;
-
-    public int_constant(int num) : base(IntTag) { Field1 = num; }
-
-    public override int IntCon => Field1;
-
-    public override string ToString() => Field1.ToString(CultureInfo.InvariantCulture);
-}
-
-public partial class real_constant : Atom
-{
-    public double Field1;
-
-    public real_constant(double v) : base(RealTag) { Field1 = v; }
-
-    public override double RealCon => Field1;
-
-    public override string ToString() => Field1.ToString("R", CultureInfo.InvariantCulture);
-}
-
-public partial class str_constant : Atom
-{
-    public string Field1;
-
-    public str_constant(string v) : base(StrTag) { Field1 = v ?? ""; }
-
-    public override string StrCon => Field1;
-
-    public override string ToString()
-    {
-        var sb = new StringBuilder("\"");
-        foreach (char c in Field1)
+        Sym key = Key;
+        if (key == null) return this;
+        if (key.UpId)
         {
-            if (c is '\\' or '"') sb.Append('\\');
-            sb.Append(c);
+            MplMacro macro = env.LoadMacro(key);
+            return macro == null ? this : macro.ExpandRef(env, this).walk_pattern(env);
         }
-        return sb.Append('"').ToString();
+        env.AddLocal(key, handle);
+        return this;
     }
+
+    [MirrorAnalyzed("Mpl.Run.Tok")]
+    public override Sexpr walk_expression(MplEnv env)
+    {
+        Sym key = Key;
+        if (key == null || !key.LowId) return this;
+        MplMacro macro = env.LoadMacro(key);
+        return macro == null ? this : macro.ExpandRef(env, this).walk_expression(env);
+    }
+}
+
+/// <summary>A quoted expression, <c>'x</c>.</summary>
+public partial class Qt : Sexpr
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    private static Sym Qt_constructor;
+
+    static Qt()
+    {
+        Qt_constructor = new Sym("Qt", "MplMacro");
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Qt(object a) : base(QtTag) { Field1 = a as Sexpr; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Qt(Sexpr a) : base(QtTag) { Field1 = a; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr quotation => Field1.quote;
+
+    /// <summary>The constructor token carries the tag (3) as its handle.</summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr quote => SCons.list2(new Tok(Qt_constructor, m_tag), Field1.quote);
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => "'" + Field1.ToString();
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr walk_expression(MplEnv env) => this;
+}
+
+/// <summary>A backquoted expression, <c>`x</c>.</summary>
+public partial class Bq : Sexpr
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Bq(object a) : base(BqTag) { Field1 = a as Sexpr; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Bq(Sexpr a) : base(BqTag) { Field1 = a; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => "`" + Field1.ToString();
+
+    [MirrorAnalyzed("Mpl.Run.Bq")]
+    public override Sexpr walk_expression(MplEnv env) =>
+        MplBackquoteMacro.singleton.ExpandCall(env, this).walk_expression(env);
+}
+
+/// <summary>An unquoted expression inside a backquote, <c>,x</c>.</summary>
+public partial class Cm : Sexpr
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Cm(object a) : base(CmTag) { Field1 = a as Sexpr; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Cm(Sexpr a) : base(CmTag) { Field1 = a; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => "," + Field1.ToString();
+}
+
+/// <summary>A spliced expression inside a backquote, <c>,@x</c>.</summary>
+public partial class Ca : Sexpr
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Ca(object a) : base(CaTag) { Field1 = a as Sexpr; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Ca(Sexpr a) : base(CaTag) { Field1 = a; }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => ",@" + Field1.ToString();
+}
+
+/// <summary>An append of S-expressions, printed <c>(SAPPEND a b …)</c>.</summary>
+public partial class SAppend : Sexpr
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field2;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public SAppend(object first, object rest) : this(first as Sexpr, rest as Sexpr) { }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public SAppend(Sexpr first, Sexpr rest) : base(SAppendTag)
+    {
+        Field1 = first;
+        Field2 = rest;
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string FormatAppend() => " " + Field1.ToString() + Field2.FormatAppend();
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() => "(SAPPEND " + Field1.ToString() + Field2.FormatAppend() + ")";
+}
+
+/// <summary>A <see cref="Cons"/> list spliced in front of an S-expression tail.</summary>
+public partial class SList : Sexpr
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public Cons Field1;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Sexpr Field2;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public SList(object first, object tail) : this(first as Cons, tail as Sexpr) { }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public SList(Cons first, Sexpr tail) : base(SListTag)
+    {
+        Field1 = first;
+        Field2 = tail;
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    private static string FormatCons(Cons c) => c == null ? "" : " " + c.Field1.ToString() + FormatCons(c.Field2 as Cons);
+
+    /// <summary>
+    /// <c>(SLIST  a b)</c> when the tail is <see cref="Nul.singleton"/> itself (two spaces: one after the word, one
+    /// before each item), otherwise <c>(SLIST#  a b tail)</c>.
+    /// </summary>
+    [MirrorVerified("SexprDifferentialTests")]
+    public override string ToString() =>
+        Field2 == Nul.singleton
+            ? "(SLIST " + FormatCons(Field1) + ")"
+            : "(SLIST# " + FormatCons(Field1) + " " + Field2.ToString() + ")";
 }

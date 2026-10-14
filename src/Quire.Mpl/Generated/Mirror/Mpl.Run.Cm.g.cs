@@ -11,12 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Cm, mplrun")]
 public partial class Cm : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public Cm(object a) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Cm(global::Quire.Mpl.Run.Sexpr a) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

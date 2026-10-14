@@ -11,34 +11,6 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Tuple, mplrun")]
 public partial class Tuple
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type[] tup_types;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.MethodInfo gf;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.MethodInfo sf;
-    [global::Quire.Mirror.MirrorStub]
-    public static int tuple_length(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type IType(global::System.Type[] tys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool AllObjects(global::System.Type[] tys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type TupleType(global::System.Type[] tys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type TupleRep(out global::Quire.Mpl.Run.Tuple.Rep rep, global::System.Type[] tys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.FieldInfo GetFieldInfo(global::System.Type ty, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo Getter(global::System.Type ty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo Setter(global::System.Type ty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetField<T>(object[] gtup, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetField<T>(object[] gtup, int i, T v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Tuple() { }
 
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Tuple+Rep, mplrun")]
     public enum Rep

@@ -11,28 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.SCons, mplrun")]
 public partial class SCons : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok token;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Sym apply;
-    [global::Quire.Mirror.MirrorStub]
-    public override uint handle { get => base.handle; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sym Key { get => base.Key; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }
-    [global::Quire.Mirror.MirrorStub]
-    public SCons(object first, object rest) : this(default(global::Quire.Mpl.Run.Sexpr), default(global::Quire.Mpl.Run.Sexpr)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Cons walk_declaration_lhs(global::Quire.Mpl.Run.MplEnv env) => base.walk_declaration_lhs(env);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Sexpr walk_patterns(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons pats) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_pattern(global::Quire.Mpl.Run.MplEnv env) => base.walk_pattern(env);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Sexpr walk_expressions(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons exps) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_expression(global::Quire.Mpl.Run.MplEnv env) => base.walk_expression(env);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Sexpr as_Sexpr(global::Quire.Mpl.Run.Cons list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

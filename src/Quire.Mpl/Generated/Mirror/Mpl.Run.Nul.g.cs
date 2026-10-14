@@ -11,10 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Nul, mplrun")]
 public partial class Nul : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok token;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.SCons scons { get => base.scons; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr quote { get => base.quote; }
 }
