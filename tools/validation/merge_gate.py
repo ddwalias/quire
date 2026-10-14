@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import ratchet
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -65,6 +66,25 @@ def changed_paths(base, tip):
     return sorted({p for p in git('diff', '-z', '--no-renames', '--name-only', f'{base}...{tip}').split('\0') if p})
 
 
+def on_branch(commit, repo=ROOT):
+    """Whether a local branch contains `commit`: the validation clone (`--no-local`) copies only those."""
+    return bool(git('for-each-ref', '--contains', commit, '--format=%(refname)', 'refs/heads', cwd=repo))
+
+
+def baseline_regressions(base, baseline, repo=ROOT):
+    """Reasons the validator's new baseline may not become main's. It is written after the last test run, but a
+    process code under test left running could still rewrite it, so it must parse, keep the schema and hold the
+    ratchet against the base's committed baseline."""
+    try:
+        old = json.loads(git('show', f'{base}:docs/mirror/validation-baseline.json', cwd=repo))
+        new = json.loads(Path(baseline).read_text())
+        if new.get('schema') != ratchet.SCHEMA:
+            return [f"new baseline schema {new.get('schema')!r} is not {ratchet.SCHEMA}"]
+        return [f'new baseline: {r}' for r in ratchet.compare(old, new)]
+    except (OSError, ValueError, RuntimeError, KeyError, TypeError, AttributeError) as error:
+        return [f'new baseline unusable: {error!r}']
+
+
 def verdict(summary):
     """Reasons the validation summary blocks a merge; empty when it may merge."""
     reasons = []
@@ -99,6 +119,9 @@ def main():
     if args.apply and git('rev-parse', '--abbrev-ref', 'HEAD') != args.base:
         parser.error(f'--apply must run from the checkout that has {args.base} checked out')
     base, tip = git('rev-parse', args.base), git('rev-parse', args.branch)
+    if not on_branch(tip):
+        print(f'BLOCKED: {args.branch} ({tip[:12]}) is not on a local branch; the validation clone copies only those.')
+        return 1
     if git('merge-base', base, tip) != base:
         print(f'BLOCKED: {args.branch} is not based on the current {args.base}; rebase it first.')
         return 1
@@ -127,27 +150,35 @@ def main():
     outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-'))).resolve()
     outputs.mkdir(parents=True, exist_ok=True)
     results = outputs / 'run'
-    # A separate clone, not a worktree: code under test never sees this repository's .git, hooks or config.
-    git('clone', '-q', '--no-local', '--no-checkout', str(ROOT), str(tree))
-    git('-c', 'advice.detachedHead=false', 'checkout', '-q', tip, cwd=tree)
     try:
-        if not args.allow_protected:
-            # Validate with main's harness, whatever the branch contains.
-            base_files = git('ls-tree', '-r', '--name-only', base).splitlines()
-            restore = protected(base_files, rules)
-            if restore:
-                git('checkout', base, '--', *restore, cwd=tree)
-        command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
-                   '--mutate-since', base, '--write-baseline', str(outputs / 'baseline.json'),
-                   '--timeout', str(args.timeout)]
-        print('Validating:', ' '.join(command), flush=True)
-        code = subprocess.run(command, cwd=tree).returncode
-        summary_path = results / 'summary.json'
-        summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {'error': 'no summary written'}
-        reasons = verdict(summary)
-        # 0: complete; 3: gate passed with known gaps. Anything else (crash, kill) blocks whatever the summary says.
-        if code not in (0, 3):
-            reasons.insert(0, f'validator exited {code}')
+        try:
+            # A separate clone, not a worktree: code under test never sees this repository's .git, hooks or config,
+            # nor, without the origin remote, its path.
+            git('clone', '-q', '--no-local', '--no-checkout', str(ROOT), str(tree))
+            git('remote', 'remove', 'origin', cwd=tree)
+            git('-c', 'advice.detachedHead=false', 'checkout', '-q', tip, cwd=tree)
+            if not args.allow_protected:
+                # Validate with main's harness, whatever the branch contains.
+                base_files = git('ls-tree', '-r', '--name-only', base).splitlines()
+                restore = protected(base_files, rules)
+                if restore:
+                    git('checkout', base, '--', *restore, cwd=tree)
+        except RuntimeError as error:
+            code, reasons = None, [f'cannot prepare the validation clone: {error}']
+        else:
+            command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
+                       '--mutate-since', base, '--write-baseline', str(outputs / 'baseline.json'),
+                       '--timeout', str(args.timeout)]
+            print('Validating:', ' '.join(command), flush=True)
+            code = subprocess.run(command, cwd=tree).returncode
+            summary_path = results / 'summary.json'
+            summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {'error': 'no summary written'}
+            reasons = verdict(summary)
+            # 0: complete; 3: gate passed with known gaps. Anything else (crash, kill) blocks whatever the summary says.
+            if code not in (0, 3):
+                reasons.insert(0, f'validator exited {code}')
+            if not reasons:
+                reasons = baseline_regressions(base, outputs / 'baseline.json')
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
                   'results': str(results), 'validator_exit': code, 'reasons': reasons}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')

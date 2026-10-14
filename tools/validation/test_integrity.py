@@ -26,6 +26,12 @@ class IntegrityTests(unittest.TestCase):
     def test_mirrored_names_and_generics_are_not_artifacts(self):
         self.assertEqual(self.source('SCons.list2(x, y); var d = typeof(Dictionary<,>); Field1 = list3(a, b, c);'), [])
 
+    def test_only_ilspy_is_matched_case_insensitively(self):
+        self.assertEqual(self.source('// warning: keep in step with Dim'), [])
+        for text in ('// ILSpy-generated view', '// Warning: some IL'):
+            with self.subTest(text=text):
+                self.assertIn('decompiler comment', self.source(text))
+
     def test_generated_stubs_skipped_and_only_exact_allowlisted_lines_exempt(self):
         self.assertEqual(self.source('int num2 = 0;', 'Quire.Mpl/Generated/Stub.g.cs'), [])
         self.assertEqual(self.source('int num2 = 0; // quire-lint: allow'), ['decompiler local name'])
@@ -76,6 +82,8 @@ class IntegrityTests(unittest.TestCase):
                            (header + 'var t = Type.GetType(name);', 'forbidden test API'),
                            (header + 'var f = typeof(MethodComparison).GetMethods();', 'forbidden test API'),
                            (header + 'file static class Assert { }', 'file-local type'),
+                           (header + '[Obsolete] file sealed record Assert;', 'file-local type'),
+                           (header + '// note\u2028file class Assert { }', 'file-local type'),
                            (header + '[assembly: Xunit.TestFramework("X", "Y")]', 'assembly or module attribute'),
                            (header + '// ILSpy-generated view', 'decompiler comment'),
                            (header + '// ilspycmd 11.1.0.9782', 'decompiler comment'),
@@ -83,6 +91,11 @@ class IntegrityTests(unittest.TestCase):
                            ('#line hidden', 'line directive')]:
             with self.subTest(text=text):
                 self.assertIn(rule, self.differential(text))
+
+    def test_file_in_comments_and_strings_is_not_a_file_local_type(self):
+        text = 'namespace Quire.Differential.Tests;\npublic class XDifferentialTests\n{\n' \
+               '    // one file record per case\n    /* a file class */ string s = "file struct";\n}\n'
+        self.assertEqual(self.differential(text), [])
 
     def test_compiled_test_types_must_come_from_their_own_file(self):
         root = self.repo.resolve().as_posix()

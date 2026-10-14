@@ -47,9 +47,9 @@ def select(coverage, types):
     return [(m, mutant) for m in chosen for mutant in m.get('mutants', [])]
 
 
-def execute(command, env, timeout):
+def execute(command, env, timeout, cwd=None):
     """Exit code, or None on timeout after killing the whole process tree (dotnet test spawns testhost)."""
-    process = subprocess.Popen(command, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+    process = subprocess.Popen(command, cwd=cwd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                                start_new_session=os.name != 'nt')
     try:
         return process.wait(timeout=timeout)
@@ -88,10 +88,10 @@ def mismatches(scratch, mvid):
     return {identity for test, identity in recorded if test in failed and identity.startswith(f'{mvid}:')}
 
 
-def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None):
+def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None, cwd=None):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test. Other test
-    failures, and mismatches a test swallows, cannot kill it."""
+    failures, and mismatches a test swallows, cannot kill it. `cwd`: where dotnet runs (its global.json choice)."""
     selected = select(coverage, types)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
@@ -112,7 +112,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         command = [dotnet, 'test', str(copy / test_dll.name), '--filter', test_filter(tests),
                    '--logger', 'trx;LogFileName=run.trx', '--results-directory', str(scratch)]
         kills = scratch / f'kills-{uuid.uuid4().hex}.txt'
-        code = execute(command, dict(env, QUIRE_MUTATION_KILLS=str(kills)), limit)
+        code = execute(command, dict(env, QUIRE_MUTATION_KILLS=str(kills)), limit, cwd)
         if kills.is_file():
             kills.replace(scratch / 'kills.txt')
         return code, scratch

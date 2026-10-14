@@ -1,3 +1,4 @@
+import shutil
 import tempfile
 from pathlib import Path
 import unittest
@@ -92,6 +93,49 @@ class SealTests(unittest.TestCase):
                 change()
                 with self.subTest(change=change), self.assertRaises(ValueError):
                     sealed.verify('run')
+
+
+class SealTreeTests(unittest.TestCase):
+    def test_records_added_nested_or_deleted_at_any_depth_detected(self):
+        from validate import Seal
+        def plant(root, name):
+            (root / name).parent.mkdir(parents=True, exist_ok=True)
+            (root / name).write_text('planted')
+        for change in (lambda root: (root / 'evidence/sub/A.md').write_text('forged'),
+                       lambda root: (root / 'evidence/sub/A.md').unlink(),
+                       lambda root: plant(root, 'evidence/new/deep/B.txt'),
+                       lambda root: plant(root, 'manifest/C.json')):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                plant(root, 'evidence/sub/A.md')
+                sealed = Seal(root, [], [root / 'evidence', root / 'manifest'])
+                change(root)
+                with self.assertRaises(ValueError):
+                    sealed.verify('run')
+
+
+class SdkDirectoryTests(unittest.TestCase):
+    def test_private_directory_holds_the_repository_global_json_read_now(self):
+        from validate import sdk_directory
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            empty = sdk_directory(repo)
+            self.addCleanup(shutil.rmtree, empty, True)
+            self.assertEqual((empty / 'global.json').read_text(), '{}\n')  # stops the search for one above it
+            (repo / 'global.json').write_text('{"sdk": {"version": "10.0.100"}}')
+            pinned = sdk_directory(repo)
+            self.addCleanup(shutil.rmtree, pinned, True)
+            (repo / 'global.json').write_text('{"sdk": {"version": "1.0.0"}}')  # planted after the copy
+            self.assertEqual((pinned / 'global.json').read_text(), '{"sdk": {"version": "10.0.100"}}')
+            self.assertFalse(repo in pinned.parents)
+
+    def test_global_json_above_the_private_directory_refused(self):
+        from validate import sdk_directory
+        with tempfile.TemporaryDirectory() as repo, tempfile.TemporaryDirectory() as parent:
+            (Path(parent) / 'global.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'global.json'):
+                sdk_directory(repo, parent)
+            self.assertEqual([p.name for p in Path(parent).iterdir()], ['global.json'])
 
 
 class PrivateCopyTests(unittest.TestCase):

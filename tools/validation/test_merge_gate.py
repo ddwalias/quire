@@ -1,6 +1,14 @@
+import contextlib
+import io
+import json
 from pathlib import Path
+import subprocess
+import tempfile
 import unittest
-from merge_gate import baseline_commit, case_collisions, patterns, protected, unvalidated_paths, verdict
+from unittest import mock
+import merge_gate
+from merge_gate import (baseline_commit, baseline_regressions, case_collisions, on_branch, patterns, protected,
+                        unvalidated_paths, verdict)
 
 RULES = patterns((Path(__file__).parent / 'protected.txt').read_text())
 PASSED = {'projects': [{'project': 'P', 'exit_code': 0, 'passed': 3, 'failed': 0, 'skipped': 0}],
@@ -91,6 +99,90 @@ class MergeGateTests(unittest.TestCase):
         for summary, reason in cases:
             with self.subTest(reason=reason):
                 self.assertTrue(any(reason in r for r in verdict(summary)), verdict(summary))
+
+
+class RepositoryTests(unittest.TestCase):
+    """Against a scratch repository: `main` holds a baseline and the protected rules; `work` adds a document."""
+    BASELINE = {'schema': 2, 'profile': 'focused', 'types': {'T': {
+        'compared': 1, 'total': 2, 'missing': 1, 'structure_mismatch': 0, 'uncovered': 0, 'verified_unsupported': 0}},
+        'methods': {'T::A()': 'compared', 'T::B()': 'missing'}, 'tests': {}, 'lint': []}
+
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.repo = Path(directory.name) / 'repo'
+        (self.repo / 'docs/mirror').mkdir(parents=True)
+        (self.repo / 'tools/validation').mkdir(parents=True)
+        (self.repo / 'tools/validation/protected.txt').write_text('tools/*\ndocs/mirror/validation-baseline.json\n')
+        (self.repo / 'docs/mirror/validation-baseline.json').write_text(json.dumps(self.BASELINE))
+        self.git('init', '-q', '-b', 'main')
+        self.git('add', '-A'); self.git('commit', '-qm', 'base')
+        self.base = self.git('rev-parse', 'HEAD')
+        self.git('checkout', '-qb', 'work')
+        (self.repo / 'docs/x.md').write_text('work')
+        self.git('add', '-A'); self.git('commit', '-qm', 'work')
+        self.git('checkout', '-q', 'main')
+        self.new = Path(directory.name) / 'baseline.json'
+
+    def git(self, *args):
+        return subprocess.run(['git', '-c', 'user.name=t', '-c', 'user.email=t@t', *args], cwd=self.repo, check=True,
+                              capture_output=True, text=True).stdout.strip()
+
+    def regressions(self, baseline):
+        self.new.write_text(baseline if isinstance(baseline, str) else json.dumps(baseline))
+        return baseline_regressions(self.base, self.new, self.repo)
+
+    def test_new_baseline_must_parse_and_hold_the_ratchet(self):
+        self.assertEqual(self.regressions(self.BASELINE), [])
+        self.assertEqual(self.regressions(dict(self.BASELINE, methods={'T::A()': 'compared', 'T::B()': 'compared'})), [])
+        for baseline, reason in [
+                ('{"schema": 2,', 'unusable'), ('[]', 'unusable'), ({'profile': 'focused'}, 'schema'),
+                (dict(self.BASELINE, methods={'T::A()': 'missing', 'T::B()': 'missing'}), 'compared became missing'),
+                (dict(self.BASELINE, types={}), 'type disappeared'),
+                (dict(self.BASELINE, lint=['a.cs | goto statement | goto x;']), 'new lint'),
+                ({k: v for k, v in self.BASELINE.items() if k != 'types'}, 'unusable')]:
+            with self.subTest(reason=reason):
+                self.assertTrue(any(reason in r for r in self.regressions(baseline)), self.regressions(baseline))
+        self.new.unlink()
+        self.assertIn('unusable', baseline_regressions(self.base, self.new, self.repo)[0])
+
+    def test_only_commits_on_a_local_branch_can_be_cloned(self):
+        self.assertTrue(on_branch(self.git('rev-parse', 'work'), self.repo))
+        dangling = self.git('commit-tree', f'{self.base}^{{tree}}', '-p', self.base, '-m', 'dangling')
+        self.assertFalse(on_branch(dangling, self.repo))
+        self.assertEqual(self.main(dangling)[0], 1)
+
+    def main(self, branch, fail=None):
+        """Exit code and gate.json (None when the gate stopped before validation) of a check against the scratch
+        repository; git commands whose first argument is `fail` fail."""
+        real, root = merge_gate.git, merge_gate.ROOT
+        def git(*args, cwd=None, check=True):
+            if args[0] == fail:
+                raise RuntimeError(f'git {fail}: failed')
+            return real(*args, cwd=self.repo if cwd in (None, root) else cwd, check=check)
+        results = self.repo.parent / 'results'
+        with mock.patch.object(merge_gate, 'git', git), mock.patch.object(merge_gate, 'ROOT', self.repo), \
+                mock.patch('sys.argv', ['merge_gate.py', branch, '--results', str(results)]), \
+                contextlib.redirect_stdout(io.StringIO()):
+            code = merge_gate.main()
+        gate = results / 'gate.json'
+        return code, json.loads(gate.read_text()) if gate.is_file() else None
+
+    def test_failed_clone_is_recorded_as_blocked(self):
+        for command in ('clone', 'remote'):
+            with self.subTest(command=command):
+                code, gate = self.main('work', fail=command)
+                self.assertEqual(code, 1)
+                self.assertEqual(gate['reasons'], [f'cannot prepare the validation clone: git {command}: failed'])
+                (self.repo.parent / 'results/gate.json').unlink(); (self.repo.parent / 'results').rmdir()
+
+    def test_clone_steps_leave_no_repository_path_and_check_out_the_tip(self):
+        tree, git = self.repo.parent / 'tree', merge_gate.git
+        git('clone', '-q', '--no-local', '--no-checkout', str(self.repo), str(tree), cwd=self.repo)
+        git('remote', 'remove', 'origin', cwd=tree)
+        git('-c', 'advice.detachedHead=false', 'checkout', '-q', self.git('rev-parse', 'work'), cwd=tree)
+        self.assertNotIn(str(self.repo), (tree / '.git/config').read_text())
+        self.assertEqual((tree / 'docs/x.md').read_text(), 'work')
 
 
 if __name__ == '__main__':

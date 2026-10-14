@@ -214,7 +214,8 @@ hand-written method total may not fall; `missing`, `structure_mismatch`, `uncove
 not rise; a method may only change state by becoming `compared`; a new method without a Mathcad counterpart is
 rejected. Unscoped runs also forbid any new lint finding (fixing one does not pay for another) and
 disappearing types or methods. New types with counterparts start their own baseline. A baseline from another profile
-or schema is rejected. `--write-baseline PATH` writes a run's snapshot (unscoped runs only). A maintainer creates the first baseline from an
+or schema is rejected. `--write-baseline PATH` writes a run's snapshot (unscoped runs only) once every test and mutation
+run has finished and the final seal check has passed. A maintainer creates the first baseline from an
 unscoped focused run on `main`; afterwards only the merge gate updates it.
 
 ### Merge gate
@@ -235,7 +236,9 @@ targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned r
 only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
 `--allow-unvalidated` after a Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
 protected file**: an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
-ratchet holds and no mutant survives. `gate.json` beside the results records the decision.
+ratchet holds, no mutant survives, and the new baseline parses and holds the ratchet against `main`'s committed one.
+`gate.json` beside the results records the decision, including a failure to prepare the clone. A branch whose tip is
+not on a local branch is blocked, since the clone copies only local branches.
 
 Code under test runs inside every `dotnet test` with the validator's own user rights, so the run is arranged to
 limit what it can reach:
@@ -246,12 +249,20 @@ limit what it can reach:
   before any test starts.
 - Tests run from their built assemblies, not their projects, so no MSBuild evaluation follows code under test.
   Coverage results go to a fresh temporary directory.
-- The few files read afterwards (type map, manifests, evidence records, built test outputs, the MethodAudit build)
-  are fingerprinted and checked after every test, coverage and mutation run and at the end.
-- The merge gate validates in a separate clone (`git clone --no-local`), never sharing this repository's `.git`,
-  hooks or config; blocks unless the validator exits normally (0, or 3 when only the completeness goal is unmet);
-  and builds the merge commit from the tip's committed tree plus the new baseline with hooks disabled, so nothing
-  done to the checkout during validation can reach `main`.
+- Every `dotnet` command runs from a private temporary directory holding a copy of the repository's `global.json`
+  taken before any test runs (or an empty `{}` one, the CLI's defaults, when the repository has none), with absolute
+  paths to projects and assemblies, so a `global.json` planted in the checkout, or above the private directory,
+  cannot change the SDK or test runner a later command picks. The validator refuses to run when a directory above
+  that private one already holds a `global.json`.
+- The few files read afterwards (type map, every file at any depth under `docs/mirror/evidence` and
+  `docs/mirror/manifest`, built test outputs, the MethodAudit build) are fingerprinted and checked after every test,
+  coverage and mutation run and at the end, so a record added, nested, changed or deleted mid-run is caught.
+- The merge gate validates in a separate clone (`git clone --no-local`, with the `origin` remote removed so it does
+  not record this repository's path), never sharing this repository's `.git`, hooks or config; blocks unless the
+  validator exits normally (0, or 3 when only the completeness goal is unmet); re-reads the new baseline, which the
+  validator writes only after its last test run, and requires it to parse and hold the ratchet against the base's
+  committed baseline; and builds the merge commit from the tip's committed tree plus that baseline with hooks
+  disabled, so nothing done to the checkout during validation can reach `main`.
 
 Not covered: test processes are not sandboxed. Code under test can forge records it writes during its own run
 (case, mismatch and coverage records), and a process it leaves running could interfere with a later stage of the

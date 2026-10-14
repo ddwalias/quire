@@ -53,17 +53,18 @@ def files_under(*directories):
 
 
 class Seal:
-    """Content fingerprints of what the validator reads after code under test has run: the given repository files
-    and the built test outputs. Everything else it needs is read before any test runs, and the merge is built from
-    the tip's committed tree, so other changes to the checkout cannot reach a verdict or main."""
+    """Content fingerprints of what the validator reads after code under test has run: the given repository files,
+    and every file at any depth under the given directories (records and built test outputs), so a file added,
+    nested or deleted anywhere beneath them shows. Everything else it needs is read before any test runs, and the
+    merge is built from the tip's committed tree, so other changes to the checkout cannot reach a verdict or main."""
 
-    def __init__(self, root, files, outputs=()):
-        self.root, self.files, self.outputs = Path(root), [Path(f) for f in files], [Path(o) for o in outputs]
+    def __init__(self, root, files, trees=()):
+        self.root, self.files, self.trees = Path(root), [Path(f) for f in files], [Path(t) for t in trees]
         self.state = self.take()
 
     def take(self):
         present = [f for f in self.files if f.is_file()]
-        return {**digest(present, self.root), **digest(files_under(*self.outputs), self.root),
+        return {**digest(present, self.root), **digest(files_under(*self.trees), self.root),
                 **{f.relative_to(self.root).as_posix(): None for f in self.files if not f.is_file()}}
 
     def verify(self, after):
@@ -71,6 +72,24 @@ class Seal:
         changed = sorted(k for k in set(state) | set(self.state) if state.get(k, "gone") != self.state.get(k, "gone"))
         if changed:
             raise ValueError(f"{after} changed files the validator reads: {', '.join(changed[:10])}")
+
+
+def sdk_directory(root, parent=None):
+    """A private working directory for every dotnet command. The CLI picks its SDK, and `dotnet test` its runner,
+    from the first global.json at or above its working directory; this one holds a copy of the repository's, taken
+    before any test runs, so one planted later in the checkout cannot change either. Without one, it holds an empty
+    global.json (the CLI's defaults), so one planted later above it, say in the shared temporary directory, is never
+    reached; one there already is refused."""
+    directory = Path(tempfile.mkdtemp(prefix="quire-dotnet-", dir=parent))
+    planted = [str(p / "global.json") for p in directory.parents if (p / "global.json").exists()]
+    if planted:
+        shutil.rmtree(directory, ignore_errors=True)
+        raise ValueError(f"{planted[0]} would select the SDK for every dotnet command; remove it")
+    if (Path(root) / "global.json").is_file():
+        shutil.copyfile(Path(root) / "global.json", directory / "global.json")
+    else:
+        (directory / "global.json").write_text("{}\n")
+    return directory
 
 
 def changed_types(coverage, name_status, previous=None):
@@ -158,6 +177,11 @@ def main():
         parser.error("phase closure must run the full differential suite; omit --diff-filter")
     if args.profile == "phase" and args.allow_differential_skips:
         parser.error("phase validation requires differential execution; omit --allow-differential-skips")
+    # dotnet runs from a private directory (see sdk_directory), so every path it is given must be absolute.
+    if os.sep in args.dotnet or "/" in args.dotnet:
+        args.dotnet = str(Path(args.dotnet).resolve())
+    args.baseline = args.baseline and args.baseline.resolve()
+    args.write_baseline = args.write_baseline and args.write_baseline.resolve()
     output = args.results.resolve() if args.results else Path(tempfile.mkdtemp(prefix="quire-validation-"))
     if args.results:
         output.mkdir(parents=True, exist_ok=False)
@@ -187,6 +211,7 @@ def main():
         deviations = method_coverage.accepted_deviations(ROOT)
         accepted_mutants = mutate.accepted()
         lint_findings = integrity_module.lint(ROOT)
+        sdk = holder["sdk"] = sdk_directory(ROOT)
         changed_names = None
         if args.mutate_since:
             changed_names = git_output("diff", "-z", "--no-renames", "--name-status", args.mutate_since)
@@ -200,7 +225,7 @@ def main():
         with (output / "build.log").open("w") as log:
             for target, extra in [(tool, ["-o", str(tool_dir)])] + [
                     (ROOT / "tests" / p / f"{p}.csproj", []) for p in projects]:
-                result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=ROOT,
+                result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=sdk,
                                         stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
                 if result.returncode:
                     raise ValueError(f"build of {target.name} failed; inspect build.log")
@@ -210,14 +235,13 @@ def main():
         assemblies = {}
         for project in projects:
             path = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
-                                   "-getProperty:TargetPath", "-nologo"], cwd=ROOT, capture_output=True, text=True,
+                                   "-getProperty:TargetPath", "-nologo"], cwd=sdk, capture_output=True, text=True,
                                   timeout=args.timeout).stdout.strip()
             if not path or not Path(path).is_file():
                 raise ValueError(f"{project}: built assembly not found ({path!r})")
             assemblies[project] = Path(path)
-        late = [ROOT / "docs/mirror/type-map.csv", *sorted((ROOT / "docs/mirror/evidence").glob("*.md")),
-                *sorted((ROOT / "docs/mirror/manifest").glob("*"))]
-        seal = Seal(ROOT, late, [ROOT / "tests" / p / "bin" for p in projects])
+        trees = [ROOT / "docs/mirror/evidence", ROOT / "docs/mirror/manifest", *(ROOT / "tests" / p / "bin" for p in projects)]
+        seal = Seal(ROOT, [ROOT / "docs/mirror/type-map.csv"], trees)
         for project in projects:
             differential = "Differential" in project
             env = os.environ.copy()
@@ -236,7 +260,7 @@ def main():
             item = {"project": project, "command": command, "trx": str(trx)}
             report["projects"].append(item)
             with (output / f"{project}.log").open("w") as log:
-                result = subprocess.run(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
+                result = subprocess.run(command, cwd=sdk, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
             item["exit_code"] = result.returncode
             seal.verify(project)
             if result.returncode:
@@ -255,7 +279,7 @@ def main():
                 item["coverage_command"] = coverage_command
                 print(f"Measuring branch coverage of {project}", flush=True)
                 with (output / f"{project}.coverage.log").open("w") as log:
-                    result = subprocess.run(coverage_command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
+                    result = subprocess.run(coverage_command, cwd=sdk, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
                 seal.verify(f"{project} coverage run")
                 if result.returncode:
                     raise ValueError(f"{project}: coverage run exited {result.returncode}; inspect its log")
@@ -276,7 +300,7 @@ def main():
         report["method_commands"] = [scan]
         print("Auditing every selected method, including private methods and accessors", flush=True)
         with (output / "method-audit.log").open("w") as log:
-            result = subprocess.run(scan, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
+            result = subprocess.run(scan, cwd=sdk, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
             if result.returncode:
                 raise ValueError("Method inventory failed; inspect method-audit.log")
         records = [json.loads(line) for path in (output / "method-cases").glob("*.jsonl")
@@ -298,8 +322,6 @@ def main():
         (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
         report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"]}
         print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
-        if args.write_baseline:
-            args.write_baseline.write_text(json.dumps(ratchet_report["snapshot"], indent=2, sort_keys=True) + "\n")
         mutation_ok = True
         mutate_types = set(args.method_type) if args.mutate else set()
         if args.mutate_since:
@@ -308,7 +330,7 @@ def main():
         if mutate_types:
             print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
-                                  args.dotnet, args.jobs, args.timeout, accepted_mutants)
+                                  args.dotnet, args.jobs, args.timeout, accepted_mutants, cwd=sdk)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors")}
@@ -318,6 +340,9 @@ def main():
         # The merge gate needs green tests, no regression and no surviving mutant; completeness is the end goal.
         report["gate_passed"] = ratchet_report["ok"] and mutation_ok
         seal.verify("the run")
+        # Written only now that no code under test runs again; the merge gate still checks it against main's.
+        if args.write_baseline:
+            args.write_baseline.write_text(json.dumps(ratchet_report["snapshot"], indent=2, sort_keys=True) + "\n")
         # 0: complete; 3: the merge gate's requirements hold but gaps remain; 1: blocked.
         return 0 if report["complete"] else 3 if report["gate_passed"] else 1
     except (OSError, ValueError, KeyError, TypeError, ET.ParseError, subprocess.TimeoutExpired) as error:
@@ -325,8 +350,8 @@ def main():
         print(str(error), file=sys.stderr)
         return 1
     finally:
-        if "tool" in holder:
-            shutil.rmtree(holder["tool"], ignore_errors=True)
+        for directory in holder.values():
+            shutil.rmtree(directory, ignore_errors=True)
         (output / "summary.json").write_text(json.dumps(report, indent=2) + "\n")
         print(f"Report: {output / 'summary.json'}", flush=True)
 

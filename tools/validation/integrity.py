@@ -14,7 +14,7 @@ ARTIFACTS = [
     ('goto statement', re.compile(r'\bgoto\b')),
     ('compiler-generated name', re.compile(r'CS\$|<>[A-Za-z0-9_]|<[A-Za-z_]\w*>[a-z]__')),
     ('IL offset label', re.compile(r'\bIL_[0-9A-Fa-f]{4}\b')),
-    ('decompiler comment', re.compile(r'(?i)ilspy|//\s*Warning:|/\*\s*(Error|OpCode not supported)|^\s*//\s*(SHA-256|MVID):')),
+    ('decompiler comment', re.compile(r'(?i:ilspy)|//\s*Warning:|/\*\s*(Error|OpCode not supported)|^\s*//\s*(SHA-256|MVID):')),
     ('decompiler local name', re.compile(
         r'\b(?:var|[A-Za-z_][\w.]*(?:<[^;=()]*>)?(?:\[,*\])*\??)\s+'
         r'(?:num|flag|obj|text|array|list|type|val|item|ex|result|enumerator|dictionary|disposable)\d+\b'
@@ -43,8 +43,12 @@ SRC_RULES = [
         r'(?:Get|Expand)EnvironmentVariables?|EnvironmentVariables)\b|QUIRE_(?!MIRROR_)|Quire\.Differential')),
 ]
 TESTS = 'tests/Quire.Differential.Tests'
-CODE = re.compile(r'//[^\n]*|/\*.*?\*/|\$*("{3,}).*?\1|\$*@"(?:[^"]|"")*"|@?\$*"(?:[^"\\\n]|\\.)*"|'
+# C# ends a line comment at any of its line terminators, so code after one cannot hide as comment.
+CODE = re.compile(r'//[^\n\r\x85\u2028\u2029]*|/\*.*?\*/|\$*("{3,}).*?\1|\$*@"(?:[^"]|"")*"|@?\$*"(?:[^"\\\n]|\\.)*"|'
                   r"'(?:[^'\\\n]|\\.)+'", re.S)
+# Rules matched against code only, with comments and string literals blanked: `file` is also an English word.
+CODE_ONLY = {'file-local type'}
+NOT_LINE_BREAK = re.compile('[^\n\r\v\f\x1c-\x1e\x85\u2028\u2029]')
 
 
 def allowed(path=ALLOWED):
@@ -122,9 +126,11 @@ def lint(repo=ROOT, allow=None):
         if path in tests:
             findings += [{'file': name, 'line': 0, 'rule': 'test file shape', 'match': p, 'text': ''}
                          for p in shape(path, text)]
+        # Blanking keeps every line break, so code lines align with the text's.
+        code = CODE.sub(lambda m: NOT_LINE_BREAK.sub(' ', m[0]), text).splitlines()
         for number, line in enumerate(text.splitlines(), 1):
             for rule, pattern in rules:
-                matches = list(pattern.finditer(line))
+                matches = list(pattern.finditer(code[number - 1] if rule in CODE_ONLY else line))
                 if matches and allow[(name, rule, line.strip())] > 0:
                     allow[(name, rule, line.strip())] -= 1
                     continue
