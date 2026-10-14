@@ -145,8 +145,9 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             for copy in copies:
                 shutil.rmtree(copy, ignore_errors=True)
             raise
-        # A mutant that loops forever is cut off relative to how long all its tests take unmutated.
-        mutant_timeout = min(timeout, max(30, 5 * (time.monotonic() - started)))
+        # A mutant that loops forever is cut off relative to how long all its tests take unmutated. The control ran
+        # alone; parallel jobs slow each run, and a load-induced timeout would count as a kill, so widen the margin.
+        mutant_timeout = min(timeout, max(30, 5 * max(1, len(copies) / 2) * (time.monotonic() - started)))
     # Each mutant reruns only its method's tests in a fresh process, so that subset also needs its own control:
     # a test that passes after its siblings but mismatches alone would otherwise kill every mutant.
     controlled, control_lock, failures = {}, threading.Lock(), []

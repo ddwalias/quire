@@ -12,7 +12,7 @@ public static class MethodComparison
     // Recording runs thousands of cases: locate the repository, hash each file and open the case log once.
     private static readonly Dictionary<string, string> Hashes = new();
     private static readonly Lazy<string> Repo = new(FindRepo);
-    private static StreamWriter? Cases;
+    private static StreamWriter? Cases;   // QUIRE_METHOD_CASES is fixed for a test process
 
     public static void Compare(string caseId, string contract, MethodBase quire, object? quireTarget, object?[] quireArgs,
         MethodBase original, object? originalTarget, object?[] originalArgs,
