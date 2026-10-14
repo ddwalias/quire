@@ -70,6 +70,7 @@ TypeSig Map(TypeSig sig) => sig switch
     _ => sig
 };
 string Key(MethodModel m, bool map) => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
+var matched = new List<(Artifact Artifact, RawMethod Raw, TypeModel Type, MethodModel Method, IHasStatus Status, string? Exclusion, Artifact? Original, RawMethod? Counterpart)>();
 foreach (var artifact in quire)
     foreach (var raw in artifact.Methods)
     {
@@ -93,19 +94,47 @@ foreach (var artifact in quire)
             if (originals.TryGetValue(fields[1].Trim(), out original))
                 counterpart = original.Methods.SingleOrDefault(m => m.Owner == fields[0].Trim() && m.Key == Key(method, true));
         }
-        rows.Add(new {
-            id = artifact.Name + "::" + raw.Owner + "::" + raw.Key, project = artifact.Name, type = raw.Owner, signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
-            is_static = method.Static, is_constructor = method.IsConstructor, access = method.Access.ToString(), status = status.Status.ToString(), evidence = status.Evidence,
-            quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid, exclusion,
-            original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,
-                version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
-            declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
-                && (method.Abstract && counterpart.Abstract || type.Kind == TypeKind.Delegate),
-            shape_matches = counterpart != null && method.Access.ToString() == counterpart.Access
-        });
+        matched.Add((artifact, raw, type, method, status, exclusion, original, counterpart));
     }
+// Calls to Quire methods are named after their Mathcad counterparts; types after their MirrorOf binding.
+var originalNames = matched.Where(m => m.Counterpart != null)
+    .ToDictionary(m => (m.Artifact.Name, m.Raw.Token), m => m.Counterpart!.Name);
+string MathcadType(string name) => typeNames.TryGetValue(name, out var names) ? names[0] : name;
+var structures = new Dictionary<Artifact, StructureReader>();
+StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, out var reader) ? reader
+    : structures[a] = new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name),
+        isQuire ? MathcadType : name => name,
+        isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null);
+foreach (var (artifact, raw, type, method, status, exclusion, original, counterpart) in matched)
+{
+    List<string>? differences = null;
+    if (exclusion == null && counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
+    {
+        try
+        {
+            differences = Reader(artifact, true).Read(MetadataTokens.MethodDefinitionHandle(raw.Token))
+                .Compare(Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token)));
+        }
+        catch (Exception e) when (e is BadImageFormatException or KeyNotFoundException or InvalidOperationException)
+        {
+            differences = [$"IL unreadable: {e.Message}"];
+        }
+    }
+    rows.Add(new {
+        id = artifact.Name + "::" + raw.Owner + "::" + raw.Key, project = artifact.Name, type = raw.Owner, signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
+        is_static = method.Static, is_constructor = method.IsConstructor, access = method.Access.ToString(), status = status.Status.ToString(), evidence = status.Evidence,
+        quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid, exclusion,
+        original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,
+            version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
+        declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
+            && (method.Abstract && counterpart.Abstract || type.Kind == TypeKind.Delegate),
+        shape_matches = counterpart != null && method.Access.ToString() == counterpart.Access,
+        structure_matches = differences == null ? (bool?)null : differences.Count == 0,
+        structure_differences = differences ?? []
+    });
+}
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
-File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 1, projects, errors, methods = rows }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
+File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
 Console.WriteLine($"Method inventory: {rows.Count} declarations, {errors.Count} inspection errors; {output}");
 return errors.Count == 0 && rows.Count > 0 ? 0 : 1;
 
@@ -118,14 +147,15 @@ sealed class Artifact
     public string Mvid { get; }
     public string Version { get; }
     public List<RawMethod> Methods { get; } = [];
+    public PEReader Pe { get; }
+    public MetadataReader Metadata { get; }
     public Artifact(string path)
     {
         Model = MetadataLoader.Load(path) ?? throw new BadImageFormatException(path);
-        using var stream = File.OpenRead(path);
-        Hash = Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
-        stream.Position = 0;
-        using var pe = new PEReader(stream);
-        var md = pe.GetMetadataReader();
+        byte[] image = File.ReadAllBytes(path);
+        Hash = Convert.ToHexString(SHA256.HashData(image)).ToLowerInvariant();
+        Pe = new PEReader(new MemoryStream(image));
+        var md = Metadata = Pe.GetMetadataReader();
         Mvid = md.GetGuid(md.GetModuleDefinition().Mvid).ToString();
         Version = md.GetAssemblyDefinition().Version.ToString();
         var decoder = new SigProvider(Name);

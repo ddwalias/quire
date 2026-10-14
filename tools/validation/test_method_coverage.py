@@ -18,14 +18,15 @@ class CoverageTests(unittest.TestCase):
         self.method = dict(project='Quire.Mpl', type='Quire.T', signature='private()', token=0x06000001,
                            access='Private', status='Verified', is_static=True, is_constructor=False, quire_sha256='quire-sha', quire_mvid='quire-mvid',
                            original=dict(assembly='mplrun', sha256='original-sha', mvid='original-mvid', token=0x06000002),
-                           declaration_only=False, exclusion=None, shape_matches=True)
+                           declaration_only=False, exclusion=None, shape_matches=True,
+                           structure_matches=True, structure_differences=[])
         self.record = dict(schema=1, run='fresh', test='Tests.Compare', case_id='edge case', inputs=[1], outcome='1', arguments_after=[1],
                            contract='Contract', contract_sha256=hashlib.sha256(contract).hexdigest(),
                            quire=dict(assembly='Quire.Mpl', sha256='quire-sha', mvid='quire-mvid', token=0x06000001),
                            original=self.method['original'])
 
     def check(self, methods=None, records=None, tests=None, types=()):
-        return audit(dict(schema=1, errors=[], methods=methods if methods is not None else [self.method]),
+        return audit(dict(schema=2, errors=[], methods=methods if methods is not None else [self.method]),
                      records if records is not None else [self.record], tests if tests is not None else {'Tests.Compare'},
                      'fresh', self.repo, types)
 
@@ -94,6 +95,22 @@ class CoverageTests(unittest.TestCase):
         record = dict(self.record, contract_sha256=hashlib.sha256(content).hexdigest())
         with self.assertRaises(ValueError):
             self.check(records=[record])
+
+    def test_structural_difference_fails_unless_accepted_deviation(self):
+        differs = dict(self.method, structure_matches=False, structure_differences=['calls differ at #0'])
+        report = self.check(methods=[differs])
+        self.assertFalse(report['complete'])
+        self.assertEqual(report['counts']['structure_mismatch'], 1)
+        self.assertIn('calls differ at #0', report['methods'][0]['reason'])
+        self.assertFalse(self.check(methods=[dict(self.method, structure_matches=None)])['complete'])
+        self.assertTrue(self.check(methods=[dict(differs, status='Deviation')])['complete'])
+
+    def test_structure_alone_does_not_replace_a_direct_comparison(self):
+        self.assertEqual(self.check(records=[])['counts']['missing'], 1)
+
+    def test_older_inventory_schema_rejected(self):
+        with self.assertRaises(ValueError):
+            audit(dict(schema=1, errors=[], methods=[self.method]), [self.record], {'Tests.Compare'}, 'fresh', self.repo)
 
 
 if __name__ == '__main__':

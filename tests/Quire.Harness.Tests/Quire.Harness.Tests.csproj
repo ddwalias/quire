@@ -15,5 +15,8 @@
   <ItemGroup>
     <Compile Include="../Quire.Differential.Tests/Reflect.cs" Link="Reflect.cs" />
     <Compile Include="../Quire.Differential.Tests/MethodComparison.cs" Link="MethodComparison.cs" />
+    <Compile Include="../../tools/Quire.Tools.MethodAudit/Structure.cs" Link="Structure.cs" />
+    <Compile Include="../../tools/Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
+    <Compile Include="../../tools/Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
   </ItemGroup>
 </Project>

@@ -50,6 +50,9 @@ python3 -m unittest discover -s tools/validation -p 'test_*.py'
 dotnet test tests/Quire.Harness.Tests/Quire.Harness.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false
 ```
 
+`StructureTests` check that locals and expression bodies do not change a structure while swapped calls, extra
+branches, constants, catch types and throws do.
+
 These check per-method record validation and rejection of false-green reports, reflection ambiguity/missing members, static versus
 instance calls, ref parameter selection/mutation, propagation of formatter failures, comparison
 of actual target and deferred iterator exceptions, and detection of differing outcomes.
@@ -123,6 +126,28 @@ unchanged. Records for another token, overload, artifact, MVID or run do not cov
 skipped, aborted, missing or stale tests cannot supply coverage. Tests using other comparison helpers
 must migrate to this API before they count; existing passing behavior tests are not reclassified.
 No method status is upgraded automatically.
+
+### Reconstruction integrity
+
+The same run also checks each reconstruction against the original IL:
+
+- **Structure** (`method-inventory.json` → `method-coverage.json`): MethodAudit reads both bodies and compares
+  the ordered calls (`call`/`callvirt`/`newobj`/`ldftn`), field reads/writes, type operations (`isinst`,
+  `castclass`, `box`, `newarr`, `ldtoken`), constants (sorted; `0`/`1` ignored), exception regions and catch types,
+  conditional-branch and switch-target counts, `throw`/`rethrow` counts. Quire types/methods are named after their
+  Mathcad binding; locals, nops, stack shuffling, branch encoding and compiler-generated names are ignored, so a
+  Debug build can match. A difference makes the method `structure_mismatch` with the first differing item. Only a
+  `Deviation` status may differ. A matching structure never substitutes for a direct comparison.
+- **Lint** (`integrity.json`): hand-written `src/` code must not contain `goto`, compiler-generated names, IL
+  labels, decompiler comments or decompiler-style locals (`num2`, `type2`, `obj1`). A reviewed exception carries
+  `// quire-lint: allow <reason>` on that line.
+- **IL listings** (`integrity.json`): every type with a selected non-stub, classified method needs its listing in
+  [il/](il/), whose header must name the SHA-256 and MVID of the artifact the audit loaded. Listings for assemblies
+  the run did not load are reported as unchecked.
+
+`python3 tools/validation/integrity.py --inventory <run>/method-inventory.json` repeats the lint/listing checks.
+The structure comparison is a fingerprint, not a proof: identical structure with different arithmetic or operand
+order passes it, which the direct comparisons must catch.
 
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.

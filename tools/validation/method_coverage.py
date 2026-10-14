@@ -1,4 +1,4 @@
-"""Fail unless each inventoried method has an artifact-bound, direct, passing comparison."""
+"""Fail unless each inventoried method has an artifact-bound, direct, passing comparison and the original's IL structure."""
 import argparse
 import hashlib
 import json
@@ -29,7 +29,7 @@ def identity(value):
 
 
 def audit(inventory, records, tests, run, repo=ROOT, types=()):
-    if inventory.get('schema') != 1 or inventory.get('errors'):
+    if inventory.get('schema') != 2 or inventory.get('errors'):
         raise ValueError(f"Invalid method inventory: {inventory.get('errors')}")
     methods = inventory['methods']
     keys = [(m['project'], m['token']) for m in methods]
@@ -65,7 +65,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=()):
             raise ValueError(f"Original method token is absent from contract: {contract}")
         key = identity(record['quire']), identity(original)
         observed.setdefault(key, []).append({'test': record['test'], 'case': record['case_id'], 'contract': record['contract'], 'state_checked': record.get('state_checked', False)})
-    counts = {'compared': 0, 'declaration_only': 0, 'excluded': 0, 'missing': 0}
+    counts = {'compared': 0, 'declaration_only': 0, 'excluded': 0, 'missing': 0, 'structure_mismatch': 0}
     rows = []
     for method in methods:
         cases = []
@@ -84,14 +84,17 @@ def audit(inventory, records, tests, run, repo=ROOT, types=()):
                 state, reason = 'missing', 'Method remains a stub or blocked'
             elif cases and not method['is_static'] and not method['is_constructor'] and not all(c['state_checked'] for c in cases):
                 state, reason = 'missing', 'Instance method lacks checked before/after target state'
+            elif method['structure_matches'] is not True and method['status'] != 'Deviation':
+                state, reason = 'structure_mismatch', 'IL structure differs from the original: ' + '; '.join(
+                    method['structure_differences'] or ['not compared'])
             elif cases:
                 state, reason = 'compared', 'Direct comparison passed for the listed cases only'
             else:
                 state, reason = 'missing', 'No direct comparison from a passing test in this run'
         counts[state] += 1
         rows.append(dict(method, validation=state, reason=reason, cases=cases))
-    return {'schema': 1, 'run': run, 'complete': counts['missing'] == 0,
-            'policy': 'Direct comparison for every non-compiler method with a body, regardless of accessibility',
+    return {'schema': 1, 'run': run, 'complete': counts['missing'] == 0 and counts['structure_mismatch'] == 0,
+            'policy': 'Direct comparison and matching IL structure for every non-compiler method with a body, regardless of accessibility; accepted deviations may differ structurally',
             'scope': list(types) if types else 'all inventoried project methods',
             'limitations': 'Only recorded cases are compared. Test and renderer quality still need review; no status is upgraded automatically.',
             'counts': counts, 'by_access': {access: {state: sum(m['access'] == access and m['validation'] == state for m in rows)

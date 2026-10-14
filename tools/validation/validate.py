@@ -132,8 +132,14 @@ def main():
                          passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type)
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
         report["method_coverage"] = coverage["counts"]
-        report["complete"] = coverage["complete"]
         print(f"Method coverage: {coverage['counts']}; {output / 'method-coverage.json'}", flush=True)
+        from integrity import check
+        integrity = check(json.loads(inventory_path.read_text()), types=args.method_type)
+        (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
+        report["integrity"] = {"lint": len(integrity["lint"]), "listing_errors": len(integrity["listings"]["errors"]),
+                               "listings_unchecked": len(integrity["listings"]["unchecked"])}
+        report["complete"] = coverage["complete"] and integrity["complete"]
+        print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
         return 0 if report["complete"] else 1
     except (OSError, ValueError, KeyError, TypeError, ET.ParseError, subprocess.TimeoutExpired) as error:
         report["error"] = str(error)
