@@ -241,15 +241,23 @@ def main():
         tool_digest = digest(files_under(tool_dir), tool_dir)
         # Test assemblies are run directly rather than through their projects, so no MSBuild evaluation (which
         # imports obj/*.props and *.targets that earlier tests could plant) happens after code under test has run.
-        assemblies = {}
+        # Run that way, VSTest finds the coverage collector only through the directory the Microsoft.CodeCoverage
+        # package records in TraceDataCollectorDirectoryPath.
+        assemblies, collectors = {}, {}
         for project in projects:
             with sdk_directory(global_json) as sdk:
-                path = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
-                                       "-getProperty:TargetPath", "-nologo"], cwd=sdk, capture_output=True, text=True,
-                                      timeout=args.timeout).stdout.strip()
+                query = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
+                                        "-getProperty:TargetPath", "-getProperty:TraceDataCollectorDirectoryPath",
+                                        "-nologo"], cwd=sdk, capture_output=True, text=True, timeout=args.timeout)
+            try:
+                properties = json.loads(query.stdout)["Properties"]
+            except (ValueError, KeyError, TypeError):
+                properties = {}
+            path = properties.get("TargetPath", "")
             if not path or not Path(path).is_file():
-                raise ValueError(f"{project}: built assembly not found ({path!r})")
+                raise ValueError(f"{project}: built assembly not found ({query.stdout.strip()!r})")
             assemblies[project] = Path(path)
+            collectors[project] = properties.get("TraceDataCollectorDirectoryPath", "")
         trees = [ROOT / "docs/mirror/evidence", ROOT / "docs/mirror/manifest", *(ROOT / "tests" / p / "bin" for p in projects)]
         seal = Seal(ROOT, [ROOT / "docs/mirror/type-map.csv"], trees)
         for project in projects:
@@ -285,7 +293,10 @@ def main():
                 coverage_trx = output / f"{project}.coverage.trx"
                 coverage_command = [c if not c.startswith("trx;") else f"trx;LogFileName={coverage_trx.name}" for c in command]
                 coverage_command[coverage_command.index("--results-directory") + 1] = str(coverage_dir)
-                coverage_command += ["--collect", "Code Coverage;Format=cobertura"]
+                if not collectors[project] or not Path(collectors[project]).is_dir():
+                    raise ValueError(f"{project}: no coverage collector; does it reference Microsoft.NET.Test.Sdk?")
+                coverage_command += ["--collect", "Code Coverage;Format=cobertura",
+                                     "--test-adapter-path", collectors[project]]
                 item["coverage_command"] = coverage_command
                 print(f"Measuring branch coverage of {project}", flush=True)
                 with (output / f"{project}.coverage.log").open("w") as log, sdk_directory(global_json) as sdk:
