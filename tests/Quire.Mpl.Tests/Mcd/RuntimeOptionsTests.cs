@@ -37,6 +37,8 @@ public class RuntimeOptionsTests
     public void Only_synced_threads_have_options()
     {
         Assert.Null(OnNewThread(() => RuntimeOptions.the_unit_system));
+        // Dim's type initialiser needs a synced thread; run it here rather than on whichever thread touches Dim first.
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(Dim).TypeHandle);
         Assert.Null(OnNewThread(() => Dim.s_vec));
         var o = new RuntimeOptions { m_strict_comparisons = true, m_ro_number = 42 };
         var seen = OnNewThread(() =>
