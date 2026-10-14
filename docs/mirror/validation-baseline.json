@@ -200,23 +200,23 @@
     "Quire.Mcd.Iterator+MatrixIterator::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mcd.Iterator+MatrixIterator::first`0()->[System.Runtime]System.Object|False": "missing",
     "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "missing",
-    "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mcd.Iterator+ScalarIterator::first`0()->[System.Runtime]System.Object|False": "missing",
-    "Quire.Mcd.Iterator+ScalarIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "missing",
-    "Quire.Mcd.Iterator+SeqIterator::.ctor`0([Quire.Mpl]Quire.Mcd.Iterator[])->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mcd.Iterator+SeqIterator::first`0()->[System.Runtime]System.Object|False": "missing",
-    "Quire.Mcd.Iterator+SeqIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "missing",
+    "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Iterator+ScalarIterator::first`0()->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mcd.Iterator+ScalarIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
+    "Quire.Mcd.Iterator+SeqIterator::.ctor`0([Quire.Mpl]Quire.Mcd.Iterator[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Iterator+SeqIterator::first`0()->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mcd.Iterator+SeqIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
     "Quire.Mcd.Iterator::.ctor`0()->[System.Runtime]System.Void|False": "missing",
     "Quire.Mcd.Iterator::first`0()->[System.Runtime]System.Object|False": "declaration_only",
-    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.RngVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::forValue`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.Iterator|True": "structure_mismatch",
-    "Quire.Mcd.Iterator::forValues`0([Quire.Mpl]Quire.Mcd.Iterator[])->[Quire.Mpl]Quire.Mcd.Iterator|True": "missing",
-    "Quire.Mcd.Iterator::it_incr`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.Iterator)->[System.Runtime]System.Object|True": "missing",
+    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.RngVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forValue`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::forValues`0([Quire.Mpl]Quire.Mcd.Iterator[])->[Quire.Mpl]Quire.Mcd.Iterator|True": "compared",
+    "Quire.Mcd.Iterator::it_incr`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.Iterator)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mcd.Iterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "declaration_only",
     "Quire.Mcd.MatDim+<>c__DisplayClass26_0::.ctor`0()->[System.Runtime]System.Void|False": "excluded",
     "Quire.Mcd.MatDim+<>c__DisplayClass26_0::<Uniform>b__0`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": "excluded",
@@ -751,11 +751,11 @@
     "Quire.Mcd.PtrDelegate::BeginInvoke`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object,[System.Runtime]System.AsyncCallback,[System.Runtime]System.Object)->[System.Runtime]System.IAsyncResult|False": "declaration_only",
     "Quire.Mcd.PtrDelegate::EndInvoke`0([System.Runtime]System.IAsyncResult)->[System.Runtime]System.Void|False": "declaration_only",
     "Quire.Mcd.PtrDelegate::Invoke`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "declaration_only",
-    "Quire.Mcd.RangeIterator::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mcd.RangeIterator::first`0()->[System.Runtime]System.Object|False": "missing",
-    "Quire.Mcd.RangeIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "missing",
-    "Quire.Mcd.RangeIterator::ri_first`0()->[System.Runtime]System.Object|False": "missing",
-    "Quire.Mcd.RangeIterator::ri_next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "missing",
+    "Quire.Mcd.RangeIterator::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.RangeIterator::first`0()->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mcd.RangeIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
+    "Quire.Mcd.RangeIterator::ri_first`0()->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mcd.RangeIterator::ri_next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
     "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "missing",
@@ -779,36 +779,36 @@
     "Quire.Mcd.Rational::op_LessThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "missing",
     "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": "missing",
     "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "missing",
-    "Quire.Mcd.RngVal::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mcd.RngVal::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mcd.RngVal::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "missing",
-    "Quire.Mcd.RngVal::GetHashCode`0()->[System.Runtime]System.Int32|False": "missing",
-    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::Range`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::Range`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "missing",
-    "Quire.Mcd.RngVal::asRange`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.RngVal|False": "missing",
-    "Quire.Mcd.RngVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "missing",
-    "Quire.Mcd.RngVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "missing",
-    "Quire.Mcd.RngVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "missing",
-    "Quire.Mcd.RngVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "missing",
-    "Quire.Mcd.RngVal::get_Integral`0()->[System.Runtime]System.Boolean|False": "missing",
-    "Quire.Mcd.RngVal::get_Isize`0()->[System.Runtime]System.Int32|False": "missing",
-    "Quire.Mcd.RngVal::get_PhysicalDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False": "structure_mismatch",
-    "Quire.Mcd.RngVal::get_Rsize`0()->[System.Runtime]System.Int32|False": "missing",
-    "Quire.Mcd.RngVal::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "missing",
-    "Quire.Mcd.RngVal::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "missing",
-    "Quire.Mcd.RngVal::mkRange2`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::mkRange3`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::mkVec2`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::mkVec3`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "missing",
-    "Quire.Mcd.RngVal::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "missing",
-    "Quire.Mcd.RngValInterpolate::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mcd.RngValInterpolate::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "missing",
-    "Quire.Mcd.RngValInterpolate::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "missing",
-    "Quire.Mcd.RngValInterpolate::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "missing",
+    "Quire.Mcd.RngVal::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.RngVal::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.RngVal::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.RngVal::GetHashCode`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::Range`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::Range`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
+    "Quire.Mcd.RngVal::asRange`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.RngVal|False": "compared",
+    "Quire.Mcd.RngVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
+    "Quire.Mcd.RngVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
+    "Quire.Mcd.RngVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
+    "Quire.Mcd.RngVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
+    "Quire.Mcd.RngVal::get_Integral`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.RngVal::get_Isize`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.RngVal::get_PhysicalDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False": "compared",
+    "Quire.Mcd.RngVal::get_Rsize`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.RngVal::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "compared",
+    "Quire.Mcd.RngVal::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
+    "Quire.Mcd.RngVal::mkRange2`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::mkRange3`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::mkVec2`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::mkVec3`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": "compared",
+    "Quire.Mcd.RngVal::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
+    "Quire.Mcd.RngValInterpolate::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.RngValInterpolate::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "compared",
+    "Quire.Mcd.RngValInterpolate::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
+    "Quire.Mcd.RngValInterpolate::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer::.ctor`0()->[System.Runtime]System.Void|False": "missing",
     "Quire.Mcd.RuntimeOptions::.cctor`0()->[System.Runtime]System.Void|True": "missing",
     "Quire.Mcd.RuntimeOptions::.ctor`0()->[System.Runtime]System.Void|False": "missing",
@@ -1834,25 +1834,25 @@
     "Quire.Mpl.Run.QuartnaryDelegateFunction::Premium`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "missing",
     "Quire.Mpl.Run.QuartnaryDelegateFunction::app`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.QuartnaryDelegateFunction::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Rts::.cctor`0()->[System.Runtime]System.Void|True": "structure_mismatch",
-    "Quire.Mpl.Run.Rts::BoolTrue`0()->[System.Runtime]System.Reflection.FieldInfo|True": "missing",
-    "Quire.Mpl.Run.Rts::ExceptionCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": "missing",
-    "Quire.Mpl.Run.Rts::FcnType`0()->[System.Runtime]System.Type|True": "missing",
+    "Quire.Mpl.Run.Rts::.cctor`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.Rts::BoolTrue`0()->[System.Runtime]System.Reflection.FieldInfo|True": "compared",
+    "Quire.Mpl.Run.Rts::ExceptionCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": "compared",
+    "Quire.Mpl.Run.Rts::FcnType`0()->[System.Runtime]System.Type|True": "compared",
     "Quire.Mpl.Run.Rts::GetTypeInitializer`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.TypeBuilder)->[Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ConstructorBuilder|True": "no_counterpart",
-    "Quire.Mpl.Run.Rts::IsCancellationRequested`0()->[System.Runtime]System.Boolean|True": "structure_mismatch",
-    "Quire.Mpl.Run.Rts::OnResolveAssembly`0([System.Runtime]System.Object,[System.Runtime]System.ResolveEventArgs)->[System.Runtime]System.Reflection.Assembly|True": "missing",
-    "Quire.Mpl.Run.Rts::RegisterThreadForCancellationChecking`0([System.Runtime]System.Threading.CancellationTokenSource)->[System.Runtime]System.Void|True": "missing",
-    "Quire.Mpl.Run.Rts::ResetStackDepth`0()->[System.Runtime]System.Void|True": "missing",
-    "Quire.Mpl.Run.Rts::RethrowCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": "missing",
-    "Quire.Mpl.Run.Rts::TagCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": "missing",
-    "Quire.Mpl.Run.Rts::TagField`0()->[System.Runtime]System.Reflection.FieldInfo|True": "missing",
-    "Quire.Mpl.Run.Rts::TagType`0()->[System.Runtime]System.Type|True": "missing",
-    "Quire.Mpl.Run.Rts::VoidType`0()->[System.Runtime]System.Type|True": "missing",
-    "Quire.Mpl.Run.Rts::get_AssemblyPath`0()->[System.Runtime]System.String|True": "missing",
-    "Quire.Mpl.Run.Rts::get_StackDepth`0()->[System.Runtime]System.Reflection.FieldInfo|True": "structure_mismatch",
-    "Quire.Mpl.Run.Rts::get_m_stack_depth`0()->[System.Runtime]System.Int32|True": "missing",
-    "Quire.Mpl.Run.Rts::set_AssemblyPath`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": "missing",
-    "Quire.Mpl.Run.Rts::set_m_stack_depth`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "missing",
+    "Quire.Mpl.Run.Rts::IsCancellationRequested`0()->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mpl.Run.Rts::OnResolveAssembly`0([System.Runtime]System.Object,[System.Runtime]System.ResolveEventArgs)->[System.Runtime]System.Reflection.Assembly|True": "compared",
+    "Quire.Mpl.Run.Rts::RegisterThreadForCancellationChecking`0([System.Runtime]System.Threading.CancellationTokenSource)->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.Rts::ResetStackDepth`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.Rts::RethrowCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": "compared",
+    "Quire.Mpl.Run.Rts::TagCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": "compared",
+    "Quire.Mpl.Run.Rts::TagField`0()->[System.Runtime]System.Reflection.FieldInfo|True": "compared",
+    "Quire.Mpl.Run.Rts::TagType`0()->[System.Runtime]System.Type|True": "compared",
+    "Quire.Mpl.Run.Rts::VoidType`0()->[System.Runtime]System.Type|True": "compared",
+    "Quire.Mpl.Run.Rts::get_AssemblyPath`0()->[System.Runtime]System.String|True": "compared",
+    "Quire.Mpl.Run.Rts::get_StackDepth`0()->[System.Runtime]System.Reflection.FieldInfo|True": "compared",
+    "Quire.Mpl.Run.Rts::get_m_stack_depth`0()->[System.Runtime]System.Int32|True": "compared",
+    "Quire.Mpl.Run.Rts::set_AssemblyPath`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.Rts::set_m_stack_depth`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.SAppend::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sexpr,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.SAppend::.ctor`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.SAppend::FormatAppend`0()->[System.Runtime]System.String|False": "missing",
@@ -1968,8 +1968,8 @@
     "Quire.Mpl.Run.Tok::walk_expression`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
     "Quire.Mpl.Run.Tok::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
     "Quire.Mpl.Run.True::.cctor`0()->[System.Runtime]System.Void|True": "missing",
-    "Quire.Mpl.Run.True::.ctor`0()->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.True::ToString`0()->[System.Runtime]System.String|False": "missing",
+    "Quire.Mpl.Run.True::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.True::ToString`0()->[System.Runtime]System.String|False": "compared",
     "Quire.Mpl.Run.Tuple::.cctor`0()->[System.Runtime]System.Void|True": "missing",
     "Quire.Mpl.Run.Tuple::.ctor`0()->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.Tuple::AllObjects`0([System.Runtime]System.Type[])->[System.Runtime]System.Boolean|True": "missing",
@@ -2574,6 +2574,51 @@
     "Quire.Mcd.DimVal::sym_matrix_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": [
       "dimvaldifferentialtests"
     ],
+    "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+ScalarIterator::first`0()->[System.Runtime]System.Object|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+ScalarIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+SeqIterator::.ctor`0([Quire.Mpl]Quire.Mcd.Iterator[])->[System.Runtime]System.Void|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+SeqIterator::first`0()->[System.Runtime]System.Object|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+SeqIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forRange`0([Quire.Mpl]Quire.Mcd.RngVal)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forValue`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::forValues`0([Quire.Mpl]Quire.Mcd.Iterator[])->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.Iterator::it_incr`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.Iterator)->[System.Runtime]System.Object|True": [
+      "rngvaldifferentialtests"
+    ],
     "Quire.Mcd.NotAVal::.cctor`0()->[System.Runtime]System.Void|True": [
       "numvaldifferentialtests"
     ],
@@ -2760,6 +2805,111 @@
     "Quire.Mcd.NumVal::set_Real`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": [
       "numvaldifferentialtests"
     ],
+    "Quire.Mcd.RangeIterator::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RangeIterator::first`0()->[System.Runtime]System.Object|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RangeIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RangeIterator::ri_first`0()->[System.Runtime]System.Object|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RangeIterator::ri_next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::GetHashCode`0()->[System.Runtime]System.Int32|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::IncrRange`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::Range`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::Range`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Double,[Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::asRange`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.RngVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::get_Integral`0()->[System.Runtime]System.Boolean|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::get_Isize`0()->[System.Runtime]System.Int32|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::get_PhysicalDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::get_Rsize`0()->[System.Runtime]System.Int32|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::mkRange2`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::mkRange3`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::mkVec2`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::mkVec3`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[Quire.Mpl]Quire.Mcd.RngVal|True": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngVal::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngValInterpolate::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngValInterpolate::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngValInterpolate::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "rngvaldifferentialtests"
+    ],
+    "Quire.Mcd.RngValInterpolate::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "rngvaldifferentialtests"
+    ],
     "Quire.Mcd.StrVal::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
       "numvaldifferentialtests"
     ],
@@ -2786,6 +2936,66 @@
     ],
     "Quire.Mcd.num_val::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": [
       "numvaldifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::.cctor`0()->[System.Runtime]System.Void|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::BoolTrue`0()->[System.Runtime]System.Reflection.FieldInfo|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::ExceptionCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::FcnType`0()->[System.Runtime]System.Type|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::IsCancellationRequested`0()->[System.Runtime]System.Boolean|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::OnResolveAssembly`0([System.Runtime]System.Object,[System.Runtime]System.ResolveEventArgs)->[System.Runtime]System.Reflection.Assembly|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::RegisterThreadForCancellationChecking`0([System.Runtime]System.Threading.CancellationTokenSource)->[System.Runtime]System.Void|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::ResetStackDepth`0()->[System.Runtime]System.Void|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::RethrowCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::TagCtor`0()->[System.Runtime]System.Reflection.ConstructorInfo|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::TagField`0()->[System.Runtime]System.Reflection.FieldInfo|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::TagType`0()->[System.Runtime]System.Type|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::VoidType`0()->[System.Runtime]System.Type|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::get_AssemblyPath`0()->[System.Runtime]System.String|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::get_StackDepth`0()->[System.Runtime]System.Reflection.FieldInfo|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::get_m_stack_depth`0()->[System.Runtime]System.Int32|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::set_AssemblyPath`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Rts::set_m_stack_depth`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|True": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.True::.ctor`0()->[System.Runtime]System.Void|False": [
+      "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.True::ToString`0()->[System.Runtime]System.String|False": [
+      "rtsdifferentialtests"
     ]
   },
   "types": {
@@ -2840,14 +3050,14 @@
       "verified_unsupported": 22
     },
     "Quire.Mcd.Iterator": {
-      "compared": 0,
+      "compared": 9,
       "declaration_only": 2,
       "excluded": 0,
-      "missing": 9,
-      "structure_mismatch": 1,
+      "missing": 1,
+      "structure_mismatch": 0,
       "total": 12,
       "uncovered": 0,
-      "verified_unsupported": 9
+      "verified_unsupported": 1
     },
     "Quire.Mcd.Iterator+MatrixIterator": {
       "compared": 0,
@@ -2860,24 +3070,24 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.Iterator+ScalarIterator": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
-      "verified_unsupported": 3
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Iterator+SeqIterator": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
-      "verified_unsupported": 3
+      "verified_unsupported": 0
     },
     "Quire.Mcd.MatDim": {
       "compared": 0,
@@ -3090,14 +3300,14 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.RangeIterator": {
-      "compared": 0,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 5,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
-      "verified_unsupported": 5
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Rational": {
       "compared": 0,
@@ -3110,24 +3320,24 @@
       "verified_unsupported": 23
     },
     "Quire.Mcd.RngVal": {
-      "compared": 0,
+      "compared": 26,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 25,
-      "structure_mismatch": 1,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 26,
       "uncovered": 0,
-      "verified_unsupported": 22
+      "verified_unsupported": 0
     },
     "Quire.Mcd.RngValInterpolate": {
-      "compared": 0,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 4,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 4,
       "uncovered": 0,
-      "verified_unsupported": 4
+      "verified_unsupported": 0
     },
     "Quire.Mcd.RuntimeOptions": {
       "compared": 0,
@@ -4500,14 +4710,14 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Rts": {
-      "compared": 0,
+      "compared": 18,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 16,
-      "structure_mismatch": 3,
+      "missing": 1,
+      "structure_mismatch": 0,
       "total": 19,
       "uncovered": 0,
-      "verified_unsupported": 17
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.SAppend": {
       "compared": 0,
@@ -4590,14 +4800,14 @@
       "verified_unsupported": 10
     },
     "Quire.Mpl.Run.True": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 1,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
-      "verified_unsupported": 3
+      "verified_unsupported": 1
     },
     "Quire.Mpl.Run.Tuple": {
       "compared": 0,
