@@ -63,9 +63,12 @@ def compare(baseline, current, scoped=False):
     return regressions
 
 
-def check(coverage, integrity, scoped, profile, path=BASELINE):
+def check(coverage, integrity, scoped, profile, path=BASELINE, baseline=False):
+    """`baseline`: the parsed baseline (None when absent), when the caller read it before code under test ran."""
     current = snapshot(coverage, integrity, profile)
-    if not Path(path).is_file():
+    if baseline is False:
+        baseline = json.loads(Path(path).read_text()) if Path(path).is_file() else None
+    if baseline is None:
         return {'ok': False, 'regressions': [f'No baseline at {path}; a maintainer must create it'], 'snapshot': current}
-    regressions = compare(json.loads(Path(path).read_text()), current, scoped)
+    regressions = compare(baseline, current, scoped)
     return {'ok': not regressions, 'regressions': regressions, 'snapshot': current}

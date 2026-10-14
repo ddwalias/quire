@@ -188,7 +188,20 @@ static object? Owner(string typeName, string methodName)
 {
     var parts = typeName.Split('+');
     string type = string.Join('+', parts.TakeWhile(p => !p.StartsWith('<')));
-    string? Inner(string name) => name.StartsWith('<') && name.IndexOf('>') is > 1 and var end ? name[1..end] : null;
+    // The text inside the leading <...>, brackets matched by depth (`<Ns.IFoo<T>.Bar>b__0_0`), unwrapped again when it
+    // is itself compiler-named (`<<Bar>g__Local|3_0>d` is the state machine of local function Local in Bar).
+    static string? Inner(string name)
+    {
+        if (!name.StartsWith('<')) return null;
+        int depth = 0;
+        for (int i = 0; i < name.Length; i++)
+        {
+            if (name[i] == '<') depth++;
+            else if (name[i] == '>' && --depth == 0)
+                return i <= 1 ? null : name[1] == '<' ? Inner(name[1..i]) : name[1..i];
+        }
+        return null;
+    }
     string? name = Inner(methodName) ?? parts.Select(Inner).LastOrDefault(n => n != null);
     return type.Length == 0 || name == null ? null : new { type, name };
 }

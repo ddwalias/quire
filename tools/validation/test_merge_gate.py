@@ -1,6 +1,6 @@
 from pathlib import Path
 import unittest
-from merge_gate import case_collisions, patterns, protected, unvalidated_paths, verdict
+from merge_gate import baseline_commit, case_collisions, patterns, protected, unvalidated_paths, verdict
 
 RULES = patterns((Path(__file__).parent / 'protected.txt').read_text())
 PASSED = {'projects': [{'project': 'P', 'exit_code': 0, 'passed': 3, 'failed': 0, 'skipped': 0}],
@@ -49,6 +49,30 @@ class MergeGateTests(unittest.TestCase):
     def test_case_collisions_found(self):
         self.assertEqual(case_collisions(['src/Quire.Mpl/A.cs', 'Src/Quire.Engine/B.cs', 'docs/x.md']), ['Src / src'])
         self.assertEqual(case_collisions(['src/a/A.cs', 'src/a/B.cs']), [])
+
+    def test_baseline_commit_is_the_tip_tree_plus_the_baseline(self):
+        import subprocess, tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            def git(*args):
+                return subprocess.run(['git', '-c', 'user.name=t', '-c', 'user.email=t@t', *args], cwd=repo, check=True,
+                                      capture_output=True, text=True).stdout.strip()
+            git('init', '-q')
+            (repo / 'src.cs').write_text('committed')
+            git('add', '-A'); git('commit', '-qm', 'tip')
+            tip = git('rev-parse', 'HEAD')
+            (repo / 'src.cs').write_text('tampered in the checkout')
+            hooks = repo / '.git/hooks'
+            (hooks / 'pre-commit').write_text('#!/bin/sh\nexit 1\n'); (hooks / 'pre-commit').chmod(0o755)
+            baseline = repo.parent / f'{repo.name}-baseline.json'
+            baseline.write_text('{}')
+            try:
+                commit = baseline_commit(tip, baseline, 'b', 'r', repo)
+            finally:
+                baseline.unlink()
+            self.assertEqual(git('rev-parse', f'{commit}^'), tip)
+            self.assertEqual(git('show', f'{commit}:src.cs'), 'committed')
+            self.assertEqual(git('show', f'{commit}:docs/mirror/validation-baseline.json'), '{}')
 
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])

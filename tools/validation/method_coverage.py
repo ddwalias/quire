@@ -49,7 +49,7 @@ def member(method):
     return f"{method['type']}::{re.split(r'[`(]', method['signature'])[0]}"
 
 
-def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None):
+def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, deviations=None):
     """`lines` is merged cobertura data from the differential run; without it the coverage gate cannot pass."""
     if inventory.get('schema') != 2 or inventory.get('errors'):
         raise ValueError(f"Invalid method inventory: {inventory.get('errors')}")
@@ -67,7 +67,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None):
     observed = {}
     evidence_dir = (Path(repo) / 'docs/mirror/evidence').resolve()
     contracts = {}
-    deviations = accepted_deviations(repo)
+    deviations = accepted_deviations(repo) if deviations is None else deviations
     for record in records:
         if record.get('schema') != 1 or record.get('run') != run:
             raise ValueError('Stale or invalid direct-comparison record')

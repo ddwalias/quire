@@ -146,7 +146,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         mutant_timeout = min(timeout, max(30, 5 * (time.monotonic() - started)))
     # Each mutant reruns only its method's tests in a fresh process, so that subset also needs its own control:
     # a test that passes after its siblings but mismatches alone would otherwise kill every mutant.
-    controlled, control_lock = {}, threading.Lock()
+    controlled, control_lock, failures = {}, threading.Lock(), []
 
     def attempt(copy, method, mutant):
         tests = frozenset(case['test'] for case in method['cases'])
@@ -156,10 +156,15 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         if first:
             try:
                 control(copy, tests, timeout)
+            except BaseException as error:
+                failures.append(error)
+                raise
             finally:
                 done_control.set()
         else:
             done_control.wait()
+        if failures:
+            raise failures[0]
         target = copy / f'{project}.dll'
         image = bytearray(target.read_bytes())
         original, replacement = bytes.fromhex(mutant['original']), bytes.fromhex(mutant['replacement'])
@@ -198,7 +203,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     done, lock = [0], threading.Lock()
 
     def worker(copy):
-        while True:
+        while not failures:
             try:
                 index, (method, mutant) = pending.get_nowait()
             except queue.Empty:

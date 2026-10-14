@@ -146,7 +146,7 @@ The same run also checks each reconstruction against the original IL:
   `obj1`), `#line` or `#pragma checksum`. Differential test files compile into the harness assembly, so each must
   declare exactly `namespace Quire.Differential.Tests;` and one top-level type, `class <file name>` (checked outside
   braces, comments and strings, so no `Assert` or harness name can be shadowed and every test maps to its file),
-  avoid `global using`, and not name the environment, files, processes, assembly locations, `QUIRE_*` variables,
+  avoid `global using`, `file`-local types and `[assembly:]`/`[module:]` attributes, and not name the environment, files, processes, assembly locations, `QUIRE_*` variables,
   code generation, marshalling, method bodies/IL, assembly or type enumeration, `Type.GetType`, harness types via
   `typeof`, xUnit exceptions, sleeps or delays. `src/Quire.Mpl` code, which runs in the same process, must not name
   module initializers, xUnit, `MethodComparison`, the `Quire.Differential` namespace, method IL, assembly
@@ -157,8 +157,9 @@ The same run also checks each reconstruction against the original IL:
 - **Test assembly types** (`integrity.json`): MethodAudit lists every top-level type compiled into
   `Quire.Differential.Tests.dll` with the PDB source files of its methods. Each must come only from maintainer-owned
   files, or be the single class an agent test file is named after; types without source lines or with sources
-  outside the repository (other than restored NuGet packages, outside `Quire.*`) are rejected. This reads the
-  binary, so no source-level trick can add a shadowing `Assert` or harness type.
+  outside the repository (other than restored NuGet packages, outside `Quire.*`) are rejected, as are
+  compiler-named types other than anonymous types and constant data (so a file-local class cannot hide). This reads
+  the binary, so source-level tricks that fool the text checks still cannot add a top-level type.
 
 `python3 tools/validation/integrity.py --inventory <run>/method-inventory.json` repeats the lint and test-type checks.
 No original code is committed; the structure check reads the original IL from the artifact itself.
@@ -191,8 +192,8 @@ order passes it, which the direct comparisons must catch.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
   `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
-  nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in a changed
-  differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie
+  nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in an added,
+  changed or deleted differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie
   outside the repository.
 - **Status:** a `Verified` method that this run does not show as compared (or declaration-only) counts as
   `verified_unsupported`. A `Deviation` status skips the structure check only when the `deviations.md` index lists
@@ -232,16 +233,30 @@ case. It also blocks any added, changed, deleted or renamed path matching `tools
 targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned records), unless a maintainer passes
 `--allow-protected`. Because the gate runs the focused profile, which builds and audits only `Quire.Mpl` and runs
 only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
-`--allow-unvalidated` after a Windows phase run. Otherwise it validates a detached worktree of the branch **with `main`'s copies of every
+`--allow-unvalidated` after a Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
 protected file**: an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
 ratchet holds and no mutant survives. `gate.json` beside the results records the decision.
 
-Code under test runs inside every `dotnet test`, so `validate.py` loads its modules and builds MethodAudit (into a
-directory outside the tree) and all test projects before any test runs, then runs tests with `--no-build`. After
-every test, coverage and mutation run it checks fingerprints of every maintainer-owned file and of the built test
-outputs and fails on any change. Code in the test process can still forge records it writes during its own run
-(case records, mismatch records), which is why the lint keeps file, environment and reflection APIs out of agent
-code and test diffs still need review.
+Code under test runs inside every `dotnet test` with the validator's own user rights, so the run is arranged to
+limit what it can reach:
+
+- `validate.py` reruns itself from a private temporary copy with `python -I -B` and imports every module up front;
+  it builds MethodAudit into a temporary directory and all test projects, then reads every verdict input (baseline,
+  accepted mutants, lint allowlist, deviations, protected rules, the `--mutate-since` diff) and runs the source lint
+  before any test starts.
+- Tests run from their built assemblies, not their projects, so no MSBuild evaluation follows code under test.
+  Coverage results go to a fresh temporary directory.
+- The few files read afterwards (type map, manifests, evidence records, built test outputs, the MethodAudit build)
+  are fingerprinted and checked after every test, coverage and mutation run and at the end.
+- The merge gate validates in a separate clone (`git clone --no-local`), never sharing this repository's `.git`,
+  hooks or config; blocks unless the validator exits normally (0, or 3 when only the completeness goal is unmet);
+  and builds the merge commit from the tip's committed tree plus the new baseline with hooks disabled, so nothing
+  done to the checkout during validation can reach `main`.
+
+Not covered: test processes are not sandboxed. Code under test can forge records it writes during its own run
+(case, mismatch and coverage records), and a process it leaves running could interfere with a later stage of the
+same run. `src/Quire.Mpl` and `tests/Quire.Mpl.Tests` are not held to the differential tests' API rules. Deliberate
+tampering of this kind is out of scope for the gate; review agent diffs for it.
 
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.

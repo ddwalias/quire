@@ -120,6 +120,13 @@ class MutationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "control run of \\['Ns.Tests.Alone'\\] failed"):
             self.mutate()
 
+    def test_failed_subset_control_stops_every_worker(self):
+        alone = dict(self.method, signature='N()', token=0x06000003, cases=[dict(test='Ns.Tests.Alone')])
+        self.coverage['methods'].append(alone)
+        with self.assertRaisesRegex(ValueError, 'control run'):
+            run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl', str(self.dotnet),
+                jobs=3, accepted_keys=frozenset())
+
     def test_tests_rewriting_their_output_rejected(self):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFD]) + self.image[1:])
         with self.assertRaisesRegex(ValueError, 'changed their own build output'):

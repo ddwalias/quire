@@ -11,7 +11,8 @@ import tempfile
 import uuid
 import xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parents[2]
+# The repository under validation; set when running from the private copy (see main).
+ROOT = Path(os.environ.get("QUIRE_VALIDATOR_REPO") or Path(__file__).resolve().parents[2])
 NS = {"t": "http://microsoft.com/schemas/VisualStudio/TeamTest/2010"}
 
 
@@ -48,47 +49,35 @@ def files_under(*directories):
     return sorted(p for d in directories if Path(d).is_dir() for p in Path(d).rglob("*") if p.is_file())
 
 
-def tree_state(root):
-    """The working tree relative to its index and commit: git's status (which notices changed size, mtime, ctime or
-    inode) plus the content of every file it lists, so re-editing an already modified file is noticed too."""
-    status = subprocess.run(["git", "status", "--porcelain=v1", "-z", "--untracked-files=all"], cwd=root, check=True,
-                            capture_output=True).stdout.decode()
-    entries = sorted(e for e in status.split("\0") if e)
-    listed = [Path(root) / e[3:] for e in entries if len(e) > 3 and (Path(root) / e[3:]).is_file()]
-    return {"status": entries, "content": digest(listed, root)}
-
-
 class Seal:
-    """Fingerprints of what code under test must not change: the whole working tree (sources the lint and audit read
-    afterwards, maintainer-owned files) and the built test outputs. Agent code runs inside every dotnet test, so each
-    run is followed by a check."""
+    """Content fingerprints of what the validator reads after code under test has run: the given repository files
+    and the built test outputs. Everything else it needs is read before any test runs, and the merge is built from
+    the tip's committed tree, so other changes to the checkout cannot reach a verdict or main."""
 
-    def __init__(self, root, outputs=()):
-        self.root, self.outputs = Path(root), [Path(o) for o in outputs]
-        self.tree, self.built = self.take()
+    def __init__(self, root, files, outputs=()):
+        self.root, self.files, self.outputs = Path(root), [Path(f) for f in files], [Path(o) for o in outputs]
+        self.state = self.take()
 
     def take(self):
-        return tree_state(self.root), digest(files_under(*self.outputs), self.root)
+        present = [f for f in self.files if f.is_file()]
+        return {**digest(present, self.root), **digest(files_under(*self.outputs), self.root),
+                **{f.relative_to(self.root).as_posix(): None for f in self.files if not f.is_file()}}
 
     def verify(self, after):
-        tree, built = self.take()
-        if tree != self.tree:
-            changed = sorted(set(tree["status"]) ^ set(self.tree["status"])) or sorted(
-                k for k in set(tree["content"]) | set(self.tree["content"]) if tree["content"].get(k) != self.tree["content"].get(k))
-            raise ValueError(f"{after} changed the working tree: {', '.join(changed[:10])}")
-        changed = sorted(k for k in set(built) | set(self.built) if built.get(k) != self.built.get(k))
+        state = self.take()
+        changed = sorted(k for k in set(state) | set(self.state) if state.get(k, "gone") != self.state.get(k, "gone"))
         if changed:
-            raise ValueError(f"{after} changed built test outputs: {', '.join(changed[:10])}")
+            raise ValueError(f"{after} changed files the validator reads: {', '.join(changed[:10])}")
 
 
-def changed_types(coverage, since, git_output, previous=None):
-    """Types to mutate after changes since `since`: those whose Quire.Mpl source changed and those whose comparisons
-    live, or lived according to the baseline's `previous` method -> test classes map, in a changed differential test
-    file (a method whose cases were cut from a file is mutated against what remains)."""
-    names = git_output("diff", "-z", "--no-renames", "--diff-filter=AM", "--name-only", since)
-    if names is None:
-        raise ValueError(f"cannot diff against {since}")
-    names = [n for n in names.split("\0") if n]
+def changed_types(coverage, name_status, previous=None):
+    """Types to mutate given `git diff -z --no-renames --name-status` output: those whose Quire.Mpl source was added
+    or changed, and those whose comparisons live, or lived according to the baseline's `previous` method -> test
+    classes map, in an added, changed or deleted differential test file (a method whose cases were cut or whose
+    test file was deleted is mutated against what remains)."""
+    fields = [f for f in name_status.split("\0") if f]
+    changes = list(zip(fields[0::2], fields[1::2]))
+    names = [n for status, n in changes if status[0] in "AM"]
     root = ROOT.resolve().as_posix() + "/"
     sources = {}
     for method in coverage["methods"]:
@@ -104,8 +93,8 @@ def changed_types(coverage, since, git_output, previous=None):
         if name.lower().startswith("src/quire.mpl/") and name.lower().endswith(".cs"):
             types |= sources.get(name, set())
     # The lint holds each differential test file to one top-level class named after it; nested classes count as it.
-    test_classes = {Path(n).stem.lower() for n in names
-                    if n.lower().startswith("tests/quire.differential.tests/") and n.lower().endswith(".cs")}
+    test_classes = {Path(n).stem.lower() for status, n in changes if status[0] in "AMD"
+                    and n.lower().startswith("tests/quire.differential.tests/") and n.lower().endswith(".cs")}
     types |= {m["type"] for m in coverage["methods"]
               if any(test_class(case["test"]) in test_classes for case in m.get("cases", []))}
     known = {m["type"] for m in coverage["methods"]}
@@ -120,6 +109,16 @@ def test_class(test):
 
 
 def main():
+    if not os.environ.get("QUIRE_VALIDATOR_REPO"):
+        # Run from a private copy, isolated from PYTHONPATH and bytecode caches, so nothing code under test writes
+        # into the repository's tools/ can change the validator mid-run.
+        copy = Path(tempfile.mkdtemp(prefix="quire-validator-"))
+        try:
+            shutil.copytree(Path(__file__).parent, copy / "validation", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            return subprocess.run([sys.executable, "-I", "-B", str(copy / "validation/validate.py"), *sys.argv[1:]],
+                                  env=dict(os.environ, QUIRE_VALIDATOR_REPO=str(ROOT))).returncode
+        finally:
+            shutil.rmtree(copy, ignore_errors=True)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", choices=["focused", "phase"], default="focused")
     parser.add_argument("--method-type", action="append", default=[], help="exact type(s) for a batch method gate; default: all project methods")
@@ -176,7 +175,20 @@ def main():
     try:
         # Everything the verdict depends on is loaded or built before any code under test runs; afterwards the seal
         # catches tests that rewrite maintainer-owned files or built outputs on disk.
-        import branch_coverage, integrity, method_coverage, mutate, ratchet  # noqa: F401
+        import branch_coverage, merge_gate, method_coverage, mutate, ratchet  # noqa: F401
+        import integrity as integrity_module
+        # Verdict inputs are read, and the source lint run, before any code under test can touch them.
+        baseline_path = args.baseline or ratchet.BASELINE
+        baseline = json.loads(baseline_path.read_text()) if baseline_path.is_file() else None
+        deviations = method_coverage.accepted_deviations(ROOT)
+        accepted_mutants = mutate.accepted()
+        lint_findings = integrity_module.lint(ROOT)
+        changed_names = None
+        if args.mutate_since:
+            changed_names = git_output("diff", "-z", "--no-renames", "--name-status", args.mutate_since)
+            if changed_names is None:
+                raise ValueError(f"cannot diff against {args.mutate_since}")
+        coverage_dir = Path(tempfile.mkdtemp(prefix="quire-coverage-"))
         build_flags = ["-m:1", "-nr:false", "-p:UseSharedCompilation=false", "-p:NuGetAudit=false"]
         tool = ROOT / "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj"
         tool_dir = holder["tool"] = Path(tempfile.mkdtemp(prefix="quire-audit-tool-"))
@@ -189,7 +201,19 @@ def main():
                 if result.returncode:
                     raise ValueError(f"build of {target.name} failed; inspect build.log")
         tool_digest = digest(files_under(tool_dir), tool_dir)
-        seal = Seal(ROOT, [ROOT / "tests" / p / "bin" for p in projects])
+        # Test assemblies are run directly rather than through their projects, so no MSBuild evaluation (which
+        # imports obj/*.props and *.targets that earlier tests could plant) happens after code under test has run.
+        assemblies = {}
+        for project in projects:
+            path = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
+                                   "-getProperty:TargetPath", "-nologo"], cwd=ROOT, capture_output=True, text=True,
+                                  timeout=args.timeout).stdout.strip()
+            if not path or not Path(path).is_file():
+                raise ValueError(f"{project}: built assembly not found ({path!r})")
+            assemblies[project] = Path(path)
+        late = [ROOT / "docs/mirror/type-map.csv", *sorted((ROOT / "docs/mirror/evidence").glob("*.md")),
+                *sorted((ROOT / "docs/mirror/manifest").glob("*"))]
+        seal = Seal(ROOT, late, [ROOT / "tests" / p / "bin" for p in projects])
         for project in projects:
             differential = "Differential" in project
             env = os.environ.copy()
@@ -200,7 +224,7 @@ def main():
                 env["QUIRE_METHOD_CASES"] = str(output / "method-cases")
                 env["QUIRE_VALIDATION_RUN"] = run
             trx = output / f"{project}.trx"
-            command = [args.dotnet, "test", str(ROOT / "tests" / project / f"{project}.csproj"), "--no-build",
+            command = [args.dotnet, "test", str(assemblies[project]),
                        "--logger", f"trx;LogFileName={trx.name}", "--results-directory", str(output)]
             if differential and args.diff_filter:
                 command += ["--filter", args.diff_filter]
@@ -222,7 +246,7 @@ def main():
                 env.pop("QUIRE_VALIDATION_RUN", None)
                 coverage_trx = output / f"{project}.coverage.trx"
                 coverage_command = [c if not c.startswith("trx;") else f"trx;LogFileName={coverage_trx.name}" for c in command]
-                coverage_command[coverage_command.index("--results-directory") + 1] = str(output / "coverage")
+                coverage_command[coverage_command.index("--results-directory") + 1] = str(coverage_dir)
                 coverage_command += ["--collect", "Code Coverage;Format=cobertura"]
                 item["coverage_command"] = coverage_command
                 print(f"Measuring branch coverage of {project}", flush=True)
@@ -231,7 +255,7 @@ def main():
                 seal.verify(f"{project} coverage run")
                 if result.returncode:
                     raise ValueError(f"{project}: coverage run exited {result.returncode}; inspect its log")
-                read_trx(output / "coverage" / coverage_trx.name, args.allow_differential_skips)
+                read_trx(coverage_dir / coverage_trx.name, args.allow_differential_skips)
         if any(p["skipped"] for p in report["projects"]):
             return 2
         from method_coverage import audit, passed_tests
@@ -254,21 +278,19 @@ def main():
         records = [json.loads(line) for path in (output / "method-cases").glob("*.jsonl")
                    for line in path.read_text().splitlines() if line]
         from branch_coverage import read_cobertura
-        cobertura = sorted((output / "coverage").rglob("*.cobertura.xml"))
+        cobertura = sorted(coverage_dir.rglob("*.cobertura.xml"))
         report["coverage_reports"] = [str(p) for p in cobertura]
         coverage = audit(json.loads(inventory_path.read_text()), records,
                          passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type,
-                         lines=read_cobertura(cobertura))
+                         lines=read_cobertura(cobertura), deviations=deviations)
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
         report["method_coverage"] = coverage["counts"]
         print(f"Method coverage: {coverage['counts']}; {output / 'method-coverage.json'}", flush=True)
-        from integrity import check
-        integrity = check(json.loads(inventory_path.read_text()))
+        integrity = integrity_module.check(json.loads(inventory_path.read_text()), findings=lint_findings)
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
         report["integrity"] = {"lint": len(integrity["lint"])}
         print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
-        import ratchet
-        ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.profile, args.baseline or ratchet.BASELINE)
+        ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.profile, baseline_path, baseline)
         (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
         report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"]}
         print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
@@ -277,16 +299,12 @@ def main():
         mutation_ok = True
         mutate_types = set(args.method_type) if args.mutate else set()
         if args.mutate_since:
-            baseline_path = args.baseline or ratchet.BASELINE
-            previous = json.loads(baseline_path.read_text()).get("tests") if baseline_path.is_file() else None
-            mutate_types |= changed_types(coverage, args.mutate_since, git_output, previous)
+            mutate_types |= changed_types(coverage, changed_names, (baseline or {}).get("tests"))
             report["mutate_since"] = args.mutate_since
         if mutate_types:
-            import mutate
             print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
-            host_dir = ROOT / "tests/Quire.Focused.Differential.Tests/bin/Debug/net10.0"
-            mutation = mutate.run(coverage, mutate_types, host_dir / "Quire.Differential.Tests.dll", "Quire.Mpl",
-                                  args.dotnet, args.jobs, args.timeout)
+            mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
+                                  args.dotnet, args.jobs, args.timeout, accepted_mutants)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors")}
@@ -295,7 +313,9 @@ def main():
         report["complete"] = coverage["complete"] and integrity["complete"] and mutation_ok
         # The merge gate needs green tests, no regression and no surviving mutant; completeness is the end goal.
         report["gate_passed"] = ratchet_report["ok"] and mutation_ok
-        return 0 if report["complete"] else 1
+        seal.verify("the run")
+        # 0: complete; 3: the merge gate's requirements hold but gaps remain; 1: blocked.
+        return 0 if report["complete"] else 3 if report["gate_passed"] else 1
     except (OSError, ValueError, KeyError, TypeError, ET.ParseError, subprocess.TimeoutExpired) as error:
         report["error"] = str(error)
         print(str(error), file=sys.stderr)

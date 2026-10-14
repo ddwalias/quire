@@ -29,6 +29,7 @@ src/*/obj/*
 *.slnx
 *.sln
 *.gitattributes
+*.gitignore
 *.editorconfig
 *.globalconfig
 

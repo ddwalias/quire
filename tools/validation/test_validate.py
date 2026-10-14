@@ -39,9 +39,9 @@ class ChangedTypeTests(unittest.TestCase):
             dict(type='Quire.Mcd.NumVal', source=[dict(file=f'{root}/src/Quire.Mpl/Mcd/NumVal.cs', lines=[1])],
                  cases=[dict(test='Quire.Differential.Tests.NumValDifferentialTests.Compare')])]}
 
-    def types(self, *names):
+    def types(self, *names, status='M'):
         from validate import changed_types
-        return changed_types(self.coverage, 'base', lambda *args: '\0'.join(names) + '\0')
+        return changed_types(self.coverage, ''.join(f'{status}\0{n}\0' for n in names))
 
     def test_changed_source_and_changed_tests_select_types(self):
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs'), {'Quire.Mcd.Dim'})
@@ -55,8 +55,10 @@ class ChangedTypeTests(unittest.TestCase):
     def test_cases_removed_from_a_changed_file_still_select_their_type(self):
         from validate import changed_types
         previous = {'Quire.Mcd.Dim::Pwr()': ['dimdifferentialtests'], 'Quire.Gone::X()': ['dimdifferentialtests']}
-        names = 'tests/Quire.Differential.Tests/DimDifferentialTests.cs\0'
-        self.assertEqual(changed_types(self.coverage, 'base', lambda *a: names, previous), {'Quire.Mcd.Dim'})
+        for status in 'MD':  # cases cut from the file, or the whole file deleted
+            names = f'{status}\0tests/Quire.Differential.Tests/DimDifferentialTests.cs\0'
+            self.assertEqual(changed_types(self.coverage, names, previous), {'Quire.Mcd.Dim'})
+        self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs', status='D'), set())
 
     def test_source_without_methods_selects_nothing(self):
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Kinds.cs'), set())
@@ -68,34 +70,28 @@ class ChangedTypeTests(unittest.TestCase):
 
 
 class SealTests(unittest.TestCase):
-    def test_changes_to_protected_files_or_outputs_detected(self):
-        import subprocess
+    def test_changes_to_late_read_files_or_outputs_detected(self):
         from validate import Seal
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            subprocess.run(['git', 'init', '-q'], cwd=root, check=True)
-            (root / 'tools').mkdir()
-            (root / 'tools/ratchet.py').write_text('real')
-            (root / 'src').mkdir()
-            (root / 'src/Work.cs').write_text('work')
+            (root / 'docs').mkdir()
+            (root / 'docs/type-map.csv').write_text('map')
             (root / 'bin').mkdir()
             (root / 'bin/Harness.dll').write_bytes(b'a')
-            (root / '.gitignore').write_text('bin/\n')
-            subprocess.run(['git', 'add', '-A'], cwd=root, check=True)
-            subprocess.run(['git', '-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-qm', 'x'], cwd=root, check=True)
-            (root / 'src/Work.cs').write_text('already modified before the run')
-            seal = Seal(root, [root / 'bin'])
-            seal.verify('run')
-            for change in (lambda: (root / 'tools/ratchet.py').write_text('forged'),
-                           lambda: (root / 'src/Work.cs').write_text('rewritten during the run'),
-                           lambda: (root / 'src/New.cs').write_text('planted'),
-                           lambda: (root / 'Directory.Build.targets').write_text('<Project/>'),
+            (root / 'src.cs').write_text('read before tests; not sealed')
+            def seal():
+                return Seal(root, [root / 'docs/type-map.csv', root / 'docs/absent.md'], [root / 'bin'])
+            unchanged = seal()
+            (root / 'src.cs').write_text('changed')
+            unchanged.verify('run')
+            for change in (lambda: (root / 'docs/type-map.csv').write_text('forged'),
+                           lambda: (root / 'docs/absent.md').write_text('planted'),
                            lambda: (root / 'bin/Harness.dll').write_bytes(b'b'),
                            lambda: (root / 'bin/planted.dll').write_bytes(b'c')):
-                seal = Seal(root, [root / 'bin'])
+                sealed = seal()
                 change()
                 with self.subTest(change=change), self.assertRaises(ValueError):
-                    seal.verify('run')
+                    sealed.verify('run')
 
 
 if __name__ == "__main__":

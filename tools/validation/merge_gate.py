@@ -7,6 +7,7 @@ Run from the checkout that has the base branch checked out:
 import argparse
 import fnmatch
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -126,7 +127,9 @@ def main():
     outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-'))).resolve()
     outputs.mkdir(parents=True, exist_ok=True)
     results = outputs / 'run'
-    git('worktree', 'add', '--detach', str(tree), tip)
+    # A separate clone, not a worktree: code under test never sees this repository's .git, hooks or config.
+    git('clone', '-q', '--no-local', '--no-checkout', str(ROOT), str(tree))
+    git('-c', 'advice.detachedHead=false', 'checkout', '-q', tip, cwd=tree)
     try:
         if not args.allow_protected:
             # Validate with main's harness, whatever the branch contains.
@@ -134,34 +137,53 @@ def main():
             restore = protected(base_files, rules)
             if restore:
                 git('checkout', base, '--', *restore, cwd=tree)
-        command = [sys.executable, str(tree / 'tools/validation/validate.py'), '--results', str(results),
+        command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
                    '--mutate-since', base, '--write-baseline', str(outputs / 'baseline.json'),
                    '--timeout', str(args.timeout)]
         print('Validating:', ' '.join(command), flush=True)
-        subprocess.run(command, cwd=tree)
+        code = subprocess.run(command, cwd=tree).returncode
         summary_path = results / 'summary.json'
         summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {'error': 'no summary written'}
         reasons = verdict(summary)
+        # 0: complete; 3: gate passed with known gaps. Anything else (crash, kill) blocks whatever the summary says.
+        if code not in (0, 3):
+            reasons.insert(0, f'validator exited {code}')
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
-                  'results': str(results), 'reasons': reasons}
+                  'results': str(results), 'validator_exit': code, 'reasons': reasons}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
         if reasons:
             print('BLOCKED:\n  ' + '\n  '.join(reasons) + f'\nResults: {results}')
             return 1
         print(f'PASSED: {args.branch} ({tip[:12]}); results {results}')
         if args.apply:
-            shutil.copyfile(outputs / 'baseline.json', tree / 'docs/mirror/validation-baseline.json')
-            git('add', 'docs/mirror/validation-baseline.json', cwd=tree)
-            if subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=tree).returncode:
-                git('commit', '-q', '-m', f'Update validation baseline after merging {args.branch}',
-                    '-m', f'Merge gate results: {results}', cwd=tree)
-            merged = git('rev-parse', 'HEAD', cwd=tree)
-            git('merge', '--ff-only', merged)
+            merged = baseline_commit(tip, outputs / 'baseline.json', args.branch, results)
+            git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', merged)
             print(f'MERGED: {args.base} -> {merged[:12]}')
         return 0
     finally:
-        git('worktree', 'remove', '--force', str(tree), check=False)
+        shutil.rmtree(tree, ignore_errors=True)
 
+
+def baseline_commit(tip, baseline, branch, results, repo=ROOT):
+    """The tip's committed tree plus the new baseline, built from objects rather than any working tree, so nothing
+    the validated code did to its checkout can reach the merge."""
+    with tempfile.TemporaryDirectory() as scratch:
+        env = dict(os.environ, GIT_INDEX_FILE=str(Path(scratch) / 'index'))
+        def run(*command):
+            return subprocess.run(['git', '-c', 'core.hooksPath=/dev/null', *command], cwd=repo, env=env, check=True,
+                                  capture_output=True, text=True).stdout.strip()
+        run('read-tree', tip)
+        blob = run('hash-object', '-w', str(baseline))
+        run('update-index', '--add', '--cacheinfo', f'100644,{blob},docs/mirror/validation-baseline.json')
+        tree = run('write-tree')
+        if tree == run('rev-parse', f'{tip}^{{tree}}'):
+            return tip
+        commit = run('commit-tree', tree, '-p', tip, '-m', f'Update validation baseline after merging {branch}',
+                     '-m', f'Merge gate results: {results}')
+    changed = git('diff', '--name-only', tip, commit, cwd=repo).splitlines()
+    if changed != ['docs/mirror/validation-baseline.json']:
+        raise RuntimeError(f'baseline commit changed {changed}')
+    return commit
 
 if __name__ == '__main__':
     sys.exit(main())

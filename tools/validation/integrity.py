@@ -14,7 +14,7 @@ ARTIFACTS = [
     ('goto statement', re.compile(r'\bgoto\b')),
     ('compiler-generated name', re.compile(r'CS\$|<>[A-Za-z0-9_]|<[A-Za-z_]\w*>[a-z]__')),
     ('IL offset label', re.compile(r'\bIL_[0-9A-Fa-f]{4}\b')),
-    ('decompiler comment', re.compile(r'ILSpy|//\s*Warning:|/\*\s*(Error|OpCode not supported)')),
+    ('decompiler comment', re.compile(r'(?i)ilspy|//\s*Warning:|/\*\s*(Error|OpCode not supported)|^\s*//\s*(SHA-256|MVID):')),
     ('decompiler local name', re.compile(
         r'\b(?:var|[A-Za-z_][\w.]*(?:<[^;=()]*>)?(?:\[,*\])*\??)\s+'
         r'(?:num|flag|obj|text|array|list|type|val|item|ex|result|enumerator|dictionary|disposable)\d+\b'
@@ -26,6 +26,9 @@ ARTIFACTS = [
 # defence in depth only; test diffs still need review.
 TEST_RULES = [
     ('global using', re.compile(r'^\s*global\s+using\b')),
+    ('assembly or module attribute', re.compile(r'\[\s*(assembly|module)\s*:')),
+    ('file-local type', re.compile(r'\bfile\s+(?:(?:static|sealed|abstract|partial|readonly|unsafe|ref)\s+)*'
+                                   r'(?:class|struct|record|interface|enum|delegate)\b')),
     ('forbidden test API', re.compile(
         r'\b(?:Environment|AppContext|Location|System\.IO|File|Directory|Path|Process|ModuleInitializer|DllImport|'
         r'LibraryImport|Emit|AssemblyLoadContext|Marshal|GetMethodBody|GetILAsByteArray|GetTypes|GetAssemblies|'
@@ -142,8 +145,11 @@ def test_types(inventory, repo=ROOT):
         def problem(text):
             findings.append({'file': 'Quire.Differential.Tests.dll', 'line': 0, 'rule': 'test assembly type',
                              'match': name, 'text': f'{name}: {text}'})
+        if re.match(r'<(>f__AnonymousType|PrivateImplementationDetails>|>[a-z]__)', name):
+            continue  # Compiler-emitted helpers (anonymous types, constant data, inline arrays).
         if name.startswith('<'):
-            continue  # Only a compiler can produce these names.
+            problem('compiler-named type, such as a file-local class; cannot attribute it')
+            continue
         if not documents:
             problem('no source lines; cannot attribute the type to a file')
             continue
@@ -160,8 +166,9 @@ def test_types(inventory, repo=ROOT):
     return findings
 
 
-def check(inventory, repo=ROOT):
-    findings = lint(repo) + test_types(inventory, repo)
+def check(inventory, repo=ROOT, findings=None):
+    """`findings`: the source lint, when the caller ran it before code under test could touch the sources."""
+    findings = (lint(repo) if findings is None else list(findings)) + test_types(inventory, repo)
     return {'complete': not findings, 'lint': findings}
 
 
