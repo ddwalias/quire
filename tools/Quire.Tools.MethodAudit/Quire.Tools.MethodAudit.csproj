@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework></PropertyGroup>
+  <ItemGroup>
+    <!-- Reuse the metadata decoder as source; inspect Windows assemblies without loading them. -->
+    <Compile Include="../Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
+    <Compile Include="../Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
+  </ItemGroup>
+</Project>

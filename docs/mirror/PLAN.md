@@ -33,7 +33,10 @@ Stable rule numbers/anchor for D9 and existing reports.
    applicable licensing/legal constraints still need confirming.
 3. **Tests:** Implement independently from contracts; no proprietary bodies/pseudocode. Behavior/regression tests
    mandatory. Verified means direct Mathcad comparison for recorded cases only; skips, REA, or inferred cases
-   do not prove equivalence.
+   do not prove equivalence. Run the [direct-method validation gate](validation.md#direct-comparison-for-every-method)
+   for the selected scope: every method with a body, including private methods, needs an artifact-bound direct
+   Mathcad comparison from a passing test in the current run. Public-caller coverage does not satisfy private
+   method validation. Report all remaining gaps; a scoped pass is not project-wide completion.
 4. **Deviation:** Before relying on a departure, require an explicitly accepted, tested
    [ledger entry](deviations.md) with evidence, behavior, rationale, impact, revisit plan, decision.
    Report separately from matches. Notes authorize nothing; unknowns stay open, bugs need fixing.

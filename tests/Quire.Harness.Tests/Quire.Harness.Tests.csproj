@@ -14,5 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="../Quire.Differential.Tests/Reflect.cs" Link="Reflect.cs" />
+    <Compile Include="../Quire.Differential.Tests/MethodComparison.cs" Link="MethodComparison.cs" />
   </ItemGroup>
 </Project>

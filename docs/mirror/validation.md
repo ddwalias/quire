@@ -18,6 +18,9 @@ sources through `Quire.Focused.Differential.Tests`. Omit `--diff-filter` for all
 comparisons; use a VSTest expression such as
 `FullyQualifiedName~MatVal|FullyQualifiedName~MatDim|FullyQualifiedName~FunctionMatrix`
 for the matrix slice. The filter applies only to differential tests. It does not filter regressions.
+After test execution, every selected method must pass the direct method gate described below.
+The existing test suite has not yet been migrated to this requirement; passing tests can therefore
+still produce a failing validation report with precise coverage gaps.
 This profile covers mplrun, not engine/UI/other-project behavior; also run affected tests there.
 
 The focused project links the differential sources, targets `net10.0`, and references only
@@ -47,7 +50,7 @@ python3 -m unittest discover -s tools/validation -p 'test_*.py'
 dotnet test tests/Quire.Harness.Tests/Quire.Harness.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false
 ```
 
-These check rejection of false-green reports, reflection ambiguity/missing members, static versus
+These check per-method record validation and rejection of false-green reports, reflection ambiguity/missing members, static versus
 instance calls, ref parameter selection/mutation, propagation of formatter failures, comparison
 of actual target and deferred iterator exceptions, and detection of differing outcomes.
 Differential tests run serially because they change runtime defaults/caches on both sides.
@@ -59,6 +62,71 @@ match. Missing members or ambiguous selection are harness errors, never comparab
 Use an explicit result renderer when fields, type, dimensions, identity or mutation matter:
 `Side.Show` falls back to type names for unrecognized mirrored objects, so equal text alone may
 omit relevant state. Do not use a vacuous scenario; `Scenario.Compare` requires outcomes on both sides.
+
+## Direct comparison for every method
+
+The validator now audits compiled method definitions, independently of the reduced shape/status
+inventory. It includes **private/public/protected/internal methods, constructors, static constructors,
+property getters/setters, event add/remove methods, explicit interface implementations and overloads**.
+Methods on non-mirrored helper types are included too, so missing Mathcad counterparts are visible.
+Compiler-generated types/names are explicitly reported as excluded under PLAN's scope rule.
+Matching abstract methods and CLR delegate declarations without bodies are reported separately as
+declaration-only. A Quire-only/deviation/status annotation does not silently exempt a method from
+this strict comparison policy; methods without counterparts need reviewed resolution.
+
+Private methods require **direct invocation on both artifacts**. Calling a public method that happens
+to reach the private method does not count. The same conservative policy applies to other methods.
+The metadata audit checks `MirrorOf` against the reviewed type map, then matches declaring types, assembly-qualified parameter/return
+types, generic arity and static/instance signatures, and checks accessibility. It records both tokens,
+versions, MVIDs and SHA-256 values. Existing shape/status checks remain necessary for broader shape,
+inheritance, constraints, evidence classifications and phase closure requirements.
+
+`method-inventory.json` is the complete compiled inventory for the selected project(s).
+`method-coverage.json` identifies each method as compared, declaration-only, excluded or missing,
+with reasons, exact identities, case/test/contract references and totals by accessibility.
+Validation fails if **any** selected method lacks a direct passing comparison. `Verified` attributes
+and existing test-class names alone do not count. Stubs and blocked methods cannot pass this gate.
+
+For a batch, add `--method-type Quire.Mcd.Dim` (repeat for multiple exact declaring types). The report
+records that scope; a scoped pass is not a project-wide pass. Unknown types and empty selections fail.
+The focused default audits every method in Quire.Mpl; the Windows phase profile audits all manifest
+projects and disallows type filters. A differential filter selects tests, not covered methods: selecting
+too few tests makes the method gate fail rather than shrinking its method inventory.
+
+### Writing an attributable case
+
+Use `MethodComparison.Compare` inside an xUnit fact/theory. See
+`tests/Quire.Differential.Tests/PrivateMethodCoverageTests.cs` for a runnable private-method example.
+Select each overload with its exact parameter types and `DeclaredOnly`; choose the actual override
+when virtual dispatch could select another body. Close generic types/methods explicitly.
+
+```csharp
+MethodComparison.Compare("specific input and edge condition", "Mcd.Dim",
+    quireMethod, quireTarget, quireArguments,
+    originalMethod, originalTarget, originalArguments,
+    quireShow: DescribeQuireResult,
+    originalShow: DescribeOriginalResult);
+```
+
+The second argument names a contract record in `docs/mirror/evidence` without `.md`. The record must
+contain the actual original token, SHA-256 and MVID. The helper invokes each selected body and asserts
+matching rendered inputs, outcomes and mutated ref/out arguments. Object/array/constructor results
+require explicit renderers. Instance methods also require `quireState` and `originalState` callbacks
+that describe relevant target state before and after invocation. Include relevant fields, dimensions,
+identity relationships, mutation, events, side effects and error details in observers or further test
+assertions as required by that method's contract; a constant renderer is not a useful test.
+
+The normal validator sets a fresh run ID and output directory. After a comparison passes, the helper
+writes a case record bound to the actual loaded assemblies and executing xUnit method. The gate
+accepts it only when that **same test passes in this run's TRX** and the recorded contract remains
+unchanged. Records for another token, overload, artifact, MVID or run do not cover a method. Failed,
+skipped, aborted, missing or stale tests cannot supply coverage. Tests using other comparison helpers
+must migrate to this API before they count; existing passing behavior tests are not reclassified.
+No method status is upgraded automatically.
+
+This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
+for every possible input, or determine whether a case and its observers fully express the contract.
+Review test quality and retain the analysis and independent-review requirements of PLAN.
 
 ## Windows and phase closure
 
@@ -107,3 +175,20 @@ methods competed; `Function.Apply` needed an exact array signature; the `DimVal.
 scenario omitted `Double` from its explicit signature. Fixing these selected the intended bodies,
 and the resulting full runtime comparisons passed. Result-rendering errors now escape comparison,
 while deferred iterator execution remains part of the comparable runtime operation.
+
+### Direct-method gate audit (2026-10-14)
+
+The metadata audit, focused differential and harness projects build successfully. Supplementary
+direct invocation passed **18 harness facts** and the new private `Dim.intern(int[])` comparison fact
+(**5 recorded cases**, including repeated identities, retained input storage and an exception case). Python gate checks: **13 passed**. The gate tests
+cover private/public-caller distinction, missing constructors/accessors/initializers/explicit methods,
+stale runs/binaries, wrong overloads, failed tests, changed contracts, stubs, unmatched methods,
+empty scopes and the separate bodyless/compiler categories. The original VSTest socket restriction
+still applies; no normal test-run or phase closure success is claimed.
+
+A supplementary audit of the isolated baseline inventoried **2,047 method declarations**, including
+**199 private declarations** and **276 constructors/type initializers**. With only the new attributable
+private comparison, it reported **1 compared / 165 declaration-only / 67 compiler exclusions /
+1,814 missing**. Private results were **1 compared / 43 compiler exclusions / 155 missing**. This is
+an intentionally failing project-wide coverage report; existing tests must be attributed before their
+methods count. These counts describe the isolated baseline, not the concurrently changing implementation.
