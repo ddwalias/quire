@@ -12,8 +12,8 @@ public abstract partial class DimVal
     [MirrorAnalyzed("Mcd.MatVal")]
     public virtual MatVal extend_1(int i)
     {
-        if(i<0) AppException.Raise("index out of bounds",2u);
-        return new MatVal(i+1);
+        if (i < 0) AppException.Raise("index out of bounds", 2u);
+        return new MatVal(i + 1, 1, false, System.Math.Max(i + 1, 4));
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     public virtual MatVal extend_2(int i,int j)

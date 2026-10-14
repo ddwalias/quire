@@ -100,8 +100,12 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static Units GetUnits(Dim d, bool simplify)
     {
-        int[] coordinates = (d ?? Dim.identity).Coordinates;
-        return simplify ? RuntimeOptions.the_unit_system.Simplify(coordinates) : RuntimeOptions.the_unit_system.Normalize(coordinates);
+        int[] coordinates = (d != null ? d.Coordinates : Dim.identity.Coordinates);
+        if (!simplify)
+        {
+            return RuntimeOptions.the_unit_system.Normalize(coordinates);
+        }
+        return RuntimeOptions.the_unit_system.Simplify(coordinates);
     }
 
     [MirrorVerified("DimValDifferentialTests")]
@@ -370,13 +374,16 @@ public abstract partial class DimVal
     }
 
     [MirrorVerified("DimValDifferentialTests")]
-    public static void OnError(uint a, string m, int i, int j) => AppException.Raise($"{m}\t{i}\t{j}", a);
+    public static void OnError(uint a, string m, int i, int j) =>
+        AppException.Raise(string.Format("{0}\t{1}\t{2}", m, i, j), a);
 
     [MirrorVerified("DimValDifferentialTests")]
-    public static void OnError(uint a, string m, int i) => AppException.Raise($"{m}\t{i}", a);
+    public static void OnError(uint a, string m, int i) =>
+        AppException.Raise(string.Format("{0}\t{1}", m, i), a);
 
     [MirrorVerified("DimValDifferentialTests")]
-    public static void OnError(uint a, string m, object thing) => AppException.Raise($"{m}\t{thing}", a);
+    public static void OnError(uint a, string m, object thing) =>
+        AppException.Raise(string.Format("{0}\t{1}", m, thing), a);
 
     /// <summary>
     /// Raises "too_many_arguments1\tactual" when one argument was required and more were given,
@@ -386,9 +393,21 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static object WrongNumberOfArguments(int required, int actual, uint errpos)
     {
-        if (required >= actual) OnError(errpos, "too_few_arguments", required, actual);
-        else if (required == 1) OnError(errpos, "too_many_arguments1", actual);
-        else OnError(errpos, "too_many_arguments", required, actual);
+        if (required < actual)
+        {
+            if (required == 1)
+            {
+                OnError(errpos, "too_many_arguments1", actual);
+            }
+            else
+            {
+                OnError(errpos, "too_many_arguments", required, actual);
+            }
+        }
+        else
+        {
+            OnError(errpos, "too_few_arguments", required, actual);
+        }
         return null;
     }
 
