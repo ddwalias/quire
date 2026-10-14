@@ -7,8 +7,8 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `Initialize([System.Runtime]System.String)->[System.Runtime]System.Void` | 0x060000b5 | Declaration only; Initialize([System.Runtime]System.String)->[System.Runtime]System.Void | REA metadata and same-artifact reference index; no body | Abstract |
-| `VerifyIntegrity()->[System.Runtime]System.Boolean` | 0x060000b6 | Declaration only; VerifyIntegrity()->[System.Runtime]System.Boolean | REA metadata and same-artifact reference index; no body | Abstract |
+| `Initialize([System.Runtime]System.String)->[System.Runtime]System.Void` | 0x060000b5 | Declaration only; Initialize([System.Runtime]System.String)->[System.Runtime]System.Void | REA metadata and same-artifact reference index; original declaration has no body; Quire has a generated MirrorStub body | Stub |
+| `VerifyIntegrity()->[System.Runtime]System.Boolean` | 0x060000b6 | Declaration only; VerifyIntegrity()->[System.Runtime]System.Boolean | REA metadata and same-artifact reference index; original declaration has no body; Quire has a generated MirrorStub body | Stub |
 | `get_WorkerStackSize()->[System.Runtime]System.Int32` | 0x060000b7 | Declaration only; get_WorkerStackSize()->[System.Runtime]System.Int32 | REA metadata and same-artifact reference index; no body | Abstract |
 | `set_WorkerStackSize([System.Runtime]System.Int32)->[System.Runtime]System.Void` | 0x060000b8 | Declaration only; set_WorkerStackSize([System.Runtime]System.Int32)->[System.Runtime]System.Void | REA metadata and same-artifact reference index; no body | Abstract |
 | `NewEngine()->[iengine]Engine.IEngine` | 0x060000b9 | Declaration only; NewEngine()->[iengine]Engine.IEngine | REA metadata and same-artifact reference index; no body | Abstract |
@@ -16,7 +16,7 @@
 
 ## Test cases
 
-Observed from the installed iengine metadata and same-artifact member index. These are interface/delegate declarations or enum constants; there are no method bodies to reconstruct or invoke.
+Observed from the installed iengine metadata and same-artifact member index. The original members are declarations without implementation bodies. Quire provides generated MirrorStub default bodies for rows marked Stub; rows marked Abstract are bare Quire interface declarations. No executable original body is available to reconstruct or invoke.
 
 ## Open
 
