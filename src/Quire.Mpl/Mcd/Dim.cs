@@ -72,8 +72,7 @@ public sealed partial class Dim
     [MirrorTested("Mcd.Dim")]
     private Dim(int[] v)
     {
-        m_vec = v;
-        s_map.Add(v, this);
+        s_map.Add(m_vec = v, this);
     }
 
     /// <summary>A marker: zero coordinates, not interned.</summary>
@@ -85,7 +84,8 @@ public sealed partial class Dim
     [MirrorVerified("DimDifferentialTests")]
     private static Dim intern(int[] v)
     {
-        if (s_map[v] is Dim d) return d;
+        object obj = s_map[v];
+        if (obj != null) return (Dim)obj;
         if (v == s_vec) s_vec = new int[s_rank];
         return new Dim(v);
     }
@@ -128,7 +128,7 @@ public sealed partial class Dim
     /// (formatted, null as unitless) for argument <paramref name="a"/>.</summary>
     [MirrorVerified("DimDifferentialTests")]
     public static void OnError(string m, Dim d, Dim e, uint a) =>
-        AppException.Raise($"{m}\t{FixDimension(d).Format()}\t{FixDimension(e).Format()}", a);
+        AppException.Raise(string.Format("{0}\t{1}\t{2}", m, FixDimension(d).Format(), FixDimension(e).Format()), a);
 
     [MirrorVerified("DimDifferentialTests")]
     public static Dim Parse(string signature) => New(Type.Parse(signature).GetDimensionTypeProduct());
@@ -156,7 +156,7 @@ public sealed partial class Dim
     public static bool IsDimensioned(Dim x)
     {
         if (x == null) return false;
-        for (int i = 0; i != s_rank; i++)
+        for (int i = 0, n = s_rank; i < n; i++)
             if (x.m_vec[i] != 0) return true;
         return false;
     }
@@ -187,7 +187,8 @@ public sealed partial class Dim
     [MirrorVerified("DimDifferentialTests")]
     public static Dim Id(Dim x, uint a)
     {
-        if (Id_b(x)) return identity;
+        if (x == identity || x == null || x == mcd_zero)
+            return identity;
         OnError("bad_dimensions_unitless", x, a);
         return null;
     }
@@ -221,9 +222,18 @@ public sealed partial class Dim
     [MirrorVerified("DimDifferentialTests")]
     public static Dim Mult(Dim x, Dim y)
     {
-        if (x == identity || y == null) return y == mcd_zero ? identity : y;
-        if (y == identity || x == null) return x == mcd_zero ? identity : x;
-        for (int i = 0; i != s_rank; i++) s_vec[i] = x.m_vec[i] + y.m_vec[i];
+        if (x == identity || y == null)
+        {
+            if (y == mcd_zero) return identity;
+            return y;
+        }
+        if (y == identity || x == null)
+        {
+            if (x == mcd_zero) return identity;
+            return x;
+        }
+        for (int i = 0, n = s_rank; i < n; i++)
+            s_vec[i] = x.m_vec[i] + y.m_vec[i];
         return intern();
     }
 
@@ -237,7 +247,8 @@ public sealed partial class Dim
         if (y == identity || x == null) return x;
         if (y == null) return null;
         if (x == y) return identity;
-        for (int i = 0; i != s_rank; i++) s_vec[i] = x.m_vec[i] - y.m_vec[i];
+        for (int i = 0, n = s_rank; i < n; i++)
+            s_vec[i] = x.m_vec[i] - y.m_vec[i];
         return intern();
     }
 
@@ -251,7 +262,8 @@ public sealed partial class Dim
     {
         if (x == identity || x == null || e == 1.0) return x;
         if (e == 0.0) return identity;
-        for (int i = 0; i != s_rank; i++) s_vec[i] = (int)Math.Round(x.m_vec[i] * e, 0);
+        for (int i = 0, n = s_rank; i < n; i++)
+            s_vec[i] = (int)Math.Round(x.m_vec[i] * e, 0);
         return intern();
     }
 
