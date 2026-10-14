@@ -1,14 +1,17 @@
 #nullable disable
 using System.Collections;
+using Quire.Mirror;
 
 namespace Quire.Engine;
 
 /// <summary>Reports that node <paramref name="h"/> (added with <paramref name="client_cookie"/>) reached status
 /// <paramref name="s"/>. The trigger arguments name the node whose change caused the update, when known.</summary>
+[MirrorOf("Engine.NodeCallback, iengine")]
 public delegate void NodeCallback(int h, NodeStatus s, int client_cookie, int trigger_handle, int trigger_cookie);
 
 public delegate void BooleanCallback(bool A_0);
 
+[MirrorOf("Engine.NodeStatus, iengine")]
 public enum NodeStatus
 {
     NODE_INVALID = 0,
