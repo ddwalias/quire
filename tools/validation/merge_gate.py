@@ -90,7 +90,7 @@ def clone(tip, tree, repo=ROOT):
     nor, without the origin remote and the reflogs (`clone: from <path>`), its path."""
     git('clone', '-q', '--no-local', '--no-checkout', str(repo), str(tree), cwd=repo)
     git('remote', 'remove', 'origin', cwd=tree)
-    shutil.rmtree(Path(tree) / '.git/logs')
+    shutil.rmtree(Path(tree) / '.git/logs', ignore_errors=True)  # absent under core.logAllRefUpdates=false
     git('-c', 'advice.detachedHead=false', 'checkout', '-q', tip, cwd=tree)
 
 
@@ -215,7 +215,7 @@ def baseline_commit(tip, baseline, branch, results, repo=ROOT):
             return subprocess.run(['git', '-c', 'core.hooksPath=/dev/null', *command], cwd=repo, env=env, check=True,
                                   capture_output=True, input=data).stdout.decode().strip()
         run('read-tree', tip)
-        blob = run('hash-object', '-w', '--stdin', data=baseline)
+        blob = run('hash-object', '-w', '--stdin', '--path', 'docs/mirror/validation-baseline.json', data=baseline)
         run('update-index', '--add', '--cacheinfo', f'100644,{blob},docs/mirror/validation-baseline.json')
         tree = run('write-tree')
         if tree == run('rev-parse', f'{tip}^{{tree}}'):

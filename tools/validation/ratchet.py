@@ -3,24 +3,38 @@ committed baseline."""
 from collections import Counter
 import json
 from pathlib import Path
+from method_coverage import UNTESTED
 from validate import ROOT, test_class
 
 BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
-SCHEMA = 2
+SCHEMA = 3
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
 # Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
-BAD = ('missing', 'structure_mismatch', 'uncovered', 'verified_unsupported')
+# A method moves through these stages in the order the audit checks them; fixing one exposes the next, so a method
+# may move forward between unfinished states but never back. Per type, the unfinished methods may not grow in number.
+STAGES = ('no_counterpart', 'missing', 'structure_mismatch', 'untested', 'uncovered', 'compared')
+UNFINISHED = ('missing', 'structure_mismatch', 'uncovered')
 
 
 def snapshot(coverage, integrity, profile):
     """Identities, not just counts, so fixing one finding cannot pay for a new one."""
     return {'schema': SCHEMA, 'profile': profile, 'types': coverage['by_type'],
-            'methods': {f"{m['type']}::{m['signature']}":
-                        m['validation'] if m.get('original') or m['validation'] == 'excluded' else 'no_counterpart'
-                        for m in coverage['methods']},
+            'methods': {f"{m['type']}::{m['signature']}": stage(m) for m in coverage['methods']},
             'tests': {f"{m['type']}::{m['signature']}": sorted({test_class(c['test']) for c in m['cases']})
                       for m in coverage['methods'] if m.get('cases')},
             'lint': sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint'])}
+
+
+def stage(method):
+    if not method.get('original') and method['validation'] != 'excluded':
+        return 'no_counterpart'
+    if method['validation'] == 'missing' and method.get('reason') == UNTESTED:
+        return 'untested'
+    return method['validation']
+
+
+def forward(old, new):
+    return old in STAGES and new in STAGES and STAGES.index(new) > STAGES.index(old)
 
 
 def compare(baseline, current, scoped=False):
@@ -42,7 +56,7 @@ def compare(baseline, current, scoped=False):
         old = old_methods.get(name)
         if old is None and state == 'no_counterpart':
             regressions.append(f'{name}: new method has no Mathcad counterpart')
-        elif old is not None and state != old and state != 'compared':
+        elif old is not None and state != old and state != 'compared' and not forward(old, state):
             regressions.append(f'{name}: {old} became {state}')
     for name, counts in sorted(new_types.items()):
         old = old_types.get(name)
@@ -54,9 +68,11 @@ def compare(baseline, current, scoped=False):
                 if key == 'total' else (counts[key], old.get(key, 0))
             if now < before:
                 regressions.append(f'{name}: {key} fell from {before} to {now}')
-        for key in BAD:
-            if counts[key] > old.get(key, 0):
-                regressions.append(f'{name}: {key} rose from {old.get(key, 0)} to {counts[key]}')
+        now, before = sum(counts[k] for k in UNFINISHED), sum(old.get(k, 0) for k in UNFINISHED)
+        if now > before:
+            regressions.append(f'{name}: unfinished methods rose from {before} to {now}')
+        if counts['verified_unsupported'] > old.get('verified_unsupported', 0):
+            regressions.append(f"{name}: verified_unsupported rose from {old.get('verified_unsupported', 0)} to {counts['verified_unsupported']}")
     if not scoped:
         for finding in sorted((Counter(current['lint']) - Counter(baseline.get('lint', []))).elements()):
             regressions.append(f'new lint: {finding}')

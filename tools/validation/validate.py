@@ -95,10 +95,9 @@ def resolve_dotnet(name, root):
     found = shutil.which(name)
     if not found:
         raise ValueError(f"dotnet CLI {name!r} not found")
-    path = Path(found).resolve()
-    if path.is_relative_to(Path(root).resolve()):
-        raise ValueError(f"dotnet CLI {path} lies inside the repository under validation")
-    return str(path)
+    if Path(found).resolve().is_relative_to(Path(root).resolve()):
+        raise ValueError(f"dotnet CLI {found} lies inside the repository under validation")
+    return os.path.abspath(found)  # not resolved: a launcher such as snap's picks its tool by the name it is run as
 
 
 def changed_types(coverage, name_status, previous=None):
@@ -296,7 +295,7 @@ def main():
                 if not collectors[project] or not Path(collectors[project]).is_dir():
                     raise ValueError(f"{project}: no coverage collector; does it reference Microsoft.NET.Test.Sdk?")
                 coverage_command += ["--collect", "Code Coverage;Format=cobertura",
-                                     "--test-adapter-path", collectors[project]]
+                                     "--test-adapter-path", str(Path(collectors[project]))]
                 item["coverage_command"] = coverage_command
                 print(f"Measuring branch coverage of {project}", flush=True)
                 with (output / f"{project}.coverage.log").open("w") as log, sdk_directory(global_json) as sdk:
@@ -363,7 +362,8 @@ def main():
         seal.verify("the run")
         # Written only now that no code under test runs again; the merge gate still checks it against main's.
         if args.write_baseline:
-            args.write_baseline.write_text(json.dumps(ratchet_report["snapshot"], indent=2, sort_keys=True) + "\n")
+            args.write_baseline.write_text(json.dumps(ratchet_report["snapshot"], indent=2, sort_keys=True) + "\n",
+                                           newline="\n")
         # 0: complete; 3: the merge gate's requirements hold but gaps remain; 1: blocked.
         return 0 if report["complete"] else 3 if report["gate_passed"] else 1
     except (OSError, ValueError, KeyError, TypeError, ET.ParseError, subprocess.TimeoutExpired) as error:

@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 import unittest
 from unittest import mock
+import ratchet
 import merge_gate
 from merge_gate import (baseline_commit, baseline_regressions, case_collisions, on_branch, patterns, protected,
                         unvalidated_paths, verdict)
@@ -100,7 +101,7 @@ class MergeGateTests(unittest.TestCase):
 
 class RepositoryTests(unittest.TestCase):
     """Against a scratch repository: `main` holds a baseline and the protected rules; `work` adds a document."""
-    BASELINE = {'schema': 2, 'profile': 'focused', 'types': {'T': {
+    BASELINE = {'schema': ratchet.SCHEMA, 'profile': 'focused', 'types': {'T': {
         'compared': 1, 'total': 2, 'missing': 1, 'structure_mismatch': 0, 'uncovered': 0, 'verified_unsupported': 0}},
         'methods': {'T::A()': 'compared', 'T::B()': 'missing'}, 'tests': {}, 'lint': []}
 
@@ -132,7 +133,7 @@ class RepositoryTests(unittest.TestCase):
         self.assertEqual(self.regressions(self.BASELINE), [])
         self.assertEqual(self.regressions(dict(self.BASELINE, methods={'T::A()': 'compared', 'T::B()': 'compared'})), [])
         for baseline, reason in [
-                ('{"schema": 2,', 'unusable'), ('[]', 'unusable'), ('', 'unusable'), ({'profile': 'focused'}, 'schema'),
+                ('{"schema": 3,', 'unusable'), ('[]', 'unusable'), ('', 'unusable'), ({'profile': 'focused'}, 'schema'),
                 (dict(self.BASELINE, methods={'T::A()': 'missing', 'T::B()': 'missing'}), 'compared became missing'),
                 (dict(self.BASELINE, types={}), 'type disappeared'),
                 (dict(self.BASELINE, lint=['a.cs | goto statement | goto x;']), 'new lint'),

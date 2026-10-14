@@ -49,6 +49,11 @@ def member(method):
     return f"{method['type']}::{re.split(r'[`(]', method['signature'])[0]}"
 
 
+# The one 'missing' reason reached only after the structure check passed: such a method is further along than one
+# whose structure still differs.
+UNTESTED = 'No direct comparison from a passing test in this run'
+
+
 def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, deviations=None):
     """`lines` is merged cobertura data from the differential run; without it the coverage gate cannot pass."""
     if inventory.get('schema') != 2 or inventory.get('errors'):
@@ -123,7 +128,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, devia
             elif cases:
                 state, reason = 'compared', 'Direct comparison passed for the listed cases only; every line and branch executed'
             else:
-                state, reason = 'missing', 'No direct comparison from a passing test in this run'
+                state, reason = 'missing', UNTESTED
         counts[state] += 1
         unsupported = method['status'] == 'Verified' and state not in ('compared', 'declaration_only')
         rows.append(dict(method, validation=state, reason=reason, cases=cases, status_supported=not unsupported))
