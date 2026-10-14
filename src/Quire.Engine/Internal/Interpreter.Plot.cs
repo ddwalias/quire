@@ -54,7 +54,7 @@ internal sealed partial class Interpreter
                     }
                 }
                 if (!any) throw first ?? new CalcException("Nothing to plot");
-                traces.Add(Scale(new Trace(y.ToString(), X, Y, xValues.Count > 0 ? xValues[0].m_dim : Dim.identity, yd), xUnit, yUnit));
+                traces.Add(Scale(new Trace(Rl.Write(y), X, Y, xValues.Count > 0 ? xValues[0].m_dim : Dim.identity, yd), xUnit, yUnit));
             }
             return new TraceVal(traces);
         }
@@ -65,7 +65,7 @@ internal sealed partial class Interpreter
             var yv = Vector(EvalIterated(y, env, out _), "y-axis");
             if (yv.Count != xv.Count)
                 throw new CalcException($"x and y have different lengths ({xv.Count} and {yv.Count})");
-            traces.Add(Scale(new Trace(y.ToString(), xv.Select(p => p.Real).ToArray(), yv.Select(p => p.Real).ToArray(),
+            traces.Add(Scale(new Trace(Rl.Write(y), xv.Select(p => p.Real).ToArray(), yv.Select(p => p.Real).ToArray(),
                 Uniform(xv, "x"), Uniform(yv, "y")), xUnit, yUnit));
         }
         return new TraceVal(traces);

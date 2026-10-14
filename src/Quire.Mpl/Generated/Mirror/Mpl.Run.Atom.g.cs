@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Atom, mplrun")]
 public abstract partial class Atom : global::Quire.Mpl.Run.Tag
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int CharTag = 3;
-    [global::Quire.Mirror.MirrorStub]
-    public const int KeyTag = 5;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int KeyNum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual char CharCon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.Sexpr quote_atom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Keyword Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

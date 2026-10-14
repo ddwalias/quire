@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.SAppend, mplrun")]
 public partial class SAppend : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field2;
-    [global::Quire.Mirror.MirrorStub]
-    public SAppend(object first, object rest) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SAppend(global::Quire.Mpl.Run.Sexpr first, global::Quire.Mpl.Run.Sexpr rest) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string FormatAppend() => base.FormatAppend();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

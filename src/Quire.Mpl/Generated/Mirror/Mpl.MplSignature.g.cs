@@ -11,18 +11,4 @@ namespace Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("Mpl.MplSignature, mplrun")]
 public partial class MplSignature
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Type return_type;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Type[] parameter_types;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Type RetType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Type[] ArgTypes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public MplSignature(global::System.Type r, global::System.Type[] p) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
 }

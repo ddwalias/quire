@@ -11,10 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.True, mplrun")]
 public partial class True
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.True singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public True() { }
 }

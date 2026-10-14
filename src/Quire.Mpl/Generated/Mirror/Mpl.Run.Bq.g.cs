@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Bq, mplrun")]
 public partial class Bq : global::Quire.Mpl.Run.Sexpr
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public Bq(object a) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Bq(global::Quire.Mpl.Run.Sexpr a) : base(default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_expression(global::Quire.Mpl.Run.MplEnv env) => base.walk_expression(env);
 }

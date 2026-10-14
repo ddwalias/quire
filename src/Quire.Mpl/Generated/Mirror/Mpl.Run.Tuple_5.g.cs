@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Tuple`5, mplrun")]
 public partial class Tuple<A, B, C, D, E>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public A m_1;
-    [global::Quire.Mirror.MirrorStub]
-    public B m_2;
-    [global::Quire.Mirror.MirrorStub]
-    public C m_3;
-    [global::Quire.Mirror.MirrorStub]
-    public D m_4;
-    [global::Quire.Mirror.MirrorStub]
-    public E m_5;
-    [global::Quire.Mirror.MirrorStub]
-    public Tuple() { }
 }

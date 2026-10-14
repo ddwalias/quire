@@ -11,28 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.VecBuilder, mplrun")]
 public partial class VecBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int Field1;
-    [global::Quire.Mirror.MirrorStub]
-    public object[] Field2;
-    [global::Quire.Mirror.MirrorStub]
-    public object vector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int cnt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VecBuilder(int i, object[] v) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.VecBuilder make(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Cons AsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] AsVector() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.VecBuilder Push1(object a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.VecBuilder Push2(object a, object b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.VecBuilder Push3(object a, object b, object c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.VecBuilder Push4(object a, object b, object c, object d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

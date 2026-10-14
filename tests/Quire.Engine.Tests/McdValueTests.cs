@@ -122,12 +122,15 @@ public class McdValueTests
     {
         var e = SCons.list3(Sym.MakeSym("define"), new Tok(new Sym("a b", null), 0),
             SCons.list2(new Tok(new real_constant(1.5), 0), new Tok(new str_constant("q\""), 0)));
-        Assert.Equal("(define |a b| (1.5 \"q\\\"\"))", e.ToString());
+        Assert.Equal("(define |a b| (1.5 \"q\\\"\"))", Rl.Write(e));
         Assert.Equal(3u, e.Length);
-        Assert.Equal("()", Nul.singleton.ToString());
+        Assert.Equal("()", Rl.Write(Nul.singleton));
+        // Mathcad's own ToString is debugging text: bare names, raw strings, Nul for the empty list.
+        Assert.Equal("Nul", Nul.singleton.ToString());
+        Assert.Equal("(define a b)", SCons.list2(Sym.MakeSym("define"), new Tok(new Sym("a b", null), 0)).ToString());
         Assert.Equal("define", e.car.sym.name);
         const string tricky = "(eval |a \\\\b\\|c|)";
-        Assert.Equal(tricky, RlReader.Read(tricky).ToString());
+        Assert.Equal(tricky, Rl.Write(RlReader.Read(tricky)));
         Assert.Equal("a \\b|c", RlReader.Read(tricky).scons.cdr.scons.car.sym.name);
     }
 }

@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.real_constant, mplrun")]
 public partial class real_constant : global::Quire.Mpl.Run.Atom
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mpl.Run.Tok token;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr quote_atom { get => base.quote_atom; }
-    [global::Quire.Mirror.MirrorStub]
-    public real_constant(string name) : this(default(double)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(double v, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(string nm, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

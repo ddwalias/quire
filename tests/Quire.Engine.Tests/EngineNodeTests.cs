@@ -98,6 +98,6 @@ public class EngineNodeTests : EngineTestBase
     public void Sexpr_round_trips_through_reader_and_writer()
     {
         const string src = "(define |a b| (op_div km/h hr) \"text\" 1.5)";
-        Assert.Equal(src, RlReader.Read(src).ToString());
+        Assert.Equal(src, Rl.Write(RlReader.Read(src)));
     }
 }
