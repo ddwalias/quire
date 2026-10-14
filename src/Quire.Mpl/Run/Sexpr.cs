@@ -373,13 +373,25 @@ public partial class SCons : Sexpr
     public override Sexpr walk_pattern(MplEnv env)
     {
         Sym key = Key;
-        if (key == null) BadPattern(this);
-        if (!key.LowId) return new SCons(head, walk_patterns(env, tail));
-        MplMacro macro = env.LoadMacro(key);
-        if (macro != null) return macro.ExpandCall(env, this).walk_pattern(env);
-        if (Length != 1) BadPattern(this);
-        env.AddLocal(key, handle);
-        return this;
+        if (key == null)
+        {
+            BadPattern(this);
+        }
+        if (key.LowId)
+        {
+            MplMacro macro = env.LoadMacro(key);
+            if (macro == null)
+            {
+                if (Length == 1)
+                {
+                    env.AddLocal(key, handle);
+                    return this;
+                }
+                BadPattern(this);
+            }
+            return macro.ExpandCall(env, this).walk_pattern(env);
+        }
+        return new SCons(head, walk_patterns(env, tail));
     }
 
     /// <summary>Walks each element as an expression, reusing the original cells when nothing changed.</summary>
@@ -400,9 +412,16 @@ public partial class SCons : Sexpr
     public override Sexpr walk_expression(MplEnv env)
     {
         Sym key = Key;
-        if (key != null) return key.walk_expression_as(env, this);
-        if (head == null) BadApplication(this);
-        return new SCons(new Tok(apply, handle), walk_expressions(env, this));
+        if (key == null)
+        {
+            _ = head;
+            if (head == null)
+            {
+                BadApplication(this);
+            }
+            return new SCons(new Tok(apply, handle), walk_expressions(env, this));
+        }
+        return key.walk_expression_as(env, this);
     }
 
     [MirrorVerified("SexprDifferentialTests")]
@@ -476,10 +495,15 @@ public partial class Tok : Sexpr
     [MirrorVerified("SexprDifferentialTests")]
     public override Sexpr quote => SCons.list3(new Tok(tok, Field2), Field1.quote_atom, int_constant.zero);
 
-    /// <summary>The atom, prefixed with <c>#T</c> and the handle in hex when the handle isn't 0.</summary>
     [MirrorVerified("SexprDifferentialTests")]
-    public override string ToString() =>
-        Field2 == 0 ? Field1.ToString() : "#T" + Field2.ToString("X") + " " + Field1.ToString();
+    public override string ToString()
+    {
+        if (Field2 == 0)
+        {
+            return Field1.ToString();
+        }
+        return "#T" + Field2.ToString("X") + " " + Field1.ToString();
+    }
 
     [MirrorAnalyzed("Mpl.Run.Tok")]
     public override Sexpr walk_pattern(MplEnv env)
@@ -644,8 +668,12 @@ public partial class SList : Sexpr
     /// before each item), otherwise <c>(SLIST#  a b tail)</c>.
     /// </summary>
     [MirrorVerified("SexprDifferentialTests")]
-    public override string ToString() =>
-        Field2 == Nul.singleton
-            ? "(SLIST " + FormatCons(Field1) + ")"
-            : "(SLIST# " + FormatCons(Field1) + " " + Field2.ToString() + ")";
+    public override string ToString()
+    {
+        if (Field2 == Nul.singleton)
+        {
+            return "(SLIST " + FormatCons(Field1) + ")";
+        }
+        return "(SLIST# " + FormatCons(Field1) + " " + Field2.ToString() + ")";
+    }
 }

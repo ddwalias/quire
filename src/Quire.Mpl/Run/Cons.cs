@@ -42,8 +42,14 @@ public partial class Cons
     /// <see cref="NullReferenceException"/>.
     /// </summary>
     [MirrorVerified("MplRunHelpersDifferentialTests")]
-    private string FormatItems() =>
-        Field2 == null ? Field1.ToString() : Field1.ToString() + ", " + (Field2 as Cons).FormatItems();
+    private string FormatItems()
+    {
+        if (Field2 == null)
+        {
+            return Field1.ToString();
+        }
+        return Field1.ToString() + ", " + (Field2 as Cons).FormatItems();
+    }
 
     [MirrorVerified("MplRunHelpersDifferentialTests")]
     public override string ToString() => "[" + FormatItems() + "]";

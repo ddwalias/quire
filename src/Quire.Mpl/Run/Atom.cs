@@ -145,7 +145,17 @@ public partial class Sym : Atom
 
     /// <summary>The name, then <c>.</c> and the qualifier when there is one (name first).</summary>
     [MirrorVerified("SexprDifferentialTests")]
-    public string long_name => Field2 != null ? Field1 + "." + Field2 : Field1;
+    public string long_name
+    {
+        get
+        {
+            if (Field2 != null)
+            {
+                return Field1 + "." + Field2;
+            }
+            return Field1;
+        }
+    }
 
     [MirrorVerified("SexprDifferentialTests")]
     public uint uid
@@ -159,10 +169,17 @@ public partial class Sym : Atom
 
     /// <summary><c>(Sym "name")</c>, or <c>(make_symbolq "name" "qualifier")</c> for a qualified symbol.</summary>
     [MirrorVerified("SexprDifferentialTests")]
-    public override Sexpr quote_atom =>
-        qualifier != null
-            ? SCons.list3(make_symq, str_constant.NewTok(Field1, 0u), str_constant.NewTok(Field2, 0u))
-            : SCons.list2(make_sym, str_constant.NewTok(Field1, 0u));
+    public override Sexpr quote_atom
+    {
+        get
+        {
+            if (qualifier != null)
+            {
+                return SCons.list3(make_symq, str_constant.NewTok(Field1, 0u), str_constant.NewTok(Field2, 0u));
+            }
+            return SCons.list2(make_sym, str_constant.NewTok(Field1, 0u));
+        }
+    }
 
     [MirrorVerified("SexprDifferentialTests")]
     public static Tok NewTok(string nm, uint tag) => new(new Sym(nm, null), tag);
@@ -211,9 +228,16 @@ public partial class Sym : Atom
     public virtual Sexpr walk_expression_as(MplEnv env, SCons form)
     {
         MplMacro macro = LowId ? env.LoadMacro(this) : null;
-        if (macro != null) return macro.ExpandCall(env, form).walk_expression(env);
-        Sexpr args = SCons.walk_expressions(env, form.tail);
-        return args != form.Field2 ? new SCons(form.head, args) : form;
+        if (macro == null)
+        {
+            Sexpr sexpr = SCons.walk_expressions(env, form.tail);
+            if (sexpr == form.Field2)
+            {
+                return form;
+            }
+            return new SCons(form.head, sexpr);
+        }
+        return macro.ExpandCall(env, form).walk_expression(env);
     }
 }
 
