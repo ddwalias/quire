@@ -1,6 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <!-- Mathcad's isInt(int*) family is part of the mirrored surface. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MirrorStubs)' == 'false'">
+    <DefineConstants>$(DefineConstants);QUIRE_MIRROR_STUB_FREE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <!-- Quire's built-in unit table (Quire.Mpl.Internal) has no Mathcad counterpart in metadata. -->
@@ -11,6 +16,16 @@
     <InternalsVisibleTo Include="Quire.Engine.Tests" />
     <InternalsVisibleTo Include="Quire.EquationEditor.Tests" />
     <InternalsVisibleTo Include="Quire.Calculation.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Generated enums the hand-written runtime refers to, kept in the stub-free build (Directory.Build.targets). -->
+    <MirrorWholeType Include="Generated\Mirror\Mcd.MangledIdOptions.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\Mcd.Flags.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\Mcd.PtrDelegate.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\Mcd.MatAxis.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\Mcd.ElementType.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\Mpl.Run.F_2.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\Mpl.Run.F_3.g.cs" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

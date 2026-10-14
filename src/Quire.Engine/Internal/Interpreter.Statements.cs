@@ -159,10 +159,10 @@ internal sealed partial class Interpreter
             if (r < 0 || c < 0) throw new CalcException($"Index is below ORIGIN ({origin})");
             Val.CheckSize(r + 1, Math.Max(c + 1, cols));
             var value = EvalNum(expr, scope, "element");
-            while (grid.Count <= r) grid.Add(Enumerable.Repeat(NumVal.Zero, cols).ToList());
+            while (grid.Count <= r) grid.Add(Enumerable.Repeat(NumVal.ZeroId, cols).ToList());
             if (c >= cols)
             {
-                foreach (var row in grid) row.AddRange(Enumerable.Repeat(NumVal.Zero, c + 1 - cols));
+                foreach (var row in grid) row.AddRange(Enumerable.Repeat(NumVal.ZeroId, c + 1 - cols));
                 cols = c + 1;
             }
             grid[r][c] = value;

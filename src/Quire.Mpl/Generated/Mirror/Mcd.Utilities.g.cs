@@ -11,20 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.Utilities, mplrun")]
 public sealed partial class Utilities
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void ScaleVector(double[] vector, double scalar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object Divide(object value, double scalar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object Multiply(object value, double scalar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Units GetUnits(global::Quire.Mcd.Type.Product product) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsFinite(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void AssertFinite(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void AssertFinite(global::Quire.Mcd.num_val v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Utilities() { }
 }

@@ -14,10 +14,6 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Mpl.Run.Function m_inverse_function;
     [global::Quire.Mirror.MirrorStub]
-    private static object OptArg;
-    [global::Quire.Mirror.MirrorStub]
-    private static char[] label_delimiter;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function InverseFunction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string format_vector(object[] v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -146,119 +142,7 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     [global::Quire.Mirror.MirrorStub]
     public R Call_16<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public object apply<A>(A aa) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B>(A aa, B bb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C>(A aa, B bb, C cc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D>(A aa, B bb, C cc, D dd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E>(A aa, B bb, C cc, D dd, E ee) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F>(A aa, B bb, C cc, D dd, E ee, F ff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G>(A aa, B bb, C cc, D dd, E ee, F ff, G gg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J, K>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J, K, L>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Function closure<CLO>(global::System.Delegate d, CLO clo, int purity) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::Quire.Mpl.Run.Function clo<CLO>(CLO a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::Quire.Mpl.Run.Function clovec<CLO>(CLO[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFullyApplied(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AssertFullApp(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AssertFullApp(int n, uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void appVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R>(out R r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void app<R, A>(out R r, A aa) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void app<R, A, B>(out R r, A aa, B bb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void app<R, A, B, C>(out R r, A aa, B bb, C cc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void app<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E>(out R r, A aa, B bb, C cc, D dd, E ee) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F>(out R r, A aa, B bb, C cc, D dd, E ee, F ff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J, K>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R>(out R r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A>(out R r, A aa) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B>(out R r, A aa, B bb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C>(out R r, A aa, B bb, C cc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E>(out R r, A aa, B bb, C cc, D dd, E ee) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F>(out R r, A aa, B bb, C cc, D dd, E ee, F ff) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override object VecCall(object b) => base.VecCall(b);
     [global::Quire.Mirror.MirrorStub]
@@ -272,8 +156,6 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     [global::Quire.Mirror.MirrorStub]
     public R Call_vec<R>(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override object Apply(object[] args) => base.Apply(args);
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function CurryMatVal() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.Function UnCurryMatVal() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -282,25 +164,13 @@ public abstract partial class Function : global::Quire.Mpl.Run.FunctionUtilities
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Function VectorFunction(object vv) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.F<R, A> AsF<R, A>(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.F<R, A, B> AsF<R, A, B>(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.F<R, A, B, C> AsF<R, A, B, C>(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::Quire.Mpl.Run.F<R, A, B, C, D> AsF<R, A, B, C, D>(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.F<object, object> AsDelegate_1() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.F<object, object, object> AsDelegate_2() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.F<object, object, object, object> AsDelegate_3() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.F<object, object, object, object, object> AsDelegate_4() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.F<object, object> AsDelegate_1(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.F<object, object, object> AsDelegate_2(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mpl.Run.F<object, object, object, object> AsDelegate_3(uint errpos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

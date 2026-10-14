@@ -2,139 +2,788 @@
 # Each type with a non-stub member: its counts, then every member that isn't a stub, with the reason,
 # test class or source its attribute gives. Stubs are listed in ../manifest.
 
-T Quire.Mcd.Dim  45 members: stub 14, unclassified 31
-  unclassified F internal const System.Int32 Denominator
-  unclassified F internal static readonly System.String[] BaseNames
-  unclassified F private System.Int32[] m_vec
-  unclassified F private static readonly System.Collections.IDictionary s_map
-  unclassified F private static readonly System.Int32 s_rank
-  unclassified F private static readonly System.String[] Symbols
-  unclassified F public const Quire.Mcd.Dim polymorphic
-  unclassified F public static readonly Quire.Mcd.Dim function_dim
-  unclassified F public static readonly Quire.Mcd.Dim identity
-  unclassified F public static readonly Quire.Mcd.Dim mcd_zero
-  unclassified F public static readonly Quire.Mcd.Dim mixed_matrix_dim
-  unclassified F public static readonly Quire.Mcd.Dim string_dim
-  unclassified M private static Combine`0(Quire.Mcd.Dim,Quire.Mcd.Dim,System.Int32) -> Quire.Mcd.Dim
-  unclassified M private static Require`0(Quire.Mcd.Dim,System.String) -> System.Void
-  unclassified M private static intern`0(System.Int32[]) -> Quire.Mcd.Dim
-  unclassified M public Format`0() -> System.String
-  unclassified M public override Equals`0(System.Object) -> System.Boolean
-  unclassified M public override GetHashCode`0() -> System.Int32
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public static Div`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.Dim
-  unclassified M public static Eq_b`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> System.Boolean
-  unclassified M public static Id_b`0(Quire.Mcd.Dim) -> System.Boolean
-  unclassified M public static IsDimensioned`0(Quire.Mcd.Dim) -> System.Boolean
-  unclassified M public static IsSpecial`0(Quire.Mcd.Dim) -> System.Boolean
-  unclassified M public static Mult`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.Dim
-  unclassified M public static New`0(Quire.Mcd.Type+Product) -> Quire.Mcd.Dim
-  unclassified M public static Parse`0(System.String) -> Quire.Mcd.Dim
-  unclassified M public static Pwr`0(Quire.Mcd.Dim,System.Double) -> Quire.Mcd.Dim
-  unclassified M public static Root`0(Quire.Mcd.Dim,System.Double) -> Quire.Mcd.Dim
-  unclassified M public static intern`0(Quire.Mcd.Dim) -> Quire.Mcd.Dim
-  unclassified P Coordinates : System.Int32[] get:public
+T Quire.Mcd.Dim  40 members: tested 3, verified 37
+  tested       F private System.Int32[] m_vec  [Mcd.Dim]
+  tested       F private static readonly System.Collections.IDictionary s_map  [Mcd.Dim]
+  tested       F private static readonly System.Int32 s_rank  [Mcd.Dim]
+  verified     F public const Quire.Mcd.Dim polymorphic  [DimDifferentialTests]
+  verified     F public static System.Int32[] s_vec  [DimDifferentialTests]
+  verified     F public static readonly Quire.Mcd.Dim function_dim  [DimDifferentialTests]
+  verified     F public static readonly Quire.Mcd.Dim identity  [DimDifferentialTests]
+  verified     F public static readonly Quire.Mcd.Dim mcd_zero  [DimDifferentialTests]
+  verified     F public static readonly Quire.Mcd.Dim mixed_matrix_dim  [DimDifferentialTests]
+  verified     F public static readonly Quire.Mcd.Dim string_dim  [DimDifferentialTests]
+  verified     M private static intern`0() -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M private static intern`0(System.Int32[]) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public Format`0() -> System.String  [DimDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [DimDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [DimDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [DimDifferentialTests]
+  verified     M public static Div`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static Eq_b1`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static Eq_b`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static Eq`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static Eq`0(Quire.Mcd.Dim,Quire.Mcd.Dim,System.UInt32) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static FixDimension`0(Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static Id_b`0(Quire.Mcd.Dim) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static Id`0(Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static Id`0(Quire.Mcd.Dim,System.UInt32) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static IsDimensioned`0(Quire.Mcd.Dim) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static IsSpecial`0(Quire.Mcd.Dim) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static Mult`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static New`0(Quire.Mcd.Type+Product) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static NonScalar_b`0(Quire.Mcd.Dim) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static OnError`0(System.String,Quire.Mcd.Dim,Quire.Mcd.Dim,System.UInt32) -> System.Void  [DimDifferentialTests]
+  verified     M public static OnError`0(System.String,Quire.Mcd.Dim,System.UInt32) -> System.Void  [DimDifferentialTests]
+  verified     M public static Parse`0(System.String) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static Pwr`0(Quire.Mcd.Dim,System.Double) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static Root`0(Quire.Mcd.Dim,System.Double) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static ThreadInit`0() -> System.Void  [DimDifferentialTests]
+  verified     M public static ValDim`0(Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     M public static intern`0(Quire.Mcd.Dim) -> Quire.Mcd.Dim  [DimDifferentialTests]
+  verified     P Coordinates : System.Int32[] get:public  [DimDifferentialTests]
+  verified     P Product : Quire.Mcd.Type+Product get:public  [DimDifferentialTests]
 
-T Quire.Mcd.Dim+Hash  5 members: unclassified 5
-  unclassified M public .ctor`0() -> System.Void
-  unclassified M public Equals`0(System.Object,System.Object) -> System.Boolean
-  unclassified M public GetHashCode`0(System.Object) -> System.Int32
-  unclassified M public static Equals`0(System.Int32[],System.Int32[]) -> System.Boolean
-  unclassified M public static GetHashCode`0(System.Int32[]) -> System.Int32
+T Quire.Mcd.Dim+Hash  5 members: verified 5
+  verified     M public .ctor`0() -> System.Void  [DimDifferentialTests]
+  verified     M public Equals`0(System.Object,System.Object) -> System.Boolean  [DimDifferentialTests]
+  verified     M public GetHashCode`0(System.Object) -> System.Int32  [DimDifferentialTests]
+  verified     M public static Equals`0(System.Int32[],System.Int32[]) -> System.Boolean  [DimDifferentialTests]
+  verified     M public static GetHashCode`0(System.Int32[]) -> System.Int32  [DimDifferentialTests]
 
-T Quire.Mcd.DimVal  125 members: stub 110, unclassified 15
-  unclassified F public Quire.Mcd.Dim m_dim
-  unclassified M protected .ctor`0() -> System.Void
-  unclassified M public static DimOf`0(System.Object) -> Quire.Mcd.Dim
-  unclassified M public virtual SetDim`0(Quire.Mcd.Dim) -> Quire.Mcd.DimVal
-  unclassified M public virtual ToString`0(System.IFormatProvider) -> System.String
-  unclassified M public virtual asVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal
-  unclassified M public virtual range_get`0(System.Int32) -> Quire.Mcd.DimVal
-  unclassified P IsDimless : System.Boolean virtual get:public
-  unclassified P IsFunction : Quire.Mpl.Run.Function virtual get:public
-  unclassified P IsMatrix : Quire.Mcd.MatVal virtual get:public
-  unclassified P IsPolymorphic : System.Boolean get:public
-  unclassified P IsReal : System.Int32 virtual get:public
-  unclassified P IsString : System.String virtual get:public
-  unclassified P PhysicalDimension : Quire.Mcd.Dim virtual get:public
-  unclassified P Rsize : System.Int32 virtual get:public
+T Quire.Mcd.DimVal  125 members: stub 1, analyzed 18, verified 106
+  analyzed     M public matrix_set0_1`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set0_2`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_1_ob`0(System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_1`0(System.Int32,Quire.Mcd.DimVal) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_1`0(System.Int32,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_1`0(System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_2_ob`0(System.Int32,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_2`0(System.Int32,System.Int32,Quire.Mcd.DimVal) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_2`0(System.Int32,System.Int32,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_2`0(System.Int32,System.Int32,System.Double,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_2`0(System.Int32,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public matrix_set_2i`0(System.Int32,System.Int32,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public static MatDimOf`0(System.Object) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public virtual extend_1`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public virtual extend_1u`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public virtual extend_2`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public virtual extend_2u`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     P MatrixDimension : Quire.Mcd.MatDim virtual get:public  [Mcd.MatDim]
+  verified     F public Quire.Mcd.Dim m_dim  [DimValDifferentialTests]
+  verified     M protected .ctor`0() -> System.Void  [DimValDifferentialTests]
+  verified     M public BadCall`0(System.Int32,System.Int32) -> System.Object  [DimValDifferentialTests]
+  verified     M public BadCall`0(System.Int32,System.Int32,System.UInt32) -> System.Object  [DimValDifferentialTests]
+  verified     M public GetUnits`0(System.Boolean) -> Quire.Mcd.Units  [DimValDifferentialTests]
+  verified     M public asDimlessInt`0() -> System.Int32  [DimValDifferentialTests]
+  verified     M public asDimlessInt`0(System.UInt32) -> System.Int32  [DimValDifferentialTests]
+  verified     M public asDimlessReal`0(System.String,System.UInt32) -> System.Double  [DimValDifferentialTests]
+  verified     M public asFunctionN`0(System.Int32) -> Quire.Mpl.Run.Function  [DimValDifferentialTests]
+  verified     M public asFunction`0() -> Quire.Mpl.Run.Function  [DimValDifferentialTests]
+  verified     M public asFunction`0(System.UInt32) -> Quire.Mpl.Run.Function  [DimValDifferentialTests]
+  verified     M public asInt`0() -> System.Int32  [DimValDifferentialTests]
+  verified     M public asInt`0(System.String,System.UInt32) -> System.Int32  [DimValDifferentialTests]
+  verified     M public asInt`0(System.UInt32) -> System.Int32  [DimValDifferentialTests]
+  verified     M public asMatrix`0() -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asMatrix`0(System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asRange`0() -> Quire.Mcd.RngVal  [DimValDifferentialTests]
+  verified     M public asRange`0(System.UInt32) -> Quire.Mcd.RngVal  [DimValDifferentialTests]
+  verified     M public asRealMatrix`0() -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asRealMatrix`0(System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asRealVector`0() -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asRealVector`0(System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asReal`0() -> System.Double  [DimValDifferentialTests]
+  verified     M public asReal`0(System.UInt32) -> System.Double  [DimValDifferentialTests]
+  verified     M public asString`0() -> System.String  [DimValDifferentialTests]
+  verified     M public asString`0(System.UInt32) -> System.String  [DimValDifferentialTests]
+  verified     M public asVector`0() -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public asVector`0(System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public dv`0(Quire.Mcd.Dim) -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public static DimCast`0(System.Object,Quire.Mcd.Dim) -> System.Object  [DimValDifferentialTests]
+  verified     M public static DimOf`0(System.Object) -> Quire.Mcd.Dim  [DimValDifferentialTests]
+  verified     M public static GetUnits`0(Quire.Mcd.Dim,System.Boolean) -> Quire.Mcd.Units  [DimValDifferentialTests]
+  verified     M public static IsDimOf`0(System.Object,Quire.Mcd.Dim) -> System.Boolean  [DimValDifferentialTests]
+  verified     M public static NearlyEqual`0(System.Object,System.Object,System.Double) -> System.Boolean  [DimValDifferentialTests]
+  verified     M public static OnError`0(System.UInt32,System.String,System.Int32) -> System.Void  [DimValDifferentialTests]
+  verified     M public static OnError`0(System.UInt32,System.String,System.Int32,System.Int32) -> System.Void  [DimValDifferentialTests]
+  verified     M public static OnError`0(System.UInt32,System.String,System.Object) -> System.Void  [DimValDifferentialTests]
+  verified     M public static WrongNumberOfArguments`0(System.Int32,System.Int32) -> System.Object  [DimValDifferentialTests]
+  verified     M public static WrongNumberOfArguments`0(System.Int32,System.Int32,System.UInt32) -> System.Object  [DimValDifferentialTests]
+  verified     M public static as_result`0(System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public static dyn`0(System.Object,Quire.Mcd.Dim) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual Apply`0(System.Object[]) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynApply`0(System.Object[]) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0() -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual DynCall`0(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual IsFunctionN`0(System.Int32) -> Quire.Mpl.Run.Function  [DimValDifferentialTests]
+  verified     M public virtual IsUniformDimOf`0(Quire.Mcd.Dim) -> System.Boolean  [DimValDifferentialTests]
+  verified     M public virtual SetDim`0(Quire.Mcd.Dim) -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual ToString`0(System.IFormatProvider) -> System.String  [DimValDifferentialTests]
+  verified     M public virtual VecApply`0(System.Object[]) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual VecCall`0(System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual VecCall`0(System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual VecCall`0(System.Object,System.Object,System.Object) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual asDimlessInt`0(System.String,System.UInt32) -> System.Int32  [DimValDifferentialTests]
+  verified     M public virtual asDimlessReal`0(System.UInt32) -> System.Double  [DimValDifferentialTests]
+  verified     M public virtual asDimless`0() -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual asDimless`0(System.UInt32) -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual asFunctionN`0(System.Int32,System.UInt32) -> Quire.Mpl.Run.Function  [DimValDifferentialTests]
+  verified     M public virtual asFunction`0(System.String,System.UInt32) -> Quire.Mpl.Run.Function  [DimValDifferentialTests]
+  verified     M public virtual asImmutable`0() -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual asIterator`0() -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual asMatrix`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public virtual asRange`0(System.String,System.UInt32) -> Quire.Mcd.RngVal  [DimValDifferentialTests]
+  verified     M public virtual asRealMatrix`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public virtual asRealVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public virtual asReal`0(System.String,System.UInt32) -> System.Double  [DimValDifferentialTests]
+  verified     M public virtual asResult`0() -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual asString`0(System.String,System.UInt32) -> System.String  [DimValDifferentialTests]
+  verified     M public virtual asTuple`0(System.UInt32,System.UInt32,System.UInt32) -> System.Object[]  [DimValDifferentialTests]
+  verified     M public virtual asVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [DimValDifferentialTests]
+  verified     M public virtual isInt`0(System.Int32*) -> System.Boolean  [DimValDifferentialTests]
+  verified     M public virtual iterator_get`0(System.Int32) -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual matrix_get_1`0(System.Int32) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual matrix_get_2`0(System.Int32,System.Int32) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual nearly_equal`0(Quire.Mcd.DimVal,System.Double) -> System.Boolean  [DimValDifferentialTests]
+  verified     M public virtual range_get`0(System.Int32) -> Quire.Mcd.DimVal  [DimValDifferentialTests]
+  verified     M public virtual sym_matrix_get_1`0(System.Int32) -> System.Object  [DimValDifferentialTests]
+  verified     M public virtual sym_matrix_get_2`0(System.Int32,System.Int32) -> System.Object  [DimValDifferentialTests]
+  verified     P IsDimless : System.Boolean virtual get:public  [DimValDifferentialTests]
+  verified     P IsDimlessReal : System.Boolean virtual get:public  [DimValDifferentialTests]
+  verified     P IsFunction : Quire.Mpl.Run.Function virtual get:public  [DimValDifferentialTests]
+  verified     P IsMatrix : Quire.Mcd.MatVal virtual get:public  [DimValDifferentialTests]
+  verified     P IsPolymorphic : System.Boolean get:public  [DimValDifferentialTests]
+  verified     P IsReal : System.Int32 virtual get:public  [DimValDifferentialTests]
+  verified     P IsString : System.String virtual get:public  [DimValDifferentialTests]
+  verified     P Isize : System.Int32 virtual get:public  [DimValDifferentialTests]
+  verified     P PhysicalDimension : Quire.Mcd.Dim virtual get:public  [DimValDifferentialTests]
+  verified     P PhysicalUnit : Quire.Mcd.NumVal virtual get:public  [DimValDifferentialTests]
+  verified     P Rfinal : Quire.Mcd.DimVal get:public  [DimValDifferentialTests]
+  verified     P Rsize : System.Int32 virtual get:public  [DimValDifferentialTests]
+  verified     P UniformDimension : Quire.Mcd.Dim virtual get:public  [DimValDifferentialTests]
 
-T Quire.Mcd.MatVal  296 members: stub 253, unclassified 43
+T Quire.Mcd.Iterator  12 members: analyzed 1, verified 9, abstract 2
+  analyzed     M public static forValue`0(System.Object) -> Quire.Mcd.Iterator  [Mcd.RngVal]
+  verified     M protected .ctor`0() -> System.Void  [RngValDifferentialTests]
+  verified     M public static forRange`0(Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static forRange`0(Quire.Mcd.DimVal,Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static forRange`0(Quire.Mcd.RngVal) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static forRange`0(System.Double,System.Double) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static forRange`0(System.Double,System.Double,System.Double) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static forRange`0(System.Double,System.Double,System.Int32) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static forValues`0(Quire.Mcd.Iterator[]) -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public static it_incr`0(System.Object,Quire.Mcd.Iterator) -> System.Object  [RngValDifferentialTests]
+  abstract     M public abstract first`0() -> System.Object
+  abstract     M public abstract next`0() -> Quire.Mcd.Iterator
+
+T Quire.Mcd.Iterator+MatrixIterator  6 members: analyzed 6
+  analyzed     F private Quire.Mcd.MatVal m_mat  [Mcd.RngVal]
+  analyzed     F private System.Int32 m_col  [Mcd.RngVal]
+  analyzed     F private System.Int32 m_row  [Mcd.RngVal]
+  analyzed     M public .ctor`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.RngVal]
+  analyzed     M public override first`0() -> System.Object  [Mcd.RngVal]
+  analyzed     M public override next`0() -> Quire.Mcd.Iterator  [Mcd.RngVal]
+
+T Quire.Mcd.Iterator+ScalarIterator  4 members: verified 4
+  verified     F private System.Object m_init  [RngValDifferentialTests]
+  verified     M public .ctor`0(System.Object) -> System.Void  [RngValDifferentialTests]
+  verified     M public override first`0() -> System.Object  [RngValDifferentialTests]
+  verified     M public override next`0() -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+
+T Quire.Mcd.Iterator+SeqIterator  5 members: verified 5
+  verified     F private Quire.Mcd.Iterator[] m_its  [RngValDifferentialTests]
+  verified     F private System.Int32 m_curr  [RngValDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.Iterator[]) -> System.Void  [RngValDifferentialTests]
+  verified     M public override first`0() -> System.Object  [RngValDifferentialTests]
+  verified     M public override next`0() -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+
+T Quire.Mcd.MatDim  69 members: analyzed 46, tested 11, verified 9, abstract 3
+  analyzed     M private static PickLoser`0(Quire.Mcd.MatDim,Quire.Mcd.MatDim,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M private static makeArrayDim`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M private static makeArrayDim`0(Quire.Mcd.MatVal,System.Boolean) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M private static makeColumnVectorDim`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M private static makeRowVectorDim`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual det`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected virtual dmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected virtual dmult2`0(Quire.Mcd.MatDim+c_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected virtual dmult2`0(Quire.Mcd.MatDim+r_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected virtual dmult2`0(Quire.Mcd.MatDim+rc_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected virtual dmult2`0(Quire.Mcd.MatDim+uniform_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected virtual eq2_b`0(Quire.Mcd.Dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected virtual eq2_b`0(Quire.Mcd.MatDim+c_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected virtual eq2_b`0(Quire.Mcd.MatDim+crazy_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected virtual eq2_b`0(Quire.Mcd.MatDim+r_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected virtual eq2_b`0(Quire.Mcd.MatDim+rc_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected virtual invert`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual mmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual mmult2`0(Quire.Mcd.MatDim+c_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual mmult2`0(Quire.Mcd.MatDim+r_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual mmult2`0(Quire.Mcd.MatDim+rc_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual mmult2`0(Quire.Mcd.MatDim+uniform_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual pwr`0(System.UInt32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected virtual transpose`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static DMult`0(Quire.Mcd.MatDim,Quire.Mcd.MatDim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public static Det`0(Quire.Mcd.MatDim,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public static Eq_b`0(Quire.Mcd.MatDim,Quire.Mcd.Dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M public static Eq_b`0(Quire.Mcd.MatDim,Quire.Mcd.MatDim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M public static Eq`0(Quire.Mcd.MatDim,Quire.Mcd.Dim,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M public static Eq`0(Quire.Mcd.MatDim,Quire.Mcd.MatDim,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M public static MMult`0(Quire.Mcd.MatDim,Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static OnError`0(Quire.Mcd.Dim,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M public static OnError`0(System.String,Quire.Mcd.Dim,System.Int32,System.Int32,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M public static OnError`0(System.String,Quire.Mcd.Dim,System.Int32,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M public static OnError`0(System.String,Quire.Mcd.Dim,System.UInt32) -> System.Void  [Mcd.MatDim]
+  analyzed     M public static Pwr`0(Quire.Mcd.MatDim,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static Transpose`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static makeColDimension`0(Quire.Mcd.Dim,Quire.Mcd.Dim,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static makeColDimension`0(Quire.Mcd.Dim,Quire.Mcd.Dim[],System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static makeRowDimension`0(Quire.Mcd.Dim,Quire.Mcd.Dim,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static makeRowDimension`0(Quire.Mcd.Dim,Quire.Mcd.Dim[],System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.Dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.Dim[],Quire.Mcd.Dim[]) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.MatDim+RC,Quire.Mcd.Dim[],System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.MatVal,System.Boolean) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  tested       F public readonly System.Int32 m_col  [Mcd.MatDim]
+  tested       F public readonly System.Int32 m_row  [Mcd.MatDim]
+  tested       M protected .ctor`0(System.Int32,System.Int32) -> System.Void  [Mcd.MatDim]
+  tested       M public virtual ColDimensionArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatDim]
+  tested       M public virtual RowDimensionArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatDim]
+  tested       P ColDimensions : Quire.Mcd.Dim[] virtual get:public  [Mcd.MatDim]
+  tested       P Cols : System.Int32 get:public  [Mcd.MatDim]
+  tested       P IsLinear : Quire.Mcd.MatDim virtual get:public  [Mcd.MatDim]
+  tested       P RowDimensions : Quire.Mcd.Dim[] virtual get:public  [Mcd.MatDim]
+  tested       P Rows : System.Int32 get:public  [Mcd.MatDim]
+  tested       P UniformDim : Quire.Mcd.Dim virtual get:public  [Mcd.MatDim]
+  verified     M public static CMult`0(Quire.Mcd.MatDim,Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [MatDimDifferentialTests]
+  verified     M public static Eq_b`0(Quire.Mcd.Dim[],Quire.Mcd.Dim[]) -> System.Boolean  [MatDimDifferentialTests]
+  verified     M public static Invert`0(Quire.Mcd.Dim[]) -> Quire.Mcd.Dim[]  [MatDimDifferentialTests]
+  verified     M public static IsScalarMultiple`0(Quire.Mcd.Dim[],Quire.Mcd.Dim[]) -> Quire.Mcd.Dim  [MatDimDifferentialTests]
+  verified     M public static Mult`0(Quire.Mcd.Dim,Quire.Mcd.Dim[]) -> Quire.Mcd.Dim[]  [MatDimDifferentialTests]
+  verified     M public static Mult`0(Quire.Mcd.Dim[],Quire.Mcd.Dim[]) -> Quire.Mcd.Dim  [MatDimDifferentialTests]
+  verified     M public static Product`0(Quire.Mcd.Dim,Quire.Mcd.Dim[]) -> Quire.Mcd.Dim  [MatDimDifferentialTests]
+  verified     M public static Push`0(Quire.Mcd.Dim,Quire.Mcd.Dim[]) -> Quire.Mcd.Dim[]  [MatDimDifferentialTests]
+  verified     M public static Uniform`0(Quire.Mcd.Dim[]) -> Quire.Mcd.Dim  [MatDimDifferentialTests]
+  abstract     M protected abstract eq_b`0(Quire.Mcd.MatDim) -> System.Boolean
+  abstract     M public abstract dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim
+  abstract     M public abstract matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim
+
+T Quire.Mcd.MatDim+c_dim  18 members: analyzed 18
+  analyzed     F public readonly Quire.Mcd.Dim[] m_coldim  [Mcd.MatDim]
+  analyzed     M protected override det`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult2`0(Quire.Mcd.MatDim+c_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult2`0(Quire.Mcd.MatDim+r_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override eq2_b`0(Quire.Mcd.MatDim+c_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override eq_b`0(Quire.Mcd.MatDim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override invert`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+r_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+uniform_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override transpose`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public override RowDimensionArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatDim]
+  analyzed     M public override dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public override matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.Dim[],System.Int32) -> Quire.Mcd.MatDim+c_dim  [Mcd.MatDim]
+  analyzed     P ColDimensions : Quire.Mcd.Dim[] override get:public  [Mcd.MatDim]
+  analyzed     P IsLinear : Quire.Mcd.MatDim override get:public  [Mcd.MatDim]
+
+T Quire.Mcd.MatDim+crazy_dim  7 members: analyzed 7
+  analyzed     F private readonly Quire.Mcd.MatVal m_matrix  [Mcd.MatDim]
+  analyzed     M protected .ctor`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.MatDim]
+  analyzed     M protected override eq2_b`0(Quire.Mcd.MatDim+crazy_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override eq_b`0(Quire.Mcd.MatDim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M public override dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public override matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatDim+crazy_dim  [Mcd.MatDim]
+
+T Quire.Mcd.MatDim+r_dim  18 members: analyzed 18
+  analyzed     F public readonly Quire.Mcd.Dim[] m_rowdim  [Mcd.MatDim]
+  analyzed     M protected override det`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult2`0(Quire.Mcd.MatDim+c_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult2`0(Quire.Mcd.MatDim+r_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override eq2_b`0(Quire.Mcd.MatDim+r_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override eq_b`0(Quire.Mcd.MatDim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override invert`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+c_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+rc_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override transpose`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public override ColDimensionArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatDim]
+  analyzed     M public override dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public override matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.Dim[],System.Int32) -> Quire.Mcd.MatDim+r_dim  [Mcd.MatDim]
+  analyzed     P IsLinear : Quire.Mcd.MatDim override get:public  [Mcd.MatDim]
+  analyzed     P RowDimensions : Quire.Mcd.Dim[] override get:public  [Mcd.MatDim]
+
+T Quire.Mcd.MatDim+rc_dim  17 members: analyzed 17
+  analyzed     F public readonly Quire.Mcd.Dim[] m_coldim  [Mcd.MatDim]
+  analyzed     F public readonly Quire.Mcd.Dim[] m_rowdim  [Mcd.MatDim]
+  analyzed     M protected override det`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override eq2_b`0(Quire.Mcd.MatDim+rc_dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override eq_b`0(Quire.Mcd.MatDim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override invert`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+c_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+rc_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override pwr`0(System.UInt32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override transpose`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public override ColDimensionArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatDim]
+  analyzed     M public override RowDimensionArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatDim]
+  analyzed     M public override dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public override matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make_rc`0(Quire.Mcd.Dim[],Quire.Mcd.Dim[]) -> Quire.Mcd.MatDim+rc_dim  [Mcd.MatDim]
+  analyzed     P IsLinear : Quire.Mcd.MatDim override get:public  [Mcd.MatDim]
+
+T Quire.Mcd.MatDim+uniform_dim  17 members: analyzed 17
+  analyzed     F public readonly Quire.Mcd.Dim m_dim  [Mcd.MatDim]
+  analyzed     M protected override det`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override dmult2`0(Quire.Mcd.MatDim+uniform_dim) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M protected override eq2_b`0(Quire.Mcd.Dim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override eq_b`0(Quire.Mcd.MatDim) -> System.Boolean  [Mcd.MatDim]
+  analyzed     M protected override invert`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult1`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+r_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override mmult2`0(Quire.Mcd.MatDim+uniform_dim) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override pwr`0(System.UInt32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M protected override transpose`0() -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public override dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatDim]
+  analyzed     M public override matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatDim]
+  analyzed     M public static make`0(Quire.Mcd.Dim,System.Int32,System.Int32) -> Quire.Mcd.MatDim+uniform_dim  [Mcd.MatDim]
+  analyzed     P IsLinear : Quire.Mcd.MatDim override get:public  [Mcd.MatDim]
+  analyzed     P UniformDim : Quire.Mcd.Dim override get:public  [Mcd.MatDim]
+
+T Quire.Mcd.MatVal  293 members: unclassified 5, analyzed 256, tested 1, verified 31
   unclassified F public Quire.Mcd.mat_val Data
   unclassified F public System.Collections.Hashtable m_parr
   unclassified F public System.Double[] m_iarr
   unclassified F public System.Double[] m_rarr
   unclassified F public System.Int32 m_offset
-  unclassified F public static readonly System.Double PtrNan
-  unclassified M private Check`0(System.Int32,System.Int32) -> System.Void
-  unclassified M private CopyElement`0(Quire.Mcd.MatVal,System.Int32,System.Int32,System.Int32,System.Int32) -> System.Void
-  unclassified M private Like`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal
-  unclassified M public .ctor`0() -> System.Void
-  unclassified M public .ctor`0(System.Double[],System.Double[],System.Int32,System.Int32) -> System.Void
-  unclassified M public .ctor`0(System.Int32) -> System.Void
-  unclassified M public .ctor`0(System.Int32,System.Int32) -> System.Void
-  unclassified M public .ctor`0(System.Int32,System.Int32,System.Boolean) -> System.Void
-  unclassified M public .ctor`0(System.Int32,System.Int32,System.Boolean,System.Int32) -> System.Void
-  unclassified M public .ctor`0(System.Object[]) -> System.Void
-  unclassified M public ColOf`0(System.Int32) -> System.Int32
-  unclassified M public Column`0(System.Int32) -> Quire.Mcd.MatVal
-  unclassified M public Index`0(System.Int32,System.Int32) -> System.Int32
-  unclassified M public RowOf`0(System.Int32) -> System.Int32
-  unclassified M public Row`0(System.Int32) -> Quire.Mcd.MatVal
-  unclassified M public SubMatrix`0(System.UInt32,System.UInt32,System.UInt32,System.UInt32) -> Quire.Mcd.MatVal
-  unclassified M public Transpose`0() -> Quire.Mcd.MatVal
-  unclassified M public get_1`0(System.Int32) -> System.Object
-  unclassified M public get_2`0(System.Int32,System.Int32) -> System.Object
-  unclassified M public get_real`0(System.Int32,System.Int32) -> System.Double
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public override asVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal
-  unclassified M public set_1`0(System.Int32,System.Double) -> System.Void
-  unclassified M public set_1`0(System.Int32,System.Object) -> System.Void
-  unclassified M public set_2`0(System.Int32,System.Int32,System.Double) -> System.Void
-  unclassified M public set_2`0(System.Int32,System.Int32,System.Object) -> System.Void
-  unclassified M public static MakeVector`0(System.Object[]) -> Quire.Mcd.MatVal
-  unclassified P Anr : System.Int32 get:public
-  unclassified P Cols : System.Int32 get:public
-  unclassified P HasImag : System.Boolean get:public
-  unclassified P HasPtrs : System.Boolean get:public
-  unclassified P IsMatrix : Quire.Mcd.MatVal override get:public
-  unclassified P IsUniform : System.Boolean get:public
-  unclassified P IsVector : System.Boolean get:public
-  unclassified P Offset : System.Int32 get:public
-  unclassified P PhysicalDimension : Quire.Mcd.Dim override get:public
-  unclassified P Rows : System.Int32 get:public
+  analyzed     M private ApplyCrazyDimension`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M private AssignPtrs`0(Quire.Mcd.MatVal,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M private CanonicalizePtrs`0() -> System.Boolean  [Mcd.MatVal]
+  analyzed     M private CastPtrs`0(Quire.Mcd.MatVal,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal.Dimensions]
+  analyzed     M private CopyResize`0(System.Double[],System.Int32,System.Int32) -> System.Double[]  [Mcd.MatVal.Growth]
+  analyzed     M private DimActual`0() -> System.Boolean  [Mcd.MatVal]
+  analyzed     M private FillThisPtrs`0(System.Object,System.Int32,System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M private FillThis`0(Quire.Mcd.NumVal,System.Int32,System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M private FillThis`0(System.Object,System.Int32,System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M private InitPtrs`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal]
+  analyzed     M private IsUniformPtrsNoChange`0() -> System.Boolean  [Mcd.MatVal]
+  analyzed     M private IsUniformPtrs`0() -> System.Boolean  [Mcd.MatVal]
+  analyzed     M private IsUniformScalarPtrs`0() -> System.Boolean  [Mcd.MatVal]
+  analyzed     M private PackPtrs`0(System.Int32) -> System.Collections.Hashtable  [Mcd.MatVal]
+  analyzed     M private PackPtrs`0(System.Int32,System.Int32,System.Int32,System.Int32) -> System.Collections.Hashtable  [Mcd.MatVal]
+  analyzed     M private Pack`0(System.Double[]) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M private Pack`0(System.Double[],System.Int32) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M private Pack`0(System.Double[],System.Int32,System.Int32,System.Int32,System.Int32) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M private PromoteDim`0() -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M private PromoteDim`0(Quire.Mcd.Dim) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M private ReinsertPtrs1`0() -> System.Void  [Mcd.MatVal]
+  analyzed     M private ReinsertPtrs`0() -> System.Void  [Mcd.MatVal]
+  analyzed     M private ResizePtrs`0(System.Int32,System.Int32) -> System.Collections.Hashtable  [Mcd.MatVal.Growth]
+  analyzed     M private Resize`0(System.Double[],System.Int32) -> System.Double[]  [Mcd.MatVal.Growth]
+  analyzed     M private Resize`0(System.Double[],System.Int32,System.Int32) -> System.Double[]  [Mcd.MatVal.Growth]
+  analyzed     M private Scale`0(System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M private Stretch`0(System.Int32) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M private Stretch`0(System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M private SubMatrixPtrs`0(Quire.Mcd.MatVal,System.Int32,System.Int32,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M private TidyPtrs`0(System.Int32,System.Int32,Quire.Mcd.Dim,System.Boolean) -> System.Boolean  [Mcd.MatVal]
+  analyzed     M private TidyZeros`0(System.Int32,System.Int32,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M private TransposeArr`0(System.Double[]) -> System.Double[]  [Mcd.MatVal.Views]
+  analyzed     M private TrimPtrs`0(System.Collections.Hashtable) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M private dvm`0(Quire.Mcd.Dim) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M private get_data`0(System.Int32,System.Double,System.Double) -> System.Object  [Mcd.MatVal]
+  analyzed     M private get_dim`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatVal]
+  analyzed     M private get_double`0(System.Int32,System.Double,System.Double) -> System.Double  [Mcd.MatVal]
+  analyzed     M private get_na`0(Quire.Mcd.NumVal,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M private get_ptr`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M private get_type`0(System.Int32,System.Double) -> Quire.Mcd.ElementType  [Mcd.MatVal]
+  analyzed     M private get`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M private offsets`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.Generic.IEnumerable`1<System.Int32>  [Mcd.MatVal]
+  analyzed     M private setNaN`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set_at`0(System.Int32,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set_at`0(System.Int32,System.Double,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set_ptrs_2_reverse`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M private set_ptrs_2_transpose`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M private set_ptrs_at`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set_ptrs_raw`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set_ptrs`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set`0(System.Int32,Quire.Mcd.NumVal) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set`0(System.Int32,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set`0(System.Int32,System.Double,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set`0(System.Int32,System.Double,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set`0(System.Int32,System.Double,System.Double,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal]
+  analyzed     M private set`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M private setmatrix_ptrs`0(System.Int32,System.Int32,Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M private setmatrix`0(System.Int32,System.Int32,Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M private setspec`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M private static Copy`0(System.Double[],System.Int32,System.Double[],System.Int32,System.Int32) -> System.Void  [Mcd.MatVal]
+  analyzed     M private static FillArr`0(System.Double[],System.Double,System.Int32,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Collections]
+  analyzed     M public .ctor`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal]
+  analyzed     M public .ctor`0(Quire.Mcd.RngVal) -> System.Void  [Mcd.MatVal.Collections]
+  analyzed     M public .ctor`0(System.Object[]) -> System.Void  [Mcd.MatVal.Collections]
+  analyzed     M public AllocImaginary`0(System.Double[]) -> System.Void  [Mcd.MatVal]
+  analyzed     M public ApplyColDimensions`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public ApplyColDimensions`0(Quire.Mcd.Dim[]) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public ApplyDimension`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public ApplyLinearDimension`0(Quire.Mcd.MatDim) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public ApplyRowDimensions`0(Quire.Mcd.Dim,Quire.Mcd.Dim) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public ApplyRowDimensions`0(Quire.Mcd.Dim[]) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public Canonicalize`0() -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public ColDimArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatVal]
+  analyzed     M public Column`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Views]
+  analyzed     M public CopyPtrs`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal]
+  analyzed     M public DivideByDefaultDimension`0() -> Quire.Mcd.Dim  [Mcd.MatVal.Dimensions]
+  analyzed     M public DivideByDimension`0(Quire.Mcd.Dim) -> Quire.Mcd.Dim  [Mcd.MatVal.Dimensions]
+  analyzed     M public Fill`0(System.Object,System.Int32,System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public Fix`0() -> Quire.Mcd.MatVal  [Mcd.MatVal.Views]
+  analyzed     M public IteratePtrs`0(Quire.Mcd.PtrDelegate) -> System.Void  [Mcd.MatVal]
+  analyzed     M public PackImag`0() -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PackImag`0(System.Int32) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PackImag`0(System.Int32,System.Int32,System.Int32,System.Int32) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PackObjects`0() -> System.Object[]  [Mcd.MatVal]
+  analyzed     M public PackObjects`0(System.Int32) -> System.Object[]  [Mcd.MatVal]
+  analyzed     M public PackReal`0() -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PackReal`0(System.Int32) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PackReal`0(System.Int32,System.Int32,System.Int32,System.Int32) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PackZero`0(System.Double[]) -> System.Double[]  [Mcd.MatVal]
+  analyzed     M public PushRaw1`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public PushRawIndex`0(System.Object) -> System.Int32  [Mcd.MatVal.Collections]
+  analyzed     M public PushRaw`0(System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public PushRaw`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public PushRaw`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public PushReal`0(System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public PushVectorArg`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public PushZero`0() -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public Push`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public ReAllocate`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public ReAllocate`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public Reshape`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public ReversePtrs`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M public RowDimArray`0(System.Int32) -> Quire.Mcd.Dim[]  [Mcd.MatVal]
+  analyzed     M public Row`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Views]
+  analyzed     M public SetShape1`0() -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public SetShape`0() -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public StretchWithColumnFill`0(System.Int32,System.Int32,Quire.Mcd.DimVal) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M public SubMatrix`0(System.UInt32,System.UInt32,System.UInt32,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Views]
+  analyzed     M public TransformPtrs`0(Quire.Mcd.MatVal,Quire.Mcd.PtrDelegate) -> System.Void  [Mcd.MatVal]
+  analyzed     M public TransposeImag`0() -> System.Double[]  [Mcd.MatVal.Views]
+  analyzed     M public TransposePtrs`0(Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M public TransposeReal`0() -> System.Double[]  [Mcd.MatVal.Views]
+  analyzed     M public Transpose`0() -> Quire.Mcd.MatVal  [Mcd.MatVal.Views]
+  analyzed     M public aref_1`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public aref_2`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public assertRealMatrix`0(System.UInt32) -> System.Void  [Mcd.MatVal]
+  analyzed     M public assertRealVector`0() -> System.Void  [Mcd.MatVal]
+  analyzed     M public assertRealVector`0(System.UInt32) -> System.Void  [Mcd.MatVal]
+  analyzed     M public contains`0(System.Object) -> System.Boolean  [Mcd.MatVal]
+  analyzed     M public element_types`0(Quire.Mcd.MatAxis,System.Int32,System.Double) -> System.Collections.Generic.IEnumerable`1<Quire.Mcd.ElementType>  [Mcd.MatVal]
+  analyzed     M public get_1_dim`0(System.Int32) -> Quire.Mcd.Dim  [Mcd.MatVal]
+  analyzed     M public get_1_matdim`0(System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatVal]
+  analyzed     M public get_1_na`0(Quire.Mcd.NumVal,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public get_1_ptr`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public get_1`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public get_2_dim`0(System.Int32,System.Int32) -> Quire.Mcd.Dim  [Mcd.MatVal]
+  analyzed     M public get_2_matdim`0(System.Int32,System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatVal]
+  analyzed     M public get_2_na`0(Quire.Mcd.NumVal,System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public get_2_ptr`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public get_2`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public get_data`0(Quire.Mcd.MatAxis,System.Int32,System.Double,System.Double) -> System.Collections.Generic.IEnumerable`1<System.Object>  [Mcd.MatVal]
+  analyzed     M public get_doubles`0(Quire.Mcd.MatAxis,System.Int32,System.Double,System.Double) -> System.Collections.Generic.IEnumerable`1<System.Double>  [Mcd.MatVal]
+  analyzed     M public get_elements`0() -> System.Object[]  [Mcd.MatVal.Views]
+  analyzed     M public get_elements`0(System.UInt32,System.UInt32) -> System.Object[]  [Mcd.MatVal.Views]
+  analyzed     M public get_imag_raw`0(System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_imag`0(System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_imag`0(System.Int32,System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_matdim`0(System.Int32) -> Quire.Mcd.MatDim  [Mcd.MatVal]
+  analyzed     M public get_ptrs`0(Quire.Mcd.MatAxis,System.Int32) -> System.Collections.Generic.IEnumerable`1<System.Object>  [Mcd.MatVal]
+  analyzed     M public get_real_mixed_handle`0(System.Int32,System.Int32,System.UInt32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real_mixed_handle`0(System.Int32,System.UInt32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real_mixed_raw`0(System.Int32,System.UInt32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real_mixed`0(System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real_mixed`0(System.Int32,System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real_raw`0(System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real`0(System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_real`0(System.Int32,System.Int32) -> System.Double  [Mcd.MatVal]
+  analyzed     M public get_type_2`0(System.Int32,System.Int32,System.Double) -> Quire.Mcd.ElementType  [Mcd.MatVal]
+  analyzed     M public mcd_get_1`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_get_1`0(System.UInt32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_get_2`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_get_2`0(System.UInt32,System.UInt32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_set_1`0(System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public mcd_set_2`0(System.Int32,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public mcd_sym_get_1`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_sym_get_1`0(System.UInt32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_sym_get_2`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_sym_get_2`0(System.UInt32,System.UInt32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public mcd_upd_1`0(System.Int32,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public mcd_upd_1`0(System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public mcd_upd_2`0(System.Int32,System.Int32,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public mcd_upd_2`0(System.Int32,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public override DynCall`0(System.Object) -> System.Object  [Mcd.MatVal]
+  analyzed     M public override DynCall`0(System.Object,System.Object) -> System.Object  [Mcd.MatVal]
+  analyzed     M public override Equals`0(System.Object) -> System.Boolean  [Mcd.MatVal.Views]
+  analyzed     M public override IsUniformDimOf`0(Quire.Mcd.Dim) -> System.Boolean  [Mcd.MatVal]
+  analyzed     M public override SetDim`0(Quire.Mcd.Dim) -> Quire.Mcd.DimVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public override ToString`0() -> System.String  [Mcd.MatVal.Views]
+  analyzed     M public override asImmutable`0() -> Quire.Mcd.DimVal  [Mcd.MatVal.Views]
+  analyzed     M public override asMatrix`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public override asRealMatrix`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public override asRealVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public override asResult`0() -> Quire.Mcd.DimVal  [Mcd.MatVal.Views]
+  analyzed     M public override asTuple`0(System.UInt32,System.UInt32,System.UInt32) -> System.Object[]  [Mcd.MatVal.Views]
+  analyzed     M public override asVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public override extend_1`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public override extend_2`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public override iterator_get`0(System.Int32) -> Quire.Mcd.DimVal  [Mcd.MatVal]
+  analyzed     M public override matrix_get_1`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public override matrix_get_2`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public override nearly_equal`0(Quire.Mcd.DimVal,System.Double) -> System.Boolean  [Mcd.MatVal.Views]
+  analyzed     M public override sym_matrix_get_1`0(System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public override sym_matrix_get_2`0(System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public real_column`0(System.Int32) -> System.Double[]  [Mcd.MatVal.Views]
+  analyzed     M public set_1`0(System.Int32,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_1`0(System.Int32,System.Double,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_1`0(System.Int32,System.Double,System.Double,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_1`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_2`0(System.Int32,System.Int32,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_2`0(System.Int32,System.Int32,System.Double,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_2`0(System.Int32,System.Int32,System.Double,System.Double,Quire.Mcd.Dim) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_2`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_2i`0(System.Int32,System.Int32,System.Double) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_ptrs_1`0(System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M public set_ptrs_2`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal]
+  analyzed     M public setblock`0(System.Int32,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public setcol`0(System.Int32,Quire.Mcd.MatVal) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M public setcolumn`0(System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public setrow`0(System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static AsDimless`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public static AsPolymorphic`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public static AsUniform`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public static FixForExport`0(System.Object) -> System.Object  [Mcd.MatVal.Views]
+  analyzed     M public static Fix`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Views]
+  analyzed     M public static MDimCast`0(System.Object,Quire.Mcd.MatDim) -> System.Object  [Mcd.MatVal.Dimensions]
+  analyzed     M public static MakeVector0`0(System.Object[]) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static MakeVector`0(System.Object[]) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static MatCreateDim`0(System.Object,System.Object,System.Object) -> System.Object  [Mcd.MatVal.Dimensions]
+  analyzed     M public static Pair`0(System.Object,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static ReAlloc`0(System.Object,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static ReAlloc`0(System.Object,System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static Replicate`0(System.Object,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static Singleton`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static StripDimension`0(Quire.Mcd.MatVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Dimensions]
+  analyzed     M public static Triple`0(System.Object,System.Object,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static asRealVector`0(System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public static as_object_vector`0(Quire.Mcd.DimVal) -> System.Object[]  [Mcd.MatVal.Collections]
+  analyzed     M public static map`0(Quire.Mpl.Run.F`2<System.Object,System.Object>,Quire.Mcd.DimVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static map`0(Quire.Mpl.Run.F`3<System.Object,System.Object,System.Object>,Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static map`0(Quire.Mpl.Run.Function,Quire.Mcd.DimVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static map`0(Quire.Mpl.Run.Function,Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static mapv`0(Quire.Mpl.Run.F`2<System.Object,System.Object>,Quire.Mcd.DimVal) -> System.Object[]  [Mcd.MatVal.Collections]
+  analyzed     M public static mcd_column`0(System.Object,System.Int32) -> System.Object  [Mcd.MatVal.Views]
+  analyzed     M public static mcd_get_1`0(System.Object,System.Object) -> System.Object  [Mcd.MatVal]
+  analyzed     M public static mcd_getm_1`0(System.Object,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public static mcd_getm_2`0(System.Object,System.Int32,System.Int32) -> System.Object  [Mcd.MatVal]
+  analyzed     M public static mcd_row`0(System.Object,System.Int32) -> System.Object  [Mcd.MatVal.Views]
+  analyzed     M public static mcd_setcolumn`0(System.Object,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static mcd_setm_1`0(System.Object,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static mcd_setm_2`0(System.Object,System.Int32,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static mcd_setrow`0(System.Object,System.Int32,System.Object) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static mcd_sym_column`0(System.Object,System.Int32) -> System.Object  [Mcd.MatVal.Views]
+  analyzed     M public static mcd_sym_row`0(System.Object,System.Int32) -> System.Object  [Mcd.MatVal.Views]
+  analyzed     M public static mkRange2`0(System.Object,System.Object) -> System.Object  [Mcd.MatVal.Collections]
+  analyzed     M public static mkRange3`0(System.Object,System.Object,System.Object) -> System.Object  [Mcd.MatVal.Collections]
+  analyzed     M public static op_Division`0(Quire.Mcd.MatVal,System.Double) -> Quire.Mcd.MatVal  [Mcd.MatVal]
+  analyzed     M public static realloc`0(System.Object,System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Growth]
+  analyzed     M public static reserve`0(System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static reserve`0(System.Int32,System.Int32) -> Quire.Mcd.MatVal  [Mcd.MatVal.Collections]
+  analyzed     M public static vectorize`0(Quire.Mpl.Run.Function,System.Object[]) -> System.Object  [Mcd.MatVal.Collections]
+  analyzed     P HasPtrs : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsDimless : System.Boolean override get:public  [Mcd.MatVal]
+  analyzed     P IsIntegral : System.Boolean get:public set:public  [Mcd.MatVal]
+  analyzed     P IsMatrix : Quire.Mcd.MatVal override get:public  [Mcd.MatVal]
+  analyzed     P IsRange : System.Boolean get:public set:public  [Mcd.MatVal]
+  analyzed     P IsRealMatrix : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsRealMatrixMixed : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsRealVector : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsScalarMatrix : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsUniform : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsUniformScalar : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P IsVector : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P MatrixDimension : Quire.Mcd.MatDim override get:public  [Mcd.MatVal]
+  analyzed     P PhysicalDimension : Quire.Mcd.Dim override get:public  [Mcd.MatVal]
+  analyzed     P RepHasPtrs : System.Boolean get:public  [Mcd.MatVal]
+  analyzed     P UniformDimension : Quire.Mcd.Dim override get:public  [Mcd.MatVal]
+  tested       M private IsPtrNan`0(System.Int32,System.Int32) -> System.Boolean  [Mcd.MatVal]
+  verified     F public static System.Double PtrNan  [MatValDifferentialTests]
+  verified     F public static System.UInt32 NanMask  [MatValDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[]) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[],System.Double[]) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[],System.Double[],System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[],System.Double[],System.Int32,System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[],System.Double[],System.Int32,System.Int32,System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[],System.Double[],System.Int32,System.Int32,System.Int32,System.Collections.Hashtable) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Double[],System.Double[],System.Int32,System.Int32,System.Int32,System.Collections.Hashtable,Quire.Mcd.Flags,System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Int32,System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Int32,System.Int32,System.Boolean) -> System.Void  [MatValDifferentialTests]
+  verified     M public .ctor`0(System.Int32,System.Int32,System.Boolean,System.Int32) -> System.Void  [MatValDifferentialTests]
+  verified     M public AllocImaginary`0() -> System.Void  [MatValDifferentialTests]
+  verified     M public ColOf`0(System.Int32) -> System.Int32  [MatValDifferentialTests]
+  verified     M public Index`0(System.Int32) -> System.Int32  [MatValDifferentialTests]
+  verified     M public Index`0(System.Int32,System.Int32) -> System.Int32  [MatValDifferentialTests]
+  verified     M public RowOf`0(System.Int32) -> System.Int32  [MatValDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [MatValDifferentialTests]
+  verified     M public static IsPtrNan`0(System.Double&) -> System.Boolean  [MatValDifferentialTests]
+  verified     M public static ThePtrNan`0() -> System.Double  [MatValDifferentialTests]
+  verified     P Anr : System.Int32 get:public  [MatValDifferentialTests]
+  verified     P Cols : System.Int32 get:public  [MatValDifferentialTests]
+  verified     P HasImag : System.Boolean get:public  [MatValDifferentialTests]
+  verified     P Immutable : System.Boolean get:public set:public  [MatValDifferentialTests]
+  verified     P Isize : System.Int32 override get:public  [MatValDifferentialTests]
+  verified     P Offset : System.Int32 get:public  [MatValDifferentialTests]
+  verified     P Packed : System.Boolean get:public  [MatValDifferentialTests]
+  verified     P Rows : System.Int32 get:public  [MatValDifferentialTests]
+  verified     P Shared : System.Boolean get:public set:public  [MatValDifferentialTests]
 
-T Quire.Mcd.NumVal  70 members: stub 44, unclassified 26
-  unclassified F public Quire.Mcd.num_val Data
+T Quire.Mcd.MatVal+AssignMatrixPtrs  5 members: analyzed 5
+  analyzed     F private Quire.Mcd.MatVal m_m  [Mcd.MatVal.Growth]
+  analyzed     F private System.Int32 m_c  [Mcd.MatVal.Growth]
+  analyzed     F private System.Int32 m_r  [Mcd.MatVal.Growth]
+  analyzed     M public .ctor`0(Quire.Mcd.MatVal,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M public assign_matrix_ptrs`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal.Growth]
+
+T Quire.Mcd.MatVal+ResizeMatrixPtrs  5 members: analyzed 5
+  analyzed     F private System.Collections.Hashtable m_parr  [Mcd.MatVal.Growth]
+  analyzed     F private System.Int32 m_anr  [Mcd.MatVal.Growth]
+  analyzed     F private System.Int32 m_off  [Mcd.MatVal.Growth]
+  analyzed     M public .ctor`0(System.Collections.Hashtable,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Growth]
+  analyzed     M public resize_matrix_ptrs`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal.Growth]
+
+T Quire.Mcd.MatVal+TrimSubMatrixPtrs  7 members: analyzed 7
+  analyzed     F private Quire.Mcd.MatVal m_m  [Mcd.MatVal.Views]
+  analyzed     F private System.Int32 m_c1  [Mcd.MatVal.Views]
+  analyzed     F private System.Int32 m_c2  [Mcd.MatVal.Views]
+  analyzed     F private System.Int32 m_r1  [Mcd.MatVal.Views]
+  analyzed     F private System.Int32 m_r2  [Mcd.MatVal.Views]
+  analyzed     M public .ctor`0(Quire.Mcd.MatVal,System.Int32,System.Int32,System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Views]
+  analyzed     M public set_submatrix_ptrs`0(System.Int32,System.Int32,System.Object) -> System.Void  [Mcd.MatVal.Views]
+
+T Quire.Mcd.MatVal+arg_desc  3 members: analyzed 3
+  analyzed     F public Quire.Mcd.MatVal m_mat  [Mcd.MatVal.Collections]
+  analyzed     F public System.Int32 m_pos  [Mcd.MatVal.Collections]
+  analyzed     M public FetchInto`0(System.Object[],System.Int32,System.Int32) -> System.Void  [Mcd.MatVal.Collections]
+
+T Quire.Mcd.NotAVal  3 members: verified 3
+  verified     F public static readonly Quire.Mcd.NotAVal singleton  [NumValDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [NumValDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [NumValDifferentialTests]
+
+T Quire.Mcd.NumVal  71 members: unclassified 4, verified 67
   unclassified F public const System.Double default_fuzz
-  unclassified F public static readonly Quire.Mcd.NumVal One
-  unclassified F public static readonly Quire.Mcd.NumVal Zero
-  unclassified M public .ctor`0() -> System.Void
-  unclassified M public .ctor`0(Quire.Mcd.NumVal) -> System.Void
-  unclassified M public .ctor`0(Quire.Mcd.NumVal,Quire.Mcd.Dim) -> System.Void
-  unclassified M public .ctor`0(System.Double) -> System.Void
-  unclassified M public .ctor`0(System.Double,System.Double) -> System.Void
-  unclassified M public .ctor`0(System.Double,System.Double,Quire.Mcd.Dim) -> System.Void
-  unclassified M public .ctor`0(System.Int32) -> System.Void
-  unclassified M public Format`0(System.Boolean) -> System.String
-  unclassified M public override Equals`0(System.Object) -> System.Boolean
-  unclassified M public override GetHashCode`0() -> System.Int32
-  unclassified M public override SetDim`0(Quire.Mcd.Dim) -> Quire.Mcd.DimVal
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public static ExactEquals`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean
-  unclassified M public static FuzzyEquals`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean
-  unclassified M public static FuzzyEquals`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal,System.Double) -> System.Boolean
-  unclassified M public static FuzzyEquals`0(System.Double,System.Double) -> System.Boolean
-  unclassified M public static FuzzyEquals`0(System.Double,System.Double,System.Double) -> System.Boolean
-  unclassified M public static McdBool`0(System.Object) -> Quire.Mcd.NumVal
-  unclassified P Imag : System.Double get:public set:public
-  unclassified P IsReal : System.Int32 override get:public
-  unclassified P PhysicalDimension : Quire.Mcd.Dim override get:public
-  unclassified P Real : System.Double get:public set:public
+  unclassified F public const System.Double machine_eps
+  unclassified F public const System.Double normalize_exponent
+  unclassified M private static Compare`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal,System.Func`3<System.Double,System.Double,System.Boolean>) -> System.Boolean
+  verified     F public Quire.Mcd.num_val Data  [NumValDifferentialTests]
+  verified     F public static Quire.Mcd.NotAVal NoValue  [NumValDifferentialTests]
+  verified     F public static Quire.Mcd.NumVal One  [NumValDifferentialTests]
+  verified     F public static Quire.Mcd.NumVal Zero  [NumValDifferentialTests]
+  verified     F public static Quire.Mcd.NumVal ZeroId  [NumValDifferentialTests]
+  verified     F public static Quire.Mcd.NumVal ZeroPoly  [NumValDifferentialTests]
+  verified     F public static Quire.Mcd.NumVal mcNaN  [NumValDifferentialTests]
+  verified     F public static System.Double Inf  [NumValDifferentialTests]
+  verified     F public static System.Double McdNaN  [NumValDifferentialTests]
+  verified     F public static System.Double NaN  [NumValDifferentialTests]
+  verified     F public static System.Double NoNoNaN  [NumValDifferentialTests]
+  verified     M private static isNearInt`0(System.Int32*,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.NumVal) -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.NumVal,Quire.Mcd.Dim) -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.Double) -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.Double,System.Double) -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.Double,System.Double,Quire.Mcd.Dim) -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [NumValDifferentialTests]
+  verified     M public Equals1`0(System.Object) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public Format`0(System.Boolean) -> System.String  [NumValDifferentialTests]
+  verified     M public Format`0(System.Boolean,System.Boolean) -> System.String  [NumValDifferentialTests]
+  verified     M public Format`0(System.IFormatProvider,System.String,System.Boolean,System.Boolean) -> System.String  [NumValDifferentialTests]
+  verified     M public Format`0(System.String,System.Boolean) -> System.String  [NumValDifferentialTests]
+  verified     M public Format`0(System.String,System.Boolean,System.Boolean) -> System.String  [NumValDifferentialTests]
+  verified     M public Set`0(System.Double) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public Set`0(System.Double,System.Double) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public Set`0(System.Int32) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public ToString`0(System.IFormatProvider,System.String) -> System.String  [NumValDifferentialTests]
+  verified     M public ToString`0(System.String) -> System.String  [NumValDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [NumValDifferentialTests]
+  verified     M public override SetDim`0(Quire.Mcd.Dim) -> Quire.Mcd.DimVal  [NumValDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [NumValDifferentialTests]
+  verified     M public override ToString`0(System.IFormatProvider) -> System.String  [NumValDifferentialTests]
+  verified     M public override asReal`0(System.String,System.UInt32) -> System.Double  [NumValDifferentialTests]
+  verified     M public override asResult`0() -> Quire.Mcd.DimVal  [NumValDifferentialTests]
+  verified     M public override isInt`0(System.Int32*) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public override nearly_equal`0(Quire.Mcd.DimVal,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static ExactEquals`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static FuzzyEquals`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static FuzzyEquals`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static FuzzyEquals`0(System.Double,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static FuzzyEquals`0(System.Double,System.Double,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static GE`0(System.Double,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static GT`0(System.Double,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static GreaterEqThan`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static GreaterThan`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static IntDv`0(System.Int32) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public static LE`0(System.Double,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static LT`0(System.Double,System.Double) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static LessEqThan`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static LessThan`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public static LoadNaN`0(System.Int32) -> System.Double  [NumValDifferentialTests]
+  verified     M public static McdBool`0(System.Object) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public static NotNoValue`0(System.Object) -> System.Object  [NumValDifferentialTests]
+  verified     M public static NumDv`0(System.Double,System.Double) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public static RealDv`0(System.Double) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public static ibv`0(System.Int32) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     M public static op_Division`0(Quire.Mcd.NumVal,System.Double) -> Quire.Mcd.NumVal  [NumValDifferentialTests]
+  verified     P Imag : System.Double get:public set:public  [NumValDifferentialTests]
+  verified     P IsInt : System.Int32 get:public  [NumValDifferentialTests]
+  verified     P IsPureImag : System.Object get:public  [NumValDifferentialTests]
+  verified     P IsPureReal : System.Object get:public  [NumValDifferentialTests]
+  verified     P IsReal : System.Int32 override get:public  [NumValDifferentialTests]
+  verified     P PhysicalDimension : Quire.Mcd.Dim override get:public  [NumValDifferentialTests]
+  verified     P Real : System.Double get:public set:public  [NumValDifferentialTests]
 
-T Quire.Mcd.Rational  25 members: unclassified 2, verified 23
-  unclassified F public readonly System.Int32 Denominator
-  unclassified F public readonly System.Int32 Numerator
+T Quire.Mcd.RangeIterator  8 members: verified 8
+  verified     F private Quire.Mcd.RngVal m_rng  [RngValDifferentialTests]
+  verified     F private System.Int32 m_it  [RngValDifferentialTests]
+  verified     F private System.Int32 m_n  [RngValDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.RngVal) -> System.Void  [RngValDifferentialTests]
+  verified     M public override first`0() -> System.Object  [RngValDifferentialTests]
+  verified     M public override next`0() -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+  verified     M public ri_first`0() -> System.Object  [RngValDifferentialTests]
+  verified     M public ri_next`0() -> Quire.Mcd.Iterator  [RngValDifferentialTests]
+
+T Quire.Mcd.Rational  25 members: verified 25
+  verified     F public readonly System.Int32 Denominator  [RationalDifferentialTests]
+  verified     F public readonly System.Int32 Numerator  [RationalDifferentialTests]
   verified     M public .ctor`0(System.Double) -> System.Void  [RationalDifferentialTests]
   verified     M public .ctor`0(System.Double,System.Double) -> System.Void  [RationalDifferentialTests]
   verified     M public .ctor`0(System.Int32) -> System.Void  [RationalDifferentialTests]
@@ -159,118 +808,367 @@ T Quire.Mcd.Rational  25 members: unclassified 2, verified 23
   verified     M public static op_Multiply`0(Quire.Mcd.Rational,System.Int32) -> Quire.Mcd.Rational  [RationalDifferentialTests]
   verified     P IsIntegral : System.Boolean get:public  [RationalDifferentialTests]
 
-T Quire.Mcd.RngVal  31 members: stub 16, unclassified 15
-  unclassified F protected System.Boolean m_integral
-  unclassified F protected System.Double m_incr
-  unclassified F protected System.Double m_init
-  unclassified F protected System.Int32 m_n
-  unclassified M protected .ctor`0(System.Double,System.Double,System.Int32,Quire.Mcd.Dim) -> System.Void
-  unclassified M public override Equals`0(System.Object) -> System.Boolean
-  unclassified M public override GetHashCode`0() -> System.Int32
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public override asVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal
-  unclassified M public override range_get`0(System.Int32) -> Quire.Mcd.DimVal
-  unclassified M public static IncrRange`0(System.Double,System.Double,System.Int32,Quire.Mcd.Dim) -> Quire.Mcd.RngVal
-  unclassified M public virtual get`0(System.Int32) -> System.Double
-  unclassified P Integral : System.Boolean get:public
-  unclassified P PhysicalDimension : Quire.Mcd.Dim override get:public
-  unclassified P Rsize : System.Int32 override get:public
+T Quire.Mcd.RngVal  32 members: unclassified 2, analyzed 4, verified 26
+  unclassified F private const System.String NotSequential
+  unclassified F private const System.String TwoArgumentUnits
+  analyzed     M public override asMatrix`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.RngVal]
+  analyzed     M public override asRealMatrix`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.RngVal]
+  analyzed     M public override asRealVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.RngVal]
+  analyzed     M public override asVector`0(System.String,System.UInt32) -> Quire.Mcd.MatVal  [Mcd.RngVal]
+  verified     F protected System.Boolean m_integral  [RngValDifferentialTests]
+  verified     F protected System.Double m_incr  [RngValDifferentialTests]
+  verified     F protected System.Double m_init  [RngValDifferentialTests]
+  verified     F protected System.Int32 m_n  [RngValDifferentialTests]
+  verified     M protected .ctor`0(Quire.Mcd.RngVal) -> System.Void  [RngValDifferentialTests]
+  verified     M protected .ctor`0(System.Double,System.Double,System.Int32,Quire.Mcd.Dim) -> System.Void  [RngValDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [RngValDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [RngValDifferentialTests]
+  verified     M public override asRange`0(System.String,System.UInt32) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public override asResult`0() -> Quire.Mcd.DimVal  [RngValDifferentialTests]
+  verified     M public override iterator_get`0(System.Int32) -> Quire.Mcd.DimVal  [RngValDifferentialTests]
+  verified     M public override range_get`0(System.Int32) -> Quire.Mcd.DimVal  [RngValDifferentialTests]
+  verified     M public static IncrRange`0(System.Double,System.Double,System.Double,Quire.Mcd.Dim) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static IncrRange`0(System.Double,System.Double,System.Double,Quire.Mcd.Dim,System.String) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static IncrRange`0(System.Double,System.Double,System.Int32,Quire.Mcd.Dim) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static Range`0(System.Double,System.Double) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static Range`0(System.Double,System.Double,System.Double,Quire.Mcd.Dim) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static mkRange2`0(Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static mkRange3`0(Quire.Mcd.DimVal,Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static mkVec2`0(Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public static mkVec3`0(Quire.Mcd.DimVal,Quire.Mcd.DimVal,Quire.Mcd.DimVal) -> Quire.Mcd.RngVal  [RngValDifferentialTests]
+  verified     M public virtual get`0(System.Int32) -> System.Double  [RngValDifferentialTests]
+  verified     P Integral : System.Boolean get:public  [RngValDifferentialTests]
+  verified     P Isize : System.Int32 override get:public  [RngValDifferentialTests]
+  verified     P PhysicalDimension : Quire.Mcd.Dim override get:public  [RngValDifferentialTests]
+  verified     P Rsize : System.Int32 override get:public  [RngValDifferentialTests]
 
-T Quire.Mcd.StrVal  8 members: stub 1, unclassified 7
-  unclassified F public System.String Field1
-  unclassified M public .ctor`0(System.String) -> System.Void
-  unclassified M public override Equals`0(System.Object) -> System.Boolean
-  unclassified M public override GetHashCode`0() -> System.Int32
-  unclassified M public override ToString`0() -> System.String
-  unclassified P IsString : System.String override get:public
-  unclassified P m_string : System.String get:public
+T Quire.Mcd.RngValInterpolate  6 members: verified 6
+  verified     F protected System.Double m_last  [RngValDifferentialTests]
+  verified     F protected System.Int32 m_ninterval  [RngValDifferentialTests]
+  verified     M public .ctor`0(System.Double,System.Double,System.Int32,Quire.Mcd.Dim) -> System.Void  [RngValDifferentialTests]
+  verified     M public override get`0(System.Int32) -> System.Double  [RngValDifferentialTests]
+  verified     M public override iterator_get`0(System.Int32) -> Quire.Mcd.DimVal  [RngValDifferentialTests]
+  verified     M public override range_get`0(System.Int32) -> Quire.Mcd.DimVal  [RngValDifferentialTests]
 
-T Quire.Mcd.Type  13 members: stub 9, unclassified 3, abstract 1
-  unclassified M protected .ctor`0() -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public static Parse`0(System.String) -> Quire.Mcd.Type
+T Quire.Mcd.RuntimeOptions  32 members: tested 1, verified 31
+  tested       F private static System.Object s_init  [Mcd.RuntimeOptions]
+  verified     F public Quire.Mcd.MangledIdOptions m_mangled_identifiers  [RuntimeOptionsDifferentialTests]
+  verified     F public Quire.Mcd.UnitSystem m_unit_system  [RuntimeOptionsDifferentialTests]
+  verified     F public Quire.Mcd.UnitSystemGroup m_unit_system_group  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_constants_in_symbolics  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_debugging_enabled  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_labels_in_symbolics  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_strict_comparisons  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_strict_singularity_checking  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_strings_indexed_from_origin  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_units_in_symbolics  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Boolean m_zero_over_zero_is_zero  [RuntimeOptionsDifferentialTests]
+  verified     F public System.Int32 m_ro_number  [RuntimeOptionsDifferentialTests]
+  verified     F public static Quire.Mcd.MangledIdOptions mangled_identifiers  [RuntimeOptionsDifferentialTests]
+  verified     F public static Quire.Mcd.UnitSystem s_default_unit_system  [RuntimeOptionsDifferentialTests]
+  verified     F public static Quire.Mcd.UnitSystem the_unit_system  [RuntimeOptionsDifferentialTests]
+  verified     F public static Quire.Mcd.UnitSystemGroup the_unit_system_group  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean constants_in_symbolics  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean debugging_enabled  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean labels_in_symbolics  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean s_restricted_mode  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean strict_comparisons  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean strict_singularity_checking  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean strings_indexed_from_origin  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean units_in_symbolics  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Boolean zero_over_zero_is_zero  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Int32 s_ro_counter  [RuntimeOptionsDifferentialTests]
+  verified     F public static System.Int32 the_ro_number  [RuntimeOptionsDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public RemoveUnitSystem`0() -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public SyncToThread`0() -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public static SaveThreadOptions`0() -> Quire.Mcd.RuntimeOptions  [RuntimeOptionsDifferentialTests]
+
+T Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer  1 members: tested 1
+  tested       M public .ctor`0() -> System.Void  [Mcd.RuntimeOptions]
+
+T Quire.Mcd.StrVal  8 members: verified 8
+  verified     F public System.String Field1  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.String) -> System.Void  [NumValDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [NumValDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [NumValDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [NumValDifferentialTests]
+  verified     M public override asString`0(System.String,System.UInt32) -> System.String  [NumValDifferentialTests]
+  verified     P IsString : System.String override get:public  [NumValDifferentialTests]
+  verified     P m_string : System.String get:public  [NumValDifferentialTests]
+
+T Quire.Mcd.Type  13 members: tested 2, verified 9, abstract 2
+  tested       M private static Take`0(Quire.Mcd.Type+Product+Power[],System.Int32,System.Int32) -> Quire.Mcd.Type+Product+Power[]  [Mcd.Type]
+  tested       M protected .ctor`0() -> System.Void  [Mcd.Type]
+  verified     M public Format`0() -> System.String  [TypeDifferentialTests]
+  verified     M public Format`0(System.Text.StringBuilder) -> System.Void  [TypeDifferentialTests]
+  verified     M public Format`0(System.Text.StringBuilder,Quire.Mcd.UnitSystem) -> System.Void  [TypeDifferentialTests]
+  verified     M public GetDimensionTypeProduct`0() -> Quire.Mcd.Type+Product  [TypeDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [TypeDifferentialTests]
+  verified     M public static Parse`0(System.String) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     P IsImplicitArgument : System.Boolean virtual get:public  [TypeDifferentialTests]
+  verified     P Item[System.Int32] : Quire.Mcd.Type get:public set:public  [TypeDifferentialTests]
+  verified     P Root : System.Char get:public  [TypeDifferentialTests]
+  abstract     M public abstract Accept`0(Quire.Mcd.Type+Visitor) -> System.Void
   abstract     P Name : System.String abstract get:public
 
-T Quire.Mcd.Type+Constant  3 members: stub 2, unclassified 1
-  unclassified M public .ctor`0(System.String) -> System.Void
+T Quire.Mcd.Type+Application  7 members: tested 1, verified 6
+  tested       M public override Accept`0(Quire.Mcd.Type+Visitor) -> System.Void  [Mcd.Type]
+  verified     F public Quire.Mcd.Type Operator  [TypeDifferentialTests]
+  verified     F public Quire.Mcd.Type[] Operands  [TypeDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.Type,Quire.Mcd.Type[]) -> System.Void  [TypeDifferentialTests]
+  verified     P Arity : System.Int32 get:public  [TypeDifferentialTests]
+  verified     P IsImplicitArgument : System.Boolean override get:public  [TypeDifferentialTests]
+  verified     P Name : System.String override get:public  [TypeDifferentialTests]
 
-T Quire.Mcd.Type+Named  6 members: unclassified 6
-  unclassified F public System.String m_nam
-  unclassified M protected .ctor`0() -> System.Void
-  unclassified M public override Equals`0(System.Object) -> System.Boolean
-  unclassified M public override GetHashCode`0() -> System.Int32
-  unclassified M public virtual CompareTo`0(System.Object) -> System.Int32
-  unclassified P Name : System.String override get:public
+T Quire.Mcd.Type+Constant  3 members: tested 1, verified 2
+  tested       M public override Accept`0(Quire.Mcd.Type+Visitor) -> System.Void  [Mcd.Type]
+  verified     M public .ctor`0(System.String) -> System.Void  [TypeDifferentialTests]
+  verified     P IsImplicitArgument : System.Boolean override get:public  [TypeDifferentialTests]
 
-T Quire.Mcd.Type+Product  11 members: stub 5, unclassified 6
-  unclassified F private System.Int32 m_con
-  unclassified F private System.Int32 m_var
-  unclassified F public Quire.Mcd.Type+Product+Power[] Powers
-  unclassified M public .ctor`0(Quire.Mcd.Type+Product+Power[],System.Int32) -> System.Void
-  unclassified P IsDimensionless : System.Boolean get:public
-  unclassified P Name : System.String override get:public
+T Quire.Mcd.Type+Factory  15 members: tested 1, verified 14
+  tested       F private System.Collections.Stack m_stk  [Mcd.Type]
+  verified     M public .ctor`0() -> System.Void  [TypeDifferentialTests]
+  verified     M public NewApplication`0(Quire.Mcd.Type,Quire.Mcd.Type[]) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewApplication`0(Quire.Mcd.Type,System.Int32) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewApplication`0(System.Int32) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewConstant`0(System.String) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewFunction`0(Quire.Mcd.Type,Quire.Mcd.Type) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewList`0(Quire.Mcd.Type) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewProduct`0(System.Int32,System.Int32) -> Quire.Mcd.Type+Product  [TypeDifferentialTests]
+  verified     M public NewTuple`0(System.Int32) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public NewVariable`0(System.String) -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public Pop`0() -> Quire.Mcd.Type  [TypeDifferentialTests]
+  verified     M public Pop`0(System.Int32) -> Quire.Mcd.Type[]  [TypeDifferentialTests]
+  verified     M public Push`0(Quire.Mcd.Type) -> System.Void  [TypeDifferentialTests]
+  verified     M public Push`0(Quire.Mcd.Type,System.Int32) -> System.Void  [TypeDifferentialTests]
 
-T Quire.Mcd.Type+Product+Power  2 members: unclassified 2
-  unclassified F public Quire.Mcd.Type Base
-  unclassified F public System.Int32 Exponent
+T Quire.Mcd.Type+Formatter  7 members: tested 7
+  tested       F private Quire.Mcd.Type+Factory m_fac  [Mcd.Type]
+  tested       F private Quire.Mcd.UnitSystem m_sys  [Mcd.Type]
+  tested       M private OnFunction`0(Quire.Mcd.Type,System.Int32) -> System.Void  [Mcd.Type]
+  tested       M public .ctor`0(System.Text.StringBuilder,Quire.Mcd.UnitSystem) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Application) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Product) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Variable) -> System.Void  [Mcd.Type]
 
-T Quire.Mcd.Unit  8 members: unclassified 8
-  unclassified F public readonly Quire.Mcd.Type Type
-  unclassified F public readonly System.Double Magnitude
-  unclassified F public readonly System.String Name
-  unclassified F public readonly System.String Quantity
-  unclassified F public readonly System.String Symbol
-  unclassified M public .ctor`0(System.String,System.String,System.String,System.Double,System.String) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified P Dimensions : Quire.Mcd.Type+Product get:public
+T Quire.Mcd.Type+Lexer  4 members: tested 4
+  tested       F private System.Int32 m_off  [Mcd.Type]
+  tested       F private System.String m_src  [Mcd.Type]
+  tested       M public .ctor`0(System.String) -> System.Void  [Mcd.Type]
+  tested       M public GetToken`0(out System.String&) -> System.Char  [Mcd.Type]
 
-T Quire.Mcd.UnitSystem  43 members: stub 20, unclassified 23
-  unclassified F private Quire.Mcd.Unit[] m_base
-  unclassified F private Quire.Mcd.Unit[] m_basis_orig
-  unclassified F private Quire.Mcd.Unit[] m_defaults
-  unclassified F private Quire.Mcd.Unit[] m_defaults_orig
-  unclassified F private System.Int32 m_rank
-  unclassified F private System.Int32 m_ro_number
-  unclassified F private System.String m_guid
-  unclassified F private System.String m_name
-  unclassified F private System.UInt32 m_code
-  unclassified M public .ctor`0(System.String,System.UInt32,System.String,Quire.Mcd.Unit[],Quire.Mcd.Unit[]) -> System.Void
-  unclassified M public GetCoordinates`0(Quire.Mcd.Type+Product) -> System.Int32[]
-  unclassified M public Reset`0() -> Quire.Mcd.UnitSystem
-  unclassified M public Simplify`0(Quire.Mcd.Type+Product) -> Quire.Mcd.Units
-  unclassified M public Simplify`0(System.Int32[]) -> Quire.Mcd.Units
-  unclassified M public Simplify`0(System.String) -> Quire.Mcd.Units
-  unclassified M public override ToString`0() -> System.String
-  unclassified P Basis : Quire.Mcd.Unit[] get:public set:public
-  unclassified P Code : System.UInt32 get:public
-  unclassified P Defaults : Quire.Mcd.Unit[] get:public set:public
-  unclassified P Guid : System.String get:public
-  unclassified P Name : System.String get:public
-  unclassified P RO_number : System.Int32 get:public set:public
-  unclassified P Rank : System.Int32 get:public
+T Quire.Mcd.Type+Named  6 members: tested 1, verified 5
+  tested       M protected .ctor`0() -> System.Void  [Mcd.Type]
+  verified     F public System.String m_nam  [TypeDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [TypeDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [TypeDifferentialTests]
+  verified     M public virtual CompareTo`0(System.Object) -> System.Int32  [TypeDifferentialTests]
+  verified     P Name : System.String override get:public  [TypeDifferentialTests]
 
-T Quire.Mcd.Units  6 members: unclassified 6
-  unclassified F public readonly Quire.Mcd.Units+Power[] Powers
-  unclassified F public readonly System.Double Magnitude
-  unclassified M public .ctor`0(Quire.Mcd.Unit,Quire.Mcd.Rational) -> System.Void
-  unclassified M public .ctor`0(Quire.Mcd.Units+Power[]) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified P magnitude : System.Double get:public
+T Quire.Mcd.Type+Parser  13 members: tested 13
+  tested       F private Quire.Mcd.Type+Factory m_fac  [Mcd.Type]
+  tested       F private Quire.Mcd.Type+Lexer m_lex  [Mcd.Type]
+  tested       F private System.Char m_tok  [Mcd.Type]
+  tested       F private System.String m_val  [Mcd.Type]
+  tested       M private GetNextTokenIf`0(System.String) -> System.Boolean  [Mcd.Type]
+  tested       M private GetNextToken`0() -> System.Char  [Mcd.Type]
+  tested       M private IsNextToken`0(System.String) -> System.Boolean  [Mcd.Type]
+  tested       M private ParseApplication`0() -> Quire.Mcd.Type  [Mcd.Type]
+  tested       M private ParseAtomic`0() -> Quire.Mcd.Type  [Mcd.Type]
+  tested       M private ParseExponent`0() -> System.Int32  [Mcd.Type]
+  tested       M private SkipToken`0(System.Char) -> System.Void  [Mcd.Type]
+  tested       M public .ctor`0(System.String) -> System.Void  [Mcd.Type]
+  tested       M public Parse`0() -> Quire.Mcd.Type  [Mcd.Type]
 
-T Quire.Mcd.Units+Power  2 members: unclassified 2
-  unclassified F public Quire.Mcd.Rational Exponent
-  unclassified F public Quire.Mcd.Unit Base
+T Quire.Mcd.Type+Printer  6 members: tested 6
+  tested       F protected System.Text.StringBuilder m_out  [Mcd.Type]
+  tested       M public .ctor`0(System.Text.StringBuilder) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Application) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Constant) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Product) -> System.Void  [Mcd.Type]
+  tested       M public override Visit`0(Quire.Mcd.Type+Variable) -> System.Void  [Mcd.Type]
 
-T Quire.Mcd.mat_val  6 members: stub 3, unclassified 3
-  unclassified F public System.Int32 m_anr
-  unclassified F public System.Int32 m_cols
-  unclassified F public System.Int32 m_rows
+T Quire.Mcd.Type+Product  11 members: tested 2, verified 9
+  tested       F private System.Int32 m_con  [Mcd.Type]
+  tested       M public override Accept`0(Quire.Mcd.Type+Visitor) -> System.Void  [Mcd.Type]
+  verified     F private System.Int32 m_var  [TypeDifferentialTests]
+  verified     F public Quire.Mcd.Type+Product+Power[] Powers  [TypeDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.Type+Product+Power[],System.Int32) -> System.Void  [TypeDifferentialTests]
+  verified     P Constants : Quire.Mcd.Type+Product+Power[] get:public  [TypeDifferentialTests]
+  verified     P IsDimensionless : System.Boolean get:public  [TypeDifferentialTests]
+  verified     P IsMonomorphic : System.Boolean get:public  [TypeDifferentialTests]
+  verified     P IsPolymorphic : System.Boolean get:public  [TypeDifferentialTests]
+  verified     P Name : System.String override get:public  [TypeDifferentialTests]
+  verified     P Variables : Quire.Mcd.Type+Product+Power[] get:public  [TypeDifferentialTests]
 
-T Quire.Mcd.num_val  4 members: unclassified 4
-  unclassified F public System.Double ip
-  unclassified F public System.Double rp
-  unclassified M public .ctor`0(System.Double) -> System.Void
-  unclassified M public .ctor`0(System.Double,System.Double) -> System.Void
+T Quire.Mcd.Type+Product+Power  2 members: verified 2
+  verified     F public Quire.Mcd.Type Base  [TypeDifferentialTests]
+  verified     F public System.Int32 Exponent  [TypeDifferentialTests]
+
+T Quire.Mcd.Type+Variable  2 members: tested 1, verified 1
+  tested       M public override Accept`0(Quire.Mcd.Type+Visitor) -> System.Void  [Mcd.Type]
+  verified     M public .ctor`0(System.String) -> System.Void  [TypeDifferentialTests]
+
+T Quire.Mcd.Type+Visitor  6 members: tested 6
+  tested       M protected .ctor`0() -> System.Void  [Mcd.Type]
+  tested       M public Traverse`0(Quire.Mcd.Type) -> System.Void  [Mcd.Type]
+  tested       M public virtual Visit`0(Quire.Mcd.Type+Application) -> System.Void  [Mcd.Type]
+  tested       M public virtual Visit`0(Quire.Mcd.Type+Constant) -> System.Void  [Mcd.Type]
+  tested       M public virtual Visit`0(Quire.Mcd.Type+Product) -> System.Void  [Mcd.Type]
+  tested       M public virtual Visit`0(Quire.Mcd.Type+Variable) -> System.Void  [Mcd.Type]
+
+T Quire.Mcd.Unit  8 members: verified 8
+  verified     F public readonly Quire.Mcd.Type Type  [UnitSystemDifferentialTests]
+  verified     F public readonly System.Double Magnitude  [UnitSystemDifferentialTests]
+  verified     F public readonly System.String Name  [UnitSystemDifferentialTests]
+  verified     F public readonly System.String Quantity  [UnitSystemDifferentialTests]
+  verified     F public readonly System.String Symbol  [UnitSystemDifferentialTests]
+  verified     M public .ctor`0(System.String,System.String,System.String,System.Double,System.String) -> System.Void  [UnitSystemDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [UnitSystemDifferentialTests]
+  verified     P Dimensions : Quire.Mcd.Type+Product get:public  [UnitSystemDifferentialTests]
+
+T Quire.Mcd.UnitSystem  42 members: tested 19, verified 23
+  tested       F private Quire.Mcd.Type[] m_dims  [Mcd.UnitSystem]
+  tested       F private Quire.Mcd.Unit[] m_base  [Mcd.UnitSystem]
+  tested       F private Quire.Mcd.Unit[] m_basis_orig  [Mcd.UnitSystem]
+  tested       F private Quire.Mcd.Unit[] m_defaults_orig  [Mcd.UnitSystem]
+  tested       F private System.Collections.Hashtable m_defs  [Mcd.UnitSystem]
+  tested       F private System.Collections.Hashtable m_unit_syms  [Mcd.UnitSystem]
+  tested       F private System.Double[,] m_gtol  [Mcd.UnitSystem]
+  tested       F private System.Double[,] m_ltog  [Mcd.UnitSystem]
+  tested       F private System.Int32 m_rank  [Mcd.UnitSystem]
+  tested       F private System.Int32 m_ro_number  [Mcd.UnitSystem]
+  tested       F private System.String m_guid  [Mcd.UnitSystem]
+  tested       F private System.String m_name  [Mcd.UnitSystem]
+  tested       F private System.UInt32 m_code  [Mcd.UnitSystem]
+  tested       M private GetDimensionIndex`0(Quire.Mcd.Type) -> System.Int32  [Mcd.UnitSystem]
+  tested       M private static Count`0(System.Double[]) -> System.Int32  [Mcd.UnitSystem]
+  tested       M private static Count`0(System.Int32[]) -> System.Int32  [Mcd.UnitSystem]
+  tested       M private static GetDimensions`0(System.String) -> Quire.Mcd.Type+Product  [Mcd.UnitSystem]
+  tested       M private static Inverse`0(System.Double[,]) -> System.Double[,]  [Mcd.UnitSystem]
+  tested       M private static IsSmall`0(System.Double) -> System.Boolean  [Mcd.UnitSystem]
+  verified     M public .ctor`0(System.String,System.UInt32,System.String,Quire.Mcd.Unit[],Quire.Mcd.Unit[]) -> System.Void  [UnitSystemDifferentialTests]
+  verified     M public ChangeBasis`0(System.Double[]) -> System.Int32[]  [UnitSystemDifferentialTests]
+  verified     M public ChangeBasis`0(System.Int32[]) -> System.Double[]  [UnitSystemDifferentialTests]
+  verified     M public GetCoordinates`0(Quire.Mcd.Type+Product) -> System.Int32[]  [UnitSystemDifferentialTests]
+  verified     M public GetDimensions`0(System.Int32[]) -> Quire.Mcd.Type+Product  [UnitSystemDifferentialTests]
+  verified     M public GetUnits`0(System.Double[]) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public IsUnitSymbol`0(System.String) -> System.Boolean  [UnitSystemDifferentialTests]
+  verified     M public Normalize`0(Quire.Mcd.Type+Product) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public Normalize`0(System.Int32[]) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public Normalize`0(System.String) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public Reset`0() -> Quire.Mcd.UnitSystem  [UnitSystemDifferentialTests]
+  verified     M public Simplify`0(Quire.Mcd.Type+Product) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public Simplify`0(System.Int32[]) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public Simplify`0(System.String) -> Quire.Mcd.Units  [UnitSystemDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [UnitSystemDifferentialTests]
+  verified     P Basis : Quire.Mcd.Unit[] get:public set:public  [UnitSystemDifferentialTests]
+  verified     P Code : System.UInt32 get:public  [UnitSystemDifferentialTests]
+  verified     P Defaults : Quire.Mcd.Unit[] get:public set:public  [UnitSystemDifferentialTests]
+  verified     P Dimensions : Quire.Mcd.Type[] get:public  [UnitSystemDifferentialTests]
+  verified     P Guid : System.String get:public  [UnitSystemDifferentialTests]
+  verified     P Name : System.String get:public  [UnitSystemDifferentialTests]
+  verified     P RO_number : System.Int32 get:public set:public  [UnitSystemDifferentialTests]
+  verified     P Rank : System.Int32 get:public  [UnitSystemDifferentialTests]
+
+T Quire.Mcd.UnitSystem+Default  9 members: tested 9
+  tested       F public readonly Quire.Mcd.Unit Unit  [Mcd.UnitSystem]
+  tested       F public readonly System.Int32 Order  [Mcd.UnitSystem]
+  tested       F public readonly System.Int32 Scalar  [Mcd.UnitSystem]
+  tested       F public readonly System.Int32[] Vector  [Mcd.UnitSystem]
+  tested       M public .ctor`0(System.Int32[]) -> System.Void  [Mcd.UnitSystem]
+  tested       M public .ctor`0(System.Int32[],Quire.Mcd.Unit) -> System.Void  [Mcd.UnitSystem]
+  tested       M public CompareTo`0(System.Object) -> System.Int32  [Mcd.UnitSystem]
+  tested       M public override Equals`0(System.Object) -> System.Boolean  [Mcd.UnitSystem]
+  tested       M public override GetHashCode`0() -> System.Int32  [Mcd.UnitSystem]
+
+T Quire.Mcd.UnitSystemGroup  12 members: tested 3, verified 9
+  tested       F private System.Collections.Generic.Dictionary`2<System.Int32,Quire.Mcd.UnitSystem> m_unitsys_list  [Mcd.RuntimeOptions]
+  tested       F private System.String m_name  [Mcd.RuntimeOptions]
+  tested       F private readonly System.Int32 init_id  [Mcd.RuntimeOptions]
+  verified     M public .ctor`0(Quire.Mcd.UnitSystem) -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public Reset`0(System.Int32) -> Quire.Mcd.UnitSystem  [RuntimeOptionsDifferentialTests]
+  verified     M public addCopyWithRONumber`0(System.Int32) -> Quire.Mcd.UnitSystem  [RuntimeOptionsDifferentialTests]
+  verified     M public addMember`0(Quire.Mcd.UnitSystem) -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public changeMember`0(System.Int32,Quire.Mcd.Unit[],Quire.Mcd.Unit[]) -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public findMember`0(System.Int32) -> Quire.Mcd.UnitSystem  [RuntimeOptionsDifferentialTests]
+  verified     M public removeMember`0(System.Int32) -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     M public resetMember`0(System.Int32) -> System.Void  [RuntimeOptionsDifferentialTests]
+  verified     P Name : System.String get:public  [RuntimeOptionsDifferentialTests]
+
+T Quire.Mcd.Units  6 members: verified 6
+  verified     F public readonly Quire.Mcd.Units+Power[] Powers  [UnitSystemDifferentialTests]
+  verified     F public readonly System.Double Magnitude  [UnitSystemDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.Unit,Quire.Mcd.Rational) -> System.Void  [UnitSystemDifferentialTests]
+  verified     M public .ctor`0(Quire.Mcd.Units+Power[]) -> System.Void  [UnitSystemDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [UnitSystemDifferentialTests]
+  verified     P magnitude : System.Double get:public  [UnitSystemDifferentialTests]
+
+T Quire.Mcd.Units+Power  2 members: verified 2
+  verified     F public Quire.Mcd.Rational Exponent  [UnitSystemDifferentialTests]
+  verified     F public Quire.Mcd.Unit Base  [UnitSystemDifferentialTests]
+
+T Quire.Mcd.Utilities  8 members: analyzed 2, verified 6
+  analyzed     M public static Divide`0(System.Object,System.Double) -> System.Object  [Mcd.MatVal]
+  analyzed     M public static Multiply`0(System.Object,System.Double) -> System.Object  [Mcd.MatVal]
+  verified     M public .ctor`0() -> System.Void  [UtilitiesDifferentialTests]
+  verified     M public static AssertFinite`0(Quire.Mcd.num_val) -> System.Void  [UtilitiesDifferentialTests]
+  verified     M public static AssertFinite`0(System.Double) -> System.Void  [UtilitiesDifferentialTests]
+  verified     M public static GetUnits`0(Quire.Mcd.Type+Product) -> Quire.Mcd.Units  [UtilitiesDifferentialTests]
+  verified     M public static IsFinite`0(System.Double) -> System.Boolean  [UtilitiesDifferentialTests]
+  verified     M public static ScaleVector`0(System.Double[],System.Double) -> System.Void  [UtilitiesDifferentialTests]
+
+T Quire.Mcd.mat_val  6 members: analyzed 2, verified 4
+  analyzed     F public System.IntPtr m_iv  [Mcd.MatVal]
+  analyzed     F public System.IntPtr m_rv  [Mcd.MatVal]
+  verified     F public Quire.Mcd.Flags m_flags  [MatValDifferentialTests]
+  verified     F public System.Int32 m_anr  [MatValDifferentialTests]
+  verified     F public System.Int32 m_cols  [MatValDifferentialTests]
+  verified     F public System.Int32 m_rows  [MatValDifferentialTests]
+
+T Quire.Mcd.num_val  4 members: verified 4
+  verified     F public System.Double ip  [NumValDifferentialTests]
+  verified     F public System.Double rp  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.Double) -> System.Void  [NumValDifferentialTests]
+  verified     M public .ctor`0(System.Double,System.Double) -> System.Void  [NumValDifferentialTests]
+
+T Quire.Mpl.Run.AbortRequestedException  1 members: verified 1
+  verified     M public .ctor`0() -> System.Void  [AppExceptionDifferentialTests]
+
+T Quire.Mpl.Run.AppException  32 members: tested 2, verified 30
+  tested       F private System.UInt32 m_argument  [Mpl.Run.AppException]
+  tested       F private System.UInt32 m_handle  [Mpl.Run.AppException]
+  verified     F public static System.Char errorArgDelimiter  [AppExceptionDifferentialTests]
+  verified     F public static System.Char errorTagDelimiter  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.Exception,System.UInt32) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String,System.Exception) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String,System.Exception,System.UInt32) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String,System.Exception,System.UInt32,System.UInt32) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String,System.Exception,System.UInt32,System.UInt32,System.UInt32) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String,System.UInt32) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String,System.UInt32,System.UInt32) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public static ChainTagAndArgument`0(System.String) -> Quire.Mpl.Run.AppException  [AppExceptionDifferentialTests]
+  verified     M public static ChainTaggedError`0(System.String,System.UInt32) -> Quire.Mpl.Run.AppException  [AppExceptionDifferentialTests]
+  verified     M public static FatalException`0(System.String) -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public static ProbeStack`0() -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0() -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.Exception,System.UInt32) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.Object) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.Object[],System.UInt32) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.String) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.String,System.Exception) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.String,System.UInt32) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static Raise`0(System.String,System.UInt32,System.UInt32) -> System.Object  [AppExceptionDifferentialTests]
+  verified     M public static RestoreStack`0() -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public static StackOverflowException`0() -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public static asAppException`0(System.Exception) -> Quire.Mpl.Run.AppException  [AppExceptionDifferentialTests]
+  verified     P Argument : System.UInt32 get:public  [AppExceptionDifferentialTests]
+  verified     P EfiMessage : System.String get:public  [AppExceptionDifferentialTests]
+  verified     P Handle : System.UInt32 get:public  [AppExceptionDifferentialTests]
+  verified     P Region : System.UInt32 get:public set:public  [AppExceptionDifferentialTests]
+  verified     P Tag : System.UInt32 get:public set:public  [AppExceptionDifferentialTests]
 
 T Quire.Mpl.Run.Atom  15 members: stub 6, unclassified 9
   unclassified F public const System.Int32 IntTag
@@ -283,25 +1181,135 @@ T Quire.Mpl.Run.Atom  15 members: stub 6, unclassified 9
   unclassified P StrCon : System.String virtual get:public
   unclassified P sym : Quire.Mpl.Run.Sym get:public
 
-T Quire.Mpl.Run.Function  166 members: stub 151, unclassified 14, abstract 1
+T Quire.Mpl.Run.Cons  9 members: analyzed 9
+  analyzed     F public System.Object Field1  [Mpl.Run.Cons]
+  analyzed     F public System.Object Field2  [Mpl.Run.Cons]
+  analyzed     M private FormatItems`0() -> System.String  [Mpl.Run.Cons]
+  analyzed     M public .ctor`0(System.Object,System.Object) -> System.Void  [Mpl.Run.Cons]
+  analyzed     M public override ToString`0() -> System.String  [Mpl.Run.Cons]
+  analyzed     M public static Length`0(Quire.Mpl.Run.Cons) -> System.Int32  [Mpl.Run.Cons]
+  analyzed     M public static destructive_append`0(Quire.Mpl.Run.Cons,Quire.Mpl.Run.Cons) -> Quire.Mpl.Run.Cons  [Mpl.Run.Cons]
+  analyzed     P head : System.Object get:public  [Mpl.Run.Cons]
+  analyzed     P tail : Quire.Mpl.Run.Cons get:public  [Mpl.Run.Cons]
+
+T Quire.Mpl.Run.Fn_clo`1  23 members: stub 2, analyzed 21
+  analyzed     F private !0 m_clo  [Mpl.Run.Function.Matrix]
+  analyzed     F private Quire.Mpl.Run.Function m_func  [Mpl.Run.Function.Matrix]
+  analyzed     M public .ctor`0(Quire.Mpl.Run.Function,!0) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override invVec`1(out !!0&,System.Object[]) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`1(out !!0&) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`10(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`11(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`12(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`13(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`14(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`15(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`16(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`2(out !!0&,!!1) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`3(out !!0&,!!1,!!2) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`4(out !!0&,!!1,!!2,!!3) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`5(out !!0&,!!1,!!2,!!3,!!4) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`6(out !!0&,!!1,!!2,!!3,!!4,!!5) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`7(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`8(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public override inv`9(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     P Name : System.String override get:public  [Mpl.Run.Function.Matrix]
+
+T Quire.Mpl.Run.Function  166 members: stub 86, unclassified 11, analyzed 68, abstract 1
   unclassified F protected System.Boolean m_no_vectorize
   unclassified F protected System.Boolean m_varargs
   unclassified F protected System.Int32 m_minargs
   unclassified F protected System.Int32 m_n
   unclassified F protected System.Int32 m_purity
   unclassified F protected System.String m_name
-  unclassified M protected .ctor`0(System.Int32,System.Int32) -> System.Void
   unclassified M public InvokeVec`0(System.Object[]) -> System.Object
-  unclassified M public override ToString`0() -> System.String
   unclassified P IsFunction : Quire.Mpl.Run.Function override get:public
   unclassified P MinArgs : System.Int32 get:public
-  unclassified P Name : System.String virtual get:public set:public
   unclassified P Purity : System.Int32 get:public
   unclassified P Varargs : System.Boolean get:public
+  analyzed     F private static System.Char[] label_delimiter  [Mpl.Run.Function.Matrix]
+  analyzed     F private static System.Object OptArg  [Mpl.Run.Function.Matrix]
+  analyzed     M protected .ctor`0(System.Int32,System.Int32) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M protected virtual clo`1(!!0) -> Quire.Mpl.Run.Function  [Mpl.Run.Function.Matrix]
+  analyzed     M protected virtual clovec`1(!!0[]) -> Quire.Mpl.Run.Function  [Mpl.Run.Function.Matrix]
+  analyzed     M public AsDelegate_1`0() -> Quire.Mpl.Run.F`2<System.Object,System.Object>  [Mpl.Run.Function.Matrix]
+  analyzed     M public AsDelegate_1`0(System.UInt32) -> Quire.Mpl.Run.F`2<System.Object,System.Object>  [Mpl.Run.Function.Matrix]
+  analyzed     M public AsDelegate_2`0() -> Quire.Mpl.Run.F`3<System.Object,System.Object,System.Object>  [Mpl.Run.Function.Matrix]
+  analyzed     M public AsDelegate_2`0(System.UInt32) -> Quire.Mpl.Run.F`3<System.Object,System.Object,System.Object>  [Mpl.Run.Function.Matrix]
+  analyzed     M public AssertFullApp`0(System.Int32) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public AssertFullApp`0(System.Int32,System.UInt32) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public IsFullyApplied`0(System.Int32) -> System.Boolean  [Mpl.Run.Function.Matrix]
+  analyzed     M public appVec`1(out !!0&,System.Object[]) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`1(out !!0&) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`10(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`11(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`12(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`13(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`14(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`15(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`16(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`17(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15,!!16) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`6(out !!0&,!!1,!!2,!!3,!!4,!!5) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`7(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`8(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public app`9(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`1(!!0) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`10(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`11(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`12(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`13(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`14(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`15(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`16(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`2(!!0,!!1) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`3(!!0,!!1,!!2) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`4(!!0,!!1,!!2,!!3) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`5(!!0,!!1,!!2,!!3,!!4) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`6(!!0,!!1,!!2,!!3,!!4,!!5) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`7(!!0,!!1,!!2,!!3,!!4,!!5,!!6) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`8(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public apply`9(!!0,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public override Apply`0(System.Object[]) -> System.Object  [Mpl.Run.Function.Matrix]
+  analyzed     M public override ToString`0() -> System.String  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual AsF`2(System.UInt32) -> Quire.Mpl.Run.F`2<!!0,!!1>  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual AsF`3(System.UInt32) -> Quire.Mpl.Run.F`3<!!0,!!1,!!2>  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual app`2(out !!0&,!!1) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual app`3(out !!0&,!!1,!!2) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual app`4(out !!0&,!!1,!!2,!!3) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual app`5(out !!0&,!!1,!!2,!!3,!!4) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`1(out !!0&) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`10(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`11(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`12(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`13(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`14(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`15(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`16(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`17(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15,!!16) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`2(out !!0&,!!1) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`3(out !!0&,!!1,!!2) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`4(out !!0&,!!1,!!2,!!3) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`5(out !!0&,!!1,!!2,!!3,!!4) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`6(out !!0&,!!1,!!2,!!3,!!4,!!5) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`7(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`8(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     M public virtual inv`9(out !!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8) -> System.Void  [Mpl.Run.Function.Matrix]
+  analyzed     P Name : System.String virtual get:public set:public  [Mpl.Run.Function.Matrix]
   abstract     M public abstract invVec`1(out !!0&,System.Object[]) -> System.Void
 
-T Quire.Mpl.Run.FunctionUtilities  18 members: stub 17, unclassified 1
+T Quire.Mpl.Run.FunctionUtilities  18 members: stub 13, unclassified 1, analyzed 4
   unclassified M protected .ctor`0() -> System.Void
+  analyzed     F public static System.Object[] empty_vec  [Mpl.Run.Function.Matrix]
+  analyzed     M public static PushFront`0(System.Object,System.Object[]) -> System.Object[]  [Mpl.Run.Function.Matrix]
+  analyzed     M public static but`1(System.Int32,!!0[]) -> !!0[]  [Mpl.Run.Function.Matrix]
+  analyzed     M public static take`1(System.Int32,!!0[]) -> !!0[]  [Mpl.Run.Function.Matrix]
+
+T Quire.Mpl.Run.NonCriticalException  5 members: verified 5
+  verified     F public static readonly System.String ArgumentIsNull  [AppExceptionDifferentialTests]
+  verified     F public static readonly System.String Default  [AppExceptionDifferentialTests]
+  verified     F public static readonly System.String Unexpected  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [AppExceptionDifferentialTests]
+  verified     M public .ctor`0(System.String) -> System.Void  [AppExceptionDifferentialTests]
 
 T Quire.Mpl.Run.Nul  7 members: stub 3, unclassified 4
   unclassified F public static Quire.Mpl.Run.Nul singleton
@@ -309,11 +1317,34 @@ T Quire.Mpl.Run.Nul  7 members: stub 3, unclassified 4
   unclassified M public override FormatTail`0() -> System.String
   unclassified M public override ToString`0() -> System.String
 
-T Quire.Mpl.Run.Rts  28 members: stub 24, unclassified 4
-  unclassified F private static System.Threading.CancellationTokenSource ms_thread_cancellation_token
-  unclassified F private static readonly System.Threading.CancellationTokenSource ms_dummy_cancellation_token
-  unclassified M public static IsCancellationRequested`0() -> System.Boolean
-  unclassified M public static RegisterThreadForCancellationChecking`0(System.Threading.CancellationTokenSource) -> System.Void
+T Quire.Mpl.Run.Rts  28 members: stub 1, tested 10, verified 17
+  tested       F private static System.Int32 m_stack_depth__  [Mpl.Run.Rts]
+  tested       F private static System.Int32 m_stack_depth_init__  [Mpl.Run.Rts]
+  tested       F private static System.Reflection.ConstructorInfo m_exception_ctor  [Mpl.Run.Rts]
+  tested       F private static System.Reflection.ConstructorInfo m_rethrow_ctor  [Mpl.Run.Rts]
+  tested       F private static System.Reflection.ConstructorInfo m_tag_ctor  [Mpl.Run.Rts]
+  tested       F private static System.Reflection.FieldInfo m_stack_depth_field_info  [Mpl.Run.Rts]
+  tested       F private static System.String[] s_paths  [Mpl.Run.Rts]
+  tested       F private static System.Threading.CancellationTokenSource ms_thread_cancellation_token  [Mpl.Run.Rts]
+  tested       F private static System.Type m_fcn_type  [Mpl.Run.Rts]
+  tested       F private static readonly System.Threading.CancellationTokenSource ms_dummy_cancellation_token  [Mpl.Run.Rts]
+  verified     F public static System.Int32 m_max_stack  [RtsDifferentialTests]
+  verified     F public static System.Int32 m_worker_stack_size  [RtsDifferentialTests]
+  verified     M private static OnResolveAssembly`0(System.Object,System.ResolveEventArgs) -> System.Reflection.Assembly  [RtsDifferentialTests]
+  verified     M public static BoolTrue`0() -> System.Reflection.FieldInfo  [RtsDifferentialTests]
+  verified     M public static ExceptionCtor`0() -> System.Reflection.ConstructorInfo  [RtsDifferentialTests]
+  verified     M public static FcnType`0() -> System.Type  [RtsDifferentialTests]
+  verified     M public static IsCancellationRequested`0() -> System.Boolean  [RtsDifferentialTests]
+  verified     M public static RegisterThreadForCancellationChecking`0(System.Threading.CancellationTokenSource) -> System.Void  [RtsDifferentialTests]
+  verified     M public static ResetStackDepth`0() -> System.Void  [RtsDifferentialTests]
+  verified     M public static RethrowCtor`0() -> System.Reflection.ConstructorInfo  [RtsDifferentialTests]
+  verified     M public static TagCtor`0() -> System.Reflection.ConstructorInfo  [RtsDifferentialTests]
+  verified     M public static TagField`0() -> System.Reflection.FieldInfo  [RtsDifferentialTests]
+  verified     M public static TagType`0() -> System.Type  [RtsDifferentialTests]
+  verified     M public static VoidType`0() -> System.Type  [RtsDifferentialTests]
+  verified     P AssemblyPath : System.String static get:public set:public  [RtsDifferentialTests]
+  verified     P StackDepth : System.Reflection.FieldInfo static get:public  [RtsDifferentialTests]
+  verified     P m_stack_depth : System.Int32 static get:public set:public  [RtsDifferentialTests]
 
 T Quire.Mpl.Run.SCons  32 members: stub 12, unclassified 20
   unclassified F public Quire.Mpl.Run.Sexpr Field1
@@ -373,6 +1404,11 @@ T Quire.Mpl.Run.Tok  15 members: stub 6, unclassified 9
   unclassified P handle : System.UInt32 override get:public
   unclassified P str : System.String override get:public
   unclassified P sym : Quire.Mpl.Run.Sym override get:public
+
+T Quire.Mpl.Run.True  3 members: verified 3
+  verified     F public static Quire.Mpl.Run.True singleton  [RtsDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [RtsDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [RtsDifferentialTests]
 
 T Quire.Mpl.Run.int_constant  10 members: stub 6, unclassified 4
   unclassified F public System.Int32 Field1

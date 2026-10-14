@@ -1,162 +1,454 @@
 #nullable disable
 using System.Globalization;
+using Quire.Mirror;
+using Quire.Mpl.Run;
 
 namespace Quire.Mcd;
 
-/// <summary>The real and imaginary parts of a number, in SI base units.</summary>
+/// <summary>The real and imaginary parts of a number, in SI base units (docs/mirror/evidence/Mcd.NumVal.md).</summary>
+[Serializable]
 public partial struct num_val
 {
+    [MirrorVerified("NumValDifferentialTests")]
     public double rp;
+
+    [MirrorVerified("NumValDifferentialTests")]
     public double ip;
 
-    public num_val(double r) { rp = r; ip = 0; }
+    [MirrorVerified("NumValDifferentialTests")]
+    public num_val(double r)
+    {
+        rp = r;
+        ip = 0.0;
+    }
 
-    public num_val(double r, double i) { rp = r; ip = i; }
+    [MirrorVerified("NumValDifferentialTests")]
+    public num_val(double r, double i)
+    {
+        rp = r;
+        ip = i;
+    }
 }
 
-/// <summary>A complex number with a physical dimension; the parts are stored in SI base units.</summary>
+/// <summary>
+/// A complex number with a dimension; the parts are in SI base units. Constructors without a dimension leave it
+/// null (polymorphic); <see cref="NumDv"/>, <see cref="RealDv"/> and <see cref="IntDv"/> make unitless numbers.
+/// Comparisons are fuzzy (relative 5e-13) unless the thread's <see cref="RuntimeOptions.strict_comparisons"/> is
+/// set. Behaviour follows mplrun 12.0.1.0 (docs/mirror/evidence/Mcd.NumVal.md).
+/// </summary>
+[Serializable]
 public sealed partial class NumVal : DimVal
 {
-    public const double default_fuzz = 5E-13d;
+    public const double normalize_exponent = 4503599627370496.0;
+    public const double machine_eps = 2.220446049250313E-16;
+    public const double default_fuzz = 5E-13;
 
+    [MirrorVerified("NumValDifferentialTests")]
     public num_val Data;
 
-    public static readonly NumVal Zero = new(0.0);
-    public static readonly NumVal One = new(1.0);
+    /// <summary>Zero of the <see cref="Dim.mcd_zero"/> marker, compatible with any dimension.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal Zero;
 
-    public NumVal() : this(0.0) { }
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal ZeroId;
 
-    public NumVal(int i) : this((double)i) { }
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal ZeroPoly;
 
-    public NumVal(double r) : this(r, 0, Dim.identity) { }
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal One;
 
-    public NumVal(double r, double i) : this(r, i, Dim.identity) { }
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NotAVal NoValue;
 
-    public NumVal(double r, double i, Dim d)
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal mcNaN;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static double Inf;
+
+    /// <summary>Positive infinity, despite the name.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static double McdNaN;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static double NaN;
+
+    /// <summary>A quiet NaN with payload 0x12345678.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static double NoNoNaN;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    static NumVal()
     {
-        Data = new num_val(r, i);
+        Inf = double.PositiveInfinity;
+        McdNaN = double.PositiveInfinity;
+        NaN = double.NaN;
+        Zero = new NumVal(0.0, 0.0, Dim.mcd_zero);
+        ZeroId = new NumVal(0.0, 0.0, Dim.identity);
+        ZeroPoly = new NumVal(0);
+        One = new NumVal(1.0, 0.0, Dim.identity);
+        mcNaN = new NumVal(NaN, 0.0, Dim.mcd_zero);
+        NoNoNaN = LoadNaN(0x12345678);
+        NoValue = NotAVal.singleton;
+    }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal() { }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal(int i) { Data.rp = i; }
+
+    /// <summary>Copies the parts only: the copy is polymorphic.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal(NumVal n) { Data = n.Data; }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal(NumVal n, Dim d)
+    {
+        Data = n.Data;
         m_dim = d;
     }
 
-    public NumVal(NumVal n) : this(n.Data.rp, n.Data.ip, n.m_dim) { }
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal(double r) { Data.rp = r; }
 
-    public NumVal(NumVal n, Dim d) : this(n.Data.rp, n.Data.ip, d) { }
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal(double r, double i)
+    {
+        Data.rp = r;
+        Data.ip = i;
+    }
 
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal(double r, double i, Dim d)
+    {
+        Data.rp = r;
+        Data.ip = i;
+        m_dim = d;
+    }
+
+    /// <summary>The dimension, unitless when polymorphic.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override Dim PhysicalDimension => m_dim ?? Dim.identity;
+
+    /// <summary><see cref="True.singleton"/> when the imaginary part is zero, else null.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public object IsPureReal => Data.ip == 0.0 ? True.singleton : null;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public object IsPureImag => Data.rp == 0.0 ? True.singleton : null;
+
+    [MirrorVerified("NumValDifferentialTests")]
     public double Real
     {
         get => Data.rp;
         set => Data.rp = value;
     }
 
+    [MirrorVerified("NumValDifferentialTests")]
     public double Imag
     {
         get => Data.ip;
         set => Data.ip = value;
     }
 
-    public override Dim PhysicalDimension => m_dim;
+    /// <summary>1 for a real whose (saturating) int conversion is exact, else 0.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public int IsInt => Data.ip == 0.0 && (int)Data.rp == Data.rp ? 1 : 0;
 
-    public override int IsReal => Data.ip == 0 ? 1 : 0;
+    [MirrorVerified("NumValDifferentialTests")]
+    public override int IsReal => Data.ip == 0.0 ? 1 : 0;
 
-    /// <summary>1 for true, 0 for false.</summary>
-    public static NumVal McdBool(object o) => o is true ? One : Zero;
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal NumDv(double r, double i) => new(r, i, Dim.identity);
 
-    public override DimVal SetDim(Dim d) => new NumVal(this, d);
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal IntDv(int i) => new(i, 0.0, Dim.identity);
 
-    public static bool ExactEquals(NumVal x, NumVal y) =>
-        x.Data.rp.Equals(y.Data.rp) && x.Data.ip.Equals(y.Data.ip) && Dim.Eq_b(x.m_dim, y.m_dim);
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal RealDv(double r) => new(r, 0.0, Dim.identity);
 
-    public static bool FuzzyEquals(double x, double y) => FuzzyEquals(x, y, default_fuzz);
-
-    /// <summary>True when <paramref name="x"/> and <paramref name="y"/> agree to a relative tolerance.</summary>
-    public static bool FuzzyEquals(double x, double y, double fuzz) =>
-        x == y || Math.Abs(x - y) <= fuzz * Math.Max(Math.Abs(x), Math.Abs(y));
-
-    public static bool FuzzyEquals(NumVal x, NumVal y) => FuzzyEquals(x, y, default_fuzz);
-
-    public static bool FuzzyEquals(NumVal x, NumVal y, double fuzz) =>
-        Dim.Eq_b(x.m_dim, y.m_dim) && FuzzyEquals(x.Data.rp, y.Data.rp, fuzz) && FuzzyEquals(x.Data.ip, y.Data.ip, fuzz);
-
-    public override bool Equals(object obj) => obj is NumVal n && ExactEquals(this, n);
-
-    public override int GetHashCode() => HashCode.Combine(Data.rp, Data.ip, m_dim);
-
-    public string Format(bool show_dimension)
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal Set(double r)
     {
-        string re = Data.rp.ToString("G10", CultureInfo.InvariantCulture);
-        string text = Data.ip == 0 ? re
-            : $"{re}{(Data.ip < 0 ? "-" : "+")}{Math.Abs(Data.ip).ToString("G10", CultureInfo.InvariantCulture)}i";
-        return show_dimension && Dim.IsDimensioned(m_dim) ? $"{text} [{m_dim}]" : text;
+        Data.rp = r;
+        Data.ip = 0.0;
+        return this;
     }
 
-    public override string ToString() => Format(true);
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal Set(double r, double i)
+    {
+        Data.rp = r;
+        Data.ip = i;
+        return this;
+    }
+
+    /// <summary>Leaves the real part 0 and the imaginary part unchanged, whatever <paramref name="i"/> is.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public NumVal Set(int i)
+    {
+        Data.rp = i;
+        Data.rp = 0.0;
+        return this;
+    }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool ExactEquals(NumVal x, NumVal y) => x.Data.rp == y.Data.rp && x.Data.ip == y.Data.ip;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool FuzzyEquals(double x, double y) => FuzzyEquals(x, y, default_fuzz);
+
+    /// <summary>Equal, or differing by less than <paramref name="fuzz"/> times |x + y|.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool FuzzyEquals(double x, double y, double fuzz) => x == y || Math.Abs(x - y) < fuzz * Math.Abs(x + y);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool FuzzyEquals(NumVal x, NumVal y) => FuzzyEquals(x, y, default_fuzz);
+
+    /// <summary>Two reals compare as doubles; otherwise exactly equal parts, or the summed part differences under
+    /// <paramref name="fuzz"/> times the summed absolute part sums.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool FuzzyEquals(NumVal x, NumVal y, double fuzz)
+    {
+        num_val a = x.Data, b = y.Data;
+        if (a.ip == 0.0 && b.ip == 0.0) return FuzzyEquals(a.rp, b.rp, fuzz);
+        if (a.rp == b.rp && a.ip == b.ip) return true;
+        return Math.Abs(a.rp - b.rp) + Math.Abs(a.ip - b.ip) < fuzz * (Math.Abs(a.rp + b.rp) + Math.Abs(a.ip + b.ip));
+    }
+
+    /// <summary>Compatible dimensions (<see cref="Dim.Eq_b"/>) and equal values, exact or fuzzy by the thread's
+    /// strictness.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override bool Equals(object obj) =>
+        obj is NumVal n && Dim.Eq_b(m_dim, n.m_dim) && (RuntimeOptions.strict_comparisons ? ExactEquals(this, n) : FuzzyEquals(this, n));
+
+    /// <summary>As <see cref="Equals(object)"/>, but the zero marker isn't compatible with other dimensions.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public bool Equals1(object obj) =>
+        obj is NumVal n && Dim.Eq_b1(m_dim, n.m_dim) && (RuntimeOptions.strict_comparisons ? ExactEquals(this, n) : FuzzyEquals(this, n));
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public override bool nearly_equal(DimVal obj, double fuzz) =>
+        obj is NumVal n && Dim.Eq_b(m_dim, n.m_dim) && FuzzyEquals(this, n, fuzz);
+
+    /// <summary>Less by more than the fuzz (any amount when strict).</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool LT(double n1, double n2) => n1 < n2 && (RuntimeOptions.strict_comparisons || !(n2 - n1 < default_fuzz * Math.Abs(n1 + n2)));
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool GT(double n1, double n2) => n1 > n2 && (RuntimeOptions.strict_comparisons || !(n1 - n2 < default_fuzz * Math.Abs(n1 + n2)));
+
+    /// <summary>Less or equal, or (not strict) greater by less than the fuzz.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool LE(double n1, double n2) => n1 <= n2 || !RuntimeOptions.strict_comparisons && n1 - n2 < default_fuzz * Math.Abs(n1 + n2);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool GE(double n1, double n2) => n1 >= n2 || !RuntimeOptions.strict_comparisons && n2 - n1 < default_fuzz * Math.Abs(n1 + n2);
+
+    /// <summary>
+    /// Checks the dimensions agree (<see cref="Dim.Eq(Dim, Dim)"/>), then compares two reals by their real parts or
+    /// two pure imaginaries by their imaginary parts; anything else is "incomparable".
+    /// </summary>
+    private static bool Compare(NumVal n1, NumVal n2, Func<double, double, bool> by)
+    {
+        Dim.Eq(n1.m_dim, n2.m_dim);
+        if (n1.Data.ip == 0.0 && n2.Data.ip == 0.0) return by(n1.Data.rp, n2.Data.rp);
+        if (n1.Data.rp == 0.0 && n2.Data.rp == 0.0) return by(n1.Data.ip, n2.Data.ip);
+        AppException.Raise("incomparable");
+        return false;
+    }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool LessThan(NumVal n1, NumVal n2) => Compare(n1, n2, LT);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool GreaterThan(NumVal n1, NumVal n2) => Compare(n1, n2, GT);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool LessEqThan(NumVal n1, NumVal n2) => Compare(n1, n2, LE);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static bool GreaterEqThan(NumVal n1, NumVal n2) => Compare(n1, n2, GE);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public override int GetHashCode() => Data.rp.GetHashCode() ^ Data.ip.GetHashCode();
+
+    /// <summary>A copy with dimension <paramref name="d"/>; this number is unchanged.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override DimVal SetDim(Dim d) => new NumVal(this, d);
+
+    /// <summary>
+    /// Rounds <paramref name="r"/> to the nearest int (ties to even; <see cref="OverflowException"/> outside the int
+    /// range or for NaN) into <paramref name="res"/>, and says whether it lies within |r|·2⁻⁴² of it.
+    /// </summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    private static unsafe bool isNearInt(int* res, double r)
+    {
+        double tolerance = Math.Abs(r) * 2.2737367544323206E-13;
+        *res = Convert.ToInt32(r);
+        return Math.Abs(*res - r) < tolerance;
+    }
+
+    /// <summary>
+    /// A real is an integer when adding 2⁵² leaves it in the low 32 bits of the sum: for whole numbers in
+    /// [0, 2³²) that holds, and the low word is returned as an int (so values from 2³¹ wrap negative). Anything else
+    /// falls back to <see cref="isNearInt"/>. Complex numbers are not integers.
+    /// </summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override unsafe bool isInt(int* res)
+    {
+        if (Data.ip != 0.0) return false;
+        long bits = BitConverter.DoubleToInt64Bits(Data.rp + normalize_exponent);
+        uint low = unchecked((uint)bits);
+        if (Data.rp == low)
+        {
+            *res = unchecked((int)low);
+            return true;
+        }
+        return isNearInt(res, Data.rp);
+    }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public override double asReal(string m, uint a)
+    {
+        if (Data.ip != 0.0) AppException.Raise(m, a);
+        return Data.rp;
+    }
+
+    /// <summary><see cref="One"/> for any non-null object (false included), else <see cref="Zero"/>.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal McdBool(object o) => o != null ? One : Zero;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal ibv(int o) => o != 0 ? One : Zero;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public string Format(string numeric_format, bool show_dimension, bool simplify) =>
+        Format(NumberFormatInfo.InvariantInfo, numeric_format, show_dimension, simplify);
+
+    /// <summary>
+    /// <c>a</c>, <c>bi</c>, <c>a + bi</c> or <c>a - bi</c> with each part in <paramref name="numeric_format"/>; with
+    /// <paramref name="show_dimension"/> and a real dimension, the parts are first divided by the magnitude of its
+    /// units and the units text (<c>{m s -1}</c>) is appended without a space.
+    /// </summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public string Format(IFormatProvider culture, string numeric_format, bool show_dimension, bool simplify)
+    {
+        double re = Data.rp, im = Data.ip;
+        string units = null;
+        if (show_dimension && Dim.IsDimensioned(m_dim))
+        {
+            var u = GetUnits(simplify);
+            re /= u.magnitude;
+            im /= u.magnitude;
+            units = u.ToString();
+        }
+        string real = "{0:" + numeric_format + "}", imaginary = "{1:" + numeric_format + "}i";
+        string pattern;
+        if (im == 0.0) pattern = real;
+        else if (re == 0.0) pattern = imaginary;
+        else if (im < 0.0)
+        {
+            im = -im;
+            pattern = real + " - " + imaginary;
+        }
+        else pattern = real + " + " + imaginary;
+        string text = string.Format(culture, pattern, re, im);
+        return units == null ? text : text + units;
+    }
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public string Format(bool show_dimension) => Format("g15", show_dimension, false);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public string Format(bool show_dimension, bool simplify) => Format("g15", show_dimension, simplify);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public string Format(string numeric_format, bool show_dimension) => Format(numeric_format, show_dimension, false);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public string ToString(IFormatProvider culture, string numeric_format) => Format(culture, numeric_format, false, false);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public string ToString(string numeric_format) => Format(numeric_format, false, false);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public override string ToString(IFormatProvider culture) => ToString(culture, "g15");
+
+    /// <summary>The value in g15, invariant culture, without units.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override string ToString() => ToString("g15");
+
+    /// <summary>This number, or a unitless copy when it is polymorphic.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override DimVal asResult() => m_dim != null ? this : new NumVal(Data.rp, Data.ip, Dim.FixDimension(m_dim));
+
+    /// <summary>A quiet NaN whose low word is <paramref name="payload"/>.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static double LoadNaN(int payload) => BitConverter.Int64BitsToDouble(0x7FF80000L << 32 | (uint)payload);
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public static object NotNoValue(object o)
+    {
+        if (o == NoValue) AppException.Raise("invalid");
+        return o;
+    }
+
+    /// <summary>Both parts divided, keeping the dimension.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public static NumVal operator /(NumVal n, double scalar) => (NumVal)new NumVal(n.Data.rp / scalar, n.Data.ip / scalar).dv(n.m_dim);
 }
 
-/// <summary>A string value.</summary>
+/// <summary>A string value; its dimension is <see cref="Dim.string_dim"/> (docs/mirror/evidence/Mcd.NumVal.md).</summary>
+[Serializable]
 public partial class StrVal : DimVal
 {
+    [MirrorVerified("NumValDifferentialTests")]
     public string Field1;
 
+    [MirrorVerified("NumValDifferentialTests")]
     public StrVal(string str)
     {
-        Field1 = str ?? "";
+        Field1 = str;
         m_dim = Dim.string_dim;
     }
 
-    public string m_string => Field1;
-
+    [MirrorVerified("NumValDifferentialTests")]
     public override string IsString => Field1;
 
-    public override string ToString() => $"\"{Field1}\"";
+    [MirrorVerified("NumValDifferentialTests")]
+    public string m_string => Field1;
 
-    public override bool Equals(object obj) => obj is StrVal s && s.Field1 == Field1;
+    /// <summary>The text, whatever the message.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override string asString(string m, uint a) => Field1;
 
-    public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(Field1);
+    /// <summary>The text itself, unquoted.</summary>
+    [MirrorVerified("NumValDifferentialTests")]
+    public override string ToString() => Field1;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public override bool Equals(object obj) => obj is StrVal s && Field1 == s.Field1;
+
+    [MirrorVerified("NumValDifferentialTests")]
+    public override int GetHashCode() => Field1.GetHashCode();
 }
 
-/// <summary>A range variable such as <c>x := 0, 0.5 .. 10</c>: <see cref="m_n"/> values from
-/// <see cref="m_init"/> in steps of <see cref="m_incr"/>.</summary>
-public partial class RngVal : DimVal
+/// <summary>The "no value" marker (<see cref="NumVal.NoValue"/>).</summary>
+public partial class NotAVal : DimVal
 {
-    protected double m_init;
-    protected double m_incr;
-    protected int m_n;
-    protected bool m_integral;
+    [MirrorVerified("NumValDifferentialTests")]
+    public static readonly NotAVal singleton;
 
-    protected RngVal(double init, double incr, int n, Dim d)
-    {
-        m_init = init;
-        m_incr = incr;
-        m_n = Math.Max(n, 0);
-        m_integral = init == Math.Floor(init) && incr == Math.Floor(incr);
-        m_dim = d;
-    }
+    [MirrorVerified("NumValDifferentialTests")]
+    static NotAVal() { singleton = new NotAVal(); }
 
-    public bool Integral => m_integral;
+    [MirrorVerified("NumValDifferentialTests")]
+    public NotAVal() { }
 
-    public override Dim PhysicalDimension => m_dim;
-
-    public override int Rsize => m_n;
-
-    public static RngVal IncrRange(double first, double incr, int n, Dim d) => new(first, incr, n, d);
-
-    public virtual double get(int i) => m_init + i * m_incr;
-
-    public override DimVal range_get(int n) =>
-        n >= 0 && n < m_n ? new NumVal(get(n), 0, m_dim) : throw new IndexOutOfRangeException($"Range index {n} is out of range");
-
-    public override MatVal asVector(string m, uint a)
-    {
-        var v = new MatVal(m_n, 1);
-        v.m_dim = m_dim;
-        for (int i = 0; i < m_n; i++) v.set_1(i, get(i));
-        return v;
-    }
-
-    public override bool Equals(object obj) =>
-        obj is RngVal r && r.m_init.Equals(m_init) && r.m_incr.Equals(m_incr) && r.m_n == m_n && Dim.Eq_b(r.m_dim, m_dim);
-
-    public override int GetHashCode() => HashCode.Combine(m_init, m_incr, m_n, m_dim);
-
-    public override string ToString() => $"range[{m_n}]";
+    [MirrorVerified("NumValDifferentialTests")]
+    public override string ToString() => "Not A Value";
 }

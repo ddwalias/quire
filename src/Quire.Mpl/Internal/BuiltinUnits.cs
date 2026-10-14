@@ -16,27 +16,37 @@ internal static class BuiltinUnits
     private static readonly Dictionary<Unit, Dim> Dims = [];
     private static readonly Dictionary<string, AffineUnit> AffineTable = new(StringComparer.Ordinal);
 
-    public const string Force = "length*mass/time^2", Pressure = "mass/length/time^2", Energy = "length^2*mass/time^2",
-        Power = "length^2*mass/time^3", Voltage = "length^2*mass/time^3/current", Charge = "time*current",
-        Resistance = "length^2*mass/time^3/current^2", Capacitance = "time^4*current^2/length^2/mass",
-        Inductance = "length^2*mass/time^2/current^2", Conductance = "time^3*current^2/length^2/mass",
-        MagneticFlux = "length^2*mass/time^2/current", FluxDensity = "mass/time^2/current", Frequency = "1/time",
-        Area = "length^2", Volume = "length^3", Velocity = "length/time", Acceleration = "length/time^2";
+    // Signatures in Mathcad's type syntax: base-dimension exponents scaled by 60000.
+    public const string Length = "V{Length 60000}", Mass = "V{Mass 60000}", Time = "V{Time 60000}",
+        Current = "V{Current 60000}", Temperature = "V{Temperature 60000}", Substance = "V{Substance 60000}",
+        Luminosity = "V{Luminosity 60000}", Money = "V{Money 60000}", Unitless = "V{}",
+        Force = "V{Length 60000 Mass 60000 Time-120000}", Pressure = "V{Length-60000 Mass 60000 Time-120000}",
+        Energy = "V{Length 120000 Mass 60000 Time-120000}", Power = "V{Length 120000 Mass 60000 Time-180000}",
+        Voltage = "V{Current-60000 Length 120000 Mass 60000 Time-180000}", Charge = "V{Current 60000 Time 60000}",
+        Resistance = "V{Current-120000 Length 120000 Mass 60000 Time-180000}",
+        Capacitance = "V{Current 120000 Length-120000 Mass-60000 Time 240000}",
+        Inductance = "V{Current-120000 Length 120000 Mass 60000 Time-120000}",
+        Conductance = "V{Current 120000 Length-120000 Mass-60000 Time 180000}",
+        MagneticFlux = "V{Current-60000 Length 120000 Mass 60000 Time-120000}",
+        FluxDensity = "V{Current-60000 Mass 60000 Time-120000}", Frequency = "V{Time-60000}",
+        Area = "V{Length 120000}", Volume = "V{Length 180000}", Velocity = "V{Length 60000 Time-60000}",
+        Acceleration = "V{Length 60000 Time-120000}";
 
     static BuiltinUnits()
     {
-        Def("Length", "length", ("m", 1), ("km", 1e3), ("cm", 1e-2), ("mm", 1e-3), ("μm", 1e-6), ("um", 1e-6),
+        RuntimeThread.Ensure();
+        Def("Length", Length, ("m", 1), ("km", 1e3), ("cm", 1e-2), ("mm", 1e-3), ("μm", 1e-6), ("um", 1e-6),
             ("nm", 1e-9), ("Å", 1e-10), ("in", 0.0254), ("ft", 0.3048), ("yd", 0.9144), ("mi", 1609.344),
             ("mil", 2.54e-5), ("nmi", 1852));
-        Def("Mass", "mass", ("kg", 1), ("gm", 1e-3), ("mg", 1e-6), ("tonne", 1000), ("lb", 0.45359237),
+        Def("Mass", Mass, ("kg", 1), ("gm", 1e-3), ("mg", 1e-6), ("tonne", 1000), ("lb", 0.45359237),
             ("lbm", 0.45359237), ("oz", 0.028349523125), ("ton", 907.18474), ("slug", 14.593902937206364));
-        Def("Time", "time", ("s", 1), ("sec", 1), ("ms", 1e-3), ("μs", 1e-6), ("us", 1e-6), ("ns", 1e-9),
+        Def("Time", Time, ("s", 1), ("sec", 1), ("ms", 1e-3), ("μs", 1e-6), ("us", 1e-6), ("ns", 1e-9),
             ("min", 60), ("hr", 3600), ("day", 86400), ("wk", 604800), ("yr", 31556952));
-        Def("Current", "current", ("A", 1), ("mA", 1e-3), ("kA", 1e3), ("μA", 1e-6), ("uA", 1e-6));
-        Def("Temperature", "temperature", ("K", 1), ("R", 5.0 / 9.0), ("Δ°C", 1), ("Δ°F", 5.0 / 9.0));
-        Def("Amount", "substance", ("mol", 1), ("kmol", 1e3));
-        Def("Luminosity", "luminosity", ("cd", 1));
-        Def("Angle", "1", ("rad", 1), ("deg", Math.PI / 180), ("°", Math.PI / 180), ("rev", 2 * Math.PI),
+        Def("Current", Current, ("A", 1), ("mA", 1e-3), ("kA", 1e3), ("μA", 1e-6), ("uA", 1e-6));
+        Def("Temperature", Temperature, ("K", 1), ("R", 5.0 / 9.0), ("Δ°C", 1), ("Δ°F", 5.0 / 9.0));
+        Def("Amount", Substance, ("mol", 1), ("kmol", 1e3));
+        Def("Luminosity", Luminosity, ("cd", 1));
+        Def("Angle", Unitless, ("rad", 1), ("deg", Math.PI / 180), ("°", Math.PI / 180), ("rev", 2 * Math.PI),
             ("sr", 1));
         Def("Force", Force, ("N", 1), ("kN", 1e3), ("MN", 1e6), ("dyne", 1e-5), ("lbf", 4.4482216152605),
             ("kip", 4448.2216152605), ("kgf", 9.80665));
@@ -71,8 +81,8 @@ internal static class BuiltinUnits
         AllSystems = [SI, USCS, CGS];
         Constants = new Dictionary<string, NumVal>
         {
-            ["π"] = new(Math.PI), ["pi"] = new(Math.PI), ["e"] = new(Math.E),
-            ["g"] = new(9.80665, 0, Dim.Parse(Acceleration)), ["∞"] = new(double.PositiveInfinity),
+            ["π"] = NumVal.RealDv(Math.PI), ["pi"] = NumVal.RealDv(Math.PI), ["e"] = NumVal.RealDv(Math.E),
+            ["g"] = new(9.80665, 0, Dim.Parse(Acceleration)), ["∞"] = NumVal.RealDv(double.PositiveInfinity),
         };
     }
 
@@ -87,8 +97,11 @@ internal static class BuiltinUnits
         }
     }
 
+    /// <summary>Money has no built-in unit, so every basis ends with Mathcad's base currency.</summary>
+    private static readonly Unit BaseCurrency = new("base_currency", "¤", "Money", 1.0, Money);
+
     private static UnitSystem System(string name, uint code, string[] basis, string[] defaults) =>
-        new(name, code, "", basis.Select(n => Table[n]).ToArray(), defaults.Select(n => Table[n]).ToArray());
+        new(name, code, "", [.. basis.Select(n => Table[n]), BaseCurrency], defaults.Select(n => Table[n]).ToArray());
 
     public static UnitSystem SI { get; }
     public static UnitSystem USCS { get; }

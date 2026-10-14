@@ -68,7 +68,7 @@ internal sealed partial class Interpreter
                 double b = Ops.Unitless(Eval(args[3], env), $"{fn} upper limit");
                 if (a != Math.Floor(a) || b != Math.Floor(b)) throw new CalcException($"{fn} limits must be integers");
                 if (b - a > MaxIterations) throw new CalcException($"{fn} has too many terms");
-                terms = Enumerable.Range(0, Math.Max(0, (int)(b - a) + 1)).Select(i => Eval(args[0], env.With(v, new NumVal(a + i))));
+                terms = Enumerable.Range(0, Math.Max(0, (int)(b - a) + 1)).Select(i => Eval(args[0], env.With(v, NumVal.RealDv(a + i))));
                 break;
             }
             default:
@@ -81,7 +81,7 @@ internal sealed partial class Interpreter
             CheckCancelled();
             acc = acc == null ? t : product ? Ops.Mul(acc, t) : Ops.Add(acc, t);
         }
-        return acc ?? (product ? NumVal.One : NumVal.Zero);
+        return acc ?? (product ? NumVal.One : NumVal.ZeroId);
     }
 
     /// <summary>integral(expr, x, a, b)</summary>

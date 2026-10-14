@@ -11,10 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.mat_val, mplrun")]
 public partial struct mat_val
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Flags m_flags;
-    [global::Quire.Mirror.MirrorStub]
-    public nint m_rv;
-    [global::Quire.Mirror.MirrorStub]
-    public nint m_iv;
 }

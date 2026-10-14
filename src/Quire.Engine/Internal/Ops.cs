@@ -1,3 +1,4 @@
+using System.Globalization;
 using Quire.Mcd;
 using Quire.Mpl.Run;
 
@@ -114,11 +115,19 @@ internal static class Ops
     };
 
     /// <summary>The dimension of <paramref name="d"/> raised to <paramref name="p"/>, as a calculation error when
-    /// the exponent would not be exact.</summary>
+    /// an exponent would not be exact. <see cref="Dim.Pwr"/> itself rounds silently.</summary>
     public static Dim Pwr(Dim d, double p)
     {
-        try { return Dim.Pwr(d, p); }
-        catch (ArithmeticException ex) { throw new CalcException(ex.Message); }
+        if (Dim.IsDimensioned(d))
+        {
+            foreach (int c in d.Coordinates)
+            {
+                double scaled = c * p;
+                if (Math.Abs(scaled - Math.Round(scaled)) > 1e-6 || Math.Abs(scaled) > int.MaxValue)
+                    throw new CalcException($"Units can't be raised to the power {p.ToString("G6", CultureInfo.InvariantCulture)}");
+            }
+        }
+        return Dim.Pwr(d, p);
     }
 
     public static DimVal Pow(DimVal a, DimVal b)

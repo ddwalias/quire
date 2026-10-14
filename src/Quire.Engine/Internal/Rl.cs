@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Engine.Internal;
@@ -117,11 +118,11 @@ internal static class Val
 {
     public const int MaxElements = 10_000_000;
 
-    public static readonly Dim Temperature = Dim.Parse("temperature");
+    public static readonly Dim Temperature = Dim.Parse(BuiltinUnits.Temperature);
 
     public static NumVal Num(double v, Dim d) => new(v, 0, d);
 
-    public static NumVal Bool(bool b) => NumVal.McdBool(b);
+    public static NumVal Bool(bool b) => NumVal.ibv(b ? 1 : 0);
 
     public static void CheckSize(int rows, int cols)
     {

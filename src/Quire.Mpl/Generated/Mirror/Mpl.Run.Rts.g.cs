@@ -12,51 +12,5 @@ namespace Quire.Mpl.Run;
 public static partial class Rts
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.ConstructorInfo m_tag_ctor;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.ConstructorInfo m_exception_ctor;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.ConstructorInfo m_rethrow_ctor;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type m_fcn_type;
-    [global::Quire.Mirror.MirrorStub]
-    public static int m_max_stack;
-    [global::Quire.Mirror.MirrorStub]
-    public static int m_worker_stack_size;
-    [global::Quire.Mirror.MirrorStub]
-    private static int m_stack_depth__;
-    [global::Quire.Mirror.MirrorStub]
-    private static int m_stack_depth_init__;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.FieldInfo m_stack_depth_field_info;
-    [global::Quire.Mirror.MirrorStub]
-    private static string[] s_paths;
-    [global::Quire.Mirror.MirrorStub]
-    public static int m_stack_depth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.FieldInfo StackDepth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string AssemblyPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static void ResetStackDepth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo ExceptionCtor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo RethrowCtor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo TagCtor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type FcnType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.FieldInfo BoolTrue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.FieldInfo TagField() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type VoidType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type TagType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder GetTypeInitializer(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.Assembly OnResolveAssembly(object s, global::System.ResolveEventArgs a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

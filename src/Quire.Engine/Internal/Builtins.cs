@@ -19,7 +19,7 @@ internal static class Builtins
 
     /// <summary>Unitless scalar function applied element-wise to matrices.</summary>
     private static void Scalar(string name, Func<double, double> f) =>
-        Def(name, 1, a => Map(a[0], x => new NumVal(Check(f(Unitless(x, name)), name))));
+        Def(name, 1, a => Map(a[0], x => NumVal.RealDv(Check(f(Unitless(x, name)), name))));
 
     private static DimVal Map(DimVal v, Func<NumVal, NumVal> f) => Ops.Normalize(v) switch
     {
@@ -86,24 +86,24 @@ internal static class Builtins
         {
             var x = Ops.Num(a[0]); var y = Ops.Num(a[1]);
             if (x.m_dim != y.m_dim) throw CalcException.UnitsMismatch("atan2");
-            return new NumVal(Math.Atan2(y.Real, x.Real));
+            return NumVal.RealDv(Math.Atan2(y.Real, x.Real));
         });
         Def("log", 1, 2, (a, _) =>
         {
             double b = a.Length == 2 ? Ops.Unitless(a[1], "log base") : 10;
-            return Map(a[0], x => new NumVal(Check(Math.Log(Unitless(x, "log")) / Math.Log(b), "log")));
+            return Map(a[0], x => NumVal.RealDv(Check(Math.Log(Unitless(x, "log")) / Math.Log(b), "log")));
         });
         Def("sqrt", 1, a => Sqrt(a[0]));
         Def("nthroot", 2, a => NthRoot(a[0], a[1]));
         Def("abs", 1, a => Abs(a[0]));
         Def("fact", 1, a => Factorial(a[0]));
-        Def("sign", 1, a => Map(a[0], x => new NumVal(Math.Sign(x.Real))));
-        Def("signum", 1, a => Map(a[0], x => x.Real == 0 ? NumVal.Zero : new NumVal(x.Real / Math.Abs(x.Real))));
+        Def("sign", 1, a => Map(a[0], x => NumVal.RealDv(Math.Sign(x.Real))));
+        Def("signum", 1, a => Map(a[0], x => x.Real == 0 ? NumVal.ZeroId : NumVal.RealDv(x.Real / Math.Abs(x.Real))));
         Scalar("floor", Math.Floor); Scalar("ceil", Math.Ceiling); Scalar("trunc", Math.Truncate);
         Def("round", 1, 2, (a, _) =>
         {
             int n = a.Length == 2 ? Int(a[1], "round digits") : 0;
-            return Map(a[0], x => new NumVal(n >= 0
+            return Map(a[0], x => NumVal.RealDv(n >= 0
                 ? Math.Round(Unitless(x, "round"), Math.Min(n, 15), MidpointRounding.AwayFromZero)
                 : Math.Round(Unitless(x, "round") / Math.Pow(10, -n), MidpointRounding.AwayFromZero) * Math.Pow(10, -n)));
         });
@@ -114,8 +114,8 @@ internal static class Builtins
             if (y.Real == 0) throw new CalcException("mod: division by zero");
             return Val.Num(x.Real % y.Real, x.m_dim);
         });
-        Def("gcd", 2, int.MaxValue, (a, _) => new NumVal(a.Select(v => (long)Ops.Unitless(v, "gcd")).Aggregate(Gcd)));
-        Def("lcm", 2, int.MaxValue, (a, _) => new NumVal(a.Select(v => (long)Ops.Unitless(v, "lcm")).Aggregate((x, y) => x / Gcd(x, y) * y)));
+        Def("gcd", 2, int.MaxValue, (a, _) => NumVal.RealDv(a.Select(v => (long)Ops.Unitless(v, "gcd")).Aggregate(Gcd)));
+        Def("lcm", 2, int.MaxValue, (a, _) => NumVal.RealDv(a.Select(v => (long)Ops.Unitless(v, "lcm")).Aggregate((x, y) => x / Gcd(x, y) * y)));
         Def("UnitsOf", 1, a => Val.Num(1, Ops.Num(a[0]).m_dim));
 
         // statistics and aggregates
@@ -134,10 +134,10 @@ internal static class Builtins
         Def("Stdev", 1, int.MaxValue, (a, _) => Sqrt(Variance(Flatten(a, "Stdev"), sample: true)));
 
         // vectors and matrices
-        Def("length", 1, a => new NumVal(Vec(a[0], "length").Length()));
-        Def("rows", 1, a => new NumVal(MatrixOps.AsMatrix(a[0], "rows").Rows));
-        Def("cols", 1, a => new NumVal(MatrixOps.AsMatrix(a[0], "cols").Cols));
-        Def("last", 1, 1, (a, i) => new NumVal(Vec(a[0], "last").Length() - 1 + i.Origin(i.CallSiteEnv)));
+        Def("length", 1, a => NumVal.RealDv(Vec(a[0], "length").Length()));
+        Def("rows", 1, a => NumVal.RealDv(MatrixOps.AsMatrix(a[0], "rows").Rows));
+        Def("cols", 1, a => NumVal.RealDv(MatrixOps.AsMatrix(a[0], "cols").Cols));
+        Def("last", 1, 1, (a, i) => NumVal.RealDv(Vec(a[0], "last").Length() - 1 + i.Origin(i.CallSiteEnv)));
         Def("identity", 1, a => MatrixOps.Identity(Int(a[0], "identity size"), Dim.identity));
         Def("transpose", 1, a => MatrixOps.AsMatrix(a[0], "transpose").Transpose());
         Def("inverse", 1, a => MatrixOps.Inverse(MatrixOps.AsMatrix(a[0], "inverse")));
@@ -150,7 +150,7 @@ internal static class Builtins
             for (int i = 1; i < m.Rows; i++) acc = Ops.Add(acc, m.At(i, i));
             return acc;
         });
-        Def("rank", 1, a => new NumVal(Rank(MatrixOps.Uniform(MatrixOps.AsMatrix(a[0], "rank"), "rank").Values)));
+        Def("rank", 1, a => NumVal.RealDv(Rank(MatrixOps.Uniform(MatrixOps.AsMatrix(a[0], "rank"), "rank").Values)));
         Def("lsolve", 2, a => MatrixOps.LSolve(MatrixOps.AsMatrix(a[0], "lsolve"), MatrixOps.AsMatrix(a[1], "lsolve")));
         Def("augment", 1, int.MaxValue, (a, _) => MatrixOps.Augment(a.Select(x => MatrixOps.AsMatrix(x, "augment")).ToList()));
         Def("stack", 1, int.MaxValue, (a, _) => MatrixOps.Stack(a.Select(x => MatrixOps.AsMatrix(x, "stack")).ToList()));
@@ -182,7 +182,7 @@ internal static class Builtins
             int rows = Int(a[0], "rows"), cols = Int(a[1], "cols");
             var f = a[2] as Function ?? throw new CalcException("matrix(m, n, f): f must be a function of (i, j)");
             int o = i.Origin(i.CallSiteEnv);
-            return Val.Create(rows, cols, (r, c) => Ops.Num(i.Call(f, [new NumVal(r + o), new NumVal(c + o)]), "matrix element"));
+            return Val.Create(rows, cols, (r, c) => Ops.Num(i.Call(f, [NumVal.RealDv(r + o), NumVal.RealDv(c + o)]), "matrix element"));
         });
         Def("linspace", 3, a =>
         {
@@ -208,10 +208,10 @@ internal static class Builtins
 
         // strings
         Def("concat", 1, int.MaxValue, (a, _) => new StrVal(string.Concat(a.Select(x => x is StrVal s ? s.Field1 : throw new CalcException("concat expects strings")))));
-        Def("strlen", 1, a => a[0] is StrVal s ? new NumVal(s.Field1.Length) : throw new CalcException("strlen expects a string"));
+        Def("strlen", 1, a => a[0] is StrVal s ? NumVal.RealDv(s.Field1.Length) : throw new CalcException("strlen expects a string"));
         Def("num2str", 1, a => new StrVal(Ops.Num(a[0]).Real.ToString("G15", CultureInfo.InvariantCulture)));
         Def("str2num", 1, a => a[0] is StrVal s && double.TryParse(s.Field1, NumberStyles.Float, CultureInfo.InvariantCulture, out var d)
-            ? new NumVal(d) : throw new CalcException("str2num: not a number"));
+            ? NumVal.RealDv(d) : throw new CalcException("str2num: not a number"));
         Def("error", 1, a => throw new CalcException(a[0] is StrVal s ? s.Field1 : "error"));
     }
 
@@ -255,7 +255,7 @@ internal static class Builtins
         if (n > 170) throw new CalcException("Factorial is too large");
         double r = 1;
         for (int i = 2; i <= n; i++) r *= i;
-        return new NumVal(r);
+        return NumVal.RealDv(r);
     });
 
     private static NumVal Variance(IReadOnlyList<NumVal> l, bool sample)

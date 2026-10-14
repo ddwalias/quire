@@ -11,20 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.RangeIterator, mplrun")]
 public partial class RangeIterator : global::Quire.Mcd.Iterator
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.RngVal m_rng;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_it;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_n;
-    [global::Quire.Mirror.MirrorStub]
-    public RangeIterator(global::Quire.Mcd.RngVal r) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object ri_first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.Iterator next() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Iterator ri_next() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,28 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.UnitSystemGroup, mplrun")]
 public partial class UnitSystemGroup : global::System.MarshalByRefObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<int, global::Quire.Mcd.UnitSystem> m_unitsys_list;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int init_id;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_name;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public UnitSystemGroup(global::Quire.Mcd.UnitSystem unit_system) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.UnitSystem findMember(int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void changeMember(int num, global::Quire.Mcd.Unit[] basis, global::Quire.Mcd.Unit[] defaults) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void addMember(global::Quire.Mcd.UnitSystem unit_system) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void removeMember(int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void resetMember(int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.UnitSystem Reset(int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.UnitSystem addCopyWithRONumber(int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

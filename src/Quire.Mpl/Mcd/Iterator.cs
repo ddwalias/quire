@@ -1,0 +1,168 @@
+#nullable disable
+using Quire.Mirror;
+
+namespace Quire.Mcd;
+
+/// <summary>
+/// A cursor over the values of a for loop: <see cref="first"/> is the current value and <see cref="next"/> advances,
+/// returning null when done. Behaviour follows mplrun 12.0.1.0 (docs/mirror/evidence/Mcd.RngVal.md).
+/// </summary>
+public abstract partial class Iterator
+{
+    /// <summary>The iterators one after another.</summary>
+    public partial class SeqIterator : Iterator
+    {
+        [MirrorVerified("RngValDifferentialTests")]
+        private Iterator[] m_its;
+
+        [MirrorVerified("RngValDifferentialTests")]
+        private int m_curr;
+
+        [MirrorVerified("RngValDifferentialTests")]
+        public SeqIterator(Iterator[] its)
+        {
+            m_curr = 0;
+            m_its = its;
+        }
+
+        [MirrorVerified("RngValDifferentialTests")]
+        public override object first() => m_its[m_curr].first();
+
+        /// <summary>Moves to the next iterator when the current one ends (null, not an empty iterator, is
+        /// expected for an empty part).</summary>
+        [MirrorVerified("RngValDifferentialTests")]
+        public override Iterator next()
+        {
+            if (m_its[m_curr].next() == null) m_curr++;
+            return m_curr >= m_its.Length ? null : this;
+        }
+    }
+
+    /// <summary>One value.</summary>
+    public partial class ScalarIterator : Iterator
+    {
+        [MirrorVerified("RngValDifferentialTests")]
+        private object m_init;
+
+        [MirrorVerified("RngValDifferentialTests")]
+        public ScalarIterator(object init) { m_init = init; }
+
+        [MirrorVerified("RngValDifferentialTests")]
+        public override object first() => m_init;
+
+        [MirrorVerified("RngValDifferentialTests")]
+        public override Iterator next() => null;
+    }
+
+    /// <summary>The elements of a matrix in column order.</summary>
+    public partial class MatrixIterator : Iterator
+    {
+        [MirrorAnalyzed("Mcd.RngVal")]
+        private MatVal m_mat;
+
+        [MirrorAnalyzed("Mcd.RngVal")]
+        private int m_row;
+
+        [MirrorAnalyzed("Mcd.RngVal")]
+        private int m_col;
+
+        [MirrorAnalyzed("Mcd.RngVal")]
+        public MatrixIterator(MatVal mat)
+        {
+            m_mat = mat;
+            m_row = 0;
+            m_col = 0;
+        }
+
+        [MirrorAnalyzed("Mcd.RngVal")]
+        public override object first() => m_mat.get_2(m_row, m_col);
+
+        [MirrorAnalyzed("Mcd.RngVal")]
+        public override Iterator next()
+        {
+            if (++m_row < m_mat.Data.m_rows) return this;
+            if (++m_col >= m_mat.Data.m_cols) return null;
+            m_row = 0;
+            return this;
+        }
+    }
+
+    public abstract object first();
+
+    public abstract Iterator next();
+
+    /// <summary>The current value, then advances.</summary>
+    [MirrorVerified("RngValDifferentialTests")]
+    public static object it_incr(object ignore, Iterator it)
+    {
+        object value = it.first();
+        it.next();
+        return value;
+    }
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forRange(double init, double incr, int count) => forRange(RngVal.IncrRange(init, incr, count, Dim.identity));
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forRange(double init, double end) => forRange(RngVal.Range(init, end));
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forRange(double init, double next, double end) => forRange(RngVal.Range(init, next, end, Dim.identity));
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forRange(DimVal init, DimVal next, DimVal end) => forRange(RngVal.mkRange3(init, next, end));
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forRange(DimVal init, DimVal end) => forRange(RngVal.mkRange2(init, end));
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forRange(RngVal r) => new RangeIterator(r);
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public static Iterator forValues(Iterator[] its) => new SeqIterator(its);
+
+    /// <summary>A matrix iterates its elements (null when it is empty), a range its values, anything else itself.</summary>
+    [MirrorAnalyzed("Mcd.RngVal")]
+    public static Iterator forValue(object o) => o switch
+    {
+        MatVal m => m.Rows <= 0 || m.Cols <= 0 ? null : new MatrixIterator(m),
+        RngVal r => forRange(r),
+        _ => new ScalarIterator(o),
+    };
+
+    [MirrorVerified("RngValDifferentialTests")]
+    protected Iterator() { }
+}
+
+/// <summary>The values of a range; the count is fixed when the iterator is made.</summary>
+public partial class RangeIterator : Iterator
+{
+    [MirrorVerified("RngValDifferentialTests")]
+    private RngVal m_rng;
+
+    [MirrorVerified("RngValDifferentialTests")]
+    private int m_it;
+
+    [MirrorVerified("RngValDifferentialTests")]
+    private int m_n;
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public RangeIterator(RngVal r)
+    {
+        m_rng = r;
+        m_it = 0;
+        m_n = m_rng.Rsize;
+    }
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public override object first() => ri_first();
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public object ri_first() => m_rng.range_get(m_it);
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public override Iterator next() => ri_next();
+
+    [MirrorVerified("RngValDifferentialTests")]
+    public Iterator ri_next() => ++m_it >= m_n ? null : this;
+}

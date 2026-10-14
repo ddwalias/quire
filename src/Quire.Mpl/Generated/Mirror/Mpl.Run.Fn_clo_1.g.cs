@@ -12,49 +12,7 @@ namespace Quire.Mpl.Run;
 public partial class Fn_clo<CLO> : global::Quire.Mpl.Run.Function
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Function m_func;
-    [global::Quire.Mirror.MirrorStub]
-    private CLO m_clo;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => base.Name; }
-    [global::Quire.Mirror.MirrorStub]
-    public Fn_clo(global::System.Delegate f, CLO clo, int function_purity) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public Fn_clo(global::Quire.Mpl.Run.Function f, CLO clo) : base(default(int), default(int)) { }
+    public Fn_clo(global::System.Delegate f, CLO clo, int function_purity) : this(default(global::Quire.Mpl.Run.Function), default(CLO)) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Function Fixpoint(global::Quire.Mpl.Run.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R>(out R r) => base.inv<R>(out r);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A>(out R r, A aa) => base.inv<R, A>(out r, aa);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B>(out R r, A aa, B bb) => base.inv<R, A, B>(out r, aa, bb);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc) => base.inv<R, A, B, C>(out r, aa, bb, cc);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => base.inv<R, A, B, C, D>(out r, aa, bb, cc, dd);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E>(out R r, A aa, B bb, C cc, D dd, E ee) => base.inv<R, A, B, C, D, E>(out r, aa, bb, cc, dd, ee);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F>(out R r, A aa, B bb, C cc, D dd, E ee, F ff) => base.inv<R, A, B, C, D, E, F>(out r, aa, bb, cc, dd, ee, ff);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg) => base.inv<R, A, B, C, D, E, F, G>(out r, aa, bb, cc, dd, ee, ff, gg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) => base.inv<R, A, B, C, D, E, F, G, H>(out r, aa, bb, cc, dd, ee, ff, gg, hh);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) => base.inv<R, A, B, C, D, E, F, G, H, I>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I, J>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) => base.inv<R, A, B, C, D, E, F, G, H, I, J>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I, J, K>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) => base.inv<R, A, B, C, D, E, F, G, H, I, J, K>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) => base.inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) => base.inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) => base.inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn);
-    [global::Quire.Mirror.MirrorStub]
-    public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) => base.inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out r, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo);
 }

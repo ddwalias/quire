@@ -8,7 +8,7 @@ public class UnitTests : EngineTestBase
 {
     [Fact]
     public void Quantities_are_stored_in_SI() =>
-        AssertNum(Last("(eval (op_mult 5 km))"), 5000, Dim.Parse("length"));
+        AssertNum(Last("(eval (op_mult 5 km))"), 5000, Dim.Parse(BuiltinUnits.Length));
 
     [Fact]
     public void Derived_dimensions_combine() =>
@@ -20,7 +20,7 @@ public class UnitTests : EngineTestBase
 
     [Fact]
     public void Compatible_units_add() =>
-        AssertNum(Last("(eval (op_add (op_mult 1 ft) (op_mult 12 in)))"), 0.6096, Dim.Parse("length"));
+        AssertNum(Last("(eval (op_add (op_mult 1 ft) (op_mult 12 in)))"), 0.6096, Dim.Parse(BuiltinUnits.Length));
 
     [Fact]
     public void Unit_override_returns_display_scale()
@@ -36,7 +36,7 @@ public class UnitTests : EngineTestBase
 
     [Fact]
     public void Affine_temperature_literals_convert_to_kelvin() =>
-        AssertNum(Last("(eval (op_mult 20 °C))"), 293.15, Dim.Parse("temperature"));
+        AssertNum(Last("(eval (op_mult 20 °C))"), 293.15, Dim.Parse(BuiltinUnits.Temperature));
 
     [Fact]
     public void Affine_temperature_override_converts_back()
@@ -48,7 +48,7 @@ public class UnitTests : EngineTestBase
 
     [Fact]
     public void Square_root_halves_dimensions() =>
-        AssertNum(Last("(eval (op_sqrt (op_mult 16 (op_power m 2))))"), 4, Dim.Parse("length"));
+        AssertNum(Last("(eval (op_sqrt (op_mult 16 (op_power m 2))))"), 4, Dim.Parse(BuiltinUnits.Length));
 
     [Fact]
     public void Trig_requires_unitless_angles_and_deg_is_unitless()
@@ -67,6 +67,6 @@ public class UnitTests : EngineTestBase
         var force = Dim.Parse(BuiltinUnits.Force);
         Assert.Equal("N", Assert.Single(BuiltinUnits.SI.Simplify(force.Coordinates).Powers).Base.Symbol);
         Assert.Equal("lbf", Assert.Single(BuiltinUnits.USCS.Simplify(force.Coordinates).Powers).Base.Symbol);
-        Assert.Equal(0.3048, BuiltinUnits.USCS.Simplify(Dim.Parse("length").Coordinates).Magnitude, 12);
+        Assert.Equal(0.3048, BuiltinUnits.USCS.Simplify(Dim.Parse(BuiltinUnits.Length).Coordinates).Magnitude, 12);
     }
 }

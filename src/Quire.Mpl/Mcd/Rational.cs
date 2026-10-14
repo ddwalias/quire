@@ -9,7 +9,9 @@ namespace Quire.Mcd;
 /// </summary>
 public partial struct Rational
 {
+    [MirrorVerified("RationalDifferentialTests")]
     public readonly int Numerator;
+    [MirrorVerified("RationalDifferentialTests")]
     public readonly int Denominator;
 
     [MirrorVerified("RationalDifferentialTests")]

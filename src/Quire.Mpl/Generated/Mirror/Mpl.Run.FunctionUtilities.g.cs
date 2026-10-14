@@ -14,8 +14,6 @@ public abstract partial class FunctionUtilities : global::Quire.Mcd.DimVal
     [global::Quire.Mirror.MirrorStub]
     public const int maxargs = 16;
     [global::Quire.Mirror.MirrorStub]
-    public static object[] empty_vec;
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.MethodInfo FcnCtor;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.MethodInfo CloCtorGeneric;
@@ -33,12 +31,6 @@ public abstract partial class FunctionUtilities : global::Quire.Mcd.DimVal
     public static global::System.Reflection.MethodInfo GetCallMethod(global::System.Type r, global::System.Type[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object[] concat(object[] a, object[] b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T[] but<T>(int i, T[] a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T[] take<T>(int i, T[] a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object[] PushFront(object b, object[] a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object[] PushFront(object b, object c, object[] a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

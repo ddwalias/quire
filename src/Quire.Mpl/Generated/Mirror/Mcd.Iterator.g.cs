@@ -11,73 +11,19 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.Iterator, mplrun")]
 public abstract partial class Iterator
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract object first();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Mcd.Iterator next();
-    [global::Quire.Mirror.MirrorStub]
-    public static object it_incr(object ignore, global::Quire.Mcd.Iterator it) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forRange(double init, double incr, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forRange(double init, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forRange(double init, double next, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forRange(global::Quire.Mcd.DimVal init, global::Quire.Mcd.DimVal next, global::Quire.Mcd.DimVal end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forRange(global::Quire.Mcd.DimVal init, global::Quire.Mcd.DimVal end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forRange(global::Quire.Mcd.RngVal r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forValues(global::Quire.Mcd.Iterator[] its) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Iterator forValue(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected Iterator() { }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Iterator+SeqIterator, mplrun")]
     public partial class SeqIterator : global::Quire.Mcd.Iterator
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.Iterator[] m_its;
-        [global::Quire.Mirror.MirrorStub]
-        private int m_curr;
-        [global::Quire.Mirror.MirrorStub]
-        public SeqIterator(global::Quire.Mcd.Iterator[] its) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override global::Quire.Mcd.Iterator next() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Iterator+ScalarIterator, mplrun")]
     public partial class ScalarIterator : global::Quire.Mcd.Iterator
     {
-        [global::Quire.Mirror.MirrorStub]
-        private object m_init;
-        [global::Quire.Mirror.MirrorStub]
-        public ScalarIterator(object init) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override global::Quire.Mcd.Iterator next() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Iterator+MatrixIterator, mplrun")]
     public partial class MatrixIterator : global::Quire.Mcd.Iterator
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.MatVal m_mat;
-        [global::Quire.Mirror.MirrorStub]
-        private int m_row;
-        [global::Quire.Mirror.MirrorStub]
-        private int m_col;
-        [global::Quire.Mirror.MirrorStub]
-        public MatrixIterator(global::Quire.Mcd.MatVal mat) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override object first() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override global::Quire.Mcd.Iterator next() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

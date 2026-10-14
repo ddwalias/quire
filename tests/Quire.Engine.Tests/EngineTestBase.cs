@@ -1,11 +1,15 @@
 using Quire.Engine.Internal;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 
 namespace Quire.Engine.Tests;
 
 public abstract class EngineTestBase
 {
     internal readonly WorksheetEngine Engine = new();
+
+    /// <summary>Tests build dimensions on xUnit's threads, which need the runtime's per-thread options.</summary>
+    protected EngineTestBase() => RuntimeThread.Ensure();
 
     /// <summary>Appends regions (Rl strings) and returns their results in order.</summary>
     internal IReadOnlyList<NodeResult> Run(params string[] regions)

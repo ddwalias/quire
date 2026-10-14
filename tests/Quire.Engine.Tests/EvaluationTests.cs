@@ -86,21 +86,21 @@ public class ReviewRegressionTests : EngineTestBase
     [Fact]
     public void Min_and_sec_are_time_units_in_value_position()
     {
-        AssertNum(Last("(eval (op_mult 5 min))"), 300, Dim.Parse("time"));
-        AssertNum(Last("(eval (op_mult 2 sec))"), 2, Dim.Parse("time"));
+        AssertNum(Last("(eval (op_mult 5 min))"), 300, Dim.Parse(BuiltinUnits.Time));
+        AssertNum(Last("(eval (op_mult 2 sec))"), 2, Dim.Parse(BuiltinUnits.Time));
         AssertNum(Last("(eval (op_apply min 3 1 2))"), 1);
     }
 
     [Fact]
     public void Affine_temperature_applies_to_unitless_expressions()
     {
-        AssertNum(Last("(define t 20)", "(eval (op_mult t °C))"), 293.15, Dim.Parse("temperature"));
-        AssertNum(Last("(eval (op_mult (op_add 20 5) °C))"), 298.15, Dim.Parse("temperature"));
+        AssertNum(Last("(define t 20)", "(eval (op_mult t °C))"), 293.15, Dim.Parse(BuiltinUnits.Temperature));
+        AssertNum(Last("(eval (op_mult (op_add 20 5) °C))"), 298.15, Dim.Parse(BuiltinUnits.Temperature));
     }
 
     [Fact]
     public void Affine_unit_after_dimensioned_operand_is_a_difference() =>
-        AssertNum(Last("(eval (op_div J (op_mult kg °C)))"), 1, Dim.Parse("length^2/time^2/temperature"));
+        AssertNum(Last("(eval (op_div J (op_mult kg °C)))"), 1, Dim.Parse("V{Length 120000 Temperature-60000 Time-120000}"));
 
     [Fact]
     public void Derivative_iterates_a_range_variable()
@@ -114,7 +114,7 @@ public class ReviewRegressionTests : EngineTestBase
     [Fact]
     public void Indexed_definition_pads_with_matching_units()
     {
-        AssertNum(Last("(define (op_index v 2) (op_mult 5 m))", "(eval (op_apply sum v))"), 5, Dim.Parse("length"));
+        AssertNum(Last("(define (op_index v 2) (op_mult 5 m))", "(eval (op_apply sum v))"), 5, Dim.Parse(BuiltinUnits.Length));
     }
 
     [Fact]

@@ -11,24 +11,6 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.Type, mplrun")]
 public abstract partial class Type
 {
-    [global::Quire.Mirror.MirrorStub]
-    public char Root { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsImplicitArgument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Type this[int operand] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mcd.Type.Product.Power[] Take(global::Quire.Mcd.Type.Product.Power[] array, int start, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Accept(global::Quire.Mcd.Type.Visitor _);
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Type.Product GetDimensionTypeProduct() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string Format() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Format(global::System.Text.StringBuilder builder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Format(global::System.Text.StringBuilder builder, global::Quire.Mcd.UnitSystem system) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Named, mplrun")]
     public abstract partial class Named : global::Quire.Mcd.Type, global::System.IComparable
@@ -38,53 +20,21 @@ public abstract partial class Type
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Constant, mplrun")]
     public partial class Constant : global::Quire.Mcd.Type.Named
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override bool IsImplicitArgument { get => base.IsImplicitArgument; }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Accept(global::Quire.Mcd.Type.Visitor v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Variable, mplrun")]
     public partial class Variable : global::Quire.Mcd.Type.Named
     {
-        [global::Quire.Mirror.MirrorStub]
-        public Variable(string n) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Accept(global::Quire.Mcd.Type.Visitor v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Application, mplrun")]
     public partial class Application : global::Quire.Mcd.Type
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type Operator;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type[] Operands;
-        [global::Quire.Mirror.MirrorStub]
-        public override bool IsImplicitArgument { get => base.IsImplicitArgument; }
-        [global::Quire.Mirror.MirrorStub]
-        public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public int Arity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public Application(global::Quire.Mcd.Type o, global::Quire.Mcd.Type[] a) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Accept(global::Quire.Mcd.Type.Visitor v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Product, mplrun")]
     public partial class Product : global::Quire.Mcd.Type
     {
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsMonomorphic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsPolymorphic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type.Product.Power[] Variables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type.Product.Power[] Constants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Accept(global::Quire.Mcd.Type.Visitor v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Mcd.Type+Product+Power, mplrun")]
         public partial struct Power
@@ -95,132 +45,30 @@ public abstract partial class Type
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Visitor, mplrun")]
     public abstract partial class Visitor
     {
-        [global::Quire.Mirror.MirrorStub]
-        public void Traverse(global::Quire.Mcd.Type t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Visit(global::Quire.Mcd.Type.Constant _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Visit(global::Quire.Mcd.Type.Variable _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Visit(global::Quire.Mcd.Type.Application _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Visit(global::Quire.Mcd.Type.Product _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected Visitor() { }
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Factory, mplrun")]
     public partial class Factory
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Collections.Stack m_stk;
-        [global::Quire.Mirror.MirrorStub]
-        public void Push(global::Quire.Mcd.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Push(global::Quire.Mcd.Type type, int exponent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type Pop() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type[] Pop(int types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewConstant(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewVariable(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewApplication(global::Quire.Mcd.Type type, global::Quire.Mcd.Type[] operands) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewApplication(int types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewApplication(global::Quire.Mcd.Type type, int operands) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewTuple(int operands) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewFunction(global::Quire.Mcd.Type domain, global::Quire.Mcd.Type range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type NewList(global::Quire.Mcd.Type element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type.Product NewProduct(int variables, int constants) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public Factory() { }
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Lexer, mplrun")]
     private partial class Lexer
     {
-        [global::Quire.Mirror.MirrorStub]
-        private string m_src;
-        [global::Quire.Mirror.MirrorStub]
-        private int m_off;
-        [global::Quire.Mirror.MirrorStub]
-        public Lexer(string signature) { }
-        [global::Quire.Mirror.MirrorStub]
-        public char GetToken(out string lexeme) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Parser, mplrun")]
     private partial class Parser
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.Type.Factory m_fac;
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.Type.Lexer m_lex;
-        [global::Quire.Mirror.MirrorStub]
-        private char m_tok;
-        [global::Quire.Mirror.MirrorStub]
-        private string m_val;
-        [global::Quire.Mirror.MirrorStub]
-        public Parser(string signature) { }
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Mcd.Type Parse() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.Type ParseApplication() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.Type ParseAtomic() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private int ParseExponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private bool IsNextToken(string tokens) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private char GetNextToken() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private bool GetNextTokenIf(string tokens) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void SkipToken(char token) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Printer, mplrun")]
     private partial class Printer : global::Quire.Mcd.Type.Visitor
     {
-        [global::Quire.Mirror.MirrorStub]
-        protected global::System.Text.StringBuilder m_out;
-        [global::Quire.Mirror.MirrorStub]
-        public Printer(global::System.Text.StringBuilder builder) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Constant t) => base.Visit(t);
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Variable t) => base.Visit(t);
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Application t) => base.Visit(t);
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Product t) => base.Visit(t);
     }
 
     [global::Quire.Mirror.MirrorOf("Mcd.Type+Formatter, mplrun")]
     private partial class Formatter : global::Quire.Mcd.Type.Printer
     {
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.UnitSystem m_sys;
-        [global::Quire.Mirror.MirrorStub]
-        private global::Quire.Mcd.Type.Factory m_fac;
-        [global::Quire.Mirror.MirrorStub]
-        public Formatter(global::System.Text.StringBuilder builder, global::Quire.Mcd.UnitSystem system) : base(default(global::System.Text.StringBuilder)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Variable t) => base.Visit(t);
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Application t) => base.Visit(t);
-        [global::Quire.Mirror.MirrorStub]
-        private void OnFunction(global::Quire.Mcd.Type t, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Visit(global::Quire.Mcd.Type.Product t) => base.Visit(t);
     }
 }

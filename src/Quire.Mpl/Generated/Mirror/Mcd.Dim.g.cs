@@ -11,34 +11,6 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.Dim, mplrun")]
 public sealed partial class Dim
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static int[] s_vec;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Type.Product Product { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static void ThreadInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mcd.Dim intern() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void OnError(string m, global::Quire.Mcd.Dim d, uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void OnError(string m, global::Quire.Mcd.Dim d, global::Quire.Mcd.Dim e, uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim ValDim(global::Quire.Mcd.Dim x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Eq_b1(global::Quire.Mcd.Dim x, global::Quire.Mcd.Dim y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool NonScalar_b(global::Quire.Mcd.Dim x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim Id(global::Quire.Mcd.Dim x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim Id(global::Quire.Mcd.Dim x, uint a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim Eq(global::Quire.Mcd.Dim x, global::Quire.Mcd.Dim y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim Eq(global::Quire.Mcd.Dim x, global::Quire.Mcd.Dim y, uint arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.Dim FixDimension(global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Mcd.Dim+Hash, mplrun")]
     private sealed partial class Hash : global::System.Collections.IEqualityComparer

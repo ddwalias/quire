@@ -1,5 +1,6 @@
 using System.Collections;
 using Quire.Mcd;
+using Quire.Mpl.Internal;
 using Quire.Mpl.Run;
 
 namespace Quire.Engine.Internal;
@@ -210,6 +211,7 @@ internal sealed class WorksheetEngine : IEngine
     public void CalculateNow(int h)
     {
         if (IsUpToDate) return;
+        RuntimeThread.Ensure();
         int last = h == 0 ? _nodes.Count - 1 : IndexOf(h);
         IsBusy = true;
         OnBusy?.Invoke(true);

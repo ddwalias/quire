@@ -47,7 +47,7 @@ public class CalculusAndSolverTests : EngineTestBase
 
     [Fact]
     public void Root_keeps_units() =>
-        AssertNum(Last("(define L (op_mult 1 m))", "(eval (op_apply root (op_sub (op_power L 2) (op_mult 9 (op_power m 2))) L))"), 3, Dim.Parse("length"), 1e-9);
+        AssertNum(Last("(define L (op_mult 1 m))", "(eval (op_apply root (op_sub (op_power L 2) (op_mult 9 (op_power m 2))) L))"), 3, Dim.Parse(BuiltinUnits.Length), 1e-9);
 
     [Fact]
     public void Solve_block_find_solves_nonlinear_system()

@@ -2,6 +2,7 @@
   <!-- Behaviour tests for the mirrored mplrun types (Mcd, Mpl.Run), one class per type, named in its evidence record. -->
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>

@@ -64,7 +64,7 @@ public class MatrixAndRangeTests : EngineTestBase
         var r = Last("(define t (op_range3 (op_mult 0 s) (op_mult 0.5 s) (op_mult 2 s)))", "(eval t)");
         var m = Assert.IsType<MatVal>(r.Value);
         Assert.Equal(5, m.Length());
-        Assert.Equal(Dim.Parse("time"), m.At(4).m_dim);
+        Assert.Equal(Dim.Parse(BuiltinUnits.Time), m.At(4).m_dim);
     }
 
     [Fact]

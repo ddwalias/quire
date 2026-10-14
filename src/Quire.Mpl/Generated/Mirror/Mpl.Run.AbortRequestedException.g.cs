@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.AbortRequestedException, mplrun")]
 public partial class AbortRequestedException : global::Quire.Mpl.Run.AppException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public AbortRequestedException() : base(default(string)) { }
 }

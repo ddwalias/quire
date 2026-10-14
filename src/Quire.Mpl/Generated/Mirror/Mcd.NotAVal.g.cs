@@ -11,10 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.NotAVal, mplrun")]
 public partial class NotAVal : global::Quire.Mcd.DimVal
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Mcd.NotAVal singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public NotAVal() { }
 }

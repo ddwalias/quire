@@ -5,6 +5,9 @@
   -->
   <ItemGroup Condition="'$(MirrorStubs)' == 'false'">
     <Compile Remove="Generated\Mirror\**" />
+    <!-- Generated whole types (enums, delegates) that hand-written code needs: a project lists them as
+         MirrorWholeType items. MirrorGen still treats them as generated, since they carry [MirrorOf]. -->
+    <Compile Include="@(MirrorWholeType)" />
     <!-- MirrorGen refuses to read any other build as "hand-written". -->
     <AssemblyMetadata Include="Quire.MirrorStubs" Value="false" />
   </ItemGroup>

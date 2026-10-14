@@ -34,8 +34,8 @@ internal sealed partial class Interpreter
     {
         switch (e)
         {
-            case Tok { Field1: real_constant r }: return new NumVal(r.Field1);
-            case Tok { Field1: int_constant i }: return new NumVal(i.Field1);
+            case Tok { Field1: real_constant r }: return NumVal.RealDv(r.Field1);
+            case Tok { Field1: int_constant i }: return NumVal.RealDv(i.Field1);
             case Tok { Field1: str_constant s }: return new StrVal(s.Field1);
             case Tok { Field1: Sym s }: return env.Lookup(s.name);
             case SCons l: return EvalList(l, env);

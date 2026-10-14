@@ -1,14 +1,25 @@
 #nullable disable
 using System.Collections;
+using Quire.Mirror;
 
 namespace Quire.Mcd;
 
 /// <summary>The shape of a matrix: <see cref="m_anr"/> is the allocated row count (the column stride).</summary>
+[Serializable]
 public partial struct mat_val
 {
+    [MirrorVerified("MatValDifferentialTests")]
     public int m_anr;
+    [MirrorVerified("MatValDifferentialTests")]
+    public Flags m_flags;
+    [MirrorVerified("MatValDifferentialTests")]
     public int m_rows;
+    [MirrorVerified("MatValDifferentialTests")]
     public int m_cols;
+    [MirrorAnalyzed("Mcd.MatVal")]
+    public nint m_rv;
+    [MirrorAnalyzed("Mcd.MatVal")]
+    public nint m_iv;
 }
 
 /// <summary>
@@ -17,10 +28,22 @@ public partial struct mat_val
 /// units, a string, a nested matrix) is a pointer: it lives in <see cref="m_parr"/> under its offset, and its slot
 /// in <see cref="m_rarr"/> holds <see cref="PtrNan"/>.
 /// </summary>
+[Serializable]
 public sealed partial class MatVal : DimVal
 {
     /// <summary>The NaN pattern that marks a pointer slot.</summary>
-    public static readonly double PtrNan = BitConverter.Int64BitsToDouble(0x7FF8_0000_5054_524EL);
+    [MirrorVerified("MatValDifferentialTests")]
+    public static double PtrNan;
+
+    [MirrorVerified("MatValDifferentialTests")]
+    public static uint NanMask;
+
+    [MirrorVerified("MatValDifferentialTests")]
+    static MatVal()
+    {
+        NanMask = 2146959360u;
+        PtrNan = ThePtrNan();
+    }
 
     public mat_val Data;
     public int m_offset;
@@ -28,169 +51,117 @@ public sealed partial class MatVal : DimVal
     public double[] m_iarr;
     public Hashtable m_parr;
 
-    public MatVal() : this(0, 0) { }
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal() : this(null, null, 0, 0, 0, null, Flags.MatrixTag, 0) { }
 
+    [MirrorVerified("MatValDifferentialTests")]
     public MatVal(int r) : this(r, 1) { }
 
+    [MirrorVerified("MatValDifferentialTests")]
     public MatVal(int r, int c) : this(r, c, false) { }
 
+    [MirrorVerified("MatValDifferentialTests")]
     public MatVal(int r, int c, bool imag) : this(r, c, imag, r) { }
 
+    [MirrorVerified("MatValDifferentialTests")]
     public MatVal(int r, int c, bool imag, int anr)
     {
-        if (r < 0 || c < 0 || anr < r) throw new ArgumentOutOfRangeException(nameof(r), $"Invalid matrix shape {r}×{c}");
         Data.m_rows = r;
         Data.m_cols = c;
         Data.m_anr = anr;
-        m_rarr = new double[checked(anr * c)];
+        m_rarr = new double[anr * c];
         m_iarr = imag ? new double[m_rarr.Length] : null;
-        m_dim = Dim.identity;
+        Data.m_flags = Flags.MatrixTag;
     }
 
-    public MatVal(double[] rarr, double[] iarr, int r, int c)
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr, double[] iarr, int r, int c, int anr, Hashtable ptrs, Flags flags, int offset)
     {
-        if (rarr.Length < r * c || (iarr != null && iarr.Length != rarr.Length))
-            throw new ArgumentException("Matrix data doesn't fit its shape");
         Data.m_rows = r;
         Data.m_cols = c;
-        Data.m_anr = r;
+        Data.m_anr = anr;
+        Data.m_flags = flags;
         m_rarr = rarr;
         m_iarr = iarr;
+        m_parr = ptrs;
+        m_offset = offset;
         m_dim = Dim.identity;
     }
 
-    /// <summary>A column vector of <paramref name="vals"/>; its dimension is that of the first number.</summary>
-    public MatVal(object[] vals) : this(vals.Length, 1)
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr, double[] iarr, int r, int c, int anr, Hashtable ptrs)
+        : this(rarr, iarr, r, c, anr, ptrs, Flags.MatrixTag, 0) { }
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr, double[] iarr, int r, int c, int anr)
+        : this(rarr, iarr, r, c, anr, null) { }
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr, double[] iarr, int r, int c)
+        : this(rarr, iarr, r, c, r) { }
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr, double[] iarr, int r)
+        : this(rarr, iarr, r, 1) { }
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr, double[] iarr) : this(rarr, iarr, rarr.Length) { }
+    [MirrorVerified("MatValDifferentialTests")]
+    public MatVal(double[] rarr) : this(rarr, null) { }
+
+    [MirrorVerified("MatValDifferentialTests")]
+    public int Rows => Data.m_rows;
+    [MirrorVerified("MatValDifferentialTests")]
+    public int Cols => Data.m_cols;
+    [MirrorVerified("MatValDifferentialTests")]
+    public int Anr => Data.m_anr;
+    [MirrorVerified("MatValDifferentialTests")]
+    public int Offset => m_offset;
+    [MirrorVerified("MatValDifferentialTests")]
+    public bool HasImag
     {
-        m_dim = vals.OfType<NumVal>().FirstOrDefault()?.m_dim ?? Dim.identity;
-        for (int i = 0; i < vals.Length; i++) set_1(i, vals[i]);
+        get
+        {
+            if (m_iarr == null) return false;
+            if (Array.Exists(m_iarr, value => value != 0)) return true;
+            m_iarr = null;
+            return false;
+        }
     }
 
-    public int Rows => Data.m_rows;
-    public int Cols => Data.m_cols;
-    public int Anr => Data.m_anr;
-    public int Offset => m_offset;
-    public bool HasPtrs => m_parr != null && m_parr.Count > 0;
-    public bool HasImag => m_iarr != null;
-    public bool IsUniform => !HasPtrs;
-    public bool IsVector => Rows == 1 || Cols == 1;
+    [MirrorVerified("MatValDifferentialTests")]
+    public bool Packed => Rows * Cols == m_rarr.Length;
+    [MirrorVerified("MatValDifferentialTests")]
+    public bool Immutable
+    {
+        get => (Data.m_flags & Flags.CopyOnWrite) != 0;
+        set => Data.m_flags = value ? Data.m_flags | Flags.CopyOnWrite : Data.m_flags & ~Flags.CopyOnWrite;
+    }
+    [MirrorVerified("MatValDifferentialTests")]
+    public bool Shared
+    {
+        get => (Data.m_flags & Flags.Shared) != 0;
+        set => Data.m_flags = value ? Data.m_flags | Flags.Shared : Data.m_flags & ~Flags.Shared;
+    }
+    [MirrorVerified("MatValDifferentialTests")]
+    public override int Isize => Rows * Cols;
+    [MirrorVerified("MatValDifferentialTests")]
+    public override int GetHashCode() => unchecked(Rows * 64 + Cols);
+    [MirrorVerified("MatValDifferentialTests")]
+    public static double ThePtrNan() => BitConverter.Int64BitsToDouble(-1L);
+    [MirrorVerified("MatValDifferentialTests")]
+    public static bool IsPtrNan(ref double r) => (uint)(BitConverter.DoubleToInt64Bits(r) >> 32) == uint.MaxValue;
+    [MirrorTested("Mcd.MatVal")]
+    private bool IsPtrNan(int r, int c) => IsPtrNan(ref m_rarr[Index(r, c)]);
+    [MirrorVerified("MatValDifferentialTests")]
+    public void AllocImaginary() => m_iarr = new double[m_rarr.Length];
 
-    public override MatVal IsMatrix => this;
+    [MirrorVerified("MatValDifferentialTests")]
+    public int Index(int r) => m_offset + r;
 
-    /// <summary>The shared dimension, or <see cref="Dim.mixed_matrix_dim"/> when elements differ.</summary>
-    public override Dim PhysicalDimension => HasPtrs ? Dim.mixed_matrix_dim : m_dim;
-
-    public static MatVal MakeVector(object[] vals) => new(vals);
-
+    [MirrorVerified("MatValDifferentialTests")]
     public int Index(int r, int c) => m_offset + c * Anr + r;
 
+    [MirrorVerified("MatValDifferentialTests")]
     public int RowOf(int idx) => (idx - m_offset) % Anr;
 
+    [MirrorVerified("MatValDifferentialTests")]
     public int ColOf(int idx) => (idx - m_offset) / Anr;
 
-    private void Check(int i, int j)
-    {
-        if (i < 0 || i >= Rows || j < 0 || j >= Cols)
-            throw new IndexOutOfRangeException($"Element ({i}, {j}) is outside a {Rows}×{Cols} matrix");
-    }
-
-    /// <summary>Element <paramref name="i"/> in column-major order.</summary>
-    public object get_1(int i) => Rows == 0 ? throw new IndexOutOfRangeException("The matrix is empty") : get_2(i % Rows, i / Rows);
-
-    public object get_2(int i, int j)
-    {
-        Check(i, j);
-        int off = Index(i, j);
-        if (m_parr != null && m_parr.ContainsKey(off)) return m_parr[off];
-        return new NumVal(m_rarr[off], m_iarr?[off] ?? 0, m_dim);
-    }
-
-    public double get_real(int i, int j)
-    {
-        Check(i, j);
-        int off = Index(i, j);
-        return m_parr != null && m_parr[off] is NumVal n ? n.Real : m_rarr[off];
-    }
-
-    public void set_1(int i, object x)
-    {
-        if (Rows == 0) throw new IndexOutOfRangeException("The matrix is empty");
-        set_2(i % Rows, i / Rows, x);
-    }
-
-    public void set_2(int i, int j, object x)
-    {
-        Check(i, j);
-        int off = Index(i, j);
-        if (x is NumVal n && Dim.Eq_b(n.m_dim, m_dim))
-        {
-            m_parr?.Remove(off);
-            m_rarr[off] = n.Real;
-            if (n.Imag != 0) (m_iarr ??= new double[m_rarr.Length])[off] = n.Imag;
-            else if (m_iarr != null) m_iarr[off] = 0;
-        }
-        else
-        {
-            (m_parr ??= new Hashtable())[off] = x;
-            m_rarr[off] = PtrNan;
-            if (m_iarr != null) m_iarr[off] = 0;
-        }
-    }
-
-    public void set_1(int i, double r)
-    {
-        if (Rows == 0) throw new IndexOutOfRangeException("The matrix is empty");
-        set_2(i % Rows, i / Rows, r);
-    }
-
-    public void set_2(int i, int j, double r)
-    {
-        Check(i, j);
-        int off = Index(i, j);
-        m_parr?.Remove(off);
-        m_rarr[off] = r;
-        if (m_iarr != null) m_iarr[off] = 0;
-    }
-
-    private MatVal Like(int r, int c) => new(r, c, HasImag) { m_dim = m_dim };
-
-    private void CopyElement(MatVal from, int fi, int fj, int i, int j)
-    {
-        int src = from.Index(fi, fj), dst = Index(i, j);
-        if (from.m_parr != null && from.m_parr.ContainsKey(src)) { (m_parr ??= new Hashtable())[dst] = from.m_parr[src]; m_rarr[dst] = PtrNan; }
-        else
-        {
-            m_rarr[dst] = from.m_rarr[src];
-            if (from.m_iarr != null) m_iarr[dst] = from.m_iarr[src];
-        }
-    }
-
-    public MatVal Transpose()
-    {
-        var t = Like(Cols, Rows);
-        for (int j = 0; j < Cols; j++)
-            for (int i = 0; i < Rows; i++) t.CopyElement(this, i, j, j, i);
-        return t;
-    }
-
-    public MatVal Column(int col) => SubMatrix(0, (uint)Rows - 1, (uint)col, (uint)col);
-
-    public MatVal Row(int row) => SubMatrix((uint)row, (uint)row, 0, (uint)Cols - 1);
-
-    /// <summary>Rows <paramref name="r1"/>..<paramref name="r2"/> and columns <paramref name="c1"/>..<paramref name="c2"/>, inclusive.</summary>
-    public MatVal SubMatrix(uint r1, uint r2, uint c1, uint c2)
-    {
-        if (r2 < r1 || c2 < c1 || r2 >= Rows || c2 >= Cols)
-            throw new IndexOutOfRangeException($"Submatrix ({r1}..{r2}, {c1}..{c2}) is outside a {Rows}×{Cols} matrix");
-        var s = Like((int)(r2 - r1 + 1), (int)(c2 - c1 + 1));
-        for (int j = 0; j < s.Cols; j++)
-            for (int i = 0; i < s.Rows; i++) s.CopyElement(this, (int)r1 + i, (int)c1 + j, i, j);
-        return s;
-    }
-
-    public override MatVal asVector(string m, uint a) =>
-        Cols == 1 ? this : Rows == 1 ? Transpose()
-            : throw new InvalidCastException($"{m ?? "This operation"} needs a vector, not a {Rows}×{Cols} matrix");
-
-    public override string ToString() => $"[{Rows}x{Cols}]";
 }

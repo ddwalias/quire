@@ -11,6 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.StrVal, mplrun")]
 public partial class StrVal : global::Quire.Mcd.DimVal
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string asString(string m, uint a) => base.asString(m, a);
 }

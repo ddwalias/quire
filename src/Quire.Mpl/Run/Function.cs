@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mcd;
+using Quire.Mirror;
 
 namespace Quire.Mpl.Run;
 
@@ -11,7 +12,7 @@ public abstract partial class FunctionUtilities : DimVal
 
 /// <summary>
 /// A callable value. <see cref="MinArgs"/> arguments are required; a <see cref="Varargs"/> function accepts more.
-/// Subclasses implement <see cref="invVec{R}"/>, which every call form ends in.
+/// Subclasses implement <see cref="invVec{R}"/>; typed call forms also support virtual overrides.
 /// </summary>
 public abstract partial class Function : FunctionUtilities
 {
@@ -22,13 +23,15 @@ public abstract partial class Function : FunctionUtilities
     protected bool m_varargs;
     protected string m_name;
 
-    /// <param name="function_purity">0 for a pure function; nonzero when calls have side effects.</param>
-    /// <param name="n">The number of parameters.</param>
+    /// <param name="function_purity">The original function purity/arity counter before captures.</param>
+    /// <param name="n">The captured-argument count subtracted from that counter.</param>
+    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     protected Function(int function_purity, int n)
     {
-        m_purity = function_purity;
         m_n = n;
-        m_minargs = n;
+        m_purity = function_purity - n;
+        m_minargs = m_purity;
+        m_no_vectorize = false;
         m_dim = Dim.function_dim;
     }
 
@@ -36,9 +39,10 @@ public abstract partial class Function : FunctionUtilities
     public int MinArgs => m_minargs;
     public bool Varargs => m_varargs;
 
+    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual string Name
     {
-        get => m_name;
+        get => m_name ?? "<anonymous>";
         set => m_name = value;
     }
 
@@ -53,22 +57,6 @@ public abstract partial class Function : FunctionUtilities
         return r;
     }
 
-    public override string ToString() => m_name ?? GetType().Name;
-}
-
-/// <summary>Runtime services for compiled and interpreted Mpl code.</summary>
-public static partial class Rts
-{
-    [ThreadStatic]
-    private static CancellationTokenSource ms_thread_cancellation_token;
-
-    private static readonly CancellationTokenSource ms_dummy_cancellation_token = new();
-
-    /// <summary>Makes <see cref="IsCancellationRequested"/> on the calling thread follow <paramref name="src"/>.</summary>
-    public static void RegisterThreadForCancellationChecking(CancellationTokenSource src) =>
-        ms_thread_cancellation_token = src;
-
-    /// <summary>True when the calculation running on this thread should stop.</summary>
-    public static bool IsCancellationRequested() =>
-        (ms_thread_cancellation_token ?? ms_dummy_cancellation_token).IsCancellationRequested;
+    [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
+    public override string ToString() => $"Function: {Name}";
 }

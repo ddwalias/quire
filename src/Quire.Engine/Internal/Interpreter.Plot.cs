@@ -27,7 +27,7 @@ internal sealed partial class Interpreter
         {
             IReadOnlyList<NumVal> xValues = env.TryLookupUser(xs, out var r) && r is RngVal range
                 ? range.Values().ToArray()
-                : Enumerable.Range(0, QuickPlotPoints).Select(i => new NumVal(-10 + 20.0 * i / (QuickPlotPoints - 1))).ToArray();
+                : Enumerable.Range(0, QuickPlotPoints).Select(i => NumVal.RealDv(-10 + 20.0 * i / (QuickPlotPoints - 1))).ToArray();
             bool quick = !env.IsUserDefined(xs);
             foreach (var y in yExprs)
             {

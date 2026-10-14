@@ -91,7 +91,7 @@ public class EngineNodeTests : EngineTestBase
                      "(plot2d (x t) (y (op_mult t (op_div m s))) (xunit ms))");
         var tr = Assert.Single(Assert.IsType<TraceVal>(r.Value).Traces);
         Assert.Equal([0.0, 1000, 2000, 3000], tr.X);
-        Assert.Equal(Dim.Parse("length"), tr.YDim);
+        Assert.Equal(Dim.Parse(BuiltinUnits.Length), tr.YDim);
     }
 
     [Fact]

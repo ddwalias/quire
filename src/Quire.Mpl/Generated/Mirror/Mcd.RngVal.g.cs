@@ -11,36 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.RngVal, mplrun")]
 public partial class RngVal : global::Quire.Mcd.DimVal
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override int Isize { get => base.Isize; }
-    [global::Quire.Mirror.MirrorStub]
-    protected RngVal(global::Quire.Mcd.RngVal r) : this(default(double), default(double), default(int), default(global::Quire.Mcd.Dim)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.DimVal asResult() => base.asResult();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.DimVal iterator_get(int n) => base.iterator_get(n);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal mkVec2(global::Quire.Mcd.DimVal beg, global::Quire.Mcd.DimVal end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal mkVec3(global::Quire.Mcd.DimVal beg, global::Quire.Mcd.DimVal next, global::Quire.Mcd.DimVal end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal mkRange2(global::Quire.Mcd.DimVal beg, global::Quire.Mcd.DimVal end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal mkRange3(global::Quire.Mcd.DimVal beg, global::Quire.Mcd.DimVal next, global::Quire.Mcd.DimVal end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal Range(double beg, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal Range(double first, double second, double last, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal IncrRange(double first, double incr, double last, global::Quire.Mcd.Dim d, string m) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.RngVal IncrRange(double first, double incr, double last, global::Quire.Mcd.Dim d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.MatVal asMatrix(string m, uint a) => base.asMatrix(m, a);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.MatVal asRealMatrix(string m, uint a) => base.asRealMatrix(m, a);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.MatVal asRealVector(string m, uint a) => base.asRealVector(m, a);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mcd.RngVal asRange(string m, uint a) => base.asRange(m, a);
 }

@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.NonCriticalException, mplrun")]
 public partial class NonCriticalException : global::System.ApplicationException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string Default;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string Unexpected;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string ArgumentIsNull;
-    [global::Quire.Mirror.MirrorStub]
-    public NonCriticalException() { }
-    [global::Quire.Mirror.MirrorStub]
-    public NonCriticalException(string message) { }
 }

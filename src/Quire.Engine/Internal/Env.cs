@@ -75,7 +75,7 @@ internal sealed class Env
 /// <summary>A function defined in the worksheet, <c>f(x, y) := body</c>.</summary>
 internal sealed class UserFunction : Function
 {
-    public UserFunction(string name, IReadOnlyList<string> parameters, Sexpr body, Interpreter interpreter) : base(0, parameters.Count)
+    public UserFunction(string name, IReadOnlyList<string> parameters, Sexpr body, Interpreter interpreter) : base(parameters.Count, 0)
     {
         m_name = name;
         Parameters = parameters;
@@ -103,7 +103,7 @@ internal sealed class BuiltinFunction : Function
 {
     private readonly Func<DimVal[], Interpreter, DimVal> _impl;
 
-    public BuiltinFunction(string name, int minArgs, int maxArgs, Func<DimVal[], Interpreter, DimVal> impl) : base(0, minArgs)
+    public BuiltinFunction(string name, int minArgs, int maxArgs, Func<DimVal[], Interpreter, DimVal> impl) : base(minArgs, 0)
     {
         m_name = name;
         m_varargs = maxArgs > minArgs;

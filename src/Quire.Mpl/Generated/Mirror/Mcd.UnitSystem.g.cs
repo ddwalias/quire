@@ -11,67 +11,9 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.UnitSystem, mplrun")]
 public partial class UnitSystem : global::System.MarshalByRefObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mcd.Type[] m_dims;
-    [global::Quire.Mirror.MirrorStub]
-    private double[,] m_ltog;
-    [global::Quire.Mirror.MirrorStub]
-    private double[,] m_gtol;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Hashtable m_defs;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Hashtable m_unit_syms;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Type[] Dimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units Normalize(string signature) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units Normalize(global::Quire.Mcd.Type.Product product) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units Normalize(int[] global) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Units GetUnits(double[] local) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.Type.Product GetDimensions(int[] global) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double[] ChangeBasis(int[] global) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int[] ChangeBasis(double[] local) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsUnitSymbol(string sym) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int GetDimensionIndex(global::Quire.Mcd.Type dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mcd.Type.Product GetDimensions(string signature) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double[,] Inverse(double[,] matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsSmall(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int Count(int[] array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int Count(double[] array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Mcd.UnitSystem+Default, mplrun")]
     private partial class Default : global::System.IComparable
     {
-        [global::Quire.Mirror.MirrorStub]
-        public readonly int[] Vector;
-        [global::Quire.Mirror.MirrorStub]
-        public readonly int Scalar;
-        [global::Quire.Mirror.MirrorStub]
-        public readonly int Order;
-        [global::Quire.Mirror.MirrorStub]
-        public readonly global::Quire.Mcd.Unit Unit;
-        [global::Quire.Mirror.MirrorStub]
-        public Default(int[] global, global::Quire.Mcd.Unit unit) { }
-        [global::Quire.Mirror.MirrorStub]
-        public Default(int[] global) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object o) => base.Equals(o);
-        [global::Quire.Mirror.MirrorStub]
-        public int CompareTo(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
