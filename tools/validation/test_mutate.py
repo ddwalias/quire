@@ -7,11 +7,39 @@ import unittest
 from mutate import key, run, select
 
 FAKE_DOTNET = """#!{python}
-import sys
+import os, sys
 from pathlib import Path
-image = (Path(sys.argv[2]).parent / 'Quire.Mpl.dll').read_bytes()
-# The fake suite notices only the mutant at offset 4 (add -> sub); offset 8 is never checked.
-sys.exit(1 if image[4] == 0x59 else 0)
+args = sys.argv
+image = (Path(args[2]).parent / 'Quire.Mpl.dll').read_bytes()
+scratch = Path(args[args.index('--results-directory') + 1])
+kills = Path(os.environ['QUIRE_MUTATION_KILLS'])
+TEST = 'Ns.Tests.Compare'
+
+def finish(failed, *recorded):
+    if recorded:
+        kills.write_text(''.join(f'{{TEST}}|{{r}}\\n' for r in recorded))
+    outcome = 'Failed' if failed else 'Passed'
+    (scratch / 'run.trx').write_text(
+        '<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010"><TestDefinitions>'
+        '<UnitTest id="1"><TestMethod className="Ns.Tests" name="Compare"/></UnitTest></TestDefinitions>'
+        f'<Results><UnitTestResult testId="1" outcome="{{outcome}}"/></Results></TestRun>')
+    sys.exit(1 if failed else 0)
+
+if image[0] == 0xFF:
+    finish(True)  # a broken suite: even the control run fails
+if image[0] == 0xFE:
+    finish(False, 'mvid:100663297')  # a test swallows an always-mismatching comparison
+if image[4] == 0x59:  # add -> sub: the method's own comparison mismatches and the harness records it
+    finish(True, 'mvid:100663297')
+if image[6] == 0x5B:  # mul -> div: another method compared first mismatches; also one in a foreign assembly
+    finish(True, 'other:100663297', 'mvid:100663298')
+if image[8] == 0x2D and image[9] == 1:  # only a foreign assembly's comparison mismatched
+    finish(True, 'other:100663297')
+if image[8] == 0x2D and image[9] == 2:  # the mismatch is swallowed; the test fails for another reason
+    kills.write_text(f'{{TEST}}|mvid:100663297\\n')
+    sys.exit(1)
+# brfalse -> brtrue at offset 8: the test fails, but no comparison reported a mismatch
+finish(image[8] == 0x2D)
 """
 
 
@@ -22,7 +50,7 @@ class MutationTests(unittest.TestCase):
         root = Path(self.directory.name)
         self.tests = root / 'bin'
         self.tests.mkdir()
-        self.image = bytes([0, 0, 0, 0, 0x58, 0, 0, 0, 0x2C, 0])
+        self.image = bytes([0, 0, 0, 0, 0x58, 0, 0x5A, 0, 0x2C, 0])
         (self.tests / 'Quire.Mpl.dll').write_bytes(self.image)
         (self.tests / 'Quire.Differential.Tests.dll').write_bytes(b'')
         self.dotnet = root / 'dotnet'
@@ -30,8 +58,9 @@ class MutationTests(unittest.TestCase):
         self.dotnet.chmod(self.dotnet.stat().st_mode | stat.S_IEXEC)
         killed = dict(il_offset=1, file_offset=4, original='58', replacement='59', description='add -> sub')
         survived = dict(il_offset=5, file_offset=8, original='2C', replacement='2D', description='brfalse.s -> brtrue.s')
-        self.method = dict(type='Quire.T', signature='M()', validation='compared', mutants=[killed, survived],
-                           cases=[dict(test='Ns.Tests.Compare')])
+        caller = dict(il_offset=3, file_offset=6, original='5A', replacement='5B', description='mul -> div')
+        self.method = dict(type='Quire.T', signature='M()', validation='compared', mutants=[killed, survived, caller],
+                           cases=[dict(test='Ns.Tests.Compare')], quire_mvid='mvid', token=0x06000001)
         self.coverage = {'methods': [self.method, dict(self.method, type='Quire.Other'),
                                      dict(self.method, signature='Stub()', validation='missing')]}
 
@@ -40,17 +69,42 @@ class MutationTests(unittest.TestCase):
                    str(self.dotnet), jobs=jobs, accepted_keys=accepted)
 
     def test_only_compared_methods_of_selected_types(self):
-        self.assertEqual(len(select(self.coverage, {'Quire.T'})), 2)
+        self.assertEqual(len(select(self.coverage, {'Quire.T'})), 3)
 
     def test_survivor_fails_until_accepted(self):
         for jobs in (1, 2):
             with self.subTest(jobs=jobs):
                 report = self.mutate(jobs=jobs)
-                self.assertEqual((report['total'], report['killed']), (2, 1))
+                self.assertEqual((report['total'], report['killed']), (3, 2))
                 self.assertEqual(report['survivors'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'])
                 self.assertFalse(report['complete'])
         survivor = key(self.method, self.method['mutants'][1])
         self.assertTrue(self.mutate({survivor})['complete'])
+
+    def test_only_a_recorded_mismatch_kills(self):
+        result = {r['key']: r['outcome'] for r in self.mutate()['mutants']}
+        self.assertEqual(result['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'], 'survived (tests failed without a mismatch)')
+        self.assertEqual(result['Quire.T::M()@IL_0001 add -> sub'], 'killed')
+        self.assertEqual(result['Quire.T::M()@IL_0003 mul -> div'], 'killed (via another method compared first)')
+
+    def test_mismatch_in_another_assembly_or_a_passing_test_is_not_a_kill(self):
+        for marker in (1, 2):
+            with self.subTest(marker=marker):
+                image = bytearray(self.image); image[9] = marker
+                (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+                result = {r['key']: r['outcome'] for r in self.mutate()['mutants']}
+                self.assertEqual(result['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'],
+                                 'survived (tests failed without a mismatch)')
+
+    def test_control_run_with_a_swallowed_mismatch_rejected(self):
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFE]) + self.image[1:])
+        with self.assertRaisesRegex(ValueError, 'swallowed'):
+            self.mutate()
+
+    def test_failing_control_run_rejected(self):
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFF]) + self.image[1:])
+        with self.assertRaises(ValueError):
+            self.mutate()
 
     def test_original_assembly_left_unchanged(self):
         self.mutate()

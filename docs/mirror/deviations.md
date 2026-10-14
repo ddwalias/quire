@@ -19,6 +19,9 @@ decided.
 |---|---|---|---|---|
 | — | — | No confirmed intentional deviations are recorded in this ledger yet. | — | — |
 
+The scope cell names each covered Quire method as `Quire.Type::Member` (every overload of that name); the validator
+lets an accepted id excuse a structural difference only on the members its row names.
+
 No behavioral deviations were newly verified by this documentation edit. This empty index does not establish that no
 deviations exist. Existing differences noted by the generator are not thereby reviewed, accepted, or classified as
 behavioral deviations.

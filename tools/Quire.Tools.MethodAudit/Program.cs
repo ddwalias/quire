@@ -75,7 +75,9 @@ foreach (var artifact in quire)
     foreach (var raw in artifact.Methods)
     {
         var type = artifact.Model.Types.Single(t => t.FullName == raw.Owner);
-        string? exclusion = raw.Name.StartsWith('<') || type.CompilerGenerated ? "compiler-generated" : null;
+        // Only names a compiler can produce: [CompilerGenerated] on a hand-written type must not hide its methods.
+        string? exclusion = raw.Name.StartsWith('<') || type.CompilerGenerated && type.FullName.Contains('<')
+            ? "compiler-generated" : null;
         var candidates = type.Methods.Concat(type.Properties.SelectMany(p => new[] { p.Getter, p.Setter }))
             .Concat(type.Events.SelectMany(e => new[] { e.Adder, e.Remover })).OfType<MethodModel>();
         var method = candidates.Single(m => Key(m, false) == raw.Key);
@@ -155,15 +157,16 @@ sealed class Artifact
     public PEReader Pe { get; }
     private readonly MetadataReader? _debug;
 
-    /// <summary>Source file and statement lines of a method from its portable PDB; null without one.</summary>
+    /// <summary>Statement lines of a method per source file, from its portable PDB; null without one.</summary>
     public object? Source(int token)
     {
         if (_debug == null) return null;
         var points = _debug.GetMethodDebugInformation(MetadataTokens.MethodDefinitionHandle(token).ToDebugInformationHandle())
             .GetSequencePoints().Where(p => !p.IsHidden).ToList();
         if (points.Count == 0) return null;
-        return new { file = _debug.GetString(_debug.GetDocument(points[0].Document).Name),
-            lines = points.Select(p => p.StartLine).Distinct().Order().ToArray() };
+        // Constructors can span documents (field initializers in another partial file).
+        return points.GroupBy(p => p.Document).Select(g => new { file = _debug.GetString(_debug.GetDocument(g.Key).Name),
+            lines = g.Select(p => p.StartLine).Distinct().Order().ToArray() }).ToArray();
     }
     public MetadataReader Metadata { get; }
     public Artifact(string path)

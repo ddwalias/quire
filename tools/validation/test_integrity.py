@@ -35,9 +35,61 @@ class IntegrityTests(unittest.TestCase):
     def test_mirrored_names_and_generics_are_not_artifacts(self):
         self.assertEqual(self.source('SCons.list2(x, y); var d = typeof(Dictionary<,>); Field1 = list3(a, b, c);'), [])
 
-    def test_generated_stubs_skipped_and_allow_marker_respected(self):
+    def test_generated_stubs_skipped_and_only_exact_allowlisted_lines_exempt(self):
         self.assertEqual(self.source('int num2 = 0;', 'Quire.Mpl/Generated/Stub.g.cs'), [])
-        self.assertEqual(self.source('int num2 = 0; // quire-lint: allow Mathcad local name'), [])
+        self.assertEqual(self.source('int num2 = 0; // quire-lint: allow'), ['decompiler local name'])
+        (self.repo / 'docs/mirror/lint-allowed.txt').write_text(
+            '# reviewed\nsrc/Quire.Mpl/Dim.cs | decompiler local name | int num2 = 0;\n')
+        self.assertEqual(self.source('int num2 = 0;'), [])
+        self.assertEqual(self.source('int num2 = 0; int num3 = 1;'), ['decompiler local name', 'decompiler local name'])
+        self.assertEqual(self.source('long num3 = 0;'), ['decompiler local name'])
+
+    def test_quire_mpl_cannot_reach_the_harness(self):
+        for text in ('[ModuleInitializer] static void Init() { }', 'var t = "QUIRE_MUTATION_KILLS";',
+                     'Environment.GetEnvironmentVariable(name);', 'AppDomain.CurrentDomain.GetAssemblies();'):
+            with self.subTest(text=text):
+                self.assertIn('forbidden harness reach', self.source(text))
+        self.assertEqual(self.source('#if QUIRE_MIRROR_STUB_FREE\n#endif'), [])
+        (self.repo / 'src/Quire.Engine').mkdir()
+        self.source('[ModuleInitializer] static void Init() { }', 'Quire.Engine/X.cs')
+        self.assertEqual([f for f in lint(self.repo) if 'Engine' in f['file']], [])
+
+    def differential(self, text, name='XDifferentialTests.cs'):
+        directory = self.repo / 'tests/Quire.Differential.Tests'
+        (directory / name).parent.mkdir(parents=True, exist_ok=True)
+        (directory / name).write_text(text)
+        return [f['rule'] for f in lint(self.repo) if f['file'].startswith('tests/')]
+
+    def test_differential_tests_cannot_shadow_or_escape_the_harness(self):
+        good = 'namespace Quire.Differential.Tests;\n[Trait("a", "b")]\npublic class XDifferentialTests\n{\n' \
+               '    private sealed class Helper { }\n    string s = "class Assert";\n}\n'
+        self.assertEqual(self.differential(good), [])
+        header = 'namespace Quire.Differential.Tests;\npublic class XDifferentialTests { }\n'
+        for text, rule in [(header + 'static class Assert { }', 'test file shape'),
+                           (header + '    [System.Obsolete] static class Reflect { }', 'test file shape'),
+                           ('public class XDifferentialTests { }', 'test file shape'),
+                           ('namespace Quire.Differential { public class XDifferentialTests { } }', 'test file shape'),
+                           ('namespace Quire;\npublic class XDifferentialTests { }', 'test file shape'),
+                           ('namespace Quire.Differential.Tests;\npublic class YDifferentialTests { }', 'test file shape'),
+                           (header + 'global using Assert = Fake;', 'global using'),
+                           (header + 'var e = Environment.GetEnvironmentVariable("X");', 'forbidden test API'),
+                           (header + 'var s = "QUIRE_MUTATION_KILLS";', 'forbidden test API'),
+                           (header + 'if (typeof(X).Assembly.Location.Contains("mutant")) { }', 'forbidden test API'),
+                           (header + 'var il = m.GetMethodBody()!.GetILAsByteArray();', 'forbidden test API'),
+                           (header + 'Thread.Sleep(100000);', 'forbidden test API'),
+                           (header + 'catch (Xunit.Sdk.XunitException) { }', 'forbidden test API'),
+                           (header + 'var t = Type.GetType(name);', 'forbidden test API'),
+                           (header + 'var f = typeof(MethodComparison).GetMethods();', 'forbidden test API'),
+                           ('#line hidden', 'line directive')]:
+            with self.subTest(text=text):
+                self.assertIn(rule, self.differential(text))
+
+    def test_case_variant_and_nested_test_files(self):
+        bad = 'namespace Quire;\nstatic class Assert { QUIRE_X }\n'
+        self.assertIn('forbidden test API', self.differential(bad, 'Evildifferentialtests.cs'))
+        (self.repo / 'tests/Quire.Differential.Tests/Evildifferentialtests.cs').unlink()
+        # Protected subdirectory files are maintainer-reviewed and not linted as agent tests.
+        self.assertEqual(self.differential(bad, 'Sub/EvilDifferentialTests.cs'), [])
 
     def test_analyzed_type_requires_listing_for_top_level_type(self):
         self.assertEqual(listings(self.inventory, self.repo)['errors'],

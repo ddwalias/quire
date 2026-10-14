@@ -29,6 +29,26 @@ def identity(value):
     return value['assembly'], value['sha256'], value['mvid'], value['token']
 
 
+def accepted_deviations(repo=ROOT):
+    """Accepted deviation id -> the `Quire.Type::Member` names its ledger index row scopes it to. Any other
+    [MirrorDeviation] id, or an accepted id on a member outside its scope, is ignored."""
+    path = Path(repo) / 'docs/mirror/deviations.md'
+    if not path.is_file():
+        return {}
+    accepted = {}
+    for line in path.read_text().splitlines():
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if (len(cells) > 1 and re.fullmatch(r'DEV-\d{4}', cells[0])
+                and any(c in ('accepted-temporary', 'accepted-permanent') for c in cells)):
+            accepted[cells[0]] = set(re.findall(r'[\w.+]+::[\w.<>]+', cells[1].replace('`', '')))
+    return accepted
+
+
+def member(method):
+    """`Quire.Type::Name` of a method; a deviation covers every overload of the name it scopes."""
+    return f"{method['type']}::{re.split(r'[`(]', method['signature'])[0]}"
+
+
 def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None):
     """`lines` is merged cobertura data from the differential run; without it the coverage gate cannot pass."""
     if inventory.get('schema') != 2 or inventory.get('errors'):
@@ -47,6 +67,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None):
     observed = {}
     evidence_dir = (Path(repo) / 'docs/mirror/evidence').resolve()
     contracts = {}
+    deviations = accepted_deviations(repo)
     for record in records:
         if record.get('schema') != 1 or record.get('run') != run:
             raise ValueError('Stale or invalid direct-comparison record')
@@ -89,7 +110,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None):
                 state, reason = 'missing', 'Method remains a stub or blocked'
             elif cases and not method['is_static'] and not method['is_constructor'] and not all(c['state_checked'] for c in cases):
                 state, reason = 'missing', 'Instance method lacks checked before/after target state'
-            elif method['structure_matches'] is not True and method['status'] != 'Deviation':
+            elif method['structure_matches'] is not True and not (method['status'] == 'Deviation' and member(method) in deviations.get(method.get('evidence'), ())):
                 state, reason = 'structure_mismatch', 'IL structure differs from the original: ' + '; '.join(
                     method['structure_differences'] or ['not compared'])
             elif cases and lines is None:
@@ -98,7 +119,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None):
                 state, reason = 'uncovered', 'No source lines in the PDB; coverage cannot be attributed'
             elif cases and (gap['uncovered_lines'] or gap['partial_branches']):
                 state, reason = 'uncovered', (f"Differential run leaves lines {gap['uncovered_lines']} unexecuted and "
-                                              f"branches {gap['partial_branches']} partly covered in {gap['file']}")
+                                              f"branches {gap['partial_branches']} partly covered")
             elif cases:
                 state, reason = 'compared', 'Direct comparison passed for the listed cases only; every line and branch executed'
             else:
@@ -121,7 +142,8 @@ def by_type(rows):
     result = {}
     for row in rows:
         counts = result.setdefault(row['type'], dict.fromkeys(
-            ('compared', 'declaration_only', 'excluded', 'missing', 'structure_mismatch', 'uncovered', 'verified_unsupported'), 0))
+            ('total', 'compared', 'declaration_only', 'excluded', 'missing', 'structure_mismatch', 'uncovered', 'verified_unsupported'), 0))
+        counts['total'] += 1
         counts[row['validation']] += 1
         counts['verified_unsupported'] += not row['status_supported']
     return result

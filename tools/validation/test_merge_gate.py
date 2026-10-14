@@ -1,6 +1,6 @@
 from pathlib import Path
 import unittest
-from merge_gate import patterns, protected, verdict
+from merge_gate import case_collisions, patterns, protected, verdict
 
 RULES = patterns((Path(__file__).parent / 'protected.txt').read_text())
 PASSED = {'projects': [{'project': 'P', 'exit_code': 0, 'passed': 3, 'failed': 0, 'skipped': 0}],
@@ -13,17 +13,34 @@ class MergeGateTests(unittest.TestCase):
             'tools/validation/mutate.py', 'tools/Quire.Tools.MethodAudit/Structure.cs',
             'tests/Quire.Differential.Tests/MethodComparison.cs', 'tests/Quire.Differential.Tests/Mathcad.cs',
             'docs/mirror/validation-baseline.json', 'docs/mirror/accepted-mutants.txt', 'docs/mirror/deviations.md',
-            'src/Quire.Mirror/MirrorAttributes.cs', 'Directory.Build.props'], RULES), sorted([
+            'src/Quire.Mirror/MirrorAttributes.cs', 'Directory.Build.props', 'tests/Quire.Differential.Tests/Reflect.cs',
+            'tests/Quire.Differential.Tests/NewHelper.cs', 'src/Directory.Build.targets', 'tests/x/NuGet.Config',
+            'global.json', 'src/Quire.Mpl/Quire.Mpl.csproj', 'tests/a.runsettings'], RULES), sorted([
             'tools/validation/mutate.py', 'tools/Quire.Tools.MethodAudit/Structure.cs',
             'tests/Quire.Differential.Tests/MethodComparison.cs', 'tests/Quire.Differential.Tests/Mathcad.cs',
             'docs/mirror/validation-baseline.json', 'docs/mirror/accepted-mutants.txt', 'docs/mirror/deviations.md',
-            'src/Quire.Mirror/MirrorAttributes.cs', 'Directory.Build.props']))
+            'src/Quire.Mirror/MirrorAttributes.cs', 'Directory.Build.props', 'tests/Quire.Differential.Tests/Reflect.cs',
+            'tests/Quire.Differential.Tests/NewHelper.cs', 'src/Directory.Build.targets', 'tests/x/NuGet.Config',
+            'global.json', 'src/Quire.Mpl/Quire.Mpl.csproj', 'tests/a.runsettings']))
 
     def test_work_paths_are_not_protected(self):
         self.assertEqual(protected([
             'src/Quire.Mpl/Mcd/NumVal.cs', 'tests/Quire.Differential.Tests/NumValDifferentialTests.cs',
-            'tests/Quire.Differential.Tests/Reflect.cs', 'docs/mirror/evidence/Mcd.NumVal.md',
+            'tests/Quire.Mpl.Tests/Mcd/NumValTests.cs', 'docs/mirror/evidence/Mcd.NumVal.md',
             'docs/mirror/il/mplrun/Mcd.NumVal.il', 'docs/mirror/WORK.md', 'docs/mirror/status/Quire.Mpl.txt'], RULES), [])
+
+    def test_case_variants_and_subdirectories_stay_protected(self):
+        self.assertEqual(protected([
+            'tests/Quire.Differential.Tests/Sub/EvilDifferentialTests.cs', 'src/Quire.Mpl/Generated/Mirror/X.cs',
+            'src/Quire.Mpl/Mcd/Generated/Y.cs', 'TOOLS/validation/validate.py'], RULES), sorted([
+            'tests/Quire.Differential.Tests/Sub/EvilDifferentialTests.cs', 'src/Quire.Mpl/Generated/Mirror/X.cs',
+            'src/Quire.Mpl/Mcd/Generated/Y.cs', 'TOOLS/validation/validate.py']))
+        # Writable, so integrity.py lints every such file whatever its case.
+        self.assertEqual(protected(['tests/Quire.Differential.Tests/Evildifferentialtests.cs'], RULES), [])
+
+    def test_case_collisions_found(self):
+        self.assertEqual(case_collisions(['src/Quire.Mpl/A.cs', 'Src/Quire.Engine/B.cs', 'docs/x.md']), ['Src / src'])
+        self.assertEqual(case_collisions(['src/a/A.cs', 'src/a/B.cs']), [])
 
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])

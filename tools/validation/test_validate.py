@@ -29,5 +29,37 @@ class ResultTests(unittest.TestCase):
             self.check(["NotExecuted"], allow=True)
 
 
+
+class ChangedTypeTests(unittest.TestCase):
+    def setUp(self):
+        from validate import ROOT
+        root = ROOT.resolve().as_posix()
+        self.coverage = {'methods': [
+            dict(type='Quire.Mcd.Dim', source=[dict(file=f'{root}/src/Quire.Mpl/Mcd/Dim.cs', lines=[1])], cases=[]),
+            dict(type='Quire.Mcd.NumVal', source=[dict(file=f'{root}/src/Quire.Mpl/Mcd/NumVal.cs', lines=[1])],
+                 cases=[dict(test='Quire.Differential.Tests.NumValDifferentialTests.Compare')])]}
+
+    def types(self, *names):
+        from validate import changed_types
+        return changed_types(self.coverage, 'base', lambda *args: '\0'.join(names) + '\0')
+
+    def test_changed_source_and_changed_tests_select_types(self):
+        self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs'), {'Quire.Mcd.Dim'})
+        self.assertEqual(self.types('tests/Quire.Differential.Tests/NumValDifferentialTests.cs'), {'Quire.Mcd.NumVal'})
+        self.assertEqual(self.types('docs/mirror/WORK.md'), set())
+
+    def test_nested_and_case_variant_test_classes_map_to_their_file(self):
+        self.coverage['methods'][1]['cases'] = [dict(test='Quire.Differential.Tests.NumValDifferentialTests+More.Compare')]
+        self.assertEqual(self.types('tests/Quire.Differential.Tests/numvaldifferentialtests.cs'), {'Quire.Mcd.NumVal'})
+
+    def test_source_without_methods_selects_nothing(self):
+        self.assertEqual(self.types('src/Quire.Mpl/Mcd/Kinds.cs'), set())
+
+    def test_source_outside_the_repository_fails(self):
+        self.coverage['methods'][0]['source'][0]['file'] = '/elsewhere/Dim.cs'
+        with self.assertRaises(ValueError):
+            self.types('src/Quire.Mpl/Mcd/Dim.cs')
+
+
 if __name__ == "__main__":
     unittest.main()

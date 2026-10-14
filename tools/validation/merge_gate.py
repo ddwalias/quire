@@ -27,8 +27,34 @@ def patterns(text):
     return [line.strip() for line in text.splitlines() if line.strip() and not line.startswith('#')]
 
 
+def is_protected(path, rules):
+    """Last matching rule wins; `!pattern` re-allows. Case-insensitive, so `NuGet.Config` cannot slip through."""
+    result = False
+    for rule in rules:
+        negate = rule.startswith('!')
+        if fnmatch.fnmatchcase(path.lower(), rule.lstrip('!').lower()):
+            result = not negate
+    return result
+
+
 def protected(paths, rules):
-    return sorted(p for p in paths if any(fnmatch.fnmatch(p, rule) for rule in rules))
+    return sorted(p for p in paths if is_protected(p, rules))
+
+
+def case_collisions(paths):
+    """Paths, or their directories, that differ only in case."""
+    seen = {}
+    for path in paths:
+        parts = path.split('/')
+        for depth in range(1, len(parts) + 1):
+            prefix = '/'.join(parts[:depth])
+            seen.setdefault(prefix.lower(), set()).add(prefix)
+    return sorted(' / '.join(sorted(names)) for names in seen.values() if len(names) > 1)
+
+
+def changed_paths(base, tip):
+    """Every added, changed, deleted or renamed path, both sides of a rename, unquoted."""
+    return sorted({p for p in git('diff', '-z', '--no-renames', '--name-only', f'{base}...{tip}').split('\0') if p})
 
 
 def verdict(summary):
@@ -57,6 +83,8 @@ def main():
     parser.add_argument('--base', default='main')
     parser.add_argument('--apply', action='store_true', help='fast-forward the base branch and commit the new baseline')
     parser.add_argument('--allow-protected', action='store_true', help='maintainer only: accept protected-path changes')
+    parser.add_argument('--allow-unvalidated', action='store_true',
+                        help='maintainer only: accept src changes outside Quire.Mpl after a separate phase run')
     parser.add_argument('--results', type=Path, help='new directory for the validation results')
     parser.add_argument('--timeout', type=int, default=1800)
     args = parser.parse_args()
@@ -66,7 +94,7 @@ def main():
     if git('merge-base', base, tip) != base:
         print(f'BLOCKED: {args.branch} is not based on the current {args.base}; rebase it first.')
         return 1
-    changed = git('diff', '--name-only', f'{base}...{tip}').splitlines()
+    changed = changed_paths(base, tip)
     if not changed:
         print(f'BLOCKED: {args.branch} has no changes.')
         return 1
@@ -75,9 +103,22 @@ def main():
     if touched and not args.allow_protected:
         print('BLOCKED: maintainer-owned paths changed:\n  ' + '\n  '.join(touched))
         return 1
+    collisions = case_collisions(git('ls-tree', '-r', '--name-only', tip).splitlines())
+    if collisions:
+        print('BLOCKED: paths differ only in case and would merge into one file on Windows:\n  ' + '\n  '.join(collisions))
+        return 1
+    unvalidated = sorted(p for p in changed if p.lower().startswith('src/') and not p.lower().startswith('src/quire.mpl/'))
+    if unvalidated and not args.allow_unvalidated:
+        print('BLOCKED: the gate validates only Quire.Mpl (focused profile); these need the Windows phase profile '
+              'and a maintainer merge:\n  ' + '\n  '.join(unvalidated))
+        return 1
 
+    if args.results and args.results.exists():
+        parser.error('--results must name a new directory')
     tree = Path(tempfile.mkdtemp(prefix='quire-gate-'))
-    results = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-')) / 'run').resolve()
+    outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-'))).resolve()
+    outputs.mkdir(parents=True, exist_ok=True)
+    results = outputs / 'run'
     git('worktree', 'add', '--detach', str(tree), tip)
     try:
         if not args.allow_protected:
@@ -87,7 +128,7 @@ def main():
             if restore:
                 git('checkout', base, '--', *restore, cwd=tree)
         command = [sys.executable, str(tree / 'tools/validation/validate.py'), '--results', str(results),
-                   '--mutate-since', base, '--write-baseline', str(results.parent / 'baseline.json'),
+                   '--mutate-since', base, '--write-baseline', str(outputs / 'baseline.json'),
                    '--timeout', str(args.timeout)]
         print('Validating:', ' '.join(command), flush=True)
         subprocess.run(command, cwd=tree)
@@ -96,13 +137,13 @@ def main():
         reasons = verdict(summary)
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
                   'results': str(results), 'reasons': reasons}
-        (results.parent / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
+        (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
         if reasons:
             print('BLOCKED:\n  ' + '\n  '.join(reasons) + f'\nResults: {results}')
             return 1
         print(f'PASSED: {args.branch} ({tip[:12]}); results {results}')
         if args.apply:
-            shutil.copyfile(results.parent / 'baseline.json', tree / 'docs/mirror/validation-baseline.json')
+            shutil.copyfile(outputs / 'baseline.json', tree / 'docs/mirror/validation-baseline.json')
             git('add', 'docs/mirror/validation-baseline.json', cwd=tree)
             if subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=tree).returncode:
                 git('commit', '-q', '-m', f'Update validation baseline after merging {args.branch}',

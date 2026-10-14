@@ -138,9 +138,20 @@ The same run also checks each reconstruction against the original IL:
   Mathcad binding; locals, nops, stack shuffling, branch encoding and compiler-generated names are ignored, so a
   Debug build can match. A difference makes the method `structure_mismatch` with the first differing item. Only a
   `Deviation` status may differ. A matching structure never substitutes for a direct comparison.
-- **Lint** (`integrity.json`): hand-written `src/` code must not contain `goto`, compiler-generated names, IL
-  labels, decompiler comments or decompiler-style locals (`num2`, `type2`, `obj1`). A reviewed exception carries
-  `// quire-lint: allow <reason>` on that line.
+- **Lint** (`integrity.json`): hand-written `src/` code and agent-writable differential test files (every `.cs`
+  under `tests/Quire.Differential.Tests` that `protected.txt` leaves writable, whatever its case) must not contain
+  `goto`, compiler-generated names, IL labels, decompiler comments, decompiler-style locals (`num2`, `type2`,
+  `obj1`), `#line` or `#pragma checksum`. Differential test files compile into the harness assembly, so each must
+  declare exactly `namespace Quire.Differential.Tests;` and one top-level type, `class <file name>` (checked outside
+  braces, comments and strings, so no `Assert` or harness name can be shadowed and every test maps to its file),
+  avoid `global using`, and not name the environment, files, processes, assembly locations, `QUIRE_*` variables,
+  code generation, marshalling, method bodies/IL, assembly or type enumeration, `Type.GetType`, harness types via
+  `typeof`, xUnit exceptions, sleeps or delays. `src/Quire.Mpl` code, which runs in the same process, must not name
+  module initializers, xUnit, `MethodComparison`, method IL, assembly enumeration, environment variables or
+  `QUIRE_*` variables. These token rules are defence in depth, not containment (string building and reflection can
+  evade them), so test diffs still need review. Exceptions are maintainer-reviewed entries in
+  `docs/mirror/lint-allowed.txt` (`<path> | <rule> | <exact trimmed line>`), keyed on the whole line so an
+  exception never covers edited or new code.
 - **IL listings** (`integrity.json`): every type with a selected non-stub, classified method needs its listing in
   [il/](il/), whose header must name the SHA-256 and MVID of the artifact the audit loaded. Listings for assemblies
   the run did not load are reported as unchecked.
@@ -153,24 +164,46 @@ order passes it, which the direct comparisons must catch.
 
 - **Branch coverage:** the differential tests run a second time, unrecorded and `--no-build`, under the Microsoft
   code-coverage collector (cobertura). Instrumentation rewrites the module and corrupts the method tokens that
-  comparison records carry, so it never runs in the recorded pass. A compared method whose PDB statement lines are not all executed, or whose branch conditions are partly covered,
-  becomes `uncovered`, with the lines named. Coverage counts any execution during the differential run, including
-  test setup, so mutation is the attributable check.
+  comparison records carry, so it never runs in the recorded pass. A compared method whose PDB statement lines (in
+  every source document) are not all executed, or whose branch conditions are partly covered, becomes `uncovered`,
+  with the lines named. Coverage counts any execution during the differential run, including test setup; mutation
+  is the attributable check.
 - **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
-  byte changes in each compared method (negated branches, swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
-  `cgt`/`clt`, `0`/`1` swapped, other constants moved by one). Each mutant is applied to a copy of the test output and **only the tests
-  whose direct comparisons covered that method** are rerun; one must fail. `mutation.json` lists survivors. A
-  survivor means a missing case or a lossy renderer. Equivalent mutants are accepted only by a maintainer in
-  `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
+  byte changes in each compared method: negated branches; swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
+  `cgt`/`clt`; `ceq` → `cgt.un`; `0`/`1` swapped; other integer constants plus one; floating constants plus one
+  (doubled where rounding absorbs it; NaN and infinities skipped). An unmutated control run of the same tests must
+  pass first and record no mismatch (a recorded mismatch in a passing run means a test swallowed it). Each mutant is
+  applied to a copy of the test output and only the tests whose direct comparisons covered that method are rerun.
+  It counts as killed only when `MethodComparison` records an outcome or state mismatch on a method of the mutated
+  assembly **in a test that the TRX report shows failed**; the record and report live in a scratch directory outside
+  the test output. The mismatch is usually the mutated method's own, but the first mismatch ends a test, so it may
+  belong to another method compared earlier (`killed (via another method compared first)`). Failures that record no
+  mismatch, such as crashes in a type initializer or setup errors, do not count; a maintainer may accept such
+  mutants. A run that exceeds five times the control duration (at least 30 s) is killed with its process tree and
+  counts as killed, so a test that stalls deliberately would also kill mutants; the lint forbids sleeps and delays.
+  `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
+  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
+  `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
+  nothing) or whose comparisons live in a changed differential test file (by its single top-level class, nested
+  classes included), and fails when PDB paths lie outside the repository.
 - **Status:** a `Verified` method that this run does not show as compared (or declaration-only) counts as
-  `verified_unsupported`.
+  `verified_unsupported`. A `Deviation` status skips the structure check only when the `deviations.md` index lists
+  its id with `accepted-temporary` or `accepted-permanent` and names the method as `Quire.Type::Member` in the scope
+  column (every overload of that name).
+- **Limits:** lambda, iterator and async bodies live in compiler-generated methods, which are excluded from structure,
+  coverage and mutation; an iterator or async kickoff method has no statement lines and stays `uncovered`. Only names
+  a compiler can produce (containing `<`) are excluded.
 
 ### Ratchet
 
-`ratchet.json` compares per-type counts with `docs/mirror/validation-baseline.json`: `compared` may not fall;
-`missing`, `structure_mismatch`, `uncovered` and `verified_unsupported` may not rise; unscoped runs also forbid more
-lint findings or listing errors and disappearing types. New types start their own baseline. `--write-baseline PATH`
-writes a run's counts (unscoped runs only). Only the merge gate or a maintainer updates the committed baseline.
+`ratchet.json` compares a run with `docs/mirror/validation-baseline.json` (schema 2), which records its profile,
+per-type counts, each method's state and each lint finding and listing error by identity. `compared` and each type's
+method `total` may not fall; `missing`, `structure_mismatch`, `uncovered`, `verified_unsupported` and `excluded` may
+not rise; a method may only change state by becoming `compared`; a new method without a Mathcad counterpart is
+rejected. Unscoped runs also forbid any new lint finding or listing error (fixing one does not pay for another) and
+disappearing types or methods. New types with counterparts start their own baseline. A baseline from another profile
+or schema is rejected. `--write-baseline PATH` writes a run's snapshot (unscoped runs only). A maintainer creates the first baseline from an
+unscoped focused run on `main`; afterwards only the merge gate updates it.
 
 ### Merge gate
 
@@ -182,12 +215,15 @@ python3 tools/validation/merge_gate.py <branch>            # check only
 python3 tools/validation/merge_gate.py <branch> --apply    # check, fast-forward main, commit the new baseline
 ```
 
-The gate blocks a branch that is not based on current `main`, has no changes, or changes a maintainer-owned path in
-`tools/validation/protected.txt` (harness, MethodAudit, MirrorGen, comparison helper, pinned identity, mirror
-attributes, build props, PLAN/validation/deviations/decisions, baseline, accepted mutants). A maintainer may pass
-`--allow-protected`. Otherwise it validates a detached worktree of the branch **with `main`'s copies of every
-protected file**, unscoped, mutating types whose source changed. It merges only when all tests pass, the ratchet
-holds and no mutant survives. `gate.json` beside the results records the decision.
+The gate blocks a branch that is not based on current `main`, has no changes, or contains paths that differ only in
+case. It also blocks any added, changed, deleted or renamed path matching `tools/validation/protected.txt` (all of
+`tools/`, the harness and comparison helper files, test subdirectories, generated sources, every project, props,
+targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned records), unless a maintainer passes
+`--allow-protected`. Because the gate runs the focused profile, which audits only
+`Quire.Mpl`, it blocks `src/` changes outside `src/Quire.Mpl` unless a maintainer passes `--allow-unvalidated`
+after a Windows phase run. Otherwise it validates a detached worktree of the branch **with `main`'s copies of every
+protected file**: an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
+ratchet holds and no mutant survives. `gate.json` beside the results records the decision.
 
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.

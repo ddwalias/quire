@@ -19,7 +19,7 @@ class CoverageTests(unittest.TestCase):
                            access='Private', status='Verified', is_static=True, is_constructor=False, quire_sha256='quire-sha', quire_mvid='quire-mvid',
                            original=dict(assembly='mplrun', sha256='original-sha', mvid='original-mvid', token=0x06000002),
                            declaration_only=False, exclusion=None, shape_matches=True,
-                           structure_matches=True, structure_differences=[], source=dict(file='/src/T.cs', lines=[10, 11]))
+                           structure_matches=True, structure_differences=[], source=[dict(file='/src/T.cs', lines=[10, 11])])
         self.lines = {('/src/T.cs', 10): (3, 0, 0), ('/src/T.cs', 11): (3, 2, 2)}
         self.record = dict(schema=1, run='fresh', test='Tests.Compare', case_id='edge case', inputs=[1], outcome='1', arguments_after=[1],
                            contract='Contract', contract_sha256=hashlib.sha256(contract).hexdigest(),
@@ -104,13 +104,21 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(report['counts']['structure_mismatch'], 1)
         self.assertIn('calls differ at #0', report['methods'][0]['reason'])
         self.assertFalse(self.check(methods=[dict(self.method, structure_matches=None)])['complete'])
-        self.assertTrue(self.check(methods=[dict(differs, status='Deviation')])['complete'])
+        deviation = dict(differs, status='Deviation', evidence='DEV-0001')
+        self.assertFalse(self.check(methods=[deviation])['complete'])
+        ledger = self.repo / 'docs/mirror/deviations.md'
+        ledger.write_text('| DEV-0001 | Mcd.T | differs | proposed | x |\n')
+        self.assertFalse(self.check(methods=[deviation])['complete'])
+        ledger.write_text('| DEV-0001 | `Quire.U::private` | differs | accepted-temporary | x |\n')
+        self.assertFalse(self.check(methods=[deviation])['complete'])  # accepted, but for another member
+        ledger.write_text('| DEV-0001 | `Quire.T::private` | differs | accepted-temporary | x |\n')
+        self.assertTrue(self.check(methods=[deviation])['complete'])
 
     def test_structure_alone_does_not_replace_a_direct_comparison(self):
         self.assertEqual(self.check(records=[])['counts']['missing'], 1)
 
     def test_every_line_and_branch_must_execute(self):
-        for lines, detail in [({('/src/T.cs', 10): (3, 0, 0)}, '[11]'), ({**self.lines, ('/src/T.cs', 11): (3, 1, 2)}, '11 (1/2)'),
+        for lines, detail in [({('/src/T.cs', 10): (3, 0, 0)}, "['/src/T.cs:11']"), ({**self.lines, ('/src/T.cs', 11): (3, 1, 2)}, '11 (1/2)'),
                               (None, 'not collected')]:
             with self.subTest(detail=detail):
                 report = self.check(lines=lines)
@@ -129,6 +137,7 @@ class CoverageTests(unittest.TestCase):
         other = dict(self.method, type='Quire.U', token=0x06000009)
         by_type = self.check(methods=[self.method, other])['by_type']
         self.assertEqual(by_type['Quire.T']['compared'], 1)
+        self.assertEqual(by_type['Quire.T']['total'], 1)
         self.assertEqual(by_type['Quire.U']['missing'], 1)
         self.assertEqual(by_type['Quire.U']['verified_unsupported'], 1)
 

@@ -38,6 +38,40 @@ def read_trx(path, allow_skips=False):
     return counts
 
 
+def changed_types(coverage, since, git_output):
+    """Types to mutate after changes since `since`: those whose Quire.Mpl source changed and those whose comparisons
+    live in a changed differential test file."""
+    names = git_output("diff", "-z", "--no-renames", "--diff-filter=AM", "--name-only", since)
+    if names is None:
+        raise ValueError(f"cannot diff against {since}")
+    names = [n for n in names.split("\0") if n]
+    root = ROOT.resolve().as_posix() + "/"
+    sources = {}
+    for method in coverage["methods"]:
+        for document in method.get("source") or []:
+            file = Path(document["file"]).as_posix()
+            if not file.startswith(root):
+                raise ValueError(f"PDB source {file} of {method['type']} lies outside the repository; "
+                                 "path maps and #line directives would hide changes from mutation")
+            sources.setdefault(file[len(root):], set()).add(method["type"])
+    types = set()
+    for name in names:
+        # A file with no method bodies (enums, interfaces, attributes) has no sequence points and nothing to mutate.
+        if name.lower().startswith("src/quire.mpl/") and name.lower().endswith(".cs"):
+            types |= sources.get(name, set())
+    # The lint holds each differential test file to one top-level class named after it; nested classes count as it.
+    test_classes = {Path(n).stem.lower() for n in names
+                    if n.lower().startswith("tests/quire.differential.tests/") and n.lower().endswith(".cs")}
+    types |= {m["type"] for m in coverage["methods"]
+              if any(test_class(case["test"]) in test_classes for case in m.get("cases", []))}
+    return types
+
+
+def test_class(test):
+    """Top-level class of `Namespace.Class[+Nested].Method`, lower-cased."""
+    return test.rsplit(".", 1)[0].rsplit(".", 1)[-1].split("+")[0].lower()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", choices=["focused", "phase"], default="focused")
@@ -171,7 +205,7 @@ def main():
                                "listings_unchecked": len(integrity["listings"]["unchecked"])}
         print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
         import ratchet
-        ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.baseline or ratchet.BASELINE)
+        ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.profile, args.baseline or ratchet.BASELINE)
         (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
         report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"]}
         print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
@@ -180,12 +214,7 @@ def main():
         mutation_ok = True
         mutate_types = set(args.method_type) if args.mutate else set()
         if args.mutate_since:
-            changed = git_output("diff", "--name-only", args.mutate_since, "--", "src")
-            if changed is None:
-                raise ValueError(f"cannot diff against {args.mutate_since}")
-            changed = {(ROOT / name).resolve().as_posix() for name in changed.splitlines()}
-            mutate_types |= {m["type"] for m in coverage["methods"]
-                             if m.get("source") and Path(m["source"]["file"]).resolve().as_posix() in changed}
+            mutate_types |= changed_types(coverage, args.mutate_since, git_output)
             report["mutate_since"] = args.mutate_since
         if mutate_types:
             import mutate

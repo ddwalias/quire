@@ -41,13 +41,20 @@ public static class MethodComparison
         Assert.Equal(mInputs, qInputs);
         string q = Reflect.Outcome(() => Invoke(quire, quireTarget, quireArgs), quireShow);
         string m = Reflect.Outcome(() => Invoke(original, originalTarget, originalArgs), originalShow);
-        Assert.Equal(m, q);
+        // Mismatches after invocation are recorded with the test and Quire method; mutation counts a kill only when
+        // that test also failed, so a swallowed mismatch kills nothing.
+        void Same<T>(T expected, T actual)
+        {
+            try { Assert.Equal(expected, actual); }
+            catch (Xunit.Sdk.XunitException) { RecordKill(test, quire); throw; }
+        }
+        Same(m, q);
         // Mutated ref/out arguments are observable results too.
         var qAfter = quireArgs.Select(quireShow).ToArray();
         var mAfter = originalArgs.Select(originalShow).ToArray();
-        Assert.Equal(mAfter, qAfter);
+        Same(mAfter, qAfter);
         string? targetAfter = stateRequired ? quireState!(quireTarget!) : null;
-        Assert.Equal(stateRequired ? originalState!(originalTarget!) : null, targetAfter);
+        Same(stateRequired ? originalState!(originalTarget!) : null, targetAfter);
         string? directory = Environment.GetEnvironmentVariable("QUIRE_METHOD_CASES");
         if (directory == null) return;
         string run = Environment.GetEnvironmentVariable("QUIRE_VALIDATION_RUN")
@@ -68,6 +75,15 @@ public static class MethodComparison
             Directory.CreateDirectory(directory);
             File.AppendAllText(Path.Combine(directory, $"cases-{Environment.ProcessId}.jsonl"), JsonSerializer.Serialize(record) + "\n");
         }
+    }
+
+    /// <summary>Under mutation testing, names the test and the Quire method whose comparison failed.</summary>
+    private static void RecordKill(MethodInfo test, MethodBase quire)
+    {
+        string? path = Environment.GetEnvironmentVariable("QUIRE_MUTATION_KILLS");
+        if (path == null) return;
+        string line = $"{test.DeclaringType!.FullName}.{test.Name}|{quire.Module.ModuleVersionId}:{quire.MetadataToken}\n";
+        lock (FileLock) File.AppendAllText(path, line);
     }
 
     private static string FindRepo()

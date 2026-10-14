@@ -1,17 +1,33 @@
-# Maintainer-owned paths (fnmatch patterns; * crosses directories). The merge gate rejects a branch that changes
-# any of them unless a maintainer passes --allow-protected, and always validates with main's copies.
-tools/validation/*
-tools/Quire.Tools.MethodAudit/*
-tools/Quire.Tools.MirrorGen/*
+# Maintainer-owned paths. fnmatch patterns matched case-insensitively against the whole repo-relative path; `*`
+# crosses directories. A later `!pattern` re-allows a path; the last matching line wins. The merge gate rejects a
+# branch that adds, changes, deletes or renames a protected path unless a maintainer passes --allow-protected, and
+# validates with main's copies of all protected files.
+
+# Validation harness and generators.
+tools/*
 tests/Quire.Harness.Tests/*
 tests/Quire.Focused.Differential.Tests/*
-tests/Quire.Differential.Tests/MethodComparison.cs
-tests/Quire.Differential.Tests/Mathcad.cs
-tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj
+tests/Quire.Differential.Tests/*
+!tests/Quire.Differential.Tests/*DifferentialTests.cs
+tests/Quire.Differential.Tests/*/*
 src/Quire.Mirror/*
-Directory.Build.props
-Directory.Build.targets
-Quire.slnx
+src/*/Generated/*
+
+# Build, SDK, package and test-runner configuration at any depth, and every project file.
+*Directory.Build.*
+*Directory.Packages.props
+*global.json
+*nuget.config
+*.runsettings
+*xunit.runner.json
+*testconfig.json
+*.csproj
+*.props
+*.targets
+*.slnx
+*.sln
+
+# Maintainer-owned records.
 docs/mirror/PLAN.md
 docs/mirror/validation.md
 docs/mirror/evidence/README.md
@@ -19,3 +35,4 @@ docs/mirror/deviations.md
 docs/mirror/decisions.md
 docs/mirror/validation-baseline.json
 docs/mirror/accepted-mutants.txt
+docs/mirror/lint-allowed.txt

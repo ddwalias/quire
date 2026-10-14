@@ -1,0 +1,26 @@
+# Maintainer-reviewed lint exceptions (tools/validation/integrity.py).
+# One per line: <repo path> | <rule> | <exact line, trimmed>. Keyed on the whole line, so editing an allowed line
+# or adding another use needs a new review. Reasons go in comment lines above each group.
+
+# dynamic subclass reaches a protected constructor on both sides
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | using System.Reflection.Emit;
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Ldarg_0); body.Emit(OpCodes.Ldarg_1); body.Emit(OpCodes.Ldarg_2);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Call, baseType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, [typeof(int), typeof(int)], null)!);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Ldarg_0); body.Emit(OpCodes.Ldarg_3);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Stfld, baseType.GetField("m_minargs", BindingFlags.Instance | BindingFlags.NonPublic)!);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Ldarg_0); body.Emit(OpCodes.Ldarg_S, (byte)4);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Stfld, baseType.GetField("m_varargs", BindingFlags.Instance | BindingFlags.NonPublic)!);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Ret);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Ldarg_1); body.Emit(OpCodes.Ldarg_2); body.Emit(OpCodes.Ldlen); body.Emit(OpCodes.Conv_I4);
+tests/Quire.Differential.Tests/FunctionMatrixDifferentialTests.cs | forbidden test API | body.Emit(OpCodes.Box, typeof(int)); body.Emit(OpCodes.Unbox_Any, result); body.Emit(OpCodes.Stobj, result); body.Emit(OpCodes.Ret);
+
+# SizeOf/OffsetOf compare native struct layout on both sides
+tests/Quire.Differential.Tests/MatValDifferentialTests.cs | forbidden test API | log.Log(s,"native struct size",()=>System.Runtime.InteropServices.Marshal.SizeOf(t));
+tests/Quire.Differential.Tests/MatValDifferentialTests.cs | forbidden test API | log.Log(s,f+" offset",()=>System.Runtime.InteropServices.Marshal.OffsetOf(t,f));
+
+# temporary probe assembly directory and copy for Rts assembly loading
+tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | string dir = Path.Combine(Path.GetTempPath(), "quire-rts-" + Guid.NewGuid().ToString("N"));
+tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | Directory.CreateDirectory(dir);
+tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | File.Copy(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.Location, Path.Combine(dir, "Probe.dll"));
+tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | Set(rts, "AssemblyPath", Path.Combine(dir, "missing") + ";" + dir);
+tests/Quire.Differential.Tests/RtsDifferentialTests.cs | forbidden test API | try { Directory.Delete(dir, true); } catch (IOException) { } catch (UnauthorizedAccessException) { }

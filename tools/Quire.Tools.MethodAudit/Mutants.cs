@@ -4,7 +4,7 @@ using System.Reflection.PortableExecutable;
 
 /// <summary>
 /// A same-size byte change inside one method body that still verifies: a negated branch, a swapped arithmetic or
-/// comparison operator, a 0/1 constant swapped, or another constant moved by one. Applying it to a copy of the
+/// comparison operator, a 0/1 constant swapped, or another constant changed. Applying it to a copy of the
 /// assembly must make a direct comparison fail; a surviving mutant marks a branch, operator or constant no case
 /// distinguishes.
 /// </summary>
@@ -22,8 +22,8 @@ static class Mutants
         // add/sub, mul/div, rem→div, and/or, xor→or, shl/shr.
         [0x58] = 0x59, [0x59] = 0x58, [0x5A] = 0x5B, [0x5B] = 0x5A, [0x5D] = 0x5B,
         [0x5F] = 0x60, [0x60] = 0x5F, [0x61] = 0x60, [0x62] = 0x63, [0x63] = 0x62,
-        // cgt/clt, cgt.un/clt.un.
-        [0xFE02] = 0xFE04, [0xFE04] = 0xFE02, [0xFE03] = 0xFE05, [0xFE05] = 0xFE03,
+        // cgt/clt, cgt.un/clt.un; ceq (== and !=) becomes cgt.un.
+        [0xFE02] = 0xFE04, [0xFE04] = 0xFE02, [0xFE03] = 0xFE05, [0xFE05] = 0xFE03, [0xFE01] = 0xFE03,
     };
 
     public static List<Mutant> Find(PEReader pe, MethodDefinition method)
@@ -68,15 +68,33 @@ static class Mutants
                 int v = BitConverter.ToInt32(image.AsSpan(code + operand, 4));
                 Add(BitConverter.GetBytes(v), BitConverter.GetBytes(unchecked(v + 1)), $"ldc.i4 {v} -> {unchecked(v + 1)}", operand);
             }
+            else if (value == 0x21)
+            {
+                long v = BitConverter.ToInt64(image.AsSpan(code + operand, 8));
+                Add(BitConverter.GetBytes(v), BitConverter.GetBytes(unchecked(v + 1)), $"ldc.i8 {v} -> {unchecked(v + 1)}", operand);
+            }
+            else if (value == 0x22)
+            {
+                float v = BitConverter.ToSingle(image.AsSpan(code + operand, 4));
+                float changed = Changed(v);
+                if (BitConverter.SingleToInt32Bits(changed) != BitConverter.SingleToInt32Bits(v))
+                    Add(BitConverter.GetBytes(v), BitConverter.GetBytes(changed), $"ldc.r4 {v:R} -> {changed:R}", operand);
+            }
             else if (value == 0x23)
             {
                 double v = BitConverter.ToDouble(image.AsSpan(code + operand, 8));
-                double changed = v == 0 ? 1 : v * 2;
-                Add(BitConverter.GetBytes(v), BitConverter.GetBytes(changed), $"ldc.r8 {v:R} -> {changed:R}", operand);
+                double changed = Changed(v);
+                // NaN and infinities have no neighbour that changes the bytes; such a mutant could never be killed.
+                if (BitConverter.DoubleToInt64Bits(changed) != BitConverter.DoubleToInt64Bits(v))
+                    Add(BitConverter.GetBytes(v), BitConverter.GetBytes(changed), $"ldc.r8 {v:R} -> {changed:R}", operand);
             }
         }
         return found;
     }
+
+    /// <summary>v + 1, or v * 2 where + 1 is lost to rounding; 0 becomes 1. NaN and infinities stay unchanged.</summary>
+    private static double Changed(double v) => v == 0 ? 1 : v + 1 != v ? v + 1 : v * 2;
+    private static float Changed(float v) => v == 0 ? 1 : v + 1 != v ? v + 1 : v * 2;
 
     private static void Skip(ref BlobReader il, OpCode op)
     {
