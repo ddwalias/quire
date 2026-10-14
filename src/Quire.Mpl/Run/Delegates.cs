@@ -270,9 +270,9 @@ public partial class Delegates
                 {
                     if (!array[j].IsClass) return null;
                 }
-                Type type2 = FType(array);
-                if (!d.GetType().Equals(type2))
-                    d = Delegate.CreateDelegate(type2, d, method);
+                Type targetType = FType(array);
+                if (!d.GetType().Equals(targetType))
+                    d = Delegate.CreateDelegate(targetType, d, method);
                 return Delegate.CreateDelegate(F, d, imethods[array.Length - 1].MakeGenericMethod(array));
             }
             return Delegate.CreateDelegate(F, d, method);
