@@ -272,16 +272,61 @@ T Quire.Mcd.num_val  4 members: unclassified 4
   unclassified M public .ctor`0(System.Double) -> System.Void
   unclassified M public .ctor`0(System.Double,System.Double) -> System.Void
 
-T Quire.Mpl.Run.Atom  15 members: stub 6, unclassified 9
-  unclassified F public const System.Int32 IntTag
-  unclassified F public const System.Int32 RealTag
-  unclassified F public const System.Int32 StrTag
-  unclassified F public const System.Int32 SymTag
-  unclassified M public .ctor`0(System.Int32) -> System.Void
-  unclassified P IntCon : System.Int32 virtual get:public
-  unclassified P RealCon : System.Double virtual get:public
-  unclassified P StrCon : System.String virtual get:public
-  unclassified P sym : Quire.Mpl.Run.Sym get:public
+T Quire.Mpl.MplSignature  7 members: verified 7
+  verified     F private System.Type return_type  [MplRunHelpersDifferentialTests]
+  verified     F private System.Type[] parameter_types  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0(System.Type,System.Type[]) -> System.Void  [MplRunHelpersDifferentialTests]
+  verified     M public override Equals`0(System.Object) -> System.Boolean  [MplRunHelpersDifferentialTests]
+  verified     M public override GetHashCode`0() -> System.Int32  [MplRunHelpersDifferentialTests]
+  verified     P ArgTypes : System.Type[] get:public  [MplRunHelpersDifferentialTests]
+  verified     P RetType : System.Type get:public  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.Atom  15 members: verified 15
+  verified     F public const System.Int32 CharTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 IntTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 KeyTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 RealTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 StrTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 SymTag  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [SexprDifferentialTests]
+  verified     P CharCon : System.Char virtual get:public  [SexprDifferentialTests]
+  verified     P IntCon : System.Int32 virtual get:public  [SexprDifferentialTests]
+  verified     P Key : Quire.Mpl.Run.Keyword get:public  [SexprDifferentialTests]
+  verified     P KeyNum : System.Int32 virtual get:public  [SexprDifferentialTests]
+  verified     P RealCon : System.Double virtual get:public  [SexprDifferentialTests]
+  verified     P StrCon : System.String virtual get:public  [SexprDifferentialTests]
+  verified     P quote_atom : Quire.Mpl.Run.Sexpr virtual get:public  [SexprDifferentialTests]
+  verified     P sym : Quire.Mpl.Run.Sym get:public  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.Bq  5 members: analyzed 1, verified 4
+  analyzed     M public override walk_expression`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.Bq]
+  verified     F public Quire.Mpl.Run.Sexpr Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.Ca  4 members: verified 4
+  verified     F public Quire.Mpl.Run.Sexpr Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.Cm  4 members: verified 4
+  verified     F public Quire.Mpl.Run.Sexpr Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.Cons  9 members: verified 9
+  verified     F public System.Object Field1  [MplRunHelpersDifferentialTests]
+  verified     F public System.Object Field2  [MplRunHelpersDifferentialTests]
+  verified     M private FormatItems`0() -> System.String  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0(System.Object,System.Object) -> System.Void  [MplRunHelpersDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [MplRunHelpersDifferentialTests]
+  verified     M public static Length`0(Quire.Mpl.Run.Cons) -> System.Int32  [MplRunHelpersDifferentialTests]
+  verified     M public static destructive_append`0(Quire.Mpl.Run.Cons,Quire.Mpl.Run.Cons) -> Quire.Mpl.Run.Cons  [MplRunHelpersDifferentialTests]
+  verified     P head : System.Object get:public  [MplRunHelpersDifferentialTests]
+  verified     P tail : Quire.Mpl.Run.Cons get:public  [MplRunHelpersDifferentialTests]
 
 T Quire.Mpl.Run.Function  166 members: stub 151, unclassified 14, abstract 1
   unclassified F protected System.Boolean m_no_vectorize
@@ -303,11 +348,24 @@ T Quire.Mpl.Run.Function  166 members: stub 151, unclassified 14, abstract 1
 T Quire.Mpl.Run.FunctionUtilities  18 members: stub 17, unclassified 1
   unclassified M protected .ctor`0() -> System.Void
 
-T Quire.Mpl.Run.Nul  7 members: stub 3, unclassified 4
-  unclassified F public static Quire.Mpl.Run.Nul singleton
-  unclassified M public .ctor`0() -> System.Void
-  unclassified M public override FormatTail`0() -> System.String
-  unclassified M public override ToString`0() -> System.String
+T Quire.Mpl.Run.Nul  7 members: verified 7
+  verified     F public static Quire.Mpl.Run.Nul singleton  [SexprDifferentialTests]
+  verified     F public static Quire.Mpl.Run.Tok token  [SexprDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [SexprDifferentialTests]
+  verified     M public override FormatTail`0() -> System.String  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     P quote : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+  verified     P scons : Quire.Mpl.Run.SCons override get:public  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.Qt  8 members: verified 8
+  verified     F private static Quire.Mpl.Run.Sym Qt_constructor  [SexprDifferentialTests]
+  verified     F public Quire.Mpl.Run.Sexpr Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public override walk_expression`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     P quotation : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+  verified     P quote : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
 
 T Quire.Mpl.Run.Rts  28 members: stub 24, unclassified 4
   unclassified F private static System.Threading.CancellationTokenSource ms_thread_cancellation_token
@@ -315,79 +373,247 @@ T Quire.Mpl.Run.Rts  28 members: stub 24, unclassified 4
   unclassified M public static IsCancellationRequested`0() -> System.Boolean
   unclassified M public static RegisterThreadForCancellationChecking`0(System.Threading.CancellationTokenSource) -> System.Void
 
-T Quire.Mpl.Run.SCons  32 members: stub 12, unclassified 20
-  unclassified F public Quire.Mpl.Run.Sexpr Field1
-  unclassified F public Quire.Mpl.Run.Sexpr Field2
-  unclassified M public .ctor`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> System.Void
-  unclassified M public override FormatTail`0() -> System.String
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public static list1`0(Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons
-  unclassified M public static list2`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons
-  unclassified M public static list3`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons
-  unclassified M public static list4`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons
-  unclassified P Length : System.UInt32 get:public
-  unclassified P car : Quire.Mpl.Run.Sexpr get:public
-  unclassified P cdr : Quire.Mpl.Run.Sexpr get:public
-  unclassified P fifth : Quire.Mpl.Run.Sexpr get:public
-  unclassified P first : Quire.Mpl.Run.Sexpr get:public
-  unclassified P fourth : Quire.Mpl.Run.Sexpr get:public
-  unclassified P head : Quire.Mpl.Run.Sexpr get:public
-  unclassified P scons : Quire.Mpl.Run.SCons override get:public
-  unclassified P second : Quire.Mpl.Run.Sexpr get:public
-  unclassified P tail : Quire.Mpl.Run.SCons get:public
-  unclassified P third : Quire.Mpl.Run.Sexpr get:public
+T Quire.Mpl.Run.SAppend  6 members: verified 6
+  verified     F public Quire.Mpl.Run.Sexpr Field1  [SexprDifferentialTests]
+  verified     F public Quire.Mpl.Run.Sexpr Field2  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object,System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override FormatAppend`0() -> System.String  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.Sexpr  43 members: stub 34, unclassified 9
-  unclassified F public const System.Int32 ConsTag
-  unclassified F public const System.Int32 NulTag
-  unclassified F public const System.Int32 TokTag
-  unclassified M public .ctor`0(System.Int32) -> System.Void
-  unclassified M public virtual FormatTail`0() -> System.String
-  unclassified P handle : System.UInt32 virtual get:public
-  unclassified P scons : Quire.Mpl.Run.SCons virtual get:public
-  unclassified P str : System.String virtual get:public
-  unclassified P sym : Quire.Mpl.Run.Sym virtual get:public
+T Quire.Mpl.Run.SCons  32 members: analyzed 1, tested 1, verified 30
+  analyzed     M public override walk_pattern`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.SCons]
+  tested       M public override walk_declaration_lhs`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Cons  [Mpl.Run.SCons]
+  verified     F public Quire.Mpl.Run.Sexpr Field1  [SexprDifferentialTests]
+  verified     F public Quire.Mpl.Run.Sexpr Field2  [SexprDifferentialTests]
+  verified     F public static Quire.Mpl.Run.Sym apply  [SexprDifferentialTests]
+  verified     F public static Quire.Mpl.Run.Tok token  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object,System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override FormatTail`0() -> System.String  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public override walk_expression`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     M public static as_Sexpr`0(Quire.Mpl.Run.Cons) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     M public static list1`0(Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons  [SexprDifferentialTests]
+  verified     M public static list2`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons  [SexprDifferentialTests]
+  verified     M public static list3`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons  [SexprDifferentialTests]
+  verified     M public static list4`0(Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.SCons  [SexprDifferentialTests]
+  verified     M public static walk_expressions`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.SCons) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     M public static walk_patterns`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.SCons) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     P Key : Quire.Mpl.Run.Sym override get:public  [SexprDifferentialTests]
+  verified     P Length : System.UInt32 get:public  [SexprDifferentialTests]
+  verified     P car : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P cdr : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P fifth : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P first : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P fourth : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P handle : System.UInt32 override get:public  [SexprDifferentialTests]
+  verified     P head : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P quote : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+  verified     P scons : Quire.Mpl.Run.SCons override get:public  [SexprDifferentialTests]
+  verified     P second : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
+  verified     P tail : Quire.Mpl.Run.SCons get:public  [SexprDifferentialTests]
+  verified     P third : Quire.Mpl.Run.Sexpr get:public  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.Sym  27 members: stub 18, unclassified 9
-  unclassified F public System.String Field1
-  unclassified F public System.String Field2
-  unclassified M public .ctor`0(System.Object) -> System.Void
-  unclassified M public .ctor`0(System.String,System.String) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified M public static MakeSym`0(System.String) -> Quire.Mpl.Run.Tok
-  unclassified P long_name : System.String get:public
-  unclassified P name : System.String get:public
-  unclassified P qualifier : System.String get:public
+T Quire.Mpl.Run.SList  6 members: verified 6
+  verified     F public Quire.Mpl.Run.Cons Field1  [SexprDifferentialTests]
+  verified     F public Quire.Mpl.Run.Sexpr Field2  [SexprDifferentialTests]
+  verified     M private static FormatCons`0(Quire.Mpl.Run.Cons) -> System.String  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Cons,Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object,System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.Tag  2 members: unclassified 2
-  unclassified F public System.Int32 m_tag
-  unclassified M public .ctor`0(System.Int32) -> System.Void
+T Quire.Mpl.Run.Sexpr  43 members: analyzed 1, tested 2, verified 40
+  analyzed     M public static WalkModule`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.Sexpr) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.Sexpr]
+  tested       M private static walk_definition`0(Quire.Mpl.Run.SCons,Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.Sexpr]
+  tested       M private static walk_definitions`0(Quire.Mpl.Run.Cons,Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Cons  [Mpl.Run.Sexpr]
+  verified     F public const System.Int32 BqTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 CaTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 CmTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 ConsTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 NulTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 QtTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 SAppendTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 SListTag  [SexprDifferentialTests]
+  verified     F public const System.Int32 TokTag  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [SexprDifferentialTests]
+  verified     M public static BadApplication`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static BadDeclaration`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static BadExpression`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static BadPattern`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static ExpectedAList`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static NotAKeyword`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static NotAQuotation`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static NotAString`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static NotASymbol`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static NotImplemented`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static QuotationNotImplemented`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static SyntaxError`0(Quire.Mpl.Run.Sexpr) -> System.Void  [SexprDifferentialTests]
+  verified     M public static Walk`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.Sexpr) -> System.Object[]  [SexprDifferentialTests]
+  verified     M public virtual FormatAppend`0() -> System.String  [SexprDifferentialTests]
+  verified     M public virtual FormatTail`0() -> System.String  [SexprDifferentialTests]
+  verified     M public virtual walk_declaration_lhs`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Cons  [SexprDifferentialTests]
+  verified     M public virtual walk_expression`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     M public virtual walk_pattern`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     M public walk_with_bindings`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.SCons,out Quire.Mpl.Run.Sexpr&) -> Quire.Mpl.Run.Sexpr  [SexprDifferentialTests]
+  verified     M public walk`0(Quire.Mpl.Run.MplEnv,out Quire.Mpl.Run.MplEnv&) -> Quire.Mpl.Run.Cons  [SexprDifferentialTests]
+  verified     P AsKey : Quire.Mpl.Run.Sym virtual get:public  [SexprDifferentialTests]
+  verified     P AsStr : System.String virtual get:public  [SexprDifferentialTests]
+  verified     P AsSym : Quire.Mpl.Run.Sym virtual get:public  [SexprDifferentialTests]
+  verified     P Key : Quire.Mpl.Run.Sym virtual get:public  [SexprDifferentialTests]
+  verified     P handle : System.UInt32 virtual get:public  [SexprDifferentialTests]
+  verified     P quotation : Quire.Mpl.Run.Sexpr virtual get:public  [SexprDifferentialTests]
+  verified     P quote : Quire.Mpl.Run.Sexpr virtual get:public  [SexprDifferentialTests]
+  verified     P scons : Quire.Mpl.Run.SCons virtual get:public  [SexprDifferentialTests]
+  verified     P str : System.String virtual get:public  [SexprDifferentialTests]
+  verified     P sym : Quire.Mpl.Run.Sym virtual get:public  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.Tok  15 members: stub 6, unclassified 9
-  unclassified F public Quire.Mpl.Run.Atom Field1
-  unclassified F public System.UInt32 Field2
-  unclassified M public .ctor`0(Quire.Mpl.Run.Atom,System.Int32) -> System.Void
-  unclassified M public .ctor`0(Quire.Mpl.Run.Atom,System.UInt32) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified P atom : Quire.Mpl.Run.Atom get:public
-  unclassified P handle : System.UInt32 override get:public
-  unclassified P str : System.String override get:public
-  unclassified P sym : Quire.Mpl.Run.Sym override get:public
+T Quire.Mpl.Run.Sym  27 members: analyzed 2, verified 25
+  analyzed     M public virtual walk_declaration_as`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.SCons) -> Quire.Mpl.Run.Cons  [Mpl.Run.Sym]
+  analyzed     M public virtual walk_expression_as`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.SCons) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.Sym]
+  verified     F private System.UInt32 m_umgd  [SexprDifferentialTests]
+  verified     F public System.String Field1  [SexprDifferentialTests]
+  verified     F public System.String Field2  [SexprDifferentialTests]
+  verified     F public static readonly Quire.Mpl.Run.Tok make_sym  [SexprDifferentialTests]
+  verified     F public static readonly Quire.Mpl.Run.Tok make_symq  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.String,System.String) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.String,System.String,System.Int32) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.String,System.String,System.UInt32) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public static MakeSymQ`0(System.String,System.String) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static MakeSym`0(System.String) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.String,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.String,System.UInt32,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.UInt32,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public virtual walk_definition_as`0(Quire.Mpl.Run.MplEnv,Quire.Mpl.Run.SCons) -> Quire.Mpl.Run.SCons  [SexprDifferentialTests]
+  verified     P KeyNum : System.Int32 override get:public  [SexprDifferentialTests]
+  verified     P LowId : System.Boolean get:public  [SexprDifferentialTests]
+  verified     P UpId : System.Boolean get:public  [SexprDifferentialTests]
+  verified     P long_name : System.String get:public  [SexprDifferentialTests]
+  verified     P name : System.String get:public  [SexprDifferentialTests]
+  verified     P qualifier : System.String get:public  [SexprDifferentialTests]
+  verified     P quote_atom : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+  verified     P uid : System.UInt32 get:public set:public  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.int_constant  10 members: stub 6, unclassified 4
-  unclassified F public System.Int32 Field1
-  unclassified M public .ctor`0(System.Int32) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified P IntCon : System.Int32 override get:public
+T Quire.Mpl.Run.Tag  2 members: verified 2
+  verified     F public System.Int32 m_tag  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.real_constant  9 members: stub 5, unclassified 4
-  unclassified F public System.Double Field1
-  unclassified M public .ctor`0(System.Double) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified P RealCon : System.Double override get:public
+T Quire.Mpl.Run.Tok  15 members: analyzed 2, verified 13
+  analyzed     M public override walk_expression`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.Tok]
+  analyzed     M public override walk_pattern`0(Quire.Mpl.Run.MplEnv) -> Quire.Mpl.Run.Sexpr  [Mpl.Run.Tok]
+  verified     F private static Quire.Mpl.Run.Sym tok  [SexprDifferentialTests]
+  verified     F public Quire.Mpl.Run.Atom Field1  [SexprDifferentialTests]
+  verified     F public System.UInt32 Field2  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Atom,System.Int32) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(Quire.Mpl.Run.Atom,System.UInt32) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Object,System.Int32) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     P Key : Quire.Mpl.Run.Sym override get:public  [SexprDifferentialTests]
+  verified     P atom : Quire.Mpl.Run.Atom get:public  [SexprDifferentialTests]
+  verified     P handle : System.UInt32 override get:public  [SexprDifferentialTests]
+  verified     P quote : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+  verified     P str : System.String override get:public  [SexprDifferentialTests]
+  verified     P sym : Quire.Mpl.Run.Sym override get:public  [SexprDifferentialTests]
 
-T Quire.Mpl.Run.str_constant  7 members: stub 3, unclassified 4
-  unclassified F public System.String Field1
-  unclassified M public .ctor`0(System.String) -> System.Void
-  unclassified M public override ToString`0() -> System.String
-  unclassified P StrCon : System.String override get:public
+T Quire.Mpl.Run.True  3 members: verified 3
+  verified     F public static Quire.Mpl.Run.True singleton  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MplRunHelpersDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.Tuple  14 members: verified 14
+  verified     F private static System.Reflection.MethodInfo gf  [MplRunHelpersDifferentialTests]
+  verified     F private static System.Reflection.MethodInfo sf  [MplRunHelpersDifferentialTests]
+  verified     F private static System.Type[] tup_types  [MplRunHelpersDifferentialTests]
+  verified     M private static IType`0(System.Type[]) -> System.Type  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MplRunHelpersDifferentialTests]
+  verified     M public static AllObjects`0(System.Type[]) -> System.Boolean  [MplRunHelpersDifferentialTests]
+  verified     M public static GetFieldInfo`0(System.Type,System.Int32) -> System.Reflection.FieldInfo  [MplRunHelpersDifferentialTests]
+  verified     M public static GetField`1(System.Object[],System.Int32) -> !!0  [MplRunHelpersDifferentialTests]
+  verified     M public static Getter`0(System.Type) -> System.Reflection.MethodInfo  [MplRunHelpersDifferentialTests]
+  verified     M public static SetField`1(System.Object[],System.Int32,!!0) -> System.Void  [MplRunHelpersDifferentialTests]
+  verified     M public static Setter`0(System.Type) -> System.Reflection.MethodInfo  [MplRunHelpersDifferentialTests]
+  verified     M public static TupleRep`0(out Quire.Mpl.Run.Tuple+Rep&,System.Type[]) -> System.Type  [MplRunHelpersDifferentialTests]
+  verified     M public static TupleType`0(System.Type[]) -> System.Type  [MplRunHelpersDifferentialTests]
+  verified     M public static tuple_length`0(System.Object) -> System.Int32  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.Tuple`2  3 members: verified 3
+  verified     F public !0 m_1  [MplRunHelpersDifferentialTests]
+  verified     F public !1 m_2  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.Tuple`3  4 members: verified 4
+  verified     F public !0 m_1  [MplRunHelpersDifferentialTests]
+  verified     F public !1 m_2  [MplRunHelpersDifferentialTests]
+  verified     F public !2 m_3  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.Tuple`4  5 members: verified 5
+  verified     F public !0 m_1  [MplRunHelpersDifferentialTests]
+  verified     F public !1 m_2  [MplRunHelpersDifferentialTests]
+  verified     F public !2 m_3  [MplRunHelpersDifferentialTests]
+  verified     F public !3 m_4  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.Tuple`5  6 members: verified 6
+  verified     F public !0 m_1  [MplRunHelpersDifferentialTests]
+  verified     F public !1 m_2  [MplRunHelpersDifferentialTests]
+  verified     F public !2 m_3  [MplRunHelpersDifferentialTests]
+  verified     F public !3 m_4  [MplRunHelpersDifferentialTests]
+  verified     F public !4 m_5  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0() -> System.Void  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.VecBuilder  12 members: verified 12
+  verified     F public System.Int32 Field1  [MplRunHelpersDifferentialTests]
+  verified     F public System.Object[] Field2  [MplRunHelpersDifferentialTests]
+  verified     M public .ctor`0(System.Int32,System.Object[]) -> System.Void  [MplRunHelpersDifferentialTests]
+  verified     M public AsList`0() -> Quire.Mpl.Run.Cons  [MplRunHelpersDifferentialTests]
+  verified     M public AsVector`0() -> System.Object[]  [MplRunHelpersDifferentialTests]
+  verified     M public Push1`0(System.Object) -> Quire.Mpl.Run.VecBuilder  [MplRunHelpersDifferentialTests]
+  verified     M public Push2`0(System.Object,System.Object) -> Quire.Mpl.Run.VecBuilder  [MplRunHelpersDifferentialTests]
+  verified     M public Push3`0(System.Object,System.Object,System.Object) -> Quire.Mpl.Run.VecBuilder  [MplRunHelpersDifferentialTests]
+  verified     M public Push4`0(System.Object,System.Object,System.Object,System.Object) -> Quire.Mpl.Run.VecBuilder  [MplRunHelpersDifferentialTests]
+  verified     M public static make`0(System.Int32) -> Quire.Mpl.Run.VecBuilder  [MplRunHelpersDifferentialTests]
+  verified     P cnt : System.Int32 get:public  [MplRunHelpersDifferentialTests]
+  verified     P vector : System.Object get:public  [MplRunHelpersDifferentialTests]
+
+T Quire.Mpl.Run.char_constant  5 members: verified 5
+  verified     F public System.Char Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Char) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.Char,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     P CharCon : System.Char override get:public  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.int_constant  10 members: verified 10
+  verified     F private static Quire.Mpl.Run.Tok token  [SexprDifferentialTests]
+  verified     F public System.Int32 Field1  [SexprDifferentialTests]
+  verified     F public static Quire.Mpl.Run.Tok zero  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Int32) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.String) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.Int32,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     P IntCon : System.Int32 override get:public  [SexprDifferentialTests]
+  verified     P quote_atom : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.real_constant  9 members: verified 9
+  verified     F private static Quire.Mpl.Run.Tok token  [SexprDifferentialTests]
+  verified     F public System.Double Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.Double) -> System.Void  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.String) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.Double,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     P RealCon : System.Double override get:public  [SexprDifferentialTests]
+  verified     P quote_atom : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
+
+T Quire.Mpl.Run.str_constant  7 members: verified 7
+  verified     F private static Quire.Mpl.Run.Tok token  [SexprDifferentialTests]
+  verified     F public System.String Field1  [SexprDifferentialTests]
+  verified     M public .ctor`0(System.String) -> System.Void  [SexprDifferentialTests]
+  verified     M public override ToString`0() -> System.String  [SexprDifferentialTests]
+  verified     M public static NewTok`0(System.String,System.UInt32) -> Quire.Mpl.Run.Tok  [SexprDifferentialTests]
+  verified     P StrCon : System.String override get:public  [SexprDifferentialTests]
+  verified     P quote_atom : Quire.Mpl.Run.Sexpr override get:public  [SexprDifferentialTests]
