@@ -9,7 +9,10 @@ namespace Quire.Differential.Tests;
 public static class MethodComparison
 {
     private static readonly object FileLock = new();
+    // Recording runs thousands of cases: locate the repository, hash each file and open the case log once.
     private static readonly Dictionary<string, string> Hashes = new();
+    private static readonly Lazy<string> Repo = new(FindRepo);
+    private static StreamWriter? Cases;
 
     public static void Compare(string caseId, string contract, MethodBase quire, object? quireTarget, object?[] quireArgs,
         MethodBase original, object? originalTarget, object?[] originalArgs,
@@ -59,21 +62,23 @@ public static class MethodComparison
         if (directory == null) return;
         string run = Environment.GetEnvironmentVariable("QUIRE_VALIDATION_RUN")
             ?? throw new HarnessException("Method case recording requires a validation run ID");
-        string repo = FindRepo();
-        string evidenceDir = Path.Combine(repo, "docs", "mirror", "evidence");
+        string evidenceDir = Path.Combine(Repo.Value, "docs", "mirror", "evidence");
         string contractPath = Path.GetFullPath(Path.Combine(evidenceDir, contract + ".md"));
         if (!contractPath.StartsWith(evidenceDir + Path.DirectorySeparatorChar, StringComparison.Ordinal))
             throw new HarnessException("Contract must be a record inside docs/mirror/evidence");
-        using var contractStream = File.OpenRead(contractPath);
-        string contractHash = Convert.ToHexString(SHA256.HashData(contractStream)).ToLowerInvariant();
+        string contractHash = Hash(contractPath);
         var record = new { schema = 1, run, test = test.DeclaringType!.FullName + "." + test.Name,
             case_id = caseId, contract, contract_sha256 = contractHash, inputs = qInputs, outcome = q, arguments_after = qAfter,
             state_checked = stateRequired, target_before = targetBefore, target_after = targetAfter,
             quire = Identity(quire), original = Identity(original) };
         lock (FileLock)
         {
-            Directory.CreateDirectory(directory);
-            File.AppendAllText(Path.Combine(directory, $"cases-{Environment.ProcessId}.jsonl"), JsonSerializer.Serialize(record) + "\n");
+            if (Cases == null)
+            {
+                Directory.CreateDirectory(directory);
+                Cases = new StreamWriter(Path.Combine(directory, $"cases-{Environment.ProcessId}.jsonl"), append: true) { AutoFlush = true };
+            }
+            Cases.Write(JsonSerializer.Serialize(record) + "\n");
         }
     }
 
@@ -128,19 +133,22 @@ public static class MethodComparison
         catch (Exception e) { throw new HarnessException($"Direct invocation failed: {method}", e); }
     }
 
-    private static object Identity(MethodBase method)
+    private static string Hash(string path)
     {
-        string path = method.Module.Assembly.Location;
-        string hash;
         lock (FileLock)
         {
-            if (!Hashes.TryGetValue(path, out hash!))
+            if (!Hashes.TryGetValue(path, out string? hash))
             {
                 using var stream = File.OpenRead(path);
                 Hashes[path] = hash = Convert.ToHexString(SHA256.HashData(stream)).ToLowerInvariant();
             }
+            return hash;
         }
-        return new { assembly = method.Module.Assembly.GetName().Name, sha256 = hash,
+    }
+
+    private static object Identity(MethodBase method)
+    {
+        return new { assembly = method.Module.Assembly.GetName().Name, sha256 = Hash(method.Module.Assembly.Location),
             mvid = method.Module.ModuleVersionId.ToString(), token = method.MetadataToken };
     }
 }

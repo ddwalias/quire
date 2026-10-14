@@ -163,7 +163,7 @@ def main():
     parser.add_argument("--results", type=Path, help="new result directory (must not exist)")
     parser.add_argument("--mutate", action="store_true", help="IL-mutate compared methods of the --method-type types")
     parser.add_argument("--mutate-since", metavar="REV", help="IL-mutate compared methods of types whose source changed since REV")
-    parser.add_argument("--jobs", type=int, default=2, help="parallel mutant test runs (default: 2)")
+    parser.add_argument("--jobs", type=int, default=4, help="parallel mutant test runs (default: 4)")
     parser.add_argument("--baseline", type=Path, help="ratchet baseline (default: docs/mirror/validation-baseline.json)")
     parser.add_argument("--write-baseline", type=Path, help="write this run's counts as a baseline (unscoped runs only)")
     args = parser.parse_args()
