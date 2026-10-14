@@ -12,7 +12,8 @@ A return type and parameter types, used as a key.
 |---|---|---|---|---|---|
 | `return_type, parameter_types` | 0x04000001, 0x04000002 | — | Private. | High | Verified |
 | `.ctor(Type, Type[])` | 0x06000004 | `b4a398e8` | Stores both; the array isn't copied. | High | Verified |
-| `RetType, ArgTypes` | 0x06000001, 0x06000002 | `1c391ab2`, `5a889236` | The fields. | High | Verified |
+| `RetType` | 0x06000001 | `1c391ab2` | Return type field. | High | Verified |
+| `ArgTypes` | 0x06000002 | `5a889236` | Parameter types field. | High | Verified |
 | `GetHashCode()` | 0x06000003 | `640df087` | `(hash(return) + Σ hash(parameter)) · 64 + count`, wrapping; null types throw. | High | Verified |
 | `Equals(object)` | 0x06000005 | `4ac0348b` | False for null or another runtime class. Then this signature's parameter types, position by position (the other's extras ignored, fewer throw `IndexOutOfRangeException`), then the return type. Null types in this signature throw. | High | Verified |
 

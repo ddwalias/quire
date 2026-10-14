@@ -13,10 +13,14 @@ Fills an object array from the front.
 | `Field1, Field2` | 0x040000bc, 0x040000bd | — | Public mutable count and array. | High | Verified |
 | `.ctor(int, object[])` | 0x060003f2 | `2e5d037c` | Stores both, unchecked. | High | Verified |
 | `make(int)` | 0x060003f3 | `d1930694` | Count 0, a new array of n. | High | Verified |
-| `vector, AsVector()` | 0x060003f4, 0x060003f7 | `bf6e3f2a` | The whole array (identical IL). | High | Verified |
+| `vector` | 0x060003f4 | `bf6e3f2a` | The whole array. | High | Verified |
 | `cnt` | 0x060003f5 | `8c0667ba` | The count. | High | Verified |
 | `AsList()` | 0x060003f6 | `4b930a3f` | A `Cons` list of the first `cnt` slots, null when 0; a count past the array throws `IndexOutOfRangeException`. | High | Verified |
-| `Push1 … Push4` | 0x060003f8–0x060003fb | — | Store into the next slots one by one, post-incrementing the count, and return this. Past the end the store throws after the count has moved on. | High | Verified |
+| `AsVector()` | 0x060003f7 | `bf6e3f2a` | The whole array. | High | Verified |
+| `Push1(object)` | 0x060003f8 | — | Store next slot, post-increment count, return this. | High | Verified |
+| `Push2(object, object)` | 0x060003f9 | — | Store next 2 slots, post-increment count, return this. | High | Verified |
+| `Push3(object, object, object)` | 0x060003fa | — | Store next 3 slots, post-increment count, return this. | High | Verified |
+| `Push4(object, object, object, object)` | 0x060003fb | — | Store next 4 slots, post-increment count, return this. | High | Verified |
 
 ## Test cases
 

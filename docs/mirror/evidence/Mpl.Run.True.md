@@ -11,6 +11,7 @@ The runtime truth value.
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
 | `singleton` | 0x040000b9 | — | Static mutable, set by the static constructor. | High | Verified |
+| `.cctor()` | 0x060003e8 | — | Sets singleton to a new True instance. | High | Verified |
 | `.ctor()` | 0x060003ea | `41ad57d1` | No state. | High | Verified |
 | `ToString()` | 0x060003e9 | `c5de8e74` | `"True"`. | High | Verified |
 

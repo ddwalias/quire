@@ -19,11 +19,15 @@ How the runtime represents tuples, and the generic classes `Tuple`2` … `Tuple`
 | `TupleType(Type[])` | 0x06000423 | `fe376473` | null for 6 or more types, else `IType`. | High | Verified |
 | `TupleRep(out Rep, Type[])` | 0x06000424 | `90076d79` | One type: itself, `Singleton`. All reference types (none included): `object[]`, `ObjVector`. Up to 5 with a value type: the generic class, `TupleType`. More: `object[]`, `HeteroVector`. | High | Verified |
 | `GetFieldInfo(Type, int)` | 0x06000425 | `d39af0a2` | null type gives null, else `GetField("m_" + n)` (public instance; null when absent). | High | Verified |
-| `Getter(Type), Setter(Type)` | 0x06000426, 0x06000427 | `7eab34fc` | `GetField<T>`/`SetField<T>` closed over the type. | High | Verified |
+| `Getter(Type)` | 0x06000426 | `7eab34fc` | `GetField<T>` closed over the type. | High | Verified |
+| `Setter(Type)` | 0x06000427 | `7eab34fc` | `SetField<T>` closed over the type. | High | Verified |
 | `GetField<T>(object[], int)` | 0x06000428 | `6b1d14d8` | Unboxing cast of the slot (throws on mismatch, null for a value type). | High | Verified |
 | `SetField<T>(object[], int, T)` | 0x06000429 | `f879e602` | Stores into the slot. | High | Verified |
 | `Tuple`2…`5 m_1 … m_5` | 0x040000c4–0x040000d1 | — | Public mutable fields. | High | Verified |
-| `Tuple`2…`5 .ctor()` | 0x0600041b–0x0600041e | — | No state. | High | Verified |
+| `Tuple`2 .ctor()` | 0x0600041b | `41ad57d1` | No state. | High | Verified |
+| `Tuple`3 .ctor()` | 0x0600041c | `41ad57d1` | No state. | High | Verified |
+| `Tuple`4 .ctor()` | 0x0600041d | `41ad57d1` | No state. | High | Verified |
+| `Tuple`5 .ctor()` | 0x0600041e | `41ad57d1` | No state. | High | Verified |
 
 ## Test cases
 

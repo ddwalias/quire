@@ -79,7 +79,11 @@ public partial class Tuple
 
     /// <summary>The public field <c>m_</c><paramref name="n"/> of the type, or null.</summary>
     [MirrorVerified("MplRunHelpersDifferentialTests")]
-    public static FieldInfo GetFieldInfo(System.Type ty, int n) => ty?.GetField("m_" + n);
+    public static FieldInfo GetFieldInfo(System.Type ty, int n)
+    {
+        if (ty == null) return null;
+        return ty.GetField("m_" + n);
+    }
 
     [MirrorVerified("MplRunHelpersDifferentialTests")]
     public static MethodInfo Getter(System.Type ty) => gf.MakeGenericMethod(ty);
