@@ -125,9 +125,6 @@ The suite contains four scenarios, pending the focused rerun in this session:
 
 These scenarios do **not** exercise RngVal matrix conversions or MatrixIterator; those remain Analyzed. The forValue range/scalar branches appear in the suite, but its matrix branches have no recorded direct case here. Field annotations derive from constructors/query/iteration scenarios; they do not establish all arbitrary reflected mutations.
 
-## Open
+## Not yet comparable
 
-- Focused comparison results and case-specific runtime observations must be added by the validating root before claiming a new verification run.
-- RngVal asVector/asMatrix/asRealMatrix/asRealVector and Iterator.MatrixIterator lack execution evidence in this record; preserve Analyzed status.
-- Source-only error-message constants `TwoArgumentUnits` and `NotSequential` have no corresponding field in the bound RngVal metadata inventory. Current status report lists them Unclassified; this documentation does not reclassify them or authorize a shape departure.
-- Empty/null iterator-array and cursor calls after exhaustion preserve natural runtime failures. Matrix malformed-storage, mutation during traversal, and conversion allocation limits are not exhaustively tested.
+- `Quire.Mpl::Quire.Mcd.Iterator::.ctor`0()->[System.Runtime]System.Void|False`: Cannot be invoked directly through reflection `ConstructorInfo.Invoke` because `Quire.Mcd.Iterator` is an abstract class (`MemberAccessException: Cannot create an instance of Quire.Mcd.Iterator because it is an abstract class`). Subclass constructors invoke it as base constructor.

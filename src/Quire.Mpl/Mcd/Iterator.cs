@@ -34,7 +34,8 @@ public abstract partial class Iterator
         public override Iterator next()
         {
             if (m_its[m_curr].next() == null) m_curr++;
-            return m_curr >= m_its.Length ? null : this;
+            if (m_curr >= m_its.Length) return null;
+            return this;
         }
     }
 
@@ -123,12 +124,24 @@ public abstract partial class Iterator
 
     /// <summary>A matrix iterates its elements (null when it is empty), a range its values, anything else itself.</summary>
     [MirrorAnalyzed("Mcd.RngVal")]
-    public static Iterator forValue(object o) => o switch
+    public static Iterator forValue(object o)
     {
-        MatVal m => m.Rows <= 0 || m.Cols <= 0 ? null : new MatrixIterator(m),
-        RngVal r => forRange(r),
-        _ => new ScalarIterator(o),
-    };
+        MatVal matVal = o as MatVal;
+        if (matVal == null)
+        {
+            RngVal rngVal = o as RngVal;
+            if (rngVal == null)
+            {
+                return new ScalarIterator(o);
+            }
+            return forRange(rngVal);
+        }
+        if (matVal.Rows <= 0 || matVal.Cols <= 0)
+        {
+            return null;
+        }
+        return new MatrixIterator(matVal);
+    }
 
     [MirrorVerified("RngValDifferentialTests")]
     protected Iterator() { }
@@ -164,5 +177,9 @@ public partial class RangeIterator : Iterator
     public override Iterator next() => ri_next();
 
     [MirrorVerified("RngValDifferentialTests")]
-    public Iterator ri_next() => ++m_it >= m_n ? null : this;
+    public Iterator ri_next()
+    {
+        if (++m_it >= m_n) return null;
+        return this;
+    }
 }

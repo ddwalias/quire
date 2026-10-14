@@ -48,7 +48,14 @@ public partial class RngVal : DimVal
     public bool Integral => m_integral;
 
     [MirrorVerified("RngValDifferentialTests")]
-    public override Dim PhysicalDimension => m_dim ?? Dim.identity;
+    public override Dim PhysicalDimension
+    {
+        get
+        {
+            if (!IsPolymorphic) return m_dim;
+            return Dim.identity;
+        }
+    }
 
     [MirrorVerified("RngValDifferentialTests")]
     public override int Rsize => m_n;
