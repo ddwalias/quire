@@ -212,13 +212,15 @@ order passes it, which the direct comparisons must catch.
 ### Ratchet
 
 `ratchet.json` compares a run with `docs/mirror/validation-baseline.json` (schema 3), which records its profile,
-per-type counts, each method's stage and test classes, and each lint finding by identity (counted). The stages follow
-the order the audit checks them: `no_counterpart`, `missing`, `structure_mismatch`, `untested` (structure matches but
-no passing direct comparison; counted as `missing`), `uncovered`, `compared`. Fixing one stage exposes the next, so a
-method may move forward but never back, and any other change of state must reach `compared`. `compared` and each
-type's hand-written method total may not fall; a type's unfinished methods (`missing`, `structure_mismatch` and
-`uncovered` together) and its `verified_unsupported` count may not rise; a new method without a Mathcad counterpart
-is rejected. Unscoped runs also forbid any new lint finding (fixing one does not pay for another) and
+per-type counts, each method's stage (emitted by the audit) and test classes, and each lint finding by identity
+(counted). The stages, in order: `no_counterpart`, `missing`, `structure_mismatch`, `untested` (structure matches but no
+passing direct comparison), `unchecked_state` (an instance method compared without checking its state), `uncovered`,
+`compared`; `untested` and `unchecked_state` are counted as `missing`. Fixing one gap exposes the next, so a method
+may move forward but never back (deleting tests never counts as progress), and any other change of state must reach
+`compared`. `compared` and each type's hand-written method total may not fall; a type's unfinished methods
+(`missing`, `structure_mismatch` and `uncovered` together) and its `verified_unsupported` count may not rise. A new
+method without a Mathcad counterpart is rejected, and a new method in an existing type may not arrive as
+`structure_mismatch`, `unchecked_state` or `uncovered`, so progress elsewhere cannot pay for it. Unscoped runs also forbid any new lint finding (fixing one does not pay for another) and
 disappearing types or methods. New types with counterparts start their own baseline. A baseline from another profile
 or schema is rejected. `--write-baseline PATH` writes a run's snapshot (unscoped runs only) once every test and mutation
 run has finished and the final seal check has passed. A maintainer creates the first baseline from an

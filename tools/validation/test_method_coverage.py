@@ -72,7 +72,9 @@ class CoverageTests(unittest.TestCase):
 
     def test_instance_requires_state_assertions(self):
         method = dict(self.method, is_static=False)
-        self.assertFalse(self.check(methods=[method])['complete'])
+        report = self.check(methods=[method])
+        self.assertFalse(report['complete'])
+        self.assertEqual((report['methods'][0]['validation'], report['methods'][0]['stage']), ('missing', 'unchecked_state'))
         self.assertTrue(self.check(methods=[method], records=[dict(self.record, state_checked=True)])['complete'])
 
     def test_unmatched_and_stub_methods_cannot_pass(self):
@@ -115,7 +117,11 @@ class CoverageTests(unittest.TestCase):
         self.assertTrue(self.check(methods=[deviation])['complete'])
 
     def test_structure_alone_does_not_replace_a_direct_comparison(self):
-        self.assertEqual(self.check(records=[])['counts']['missing'], 1)
+        report = self.check(records=[])
+        self.assertEqual(report['counts']['missing'], 1)
+        self.assertEqual(report['methods'][0]['stage'], 'untested')
+        self.assertEqual(self.check(methods=[dict(self.method, status='Stub')])['methods'][0]['stage'], 'missing')
+        self.assertEqual(self.check()['methods'][0]['stage'], 'compared')
 
     def test_every_line_and_branch_must_execute(self):
         for lines, detail in [({('/src/T.cs', 10): (3, 0, 0)}, "['/src/T.cs:11']"), ({**self.lines, ('/src/T.cs', 11): (3, 1, 2)}, '11 (1/2)'),

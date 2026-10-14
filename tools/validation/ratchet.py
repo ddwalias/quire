@@ -3,17 +3,19 @@ committed baseline."""
 from collections import Counter
 import json
 from pathlib import Path
-from method_coverage import UNTESTED
 from validate import ROOT, test_class
 
 BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
 SCHEMA = 3
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
 # Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
-# A method moves through these stages in the order the audit checks them; fixing one exposes the next, so a method
-# may move forward between unfinished states but never back. Per type, the unfinished methods may not grow in number.
-STAGES = ('no_counterpart', 'missing', 'structure_mismatch', 'untested', 'uncovered', 'compared')
+# A method's stage (method_coverage.audit) says how far it has got; fixing one gap exposes the next, so a method may
+# move forward between unfinished stages but never back. Tests that compare without checking instance state rank
+# above having none, so deleting them is never progress. Per type, the unfinished methods may not grow in number, and
+# a new method may not arrive with a gap that existing methods' progress would otherwise pay for.
+STAGES = ('no_counterpart', 'missing', 'structure_mismatch', 'untested', 'unchecked_state', 'uncovered', 'compared')
 UNFINISHED = ('missing', 'structure_mismatch', 'uncovered')
+NEW_GAPS = ('structure_mismatch', 'unchecked_state', 'uncovered')
 
 
 def snapshot(coverage, integrity, profile):
@@ -28,9 +30,7 @@ def snapshot(coverage, integrity, profile):
 def stage(method):
     if not method.get('original') and method['validation'] != 'excluded':
         return 'no_counterpart'
-    if method['validation'] == 'missing' and method.get('reason') == UNTESTED:
-        return 'untested'
-    return method['validation']
+    return method.get('stage', method['validation'])
 
 
 def forward(old, new):
@@ -56,6 +56,8 @@ def compare(baseline, current, scoped=False):
         old = old_methods.get(name)
         if old is None and state == 'no_counterpart':
             regressions.append(f'{name}: new method has no Mathcad counterpart')
+        elif old is None and state in NEW_GAPS and name.split('::')[0] in old_types:
+            regressions.append(f'{name}: new method is {state}')
         elif old is not None and state != old and state != 'compared' and not forward(old, state):
             regressions.append(f'{name}: {old} became {state}')
     for name, counts in sorted(new_types.items()):

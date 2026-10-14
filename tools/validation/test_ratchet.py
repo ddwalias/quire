@@ -2,7 +2,6 @@ import json
 import tempfile
 from pathlib import Path
 import unittest
-from method_coverage import UNTESTED
 from ratchet import SCHEMA, check, compare
 
 ZERO = dict.fromkeys(('total', 'compared', 'declaration_only', 'excluded', 'missing', 'structure_mismatch', 'uncovered', 'verified_unsupported'), 0)
@@ -48,17 +47,35 @@ class RatchetTests(unittest.TestCase):
         same = {'Quire.T': counts(compared=3, missing=2)}
         stages = lambda b: dict(METHODS, **{'Quire.T::B()': b})
         for old, new in [('missing', 'structure_mismatch'), ('structure_mismatch', 'untested'), ('untested', 'uncovered'),
-                         ('missing', 'uncovered'), ('no_counterpart', 'missing')]:
+                         ('missing', 'uncovered'), ('no_counterpart', 'missing'), ('untested', 'unchecked_state'),
+                         ('structure_mismatch', 'unchecked_state'), ('unchecked_state', 'uncovered')]:
             with self.subTest(old=old, new=new):
                 baseline = dict(self.baseline, methods=stages(old))
                 self.assertEqual(compare(baseline, self.current(methods=stages(new), **same)), [])
                 self.assertEqual(compare(dict(self.baseline, methods=stages(new)), self.current(methods=stages(old), **same)),
                                  [f'Quire.T::B(): {new} became {old}'])
-        self.assertEqual(compare(dict(self.baseline, methods=stages('missing')), self.current(methods=stages('excluded'), **same)),
-                         ['Quire.T::B(): missing became excluded'])
+        for old, new in [('missing', 'excluded'), ('missing', 'declaration_only'), ('declaration_only', 'untested'),
+                         ('excluded', 'missing'), ('compared', 'untested')]:
+            with self.subTest(old=old, new=new):
+                self.assertEqual(compare(dict(self.baseline, methods=stages(old)), self.current(methods=stages(new), **same)),
+                                 [f'Quire.T::B(): {old} became {new}'])
         # Fixing a structure mismatch moves it to the untested 'missing' bucket: the type's unfinished total holds.
         baseline = dict(self.baseline, types={'Quire.T': counts(compared=3, missing=1, structure_mismatch=1)})
         self.assertEqual(compare(baseline, self.current(**same)), [])
+
+    def test_new_method_with_a_gap_is_not_paid_for_by_progress_elsewhere(self):
+        better = {'Quire.T': counts(compared=4, missing=1, structure_mismatch=1)}
+        for gap in ('structure_mismatch', 'unchecked_state', 'uncovered'):
+            with self.subTest(gap=gap):
+                methods = {'Quire.T::A()': 'compared', 'Quire.T::B()': 'compared', 'Quire.T::C()': gap}
+                self.assertEqual(compare(self.baseline, self.current(methods=methods, **better)),
+                                 [f'Quire.T::C(): new method is {gap}'])
+        # A new stub or untested method is still governed by the type's unfinished total; new types start fresh.
+        stub = {'Quire.T::A()': 'compared', 'Quire.T::B()': 'compared', 'Quire.T::C()': 'missing'}
+        self.assertEqual(compare(self.baseline, self.current(methods=stub, **{'Quire.T': counts(compared=4, missing=2)})), [])
+        fresh = dict(METHODS, **{'Quire.New::C()': 'structure_mismatch'})
+        self.assertEqual(compare(self.baseline, self.current(methods=fresh, **{'Quire.T': counts(compared=3, missing=2),
+                                                                                 'Quire.New': counts(structure_mismatch=1)})), [])
 
     def test_deleted_methods_fail_but_lambdas_may_come_and_go(self):
         baseline = dict(self.baseline, types={'Quire.T': counts(total=5, compared=3, missing=2)})
@@ -96,7 +113,7 @@ class RatchetTests(unittest.TestCase):
             self.assertEqual(report['snapshot']['methods'], {'Quire.T::A()': 'compared'})
             lambda_ = {'type': 'Quire.T+<>c', 'signature': '<A>b__0_0()', 'validation': 'excluded', 'cases': []}
             invented = {'type': 'Quire.T', 'signature': 'B()', 'validation': 'missing', 'cases': []}
-            untested = {'type': 'Quire.T', 'signature': 'C()', 'validation': 'missing', 'reason': UNTESTED,
+            untested = {'type': 'Quire.T', 'signature': 'C()', 'validation': 'missing', 'stage': 'untested',
                         'original': {'token': 3}, 'cases': []}
             snapshot = check(dict(coverage, methods=coverage['methods'] + [lambda_, invented, untested]), integrity, False,
                              'focused', Path(directory) / 'none.json')['snapshot']

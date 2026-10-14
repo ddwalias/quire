@@ -49,11 +49,6 @@ def member(method):
     return f"{method['type']}::{re.split(r'[`(]', method['signature'])[0]}"
 
 
-# The one 'missing' reason reached only after the structure check passed: such a method is further along than one
-# whose structure still differs.
-UNTESTED = 'No direct comparison from a passing test in this run'
-
-
 def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, deviations=None):
     """`lines` is merged cobertura data from the differential run; without it the coverage gate cannot pass."""
     if inventory.get('schema') != 2 or inventory.get('errors'):
@@ -99,7 +94,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, devia
     counts = {'compared': 0, 'declaration_only': 0, 'excluded': 0, 'missing': 0, 'structure_mismatch': 0, 'uncovered': 0}
     rows = []
     for method in methods:
-        cases = []
+        cases, stage = [], None
         if method.get('exclusion'):
             state, reason = 'excluded', method['exclusion']
         elif not method.get('original'):
@@ -114,7 +109,7 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, devia
             if method['status'] in ('Stub', 'Blocked'):
                 state, reason = 'missing', 'Method remains a stub or blocked'
             elif cases and not method['is_static'] and not method['is_constructor'] and not all(c['state_checked'] for c in cases):
-                state, reason = 'missing', 'Instance method lacks checked before/after target state'
+                state, stage, reason = 'missing', 'unchecked_state', 'Instance method lacks checked before/after target state'
             elif method['structure_matches'] is not True and not (method['status'] == 'Deviation' and member(method) in deviations.get(method.get('evidence'), ())):
                 state, reason = 'structure_mismatch', 'IL structure differs from the original: ' + '; '.join(
                     method['structure_differences'] or ['not compared'])
@@ -128,10 +123,12 @@ def audit(inventory, records, tests, run, repo=ROOT, types=(), lines=None, devia
             elif cases:
                 state, reason = 'compared', 'Direct comparison passed for the listed cases only; every line and branch executed'
             else:
-                state, reason = 'missing', UNTESTED
+                state, stage, reason = 'missing', 'untested', 'No direct comparison from a passing test in this run'
         counts[state] += 1
         unsupported = method['status'] == 'Verified' and state not in ('compared', 'declaration_only')
-        rows.append(dict(method, validation=state, reason=reason, cases=cases, status_supported=not unsupported))
+        # `missing` covers several gaps; the ratchet orders methods by `stage` (see ratchet.STAGES).
+        rows.append(dict(method, validation=state, stage=stage or state, reason=reason, cases=cases,
+                         status_supported=not unsupported))
     counts['verified_unsupported'] = sum(not r['status_supported'] for r in rows)
     return {'schema': 1, 'run': run, 'complete': all(counts[k] == 0 for k in ('missing', 'structure_mismatch', 'uncovered', 'verified_unsupported')),
             'policy': 'Direct comparison and matching IL structure for every non-compiler method with a body, regardless of accessibility; accepted deviations may differ structurally',
