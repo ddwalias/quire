@@ -152,7 +152,7 @@ public abstract partial class MatDim
         if (rows == null || cols == null) return crazy_dim.make(m);
         var factors = new Dim[m.Cols];
         factors[0] = Dim.identity;
-        for (int c = 1; c < factors.Length; c++)
+        for (int c = 1; c < m.Cols; c++)
         {
             factors[c] = IsScalarMultiple(rows, m.ColDimArray(c));
             if (factors[c] == null) return crazy_dim.make(m);

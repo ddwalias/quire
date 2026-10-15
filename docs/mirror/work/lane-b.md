@@ -189,3 +189,22 @@ python3 tools/validation/validate.py --method-type Quire.Mcd.DimVal --jobs 4
 ```
 
 An initial filtered type-scoped diagnostic selected only these three facts, so it left existing `DimVal` comparisons untested and produced 125 ratchet regressions; the unfiltered receipt above is the complete scoped run. Strict comparisons loaded the pinned Mathcad artifact. No scoped mutation was run; the full runtime merge gate owns mutation. Windows/native and full runtime merge-gate checks remain unperformed, and this member result does not claim phase completion. No acceptance proposal was made. Next: obtain independent whole-diff review, squash/push, and publish a ready handoff.
+
+## MatDim.makeArrayDim survivor follow-up — active checkpoint
+
+This fresh-main follow-up is on branch `mirror/b-matdim-arraydim-followup`, worktree `/root/src/quire-matdim-arraydim-followup`, based on `488ed958459a15032b80c4b360e0b99526345980`. The prior `mirror/b-matval-matrix-dimension-remediation-current` branch remains frozen; it is not amended or assumed merged. The target is private static `Mcd.MatDim.makeArrayDim(Mcd.MatVal)`, Prime 12.0.1.0 `mplrun.dll`, token `0x0600064b`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Original `MatDim` and `MatVal` source/IL were refreshed through `python3 tools/reference/reference.py Mcd.MatDim --il` and `python3 tools/reference/reference.py Mcd.MatVal --il`.
+
+The source evaluates `m.Cols` at every factor-loop condition, matching original evaluation order after allocating the factor array from one earlier `m.Cols` read. Nine strict direct comparisons exercise column- and row-uniform success/failure, scalar factorization, both reachable null-array guard arms, and side-effecting virtual `UniformDimension` queries. The counted nonuniform first-column case kills the factor-loop-start-at-zero mutant; a separate factorization callback changes the parent from 3 columns to 2 and confirms the original re-read behavior. Comparisons observe returned shape and every cell dimension, plus input geometry, flags, backing arrays, dimension, pointer and callback state. The null guard is reachable because `MatVal.ColDimArray` / `RowDimArray` return null when a live pointer's `DimVal.DimOf` is a nonscalar dimension.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDim' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatDimArrayDimLoopDispatchDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 9 passed, 0 failed, 0 skipped; 9 direct MethodComparison cases.
+
+QUIRE_REQUIRE_MATHCAD=1 python3 tools/validation/validate.py --method-type Quire.Mcd.MatDim --mutate --jobs 4
+=> `/tmp/quire-validation-llzzv2mj/summary.json`; Harness 36/36, Mpl 181/181, Differential 113/113; method coverage compared 1, declaration-only 3, missing 53, structure mismatch 10, uncovered 0, verified-unsupported 9; integrity lint 25/incomplete; ratchet pass; mutation 32/32 killed, zero survivors, zero proposals. The target IL structure and branches match. Scoped local checks pass; the gate would pass with the listed inventory/integrity gaps.
+```
+
+No acceptance or unreachable proposal is made, and the 19 pending DimVal proposals remain untouched. This result is limited to the target method and recorded cases; Windows/native and full runtime merge-gate checks remain unperformed, and it does not claim phase completion. The batch is one squashed commit; independent review passed the prior exact tip, with review reconfirmation after this checkpoint wording correction, backup push, and frozen handoff pending.
