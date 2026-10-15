@@ -99,3 +99,24 @@ python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --j
 ```
 
 No exception or unreachable proposal is made. This scoped Linux run does not establish whole-type equivalence or phase completion. Windows/native and full merge-gate checks remain unperformed. The batch was squashed in one commit, passed independent whole-diff review, was pushed as backup, and is frozen at the exact tip recorded in the [handoff](../../../../quire-handoffs/lane-b/matval-pointer-helper-remediation.md). Agent A owns integration. Do not amend this queued tip concurrently.
+
+## MatVal CanonicalizePtrs — queued handoff
+
+This is the next independent Lane B batch on branch `mirror/b-matval-canonicalize-ptrs` in `/root/src/quire-matval-canonicalize-ptrs`, freshly based on clean main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. The old pointer-helper and classifier branches remain separate queued tips; no integration is assumed. This batch directly compares the private `CanonicalizePtrs()` method, token `0x06000441`; source and exact original IL have been refreshed with `python3 tools/reference/reference.py Mcd.MatVal --il`.
+
+Original identity is Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Evidence contract is recorded in `docs/mirror/evidence/Mcd.MatVal.md`. The 18 direct cases cover dimension normalization/order, logical nonpointer versus pointer-only dimensions, stale/live pointers, matching/incompatible/zero dimensions, non-NumVal pointers, full/partial coverage, both reinsertion paths, shared padded storage, and original exceptions with post-state. The observer compares return/exception, matrix dimension reference, flags/shape/offset/stride, backing/table references and prior aliases, pointer identities, and NumVal values/dimension references.
+
+Validation commands and results:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValCanonicalizePtrsDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 fact passed, 0 failed, 0 skipped; 18 direct MethodComparison cases.
+
+python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --jobs 4
+=> /tmp/quire-validation-dc0wh8p3/summary.json: Harness 36/36, Mpl 160/160, Differential 89/89; method inventory compared 41, declaration-only 0, excluded 0, missing 147, structure mismatch 109, uncovered 0, verified-unsupported 32; integrity lint 0/complete; ratchet pass; mutation 179/179 killed, zero survivors, zero accepted/proposed. Focused local checks pass; the scoped gate would pass with the listed inventory gaps.
+```
+
+No acceptance or unreachable proposal is made. This batch is a single reviewed commit, pushed as backup, and frozen at the exact tip recorded in its [handoff](../../../../quire-handoffs/lane-b/matval-canonicalize-ptrs.md).

@@ -54,6 +54,7 @@
 | get_IsDimless() | 0x0600043a | — | First require IsUniformScalar; return false without checking m_dim when that fails; otherwise return Dim.Id_b(m_dim). | Same-artifact ILSpy; 7 direct comparisons; finite cases in lane checkpoint | Verified |
 | get_PhysicalDimension() | 0x06000452 | — | Return the virtual UniformDimension property result. | Same-artifact ILSpy; 6 direct comparisons; finite cases in lane checkpoint | Verified |
 | get_UniformDimension() | 0x06000453 | — | Return mixed_matrix_dim when IsUniform is false; otherwise return m_dim. May canonicalize pointer storage through IsUniform. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
+| CanonicalizePtrs() | 0x06000441 | — | Normalize `string_dim` to identity, seed the common dimension from `m_dim` only when logical cells include non-pointer data, then classify only PtrNan-marked table entries. Merge compatible NumVal dimensions, accept `mcd_zero`, flag other live values/dimensions, and pass live/zero counts plus the common dimension to `TidyPtrs`; may mutate matrix and pointer state through reinsertion. | Same-artifact IL; 18 direct comparisons | Verified |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 
