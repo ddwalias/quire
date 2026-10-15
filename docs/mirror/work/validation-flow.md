@@ -25,8 +25,9 @@ Independent review passed with no blockers. A real CLI check/apply smoke run in 
 the prose route without invoking .NET and preserved the baseline bytes (0.08 s on this workstation; not a full
 workflow benchmark).
 
-Merge this tooling branch through the full protected runtime gate; its receipt and any baseline update are
-recorded by the merge gate. After merging, resume the implementation lanes linked from WORK. This change does
+This tooling branch passed the full protected runtime gate and was merged as `c011f35`; receipt:
+`/tmp/quire-workflow-trim-runtime-gate/gate.json`. The branch and main were pushed. Resume the implementation
+lanes linked from WORK. This change does
 not establish Windows phase completion.
 
 ## Two-batch integration amendment
@@ -42,8 +43,10 @@ Motivation: the pending runtime test work shares the same build, regression, cov
 accepted-mutant change also requires a full mutation audit (the current inventory contains 2,112 mutants).
 Serial gates for two such queued batches would repeat that complete pass. This amendment permits one final
 pass after both are ready, without using an interrupted/failed run as evidence. It does not claim a measured
-end-to-end speedup. Protected changes are only PLAN and validation.md; run the existing protected runtime gate
-for this amendment before using it. Independent review and the gate receipt must be recorded after execution.
+end-to-end speedup. Protected changes are only PLAN and validation.md. Independent review passed for `8ab21a1`; the existing
+protected runtime gate passed Harness 36, Mpl 159 and Differential 79, with no failures/skips, lint 0 and ratchet
+ok. No methods were selected for mutation. The gate merged the amendment as `7c5d9aa`, and main was pushed.
+Receipt: `/tmp/quire-gate-batching-runtime-gate/gate.json`; protected paths match exactly those two policy files.
 
 The earlier `02ecce1` full audit at `/tmp/quire-matval-final-runtime-gate` was interrupted after
 1,180/2,112 mutants when unmerged DimVal comparison fixes and their pending approvals were identified.
