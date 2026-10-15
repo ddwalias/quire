@@ -54,7 +54,7 @@ QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire
 
 No implementation source changed, no scoped mutation run was requested or used, and no acceptance exception was proposed. Independent whole-diff review passed after adding a prior-table alias observation for the `RepHasPtrs` clear. Windows/native and full merge-gate checks remain unperformed and are not claimed; the focused Linux differential run was strict and loaded the pinned Mathcad artifact. The branch is a single reviewed commit, pushed as backup, and frozen at the exact tip in the atomic handoff linked above. Next action: start the dimension-query batch on a new branch from freshly inspected current main.
 
-The next independent batch is the four dimension queries `get_IsDimless`, `IsUniformDimOf`, `get_PhysicalDimension`, and `get_UniformDimension`; isolate `get_MatrixDimension` because it crosses into MatDim factory behavior. Use the evidence analysis and exact member contracts before changing files.
+The four dimension queries `get_IsDimless`, `IsUniformDimOf`, `get_PhysicalDimension`, and `get_UniformDimension` have a separate ready handoff; do not duplicate them here. The `get_MatrixDimension` factory path is isolated in the active checkpoint below. Once that exact tip is frozen, inspect current main and handoffs again before selecting the next Lane B batch.
 
 ## MatVal dimension-property batch — active checkpoint
 
@@ -78,3 +78,31 @@ No production source changed; no scoped mutation run was requested or used and n
 Independent whole-diff review passed after adding full-coverage null-dimension assignment and an argument-to-`m_dim` reference check. This batch is a single reviewed commit, pushed as backup, and frozen at the exact tip recorded in its atomic handoff linked above. Next action: start the next independent Lane B batch from freshly inspected current main.
 
 Keep this checkpoint authoritative for Lane B; WORK is an index. Do not repeat old run logs here.
+
+## MatVal MatrixDimension mutation follow-up — active checkpoint
+
+The prior MatrixDimension branch `mirror/b-matval-matrix-dimension` is frozen at pushed tip `cf4eb1331686195ba74c8cc325a18655f03fe977`; it is not on main. Agent A's integration gate on that exact tip was blocked by 11 surviving mutants (126/137 killed), recorded in `/root/src/quire-handoffs/lane-b/matval-matrix-dimension.md`. The handoff's short tip was corrected against local/remote refs and `summary.json`. Do not edit the frozen branch.
+
+This independent remediation is on fresh-main branch `mirror/b-matdim-factory-mutation-cases`, worktree `/root/src/quire-matdim-factory-mutation-cases`, base `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. The prior relevant source/evidence/test diff is replayed onto this clean base for the new queued tip; only this branch is mutable. Current main does not contain the prior `MatValMatrixDimensionDifferentialTests` file or the related Verified status annotations. Artifact identity was refreshed with `python3 tools/reference/reference.py Mcd.MatDim --il`, `Mcd.MatVal --il`, `Mcd.Dim --il`, and `Mcd.NumVal --il`: Prime 12.0.1.0 mplrun SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+The new direct cases in `MatValMatrixDimensionDifferentialTests.cs` cover 97 cases across five facts, including 4×1/1×4 precedence, 2×1/1×2 vectors with a null-dimension StrVal then a dimensional NumVal, 3×3 matrices with two later loop entries, and direct `makeArrayDim` factor initialization on a null-dimension first column. The new special inputs compare equal on Quire and Mathcad. Existing rows and pointer/source-state renderers remain in place.
+
+Commands and receipts so far:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDimTests|FullyQualifiedName~MatValDimensionTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 11 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValMatrixDimensionDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped; 97 direct MethodComparison cases.
+
+git diff --check
+=> passed.
+```
+
+The two uniform-loop `1→0` mutants are not killed by the 3×3 cases; current evidence suggests the repeated index-zero check is equivalent for stable inputs under the prior uniformity guard. Cross-lane `Dim.Pwr` and `NumVal::.cctor` survivors are coordinated in `/root/src/quire-handoffs/lane-b/coordination.md`. No mutant or unreachable exception is approved. The current scoped mutation receipt below controls this batch's status. Windows/native and full integration gate remain unperformed; this is not phase completion.
+
+Mutation follow-up receipt (`python3 tools/validation/validate.py --mutate-since main --jobs 4`, run `0wu6qu6t`, summary `/tmp/quire-validation-0wu6qu6t/summary.json`): strict Differential 93/93, Mpl 160/160, Harness 36/36; coverage lint 0, integrity complete, ratchet pass; compared 733, declaration-only 165, excluded 100, missing 912, structure mismatch 136, uncovered 42, verified unsupported 81. The mutation phase ran all 137 selected mutants: 127 killed, 10 survived, none accepted, so local checks fail and the gate would block. Exact survivors are `Dim::Pwr IL_0024 ldc.r8 0→1`; `MatDim.make(MatVal,bool) IL_002b ldc.i4.1→0` and `IL_0041 ldc.i4.1→0`; `MatDim.makeArrayDim(MatVal) IL_001f` and `IL_007d ldc.i4.1→0`; and five `NumVal::.cctor` changes at IL_004c (`0→1`), IL_0055 (`0→1`), IL_006d (`i4.0→i4.1`), IL_009e (`0→1`), IL_00b6 (`305419896→305419897`). The previously targeted `makeArrayDim` factor-initialization survivor was killed. The current null-dimension vector cases compare the vector shortcut and Mathcad result but do not kill either shortcut mutant; evidence review confirms the receipt is the controlling result, so these constants remain unresolved pending a demonstrated distinguishing state or proof. The two loop-start mutants appear equivalent under their preceding uniformity guards for stable inputs, but are not accepted. `Dim.Pwr` and `NumVal::.cctor` are cross-lane; coordination is pending with Agent A. No exceptions or acceptance proposals were added. This is a blocked local mutation receipt, not phase completion.
+
+
+The superseded MatrixDimension branch and its blocked gate receipt are preserved in the [frozen handoff](../../../../quire-handoffs/lane-b/matval-matrix-dimension.md); its old active-checkpoint instructions are removed. The active remediation and current mutation receipt are recorded above.
