@@ -96,6 +96,10 @@ class MutationTests(unittest.TestCase):
         patcher = mock.patch.dict(os.environ, QUIRE_MUTANT_CACHE=str(self.cache))
         patcher.start()
         self.addCleanup(patcher.stop)
+        (root / 'swept').mkdir()
+        sweeper = mock.patch('mutate.SWEEP_DIRECTORY', root / 'swept')  # never the real temporary directory
+        sweeper.start()
+        self.addCleanup(sweeper.stop)
         self.dotnet = root / 'dotnet'
         self.dotnet.write_text(FAKE_DOTNET.format(python=sys.executable))
         self.dotnet.chmod(self.dotnet.stat().st_mode | stat.S_IEXEC)
@@ -187,12 +191,24 @@ class MutationTests(unittest.TestCase):
         self.assertEqual(reasons(path), {'Quire.T::M()@IL_0005 brfalse.s -> brtrue.s': (BODY, 'dead branch'),
                                          'Quire.T::M()@IL_0001 add -> sub': (None, 'no hash')})
 
+    def test_malformed_hashes_and_duplicate_keys_excuse_nothing(self):
+        survivor = key(self.method, self.method['mutants'][1])
+        path = Path(self.directory.name) / 'entries.txt'
+        path.write_text(f'{survivor} body={BODY[:-1]} # short hash\nQuire.T::M()@IL_0001 add -> sub body={BODY} # once\n'
+                        f'Quire.T::M()@IL_0001 add -> sub body={BODY} # twice\n')
+        entries = reasons(path)
+        self.assertEqual(sorted(e['problem'] for e in stale_entries(self.coverage['methods'], entries)),
+                         ['duplicate entry', 'malformed body hash'])
+        self.assertEqual(self.mutate(entries)['survivors'], [survivor])
+        self.assertEqual(self.mutate(proposed=entries)['survivors'], [survivor])
+
     def test_annotate_adds_the_current_body_hash(self):
         path = Path(self.directory.name) / 'accepted.txt'
         path.write_text('# header\n\nQuire.T::M()@IL_0005 brfalse.s -> brtrue.s # dead branch\n'
                         f'Quire.T::M()@IL_0001 add -> sub body={"cd" * 32} # rehashed\n'
                         'Quire.Gone::X()@IL_0000 nop # gone\n')
-        self.assertEqual(annotate(path, self.coverage['methods']), [('Quire.Gone::X()@IL_0000 nop', 'no such method')])
+        self.assertEqual(annotate(path, self.coverage['methods']),
+                         ([('Quire.Gone::X()@IL_0000 nop', 'no such method')], ['Quire.T::M()@IL_0001 add -> sub']))
         self.assertEqual(path.read_text(), f'# header\n\nQuire.T::M()@IL_0005 brfalse.s -> brtrue.s body={BODY} # dead branch\n'
                          f'Quire.T::M()@IL_0001 add -> sub body={BODY} # rehashed\nQuire.Gone::X()@IL_0000 nop # gone\n')
         self.assertEqual(stale_entries(self.coverage['methods'], {k: v for k, v in reasons(path).items()
@@ -242,10 +258,16 @@ class MutationTests(unittest.TestCase):
     def test_a_mutant_that_times_out_again_is_killed_and_listed(self):
         image = bytearray(self.image); image[9] = 3
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
-        with mock.patch('mutate.MUTANT_FLOOR', 2):
+        self.method['mutants'].append(dict(il_offset=7, file_offset=8, original='2C', replacement='2D',
+                                           description='brfalse.s -> brtrue.s (again)'))
+        log = Path(self.directory.name) / 'runs.log'
+        with mock.patch('mutate.MUTANT_FLOOR', 2), mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log)):
             report = self.mutate(use_cache=False)
-        self.assertEqual((report['timeouts'], report['timeout_retries']), (1, 1))
-        self.assertEqual(report['timed_out'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'])
+        self.assertEqual((report['timeouts'], report['timeout_retries']), (2, 2))
+        self.assertEqual(report['timed_out'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s',
+                                               'Quire.T::M()@IL_0007 brfalse.s -> brtrue.s (again)'])
+        # Two controls and four mutants, then one fresh control for the shared test set and two reruns.
+        self.assertEqual(log.read_text().count('|'), 9)
 
     def test_copies_and_run_directories_live_under_the_given_scratch_directory(self):
         scratch = Path(self.directory.name) / 'results/mutation-scratch'
@@ -263,6 +285,11 @@ class MutationTests(unittest.TestCase):
         tmp = Path(self.directory.name) / 'tmp'
         tmp.mkdir()
         old = time.time() - 2 * 24 * 3600
+        busy = tmp / 'quire-mutant-busy'
+        (busy / 'copy').mkdir(parents=True)
+        (busy / 'copy/Quire.Mpl.dll').write_text('rewritten by every mutant')  # recent, deep inside an old directory
+        for path in (busy / 'copy', busy):
+            os.utime(path, (old, old))
         for name in ('quire-mutant-old', 'quire-mutant-run-old', 'quire-mutant-new', 'other-old', 'quire-mutant-file'):
             path = tmp / name
             path.mkdir() if name != 'quire-mutant-file' else path.write_text('x')
@@ -274,7 +301,11 @@ class MutationTests(unittest.TestCase):
             self.assertEqual(sweep_stale(tmp), [])  # someone else's
         self.assertEqual(sorted(p.name for p in sweep_stale(tmp)), ['quire-mutant-old', 'quire-mutant-run-old'])
         self.assertEqual(sorted(p.name for p in tmp.iterdir()),
-                         ['other-old', 'quire-mutant-file', 'quire-mutant-link', 'quire-mutant-new'])
+                         ['other-old', 'quire-mutant-busy', 'quire-mutant-file', 'quire-mutant-link', 'quire-mutant-new'])
+        with mock.patch('mutate.SWEEP_ENTRIES', 1):
+            os.utime(busy / 'copy/Quire.Mpl.dll', (old, old))
+            self.assertEqual(sweep_stale(tmp), [])  # too large to examine: left alone
+        self.assertEqual(sweep_stale(tmp), [busy])
 
     def test_a_crash_under_a_passing_control_kills(self):
         image = bytearray(self.image); image[9] = 4

@@ -141,6 +141,9 @@ def resolve_dotnet(name, root):
     return os.path.abspath(found)  # not resolved: a launcher such as snap's picks its tool by the name it is run as
 
 
+# The mutation scratch directory (in the system temporary directory, so the stale sweep covers it), and the file in
+# the results naming it, so the merge gate can remove it if the validator dies.
+SCRATCH_PREFIX, SCRATCH_RECORD = "quire-mutant-scratch-", "mutation-scratch.txt"
 DIFFERENTIAL_TESTS = "tests/Quire.Differential.Tests/"
 # Callers of one dispatch slot above which a run notes the slot (object.ToString and the like): they are all still
 # selected, since leaving any out would be unsound, but the note says why a selection is large.
@@ -414,6 +417,14 @@ def test_class(test):
     return test.rsplit(".", 1)[0].rsplit(".", 1)[-1].split("+")[0].lower()
 
 
+def stale_accepted(inventory, accepted_mutants):
+    """Accepted-mutant entries that excuse nothing (mutate.stale_entries). An accepted mutant was proven equivalent for
+    one method body; once that body changes the entry excuses nothing. Checked against the whole inventory, not a
+    --method-type selection, so a scoped run does not report other types' entries as naming no method."""
+    import mutate
+    return mutate.stale_entries(inventory["methods"], accepted_mutants)
+
+
 def mutant_cache_allowed(args):
     """The mutant cache is local-only: code under test runs as the same user and could forge entries, so the gate
     (--mutate-since, --write-baseline) never reads or writes it."""
@@ -678,11 +689,10 @@ def main():
                                               if m["validation"] == "compared")
         if any(m["proposed_exempt_lines"] for m in coverage["methods"]):
             print("Coverage passes only with proposed unreachable lines, which await maintainer acceptance", flush=True)
-        # An accepted mutant was proven equivalent for one method body; once that body changes the entry excuses nothing.
-        report["stale_accepted"] = mutate.stale_entries(coverage["methods"], accepted_mutants)
+        inventory = json.loads(inventory_path.read_text())
+        report["stale_accepted"] = stale_accepted(inventory, accepted_mutants)
         if report["stale_accepted"]:
             print(f"Stale accepted-mutant entries: {report['stale_accepted']}", flush=True)
-        inventory = json.loads(inventory_path.read_text())
         integrity = integrity_module.check(inventory, findings=lint_findings)
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
         report["integrity"] = {"lint": len(integrity["lint"]), "complete": integrity["complete"]}
@@ -716,8 +726,10 @@ def main():
             report["mutation_scope"] = "all compared methods (requested)"
         if mutate_types or mutate_methods:
             print(f"Mutating compared methods with {args.jobs} workers; each mutant reruns the differential tests", flush=True)
-            # Copies of the test output live under this run's results, removed afterwards (and by the merge gate).
-            scratch = holder["mutation"] = output / "mutation-scratch"
+            # Copies of the test output live in a directory of their own, outside the results that code under test
+            # could otherwise reach from them; removed afterwards, and by the merge gate if this process is killed.
+            scratch = holder["mutation"] = Path(tempfile.mkdtemp(prefix=SCRATCH_PREFIX))
+            (output / SCRATCH_RECORD).write_text(str(scratch) + "\n")
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
                                   args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json,
                                   proposed_mutants, mutant_cache_allowed(args), install, methods=mutate_methods,

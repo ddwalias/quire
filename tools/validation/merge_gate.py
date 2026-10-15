@@ -16,6 +16,7 @@ import sys
 import tempfile
 import ratchet
 from validate import mutation_jobs
+from validate import SCRATCH_PREFIX, SCRATCH_RECORD
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -343,8 +344,24 @@ def main():
         return 0
     finally:
         shutil.rmtree(tree, ignore_errors=True)
-        # Mutant copies of the test output, left behind if the validator was killed mid-run.
-        shutil.rmtree(results / 'mutation-scratch', ignore_errors=True)
+        remove_scratch(results)
+
+
+def remove_scratch(results):
+    """Remove the mutation scratch directory (mutant copies of the test output) that the validator named in its
+    results, left behind if it was killed mid-run; only a `quire-mutant-scratch-*` directory directly in the temporary
+    directory that this user owns, whatever the record says."""
+    try:
+        named = Path((results / SCRATCH_RECORD).read_text().strip())
+        info = named.lstat()
+    except (OSError, ValueError):
+        return False
+    if (named.parent.resolve() != Path(tempfile.gettempdir()).resolve() or not named.name.startswith(SCRATCH_PREFIX)
+            or not os.path.isdir(named) or os.path.islink(named)
+            or hasattr(os, 'getuid') and info.st_uid != os.getuid()):
+        return False
+    shutil.rmtree(named, ignore_errors=True)
+    return True
 
 
 def baseline_commit(tip, baseline, branch, results, repo=ROOT):

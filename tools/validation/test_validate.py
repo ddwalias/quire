@@ -320,6 +320,25 @@ class ChangedMethodTests(unittest.TestCase):
         self.assertEqual(notes, ['test class dependencies: IL and text'])
 
 
+class StaleAcceptedTests(unittest.TestCase):
+    def test_a_scoped_run_checks_entries_against_the_whole_inventory(self):
+        from method_coverage import audit
+        from validate import stale_accepted
+        body = 'ab' * 32
+        def method(type_, token):
+            return dict(project='Quire.Mpl', type=type_, signature='M()', token=token, status='Unclassified',
+                        access='Public', exclusion='compiler-generated', body_sha256=body,
+                        mutants=[dict(il_offset=1, description='add -> sub')])
+        inventory = {'schema': 2, 'errors': [], 'methods': [method('Quire.A', 1), method('Quire.B', 2)]}
+        entries = {'Quire.B::M()@IL_0001 add -> sub': (body, 'equivalent')}
+        with tempfile.TemporaryDirectory() as repo:
+            scoped = audit(inventory, [], set(), 'run', repo=repo, types=['Quire.A'], unreachable={})
+        self.assertEqual([m['type'] for m in scoped['methods']], ['Quire.A'])  # what a --method-type run keeps
+        self.assertEqual(stale_accepted(inventory, entries), [])
+        self.assertEqual(stale_accepted(dict(inventory, methods=inventory['methods'][:1]), entries)[0]['problem'],
+                         'no such method')
+
+
 class VerdictTests(unittest.TestCase):
     BASE = dict(projects=[dict(project='P', exit_code=0, passed=3, failed=0, skipped=0)], ratchet=dict(ok=True, regressions=[]),
                 mutation=dict(survivors=[], proposed_survivors=[]), executed_unreachable=[],

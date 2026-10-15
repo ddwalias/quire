@@ -120,6 +120,27 @@ class MergeGateTests(unittest.TestCase):
             command = merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60)
         self.assertEqual(command[command.index('--jobs') + 1], '12')
 
+    def test_a_killed_validators_mutation_scratch_is_removed_and_nothing_else(self):
+        import os
+        from validate import SCRATCH_PREFIX, SCRATCH_RECORD
+        with tempfile.TemporaryDirectory() as results:
+            results = Path(results)
+            scratch = Path(tempfile.mkdtemp(prefix=SCRATCH_PREFIX))
+            (scratch / 'copy').mkdir()
+            elsewhere = Path(tempfile.mkdtemp(prefix='quire-other-'))
+            self.addCleanup(lambda: __import__('shutil').rmtree(elsewhere, ignore_errors=True))
+            self.assertFalse(merge_gate.remove_scratch(results))  # no record: the validator never mutated
+            for named in (elsewhere, results, Path('/'), scratch / 'copy'):
+                (results / SCRATCH_RECORD).write_text(str(named))
+                self.assertFalse(merge_gate.remove_scratch(results), named)
+                self.assertTrue(named.exists())
+            (results / SCRATCH_RECORD).write_text(f'{scratch}\n')
+            if hasattr(os, 'getuid'):
+                with mock.patch('merge_gate.os.getuid', return_value=os.getuid() + 1):
+                    self.assertFalse(merge_gate.remove_scratch(results))
+            self.assertTrue(merge_gate.remove_scratch(results))
+            self.assertFalse(scratch.exists())
+
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])
 

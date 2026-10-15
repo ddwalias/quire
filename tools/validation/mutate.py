@@ -77,11 +77,25 @@ def key(method, mutant):
 
 
 BODY = re.compile(r'(.*\S) body=([0-9a-f]{64})')
+# Any `body=` field, well-formed or not, so a malformed one cannot pass as part of the key.
+ANY_BODY = re.compile(r'(.*\S) body=\S*')
+# What `reasons` records instead of a hash for an entry that may excuse nothing (see stale_entries).
+MALFORMED, DUPLICATE = 'malformed body hash', 'duplicate entry'
+
+
+def split_entry(head):
+    """(mutant key, body hash, or MALFORMED when a `body=` field is not 64 lowercase hex digits, or None)."""
+    match = BODY.fullmatch(head.strip())
+    if match:
+        return match[1], match[2]
+    match = ANY_BODY.fullmatch(head.strip())
+    return (match[1], MALFORMED) if match else (head.strip(), None)
 
 
 def reasons(path):
     """Mutant key -> (body hash or None, reason) of a `<key> [body=<body_sha256>] # reason` per line file; empty when
-    it does not exist. The hash is MethodAudit's `body_sha256` of the mutant's method when the entry was reviewed."""
+    it does not exist. The hash is MethodAudit's `body_sha256` of the mutant's method when the entry was reviewed. A
+    malformed hash, or a key listed twice, is recorded as MALFORMED or DUPLICATE: such an entry excuses nothing."""
     if not Path(path).is_file():
         return {}
     entries = {}
@@ -89,8 +103,8 @@ def reasons(path):
         if not line.strip() or line.startswith('#'):
             continue
         head, _, reason = line.partition(' # ')
-        match = BODY.fullmatch(head.strip())
-        entries[match[1] if match else head.strip()] = (match[2] if match else None, reason.strip())
+        mutant_key, body = split_entry(head)
+        entries[mutant_key] = (DUPLICATE if mutant_key in entries else body, reason.strip())
     return entries
 
 
@@ -115,7 +129,9 @@ def stale_entries(methods, entries, origin='accepted'):
     stale = []
     for mutant_key, (body, reason) in sorted(entries.items()):
         candidates = by_key.get(method_key(mutant_key), [])
-        if body is None and origin == 'accepted':
+        if body in (MALFORMED, DUPLICATE):
+            problem = body
+        elif body is None and origin == 'accepted':
             problem = 'no body hash'
         elif not candidates:
             problem = 'no such method'
@@ -135,7 +151,7 @@ def listed(entries, method, mutant, origin):
     """Whether an entry covers this mutant of this method body: an accepted entry needs the method's current body
     hash; a proposal without one matches by key."""
     entry = entries.get(key(method, mutant))
-    if entry is None or entry[0] is None and origin == 'accepted':
+    if entry is None or entry[0] in (MALFORMED, DUPLICATE) or entry[0] is None and origin == 'accepted':
         return False
     return entry[0] is None or entry[0] == method.get('body_sha256')
 
@@ -162,19 +178,44 @@ def select(coverage, types, methods=()):
     return [(m, mutant) for m in chosen for mutant in m.get('mutants', [])]
 
 
+# Where run() sweeps (None: the system temporary directory); tests point it elsewhere.
+SWEEP_DIRECTORY = None
+# Entries examined per directory before it counts as in use: a tree this large is left alone.
+SWEEP_ENTRIES = 100_000
+
+
+def newest_change(path, limit=None):
+    """The latest modification time of `path` or anything beneath it (links not followed); None past `limit`
+    entries. A directory's own time changes only when entries are added or removed, not when a file is rewritten."""
+    newest, seen, limit = path.lstat().st_mtime, 0, SWEEP_ENTRIES if limit is None else limit
+    for directory, names, files in os.walk(path, followlinks=False):
+        for name in names + files:
+            seen += 1
+            if seen > limit:
+                return None
+            try:
+                newest = max(newest, os.lstat(os.path.join(directory, name)).st_mtime)
+            except OSError:
+                pass
+    return newest
+
+
 def sweep_stale(directory=None, age=STALE_SECONDS):
-    """Remove `quire-mutant-*` directories (not files or links) older than `age` seconds that this user owns from
-    `directory` (the system temporary directory): copies of test output left by runs that were killed before
-    cleaning up, from before runs kept them under their own results. Returns the removed paths."""
+    """Remove `quire-mutant-*` directories (not files or links) that this user owns in `directory` (the system
+    temporary directory) and in which nothing changed for `age` seconds: copies of test output and scratch
+    directories left by runs that were killed before cleaning up. Returns the removed paths."""
     if not hasattr(os, 'getuid'):
         return []
     cutoff, removed = time.time() - age, []
     for path in Path(directory or tempfile.gettempdir()).glob('quire-mutant-*'):
         try:
             info = path.lstat()
+            if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid():
+                continue
+            newest = newest_change(path)
         except OSError:
             continue
-        if stat.S_ISDIR(info.st_mode) and info.st_uid == os.getuid() and info.st_mtime < cutoff:
+        if newest is not None and newest < cutoff:
             shutil.rmtree(path, ignore_errors=True)
             removed.append(path)
     return removed
@@ -246,10 +287,11 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     their survivors apart and does not fail on them (the merge gate never passes any). `use_cache`: reuse and record
     outcomes in the local cache; never in the gate. `mathcad`: the Mathcad install the tests compare against.
     `methods`: `Type::signature` -> reasons, methods selected individually (validate.changed_methods). `scratch`: the
-    directory (the run's results) that holds the copies and per-run directories; default: the system's temporary one.
+    directory that holds the copies and per-run directories (validate gives each run its own); default: the system's
+    temporary one.
     A mutant that times out in the parallel pass is rerun once all workers have finished, alone, with a limit from a
     fresh control run of its tests; it counts as killed only if it times out again."""
-    sweep_stale()
+    sweep_stale(SWEEP_DIRECTORY)
     if scratch is not None:
         Path(scratch).mkdir(parents=True, exist_ok=True)
     proposed = proposed or {}
@@ -433,10 +475,16 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         retried = [i for i, r in enumerate(results) if r['outcome'] == 'killed (timeout)']
         if retried:
             print(f'  rerunning {len(retried)} timed-out mutants one at a time', flush=True)
+        # One fresh control per test set, now that nothing else runs.
+        fresh = {}
+        for index in retried:
+            tests = tests_of(selected[index][0])
+            if tests not in fresh:
+                fresh[tests] = limit_for(copies[0], tests)
         for index in retried:
             method, mutant = selected[index]
             tests = tests_of(method)
-            seconds = limit_for(copies[0], tests)
+            seconds = fresh[tests]
             outcome = outcome_of(copies[0], method, mutant, tests, seconds)
             if cache:
                 store_outcome(cache, mutant_cache_key(method, mutant, tests), outcome)
@@ -468,18 +516,18 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
 def annotate(path, methods):
     """Rewrite an accepted-mutants file with each entry's current method body hash (`<key> body=<sha> # reason`),
     from a run's method inventory or coverage report. Entries whose method is missing or ambiguous, or that name no
-    mutant of it, are left as they are and returned with the problem; comments and blank lines are kept."""
+    mutant of it, are left as they are and returned with the problem; comments and blank lines are kept. Returns
+    (problems, keys whose existing hash differed from the current one: reviewed for another body, or malformed)."""
     by_key = {}
     for method in methods:
         by_key.setdefault(f"{method['type']}::{method['signature']}", []).append(method)
-    lines, problems = [], []
+    lines, problems, rehashed = [], [], []
     for line in Path(path).read_text().splitlines():
         head, separator, reason = line.partition(' # ')
         if not line.strip() or line.startswith('#'):
             lines.append(line)
             continue
-        match = BODY.fullmatch(head.strip())
-        mutant_key = match[1] if match else head.strip()
+        mutant_key, body = split_entry(head)
         candidates = by_key.get(method_key(mutant_key), [])
         if len(candidates) != 1 or not candidates[0].get('body_sha256'):
             problems.append((mutant_key, 'ambiguous method key' if candidates else 'no such method'))
@@ -487,9 +535,11 @@ def annotate(path, methods):
             continue
         if mutant_key not in {key(candidates[0], m) for m in candidates[0].get('mutants') or []}:
             problems.append((mutant_key, 'no such mutant'))
+        if body is not None and body != candidates[0]['body_sha256']:
+            rehashed.append(mutant_key)  # its proof was for another body (or the hash was malformed): re-review it
         lines.append(f"{mutant_key} body={candidates[0]['body_sha256']}{separator}{reason}")
     Path(path).write_text('\n'.join(lines) + '\n')
-    return problems
+    return problems, rehashed
 
 
 def main(argv):
@@ -501,7 +551,9 @@ def main(argv):
     parser.add_argument('--file', type=Path, default=ACCEPTED, help='accepted-mutants file to rewrite (default: the '
                         'repository\'s docs/mirror/accepted-mutants.txt)')
     args = parser.parse_args(argv)
-    problems = annotate(args.file, json.loads(args.report.read_text())['methods'])
+    problems, rehashed = annotate(args.file, json.loads(args.report.read_text())['methods'])
+    for mutant_key in rehashed:
+        print(f'rehashed (body changed): {mutant_key}')
     for mutant_key, problem in problems:
         print(f'{problem}: {mutant_key}')
     return 1 if problems else 0

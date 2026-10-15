@@ -271,11 +271,14 @@ order passes it, which the direct comparisons must catch.
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> body=<body_sha256> # reason`). The hash is the mutated
   method's `body_sha256` (see What the gate mutates) when the proof was reviewed, so an entry is tied to that body, as
   an unreachable-line entry is tied to its method's source: once the method's IL changes, the entry excuses nothing
-  (its survivor fails the run) and `summary.json` `stale_accepted` lists it with its `problem` (`no body hash`, `no
-  such method`, `ambiguous method key`, `method body changed`, `no such mutant`). A stale entry makes the run
+  (its survivor fails the run) and `summary.json` `stale_accepted` lists it with its `problem` (`no body hash`,
+  `malformed body hash`, `duplicate entry` (a key listed twice), `no such method`, `ambiguous method
+  key`, `method body changed`, `no such mutant`), checked against the whole method inventory even in a
+  `--method-type` run. A stale entry makes the run
   incomplete; re-review the proof and rehash it, or delete it. `python3 tools/validation/mutate.py annotate-accepted
   <method-inventory.json or method-coverage.json> [--file PATH]` rewrites a file's entries with the body hashes of a
-  run's build and lists entries whose method or mutant it cannot find. An agent proposes one, with its proof, in a
+  run's build, prints `rehashed (body changed): <key>` for each entry whose hash it replaced (re-review those proofs)
+  and lists entries whose method or mutant it cannot find. An agent proposes one, with its proof, in a
   scratch file, either form (with or without `body=`), passes `--proposed-mutants PATH` to local runs, and pastes the
   same lines into its lane file: those survivors are listed apart under `proposed_survivors` (with reasons), and
   `stale_proposed` lists proposals that matched no surviving mutant (killed, already accepted, not run, or hashed for
@@ -322,10 +325,13 @@ order passes it, which the direct comparisons must catch.
   `parallel_outcome` records the first. `mutation.json` and `summary.json` `mutation` record `timeouts` (after
   reruns), `timed_out` (their keys), `timeout_retries` and `crashes`; runtime `gate.json` copies them as
   `mutation_timeouts`, `mutation_timed_out`, `mutation_timeout_retries` and `mutation_crashes`.
-- **Mutant scratch space:** the copies of the test output and each mutant run's directory live under the run's results
-  (`mutation-scratch`), removed when mutation ends, and by the merge gate if the validator was killed. Each mutation
-  run first removes `quire-mutant-*` directories this user owns in the system temporary directory that are more than
-  a day old, left there by older or killed runs.
+- **Mutant scratch space:** the copies of the test output and each mutant run's directory live in a new
+  `quire-mutant-scratch-*` directory of the system temporary directory, outside the results (code under test runs
+  from a copy, so the results must not be a fixed path away from it). The validator removes it when the run ends and
+  names it in the results' `mutation-scratch.txt`; if the validator was killed, the merge gate removes it, but only a
+  `quire-mutant-scratch-*` directory directly in the temporary directory that this user owns. Each mutation run first
+  removes `quire-mutant-*` directories this user owns in the system temporary directory in which nothing (at any
+  depth, links not followed) changed for a day, left by older or killed runs; one too large to examine is kept.
 - **What the gate mutates** (`--mutate-since REV`, which the merge gate passes): not every compared method of a
   changed type, but the compared methods whose mutants could now have a different outcome. A mutant's outcome is
   decided by the mutated method's IL, the tests that directly compare that method (only those run it), and whatever
