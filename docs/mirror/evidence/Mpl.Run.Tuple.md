@@ -12,6 +12,7 @@ How the runtime represents tuples, and the generic classes `Tuple`2` … `Tuple`
 |---|---|---|---|---|---|
 | `tup_types` | 0x040000d2 | — | Private static: null, null, then the generic classes of arity 2–5. | High | Verified |
 | `gf, sf` | 0x040000d3, 0x040000d4 | — | Private static `GetField` and `SetField` method definitions. | High | Verified |
+| `.cctor` | 0x06000420 | — | Sets `gf`, `sf` and `tup_types`; compared by rerunning the type initializer and rendering the three fields. | High | Verified |
 | `.ctor()` | 0x0600042a | `41ad57d1` | No state. | High | Verified |
 | `tuple_length(object)` | 0x0600041f | `aca948a1` | 0 for null, the length of an `object[]`, else 1 (other arrays included). | High | Verified |
 | `IType(Type[])` | 0x06000421 | `c353de18` | Private: `tup_types[n].MakeGenericType(tys)`; fewer than 2 types throw `NullReferenceException`, more than 5 `IndexOutOfRangeException`. | High | Verified |

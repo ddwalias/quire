@@ -52,5 +52,7 @@ qualifiers "b", null, "".
 
 ## Open
 
+- Null-environment cases (`SexprDifferentialTests`) pass a null `MplEnv` to both sides; they show only that the
+  environment is dereferenced before any other observable effect, not which branch follows.
 - `walk_declaration_as` and the macro branch of `walk_expression_as` wait for `MplEnv.LoadMacro` and
   `MplMacro.ExpandCall` (Keyword/env batch).

@@ -316,6 +316,32 @@ public class SexprDifferentialTests
         var symUpperM = ToMathcad(symUpperQ)!;
         Compare("Sym.walk_definition_as", "Mpl.Run.Sym", qWalkDefAs, symUpperQ, [qEnv, form], mWalkDefAs, symUpperM, [mEnv, mForm]);
         Compare("Sym.walk_expression_as upper", "Mpl.Run.Sym", qWalkExprAs, symUpperQ, [qEnv, form], mWalkExprAs, symUpperM, [mEnv, mForm]);
+
+        // An upper-case symbol walks the arguments without the environment: unchanged arguments keep the form,
+        // a nested list (walked into an apply) gives a new form with the original head.
+        var formQ = L(S("Foo", 2), I(1), Str("s"));
+        var formM = ToMathcad(formQ)!;
+        var changedQ = L(S("Foo", 2), I(1), L(I(2), I(3)));
+        var changedM = ToMathcad(changedQ)!;
+        foreach (var (fQ, fM, label) in new[] { (formQ, formM, "unchanged"), (changedQ, changedM, "changed") })
+        {
+            MethodComparison.Compare($"Sym.walk_expression_as upper {label}", "Mpl.Run.Sym",
+                qWalkExprAs, symUpperQ, [null, fQ], mWalkExprAs, symUpperM, [null, fM],
+                quireShow: res => ReferenceEquals(res, fQ) ? "same form" : res is SCons r && ReferenceEquals(r.head, fQ.head) ? "same head: " + Describe(res) : Describe(res),
+                originalShow: res => ReferenceEquals(res, fM) ? "same form" : res != null && ReferenceEquals(Reflect.Get(res, "Field1"), Reflect.Get(fM, "Field1")) ? "same head: " + Describe(res) : Describe(res),
+                quireState: o => Describe(o), originalState: o => Describe(o));
+        }
+        Compare("Sym.walk_expression_as upper null form", "Mpl.Run.Sym", qWalkExprAs, symUpperQ, [qEnv, null], mWalkExprAs, symUpperM, [mEnv, null]);
+        Compare("Sym.walk_definition_as null form", "Mpl.Run.Sym", qWalkDefAs, symUpperQ, [qEnv, null], mWalkDefAs, symUpperM, [mEnv, null]);
+
+        // Lower-case symbols and declarations consult the environment first; without one both sides fail there.
+        var symLowerQ = new Sym("foo", null);
+        var symLowerM = ToMathcad(symLowerQ)!;
+        var lowerForm = L(S("foo", 4), I(1));
+        var mLowerForm = ToMathcad(lowerForm);
+        Compare("Sym.walk_expression_as lower, no env", "Mpl.Run.Sym", qWalkExprAs, symLowerQ, [null, lowerForm], mWalkExprAs, symLowerM, [null, mLowerForm]);
+        Compare("Sym.walk_declaration_as lower, no env", "Mpl.Run.Sym", qWalkDeclAs, symLowerQ, [null, lowerForm], mWalkDeclAs, symLowerM, [null, mLowerForm]);
+        Compare("Sym.walk_declaration_as upper, no env", "Mpl.Run.Sym", qWalkDeclAs, symUpperQ, [null, form], mWalkDeclAs, symUpperM, [null, mForm]);
     }
 
     [SkippableFact]
@@ -376,6 +402,9 @@ public class SexprDifferentialTests
                 Compare($"{label}.walk_expression", "Mpl.Run.Tok", qWalkExpr, t, [qEnv], mWalkExpr, m, [mEnv]);
             if (t.Key == null)
                 Compare($"{label}.walk_pattern", "Mpl.Run.Tok", qWalkPat, t, [qEnv], mWalkPat, m, [mEnv]);
+            // Without an environment every path that needs one fails at its first call (LoadMacro or AddLocal).
+            Compare($"{label}.walk_expression, no env", "Mpl.Run.Tok", qWalkExpr, t, [null], mWalkExpr, m, [null]);
+            Compare($"{label}.walk_pattern, no env", "Mpl.Run.Tok", qWalkPat, t, [null], mWalkPat, m, [null]);
         }
     }
 
@@ -752,6 +781,45 @@ public class SexprDifferentialTests
             quireShow: res => ReferenceEquals(res, nestedApplyQ) ? "reused" : Describe(res),
             originalShow: res => ReferenceEquals(res, nestedApplyM) ? "reused" : Describe(res),
             quireState: o => Describe(o), originalState: o => Describe(o));
+
+        // An upper-case pattern list always walks to a new cell, so it changes the head, the tail or both.
+        var patLists = new[]
+        {
+            L(L(S("Foo"), I(1)), I(2)),
+            L(I(1), L(S("Foo"), I(2))),
+            L(L(S("Foo")), L(S("Bar"), I(3))),
+            L(I(1), Str("s"), I(2)),
+        };
+        foreach (var patsQ in patLists)
+        {
+            var patsM = ToMathcad(patsQ)!;
+            MethodComparison.Compare($"SCons.walk_patterns({Describe(patsQ)})", "Mpl.Run.SCons",
+                qWalkPats, null, [qEnv, patsQ],
+                mWalkPats, null, [mEnv, patsM],
+                quireShow: res => ReferenceEquals(res, patsQ) ? "reused" : Describe(res),
+                originalShow: res => ReferenceEquals(res, patsM) ? "reused" : Describe(res),
+                quireState: o => Describe(o), originalState: o => Describe(o));
+        }
+
+        // A null head fails in Key before anything else.
+        Compare("SCons.walk_pattern null head", "Mpl.Run.SCons", qWalkPat, sNullHead, [qEnv], mWalkPat, mNullHead, [mEnv]);
+        Compare("SCons.walk_declaration_lhs null head", "Mpl.Run.SCons", qWalkDecl, sNullHead, [qEnv], mWalkDecl, mNullHead, [mEnv]);
+
+        // Upper-case heads in pattern and expression position never touch the environment, so a null one still
+        // gives the ordinary result.
+        Compare("SCons.walk_pattern upper, no env", "Mpl.Run.SCons", qWalkPat, patSymQ, [null], mWalkPat, patSymM, [null]);
+        Compare("SCons.walk_expression upper, no env", "Mpl.Run.SCons", qWalkExpr, patSymQ, [null], mWalkExpr, patSymM, [null]);
+
+        // Paths that need the environment: with none, both sides fail with NullReferenceException at the first
+        // environment call (MplEnv.LoadMacro, via Sym.walk_declaration_as for declarations). This shows only that the
+        // environment is dereferenced before any other observable effect, not which branch follows; the rest needs
+        // MplEnv, LocalEnv and MplMacro.
+        var lowerQ = L(S("foo", 3), I(1));
+        var lowerM = ToMathcad(lowerQ)!;
+        Compare("SCons.walk_declaration_lhs upper, no env", "Mpl.Run.SCons", qWalkDecl, patSymQ, [null], mWalkDecl, patSymM, [null]);
+        Compare("SCons.walk_declaration_lhs lower, no env", "Mpl.Run.SCons", qWalkDecl, lowerQ, [null], mWalkDecl, lowerM, [null]);
+        Compare("SCons.walk_pattern lower, no env", "Mpl.Run.SCons", qWalkPat, lowerQ, [null], mWalkPat, lowerM, [null]);
+        Compare("SCons.walk_expression lower, no env", "Mpl.Run.SCons", qWalkExpr, lowerQ, [null], mWalkExpr, lowerM, [null]);
     }
 
     [SkippableFact]
@@ -829,6 +897,13 @@ public class SexprDifferentialTests
         Compare("Sexpr.walk on Nul", "Mpl.Run.Sexpr", qWalk, qNul, qWalkArgs, mWalk, mNul, mWalkArgs);
         Compare("Sexpr.Walk(qEnv, Nul)", "Mpl.Run.Sexpr", qWalkStatic, null, [qEnv, qNul], mWalkStatic, null, [mEnv, mNul]);
         Compare("Sexpr.Walk(qEnv, Tok)", "Mpl.Run.Sexpr", qWalkStatic, null, [qEnv, qTokUpper], mWalkStatic, null, [mEnv, mTokUpper]);
+
+        // WalkModule: a block that fails while walking. A successful walk needs block_keyword.NewTok (a stub).
+        var (qWalkModule, mWalkModule) = Method(typeof(Sexpr), "WalkModule", DeclaredStaticPublic, typeof(MplEnv), typeof(Sexpr));
+        var badBlock = L(I(1, 8), I(2));
+        var mBadBlock = ToMathcad(badBlock);
+        Compare("Sexpr.WalkModule non-sym declaration throws", "Mpl.Run.Sexpr", qWalkModule, null, [qEnv, badBlock], mWalkModule, null, [mEnv, mBadBlock]);
+        Compare("Sexpr.WalkModule null block throws", "Mpl.Run.Sexpr", qWalkModule, null, [qEnv, null], mWalkModule, null, [mEnv, null]);
 
         // walk_definitions and walk_definition
         Compare("Sexpr.walk_definitions(null)", "Mpl.Run.Sexpr", qWalkDefs, null, [null, qEnv], mWalkDefs, null, [null, mEnv]);

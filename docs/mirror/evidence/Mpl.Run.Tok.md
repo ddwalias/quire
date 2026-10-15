@@ -35,4 +35,6 @@ As in Mpl.Run.Sexpr.md.
 
 ## Open
 
+- Null-environment cases (`SexprDifferentialTests`) pass a null `MplEnv` to both sides; they show only that the
+  environment is dereferenced before any other observable effect, not which branch follows.
 - The macro branches of both walks wait for `MplEnv.LoadMacro`/`MplMacro.ExpandRef`; `walk_pattern`'s local branch for `LocalEnv.AddLocal`.

@@ -52,6 +52,12 @@ public class AppExceptionDifferentialTests
     [SkippableFact]
     public void Constructors_and_handle_packing()
     {
+        // The type initializer sets both delimiters; rerunning it is rendered as the delimiters it leaves behind.
+        MethodComparison.Compare(".cctor() delimiters", Contract,
+            typeof(AppException).TypeInitializer!, null, [], M.TypeInitializer!, null, [],
+            _ => Text($"{Get(typeof(AppException), "errorTagDelimiter")}{Get(typeof(AppException), "errorArgDelimiter")}"),
+            _ => Text($"{Get(M, "errorTagDelimiter")}{Get(M, "errorArgDelimiter")}"));
+
         var qCtorStr = typeof(AppException).GetConstructor([typeof(string)])!;
         var mCtorStr = M.GetConstructor([typeof(string)])!;
         var qCtorStrEx = typeof(AppException).GetConstructor([typeof(string), typeof(Exception)])!;

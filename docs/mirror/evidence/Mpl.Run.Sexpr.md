@@ -65,5 +65,14 @@ through test doubles (a `Sexpr` subclass returning given declarations, a `Sym` s
 
 ## Open
 
-- `WalkModule` waits for `block_keyword.NewTok`; `walk`'s environment chaining waits for `LocalEnv`.
+- `WalkModule` waits for `block_keyword.NewTok`; `walk`'s environment chaining waits for `LocalEnv`. Compared so far:
+  a block whose declaration has no head symbol (`BadDeclaration`) and a null block.
+- Paths that need the environment are compared with a null environment on both sides, so they stop at the first
+  environment call (`MplEnv.LoadMacro`, `MplEnv.AddLocal`) with `NullReferenceException`; what follows waits for
+  `MplEnv`/`LocalEnv`/`MplMacro`/`Keyword`.
+- Unreachable lines: the `return null;` (and closing brace) after the always-throwing helper in the base `quotation`,
+  `quote`, `scons`, `walk_pattern` and `walk_expression`, as in the original IL; the branch-coverage gate reports them
+  as uncovered.
+- `.ctor(int)` (here and on `Atom`) belongs to an abstract class: `MethodComparison` invokes constructors with
+  `ConstructorInfo.Invoke(args)`, which cannot instantiate an abstract type, so no direct comparison is possible.
 - Messages and handles of the thrown `AppException`s can be compared once `AppException` is implemented.

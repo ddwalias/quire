@@ -330,6 +330,25 @@ public class MplRunHelpersDifferentialTests
         MethodComparison.Compare("new Tuple()", "Mpl.Run.Tuple",
             qCtor, null, [], mCtor, null, [], show, show);
 
+        // The type initializer fills the generic tuple classes by arity and the GetField/SetField definitions;
+        // rerunning it is rendered as the static state it leaves behind.
+        static string Statics(System.Type t)
+        {
+            var types = (System.Type?[])Get(t, "tup_types")!;
+            string Full(System.Type ty) => ty.FullName!.StartsWith("Quire.", StringComparison.Ordinal) ? ty.FullName[6..] : ty.FullName;
+            string Name(object? o) => o switch
+            {
+                null => "null",
+                System.Type ty => Full(ty),
+                MethodInfo mi => $"{Full(mi.DeclaringType!)}.{mi.Name}`{mi.GetGenericArguments().Length} own={mi.DeclaringType == t}",
+                _ => o.GetType().Name,
+            };
+            return $"tup_types=[{string.Join(", ", types.Select(Name))}] gf={Name(Get(t, "gf"))} sf={Name(Get(t, "sf"))}";
+        }
+        MethodComparison.Compare(".cctor() statics", "Mpl.Run.Tuple",
+            qt.TypeInitializer!, null, [], mt.TypeInitializer!, null, [],
+            _ => Statics(qt), _ => Statics(mt));
+
         foreach (object? o in new object?[] { null, new object[3], new object[0], 5, "s", new int[2], new string[4] })
         {
             MethodComparison.Compare($"tuple_length({Describe(o)})", "Mpl.Run.Tuple",

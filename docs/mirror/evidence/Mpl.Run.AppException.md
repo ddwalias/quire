@@ -14,7 +14,7 @@ in text: `tag>message` wraps the error in one with that handle, and `message@arg
 delimiters are the public static chars `errorTagDelimiter` (`>`) and `errorArgDelimiter` (`@`). Every constructor
 resets the calling thread's Mpl stack budget. `NonCriticalException` is a separate `ApplicationException` whose
 message is one of the static reason names `Default`, `Unexpected` and `ArgumentIsNull`. Every member below is
-differential-verified for the cases in "Test cases", except the two type initializers.
+differential-verified for the cases in "Test cases", except `NonCriticalException`'s type initializer.
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
@@ -48,15 +48,15 @@ differential-verified for the cases in "Test cases", except the two type initial
 | `StackOverflowException()` | 0x060003e0 | `634c0ece` | `FatalException("stack overflow")`. | High | Verified |
 | `ProbeStack()` | 0x060003e1 | `9e810a10` | Decrements the thread's stack budget; once it goes negative, throws "stack overflow" (whose constructor resets the budget). Then throws `AbortRequestedException` if the thread's registered cancellation source has been cancelled (reported once, see `Rts.IsCancellationRequested`). | High | Verified |
 | `RestoreStack()` | 0x060003e2 | `38fe43c5` | Increments the thread's stack budget. | High | Verified |
-| `.cctor` | 0x060003e3 | `da48185d` | Sets the delimiters to `>` and `@`. | High | — (type initializer; not counted) |
+| `.cctor` | 0x060003e3 | `da48185d` | Sets the delimiters to `>` and `@`. | High; compared by rerunning the type initializer and rendering both delimiters | Verified |
 | `AbortRequestedException.ctor()` | 0x060003e4 | `4902bc06` | An `AppException` "abort requested" with no argument and handle 0. | High | Verified |
 | `NonCriticalException.ctor()` | 0x060003e5 | `522686e1` | Message `Default`. | High | Verified |
 | `NonCriticalException.ctor(string)` | 0x060003e6 | `a3b4dbf7` | The given message (null gives the framework's default message). | High | Verified |
 | `NonCriticalException.cctor` | 0x060003e7 | `00a3e423` | Sets the reason names `Default`, `Unexpected` and `ArgumentIsNull` to themselves. | High | — (type initializer; not counted) |
 
 **Type initializers.** Quire writes the static fields with initializers and no explicit static constructor; the
-mirror tooling doesn't count type initializers, so those rows carry no status attribute. The differential test
-compares the fields they set.
+mirror tooling doesn't count type initializers, so those rows carry no status attribute. `AppException.cctor` is
+compared directly by rerunning it; for `NonCriticalException.cctor` the differential test compares the fields it sets.
 
 **Constructor order.** The two-parameter constructors `(string, Exception)` and `(string, uint)` have the same IL size;
 their rows follow declaration order, which matches Quire's source order for all eight.
@@ -93,5 +93,7 @@ probing spending the stack budget and checking cancellation.
 ## Open
 
 - Tag and argument parsing use the current culture's uint parsing; only the test process's culture was compared.
+- `Raise(object[], uint)`: its closing brace never runs, since every path returns a call that always throws (as in
+  the original); the branch-coverage gate reports that line as uncovered.
 - Binary serialization and the COM class interface (`AutoDual`, fixed GUID) are declared as in the original but not
   exercised.
