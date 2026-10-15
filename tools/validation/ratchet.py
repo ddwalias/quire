@@ -7,6 +7,10 @@ from validate import ROOT, test_class
 
 BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
 SCHEMA = 3
+# Baseline schemas compare() reads and the merge gate accepts from a validator. Schema 4 adds only `bodies` and
+# `writes` (which narrow mutation selection, not the ratchet); accepting it first lets the branch that starts writing
+# it pass the gate run by this code.
+READABLE = (3, 4)
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
 # Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
 # A method's stage (method_coverage.audit) says how far it has got; fixing one gap exposes the next, so a method may
@@ -39,8 +43,8 @@ def forward(old, new):
 
 def compare(baseline, current, scoped=False):
     """Regressions of `current` against `baseline`. A scoped run only answers for its own types."""
-    if baseline.get('schema') != SCHEMA:
-        return [f"baseline schema {baseline.get('schema')!r} is not {SCHEMA}; a maintainer must regenerate it"]
+    if baseline.get('schema') not in READABLE:
+        return [f"baseline schema {baseline.get('schema')!r} is not one of {READABLE}; a maintainer must regenerate it"]
     if baseline.get('profile') != current['profile']:
         return [f"baseline is for profile {baseline.get('profile')!r}, this run is {current['profile']!r}"]
     regressions = []

@@ -152,6 +152,17 @@ class RepositoryTests(unittest.TestCase):
                 self.assertTrue(any(reason in r for r in self.regressions(baseline)), self.regressions(baseline))
         self.assertIn('unusable', baseline_regressions(self.base, b'\xff', self.repo)[0])
 
+    def test_baseline_schemas_3_and_4_accepted(self):
+        self.assertEqual(self.regressions(dict(self.BASELINE, schema=4, bodies={'T::A()': 'ab'})), [])
+        self.assertIn('schema', self.regressions(dict(self.BASELINE, schema=5))[0])
+
+    def test_clone_always_takes_the_base_baseline(self):
+        files = ['tools/validation/validate.py', 'docs/mirror/validation-baseline.json', 'docs/x.md']
+        rules = merge_gate.patterns('tools/*\ndocs/mirror/validation-baseline.json\n')
+        self.assertEqual(sorted(merge_gate.restored_paths(files, rules, {}, False)),
+                         ['docs/mirror/validation-baseline.json', 'tools/validation/validate.py'])
+        self.assertEqual(merge_gate.restored_paths(files, rules, {}, True), ['docs/mirror/validation-baseline.json'])
+
     def test_only_commits_on_a_local_branch_can_be_cloned(self):
         self.assertTrue(on_branch(self.git('rev-parse', 'work'), self.repo))
         dangling = self.git('commit-tree', f'{self.base}^{{tree}}', '-p', self.base, '-m', 'dangling')

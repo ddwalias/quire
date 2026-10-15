@@ -133,11 +133,24 @@ def baseline_regressions(base, baseline, repo=ROOT):
     try:
         old = json.loads(git('show', f'{base}:docs/mirror/validation-baseline.json', cwd=repo))
         new = json.loads(baseline)
-        if new.get('schema') != ratchet.SCHEMA:
-            return [f"new baseline schema {new.get('schema')!r} is not {ratchet.SCHEMA}"]
+        if new.get('schema') not in ratchet.READABLE:
+            return [f"new baseline schema {new.get('schema')!r} is not one of {ratchet.READABLE}"]
         return [f'new baseline: {r}' for r in ratchet.compare(old, new)]
     except (OSError, ValueError, RuntimeError, KeyError, TypeError, AttributeError) as error:
         return [f'new baseline unusable: {error!r}']
+
+
+BASELINE = 'docs/mirror/validation-baseline.json'
+
+
+def restored_paths(base_files, rules, stubs, allow_protected):
+    """Protected paths the validation clone takes from the base: all of them (main's harness, whatever the branch
+    contains) unless a maintainer allows protected changes, and the ratchet baseline always: the gate writes it, a
+    branch never legitimately edits it, and it decides what the ratchet and mutation selection compare against."""
+    restore = [] if allow_protected else [p for p in protected(base_files, rules) if p not in stubs]
+    if BASELINE in base_files and BASELINE not in restore:
+        restore.append(BASELINE)
+    return restore
 
 
 def validation_command(tree, results, base, baseline, timeout):
@@ -234,12 +247,10 @@ def main():
     try:
         try:
             clone(tip, tree, ROOT)
-            if not args.allow_protected:
-                # Validate with main's harness, whatever the branch contains.
-                base_files = git('ls-tree', '-r', '--name-only', base).splitlines()
-                restore = [p for p in protected(base_files, rules) if p not in stubs]
-                if restore:
-                    git('checkout', base, '--', *restore, cwd=tree)
+            restore = restored_paths(git('ls-tree', '-r', '--name-only', base).splitlines(), rules, stubs,
+                                     args.allow_protected)
+            if restore:
+                git('checkout', base, '--', *restore, cwd=tree)
         except (RuntimeError, OSError) as error:
             code, reasons = None, [f'cannot prepare the validation clone: {error}']
         else:

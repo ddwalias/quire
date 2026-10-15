@@ -296,7 +296,7 @@ may move forward but never back (deleting tests never counts as progress), and a
 method without a Mathcad counterpart is rejected, and a new method in an existing type may not arrive as
 `structure_mismatch`, `unchecked_state` or `uncovered`, so progress elsewhere cannot pay for it. Unscoped runs also forbid any new lint finding (fixing one does not pay for another) and
 disappearing types or methods. New types with counterparts start their own baseline. A baseline from another profile
-or schema is rejected. `--write-baseline PATH` writes a run's snapshot (unscoped runs only) once every test and mutation
+or schema is rejected; schemas 3 and 4 are both read (4 adds data that selects mutants, not ratchet data). `--write-baseline PATH` writes a run's snapshot (unscoped runs only) once every test and mutation
 run has finished and the final seal check has passed. A maintainer creates the first baseline from an
 unscoped focused run on `main`; afterwards only the merge gate updates it.
 
@@ -326,7 +326,8 @@ branch has them, and `gate.json` lists the deleted members under `stub_deletions
 attribute, edits, additions, regeneration, deleting the file, or a change that deletes nothing stay maintainer-only. Because the gate runs the focused profile, which builds and audits only `Quire.Mpl` and runs
 only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
 `--allow-unvalidated` after a Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
-protected file**: an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
+protected file** (with `--allow-protected`, the branch's, except `docs/mirror/validation-baseline.json`, which always
+comes from `main`): an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
 ratchet holds, no mutant survives, and the new baseline parses and holds the ratchet against `main`'s committed one.
 `gate.json` beside the results records the decision, including a failure to prepare the clone. A branch whose tip is
 not on a local branch is blocked, since the clone copies only local branches.
