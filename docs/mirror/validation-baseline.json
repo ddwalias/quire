@@ -809,12 +809,12 @@
     "Quire.Mcd.RngValInterpolate::get`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "compared",
     "Quire.Mcd.RngValInterpolate::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.RngValInterpolate::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
-    "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer::.ctor`0()->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.RuntimeOptions::.cctor`0()->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mcd.RuntimeOptions::.ctor`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.RuntimeOptions::RemoveUnitSystem`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.RuntimeOptions::SaveThreadOptions`0()->[Quire.Mpl]Quire.Mcd.RuntimeOptions|True": "untested",
-    "Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.RuntimeOptions::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.RuntimeOptions::RemoveUnitSystem`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.RuntimeOptions::SaveThreadOptions`0()->[Quire.Mpl]Quire.Mcd.RuntimeOptions|True": "compared",
+    "Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.StrVal::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.StrVal::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.StrVal::GetHashCode`0()->[System.Runtime]System.Int32|False": "compared",
@@ -822,133 +822,133 @@
     "Quire.Mcd.StrVal::asString`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.String|False": "compared",
     "Quire.Mcd.StrVal::get_IsString`0()->[System.Runtime]System.String|False": "compared",
     "Quire.Mcd.StrVal::get_m_string`0()->[System.Runtime]System.String|False": "compared",
-    "Quire.Mcd.Type+Application::.ctor`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Application::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Application::get_Arity`0()->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.Type+Application::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Application::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Type+Constant::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Constant::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Constant::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Factory::.ctor`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Factory::NewApplication`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type[])->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::NewApplication`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::NewApplication`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::NewConstant`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::NewFunction`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type)->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::NewList`0([Quire.Mpl]Quire.Mcd.Type)->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::NewProduct`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type+Product|False": "untested",
-    "Quire.Mcd.Type+Factory::NewTuple`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "structure_mismatch",
-    "Quire.Mcd.Type+Factory::NewVariable`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::Pop`0()->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Factory::Pop`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type[]|False": "untested",
-    "Quire.Mcd.Type+Factory::Push`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Factory::Push`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Formatter::.ctor`0([System.Runtime]System.Text.StringBuilder,[Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Formatter::OnFunction`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.Type+Lexer::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Lexer::GetToken`0([System.Runtime]System.String&)->[System.Runtime]System.Char|False": "structure_mismatch",
+    "Quire.Mcd.Type+Application::.ctor`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Application::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Application::get_Arity`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.Type+Application::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Application::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Type+Constant::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Constant::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Constant::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Factory::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Factory::NewApplication`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type[])->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewApplication`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewApplication`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewConstant`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewFunction`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewList`0([Quire.Mpl]Quire.Mcd.Type)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewProduct`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type+Product|False": "compared",
+    "Quire.Mcd.Type+Factory::NewTuple`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::NewVariable`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::Pop`0()->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Factory::Pop`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type[]|False": "compared",
+    "Quire.Mcd.Type+Factory::Push`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Factory::Push`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Formatter::.ctor`0([System.Runtime]System.Text.StringBuilder,[Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Formatter::OnFunction`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Lexer::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Lexer::GetToken`0([System.Runtime]System.String&)->[System.Runtime]System.Char|False": "compared",
     "Quire.Mcd.Type+Named::.ctor`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Named::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.Type+Named::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Named::GetHashCode`0()->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.Type+Named::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Type+Parser::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Parser::GetNextTokenIf`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Parser::GetNextToken`0()->[System.Runtime]System.Char|False": "structure_mismatch",
-    "Quire.Mcd.Type+Parser::IsNextToken`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Parser::ParseApplication`0()->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Parser::ParseExponent`0()->[System.Runtime]System.Int32|False": "structure_mismatch",
-    "Quire.Mcd.Type+Parser::Parse`0()->[Quire.Mpl]Quire.Mcd.Type|False": "untested",
-    "Quire.Mcd.Type+Parser::SkipToken`0([System.Runtime]System.Char)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Printer::.ctor`0([System.Runtime]System.Text.StringBuilder)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Constant)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Product::.ctor`0([Quire.Mpl]Quire.Mcd.Type+Product+Power[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Product::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Product::get_Constants`0()->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|False": "untested",
-    "Quire.Mcd.Type+Product::get_IsDimensionless`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Product::get_IsMonomorphic`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Product::get_IsPolymorphic`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type+Product::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Type+Product::get_Variables`0()->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|False": "untested",
-    "Quire.Mcd.Type+Variable::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Variable::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.Type+Named::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.Type+Named::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Named::GetHashCode`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.Type+Named::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Type+Parser::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Parser::GetNextTokenIf`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Parser::GetNextToken`0()->[System.Runtime]System.Char|False": "compared",
+    "Quire.Mcd.Type+Parser::IsNextToken`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Parser::ParseApplication`0()->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Parser::ParseExponent`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.Type+Parser::Parse`0()->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
+    "Quire.Mcd.Type+Parser::SkipToken`0([System.Runtime]System.Char)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Printer::.ctor`0([System.Runtime]System.Text.StringBuilder)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Constant)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Product::.ctor`0([Quire.Mpl]Quire.Mcd.Type+Product+Power[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Product::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Product::get_Constants`0()->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|False": "compared",
+    "Quire.Mcd.Type+Product::get_IsDimensionless`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Product::get_IsMonomorphic`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Product::get_IsPolymorphic`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type+Product::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Type+Product::get_Variables`0()->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|False": "compared",
+    "Quire.Mcd.Type+Variable::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type+Variable::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.Type+Visitor::.ctor`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type+Visitor::Traverse`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.Type+Visitor::Traverse`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.Type+Visitor::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Type+Visitor::Visit`0([Quire.Mpl]Quire.Mcd.Type+Constant)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Type+Visitor::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Type+Visitor::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Type::.ctor`0()->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Type::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": "declaration_only",
-    "Quire.Mcd.Type::Format`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Type::Format`0([System.Runtime]System.Text.StringBuilder)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type::Format`0([System.Runtime]System.Text.StringBuilder,[Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": "structure_mismatch",
-    "Quire.Mcd.Type::Parse`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|True": "structure_mismatch",
-    "Quire.Mcd.Type::Take`0([Quire.Mpl]Quire.Mcd.Type+Product+Power[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|True": "untested",
-    "Quire.Mcd.Type::ToString`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Type::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Type::get_Item`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "structure_mismatch",
+    "Quire.Mcd.Type::Format`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Type::Format`0([System.Runtime]System.Text.StringBuilder)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type::Format`0([System.Runtime]System.Text.StringBuilder,[Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": "compared",
+    "Quire.Mcd.Type::Parse`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|True": "compared",
+    "Quire.Mcd.Type::Take`0([Quire.Mpl]Quire.Mcd.Type+Product+Power[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|True": "compared",
+    "Quire.Mcd.Type::ToString`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Type::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Type::get_Item`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": "compared",
     "Quire.Mcd.Type::get_Name`0()->[System.Runtime]System.String|False": "declaration_only",
-    "Quire.Mcd.Type::get_Root`0()->[System.Runtime]System.Char|False": "untested",
-    "Quire.Mcd.Type::set_Item`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.Type::get_Root`0()->[System.Runtime]System.Char|False": "compared",
+    "Quire.Mcd.Type::set_Item`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.Unit::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.Double,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Unit::ToString`0()->[System.Runtime]System.String|False": "structure_mismatch",
     "Quire.Mcd.Unit::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": "untested",
-    "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[],[Quire.Mpl]Quire.Mcd.Unit)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystem+Default::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.UnitSystem+Default::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.UnitSystem+Default::GetHashCode`0()->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.UnitSystem::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.String,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystem::ChangeBasis`0([System.Runtime]System.Double[])->[System.Runtime]System.Int32[]|False": "untested",
-    "Quire.Mcd.UnitSystem::ChangeBasis`0([System.Runtime]System.Int32[])->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.UnitSystem::Count`0([System.Runtime]System.Double[])->[System.Runtime]System.Int32|True": "untested",
-    "Quire.Mcd.UnitSystem::Count`0([System.Runtime]System.Int32[])->[System.Runtime]System.Int32|True": "untested",
-    "Quire.Mcd.UnitSystem::GetCoordinates`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Int32[]|False": "untested",
-    "Quire.Mcd.UnitSystem::GetDimensionIndex`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.UnitSystem::GetDimensions`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Type+Product|False": "untested",
-    "Quire.Mcd.UnitSystem::GetDimensions`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type+Product|True": "untested",
-    "Quire.Mcd.UnitSystem::GetUnits`0([System.Runtime]System.Double[])->[Quire.Mpl]Quire.Mcd.Units|False": "untested",
-    "Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True": "untested",
-    "Quire.Mcd.UnitSystem::IsSmall`0([System.Runtime]System.Double)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.UnitSystem::IsUnitSymbol`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.UnitSystem::Normalize`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": "untested",
-    "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": "untested",
-    "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": "untested",
-    "Quire.Mcd.UnitSystem::Reset`0()->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "untested",
-    "Quire.Mcd.UnitSystem::Simplify`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": "untested",
-    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": "untested",
-    "Quire.Mcd.UnitSystem::ToString`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.UnitSystem::get_Basis`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": "untested",
-    "Quire.Mcd.UnitSystem::get_Code`0()->[System.Runtime]System.UInt32|False": "untested",
-    "Quire.Mcd.UnitSystem::get_Defaults`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystem::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type[]|False": "untested",
-    "Quire.Mcd.UnitSystem::get_Guid`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.UnitSystem::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.UnitSystem::get_RO_number`0()->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.UnitSystem::get_Rank`0()->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.UnitSystem::set_Basis`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystem::set_RO_number`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystemGroup::.ctor`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystemGroup::Reset`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystemGroup::addCopyWithRONumber`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystemGroup::addMember`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystemGroup::changeMember`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.UnitSystemGroup::findMember`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystemGroup::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.UnitSystemGroup::removeMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.UnitSystemGroup::resetMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "structure_mismatch",
+    "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[],[Quire.Mpl]Quire.Mcd.Unit)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystem+Default::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.UnitSystem+Default::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.UnitSystem+Default::GetHashCode`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.UnitSystem::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.String,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystem::ChangeBasis`0([System.Runtime]System.Double[])->[System.Runtime]System.Int32[]|False": "compared",
+    "Quire.Mcd.UnitSystem::ChangeBasis`0([System.Runtime]System.Int32[])->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.UnitSystem::Count`0([System.Runtime]System.Double[])->[System.Runtime]System.Int32|True": "compared",
+    "Quire.Mcd.UnitSystem::Count`0([System.Runtime]System.Int32[])->[System.Runtime]System.Int32|True": "compared",
+    "Quire.Mcd.UnitSystem::GetCoordinates`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Int32[]|False": "compared",
+    "Quire.Mcd.UnitSystem::GetDimensionIndex`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.UnitSystem::GetDimensions`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Type+Product|False": "compared",
+    "Quire.Mcd.UnitSystem::GetDimensions`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type+Product|True": "compared",
+    "Quire.Mcd.UnitSystem::GetUnits`0([System.Runtime]System.Double[])->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
+    "Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True": "compared",
+    "Quire.Mcd.UnitSystem::IsSmall`0([System.Runtime]System.Double)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.UnitSystem::IsUnitSymbol`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.UnitSystem::Normalize`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
+    "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
+    "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
+    "Quire.Mcd.UnitSystem::Reset`0()->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
+    "Quire.Mcd.UnitSystem::Simplify`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
+    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": "uncovered",
+    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
+    "Quire.Mcd.UnitSystem::ToString`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Basis`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Code`0()->[System.Runtime]System.UInt32|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Defaults`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type[]|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Guid`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.UnitSystem::get_RO_number`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.UnitSystem::get_Rank`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.UnitSystem::set_Basis`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystem::set_RO_number`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::.ctor`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::Reset`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::addCopyWithRONumber`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::addMember`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::changeMember`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "uncovered",
+    "Quire.Mcd.UnitSystemGroup::findMember`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::removeMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.UnitSystemGroup::resetMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Unit,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Units+Power[])->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Units::ToString`0()->[System.Runtime]System.String|False": "untested",
@@ -1009,38 +1009,38 @@
     "Quire.Mpl.MplSignature::GetHashCode`0()->[System.Runtime]System.Int32|False": "compared",
     "Quire.Mpl.MplSignature::get_ArgTypes`0()->[System.Runtime]System.Type[]|False": "compared",
     "Quire.Mpl.MplSignature::get_RetType`0()->[System.Runtime]System.Type|False": "compared",
-    "Quire.Mpl.Run.AbortRequestedException::.ctor`0()->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mpl.Run.AbortRequestedException::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.AppException::.cctor`0()->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": "untested",
-    "Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": "untested",
-    "Quire.Mpl.Run.AppException::FatalException`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mpl.Run.AppException::ProbeStack`0()->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0()->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "structure_mismatch",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mpl.Run.AppException::RestoreStack`0()->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mpl.Run.AppException::StackOverflowException`0()->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mpl.Run.AppException::asAppException`0([System.Runtime]System.Exception)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": "untested",
-    "Quire.Mpl.Run.AppException::get_Argument`0()->[System.Runtime]System.UInt32|False": "untested",
-    "Quire.Mpl.Run.AppException::get_EfiMessage`0()->[System.Runtime]System.String|False": "structure_mismatch",
-    "Quire.Mpl.Run.AppException::get_Handle`0()->[System.Runtime]System.UInt32|False": "untested",
-    "Quire.Mpl.Run.AppException::get_Region`0()->[System.Runtime]System.UInt32|False": "untested",
-    "Quire.Mpl.Run.AppException::get_Tag`0()->[System.Runtime]System.UInt32|False": "untested",
-    "Quire.Mpl.Run.AppException::set_Region`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.AppException::set_Tag`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": "compared",
+    "Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": "compared",
+    "Quire.Mpl.Run.AppException::FatalException`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.AppException::ProbeStack`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0()->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "uncovered",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mpl.Run.AppException::RestoreStack`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.AppException::StackOverflowException`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.AppException::asAppException`0([System.Runtime]System.Exception)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": "compared",
+    "Quire.Mpl.Run.AppException::get_Argument`0()->[System.Runtime]System.UInt32|False": "compared",
+    "Quire.Mpl.Run.AppException::get_EfiMessage`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mpl.Run.AppException::get_Handle`0()->[System.Runtime]System.UInt32|False": "compared",
+    "Quire.Mpl.Run.AppException::get_Region`0()->[System.Runtime]System.UInt32|False": "compared",
+    "Quire.Mpl.Run.AppException::get_Tag`0()->[System.Runtime]System.UInt32|False": "compared",
+    "Quire.Mpl.Run.AppException::set_Region`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.AppException::set_Tag`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Atom::.ctor`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mpl.Run.Atom::get_CharCon`0()->[System.Runtime]System.Char|False": "compared",
     "Quire.Mpl.Run.Atom::get_IntCon`0()->[System.Runtime]System.Int32|False": "compared",
@@ -1709,8 +1709,8 @@
     "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": "missing",
     "Quire.Mpl.Run.MplSymbolMacro::make`0([Quire.Mpl]Quire.Mpl.Run.Atom,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "missing",
     "Quire.Mpl.Run.NonCriticalException::.cctor`0()->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mpl.Run.NonCriticalException::.ctor`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.NonCriticalException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mpl.Run.NonCriticalException::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.NonCriticalException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Nul::.cctor`0()->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.Nul::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Nul::FormatTail`0()->[System.Runtime]System.String|False": "compared",
@@ -3042,6 +3042,21 @@
     "Quire.Mcd.RngValInterpolate::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": [
       "rngvaldifferentialtests"
     ],
+    "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer::.ctor`0()->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.RuntimeOptions::.ctor`0()->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.RuntimeOptions::RemoveUnitSystem`0()->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.RuntimeOptions::SaveThreadOptions`0()->[Quire.Mpl]Quire.Mcd.RuntimeOptions|True": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
     "Quire.Mcd.StrVal::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
       "numvaldifferentialtests"
     ],
@@ -3062,6 +3077,351 @@
     ],
     "Quire.Mcd.StrVal::get_m_string`0()->[System.Runtime]System.String|False": [
       "numvaldifferentialtests"
+    ],
+    "Quire.Mcd.Type+Application::.ctor`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type[])->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Application::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Application::get_Arity`0()->[System.Runtime]System.Int32|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Application::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Application::get_Name`0()->[System.Runtime]System.String|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Constant::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Constant::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Constant::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::.ctor`0()->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewApplication`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type[])->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewApplication`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewApplication`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewConstant`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewFunction`0([Quire.Mpl]Quire.Mcd.Type,[Quire.Mpl]Quire.Mcd.Type)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewList`0([Quire.Mpl]Quire.Mcd.Type)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewProduct`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type+Product|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewTuple`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::NewVariable`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::Pop`0()->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::Pop`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type[]|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::Push`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Factory::Push`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Formatter::.ctor`0([System.Runtime]System.Text.StringBuilder,[Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Formatter::OnFunction`0([Quire.Mpl]Quire.Mcd.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Lexer::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Lexer::GetToken`0([System.Runtime]System.String&)->[System.Runtime]System.Char|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Named::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Named::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Named::GetHashCode`0()->[System.Runtime]System.Int32|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Named::get_Name`0()->[System.Runtime]System.String|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::GetNextTokenIf`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::GetNextToken`0()->[System.Runtime]System.Char|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::IsNextToken`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::ParseApplication`0()->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::ParseExponent`0()->[System.Runtime]System.Int32|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::Parse`0()->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Parser::SkipToken`0([System.Runtime]System.Char)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Printer::.ctor`0([System.Runtime]System.Text.StringBuilder)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Constant)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Printer::Visit`0([Quire.Mpl]Quire.Mcd.Type+Variable)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::.ctor`0([Quire.Mpl]Quire.Mcd.Type+Product+Power[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::get_Constants`0()->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::get_IsDimensionless`0()->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::get_IsMonomorphic`0()->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::get_IsPolymorphic`0()->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::get_Name`0()->[System.Runtime]System.String|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Product::get_Variables`0()->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Variable::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Variable::Accept`0([Quire.Mpl]Quire.Mcd.Type+Visitor)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type+Visitor::Traverse`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::Format`0()->[System.Runtime]System.String|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::Format`0([System.Runtime]System.Text.StringBuilder)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::Format`0([System.Runtime]System.Text.StringBuilder,[Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::Parse`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type|True": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::Take`0([Quire.Mpl]Quire.Mcd.Type+Product+Power[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type+Product+Power[]|True": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::ToString`0()->[System.Runtime]System.String|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::get_IsImplicitArgument`0()->[System.Runtime]System.Boolean|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::get_Item`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Type|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::get_Root`0()->[System.Runtime]System.Char|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.Type::set_Item`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": [
+      "typedifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[],[Quire.Mpl]Quire.Mcd.Unit)->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem+Default::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem+Default::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem+Default::GetHashCode`0()->[System.Runtime]System.Int32|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.String,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::ChangeBasis`0([System.Runtime]System.Double[])->[System.Runtime]System.Int32[]|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::ChangeBasis`0([System.Runtime]System.Int32[])->[System.Runtime]System.Double[]|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Count`0([System.Runtime]System.Double[])->[System.Runtime]System.Int32|True": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Count`0([System.Runtime]System.Int32[])->[System.Runtime]System.Int32|True": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::GetCoordinates`0([Quire.Mpl]Quire.Mcd.Type+Product)->[System.Runtime]System.Int32[]|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::GetDimensionIndex`0([Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Int32|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::GetDimensions`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Type+Product|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::GetDimensions`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Type+Product|True": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::GetUnits`0([System.Runtime]System.Double[])->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::IsSmall`0([System.Runtime]System.Double)->[System.Runtime]System.Boolean|True": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::IsUnitSymbol`0([System.Runtime]System.String)->[System.Runtime]System.Boolean|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Normalize`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Reset`0()->[Quire.Mpl]Quire.Mcd.UnitSystem|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Simplify`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::ToString`0()->[System.Runtime]System.String|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Basis`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Code`0()->[System.Runtime]System.UInt32|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Defaults`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type[]|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Guid`0()->[System.Runtime]System.String|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Name`0()->[System.Runtime]System.String|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_RO_number`0()->[System.Runtime]System.Int32|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::get_Rank`0()->[System.Runtime]System.Int32|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::set_Basis`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystem::set_RO_number`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::.ctor`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::Reset`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::addCopyWithRONumber`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::addMember`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::changeMember`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::findMember`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::get_Name`0()->[System.Runtime]System.String|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::removeMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.UnitSystemGroup::resetMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "runtimeoptionsdifferentialtests"
     ],
     "Quire.Mcd.Utilities::.ctor`0()->[System.Runtime]System.Void|False": [
       "utilitiesdifferentialtests"
@@ -3107,6 +3467,99 @@
     ],
     "Quire.Mpl.MplSignature::get_RetType`0()->[System.Runtime]System.Type|False": [
       "mplrunhelpersdifferentialtests"
+    ],
+    "Quire.Mpl.Run.AbortRequestedException::.ctor`0()->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::FatalException`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::ProbeStack`0()->[System.Runtime]System.Void|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0()->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.String,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::RestoreStack`0()->[System.Runtime]System.Void|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::StackOverflowException`0()->[System.Runtime]System.Void|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::asAppException`0([System.Runtime]System.Exception)->[Quire.Mpl]Quire.Mpl.Run.AppException|True": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::get_Argument`0()->[System.Runtime]System.UInt32|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::get_EfiMessage`0()->[System.Runtime]System.String|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::get_Handle`0()->[System.Runtime]System.UInt32|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::get_Region`0()->[System.Runtime]System.UInt32|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::get_Tag`0()->[System.Runtime]System.UInt32|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::set_Region`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.AppException::set_Tag`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
     ],
     "Quire.Mpl.Run.Atom::get_CharCon`0()->[System.Runtime]System.Char|False": [
       "sexprdifferentialtests"
@@ -3288,6 +3741,12 @@
     ],
     "Quire.Mpl.Run.FunctionUtilities::take`1([System.Runtime]System.Int32,!!0[])->!!0[]|True": [
       "functiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.NonCriticalException::.ctor`0()->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.NonCriticalException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "appexceptiondifferentialtests"
     ],
     "Quire.Mpl.Run.Nul::.cctor`0()->[System.Runtime]System.Void|True": [
       "sexprdifferentialtests"
@@ -4207,20 +4666,20 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.RuntimeOptions": {
-      "compared": 0,
-      "declaration_only": 0,
-      "excluded": 0,
-      "missing": 5,
-      "structure_mismatch": 0,
-      "total": 5,
-      "uncovered": 0,
-      "verified_unsupported": 4
-    },
-    "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer": {
-      "compared": 0,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
       "missing": 1,
+      "structure_mismatch": 0,
+      "total": 5,
+      "uncovered": 0,
+      "verified_unsupported": 0
+    },
+    "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer": {
+      "compared": 1,
+      "declaration_only": 0,
+      "excluded": 0,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 1,
       "uncovered": 0,
@@ -4237,120 +4696,120 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.Type": {
-      "compared": 0,
+      "compared": 11,
       "declaration_only": 2,
       "excluded": 0,
-      "missing": 9,
-      "structure_mismatch": 3,
+      "missing": 1,
+      "structure_mismatch": 0,
       "total": 14,
       "uncovered": 0,
-      "verified_unsupported": 10
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Application": {
-      "compared": 0,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 5,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
-      "verified_unsupported": 4
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Constant": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
-      "verified_unsupported": 2
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Factory": {
-      "compared": 0,
+      "compared": 14,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 13,
-      "structure_mismatch": 1,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 14,
       "uncovered": 0,
-      "verified_unsupported": 14
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Formatter": {
-      "compared": 0,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 4,
-      "structure_mismatch": 1,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
       "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Lexer": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 1,
-      "structure_mismatch": 1,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 2,
       "uncovered": 0,
       "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Named": {
-      "compared": 0,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 5,
+      "missing": 1,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
-      "verified_unsupported": 4
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Parser": {
-      "compared": 0,
+      "compared": 9,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 7,
-      "structure_mismatch": 2,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 9,
       "uncovered": 0,
       "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Printer": {
-      "compared": 0,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
-      "structure_mismatch": 2,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
       "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Product": {
-      "compared": 0,
+      "compared": 8,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 8,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 8,
       "uncovered": 0,
-      "verified_unsupported": 7
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Variable": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 2,
       "uncovered": 0,
-      "verified_unsupported": 1
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Type+Visitor": {
-      "compared": 0,
+      "compared": 1,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 6,
+      "missing": 5,
       "structure_mismatch": 0,
       "total": 6,
       "uncovered": 0,
@@ -4367,34 +4826,34 @@
       "verified_unsupported": 3
     },
     "Quire.Mcd.UnitSystem": {
-      "compared": 0,
+      "compared": 31,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 30,
-      "structure_mismatch": 2,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 32,
-      "uncovered": 0,
-      "verified_unsupported": 26
+      "uncovered": 1,
+      "verified_unsupported": 1
     },
     "Quire.Mcd.UnitSystem+Default": {
-      "compared": 0,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 4,
-      "structure_mismatch": 1,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
       "verified_unsupported": 0
     },
     "Quire.Mcd.UnitSystemGroup": {
-      "compared": 0,
+      "compared": 8,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
-      "structure_mismatch": 6,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 9,
-      "uncovered": 0,
-      "verified_unsupported": 9
+      "uncovered": 1,
+      "verified_unsupported": 1
     },
     "Quire.Mcd.Units": {
       "compared": 0,
@@ -4487,24 +4946,24 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.AbortRequestedException": {
-      "compared": 0,
+      "compared": 1,
+      "declaration_only": 0,
+      "excluded": 0,
+      "missing": 0,
+      "structure_mismatch": 0,
+      "total": 1,
+      "uncovered": 0,
+      "verified_unsupported": 0
+    },
+    "Quire.Mpl.Run.AppException": {
+      "compared": 29,
       "declaration_only": 0,
       "excluded": 0,
       "missing": 1,
       "structure_mismatch": 0,
-      "total": 1,
-      "uncovered": 0,
-      "verified_unsupported": 1
-    },
-    "Quire.Mpl.Run.AppException": {
-      "compared": 0,
-      "declaration_only": 0,
-      "excluded": 0,
-      "missing": 29,
-      "structure_mismatch": 2,
       "total": 31,
-      "uncovered": 0,
-      "verified_unsupported": 30
+      "uncovered": 1,
+      "verified_unsupported": 1
     },
     "Quire.Mpl.Run.Atom": {
       "compared": 8,
@@ -5517,14 +5976,14 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.NonCriticalException": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 1,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
-      "verified_unsupported": 2
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Nul": {
       "compared": 6,
