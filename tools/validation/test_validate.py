@@ -146,9 +146,9 @@ class DotnetTests(unittest.TestCase):
                 resolve_dotnet(str(Path(tools) / 'missing'), repo)
 
 
-class MissingFieldTests(unittest.TestCase):
-    """Fields the maintainer-owned manifest lists must still be in the build; other lines are the ratchet's job."""
-    def test_only_missing_field_lines_are_reported(self):
+class MissingShapeTests(unittest.TestCase):
+    """Every line of the maintainer-owned manifest must still match the build; added lines are fine."""
+    def test_missing_and_changed_lines_are_reported(self):
         import subprocess
         import validate
         with tempfile.TemporaryDirectory() as directory:
@@ -156,12 +156,13 @@ class MissingFieldTests(unittest.TestCase):
             (root / 'docs/mirror/manifest').mkdir(parents=True)
             (root / 'docs/mirror/manifest/Quire.Mpl.txt').write_text(
                 '# header\nT Quire.Mcd.T class public :  | \n  Quire.Mcd.T F private System.UInt32 m_kept\n'
-                '  Quire.Mcd.T F private System.UInt32 m_gone\n  Quire.Mcd.T M public Gone`0() -> System.Void\n')
-            built = 'T Quire.Mcd.T class public :  | \n  Quire.Mcd.T F private System.UInt32 m_kept\n'
+                '  Quire.Mcd.T F private System.UInt32 m_gone\n  Quire.Mcd.T M public virtual Run`0() -> System.Void\n')
+            built = ('T Quire.Mcd.T class public :  | \n  Quire.Mcd.T F private System.UInt32 m_kept\n'
+                     '  Quire.Mcd.T M public Run`0() -> System.Void\n  Quire.Mcd.T M private Helper`0() -> System.Void\n')
             with unittest.mock.patch.object(validate, 'ROOT', root), unittest.mock.patch.object(
                     validate.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, built, '')):
-                self.assertEqual(validate.missing_fields('dotnet', root, b'{}', root / 'Quire.Mpl.dll', 10),
-                                 ['Quire.Mcd.T F private System.UInt32 m_gone'])
+                self.assertEqual(validate.missing_shape('dotnet', root, b'{}', root / 'Quire.Mpl.dll', 10),
+                                 ['Quire.Mcd.T F private System.UInt32 m_gone', 'Quire.Mcd.T M public virtual Run`0() -> System.Void'])
 
 
 class PrivateCopyTests(unittest.TestCase):

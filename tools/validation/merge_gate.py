@@ -49,14 +49,16 @@ STUB = b'[global::Quire.Mirror.MirrorStub]'
 # above the stub, trailing comments) that line matching cannot judge.
 GENERATED = 'src/quire.mpl/generated/mirror/*.g.cs'
 TYPE = re.compile(rb'\b(class|struct|interface|enum|record|delegate|event)\b')
+# A constant has nothing to implement, and the shape omits its value.
+CONST = re.compile(rb'\bconst\b')
 
 
 def stub_deletions(base, tip, path, repo=ROOT):
     """The member lines `tip` deleted from a generated mirror file, when that is its only change: whole stub members,
     each a `[MirrorStub]` line and the one-line member under it, compared byte for byte apart from a line's trailing
-    CR. Implementing a member means deleting its stub; validation then requires the member to exist again (the ratchet
-    for methods, the manifest field check for fields). None for anything else: headers, `MirrorOf`, type declarations,
-    stubs under another attribute, edits, additions, deleting the file, or a change that deletes nothing."""
+    CR. Implementing a member means deleting its stub; validation then requires the member back with the same shape
+    (the manifest check). None for anything else: headers, `MirrorOf`, type declarations, constants, stubs under
+    another attribute, edits, additions, deleting the file, or a change that deletes nothing."""
     if not fnmatch.fnmatchcase(path.lower(), GENERATED):
         return None
     blobs = []
@@ -87,7 +89,7 @@ def stub_units(lines):
         code = re.split(rb'[="]', member, maxsplit=1)[0]
         if (lines[i].strip() == STUB and (i == 0 or not lines[i - 1].strip().startswith(b'['))
                 and member and not member.startswith((b'[', b'{', b'}', b'//', b'#')) and b'//' not in member
-                and b'MirrorOf' not in member and not TYPE.search(code)):
+                and b'MirrorOf' not in member and not TYPE.search(code) and not CONST.search(code)):
             units.append((lines[i], lines[i + 1]))
             i += 2
         else:

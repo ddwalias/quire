@@ -693,7 +693,6 @@
   Quire.Mcd.NumVal F public static System.Double McdNaN
   Quire.Mcd.NumVal F public static System.Double NaN
   Quire.Mcd.NumVal F public static System.Double NoNoNaN
-  Quire.Mcd.NumVal M private static Compare`0(Quire.Mcd.NumVal,Quire.Mcd.NumVal,System.Func`3<System.Double,System.Double,System.Boolean>) -> System.Boolean
   Quire.Mcd.NumVal M private static isNearInt`0(System.Int32*,System.Double) -> System.Boolean
   Quire.Mcd.NumVal M public .ctor`0() -> System.Void
   Quire.Mcd.NumVal M public .ctor`0(Quire.Mcd.NumVal) -> System.Void

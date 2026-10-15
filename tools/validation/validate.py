@@ -89,12 +89,12 @@ def sdk_directory(global_json):
         shutil.rmtree(directory, ignore_errors=True)
 
 
-def missing_fields(dotnet, generator_dir, global_json, assembly, timeout):
-    """Field lines of the Quire.Mpl manifest (maintainer-owned) that the built assembly no longer has. Agents may
-    delete generated stubs; the ratchet catches a method that disappears, but the method inventory lists no fields.
-    Checked before any test runs, from the build itself."""
+def missing_shape(dotnet, generator_dir, global_json, assembly, timeout):
+    """Lines of the Quire.Mpl manifest (maintainer-owned) that the built assembly no longer matches: a type or member
+    that disappeared or changed kind, access, modifiers or signature. Agents may delete generated stubs, and the
+    method inventory keys neither fields nor modifiers. Checked before any test runs, from the build itself."""
     manifest = ROOT / "docs/mirror/manifest/Quire.Mpl.txt"
-    expected = [line for line in manifest.read_text(encoding="utf-8").splitlines() if line[2:].split(" ")[1:2] == ["F"]]
+    expected = [line for line in manifest.read_text(encoding="utf-8").splitlines() if line.strip() and not line.startswith("#")]
     with sdk_directory(global_json) as sdk:
         result = subprocess.run([dotnet, str(generator_dir / "Quire.Tools.MirrorGen.dll"), "shape", str(assembly)],
                                 cwd=sdk, capture_output=True, text=True, timeout=timeout)
@@ -275,12 +275,12 @@ def main():
             assemblies[project] = Path(path)
             collectors[project] = properties.get("TraceDataCollectorDirectoryPath", "")
         if args.profile == "focused":
-            report["missing_fields"] = missing_fields(args.dotnet, generator_dir, global_json,
-                                                      assemblies["Quire.Focused.Differential.Tests"].parent / "Quire.Mpl.dll",
-                                                      args.timeout)
-            if report["missing_fields"]:
-                raise ValueError("mirrored fields missing from the Quire.Mpl build (a deleted field stub must be "
-                                 "declared again): " + "; ".join(report["missing_fields"][:10]))
+            report["missing_shape"] = missing_shape(args.dotnet, generator_dir, global_json,
+                                                    assemblies["Quire.Focused.Differential.Tests"].parent / "Quire.Mpl.dll",
+                                                    args.timeout)
+            if report["missing_shape"]:
+                raise ValueError("the Quire.Mpl build no longer matches its manifest (a deleted stub must come back with "
+                                 "the same shape): " + "; ".join(report["missing_shape"][:10]))
         trees = [ROOT / "docs/mirror/evidence", ROOT / "docs/mirror/manifest", *(ROOT / "tests" / p / "bin" for p in projects)]
         seal = Seal(ROOT, [ROOT / "docs/mirror/type-map.csv"], trees)
         for project in projects:

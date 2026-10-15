@@ -240,6 +240,10 @@ class StubDeletionTests(unittest.TestCase):
     def test_field_stubs_may_go_and_are_checked_against_the_manifest_instead(self):
         self.assertEqual(self.deleted(self.without(11, 12)), ['public int m_field;'])
 
+    def test_constant_stubs_stay(self):
+        self.base = self.commit(self.LINES[:-1] + [self.STUB, '    public const int Key = 9;', '}'])
+        self.assertIsNone(self.deleted(self.LINES))
+
     def test_anything_else_stays_maintainer_only(self):
         for name, lines, newline in [
                 ('stub under another attribute', self.without(24, 25), '\r\n'),
