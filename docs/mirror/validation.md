@@ -244,9 +244,10 @@ targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned r
 existing Quire.Mpl generated mirror file (`src/Quire.Mpl/Generated/Mirror/*.g.cs`), each a `[MirrorStub]` line and
 the one-line member under it, compared byte for byte (apart from a trailing CR; only `\n` ends a line), and nothing
 else. A deleted method, property or constructor that is not re-implemented disappears from the method inventory,
-which the ratchet rejects; the inventory lists no fields, so a deleted field or constant stub must be declared again
-in the branch's hand-written Quire.Mpl source. The clone keeps those files as the branch has them, and `gate.json`
-lists the deleted members under `stub_deletions`. Headers, `MirrorOf`, type declarations, stubs under another
+which the ratchet rejects. The inventory lists no fields, so before any test runs the focused profile also checks
+every field line of the maintainer-owned `docs/mirror/manifest/Quire.Mpl.txt` against the build (`MirrorGen shape`):
+a deleted field or constant stub must be declared again with the same shape. The clone keeps those files as the
+branch has them, and `gate.json` lists the deleted members under `stub_deletions`. Headers, `MirrorOf`, type declarations, stubs under another
 attribute, edits, additions, regeneration, deleting the file, or a change that deletes nothing stay maintainer-only. Because the gate runs the focused profile, which builds and audits only `Quire.Mpl` and runs
 only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
 `--allow-unvalidated` after a Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every

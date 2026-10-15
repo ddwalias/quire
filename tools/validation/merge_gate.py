@@ -49,16 +49,14 @@ STUB = b'[global::Quire.Mirror.MirrorStub]'
 # above the stub, trailing comments) that line matching cannot judge.
 GENERATED = 'src/quire.mpl/generated/mirror/*.g.cs'
 TYPE = re.compile(rb'\b(class|struct|interface|enum|record|delegate|event)\b')
-# Methods, constructors and properties, judged before any field initializer; anything else is a field or constant.
-METHOD = re.compile(r'[\w>]\(|=>|\{')
 
 
 def stub_deletions(base, tip, path, repo=ROOT):
     """The member lines `tip` deleted from a generated mirror file, when that is its only change: whole stub members,
     each a `[MirrorStub]` line and the one-line member under it, compared byte for byte apart from a line's trailing
-    CR. Implementing a member means deleting its stub. A deleted field must be declared again in `tip`'s hand-written
-    Quire.Mpl source, since the method inventory would not miss it. None for anything else: headers, `MirrorOf`, type
-    declarations, edits, additions, deleting the file, or a change that deletes nothing."""
+    CR. Implementing a member means deleting its stub; validation then requires the member to exist again (the ratchet
+    for methods, the manifest field check for fields). None for anything else: headers, `MirrorOf`, type declarations,
+    stubs under another attribute, edits, additions, deleting the file, or a change that deletes nothing."""
     if not fnmatch.fnmatchcase(path.lower(), GENERATED):
         return None
     blobs = []
@@ -77,21 +75,7 @@ def stub_deletions(base, tip, path, repo=ROOT):
             deleted.append(unit[1].strip().decode('utf-8', 'replace'))
         else:
             return None  # only whole stub members may go
-    if kept != len(new) or not deleted:
-        return None
-    fields = [m for m in deleted if not METHOD.search(re.split(r'=(?!>)', m)[0])]
-    if fields and not all(redeclared(tip, field, repo) for field in fields):
-        return None
-    return deleted
-
-
-def redeclared(tip, field, repo=ROOT):
-    """A field declaration of the same name in `tip`'s hand-written Quire.Mpl source."""
-    name = re.split(r'[\s=;]+', field.split('=')[0].strip().rstrip(';'))[-1]
-    pattern = rf'(^|[[:space:],])@?{re.escape(name)}[[:space:]]*(=[^=>]|;|,)'
-    result = subprocess.run(['git', 'grep', '-qE', pattern, tip, '--', 'src/Quire.Mpl/*.cs',
-                             ':(exclude)src/Quire.Mpl/Generated/*'], cwd=repo, capture_output=True)
-    return result.returncode == 0
+    return deleted if kept == len(new) and deleted else None
 
 
 def stub_units(lines):
@@ -209,10 +193,10 @@ def main():
         return 1
     rules = patterns(git('show', f'{base}:tools/validation/protected.txt'))
     stubs = {}
-    for path in protected(changed, rules):
+    for path in (owned := protected(changed, rules)):
         if (members := stub_deletions(base, tip, path)) is not None:
             stubs[path] = members
-    touched = [p for p in protected(changed, rules) if p not in stubs]
+    touched = [p for p in owned if p not in stubs]
     if touched and not args.allow_protected:
         print('BLOCKED: maintainer-owned paths changed:\n  ' + '\n  '.join(touched))
         return 1

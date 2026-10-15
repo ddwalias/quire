@@ -237,13 +237,8 @@ class StubDeletionTests(unittest.TestCase):
     def test_line_endings_may_change_with_a_deletion(self):
         self.assertEqual(len(self.deleted(self.without(9, 10), newline='\n')), 1)
 
-    def test_a_field_stub_may_go_only_when_hand_written_source_declares_it(self):
-        self.assertIsNone(self.deleted(self.without(11, 12)))
-        self.commit(['partial class T', '{', '    [MirrorTested("Mcd.T")]', '    public int m_field;', '}'],
-                    'src/Quire.Mpl/Mcd/T.cs')
+    def test_field_stubs_may_go_and_are_checked_against_the_manifest_instead(self):
         self.assertEqual(self.deleted(self.without(11, 12)), ['public int m_field;'])
-        self.commit(['partial class T', '{', '    public int m_field2;', '}'], 'src/Quire.Mpl/Mcd/T.cs')
-        self.assertIsNone(self.deleted(self.without(11, 12)))   # a different name does not count
 
     def test_anything_else_stays_maintainer_only(self):
         for name, lines, newline in [

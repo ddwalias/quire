@@ -146,6 +146,24 @@ class DotnetTests(unittest.TestCase):
                 resolve_dotnet(str(Path(tools) / 'missing'), repo)
 
 
+class MissingFieldTests(unittest.TestCase):
+    """Fields the maintainer-owned manifest lists must still be in the build; other lines are the ratchet's job."""
+    def test_only_missing_field_lines_are_reported(self):
+        import subprocess
+        import validate
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'docs/mirror/manifest').mkdir(parents=True)
+            (root / 'docs/mirror/manifest/Quire.Mpl.txt').write_text(
+                '# header\nT Quire.Mcd.T class public :  | \n  Quire.Mcd.T F private System.UInt32 m_kept\n'
+                '  Quire.Mcd.T F private System.UInt32 m_gone\n  Quire.Mcd.T M public Gone`0() -> System.Void\n')
+            built = 'T Quire.Mcd.T class public :  | \n  Quire.Mcd.T F private System.UInt32 m_kept\n'
+            with unittest.mock.patch.object(validate, 'ROOT', root), unittest.mock.patch.object(
+                    validate.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, built, '')):
+                self.assertEqual(validate.missing_fields('dotnet', root, b'{}', root / 'Quire.Mpl.dll', 10),
+                                 ['Quire.Mcd.T F private System.UInt32 m_gone'])
+
+
 class PrivateCopyTests(unittest.TestCase):
     def test_validator_runs_isolated_from_a_copy(self):
         import os, shutil, subprocess, sys

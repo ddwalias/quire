@@ -2,8 +2,15 @@ using Quire.Tools.MirrorGen;
 
 if (args.Length < 1)
 {
-    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|classify [--list]|native-inventory|scope-diff|collisions|graph|stats|dump <asm> <type>|types <dll> <filter>>");
+    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|classify [--list]|native-inventory|scope-diff|collisions|graph|stats|dump <asm> <type>|types <dll> <filter>|shape <dll>>");
     return 2;
+}
+
+// `shape ASSEMBLY`: the canonical shape lines of a built assembly's mirrored types, as the manifest lists them.
+if (args is ["shape", var shapeAssembly])
+{
+    foreach (var line in Shape.ForAssembly(shapeAssembly)) Console.WriteLine(line);
+    return 0;
 }
 
 string repo = FindRepoRoot();

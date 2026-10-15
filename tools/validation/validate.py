@@ -89,6 +89,21 @@ def sdk_directory(global_json):
         shutil.rmtree(directory, ignore_errors=True)
 
 
+def missing_fields(dotnet, generator_dir, global_json, assembly, timeout):
+    """Field lines of the Quire.Mpl manifest (maintainer-owned) that the built assembly no longer has. Agents may
+    delete generated stubs; the ratchet catches a method that disappears, but the method inventory lists no fields.
+    Checked before any test runs, from the build itself."""
+    manifest = ROOT / "docs/mirror/manifest/Quire.Mpl.txt"
+    expected = [line for line in manifest.read_text(encoding="utf-8").splitlines() if line[2:].split(" ")[1:2] == ["F"]]
+    with sdk_directory(global_json) as sdk:
+        result = subprocess.run([dotnet, str(generator_dir / "Quire.Tools.MirrorGen.dll"), "shape", str(assembly)],
+                                cwd=sdk, capture_output=True, text=True, timeout=timeout)
+    if result.returncode:
+        raise ValueError(f"shape of {assembly.name} failed: {result.stderr.strip()[:500]}")
+    actual = set(result.stdout.splitlines())
+    return [line.strip() for line in expected if line not in actual]
+
+
 def resolve_dotnet(name, root):
     """The absolute CLI path, found now: dotnet runs from a new directory each time, and on Windows a bare name would
     be looked up in the current directory (the repository) before PATH. One inside the repository is refused."""
@@ -228,9 +243,11 @@ def main():
         build_flags = ["-m:1", "-nr:false", "-p:UseSharedCompilation=false", "-p:NuGetAudit=false"]
         tool = ROOT / "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj"
         tool_dir = holder["tool"] = Path(tempfile.mkdtemp(prefix="quire-audit-tool-"))
+        generator = ROOT / "tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"
+        generator_dir = holder["generator"] = Path(tempfile.mkdtemp(prefix="quire-mirrorgen-"))
         print("Building the method audit and test projects", flush=True)
         with (output / "build.log").open("w") as log:
-            for target, extra in [(tool, ["-o", str(tool_dir)])] + [
+            for target, extra in [(tool, ["-o", str(tool_dir)]), (generator, ["-o", str(generator_dir)])] + [
                     (ROOT / "tests" / p / f"{p}.csproj", []) for p in projects]:
                 with sdk_directory(global_json) as sdk:
                     result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=sdk,
@@ -257,6 +274,13 @@ def main():
                 raise ValueError(f"{project}: built assembly not found ({query.stdout.strip()!r})")
             assemblies[project] = Path(path)
             collectors[project] = properties.get("TraceDataCollectorDirectoryPath", "")
+        if args.profile == "focused":
+            report["missing_fields"] = missing_fields(args.dotnet, generator_dir, global_json,
+                                                      assemblies["Quire.Focused.Differential.Tests"].parent / "Quire.Mpl.dll",
+                                                      args.timeout)
+            if report["missing_fields"]:
+                raise ValueError("mirrored fields missing from the Quire.Mpl build (a deleted field stub must be "
+                                 "declared again): " + "; ".join(report["missing_fields"][:10]))
         trees = [ROOT / "docs/mirror/evidence", ROOT / "docs/mirror/manifest", *(ROOT / "tests" / p / "bin" for p in projects)]
         seal = Seal(ROOT, [ROOT / "docs/mirror/type-map.csv"], trees)
         for project in projects:
