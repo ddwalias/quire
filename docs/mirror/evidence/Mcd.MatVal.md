@@ -46,6 +46,10 @@
 | get_IsUniformScalar() | 0x0600043e | — | Return true for a null table; otherwise delegate to IsUniformScalarPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
 | IsUniformScalarPtrs() | 0x0600043f | — | Inspect only PtrNan-marked entries; return false for a live non-NumVal or incompatible nonspecial dimension, accept mcd_zero dimensions, and pass the live count/common dimension to TidyPtrs. May mutate matrix and pointer state. | Same-artifact ILSpy; 9 direct comparisons; finite cases in lane checkpoint | Verified |
 | get_IsUniform() | 0x06000457 | — | Return true for a null table; otherwise delegate to IsUniformPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ILSpy; 10 direct comparisons; finite cases in lane checkpoint | Verified |
+| IsUniformDimOf(Mcd.Dim) | 0x06000437 | — | Inspect only live PtrNan entries and compare their values against the current matrix dimension; if live count equals logical area, assign the exact requested dimension reference and return true, including null and zero-area requests; otherwise fall back to equality with the current matrix dimension. | Same-artifact ILSpy; 10 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsDimless() | 0x0600043a | — | First require IsUniformScalar; return false without checking m_dim when that fails; otherwise return Dim.Id_b(m_dim). | Same-artifact ILSpy; 7 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_PhysicalDimension() | 0x06000452 | — | Return the virtual UniformDimension property result. | Same-artifact ILSpy; 6 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_UniformDimension() | 0x06000453 | — | Return mixed_matrix_dim when IsUniform is false; otherwise return m_dim. May canonicalize pointer storage through IsUniform. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 
