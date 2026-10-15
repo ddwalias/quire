@@ -42,9 +42,12 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
 }
 
 /// <summary>Reads <see cref="Structure"/> from method bodies, naming every referenced member as Mathcad would.
-/// <paramref name="exact"/> keeps compiler-generated names (for <see cref="Body"/>, which names members as declared).</summary>
+/// <paramref name="exact"/> keeps compiler-generated names (for <see cref="Body"/>, which names members as declared).
+/// <paramref name="root"/>: the checkout the assembly was built from; <see cref="Body"/> hashes string literals with
+/// it replaced by <c>&lt;repo&gt;</c>, since <c>[CallerFilePath]</c> (every <c>MirrorStub.NotImplemented()</c>)
+/// compiles the absolute source path into the IL and the gate builds in a new clone each time.</summary>
 sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, SigProvider decoder,
-    Func<string, string> typeName, Func<int, string?> methodName, bool exact = false)
+    Func<string, string> typeName, Func<int, string?> methodName, bool exact = false, string? root = null)
 {
     internal static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -180,7 +183,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     for (int i = 0; i < targets; i++) text.Append(il.ReadInt32()).Append(',');
                     break;
                 case OperandType.InlineString:
-                    text.Append(System.Text.Json.JsonSerializer.Serialize(md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32()))));
+                    text.Append(System.Text.Json.JsonSerializer.Serialize(Unrooted(md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())))));
                     break;
                 case OperandType.InlineSig:
                     var signature = md.GetStandaloneSignature((StandaloneSignatureHandle)MetadataTokens.EntityHandle(il.ReadInt32()))
@@ -216,6 +219,16 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         }
         string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
         return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads]);
+    }
+
+    /// <summary>A string literal with the checkout's path (either separator style) replaced by <c>&lt;repo&gt;</c>, so
+    /// identical sources hash alike wherever they were built.</summary>
+    private string Unrooted(string literal)
+    {
+        if (root is not { Length: > 1 }) return literal;
+        string trimmed = root.TrimEnd('/', '\\');
+        return literal.Replace(trimmed.Replace('\\', '/'), "<repo>", StringComparison.Ordinal)
+            .Replace(trimmed.Replace('/', '\\'), "<repo>", StringComparison.Ordinal);
     }
 
     private TypeSig FieldType(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition

@@ -312,7 +312,9 @@ order passes it, which the direct comparisons must catch.
   decided by the mutated method's IL, the tests that directly compare that method (only those run it), and whatever
   runs under those tests. MethodAudit records for each method with a body:
   - `body_sha256`: a hash of its IL with every metadata token resolved to the member, type, field (with its type)
-    or string it names, the initial data of fields that have some (`<PrivateImplementationDetails>` arrays), its
+    or string it names (with the checkout's absolute path replaced by `<repo>`: `[CallerFilePath]`, used by every
+    `MirrorStub.NotImplemented()`, compiles the source path into the IL, and the gate builds in a new clone each time),
+    the initial data of fields that have some (`<PrivateImplementationDetails>` arrays), its
     locals' types, exception regions and flags; token renumbering from unrelated edits does not change it. When a
     data field's size cannot be read from its type, only its name is hashed (` data ?`): that relies on the compiler
     naming such fields after a hash of their contents, as Roslyn does;

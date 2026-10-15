@@ -118,8 +118,8 @@ StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, ou
     : structures[a] = new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name),
         isQuire ? MathcadType : name => name,
         isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null);
-// Quire's own names, unmapped and exact: what the body hash and call graph identify.
-var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true));
+// Quire's own names, unmapped and exact: what the body hash and call graph identify; the checkout path left out.
+var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true, root: repo));
 foreach (var (artifact, raw, type, method, status, exclusion, original, counterpart) in matched)
 {
     var body = raw.BodyRva == 0 ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));

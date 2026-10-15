@@ -27,6 +27,10 @@ public class BodyTests
     private static async Task<int> Later() { await Task.Yield(); return 1; }
     private static int Constant() => 1;
     private static int Constant2() => 1;
+    private static string Where([System.Runtime.CompilerServices.CallerFilePath] string file = "") => file;
+    private static string Here() => Where();
+    private static string SpelledUnix() => Where("<repo>/tests/Quire.Harness.Tests/BodyTests.cs");
+    private static string SpelledWindows() => Where("<repo>\\tests\\Quire.Harness.Tests\\BodyTests.cs");
 
     private static readonly PEReader Pe = new(File.OpenRead(typeof(BodyTests).Assembly.Location));
     private static readonly MetadataReader Md = Pe.GetMetadataReader();
@@ -63,6 +67,21 @@ public class BodyTests
     {
         Assert.Equal(Body("Constant").Hash, Body("Constant2").Hash);
         Assert.NotEqual(Body("Data").Hash, Body("OtherData").Hash);
+    }
+
+    [Fact]
+    public void The_hash_leaves_out_the_checkout_path_that_CallerFilePath_compiles_in()
+    {
+        // The gate builds each candidate in a new clone; a stub's MirrorStub.NotImplemented() embeds its source path.
+        string root = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Where())!, "..", ".."));
+        var rooted = new StructureReader(Md, Pe, new SigProvider("Quire.Harness.Tests"), n => n, _ => null, exact: true, root: root);
+        var elsewhere = new StructureReader(Md, Pe, new SigProvider("Quire.Harness.Tests"), n => n, _ => null, exact: true,
+            root: Path.Combine(root, "elsewhere"));
+        MethodDefinitionHandle Method(string name) => Find(typeof(BodyTests), name);
+        string spelled = Path.DirectorySeparatorChar == '/' ? "SpelledUnix" : "SpelledWindows";
+        Assert.Equal(rooted.Body(Method(spelled)).Hash, rooted.Body(Method("Here")).Hash);
+        Assert.NotEqual(elsewhere.Body(Method(spelled)).Hash, elsewhere.Body(Method("Here")).Hash);
+        Assert.NotEqual(rooted.Body(Method("SpelledUnix")).Hash, rooted.Body(Method("SpelledWindows")).Hash);
     }
 
     [Fact]
