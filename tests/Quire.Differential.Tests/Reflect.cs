@@ -160,6 +160,12 @@ public static class Reflect
         _ => o.ToString()!,
     };
 
+    /// <summary>An <c>Mcd.Units</c> value: its text, both magnitudes and its base-unit powers. Maintainer-owned, since
+    /// <see cref="Side"/> renders units with it.</summary>
+    public static string UnitsText(object? u) => u == null ? "null"
+        : $"{Outcome(u.ToString)} m={Text(Get(u, "Magnitude"))}/{Text(Get(u, "magnitude"))} [" + string.Join(" ", ((Array)Get(u, "Powers")!).Cast<object>()
+            .Select(p => $"{Get(Get(p, "Base")!, "Symbol")}^{Get(Get(p, "Exponent")!, "Numerator")}/{Get(Get(p, "Exponent")!, "Denominator")}")) + "]";
+
     /// <summary>Records a difference between the two outcomes.</summary>
     public static void Same(List<string> diffs, string what, string quire, string mathcad)
     {

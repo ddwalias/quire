@@ -88,10 +88,6 @@ public class UnitSystemDifferentialTests
     internal static string UnitText(object? u) => u == null ? "null"
         : $"{Get(u, "Symbol")}({Get(u, "Name")}, {Get(u, "Quantity")}, {Text(Get(u, "Magnitude"))}, {Get(u, "Type")})";
 
-    internal static string UnitsText(object? u) => u == null ? "null"
-        : $"{Outcome(u.ToString)} m={Text(Get(u, "Magnitude"))}/{Text(Get(u, "magnitude"))} [" + string.Join(" ", ((Array)Get(u, "Powers")!).Cast<object>()
-            .Select(p => $"{Get(Get(p, "Base")!, "Symbol")}^{Get(Get(p, "Exponent")!, "Numerator")}/{Get(Get(p, "Exponent")!, "Denominator")}")) + "]";
-
     private static string Dims(object? a) => a == null ? "null" : string.Join(" ", ((Array)a).Cast<object?>().Select(t => t?.ToString() ?? "null"));
 
     private static string UnitsDetailed(object? a) => a == null ? "null" : string.Join(" ", ((Array)a).Cast<object?>().Select(UnitText));

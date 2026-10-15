@@ -94,7 +94,7 @@ public sealed class Side
                            $"integral {Get(o, "m_integral")}) {DimText(Get(o, "m_dim"))}";
                 if (kind == "Mcd.RngValInterpolate") s += $" last {Bits((double)Get(o, "m_last")!)} intervals {Get(o, "m_ninterval")}";
                 return s;
-            case "Mcd.Units": return "Units " + UnitSystemDifferentialTests.UnitsText(o);
+            case "Mcd.Units": return "Units " + UnitsText(o);
             case "Mcd.num_val": return $"num_val({Bits((double)Get(o, "rp")!)}, {Bits((double)Get(o, "ip")!)})";
             case "Mpl.Run.True": return "True";
         }
