@@ -83,9 +83,9 @@ public abstract partial class MatDim
 
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim make(Dim d) => uniform_dim.make(d, 1, 1);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatValMatrixDimensionDifferentialTests")]
     public static MatDim make(MatVal m) => make(m, false);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatValMatrixDimensionDifferentialTests")]
     public static MatDim make(MatVal m, bool linear_algebra_dimensions_only)
     {
         if (m.IsUniform) return uniform_dim.make(m.m_dim, m.Rows, m.Cols);
@@ -116,25 +116,25 @@ public abstract partial class MatDim
         common = Uniform(cols);
         return common != null ? make(RC.ROW, Mult(common, rows), cols.Length) : rc_dim.make_rc(rows, cols);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatValMatrixDimensionDifferentialTests")]
     private static MatDim makeColumnVectorDim(MatVal m)
     {
         var dims = m.ColDimArray(0);
         return dims == null ? crazy_dim.make(m) : r_dim.make(dims, m.Cols);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatValMatrixDimensionDifferentialTests")]
     private static MatDim makeRowVectorDim(MatVal m)
     {
         var dims = m.RowDimArray(0);
         return dims == null ? crazy_dim.make(m) : c_dim.make(dims, m.Rows);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatValMatrixDimensionDifferentialTests")]
     private static MatDim makeArrayDim(MatVal m, bool linear_algebra_dimensions_only)
     {
         var result = makeArrayDim(m);
         return linear_algebra_dimensions_only ? result.IsLinear : result;
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatValMatrixDimensionDifferentialTests")]
     private static MatDim makeArrayDim(MatVal m)
     {
         var rows = m.ColDimArray(0);
@@ -152,7 +152,7 @@ public abstract partial class MatDim
         if (rows == null || cols == null) return crazy_dim.make(m);
         var factors = new Dim[m.Cols];
         factors[0] = Dim.identity;
-        for (int c = 1; c < factors.Length; c++)
+        for (int c = 1; c < m.Cols; c++)
         {
             factors[c] = IsScalarMultiple(rows, m.ColDimArray(c));
             if (factors[c] == null) return crazy_dim.make(m);

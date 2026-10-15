@@ -54,7 +54,7 @@ QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire
 
 No implementation source changed, no scoped mutation run was requested or used, and no acceptance exception was proposed. Independent whole-diff review passed after adding a prior-table alias observation for the `RepHasPtrs` clear. Windows/native and full merge-gate checks remain unperformed and are not claimed; the focused Linux differential run was strict and loaded the pinned Mathcad artifact. The branch is a single reviewed commit, pushed as backup, and frozen at the exact tip in the atomic handoff linked above. Next action: start the dimension-query batch on a new branch from freshly inspected current main.
 
-The next independent batch is the four dimension queries `get_IsDimless`, `IsUniformDimOf`, `get_PhysicalDimension`, and `get_UniformDimension`; isolate `get_MatrixDimension` because it crosses into MatDim factory behavior. Use the evidence analysis and exact member contracts before changing files.
+The four dimension queries `get_IsDimless`, `IsUniformDimOf`, `get_PhysicalDimension`, and `get_UniformDimension` have a separate ready handoff; do not duplicate them here. The `get_MatrixDimension` factory path is isolated in the active checkpoint below. Once that exact tip is frozen, inspect current main and handoffs again before selecting the next Lane B batch.
 
 ## MatVal dimension-property batch — active checkpoint
 
@@ -78,3 +78,27 @@ No production source changed; no scoped mutation run was requested or used and n
 Independent whole-diff review passed after adding full-coverage null-dimension assignment and an argument-to-`m_dim` reference check. This batch is a single reviewed commit, pushed as backup, and frozen at the exact tip recorded in its atomic handoff linked above. Next action: start the next independent Lane B batch from freshly inspected current main.
 
 Keep this checkpoint authoritative for Lane B; WORK is an index. Do not repeat old run logs here.
+
+## MatVal MatrixDimension / MatDim factory — active checkpoint
+
+Current main was fetched and inspected before the batch: `59df412d072ef6f74a3802dd01c12e1363c56da5` (includes the pointer-properties integration at `e68e5ac`). This batch is based on that exact tip in worktree `/root/src/quire-matval-matrix-dimension`, branch `mirror/b-matval-matrix-dimension`. Other queued handoffs remain separate; their presence is not evidence they have merged.
+
+Scope is `MatVal.get_MatrixDimension` (`0x06000454`), `MatDim.make(MatVal)` (`0x06000621`), `MatDim.make(MatVal,bool)` (`0x06000620`), `makeArrayDim(MatVal,bool)` (`0x0600064a`), `makeArrayDim(MatVal)` (`0x0600064b`), `makeColumnVectorDim(MatVal)` (`0x0600064c`), and `makeRowVectorDim(MatVal)` (`0x0600064d`). Artifact identity is mplrun Prime 12.0.1.0 SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Evidence was read from artifact-bound cached IL/C# with `python3 tools/reference/reference.py Mcd.MatDim --il` and `... Mcd.MatVal --il`; original caller `DimVal.MatDimOf` was traced without changing Lane A. Contracts are in `docs/mirror/evidence/Mcd.MatDim.md` and `Mcd.MatVal.md`.
+
+The implementation follows the observed precedence: uniform, column vector, row vector, then general array; the general path checks uniform columns, uniform rows, and scalar-multiple factors before `crazy_dim`. The bool overload applies `IsLinear` only to the general-array result. Review and the final method audit caught a source loop bound using `factors.Length`; it now follows the original's repeated `m.Cols` bound. The final scoped method inventory reports shape and structure matches for all seven selected methods. Nested dimensions, generic `make(RC,Dim[],int)`, `MatVal.ColDimArray`/`RowDimArray`, `Uniform`, and `IsScalarMultiple` remain outside this batch.
+
+Direct test file: `tests/Quire.Differential.Tests/MatValMatrixDimensionDifferentialTests.cs`; four facts execute 78 artifact-bound MethodComparison cases: getter (13), make overloads (36), array overloads (25), and vector helpers (4). Cases cover uniform precedence, column/row vectors, 1x1, uniform columns/rows, nonuniform later-column and later-row fallbacks, scalar factorization, crazy fallback, separate null-row/null-column dimension arrays, bool false/true linear selection, padded stride and offset, stale pointers, returned dimension kind/shape/cells/identity, and matrix storage/table/pointer state. The strict test command passed 4/4 facts with 0 skips and 78 comparisons:
+
+```text
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValMatrixDimensionDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+```
+
+Affected behavior command passed 11/11, 0 skipped:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDimTests|FullyQualifiedName~MatValDimensionTests' -m:1 -nr:false -p:UseSharedCompilation=false
+```
+
+Final unfiltered scoped validator command was `python3 tools/validation/validate.py --profile focused --method-type Quire.Mcd.MatVal --method-type Quire.Mcd.MatDim --results /tmp/quire-matval-matrix-dimension-final3`. It completed with Harness 36/36, Mpl 159/159, Differential 88/88, no skips; coverage lint 0, integrity complete, ratchet pass, no executed-unreachable cases or proposed exemptions. Selected seven methods have matching shape and normalized structure, and all of their lines and branches are covered. Type-wide scoped audit counts are compared 44, declaration-only 3, missing 198, structure mismatch 119, uncovered 0, verified unsupported 41; verdict `LOCAL CHECKS: pass · GATE: would pass with gaps`. This scoped receipt does not establish all-member readiness or phase completion. No mutation run was requested, no acceptance exception was proposed, and the pending 19 DimVal proposals remain unapproved. Windows/native and full runtime merge-gate checks remain unperformed.
+
+The seven selected declarations carry `MirrorVerified("MatValMatrixDimensionDifferentialTests")`, matching their evidence rows and direct comparisons. The final scoped receipt is complete and the independent whole-diff review passed; prepare the squash, backup push, and exact-tip handoff, then keep the queued tip frozen for Agent A. The next batch must start from freshly inspected current main and follow the remaining Lane B queue.
