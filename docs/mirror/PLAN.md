@@ -12,8 +12,22 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 1. **Load:** Read PLAN + [WORK.md](WORK.md). Take WORK's next batch; extract only its source,
    manifest/status rows, evidence, dependencies/callers, and tests. Confirm artifact identity; reuse valid
    contracts. Fetch missing original evidence only. Record exact overloads before implementation.
-2. **Mirror:** Apply rules below. Analyze shared dependencies once, then implement and test the batch.
-   Run affected behavior/regression and feasible differential tests; inspect failures, retain concise results.
+2. **Mirror:** Apply rules below. Keep a batch to the smallest coherent group of related types within the
+   assembly; split unrelated type groups into separate checkpoints. Analyze shared dependencies once, then
+   implement the batch. During iteration, scope validation to the changed types and their differential
+   tests, for example:
+
+   ```sh
+   python3 tools/validation/validate.py --method-type <changed types> \
+     --diff-filter 'FullyQualifiedName~<related test class>'
+   ```
+
+   This still runs the focused profile's harness and Mpl
+   regression tests; the filter only narrows differential tests. Every selected method must have a direct
+   comparison in the selected tests, or the method gate will report the coverage gap. Inspect failures and
+   retain concise results. Run mutation validation for the completed batch before review/merge, not after
+   every edit; the merge gate remains authoritative. Do not use a filtered local run to claim project-wide
+   or phase completion.
    Refresh coverage/status locally after member changes if needed (`MirrorGen manifest`; `coverage.md` and
    `status/*.txt` are generated and gitignored, see [status/README.md](status/README.md)). Implement a stub by deleting its whole `[MirrorStub]` line
    pair from `Generated/Mirror` (the gate allows only that there; constant stubs stay) and declaring the member with the same shape; never
