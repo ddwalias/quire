@@ -468,6 +468,57 @@ public class SexprDifferentialTests
         // In child, child symbol resolves in child
         Compare("Sym.walk_expression_as scoped child resolution", "Mpl.Run.Sym",
             qWalkExprAs, symChild, [qChild, formCQ], mWalkExprAs, mSymChild, [mChild, formCM]);
+
+        // Direct comparisons for Sym.walk_declaration_as:
+        // 1. macro == null (bound local): throws AppException("illegal declaration", 0u, form.handle)
+        var formDeclNoMacroQ = L(new Tok(symX, 81u), I(1));
+        var formDeclNoMacroM = ToMathcad(formDeclNoMacroQ)!;
+        Compare("Sym.walk_declaration_as no macro throws illegal declaration", "Mpl.Run.Sym",
+            qWalkDeclAs, symX, [qEnvSymLocal, formDeclNoMacroQ], mWalkDeclAs, mSymX, [mEnvSymLocal, formDeclNoMacroM]);
+
+        // 2. Bound function macro (MplQuoteMacro with length 1): throws AppException("illegal macro call", 0u, form.handle)
+        var qEnvDeclFn = new LocalEnv();
+        var mEnvDeclFn = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symDeclFn = new Sym("fnquote", null);
+        var mSymDeclFn = ToMathcad(symDeclFn)!;
+        var qQuoteMacroDecl = (MplMacro)New(typeof(MplQuoteMacro));
+        var mQuoteMacroDecl = New(M("Mpl.Run.MplQuoteMacro"))!;
+        var qTableDeclFn = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvDeclFn, "m_table")!;
+        qTableDeclFn["fnquote"] = new MacroBindingInfo(42u, qQuoteMacroDecl);
+        var mTableDeclFn = (System.Collections.IDictionary)Reflect.Get(mEnvDeclFn, "m_table")!;
+        mTableDeclFn["fnquote"] = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 42u, mQuoteMacroDecl)!;
+        var formDeclFnQ = L(new Tok(symDeclFn, 82u));
+        var formDeclFnM = ToMathcad(formDeclFnQ)!;
+        Compare("Sym.walk_declaration_as bound function macro throws illegal macro call", "Mpl.Run.Sym",
+            qWalkDeclAs, symDeclFn, [qEnvDeclFn, formDeclFnQ], mWalkDeclAs, mSymDeclFn, [mEnvDeclFn, formDeclFnM]);
+
+        // 3. Bound symbol macro expanding to SCons with integer head: throws AppException("illegal declaration", 0u, rep.handle)
+        var qEnvDeclMacro = new LocalEnv();
+        var mEnvDeclMacro = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symDeclMacro = new Sym("smdecl", null);
+        var mSymDeclMacro = ToMathcad(symDeclMacro)!;
+        var repInt = I(99, 83u);
+        qEnvDeclMacro.AddSymbolMacro(symDeclMacro, 1u, repInt);
+        Call(mEnvDeclMacro, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymDeclMacro, 1u, ToMathcad(repInt)!);
+        var formDeclMacroQ = L(new Tok(symDeclMacro, 84u), I(1));
+        var formDeclMacroM = ToMathcad(formDeclMacroQ)!;
+        Compare("Sym.walk_declaration_as symbol macro expanding to non-sym head throws illegal declaration", "Mpl.Run.Sym",
+            qWalkDeclAs, symDeclMacro, [qEnvDeclMacro, formDeclMacroQ], mWalkDeclAs, mSymDeclMacro, [mEnvDeclMacro, formDeclMacroM]);
+
+        // 4. Bound symbol macro expanding to SCons with un-macro'd bound local symbol: throws AppException("illegal declaration", 0u, rep.handle)
+        var symDeclLocal = new Sym("locdecl", null);
+        var mSymDeclLocal = ToMathcad(symDeclLocal)!;
+        qEnvDeclMacro.AddLocal(symDeclLocal, 85u);
+        Call(mEnvDeclMacro, "AddLocal", ["Sym", "UInt32"], mSymDeclLocal, 85u);
+        var symDeclMacro2 = new Sym("smdecl2", null);
+        var mSymDeclMacro2 = ToMathcad(symDeclMacro2)!;
+        var repTokLocal = new Tok(symDeclLocal, 86u);
+        qEnvDeclMacro.AddSymbolMacro(symDeclMacro2, 2u, repTokLocal);
+        Call(mEnvDeclMacro, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymDeclMacro2, 2u, ToMathcad(repTokLocal)!);
+        var formDeclMacro2Q = L(new Tok(symDeclMacro2, 87u), I(1));
+        var formDeclMacro2M = ToMathcad(formDeclMacro2Q)!;
+        Compare("Sym.walk_declaration_as symbol macro expanding to un-macro'd sym head throws illegal declaration", "Mpl.Run.Sym",
+            qWalkDeclAs, symDeclMacro2, [qEnvDeclMacro, formDeclMacro2Q], mWalkDeclAs, mSymDeclMacro2, [mEnvDeclMacro, formDeclMacro2M]);
     }
 
     [SkippableFact]
@@ -635,6 +686,58 @@ public class SexprDifferentialTests
         // In child, child-only symbol resolves in child
         Compare("Tok.walk_expression scoped child resolution", "Mpl.Run.Tok",
             qWalkExpr, qTokChild, [qChild], mWalkExpr, mTokChild, [mChild]);
+
+        // Direct comparisons for Tok.walk_pattern:
+        // 1. Uppercase symbol with macro bound: macro.ExpandRef walked as pattern
+        var qEnvTokPat = new LocalEnv();
+        var mEnvTokPat = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymUpperMacro = new Sym("UpperMacro", null);
+        var mSymUpperMacro = ToMathcad(qSymUpperMacro)!;
+        var qRepTok = I(42, 7u);
+        var mRepTok = ToMathcad(qRepTok)!;
+        qEnvTokPat.AddSymbolMacro(qSymUpperMacro, 1u, qRepTok);
+        Call(mEnvTokPat, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymUpperMacro, 1u, mRepTok);
+        var qTokUpperMacro = new Tok(qSymUpperMacro, 10u);
+        var mTokUpperMacro = ToMathcad(qTokUpperMacro)!;
+        Compare("Tok.walk_pattern uppercase with macro bound", "Mpl.Run.Tok",
+            qWalkPat, qTokUpperMacro, [qEnvTokPat], mWalkPat, mTokUpperMacro, [mEnvTokPat]);
+
+        // 2. Uppercase symbol without macro: returns this
+        var qParentTok = new LocalEnv();
+        var mParentTok = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymUpperNoMacro = new Sym("UpperNoMacro", null);
+        var mSymUpperNoMacro = ToMathcad(qSymUpperNoMacro)!;
+        qParentTok.AddLocal(qSymUpperNoMacro, 1u);
+        Call(mParentTok, "AddLocal", ["Sym", "UInt32"], mSymUpperNoMacro, 1u);
+        var qChildTok = new LocalEnv(qParentTok);
+        var mChildTok = New(M("Mpl.Run.LocalEnv"), ["MplEnv"], mParentTok)!;
+        var qTokUpperNoMacro = new Tok(qSymUpperNoMacro, 20u);
+        var mTokUpperNoMacro = ToMathcad(qTokUpperNoMacro)!;
+        Compare("Tok.walk_pattern uppercase without macro returns this", "Mpl.Run.Tok",
+            qWalkPat, qTokUpperNoMacro, [qChildTok], mWalkPat, mTokUpperNoMacro, [mChildTok]);
+
+        // 3. Lowercase symbol in LocalEnv(): env.AddLocal called and returns this
+        var qEnvTokLower = new LocalEnv();
+        var mEnvTokLower = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymLower = new Sym("lowerTok", null);
+        var mSymLower = ToMathcad(qSymLower)!;
+        var qTokLower = new Tok(qSymLower, 66u);
+        var mTokLower = ToMathcad(qTokLower)!;
+        Compare("Tok.walk_pattern lowercase registers local and returns this", "Mpl.Run.Tok",
+            qWalkPat, qTokLower, [qEnvTokLower], mWalkPat, mTokLower, [mEnvTokLower]);
+        Assert.Equal(66u, (uint)Reflect.Get(qEnvTokLower.lookup_local(qSymLower)!, "m_handle")!);
+        Assert.Equal(66u, (uint)Reflect.Get(Call(mEnvTokLower, "lookup_local", ["Sym"], mSymLower)!, "m_handle")!);
+
+        // 4. Non-symbol token (e.g. int_constant, str_constant): returns this
+        var qTokInt = I(123, 77u);
+        var mTokInt = ToMathcad(qTokInt)!;
+        Compare("Tok.walk_pattern non-sym int returns this", "Mpl.Run.Tok",
+            qWalkPat, qTokInt, [qEnvTokPat], mWalkPat, mTokInt, [mEnvTokPat]);
+
+        var qTokStr = Str("patternStr", 78u);
+        var mTokStr = ToMathcad(qTokStr)!;
+        Compare("Tok.walk_pattern non-sym str returns this", "Mpl.Run.Tok",
+            qWalkPat, qTokStr, [qEnvTokPat], mWalkPat, mTokStr, [mEnvTokPat]);
     }
 
     [SkippableFact]
@@ -1122,6 +1225,93 @@ public class SexprDifferentialTests
         Compare("SCons.walk_declaration_lhs lower, no env", "Mpl.Run.SCons", qWalkDecl, lowerQ, [null], mWalkDecl, lowerM, [null]);
         Compare("SCons.walk_pattern lower, no env", "Mpl.Run.SCons", qWalkPat, lowerQ, [null], mWalkPat, lowerM, [null]);
         Compare("SCons.walk_expression lower, no env", "Mpl.Run.SCons", qWalkExpr, lowerQ, [null], mWalkExpr, lowerM, [null]);
+
+        // Direct comparisons for SCons.walk_declaration_lhs:
+        // 1. Symbol head with no macro (bound local in parent): throws AppException("illegal declaration", 0u, handle)
+        var qParentSConsDecl = new LocalEnv();
+        var mParentSConsDecl = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symSConsNoMacro = new Sym("snomacro", null);
+        var mSymSConsNoMacro = ToMathcad(symSConsNoMacro)!;
+        qParentSConsDecl.AddLocal(symSConsNoMacro, 1u);
+        Call(mParentSConsDecl, "AddLocal", ["Sym", "UInt32"], mSymSConsNoMacro, 1u);
+        var qChildSConsDecl = new LocalEnv(qParentSConsDecl);
+        var mChildSConsDecl = New(M("Mpl.Run.LocalEnv"), ["MplEnv"], mParentSConsDecl)!;
+        var formSConsDeclNoMacroQ = L(new Tok(symSConsNoMacro, 31u), I(1));
+        var formSConsDeclNoMacroM = ToMathcad(formSConsDeclNoMacroQ)!;
+        Compare("SCons.walk_declaration_lhs symbol head no macro throws illegal declaration", "Mpl.Run.SCons",
+            qWalkDecl, formSConsDeclNoMacroQ, [qChildSConsDecl], mWalkDecl, formSConsDeclNoMacroM, [mChildSConsDecl]);
+
+        // 2. Symbol head with function macro (MplQuoteMacro with length 1): throws AppException("illegal macro call", 0u, handle)
+        var formSConsDeclFnQ = L(new Tok(symSConsFn, 32u));
+        var formSConsDeclFnM = ToMathcad(formSConsDeclFnQ)!;
+        Compare("SCons.walk_declaration_lhs function macro throws illegal macro call", "Mpl.Run.SCons",
+            qWalkDecl, formSConsDeclFnQ, [qEnvSCons], mWalkDecl, formSConsDeclFnM, [mEnvSCons]);
+
+        // 3. Symbol head with MplSymbolMacro expanding to integer head: throws AppException("illegal declaration", 0u, handle)
+        var qEnvSConsDecl = new LocalEnv();
+        var mEnvSConsDecl = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symSConsIntMacro = new Sym("mdeclint", null);
+        var mSymSConsIntMacro = ToMathcad(symSConsIntMacro)!;
+        var repIntSCons = I(99, 33u);
+        qEnvSConsDecl.AddSymbolMacro(symSConsIntMacro, 1u, repIntSCons);
+        Call(mEnvSConsDecl, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymSConsIntMacro, 1u, ToMathcad(repIntSCons)!);
+        var formSConsDeclIntMacroQ = L(new Tok(symSConsIntMacro, 34u), I(1));
+        var formSConsDeclIntMacroM = ToMathcad(formSConsDeclIntMacroQ)!;
+        Compare("SCons.walk_declaration_lhs symbol macro expanding to int head throws illegal declaration", "Mpl.Run.SCons",
+            qWalkDecl, formSConsDeclIntMacroQ, [qEnvSConsDecl], mWalkDecl, formSConsDeclIntMacroM, [mEnvSConsDecl]);
+
+        // Direct comparisons for SCons.walk_pattern:
+        // 1. Lowercase symbol head with Length == 1 in LocalEnv(): registers local and returns this
+        var qParentPat = new LocalEnv();
+        var mParentPat = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symSingle = new Sym("single", null);
+        var mSymSingle = ToMathcad(symSingle)!;
+        qParentPat.AddLocal(symSingle, 1u);
+        Call(mParentPat, "AddLocal", ["Sym", "UInt32"], mSymSingle, 1u);
+
+        var qChildPat = new LocalEnv(qParentPat);
+        var mChildPat = New(M("Mpl.Run.LocalEnv"), ["MplEnv"], mParentPat)!;
+        var formSingleQ = L(new Tok(symSingle, 44u));
+        var formSingleM = ToMathcad(formSingleQ)!;
+        Compare("SCons.walk_pattern lowercase Length 1 registers local and returns this", "Mpl.Run.SCons",
+            qWalkPat, formSingleQ, [qChildPat], mWalkPat, formSingleM, [mChildPat]);
+        Assert.Equal(44u, (uint)Reflect.Get(qChildPat.lookup_local(symSingle)!, "m_handle")!);
+        Assert.Equal(44u, (uint)Reflect.Get(Call(mChildPat, "lookup_local", ["Sym"], mSymSingle)!, "m_handle")!);
+
+        // 2. Lowercase symbol head with Length > 1 and macro == null: throws AppException("bad pattern", 0u, handle)
+        var formMultiNoMacroQ = L(new Tok(symSingle, 45u), I(1), I(2));
+        var formMultiNoMacroM = ToMathcad(formMultiNoMacroQ)!;
+        Compare("SCons.walk_pattern lowercase Length > 1 no macro throws bad pattern", "Mpl.Run.SCons",
+            qWalkPat, formMultiNoMacroQ, [qParentPat], mWalkPat, formMultiNoMacroM, [mParentPat]);
+
+        // 3. Lowercase symbol head with MplSymbolMacro: expands call and walks result as pattern
+        var qEnvPatMacro = new LocalEnv();
+        var mEnvPatMacro = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symPatMacro = new Sym("pcall", null);
+        var mSymPatMacro = ToMathcad(symPatMacro)!;
+        var patUpperTarget = S("TargetUpperPat", 50u);
+        qEnvPatMacro.AddSymbolMacro(symPatMacro, 1u, patUpperTarget);
+        Call(mEnvPatMacro, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymPatMacro, 1u, ToMathcad(patUpperTarget)!);
+        var formPatMacroQ = L(new Tok(symPatMacro, 51u), I(1), I(2));
+        var formPatMacroM = ToMathcad(formPatMacroQ)!;
+        Compare("SCons.walk_pattern lowercase symbol macro expands to upper head", "Mpl.Run.SCons",
+            qWalkPat, formPatMacroQ, [qEnvPatMacro], mWalkPat, formPatMacroM, [mEnvPatMacro]);
+
+        var symPatMacroInt = new Sym("pcallint", null);
+        var mSymPatMacroInt = ToMathcad(symPatMacroInt)!;
+        var patIntTarget = I(99, 52u);
+        qEnvPatMacro.AddSymbolMacro(symPatMacroInt, 2u, patIntTarget);
+        Call(mEnvPatMacro, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymPatMacroInt, 2u, ToMathcad(patIntTarget)!);
+        var formPatMacroIntQ = L(new Tok(symPatMacroInt, 53u), I(1));
+        var formPatMacroIntM = ToMathcad(formPatMacroIntQ)!;
+        Compare("SCons.walk_pattern lowercase symbol macro expands to int head throws bad pattern", "Mpl.Run.SCons",
+            qWalkPat, formPatMacroIntQ, [qEnvPatMacro], mWalkPat, formPatMacroIntM, [mEnvPatMacro]);
+
+        // 4. Function macro call throwing AppException("illegal macro call") in pattern walk
+        var formPatFnQ = L(new Tok(symSConsFn, 54u));
+        var formPatFnM = ToMathcad(formPatFnQ)!;
+        Compare("SCons.walk_pattern lowercase function macro throws illegal macro call", "Mpl.Run.SCons",
+            qWalkPat, formPatFnQ, [qEnvSCons], mWalkPat, formPatFnM, [mEnvSCons]);
     }
 
     [SkippableFact]

@@ -32,9 +32,9 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 | `quote` | 0x06000044 | `a3eca7e8` | `list3(token, Field1.quote, Field2.quote)`. | High | Verified |
 | `FormatTail()` | 0x06000045 | `7067159c` | `" " + Field1 + Field2.FormatTail()`. | High | Verified |
 | `ToString()` | 0x06000046 | `7de30975` | `"(" + Field1 + Field2.FormatTail() + ")"`; a null `Field2` throws. | High | Verified |
-| `walk_declaration_lhs(MplEnv)` | 0x06000047 | `38d77543` | `BadDeclaration(this)` without a head symbol, else `Key.walk_declaration_as(env, this)`. | High; against Mathcad the symbol branch runs only up to `Sym.walk_declaration_as`'s `LoadMacro` (null environment), so the final line, reached only when a macro returns, has not run | Tested |
+| `walk_declaration_lhs(MplEnv)` | 0x06000047 | `38d77543` | `BadDeclaration(this)` without a head symbol, else `Key.walk_declaration_as(env, this)`. | High; verified across non-symbol heads, symbol heads without macro, function macros throwing AppException("illegal macro call"), and symbol macros expanding to non-symbols. | Verified |
 | `walk_patterns(MplEnv, SCons)` | 0x06000048 | `e00e6f0f` | null gives `Nul.singleton`; otherwise walks the head as a pattern and the tail recursively, returning the original cell when both are unchanged (by reference), else a new cell. | High | Verified |
-| `walk_pattern(MplEnv)` | 0x06000049 | `4ddb05a3` | No head symbol: `BadPattern`. A head symbol that isn't lower case: a new cell of the head and `walk_patterns(tail)` (always a new top cell). A lower-case one: its macro expands the form and walks the result as a pattern; with no macro a one-element list adds a local `(key, handle)` and returns this, a longer one is `BadPattern`. | High; the macro branch calls `MplEnv.LoadMacro`, still a stub in Quire (Keyword/env batch), so only the other branches ran | Analyzed |
+| `walk_pattern(MplEnv)` | 0x06000049 | `4ddb05a3` | No head symbol: `BadPattern`. A head symbol that isn't lower case: a new cell of the head and `walk_patterns(tail)` (always a new top cell). A lower-case one: its macro expands the form and walks the result as a pattern; with no macro a one-element list adds a local `(key, handle)` and returns this, a longer one is `BadPattern`. | High; verified across non-symbol heads, single-element lowercase symbols registering locals, multi-element lowercase symbols without macro throwing BadPattern, symbol macros expanding calls, and function macros. | Verified |
 | `walk_expressions(MplEnv, SCons)` | 0x0600004a | `cba4af7e` | As `walk_patterns`, with `walk_expression`. | High | Verified |
 | `walk_expression(MplEnv)` | 0x0600004b | `15e2b46a` | A head symbol walks the form (`Key.walk_expression_as`). Otherwise the result is `(apply e1 e2 …)`: a new cell headed by `new Tok(apply, handle)` over `walk_expressions(env, this)`. The null-head `BadApplication` check is unreachable because `Key` already dereferences the head. An improper tail is dropped. | High | Verified |
 | `list1 … list4` | 0x0600004c, 0x0600004d, 0x0600004e, 0x0600004f | `38a6bf2f` (first) | Proper lists ending in `Nul.singleton`. | High | Verified |
@@ -43,12 +43,12 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 ## Test cases
 
 As in Mpl.Run.Sexpr.md. Direct differential comparisons against Mathcad in `SexprDifferentialTests` verify
-`SCons.walk_expression` and `SCons.walk_expressions` across symbol macro calls, function macro calls throwing
-`AppException("illegal macro call")`, non-symbol heads `(1 2 3)` and `((a b) c)` wrapping in `apply`, and
-`walk_expressions` returning a new chain when macro arguments change.
+`SCons.walk_expression`, `SCons.walk_expressions`, `SCons.walk_pattern`, and `SCons.walk_declaration_lhs` across
+symbol macro calls, function macro calls throwing `AppException("illegal macro call")`, non-symbol heads `(1 2 3)`
+and `((a b) c)` in expression and pattern positions, single-element lowercase patterns registering locals in
+`LocalEnv`, and `walk_expressions` returning a new chain when macro arguments change.
 
 ## Open
 
 - Null-environment cases in `walk_declaration_lhs` pass a null `MplEnv` to both sides; they show only that the
   environment is dereferenced before any other observable effect, not which branch follows.
-- `walk_pattern`'s lower-case branch waits for `MplEnv.LoadMacro`/`MplMacro.ExpandCall` (Keyword/env batch).

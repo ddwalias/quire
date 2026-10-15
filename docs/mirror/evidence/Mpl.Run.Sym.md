@@ -41,19 +41,18 @@ names into "".
 | `.cctor` | 0x06000088 | — | Initialises make_sym and make_symq. | High | Verified |
 | `ToString()` | 0x06000093 | `e71fa0d7` | The name alone (same IL as `name`); null for a null name. | High | Verified |
 | `quote_atom` | 0x06000094 | `4b6bb7cf` | Qualified: `(make_symbolq "name" "qualifier")`; else `(Sym "name")`, the strings as `str_constant` tokens with handle 0. | High | Verified |
-| `walk_declaration_as(MplEnv, SCons)` | 0x06000095 | `3df98eb8` | The symbol's macro (`env.LoadMacro(this)`) expands the form, whose left-hand side is then walked; with no macro, `BadDeclaration(form)`. | High; every path calls `MplEnv.LoadMacro`, a stub in Quire | Analyzed |
+| `walk_declaration_as(MplEnv, SCons)` | 0x06000095 | `3df98eb8` | The symbol's macro (`env.LoadMacro(this)`) expands the form, whose left-hand side is then walked; with no macro, `BadDeclaration(form)`. | High; verified across no macro (local symbol throwing BadDeclaration), function macro throwing AppException("illegal macro call"), and symbol macros expanding calls. | Verified |
 | `walk_definition_as(MplEnv, SCons)` | 0x06000096 | `1072839c` | `BadDeclaration(form)`; keywords override it. | High | Verified |
 | `walk_expression_as(MplEnv, SCons)` | 0x06000097 | `b8c8b715` | A lower-case symbol with a macro expands the form and walks the result. Otherwise the arguments (`form.tail`) are walked as expressions: unchanged gives `form`, changed a new cell of `form.head` and the new arguments. | High; verified across macro expansion, unchanged arguments, changed arguments, function macro throwing AppException, and scoped LocalEnv(parent) resolution. | Verified |
 
 ## Test cases
 
 As in Mpl.Run.Sexpr.md and Mpl.Run.Atom.md; constructors and factories are compared on names "a", null, "" and
-qualifiers "b", null, "". `Sym.walk_expression_as` is verified differentially against Mathcad in `SexprDifferentialTests`
-across bound local (unchanged vs changed args), bound symbol macro, chained symbol macros, function macro throwing
+qualifiers "b", null, "". `Sym.walk_expression_as` and `Sym.walk_declaration_as` are verified differentially against Mathcad in `SexprDifferentialTests`
+across bound local (unchanged vs changed args, no macro throwing BadDeclaration), bound symbol macro, chained symbol macros, function macro throwing
 `AppException("illegal macro call")`, and nested `LocalEnv(parent)` lexical scoping.
 
 ## Open
 
 - Null-environment cases (`SexprDifferentialTests`) pass a null `MplEnv` to both sides; they show only that the
   environment is dereferenced before any other observable effect, not which branch follows.
-- `walk_declaration_as` waits for `MplEnv.LoadMacro` and `MplMacro.ExpandCall` (Keyword/env batch).

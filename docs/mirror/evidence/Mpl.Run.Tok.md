@@ -26,15 +26,14 @@ An atom with the source handle it came from.
 | `quote` | 0x06000067 | `8146d0d4` | `list3(new Tok(tok, Field2), Field1.quote_atom, int_constant.zero)`. | High | Verified |
 | `.cctor` | 0x06000068 | — | Initialises tok. | High | Verified |
 | `ToString()` | 0x0600006c | `3d4570c0` | The atom's text; with a non-zero handle, `"#T" + handle in upper-case hex + " " + atom`. A null atom throws (pre-§3c Quire printed ""). | High | Verified |
-| `walk_pattern(MplEnv)` | 0x0600006d | `7fcc54c9` | Not a symbol: this. An upper-case symbol: its macro's `ExpandRef` walked as a pattern, or this with no macro. Any other symbol: `env.AddLocal(key, handle)`, then this. Empty or null names throw from the case test. | High; the macro branch calls `MplEnv.LoadMacro`, still a stub in Quire (Keyword/env batch), so only the other branches ran | Analyzed |
+| `walk_pattern(MplEnv)` | 0x0600006d | `7fcc54c9` | Not a symbol: this. An upper-case symbol: its macro's `ExpandRef` walked as a pattern, or this with no macro. Any other symbol: `env.AddLocal(key, handle)`, then this. Empty or null names throw from the case test. | High; verified across non-symbols, uppercase with macro, uppercase without macro, lowercase local registration in LocalEnv, and argument exceptions for empty/null names. | Verified |
 | `walk_expression(MplEnv)` | 0x0600006e | `d60e61f0` | Not a symbol, or not lower case: this. A lower-case symbol: its macro's `ExpandRef` walked as an expression, or this. | High | Verified |
 
 ## Test cases
 
-As in Mpl.Run.Sexpr.md. Differential tests in `SexprDifferentialTests` verify `walk_expression` across non-symbols (int, real, str, char, null), uppercase symbols, unbound lowercase symbols in empty `LocalEnv()`, bound local symbols (`AddLocal`), bound symbol macros (`AddSymbolMacro`), chained symbol macros, function macros throwing `AppException("illegal macro reference")` with exact handle matching, and scoped parent resolution and shadowing in nested `LocalEnv(parent)`.
+As in Mpl.Run.Sexpr.md. Differential tests in `SexprDifferentialTests` verify `walk_expression` and `walk_pattern` across non-symbols (int, real, str, char, null), uppercase symbols, unbound lowercase symbols in empty `LocalEnv()`, bound local symbols (`AddLocal`), bound symbol macros (`AddSymbolMacro`), chained symbol macros, function macros throwing `AppException` ("illegal macro reference" / "illegal macro call") with exact handle matching, lowercase symbols registering locals in `LocalEnv`, and scoped parent resolution and shadowing in nested `LocalEnv(parent)`.
 
 ## Open
 
 - Null-environment cases (`SexprDifferentialTests`) pass a null `MplEnv` to both sides; they show only that the
   environment is dereferenced before any other observable effect, not which branch follows.
-- The macro branch of `walk_pattern` waits for `MplEnv.LoadMacro`/`MplMacro.ExpandRef`; `walk_pattern`'s local branch for `LocalEnv.AddLocal`.

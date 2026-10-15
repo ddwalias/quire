@@ -637,4 +637,267 @@ public class SexprTests
         Assert.Equal(Sexpr.SListTag, new SList(null!, null!).m_tag);
         Assert.Equal(9, new Tag(9).m_tag);
     }
+
+    private sealed class TestQuoteMacro(Sym s) : MplMacro(s)
+    {
+        public override Sexpr ExpandCall(MplEnv e, Sexpr f) => new Qt(((SCons)f).second);
+    }
+
+    private sealed class TestCustomMacro(Sym s, Func<MplEnv, Sexpr, Sexpr> expandCall, Func<MplEnv, Tok, Sexpr>? expandRef = null) : MplMacro(s)
+    {
+        public override Sexpr ExpandCall(MplEnv e, Sexpr f) => expandCall(e, f);
+        public override Sexpr ExpandRef(MplEnv e, Tok tok) => expandRef != null ? expandRef(e, tok) : base.ExpandRef(e, tok);
+    }
+
+    [Fact]
+    public void Tok_walk_pattern_comprehensive()
+    {
+        var env = new TrackingEnv();
+
+        // 1. Non-symbol tokens return this without touching env
+        Tok intTok = I(42, 10u);
+        Assert.Same(intTok, intTok.walk_pattern(env));
+        Tok realTok = new Tok(new real_constant(3.14), 11u);
+        Assert.Same(realTok, realTok.walk_pattern(env));
+        Tok strTok = new Tok(new str_constant("text"), 12u);
+        Assert.Same(strTok, strTok.walk_pattern(env));
+        Tok charTok = new Tok(new char_constant('z'), 13u);
+        Assert.Same(charTok, charTok.walk_pattern(env));
+        Tok nullAtomTok = new Tok((Atom)null!, 14u);
+        Assert.Same(nullAtomTok, nullAtomTok.walk_pattern(env));
+        Assert.Empty(env.AddedLocals);
+
+        // Even with null env, non-symbol tokens return this
+        Assert.Same(intTok, intTok.walk_pattern(null!));
+
+        // 2. Uppercase symbol with no macro returns this
+        Tok upperTok = S("Upper", 20u);
+        Assert.Same(upperTok, upperTok.walk_pattern(env));
+        Assert.Empty(env.AddedLocals);
+
+        // 3. Uppercase symbol with macro: expands and walks replacement
+        var localEnv = new LocalEnv();
+        var symMacro = new Sym("UpperMacro", null);
+        var symTarget = new Sym("targetLocal", null);
+        localEnv.AddSymbolMacro(symMacro, 1u, new Tok(symTarget, 25u));
+
+        var tokUpperWithMacro = new Tok(symMacro, 30u);
+        var walkedUpper = tokUpperWithMacro.walk_pattern(localEnv);
+        Assert.IsType<Tok>(walkedUpper);
+        Assert.Equal("targetLocal", ((Tok)walkedUpper).Key.name);
+        Assert.Equal(25u, ((Tok)walkedUpper).handle);
+        // The expanded lowercase symbol was registered as local in localEnv!
+        Assert.NotNull(localEnv.lookup_local(symTarget));
+
+        // 4. Uppercase symbol with function macro: throws illegal macro reference
+        var symFn = new Sym("UpperFn", null);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(localEnv)!;
+        table["UpperFn"] = new MacroBindingInfo(40u, new TestFunctionMacro(symFn));
+
+        var tokFn = new Tok(symFn, 41u);
+        var exRef = Assert.Throws<AppException>(() => tokFn.walk_pattern(localEnv));
+        Assert.Equal("illegal macro reference", exRef.Message);
+        Assert.Equal(41u, exRef.Handle);
+
+        // 5. Lowercase symbol: registers local and returns this
+        var lowerTok = S("lowerVar", 50u);
+        var walkedLower = lowerTok.walk_pattern(env);
+        Assert.Same(lowerTok, walkedLower);
+        Assert.Single(env.AddedLocals);
+        Assert.Equal("lowerVar", env.AddedLocals[0].Sym.name);
+        Assert.Equal(50u, env.AddedLocals[0].Handle);
+
+        // 6. Symbols with empty/null name throw from UpId
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Tok(new Sym("", null), 60u).walk_pattern(env));
+        Assert.Throws<ArgumentNullException>(() => new Tok(new Sym(null!, null), 61u).walk_pattern(env));
+    }
+
+    [Fact]
+    public void SCons_walk_pattern_comprehensive()
+    {
+        var env = new TrackingEnv();
+
+        // 1. Key == null throws bad pattern with exact handle
+        var intHead = SCons.list2(I(1, 100u), I(2));
+        var ex1 = Assert.Throws<AppException>(() => intHead.walk_pattern(env));
+        Assert.Equal("bad pattern", ex1.Message);
+        Assert.Equal(100u, ex1.Handle);
+
+        var nestedHead = SCons.list2(SCons.list2(S("A", 101u), I(1)), I(2));
+        var ex2 = Assert.Throws<AppException>(() => nestedHead.walk_pattern(env));
+        Assert.Equal("bad pattern", ex2.Message);
+        Assert.Equal(101u, ex2.Handle);
+
+        // 2. Key.LowId with macro == null
+        // 2a. Length == 1: registers local in env and returns this
+        var singleLower = SCons.list1(S("singleVar", 102u));
+        var walkedSingle = singleLower.walk_pattern(env);
+        Assert.Same(singleLower, walkedSingle);
+        Assert.Single(env.AddedLocals);
+        Assert.Equal("singleVar", env.AddedLocals[0].Sym.name);
+        Assert.Equal(102u, env.AddedLocals[0].Handle);
+
+        // 2b. Length > 1: throws bad pattern with form.handle
+        var multiLower = SCons.list3(S("multiVar", 103u), I(1), I(2));
+        var ex3 = Assert.Throws<AppException>(() => multiLower.walk_pattern(env));
+        Assert.Equal("bad pattern", ex3.Message);
+        Assert.Equal(103u, ex3.Handle);
+
+        // 3. Key.LowId with macro != null: macro.ExpandCall(env, this).walk_pattern(env)
+        var localEnv = new LocalEnv();
+        var symPatMacro = new Sym("mexpand", null);
+        var targetUpper = S("PatUpperTarget", 104u);
+        localEnv.AddSymbolMacro(symPatMacro, 1u, targetUpper);
+
+        // 3a. Expands to uppercase call: walks tail as patterns
+        var formMacro = SCons.list3(new Tok(symPatMacro, 105u), S("argVar", 106u), I(2));
+        var walkedMacro = (SCons)formMacro.walk_pattern(localEnv);
+        Assert.Equal("PatUpperTarget", walkedMacro.head.sym.name);
+        Assert.Equal(104u, walkedMacro.head.handle);
+        // Arg lowercase symbol was walked as pattern in localEnv, registering it
+        Assert.NotNull(localEnv.lookup_local(new Sym("argVar", null)));
+
+        // 3b. Expands to non-symbol head: throws bad pattern
+        var symPatInt = new Sym("mexpandint", null);
+        localEnv.AddSymbolMacro(symPatInt, 2u, I(99, 107u));
+        var formMacroInt = SCons.list2(new Tok(symPatInt, 108u), I(1));
+        var ex4 = Assert.Throws<AppException>(() => formMacroInt.walk_pattern(localEnv));
+        Assert.Equal("bad pattern", ex4.Message);
+        Assert.Equal(107u, ex4.Handle);
+
+        // 3c. Function macro throws illegal macro call
+        var symPatFn = new Sym("mexpandfn", null);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(localEnv)!;
+        table["mexpandfn"] = new MacroBindingInfo(42u, new TestFunctionMacro(symPatFn));
+        var formMacroFn = SCons.list2(new Tok(symPatFn, 109u), I(1));
+        var ex5 = Assert.Throws<AppException>(() => formMacroFn.walk_pattern(localEnv));
+        Assert.Equal("illegal macro call", ex5.Message);
+        Assert.Equal(109u, ex5.Handle);
+
+        // 4. !Key.LowId (uppercase head): returns new SCons(head, walk_patterns(env, tail))
+        var upperForm = SCons.list3(S("UpperPat", 110u), S("arg1", 111u), S("arg2", 112u));
+        var walkedUpperForm = (SCons)upperForm.walk_pattern(env);
+        Assert.Same(upperForm.head, walkedUpperForm.head);
+        Assert.NotSame(upperForm, walkedUpperForm);
+        // Arguments walked as patterns, registering arg1 and arg2 in env
+        Assert.Contains(env.AddedLocals, l => l.Sym.name == "arg1" && l.Handle == 111u);
+        Assert.Contains(env.AddedLocals, l => l.Sym.name == "arg2" && l.Handle == 112u);
+
+        // 5. Empty and null head symbol names throw
+        Assert.Throws<ArgumentOutOfRangeException>(() => SCons.list2(S("", 113u), I(1)).walk_pattern(env));
+        Assert.Throws<ArgumentNullException>(() => SCons.list2(S(null!, 114u), I(1)).walk_pattern(env));
+    }
+
+    [Fact]
+    public void SCons_walk_declaration_lhs_comprehensive()
+    {
+        var env = new LocalEnv();
+
+        // 1. Non-symbol head throws AppException("illegal declaration", 0u, handle)
+        var intForm = SCons.list3(I(1, 201u), I(2), I(3));
+        var ex1 = Assert.Throws<AppException>(() => intForm.walk_declaration_lhs(env));
+        Assert.Equal("illegal declaration", ex1.Message);
+        Assert.Equal(201u, ex1.Handle);
+
+        var nestedForm = SCons.list2(SCons.list1(I(5, 202u)), I(2));
+        var ex2 = Assert.Throws<AppException>(() => nestedForm.walk_declaration_lhs(env));
+        Assert.Equal("illegal declaration", ex2.Message);
+        Assert.Equal(202u, ex2.Handle);
+
+        // 2. Null head throws NullReferenceException on Key dereference
+        var nullHeadForm = new SCons((Sexpr)null!, Nul.singleton);
+        Assert.Throws<NullReferenceException>(() => nullHeadForm.walk_declaration_lhs(env));
+
+        // 3. Symbol head with no macro: delegates to Sym.walk_declaration_as which throws illegal declaration
+        var symNoMacro = new Sym("unbound", null);
+        env.AddLocal(symNoMacro, 1u); // bound as local, so LoadMacro returns null
+        var formNoMacro = SCons.list2(new Tok(symNoMacro, 203u), I(1));
+        var ex3 = Assert.Throws<AppException>(() => formNoMacro.walk_declaration_lhs(env));
+        Assert.Equal("illegal declaration", ex3.Message);
+        Assert.Equal(203u, ex3.Handle);
+
+        // 4. Symbol head with quote macro: delegates to walk_declaration_as, which returns null
+        var symQuote = new Sym("quote", null);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(env)!;
+        table["quote"] = new MacroBindingInfo(42u, new TestQuoteMacro(symQuote));
+        var formQuote = SCons.list2(new Tok(symQuote, 204u), S("target", 205u));
+        Assert.Null(formQuote.walk_declaration_lhs(env));
+
+        // 5. Symbol head with macro expanding to non-symbol head: throws illegal declaration with rep.handle
+        var symIntMacro = new Sym("mint", null);
+        env.AddSymbolMacro(symIntMacro, 2u, I(88, 206u));
+        var formIntMacro = SCons.list2(new Tok(symIntMacro, 207u), I(1));
+        var ex4 = Assert.Throws<AppException>(() => formIntMacro.walk_declaration_lhs(env));
+        Assert.Equal("illegal declaration", ex4.Message);
+        Assert.Equal(206u, ex4.Handle);
+
+        // 6. Custom symbol override: Key.walk_declaration_as is invoked directly
+        var defSym = new DefSym("custom");
+        var formCustom = SCons.list2(new Tok(defSym, 208u), I(1));
+        var consResult = formCustom.walk_declaration_lhs(env);
+        Assert.NotNull(consResult);
+        Assert.Same(formCustom, consResult.Field1);
+    }
+
+    [Fact]
+    public void Sym_walk_declaration_as_comprehensive()
+    {
+        var env = new LocalEnv();
+        var sym = new Sym("testDecl", null);
+        var form = SCons.list2(new Tok(sym, 301u), I(10));
+
+        // 1. macro == null: throws AppException("illegal declaration", 0u, form.handle)
+        env.AddLocal(sym, 1u); // LoadMacro returns null
+        var ex1 = Assert.Throws<AppException>(() => sym.walk_declaration_as(env, form));
+        Assert.Equal("illegal declaration", ex1.Message);
+        Assert.Equal(301u, ex1.Handle);
+
+        // 2. macro != null, ExpandCall returns Qt: Qt.walk_declaration_lhs returns null -> method returns null
+        var symQ = new Sym("myquote", null);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(env)!;
+        table["myquote"] = new MacroBindingInfo(42u, new TestQuoteMacro(symQ));
+        var formQ = SCons.list2(new Tok(symQ, 302u), S("val", 303u));
+        var resultQ = symQ.walk_declaration_as(env, formQ);
+        Assert.Null(resultQ);
+
+        // 3. macro != null, ExpandCall returns Nul.singleton: Nul.walk_declaration_lhs returns null -> method returns null
+        var symNulMacro = new Sym("nulmacro", null);
+        table["nulmacro"] = new MacroBindingInfo(43u, new TestCustomMacro(symNulMacro, (e, f) => Nul.singleton));
+        var formNul = SCons.list2(new Tok(symNulMacro, 304u), I(1));
+        var resultNul = symNulMacro.walk_declaration_as(env, formNul);
+        Assert.Null(resultNul);
+
+        // 4. macro != null, ExpandCall returns SCons with int head: throws illegal declaration with int head handle
+        var symIntM = new Sym("intm", null);
+        env.AddSymbolMacro(symIntM, 1u, I(77, 305u));
+        var formInt = SCons.list2(new Tok(symIntM, 306u), I(1));
+        var ex2 = Assert.Throws<AppException>(() => symIntM.walk_declaration_as(env, formInt));
+        Assert.Equal("illegal declaration", ex2.Message);
+        Assert.Equal(305u, ex2.Handle);
+
+        // 5. macro != null, ExpandCall returns SCons with custom Cons-returning symbol: returns that Cons
+        var defSym = new DefSym("retCons");
+        var symMacroRetCons = new Sym("mretcons", null);
+        env.AddSymbolMacro(symMacroRetCons, 2u, new Tok(defSym, 307u));
+        var formRetCons = SCons.list2(new Tok(symMacroRetCons, 308u), I(1));
+        var resultCons = symMacroRetCons.walk_declaration_as(env, formRetCons);
+        Assert.NotNull(resultCons);
+        Assert.Equal("retCons", ((SCons)resultCons.Field1).head.sym.name);
+
+        // 6. Function macro without ExpandCall override: throws AppException("illegal macro call", 0u, form.handle)
+        var symFn = new Sym("fnmacro", null);
+        table["fnmacro"] = new MacroBindingInfo(44u, new TestFunctionMacro(symFn));
+        var formFn = SCons.list2(new Tok(symFn, 309u), I(1));
+        var ex3 = Assert.Throws<AppException>(() => symFn.walk_declaration_as(env, formFn));
+        Assert.Equal("illegal macro call", ex3.Message);
+        Assert.Equal(309u, ex3.Handle);
+    }
 }

@@ -351,7 +351,7 @@ public partial class SCons : Sexpr
     [MirrorVerified("SexprDifferentialTests")]
     public override string ToString() => "(" + Field1.ToString() + Field2.FormatTail() + ")";
 
-    [MirrorTested("Mpl.Run.SCons")]
+    [MirrorVerified("SexprDifferentialTests")]
     public override Cons walk_declaration_lhs(MplEnv env)
     {
         Sym key = Key;
@@ -369,7 +369,7 @@ public partial class SCons : Sexpr
         return h == pats.head && t == pats.Field2 ? pats : new SCons(h, t);
     }
 
-    [MirrorAnalyzed("Mpl.Run.SCons")]
+    [MirrorVerified("SexprDifferentialTests")]
     public override Sexpr walk_pattern(MplEnv env)
     {
         Sym key = Key;
@@ -505,7 +505,7 @@ public partial class Tok : Sexpr
         return "#T" + Field2.ToString("X") + " " + Field1.ToString();
     }
 
-    [MirrorAnalyzed("Mpl.Run.Tok")]
+    [MirrorVerified("SexprDifferentialTests")]
     public override Sexpr walk_pattern(MplEnv env)
     {
         Sym key = Key;
