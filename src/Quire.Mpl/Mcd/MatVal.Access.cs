@@ -11,7 +11,7 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     public override MatVal IsMatrix => this;
     [MirrorAnalyzed("Mcd.MatVal")]
-    public bool IsVector => Cols == 1;
+    public bool IsVector => Data.m_cols == 1;
     [MirrorAnalyzed("Mcd.MatVal")]
     public bool HasPtrs => m_parr != null && !IsUniformScalar;
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -41,7 +41,14 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     public bool IsRealMatrix => IsUniformScalar & !HasImag;
     [MirrorAnalyzed("Mcd.MatVal")]
-    public bool IsRealVector => IsVector && IsRealMatrix;
+    public bool IsRealVector
+    {
+        get
+        {
+            if (Data.m_cols == 1) return IsRealMatrix;
+            return false;
+        }
+    }
     [MirrorAnalyzed("Mcd.MatVal")]
     public bool IsScalarMatrix
     {
@@ -61,7 +68,11 @@ public sealed partial class MatVal
             if (HasImag) return false;
             if (m_parr != null)
                 foreach (DictionaryEntry entry in m_parr)
-                    if (IsPtrNan(ref m_rarr[(int)entry.Key]) && (entry.Value is not NumVal n || n.Imag != 0)) return false;
+                {
+                    if (!IsPtrNan(ref m_rarr[(int)entry.Key])) continue;
+                    if (entry.Value is not NumVal number) return false;
+                    if (number.Data.ip != 0.0) return false;
+                }
             return true;
         }
     }

@@ -54,6 +54,11 @@
 | get_IsDimless() | 0x0600043a | — | First require IsUniformScalar; return false without checking m_dim when that fails; otherwise return Dim.Id_b(m_dim). | Same-artifact ILSpy; 7 direct comparisons; finite cases in lane checkpoint | Verified |
 | get_PhysicalDimension() | 0x06000452 | — | Return the virtual UniformDimension property result. | Same-artifact ILSpy; 6 direct comparisons; finite cases in lane checkpoint | Verified |
 | get_UniformDimension() | 0x06000453 | — | Return mixed_matrix_dim when IsUniform is false; otherwise return m_dim. May canonicalize pointer storage through IsUniform. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsVector() | 0x0600045b | — | Return whether the raw `Data.m_cols` field equals 1; do not inspect rows, pointers, or imaginary storage. | Same-artifact IL; 6 direct comparisons | Verified |
+| get_IsRealMatrix() | 0x0600045c | — | Evaluate `IsUniformScalar` and `HasImag` in that order, then bitwise-AND their results, so both calls run; `HasImag` may clear an all-zero imaginary backing array even when uniformity is false. | Same-artifact IL; 12 direct comparisons | Verified |
+| get_IsScalarMatrix() | 0x0600045d | — | Return true for a null table; otherwise scan entries, ignore stale markers, and return false if a live pointer value is not a `NumVal`; dimensions and imaginary values do not affect the result. | Same-artifact IL; 8 direct comparisons | Verified |
+| get_IsRealMatrixMixed() | 0x0600045e | — | Call `HasImag` first and return false if imaginary backing has any nonzero/NaN value; otherwise require each live pointer to be a `NumVal` with `Data.ip == 0.0`. Stale entries are ignored; all-zero imaginary backing may be cleared. | Same-artifact IL; 12 direct comparisons | Verified |
+| get_IsRealVector() | 0x0600045f | — | Test raw `Data.m_cols == 1` first; only then call `IsRealMatrix`. Multi-column matrices return false without any `IsRealMatrix` side effects. | Same-artifact IL; 8 direct comparisons | Verified |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 

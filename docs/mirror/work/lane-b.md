@@ -99,3 +99,26 @@ python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --j
 ```
 
 No exception or unreachable proposal is made. This scoped Linux run does not establish whole-type equivalence or phase completion. Windows/native and full merge-gate checks remain unperformed. The batch was squashed in one commit, passed independent whole-diff review, was pushed as backup, and is frozen at the exact tip recorded in the [handoff](../../../../quire-handoffs/lane-b/matval-pointer-helper-remediation.md). Agent A owns integration. Do not amend this queued tip concurrently.
+
+## MatVal real-classifier fresh-main batch — queued handoff
+
+The stale classifier candidate `mirror/b-matval-real-classifiers` at `459477cf24f5a6552bb74b62db194a28290e29d6` is frozen and unmerged; its integration gate was blocked by 20 caller mutants. This follow-up is isolated on branch `mirror/b-matval-real-classifiers-current` in `/root/src/quire-matval-real-classifiers-current`, freshly based on verified clean main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. Do not amend the old branch. Only Lane B-owned `Mcd.MatVal` source, direct tests, evidence, and this checkpoint are in scope; caller tests in `DimVal`, `Iterator`, `NumVal`, and `RngVal` require coordination with their owners.
+
+Original Prime 12.0.1.0 `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; exact reference source and IL refreshed with `python3 tools/reference/reference.py Mcd.MatVal --il`. This batch covers `IsVector` (0x0600045b), `IsRealMatrix` (0x0600045c), `IsScalarMatrix` (0x0600045d), `IsRealMatrixMixed` (0x0600045e), and `IsRealVector` (0x0600045f). Original contracts are recorded in `docs/mirror/evidence/Mcd.MatVal.md`.
+
+The strict direct suite contains 46 comparisons across five facts (IsVector 6, IsScalarMatrix 8, IsRealMatrix 12, IsRealMatrixMixed 12, IsRealVector 8). It compares results, original exceptions, matrix/backing/table and pointer-object identities, and NumVal value/dimension state before and after. Cases cover logical shape and padded storage, imaginary backing including padding/NaN, stale versus live pointers, pointer value types and dimensions, canonicalization, and the multi-column `IsRealVector` short-circuit. This batch is a single reviewed commit, pushed as backup, and frozen at the exact tip recorded in its [handoff](../../../../quire-handoffs/lane-b/matval-real-classifiers-current.md).
+
+Validation commands and results:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValRealClassifiersDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped; 46 direct MethodComparison cases.
+
+python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --jobs 4
+=> /tmp/quire-validation-r26jx8ne/summary.json: Harness 36/36, Mpl 160/160, Differential 93/93; method inventory compared 46, declaration-only 0, excluded 0, missing 145, structure mismatch 106, uncovered 0, verified-unsupported 32; integrity lint 0/complete; ratchet pass; mutation 221/221 killed, zero survivors, zero accepted/proposed. Focused local checks pass and the scoped gate would pass with the listed inventory gaps.
+```
+
+The earlier integration gate for the stale classifier candidate reported 20 survivors in caller methods owned outside this batch. Its base predates current main, so it is evidence for coordination, not a current gate result. The fresh batch changes no caller files; Agent A should run the integration gate and coordinate any repeated caller blockers with their owners. No acceptance or unreachable proposal has been made. Windows/native and full merge-gate validation are not claimed.
