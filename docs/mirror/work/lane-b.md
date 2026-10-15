@@ -144,3 +144,22 @@ git diff --check
 ```
 
 No production source changed, and no acceptance or unreachable proposal is made. Windows/native phase closure and the full runtime merge gate remain unperformed; the scoped run is not a phase-completion claim. This branch is one squashed commit pushed for backup. Its exact tip and independent review verdict will be recorded in the atomic handoff.
+
+## MatVal contains(object)
+
+Branch `mirror/b-matval-contains`, worktree `/root/src/quire-matval-contains`, was freshly based on clean main `d1f744900cc2cc6c7dc43056a9f0eaf4d030ee69`. The pointer-slot-writer handoff at `def1c0b3420c2d762661e745eb866d3ff5e06a34` remains separate and was not assumed integrated. Original Prime 12.0.1.0 artifact identity was refreshed with `python3 tools/reference/reference.py Mcd.MatVal --il`: `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Exact public instance signature `Mcd.MatVal.contains(object) -> bool`, token `0x0600051a`, is recorded in `docs/mirror/evidence/Mcd.MatVal.md`. Original source/IL enumerates table values, matches by reference identity, and recursively visits only MatVal-valued entries. It ignores keys, PtrNan markers, dimensions, and value equality, and does not mutate state.
+
+The direct suite in `tests/Quire.Differential.Tests/MatValContainsDifferentialTests.cs` compares 15 finite cases in one fact. It covers null/empty tables, null query/value, same and equal-but-distinct NumVal/StrVal/object/string references, arbitrary keys, stale values, unrelated live pointer slots, nested present/absent values through multiple levels, and unchanged retained table/backing/dimension/entry identities and contents. Recursive cycles and concurrent table mutation are excluded because the original has no cycle guard and its enumeration can be invalidated.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValContainsDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 passed, 0 failed, 0 skipped; 15 direct MethodComparison cases against token 0x0600051a.
+
+git diff --check
+=> passed.
+```
+
+No production source changed, so no scoped mutation run was required. No acceptance or unreachable proposal is made. Windows/native and full merge-gate checks remain unperformed; these focused Linux checks do not establish whole-type equivalence or phase completion. Independent whole-diff review, squash, backup push and frozen handoff are pending. Remaining Lane B work follows the current queue in `WORK.md`; this branch must remain isolated from the queued pointer-slot-writer tip.
