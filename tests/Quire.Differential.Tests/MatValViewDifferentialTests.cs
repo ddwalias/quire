@@ -148,6 +148,9 @@ public class MatValViewDifferentialTests
             var q = Matrix(Side.Quire); var m = Matrix(Side.Mathcad);
             Compare("wrapper successful column " + wrapper, wrapper, [typeof(object), typeof(int)], true,
                 null, null, [q, 1], [m, 1]);
+            q = Matrix(Side.Quire); m = Matrix(Side.Mathcad);
+            Compare("wrapper first column " + wrapper, wrapper, [typeof(object), typeof(int)], true,
+                null, null, [q, 0], [m, 0]);
             Compare("wrapper invalid type " + wrapper, wrapper, [typeof(object), typeof(int)], true,
                 null, null, ["text", 0], ["text", 0]);
             foreach (int index in new[] { -1, 2 })
@@ -162,6 +165,9 @@ public class MatValViewDifferentialTests
             var q = Matrix(Side.Quire); var m = Matrix(Side.Mathcad);
             Compare("wrapper successful row " + wrapper, wrapper, [typeof(object), typeof(int)], true,
                 null, null, [q, 1], [m, 1]);
+            q = Matrix(Side.Quire); m = Matrix(Side.Mathcad);
+            Compare("wrapper first row " + wrapper, wrapper, [typeof(object), typeof(int)], true,
+                null, null, [q, 0], [m, 0]);
             Compare("wrapper invalid type " + wrapper, wrapper, [typeof(object), typeof(int)], true,
                 null, null, ["text", 0], ["text", 0]);
             foreach (int index in new[] { -1, 2 })
@@ -220,6 +226,13 @@ public class MatValViewDifferentialTests
             qNestedMethod, qCallback, [1, 0, "outside"], mNestedMethod, mCallback, [1, 0, "outside"],
             value => Show(Side.Quire, value), value => Show(Side.Mathcad, value),
             value => NestedState(Side.Quire, value), value => NestedState(Side.Mathcad, value));
+        qDestination = Shape(Side.Quire, 4, 4, 5); mDestination = Shape(Side.Mathcad, 4, 4, 5);
+        qCallback = New(qNestedType, qDestination, 1, 3, 1, 3);
+        mCallback = New(mNestedType, mDestination, 1, 3, 1, 3);
+        MethodComparison.Compare("TrimSubMatrixPtrs shifts a nonzero source row and column", Contract,
+            qNestedMethod, qCallback, [2, 2, "shifted"], mNestedMethod, mCallback, [2, 2, "shifted"],
+            value => Show(Side.Quire, value), value => Show(Side.Mathcad, value),
+            value => NestedState(Side.Quire, value), value => NestedState(Side.Mathcad, value));
         qSub = Matrix(Side.Quire, 1); mSub = Matrix(Side.Mathcad, 1);
         var qPtrTarget = Shape(Side.Quire, 2, 1, 2); var mPtrTarget = Shape(Side.Mathcad, 2, 1, 2);
         CompareInstance("private SubMatrixPtrs transforms selected pointer coordinates", "SubMatrixPtrs",
@@ -247,6 +260,9 @@ public class MatValViewDifferentialTests
         var qReverse = Shape(Side.Quire, 3, 2, 4); var mReverse = Shape(Side.Mathcad, 3, 2, 4);
         CompareInstance("set_ptrs_2_reverse uses original Rows minus row", "set_ptrs_2_reverse",
             [typeof(int), typeof(int), typeof(object)], qReverse, mReverse, [0, 1, "ptr"], [0, 1, "ptr"]);
+        qReverse = Shape(Side.Quire, 3, 2, 4); mReverse = Shape(Side.Mathcad, 3, 2, 4);
+        CompareInstance("set_ptrs_2_reverse offsets a nonzero row", "set_ptrs_2_reverse",
+            [typeof(int), typeof(int), typeof(object)], qReverse, mReverse, [1, 1, "ptr"], [1, 1, "ptr"]);
         qPtrSource = Matrix(Side.Quire, 1); mPtrSource = Matrix(Side.Mathcad, 1);
         CompareInstance("ReversePtrs maps source pointers using original coordinate", "ReversePtrs",
             [typeof(global::Quire.Mcd.MatVal)], qReverse, mReverse, [qPtrSource], [mPtrSource]);
