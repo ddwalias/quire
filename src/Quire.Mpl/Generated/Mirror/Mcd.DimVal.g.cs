@@ -11,6 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.DimVal, mplrun")]
 public abstract partial class DimVal
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static object ApplyMatVal(global::Quire.Mcd.DimVal fv, global::Quire.Mcd.DimVal mv) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

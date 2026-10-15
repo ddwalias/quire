@@ -8,7 +8,7 @@ An abstract base class for dimensioned values, providing conversion methods, cap
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `ApplyMatVal(Mcd.DimVal, Mcd.DimVal)` | 0x060006b0 | Convert mv to MatVal with error position 2; pack its elements, pass that array to fv.Apply, and return the result or propagate the first error. | High; same-artifact C# and IL show this call order. Prepared direct cases exercise element packing/application and non-matrix conversion failure; current-run result pending. | Analyzed |
+| `ApplyMatVal(Mcd.DimVal, Mcd.DimVal)` | 0x060006b0 | Convert mv to MatVal with error position 2; pack its elements, pass that array to fv.Apply, and return the result or propagate the first error. | High; same-artifact C# and IL show this call order. Current focused run passed both direct cases, matched structure, and covered every line and branch. The wider DimVal audit still has unrelated gaps. | Verified |
 | `.ctor`0()` | 0x060006ce | .ctor`0() contract | High | Verified |
 | `get_IsPolymorphic`0()` | 0x06000660 | get_IsPolymorphic`0() contract | High | Verified |
 | `get_PhysicalUnit`0()` | 0x06000661 | get_PhysicalUnit`0() contract | High | Verified |
@@ -141,10 +141,10 @@ An abstract base class for dimensioned values, providing conversion methods, cap
 - Static conversion and unit helpers.
 - Matrix extension and setter operations.
 
-**Prepared** (`DimValApplyMatValDifferentialTests`, direct `MethodComparison.Compare` cases; current-run validation pending):
+**Verified this run** (`DimValApplyMatValDifferentialTests`, direct `MethodComparison.Compare` cases; run `scratch/dimval-apply-8da5693-r3`):
 - A four-argument delegate returns all four values, checking that a 2×2 matrix is packed in row-major order and passed to `Apply`.
 - A scalar second argument fails during `asMatrix(2)` conversion before function invocation.
 
 ## Open
 
-- The existing broad DimVal record includes previously analyzed and verified members. This batch changes the `ApplyMatVal` implementation and adds direct cases; focused validation is blocked by unmerged Lane A helper symbols in Lane A source files, so no current-run evidence supports Verified. Other methods are outside this record update.
+- The full focused validation passed Harness 27/27, Mpl 159/159, and Differential 79/79, with lint 0 and ratchet ok. It exits 3 because the wider DimVal audit has 21 uncovered methods and one missing protected constructor; `ApplyMatVal` itself has matching structure, no uncovered lines/branches, and passing direct cases. Other methods are outside this record update.
