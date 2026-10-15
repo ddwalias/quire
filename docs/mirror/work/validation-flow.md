@@ -28,3 +28,24 @@ workflow benchmark).
 Merge this tooling branch through the full protected runtime gate; its receipt and any baseline update are
 recorded by the merge gate. After merging, resume the implementation lanes linked from WORK. This change does
 not establish Windows phase completion.
+
+## Two-batch integration amendment
+
+The user requested following PLAN and improving any demonstrably wasteful execution step. Two independently
+reviewed queued batches may now share one unchanged final merge gate, with at most two batches per integration
+candidate. Each retains its own coherent scope, squashed commit, ownership and checkpoint. Full combined-diff
+review and all required approvals precede validation; audit triggers use the union of both batches and count
+logical batches so frequency is retained. No gate implementation, test/mutation selection, acceptance rule or
+evidence requirement changes. Only the final candidate is validated, and the entire candidate fails together.
+
+Motivation: the pending runtime test work shares the same build, regression, coverage and audit stages; an
+accepted-mutant change also requires a full mutation audit (the current inventory contains 2,112 mutants).
+Serial gates for two such queued batches would repeat that complete pass. This amendment permits one final
+pass after both are ready, without using an interrupted/failed run as evidence. It does not claim a measured
+end-to-end speedup. Protected changes are only PLAN and validation.md; run the existing protected runtime gate
+for this amendment before using it. Independent review and the gate receipt must be recorded after execution.
+
+The earlier `02ecce1` full audit at `/tmp/quire-matval-final-runtime-gate` was interrupted after
+1,180/2,112 mutants when unmerged DimVal comparison fixes and their pending approvals were identified.
+Its gate receipt is blocked (validator exit 241, no sealed summary); it is not a passing audit or merge
+authorization. The corrected candidate still requires a fresh complete full audit.

@@ -85,6 +85,18 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      diagnostic ones, docs, lane notes) by an agent other than the author. `src/` changes in types another lane owns
      also need that lane owner's OK; protected-file changes need the maintainer. Reviewers do not run full mutation:
      the merge gate is the mutation authority.
+   - **Two-batch integration:** the maintainer may combine at most two already-reviewed queued batches on a
+     `mirror/integration-<unit>` branch from current `main`, preserving each batch's squashed commit. Each batch
+     keeps its own branch, owner, coherent scope and checkpoint. Record the original and integrated commit ids,
+     owners, review verdicts, exact approvals, and final base/tip in the lane checkpoints. Independently review
+     the complete combined diff, including conflict resolutions and accepted-mutant keys/proofs, before the gate.
+     Keep that candidate fixed during validation. Under the merge lock, run the unchanged gate once against
+     current `main`'s baseline and apply atomically only on a pass. Its changed-method scope includes both batches;
+     use `--mutate-all` if either batch or the audit schedule requires it. Count this as two logical batch merges
+     for the periodic audit schedule. Unresolved approvals and scopes lacking required runtime evidence stay out;
+     batching grants no extra protected-path or unvalidated-scope authority. Inspect the entire protected-path
+     list. Only the final combined tip is gate-validated; intermediate commits are not validated rollback targets.
+     A failed or interrupted earlier run never authorizes this candidate. See [validation.md](validation.md#merge-gate).
 
 ## 3c. Method-by-method fidelity
 

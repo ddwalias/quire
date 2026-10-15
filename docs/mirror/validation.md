@@ -371,7 +371,7 @@ order passes it, which the direct comparisons must catch.
     those tests reach, which its own direct comparisons against Mathcad (mutated under rule 1) would normally catch,
     but nothing proves it. Removing an `accepted-mutants.txt` entry and changing the Mathcad install select nothing.
   - So a maintainer audits with `--mutate-all` (every compared method; `merge_gate.py --mutate-all` or an unscoped
-    `validate.py --mutate-all`) after every 10 gate merges or weekly, whichever comes first, and after any change to
+    `validate.py --mutate-all`) after every 10 logical batch merges or weekly, whichever comes first, and after any change to
     the harness, maintainer-owned test helpers, `accepted-mutants.txt` or the Mathcad install. `--mutate-types-wide` (both
     scripts) restores the previous rule: every compared method of types whose `src/Quire.Mpl` source changed (by
     PDB path; files without method bodies select nothing) or whose comparisons live, or lived, in a changed test
@@ -421,6 +421,24 @@ python3 tools/validation/merge_gate.py <branch> --apply    # check and fast-forw
 python3 tools/validation/merge_gate.py <branch> --jobs 8   # choose the mutant worker count
 python3 tools/validation/merge_gate.py <branch> --full-validation # validate even allowlisted prose edits
 ```
+
+To share one final validation pass, the maintainer may combine **at most two** independently reviewed queued
+batches on a `mirror/integration-<unit>` branch from current `main`. Preserve each batch's squashed commit and
+its own coherent scope/checkpoint. Record original and integrated commit ids, owners, review verdicts, exact
+approvals, final base and final tip; obtain independent review of the entire combined diff, including conflict
+resolutions and accepted-mutant proofs/keys. Hold the merge lock through final base checks, gate application
+and push. Keep the candidate fixed during validation. Run the same gate on the final candidate against current
+main's baseline: its changed-method scope covers both batches. If either batch or the audit schedule needs
+`--mutate-all`, the combined gate needs it too. Two combined batches count as two logical merges toward the
+10-batch audit interval; weekly audits still apply. Reject the whole candidate on any gate failure. A failed or
+interrupted earlier audit is not a passing receipt and must not be hidden by a narrower rerun.
+
+Pending approvals and scopes without required separate runtime evidence cannot be bundled. Batching never
+grants permission for additional protected paths or `--allow-unvalidated`; inspect the complete protected-path
+list against existing exact authorization. Only the final combined tip is validated: intermediate preserved
+commits have not passed independently and are not validated rollback targets. Keep the two constituent
+checkpoints separate and link them to the same final receipt. Failure attribution can take more work, so keep
+the limit of two and use a single batch when the changes are difficult to review together.
 
 An automatic prose route skips cloning, builds, tests, coverage, auditing and mutation only when every changed
 path is one of these exact names:
