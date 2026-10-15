@@ -189,3 +189,24 @@ python3 tools/validation/validate.py --method-type Quire.Mcd.DimVal --jobs 4
 ```
 
 An initial filtered type-scoped diagnostic selected only these three facts, so it left existing `DimVal` comparisons untested and produced 125 ratchet regressions; the unfiltered receipt above is the complete scoped run. Strict comparisons loaded the pinned Mathcad artifact. No scoped mutation was run; the full runtime merge gate owns mutation. Windows/native and full runtime merge-gate checks remain unperformed, and this member result does not claim phase completion. No acceptance proposal was made. Next: obtain independent whole-diff review, squash/push, and publish a ready handoff.
+
+## MatVal ColDimArray / RowDimArray — active checkpoint
+
+Branch `mirror/b-matval-dimension-arrays`, worktree `/root/src/quire-matval-dimension-arrays`, was started from `dffea4d2b0f1` and cleanly rebased onto current local main `488ed958459a` (tip `6e8dac5d9e16` before this checkpoint update). The source and tests had no rebase conflicts. The original Prime 12.0.1.0 `mplrun.dll` identity is SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Exact signatures and tokens are `ColDimArray(int) -> Dim[]` `0x06000438` and `RowDimArray(int) -> Dim[]` `0x06000439`; contracts are in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md).
+
+The source now follows the original evaluation order: `ColDimArray` computes `Offset + c * Anr` then adds `Rows`; `RowDimArray` computes `Offset + r`, caches `Anr` once, then adds `stride * Cols`. Both check the pointer marker before reading `m_dim`, consult the pointer table only for a marked slot, and return null as soon as a live value has a nonscalar dimension. Neither performs a logical-axis bounds check. No caller or cross-lane source was changed.
+
+`MatValDimensionArraysDifferentialTests` contains two facts and 22 direct `MethodComparison` cases (11 per method). The cases cover padded/nonzero-offset layouts, live NumVal and nested MatVal dimensions, recursive child state and identity, stale pointers, early nonscalar null, malformed live pointer entries, zero-area results, and physically safe indices outside logical shape. The comparison observer records returned dimension values/aliases, exceptions, and before/after matrix and nested-child state.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatVal' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 44 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValDimensionArraysDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 2 passed, 0 failed, 0 skipped; 22 direct comparisons against the pinned artifact.
+
+git diff --check
+=> passed.
+```
+
+These are affected behavior and targeted direct checks only. `git diff --check` passed. An independent whole-diff review initially found that the malformed-object fixture was a `StrVal`; it was replaced with `new object()` and both commands above were rerun successfully. Reviewer `lane_b_pointer_review` passed the corrected exact tip `0595d535e2eea262444589c5af75a51ab8499e07`; the final checkpoint amendment is documentation-only. Scoped mutation, Windows/native validation, and the full runtime merge gate have not been run; no phase-completion claim or mutant exception proposal is made. No additional approval is required for this scope. Next: review the final checkpoint amendment, push the squashed branch for backup, and publish its atomic frozen handoff.

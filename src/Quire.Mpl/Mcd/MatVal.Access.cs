@@ -171,16 +171,21 @@ public sealed partial class MatVal
     public Dim[] ColDimArray(int c)
     {
         var result = new Dim[Rows];
-        int start = Index(0, c), end = start + Rows, item = 0;
+        int start = Offset + c * Anr;
+        int end = start + Rows;
+        int item = 0;
         for (int index = start; index < end; index++)
         {
-            Dim value = m_dim;
             if (IsPtrNan(ref m_rarr[index]))
             {
-                value = DimVal.DimOf(m_parr[index]);
+                Dim value = DimVal.DimOf(m_parr[index]);
                 if (Dim.NonScalar_b(value)) return null;
+                result[item++] = value;
             }
-            result[item++] = value;
+            else
+            {
+                result[item++] = m_dim;
+            }
         }
         return result;
     }
@@ -188,16 +193,22 @@ public sealed partial class MatVal
     public Dim[] RowDimArray(int r)
     {
         var result = new Dim[Cols];
-        int start = Index(r, 0), end = start + Anr * Cols, item = 0;
-        for (int index = start; index < end; index += Anr)
+        int start = Offset + r;
+        int stride = Anr;
+        int end = start + stride * Cols;
+        int item = 0;
+        for (int index = start; index < end; index += stride)
         {
-            Dim value = m_dim;
             if (IsPtrNan(ref m_rarr[index]))
             {
-                value = DimVal.DimOf(m_parr[index]);
+                Dim value = DimVal.DimOf(m_parr[index]);
                 if (Dim.NonScalar_b(value)) return null;
+                result[item++] = value;
             }
-            result[item++] = value;
+            else
+            {
+                result[item++] = m_dim;
+            }
         }
         return result;
     }
