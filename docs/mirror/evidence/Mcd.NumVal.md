@@ -81,3 +81,14 @@
 
 - `Quire.Mcd.NumVal.get_IsReal`: conditional branches: Quire 1, Mathcad 0. Original IL in Mathcad Prime 12 (`mplrun.dll` token `0x06000583`) is `ldarg.0; ldflda Data; ldfld ip; ldc.r8 0.0; ceq; ret`. C# cannot return comparison bool as int without branching in debug build; original IL emitted direct `ceq; ret`.
 
+## Scope reconciliation (2026-10-15)
+
+The Phase 1 checkpoint in `docs/mirror/work/lane-b.md` reported a manifest-shape failure for
+`Mcd.NumVal.Compare`. Rechecked on `local/windows-main` (`08946db27e3950d51001192cfa98898d812c40b7`):
+`docs/mirror/manifest/Quire.Mpl.txt` has no `Mcd.NumVal.Compare` row, and the hand-written source and generated
+`NumVal` declaration have no such member. The installed `mplrun.dll` reference above was read again with
+`tools/reference/reference.py Mcd.NumVal --il`; its complete member index has no `Compare` method or token.
+This reported blocker is not present in the current manifest or original artifact, so it is out of scope for
+implementation and has no direct-comparison test. The previous checkpoint note is corrected in
+`docs/mirror/work/lane-b.md`. Checkpoint and validation scope: [Lane A](../work/lane-a.md#numvalcompare-scope-correction).
+

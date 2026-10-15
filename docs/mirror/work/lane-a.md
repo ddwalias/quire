@@ -1,18 +1,91 @@
-# Lane A Work Checkpoint
+# Lane A work checkpoint
 
-## Lane Scope
-1. **Unit 1: Sexpr family** (18 types: `Sexpr`, `Nul`, `SCons`, `Tok`, `Qt`, `Bq`, `Cm`, `Ca`, `SAppend`, `SList`, `Tag`, `Atom`, `Sym`, `Cons`, `char_constant`, `int_constant`, `real_constant`, `str_constant`). Tests: `SexprDifferentialTests.cs`.
-2. **Unit 2: MplRunHelpersDifferentialTests.cs**: Cons lists, VecBuilder, Tuple, MplSignature, True.
-3. **Unit 3: *DifferentialTests.cs**:
-   - **Unit 3a**: `Rational`, `Utilities`. Tests: `RationalDifferentialTests.cs`, `UtilitiesDifferentialTests.cs`.
-   - **Unit 3b**: `AppException`, `Type`, `UnitSystem`, `RuntimeOptions`. Tests: `AppExceptionDifferentialTests.cs`, `TypeDifferentialTests.cs`, `UnitSystemDifferentialTests.cs`, `RuntimeOptionsDifferentialTests.cs`.
-4. **Unit 4: Batch 2e**: Remaining unclassified/stub members.
+Updated: 2026-10-15. Phase 1 remains open; Windows phase closure has not run.
+Read [PLAN](../PLAN.md) before starting a batch.
 
-Lane B owns `MatVal*`, `MatDim`, `Function*`, `FunctionUtilities`, `DimVal.ApplyMatVal`, and `Quire.Engine`.
+## Ownership
 
----
+Lane A owns the S-expression family and runtime helpers (`Cons`, `VecBuilder`, `True`, `Tuple`,
+`MplSignature`), `Rational`, `Utilities`, `AppException`, `Type`, `UnitSystem`, `RuntimeOptions`,
+and remaining runtime batch members outside Lane B. Lane B owns `MatVal*`, `MatDim`, `Function*`,
+`FunctionUtilities`, `DimVal.ApplyMatVal`, and `Quire.Engine`.
 
-## Unit Summary & Status Table
+## Next batch: token pattern walking
+
+Start a new `mirror/a-tok-pattern` branch from current `main`. Scope is exactly
+`Quire.Mpl.Run.Tok.walk_pattern(MplEnv)` and its direct differential tests in
+`tests/Quire.Differential.Tests/SexprDifferentialTests.cs`:
+
+1. Read the existing [Tok evidence](../evidence/Mpl.Run.Tok.md), exact original overload and its
+   `LoadMacro`, `ExpandRef`, `AddLocal` contracts. Reuse artifact-bound evidence that still matches.
+2. Add direct original/Quire cases for the uppercase macro lookup/expansion path and lowercase
+   local registration path, including observed handle/state changes. The current audit leaves
+   `src/Quire.Mpl/Run/Sexpr.cs:516` and `:519` unexecuted. Confirm the precise reachable cases from
+   the original before changing implementation or marking the method Verified.
+3. Run affected behavior tests and:
+   `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~SexprDifferentialTests'`.
+   Record actual commands/counts/case limits here; obtain independent whole-diff review, then queue
+   one full runtime merge gate. Do not treat existing coverage deficits as newly verified behavior.
+
+After that batch, independently scope `SCons.walk_pattern(MplEnv)` (missing lowercase binding,
+macro expansion and bad-pattern cases), then `Tok.walk_expression(MplEnv)` (macro lookup/expansion).
+Keep unrelated types in separate batches. If a path needs an approval proposal, record its exact
+proof and continue the next independent batch while approval is pending.
+
+## Current method audit, separate from historical merges
+
+Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run
+`e4ecd053-57b6-4787-a8ac-e284bebae831`, carried into baseline commit `c011f35`.
+This is a previously executed runtime gate report, not a new validation run for this documentation change.
+Its project-wide counts are 719 compared, 925 missing, 137 structure mismatches, 42 uncovered and
+81 unsupported Verified statuses; `complete` is false. A passing ratchet permits existing gaps and
+never establishes phase completion.
+
+| Lane A type | Missing direct comparisons | Uncovered methods | Unsupported Verified statuses |
+|---|---:|---:|---:|
+| `Atom` | 1 | 0 | 1 |
+| `Sexpr` | 1 | 6 | 6 |
+| `SCons` | 0 | 3 | 1 |
+| `Sym` | 0 | 3 | 1 |
+| `Tok` | 0 | 2 | 0 |
+| `AppException` | 0 | 1 | 1 |
+| `Mcd.Type` | 1 | 0 | 0 |
+
+Exact remaining members in those types:
+
+- Missing direct comparisons: `Atom..ctor(int)`, `Sexpr..ctor(int)`, `Mcd.Type..ctor()`.
+  Abstract base construction needs a direct comparison approach; caller coverage does not satisfy it.
+- `Sexpr`: `get_quotation`, `get_quote`, `get_scons`, `WalkModule(MplEnv,Sexpr)`,
+  `walk_pattern(MplEnv)`, `walk_expression(MplEnv)`.
+- `SCons`: `walk_declaration_lhs(MplEnv)`, `walk_pattern(MplEnv)`, `walk_expression(MplEnv)`.
+- `Sym`: `walk_declaration_as(MplEnv,SCons)`, `walk_definition_as(MplEnv,SCons)`,
+  `walk_expression_as(MplEnv,SCons)`.
+- `Tok`: `walk_pattern(MplEnv)`, `walk_expression(MplEnv)`.
+- `AppException.Raise(object[],uint)`.
+
+Some uncovered locations follow helpers that throw. Verify original reachability before proposing exact
+unreachable-line entries; never reshape source to hide them. No new acceptance proposal is made here.
+This is a queue for the listed scopes, not an exhaustive list of all remaining Lane A runtime types.
+`Rational`, `Utilities`, `UnitSystem` and `RuntimeOptions` have no missing/structure/uncovered methods in
+this report; their passing recorded cases still do not prove every possible input.
+
+## NumVal.Compare scope correction
+
+Rebased `mirror/a-numval-compare` onto `main` at `c011f35`; resolved WORK's prose conflict by retaining
+its short index. The requested `Mcd.NumVal.Compare` has no source/generated declaration, current manifest
+row or member/token in the installed original. No implementation or test should be invented for it.
+Artifact identity and the original inspection command are in [NumVal evidence](../evidence/Mcd.NumVal.md).
+The obsolete Lane B blocker is corrected in [Lane B](lane-b.md).
+
+Changes: this checkpoint, the NumVal evidence scope note and Lane B's NumVal note. No runtime behavior,
+tests, manifest or protected policy changed. Source/manifest inspection and `git diff --check` passed;
+no new runtime/mutation tests were run for this documentation correction. Evidence edits require the
+full runtime merge gate even though this batch changes documentation only.
+
+## Historical batch results
+
+These are results recorded at the named historical merges, not current completion claims. The old
+Unit 4 claim of full settlement was a classification checkpoint and is superseded by the audit above.
 
 | Unit | Types / Scope | Branch | Status | Direct Comparisons | Structure Mismatches | Lint | Ratchet | Mutants Killed |
 |---|---|---|---|---|---|---|---|---|
@@ -20,51 +93,9 @@ Lane B owns `MatVal*`, `MatDim`, `Function*`, `FunctionUtilities`, `DimVal.Apply
 | **Unit 2** | `Cons`, `VecBuilder`, `True`, `Tuple`, `MplSignature` | `main` (`20b2017`) | **Merged to main** via `merge_gate.py --apply` | 40 | 0 | 0 | ok | 87 / 87 (0 survivors) |
 | **Unit 3a** | `Rational`, `Utilities` | `main` (`4fc4a72`) | **Merged to main** via `merge_gate.py --apply` | 31 | 0 | 0 | ok | 114 / 117 (3 accepted survivors) |
 | **Unit 3b** | `AppException`, `Type`, `UnitSystem`, `RuntimeOptions` | `main` (`d7b5a63`) | **Merged to main** via `merge_gate.py --apply` | 165 | 0 | 0 | ok | 655 / 678 (23 accepted survivors) |
-| **Unit 4** | Remaining batch 2e unclassified members | `main` | **Fully Settled** (0 stubs / 0 unclassified members) | 100% | 0 | 0 | ok | N/A |
+| **Unit 4** | Remaining batch 2e unclassified members | `main` | **Historical classification checkpoint only; current audit gaps remain** | Not established | Not established | Not rerun | Not rerun | N/A |
 
----
 
-## Equivalent Mutants Ready for Maintainer Review & Acceptance
-
-Because `docs/mirror/accepted-mutants.txt` is a protected maintainer-owned file, the following provably equivalent or hardware crash mutants have been reviewed, verified, and documented here for maintainer addition:
-
-### From Unit 1 (`mirror/a-sexpr`)
-```text
-Quire.Mpl.Run.SList::ToString`0()->[System.Runtime]System.String|False@IL_0030 ldc.i4.5 -> ldc.i4.6 # trailing null in string.Concat string[] ignored by runtime
-```
-*Rationale:* In `SList.ToString()`, `return "(SLIST# " + FormatCons(Field1) + " " + Field2.ToString() + ")";` compiles to `string.Concat(new string[5] { ... })`. Mutating `ldc.i4.5` to `ldc.i4.6` allocates a 6-element array whose 6th element is uninitialized (`null`). In .NET, `string.Concat(string[])` ignores null elements, producing an identical string.
-
-### From Unit 3a (`mirror/a-rational`)
-```text
-Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0019 add -> sub # pointer subtraction p - idx*8 writes before buffer, crashing test runner with uncatchable SIGSEGV
-Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0022 sub -> add # loop counter increment ++idx creates unbounded pointer progression, crashing test runner with uncatchable SIGSEGV
-Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0030 ldc.i4.0 -> ldc.i4.1 # Roslyn compiler cleanup of pinned pointer local before ret (dead store)
-```
-*Rationale:* In `ScaleVector`, pointer indexing mutations mutate unmanaged pointer arithmetic to read/write unmapped virtual pages, triggering native OS segmentation violations (SIGSEGV) that abort the managed testhost process. The final mutant is a compiler-generated dead store zeroing the pinned pointer local variable right before returning.
-
-### From Unit 3b (`mirror/a-options`)
-```text
-Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False@IL_0004 ldc.i4.0 -> ldc.i4.1 # Passing initial 0u vs 1u handle to this(...) is immediately overwritten by Tag = tag masking m_handle & 0xFFFF0000u
-Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0018 ldc.i4.1 -> ldc.i4.0 # Redundant bounds check when at == message.Length - 1; Substring(at + 1) is empty and uint.TryParse("") returns false, falling back to same ChainTaggedError(message, uint.MaxValue)
-Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0019 sub -> add # Redundant bounds check arithmetic when at == message.Length - 1; empty string fails uint.TryParse("")
-Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_002f ldc.i4.0 -> ldc.i4.1 # Inverted boundary check on empty suffix recurses infinitely aborting test process with fatal CLR stack overflow before comparison can record
-Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0037 add -> sub # Subtracting delimiter offset recurses infinitely with identical substring aborting test process with fatal CLR stack overflow before comparison can record
-Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False@IL_0012 ldc.i4.s 77 -> 78 # Switch binary split threshold; character 78 ('N') routes to default null return under both partitions
-Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False@IL_005e ldc.i4.1 -> ldc.i4.0 # Dead boolean store for while(true) loop followed by unconditional branch br.s back to loop head
-Quire.Mcd.Type::ToString`0()->[System.Runtime]System.String|False@IL_0001 ldc.i4 256 -> 257 # Initial StringBuilder capacity has no observable behavior on returned string
-Quire.Mcd.Type::Format`0()->[System.Runtime]System.String|False@IL_0001 ldc.i4 256 -> 257 # Initial StringBuilder capacity has no observable behavior on returned string
-Quire.Mcd.Type+Factory::.ctor`0()->[System.Runtime]System.Void|False@IL_0001 ldc.i4.s 32 -> 33 # Initial Stack capacity has no observable effect on stack behavior
-Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_000f ldc.i4.s 67 -> 68 # Switch binary split threshold; character 68 ('D') is handled identically under both partitions
-Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_007c ldc.i4.s 93 -> 94 # Dead character parameter passed to SkipToken which ignores its argument and unconditionally advances lexer
-Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_00fa ldc.i4.s 125 -> 126 # Dead character parameter passed to SkipToken which ignores its argument and unconditionally advances lexer
-Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_0175 ldc.i4.s 41 -> 42 # Dead character parameter passed to SkipToken which ignores its argument and unconditionally advances lexer
-Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False@IL_000b ldc.i4.s 68 -> 69 # Binary search switch partition threshold; character 69 ('E') is not a switch case and routes identically to default under both partitions
-Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False@IL_0003 ldc.i4.0 -> ldc.i4.1 # Roslyn compiler lock pattern initialization of lockTaken flag before Monitor.Enter
-Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False@IL_009d brfalse.s -> brtrue.s # Roslyn compiler lock pattern finally branch on lockTaken after uncontested monitor acquisition
-Quire.Mcd.UnitSystem::set_Basis`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False@IL_00a1 ldc.i4.1 -> ldc.i4.0 # Storing false vs true in m_unit_syms hashtable used solely via ContainsKey has no observable behavior
-Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False@IL_0027 ldc.i4.1 -> ldc.i4.0 # Initial capacity of internal ArrayList(1) has no observable behavior
-Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False@IL_006e ldc.i4.1 -> ldc.i4.0 # Initial capacity of internal ArrayList(1) has no observable behavior
-Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True@IL_0002 ldc.i4.0 -> ldc.i4.1 # Square matrix dimension bounds: GetUpperBound(0) and GetUpperBound(1) are identical
-Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True@IL_0068 ldc.i4.1 -> ldc.i4.0 # When pivot matrix[j,j] is small, starting search loop k at j vs j+1 is skipped immediately by IsSmall(matrix[j,k]) continue
-Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False@IL_00b5 ldc.i4.1 -> ldc.i4.0 # When Scalar == 1 and first > 0, skipping early return divides vector by 1, producing identical vector
-```
+Historical mutant proposals and reasoning remain in Git history. They are not a current approval queue;
+consult `accepted-mutants.txt` for existing accepted keys. Under current PLAN rules, test-host crashes
+count as killed mutants and must never be proposed for equivalence acceptance.

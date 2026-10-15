@@ -25,7 +25,7 @@ Updated: 2026-10-15
 
 ## Reviewed out-of-scope blocker
 
-The Windows Phase 1 run of the Engine branch passed Harness 27, Mpl 159, Differential 75, Engine 94, Calculation 8, EquationEditor 88, Core 7, and Controls 16. Mirror.Tests had 31/32 pass; the sole failure expected `Mcd.NumVal.Compare`, which the manifest lists but the unchanged Lane A source and generated file do not define. The `Quire.Mcd.NumVal` source, generated file, manifest, and shape test were identical on main and the validated Engine revision. An independent reviewer confirmed this is pre-existing and outside Lane B; it remains for Lane A.
+The Windows Phase 1 run of the Engine branch was recorded as having a Mirror.Tests failure for `Mcd.NumVal.Compare`, with the checkpoint claiming the manifest listed the member. Rechecked after the workflow-rules update on `local/windows-main` (`08946db27e3950d51001192cfa98898d812c40b7`), the `Quire.Mpl` manifest has no `Mcd.NumVal.Compare` row; the current source and generated declaration also omit it. The installed `mplrun.dll` member index for `Mcd.NumVal` has no `Compare` method. See the scope reconciliation in [Mcd.NumVal evidence](../evidence/Mcd.NumVal.md). There is no current member to implement or validate; the earlier checkpoint result does not establish a current blocker.
 
 ## Working rules
 
