@@ -23,6 +23,9 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    Reference durable records rather than repeating findings or old logs. Stop at the evidence-supported boundary.
 4. **Merge:** Work on a branch per batch, based on current `main`; only the [merge gate](validation.md#merge-gate)
    merges into `main`.
+   A surviving mutant needs a stronger case; only a provably equivalent one may be proposed (`<key> # reason` in
+   the lane file or a scratch file, passed to local runs as `--proposed-mutants`). The user approves, a maintainer
+   moves it into `accepted-mutants.txt`. A mutant that crashes the test host is killed, never proposed.
 
 ## 3c. Method-by-method fidelity
 

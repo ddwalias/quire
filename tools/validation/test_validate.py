@@ -166,6 +166,20 @@ class MissingShapeTests(unittest.TestCase):
 
 
 class PrivateCopyTests(unittest.TestCase):
+    def test_gate_runs_refuse_proposed_mutants(self):
+        import os, subprocess, sys
+        with tempfile.TemporaryDirectory() as directory:
+            proposals = Path(directory) / "proposed.txt"
+            proposals.write_text("")
+            for gate in (["--mutate-since", "main"], ["--write-baseline", str(Path(directory) / "b.json")]):
+                with self.subTest(gate=gate):
+                    result = subprocess.run([sys.executable, "-I", "-B", str(Path(__file__).parent / "validate.py"),
+                                             "--proposed-mutants", str(proposals), *gate],
+                                            env=dict(os.environ, QUIRE_VALIDATOR_REPO=directory),
+                                            capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 2)
+                    self.assertIn("--proposed-mutants is for local runs", result.stderr)
+
     def test_validator_runs_isolated_from_a_copy(self):
         import os, shutil, subprocess, sys
         with tempfile.TemporaryDirectory() as directory:

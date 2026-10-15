@@ -162,6 +162,8 @@ def verdict(summary):
         reasons.append('ratchet did not run')
     elif not ratchet['ok']:
         reasons += [f'regression: {r}' for r in ratchet['regressions']]
+    if summary.get('proposed_mutants'):
+        reasons.append('validation used --proposed-mutants; only accepted-mutants.txt may excuse a survivor')
     if summary.get('mutation', {}).get('survivors'):
         reasons += [f'surviving mutant: {s}' for s in summary['mutation']['survivors']]
     if not reasons and not summary.get('gate_passed'):
@@ -233,6 +235,7 @@ def main():
             command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
                        '--mutate-since', base, '--write-baseline', str(outputs / 'baseline.json'),
                        '--timeout', str(args.timeout)]
+            assert '--proposed-mutants' not in command, 'proposed mutants are for local runs; the gate accepts none'
             print('Validating:', ' '.join(command), flush=True)
             code = subprocess.run(command, cwd=tree).returncode
             summary_path = results / 'summary.json'

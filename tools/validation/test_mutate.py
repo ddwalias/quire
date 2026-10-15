@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 import unittest
 from unittest import mock
-from mutate import key, run, select
+from mutate import key, reasons, run, select
 
 FAKE_DOTNET = """#!{python}
 import os, sys
@@ -84,9 +84,9 @@ class MutationTests(unittest.TestCase):
         self.coverage = {'methods': [self.method, dict(self.method, type='Quire.Other'),
                                      dict(self.method, signature='Stub()', validation='missing')]}
 
-    def mutate(self, accepted=frozenset(), jobs=1):
+    def mutate(self, accepted=frozenset(), jobs=1, proposed=None):
         return run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl',
-                   str(self.dotnet), jobs=jobs, accepted_keys=accepted)
+                   str(self.dotnet), jobs=jobs, accepted_keys=accepted, proposed=proposed)
 
     def test_only_compared_methods_of_selected_types(self):
         self.assertEqual(len(select(self.coverage, {'Quire.T'})), 3)
@@ -109,6 +109,19 @@ class MutationTests(unittest.TestCase):
                 self.assertFalse(report['complete'])
         survivor = key(self.method, self.method['mutants'][1])
         self.assertTrue(self.mutate({survivor})['complete'])
+
+    def test_proposed_survivors_reported_apart(self):
+        survivor = key(self.method, self.method['mutants'][1])
+        killed = key(self.method, self.method['mutants'][0])
+        path = Path(self.directory.name) / 'proposed.txt'
+        path.write_text(f'# proposals\n{survivor} # dead branch\n{killed} # wrong\nQuire.Gone::X()@IL_0000 nop # gone\n')
+        report = self.mutate(proposed=reasons(path))
+        self.assertTrue(report['complete'])
+        self.assertEqual(report['survivors'], [])
+        self.assertEqual(report['proposed_survivors'], [{'key': survivor, 'reason': 'dead branch'}])
+        self.assertEqual(report['stale_proposed'], sorted([killed, 'Quire.Gone::X()@IL_0000 nop']))
+        accepted_too = self.mutate({survivor}, proposed=reasons(path))
+        self.assertEqual((accepted_too['proposed_survivors'], accepted_too['accepted_survivors']), ([], 1))
 
     def test_only_a_recorded_mismatch_kills(self):
         result = {r['key']: r['outcome'] for r in self.mutate()['mutants']}

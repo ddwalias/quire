@@ -181,6 +181,9 @@ def main():
     parser.add_argument("--jobs", type=int, default=4, help="parallel mutant test runs (default: 4)")
     parser.add_argument("--baseline", type=Path, help="ratchet baseline (default: docs/mirror/validation-baseline.json)")
     parser.add_argument("--write-baseline", type=Path, help="write this run's counts as a baseline (unscoped runs only)")
+    parser.add_argument("--proposed-mutants", type=Path, metavar="PATH",
+                        help="local runs only: `<key> # reason` equivalent mutants proposed for maintainer review; "
+                             "their survivors are reported apart and do not fail the run")
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
@@ -190,6 +193,11 @@ def main():
         parser.error("--mutate needs --method-type; use --mutate-since for unscoped runs")
     if (args.mutate or args.mutate_since) and args.profile != "focused":
         parser.error("mutation runs in the focused profile")
+    if args.proposed_mutants and (args.mutate_since or args.write_baseline):
+        parser.error("--proposed-mutants is for local runs; the gate (--mutate-since, --write-baseline) accepts only "
+                     "docs/mirror/accepted-mutants.txt")
+    if args.proposed_mutants and not args.proposed_mutants.is_file():
+        parser.error(f"--proposed-mutants: {args.proposed_mutants} is not a file")
     if args.write_baseline and args.method_type:
         parser.error("--write-baseline needs an unscoped run")
     if args.profile == "phase" and os.name != "nt":
@@ -231,6 +239,7 @@ def main():
         baseline = json.loads(baseline_path.read_text()) if baseline_path.is_file() else None
         deviations = method_coverage.accepted_deviations(ROOT)
         accepted_mutants = mutate.accepted()
+        proposed_mutants = mutate.reasons(args.proposed_mutants) if args.proposed_mutants else {}
         lint_findings = integrity_module.lint(ROOT)
         global_json = (ROOT / "global.json").read_bytes() if (ROOT / "global.json").is_file() else b"{}\n"
         args.dotnet = resolve_dotnet(args.dotnet, ROOT)
@@ -374,12 +383,19 @@ def main():
         if mutate_types:
             print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
-                                  args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json)
+                                  args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json,
+                                  proposed_mutants)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
-            report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors")}
+            report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
+                                                           "proposed_survivors", "stale_proposed")}
             mutation_ok = mutation["complete"]
             print(f"Mutation: {mutation['killed']}/{mutation['total']} killed; survivors {len(mutation['survivors'])}", flush=True)
+            if args.proposed_mutants:
+                print(f"Proposed (not yet accepted): {len(mutation['proposed_survivors'])} survivors; "
+                      f"stale proposals {mutation['stale_proposed']}", flush=True)
+        if args.proposed_mutants:
+            report["proposed_mutants"] = str(args.proposed_mutants.resolve())
         report["complete"] = coverage["complete"] and integrity["complete"] and mutation_ok
         # The merge gate needs green tests, no regression and no surviving mutant; completeness is the end goal.
         report["gate_passed"] = ratchet_report["ok"] and mutation_ok

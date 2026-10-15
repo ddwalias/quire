@@ -92,6 +92,7 @@ class MergeGateTests(unittest.TestCase):
             ({k: v for k, v in PASSED.items() if k != 'ratchet'}, 'ratchet did not run'),
             (dict(PASSED, ratchet={'ok': False, 'regressions': ['T: missing rose']}), 'regression: T: missing rose'),
             (dict(PASSED, mutation={'survivors': ['T::M()@IL_0004 add -> sub']}), 'surviving mutant'),
+            (dict(PASSED, proposed_mutants='/tmp/proposals.txt'), 'used --proposed-mutants'),
             (dict(PASSED, gate_passed=False), 'did not report gate_passed'),
         ]
         for summary, reason in cases:

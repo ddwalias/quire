@@ -198,7 +198,12 @@ order passes it, which the direct comparisons must catch.
   in a worker under the same parallel load) is killed with its process tree and counts as killed (`timeouts`), so a test
   that stalls deliberately would also kill mutants; the lint forbids sleeps and delays.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
-  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
+  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). An agent proposes one in a scratch file or
+  its lane file, same format, and passes `--proposed-mutants PATH` to local runs: those survivors are listed apart
+  under `proposed_survivors` (with reasons) and do not fail the run, and `stale_proposed` lists proposals that
+  matched no surviving mutant (killed, already accepted or not run). The user approves a proposal; a maintainer
+  moves it into `accepted-mutants.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
+  merge gate blocks any summary that used it. `--jobs` sets parallel copies.
   `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
   nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in an added,
   changed or deleted differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie

@@ -24,12 +24,18 @@ def key(method, mutant):
     return f"{method['type']}::{method['signature']}@IL_{mutant['il_offset']:04x} {mutant['description']}"
 
 
+def reasons(path):
+    """Mutant key -> reason of a `<key> # reason` per line file; empty when it does not exist."""
+    if not Path(path).is_file():
+        return {}
+    entries = (line.partition(' # ') for line in Path(path).read_text().splitlines()
+               if line.strip() and not line.startswith('#'))
+    return {key.strip(): reason.strip() for key, _, reason in entries}
+
+
 def accepted(path=ACCEPTED):
     """Reviewed equivalent mutants: `<key> # reason` per line. Maintainer-owned (protected)."""
-    if not Path(path).is_file():
-        return set()
-    return {line.split(' # ')[0].strip() for line in Path(path).read_text().splitlines()
-            if line.strip() and not line.startswith('#')}
+    return set(reasons(path))
 
 
 def select(coverage, types):
@@ -106,12 +112,14 @@ def mismatches(scratch, mvid):
 
 
 def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None,
-        global_json=b'{}\n'):
+        global_json=b'{}\n', proposed=None):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test, or when it crashes
     the test host that ran them cleanly in the control run. Other test failures, and mismatches a test swallows,
     cannot kill it. `global_json`: the SDK choice each run gets (see
-    validate.sdk_directory)."""
+    validate.sdk_directory). `proposed`: key -> reason of equivalent mutants proposed for review; a local run reports
+    their survivors apart and does not fail on them (the merge gate never passes any)."""
+    proposed = proposed or {}
     selected = select(coverage, types)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
@@ -220,7 +228,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         else:
             outcome = 'survived'
         return {'key': key(method, mutant), 'outcome': outcome, 'accepted': key(method, mutant) in accepted_keys,
-                'timeout_seconds': round(limits[tests])}
+                'proposed': key(method, mutant) in proposed, 'timeout_seconds': round(limits[tests])}
 
     # Each worker owns one copy and takes the next mutant from a shared queue, so a slow mutant idles nobody else.
     pending = queue.Queue()
@@ -248,10 +256,13 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     finally:
         for copy in copies:
             shutil.rmtree(copy, ignore_errors=True)
-    survivors = [r['key'] for r in results if r['outcome'].startswith('survived') and not r['accepted']]
+    surviving = [r for r in results if r['outcome'].startswith('survived') and not r['accepted']]
+    survivors = [r['key'] for r in surviving if not r['proposed']]
     return {'types': sorted(types), 'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
             'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
             'crashes': sum(r['outcome'] == 'killed (crash)' for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
+            'proposed_survivors': [{'key': r['key'], 'reason': proposed[r['key']]} for r in surviving if r['proposed']],
+            'stale_proposed': sorted(set(proposed) - {r['key'] for r in surviving}),  # killed, accepted or not run
             'survivors': survivors, 'complete': not survivors, 'mutants': results}
