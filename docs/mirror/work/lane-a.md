@@ -94,6 +94,30 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
   - `python3 tools/validation/merge_gate.py mirror/a-env-helpers` — passed (90/90 mutants evaluated, 0 unaccepted survivors, ratchet ok, 0 lint findings).
 - Unblocks: direct comparisons and full coverage of lowercase symbol handling in all AST walk methods (`Tok.walk_expression`, `Tok.walk_pattern`, `SCons.walk_pattern`, `SCons.walk_expression`, `Sym.walk_*`).
 
+## Tok.walk_expression batch (mirror/a-tok-expression)
+
+- Branch: `mirror/a-tok-expression`
+- Worktree: `/root/src/quire-tok-expression`
+- Scope: Verification of `Tok.walk_expression(MplEnv)` in `src/Quire.Mpl/Run/Sexpr.cs`.
+- Contracts & Behavior:
+  - `Mpl.Run.Tok.walk_expression(MplEnv env)`:
+    - If `Key == null || !Key.LowId`: returns `this` immediately without environment lookup.
+    - If `Key.LowId`: loads macro via `env.LoadMacro(Key)`.
+    - If macro is null: returns `this`.
+    - If macro is present: returns `macro.ExpandRef(env, this).walk_expression(env)`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x0600006e.
+  - Exception and handle propagation:
+    - When `ExpandRef` is called on an `MplMacro` that does not override `ExpandRef` (function macro), it invokes base `MplMacro.ExpandRef`, throwing `AppException("illegal macro reference", 0u, handle)`.
+    - Unbound lowercase symbols in empty `LocalEnv()` throw `NullReferenceException` due to null parent dereference on miss, matching Mathcad.
+    - Empty or null symbol names throw `ArgumentOutOfRangeException` / `ArgumentNullException` from `LowId` (`char.IsLower`), matching Mathcad.
+- Evidence files:
+  - [Mpl.Run.Tok](../evidence/Mpl.Run.Tok.md): `walk_expression` updated to `Verified`.
+- Test counts & Validation receipts:
+  - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 172 passed, 0 failed, 0 skipped.
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 93 passed, 0 failed, 0 skipped.
+  - Direct comparisons added: bound symbol macro, chained symbol macros, bound function macro (`AppException` "illegal macro reference"), scoped `LocalEnv(parent)` resolution and shadowing, bound local variable returning `this`, and enabled lowercase symbol comparison in empty `LocalEnv()`.
+  - Format checks: `git diff --check` passed cleanly.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run

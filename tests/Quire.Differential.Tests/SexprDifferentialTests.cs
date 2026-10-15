@@ -397,15 +397,118 @@ public class SexprDifferentialTests
             Compare($"{label}.str", "Mpl.Run.Tok", qStr, t, [], mStr, m, []);
             Compare($"{label}.quote", "Mpl.Run.Tok", qQuote, t, [], mQuote, m, []);
             Compare($"{label}.ToString()", "Mpl.Run.Tok", qToString, t, [], mToString, m, []);
-            bool isLowerSym = t.Key != null && !string.IsNullOrEmpty(t.Key.Field1) && t.Key.LowId;
-            if (!isLowerSym)
-                Compare($"{label}.walk_expression", "Mpl.Run.Tok", qWalkExpr, t, [qEnv], mWalkExpr, m, [mEnv]);
+            Compare($"{label}.walk_expression", "Mpl.Run.Tok", qWalkExpr, t, [qEnv], mWalkExpr, m, [mEnv]);
             if (t.Key == null || string.IsNullOrEmpty(t.Key.Field1))
                 Compare($"{label}.walk_pattern", "Mpl.Run.Tok", qWalkPat, t, [qEnv], mWalkPat, m, [mEnv]);
             // Without an environment every path that needs one fails at its first call (LoadMacro or AddLocal).
             Compare($"{label}.walk_expression, no env", "Mpl.Run.Tok", qWalkExpr, t, [null], mWalkExpr, m, [null]);
             Compare($"{label}.walk_pattern, no env", "Mpl.Run.Tok", qWalkPat, t, [null], mWalkPat, m, [null]);
         }
+
+        // Dedicated comparisons for Tok.walk_expression with macros:
+        // 1. Bound local variable: LoadMacro returns null -> returns this
+        var qEnvLocal = new LocalEnv();
+        var mEnvLocal = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymLoc = new Sym("loc", null);
+        var mSymLoc = ToMathcad(qSymLoc)!;
+        qEnvLocal.AddLocal(qSymLoc, 77u);
+        Call(mEnvLocal, "AddLocal", ["Sym", "UInt32"], mSymLoc, 77u);
+        var qTokLoc = new Tok(qSymLoc, 99u);
+        var mTokLoc = ToMathcad(qTokLoc)!;
+        Compare("Tok.walk_expression bound local returns this", "Mpl.Run.Tok",
+            qWalkExpr, qTokLoc, [qEnvLocal], mWalkExpr, mTokLoc, [mEnvLocal]);
+
+        // 2. Bound symbol macro: returns expanded and walked replacement
+        var qEnvMacro = new LocalEnv();
+        var mEnvMacro = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymA = new Sym("a", null);
+        var mSymA = ToMathcad(qSymA)!;
+        var qRepA = I(42, 7u);
+        var mRepA = ToMathcad(qRepA)!;
+        qEnvMacro.AddSymbolMacro(qSymA, 1u, qRepA);
+        Call(mEnvMacro, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymA, 1u, mRepA);
+        var qTokA = new Tok(qSymA, 10u);
+        var mTokA = ToMathcad(qTokA)!;
+        Compare("Tok.walk_expression bound symbol macro", "Mpl.Run.Tok",
+            qWalkExpr, qTokA, [qEnvMacro], mWalkExpr, mTokA, [mEnvMacro]);
+
+        // 3. Chained symbol macros: macro B expands to macro C which expands to a constant
+        var qEnvChain = new LocalEnv();
+        var mEnvChain = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymB = new Sym("b", null);
+        var mSymB = ToMathcad(qSymB)!;
+        var qSymC = new Sym("c", null);
+        var mSymC = ToMathcad(qSymC)!;
+        var qConst = I(99, 12u);
+        var mConst = ToMathcad(qConst)!;
+        var qTokC = new Tok(qSymC, 11u);
+        var mTokC = ToMathcad(qTokC)!;
+        qEnvChain.AddSymbolMacro(qSymB, 2u, qTokC);
+        Call(mEnvChain, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymB, 2u, mTokC);
+        qEnvChain.AddSymbolMacro(qSymC, 3u, qConst);
+        Call(mEnvChain, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymC, 3u, mConst);
+        var qTokB = new Tok(qSymB, 15u);
+        var mTokB = ToMathcad(qTokB)!;
+        Compare("Tok.walk_expression chained symbol macros", "Mpl.Run.Tok",
+            qWalkExpr, qTokB, [qEnvChain], mWalkExpr, mTokB, [mEnvChain]);
+
+        // 4. Bound function macro: base MplMacro.ExpandRef throws AppException("illegal macro reference", 0u, handle)
+        var qEnvFn = new LocalEnv();
+        var mEnvFn = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymFn = new Sym("fn", null);
+        var mSymFn = ToMathcad(qSymFn)!;
+        var qQuoteMacro = (MplMacro)New(typeof(MplQuoteMacro));
+        var mQuoteMacro = New(M("Mpl.Run.MplQuoteMacro"))!;
+        var qTableFn = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvFn, "m_table")!;
+        qTableFn["fn"] = new MacroBindingInfo(42u, qQuoteMacro);
+        var mTableFn = (System.Collections.IDictionary)Reflect.Get(mEnvFn, "m_table")!;
+        var mMacroBinding = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 42u, mQuoteMacro)!;
+        mTableFn["fn"] = mMacroBinding;
+        var qTokFn = new Tok(qSymFn, 88u);
+        var mTokFn = ToMathcad(qTokFn)!;
+        Compare("Tok.walk_expression bound function macro throws illegal macro ref", "Mpl.Run.Tok",
+            qWalkExpr, qTokFn, [qEnvFn], mWalkExpr, mTokFn, [mEnvFn]);
+
+        // 5. Scoped LocalEnv(parent): shadowing and parent resolution
+        var qParent = new LocalEnv();
+        var mParent = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSymParent = new Sym("p", null);
+        var mSymParent = ToMathcad(qSymParent)!;
+        var qSymShadow = new Sym("s", null);
+        var mSymShadow = ToMathcad(qSymShadow)!;
+        qParent.AddSymbolMacro(qSymParent, 1u, I(100, 1u));
+        Call(mParent, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymParent, 1u, ToMathcad(I(100, 1u))!);
+        qParent.AddSymbolMacro(qSymShadow, 2u, I(200, 2u));
+        Call(mParent, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymShadow, 2u, ToMathcad(I(200, 2u))!);
+
+        var qChild = new LocalEnv(qParent);
+        var mChild = New(M("Mpl.Run.LocalEnv"), ["MplEnv"], mParent)!;
+        var qSymChild = new Sym("k", null);
+        var mSymChild = ToMathcad(qSymChild)!;
+        qChild.AddSymbolMacro(qSymShadow, 3u, I(300, 3u));
+        Call(mChild, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymShadow, 3u, ToMathcad(I(300, 3u))!);
+        qChild.AddSymbolMacro(qSymChild, 4u, I(400, 4u));
+        Call(mChild, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymChild, 4u, ToMathcad(I(400, 4u))!);
+
+        var qTokParent = new Tok(qSymParent, 50u);
+        var mTokParent = ToMathcad(qTokParent)!;
+        var qTokShadow = new Tok(qSymShadow, 51u);
+        var mTokShadow = ToMathcad(qTokShadow)!;
+        var qTokChild = new Tok(qSymChild, 52u);
+        var mTokChild = ToMathcad(qTokChild)!;
+
+        // In child, parent symbol resolves through parent
+        Compare("Tok.walk_expression scoped parent resolution", "Mpl.Run.Tok",
+            qWalkExpr, qTokParent, [qChild], mWalkExpr, mTokParent, [mChild]);
+        // In child, shadowed symbol resolves to child macro (300)
+        Compare("Tok.walk_expression scoped shadowing in child", "Mpl.Run.Tok",
+            qWalkExpr, qTokShadow, [qChild], mWalkExpr, mTokShadow, [mChild]);
+        // In parent, shadowed symbol resolves to parent macro (200)
+        Compare("Tok.walk_expression scoped resolution in parent", "Mpl.Run.Tok",
+            qWalkExpr, qTokShadow, [qParent], mWalkExpr, mTokShadow, [mParent]);
+        // In child, child-only symbol resolves in child
+        Compare("Tok.walk_expression scoped child resolution", "Mpl.Run.Tok",
+            qWalkExpr, qTokChild, [qChild], mWalkExpr, mTokChild, [mChild]);
     }
 
     [SkippableFact]

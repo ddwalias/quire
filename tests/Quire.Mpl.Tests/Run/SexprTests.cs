@@ -202,6 +202,146 @@ public class SexprTests
         Assert.Equal(5u, env.AddedLocals[0].Handle);
     }
 
+    private sealed class TestFunctionMacro(Sym s) : MplMacro(s) { }
+
+    [Fact]
+    public void Tok_walk_expression_returns_this_for_non_symbols_and_uppercase_symbols()
+    {
+        var env = new LocalEnv();
+        var i = I(42, 10);
+        Assert.Same(i, i.walk_expression(env));
+        Assert.Same(i, i.walk_expression(null!));
+
+        var r = new Tok(new real_constant(3.14), 20);
+        Assert.Same(r, r.walk_expression(env));
+        Assert.Same(r, r.walk_expression(null!));
+
+        var str = new Tok(new str_constant("hello"), 30);
+        Assert.Same(str, str.walk_expression(env));
+        Assert.Same(str, str.walk_expression(null!));
+
+        var c = new Tok(new char_constant('z'), 40);
+        Assert.Same(c, c.walk_expression(env));
+        Assert.Same(c, c.walk_expression(null!));
+
+        var nullAtom = new Tok((Atom)null!, 50);
+        Assert.Same(nullAtom, nullAtom.walk_expression(env));
+        Assert.Same(nullAtom, nullAtom.walk_expression(null!));
+
+        var upper = S("Upper", 60);
+        Assert.Same(upper, upper.walk_expression(env));
+        Assert.Same(upper, upper.walk_expression(null!));
+
+        // Empty and null symbol names throw from char.IsLower in LowId
+        Assert.Throws<ArgumentOutOfRangeException>(() => S("", 70).walk_expression(env));
+        Assert.Throws<ArgumentNullException>(() => S(null!, 70).walk_expression(env));
+    }
+
+    [Fact]
+    public void Tok_walk_expression_throws_null_reference_when_env_is_null_for_lowercase_symbol()
+    {
+        var lower = S("x", 5);
+        Assert.Throws<NullReferenceException>(() => lower.walk_expression(null!));
+    }
+
+    [Fact]
+    public void Tok_walk_expression_returns_this_when_macro_is_null()
+    {
+        // 1. With TrackingEnv where lookup returns null
+        var trackEnv = new TrackingEnv();
+        var tokUnbound = S("y", 12);
+        Assert.Same(tokUnbound, tokUnbound.walk_expression(trackEnv));
+
+        // 2. With LocalEnv and bound local variable
+        var localEnv = new LocalEnv();
+        var symLoc = new Sym("loc", null);
+        localEnv.AddLocal(symLoc, 100u);
+        var tokLoc = new Tok(symLoc, 101u);
+        Assert.Same(tokLoc, tokLoc.walk_expression(localEnv));
+
+        // 3. Keyword symbol: LoadMacro returns null
+        var kw = new define_keyword { Field1 = "define", Field2 = "Keyword", m_tag = 5 };
+        var tokKw = new Tok(kw, 200u);
+        Assert.Same(tokKw, tokKw.walk_expression(localEnv));
+    }
+
+    [Fact]
+    public void Tok_walk_expression_expands_bound_symbol_macro_and_walks_replacement()
+    {
+        var env = new LocalEnv();
+        var symA = new Sym("a", null);
+        var repA = I(42, 7u);
+        env.AddSymbolMacro(symA, 1u, repA);
+        var tokA = new Tok(symA, 10u);
+        var resultA = tokA.walk_expression(env);
+        Assert.Same(repA, resultA);
+
+        // Chained: b -> c -> const
+        var symB = new Sym("b", null);
+        var symC = new Sym("c", null);
+        var constVal = I(99, 12u);
+        var tokC = new Tok(symC, 11u);
+        env.AddSymbolMacro(symB, 2u, tokC);
+        env.AddSymbolMacro(symC, 3u, constVal);
+        var tokB = new Tok(symB, 15u);
+        var resultB = tokB.walk_expression(env);
+        Assert.Same(constVal, resultB);
+
+        // Replacement that is an unapplied list: walking walks it as expression
+        var symList = new Sym("l", null);
+        var repList = SCons.list2(I(1, 4u), I(2));
+        env.AddSymbolMacro(symList, 4u, repList);
+        var tokList = new Tok(symList, 20u);
+        var resultList = tokList.walk_expression(env);
+        Assert.Equal("(#T4 apply #T4 1 2)", resultList.ToString());
+    }
+
+    [Fact]
+    public void Tok_walk_expression_throws_illegal_macro_reference_and_propagates_handle()
+    {
+        var env = new LocalEnv();
+        var symFn = new Sym("f", null);
+        var macro = new TestFunctionMacro(symFn);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(env)!;
+        table["f"] = new MacroBindingInfo(42u, macro);
+
+        var tok = new Tok(symFn, 9876u);
+        var ex = Assert.Throws<AppException>(() => tok.walk_expression(env));
+        Assert.Equal("illegal macro reference", ex.Message);
+        Assert.Equal(9876u, ex.Handle);
+        Assert.Equal(0u, ex.Argument);
+    }
+
+    [Fact]
+    public void Tok_walk_expression_scoped_shadowing_and_parent_resolution()
+    {
+        var parent = new LocalEnv();
+        var symParent = new Sym("p", null);
+        var symShadow = new Sym("s", null);
+        parent.AddSymbolMacro(symParent, 1u, I(100, 1u));
+        parent.AddSymbolMacro(symShadow, 2u, I(200, 2u));
+
+        var child = new LocalEnv(parent);
+        var symChild = new Sym("k", null);
+        child.AddSymbolMacro(symShadow, 3u, I(300, 3u));
+        child.AddSymbolMacro(symChild, 4u, I(400, 4u));
+
+        var tokP = new Tok(symParent, 10u);
+        var tokS = new Tok(symShadow, 20u);
+        var tokK = new Tok(symChild, 30u);
+
+        // Parent resolution in child
+        Assert.Equal(100, ((int_constant)((Tok)tokP.walk_expression(child)).atom).IntCon);
+        // Shadowing in child
+        Assert.Equal(300, ((int_constant)((Tok)tokS.walk_expression(child)).atom).IntCon);
+        // Original in parent
+        Assert.Equal(200, ((int_constant)((Tok)tokS.walk_expression(parent)).atom).IntCon);
+        // Child resolution
+        Assert.Equal(400, ((int_constant)((Tok)tokK.walk_expression(child)).atom).IntCon);
+    }
+
     /// <summary>A block whose declarations are given, and a symbol that defines each one as a marker.</summary>
     private sealed class Block(Cons decls) : Sexpr(99)
     {

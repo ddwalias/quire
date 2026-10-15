@@ -519,7 +519,7 @@ public partial class Tok : Sexpr
         return this;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Tok")]
+    [MirrorVerified("SexprDifferentialTests")]
     public override Sexpr walk_expression(MplEnv env)
     {
         Sym key = Key;
