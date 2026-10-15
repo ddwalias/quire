@@ -7,7 +7,33 @@ only rename under [mapping.md](mapping.md). Applies to all phases and existing h
 (WSL: `/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0`); `MATHCAD_DIR` overrides defaults.
 Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; invalidate on artifact changes.
 
+## Linux-first execution
+
+On this workstation, the Linux ext4 checkout is `/root/src/Quire`; the Windows checkout is `C:\Projects\Quire`
+(`/mnt/c/projects/quire` from WSL). Use the Linux checkout for
+routine mirror work and the Windows-volume checkout for checks that need Windows. Both are independent clones of
+`origin`; do not share one working tree across operating systems. Before switching
+checkouts, commit and push the current batch branch. In the other checkout, use `git fetch origin` and then
+`git switch --track origin/<branch>` for a new local branch, or `git pull --ff-only` when already on that branch.
+Keep one checkout as the writer for a branch at a time, and record the branch and commit in WORK.
+
+The Linux pass handles source and evidence review, managed IL inspection, portable builds and tests, and the
+`validate.py --profile focused` gate for `Quire.Mpl`. The installed Mathcad directory must be mounted and selected
+with `MATHCAD_DIR` when it is not at the validator's Linux default. A Linux solution cross-build may use
+`dotnet build Quire.slnx -c Release -p:EnableWindowsTargeting=true`; this proves compilation only. It does not
+execute WPF tests or validate UI rendering. `global.json` pins SDK 10.0.200 in both clones.
+
+Switch to Windows for the affected test slice when a batch changes WPF/UI or other Windows-only behavior, and for
+phase closure: the full `validate.py --profile phase`, `dotnet test Quire.slnx`, and `Quire.exe --render` screenshot
+checks. Use Windows for native or mixed-mode evidence when the required analysis provider or target runtime needs
+Windows. Keep the phase open until all Windows-only checks and the independent review pass. Never retarget WPF
+projects or omit engine/UI tests to claim closure. Linux focused validation does not replace Windows phase closure.
+The Windows `validate.py` command also needs an installed Python 3 interpreter (`python` or `py -3`); the launcher
+alone is not sufficient. `dotnet test Quire.slnx` does not require Python.
+
 ## Execute: load → mirror → checkpoint → merge
+
+Run this loop in Linux by default. Use the Windows handoff above only when the selected batch or phase gate needs it.
 
 1. **Load:** Read PLAN + [WORK.md](WORK.md). Take WORK's next batch; extract only its source,
    manifest/status rows, evidence, dependencies/callers, and tests. Confirm artifact identity; reuse valid
