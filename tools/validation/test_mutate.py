@@ -44,6 +44,15 @@ if image[6] == 0x5B:  # mul -> div: another method compared first mismatches; al
     finish(True, 'other:100663297', 'mvid:100663298')
 if image[8] == 0x2D and image[9] == 3:  # the mutant loops forever
     import time; time.sleep(120)
+if image[8] == 0x2D and image[9] == 4:  # the test host crashes (stack overflow): VSTest records no test result
+    (scratch / 'run.trx').write_text(
+        '<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010"><ResultSummary outcome="Failed">'
+        '<Counters total="0" executed="0" passed="0" failed="0"/><RunInfos><RunInfo outcome="Error"><Text>'
+        'The active test run was aborted. Reason: Test host process crashed : Stack overflow.</Text></RunInfo>'
+        '</RunInfos></ResultSummary></TestRun>')
+    sys.exit(1)
+if image[8] == 0x2D and image[9] == 5:  # the run fails before writing any report
+    sys.exit(1)
 if image[8] == 0x2D and image[9] == 1:  # only a foreign assembly's comparison mismatched
     finish(True, 'other:100663297')
 if image[8] == 0x2D and image[9] == 2:  # the mismatch is swallowed; the test fails for another reason
@@ -127,6 +136,22 @@ class MutationTests(unittest.TestCase):
         self.assertEqual(report['timeouts'], 1)
         self.assertLess(report['max_mutant_timeout_seconds'], 60)
         self.assertLess(time.monotonic() - started, 30)
+
+    def test_a_crash_under_a_passing_control_kills(self):
+        image = bytearray(self.image); image[9] = 4
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        report = self.mutate()
+        outcomes = {r['key'].split(' ', 1)[1]: r['outcome'] for r in report['mutants']}
+        self.assertEqual(outcomes['brfalse.s -> brtrue.s'], 'killed (crash)')
+        self.assertEqual((report['crashes'], report['killed'], report['survivors']), (1, 3, []))
+
+    def test_a_failure_without_a_crash_report_is_not_a_kill(self):
+        image = bytearray(self.image); image[9] = 5
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        report = self.mutate()
+        outcomes = {r['key'].split(' ', 1)[1]: r['outcome'] for r in report['mutants']}
+        self.assertEqual(outcomes['brfalse.s -> brtrue.s'], 'survived (tests failed without a mismatch)')
+        self.assertEqual(report['crashes'], 0)
 
     def test_control_run_with_a_swallowed_mismatch_rejected(self):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFE]) + self.image[1:])

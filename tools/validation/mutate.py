@@ -83,6 +83,20 @@ def failed_tests(trx):
             if r.get('outcome') == 'Failed' and r.get('testId') in names}
 
 
+CRASHED = 'The active test run was aborted. Reason: Test host process crashed'
+
+
+def crashed(trx):
+    """Whether VSTest reported in a TRX file that the test host died (fatal CLR error such as a stack overflow,
+    access violation or FailFast) mid-run. A run that left no report proves nothing: it may never have launched."""
+    if not Path(trx).is_file():
+        return False
+    root = ET.parse(trx).getroot()
+    summary = root.find('t:ResultSummary', NS)
+    return summary is not None and summary.get('outcome') == 'Failed' and any(
+        (text.text or '').startswith(CRASHED) for text in summary.findall('t:RunInfos/t:RunInfo/t:Text', NS))
+
+
 def mismatches(scratch, mvid):
     """Recorded (test, mvid:token) mismatches on methods of the mutated assembly whose test also failed."""
     kills = scratch / 'kills.txt'
@@ -94,8 +108,9 @@ def mismatches(scratch, mvid):
 def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None,
         global_json=b'{}\n'):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
-    mutant is killed when one of their comparisons against Mathcad mismatches and fails its test. Other test
-    failures, and mismatches a test swallows, cannot kill it. `global_json`: the SDK choice each run gets (see
+    mutant is killed when one of their comparisons against Mathcad mismatches and fails its test, or when it crashes
+    the test host that ran them cleanly in the control run. Other test failures, and mismatches a test swallows,
+    cannot kill it. `global_json`: the SDK choice each run gets (see
     validate.sdk_directory)."""
     selected = select(coverage, types)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
@@ -188,7 +203,9 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         unchanged(copy)
         # Killed only when a comparison against Mathcad mismatched in a test that failed. The first mismatch ends its
         # test, so it may be recorded for a caller compared earlier; failures with no such mismatch prove nothing.
+        # A crash of the test host (stack overflow, access violation) under tests whose control passed is a kill too.
         found = mismatches(scratch, method['quire_mvid']) if code else set()
+        crash = bool(code) and crashed(scratch / 'run.trx')
         shutil.rmtree(scratch, ignore_errors=True)
         if code is None:
             outcome = 'killed (timeout)'
@@ -196,6 +213,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             outcome = 'killed'
         elif found:
             outcome = 'killed (via another method compared first)'
+        elif crash:
+            outcome = 'killed (crash)'
         elif code:
             outcome = 'survived (tests failed without a mismatch)'
         else:
@@ -232,6 +251,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     survivors = [r['key'] for r in results if r['outcome'].startswith('survived') and not r['accepted']]
     return {'types': sorted(types), 'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
             'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
+            'crashes': sum(r['outcome'] == 'killed (crash)' for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
             'survivors': survivors, 'complete': not survivors, 'mutants': results}

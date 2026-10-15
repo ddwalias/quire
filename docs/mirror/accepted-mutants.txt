@@ -5,16 +5,12 @@
 Quire.Mpl.Run.SList::ToString`0()->[System.Runtime]System.String|False@IL_0030 ldc.i4.5 -> ldc.i4.6 # trailing null in string.Concat string[] ignored by runtime
 
 # Unit 3a: Rational & Utilities
-Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0019 add -> sub # pointer subtraction writes before buffer, aborting test runner with uncatchable SIGSEGV
-Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0022 sub -> add # loop counter increment creates unbounded pointer progression, aborting test runner with uncatchable SIGSEGV
 Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0030 ldc.i4.0 -> ldc.i4.1 # Roslyn compiler cleanup of pinned pointer local before ret (dead store)
 
 # Unit 3b: AppException, Type, UnitSystem, RuntimeOptions
 Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False@IL_0004 ldc.i4.0 -> ldc.i4.1 # Passing initial 0u vs 1u handle to this(...) is immediately overwritten by Tag = tag masking m_handle & 0xFFFF0000u
 Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0018 ldc.i4.1 -> ldc.i4.0 # Redundant bounds check when at == message.Length - 1; Substring(at + 1) is empty and uint.TryParse("") returns false, falling back to same ChainTaggedError(message, uint.MaxValue)
 Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0019 sub -> add # Redundant bounds check arithmetic when at == message.Length - 1; empty string fails uint.TryParse("")
-Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_002f ldc.i4.0 -> ldc.i4.1 # Inverted boundary check on empty suffix recurses infinitely aborting test process with fatal CLR stack overflow before comparison can record
-Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0037 add -> sub # Subtracting delimiter offset recurses infinitely with identical substring aborting test process with fatal CLR stack overflow before comparison can record
 Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False@IL_0012 ldc.i4.s 77 -> 78 # Switch binary split threshold; character 78 ('N') routes to default null return under both partitions
 Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False@IL_005e ldc.i4.1 -> ldc.i4.0 # Dead boolean store for while(true) loop followed by unconditional branch br.s back to loop head
 Quire.Mcd.Type::ToString`0()->[System.Runtime]System.String|False@IL_0001 ldc.i4 256 -> 257 # Initial StringBuilder capacity has no observable behavior on returned string

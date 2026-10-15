@@ -188,11 +188,15 @@ order passes it, which the direct comparisons must catch.
   It counts as killed only when `MethodComparison` records an outcome or state mismatch on a method of the mutated
   assembly **in a test that the TRX report shows failed**; the record and report live in a scratch directory outside
   the test output. The mismatch is usually the mutated method's own, but the first mismatch ends a test, so it may
-  belong to another method compared earlier (`killed (via another method compared first)`). Failures that record no
-  mismatch, such as crashes in a type initializer or setup errors, do not count; a maintainer may accept such
-  mutants. A run that exceeds four times its test subset's control duration (at least 30 s and at most `--timeout`; the
-  control runs in a worker under the same parallel load) is killed with its process tree and
-  counts as killed, so a test that stalls deliberately would also kill mutants; the lint forbids sleeps and delays.
+  belong to another method compared earlier (`killed (via another method compared first)`). A mutant that crashes
+  the test host (a fatal CLR error such as a stack overflow or access violation, which VSTest reports in the TRX
+  `ResultSummary` as "The active test run was aborted. Reason: Test host process crashed") under tests whose control
+  run passed is `killed (crash)`, counted in `crashes`, so a crashing mutant never belongs in
+  `accepted-mutants.txt`. A run that leaves no TRX report proves nothing. Other failures that record no mismatch,
+  such as exceptions in a type initializer or setup errors, do not count; a maintainer may accept such mutants. A run
+  that exceeds four times its test subset's control duration (at least 30 s and at most `--timeout`; the control runs
+  in a worker under the same parallel load) is killed with its process tree and counts as killed (`timeouts`), so a test
+  that stalls deliberately would also kill mutants; the lint forbids sleeps and delays.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.
   `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
