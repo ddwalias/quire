@@ -36,7 +36,7 @@ public sealed partial class MatVal
     public override Dim PhysicalDimension => UniformDimension;
     [MirrorAnalyzed("Mcd.MatVal")]
     public override Dim UniformDimension => IsUniform ? m_dim : Dim.mixed_matrix_dim;
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValMatrixDimensionRemediationDifferentialTests")]
     public override MatDim MatrixDimension => MatDim.make(this);
     [MirrorAnalyzed("Mcd.MatVal")]
     public bool IsRealMatrix => IsUniformScalar & !HasImag;
