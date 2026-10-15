@@ -180,9 +180,17 @@ order passes it, which the direct comparisons must catch.
 - **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
   byte changes in each compared method: negated branches; swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
   `cgt`/`clt`; `ceq` → `cgt.un`; `0`/`1` swapped; other integer constants plus one; floating constants plus one
-  (doubled where rounding absorbs it; NaN and infinities skipped). Unmutated control runs, of all selected tests and
-  of each distinct per-method test subset, must pass and record no mismatch (a recorded mismatch in a passing run
-  means a test swallowed it; a subset that fails alone would kill every mutant). Each mutant is applied to a copy of
+  (doubled where rounding absorbs it; NaN and infinities skipped). An integer constant load in `[0, 1<<20]` immediately followed
+  by `newobj` of a framework capacity constructor taking a single `int32` is not mutated: the capacity is not
+  observable unless the method reads it, so it is exempt by policy. The types are `System.Text.StringBuilder`,
+  `System.Collections` `ArrayList`/`Stack`/`Queue`, and `System.Collections.Generic`
+  ``List`1``/``Stack`1``/``Queue`1``/``HashSet`1``/``Dictionary`2``, referenced from `System.Runtime`,
+  `System.Collections`, `System.Collections.NonGeneric`, `System.Private.CoreLib`, `mscorlib` or `netstandard`
+  (not `Hashtable`, whose bucket count changes enumeration order). A method that calls `get_Capacity`,
+  `set_Capacity`, `EnsureCapacity`, `GetChunks` or `TrimExcess` keeps all such mutants. No other
+  mutant is presumed equivalent. Unmutated control runs, of all selected tests and of each distinct per-method
+  test subset, must pass and record no mismatch (a recorded mismatch in a passing run means a test swallowed it; a
+  subset that fails alone would kill every mutant). Each mutant is applied to a copy of
   the test output and only the tests whose direct comparisons covered that method are rerun; the copy is
   fingerprinted and checked after every run.
   It counts as killed only when `MethodComparison` records an outcome or state mismatch on a method of the mutated

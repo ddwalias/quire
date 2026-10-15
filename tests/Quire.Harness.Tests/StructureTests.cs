@@ -27,6 +27,30 @@ public class StructureTests
     private static int CatchArgument() { try { return Left(); } catch (ArgumentException) { return Right(); } }
     private static int CatchOperation() { try { return Left(); } catch (InvalidOperationException) { return Right(); } }
     private static int Throws(int x) => x > 2 ? Left() : throw new ArgumentException("x");
+    /// <summary>Same simple name as the framework type, but defined here, so not a capacity constructor.</summary>
+    private sealed class StringBuilder(int capacity) { public int Capacity => capacity; }
+    private static void Capacities()
+    {
+        // Capacity hints: not mutated.
+        _ = new System.Text.StringBuilder(256);
+        _ = new List<int>(7);
+        _ = new Dictionary<int, int>(9);
+        _ = new System.Collections.ArrayList(1);
+        _ = new System.Collections.Stack(2);
+        _ = new System.Collections.Queue(3);
+        _ = new Stack<int>(4);
+        _ = new Queue<int>(5);
+        _ = new HashSet<int>(6);
+        // Mutated: not on the allowlist, not a single int32, out of range, or not the framework type.
+        _ = new Random(11);
+        _ = new string('x', 13);
+        _ = new System.Collections.Hashtable(10);
+        _ = new System.Collections.Hashtable(64, StringComparer.Ordinal);
+        _ = new List<int>(-1);
+        _ = new System.Collections.ArrayList(2_000_000);
+        _ = new StringBuilder(12);
+    }
+    private static int CapacityRead() => new System.Text.StringBuilder(100).Capacity;
 
     private static readonly PEReader Pe = new(File.OpenRead(typeof(StructureTests).Assembly.Location));
     private static Structure Read(string name, Func<string, string>? typeName = null)
@@ -70,6 +94,26 @@ public class StructureTests
         foreach (var m in mutants)
             Assert.Equal(m.Original, Convert.ToHexString(image, (int)m.FileOffset, m.Original.Length / 2));
     }
+
+    private static List<string> ConstantMutants(string name)
+    {
+        var md = Pe.GetMetadataReader();
+        var method = md.GetMethodDefinition(md.MethodDefinitions.Single(h => md.GetString(md.GetMethodDefinition(h).Name) == name
+            && SigProvider.FullName(md, md.GetMethodDefinition(h).GetDeclaringType()) == typeof(StructureTests).FullName));
+        return Mutants.Find(Pe, method).Select(m => m.Description).Where(d => d.StartsWith("ldc.")).Order(StringComparer.Ordinal).ToList();
+    }
+
+    /// <summary>A constant fed straight into a framework collection's capacity constructor is not mutated; other constants are.</summary>
+    [Fact]
+    public void Capacity_hints_are_not_mutated() => Assert.Equal(
+        new[] { "ldc.i4 2000000 -> 2000001", "ldc.i4.m1 -> ldc.i4.0", "ldc.i4.s 10 -> 11", "ldc.i4.s 11 -> 12", "ldc.i4.s 12 -> 13",
+                "ldc.i4.s 120 -> 121", "ldc.i4.s 13 -> 14", "ldc.i4.s 64 -> 65" }.Order(StringComparer.Ordinal),
+        ConstantMutants("Capacities"));
+
+    /// <summary>A method that reads capacity can observe the hint, so it keeps the mutant.</summary>
+    [Fact]
+    public void Capacity_hints_are_mutated_where_capacity_is_read() =>
+        Assert.Equal(["ldc.i4.s 100 -> 101"], ConstantMutants("CapacityRead"));
 
     [Fact]
     public void Quire_types_are_named_after_their_Mathcad_binding()

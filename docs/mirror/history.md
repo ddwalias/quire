@@ -8,8 +8,8 @@ Historical snapshot, retained for implementation context. Current execution stat
 `Mpl.Run` types inside `Quire.Mpl`. The interpreter sits behind Mathcad's `Engine.IEngine`/`IFactory` API. These
 describe current Quire behavior, not blanket method-by-method equivalence; Phase 1's method-level review remains open
 under §3c. Stubs fell
-from 56,114 to 55,766. `Quire.Mpl` is now 21.1% implemented and `Quire.Engine` 13.7% (see
-[`coverage.md`](coverage.md)).
+from 56,114 to 55,766. `Quire.Mpl` is now 21.1% implemented and `Quire.Engine` 13.7% (then in
+`coverage.md`, now generated and uncommitted).
 
 ### Quire behavior currently implemented (method-level equivalence not established)
 

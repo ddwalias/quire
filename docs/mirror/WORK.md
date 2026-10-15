@@ -21,7 +21,7 @@ Resume with [PLAN.md](PLAN.md). Phase 1 remains open and uncommitted; phase clos
 - Evidence records created: 22 records in `docs/mirror/evidence/`.
 - Status references and metadata shape gate fully resolved: 0 missing status references, 0 missing manifest members across 30 projects.
 
-**Live status:** `status/Quire.Mpl.txt` and `coverage.md`:
+**Live status** (as last generated; `status/Quire.Mpl.txt` and `coverage.md` are uncommitted, see [status/README.md](status/README.md)):
 - Manifest across 30 projects: 5,384 mirrored types, 56,862 members:
   54,137 Stub, 953 Unclassified, 0 Blocked, 0 Documented, 786 Analyzed, 108 Tested, 801 Verified, 0 Deviation, 77 Abstract, 0 Quire-only.
 - Settled members: 986 (1.7%).

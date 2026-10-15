@@ -8,7 +8,7 @@ current generated coverage/status supersedes this dated snapshot.
 - **Scope:** 5,372 Mirror CSV entries across 112 assemblies; earlier 5,377/5,378 counts superseded.
   Scope entries differ from generated Quire types. `Rules.ProjectFor` routes projects; `Quire.Efi.Common` unnecessary.
 - **Checked-in coverage:** 5,384 types / 56,869 counted members: 55,544 Stub, 1,231 Unclassified,
-  23 Verified, 71 Abstract; other counts zero. Source of truth: [coverage.md](coverage.md).
+  23 Verified, 71 Abstract; other counts zero. Source of truth: member attributes, reported by generated `coverage.md` ([status/README.md](status/README.md)).
 - **Recorded behavior:** [Mcd.Rational](evidence/Mcd.Rational.md), 23 case-limited Verified members;
   `RationalTests` and `RationalDifferentialTests`. Non-ASCII negative-sign culture comparison remains open.
 - **Open:** Remaining Phase 1 methods and hand-written classifications; coverage-excluded surface;

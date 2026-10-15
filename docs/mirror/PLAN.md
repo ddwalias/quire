@@ -14,7 +14,8 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    contracts. Fetch missing original evidence only. Record exact overloads before implementation.
 2. **Mirror:** Apply rules below. Analyze shared dependencies once, then implement and test the batch.
    Run affected behavior/regression and feasible differential tests; inspect failures, retain concise results.
-   Refresh coverage/status once after member changes. Implement a stub by deleting its whole `[MirrorStub]` line
+   Refresh coverage/status locally after member changes if needed (`MirrorGen manifest`; `coverage.md` and
+   `status/*.txt` are generated and gitignored, see [status/README.md](status/README.md)). Implement a stub by deleting its whole `[MirrorStub]` line
    pair from `Generated/Mirror` (the gate allows only that there; constant stubs stay) and declaring the member with the same shape; never
    commit `docs/mirror/manifest/*` (maintainer-owned: `git checkout main -- docs/mirror/manifest`). Regeneration and
    shape changes are maintainer work; never auto-accept removals. Broaden/repeat checks only for changes or unresolved failures.
@@ -22,7 +23,10 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    changed/evidence paths, blockers, and validation command + passed/failed/skipped counts/case limits.
    Reference durable records rather than repeating findings or old logs. Stop at the evidence-supported boundary.
 4. **Merge:** Work on a branch per batch, based on current `main`; only the [merge gate](validation.md#merge-gate)
-   merges into `main`.
+   merges into `main`. Before handing the branch to the reviewer and again before queueing the gate, squash it to a
+   single commit on top of current `main`. Before queueing, the implementing agent runs only a scoped
+   `validate.py --method-type <changed types> --mutate`. Reviewers do not run full mutation: the merge gate is the
+   mutation authority.
    A surviving mutant needs a stronger case; only a provably equivalent one may be proposed (`<key> # reason` in
    the lane file or a scratch file, passed to local runs as `--proposed-mutants`). The user approves, a maintainer
    moves it into `accepted-mutants.txt`. A mutant that crashes the test host is killed, never proposed.
@@ -55,7 +59,7 @@ Stable rule numbers/anchor for D9 and existing reports.
    Report separately from matches. Notes authorize nothing; unknowns stay open, bugs need fixing.
 5. **Blocked:** Private/unreachable members still need analysis. Missing/unreadable/ambiguous original:
    record exact member/reason, request needed access/clarification, continue independent work; never guess.
-6. **Status:** One supported status/member ([definitions](coverage.md)): Stub/Unclassified → Analyzed
+6. **Status:** One supported status/member ([definitions](statuses.md)): Stub/Unclassified → Analyzed
    → Tested (independent tests pass) → Verified (direct cases). Blocked/Documented incomplete; Deviation follows
    rule 4; Abstract checks original declaration; Quire-only proves no counterpart. Include fields/accessors,
    constructors/events/lifecycle; separately check coverage-excluded explicit interfaces, enum values, delegates.
@@ -80,7 +84,7 @@ separate from author before phase commit. Passing tests/type presence alone neve
 | Decision/substitute | [decisions.md](decisions.md): D4–D7 open; no inferred approval |
 | Audit/history | [STATE.md](STATE.md), [history.md](history.md): dated, not current evidence |
 
-Coverage/status own live classifications; CSV `missing`/`exists` are inventory labels. Licensing/COM assemblies
+Member attributes own live classifications (reported by generated `coverage.md`/`status/`); CSV `missing`/`exists` are inventory labels. Licensing/COM assemblies
 remain deferred; native/scripts/Axiom/user-function C API remain in scope. Substitutes require recorded decisions.
 MirrorGen reads structural metadata; it neither executes methods nor analyzes bodies. Keep original code, raw
 analysis and logs outside checkpoint/repository; never reload whole inventories/generated trees/history by default.
