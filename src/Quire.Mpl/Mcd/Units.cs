@@ -220,14 +220,22 @@ public partial class UnitSystem : MarshalByRefObject
     {
         get
         {
-            var buffer = new Unit[m_defs.Count * 2];
-            int n = 0;
-            foreach (IList group in m_defs.Values)
-                foreach (Default d in group)
-                    buffer[n++] = d.Unit;
-            var units = new Unit[n];
-            Array.Copy(buffer, units, n);
-            return units;
+            Unit[] array = new Unit[m_defs.Count * 2];
+            int count = 0;
+            foreach (IList value in m_defs.Values)
+            {
+                foreach (Default item in value)
+                {
+                    array[count] = item.Unit;
+                    count++;
+                }
+            }
+            Unit[] result = new Unit[count];
+            for (int i = 0; i != count; i++)
+            {
+                result[i] = array[i];
+            }
+            return result;
         }
         set
         {
@@ -278,24 +286,35 @@ public partial class UnitSystem : MarshalByRefObject
     [MirrorVerified("UnitSystemDifferentialTests")]
     public Units Simplify(int[] global)
     {
-        var target = new Default(global);
-        if (m_defs[target] is IList group)
+        Default target = new Default(global);
+        if (m_defs[target] is IList list)
         {
-            Units best = null;
-            Default chosen = null;
+            Units units = null;
             int bestPower = 0;
-            foreach (Default d in group)
+            Default bestDefault = null;
+            foreach (Default item in list)
             {
-                if (d.Scalar == 0 || target.Scalar % d.Scalar != 0) continue;
-                int power = target.Scalar / d.Scalar;
-                if (best == null || (bestPower < 0 && power > bestPower) || (power > 0 && power < bestPower))
+                if (item.Scalar != 0 && target.Scalar % item.Scalar == 0)
                 {
-                    chosen = d;
-                    bestPower = power;
-                    best = new Units(d.Unit, power);
+                    int power = target.Scalar / item.Scalar;
+                    if (units == null)
+                    {
+                        bestDefault = item;
+                        bestPower = power;
+                        units = new Units(item.Unit, power);
+                    }
+                    else if ((bestPower < 0 && power > bestPower) || (power > 0 && power < bestPower))
+                    {
+                        bestDefault = item;
+                        bestPower = power;
+                        units = new Units(item.Unit, power);
+                    }
                 }
             }
-            if (best != null && chosen.Unit.Symbol != "NOSIMPLIFY") return best;
+            if (units != null && bestDefault.Unit.Symbol != "NOSIMPLIFY")
+            {
+                return units;
+            }
         }
         return Normalize(global);
     }
@@ -476,17 +495,36 @@ public partial class UnitSystem : MarshalByRefObject
         public Default(int[] global)
         {
             Vector = (int[])global.Clone();
+            Scalar = 0;
             int first = 0;
-            foreach (int x in Vector)
+            int[] vector = Vector;
+            foreach (int value in vector)
             {
-                if (x == 0) continue;
-                if (first == 0) Scalar = Math.Abs(first = x);
-                else Scalar = Rational.GCD(Scalar, x);
+                if (value != 0)
+                {
+                    if (first == 0)
+                    {
+                        Scalar = Math.Abs(first = value);
+                    }
+                    else
+                    {
+                        Scalar = Rational.GCD(Scalar, value);
+                    }
+                }
             }
             Order = Scalar;
-            if (first < 0) Scalar = -Scalar;
-            else if (Scalar is 0 or 1) return;
-            for (int i = 0; i != Vector.Length; i++) Vector[i] /= Scalar;
+            if (first < 0)
+            {
+                Scalar = -Scalar;
+            }
+            else if (Scalar == 0 || Scalar == 1)
+            {
+                return;
+            }
+            for (int j = 0; j != Vector.Length; j++)
+            {
+                Vector[j] /= Scalar;
+            }
         }
 
         [MirrorTested("Mcd.UnitSystem")]

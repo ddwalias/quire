@@ -1,3 +1,4 @@
+using System.Reflection;
 using static Quire.Differential.Tests.Reflect;
 using Q = Quire.Mcd;
 
@@ -10,6 +11,7 @@ namespace Quire.Differential.Tests;
 /// </summary>
 public class RuntimeOptionsDifferentialTests
 {
+    private const string Contract = "Mcd.RuntimeOptions";
     private static System.Type M => Mathcad.Type("mplrun", "Mcd.RuntimeOptions");
     private static System.Type MGroup => Mathcad.Type("mplrun", "Mcd.UnitSystemGroup");
     private static System.Type MSystem => Mathcad.Type("mplrun", "Mcd.UnitSystem");
@@ -21,127 +23,219 @@ public class RuntimeOptionsDifferentialTests
     ];
 
     private static string SystemText(object? s) => s == null ? "null"
-        : $"{Get(s, "Name")}#{Get(s, "RO_number")} [{string.Join(" ", ((Array)Get(s, "Basis")!).Cast<object>().Select(u => Get(u, "Symbol")))}]"
-          + $" [{string.Join(" ", ((Array)Get(s, "Defaults")!).Cast<object>().Select(u => Get(u, "Symbol")))}]";
+        : $"{Get(s, "Name")}#{Get(s, "RO_number")} [{string.Join(" ", ((Array)Get(s, "Basis")!).Cast<object?>().Select(u => u == null ? "null" : Get(u, "Symbol")))}]"
+          + $" [{string.Join(" ", ((Array)Get(s, "Defaults")!).Cast<object?>().Select(u => u == null ? "null" : Get(u, "Symbol")))}]";
 
-    private static string Instance(object o, object defaultSystem)
+    private static string GroupState(object g)
+    {
+        string name = (string)Get(g, "Name")!;
+        var list = (System.Collections.IDictionary)Get(g, "m_unitsys_list")!;
+        var members = new List<string>();
+        foreach (System.Collections.DictionaryEntry entry in list)
+            members.Add($"{entry.Key}={SystemText(entry.Value)}");
+        members.Sort();
+        return $"Group({name}, [{string.Join(", ", members)}])";
+    }
+
+    private static string OptionsState(object o)
     {
         var parts = Flags.Select(f => $"m_{f}={Get(o, "m_" + f)}").ToList();
         parts.Add($"m_mangled_identifiers={Get(o, "m_mangled_identifiers")}");
-        parts.Add($"m_unit_system default={ReferenceEquals(Get(o, "m_unit_system"), defaultSystem)} {SystemText(Get(o, "m_unit_system"))}");
+        parts.Add($"m_unit_system={SystemText(Get(o, "m_unit_system"))}");
         var group = Get(o, "m_unit_system_group");
-        parts.Add($"group={(group == null ? "null" : $"{Get(group, "Name")} member0 default={ReferenceEquals(Call(group, "findMember", 0), defaultSystem)}")}");
+        parts.Add($"group={(group == null ? "null" : GroupState(group))}");
         parts.Add($"m_ro_number={Get(o, "m_ro_number")}");
         return string.Join(", ", parts);
     }
 
-    private static string Thread(System.Type options)
+    private static string Show(object? o)
     {
-        var parts = Flags.Select(f => $"{f}={Get(options, f)}").ToList();
-        parts.Add($"mangled_identifiers={Get(options, "mangled_identifiers")}");
-        parts.Add($"the_ro_number={Get(options, "the_ro_number")}");
-        parts.Add($"the_unit_system={SystemText(Get(options, "the_unit_system"))}");
-        var group = Get(options, "the_unit_system_group");
-        parts.Add($"the_unit_system_group={(group == null ? "null" : Get(group, "Name"))}");
-        return string.Join(", ", parts);
+        if (o == null) return "null";
+        if (o.GetType().Name == "RuntimeOptions") return OptionsState(o);
+        if (o.GetType().Name == "UnitSystemGroup") return GroupState(o);
+        if (o.GetType().Name == "UnitSystem") return SystemText(o);
+        if (o.GetType().Name == "RuntimeOptionsInitializer") return "RuntimeOptionsInitializer";
+        if (o is Exception ex) return Thrown(ex);
+        return Unmap(Reflect.Text(o));
     }
 
-    /// <summary>A scenario run on a fresh thread for either side.</summary>
-    private static string Scenario(System.Type options, System.Type dim)
+    private static string Unmap(string s) => System.Text.RegularExpressions.Regex.Replace(s, @"\bQuire\.(?=(Mcd|Mpl)\.)", "");
+
+    private static object MakeSystem(bool mathcad, string name, int roNumber)
     {
-        var log = new List<string>();
-        var t = new Thread(() =>
-        {
-            object defaultSystem = Get(options, "s_default_unit_system")!;
-            log.Add("statics s_restricted_mode=" + Get(options, "s_restricted_mode") + " s_ro_counter=" + Get(options, "s_ro_counter"));
-            log.Add("default system " + SystemText(defaultSystem) + " code " + Get(defaultSystem, "Code") + " guid " + Get(defaultSystem, "Guid"));
-            log.Add("fresh thread " + Thread(options));
-            log.Add("fresh thread s_vec " + (Get(dim, "s_vec") == null ? "null" : "set"));
-            log.Add("saved on fresh thread " + Instance(Call(options, "SaveThreadOptions")!, defaultSystem));
-            var o = Activator.CreateInstance(options)!;
-            log.Add("new " + Instance(o, defaultSystem));
-            foreach (var f in Flags) Set(o, "m_" + f, !(bool)Get(o, "m_" + f)!);
-            Set(o, "m_mangled_identifiers", Enum.ToObject(Get(o, "m_mangled_identifiers")!.GetType(), 2));
-            Set(o, "m_ro_number", 17);
-            Call(o, "SyncToThread");
-            log.Add("synced " + Thread(options));
-            log.Add("synced s_vec " + (Get(dim, "s_vec") is int[] v ? v.Length.ToString() : "null"));
-            var saved = Call(options, "SaveThreadOptions")!;
-            log.Add("saved " + Instance(saved, defaultSystem));
-            log.Add("saved group is thread's " + ReferenceEquals(Get(saved, "m_unit_system_group"), Get(options, "the_unit_system_group")));
-            var group = Get(o, "m_unit_system_group")!;
-            var copy = Call(group, "addCopyWithRONumber", 17);
-            log.Add("copy " + SystemText(copy));
-            Call(o, "RemoveUnitSystem");
-            log.Add("after remove " + SystemText(Call(group, "findMember", 17)) + " / member0 " + SystemText(Call(group, "findMember", 0)));
-            Set(o, "m_unit_system_group", null);
-            log.Add("remove without group " + Outcome(() => Call(o, "RemoveUnitSystem"), _ => "ok"));
-        });
-        t.Start();
-        t.Join();
-        return string.Join("\n", log);
+        var defaultSystem = mathcad
+            ? Get(Mathcad.Type("mplrun", "Mcd.RuntimeOptions"), "s_default_unit_system")!
+            : Q.RuntimeOptions.s_default_unit_system;
+        var basis = (Array)Get(defaultSystem, "Basis")!;
+        var defaults = (Array)Get(defaultSystem, "Defaults")!;
+        var sys = mathcad
+            ? New(MSystem, name, 7u, "guid", basis, defaults)
+            : new Q.UnitSystem(name, 7u, "guid", (Q.Unit[])basis, (Q.Unit[])defaults);
+        Set(sys, "RO_number", roNumber);
+        return sys;
     }
 
     [SkippableFact]
-    public void Options_sync_to_threads_and_save()
+    public void UnitSystemGroup_methods_and_state()
     {
         Runtime.Sync();
-        Assert.Equal(Scenario(M, Mathcad.Type("mplrun", "Mcd.Dim")), Scenario(typeof(Q.RuntimeOptions), typeof(Q.Dim)));
-    }
 
-    private static string GroupScript(System.Type groupType, System.Type systemType, Func<string, int, object> makeSystem)
-    {
-        var log = new List<string>();
-        void Step(string what, Func<object?> f, Func<object?, string>? show = null) => log.Add(what + " = " + Outcome(f, show));
-        var initial = makeSystem("init", 0);
-        var group = New(groupType, initial);
-        Step("Name", () => Get(group, "Name"));
-        Step("findMember(0) initial", () => ReferenceEquals(Call(group, "findMember", 0), initial));
-        Step("findMember(5)", () => Call(group, "findMember", 5), SystemText);
-        var five = makeSystem("five", 5);
-        Step("addMember(five)", () => { Call(group, "addMember", five); return Call(group, "findMember", 5); }, SystemText);
-        Step("addMember(other five)", () => { Call(group, "addMember", makeSystem("other", 5)); return Call(group, "findMember", 5); }, SystemText);
-        var initialBasis = Get(initial, "Basis");
-        Step("changeMember(5, initial basis, [])", () =>
-        {
-            Call(group, "changeMember", 5, Get(five, "Basis"), Array.CreateInstance(Get(five, "Basis")!.GetType().GetElementType()!, 0));
-            return Call(group, "findMember", 5);
-        }, SystemText);
-        Step("changeMember(9, ...)", () => { Call(group, "changeMember", 9, initialBasis, initialBasis); return "ok"; });
-        Step("resetMember(5)", () => { Call(group, "resetMember", 5); return Call(group, "findMember", 5); }, SystemText);
-        Step("resetMember(0)", () => { Call(group, "resetMember", 0); return Call(group, "findMember", 0); }, SystemText);
-        Step("Reset(5) same", () => ReferenceEquals(Call(group, "Reset", 5), five));
-        Step("Reset(5)", () => Call(group, "findMember", 5), SystemText);
-        Step("Reset(42) initial", () => ReferenceEquals(Call(group, "Reset", 42), initial));
-        Step("addCopyWithRONumber(5) existing", () => ReferenceEquals(Call(group, "addCopyWithRONumber", 5), five));
-        Step("addCopyWithRONumber(8)", () => Call(group, "addCopyWithRONumber", 8), SystemText);
-        Step("addCopyWithRONumber(8) again same", () => ReferenceEquals(Call(group, "addCopyWithRONumber", 8), Call(group, "findMember", 8)));
-        Step("copy shares basis", () => ReferenceEquals(Get(Call(group, "findMember", 8)!, "Basis"), Get(initial, "Basis")));
-        Step("removeMember(77)", () => { Call(group, "removeMember", 77); return "ok"; });
-        Step("removeMember(0)", () => { Call(group, "removeMember", 0); return Call(group, "findMember", 0); }, SystemText);
-        Step("resetMember(5) without initial", () => { Call(group, "resetMember", 5); return Call(group, "findMember", 5); }, SystemText);
-        Step("Reset(42) without initial", () => Call(group, "Reset", 42), SystemText);
-        Step("addCopyWithRONumber(9) without initial", () => Call(group, "addCopyWithRONumber", 9), SystemText);
-        Step("new group(null)", () => New(groupType, [null]), _ => "ok");
-        return string.Join("\n", log);
+        var qGroupCtor = typeof(Q.UnitSystemGroup).GetConstructor([typeof(Q.UnitSystem)])!;
+        var mGroupCtor = MGroup.GetConstructor([MSystem])!;
+        var qGetName = typeof(Q.UnitSystemGroup).GetMethod("get_Name")!;
+        var mGetName = MGroup.GetMethod("get_Name")!;
+        var qFindMember = typeof(Q.UnitSystemGroup).GetMethod("findMember", [typeof(int)])!;
+        var mFindMember = MGroup.GetMethod("findMember", [typeof(int)])!;
+        var qAddMember = typeof(Q.UnitSystemGroup).GetMethod("addMember", [typeof(Q.UnitSystem)])!;
+        var mAddMember = MGroup.GetMethod("addMember", [MSystem])!;
+        var qChangeMember = typeof(Q.UnitSystemGroup).GetMethod("changeMember", [typeof(int), typeof(Q.Unit[]), typeof(Q.Unit[])])!;
+        var mChangeMember = MGroup.GetMethod("changeMember", [typeof(int), Array.CreateInstance(Mathcad.Type("mplrun", "Mcd.Unit"), 0).GetType(), Array.CreateInstance(Mathcad.Type("mplrun", "Mcd.Unit"), 0).GetType()])!;
+        var qRemoveMember = typeof(Q.UnitSystemGroup).GetMethod("removeMember", [typeof(int)])!;
+        var mRemoveMember = MGroup.GetMethod("removeMember", [typeof(int)])!;
+        var qResetMember = typeof(Q.UnitSystemGroup).GetMethod("resetMember", [typeof(int)])!;
+        var mResetMember = MGroup.GetMethod("resetMember", [typeof(int)])!;
+        var qReset = typeof(Q.UnitSystemGroup).GetMethod("Reset", [typeof(int)])!;
+        var mReset = MGroup.GetMethod("Reset", [typeof(int)])!;
+        var qAddCopy = typeof(Q.UnitSystemGroup).GetMethod("addCopyWithRONumber", [typeof(int)])!;
+        var mAddCopy = MGroup.GetMethod("addCopyWithRONumber", [typeof(int)])!;
+
+        // Constructor with system
+        var qInitial = MakeSystem(false, "init", 0);
+        var mInitial = MakeSystem(true, "init", 0);
+        MethodComparison.Compare("UnitSystemGroup.ctor(init)", Contract, qGroupCtor, null, [qInitial], mGroupCtor, null, [mInitial], Show, Show);
+
+        // Constructor with null throws NullReferenceException
+        MethodComparison.Compare("UnitSystemGroup.ctor(null)", Contract, qGroupCtor, null, [null], mGroupCtor, null, [null], Show, Show);
+
+        var qGroup = new Q.UnitSystemGroup((Q.UnitSystem)qInitial);
+        var mGroup = New(MGroup, mInitial);
+
+        // Name
+        MethodComparison.Compare("UnitSystemGroup.Name", Contract, qGetName, qGroup, [], mGetName, mGroup, [], Show, Show, GroupState, GroupState);
+
+        // findMember
+        MethodComparison.Compare("findMember(0)", Contract, qFindMember, qGroup, [0], mFindMember, mGroup, [0], Show, Show, GroupState, GroupState);
+        MethodComparison.Compare("findMember(5) missing", Contract, qFindMember, qGroup, [5], mFindMember, mGroup, [5], Show, Show, GroupState, GroupState);
+
+        // addMember
+        var qSys3 = MakeSystem(false, "three", 3);
+        var mSys3 = MakeSystem(true, "three", 3);
+        MethodComparison.Compare("addMember(3)", Contract, qAddMember, qGroup, [qSys3], mAddMember, mGroup, [mSys3], Show, Show, GroupState, GroupState);
+
+        // addMember duplicate does not overwrite
+        var qSys3Dup = MakeSystem(false, "duplicate", 3);
+        var mSys3Dup = MakeSystem(true, "duplicate", 3);
+        MethodComparison.Compare("addMember(3 duplicate)", Contract, qAddMember, qGroup, [qSys3Dup], mAddMember, mGroup, [mSys3Dup], Show, Show, GroupState, GroupState);
+
+        // changeMember on existing
+        var qUnitType = typeof(Q.Unit);
+        var mUnitType = Mathcad.Type("mplrun", "Mcd.Unit");
+        var qNewBasis = Array.CreateInstance(qUnitType, 1);
+        qNewBasis.SetValue(new Q.Unit("second", "s", "Time", 1.0, "V{Time 60000}"), 0);
+        var mNewBasis = Array.CreateInstance(mUnitType, 1);
+        mNewBasis.SetValue(New(mUnitType, "second", "s", "Time", 1.0, "V{Time 60000}"), 0);
+        var qNewDefaults = Array.CreateInstance(qUnitType, 0);
+        var mNewDefaults = Array.CreateInstance(mUnitType, 0);
+
+        MethodComparison.Compare("changeMember(3)", Contract, qChangeMember, qGroup, [3, qNewBasis, qNewDefaults], mChangeMember, mGroup, [3, mNewBasis, mNewDefaults], Show, Show, GroupState, GroupState);
+
+        // changeMember on missing
+        MethodComparison.Compare("changeMember(99 missing)", Contract, qChangeMember, qGroup, [99, qNewBasis, qNewDefaults], mChangeMember, mGroup, [99, mNewBasis, mNewDefaults], Show, Show, GroupState, GroupState);
+
+        // resetMember on existing key 3 (copies member 0's basis and defaults)
+        MethodComparison.Compare("resetMember(3)", Contract, qResetMember, qGroup, [3], mResetMember, mGroup, [3], Show, Show, GroupState, GroupState);
+
+        // resetMember on key 0 does nothing
+        MethodComparison.Compare("resetMember(0)", Contract, qResetMember, qGroup, [0], mResetMember, mGroup, [0], Show, Show, GroupState, GroupState);
+
+        // resetMember on missing key does nothing
+        MethodComparison.Compare("resetMember(99)", Contract, qResetMember, qGroup, [99], mResetMember, mGroup, [99], Show, Show, GroupState, GroupState);
+
+        // Reset(3) calls UnitSystem.Reset
+        MethodComparison.Compare("Reset(3)", Contract, qReset, qGroup, [3], mReset, mGroup, [3], Show, Show, GroupState, GroupState);
+
+        // Reset(99) falls back to member 0
+        MethodComparison.Compare("Reset(99 fallback)", Contract, qReset, qGroup, [99], mReset, mGroup, [99], Show, Show, GroupState, GroupState);
+
+        // addCopyWithRONumber on existing key returns existing member
+        MethodComparison.Compare("addCopyWithRONumber(3 existing)", Contract, qAddCopy, qGroup, [3], mAddCopy, mGroup, [3], Show, Show, GroupState, GroupState);
+
+        // addCopyWithRONumber on new key creates a copy
+        MethodComparison.Compare("addCopyWithRONumber(7 new)", Contract, qAddCopy, qGroup, [7], mAddCopy, mGroup, [7], Show, Show, GroupState, GroupState);
+
+        // removeMember on key 3
+        MethodComparison.Compare("removeMember(3)", Contract, qRemoveMember, qGroup, [3], mRemoveMember, mGroup, [3], Show, Show, GroupState, GroupState);
+
+        // removeMember on missing key
+        MethodComparison.Compare("removeMember(99)", Contract, qRemoveMember, qGroup, [99], mRemoveMember, mGroup, [99], Show, Show, GroupState, GroupState);
+
+        // removeMember on key 0
+        MethodComparison.Compare("removeMember(0)", Contract, qRemoveMember, qGroup, [0], mRemoveMember, mGroup, [0], Show, Show, GroupState, GroupState);
+
+        // resetMember, Reset, addCopyWithRONumber when member 0 is gone
+        MethodComparison.Compare("resetMember(7 without 0)", Contract, qResetMember, qGroup, [7], mResetMember, mGroup, [7], Show, Show, GroupState, GroupState);
+        MethodComparison.Compare("Reset(99 without 0)", Contract, qReset, qGroup, [99], mReset, mGroup, [99], Show, Show, GroupState, GroupState);
+        MethodComparison.Compare("addCopyWithRONumber(12 without 0)", Contract, qAddCopy, qGroup, [12], mAddCopy, mGroup, [12], Show, Show, GroupState, GroupState);
     }
 
     [SkippableFact]
-    public void Group_membership()
+    public void RuntimeOptions_methods_and_sync()
     {
         Runtime.Sync();
-        object MSys(string name, int ro)
+
+        var qOptsCtor = typeof(Q.RuntimeOptions).GetConstructor([])!;
+        var mOptsCtor = M.GetConstructor([])!;
+        var qSync = typeof(Q.RuntimeOptions).GetMethod("SyncToThread")!;
+        var mSync = M.GetMethod("SyncToThread")!;
+        var qRemove = typeof(Q.RuntimeOptions).GetMethod("RemoveUnitSystem")!;
+        var mRemove = M.GetMethod("RemoveUnitSystem")!;
+        var qSave = typeof(Q.RuntimeOptions).GetMethod("SaveThreadOptions")!;
+        var mSave = M.GetMethod("SaveThreadOptions")!;
+
+        // Constructor
+        MethodComparison.Compare("RuntimeOptions.ctor()", Contract, qOptsCtor, null, [], mOptsCtor, null, [], Show, Show);
+
+        var qOpts = new Q.RuntimeOptions();
+        var mOpts = New(M);
+
+        // SyncToThread default
+        MethodComparison.Compare("SyncToThread default", Contract, qSync, qOpts, [], mSync, mOpts, [], Show, Show, OptionsState, OptionsState);
+
+        // SaveThreadOptions
+        MethodComparison.Compare("SaveThreadOptions synced", Contract, qSave, null, [], mSave, null, [], Show, Show);
+
+        // Modify options and SyncToThread again
+        foreach (var f in Flags)
         {
-            var d = Get(M, "s_default_unit_system")!;
-            var s = New(MSystem, name, 3u, "g", Get(d, "Basis"), Get(d, "Defaults"));
-            Set(s, "RO_number", ro);
-            return s;
+            Set(qOpts, "m_" + f, !(bool)Get(qOpts, "m_" + f)!);
+            Set(mOpts, "m_" + f, !(bool)Get(mOpts, "m_" + f)!);
         }
-        object QSys(string name, int ro)
-        {
-            var d = Q.RuntimeOptions.s_default_unit_system;
-            return new Q.UnitSystem(name, 3u, "g", d.Basis, d.Defaults) { RO_number = ro };
-        }
-        Assert.Equal(GroupScript(MGroup, MSystem, MSys), GroupScript(typeof(Q.UnitSystemGroup), typeof(Q.UnitSystem), QSys));
+        Set(qOpts, "m_mangled_identifiers", Enum.ToObject(Get(qOpts, "m_mangled_identifiers")!.GetType(), 2));
+        Set(mOpts, "m_mangled_identifiers", Enum.ToObject(Get(mOpts, "m_mangled_identifiers")!.GetType(), 2));
+        Set(qOpts, "m_ro_number", 17);
+        Set(mOpts, "m_ro_number", 17);
+
+        MethodComparison.Compare("SyncToThread modified", Contract, qSync, qOpts, [], mSync, mOpts, [], Show, Show, OptionsState, OptionsState);
+
+        // Add copy with RO number 17 so RemoveUnitSystem has something to remove
+        var qGrp = Get(qOpts, "m_unit_system_group")!;
+        var mGrp = Get(mOpts, "m_unit_system_group")!;
+        Call(qGrp, "addCopyWithRONumber", 17);
+        Call(mGrp, "addCopyWithRONumber", 17);
+
+        // RemoveUnitSystem
+        MethodComparison.Compare("RemoveUnitSystem()", Contract, qRemove, qOpts, [], mRemove, mOpts, [], Show, Show, OptionsState, OptionsState);
+
+        // RemoveUnitSystem when group is null throws NullReferenceException
+        Set(qOpts, "m_unit_system_group", null);
+        Set(mOpts, "m_unit_system_group", null);
+        MethodComparison.Compare("RemoveUnitSystem() null group", Contract, qRemove, qOpts, [], mRemove, mOpts, [], Show, Show, OptionsState, OptionsState);
+
+        // Initializer constructor
+        var qInitType = typeof(Q.RuntimeOptions).GetNestedType("RuntimeOptionsInitializer", BindingFlags.NonPublic)!;
+        var mInitType = M.GetNestedType("RuntimeOptionsInitializer", BindingFlags.NonPublic)!;
+        var qInitCtor = qInitType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
+        var mInitCtor = mInitType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
+        MethodComparison.Compare("RuntimeOptionsInitializer.ctor()", Contract, qInitCtor, null, [], mInitCtor, null, [], Show, Show);
     }
 }

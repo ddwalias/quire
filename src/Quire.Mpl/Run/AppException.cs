@@ -87,7 +87,14 @@ public partial class AppException : ApplicationException
 
     /// <summary>The message, prefixed by <c>argument.</c> when there is an argument.</summary>
     [MirrorVerified("AppExceptionDifferentialTests")]
-    public string EfiMessage => m_argument == uint.MaxValue ? Message : $"{m_argument}.{Message}";
+    public string EfiMessage
+    {
+        get
+        {
+            if (m_argument == uint.MaxValue) return Message;
+            return string.Format("{0}.{1}", m_argument, Message);
+        }
+    }
 
     /// <summary>The first <see cref="AppException"/> in the inner-exception chain, or a new untagged wrapper.</summary>
     [MirrorVerified("AppExceptionDifferentialTests")]
@@ -109,7 +116,7 @@ public partial class AppException : ApplicationException
         if (msgs == null || msgs.Length == 0) return Raise("error", handle);
         if (msgs.Length == 1) return Raise(msgs[0].ToString(), handle);
         string text = msgs[0].ToString();
-        for (int i = 1; i < msgs.Length; i++) text = $"{text}\t{msgs[i]}";
+        for (int i = 1; i < msgs.Length; i++) text = string.Format("{0}\t{1}", text, msgs[i]);
         return Raise(text, handle);
     }
 

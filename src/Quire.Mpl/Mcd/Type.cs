@@ -32,14 +32,15 @@ public abstract partial class Type
     {
         get
         {
-            var app = (Application)this;
-            return operand == 0 ? app.Operator : app.Operands[operand - 1];
+            Application application = (Application)this;
+            if (operand == 0) return application.Operator;
+            return application.Operands[operand - 1];
         }
         set
         {
-            var app = (Application)this;
-            if (operand == 0) app.Operator = value;
-            else app.Operands[operand - 1] = value;
+            Application application = (Application)this;
+            if (operand == 0) application.Operator = value;
+            else application.Operands[operand - 1] = value;
         }
     }
 
@@ -63,18 +64,37 @@ public abstract partial class Type
     [MirrorVerified("TypeDifferentialTests")]
     public Product GetDimensionTypeProduct()
     {
-        var t = this;
-        while (t.Root == 'M') t = t[1];
-        switch (t.Root)
+        Type type = this;
+        while (true)
         {
-            case 'F' or 'R' or 'V':
-                var operand = t[1];
-                if (operand is Product product) return product;
-                return new Product([new Product.Power { Base = operand, Exponent = 1 }], operand is Variable ? 1 : 0);
-            case '{':
-                return (Product)t;
-            default:
-                return null;
+            switch (type.Root)
+            {
+                case 'F':
+                case 'R':
+                case 'V':
+                    type = type[1];
+                    break;
+                case 'M':
+                    type = type[1];
+                    continue;
+                case '{':
+                    return (Product)type;
+                default:
+                    return null;
+            }
+            break;
+        }
+        if (type is Product)
+        {
+            return (Product)type;
+        }
+        Product.Power[] array = new Product.Power[1];
+        array[0].Base = type;
+        array[0].Exponent = 1;
+        bool isVar = type is Variable;
+        unsafe
+        {
+            return new Product(array, *(byte*)&isVar);
         }
     }
 
@@ -103,7 +123,11 @@ public abstract partial class Type
     public void Format(StringBuilder builder, UnitSystem system) => Accept(new Formatter(builder, system));
 
     [MirrorVerified("TypeDifferentialTests")]
-    public static Type Parse(string signature) => new Parser(signature).Parse();
+    public static Type Parse(string signature)
+    {
+        var parser = new Parser(signature);
+        return parser.Parse();
+    }
 
     [Serializable]
     public abstract partial class Named : Type, IComparable
@@ -309,12 +333,12 @@ public abstract partial class Type
 
         /// <summary>The unit constant <c>()</c>, the single term itself, or an application of <c>()</c>.</summary>
         [MirrorVerified("TypeDifferentialTests")]
-        public Type NewTuple(int operands) => operands switch
+        public Type NewTuple(int operands)
         {
-            0 => NewConstant("()"),
-            1 => Pop(),
-            _ => NewApplication(NewConstant("()"), operands),
-        };
+            if (operands == 0) return NewConstant("()");
+            if (operands == 1) return Pop();
+            return NewApplication(NewConstant("()"), operands);
+        }
 
         [MirrorVerified("TypeDifferentialTests")]
         public Type NewFunction(Type domain, Type range) => new Application(NewConstant(">"), [domain, range]);
@@ -357,36 +381,47 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         public char GetToken(out string lexeme)
         {
-            while (char.IsWhiteSpace(m_src[m_off])) m_off++;
-            int start = m_off;
             char c = m_src[m_off];
-            char kind = c;
+            while (char.IsWhiteSpace(c))
+            {
+                c = m_src[++m_off];
+            }
+            int start = m_off;
             if (char.IsLetter(c))
             {
-                do m_off++; while (char.IsLetterOrDigit(m_src[m_off]));
-                kind = char.IsUpper(c) ? 'C' : 'a';
+                while (char.IsLetterOrDigit(m_src[++m_off]))
+                {
+                }
+                c = (char.IsUpper(c) ? 'C' : 'a');
             }
             else if (char.IsDigit(c))
             {
-                do m_off++; while (char.IsDigit(m_src[m_off]));
-                kind = 'i';
-            }
-            else if (c == '-')
-            {
-                m_off++;
-                if (m_src[m_off] == '>')
+                while (char.IsDigit(m_src[++m_off]))
                 {
-                    m_off++;
-                    start++;
-                    kind = '>';
+                }
+                c = 'i';
+            }
+            else
+            {
+                switch (c)
+                {
+                    case '-':
+                        if (m_src[++m_off] == '>')
+                        {
+                            m_off++;
+                            start++;
+                            c = '>';
+                        }
+                        break;
+                    default:
+                        m_off++;
+                        break;
+                    case '$':
+                        break;
                 }
             }
-            else if (c != '$')
-            {
-                m_off++;
-            }
             lexeme = m_src.Substring(start, m_off - start);
-            return kind;
+            return c;
         }
     }
 
@@ -468,8 +503,15 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         private int ParseExponent()
         {
-            int exponent = GetNextTokenIf("-") ? -1 : 1;
-            if (GetNextTokenIf("i")) exponent *= int.Parse(m_val);
+            int exponent = 1;
+            if (GetNextTokenIf("-"))
+            {
+                exponent = -exponent;
+            }
+            if (GetNextTokenIf("i"))
+            {
+                exponent *= int.Parse(m_val);
+            }
             return exponent;
         }
 
@@ -483,10 +525,13 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         private char GetNextToken()
         {
-            if (m_tok == '$') return m_lex.GetToken(out m_val);
-            char tok = m_tok;
-            m_tok = '$';
-            return tok;
+            if (m_tok != '$')
+            {
+                char tok = m_tok;
+                m_tok = '$';
+                return tok;
+            }
+            return m_lex.GetToken(out m_val);
         }
 
         [MirrorTested("Mcd.Type")]
@@ -520,32 +565,46 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         public override void Visit(Application t)
         {
-            if (t.Root == '(')
+            switch (t.Root)
             {
-                m_out.Append('(');
-                for (int i = 0; i < t.Operands.Length; i++)
+                case '(':
                 {
-                    if (i > 0) m_out.Append(", ");
-                    Traverse(t.Operands[i]);
+                    bool isFirst = true;
+                    m_out.Append('(');
+                    Type[] operands = t.Operands;
+                    foreach (Type operand in operands)
+                    {
+                        if (isFirst)
+                        {
+                            isFirst = false;
+                        }
+                        else
+                        {
+                            m_out.Append(", ");
+                        }
+                        Traverse(operand);
+                    }
+                    m_out.Append(')');
+                    break;
                 }
-                m_out.Append(')');
-            }
-            else if (t.Root == '>')
-            {
-                Traverse(t.Operands[0]);
-                m_out.Append("->");
-                Traverse(t.Operands[1]);
-            }
-            else
-            {
-                m_out.Append('(');
-                Traverse(t.Operator);
-                foreach (var operand in t.Operands)
+                case '>':
+                    Traverse(t.Operands[0]);
+                    m_out.Append("->");
+                    Traverse(t.Operands[1]);
+                    break;
+                default:
                 {
-                    m_out.Append(' ');
-                    Traverse(operand);
+                    m_out.Append('(');
+                    Traverse(t.Operator);
+                    Type[] operands = t.Operands;
+                    foreach (Type operand in operands)
+                    {
+                        m_out.Append(' ');
+                        Traverse(operand);
+                    }
+                    m_out.Append(')');
+                    break;
                 }
-                m_out.Append(')');
             }
         }
 
@@ -553,15 +612,25 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         public override void Visit(Product t)
         {
+            bool isFirst = true;
             m_out.Append('{');
-            for (int i = 0; i < t.Powers.Length; i++)
+            Product.Power[] powers = t.Powers;
+            for (int i = 0; i < powers.Length; i++)
             {
-                if (i > 0) m_out.Append(' ');
-                Traverse(t.Powers[i].Base);
-                if (t.Powers[i].Exponent != 1)
+                Product.Power power = powers[i];
+                if (isFirst)
+                {
+                    isFirst = false;
+                }
+                else
                 {
                     m_out.Append(' ');
-                    m_out.Append(t.Powers[i].Exponent);
+                }
+                Traverse(power.Base);
+                if (power.Exponent != 1)
+                {
+                    m_out.Append(' ');
+                    m_out.Append(power.Exponent);
                 }
             }
             m_out.Append('}');
@@ -590,20 +659,20 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         public override void Visit(Variable t)
         {
-            string name = t.Name;
-            if (name.Length == 1)
+            if (t.Name.Length == 1)
             {
                 m_out.Append("any");
-                m_out.Append(name[0] - 'a' + 1);
+                m_out.Append(t.Name[0] - 97 + 1);
             }
-            else if (name[0] == 't' && char.IsDigit(name[1]))
+            else if (t.Name[0] == 't' && char.IsDigit(t.Name[1]))
             {
+                uint parsed = uint.Parse(t.Name.Substring(1));
                 m_out.Append("any");
-                m_out.Append(uint.Parse(name.Substring(1)) + 26);
+                m_out.Append(parsed + 26);
             }
             else
             {
-                m_out.Append(name);
+                m_out.Append(t.Name);
             }
         }
 
