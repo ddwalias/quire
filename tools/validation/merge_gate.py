@@ -122,6 +122,31 @@ def changed_paths(base, tip):
     return sorted({p for p in git('diff', '-z', '--no-renames', '--name-only', f'{base}...{tip}').split('\0') if p})
 
 
+PROSE_PATHS = frozenset({
+    'README.md', 'docs/mirror/WORK.md', 'docs/mirror/STATE.md', 'docs/mirror/history.md',
+    'docs/mirror/work/lane-a.md', 'docs/mirror/work/lane-b.md', 'docs/mirror/work/validation-flow.md',
+})
+
+
+def prose_only(base, tip, paths):
+    """Only edits to existing, ordinary UTF-8 documents on the explicit allowlist can reuse validation."""
+    if not paths or not set(paths) <= PROSE_PATHS:
+        return False
+    for revision in (base, tip):
+        for path in paths:
+            if git('ls-tree', revision, '--', path).split()[:2] != ['100644', 'blob']:
+                return False
+            try:
+                blob = subprocess.run(['git', 'show', f'{revision}:{path}'], cwd=ROOT,
+                                      capture_output=True, check=True).stdout
+                if b'\0' in blob:
+                    return False
+                blob.decode('utf-8')
+            except (UnicodeError, OSError, subprocess.CalledProcessError):
+                return False
+    return True
+
+
 def on_branch(commit, repo=ROOT):
     """Whether a local branch contains `commit`: the validation clone (`--no-local`) copies only those."""
     return bool(git('for-each-ref', '--contains', commit, '--format=%(refname)', 'refs/heads', cwd=repo))
@@ -203,7 +228,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('branch')
     parser.add_argument('--base', default='main')
-    parser.add_argument('--apply', action='store_true', help='fast-forward the base branch and commit the new baseline')
+    parser.add_argument('--apply', action='store_true',
+                        help='fast-forward the base branch; update the baseline after runtime validation')
     parser.add_argument('--allow-protected', action='store_true', help='maintainer only: accept protected-path changes')
     parser.add_argument('--allow-unvalidated', action='store_true',
                         help='maintainer only: accept src changes outside Quire.Mpl after a separate phase run')
@@ -214,6 +240,8 @@ def main():
     parser.add_argument('--mutate-types-wide', action='store_true',
                         help='maintainer audits: mutate every compared method of each changed type, not only changed methods')
     parser.add_argument('--mutate-all', action='store_true', help='maintainer audits: mutate every compared method')
+    parser.add_argument('--full-validation', action='store_true',
+                        help='run runtime validation even for allowlisted prose edits')
     args = parser.parse_args()
     if args.apply and git('rev-parse', '--abbrev-ref', 'HEAD') != args.base:
         parser.error(f'--apply must run from the checkout that has {args.base} checked out')
@@ -249,9 +277,21 @@ def main():
 
     if args.results and args.results.exists():
         parser.error('--results must name a new directory')
-    tree = Path(tempfile.mkdtemp(prefix='quire-gate-'))
     outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-'))).resolve()
     outputs.mkdir(parents=True, exist_ok=True)
+    if (not touched and not (args.full_validation or args.mutate_all or args.mutate_types_wide)
+            and prose_only(base, tip, changed)):
+        record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed,
+                  'protected_changed': touched, 'stub_deletions': stubs, 'validation_mode': 'prose',
+                  'baseline_reused_from': base, 'results': None, 'validator_exit': None, 'reasons': []}
+        (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
+        print(f'PASSED: {args.branch} ({tip[:12]}); allowlisted prose edits only; '
+              f'runtime validation skipped, baseline unchanged. Results: {outputs}')
+        if args.apply:
+            git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', tip)
+            print(f'MERGED: {args.base} -> {tip[:12]}')
+        return 0
+    tree = Path(tempfile.mkdtemp(prefix='quire-gate-'))
     results = outputs / 'run'
     try:
         try:
@@ -282,6 +322,7 @@ def main():
                 else:
                     reasons = baseline_regressions(base, baseline)
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
+                  'validation_mode': 'runtime',
                   'mutation_jobs': args.jobs,
                   'stub_deletions': stubs,
                   'results': str(results), 'validator_exit': code, 'reasons': reasons}

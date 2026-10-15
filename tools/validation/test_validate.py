@@ -32,6 +32,36 @@ class MutationJobsTests(unittest.TestCase):
                     self.assertIn('--jobs must be a positive integer', result.stderr)
 
 
+class PhaseProjectsTests(unittest.TestCase):
+    def test_phase_includes_every_current_solution_test_project(self):
+        import validate
+        projects = validate.phase_projects()
+        self.assertIn('Quire.Engine.Tests', projects)
+        self.assertIn('Quire.Controls.Tests', projects)
+        self.assertNotIn('Quire.Focused.Differential.Tests', projects)
+
+    def test_solution_tests_cannot_be_silently_omitted(self):
+        from validate import phase_projects
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'tests/Extra.Tests').mkdir(parents=True)
+            (root / 'tests/Extra.Tests/Extra.Tests.csproj').write_text('')
+            (root / 'Quire.slnx').write_text('<Solution><Project Path="tests/New.Tests/New.Tests.csproj" /></Solution>')
+            with self.assertRaisesRegex(ValueError, 'phase profile would omit.*New.Tests'):
+                phase_projects(root)
+            (root / 'Quire.slnx').write_text('<Solution/>')
+            self.assertEqual(phase_projects(root), ['Extra.Tests'])
+
+    def test_solution_paths_accept_windows_separators(self):
+        from validate import phase_projects
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'tests/New.Tests').mkdir(parents=True)
+            (root / 'tests/New.Tests/New.Tests.csproj').write_text('')
+            (root / 'Quire.slnx').write_text('<Solution><Project Path=".\\tests\\New.Tests\\New.Tests.csproj" /></Solution>')
+            self.assertEqual(phase_projects(root), ['New.Tests'])
+
+
 class ResultTests(unittest.TestCase):
     def check(self, outcomes, summary="Completed", allow=False):
         with tempfile.TemporaryDirectory() as directory:

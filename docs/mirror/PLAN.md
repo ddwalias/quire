@@ -14,47 +14,54 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    contracts. Fetch missing original evidence only. Record exact overloads before implementation.
 2. **Mirror:** Apply rules below. Keep a batch to the smallest coherent group of related types within the
    assembly; split unrelated type groups into separate checkpoints. Analyze shared dependencies once, then
-   implement the batch. During iteration, scope validation to the changed types and their differential
-   tests, for example:
+   implement the batch. During iteration and before handoff, run the affected behavior tests and direct
+   differential tests, for example on Linux:
 
    ```sh
-   python3 tools/validation/validate.py --method-type <changed types> \
-     --diff-filter 'FullyQualifiedName~<related test class>'
+   QUIRE_REQUIRE_MATHCAD=1 dotnet test \
+     tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj \
+     --filter 'FullyQualifiedName~<related test class>'
    ```
 
-   This still runs the focused profile's harness and Mpl
-   regression tests; the filter only narrows differential tests. Every selected method must have a direct
-   comparison in the selected tests, or the method gate will report the coverage gap. Inspect failures and
-   retain concise results. Normal local iteration runs behavior, direct comparison, coverage and ratchet checks.
-   The merge gate runs mutation once for the completed batch; local mutation is optional unless the batch needs
-   survivor or unreachable-line proposals (step 4). Do not use a filtered local run to claim project-wide or
-   phase completion.
+   Set `QUIRE_REQUIRE_MATHCAD=1` in the environment on Windows too. Keep local checks scoped to the change;
+   the final runtime merge gate owns the full regression, shape, method audit, coverage, ratchet and mutation
+   pass. Run scoped `validate.py --method-type <type> --diff-filter <filter>` locally when diagnosing those
+   checks, rather than as a mandatory second gate. Local mutation is optional unless the batch needs survivor
+   or unreachable-line proposals (step 4). Missing coverage may therefore surface at the gate. A targeted pass
+   supports only its executed cases; it does not establish audit readiness, project-wide or phase completion.
    Refresh coverage/status locally after member changes if needed (`MirrorGen manifest`; `coverage.md` and
    `status/*.txt` are generated and gitignored, see [status/README.md](status/README.md)). Implement a stub by deleting its whole `[MirrorStub]` line
    pair from `Generated/Mirror` (the gate allows only that there; constant stubs stay) and declaring the member with the same shape; never
    commit `docs/mirror/manifest/*` (maintainer-owned: `git checkout main -- docs/mirror/manifest`). Regeneration and
    shape changes are maintainer work; never auto-accept removals. Broaden/repeat checks only for changes or unresolved failures.
-3. **Checkpoint:** Update member evidence/status, then replace WORK with remaining exact members, next action,
-   changed/evidence paths, blockers, and validation command + passed/failed/skipped counts/case limits.
-   Reference durable records rather than repeating findings or old logs. Stop at the evidence-supported boundary.
+3. **Checkpoint:** Update member contracts/status in their evidence records. Keep remaining exact members, next
+   action, changed/evidence paths, blockers and validation commands/counts/case limits once in the lane checkpoint.
+   WORK is a short index linking active lane checkpoints; update it only when that index or next action changes.
+   Evidence links to the checkpoint's run results instead of repeating them. Stop at the evidence-supported boundary.
 4. **Merge:** only the [merge gate](validation.md#merge-gate) merges into `main`.
    - **Branches:** one `mirror/<lane>-<unit>` branch per batch, based on current `main`. Never commit to `main`, not
      even lane notes or evidence: they reach `main` through the gate like code. Push only your own `mirror/*` branches
      to `origin`, for backup, and use `--force-with-lease` only on those; never push or force-push `main` (the
-     maintainer pushes it when the user asks). Before handing the branch to the reviewer and again before queueing,
-     squash it to one commit and rebase it onto current `main`. `merge_gate.py` blocks a branch not based on current
+     maintainer pushes it when the user asks). Review the complete diff; squash once before queueing the gate.
+     Rebase only when `main` has moved past the branch's base. `merge_gate.py` blocks a branch not based on current
      `main`; the maintainer, merging under `flock /tmp/quire-merge.lock`, rebases a queued branch that `main` has
      moved past and the gate then validates the rebased tip. So after a clean rebase do not re-validate locally;
-     rerun the scoped validation only when the rebase had conflicts in `src/` or `tests/`.
-   - **Local validation:** before queueing, run a scoped `validate.py --method-type <changed types>` with the
-     related differential test filter. Mutation runs at the merge gate; omit a duplicate local mutation pass for
-     ordinary batches. Add `--mutate` when investigating test sensitivity or preparing survivor/unreachable-line
-     proposals. It mutates every compared method of those types, a superset of what the gate mutates in them; the
-     gate may also mutate other types' methods (callers, field readers, users of a changed test helper). A local run
+     rerun affected tests and review the resolved hunks when the rebase had conflicts in `src/` or `tests/`.
+   - **Local validation:** affected behavior/direct differential tests are the normal handoff check. Full local
+     shape, coverage, ratchet and mutation validation is optional for ordinary batches; the runtime gate requires
+     all of it. Use scoped `validate.py --method-type <changed types> --mutate` when investigating test sensitivity
+     or preparing survivor/unreachable-line proposals. It mutates every compared method of those types, a superset
+     of what the gate mutates in them; the gate may also mutate other types' methods (callers, field readers, users
+     of a changed test helper). A local run
      without mutation does not establish mutation readiness. The last line separates the run's own checks from the
      gate's likely decision (`LOCAL CHECKS: … · GATE: …`; outcomes in
      [validation.md](validation.md#branch-coverage-mutation-and-status)). Both commands accept `--jobs`; the default
      is one worker per logical CPU, capped at 12. Lower it when memory or CPU contention slows the host.
+   - **Prose edits:** the gate has an explicit allowlist for existing UTF-8, non-executable prose files, including
+     WORK and the lane checkpoints. Eligible edits retain the existing baseline and skip runtime validation;
+     normal branch, protected-path, case-collision and independent-review checks still apply. Evidence, policy,
+     configuration, tooling, additions/deletions and mixed changes use the full gate. `--full-validation` forces
+     the runtime gate; explicit mutation audit flags also force it. See [validation.md](validation.md#merge-gate).
    - **Survivors and uncovered lines:** a surviving mutant needs a stronger case; a mutant that crashes the test host
      is killed, never proposed. Only a provably equivalent survivor may be proposed. A line left `uncovered` needs a
      case; only a line that cannot execute in Mathcad's original either (e.g. `return null;` after a helper that
@@ -115,10 +122,13 @@ Stable rule numbers/anchor for D9 and existing reports.
    declaration-only/Quire-only status. Stub/Unclassified/Blocked/Documented/Analyzed prevent behavioral completion.
    Separate matches, case-limited verification, deviations; disclose unresolved work at administrative closure.
 
-**Phase closure only:** `dotnet test Quire.slnx`, manifest-shape/status-record checks, planned stub reduction,
-coverage-excluded checks, `Quire.exe --render` screenshot validation, a passing direct-method gate for the
-phase's projects (existing differential tests migrated to `MethodComparison.Compare`), and reviewer pass
-separate from author before phase commit. Passing tests/type presence alone never establish equivalence.
+**Phase closure only (Windows):** `dotnet build Quire.slnx` for full solution compilation, then
+`python tools/validation/validate.py --profile phase` for all test projects and strict reports. The phase runner
+rejects solution test projects it would omit. Keep manifest-shape/status-record checks, planned stub reduction,
+coverage-excluded checks, `Quire.exe --render` screenshots, a passing direct-method gate for the phase's projects
+(existing differential tests migrated to `MethodComparison.Compare`), and independent review before phase commit.
+The phase runner supplies the required test execution; a second `dotnet test Quire.slnx` is not required.
+Passing tests/type presence alone never establish equivalence.
 
 ## References: open only on trigger
 

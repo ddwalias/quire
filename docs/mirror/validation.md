@@ -5,7 +5,19 @@ cases; it does not establish method-wide equivalence or authorize status changes
 
 ## Runtime batch: one repeatable command
 
-From the repository root, with .NET SDK 10 and Python 3 installed:
+During iteration and before handoff, use the affected behavior and direct differential tests. For example on Linux:
+
+```sh
+QUIRE_REQUIRE_MATHCAD=1 dotnet test \
+  tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj \
+  --filter 'FullyQualifiedName~FunctionMatrixDifferentialTests'
+```
+
+Set `QUIRE_REQUIRE_MATHCAD=1` in the environment on Windows too. This executes the selected comparisons without
+the full shape, coverage, audit and ratchet pass. Those checks run at the final runtime merge gate, so coverage
+or audit gaps can surface there. Local test success alone does not establish audit or mutation readiness.
+
+For a local diagnostic run of those checks, with .NET SDK 10 and Python 3 installed:
 
 ```sh
 python3 tools/validation/validate.py --diff-filter 'FullyQualifiedName~FunctionMatrixDifferentialTests'
@@ -23,8 +35,8 @@ The existing test suite has not yet been migrated to this requirement; passing t
 still produce a failing validation report with precise coverage gaps.
 This profile covers mplrun, not engine/UI/other-project behavior; also run affected tests there.
 
-Use this scoped validation during iteration and before handoff. The merge gate performs the required mutation
-pass; ordinary batches can omit `--mutate` locally. Run scoped local mutation when investigating weak comparisons
+Scoped validation is optional for ordinary handoffs; the runtime merge gate performs the required full validation
+pass. Run scoped local mutation when investigating weak comparisons
 or preparing equivalent-mutant/unreachable-line proposals. Omitting local mutation delays that feedback until
 the gate; a passing local report without mutation does not establish that the gate's mutation checks will pass.
 The focused report records `mutation_requested` and appends `[mutation deferred to gate]` when local mutation
@@ -266,7 +278,7 @@ order passes it, which the direct comparisons must catch.
   merge gate blocks any summary that used it. Both `validate.py` and `merge_gate.py` accept `--jobs` to set parallel
   copies. The default is one worker per logical CPU, capped at 12; explicit positive counts override the cap.
   Lower it on hosts with limited memory or CPU contention. The worker count is recorded in the mutation summary
-  and in `gate.json` as `mutation_jobs`. It changes scheduling, not the selected mutants or acceptance rules.
+  and in runtime `gate.json` as `mutation_jobs`. It changes scheduling, not the selected mutants or acceptance rules.
 - **Exit status and verdict:** `validate.py` exits 0 when the run is complete, 3 when the merge gate's requirements
   hold (`gate_passed`) but gaps remain, and 1 when blocked (2 for an incomplete run with `--allow-differential-skips`).
   A run given `--proposed-mutants` or `--proposed-unreachable` is never complete nor `gate_passed`, so it exits 1; its
@@ -405,9 +417,31 @@ that has `main` checked out:
 
 ```sh
 python3 tools/validation/merge_gate.py <branch>            # check only
-python3 tools/validation/merge_gate.py <branch> --apply    # check, fast-forward main, commit the new baseline
+python3 tools/validation/merge_gate.py <branch> --apply    # check and fast-forward main
 python3 tools/validation/merge_gate.py <branch> --jobs 8   # choose the mutant worker count
+python3 tools/validation/merge_gate.py <branch> --full-validation # validate even allowlisted prose edits
 ```
+
+An automatic prose route skips cloning, builds, tests, coverage, auditing and mutation only when every changed
+path is one of these exact names:
+
+- `README.md`
+- `docs/mirror/WORK.md`
+- `docs/mirror/STATE.md`
+- `docs/mirror/history.md`
+- `docs/mirror/work/lane-a.md`
+- `docs/mirror/work/lane-b.md`
+- `docs/mirror/work/validation-flow.md`
+
+Every changed file must exist as a regular, non-executable UTF-8 file without NUL bytes in both the base and tip.
+Additions, deletions, renames between those names, mode changes, other paths and mixed changes use runtime
+validation. A protected path never uses the shortcut, even with `--allow-protected`. `--full-validation`,
+`--mutate-all` and `--mutate-types-wide` explicitly request the runtime route. The normal ancestry, local-branch,
+protected-path and case-collision checks still run, and independent review is still required. `gate.json` records
+`validation_mode: prose`, `baseline_reused_from`, and null runtime results/exit status: no tests are claimed.
+`--apply` fast-forwards to the reviewed prose tip while retaining the base's exact baseline, without a baseline
+commit. Evidence, manifests, type maps, policy/configuration and tooling are outside this allowlist. Runtime
+gates record `validation_mode: runtime` and retain the complete validation process below.
 
 The gate blocks a branch that is not based on current `main`, has no changes, or contains paths that differ only in
 case. It also blocks any added, changed, deleted or renamed path matching `tools/validation/protected.txt` (all of
@@ -469,13 +503,15 @@ Review test quality and retain the analysis and independent-review requirements 
 ## Windows and phase closure
 
 ```sh
+dotnet build Quire.slnx
 python tools/validation/validate.py --profile phase
-dotnet test Quire.slnx
 ```
 
 Run these on Windows with .NET 10 and the Windows Desktop runtime. The phase profile runs all
 solution test projects separately with strict reports (including metadata shape/status tests),
-without a differential filter. The solution command remains PLAN's explicit closure check.
+without a differential filter, and rejects any solution test project its project selection would omit. The
+solution build covers compilation of projects that tests may not reference. A second solution test run is
+unnecessary; the phase runner already executes those tests and validates their reports.
 Engine and UI tests require their own appropriate runtime environment. Never retarget WPF projects
 or omit engine tests to claim phase closure. Linux focused tests do not substitute for those checks.
 

@@ -34,6 +34,18 @@ def mutation_jobs(value=None):
     return jobs
 
 
+def phase_projects(root=ROOT):
+    """Keep the full phase test set, and reject solution tests the phase runner would omit."""
+    paths = {p.relative_to(root).as_posix() for p in (root / 'tests').glob('*/*.csproj')
+             if p.parent.name != 'Quire.Focused.Differential.Tests'}
+    solution = {Path(p.attrib['Path'].replace('\\', '/')).as_posix()
+                for p in ET.parse(root / 'Quire.slnx').iter('Project')}
+    solution = {p for p in solution if p.startswith('tests/')}
+    if missing := solution - paths:
+        raise ValueError('phase profile would omit solution test projects: ' + ', '.join(sorted(missing)))
+    return sorted(Path(p).parent.name for p in paths)
+
+
 def read_trx(path, allow_skips=False):
     root = ET.parse(path).getroot()
     summary = root.find("t:ResultSummary", NS)
@@ -490,9 +502,6 @@ def main():
     if args.results:
         output.mkdir(parents=True, exist_ok=False)
     projects = ["Quire.Harness.Tests", "Quire.Mpl.Tests", "Quire.Focused.Differential.Tests"]
-    if args.profile == "phase":
-        projects = sorted(p.parent.name for p in (ROOT / "tests").glob("*/*.csproj")
-                          if p.parent.name != "Quire.Focused.Differential.Tests")
     def git_output(*git_args):
         result = subprocess.run(["git", *git_args], cwd=ROOT, text=True, capture_output=True)
         return result.stdout.strip() if result.returncode == 0 else None
@@ -508,6 +517,8 @@ def main():
     report["original"] = {"path": str(artifact), "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else None}
     holder = {}
     try:
+        if args.profile == "phase":
+            projects = phase_projects()
         # Everything the verdict depends on is loaded or built before any code under test runs; afterwards the seal
         # catches tests that rewrite maintainer-owned files or built outputs on disk.
         # Verdict inputs are read, and the source lint run, before any code under test can touch them.

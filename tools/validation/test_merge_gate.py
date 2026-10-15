@@ -38,6 +38,27 @@ class MergeGateTests(unittest.TestCase):
             'tests/Quire.Mpl.Tests/Mcd/NumValTests.cs', 'docs/mirror/evidence/Mcd.NumVal.md',
             'docs/mirror/WORK.md', 'docs/mirror/status/Quire.Mpl.txt'], RULES), [])
 
+    def test_prose_allowlist_excludes_runtime_inputs_and_policy(self):
+        for path in ('docs/mirror/evidence/Mcd.NumVal.md', 'docs/mirror/manifest/Quire.Mpl.txt',
+                     'docs/mirror/type-map.csv', 'docs/mirror/validation-baseline.json',
+                     'docs/mirror/accepted-mutants.txt', 'docs/mirror/PLAN.md', 'docs/mirror/validation.md',
+                     'docs/mirror/decisions.md', 'tools/validation/merge_gate.py', 'src/Quire.Mpl/Mcd/Dim.cs',
+                     'tests/Quire.Differential.Tests/DimDifferentialTests.cs', 'docs/unknown.md', 'readme.md'):
+            with self.subTest(path=path):
+                self.assertFalse(merge_gate.prose_only('base', 'tip', [path]))
+                self.assertFalse(merge_gate.prose_only('base', 'tip', ['README.md', path]))
+        self.assertFalse(merge_gate.prose_only('base', 'tip', []))
+
+    def test_prose_allowlist_requires_regular_nonexecutable_files_in_both_trees(self):
+        for entry in ('', '120000 blob sha\tREADME.md', '100755 blob sha\tREADME.md', '040000 tree sha\tREADME.md'):
+            with self.subTest(entry=entry), mock.patch.object(merge_gate, 'git', return_value=entry):
+                self.assertFalse(merge_gate.prose_only('base', 'tip', ['README.md']))
+        for mode in ('120000', '100755'):
+            with self.subTest(tip_mode=mode), mock.patch.object(merge_gate, 'git', side_effect=[
+                    '100644 blob sha\tREADME.md', f'{mode} blob sha\tREADME.md']), \
+                    mock.patch.object(merge_gate.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, b'Note')):
+                self.assertFalse(merge_gate.prose_only('base', 'tip', ['README.md']))
+
     def test_case_variants_and_subdirectories_stay_protected(self):
         self.assertEqual(protected([
             'tests/Quire.Differential.Tests/Sub/EvilDifferentialTests.cs', 'src/Quire.Mpl/Generated/Mirror/X.cs',
@@ -133,6 +154,8 @@ class RepositoryTests(unittest.TestCase):
         (self.repo / 'tools/validation').mkdir(parents=True)
         (self.repo / 'tools/validation/protected.txt').write_text('tools/*\ndocs/mirror/validation-baseline.json\n')
         (self.repo / 'docs/mirror/validation-baseline.json').write_text(json.dumps(self.BASELINE))
+        (self.repo / 'docs/mirror/WORK.md').write_text('Current checkpoint\n')
+        (self.repo / 'README.md').write_text('Project overview\n')
         self.git('init', '-q', '-b', 'main')
         self.git('add', '-A'); self.git('commit', '-qm', 'base')
         self.base = self.git('rev-parse', 'HEAD')
@@ -195,7 +218,8 @@ class RepositoryTests(unittest.TestCase):
         gate = results / 'gate.json'
         return code, json.loads(gate.read_text()) if gate.is_file() else None
 
-    def test_cli_worker_count_reaches_validation_and_the_gate_record(self):
+    @contextlib.contextmanager
+    def validation(self):
         real, commands = subprocess.run, []
         def run(command, *args, **kwargs):
             if '--write-baseline' not in command:
@@ -207,12 +231,116 @@ class RepositoryTests(unittest.TestCase):
             Path(command[command.index('--write-baseline') + 1]).write_text(json.dumps(self.BASELINE))
             return subprocess.CompletedProcess(command, 0)
         with mock.patch.object(merge_gate.subprocess, 'run', side_effect=run):
+            yield commands
+
+    def test_cli_worker_count_reaches_validation_and_the_gate_record(self):
+        with self.validation() as commands:
             code, gate = self.main('work', extra=['--jobs', '8'])
         self.assertEqual(code, 0, gate)
         self.assertEqual(gate['mutation_jobs'], 8)
         self.assertEqual(len(commands), 1)
         self.assertEqual(commands[0][commands[0].index('--jobs') + 1], '8')
         self.assertIn('--no-mutant-cache', commands[0])
+
+    def prose_branch(self, path='docs/mirror/WORK.md', content=b'Updated checkpoint\n', name='notes'):
+        self.git('checkout', '-qb', name, 'main')
+        target = self.repo / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(content)
+        self.git('add', '-A'); self.git('commit', '-qm', 'notes')
+        tip = self.git('rev-parse', 'HEAD')
+        self.git('checkout', '-q', 'main')
+        return tip
+
+    def test_prose_apply_skips_runtime_validation_and_preserves_the_baseline(self):
+        tip = self.prose_branch()
+        baseline = self.git('show', 'main:docs/mirror/validation-baseline.json')
+        with mock.patch.object(merge_gate, 'clone', side_effect=AssertionError('prose must not clone')), \
+                mock.patch.object(merge_gate, 'baseline_commit', side_effect=AssertionError('baseline must not change')):
+            code, gate = self.main('notes', extra=['--apply'])
+        self.assertEqual(code, 0)
+        self.assertEqual(gate['validation_mode'], 'prose')
+        self.assertEqual(gate['baseline_reused_from'], self.base)
+        self.assertIsNone(gate['validator_exit'])
+        self.assertIsNone(gate['results'])
+        self.assertEqual(self.git('rev-parse', 'main'), tip)
+        self.assertEqual(self.git('show', 'main:docs/mirror/validation-baseline.json'), baseline)
+
+    def test_prose_check_does_not_move_main(self):
+        self.prose_branch(path='README.md')
+        with mock.patch.object(merge_gate, 'clone', side_effect=AssertionError('prose must not clone')):
+            code, gate = self.main('notes')
+        self.assertEqual(code, 0)
+        self.assertEqual(gate['validation_mode'], 'prose')
+        self.assertEqual(self.git('rev-parse', 'main'), self.base)
+
+    def test_explicit_validation_and_audits_override_the_prose_shortcut(self):
+        import shutil
+        self.prose_branch()
+        for flag in ('--full-validation', '--mutate-all', '--mutate-types-wide'):
+            with self.subTest(flag=flag), self.validation() as commands:
+                code, gate = self.main('notes', extra=[flag])
+                self.assertEqual(code, 0)
+                self.assertEqual(gate['validation_mode'], 'runtime')
+                self.assertEqual(len(commands), 1)
+            shutil.rmtree(self.repo.parent / 'results')
+
+    def test_mixed_prose_and_other_changes_use_runtime_validation(self):
+        self.git('checkout', '-q', 'work')
+        (self.repo / 'docs/mirror/WORK.md').write_text('Updated checkpoint')
+        self.git('add', '-A'); self.git('commit', '-qm', 'notes with other docs')
+        self.git('checkout', '-q', 'main')
+        with self.validation() as commands:
+            code, gate = self.main('work')
+        self.assertEqual(code, 0)
+        self.assertEqual(gate['validation_mode'], 'runtime')
+        self.assertEqual(len(commands), 1)
+
+    def test_new_or_deleted_allowlisted_documents_use_runtime_validation(self):
+        import shutil
+        self.prose_branch(path='docs/mirror/STATE.md')
+        self.git('checkout', '-qb', 'removed', 'main')
+        self.git('rm', 'README.md'); self.git('commit', '-qm', 'remove readme')
+        self.git('checkout', '-q', 'main')
+        for branch in ('notes', 'removed'):
+            with self.subTest(branch=branch), self.validation() as commands:
+                code, gate = self.main(branch)
+                self.assertEqual(code, 0)
+                self.assertEqual(gate['validation_mode'], 'runtime')
+                self.assertEqual(len(commands), 1)
+            shutil.rmtree(self.repo.parent / 'results')
+
+    def test_binary_and_non_utf8_documents_use_runtime_validation(self):
+        import shutil
+        for i, content in enumerate((b'Note\0data', b'\xff')):
+            branch = f'notes{i}'
+            self.prose_branch(content=content, name=branch)
+            with self.subTest(content=content), self.validation() as commands:
+                code, gate = self.main(branch)
+                self.assertEqual(code, 0)
+                self.assertEqual(gate['validation_mode'], 'runtime')
+                self.assertEqual(len(commands), 1)
+            shutil.rmtree(self.repo.parent / 'results')
+
+    def test_protected_prose_still_uses_runtime_validation(self):
+        with (self.repo / 'tools/validation/protected.txt').open('a') as rules:
+            rules.write('docs/mirror/WORK.md\n')
+        self.git('add', '-A'); self.git('commit', '-qm', 'protect checkpoint')
+        self.prose_branch()
+        self.assertEqual(self.main('notes'), (1, None))
+        with self.validation() as commands:
+            code, gate = self.main('notes', extra=['--allow-protected'])
+        self.assertEqual(code, 0)
+        self.assertEqual(gate['validation_mode'], 'runtime')
+        self.assertEqual(gate['protected_changed'], ['docs/mirror/WORK.md'])
+        self.assertEqual(len(commands), 1)
+
+    def test_stale_prose_branch_cannot_bypass_the_base_check(self):
+        self.prose_branch()
+        (self.repo / 'README.md').write_text('Main moved')
+        self.git('add', '-A'); self.git('commit', '-qm', 'advance main')
+        with mock.patch.object(merge_gate, 'clone', side_effect=AssertionError('stale branch must stop')):
+            self.assertEqual(self.main('notes'), (1, None))
 
     def test_failed_clone_is_recorded_as_blocked(self):
         for command in ('clone', 'remote'):
