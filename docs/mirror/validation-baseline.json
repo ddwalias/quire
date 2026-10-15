@@ -385,8 +385,8 @@
     "Quire.Mcd.MatVal+AssignMatrixPtrs::assign_matrix_ptrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal+ResizeMatrixPtrs::.ctor`0([System.Runtime]System.Collections.Hashtable,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal+ResizeMatrixPtrs::resize_matrix_ptrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal+TrimSubMatrixPtrs::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal+TrimSubMatrixPtrs::set_submatrix_ptrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal+TrimSubMatrixPtrs::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.MatVal+TrimSubMatrixPtrs::set_submatrix_ptrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal+arg_desc::FetchInto`0([System.Runtime]System.Object[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::.cctor`0()->[System.Runtime]System.Void|True": "untested",
     "Quire.Mcd.MatVal::.ctor`0()->[System.Runtime]System.Void|False": "untested",
@@ -396,7 +396,7 @@
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::.ctor`0([System.Runtime]System.Double[])->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::.ctor`0([System.Runtime]System.Double[],[System.Runtime]System.Double[])->[System.Runtime]System.Void|False": "structure_mismatch",
@@ -428,7 +428,7 @@
     "Quire.Mcd.MatVal::CastPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::ColDimArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": "structure_mismatch",
     "Quire.Mcd.MatVal::ColOf`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::CopyResize`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
     "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "untested",
@@ -444,7 +444,7 @@
     "Quire.Mcd.MatVal::FillThis`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "structure_mismatch",
     "Quire.Mcd.MatVal::Fill`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::FixForExport`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "structure_mismatch",
-    "Quire.Mcd.MatVal::Fix`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::Fix`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::Fix`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "structure_mismatch",
     "Quire.Mcd.MatVal::GetHashCode`0()->[System.Runtime]System.Int32|False": "structure_mismatch",
     "Quire.Mcd.MatVal::Index`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "untested",
@@ -498,10 +498,10 @@
     "Quire.Mcd.MatVal::ResizePtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "untested",
     "Quire.Mcd.MatVal::Resize`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
     "Quire.Mcd.MatVal::Resize`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::ReversePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::ReversePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::RowDimArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": "structure_mismatch",
     "Quire.Mcd.MatVal::RowOf`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.MatVal::Row`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::Row`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::Scale`0([System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.MatVal|False": "structure_mismatch",
     "Quire.Mcd.MatVal::SetDim`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.DimVal|False": "untested",
     "Quire.Mcd.MatVal::SetShape1`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
@@ -511,7 +511,7 @@
     "Quire.Mcd.MatVal::Stretch`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::Stretch`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::StripDimension`0([Quire.Mpl]Quire.Mcd.MatVal)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
-    "Quire.Mcd.MatVal::SubMatrixPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::SubMatrixPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::SubMatrix`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "structure_mismatch",
     "Quire.Mcd.MatVal::ThePtrNan`0()->[System.Runtime]System.Double|True": "structure_mismatch",
     "Quire.Mcd.MatVal::TidyPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.Boolean)->[System.Runtime]System.Boolean|False": "untested",
@@ -519,21 +519,21 @@
     "Quire.Mcd.MatVal::ToString`0()->[System.Runtime]System.String|False": "structure_mismatch",
     "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::TransposeArr`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::TransposeImag`0()->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::TransposePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal::TransposeReal`0()->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::Transpose`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::TransposeImag`0()->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::TransposePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.MatVal::TransposeReal`0()->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::Transpose`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::TrimPtrs`0([System.Runtime]System.Collections.Hashtable)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::Triple`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
     "Quire.Mcd.MatVal::aref_1`0([System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::aref_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "untested",
+    "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.MatVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
     "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
-    "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "untested",
-    "Quire.Mcd.MatVal::asTuple`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": "untested",
+    "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
+    "Quire.Mcd.MatVal::asTuple`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": "compared",
     "Quire.Mcd.MatVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::as_object_vector`0([Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Object[]|True": "untested",
     "Quire.Mcd.MatVal::assertRealMatrix`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
@@ -584,8 +584,8 @@
     "Quire.Mcd.MatVal::get_dim`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatVal::get_double`0([System.Runtime]System.Int32,[System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|False": "structure_mismatch",
     "Quire.Mcd.MatVal::get_doubles`0([Quire.Mpl]Quire.Mcd.MatAxis,[System.Runtime]System.Int32,[System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Collections.Generic.IEnumerable`1<[System.Runtime]System.Double>|False": "untested",
-    "Quire.Mcd.MatVal::get_elements`0()->[System.Runtime]System.Object[]|False": "untested",
-    "Quire.Mcd.MatVal::get_elements`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": "untested",
+    "Quire.Mcd.MatVal::get_elements`0()->[System.Runtime]System.Object[]|False": "compared",
+    "Quire.Mcd.MatVal::get_elements`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": "compared",
     "Quire.Mcd.MatVal::get_imag_raw`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "untested",
     "Quire.Mcd.MatVal::get_imag`0([System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "structure_mismatch",
     "Quire.Mcd.MatVal::get_imag`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double|False": "structure_mismatch",
@@ -612,7 +612,7 @@
     "Quire.Mcd.MatVal::mapv`0([Quire.Mpl]Quire.Mpl.Run.F`2<[System.Runtime]System.Object,[System.Runtime]System.Object>,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Object[]|True": "untested",
     "Quire.Mcd.MatVal::matrix_get_1`0([System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::matrix_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mcd.MatVal::mcd_column`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "untested",
+    "Quire.Mcd.MatVal::mcd_column`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mcd.MatVal::mcd_get_1`0([System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::mcd_get_1`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "untested",
     "Quire.Mcd.MatVal::mcd_get_1`0([System.Runtime]System.UInt32)->[System.Runtime]System.Object|False": "structure_mismatch",
@@ -620,19 +620,19 @@
     "Quire.Mcd.MatVal::mcd_get_2`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|False": "structure_mismatch",
     "Quire.Mcd.MatVal::mcd_getm_1`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "untested",
     "Quire.Mcd.MatVal::mcd_getm_2`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mcd.MatVal::mcd_row`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "untested",
+    "Quire.Mcd.MatVal::mcd_row`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mcd.MatVal::mcd_set_1`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|False": "structure_mismatch",
     "Quire.Mcd.MatVal::mcd_set_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::mcd_setcolumn`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "structure_mismatch",
     "Quire.Mcd.MatVal::mcd_setm_1`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
     "Quire.Mcd.MatVal::mcd_setm_2`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
     "Quire.Mcd.MatVal::mcd_setrow`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "structure_mismatch",
-    "Quire.Mcd.MatVal::mcd_sym_column`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "untested",
+    "Quire.Mcd.MatVal::mcd_sym_column`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mcd.MatVal::mcd_sym_get_1`0([System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::mcd_sym_get_1`0([System.Runtime]System.UInt32)->[System.Runtime]System.Object|False": "structure_mismatch",
     "Quire.Mcd.MatVal::mcd_sym_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::mcd_sym_get_2`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::mcd_sym_row`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "untested",
+    "Quire.Mcd.MatVal::mcd_sym_row`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mcd.MatVal::mcd_upd_1`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.MatVal|False": "structure_mismatch",
     "Quire.Mcd.MatVal::mcd_upd_1`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|False": "structure_mismatch",
     "Quire.Mcd.MatVal::mcd_upd_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
@@ -642,7 +642,7 @@
     "Quire.Mcd.MatVal::nearly_equal`0([Quire.Mpl]Quire.Mcd.DimVal,[System.Runtime]System.Double)->[System.Runtime]System.Boolean|False": "structure_mismatch",
     "Quire.Mcd.MatVal::offsets`0([Quire.Mpl]Quire.Mcd.MatAxis,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Generic.IEnumerable`1<[System.Runtime]System.Int32>|False": "untested",
     "Quire.Mcd.MatVal::op_Division`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.MatVal|True": "structure_mismatch",
-    "Quire.Mcd.MatVal::real_column`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
+    "Quire.Mcd.MatVal::real_column`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
     "Quire.Mcd.MatVal::realloc`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|True": "structure_mismatch",
     "Quire.Mcd.MatVal::reserve`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|True": "compared",
     "Quire.Mcd.MatVal::reserve`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
@@ -663,8 +663,8 @@
     "Quire.Mcd.MatVal::set_at`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::set_at`0([System.Runtime]System.Int32,[System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::set_ptrs_1`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::set_ptrs_2_reverse`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal::set_ptrs_2_transpose`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::set_ptrs_2_reverse`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.MatVal::set_ptrs_2_transpose`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::set_ptrs_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::set_ptrs_at`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "structure_mismatch",
     "Quire.Mcd.MatVal::set_ptrs_raw`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "structure_mismatch",
@@ -2619,8 +2619,35 @@
     "Quire.Mcd.Iterator::it_incr`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.Iterator)->[System.Runtime]System.Object|True": [
       "rngvaldifferentialtests"
     ],
+    "Quire.Mcd.MatVal+TrimSubMatrixPtrs::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal+TrimSubMatrixPtrs::set_submatrix_ptrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": [
+      "matvalviewdifferentialtests"
+    ],
     "Quire.Mcd.MatVal::Fill`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalcollectiondifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::FixForExport`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Fix`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Fix`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
+      "matvalviewdifferentialtests"
     ],
     "Quire.Mcd.MatVal::MakeVector0`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalcollectiondifferentialtests"
@@ -2646,14 +2673,68 @@
     "Quire.Mcd.MatVal::Reshape`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalcollectiondifferentialtests"
     ],
+    "Quire.Mcd.MatVal::ReversePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Row`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalviewdifferentialtests"
+    ],
     "Quire.Mcd.MatVal::StretchWithColumnFill`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False": [
       "matvalgrowthdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::SubMatrixPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::SubMatrix`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::ToString`0()->[System.Runtime]System.String|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::TransposeArr`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::TransposeImag`0()->[System.Runtime]System.Double[]|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::TransposePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::TransposeReal`0()->[System.Runtime]System.Double[]|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Transpose`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::TrimPtrs`0([System.Runtime]System.Collections.Hashtable)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::asTuple`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": [
+      "matvalviewdifferentialtests"
     ],
     "Quire.Mcd.MatVal::extend_1`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalgrowthdifferentialtests"
     ],
     "Quire.Mcd.MatVal::extend_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalgrowthdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::get_elements`0()->[System.Runtime]System.Object[]|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::get_elements`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::mcd_column`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::mcd_row`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": [
+      "matvalviewdifferentialtests"
     ],
     "Quire.Mcd.MatVal::mcd_set_1`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalgrowthdifferentialtests"
@@ -2667,14 +2748,32 @@
     "Quire.Mcd.MatVal::mcd_setrow`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalgrowthdifferentialtests"
     ],
+    "Quire.Mcd.MatVal::mcd_sym_column`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::mcd_sym_row`0([System.Runtime]System.Object,[System.Runtime]System.Int32)->[System.Runtime]System.Object|True": [
+      "matvalviewdifferentialtests"
+    ],
     "Quire.Mcd.MatVal::mcd_upd_1`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalgrowthdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::nearly_equal`0([Quire.Mpl]Quire.Mcd.DimVal,[System.Runtime]System.Double)->[System.Runtime]System.Boolean|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::real_column`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalviewdifferentialtests"
     ],
     "Quire.Mcd.MatVal::realloc`0([System.Runtime]System.Object,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalgrowthdifferentialtests"
     ],
     "Quire.Mcd.MatVal::reserve`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalcollectiondifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::set_ptrs_2_reverse`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::set_ptrs_2_transpose`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "matvalviewdifferentialtests"
     ],
     "Quire.Mcd.MatVal::setblock`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalgrowthdifferentialtests"
@@ -4486,10 +4585,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatVal": {
-      "compared": 12,
+      "compared": 34,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 176,
+      "missing": 154,
       "structure_mismatch": 109,
       "total": 297,
       "uncovered": 0,
@@ -4576,10 +4675,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatVal+TrimSubMatrixPtrs": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 2,
       "uncovered": 0,
