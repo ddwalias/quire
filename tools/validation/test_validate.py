@@ -333,6 +333,8 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(self.verdict()['line'], 'LOCAL CHECKS: pass · GATE: would pass')
         gaps = self.verdict(complete=False, method_coverage=dict(compared=5, missing=2))
         self.assertEqual(gaps['line'], 'LOCAL CHECKS: pass · GATE: would pass with gaps (2 missing)')
+        stale = self.verdict(complete=False, stale_accepted=[dict(key='k', problem='method body changed')])
+        self.assertEqual(stale['line'], 'LOCAL CHECKS: pass · GATE: would pass with gaps (1 stale accepted-mutant entries)')
         blocked = self.verdict(complete=False, gate_passed=False, mutation=dict(survivors=['k'], proposed_survivors=[]))
         self.assertEqual(blocked['line'], 'LOCAL CHECKS: fail · GATE: would block (1 surviving mutants)')
 

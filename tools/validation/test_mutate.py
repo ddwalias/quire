@@ -6,7 +6,9 @@ import time
 from pathlib import Path
 import unittest
 from unittest import mock
-from mutate import cache_directory, key, reasons, run, select
+from mutate import annotate, cache_directory, key, reasons, run, select, stale_entries
+
+BODY = 'ab' * 32
 
 FAKE_DOTNET = """#!{python}
 import os, sys
@@ -92,13 +94,14 @@ class MutationTests(unittest.TestCase):
         survived = dict(il_offset=5, file_offset=8, original='2C', replacement='2D', description='brfalse.s -> brtrue.s')
         caller = dict(il_offset=3, file_offset=6, original='5A', replacement='5B', description='mul -> div')
         self.method = dict(type='Quire.T', signature='M()', validation='compared', mutants=[killed, survived, caller],
-                           cases=[dict(test='Ns.Tests.Compare')], quire_mvid='mvid', token=0x06000001)
+                           cases=[dict(test='Ns.Tests.Compare')], quire_mvid='mvid', token=0x06000001,
+                           body_sha256=BODY)
         self.coverage = {'methods': [self.method, dict(self.method, type='Quire.Other'),
                                      dict(self.method, signature='Stub()', validation='missing')]}
 
-    def mutate(self, accepted=frozenset(), jobs=1, proposed=None, use_cache=True):
+    def mutate(self, accepted=None, jobs=1, proposed=None, use_cache=True):
         return run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl',
-                   str(self.dotnet), jobs=jobs, accepted_keys=accepted, proposed=proposed, use_cache=use_cache,
+                   str(self.dotnet), jobs=jobs, accepted_keys=accepted or {}, proposed=proposed, use_cache=use_cache,
                    mathcad=self.mathcad)
 
     def test_only_compared_methods_of_selected_types(self):
@@ -132,7 +135,7 @@ class MutationTests(unittest.TestCase):
                 self.assertEqual(report['survivors'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'])
                 self.assertFalse(report['complete'])
         survivor = key(self.method, self.method['mutants'][1])
-        self.assertTrue(self.mutate({survivor})['complete'])
+        self.assertTrue(self.mutate({survivor: (BODY, 'dead branch')})['complete'])
 
     def test_proposed_survivors_reported_apart(self):
         survivor = key(self.method, self.method['mutants'][1])
@@ -144,8 +147,47 @@ class MutationTests(unittest.TestCase):
         self.assertEqual(report['survivors'], [])
         self.assertEqual(report['proposed_survivors'], [{'key': survivor, 'reason': 'dead branch'}])
         self.assertEqual(report['stale_proposed'], sorted([killed, 'Quire.Gone::X()@IL_0000 nop']))
-        accepted_too = self.mutate({survivor}, proposed=reasons(path))
+        accepted_too = self.mutate({survivor: (BODY, 'dead branch')}, proposed=reasons(path))
         self.assertEqual((accepted_too['proposed_survivors'], accepted_too['accepted_survivors']), ([], 1))
+
+    def test_an_accepted_entry_excuses_only_the_body_it_was_reviewed_for(self):
+        survivor = key(self.method, self.method['mutants'][1])
+        for entry in ((None, 'no hash'), ('cd' * 32, 'another body')):
+            with self.subTest(entry=entry):
+                report = self.mutate({survivor: entry})
+                self.assertEqual(report['survivors'], [survivor])
+                self.assertEqual(report['accepted_survivors'], 0)
+        self.assertEqual(stale_entries(self.coverage['methods'], {
+            survivor: (BODY, 'ok'), survivor.replace('@IL_0005', '@IL_0009'): (BODY, 'no mutant'),
+            'Quire.T::M()@IL_0001 add -> sub': (None, 'unhashed'), 'Quire.T::M()@IL_0003 mul -> div': ('cd' * 32, 'old'),
+            'Quire.Gone::X()@IL_0000 nop': (BODY, 'gone')}), [
+            dict(key='Quire.Gone::X()@IL_0000 nop', reason='gone', source='accepted', problem='no such method'),
+            dict(key='Quire.T::M()@IL_0001 add -> sub', reason='unhashed', source='accepted', problem='no body hash'),
+            dict(key='Quire.T::M()@IL_0003 mul -> div', reason='old', source='accepted', problem='method body changed'),
+            dict(key='Quire.T::M()@IL_0009 brfalse.s -> brtrue.s', reason='no mutant', source='accepted',
+                 problem='no such mutant')])
+        # A proposal may omit the hash; one with a hash must match the current body.
+        self.assertEqual(stale_entries(self.coverage['methods'], {survivor: (None, 'p')}, 'proposed'), [])
+        report = self.mutate(proposed={survivor: ('cd' * 32, 'old proof')})
+        self.assertEqual((report['survivors'], report['stale_proposed']), ([survivor], [survivor]))
+
+    def test_entries_parse_with_and_without_a_body_hash(self):
+        path = Path(self.directory.name) / 'entries.txt'
+        path.write_text(f'# header\nQuire.T::M()@IL_0005 brfalse.s -> brtrue.s body={BODY} # dead branch\n'
+                        'Quire.T::M()@IL_0001 add -> sub # no hash\n')
+        self.assertEqual(reasons(path), {'Quire.T::M()@IL_0005 brfalse.s -> brtrue.s': (BODY, 'dead branch'),
+                                         'Quire.T::M()@IL_0001 add -> sub': (None, 'no hash')})
+
+    def test_annotate_adds_the_current_body_hash(self):
+        path = Path(self.directory.name) / 'accepted.txt'
+        path.write_text('# header\n\nQuire.T::M()@IL_0005 brfalse.s -> brtrue.s # dead branch\n'
+                        f'Quire.T::M()@IL_0001 add -> sub body={"cd" * 32} # rehashed\n'
+                        'Quire.Gone::X()@IL_0000 nop # gone\n')
+        self.assertEqual(annotate(path, self.coverage['methods']), [('Quire.Gone::X()@IL_0000 nop', 'no such method')])
+        self.assertEqual(path.read_text(), f'# header\n\nQuire.T::M()@IL_0005 brfalse.s -> brtrue.s body={BODY} # dead branch\n'
+                         f'Quire.T::M()@IL_0001 add -> sub body={BODY} # rehashed\nQuire.Gone::X()@IL_0000 nop # gone\n')
+        self.assertEqual(stale_entries(self.coverage['methods'], {k: v for k, v in reasons(path).items()
+                                                                  if 'Gone' not in k}), [])
 
     def test_only_a_recorded_mismatch_kills(self):
         result = {r['key']: r['outcome'] for r in self.mutate()['mutants']}
@@ -273,7 +315,7 @@ class MutationTests(unittest.TestCase):
         self.coverage['methods'].append(alone)
         with self.assertRaisesRegex(ValueError, 'control run'):
             run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl', str(self.dotnet),
-                jobs=3, accepted_keys=frozenset())
+                jobs=3, accepted_keys={})
 
     def test_tests_rewriting_their_output_rejected(self):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFD]) + self.image[1:])
@@ -289,7 +331,7 @@ class MutationTests(unittest.TestCase):
         log = Path(self.directory.name) / 'runs.log'
         with mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log)):
             run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl', str(self.dotnet),
-                accepted_keys=frozenset(), global_json=b'{"sdk": {}}')
+                accepted_keys={}, global_json=b'{"sdk": {}}')
         runs = [line.split('|') for line in log.read_text().splitlines()]
         self.assertEqual(len(runs), 5)  # two controls and three mutants
         self.assertEqual(len({cwd for cwd, _ in runs}), 5)

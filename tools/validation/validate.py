@@ -385,6 +385,8 @@ def verdict(report):
                 if state in ("missing", "structure_mismatch", "uncovered", "verified_unsupported") and n]
         if report.get("stale_unreachable"):
             gaps.append(f"{report['stale_unreachable']} stale unreachable-line entries")
+        if report.get("stale_accepted"):
+            gaps.append(f"{len(report['stale_accepted'])} stale accepted-mutant entries")
         if (report.get("integrity") or {}).get("complete") is False:
             gaps.append("integrity incomplete")
         if mutation and mutation.get("complete") is False:
@@ -454,7 +456,8 @@ def main():
     parser.add_argument("--baseline", type=Path, help="ratchet baseline (default: docs/mirror/validation-baseline.json)")
     parser.add_argument("--write-baseline", type=Path, help="write this run's counts as a baseline (unscoped runs only)")
     parser.add_argument("--proposed-mutants", type=Path, metavar="PATH",
-                        help="local runs only: `<key> # reason` equivalent mutants proposed for maintainer review; "
+                        help="local runs only: `<key> [body=<body_sha256>] # reason` equivalent mutants proposed for "
+                             "maintainer review; "
                              "their survivors are reported apart and do not fail the run")
     parser.add_argument("--proposed-unreachable", type=Path, metavar="PATH",
                         help="local runs only: `<method key> <path>:<line> sha256=<hash> # reason` unreachable lines "
@@ -675,6 +678,10 @@ def main():
                                               if m["validation"] == "compared")
         if any(m["proposed_exempt_lines"] for m in coverage["methods"]):
             print("Coverage passes only with proposed unreachable lines, which await maintainer acceptance", flush=True)
+        # An accepted mutant was proven equivalent for one method body; once that body changes the entry excuses nothing.
+        report["stale_accepted"] = mutate.stale_entries(coverage["methods"], accepted_mutants)
+        if report["stale_accepted"]:
+            print(f"Stale accepted-mutant entries: {report['stale_accepted']}", flush=True)
         inventory = json.loads(inventory_path.read_text())
         integrity = integrity_module.check(inventory, findings=lint_findings)
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
@@ -743,7 +750,7 @@ def main():
             report["passes_with_proposals"] = gate_ok
             print(f"Gate requirements {'hold' if gate_ok else 'fail'} with the proposals accepted", flush=True)
         report["complete"] = (coverage["complete"] and integrity["complete"] and mutation_ok and mutation_complete
-                              and not proposals)
+                              and not proposals and not report["stale_accepted"])
         report["gate_passed"] = gate_ok and not proposals
         seal.verify("the run")
         # Written only now that no code under test runs again; the merge gate still checks it against main's.

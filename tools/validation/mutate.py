@@ -72,18 +72,68 @@ def key(method, mutant):
     return f"{method['type']}::{method['signature']}@IL_{mutant['il_offset']:04x} {mutant['description']}"
 
 
+BODY = re.compile(r'(.*\S) body=([0-9a-f]{64})')
+
+
 def reasons(path):
-    """Mutant key -> reason of a `<key> # reason` per line file; empty when it does not exist."""
+    """Mutant key -> (body hash or None, reason) of a `<key> [body=<body_sha256>] # reason` per line file; empty when
+    it does not exist. The hash is MethodAudit's `body_sha256` of the mutant's method when the entry was reviewed."""
     if not Path(path).is_file():
         return {}
-    entries = (line.partition(' # ') for line in Path(path).read_text().splitlines()
-               if line.strip() and not line.startswith('#'))
-    return {key.strip(): reason.strip() for key, _, reason in entries}
+    entries = {}
+    for line in Path(path).read_text().splitlines():
+        if not line.strip() or line.startswith('#'):
+            continue
+        head, _, reason = line.partition(' # ')
+        match = BODY.fullmatch(head.strip())
+        entries[match[1] if match else head.strip()] = (match[2] if match else None, reason.strip())
+    return entries
 
 
 def accepted(path=ACCEPTED):
-    """Reviewed equivalent mutants: `<key> # reason` per line. Maintainer-owned (protected)."""
-    return set(reasons(path))
+    """Reviewed equivalent mutants: `<key> body=<body_sha256> # reason` per line. Maintainer-owned (protected). An
+    entry excuses a survivor only while its method's body hash is the one reviewed (see stale_entries)."""
+    return reasons(path)
+
+
+def method_key(mutant_key):
+    """`Type::signature` of a mutant key `Type::signature@IL_<offset> <description>`."""
+    return mutant_key.rpartition('@IL_')[0]
+
+
+def stale_entries(methods, entries, origin='accepted'):
+    """Entries (`reasons`) that excuse nothing: without a body hash (accepted entries only; a proposal may omit it),
+    naming no method or several (one per assembly), whose method's body hash differs from the one reviewed (its IL
+    changed, so the proof may no longer hold), or naming no mutant of that method."""
+    by_key = {}
+    for method in methods:
+        by_key.setdefault(f"{method['type']}::{method['signature']}", []).append(method)
+    stale = []
+    for mutant_key, (body, reason) in sorted(entries.items()):
+        candidates = by_key.get(method_key(mutant_key), [])
+        if body is None and origin == 'accepted':
+            problem = 'no body hash'
+        elif not candidates:
+            problem = 'no such method'
+        elif len(candidates) > 1:
+            problem = 'ambiguous method key'
+        elif body is not None and body != candidates[0].get('body_sha256'):
+            problem = 'method body changed'
+        elif mutant_key not in {key(candidates[0], m) for m in candidates[0].get('mutants') or []}:
+            problem = 'no such mutant'
+        else:
+            continue
+        stale.append(dict(key=mutant_key, reason=reason, source=origin, problem=problem))
+    return stale
+
+
+def listed(entries, method, mutant, origin):
+    """Whether an entry covers this mutant of this method body: an accepted entry needs the method's current body
+    hash; a proposal without one matches by key."""
+    entry = entries.get(key(method, mutant))
+    if entry is None or entry[0] is None and origin == 'accepted':
+        return False
+    return entry[0] is None or entry[0] == method.get('body_sha256')
 
 
 def select(coverage, types, methods=()):
@@ -168,8 +218,9 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test, or when it crashes
     the test host that ran them cleanly in the control run. Other test failures, and mismatches a test swallows,
-    cannot kill it. `global_json`: the SDK choice each run gets (see
-    validate.sdk_directory). `proposed`: key -> reason of equivalent mutants proposed for review; a local run reports
+    cannot kill it. `accepted_keys`: `reasons` of the accepted file (default: the repository's); an entry excuses a
+    survivor only with its method's current body hash. `global_json`: the SDK choice each run gets (see
+    validate.sdk_directory). `proposed`: `reasons` of equivalent mutants proposed for review; a local run reports
     their survivors apart and does not fail on them (the merge gate never passes any). `use_cache`: reuse and record
     outcomes in the local cache; never in the gate. `mathcad`: the Mathcad install the tests compare against.
     `methods`: `Type::signature` -> reasons, methods selected individually (validate.changed_methods)."""
@@ -310,8 +361,10 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         return result(method, mutant, outcome, tests, cached=False)
 
     def result(method, mutant, outcome, tests, cached):
-        return {'key': key(method, mutant), 'outcome': outcome, 'accepted': key(method, mutant) in accepted_keys,
-                'proposed': key(method, mutant) in proposed, 'timeout_seconds': round(limits[tests]), 'cached': cached}
+        return {'key': key(method, mutant), 'outcome': outcome,
+                'accepted': listed(accepted_keys, method, mutant, 'accepted'),
+                'proposed': listed(proposed, method, mutant, 'proposed'), 'timeout_seconds': round(limits[tests]),
+                'cached': cached}
 
     # Each worker owns one copy and takes the next mutant from a shared queue, so a slow mutant idles nobody else.
     pending = queue.Queue()
@@ -349,7 +402,55 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             'cached': sum(r['cached'] for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
-            'proposed_survivors': [{'key': r['key'], 'reason': proposed[r['key']]} for r in surviving if r['proposed']],
-            'stale_proposed': sorted(set(proposed) - {r['key'] for r in surviving}),  # killed, accepted or not run
+            'proposed_survivors': [{'key': r['key'], 'reason': proposed[r['key']][1]} for r in surviving if r['proposed']],
+            # killed, accepted, not run, or for another body
+            'stale_proposed': sorted(set(proposed) - {r['key'] for r in surviving if r['proposed']}),
             'survivors': survivors, 'complete': not survivors and not any(r['proposed'] for r in surviving),
             'mutants': results}
+
+
+def annotate(path, methods):
+    """Rewrite an accepted-mutants file with each entry's current method body hash (`<key> body=<sha> # reason`),
+    from a run's method inventory or coverage report. Entries whose method is missing or ambiguous, or that name no
+    mutant of it, are left as they are and returned with the problem; comments and blank lines are kept."""
+    by_key = {}
+    for method in methods:
+        by_key.setdefault(f"{method['type']}::{method['signature']}", []).append(method)
+    lines, problems = [], []
+    for line in Path(path).read_text().splitlines():
+        head, separator, reason = line.partition(' # ')
+        if not line.strip() or line.startswith('#'):
+            lines.append(line)
+            continue
+        match = BODY.fullmatch(head.strip())
+        mutant_key = match[1] if match else head.strip()
+        candidates = by_key.get(method_key(mutant_key), [])
+        if len(candidates) != 1 or not candidates[0].get('body_sha256'):
+            problems.append((mutant_key, 'ambiguous method key' if candidates else 'no such method'))
+            lines.append(line)
+            continue
+        if mutant_key not in {key(candidates[0], m) for m in candidates[0].get('mutants') or []}:
+            problems.append((mutant_key, 'no such mutant'))
+        lines.append(f"{mutant_key} body={candidates[0]['body_sha256']}{separator}{reason}")
+    Path(path).write_text('\n'.join(lines) + '\n')
+    return problems
+
+
+def main(argv):
+    import argparse
+    parser = argparse.ArgumentParser(prog='mutate.py annotate-accepted',
+                                     description='Add each entry\'s current method body hash to an accepted-mutants file.')
+    parser.add_argument('command', choices=['annotate-accepted'])
+    parser.add_argument('report', type=Path, help='method-inventory.json or method-coverage.json of a run')
+    parser.add_argument('--file', type=Path, default=ACCEPTED, help='accepted-mutants file to rewrite (default: the '
+                        'repository\'s docs/mirror/accepted-mutants.txt)')
+    args = parser.parse_args(argv)
+    problems = annotate(args.file, json.loads(args.report.read_text())['methods'])
+    for mutant_key, problem in problems:
+        print(f'{problem}: {mutant_key}')
+    return 1 if problems else 0
+
+
+if __name__ == '__main__':
+    import sys
+    sys.exit(main(sys.argv[1:]))

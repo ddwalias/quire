@@ -268,10 +268,18 @@ order passes it, which the direct comparisons must catch.
   no comparison against Mathcad, so a test that recurses or loops on a hard-coded expectation could kill mutants
   without one; reviewers must look for such tests.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
-  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). An agent proposes one, with its proof, in a
-  scratch file, same format, passes `--proposed-mutants PATH` to local runs, and pastes the same lines into its lane
-  file: those survivors are listed apart under `proposed_survivors` (with reasons), and `stale_proposed` lists
-  proposals that matched no surviving mutant (killed, already accepted or not run). An independent reviewer verifies
+  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> body=<body_sha256> # reason`). The hash is the mutated
+  method's `body_sha256` (see What the gate mutates) when the proof was reviewed, so an entry is tied to that body, as
+  an unreachable-line entry is tied to its method's source: once the method's IL changes, the entry excuses nothing
+  (its survivor fails the run) and `summary.json` `stale_accepted` lists it with its `problem` (`no body hash`, `no
+  such method`, `ambiguous method key`, `method body changed`, `no such mutant`). A stale entry makes the run
+  incomplete; re-review the proof and rehash it, or delete it. `python3 tools/validation/mutate.py annotate-accepted
+  <method-inventory.json or method-coverage.json> [--file PATH]` rewrites a file's entries with the body hashes of a
+  run's build and lists entries whose method or mutant it cannot find. An agent proposes one, with its proof, in a
+  scratch file, either form (with or without `body=`), passes `--proposed-mutants PATH` to local runs, and pastes the
+  same lines into its lane file: those survivors are listed apart under `proposed_survivors` (with reasons), and
+  `stale_proposed` lists proposals that matched no surviving mutant (killed, already accepted, not run, or hashed for
+  another body). The maintainer adds accepted entries with `body=`. An independent reviewer verifies
   each proof, the user approves, and the maintainer adds the entries on the branch and merges it with
   `--allow-protected`, checking that `gate.json` `protected_changed` lists only `accepted-mutants.txt` and
   `unreachable-lines.txt` ([PLAN](PLAN.md) step 4). Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
