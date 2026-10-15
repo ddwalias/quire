@@ -144,6 +144,22 @@ error handling, and dynamic call routing.
 - Static conversion and unit helpers
 - Matrix extension and setter operations
 
+## Differential test sensitivity follow-up (2026-10-15)
+
+The test-only changes from `73c53d5` are being restored on `mirror/a-dimval-sensitivity`, based on
+`main` `c011f35`. They add real/complex/unitful `NumVal` cases for `IsDimlessReal` and
+`asDimlessReal(string,uint)`, singleton/multiple-element `RngVal` endpoints for `Rfinal`, nearby numeric
+`NearlyEqual` comparisons, zero/larger matrix extension indices, and numeric matrix result rendering
+that includes dimensions, stride, real and imaginary elements with invalid-array bounds guards.
+The renderer does not compare `m_parr` pointer objects; these cases therefore do not validate
+pointer-bearing matrix results. No source member, status or `ApplyMatVal` implementation is changed.
+
+Historical execution and the 19 unresolved equivalent-mutant proposals are recorded once in
+[Lane A](../work/lane-a.md#dimval-differential-sensitivity-follow-up). These are previously executed
+cases, not a current-branch validation pass; rerun affected direct tests and the authoritative gate
+before claiming current verification. The remaining original-member inventory and open members below
+are retained.
+
 ## Not yet comparable
 
 - `Quire.Mcd.DimVal..ctor()`: Protected constructor of an abstract class; cannot be invoked directly via ConstructorInfo.Invoke without concrete instantiation.
