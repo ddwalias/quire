@@ -41,6 +41,8 @@ if image[4] == 0x59:  # add -> sub: the method's own comparison mismatches and t
     finish(True, 'mvid:100663297')
 if image[6] == 0x5B:  # mul -> div: another method compared first mismatches; also one in a foreign assembly
     finish(True, 'other:100663297', 'mvid:100663298')
+if image[8] == 0x2D and image[9] == 3:  # the mutant loops forever
+    import time; time.sleep(120)
 if image[8] == 0x2D and image[9] == 1:  # only a foreign assembly's comparison mismatched
     finish(True, 'other:100663297')
 if image[8] == 0x2D and image[9] == 2:  # the mismatch is swallowed; the test fails for another reason
@@ -112,6 +114,18 @@ class MutationTests(unittest.TestCase):
                 result = {r['key']: r['outcome'] for r in self.mutate()['mutants']}
                 self.assertEqual(result['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'],
                                  'survived (tests failed without a mismatch)')
+
+    def test_a_looping_mutant_is_cut_off_relative_to_its_own_tests(self):
+        import time
+        image = bytearray(self.image); image[9] = 3
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        started = time.monotonic()
+        with mock.patch('mutate.MUTANT_FLOOR', 2):
+            report = self.mutate()
+        outcomes = {r['key'].split(' ', 1)[1]: r['outcome'] for r in report['mutants']}
+        self.assertEqual(outcomes['brfalse.s -> brtrue.s'], 'killed (timeout)')
+        self.assertLess(report['mutant_timeout_seconds'], 10)
+        self.assertLess(time.monotonic() - started, 30)
 
     def test_control_run_with_a_swallowed_mismatch_rejected(self):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFE]) + self.image[1:])

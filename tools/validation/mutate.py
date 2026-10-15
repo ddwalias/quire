@@ -15,6 +15,7 @@ import xml.etree.ElementTree as ET
 from validate import NS, ROOT, digest, files_under, sdk_directory
 
 ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
+MUTANT_MARGIN, MUTANT_FLOOR = 4, 15  # a mutant's timeout: its tests' unmutated duration times this, at least FLOOR s
 
 
 def key(method, mutant):
@@ -127,30 +128,30 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
 
     def control(copy, tests, limit):
         """The unmutated copy must pass these tests without recording any mismatch, or no failure under a mutant
-        would mean anything; a recorded mismatch in a passing run means a test swallowed it."""
+        would mean anything; a recorded mismatch in a passing run means a test swallowed it. Returns its duration."""
+        started = time.monotonic()
         code, scratch = test_run(copy, tests, limit)
+        elapsed = time.monotonic() - started
         swallowed = (scratch / 'kills.txt').is_file()
         shutil.rmtree(scratch, ignore_errors=True)
         unchanged(copy)
         if code != 0 or swallowed:
             reason = f'failed (exit {code})' if code != 0 else 'recorded a mismatch that a test swallowed'
             raise ValueError(f'Unmutated control run of {sorted(tests)} {reason}; mutation results would be meaningless')
+        return elapsed
 
-    mutant_timeout = timeout
     if selected:
-        started = time.monotonic()
         try:
             control(copies[0], {case['test'] for method, _ in selected for case in method['cases']}, timeout)
         except ValueError:
             for copy in copies:
                 shutil.rmtree(copy, ignore_errors=True)
             raise
-        # A mutant that loops forever is cut off relative to how long all its tests take unmutated. The control ran
-        # alone; parallel jobs slow each run, and a load-induced timeout would count as a kill, so widen the margin.
-        mutant_timeout = min(timeout, max(30, 5 * max(1, len(copies) / 2) * (time.monotonic() - started)))
     # Each mutant reruns only its method's tests in a fresh process, so that subset also needs its own control:
-    # a test that passes after its siblings but mismatches alone would otherwise kill every mutant.
-    controlled, control_lock, failures = {}, threading.Lock(), []
+    # a test that passes after its siblings but mismatches alone would otherwise kill every mutant. A mutant that
+    # loops forever is cut off relative to that control, which ran in a worker under the same parallel load; a
+    # load-induced timeout would count as a kill, so the margin stays wide.
+    controlled, limits, control_lock, failures = {}, {}, threading.Lock(), []
 
     def attempt(copy, method, mutant):
         tests = frozenset(case['test'] for case in method['cases'])
@@ -159,7 +160,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             done_control = controlled.setdefault(tests, threading.Event())
         if first:
             try:
-                control(copy, tests, timeout)
+                limits[tests] = min(timeout, max(MUTANT_FLOOR, MUTANT_MARGIN * control(copy, tests, timeout)))
             except BaseException as error:
                 failures.append(error)
                 raise
@@ -179,7 +180,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         patched[offset:offset + len(original)] = replacement
         target.write_bytes(patched)
         try:
-            code, scratch = test_run(copy, tests, mutant_timeout)
+            code, scratch = test_run(copy, tests, limits[tests])
         finally:
             target.write_bytes(image)
         unchanged(copy)
@@ -226,7 +227,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         for copy in copies:
             shutil.rmtree(copy, ignore_errors=True)
     survivors = [r['key'] for r in results if r['outcome'].startswith('survived') and not r['accepted']]
-    return {'types': sorted(types), 'total': len(results), 'mutant_timeout_seconds': round(mutant_timeout),
+    return {'types': sorted(types), 'total': len(results), 'mutant_timeout_seconds': round(max(limits.values(), default=0)),
             'killed': sum(r['outcome'].startswith('killed') for r in results),
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
             'survivors': survivors, 'complete': not survivors, 'mutants': results}
