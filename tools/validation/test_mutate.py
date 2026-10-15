@@ -26,6 +26,9 @@ TEST = 'Ns.Tests.Compare'
 if 'FAKE_DOTNET_LOG' in os.environ:
     with open(os.environ['FAKE_DOTNET_LOG'], 'a') as log:
         log.write(os.getcwd() + '|' + Path('global.json').read_text() + '\\n')
+if 'FAKE_DOTNET_PATHS' in os.environ:
+    with open(os.environ['FAKE_DOTNET_PATHS'], 'a') as log:
+        log.write(args[2] + '\\n' + str(scratch) + '\\n')
 
 def finish(failed, *recorded):
     if recorded:
@@ -58,6 +61,12 @@ if image[8] == 0x2D and image[9] == 4:  # the test host crashes (stack overflow)
         'The active test run was aborted. Reason: Test host process crashed : Stack overflow.</Text></RunInfo>'
         '</RunInfos></ResultSummary></TestRun>')
     sys.exit(1)
+if image[8] == 0x2D and image[9] == 6:  # slow only the first time (as under load), then it survives
+    state = Path(os.environ['FAKE_DOTNET_STATE'])
+    if not state.exists():
+        state.write_text('slow')
+        import time; time.sleep(120)
+    finish(False)
 if image[8] == 0x2D and image[9] == 5:  # the run fails before writing any report
     sys.exit(1)
 if image[8] == 0x2D and image[9] == 1:  # only a foreign assembly's comparison mismatched
@@ -215,6 +224,57 @@ class MutationTests(unittest.TestCase):
         self.assertEqual(report['timeouts'], 1)
         self.assertLess(report['max_mutant_timeout_seconds'], 60)
         self.assertLess(time.monotonic() - started, 30)
+
+    def test_a_timeout_is_rerun_alone_and_only_a_second_timeout_kills(self):
+        image = bytearray(self.image); image[9] = 6
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        log = Path(self.directory.name) / 'runs.log'
+        with mock.patch('mutate.MUTANT_FLOOR', 2), mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log),
+                FAKE_DOTNET_STATE=str(Path(self.directory.name) / 'state')):
+            report = self.mutate(jobs=2, use_cache=False)
+        result = {r['key'].split(' ', 1)[1]: r for r in report['mutants']}['brfalse.s -> brtrue.s']
+        self.assertEqual((result['outcome'], result['parallel_outcome']), ('survived', 'killed (timeout)'))
+        self.assertEqual((report['timeouts'], report['timed_out'], report['timeout_retries']), (0, [], 1))
+        self.assertEqual(report['survivors'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'])
+        # Two controls and three mutants, then a fresh control and the rerun.
+        self.assertEqual(log.read_text().count('|'), 7)
+
+    def test_a_mutant_that_times_out_again_is_killed_and_listed(self):
+        image = bytearray(self.image); image[9] = 3
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        with mock.patch('mutate.MUTANT_FLOOR', 2):
+            report = self.mutate(use_cache=False)
+        self.assertEqual((report['timeouts'], report['timeout_retries']), (1, 1))
+        self.assertEqual(report['timed_out'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'])
+
+    def test_copies_and_run_directories_live_under_the_given_scratch_directory(self):
+        scratch = Path(self.directory.name) / 'results/mutation-scratch'
+        paths = Path(self.directory.name) / 'paths.log'
+        with mock.patch.dict(os.environ, FAKE_DOTNET_PATHS=str(paths)):
+            run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl', str(self.dotnet),
+                accepted_keys={}, scratch=scratch)
+        used = paths.read_text().splitlines()
+        self.assertEqual(len(used), 10)
+        self.assertTrue(all(Path(p).is_relative_to(scratch) for p in used), used)
+        self.assertEqual(list(scratch.iterdir()), [])
+
+    def test_stale_mutant_directories_of_this_user_are_swept(self):
+        from mutate import sweep_stale
+        tmp = Path(self.directory.name) / 'tmp'
+        tmp.mkdir()
+        old = time.time() - 2 * 24 * 3600
+        for name in ('quire-mutant-old', 'quire-mutant-run-old', 'quire-mutant-new', 'other-old', 'quire-mutant-file'):
+            path = tmp / name
+            path.mkdir() if name != 'quire-mutant-file' else path.write_text('x')
+            if name != 'quire-mutant-new':
+                os.utime(path, (old, old))
+        (tmp / 'quire-mutant-link').symlink_to(tmp / 'other-old')
+        os.utime(tmp / 'quire-mutant-link', (old, old), follow_symlinks=False)
+        with mock.patch('mutate.os.getuid', return_value=os.getuid() + 1):
+            self.assertEqual(sweep_stale(tmp), [])  # someone else's
+        self.assertEqual(sorted(p.name for p in sweep_stale(tmp)), ['quire-mutant-old', 'quire-mutant-run-old'])
+        self.assertEqual(sorted(p.name for p in tmp.iterdir()),
+                         ['other-old', 'quire-mutant-file', 'quire-mutant-link', 'quire-mutant-new'])
 
     def test_a_crash_under_a_passing_control_kills(self):
         image = bytearray(self.image); image[9] = 4

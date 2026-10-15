@@ -301,7 +301,7 @@ def main():
             if restore:
                 git('checkout', base, '--', *restore, cwd=tree)
         except (RuntimeError, OSError) as error:
-            code, reasons = None, [f'cannot prepare the validation clone: {error}']
+            code, reasons, mutation = None, [f'cannot prepare the validation clone: {error}'], {}
         else:
             command = validation_command(tree, results, base, outputs / 'baseline.json', args.timeout,
                                          args.mutate_types_wide, args.mutate_all, args.jobs)
@@ -309,6 +309,7 @@ def main():
             code = subprocess.run(command, cwd=tree).returncode
             summary_path = results / 'summary.json'
             summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {'error': 'no summary written'}
+            mutation = summary.get('mutation') or {}
             reasons = verdict(summary)
             # 0: complete; 3: gate passed with known gaps. Anything else (crash, kill) blocks whatever the summary says.
             if code not in (0, 3):
@@ -324,6 +325,10 @@ def main():
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
                   'validation_mode': 'runtime',
                   'mutation_jobs': args.jobs,
+                  # Timeouts that held when rerun alone, and crashes: kills without a comparison against Mathcad.
+                  'mutation_timeouts': mutation.get('timeouts'), 'mutation_timed_out': mutation.get('timed_out'),
+                  'mutation_timeout_retries': mutation.get('timeout_retries'),
+                  'mutation_crashes': mutation.get('crashes'),
                   'stub_deletions': stubs,
                   'results': str(results), 'validator_exit': code, 'reasons': reasons}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
@@ -338,6 +343,8 @@ def main():
         return 0
     finally:
         shutil.rmtree(tree, ignore_errors=True)
+        # Mutant copies of the test output, left behind if the validator was killed mid-run.
+        shutil.rmtree(results / 'mutation-scratch', ignore_errors=True)
 
 
 def baseline_commit(tip, baseline, branch, results, repo=ROOT):

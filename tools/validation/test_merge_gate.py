@@ -13,7 +13,9 @@ from merge_gate import (baseline_commit, baseline_regressions, case_collisions, 
 
 RULES = patterns((Path(__file__).parent / 'protected.txt').read_text())
 PASSED = {'projects': [{'project': 'P', 'exit_code': 0, 'passed': 3, 'failed': 0, 'skipped': 0}],
-          'ratchet': {'ok': True, 'regressions': []}, 'gate_passed': True}
+          'ratchet': {'ok': True, 'regressions': []}, 'gate_passed': True,
+          'mutation': {'survivors': [], 'timeouts': 1, 'timed_out': ['T::M()@IL_0001 add -> sub'], 'timeout_retries': 3,
+                       'crashes': 2}}
 
 
 class MergeGateTests(unittest.TestCase):
@@ -238,6 +240,8 @@ class RepositoryTests(unittest.TestCase):
             code, gate = self.main('work', extra=['--jobs', '8'])
         self.assertEqual(code, 0, gate)
         self.assertEqual(gate['mutation_jobs'], 8)
+        self.assertEqual((gate['mutation_timeouts'], gate['mutation_timed_out'], gate['mutation_crashes']),
+                         (1, ['T::M()@IL_0001 add -> sub'], 2))
         self.assertEqual(len(commands), 1)
         self.assertEqual(commands[0][commands[0].index('--jobs') + 1], '8')
         self.assertIn('--no-mutant-cache', commands[0])

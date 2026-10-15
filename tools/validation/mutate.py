@@ -6,6 +6,7 @@ import os
 import queue
 import re
 import signal
+import stat
 from pathlib import Path
 import shutil
 import subprocess
@@ -18,8 +19,11 @@ from validate import NS, ROOT, digest, files_under, sdk_directory
 
 ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
 # A mutant's timeout: its tests' unmutated duration times MARGIN, at least FLOOR s. A false timeout counts as a kill and
-# could hide a weak test, so the floor stays generous; only mutants that loop pay it.
+# could hide a weak test, so the floor stays generous; only mutants that loop pay it. Every timeout of the parallel pass
+# is rerun alone, against a fresh control, before it counts.
 MUTANT_MARGIN, MUTANT_FLOOR = 4, 30
+# Mutant copies and run directories older than this, left in the system temporary directory by killed runs, are removed.
+STALE_SECONDS = 24 * 3600
 # Local runs only: outcomes of earlier runs of identical mutants (see cached_outcome). Bump the version when what an
 # outcome means changes. Timeouts and crashes are not cached: load, memory pressure or a flaky crash would make them
 # permanent.
@@ -158,6 +162,24 @@ def select(coverage, types, methods=()):
     return [(m, mutant) for m in chosen for mutant in m.get('mutants', [])]
 
 
+def sweep_stale(directory=None, age=STALE_SECONDS):
+    """Remove `quire-mutant-*` directories (not files or links) older than `age` seconds that this user owns from
+    `directory` (the system temporary directory): copies of test output left by runs that were killed before
+    cleaning up, from before runs kept them under their own results. Returns the removed paths."""
+    if not hasattr(os, 'getuid'):
+        return []
+    cutoff, removed = time.time() - age, []
+    for path in Path(directory or tempfile.gettempdir()).glob('quire-mutant-*'):
+        try:
+            info = path.lstat()
+        except OSError:
+            continue
+        if stat.S_ISDIR(info.st_mode) and info.st_uid == os.getuid() and info.st_mtime < cutoff:
+            shutil.rmtree(path, ignore_errors=True)
+            removed.append(path)
+    return removed
+
+
 def execute(command, env, timeout, cwd=None):
     """Exit code, or None on timeout after killing the whole process tree (dotnet test spawns testhost)."""
     process = subprocess.Popen(command, cwd=cwd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
@@ -214,7 +236,7 @@ def mismatches(scratch, mvid):
 
 
 def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None,
-        global_json=b'{}\n', proposed=None, use_cache=False, mathcad=None, methods=None):
+        global_json=b'{}\n', proposed=None, use_cache=False, mathcad=None, methods=None, scratch=None):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test, or when it crashes
     the test host that ran them cleanly in the control run. Other test failures, and mismatches a test swallows,
@@ -223,7 +245,13 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     validate.sdk_directory). `proposed`: `reasons` of equivalent mutants proposed for review; a local run reports
     their survivors apart and does not fail on them (the merge gate never passes any). `use_cache`: reuse and record
     outcomes in the local cache; never in the gate. `mathcad`: the Mathcad install the tests compare against.
-    `methods`: `Type::signature` -> reasons, methods selected individually (validate.changed_methods)."""
+    `methods`: `Type::signature` -> reasons, methods selected individually (validate.changed_methods). `scratch`: the
+    directory (the run's results) that holds the copies and per-run directories; default: the system's temporary one.
+    A mutant that times out in the parallel pass is rerun once all workers have finished, alone, with a limit from a
+    fresh control run of its tests; it counts as killed only if it times out again."""
+    sweep_stale()
+    if scratch is not None:
+        Path(scratch).mkdir(parents=True, exist_ok=True)
     proposed = proposed or {}
     methods = methods or {}
     selected = select(coverage, types, methods)
@@ -244,7 +272,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
                       for p in install.rglob('*.dll') if p.is_file()) if install and install.is_dir() else []
         build = cache_key(sorted(pristine.items()), global_json.hex(), toolchain, project, harness,
                           str(install), dlls)
-    copies = [Path(tempfile.mkdtemp(prefix='quire-mutant-')) for _ in range(max(1, jobs))]
+    copies = [Path(tempfile.mkdtemp(prefix='quire-mutant-', dir=scratch)) for _ in range(max(1, jobs))]
     for copy in copies:
         shutil.copytree(test_dll.parent, copy, dirs_exist_ok=True)
     env = os.environ.copy()
@@ -257,15 +285,15 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     def test_run(copy, tests, limit):
         """Exit code (None on timeout) and a fresh scratch directory, outside the copy the tests can see, holding
         the mismatch record and TRX report."""
-        scratch = Path(tempfile.mkdtemp(prefix='quire-mutant-run-'))
+        directory = Path(tempfile.mkdtemp(prefix='quire-mutant-run-', dir=scratch))
         command = [dotnet, 'test', str(copy / test_dll.name), '--filter', test_filter(tests),
-                   '--logger', 'trx;LogFileName=run.trx', '--results-directory', str(scratch)]
-        kills = scratch / f'kills-{uuid.uuid4().hex}.txt'
+                   '--logger', 'trx;LogFileName=run.trx', '--results-directory', str(directory)]
+        kills = directory / f'kills-{uuid.uuid4().hex}.txt'
         with sdk_directory(global_json) as cwd:
             code = execute(command, dict(env, QUIRE_MUTATION_KILLS=str(kills)), limit, cwd)
         if kills.is_file():
-            kills.replace(scratch / 'kills.txt')
-        return code, scratch
+            kills.replace(directory / 'kills.txt')
+        return code, directory
 
     def unchanged(copy):
         """Code under test runs from the copy; it must not have rewritten it for later runs."""
@@ -276,10 +304,10 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         """The unmutated copy must pass these tests without recording any mismatch, or no failure under a mutant
         would mean anything; a recorded mismatch in a passing run means a test swallowed it. Returns its duration."""
         started = time.monotonic()
-        code, scratch = test_run(copy, tests, limit)
+        code, directory = test_run(copy, tests, limit)
         elapsed = time.monotonic() - started
-        swallowed = (scratch / 'kills.txt').is_file()
-        shutil.rmtree(scratch, ignore_errors=True)
+        swallowed = (directory / 'kills.txt').is_file()
+        shutil.rmtree(directory, ignore_errors=True)
         unchanged(copy)
         if code != 0 or swallowed:
             reason = f'failed (exit {code})' if code != 0 else 'recorded a mismatch that a test swallowed'
@@ -299,14 +327,27 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     # load-induced timeout would count as a kill, so the margin stays wide.
     controlled, limits, control_lock, failures = {}, {}, threading.Lock(), []
 
+    def limit_for(copy, tests):
+        return min(timeout, max(MUTANT_FLOOR, MUTANT_MARGIN * control(copy, tests, timeout)))
+
+    def tests_of(method):
+        return frozenset(case['test'] for case in method['cases'])
+
+    def mutant_cache_key(method, mutant, tests):
+        # The timeout, which varies with load, is not in the key. Only outcomes reached within a timeout are cached, so
+        # a fresh run could differ only by timing out, a kill; the cached outcome is then a kill too or a survivor,
+        # which fails the run anyway. Neither direction lets a weak test pass.
+        return cache_key(build, key(method, mutant), mutant['file_offset'], mutant['original'], mutant['replacement'],
+                         sorted(tests))
+
     def attempt(copy, method, mutant):
-        tests = frozenset(case['test'] for case in method['cases'])
+        tests = tests_of(method)
         with control_lock:
             first = tests not in controlled
             done_control = controlled.setdefault(tests, threading.Event())
         if first:
             try:
-                limits[tests] = min(timeout, max(MUTANT_FLOOR, MUTANT_MARGIN * control(copy, tests, timeout)))
+                limits[tests] = limit_for(copy, tests)
             except BaseException as error:
                 failures.append(error)
                 raise
@@ -316,14 +357,16 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             done_control.wait()
         if failures:
             raise failures[0]
-        # The timeout, which varies with load, is not in the key. Only outcomes reached within a timeout are cached, so
-        # a fresh run could differ only by timing out, a kill; the cached outcome is then a kill too or a survivor,
-        # which fails the run anyway. Neither direction lets a weak test pass.
-        mutant_key = cache_key(build, key(method, mutant), mutant['file_offset'], mutant['original'],
-                               mutant['replacement'], sorted(tests))
-        outcome = cached_outcome(cache, mutant_key) if cache else None
+        outcome = cached_outcome(cache, mutant_cache_key(method, mutant, tests)) if cache else None
         if outcome is not None:
-            return result(method, mutant, outcome, tests, cached=True)
+            return result(method, mutant, outcome, limits[tests], cached=True)
+        outcome = outcome_of(copy, method, mutant, tests, limits[tests])
+        if cache:
+            store_outcome(cache, mutant_cache_key(method, mutant, tests), outcome)
+        return result(method, mutant, outcome, limits[tests], cached=False)
+
+    def outcome_of(copy, method, mutant, tests, seconds):
+        """Patch the copy, run the method's tests within `seconds`, restore it and classify what happened."""
         target = copy / f'{project}.dll'
         image = bytearray(target.read_bytes())
         original, replacement = bytes.fromhex(mutant['original']), bytes.fromhex(mutant['replacement'])
@@ -334,36 +377,30 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         patched[offset:offset + len(original)] = replacement
         target.write_bytes(patched)
         try:
-            code, scratch = test_run(copy, tests, limits[tests])
+            code, directory = test_run(copy, tests, seconds)
         finally:
             target.write_bytes(image)
         unchanged(copy)
         # Killed only when a comparison against Mathcad mismatched in a test that failed. The first mismatch ends its
         # test, so it may be recorded for a caller compared earlier; failures with no such mismatch prove nothing.
         # A crash of the test host (stack overflow, access violation) under tests whose control passed is a kill too.
-        found = mismatches(scratch, method['quire_mvid']) if code else set()
-        crash = bool(code) and crashed(scratch / 'run.trx')
-        shutil.rmtree(scratch, ignore_errors=True)
+        found = mismatches(directory, method['quire_mvid']) if code else set()
+        crash = bool(code) and crashed(directory / 'run.trx')
+        shutil.rmtree(directory, ignore_errors=True)
         if code is None:
-            outcome = 'killed (timeout)'
-        elif f"{method['quire_mvid']}:{method['token']}" in found:
-            outcome = 'killed'
-        elif found:
-            outcome = 'killed (via another method compared first)'
-        elif crash:
-            outcome = 'killed (crash)'
-        elif code:
-            outcome = 'survived (tests failed without a mismatch)'
-        else:
-            outcome = 'survived'
-        if cache:
-            store_outcome(cache, mutant_key, outcome)
-        return result(method, mutant, outcome, tests, cached=False)
+            return 'killed (timeout)'
+        if f"{method['quire_mvid']}:{method['token']}" in found:
+            return 'killed'
+        if found:
+            return 'killed (via another method compared first)'
+        if crash:
+            return 'killed (crash)'
+        return 'survived (tests failed without a mismatch)' if code else 'survived'
 
-    def result(method, mutant, outcome, tests, cached):
+    def result(method, mutant, outcome, seconds, cached):
         return {'key': key(method, mutant), 'outcome': outcome,
                 'accepted': listed(accepted_keys, method, mutant, 'accepted'),
-                'proposed': listed(proposed, method, mutant, 'proposed'), 'timeout_seconds': round(limits[tests]),
+                'proposed': listed(proposed, method, mutant, 'proposed'), 'timeout_seconds': round(seconds),
                 'cached': cached}
 
     # Each worker owns one copy and takes the next mutant from a shared queue, so a slow mutant idles nobody else.
@@ -385,10 +422,27 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
                 if done[0] % 10 == 0 or done[0] == len(selected):
                     print(f'  mutants: {done[0]}/{len(selected)} run', flush=True)
 
+    retried, retry_limits = [], []
     try:
         with ThreadPoolExecutor(len(copies)) as pool:
             for future in [pool.submit(worker, copy) for copy in copies]:
                 future.result()
+        # Load (the other workers, other gates) can stretch a run past a limit set under different load, and a timeout
+        # counts as a kill. So each one reruns now, alone in this process, against a fresh control of its tests: it
+        # stays a kill only if it times out again; otherwise its real outcome stands.
+        retried = [i for i, r in enumerate(results) if r['outcome'] == 'killed (timeout)']
+        if retried:
+            print(f'  rerunning {len(retried)} timed-out mutants one at a time', flush=True)
+        for index in retried:
+            method, mutant = selected[index]
+            tests = tests_of(method)
+            seconds = limit_for(copies[0], tests)
+            outcome = outcome_of(copies[0], method, mutant, tests, seconds)
+            if cache:
+                store_outcome(cache, mutant_cache_key(method, mutant, tests), outcome)
+            results[index] = dict(result(method, mutant, outcome, seconds, cached=False),
+                                  parallel_outcome='killed (timeout)', parallel_timeout_seconds=results[index]['timeout_seconds'])
+            retry_limits.append(seconds)
     finally:
         for copy in copies:
             shutil.rmtree(copy, ignore_errors=True)
@@ -396,8 +450,10 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     survivors = [r['key'] for r in surviving if not r['proposed']]
     mutated = sorted({f"{m['type']}::{m['signature']}" for m, _ in selected})
     return {'types': sorted(types), 'methods': dict(sorted(methods.items())), 'mutated_methods': mutated,
-            'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
+            'total': len(results), 'max_mutant_timeout_seconds': round(max([*limits.values(), *retry_limits], default=timeout)),
             'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
+            'timed_out': [r['key'] for r in results if r['outcome'] == 'killed (timeout)'],
+            'timeout_retries': len(retried),
             'crashes': sum(r['outcome'] == 'killed (crash)' for r in results),
             'cached': sum(r['cached'] for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),

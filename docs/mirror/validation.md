@@ -315,6 +315,17 @@ order passes it, which the direct comparisons must catch.
   `--write-baseline`, or `--no-mutant-cache`, which the merge gate passes) neither read nor write it. Builds pass
   `EnableSourceControlManagerQueries=false` so the commit is not stamped into assemblies; a docs-only commit leaves
   the output in the same directory byte-identical (built assemblies embed their absolute path).
+- **Timed-out mutants are rerun alone:** load from the other workers can stretch a slow but terminating mutant past
+  its limit, and a timeout counts as a kill. So once every worker has finished, each mutant that timed out is rerun
+  alone in the process (one copy, nothing else running) with a limit from a fresh control run of its tests (the same
+  formula). It stays `killed (timeout)` only if it times out again; otherwise its rerun outcome stands and
+  `parallel_outcome` records the first. `mutation.json` and `summary.json` `mutation` record `timeouts` (after
+  reruns), `timed_out` (their keys), `timeout_retries` and `crashes`; runtime `gate.json` copies them as
+  `mutation_timeouts`, `mutation_timed_out`, `mutation_timeout_retries` and `mutation_crashes`.
+- **Mutant scratch space:** the copies of the test output and each mutant run's directory live under the run's results
+  (`mutation-scratch`), removed when mutation ends, and by the merge gate if the validator was killed. Each mutation
+  run first removes `quire-mutant-*` directories this user owns in the system temporary directory that are more than
+  a day old, left there by older or killed runs.
 - **What the gate mutates** (`--mutate-since REV`, which the merge gate passes): not every compared method of a
   changed type, but the compared methods whose mutants could now have a different outcome. A mutant's outcome is
   decided by the mutated method's IL, the tests that directly compare that method (only those run it), and whatever

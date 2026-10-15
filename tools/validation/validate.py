@@ -716,13 +716,18 @@ def main():
             report["mutation_scope"] = "all compared methods (requested)"
         if mutate_types or mutate_methods:
             print(f"Mutating compared methods with {args.jobs} workers; each mutant reruns the differential tests", flush=True)
+            # Copies of the test output live under this run's results, removed afterwards (and by the merge gate).
+            scratch = holder["mutation"] = output / "mutation-scratch"
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
                                   args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json,
-                                  proposed_mutants, mutant_cache_allowed(args), install, methods=mutate_methods)
+                                  proposed_mutants, mutant_cache_allowed(args), install, methods=mutate_methods,
+                                  scratch=scratch)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
                                                            "proposed_survivors", "stale_proposed")}
+            # Timeouts that held when rerun alone, and crashes: kills without a comparison against Mathcad.
+            report["mutation"].update({k: mutation[k] for k in ("timeouts", "timed_out", "timeout_retries", "crashes")})
             report["mutation"]["mutated_methods"] = len(mutation["mutated_methods"])
             report["mutation"]["jobs"] = args.jobs
             report["mutation"]["complete"] = mutation["complete"]
