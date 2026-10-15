@@ -41,6 +41,10 @@
 | ThePtrNan() | 0x0600052e | bc5d51b552b5ac23d06e569ccbfc1511bd060b45acbabba89c7569718ab9b433 | Return double with all 64 bits set. | Static observed; direct cases below only | Verified |
 | IsPtrNan(i4, i4) | 0x0600052f | 36abb07aca75a638661364cc8d75713b0e53196acd75b7f89472e32566310b83 | By-reference overload tests upper 32 bits equal 0xffffffff without changing input; private two-index overload tests indexed real backing. | Static observed; direct cases below only | Tested |
 | AllocImaginary() | 0x06000530 | ab164ac11450fc305fd20ab7bf9386dc8b5cea91bb534259564d201ff54c94c8 | Replace imaginary backing with newly allocated zero array of real backing length; null real backing throws. | Static observed; direct cases below only | Verified |
+| Canonicalize() | 0x0600043b | — | If the pointer table is nonnull, canonicalize its live entries; always return this matrix. Canonicalization may change the matrix dimension, pointer table, backing arrays, stride, offset, Shared flag, pointer keys, and pointed-to zero dimensions. | 10 direct cases; private dependency `CanonicalizePtrs()` remains separately unverified | Verified |
+| TidyPtrs(int32, int32, Mcd.Dim, bool) | 0x06000442 | — | With zero compatible pointers, retain the table and return false when another live pointer is incompatible; otherwise clear it and return true. For full logical coverage, adopt a nonnull common dimension and reinsert pointers, using the zero-aware reinsertion path when all are zero. For partial coverage, require matrix/common dimension compatibility, merge dimensions, and reinsert; otherwise return false without reinsertion. Reinsertion may repack shared storage and mutate zero pointer dimensions. | 11 direct cases; count arguments are internal helper inputs | Verified |
+| IsUniformPtrs() | 0x06000458 | — | Inspect only entries whose real slot carries the pointer-NaN marker; merge compatible dimensions, allow zero-dimension values, then delegate the count and common dimension to TidyPtrs. May canonicalize pointer storage and dimensions. | 7 direct cases | Verified |
+| IsUniformPtrsNoChange() | 0x06000459 | — | Return true for a null table; ignore stale entries; for each live pointer return false when its dimension is nonscalar or differs from the matrix dimension and is not special. Does not change matrix or pointer state. | 6 direct cases | Verified |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 
@@ -59,9 +63,11 @@ The static initializer is explicit (the original type is not beforefieldinit). F
 
 ## Test cases and open work
 
+The pointer-helper direct comparisons cover null/stale pointer tables, the special string matrix dimension, compatible and incompatible scalar pointers, full and partial coverage, mixed zero/ordinary dimensions, nonnumeric values, Shared repacking, null common dimensions, partial zero-pointer mutation, special and nonscalar dimensions, and pointer-object identity. Exact commands, fact counts and case limits are recorded in the [Lane B checkpoint](../work/lane-b.md#matval-pointer-helpers). `CanonicalizePtrs()` is a directly invoked private dependency of `Canonicalize()` but is not in this batch's selected scope; its direct comparison remains open.
+
 MatValTests: 4/4 passed in process. MatValDifferentialTests: 2/2 passed against the installed assembly in process (0 skipped), covering 16 constructor scenarios, negative/short/inconsistent storage without validation, shape/hash/index queries (−1,0,1,7), zero-stride errors, flag set/clear, padding NaN/zero imaginary arrays, and four NaN/finite payload patterns. Wrapping alias behavior and private IsPtrNan(i,j) also have independent assertions. No whole-type equivalence is claimed. Pointer fields are declaration-only analysis; their native lifecycle remains open. The manifest review also checked earlier pending changes: NumVal.Zero (0x040000fb) and One (0x040000fe) have field flags 22 (public static, mutable), and the complete REA Mcd.RngVal method inventory contains no declared ToString override. The three previous manifest lines were removed/replaced on that structural evidence; scalar/range behavior is not certified here.
 
-Matrix pointer canonicalization, access/mutation, dimension factories, nested dimensions, arithmetic, copy-on-write, and native lifecycle remain outside this foundation contract.
+Other matrix pointer queries and canonicalization helpers beyond these four selected members, access/mutation, dimension factories, nested dimensions, arithmetic, copy-on-write, and native lifecycle remain outside this foundation contract.
 
 ## Access / pointer representation contracts (implementation in progress)
 

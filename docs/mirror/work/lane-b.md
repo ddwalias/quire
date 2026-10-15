@@ -1,10 +1,10 @@
 # Lane B checkpoint
 
-Updated: 2026-10-15
+Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `b107792` (after the NumVal scope correction). Lane B history is retained compactly here; older Windows worktree results are historical and are not the active handoff.
+Checkpoint base for this batch: Linux main `6bfaea5`. Earlier candidate branches still rooted at `b107792` remain separate and unmerged; their receipts below are historical for those exact tips. Lane B history is retained compactly here; older Windows worktree results are historical and are not the active handoff.
 
 | Batch | Main status |
 |---|---|
@@ -31,6 +31,18 @@ The stronger DimVal candidate is `mirror/a-dimval-sensitivity` at `b4867dc`, reb
 - After the pending DimVal proposal approval, the coordinator should rebase both reviewed runtime batches onto current main, review the complete final diff and conflict resolutions, preserve their separate squashed commits on an integration branch, and run the combined full runtime gate under the current PLAN. Merge only if that fresh full audit passes; a scoped pass is not a substitute.
 - If approval does not arrive, leave both pending batches out and continue independent PLAN work.
 
-The next small Lane B batch is the four MatVal pointer helpers: `Canonicalize()`, `TidyPtrs(int,int,Dim,bool)`, `IsUniformPtrs()`, and `IsUniformPtrsNoChange()`. Reconstruct direct tests from original source/cases. Read the exact original signatures/tokens and existing MatVal evidence first; add artifact-bound direct comparisons for each private helper and its state effects. Treat pointer-related properties (`HasPtrs`, uniformity and dimension queries) as a separate follow-up. Use targeted local comparisons and the final gate under PLAN.
+## MatVal pointer helpers
+
+The `mirror/b-matval-pointer-helpers` batch is a direct-test and evidence follow-up from main `6bfaea5`; production source is unchanged. The installed Prime 12.0.1.0 `mplrun.dll` identity matches the MatVal evidence: SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. The four selected original members and tokens are `Canonicalize()` (0x0600043b), `TidyPtrs(int32,int32,Mcd.Dim,bool)` (0x06000442), `IsUniformPtrs()` (0x06000458), and `IsUniformPtrsNoChange()` (0x06000459). Contracts and case limits are in [MatVal evidence](../evidence/Mcd.MatVal.md).
+
+Validation on the branch:
+
+- `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 8 passed, 0 failed, 0 skipped.
+- `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValPointerHelpersDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 4 facts passed, 0 failed, 0 skipped; 34 direct comparisons (10 Canonicalize, 11 TidyPtrs, 7 IsUniformPtrs, 6 IsUniformPtrsNoChange). These finite cases do not establish whole-type or phase completion.
+- Local scoped mutation was not run; no survivor or unreachable-line proposal is included. The final runtime gate remains authoritative.
+
+Independent review of the whole diff passed after three requested cases were added: full TidyPtrs coverage with null common dimension, partial compatible zero-pointer mutation with another pointer present, and pointer-object identity in state comparison. No `src/` code or acceptance files changed. `CanonicalizePtrs()` remains a separate direct-comparison gap; its execution through `Canonicalize()` does not establish a direct method comparison. Windows phase closure has not run.
+
+The next MatVal pointer-related properties (`HasPtrs`, uniformity, and dimension queries) remain a separate batch. Their tests need a new branch from then-current main; the [Lane B pointer-helper handoff](../../../../quire-handoffs/lane-b/matval-pointer-helpers.md) records the shared MatVal evidence-file change for integration. Keep the queued branch frozen.
 
 Keep this checkpoint authoritative for Lane B; WORK is an index. Do not repeat old run logs here.
