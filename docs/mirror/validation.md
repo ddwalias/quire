@@ -240,7 +240,11 @@ The gate blocks a branch that is not based on current `main`, has no changes, or
 case. It also blocks any added, changed, deleted or renamed path matching `tools/validation/protected.txt` (all of
 `tools/`, the harness and comparison helper files, test subdirectories, generated sources, every project, props,
 targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned records), unless a maintainer passes
-`--allow-protected`. Because the gate runs the focused profile, which builds and audits only `Quire.Mpl` and runs
+`--allow-protected`. One exception lets a branch implement members: it may delete whole stub members from an existing
+generated mirror file (`src/*/Generated/Mirror/*.g.cs`), each a `[MirrorStub]` line and the one-line member under
+it, and nothing else; the clone keeps those files as the branch has them and `gate.json` lists them under
+`stub_deletions`. Headers, `MirrorOf`, type declarations, edits, additions, regeneration and deleting the file stay
+maintainer-only. Because the gate runs the focused profile, which builds and audits only `Quire.Mpl` and runs
 only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
 `--allow-unvalidated` after a Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
 protected file**: an unscoped focused run, mutating the changed types. It merges only when all tests pass, the

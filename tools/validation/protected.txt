@@ -1,7 +1,8 @@
 # Maintainer-owned paths. fnmatch patterns matched case-insensitively against the whole repo-relative path; `*`
 # crosses directories. A later `!pattern` re-allows a path; the last matching line wins. The merge gate rejects a
 # branch that adds, changes, deletes or renames a protected path unless a maintainer passes --allow-protected, and
-# validates with main's copies of all protected files.
+# validates with main's copies of all protected files. Exception (merge_gate.stub_deletions): a branch may delete
+# whole [MirrorStub] members from existing src/*/Generated/Mirror/*.g.cs files.
 
 # Validation harness and generators.
 tools/*

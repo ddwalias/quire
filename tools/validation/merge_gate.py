@@ -8,6 +8,7 @@ import argparse
 import fnmatch
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -41,6 +42,48 @@ def is_protected(path, rules):
 
 def protected(paths, rules):
     return sorted(p for p in paths if is_protected(p, rules))
+
+
+STUB = '[global::Quire.Mirror.MirrorStub]'
+GENERATED = 'src/*/generated/mirror/*.g.cs'
+TYPE = re.compile(r'\b(class|struct|interface|enum|record|delegate)\b')
+
+
+def stub_deletions(base, tip, path, repo=ROOT):
+    """True when `path` is a generated mirror file that `tip` changed only by deleting whole stub members: each a
+    `[MirrorStub]` line and the one-line member under it. Implementing a member means deleting its stub; headers,
+    `MirrorOf`, type declarations, edits, additions and deleting the file stay maintainer-only."""
+    if not fnmatch.fnmatchcase(path.lower(), GENERATED):
+        return False
+    try:
+        before = git('show', f'{base}:{path}', cwd=repo).splitlines()
+        after = git('show', f'{tip}:{path}', cwd=repo).splitlines()
+    except RuntimeError:
+        return False  # added or deleted
+    old, new = stub_units(before), stub_units(after)
+    kept = 0
+    for unit in old:
+        if kept < len(new) and unit == new[kept]:
+            kept += 1
+        elif len(unit) == 1:
+            return False  # only whole stub members may go
+    return kept == len(new)
+
+
+def stub_units(lines):
+    """Lines, with each `[MirrorStub]` line and the member under it as one unit. Identical units are
+    interchangeable, and other lines cannot equal a stub unit, so matching them in order is exact."""
+    units, i = [], 0
+    while i < len(lines):
+        member = lines[i + 1].strip() if i + 1 < len(lines) else ''
+        if (lines[i].strip() == STUB and member and not member.startswith(('[', '{', '}', '//', '#'))
+                and 'MirrorOf' not in member and not TYPE.search(member.split('(')[0])):
+            units.append((lines[i], lines[i + 1]))
+            i += 2
+        else:
+            units.append((lines[i],))
+            i += 1
+    return units
 
 
 def case_collisions(paths):
@@ -139,7 +182,8 @@ def main():
         print(f'BLOCKED: {args.branch} has no changes.')
         return 1
     rules = patterns(git('show', f'{base}:tools/validation/protected.txt'))
-    touched = protected(changed, rules)
+    stubs = [p for p in protected(changed, rules) if stub_deletions(base, tip, p)]
+    touched = [p for p in protected(changed, rules) if p not in stubs]
     if touched and not args.allow_protected:
         print('BLOCKED: maintainer-owned paths changed:\n  ' + '\n  '.join(touched))
         return 1
@@ -165,7 +209,7 @@ def main():
             if not args.allow_protected:
                 # Validate with main's harness, whatever the branch contains.
                 base_files = git('ls-tree', '-r', '--name-only', base).splitlines()
-                restore = protected(base_files, rules)
+                restore = [p for p in protected(base_files, rules) if p not in stubs]
                 if restore:
                     git('checkout', base, '--', *restore, cwd=tree)
         except (RuntimeError, OSError) as error:
@@ -191,6 +235,7 @@ def main():
                 else:
                     reasons = baseline_regressions(base, baseline)
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
+                  'stub_deletions': stubs,
                   'results': str(results), 'validator_exit': code, 'reasons': reasons}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
         if reasons:
