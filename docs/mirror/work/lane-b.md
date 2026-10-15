@@ -78,3 +78,24 @@ No production source changed; no scoped mutation run was requested or used and n
 Independent whole-diff review passed after adding full-coverage null-dimension assignment and an argument-to-`m_dim` reference check. This batch is a single reviewed commit, pushed as backup, and frozen at the exact tip recorded in its atomic handoff linked above. Next action: start the next independent Lane B batch from freshly inspected current main.
 
 Keep this checkpoint authoritative for Lane B; WORK is an index. Do not repeat old run logs here.
+
+## MatVal pointer-helper mutation remediation — active checkpoint
+
+The old candidate `mirror/b-matval-pointer-helpers` at `3cf3136cbacf3ab44e99e3b3cf4e767e2797efdc` remains frozen and unmerged; its integration gate was blocked by nine survivors (25/34 killed), detailed in the [old handoff](../../../../quire-handoffs/lane-b/matval-pointer-helpers.md). This remediation is a separate branch `mirror/b-matval-pointer-helper-remediation` in `/root/src/quire-matval-pointer-helper-remediation`, freshly based on clean main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. Only this worktree is mutable. The shared evidence was inspected against the exact original before adding the four helper contracts; no production source changes are in scope because the implementations are already present on current main.
+
+Original artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. The hash-keyed reference was regenerated/read with `python3 tools/reference/reference.py Mcd.MatVal --il`; exact tokens are `Canonicalize()` 0x0600043b, `TidyPtrs(int,int,Dim,bool)` 0x06000442, `IsUniformPtrs()` 0x06000458, and `IsUniformPtrsNoChange()` 0x06000459. Their original contracts are recorded in `docs/mirror/evidence/Mcd.MatVal.md`; `CanonicalizePtrs()` remains a separate direct-comparison gap.
+
+The direct suite now has 46 comparisons across four facts (Canonicalize 10, TidyPtrs 15, IsUniformPtrs 15, IsUniformPtrsNoChange 6). Its state observer compares matrix/backing/table identity, pointer-object identity, and each NumVal pointer dimension before and after. The final case makes the matrix dimension incompatible with the common dimension of its full live-pointer coverage, directly checking the original full-coverage adoption path and killing the remaining count mutation.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValPointerHelpersDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 4 passed, 0 failed, 0 skipped; 46 direct MethodComparison cases.
+
+python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --jobs 4
+=> /tmp/quire-validation-gpjyf7i3/summary.json; Harness 36/36, Mpl 160/160, Differential 92/92; method coverage compared 45, declaration-only 0, excluded 0, missing 143, structure mismatch 109, uncovered 0, verified-unsupported 32; integrity lint 0/complete; ratchet pass; mutation 230/230 killed, 0 survivors, 0 accepted; focused gate would pass with the listed inventory gaps.
+```
+
+No exception or unreachable proposal is made. This scoped Linux run does not establish whole-type equivalence or phase completion. Windows/native and full merge-gate checks remain unperformed. The batch was squashed in one commit, passed independent whole-diff review, was pushed as backup, and is frozen at the exact tip recorded in the [handoff](../../../../quire-handoffs/lane-b/matval-pointer-helper-remediation.md). Agent A owns integration. Do not amend this queued tip concurrently.
