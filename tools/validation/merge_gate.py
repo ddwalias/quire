@@ -44,40 +44,50 @@ def protected(paths, rules):
     return sorted(p for p in paths if is_protected(p, rules))
 
 
-STUB = '[global::Quire.Mirror.MirrorStub]'
-GENERATED = 'src/*/generated/mirror/*.g.cs'
-TYPE = re.compile(r'\b(class|struct|interface|enum|record|delegate)\b')
+STUB = b'[global::Quire.Mirror.MirrorStub]'
+# Quire.Mpl only: the focused profile validates nothing else, and other projects' stubs come in shapes (attributes
+# above the stub, trailing comments) that line matching cannot judge.
+GENERATED = 'src/quire.mpl/generated/mirror/*.g.cs'
+TYPE = re.compile(rb'\b(class|struct|interface|enum|record|delegate|event)\b')
 
 
 def stub_deletions(base, tip, path, repo=ROOT):
-    """True when `path` is a generated mirror file that `tip` changed only by deleting whole stub members: each a
-    `[MirrorStub]` line and the one-line member under it. Implementing a member means deleting its stub; headers,
-    `MirrorOf`, type declarations, edits, additions and deleting the file stay maintainer-only."""
+    """The member lines `tip` deleted from a generated mirror file, when that is its only change: whole stub members,
+    each a `[MirrorStub]` line and the one-line method, property or constructor under it, compared byte for byte.
+    Implementing a member means deleting its stub. None for anything else: headers, `MirrorOf`, type declarations,
+    field stubs (they work as declared, and the inventory lists only methods), edits, additions, line-ending changes,
+    deleting the file, or a change that deletes nothing."""
     if not fnmatch.fnmatchcase(path.lower(), GENERATED):
-        return False
-    try:
-        before = git('show', f'{base}:{path}', cwd=repo).splitlines()
-        after = git('show', f'{tip}:{path}', cwd=repo).splitlines()
-    except RuntimeError:
-        return False  # added or deleted
-    old, new = stub_units(before), stub_units(after)
-    kept = 0
+        return None
+    blobs = []
+    for commit in (base, tip):
+        result = subprocess.run(['git', 'show', f'{commit}:{path}'], cwd=repo, capture_output=True)
+        if result.returncode:
+            return None  # added or deleted
+        blobs.append(result.stdout.split(b'\n'))  # each line keeps any \r: compared exactly
+    old, new = stub_units(blobs[0]), stub_units(blobs[1])
+    kept, deleted = 0, []
     for unit in old:
         if kept < len(new) and unit == new[kept]:
             kept += 1
-        elif len(unit) == 1:
-            return False  # only whole stub members may go
-    return kept == len(new)
+        elif len(unit) == 2:
+            deleted.append(unit[1].strip().decode('utf-8', 'replace'))
+        else:
+            return None  # only whole stub members may go
+    return deleted if kept == len(new) and deleted else None
 
 
 def stub_units(lines):
-    """Lines, with each `[MirrorStub]` line and the member under it as one unit. Identical units are
-    interchangeable, and other lines cannot equal a stub unit, so matching them in order is exact."""
+    """Lines, with each deletable stub member (its `[MirrorStub]` line and the member under it) as one unit.
+    Identical units are interchangeable, and other lines cannot equal a stub unit, so matching in order is exact."""
     units, i = [], 0
     while i < len(lines):
-        member = lines[i + 1].strip() if i + 1 < len(lines) else ''
-        if (lines[i].strip() == STUB and member and not member.startswith(('[', '{', '}', '//', '#'))
-                and 'MirrorOf' not in member and not TYPE.search(member.split('(')[0])):
+        member = lines[i + 1].strip() if i + 1 < len(lines) else b''
+        code = re.split(rb'[="]', member, maxsplit=1)[0]
+        if (lines[i].strip() == STUB and (i == 0 or not lines[i - 1].strip().startswith(b'['))
+                and member and not member.startswith((b'[', b'{', b'}', b'//', b'#')) and b'//' not in member
+                and b'MirrorOf' not in member and not TYPE.search(code)
+                and (b'(' in member or b'=>' in member or b'{' in member)):
             units.append((lines[i], lines[i + 1]))
             i += 2
         else:
@@ -182,7 +192,10 @@ def main():
         print(f'BLOCKED: {args.branch} has no changes.')
         return 1
     rules = patterns(git('show', f'{base}:tools/validation/protected.txt'))
-    stubs = [p for p in protected(changed, rules) if stub_deletions(base, tip, p)]
+    stubs = {}
+    for path in protected(changed, rules):
+        if (members := stub_deletions(base, tip, path)) is not None:
+            stubs[path] = members
     touched = [p for p in protected(changed, rules) if p not in stubs]
     if touched and not args.allow_protected:
         print('BLOCKED: maintainer-owned paths changed:\n  ' + '\n  '.join(touched))
