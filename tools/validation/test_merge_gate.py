@@ -234,9 +234,19 @@ class StubDeletionTests(unittest.TestCase):
                 for line, start in zip(found, members):
                     self.assertTrue(line.startswith(start), line)
 
+    def test_line_endings_may_change_with_a_deletion(self):
+        self.assertEqual(len(self.deleted(self.without(9, 10), newline='\n')), 1)
+
+    def test_a_field_stub_may_go_only_when_hand_written_source_declares_it(self):
+        self.assertIsNone(self.deleted(self.without(11, 12)))
+        self.commit(['partial class T', '{', '    [MirrorTested("Mcd.T")]', '    public int m_field;', '}'],
+                    'src/Quire.Mpl/Mcd/T.cs')
+        self.assertEqual(self.deleted(self.without(11, 12)), ['public int m_field;'])
+        self.commit(['partial class T', '{', '    public int m_field2;', '}'], 'src/Quire.Mpl/Mcd/T.cs')
+        self.assertIsNone(self.deleted(self.without(11, 12)))   # a different name does not count
+
     def test_anything_else_stays_maintainer_only(self):
         for name, lines, newline in [
-                ('field stub', self.without(11, 12), '\r\n'),
                 ('stub under another attribute', self.without(24, 25), '\r\n'),
                 ('attribute only', self.without(9), '\r\n'), ('member only', self.without(10), '\r\n'),
                 ('header', self.without(0), '\r\n'), ('MirrorOf', self.without(6), '\r\n'),
@@ -247,7 +257,6 @@ class StubDeletionTests(unittest.TestCase):
                 ('stub moved', self.without(9, 10)[:-1] + self.LINES[9:11] + ['}'], '\r\n'),
                 ('nothing deleted', self.LINES + [''], '\r\n'),
                 ('line endings only', self.LINES, '\n'),
-                ('deletion plus line endings', self.without(9, 10), '\n'),
                 ('form feed hides the next line in a comment',
                  self.LINES[:1] + [self.LINES[1] + '\x0c' + self.LINES[2]] + self.LINES[3:], '\r\n')]:
             with self.subTest(name=name):

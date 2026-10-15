@@ -49,14 +49,16 @@ STUB = b'[global::Quire.Mirror.MirrorStub]'
 # above the stub, trailing comments) that line matching cannot judge.
 GENERATED = 'src/quire.mpl/generated/mirror/*.g.cs'
 TYPE = re.compile(rb'\b(class|struct|interface|enum|record|delegate|event)\b')
+# Methods, constructors and properties, judged before any field initializer; anything else is a field or constant.
+METHOD = re.compile(r'[\w>]\(|=>|\{')
 
 
 def stub_deletions(base, tip, path, repo=ROOT):
     """The member lines `tip` deleted from a generated mirror file, when that is its only change: whole stub members,
-    each a `[MirrorStub]` line and the one-line method, property or constructor under it, compared byte for byte.
-    Implementing a member means deleting its stub. None for anything else: headers, `MirrorOf`, type declarations,
-    field stubs (they work as declared, and the inventory lists only methods), edits, additions, line-ending changes,
-    deleting the file, or a change that deletes nothing."""
+    each a `[MirrorStub]` line and the one-line member under it, compared byte for byte apart from a line's trailing
+    CR. Implementing a member means deleting its stub. A deleted field must be declared again in `tip`'s hand-written
+    Quire.Mpl source, since the method inventory would not miss it. None for anything else: headers, `MirrorOf`, type
+    declarations, edits, additions, deleting the file, or a change that deletes nothing."""
     if not fnmatch.fnmatchcase(path.lower(), GENERATED):
         return None
     blobs = []
@@ -64,7 +66,8 @@ def stub_deletions(base, tip, path, repo=ROOT):
         result = subprocess.run(['git', 'show', f'{commit}:{path}'], cwd=repo, capture_output=True)
         if result.returncode:
             return None  # added or deleted
-        blobs.append(result.stdout.split(b'\n'))  # each line keeps any \r: compared exactly
+        # Only \n ends a line here: \f, \v or U+2028 do not end a C# comment, so they must not look like line breaks.
+        blobs.append([line.removesuffix(b'\r') for line in result.stdout.split(b'\n')])
     old, new = stub_units(blobs[0]), stub_units(blobs[1])
     kept, deleted = 0, []
     for unit in old:
@@ -74,7 +77,21 @@ def stub_deletions(base, tip, path, repo=ROOT):
             deleted.append(unit[1].strip().decode('utf-8', 'replace'))
         else:
             return None  # only whole stub members may go
-    return deleted if kept == len(new) and deleted else None
+    if kept != len(new) or not deleted:
+        return None
+    fields = [m for m in deleted if not METHOD.search(re.split(r'=(?!>)', m)[0])]
+    if fields and not all(redeclared(tip, field, repo) for field in fields):
+        return None
+    return deleted
+
+
+def redeclared(tip, field, repo=ROOT):
+    """A field declaration of the same name in `tip`'s hand-written Quire.Mpl source."""
+    name = re.split(r'[\s=;]+', field.split('=')[0].strip().rstrip(';'))[-1]
+    pattern = rf'(^|[[:space:],])@?{re.escape(name)}[[:space:]]*(=[^=>]|;|,)'
+    result = subprocess.run(['git', 'grep', '-qE', pattern, tip, '--', 'src/Quire.Mpl/*.cs',
+                             ':(exclude)src/Quire.Mpl/Generated/*'], cwd=repo, capture_output=True)
+    return result.returncode == 0
 
 
 def stub_units(lines):
@@ -86,8 +103,7 @@ def stub_units(lines):
         code = re.split(rb'[="]', member, maxsplit=1)[0]
         if (lines[i].strip() == STUB and (i == 0 or not lines[i - 1].strip().startswith(b'['))
                 and member and not member.startswith((b'[', b'{', b'}', b'//', b'#')) and b'//' not in member
-                and b'MirrorOf' not in member and not TYPE.search(code)
-                and (b'(' in member or b'=>' in member or b'{' in member)):
+                and b'MirrorOf' not in member and not TYPE.search(code)):
             units.append((lines[i], lines[i + 1]))
             i += 2
         else:
