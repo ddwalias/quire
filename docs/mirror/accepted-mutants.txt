@@ -1,2 +1,35 @@
 # Maintainer-reviewed equivalent mutants (validation.md, "Branch coverage, mutation and status").
 # One per line: <Quire type>::<signature>@IL_<offset> <description> # reason
+
+# Unit 1: Sexpr family
+Quire.Mpl.Run.SList::ToString`0()->[System.Runtime]System.String|False@IL_0030 ldc.i4.5 -> ldc.i4.6 # trailing null in string.Concat string[] ignored by runtime
+
+# Unit 3a: Rational & Utilities
+Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0019 add -> sub # pointer subtraction writes before buffer, aborting test runner with uncatchable SIGSEGV
+Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0022 sub -> add # loop counter increment creates unbounded pointer progression, aborting test runner with uncatchable SIGSEGV
+Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True@IL_0030 ldc.i4.0 -> ldc.i4.1 # Roslyn compiler cleanup of pinned pointer local before ret (dead store)
+
+# Unit 3b: AppException, Type, UnitSystem, RuntimeOptions
+Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False@IL_0004 ldc.i4.0 -> ldc.i4.1 # Passing initial 0u vs 1u handle to this(...) is immediately overwritten by Tag = tag masking m_handle & 0xFFFF0000u
+Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0018 ldc.i4.1 -> ldc.i4.0 # Redundant bounds check when at == message.Length - 1; Substring(at + 1) is empty and uint.TryParse("") returns false, falling back to same ChainTaggedError(message, uint.MaxValue)
+Quire.Mpl.Run.AppException::ChainTagAndArgument`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0019 sub -> add # Redundant bounds check arithmetic when at == message.Length - 1; empty string fails uint.TryParse("")
+Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_002f ldc.i4.0 -> ldc.i4.1 # Inverted boundary check on empty suffix recurses infinitely aborting test process with fatal CLR stack overflow before comparison can record
+Quire.Mpl.Run.AppException::ChainTaggedError`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.AppException|True@IL_0037 add -> sub # Subtracting delimiter offset recurses infinitely with identical substring aborting test process with fatal CLR stack overflow before comparison can record
+Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False@IL_0012 ldc.i4.s 77 -> 78 # Switch binary split threshold; character 78 ('N') routes to default null return under both partitions
+Quire.Mcd.Type::GetDimensionTypeProduct`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False@IL_005e ldc.i4.1 -> ldc.i4.0 # Dead boolean store for while(true) loop followed by unconditional branch br.s back to loop head
+Quire.Mcd.Type::ToString`0()->[System.Runtime]System.String|False@IL_0001 ldc.i4 256 -> 257 # Initial StringBuilder capacity has no observable behavior on returned string
+Quire.Mcd.Type::Format`0()->[System.Runtime]System.String|False@IL_0001 ldc.i4 256 -> 257 # Initial StringBuilder capacity has no observable behavior on returned string
+Quire.Mcd.Type+Factory::.ctor`0()->[System.Runtime]System.Void|False@IL_0001 ldc.i4.s 32 -> 33 # Initial Stack capacity has no observable effect on stack behavior
+Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_000f ldc.i4.s 67 -> 68 # Switch binary split threshold; character 68 ('D') is handled identically under both partitions
+Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_007c ldc.i4.s 93 -> 94 # Dead character parameter passed to SkipToken which ignores its argument and unconditionally advances lexer
+Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_00fa ldc.i4.s 125 -> 126 # Dead character parameter passed to SkipToken which ignores its argument and unconditionally advances lexer
+Quire.Mcd.Type+Parser::ParseAtomic`0()->[Quire.Mpl]Quire.Mcd.Type|False@IL_0175 ldc.i4.s 41 -> 42 # Dead character parameter passed to SkipToken which ignores its argument and unconditionally advances lexer
+Quire.Mcd.Type+Formatter::Visit`0([Quire.Mpl]Quire.Mcd.Type+Application)->[System.Runtime]System.Void|False@IL_000b ldc.i4.s 68 -> 69 # Binary search switch partition threshold; character 69 ('E') is not a switch case and routes identically to default under both partitions
+Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False@IL_0003 ldc.i4.0 -> ldc.i4.1 # Roslyn compiler lock pattern initialization of lockTaken flag before Monitor.Enter
+Quire.Mcd.RuntimeOptions::SyncToThread`0()->[System.Runtime]System.Void|False@IL_009d brfalse.s -> brtrue.s # Roslyn compiler lock pattern finally branch on lockTaken after uncontested monitor acquisition
+Quire.Mcd.UnitSystem::set_Basis`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False@IL_00a1 ldc.i4.1 -> ldc.i4.0 # Storing false vs true in m_unit_syms hashtable used solely via ContainsKey has no observable behavior
+Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False@IL_0027 ldc.i4.1 -> ldc.i4.0 # Initial capacity of internal ArrayList(1) has no observable behavior
+Quire.Mcd.UnitSystem::set_Defaults`0([Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False@IL_006e ldc.i4.1 -> ldc.i4.0 # Initial capacity of internal ArrayList(1) has no observable behavior
+Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True@IL_0002 ldc.i4.0 -> ldc.i4.1 # Square matrix dimension bounds: GetUpperBound(0) and GetUpperBound(1) are identical
+Quire.Mcd.UnitSystem::Inverse`0([System.Runtime]System.Double[,])->[System.Runtime]System.Double[,]|True@IL_0068 ldc.i4.1 -> ldc.i4.0 # When pivot matrix[j,j] is small, starting search loop k at j vs j+1 is skipped immediately by IsSmall(matrix[j,k]) continue
+Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False@IL_00b5 ldc.i4.1 -> ldc.i4.0 # When Scalar == 1 and first > 0, skipping early return divides vector by 1, producing identical vector
