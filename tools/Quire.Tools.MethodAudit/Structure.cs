@@ -49,6 +49,8 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
 sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, SigProvider decoder,
     Func<string, string> typeName, Func<int, string?> methodName, bool exact = false, string? root = null)
 {
+    private readonly string? root = root is null ? null : Path.GetFullPath(root);
+
     internal static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
         .Select(f => (OpCode)f.GetValue(null)!)
@@ -183,7 +185,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     for (int i = 0; i < targets; i++) text.Append(il.ReadInt32()).Append(',');
                     break;
                 case OperandType.InlineString:
-                    text.Append(System.Text.Json.JsonSerializer.Serialize(Unrooted(md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())))));
+                    text.Append(System.Text.Json.JsonSerializer.Serialize(Unrooted(root, md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())))));
                     break;
                 case OperandType.InlineSig:
                     var signature = md.GetStandaloneSignature((StandaloneSignatureHandle)MetadataTokens.EntityHandle(il.ReadInt32()))
@@ -221,14 +223,17 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads]);
     }
 
-    /// <summary>A string literal with the checkout's path (either separator style) replaced by <c>&lt;repo&gt;</c>, so
-    /// identical sources hash alike wherever they were built.</summary>
-    private string Unrooted(string literal)
+    /// <summary>A string literal with the checkout's path <paramref name="root"/> (either separator style, any
+    /// trailing separator ignored) replaced by <c>&lt;repo&gt;</c> where it is a whole path prefix (followed by a
+    /// separator or the end), so identical sources hash alike wherever they were built.</summary>
+    internal static string Unrooted(string? root, string literal)
     {
-        if (root is not { Length: > 1 }) return literal;
-        string trimmed = root.TrimEnd('/', '\\');
-        return literal.Replace(trimmed.Replace('\\', '/'), "<repo>", StringComparison.Ordinal)
-            .Replace(trimmed.Replace('/', '\\'), "<repo>", StringComparison.Ordinal);
+        string trimmed = (root ?? "").TrimEnd('/', '\\');
+        if (trimmed.Length == 0 || trimmed.EndsWith(':')) return literal;  // a filesystem root names every path
+        foreach (string form in new[] { trimmed.Replace('\\', '/'), trimmed.Replace('/', '\\') }.Distinct())
+            literal = System.Text.RegularExpressions.Regex.Replace(literal,
+                System.Text.RegularExpressions.Regex.Escape(form) + @"(?=[/\\]|$)", "<repo>");
+        return literal;
     }
 
     private TypeSig FieldType(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition

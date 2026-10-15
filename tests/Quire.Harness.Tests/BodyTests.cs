@@ -85,6 +85,21 @@ public class BodyTests
     }
 
     [Fact]
+    public void Only_a_whole_checkout_path_prefix_is_replaced()
+    {
+        string root = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Where())!, "..", ".."));
+        var slashed = new StructureReader(Md, Pe, new SigProvider("Quire.Harness.Tests"), n => n, _ => null, exact: true,
+            root: root + Path.DirectorySeparatorChar);
+        string spelled = Path.DirectorySeparatorChar == '/' ? "SpelledUnix" : "SpelledWindows";
+        Assert.Equal(slashed.Body(Find(typeof(BodyTests), spelled)).Hash, slashed.Body(Find(typeof(BodyTests), "Here")).Hash);
+        Assert.Equal("<repo>/src/a.cs", StructureReader.Unrooted("/w/repo/", "/w/repo/src/a.cs"));
+        Assert.Equal("<repo>", StructureReader.Unrooted("/w/repo", "/w/repo"));
+        Assert.Equal("/w/repo2/src/a.cs", StructureReader.Unrooted("/w/repo", "/w/repo2/src/a.cs"));
+        Assert.Equal(@"<repo>\src\a.cs", StructureReader.Unrooted(@"C:\w\repo", @"C:\w\repo\src\a.cs"));
+        Assert.Equal("/w/x.cs", StructureReader.Unrooted("/", "/w/x.cs"));
+    }
+
+    [Fact]
     public void Fields_holding_a_mutable_reference_count_as_written_through()
     {
         Assert.Equal([$"{typeof(BodyTests).FullName}::Table"], Body("Fill").ReferenceReads);
