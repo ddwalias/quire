@@ -1,88 +1,147 @@
 using System.Collections;
-using static Quire.Differential.Tests.Reflect;
+using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
 public class MatValIndexedDifferentialTests
 {
-    [SkippableFact]
-    public void Checked_access_and_classification() => Scenario.Compare((s,log)=>
+    private const string Contract = "Mcd.MatVal";
+    private const BindingFlags Instance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+    private const BindingFlags Static = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+    private static MethodInfo Method(Side side, bool isStatic, string name, params string[] parameters)
     {
-        var t=s.T("Mcd.MatVal");
-        var m=New(t,3,2,true,4);
-        Set(m,"m_dim",s.D("L"));
-        CallSig(m,"set_2",["Int32","Int32","Double"],0,0,2.0);
-        Call(m,"set_2i",0,0,0.1);
-        CallSig(m,"set_2",["Int32","Int32","Double"],1,0,double.NaN);
-        Call(m,"set_ptrs_2",2,0,s.Str("text"));
-        Call(m,"set_ptrs_2",0,1,s.Num(1,0,"T"));
-        Call(m,"set_ptrs_2",1,1,s.Num(1,double.NaN,"T"));
-        Call(m,"set_ptrs_2",2,1,null);
-        foreach(int i in new[]{-1,0,1,2,3})
-        {
-            foreach(var method in new[]{"matrix_get_1","sym_matrix_get_1","aref_1","iterator_get"})
-                log.Log(s,method,()=>Call(m,method,i));
-            log.Log(s,"mcd_get_1 signed",()=>CallSig(m,"mcd_get_1",["Int32"],i));
-            log.Log(s,"mcd_get_1 unsigned",()=>CallSig(m,"mcd_get_1",["UInt32"],unchecked((uint)i)));
-            foreach(int j in new[]{-1,0,1,2})
-            {
-                foreach(var method in new[]{"matrix_get_2","sym_matrix_get_2","aref_2"}) log.Log(s,method,()=>Call(m,method,i,j));
-                log.Log(s,"mcd_get_2 signed",()=>CallSig(m,"mcd_get_2",["Int32","Int32"],i,j));
-                log.Log(s,"mcd_get_2 unsigned",()=>CallSig(m,"mcd_get_2",["UInt32","UInt32"],unchecked((uint)i),unchecked((uint)j)));
-                foreach(double threshold in new[]{double.NaN,0,0.1,0.2,double.PositiveInfinity})
-                    log.Log(s,"type",()=>Call(m,"get_type_2",i,j,threshold));
-            }
-        }
-        foreach(var axis in new[]{"Row","Col"})
-        foreach(int index in new[]{-1,0,1,2})
-        foreach(double threshold in new[]{double.NaN,0,0.1,0.2})
-        {
-            object a=Enum.Parse(s.T("Mcd.MatAxis"),axis);
-            log.Log(s,"types",()=>Call(m,"element_types",a,index,threshold));
-            log.Log(s,"ptrs",()=>Call(m,"get_ptrs",a,index));
-            foreach(double scale in new[]{0,2})
-            {
-                log.Log(s,"doubles",()=>Call(m,"get_doubles",a,index,threshold,scale));
-                log.Log(s,"data",()=>Call(m,"get_data",a,index,threshold,scale));
-            }
-        }
-        foreach(var obj in new object?[]{null,s.Num(1,0,"identity"),m})
-        {
-            log.Log(s,"static getm1",()=>Call(t,"mcd_getm_1",obj,0));
-            log.Log(s,"static getm2",()=>Call(t,"mcd_getm_2",obj,0,0));
-            log.Log(s,"static get1",()=>CallSig(t,"mcd_get_1",["Object","Object"],obj,s.Num(0,0,"identity")));
-        }
-        var vector=New(t,new double[]{1,2,3});
-        foreach(int i in new[]{-1,0,2,3}) log.Log(s,"vector index",()=>Call(vector,"DynCall",s.Num(i,0,"identity")));
-        log.Log(s,"matrix DynCall",()=>Call(m,"DynCall",s.Num(0,0,"identity"),s.Num(1,0,"identity")));
-        log.Log(s,"PackObjects",()=>Call(m,"PackObjects"));
-        log.Log(s,"PackObjects offset",()=>Call(m,"PackObjects",2));
-    });
+        var type = side.T("Mcd.MatVal");
+        return (isStatic ? type.GetMethods(Static) : type.GetMethods(Instance))
+            .Single(m => m.Name == name && m.GetParameters().Select(p => p.ParameterType.Name).SequenceEqual(parameters));
+    }
+
+    private static object Matrix(Side side, int rows = 3, int cols = 2)
+    {
+        var matrix = Reflect.New(side.T("Mcd.MatVal"), new double[rows * cols], new double[rows * cols], rows, cols, rows,
+            new Hashtable(), Enum.ToObject(side.T("Mcd.Flags"), 2146697216), 0);
+        Reflect.Set(matrix, "m_dim", side.D("identity"));
+        for (int c = 0; c < cols; c++)
+        for (int r = 0; r < rows; r++)
+            Reflect.CallSig(matrix, "set_2", ["Int32", "Int32", "Double"], r, c, (double)(r + c * rows + 1));
+        Reflect.Call(matrix, "set_ptrs_2", 0, 1, side.Num(8, 2, "T"));
+        Reflect.Call(matrix, "set_ptrs_2", 1, 1, "text");
+        return matrix;
+    }
+
+    private static object Vector(Side side)
+    {
+        var vector = Reflect.New(side.T("Mcd.MatVal"), new double[] { 1, 2, 3 });
+        Reflect.Set(vector, "m_dim", side.D("identity"));
+        return vector;
+    }
+
+    private static string Show(Side side, object? value)
+    {
+        if (value == null) return "null";
+        if (value.GetType().FullName!.EndsWith("Mcd.MatVal", StringComparison.Ordinal))
+            return MatValDifferentialTests.Storage(side, value);
+        return side.Show(value);
+    }
+
+    private static string State(Side side, object value) => MatValDifferentialTests.Storage(side, value);
+
+    private static void Compare(string label, string name, string[] signature, bool isStatic,
+        object? qTarget, object?[] qArgs, object? mTarget, object?[] mArgs)
+    {
+        var qs = (Func<object?, string>)(v => Show(Side.Quire, v));
+        var ms = (Func<object?, string>)(v => Show(Side.Mathcad, v));
+        MethodComparison.Compare(label, Contract, Method(Side.Quire, isStatic, name, signature), qTarget, qArgs,
+            Method(Side.Mathcad, isStatic, name, signature), mTarget, mArgs,
+            qs, ms,
+            isStatic ? null : v => State(Side.Quire, v),
+            isStatic ? null : v => State(Side.Mathcad, v));
+    }
 
     [SkippableFact]
-    public void Scalar_division_and_multiplication() => Scenario.Compare((s,log)=>
+    public void Indexed_access_and_classification()
     {
-        foreach(bool packed in new[]{true,false})
-        foreach(bool immutable in new[]{false,true})
-        foreach(bool pointer in new[]{false,true})
-        foreach(double scalar in new[]{1,2,0,double.NaN,double.PositiveInfinity,-2})
+        Runtime.Sync();
+        foreach (int index in new[] { -1, 0, 1, 2, 3 })
         {
-            var m=New(s.T("Mcd.MatVal"),2,1,true,packed?2:3);
-            CallSig(m,"set_1",["Int32","Double"],0,8.0);
-            Call(m,"set_2i",0,0,4.0);
-            CallSig(m,"set_1",["Int32","Double"],1,6.0);
-            if(pointer) Call(m,"set_ptrs_1",1,s.Num(6,2,"L"));
-            Set(m,"Immutable",immutable);
-            object? result=null;
-            log.Log(s,"matrix divide",()=> { result=Call(s.T("Mcd.MatVal"),"op_Division",m,scalar); return ReferenceEquals(result,m); });
-            if(result!=null) log.Add("result "+MatValDifferentialTests.Storage(s,result));
-            log.Add("input "+MatValDifferentialTests.Storage(s,m));
+            var qv = Vector(Side.Quire); var mv = Vector(Side.Mathcad);
+            var qm = Matrix(Side.Quire); var mm = Matrix(Side.Mathcad);
+            var objectIndexQ = Side.Quire.Num(index, 0, "identity");
+            var objectIndexM = Side.Mathcad.Num(index, 0, "identity");
+            Compare($"matrix_get_1({index})", "matrix_get_1", ["Int32"], false, qv, [index], mv, [index]);
+            Compare($"sym_matrix_get_1({index})", "sym_matrix_get_1", ["Int32"], false, qv, [index], mv, [index]);
+            Compare($"aref_1({index})", "aref_1", ["Int32"], false, qv, [index], mv, [index]);
+            Compare($"mcd_get_1(Int32 {index})", "mcd_get_1", ["Int32"], false, qv, [index], mv, [index]);
+            Compare($"mcd_get_1(UInt32 {index})", "mcd_get_1", ["UInt32"], false, qv, [unchecked((uint)index)], mv, [unchecked((uint)index)]);
+            Compare($"mcd_get_1(Object, Object {index})", "mcd_get_1", ["Object", "Object"], true, null, [qv, objectIndexQ], null, [mv, objectIndexM]);
+            Compare($"mcd_getm_1({index})", "mcd_getm_1", ["Object", "Int32"], true, null, [qv, index], null, [mv, index]);
+            Compare($"DynCall({index})", "DynCall", ["Object"], false, qv, [objectIndexQ], mv, [objectIndexM]);
+            Compare($"iterator_get({index})", "iterator_get", ["Int32"], false, qm, [index], mm, [index]);
+
+            foreach (int column in new[] { -1, 0, 1, 2 })
+            {
+                Compare($"matrix_get_2({index}, {column})", "matrix_get_2", ["Int32", "Int32"], false, qm, [index, column], mm, [index, column]);
+                Compare($"sym_matrix_get_2({index}, {column})", "sym_matrix_get_2", ["Int32", "Int32"], false, qm, [index, column], mm, [index, column]);
+                Compare($"aref_2({index}, {column})", "aref_2", ["Int32", "Int32"], false, qm, [index, column], mm, [index, column]);
+                Compare($"mcd_get_2(Int32 {index}, {column})", "mcd_get_2", ["Int32", "Int32"], false, qm, [index, column], mm, [index, column]);
+                Compare($"mcd_get_2(UInt32 {index}, {column})", "mcd_get_2", ["UInt32", "UInt32"], false, qm, [unchecked((uint)index), unchecked((uint)column)], mm, [unchecked((uint)index), unchecked((uint)column)]);
+                Compare($"mcd_getm_2({index}, {column})", "mcd_getm_2", ["Object", "Int32", "Int32"], true, null, [qm, index, column], null, [mm, index, column]);
+                Compare($"DynCall({index}, {column})", "DynCall", ["Object", "Object"], false, qm,
+                    [Side.Quire.Num(index, 0, "identity"), Side.Quire.Num(column, 0, "identity")], mm,
+                    [Side.Mathcad.Num(index, 0, "identity"), Side.Mathcad.Num(column, 0, "identity")]);
+                foreach (double threshold in new[] { double.NaN, 0, 0.1, 0.2, double.PositiveInfinity })
+                    Compare($"get_type_2({index}, {column}, {threshold})", "get_type_2", ["Int32", "Int32", "Double"], false,
+                        qm, [index, column, threshold], mm, [index, column, threshold]);
+            }
         }
-        foreach(var value in new object?[]{null,"text",s.Num(6,2,"L"),New(s.T("Mcd.MatVal"),new double[]{6,2})})
-        foreach(double scalar in new[]{1,2,0,double.PositiveInfinity,double.NegativeInfinity,double.NaN})
+
+        Compare("mcd_get_1(nonmatrix, number)", "mcd_get_1", ["Object", "Object"], true, null,
+            ["not a matrix", Side.Quire.Num(0, 0, "identity")], null,
+            ["not a matrix", Side.Mathcad.Num(0, 0, "identity")]);
+        Compare("mcd_get_1(vector, nonnumber)", "mcd_get_1", ["Object", "Object"], true, null,
+            [Vector(Side.Quire), "not a number"], null, [Vector(Side.Mathcad), "not a number"]);
+        Compare("mcd_get_1(vector, noninteger number)", "mcd_get_1", ["Object", "Object"], true, null,
+            [Vector(Side.Quire), Side.Quire.Num(1.5, 0, "identity")], null,
+            [Vector(Side.Mathcad), Side.Mathcad.Num(1.5, 0, "identity")]);
+        Compare("mcd_getm_1(nonmatrix)", "mcd_getm_1", ["Object", "Int32"], true, null,
+            ["not a matrix", 0], null, ["not a matrix", 0]);
+        Compare("mcd_getm_2(nonmatrix)", "mcd_getm_2", ["Object", "Int32", "Int32"], true, null,
+            ["not a matrix", 0, 0], null, ["not a matrix", 0, 0]);
+
+        var qvForDynamic = Vector(Side.Quire); var mvForDynamic = Vector(Side.Mathcad);
+        var qIndexNoninteger = Side.Quire.Num(1.5, 0, "identity"); var mIndexNoninteger = Side.Mathcad.Num(1.5, 0, "identity");
+        Compare("DynCall(noninteger vector index)", "DynCall", ["Object"], false, qvForDynamic,
+            [qIndexNoninteger], mvForDynamic, [mIndexNoninteger]);
+        var qmForDynamic = Matrix(Side.Quire); var mmForDynamic = Matrix(Side.Mathcad);
+        Compare("DynCall(noninteger matrix row)", "DynCall", ["Object", "Object"], false, qmForDynamic,
+            [Side.Quire.Num(1.5, 0, "identity"), Side.Quire.Num(0, 0, "identity")], mmForDynamic,
+            [Side.Mathcad.Num(1.5, 0, "identity"), Side.Mathcad.Num(0, 0, "identity")]);
+        Compare("DynCall(noninteger matrix column)", "DynCall", ["Object", "Object"], false, qmForDynamic,
+            [Side.Quire.Num(0, 0, "identity"), Side.Quire.Num(1.5, 0, "identity")], mmForDynamic,
+            [Side.Mathcad.Num(0, 0, "identity"), Side.Mathcad.Num(1.5, 0, "identity")]);
+
+        var q = Matrix(Side.Quire); var m = Matrix(Side.Mathcad);
+        foreach (var axisName in new[] { "Row", "Col" })
+        foreach (int index in new[] { -1, 0, 1, 2 })
         {
-            log.Log(s,"Utilities.Divide",()=>Call(s.T("Mcd.Utilities"),"Divide",value,scalar));
-            log.Log(s,"Utilities.Multiply",()=>Call(s.T("Mcd.Utilities"),"Multiply",value,scalar));
+            var qa = Enum.Parse(Side.Quire.T("Mcd.MatAxis"), axisName);
+            var ma = Enum.Parse(Side.Mathcad.T("Mcd.MatAxis"), axisName);
+            foreach (double threshold in new[] { double.NaN, 0, 0.1, 0.2 })
+                Compare($"element_types({axisName}, {index}, {threshold})", "element_types", ["MatAxis", "Int32", "Double"], false,
+                    q, [qa, index, threshold], m, [ma, index, threshold]);
+            Compare($"get_ptrs({axisName}, {index})", "get_ptrs", ["MatAxis", "Int32"], false, q, [qa, index], m, [ma, index]);
+            foreach (double threshold in new[] { double.NaN, 0, 0.1, 0.2 })
+            foreach (double scale in new[] { 0, 2 })
+            {
+                Compare($"get_doubles({axisName}, {index}, {threshold}, {scale})", "get_doubles", ["MatAxis", "Int32", "Double", "Double"], false,
+                    q, [qa, index, threshold, scale], m, [ma, index, threshold, scale]);
+                Compare($"get_data({axisName}, {index}, {threshold}, {scale})", "get_data", ["MatAxis", "Int32", "Double", "Double"], false,
+                    q, [qa, index, threshold, scale], m, [ma, index, threshold, scale]);
+            }
         }
-    });
+
+        foreach (int offset in new[] { 0, 2 })
+            Compare($"PackObjects({offset})", "PackObjects", ["Int32"], false, q, [offset], m, [offset]);
+        Compare("PackObjects()", "PackObjects", [], false, q, [], m, []);
+    }
 }

@@ -147,10 +147,10 @@ public class MatValViewDifferentialTests
         {
             var q = Matrix(Side.Quire); var m = Matrix(Side.Mathcad);
             Compare("wrapper successful column " + wrapper, wrapper, [typeof(object), typeof(int)], true,
-                null, null, [q, 1], [m, 1]);
+                null, null, [q, 1], [m, 1], (side, value) => ShowWithSource(side, value, side == Side.Quire ? q : m));
             q = Matrix(Side.Quire); m = Matrix(Side.Mathcad);
             Compare("wrapper first column " + wrapper, wrapper, [typeof(object), typeof(int)], true,
-                null, null, [q, 0], [m, 0]);
+                null, null, [q, 0], [m, 0], (side, value) => ShowWithSource(side, value, side == Side.Quire ? q : m));
             Compare("wrapper invalid type " + wrapper, wrapper, [typeof(object), typeof(int)], true,
                 null, null, ["text", 0], ["text", 0]);
             foreach (int index in new[] { -1, 2 })
@@ -164,10 +164,10 @@ public class MatValViewDifferentialTests
         {
             var q = Matrix(Side.Quire); var m = Matrix(Side.Mathcad);
             Compare("wrapper successful row " + wrapper, wrapper, [typeof(object), typeof(int)], true,
-                null, null, [q, 1], [m, 1]);
+                null, null, [q, 1], [m, 1], (side, value) => ShowWithSource(side, value, side == Side.Quire ? q : m));
             q = Matrix(Side.Quire); m = Matrix(Side.Mathcad);
             Compare("wrapper first row " + wrapper, wrapper, [typeof(object), typeof(int)], true,
-                null, null, [q, 0], [m, 0]);
+                null, null, [q, 0], [m, 0], (side, value) => ShowWithSource(side, value, side == Side.Quire ? q : m));
             Compare("wrapper invalid type " + wrapper, wrapper, [typeof(object), typeof(int)], true,
                 null, null, ["text", 0], ["text", 0]);
             foreach (int index in new[] { -1, 2 })
@@ -179,7 +179,8 @@ public class MatValViewDifferentialTests
         }
 
         var qRow = Matrix(Side.Quire, 1); var mRow = Matrix(Side.Mathcad, 1);
-        CompareInstance("Row delegates to half-open submatrix", "Row", [typeof(int)], qRow, mRow, [1], [1]);
+        CompareInstance("Row delegates to half-open submatrix", "Row", [typeof(int)], qRow, mRow, [1], [1],
+            (side, value) => ShowWithSource(side, value, side == Side.Quire ? qRow : mRow));
         var qSub = Matrix(Side.Quire, 1); var mSub = Matrix(Side.Mathcad, 1);
         CompareInstance("SubMatrix aliases and marks source immutable", "SubMatrix",
             [typeof(uint), typeof(uint), typeof(uint), typeof(uint)], qSub, mSub, [0u, 2u, 1u, 2u], [0u, 2u, 1u, 2u],

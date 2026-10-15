@@ -1,202 +1,279 @@
 using System.Collections;
+using System.Reflection;
 using static Quire.Differential.Tests.Reflect;
 
 namespace Quire.Differential.Tests;
 
 public class MatValDifferentialTests
 {
-    private static void Describe(Side s, List<string> log, object m)
+    private const string Contract = "Mcd.MatVal";
+    private const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+    private const BindingFlags PublicStatic = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
+    private const BindingFlags PrivateInstance = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+
+    private static System.Type Q => typeof(global::Quire.Mcd.MatVal);
+    private static System.Type M => Mathcad.Type("mplrun", "Mcd.MatVal");
+
+    private static System.Type OriginalType(System.Type type)
     {
-        foreach (var p in new[] { "Rows", "Cols", "Anr", "Offset", "Isize", "Packed", "Immutable", "Shared" })
-            log.Log(s, p, () => Get(m, p));
-        log.Add("dim " + s.DimText(Get(m, "m_dim")));
-        log.Add("flags " + Convert.ToInt64(Get(Get(m, "Data")!, "m_flags")));
-        log.Log(s,"native real pointer",()=>Get(Get(m,"Data")!,"m_rv"));
-        log.Log(s,"native imaginary pointer",()=>Get(Get(m,"Data")!,"m_iv"));
-        log.Add("real " + s.Show(Get(m, "m_rarr")));
-        log.Add("imag " + s.Show(Get(m, "m_iarr")));
-        log.Log(s, "hash", () => m.GetHashCode());
-        foreach (int i in new[] { -1, 0, 1, 7 })
+        if (type.IsArray) return OriginalType(type.GetElementType()!).MakeArrayType();
+        if (type.Assembly == typeof(global::Quire.Mcd.MatVal).Assembly)
+            return Mathcad.Type("mplrun", type.FullName!.Replace("Quire.", "", StringComparison.Ordinal));
+        return type;
+    }
+
+    private static (MethodInfo Q, MethodInfo M) Method(string name, BindingFlags flags, params System.Type[] types)
+    {
+        var q = Q.GetMethod(name, flags, types) ?? throw new HarnessException($"Quire MatVal method not found: {name}");
+        var m = M.GetMethod(name, flags, types.Select(OriginalType).ToArray()) ?? throw new HarnessException($"Mathcad MatVal method not found: {name}");
+        return (q, m);
+    }
+
+    private static (ConstructorInfo Q, ConstructorInfo M) Constructor(params System.Type[] types)
+    {
+        var q = Q.GetConstructor(types)
+            ?? throw new HarnessException("Quire MatVal constructor not found");
+        var m = M.GetConstructor(types.Select(OriginalType).ToArray())
+            ?? throw new HarnessException("Mathcad MatVal constructor not found");
+        return (q, m);
+    }
+
+    private static object New(Side side, params object?[] args)
+    {
+        System.Type[] types = args.Length switch
         {
-            log.Log(s, "Index1", () => Call(m, "Index", i));
-            log.Log(s, "Index2", () => Call(m, "Index", i, 2));
-            log.Log(s, "RowOf", () => Call(m, "RowOf", i));
-            log.Log(s, "ColOf", () => Call(m, "ColOf", i));
+            1 when args[0] is int => [typeof(int)],
+            1 => [typeof(double[])],
+            2 when args[0] is int => [typeof(int), typeof(int)],
+            2 => [typeof(double[]), typeof(double[])],
+            8 => [typeof(double[]), typeof(double[]), typeof(int), typeof(int), typeof(int), typeof(Hashtable), typeof(global::Quire.Mcd.Flags), typeof(int)],
+            _ => throw new HarnessException($"Unsupported MatVal test fixture constructor with {args.Length} arguments")
+        };
+        bool isQuire = side.Name == "Quire";
+        var ctor = (isQuire ? Q : M).GetConstructor(types.Select(t => isQuire ? t : OriginalType(t)).ToArray())
+            ?? throw new HarnessException("MatVal fixture constructor not found");
+        object?[] callArgs = args.ToArray();
+        if (!isQuire && types.Length == 8)
+            callArgs[6] = Enum.ToObject(Mathcad.Type("mplrun", "Mcd.Flags"), Convert.ToInt64(args[6]));
+        return ctor.Invoke(callArgs);
+    }
+
+    private static string State(Side side, object value)
+    {
+        var data = Get(value, "Data")!;
+        var pointers = Get(value, "m_parr") as Hashtable;
+        string pointerState = pointers == null ? "null" : string.Join(";", pointers.Keys.Cast<int>().Order().Select(k => $"{k}:{side.Show(pointers[k])}"));
+        string packed = Outcome(() => Get(value, "Packed"), side.Show);
+        string isize = Outcome(() => Get(value, "Isize"), side.Show);
+        return $"{Get(value, "Rows")}x{Get(value, "Cols")} stride {Get(value, "Anr")} offset {Get(value, "Offset")} isize {isize} packed {packed} flags {Convert.ToInt64(Get(data, "m_flags"))} dim {side.DimText(Get(value, "m_dim"))} real {side.Show(Get(value, "m_rarr"))} imag {side.Show(Get(value, "m_iarr"))} ptrs {pointerState}";
+    }
+
+    public static string Storage(Side side, object value) => State(side, value);
+
+    private static Func<object, string> Observe(Side side) => value => State(side, value);
+    private static Func<object?, string> Show(Side side) => value => value == null ? "null" : value is global::Quire.Mcd.MatVal || value.GetType().FullName == "Mcd.MatVal" ? State(side, value) : side.Show(value);
+
+    private static string ShowConstructor(Side side, object? value, object?[] args)
+    {
+        if (value == null || !side.T("Mcd.MatVal").IsInstanceOfType(value)) return Show(side)(value);
+        var aliases = new List<string>();
+        int arrayIndex = 0;
+        for (int i = 0; i < args.Length; i++)
+        {
+            if (args[i] is double[])
+            {
+                string field = arrayIndex++ == 0 ? "m_rarr" : "m_iarr";
+                aliases.Add($"arg{i}-{field}={ReferenceEquals(args[i], Get(value, field))}");
+            }
+            else if (args[i] is Hashtable)
+                aliases.Add($"arg{i}-m_parr={ReferenceEquals(args[i], Get(value, "m_parr"))}");
+        }
+        return State(side, value) + " aliases[" + string.Join(",", aliases) + "]";
+    }
+
+    private static object[] MatrixArgs(int rows = 2, int cols = 2, int stride = 3, int offset = 1, long flags = 2146697216) =>
+        [new double[offset + stride * cols], new double[offset + stride * cols], rows, cols, stride,
+            new Hashtable(), Enum.ToObject(typeof(global::Quire.Mcd.Flags), flags), offset];
+
+    private static void Compare(string id, MethodInfo q, MethodInfo m, object? qt, object? mt, object?[] args,
+        Func<object?, string>? qShow = null, Func<object?, string>? mShow = null, Side? side = null)
+    {
+        MethodComparison.Compare(id, Contract, q, qt, args, m, mt, args.ToArray(), qShow, mShow,
+            qt == null ? null : Observe(Side.Quire), mt == null ? null : Observe(Side.Mathcad));
+    }
+
+    [SkippableFact]
+    public void Constructors_and_storage_queries()
+    {
+        Runtime.Sync();
+        var qs = Show(Side.Quire);
+        var ms = Show(Side.Mathcad);
+        var constructorCases = new (System.Type[] Types, object?[] Args)[]
+        {
+            ([], []), ([typeof(int)], [2]), ([typeof(int), typeof(int)], [2, 3]),
+            ([typeof(int), typeof(int), typeof(bool)], [2, 3, true]), ([typeof(int), typeof(int), typeof(bool), typeof(int)], [2, 3, true, 4]),
+            ([typeof(double[])], [new double[] { 1, 2, 3 }]), ([typeof(double[]), typeof(double[])], [new double[] { 1, 2 }, new double[] { 3, 4 }]),
+            ([typeof(double[]), typeof(double[]), typeof(int)], [new double[] { 1, 2, 3 }, null, 2]),
+            ([typeof(double[]), typeof(double[]), typeof(int), typeof(int)], [new double[] { 1, 2, 3 }, null, 2, 1]),
+            ([typeof(double[]), typeof(double[]), typeof(int), typeof(int), typeof(int)], [new double[] { 1, 2, 3 }, null, 2, 1, 3]),
+            ([typeof(double[]), typeof(double[]), typeof(int), typeof(int), typeof(int), typeof(Hashtable)], [new double[] { 1, 2, 3 }, null, 2, 1, 3, new Hashtable()]),
+            ([typeof(double[]), typeof(double[]), typeof(int), typeof(int), typeof(int), typeof(Hashtable), typeof(global::Quire.Mcd.Flags), typeof(int)], MatrixArgs())
+        };
+        foreach (var (types, args) in constructorCases)
+        {
+            var (q, m) = Constructor(types);
+            object?[] originalArgs = args.ToArray();
+            if (types.Length == 8)
+                originalArgs[6] = Enum.ToObject(Mathcad.Type("mplrun", "Mcd.Flags"), 2146697216);
+            MethodComparison.Compare($"MatVal constructor ({string.Join(",", types.Select(t => t.Name))})", Contract,
+                q, null, args, m, null, originalArgs,
+                value => ShowConstructor(Side.Quire, value, args), value => ShowConstructor(Side.Mathcad, value, originalArgs));
+        }
+
+        var (qRows, mRows) = Method("get_Rows", PublicInstance);
+        var (qCols, mCols) = Method("get_Cols", PublicInstance);
+        var (qAnr, mAnr) = Method("get_Anr", PublicInstance);
+        var (qOffset, mOffset) = Method("get_Offset", PublicInstance);
+        var (qIsize, mIsize) = Method("get_Isize", PublicInstance);
+        var (qPacked, mPacked) = Method("get_Packed", PublicInstance);
+        foreach (var (name, q, m) in new[] { ("Rows", qRows, mRows), ("Cols", qCols, mCols), ("Anr", qAnr, mAnr), ("Offset", qOffset, mOffset), ("Isize", qIsize, mIsize), ("Packed", qPacked, mPacked) })
+        {
+            var qa = MatrixArgs();
+            var ma = MatrixArgs();
+            var qt = New(Side.Quire, qa);
+            var mt = New(Side.Mathcad, ma);
+            Compare($"get_{name} on strided matrix", q, m, qt, mt, []);
+        }
+
+        var (qHash, mHash) = Method("GetHashCode", PublicInstance);
+        var qHashTarget = New(Side.Quire, 2, 3);
+        var mHashTarget = New(Side.Mathcad, 2, 3);
+        Compare("GetHashCode logical shape", qHash, mHash, qHashTarget, mHashTarget, []);
+
+        var qIsizeTarget = New(Side.Quire, MatrixArgs(rows: 3, cols: 2, stride: 4, offset: 1));
+        var mIsizeTarget = New(Side.Mathcad, MatrixArgs(rows: 3, cols: 2, stride: 4, offset: 1));
+        Compare("get_Isize on non-square matrix", qIsize, mIsize, qIsizeTarget, mIsizeTarget, []);
+    }
+
+    [SkippableFact]
+    public void Indexing_and_axis_arithmetic()
+    {
+        Runtime.Sync();
+        var (qIndex1, mIndex1) = Method("Index", PublicInstance, typeof(int));
+        var (qIndex2, mIndex2) = Method("Index", PublicInstance, typeof(int), typeof(int));
+        var (qRow, mRow) = Method("RowOf", PublicInstance, typeof(int));
+        var (qCol, mCol) = Method("ColOf", PublicInstance, typeof(int));
+        foreach (int stride in new[] { 0, 3 })
+        foreach (int index in new[] { -8, -1, 0, 1, 7 })
+        {
+            var qa = MatrixArgs(stride: stride);
+            var ma = MatrixArgs(stride: stride);
+            var qt = New(Side.Quire, qa);
+            var mt = New(Side.Mathcad, ma);
+            if (stride != 0)
+            {
+                Compare($"Index({index})", qIndex1, mIndex1, qt, mt, [index]);
+                Compare($"Index({index},2)", qIndex2, mIndex2, qt, mt, [index, 2]);
+                Compare($"RowOf({index})", qRow, mRow, qt, mt, [index]);
+                Compare($"ColOf({index})", qCol, mCol, qt, mt, [index]);
+            }
+            else
+            {
+                Compare("RowOf with zero stride", qRow, mRow, qt, mt, [index]);
+                Compare("ColOf with zero stride", qCol, mCol, qt, mt, [index]);
+            }
         }
     }
 
     [SkippableFact]
-    public void Constructors_and_storage() => Scenario.Compare((s, log) =>
+    public void Fill_uses_product_for_extent()
     {
-        var t = s.T("Mcd.MatVal");
-        foreach (object?[] args in new object?[][]
+        Runtime.Sync();
+        var (qFill, mFill) = Method("Fill", PublicInstance, typeof(object), typeof(int), typeof(int), typeof(int));
+        var qa = MatrixArgs(rows: 2, cols: 1, stride: 2, offset: 0);
+        var ma = MatrixArgs(rows: 2, cols: 1, stride: 2, offset: 0);
+        var qt = New(Side.Quire, qa);
+        var mt = New(Side.Mathcad, ma);
+
+        // init + incr * (n - 1) is 8. Replacing multiplication with division
+        // yields extent 3, which cannot hold the final fill index at 8.
+        Compare("Fill product determines extent", qFill, mFill, qt, mt, ["fill", 0, 4, 3],
+            Show(Side.Quire), Show(Side.Mathcad));
+
+        var qUnitIncrement = New(Side.Quire, MatrixArgs(rows: 2, cols: 1, stride: 2, offset: 0));
+        var mUnitIncrement = New(Side.Mathcad, MatrixArgs(rows: 2, cols: 1, stride: 2, offset: 0));
+        // The positive-increment arm includes 1; its IL boundary is strictly greater than zero.
+        Compare("Fill positive unit increment", qFill, mFill, qUnitIncrement, mUnitIncrement, ["fill", 0, 1, 3],
+            Show(Side.Quire), Show(Side.Mathcad));
+    }
+
+    [SkippableFact]
+    public void Imaginary_storage_flags_and_pointer_nan()
+    {
+        Runtime.Sync();
+        var (qHasImag, mHasImag) = Method("get_HasImag", PublicInstance);
+        var (qAlloc, mAlloc) = Method("AllocImaginary", PublicInstance);
+        var (qImmutableGet, mImmutableGet) = Method("get_Immutable", PublicInstance);
+        var (qImmutableSet, mImmutableSet) = Method("set_Immutable", PublicInstance, typeof(bool));
+        var (qSharedGet, mSharedGet) = Method("get_Shared", PublicInstance);
+        var (qSharedSet, mSharedSet) = Method("set_Shared", PublicInstance, typeof(bool));
+        foreach (double[]? imaginary in new double[]?[] { null, [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, double.NaN, 0, 0], [0, 0, 0, 0, 2, 0, 0] })
         {
-            [], [2], [2,3], [2,3,true], [2,3,true,4], [-2,0], [2,1,false,1], [-1,1],
-            [new double[]{1,2,3}], [new double[]{1,2},new double[]{3,4}],
-            [new double[]{1},null,2], [new double[]{1},null,2,3],
-            [new double[]{1},null,2,3,4], [new double[]{1},null,2,3,4,new Hashtable()],
-            [new double[12],new double[12],2,3,4,new Hashtable(),Enum.ToObject(s.T("Mcd.Flags"),2146697220),1],
+            var qa = MatrixArgs();
+            var ma = MatrixArgs();
+            qa[1] = imaginary;
+            ma[1] = imaginary?.ToArray();
+            var qt = New(Side.Quire, qa);
+            var mt = New(Side.Mathcad, ma);
+            Compare("HasImag scans backing", qHasImag, mHasImag, qt, mt, []);
+        }
+
+        var qAllocTarget = New(Side.Quire, new double[] { 1, 2, 3 });
+        var mAllocTarget = New(Side.Mathcad, new double[] { 1, 2, 3 });
+        Compare("AllocImaginary allocates backing", qAlloc, mAlloc, qAllocTarget, mAllocTarget, []);
+        foreach (var (getQ, getM, setQ, setM, name) in new[]
+        {
+            (qImmutableGet, mImmutableGet, qImmutableSet, mImmutableSet, "Immutable"),
+            (qSharedGet, mSharedGet, qSharedSet, mSharedSet, "Shared")
         })
         {
-            object m;
-            try { m = New(t, args); }
-            catch(Exception e) { log.Add(Thrown(e)); continue; }
-            Describe(s, log, m);
+            foreach (bool enabled in new[] { true, false })
+            {
+                var qt = New(Side.Quire, MatrixArgs());
+                var mt = New(Side.Mathcad, MatrixArgs());
+                Compare($"set_{name}({enabled})", setQ, setM, qt, mt, [enabled]);
+                Compare($"get_{name} after set", getQ, getM, qt, mt, []);
+            }
         }
-    });
 
-    [SkippableFact]
-    public void Imaginary_flags_and_nan() => Scenario.Compare((s, log) =>
-    {
-        var t = s.T("Mcd.MatVal");
-        log.Log(s,"PtrNan",()=>Get(t,"PtrNan"));
-        log.Log(s,"ThePtrNan",()=>Call(t,"ThePtrNan"));
-        log.Log(s,"NanMask",()=>Get(t,"NanMask"));
-        foreach (long bits in new[]{-1L,unchecked((long)0xFFFFFFFF00000000UL),unchecked((long)0x7FF8000000000000UL),0L})
-        {
-            object?[] args = [BitConverter.Int64BitsToDouble(bits)];
-            log.Log(s,"IsPtrNan",()=>CallSig(t,"IsPtrNan",["Double&"],args));
-            log.Add("payload " + Side.Bits((double)args[0]!));
-        }
-        var m = New(t,1,1,true,2);
-        foreach (var p in new[]{"Immutable","Shared"})
-        {
-            Set(m,p,true);
-            log.Log(s,p,()=>Get(m,p));
-            log.Add("flags "+Convert.ToInt64(Get(Get(m,"Data")!,"m_flags")));
-            Set(m,p,false);
-        }
-        log.Log(s,"HasImag zeros",()=>Get(m,"HasImag"));
-        log.Add("imag "+s.Show(Get(m,"m_iarr")));
-        Call(m,"AllocImaginary");
-        ((double[])Get(m,"m_iarr")!)[1]=double.NaN;
-        log.Log(s,"HasImag padding",()=>Get(m,"HasImag"));
-        Call(m,"AllocImaginary");
-        log.Add("imag "+s.Show(Get(m,"m_iarr")));
-        log.Log(s,"HasImag reset",()=>Get(m,"HasImag"));
-    });
+        var qSharedBit = New(Side.Quire, MatrixArgs(flags: 4));
+        var mSharedBit = New(Side.Mathcad, MatrixArgs(flags: 4));
+        Compare("get_Shared exact bit", qSharedGet, mSharedGet, qSharedBit, mSharedBit, []);
+        var qUnrelatedBit = New(Side.Quire, MatrixArgs(flags: 1));
+        var mUnrelatedBit = New(Side.Mathcad, MatrixArgs(flags: 1));
+        Compare("get_Shared ignores unrelated low bit", qSharedGet, mSharedGet, qUnrelatedBit, mUnrelatedBit, []);
 
-    public static string Storage(Side s, object m)
-    {
-        var data=Get(m,"Data")!;
-        string text=$"{Get(m,"Rows")}x{Get(m,"Cols")} stride {Get(m,"Anr")} offset {Get(m,"Offset")} flags {Convert.ToInt64(Get(data,"m_flags"))} dim {s.DimText(Get(m,"m_dim"))} real {s.Show(Get(m,"m_rarr"))} imag {s.Show(Get(m,"m_iarr"))}";
-        var table=Get(m,"m_parr") as Hashtable;
-        text+=" ptrs "+(table==null?"null":string.Join(";",table.Keys.Cast<int>().Order().Select(k=>k+":"+s.Show(table[k]))));
-        return text;
+        var (qPtrNan, mPtrNan) = Method("IsPtrNan", PublicStatic, typeof(double).MakeByRefType());
+        foreach (long bits in new[] { -1L, unchecked((long)0xFFFFFFFF00000000UL), unchecked((long)0x7FF8000000000000UL), 0L })
+        {
+            object?[] qa = [BitConverter.Int64BitsToDouble(bits)];
+            object?[] ma = [BitConverter.Int64BitsToDouble(bits)];
+            MethodComparison.Compare($"IsPtrNan bits 0x{bits:X16}", Contract, qPtrNan, null, qa, mPtrNan, null, ma);
+        }
+
+        var (qPtrAt, mPtrAt) = Method("IsPtrNan", PrivateInstance, typeof(int), typeof(int));
+        foreach (double payload in new[] { double.NaN, BitConverter.Int64BitsToDouble(-1L), 1.0 })
+        {
+            var qa = MatrixArgs();
+            var ma = MatrixArgs();
+            ((double[])qa[0]!)[1] = payload;
+            ((double[])ma[0]!)[1] = payload;
+            var qt = New(Side.Quire, qa);
+            var mt = New(Side.Mathcad, ma);
+            Compare("private IsPtrNan(row,column)", qPtrAt, mPtrAt, qt, mt, [0, 0]);
+        }
+
+        var (qThePtrNan, mThePtrNan) = Method("ThePtrNan", PublicStatic);
+        MethodComparison.Compare("ThePtrNan sentinel", Contract, qThePtrNan, null, [], mThePtrNan, null, []);
     }
-    private static object Matrix(Side s,string dimension="poly",int rows=2,int cols=2,int stride=3,int offset=1)
-    {
-        var m=New(s.T("Mcd.MatVal"),new double[offset+stride*cols],new double[offset+stride*cols],rows,cols,stride,new Hashtable(),Enum.ToObject(s.T("Mcd.Flags"),2146697216),offset);
-        Set(m,"m_dim",s.D(dimension));
-        return m;
-    }
-    private static void State(Side s,List<string> log,string label,object m) => log.Add(label+" "+Storage(s,m));
-
-    [SkippableFact]
-    public void Numeric_setters_and_raw_access() => Scenario.Compare((s,log)=>
-    {
-        foreach(var matrixDim in Side.DimNames)
-        foreach(var numberDim in Side.DimNames)
-        foreach(int overload in Enumerable.Range(0,6))
-        {
-            var m=Matrix(s,matrixDim);
-            string label=$"{matrixDim} <- {numberDim} setter {overload}";
-            object value=s.Num(2,3,numberDim);
-            switch(overload)
-            {
-                case 0: CallSig(m,"set_1",["Int32","Object"],1,value); break;
-                case 1: CallSig(m,"set_2",["Int32","Int32","Object"],1,1,value); break;
-                case 2: Call(m,"set_1",1,2.0,s.D(numberDim)); break;
-                case 3: Call(m,"set_2",1,1,2.0,s.D(numberDim)); break;
-                case 4: Call(m,"set_1",1,2.0,3.0,s.D(numberDim)); break;
-                case 5: Call(m,"set_2",1,1,2.0,3.0,s.D(numberDim)); break;
-            }
-            State(s,log,label,m);
-            foreach(int index in new[]{-2,-1,0,1,2,3,4,6,7})
-            {
-                log.Log(s,"get_1",()=>Call(m,"get_1",index));
-                log.Log(s,"get_real",()=>CallSig(m,"get_real",["Int32"],index));
-                log.Log(s,"get_imag",()=>CallSig(m,"get_imag",["Int32"],index));
-                log.Log(s,"get_ptr",()=>Call(m,"get_1_ptr",index));
-                log.Log(s,"get_dim",()=>Call(m,"get_1_dim",index));
-                log.Log(s,"mixed",()=>CallSig(m,"get_real_mixed",["Int32"],index));
-            }
-            var scratch=s.Num(-123,-456,"T");
-            log.Log(s,"get_na",()=>Call(m,"get_1_na",scratch,1));
-            log.Add("scratch "+s.Show(scratch));
-            log.Log(s,"raw overwrite",()=>CallSig(m,"set_1",["Int32","Double"],1,9.0));
-            State(s,log,"after overwrite",m);
-            log.Log(s,"get_1 after overwrite",()=>Call(m,"get_1",1));
-            log.Log(s,"get_matrixdim",()=>MatDimDifferentialTests.DescribeDimension(s,Call(m,"get_1_matdim",1)));
-        }
-    });
-
-    [SkippableFact]
-    public void Pointer_queries_canonicalization_and_packing() => Scenario.Compare((s,log)=>
-    {
-        var kinds=new[]{"numbers","mixed","zeros","strings","nested","missing","stale"};
-        foreach(var kind in kinds)
-        foreach(bool shared in new[]{false,true})
-        foreach(var query in new[]{"HasPtrs","RepHasPtrs","IsUniformScalar","IsUniform","UniformDimension","PhysicalDimension","IsDimless","IsScalarMatrix","IsRealMatrix","IsRealMatrixMixed","IsRealVector","MatrixDimension","Canonicalize"})
-        {
-            var m=Matrix(s,"identity");
-            Set(m,"Shared",shared);
-            for(int c=0;c<2;c++) for(int r=0;r<2;r++)
-            {
-                object? value=kind switch
-                {
-                    "numbers"=>s.Num(r+c,0,"L"),
-                    "mixed"=>s.Num(r+c,r,r==c?"L":"T"),
-                    "zeros"=>s.Num(0,0,"mcd_zero"),
-                    "strings"=>"hello",
-                    "nested"=>New(s.T("Mcd.MatVal"),1),
-                    _=>null,
-                };
-                Call(m,"set_ptrs_2",r,c,value);
-            }
-            if(kind=="stale") ((double[])Get(m,"m_rarr")!)[(int)Call(m,"Index",0,0)!]=9;
-            if(kind=="missing") Set(m,"m_parr",null);
-            string label=$"{kind} shared {shared} {query}";
-            if(query=="Canonicalize") log.Log(s,label,()=>Call(m,query));
-            else if(query=="MatrixDimension") log.Log(s,label,()=>MatDimDifferentialTests.DescribeDimension(s,Get(m,query)));
-            else log.Log(s,label,()=>Get(m,query));
-            State(s,log,"state",m);
-            log.Log(s,"PackReal",()=>Call(m,"PackReal"));
-            log.Log(s,"PackImag",()=>Call(m,"PackImag"));
-            log.Log(s,"PackReal col",()=>Call(m,"PackReal",1));
-            log.Log(s,"PackImag col",()=>Call(m,"PackImag",1));
-            log.Log(s,"PackReal sub",()=>Call(m,"PackReal",0,2,1,2));
-            log.Log(s,"PackImag sub",()=>Call(m,"PackImag",0,2,1,2));
-            log.Log(s,"ColDimArray",()=>Call(m,"ColDimArray",0));
-            log.Log(s,"RowDimArray",()=>Call(m,"RowDimArray",0));
-            log.Log(s,"get missing",()=>Call(m,"get_2",0,0));
-            State(s,log,"after get",m);
-        }
-        var matrix=Matrix(s);
-        Call(matrix,"set_ptrs_2",0,0,"text");
-        log.Log(s,"mixed string handle",()=>Call(matrix,"get_real_mixed_handle",0,0,17u));
-        Call(matrix,"set_ptrs_2",0,1,matrix);
-        State(s,log,"self pointer snapshot",matrix);
-        var child=Get(matrix,"m_parr") as Hashtable;
-        var nested=child![(int)Call(matrix,"Index",0,1)!]!;
-        log.Log(s,"nested immutable",()=>Get(nested,"Immutable"));
-        log.Log(s,"self copied",()=>!ReferenceEquals(matrix,nested));
-        log.Log(s,"contains text value",()=>Call(matrix,"contains",child[(int)Call(matrix,"Index",0,0)!]));
-    });
-
-    [SkippableFact]
-    public void Native_struct_layout_and_dimension_rows() => Scenario.Compare((s,log)=>
-    {
-        var t=s.T("Mcd.mat_val");
-        log.Log(s,"native struct size",()=>System.Runtime.InteropServices.Marshal.SizeOf(t));
-        foreach(var f in new[]{"m_anr","m_flags","m_rows","m_cols","m_rv","m_iv"})
-            log.Log(s,f+" offset",()=>System.Runtime.InteropServices.Marshal.OffsetOf(t,f));
-        foreach(var dim in Side.DimNames)
-        foreach(int stride in new[]{0,1,3})
-        {
-            var m=Matrix(s,dim,2,2,stride,0);
-            log.Log(s,"ColDimArray raw",()=>Call(m,"ColDimArray",0));
-            log.Log(s,"RowDimArray raw",()=>Call(m,"RowDimArray",0));
-        }
-    });
 }

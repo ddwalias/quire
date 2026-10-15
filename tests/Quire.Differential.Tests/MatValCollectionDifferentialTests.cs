@@ -36,6 +36,16 @@ public class MatValCollectionDifferentialTests
         return side.Show(value);
     }
 
+    private static string ShowWithSource(Side side, object? value, object source)
+    {
+        string result = Show(side, value);
+        if (value == null || !side.T("Mcd.MatVal").IsInstanceOfType(value)) return result;
+        return $"{result} same={ReferenceEquals(value, source)}"
+            + $" real={ReferenceEquals(Reflect.Get(value, "m_rarr"), Reflect.Get(source, "m_rarr"))}"
+            + $" imag={ReferenceEquals(Reflect.Get(value, "m_iarr"), Reflect.Get(source, "m_iarr"))}"
+            + $" ptrs={ReferenceEquals(Reflect.Get(value, "m_parr"), Reflect.Get(source, "m_parr"))}";
+    }
+
     private static Func<object?, string> Result(Side side) => value => Show(side, value);
     private static Func<object, string> State(Side side) => value => MatValDifferentialTests.Storage(side, value);
 
@@ -48,11 +58,14 @@ public class MatValCollectionDifferentialTests
     }
 
     private static void CompareInstance(string caseId, string name, System.Type[] parameterTypes,
-        object qTarget, object mTarget, object?[] qArgs, object?[] mArgs)
+        object qTarget, object mTarget, object?[] qArgs, object?[] mArgs,
+        Func<Side, object?, string>? render = null)
     {
         MethodComparison.Compare(caseId, Contract, Method(Side.Quire, name, false, parameterTypes), qTarget, qArgs,
             Method(Side.Mathcad, name, false, parameterTypes), mTarget, mArgs,
-            Result(Side.Quire), Result(Side.Mathcad), State(Side.Quire), State(Side.Mathcad));
+            render == null ? Result(Side.Quire) : value => render(Side.Quire, value),
+            render == null ? Result(Side.Mathcad) : value => render(Side.Mathcad, value),
+            State(Side.Quire), State(Side.Mathcad));
     }
 
     private static object Reserve(Side side, int capacity) => Call(side.T("Mcd.MatVal"), "reserve", capacity)!;
@@ -87,8 +100,9 @@ public class MatValCollectionDifferentialTests
 
         var qFill = New(QMat, 5, 1, true);
         var mFill = New(MMat, 5, 1, true);
-        CompareInstance("Fill pointer", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)], qFill, mFill,
-            ["pointer", 0, 2, 3], ["pointer", 0, 2, 3]);
+        CompareInstance("Fill pointer returns mutable target", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)], qFill, mFill,
+            ["pointer", 0, 2, 3], ["pointer", 0, 2, 3],
+            (side, value) => ShowWithSource(side, value, side == Side.Quire ? qFill : mFill));
         CompareInstance("Fill numeric dimensioned value", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)], qFill, mFill,
             [Side.Quire.Num(7, 2, "L"), 4, -2, 3], [Side.Mathcad.Num(7, 2, "L"), 4, -2, 3]);
         CompareInstance("Fill polymorphic real", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)], qFill, mFill,
@@ -107,6 +121,7 @@ public class MatValCollectionDifferentialTests
         Set(qImmutable, "Immutable", true);
         Set(mImmutable, "Immutable", true);
         CompareInstance("Fill immutable target returns copy", "Fill", [typeof(object), typeof(int), typeof(int), typeof(int)],
-            qImmutable, mImmutable, [Side.Quire.Num(9, 0, "poly"), 6, 1, 2], [Side.Mathcad.Num(9, 0, "poly"), 6, 1, 2]);
+            qImmutable, mImmutable, [Side.Quire.Num(9, 0, "poly"), 6, 1, 2], [Side.Mathcad.Num(9, 0, "poly"), 6, 1, 2],
+            (side, value) => ShowWithSource(side, value, side == Side.Quire ? qImmutable : mImmutable));
     }
 }
