@@ -16,11 +16,11 @@ Lane B owns `MatVal*`, `MatDim`, `Function*`, `FunctionUtilities`, `DimVal.Apply
 
 | Unit | Types / Scope | Branch | Status | Direct Comparisons | Structure Mismatches | Lint | Ratchet | Mutants Killed |
 |---|---|---|---|---|---|---|---|---|
-| **Unit 1** | Sexpr family (18 types) | `mirror/a-sexpr` | Review Approved; Ready for maintainer mutant acceptance | 157 | 0 | 0 | ok | 106 / 107 (1 equivalent survivor) |
+| **Unit 1** | Sexpr family (18 types) | `main` (`929fc6d`) | **Merged to main** via `merge_gate.py --apply` | 157 | 0 | 0 | ok | 106 / 107 (1 accepted survivor) |
 | **Unit 2** | `Cons`, `VecBuilder`, `True`, `Tuple`, `MplSignature` | `main` (`20b2017`) | **Merged to main** via `merge_gate.py --apply` | 40 | 0 | 0 | ok | 87 / 87 (0 survivors) |
-| **Unit 3a** | `Rational`, `Utilities` | `mirror/a-rational` | Review Approved; Coverage fix applied; Ready for maintainer mutant acceptance | 31 | 0 | 0 | ok | 114 / 117 (3 crash/dead-store survivors) |
-| **Unit 3b** | `AppException`, `Type`, `UnitSystem`, `RuntimeOptions` | `mirror/a-options` | Under independent code review | 165 | 0 | 0 | ok | 655 / 678 (23 equivalent survivors) |
-| **Unit 4** | Remaining batch 2e unclassified members | Pending | All lane-A types (`Dim`, `DimVal`, `NumVal`, `RngVal`, `Rts`, `True`, `Sexpr`) settled | 100% | 0 | 0 | ok | N/A |
+| **Unit 3a** | `Rational`, `Utilities` | `main` (`4fc4a72`) | **Merged to main** via `merge_gate.py --apply` | 31 | 0 | 0 | ok | 114 / 117 (3 accepted survivors) |
+| **Unit 3b** | `AppException`, `Type`, `UnitSystem`, `RuntimeOptions` | `main` (`d7b5a63`) | **Merged to main** via `merge_gate.py --apply` | 165 | 0 | 0 | ok | 655 / 678 (23 accepted survivors) |
+| **Unit 4** | Remaining batch 2e unclassified members | `main` | **Fully Settled** (0 stubs / 0 unclassified members) | 100% | 0 | 0 | ok | N/A |
 
 ---
 
