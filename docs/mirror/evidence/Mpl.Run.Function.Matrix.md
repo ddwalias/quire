@@ -8,22 +8,24 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `IgnoreVectorization(bool)` | 0x06000155 | Stores whether vectorization should be bypassed. | Direct comparison; the following `VecApply` case exercises the enabled bypass. | Analyzed |
-| `OptFunc(int)` | 0x06000156 | Sets the minimum arity. | Direct comparison followed by a padded application. | Analyzed |
-| `get_Varargs()` | 0x0600014b | Returns whether the function accepts arbitrary arity. | Direct comparisons cover false and true values. | Analyzed |
-| `IsFullyApplied(int)` | 0x060001a6 | Accepts counts between minimum arity and purity, inclusive, or any count when varargs is enabled. | Direct comparisons cover below, at and above the fixed range, and out-of-range counts with varargs. | Analyzed |
-| `AssertFullApp(int)` | 0x060001a7 | Calls `BadCall` when a count is outside the accepted interval; varargs accepts every count. | Direct comparisons cover too few, accepted, too many and varargs counts. | Analyzed |
-| `Apply(object[])` | 0x060001d3 | Applies an object vector through `appVec`, including optional padding and varargs dispatch. | Direct comparisons cover optional padding, exact arity and varargs invocation. | Analyzed |
-| `VecCall(object)` | 0x060001cd | Vectorizes a matrix argument when enabled; otherwise calls the function dynamically. | Direct comparisons cover scalar and matrix input with vectorization on and off; a matrix-sensitive delegate distinguishes vectorized output from dynamic dispatch. | Analyzed |
-| `VecCall(object, object)` | 0x060001ce | Vectorizes when either argument is a matrix; otherwise calls dynamically. | Direct comparisons cover every scalar/matrix argument mask with vectorization on, and every nonempty matrix mask with vectorization off; an ordered matrix-sensitive delegate distinguishes dispatch and argument positions. | Analyzed |
-| `VecCall(object, object, object)` | 0x060001cf | Vectorizes when any argument is a matrix; otherwise calls dynamically. | Direct comparisons cover every scalar/matrix argument mask with vectorization on, and every nonempty matrix mask with vectorization off; an ordered matrix-sensitive delegate distinguishes dispatch and argument positions. | Analyzed |
-| `VecApply(object[])` | 0x060001d0 | Vectorizes the argument array unless vectorization is disabled, then calls `Apply`. | Direct comparisons cover matrix vectorization and matrix bypass when vectorization is disabled. | Analyzed |
-| `AsDelegate_1()` | 0x060001dd | Returns the one-argument delegate projection after checking arity. | Direct comparisons cover success and the too-few-arguments exception, including its reported error position. | Analyzed |
-| `AsDelegate_2()` | 0x060001de | Returns the two-argument delegate projection after checking arity. | Direct comparisons cover success and the too-few-arguments exception, including its reported error position. | Analyzed |
+| `IgnoreVectorization(bool)` | 0x06000155 | Stores whether vectorization should be bypassed. | Current focused run directly compared this setter and exercised the enabled bypass through `VecApply`. | Verified |
+| `OptFunc(int)` | 0x06000156 | Sets the minimum arity. | Current focused run directly compared the setter and padded application. | Verified |
+| `get_Varargs()` | 0x0600014b | Returns whether the function accepts arbitrary arity. | Current focused run compared false and true values. | Verified |
+| `IsFullyApplied(int)` | 0x060001a6 | Accepts counts between minimum arity and purity, inclusive, or any count when varargs is enabled. | Current focused run compared below, at and above the fixed range, and out-of-range counts with varargs. | Verified |
+| `AssertFullApp(int)` | 0x060001a7 | Calls `BadCall` when a count is outside the accepted interval; varargs accepts every count. | Current focused run compared too few, accepted, too many and varargs counts. | Verified |
+| `Apply(object[])` | 0x060001d3 | Applies an object vector through `appVec`, including optional padding and varargs dispatch. | Current focused run compared optional padding, exact arity and varargs invocation. | Verified |
+| `VecCall(object)` | 0x060001cd | Vectorizes a matrix argument when enabled; otherwise calls the function dynamically. | Current focused run compared scalar and matrix input with vectorization on and off; a matrix-sensitive delegate distinguishes the paths. | Verified |
+| `VecCall(object, object)` | 0x060001ce | Vectorizes when either argument is a matrix; otherwise calls dynamically. | Current focused run compared every scalar/matrix mask with vectorization on and every nonempty matrix mask with it off; an ordered matrix-sensitive delegate distinguishes dispatch and argument positions. | Verified |
+| `VecCall(object, object, object)` | 0x060001cf | Vectorizes when any argument is a matrix; otherwise calls dynamically. | Current focused run compared every scalar/matrix mask with vectorization on and every nonempty matrix mask with it off; an ordered matrix-sensitive delegate distinguishes dispatch and argument positions. | Verified |
+| `VecApply(object[])` | 0x060001d0 | Vectorizes the argument array unless vectorization is disabled, then calls `Apply`. | Current focused run compared matrix vectorization and matrix bypass when vectorization is disabled. | Verified |
+| `AsDelegate_1()` | 0x060001dd | Returns the one-argument delegate projection after checking arity. | Current focused run compared success and too-few-arguments exception, including its reported error position. | Verified |
+| `AsDelegate_2()` | 0x060001de | Returns the two-argument delegate projection after checking arity. | Current focused run compared success and too-few-arguments exception, including its reported error position. | Verified |
 
 ## Test cases
 
 `Function_arity_checks_apply_and_delegate_projection` compares the arity predicates, assertion, optional padding, exact application, successful delegate projections, and their too-few-arguments exceptions. `Function_matrix_call_bridge_vectorizes_only_matrix_inputs` compares all three `VecCall` overloads over every scalar/matrix argument mask with vectorization on and every nonempty matrix mask with vectorization disabled. Matrix-sensitive ordered delegates distinguish elementwise vectorization from passing the whole matrix to dynamic dispatch. It also covers both `VecApply` branches and uses real `MatVal` values with `DelegateFunction` fixtures. No emitted probe types are used.
+
+Current focused run `scratch/function-verify-8da5693-r2` passed Harness 27/27, Mpl 159/159, and six selected Differential tests, with lint 0, ratchet ok and zero uncovered lines/branches. The wider audit remains incomplete for methods outside this record.
 
 ## Open
 
