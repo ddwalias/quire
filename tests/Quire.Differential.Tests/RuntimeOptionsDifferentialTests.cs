@@ -139,6 +139,17 @@ public class RuntimeOptionsDifferentialTests
 
         MethodComparison.Compare("changeMember(3)", Contract, qChangeMember, qGroup, [3, qNewBasis, qNewDefaults], mChangeMember, mGroup, [3, mNewBasis, mNewDefaults], Show, Show, GroupState, GroupState);
 
+        // changeMember on existing with a full basis replaces both basis and defaults
+        var qFull = MakeSystem(false, "full", 0);
+        var mFull = MakeSystem(true, "full", 0);
+        var qFullBasis = (Array)Get(qFull, "Basis")!;
+        var mFullBasis = (Array)Get(mFull, "Basis")!;
+        var qFewDefaults = Array.CreateInstance(qUnitType, 1);
+        qFewDefaults.SetValue(new Q.Unit("hertz", "Hz", "Frequency", 1.0, "V{Time-60000}"), 0);
+        var mFewDefaults = Array.CreateInstance(mUnitType, 1);
+        mFewDefaults.SetValue(New(mUnitType, "hertz", "Hz", "Frequency", 1.0, "V{Time-60000}"), 0);
+        MethodComparison.Compare("changeMember(3 full basis)", Contract, qChangeMember, qGroup, [3, qFullBasis, qFewDefaults], mChangeMember, mGroup, [3, mFullBasis, mFewDefaults], Show, Show, GroupState, GroupState);
+
         // changeMember on missing
         MethodComparison.Compare("changeMember(99 missing)", Contract, qChangeMember, qGroup, [99, qNewBasis, qNewDefaults], mChangeMember, mGroup, [99, mNewBasis, mNewDefaults], Show, Show, GroupState, GroupState);
 
@@ -237,5 +248,51 @@ public class RuntimeOptionsDifferentialTests
         var qInitCtor = qInitType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
         var mInitCtor = mInitType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
         MethodComparison.Compare("RuntimeOptionsInitializer.ctor()", Contract, qInitCtor, null, [], mInitCtor, null, [], Show, Show);
+    }
+
+    private static string UnitDetail(object? u) => u == null ? "null"
+        : $"{Get(u, "Name")}/{Get(u, "Symbol")}/{Get(u, "Quantity")}/{Text(Get(u, "Magnitude"))}/{Get(u, "Type")}";
+
+    private static string DefaultSystemText(object s) =>
+        $"{Get(s, "Name")} code={Get(s, "Code")} guid={Get(s, "Guid")} ro={Get(s, "RO_number")} rank={Get(s, "Rank")}"
+        + $" basis=[{string.Join(" ", ((Array)Get(s, "Basis")!).Cast<object?>().Select(UnitDetail))}]"
+        + $" defaults=[{string.Join(" ", ((Array)Get(s, "Defaults")!).Cast<object?>().Select(UnitDetail))}]";
+
+    private static string StaticState(System.Type t)
+    {
+        var parts = new List<string>
+        {
+            $"s_restricted_mode={Get(t, "s_restricted_mode")}",
+            $"s_ro_counter={Get(t, "s_ro_counter")}",
+            $"s_default_unit_system={DefaultSystemText(Get(t, "s_default_unit_system")!)}",
+            $"s_init={Get(t, "s_init")?.GetType().Name ?? "null"}",
+        };
+        parts.AddRange(Flags.Select(f => $"{f}={Get(t, f)}"));
+        parts.Add($"mangled_identifiers={Get(t, "mangled_identifiers")}");
+        parts.Add($"the_ro_number={Get(t, "the_ro_number")}");
+        parts.Add($"the_unit_system={SystemText(Get(t, "the_unit_system"))}");
+        var group = Get(t, "the_unit_system_group");
+        parts.Add($"the_unit_system_group={(group == null ? "null" : GroupState(group))}");
+        return string.Join(", ", parts);
+    }
+
+    [SkippableFact]
+    public void RuntimeOptions_type_initializer()
+    {
+        // When this test runs on its own, as mutant runs of the type initializer do, the first touch of either type
+        // happens inside this comparison, so a failing initializer is a compared TypeInitializationException rather
+        // than an error in setup. In a full run another test may initialize the types first.
+        var qOptsCtor = typeof(Q.RuntimeOptions).GetConstructor([])!;
+        var mOptsCtor = M.GetConstructor([])!;
+        Func<object?, string> options = o => o == null ? "null" : $"{OptionsState(o)}, system={DefaultSystemText(Get(o, "m_unit_system")!)}";
+        MethodComparison.Compare("RuntimeOptions.ctor() first in this test", Contract, qOptsCtor, null, [], mOptsCtor, null, [], options, options);
+        Runtime.Sync();
+        var qCctor = typeof(Q.RuntimeOptions).TypeInitializer!;
+        var mCctor = M.TypeInitializer!;
+        // The runtime runs a type initializer once, so invoking it again leaves the statics it set up; the outcome is
+        // those statics in full (the default system's every unit), as no test changes them.
+        MethodComparison.Compare(".cctor()", Contract, qCctor, null, [], mCctor, null, [],
+            _ => StaticState(typeof(Q.RuntimeOptions)), _ => StaticState(M));
+        Runtime.Sync();
     }
 }

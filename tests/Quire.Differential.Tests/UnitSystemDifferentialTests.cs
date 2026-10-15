@@ -12,6 +12,7 @@ namespace Quire.Differential.Tests;
 public class UnitSystemDifferentialTests
 {
     private const string Contract = "Mcd.UnitSystem";
+    private const string UnitsContract = "Mcd.Units";
     private static System.Type MUnit => Mathcad.Type("mplrun", "Mcd.Unit");
     private static System.Type MUnits => Mathcad.Type("mplrun", "Mcd.Units");
     private static System.Type MSystem => Mathcad.Type("mplrun", "Mcd.UnitSystem");
@@ -88,7 +89,7 @@ public class UnitSystemDifferentialTests
         : $"{Get(u, "Symbol")}({Get(u, "Name")}, {Get(u, "Quantity")}, {Text(Get(u, "Magnitude"))}, {Get(u, "Type")})";
 
     internal static string UnitsText(object? u) => u == null ? "null"
-        : $"{u} m={Text(Get(u, "Magnitude"))}/{Text(Get(u, "magnitude"))} [" + string.Join(" ", ((Array)Get(u, "Powers")!).Cast<object>()
+        : $"{Outcome(u.ToString)} m={Text(Get(u, "Magnitude"))}/{Text(Get(u, "magnitude"))} [" + string.Join(" ", ((Array)Get(u, "Powers")!).Cast<object>()
             .Select(p => $"{Get(Get(p, "Base")!, "Symbol")}^{Get(Get(p, "Exponent")!, "Numerator")}/{Get(Get(p, "Exponent")!, "Denominator")}")) + "]";
 
     private static string Dims(object? a) => a == null ? "null" : string.Join(" ", ((Array)a).Cast<object?>().Select(t => t?.ToString() ?? "null"));
@@ -307,6 +308,144 @@ public class UnitSystemDifferentialTests
         MethodComparison.Compare("set_Defaults(empty)", Contract, qSetDefs, qSys, [qEmptyDefs], mSetDefs, mSys, [mEmptyDefs], Show, Show, SystemState, SystemState);
 
         MethodComparison.Compare("Reset()", Contract, qReset, qSys, [], mReset, mSys, [], Show, Show, SystemState, SystemState);
+
+        // Defaults of one direction with scalars of both signs, so the chosen power changes sign or moves towards
+        // zero, and a dimensionless default whose zero scalar is skipped.
+        U perSquareSecond = new("per2", "s-2", "Q", 1, "V{Time-120000}"), second = new("sec", "sec", "Time", 1, "V{Time 60000}");
+        U hertz = new("hz", "hz", "Frequency", 1, "V{Time-60000}"), squareSecond = new("sec2", "s2", "Q", 1, "V{Time 120000}");
+        U radian = new("radian", "rad", "Angle", 1, "V{}");
+        (string Name, U[] Defaults)[] signed =
+        [
+            ("negative-then-positive", [perSquareSecond, second]),
+            ("negative-then-negative", [perSquareSecond, hertz]),
+            ("positive-then-negative", [squareSecond, hertz]),
+            ("dimensionless", [radian, second]),
+        ];
+        foreach (var (name, defaults) in signed)
+        {
+            var qSigned = new Q.UnitSystem(name, 7u, "guid", (Q.Unit[])Units(false, Base), (Q.Unit[])Units(false, defaults));
+            var mSigned = New(MSystem, name, 7u, "guid", Units(true, Base), Units(true, defaults));
+            int time = ((Array)Get(qSigned, "Dimensions")!).Cast<object>().ToList().FindIndex(d => d.ToString() == "Time");
+            for (int k = -6; k <= 6; k++)
+            {
+                var v = new int[(int)Get(qSigned, "Rank")!];
+                v[time] = k * 60000;
+                MethodComparison.Compare($"{name}: Simplify(Time {k * 60000})", Contract, qSimpInt, qSigned, [v], mSimpInt, mSigned, [v], Show, Show, SystemState, SystemState);
+            }
+        }
+    }
+
+    // The target state of a Units without calling the ToString under test, so a throwing ToString is an outcome.
+    private static string UnitsFields(object u) => $"m={Text(Get(u, "Magnitude"))} [" + string.Join(" ", ((Array)Get(u, "Powers")!).Cast<object>()
+        .Select(p => $"{Get(Get(p, "Base")!, "Symbol")}^{Get(Get(p, "Exponent")!, "Numerator")}/{Get(Get(p, "Exponent")!, "Denominator")}")) + "]";
+
+    private static string UnitsShow(object? o)
+    {
+        if (o == null) return "null";
+        string type = o.GetType().Name;
+        if (type == "Unit") return UnitText(o);
+        if (type == "Units") return UnitsText(o);
+        if (type == "Rational") return $"{Get(o, "Numerator")}/{Get(o, "Denominator")}";
+        if (type == "Power[]")
+            return "[" + string.Join(" ", ((Array)o).Cast<object>().Select(p => $"{UnitText(Get(p, "Base"))}^{UnitsShow(Get(p, "Exponent"))}")) + "]";
+        return Show(o);
+    }
+
+    [SkippableFact]
+    public void Units_and_unit_members()
+    {
+        Runtime.Sync();
+        var mRational = Mathcad.Type("mplrun", "Mcd.Rational");
+        var mPower = Nested(MUnits, "Power");
+        var qUnitCtor = typeof(Q.Unit).GetConstructor([typeof(string), typeof(string), typeof(string), typeof(double), typeof(string)])!;
+        var mUnitCtor = MUnit.GetConstructor([typeof(string), typeof(string), typeof(string), typeof(double), typeof(string)])!;
+        var qUnitToString = typeof(Q.Unit).GetMethod("ToString", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, Type.EmptyTypes)!;
+        var mUnitToString = MUnit.GetMethod("ToString", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, Type.EmptyTypes)!;
+        var qUnitDims = typeof(Q.Unit).GetMethod("get_Dimensions")!;
+        var mUnitDims = MUnit.GetMethod("get_Dimensions")!;
+        var qUnitsPowers = typeof(Q.Units).GetConstructor([typeof(Q.Units.Power[])])!;
+        var mUnitsPowers = MUnits.GetConstructor([mPower.MakeArrayType()])!;
+        var qUnitsOne = typeof(Q.Units).GetConstructor([typeof(Q.Unit), typeof(Q.Rational)])!;
+        var mUnitsOne = MUnits.GetConstructor([MUnit, mRational])!;
+        var qUnitsToString = typeof(Q.Units).GetMethod("ToString", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, Type.EmptyTypes)!;
+        var mUnitsToString = MUnits.GetMethod("ToString", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, Type.EmptyTypes)!;
+        var qUnitsMagnitude = typeof(Q.Units).GetMethod("get_magnitude")!;
+        var mUnitsMagnitude = MUnits.GetMethod("get_magnitude")!;
+
+        U[] units =
+        [
+            .. Base, .. Derived, new("zero", "z", "Q", 0, "V{Length 60000}"), new("inf", "i", "Q", double.PositiveInfinity, "V{Length 60000}"),
+            new("nan", "n", "Q", double.NaN, "V{Length 60000}"), new("neg", "-u", "Q", -2.5, "V{Length 60000}"), new("tiny", "t", "Q", 1e-300, "V{}"),
+            new("big", "B", "Q", 1e300, "F{Time 60000}"), new("poly", "p", "Q", 1, "V a"), new("matrix", "M", "Q", 1, "M(V{Length 60000})"),
+            new("fn", "f", "Q", 1, "a->b"), new("const", "c", "Q", 1, "Length"), new("bad", "b", "Q", 1, ")"), new("null", "0", "Q", 1, null!),
+            new("frac", "fr", "Q", 1234.5678, "V{Length 60000}"), new("half", "h", "Q", 0.5, "V{Length 60000}"),
+            new("subnormal", "sn", "Q", 1e-308, "V{Length 60000}"),
+        ];
+        (int N, int D)[] exponents = [(1, 1), (2, 1), (-1, 1), (0, 1), (1, 2), (-3, 2), (2, 3), (1, 0), (1000, 1), (-1000, 1), (2, 2)];
+        // A value built on one side only would hide a difference, so cases are skipped only when both sides throw.
+        static object? Built(Func<object> build)
+        {
+            try { return build(); }
+            catch (Exception) { return null; }
+        }
+        var built = new List<(U U, object Q, object M)>();
+        foreach (var u in units)
+        {
+            object?[] args = [u.Name, u.Symbol, u.Quantity, u.Magnitude, u.Signature];
+            MethodComparison.Compare($"new Unit({u.Symbol}, {Text(u.Magnitude)}, {Text(u.Signature)})", UnitsContract,
+                qUnitCtor, null, args, mUnitCtor, null, args, UnitsShow, UnitsShow);
+            object? q = Built(() => MkUnit(false, u)), m = Built(() => MkUnit(true, u));
+            if (q == null && m == null) continue;
+            if (q == null || m == null) Assert.Fail($"new Unit({u.Symbol}) threw on one side only");
+            built.Add((u, q!, m!));
+            MethodComparison.Compare($"{u.Symbol}.ToString()", UnitsContract, qUnitToString, q, [], mUnitToString, m, [], UnitsShow, UnitsShow, UnitText, UnitText);
+            MethodComparison.Compare($"{u.Symbol}.Dimensions", UnitsContract, qUnitDims, q, [], mUnitDims, m, [], UnitsShow, UnitsShow, UnitText, UnitText);
+            foreach (var (n, d) in exponents)
+                MethodComparison.Compare($"new Units({u.Symbol}, {n}/{d})", UnitsContract,
+                    qUnitsOne, null, [q, new Q.Rational(n, d)], mUnitsOne, null, [m, New(mRational, n, d)], UnitsShow, UnitsShow);
+        }
+
+        object?[] QPowers((object Q, object M, int N, int D)[] pick) =>
+            [pick.Select(p => new Q.Units.Power { Base = (Q.Unit)p.Q, Exponent = new Q.Rational(p.N, p.D) }).ToArray()];
+        object?[] MPowers((object Q, object M, int N, int D)[] pick)
+        {
+            var array = Array.CreateInstance(mPower, pick.Length);
+            for (int i = 0; i < pick.Length; i++)
+            {
+                object p = Activator.CreateInstance(mPower)!;
+                mPower.GetField("Base")!.SetValue(p, pick[i].M);
+                mPower.GetField("Exponent")!.SetValue(p, New(mRational, pick[i].N, pick[i].D));
+                array.SetValue(p, i);
+            }
+            return [array];
+        }
+
+        var rng = new Random(7);
+        for (int k = 0; k < 200; k++)
+        {
+            int count = rng.Next(4);
+            var pick = Enumerable.Range(0, count).Select(_ =>
+            {
+                var b = built[rng.Next(built.Count)];
+                var e = exponents[rng.Next(exponents.Length)];
+                return (b.Q, b.M, e.N, e.D);
+            }).ToArray();
+            object?[] qArgs = QPowers(pick), mArgs = MPowers(pick);
+            MethodComparison.Compare($"new Units(random {k})", UnitsContract, qUnitsPowers, null, qArgs, mUnitsPowers, null, mArgs, UnitsShow, UnitsShow);
+            object? qUnits = Built(() => qUnitsPowers.Invoke(qArgs)), mUnits = Built(() => mUnitsPowers.Invoke(mArgs));
+            if (qUnits == null && mUnits == null) continue;
+            if (qUnits == null || mUnits == null) Assert.Fail($"new Units(random {k}) threw on one side only");
+            MethodComparison.Compare($"Units(random {k}).ToString()", UnitsContract, qUnitsToString, qUnits!, [], mUnitsToString, mUnits!, [], UnitsShow, UnitsShow, UnitsFields, UnitsFields);
+            MethodComparison.Compare($"Units(random {k}).magnitude", UnitsContract, qUnitsMagnitude, qUnits!, [], mUnitsMagnitude, mUnits!, [], UnitsShow, UnitsShow, UnitsText, UnitsText);
+        }
+        // A product whose reciprocal is finite but near the overflow threshold.
+        var subnormal = built.Single(b => b.U.Name == "subnormal");
+        foreach (var (n, d) in new[] { (1, 1), (-1, 1) })
+        {
+            (object Q, object M, int N, int D)[] one = [(subnormal.Q, subnormal.M, n, d)];
+            MethodComparison.Compare($"new Units([sn^{n}/{d}])", UnitsContract, qUnitsPowers, null, QPowers(one), mUnitsPowers, null, MPowers(one), UnitsShow, UnitsShow);
+        }
+        MethodComparison.Compare("new Units(null)", UnitsContract, qUnitsPowers, null, [null], mUnitsPowers, null, [null], UnitsShow, UnitsShow);
     }
 
     [SkippableFact]

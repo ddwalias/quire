@@ -65,7 +65,9 @@ public partial class Units
     [MirrorVerified("UnitSystemDifferentialTests")]
     public Units(Unit unit, Rational exponent)
     {
-        Powers = [new Power { Base = unit, Exponent = exponent }];
+        Powers = new Power[1];
+        Powers[0].Base = unit;
+        Powers[0].Exponent = exponent;
         Magnitude = Math.Pow(unit.Magnitude, exponent);
         if (Magnitude == 0.0) AppException.Raise("illegal factor");
         Utilities.AssertFinite(Magnitude);

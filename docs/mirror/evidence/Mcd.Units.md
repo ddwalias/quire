@@ -35,11 +35,12 @@ Fields: `Unit.Name`/`Symbol`/`Quantity`/`Magnitude`/`Type` and `Units.Powers`/`M
 compared as text or exception type and message):
 - `new Unit` on 35 specs: the eight SI-style base units and twelve derived units used by the unit-system tests, plus
   zero, +∞, NaN, negative, 1e-300 and 1e300 magnitudes, polymorphic (`V a`), matrix, function, bare-constant,
-  malformed (`)`) and null signatures, and a fractional magnitude; for each that constructs, `ToString` and
+  malformed (`)`) and null signatures, a fractional and a 0.5 magnitude; for each that constructs, `ToString` and
   `Dimensions`;
-- `new Units(unit, n/d)` for every such unit with exponents 1, 2, −1, 0, 1/2, −3/2, 2/3, 1/0, 1000 and −1000;
+- `new Units(unit, n/d)` for every such unit with exponents 1, 2, −1, 0, 1/2, −3/2, 2/3, 1/0, 1000, −1000 and 2/2;
 - 200 seeded random `Units(Power[])` of zero to three powers drawn from the same units and exponents, and
-  `Units(null)`; each result shown as `ToString`, `Magnitude`, `magnitude` and the power list.
+  `Units(null)`; each result shown as `ToString`, `Magnitude`, `magnitude` and the power list, and `ToString` and
+  `magnitude` of each constructed one compared directly.
 
 `Simplify`, `Normalize` and `GetUnits` results in the `UnitSystem` cases exercise both constructors and `ToString`
 further (see `Mcd.UnitSystem.md`).

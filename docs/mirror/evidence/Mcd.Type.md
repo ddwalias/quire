@@ -137,6 +137,12 @@ the factory's stack discipline.
 
 ## Open
 
+- No direct comparison is possible for the protected constructors of the abstract `Type`, `Named` and `Visitor` or
+  for the four `Visitor.Visit` base bodies: reflection cannot construct an abstract type, and the only concrete
+  `Visitor` in the installed managed assemblies (mplrun's `Printer`; `mccore12` and `msclr` derive none) overrides all
+  four overloads, so a virtual invocation never reaches the base. Comparing them needs the harness to run an
+  instance constructor on a supplied object (or a non-virtual call), which `MethodComparison` does not offer.
+
 - `Named.CompareTo` is culture-sensitive; only the test process's culture was compared.
 - `Formatter.Visit(Variable)` on single characters outside `a`–`z` and `Formatter` on a system other than the
   default SI were not compared.

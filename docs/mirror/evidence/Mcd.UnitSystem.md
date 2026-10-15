@@ -83,6 +83,14 @@ text or exception type and message):
 - a setter script: replacing the defaults, `IsUnitSymbol` afterwards, simplifying a force, a US basis, a singular
   basis and the rank, basis and dimensions it leaves behind, `Reset` (returning the same object) and the basis,
   defaults and symbols after it, `RO_number`, and null basis and defaults.
+- `Simplify(int[])` on the SI basis with two defaults of the time direction whose scalars differ in sign or size
+  (per-square-second with second, per-square-second with hertz, square-second with hertz) and with a dimensionless
+  default beside second, for time exponents -6..6 (zero included): the chosen power changing sign, moving towards
+  zero, staying, and a zero-scalar default being skipped.
+
+**Unreachable branch outcome.** In `Simplify(int[])` a later candidate is never both positive and smaller than
+the best: `Defaults` sorts each direction's list by descending `Order`, so later candidates have powers of equal or
+larger magnitude. The `power > 0 && power < bestPower` true outcome needs a list mutated after sorting.
 
 **Inferred** (`UnitSystemTests`): coordinates in sorted dimension-name order, simplification preferring a dividing
 default, the smallest power winning among several defaults, basis change through a composite basis, padding of

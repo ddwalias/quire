@@ -38,8 +38,9 @@ cases in "Test cases", except the initializer.
 **Type initializer.** Quire has no explicit static constructor; the static field initializers, declared in this
 order with the initializer instance last, are the `.cctor`. The mirror tooling doesn't count type initializers, so
 its row carries no status attribute; its effects are compared through the statics and the fresh-thread scenario
-below. Because the initializer increments the counter after building the first instance, instances created later
-have options number 2.
+below. The method gate's direct case invokes both type initializers, which the runtime does not rerun, and compares
+the statics they left (every unit of the default system in full). Because the initializer increments the counter
+after building the first instance, instances created later have options number 2.
 
 Fields: every public instance and thread-static option field, `s_restricted_mode`, `s_ro_counter` and `s_default_unit_system` are Verified (read directly by `RuntimeOptionsDifferentialTests`); `s_init` and `UnitSystemGroup`'s private fields are Tested.
 
@@ -54,10 +55,16 @@ Fields: every public instance and thread-static option field, `s_restricted_mode
   thread's; `addCopyWithRONumber(17)` on the instance's group, `RemoveUnitSystem` and the group afterwards, and
   `RemoveUnitSystem` with a null group;
 - a group script: `Name`, `findMember` of 0 and a missing key, `addMember` of a new and of a duplicate key,
-  `changeMember` of an existing and a missing member, `resetMember` of a member and of 0, `Reset` of a member and of
-  a missing key (falling back to member 0), `addCopyWithRONumber` of an existing and a new key and whether the copy
-  shares member 0's basis, `removeMember` of a missing key and of 0, then `resetMember`, `Reset` and
-  `addCopyWithRONumber` without member 0, and a group built from null.
+  `changeMember` of an existing member with a one-unit basis (the padded basis throws), of the same member with the
+  default SI basis and a one-unit default list, and of a missing member, `resetMember` of a member and of 0,
+  `Reset` of a member and of a missing key (falling back to member 0), `addCopyWithRONumber` of an existing and a
+  new key and whether the copy shares member 0's basis, `removeMember` of a missing key and of 0, then
+  `resetMember`, `Reset` and `addCopyWithRONumber` without member 0, and a group built from null;
+- `new RuntimeOptions()` with the default system in full, first in its test: when that test runs on its own (as
+  mutant runs of the initializer do) this is the first touch of either type, so a failing initializer is a compared
+  `TypeInitializationException`; in a full run another test may initialize the types first. Then `.cctor` invoked
+  directly on both sides (a no-op once initialised): restricted mode, the counter, the initializer, every unit of
+  the default system and the calling thread's options and group.
 
 **Inferred** (`RuntimeOptionsTests`): defaults of a new instance, only synced threads having options, saving
 copying the thread fields, and group members keyed by options number.
