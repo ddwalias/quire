@@ -131,7 +131,7 @@ public class RngValDifferentialTests
         }
         if (tName == "MatVal")
         {
-            return $"MatVal[{Get(v, "Rows")}x{Get(v, "Cols")},dim={side.DimText(Get(v, "m_dim"))}]";
+            return MatValDifferentialTests.Storage(side, v);
         }
         if (tName == "Dim") return side.DimText(v);
         return Text(v);
@@ -276,6 +276,9 @@ public class RngValDifferentialTests
             qAsRealMatrix, qMatRng, ["m", 3u], mAsRealMatrix, mMatRng, ["m", 3u], qs, ms, qStateRng, mStateRng);
         MethodComparison.Compare("asRealVector('m', 4)", Contract,
             qAsRealVector, qMatRng, ["m", 4u], mAsRealVector, mMatRng, ["m", 4u], qs, ms, qStateRng, mStateRng);
+        var (qMatRngNonZero, mMatRngNonZero) = MakeRange(2.5, 1.0, 3, "L");
+        MethodComparison.Compare("asRealVector('m', 4) non-zero init", Contract,
+            qAsRealVector, qMatRngNonZero, ["m", 4u], mAsRealVector, mMatRngNonZero, ["m", 4u], qs, ms, qStateRng, mStateRng);
     }
 
     [SkippableFact]

@@ -153,6 +153,23 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
     - `SCons_members`: symbol macro call, function macro call throwing `AppException("illegal macro call")`, non-symbol heads `(1 2 3)` and `((a b) c)` wrapping in `apply` token, `walk_expressions` returning new chain when macro args change.
   - Format checks: `git diff --check` passed cleanly.
 
+## DimVal and RngVal caller coverage batch (mirror/a-caller-coverage)
+
+- Branch: `mirror/a-caller-coverage`
+- Worktree: `/root/src/quire-caller-coverage`
+- Scope: `tests/Quire.Differential.Tests/DimValDifferentialTests.cs` and `tests/Quire.Differential.Tests/RngValDifferentialTests.cs`.
+- Objective: Eliminate latent caller survivors in `DimVal` (`get_IsDimlessReal`, `asDimlessReal`, `matrix_set0_1`, `matrix_set0_2`) and `RngVal` (`asRealVector`) that blocked Lane B integration of `mirror/b-matval-pointer-slot-writers`.
+- Contracts & Behavior:
+  - Detailed matrix element formatting: `ShowVal` in `DimValDifferentialTests` and `RngValDifferentialTests` now delegates matrix formatting to `MatValDifferentialTests.Storage(side, v)`, making differential assertions sensitive to matrix dimensions, strides, flags, and individual real/imag/pointer array elements.
+  - Value classifier sensitivity: Added direct comparisons on `NumVal` (dimensionless real, dimensioned real, complex) and `StrVal` for `get_IsDimlessReal` and `asDimlessReal` overloads.
+  - Loop-start sensitivity: Added non-zero initial range test case (`MakeRange(2.5, 1.0, 3, "L")`) for `RngVal.asRealVector` to kill `i = 0 -> 1` loop-start mutations that were hidden when element 0 was already `0.0`.
+- Validation receipts:
+  - Scoped mutation run on `RngVal` (`/tmp/quire-validation-6yq8d9_v/summary.json`): 87/88 killed (0 survivors in `asRealVector`).
+  - Scoped mutation run on `DimVal` (`/tmp/quire-validation-pxnmzxm4/summary.json`): 85/111 killed (0 survivors in `get_IsDimlessReal`, `asDimlessReal`, `matrix_set0_1`, `matrix_set0_2`; all 11 former Lane B blockers eliminated).
+  - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 181 passed, 0 failed, 0 skipped.
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 104 passed, 0 failed, 0 skipped.
+  - Format checks: `git diff --check` passed cleanly.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run

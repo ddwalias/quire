@@ -51,7 +51,7 @@ public class DimValDifferentialTests
         if (v is int[] a) return $"[{string.Join(",", a)}]";
         if (v is object[] arr) return $"[{string.Join(", ", arr.Select(x => ShowVal(side, x)))}]";
         if (v.GetType().Name == "Units") return Text(v);
-        if (v.GetType().Name == "MatVal" || v.GetType().FullName!.Contains("MatVal")) return $"MatVal[{Get(v, "Rows")}x{Get(v, "Cols")}]";
+        if (v.GetType().Name == "MatVal" || v.GetType().FullName!.Contains("MatVal")) return MatValDifferentialTests.Storage(side, v);
         if (v.GetType().Name == "MatDim" || v.GetType().FullName!.Contains("MatDim")) return $"MatDim[{Get(v, "Rows")}x{Get(v, "Cols")}]";
         if (v.GetType().Name == "Dim") return side.DimText(v);
         if (v.GetType().Name is "NotAVal" or "StrVal" or "NumVal" || v.GetType().IsSubclassOf(side.T("Mcd.DimVal")))
@@ -260,6 +260,25 @@ public class DimValDifferentialTests
                 qAsFuncN1, qTarget, [2], mAsFuncN1, mTarget, [2], qs, ms, qState, mState);
             MethodComparison.Compare($"NotAVal_{dim}.asFunctionN(2, 6)", Contract,
                 qAsFuncN2, qTarget, [2, 6u], mAsFuncN2, mTarget, [2, 6u], qs, ms, qState, mState);
+        }
+
+        // Direct comparisons on NumVal and StrVal for IsDimlessReal and asDimlessReal (caller sensitivity)
+        var (qGetIsDimlessReal, mGetIsDimlessReal) = Method("get_IsDimlessReal", DeclaredInstancePublic);
+        var testTargets = new (string label, object q, object m)[]
+        {
+            ("NumVal_dimless", Side.Quire.Num(42.0, 0.0, "identity"), Side.Mathcad.Num(42.0, 0.0, "identity")),
+            ("NumVal_dim", Side.Quire.Num(42.0, 0.0, "L"), Side.Mathcad.Num(42.0, 0.0, "L")),
+            ("NumVal_complex", Side.Quire.Num(1.0, 2.0, "identity"), Side.Mathcad.Num(1.0, 2.0, "identity")),
+            ("StrVal_dimless", Side.Quire.Str("hello"), Side.Mathcad.Str("hello")),
+        };
+        foreach (var (label, qT, mT) in testTargets)
+        {
+            MethodComparison.Compare($"{label}.IsDimlessReal", Contract,
+                qGetIsDimlessReal, qT, [], mGetIsDimlessReal, mT, [], qs, ms, qState, mState);
+            MethodComparison.Compare($"{label}.asDimlessReal(5)", Contract,
+                qAsDimlessReal1, qT, [5u], mAsDimlessReal1, mT, [5u], qs, ms, qState, mState);
+            MethodComparison.Compare($"{label}.asDimlessReal(m, 5)", Contract,
+                qAsDimlessReal2, qT, ["custom key", 5u], mAsDimlessReal2, mT, ["custom key", 5u], qs, ms, qState, mState);
         }
     }
 
