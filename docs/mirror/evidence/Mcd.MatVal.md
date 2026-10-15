@@ -55,6 +55,8 @@
 | get_PhysicalDimension() | 0x06000452 | — | Return the virtual UniformDimension property result. | Same-artifact ILSpy; 6 direct comparisons; finite cases in lane checkpoint | Verified |
 | get_UniformDimension() | 0x06000453 | — | Return mixed_matrix_dim when IsUniform is false; otherwise return m_dim. May canonicalize pointer storage through IsUniform. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
 | CanonicalizePtrs() | 0x06000441 | — | Normalize `string_dim` to identity, seed the common dimension from `m_dim` only when logical cells include non-pointer data, then classify only PtrNan-marked table entries. Merge compatible NumVal dimensions, accept `mcd_zero`, flag other live values/dimensions, and pass live/zero counts plus the common dimension to `TidyPtrs`; may mutate matrix and pointer state through reinsertion. | Same-artifact IL; 18 direct comparisons | Verified |
+| ReinsertPtrs() | 0x06000443 | — | Save the original pointer table/backing and view geometry; if Shared, pack storage and reset offset/stride/Shared; then detach the table, skip stale entries, remap live indices when packed, and reinsert each original object through `set`. | Same-artifact IL; 11 direct comparisons | Verified |
+| ReinsertPtrs1() | 0x06000444 | — | Perform the same shared repack and live-entry remapping as `ReinsertPtrs`, but first mutate each live `NumVal` with `mcd_zero` dimension to `identity` before reinsertion. | Same-artifact IL; 12 direct comparisons | Verified |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 

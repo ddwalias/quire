@@ -120,3 +120,27 @@ python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --j
 ```
 
 No acceptance or unreachable proposal is made. This batch is a single reviewed commit, pushed as backup, and frozen at the exact tip recorded in its [handoff](../../../../quire-handoffs/lane-b/matval-canonicalize-ptrs.md).
+
+## MatVal ReinsertPtrs / ReinsertPtrs1 — active
+
+This adjacent two-member private-helper batch is on branch `mirror/b-matval-reinsert-ptrs` in `/root/src/quire-matval-reinsert-ptrs`, freshly based on clean main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. Neither frozen pointer-helper nor CanonicalizePtrs work is assumed integrated. The exact original Prime 12.0.1.0 reference was refreshed with `python3 tools/reference/reference.py Mcd.MatVal --il`; exact members are `ReinsertPtrs()` token `0x06000443` and `ReinsertPtrs1()` token `0x06000444`.
+
+Artifact SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Evidence contracts are in `docs/mirror/evidence/Mcd.MatVal.md`. Direct comparisons cover reinsertion/materialization versus retained pointers, stale entries, the `mcd_zero` mutation unique to `ReinsertPtrs1`, Shared padded/offset packing and index remapping, backing/table/pointer identities, and original exception state. `MatValReinsertPtrsDifferentialTests` contains 23 direct cases (11 for `ReinsertPtrs`, 12 for `ReinsertPtrs1`), each checking exact tokens and a state snapshot of matrix dimension, backing and geometry, old/current array and table aliases, and pointer/NumVal identity, value and dimension.
+
+Validation commands and results:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValReinsertPtrsDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 2 facts passed, 0 failed/skipped; 23 direct MethodComparison cases.
+
+QUIRE_REQUIRE_MATHCAD=1 python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --jobs 4
+=> Harness 36/36, Mpl 160/160, Differential 90/90; inventory compared 41, missing 147, structure mismatches 109, uncovered 0, verified-unsupported 32; integrity 0/complete and ratchet pass; 179/179 mutants killed, 0 survivors/proposals. LOCAL CHECKS pass; scoped gate would pass with existing gaps. Receipt: /tmp/quire-validation-84au0rip/summary.json.
+
+git diff --check
+=> passed.
+```
+
+No production source changed, and no acceptance or unreachable proposal is made. Windows/native phase closure and the full runtime merge gate remain unperformed; the scoped run is not a phase-completion claim. This branch is one squashed commit pushed for backup. Its exact tip and independent review verdict will be recorded in the atomic handoff.
