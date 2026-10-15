@@ -6,12 +6,17 @@ import time
 from pathlib import Path
 import unittest
 from unittest import mock
-from mutate import key, reasons, run, select
+from mutate import cache_directory, key, reasons, run, select
 
 FAKE_DOTNET = """#!{python}
 import os, sys
 from pathlib import Path
 args = sys.argv
+if args[1] in ('--version', '--list-runtimes'):
+    print(os.environ.get('FAKE_DOTNET_RUNTIME', 'Microsoft.NETCore.App 10.0.0'))
+    sys.exit(0)
+if 'QUIRE_MUTANT_CACHE' in os.environ:
+    sys.exit(7)  # code under test must not learn where the cache lives
 image = (Path(args[2]).parent / 'Quire.Mpl.dll').read_bytes()
 scratch = Path(args[args.index('--results-directory') + 1])
 kills = Path(os.environ['QUIRE_MUTATION_KILLS'])
@@ -73,6 +78,10 @@ class MutationTests(unittest.TestCase):
         self.image = bytes([0, 0, 0, 0, 0x58, 0, 0x5A, 0, 0x2C, 0])
         (self.tests / 'Quire.Mpl.dll').write_bytes(self.image)
         (self.tests / 'Quire.Differential.Tests.dll').write_bytes(b'')
+        self.cache = root / 'cache'
+        patcher = mock.patch.dict(os.environ, QUIRE_MUTANT_CACHE=str(self.cache))
+        patcher.start()
+        self.addCleanup(patcher.stop)
         self.dotnet = root / 'dotnet'
         self.dotnet.write_text(FAKE_DOTNET.format(python=sys.executable))
         self.dotnet.chmod(self.dotnet.stat().st_mode | stat.S_IEXEC)
@@ -165,6 +174,47 @@ class MutationTests(unittest.TestCase):
         outcomes = {r['key'].split(' ', 1)[1]: r['outcome'] for r in report['mutants']}
         self.assertEqual(outcomes['brfalse.s -> brtrue.s'], 'survived (tests failed without a mismatch)')
         self.assertEqual(report['crashes'], 0)
+
+    def test_unchanged_build_reuses_outcomes(self):
+        first = self.mutate()
+        self.assertEqual(first['cached'], 0)
+        log = Path(self.directory.name) / 'runs.log'
+        with mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log)):
+            second = self.mutate()
+        self.assertEqual(second['cached'], 3)
+        self.assertEqual([r['outcome'] for r in second['mutants']], [r['outcome'] for r in first['mutants']])
+        self.assertEqual(log.read_text().count('|'), 2)  # only the two controls ran
+        self.assertFalse(list(self.cache.rglob('.entry-*')))
+
+    def test_changed_bytes_or_runtime_miss_the_cache(self):
+        self.mutate()
+        (self.tests / 'Quire.Differential.Tests.dll').write_bytes(b'changed test')
+        self.assertEqual(self.mutate()['cached'], 0)
+        self.assertEqual(self.mutate()['cached'], 3)
+        with mock.patch.dict(os.environ, FAKE_DOTNET_RUNTIME='Microsoft.NETCore.App 10.0.1'):
+            self.assertEqual(self.mutate()['cached'], 0)
+
+    def test_timeouts_are_not_cached(self):
+        image = bytearray(self.image); image[9] = 3
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        with mock.patch('mutate.MUTANT_FLOOR', 2):
+            self.mutate()
+            report = self.mutate()
+        cached = {r['key'].split(' ', 1)[1]: r['cached'] for r in report['mutants']}
+        self.assertEqual(cached, {'add -> sub': True, 'mul -> div': True, 'brfalse.s -> brtrue.s': False})
+        self.assertEqual(report['timeouts'], 1)
+
+    def test_cached_outcomes_survive_a_different_timeout(self):
+        self.mutate()
+        with mock.patch('mutate.MUTANT_FLOOR', 5):
+            report = self.mutate()
+        self.assertEqual((report['cached'], report['max_mutant_timeout_seconds']), (3, 5))
+
+    def test_cache_inside_the_repository_rejected(self):
+        from validate import ROOT
+        with mock.patch.dict(os.environ, QUIRE_MUTANT_CACHE=str(ROOT / 'cache')), \
+                self.assertRaisesRegex(ValueError, 'inside the repository'):
+            cache_directory()
 
     def test_control_run_with_a_swallowed_mismatch_rejected(self):
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes([0xFE]) + self.image[1:])

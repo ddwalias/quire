@@ -140,6 +140,20 @@ def baseline_regressions(base, baseline, repo=ROOT):
         return [f'new baseline unusable: {error!r}']
 
 
+def gate_tree(parent=None):
+    """A new, empty directory for the validation clone, at the same path from gate to gate when it is free: built
+    outputs embed their absolute path, and the mutant cache only matches identical outputs. Concurrent gates, and a
+    directory a killed gate left behind, take the next slot."""
+    parent = Path(parent or tempfile.gettempdir())
+    for slot in range(100):
+        try:
+            (parent / f'quire-gate-tree-{slot}').mkdir(mode=0o700)
+            return parent / f'quire-gate-tree-{slot}'
+        except FileExistsError:
+            continue
+    return Path(tempfile.mkdtemp(prefix='quire-gate-', dir=parent))
+
+
 def clone(tip, tree, repo=ROOT):
     """A separate clone at `tip`, not a worktree: code under test never sees this repository's .git, hooks or config,
     nor, without the origin remote and the reflogs (`clone: from <path>`), its path."""
@@ -216,7 +230,7 @@ def main():
 
     if args.results and args.results.exists():
         parser.error('--results must name a new directory')
-    tree = Path(tempfile.mkdtemp(prefix='quire-gate-'))
+    tree = gate_tree()
     outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-'))).resolve()
     outputs.mkdir(parents=True, exist_ok=True)
     results = outputs / 'run'

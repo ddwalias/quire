@@ -249,7 +249,10 @@ def main():
             if changed_names is None:
                 raise ValueError(f"cannot diff against {args.mutate_since}")
         coverage_dir = Path(tempfile.mkdtemp(prefix="quire-coverage-"))
-        build_flags = ["-m:1", "-nr:false", "-p:UseSharedCompilation=false", "-p:NuGetAudit=false"]
+        # No source control queries: they stamp the commit into every assembly, so a docs-only commit would change
+        # the build output and miss the mutant cache.
+        build_flags = ["-m:1", "-nr:false", "-p:UseSharedCompilation=false", "-p:NuGetAudit=false",
+                       "-p:EnableSourceControlManagerQueries=false"]
         tool = ROOT / "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj"
         tool_dir = holder["tool"] = Path(tempfile.mkdtemp(prefix="quire-audit-tool-"))
         generator = ROOT / "tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"
@@ -390,7 +393,8 @@ def main():
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
                                                            "proposed_survivors", "stale_proposed")}
             mutation_ok = mutation["complete"]
-            print(f"Mutation: {mutation['killed']}/{mutation['total']} killed; survivors {len(mutation['survivors'])}", flush=True)
+            print(f"Mutation: {mutation['killed']}/{mutation['total']} killed ({mutation['cached']} cached); "
+                  f"survivors {len(mutation['survivors'])}", flush=True)
             if args.proposed_mutants:
                 print(f"Proposed (not yet accepted): {len(mutation['proposed_survivors'])} survivors; "
                       f"stale proposals {mutation['stale_proposed']}", flush=True)

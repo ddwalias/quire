@@ -1,5 +1,7 @@
 """Byte-level IL mutation of compared methods: every mutant must make a comparison against Mathcad fail its test."""
 from concurrent.futures import ThreadPoolExecutor
+import hashlib
+import json
 import os
 import queue
 import re
@@ -18,6 +20,50 @@ ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
 # A mutant's timeout: its tests' unmutated duration times MARGIN, at least FLOOR s. A false timeout counts as a kill and
 # could hide a weak test, so the floor stays generous; only mutants that loop pay it.
 MUTANT_MARGIN, MUTANT_FLOOR = 4, 30
+# Outcomes of earlier runs of identical mutants (see cached_outcome). Bump the version when what an outcome means changes.
+CACHE_VERSION = 1
+CACHEABLE = {'killed', 'killed (via another method compared first)', 'killed (crash)', 'survived',
+             'survived (tests failed without a mismatch)'}
+
+
+def cache_directory():
+    """Outside any repository; QUIRE_MUTANT_CACHE overrides the default and is withheld from code under test."""
+    directory = Path(os.environ.get('QUIRE_MUTANT_CACHE') or Path.home() / '.cache/quire-mutants').resolve()
+    if directory.is_relative_to(ROOT.resolve()):
+        raise ValueError(f'mutant cache {directory} lies inside the repository under validation')
+    return directory
+
+
+def cache_key(*parts):
+    return hashlib.sha256(json.dumps([CACHE_VERSION, *parts], sort_keys=True).encode()).hexdigest()
+
+
+def cached_outcome(directory, digest_key):
+    """The recorded outcome for this key, or None (absent or unreadable)."""
+    try:
+        outcome = json.loads((directory / digest_key[:2] / f'{digest_key}.json').read_text())['outcome']
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+    return outcome if outcome in CACHEABLE else None
+
+
+def store_outcome(directory, digest_key, outcome):
+    """Atomically, so concurrent runs (gates in other lanes, local runs) see a whole entry or none. Best effort: an
+    unwritable cache only costs later runs time."""
+    if outcome not in CACHEABLE:
+        return
+    folder = directory / digest_key[:2]
+    try:
+        folder.mkdir(parents=True, exist_ok=True)
+        handle, temporary = tempfile.mkstemp(dir=folder, prefix='.entry-')
+        try:
+            with os.fdopen(handle, 'w') as entry:
+                json.dump({'outcome': outcome}, entry)
+            os.replace(temporary, folder / f'{digest_key}.json')
+        finally:
+            Path(temporary).unlink(missing_ok=True)
+    except OSError:
+        pass
 
 
 def key(method, mutant):
@@ -123,15 +169,23 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     selected = select(coverage, types)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
+    cache = cache_directory()
+    pristine = digest(files_under(test_dll.parent), test_dll.parent)
+    # The cache matches a mutant only on byte-identical test output (code under test, tests, the pinned Mathcad
+    # identity they check), SDK choice and installed runtimes, so a run over an unchanged build reuses outcomes.
+    with sdk_directory(global_json) as cwd:
+        toolchain = [subprocess.run([dotnet, flag], cwd=cwd, capture_output=True, text=True).stdout
+                     for flag in ('--version', '--list-runtimes')]
+    build = cache_key(sorted(pristine.items()), global_json.hex(), toolchain, project)
     copies = [Path(tempfile.mkdtemp(prefix='quire-mutant-')) for _ in range(max(1, jobs))]
     for copy in copies:
         shutil.copytree(test_dll.parent, copy, dirs_exist_ok=True)
-    pristine = digest(files_under(test_dll.parent), test_dll.parent)
     env = os.environ.copy()
     env['QUIRE_REQUIRE_MATHCAD'] = '1'
     env.pop('QUIRE_METHOD_CASES', None)
     env.pop('QUIRE_VALIDATION_RUN', None)
     env.pop('QUIRE_MUTATION_KILLS', None)
+    env.pop('QUIRE_MUTANT_CACHE', None)
 
     def test_run(copy, tests, limit):
         """Exit code (None on timeout) and a fresh scratch directory, outside the copy the tests can see, holding
@@ -195,6 +249,14 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             done_control.wait()
         if failures:
             raise failures[0]
+        # The timeout, which varies with load, is not in the key. Only outcomes reached within a timeout are cached, so
+        # a fresh run could differ only by timing out, a kill; the cached outcome is then a kill too or a survivor,
+        # which fails the run anyway. Neither direction lets a weak test pass.
+        mutant_key = cache_key(build, key(method, mutant), mutant['file_offset'], mutant['original'],
+                               mutant['replacement'], sorted(tests))
+        outcome = cached_outcome(cache, mutant_key)
+        if outcome is not None:
+            return result(method, mutant, outcome, tests, cached=True)
         target = copy / f'{project}.dll'
         image = bytearray(target.read_bytes())
         original, replacement = bytes.fromhex(mutant['original']), bytes.fromhex(mutant['replacement'])
@@ -227,8 +289,12 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             outcome = 'survived (tests failed without a mismatch)'
         else:
             outcome = 'survived'
+        store_outcome(cache, mutant_key, outcome)  # not timeouts, which depend on the load
+        return result(method, mutant, outcome, tests, cached=False)
+
+    def result(method, mutant, outcome, tests, cached):
         return {'key': key(method, mutant), 'outcome': outcome, 'accepted': key(method, mutant) in accepted_keys,
-                'proposed': key(method, mutant) in proposed, 'timeout_seconds': round(limits[tests])}
+                'proposed': key(method, mutant) in proposed, 'timeout_seconds': round(limits[tests]), 'cached': cached}
 
     # Each worker owns one copy and takes the next mutant from a shared queue, so a slow mutant idles nobody else.
     pending = queue.Queue()
@@ -261,6 +327,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     return {'types': sorted(types), 'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
             'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
             'crashes': sum(r['outcome'] == 'killed (crash)' for r in results),
+            'cached': sum(r['cached'] for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
             'proposed_survivors': [{'key': r['key'], 'reason': proposed[r['key']]} for r in surviving if r['proposed']],

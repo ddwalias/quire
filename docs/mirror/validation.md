@@ -204,6 +204,14 @@ order passes it, which the direct comparisons must catch.
   matched no surviving mutant (killed, already accepted or not run). The user approves a proposal; a maintainer
   moves it into `accepted-mutants.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
   merge gate blocks any summary that used it. `--jobs` sets parallel copies.
+  Outcomes are cached outside the repository (`~/.cache/quire-mutants/`, or `QUIRE_MUTANT_CACHE`, which tests do not
+  see) by SHA-256 of the whole test output directory, SDK choice and installed runtimes, the mutant's key, offset and
+  bytes and its test set (not its timeout: a cached outcome was reached within one); only the validator writes entries, after a run. Timeouts are never cached and
+  every control still runs; `cached` in `mutation.json` counts reused outcomes. Built assemblies embed their
+  absolute path, so a hit needs the same build directory: the merge gate clones into the first free
+  `quire-gate-tree-N` under the temporary directory, and builds pass `EnableSourceControlManagerQueries=false` so the
+  commit is not stamped into them (a docs-only commit leaves the output byte-identical). Code under test, running as
+  the same user, could still write a forged entry at the default path; the cache trusts that it does not.
   `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
   nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in an added,
   changed or deleted differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie
