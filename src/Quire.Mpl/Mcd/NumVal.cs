@@ -176,7 +176,18 @@ public sealed partial class NumVal : DimVal
     }
 
     [MirrorVerified("NumValDifferentialTests")]
-    public override int IsReal => Data.ip == 0.0 ? 1 : 0;
+    public override int IsReal
+    {
+        get
+        {
+            bool isReal = Data.ip == 0.0;
+            // Reads the bool's byte without a branch, as the original's `ceq; ret` does.
+            unsafe
+            {
+                return *(byte*)&isReal;
+            }
+        }
+    }
 
     [MirrorVerified("NumValDifferentialTests")]
     public static NumVal NumDv(double r, double i) => new(r, i, Dim.identity);

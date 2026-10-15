@@ -51,10 +51,34 @@ public class DimValDifferentialTests
         if (v is int[] a) return $"[{string.Join(",", a)}]";
         if (v is object[] arr) return $"[{string.Join(", ", arr.Select(x => ShowVal(side, x)))}]";
         if (v.GetType().Name == "Units") return Text(v);
-        if (v.GetType().Name == "MatVal" || v.GetType().FullName!.Contains("MatVal")) return $"MatVal[{Get(v, "Rows")}x{Get(v, "Cols")}]";
+        if (v.GetType().Name == "MatVal" || v.GetType().FullName!.Contains("MatVal"))
+        {
+            int rows = (int)Get(v, "Rows")!;
+            int cols = (int)Get(v, "Cols")!;
+            int stride = (int)Get(Get(v, "Data")!, "m_anr")!;
+            int offset = (int)Get(v, "m_offset")!;
+            if (Get(v, "m_rarr") is not double[] real) return $"MatVal[{rows}x{cols}; stride={stride}; values=null]";
+            var imaginary = (double[]?)Get(v, "m_iarr");
+            var values = new List<string>(rows * cols);
+            for (int row = 0; row < rows; row++)
+                for (int col = 0; col < cols; col++)
+                {
+                    int index = offset + row + col * stride;
+                    if (index < 0 || index >= real.Length)
+                        values.Add("<missing>");
+                    else if (imaginary == null)
+                        values.Add(Side.Bits(real[index]));
+                    else
+                        values.Add(index >= imaginary.Length
+                            ? $"{Side.Bits(real[index])}+<missing>i"
+                            : $"{Side.Bits(real[index])}+{Side.Bits(imaginary[index])}i");
+                }
+            return $"MatVal[{rows}x{cols}; stride={stride}; values={string.Join(",", values)}]";
+        }
         if (v.GetType().Name == "MatDim" || v.GetType().FullName!.Contains("MatDim")) return $"MatDim[{Get(v, "Rows")}x{Get(v, "Cols")}]";
         if (v.GetType().Name == "Dim") return side.DimText(v);
-        if (v.GetType().Name is "NotAVal" or "StrVal" or "NumVal" || v.GetType().IsSubclassOf(side.T("Mcd.DimVal")))
+        if (v.GetType().Name == "NumVal") return side.Show(v);
+        if (v.GetType().Name is "NotAVal" or "StrVal" || v.GetType().IsSubclassOf(side.T("Mcd.DimVal")))
         {
             return $"{v.GetType().Name}[dim={side.DimText(Get(v, "m_dim"))}]";
         }
@@ -581,5 +605,107 @@ public class DimValDifferentialTests
             qNearlyEqualInst, qT1, [qT2, 0.1],
             mNearlyEqualInst, mT1, [mT2, 0.1],
             qs, ms, qState, mState);
+    }
+
+    /// <summary>The base bodies of <c>PhysicalUnit</c>, <c>IsDimlessReal</c> and both <c>asDimlessReal</c> overloads, which <c>NumVal</c> inherits,
+    /// on numbers with and without a physical dimension, including the mixed-matrix marker.</summary>
+    [SkippableFact]
+    public void Base_bodies_on_numbers()
+    {
+        Runtime.Sync();
+        Func<object?, string> qs = Side.Quire.Show;
+        Func<object?, string> ms = Side.Mathcad.Show;
+        Func<object, string> qState = Side.Quire.Show;
+        Func<object, string> mState = Side.Mathcad.Show;
+
+        var (qPhysicalUnit, mPhysicalUnit) = Method("get_PhysicalUnit", DeclaredInstancePublic);
+        var (qIsDimlessReal, mIsDimlessReal) = Method("get_IsDimlessReal", DeclaredInstancePublic);
+        var (qAsDimlessReal, mAsDimlessReal) = Method("asDimlessReal", DeclaredInstancePublic, typeof(uint));
+        var (qAsDimlessRealM, mAsDimlessRealM) = Method("asDimlessReal", DeclaredInstancePublic, typeof(string), typeof(uint));
+
+        (double Re, double Im, string Dim)[] numbers =
+        [
+            (2.5, 0.0, "identity"), (-4.0, 0.0, "poly"), (3.0, 0.0, "mcd_zero"), (7.0, 0.0, "L"),
+            (1.5, 0.0, "mixed_matrix_dim"), (0.0, 2.0, "identity"), (6.0, 1.0, "T")
+        ];
+        foreach (var (re, im, dim) in numbers)
+        {
+            var qTarget = Side.Quire.Num(re, im, dim);
+            var mTarget = Side.Mathcad.Num(re, im, dim);
+            MethodComparison.Compare($"NumVal({re}, {im}, {dim}).PhysicalUnit (DimVal body)", Contract,
+                qPhysicalUnit, qTarget, [], mPhysicalUnit, mTarget, [], qs, ms, qState, mState);
+            MethodComparison.Compare($"NumVal({re}, {im}, {dim}).asDimlessReal(6) (DimVal body)", Contract,
+                qAsDimlessReal, qTarget, [6u], mAsDimlessReal, mTarget, [6u], qs, ms, qState, mState);
+            MethodComparison.Compare($"NumVal({re}, {im}, {dim}).asDimlessReal(m, 6) (DimVal body)", Contract,
+                qAsDimlessRealM, qTarget, ["custom key", 6u], mAsDimlessRealM, mTarget, ["custom key", 6u], qs, ms, qState, mState);
+            MethodComparison.Compare($"NumVal({re}, {im}, {dim}).IsDimlessReal (DimVal body)", Contract,
+                qIsDimlessReal, qTarget, [], mIsDimlessReal, mTarget, [], qs, ms, qState, mState);
+        }
+    }
+
+    private static string ShowAny(Side side, object? v)
+    {
+        if (v?.GetType().Name != "MatVal") return side.Show(v);
+        var data = Get(v, "Data")!;
+        var re = Get(v, "m_rarr") is double[] r ? $"[{string.Join(",", r.Select(Side.Bits))}]" : "null";
+        return $"MatVal[{Get(data, "m_rows")}x{Get(data, "m_cols")} anr {Get(data, "m_anr")} flags {Convert.ToInt64(Get(data, "m_flags"))} " +
+               $"offset {Get(v, "m_offset")} re {re} im {(Get(v, "m_iarr") == null ? "null" : "set")} " +
+               $"ptrs {(Get(v, "m_parr") == null ? "null" : "set")} dim {side.DimText(Get(v, "m_dim"))}]";
+    }
+
+    /// <summary>Index bounds, storage and stored zeros of the base matrix extension, <c>Rfinal</c> on a range and
+    /// <c>NearlyEqual</c> on numbers, which override the callees these bodies use.</summary>
+    [SkippableFact]
+    public void Bounds_and_overridden_callees()
+    {
+        Runtime.Sync();
+        Func<object?, string> qs = v => ShowAny(Side.Quire, v);
+        Func<object?, string> ms = v => ShowAny(Side.Mathcad, v);
+        Func<object, string> qState = v => ShowAny(Side.Quire, v);
+        Func<object, string> mState = v => ShowAny(Side.Mathcad, v);
+
+        var (qExtend1, mExtend1) = Method("extend_1", DeclaredInstancePublic, typeof(int));
+        var (qExtend2, mExtend2) = Method("extend_2", DeclaredInstancePublic, typeof(int), typeof(int));
+        var (qMatrixSet0_1, mMatrixSet0_1) = Method("matrix_set0_1", DeclaredInstancePublic, typeof(int));
+        var (qMatrixSet0_2, mMatrixSet0_2) = Method("matrix_set0_2", DeclaredInstancePublic, typeof(int), typeof(int));
+        var (qRfinal, mRfinal) = Method("get_Rfinal", DeclaredInstancePublic);
+        var (qNearlyEqual, mNearlyEqual) = Method("NearlyEqual", DeclaredStaticPublic, typeof(object), typeof(object), typeof(double));
+
+        var qTarget = Side.Quire.NotAVal();
+        var mTarget = Side.Mathcad.NotAVal();
+        foreach (int i in new[] { 0, 5 })
+        {
+            MethodComparison.Compare($"NotAVal.extend_1({i})", Contract,
+                qExtend1, qTarget, [i], mExtend1, mTarget, [i], qs, ms, qState, mState);
+            MethodComparison.Compare($"NotAVal.matrix_set0_1({i})", Contract,
+                qMatrixSet0_1, qTarget, [i], mMatrixSet0_1, mTarget, [i], qs, ms, qState, mState);
+        }
+        foreach (var (i, j) in new[] { (1, 0), (0, 0) })
+        {
+            MethodComparison.Compare($"NotAVal.extend_2({i}, {j})", Contract,
+                qExtend2, qTarget, [i, j], mExtend2, mTarget, [i, j], qs, ms, qState, mState);
+        }
+        MethodComparison.Compare("NotAVal.matrix_set0_2(1, 0)", Contract,
+            qMatrixSet0_2, qTarget, [1, 0], mMatrixSet0_2, mTarget, [1, 0], qs, ms, qState, mState);
+
+        var qRange = Call(Side.Quire.T("Mcd.RngVal"), "Range", 1.0, 5.0)!;
+        var mRange = Call(Side.Mathcad.T("Mcd.RngVal"), "Range", 1.0, 5.0)!;
+        MethodComparison.Compare("Range(1, 5).Rfinal (DimVal body)", Contract,
+            qRfinal, qRange, [], mRfinal, mRange, [], qs, ms, qState, mState);
+        foreach (var (init, increment, count) in new[] { (4.0, 3.0, 1), (-2.0, 0.5, 3) })
+        {
+            var qIncr = Call(Side.Quire.T("Mcd.RngVal"), "IncrRange", init, increment, count, Side.Quire.D("identity"))!;
+            var mIncr = Call(Side.Mathcad.T("Mcd.RngVal"), "IncrRange", init, increment, count, Side.Mathcad.D("identity"))!;
+            MethodComparison.Compare($"IncrRange({init}, {increment}, {count}).Rfinal (DimVal body)", Contract,
+                qRfinal, qIncr, [], mRfinal, mIncr, [], qs, ms, qState, mState);
+        }
+
+        var qOne = Side.Quire.Num(1.0, 0.0, "identity");
+        var mOne = Side.Mathcad.Num(1.0, 0.0, "identity");
+        MethodComparison.Compare("NearlyEqual(1, 1.05, 0.1)", Contract,
+            qNearlyEqual, null, [qOne, Side.Quire.Num(1.05, 0.0, "identity"), 0.1],
+            mNearlyEqual, null, [mOne, Side.Mathcad.Num(1.05, 0.0, "identity"), 0.1], qs, ms);
+        MethodComparison.Compare("NearlyEqual(1, \"a\", 0.1)", Contract,
+            qNearlyEqual, null, [qOne, "a", 0.1], mNearlyEqual, null, [mOne, "a", 0.1], qs, ms);
     }
 }

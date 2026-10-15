@@ -174,7 +174,7 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public unsafe int asInt(string m, uint a)
     {
-        int value = 0;
+        int value;
         if (isInt(&value)) return value;
         AppException.Raise("must be integer", a);
         return 0;

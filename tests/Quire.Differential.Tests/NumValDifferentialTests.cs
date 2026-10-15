@@ -558,4 +558,72 @@ public class NumValDifferentialTests
         var naM = Side.Mathcad.NotAVal();
         MethodComparison.Compare("NotAVal.ToString()", ContractNotAVal, qNotAValToString, naQ, [], mNotAValToString, naM, [], qs, ms, qStateNotAVal, mStateNotAVal);
     }
+
+    private static string Statics(Side side) => string.Join(" ", new[] { "Zero", "ZeroId", "ZeroPoly", "One", "mcNaN", "NoValue", "Inf", "McdNaN", "NaN", "NoNoNaN" }
+        .Select(f => $"{f}={side.Show(Get(side.T("Mcd.NumVal"), f))}"));
+
+    /// <summary>A unit system whose length unit is the foot.</summary>
+    private static object Feet(Side side)
+    {
+        var standard = Get(side.T("Mcd.RuntimeOptions"), "s_default_unit_system")!;
+        var basis = (Array)((Array)Get(standard, "Basis")!).Clone();
+        for (int i = 0; i < basis.Length; i++)
+            if ((string?)Get(basis.GetValue(i)!, "Quantity") == "Length")
+                basis.SetValue(New(side.T("Mcd.Unit"), "foot", "ft", "Length", 0.3048, "V{Length 60000}"), i);
+        return New(side.T("Mcd.UnitSystem"), "feet", 7u, "guid", basis, Get(standard, "Defaults"));
+    }
+
+    /// <summary>The statics the type initializer sets, NaN payload bits, whether <c>asResult</c> returns the number
+    /// itself, fuzzy comparison of complex parts, and formatting in units whose magnitude isn't 1.</summary>
+    [SkippableFact]
+    public void Statics_payloads_identity_and_units()
+    {
+        Runtime.Sync();
+        Func<object?, string> qs = Side.Quire.Show;
+        Func<object?, string> ms = Side.Mathcad.Show;
+
+        // First, so that a failing type initializer is seen inside a comparison.
+        var (qLoadNaN, mLoadNaN) = Method(QNumVal, "LoadNaN", DeclaredStaticPublic, typeof(int));
+        foreach (var payload in new[] { 0, 0x12345678 })
+            MethodComparison.Compare($"LoadNaN({payload}) bits", ContractNumVal, qLoadNaN, null, [payload], mLoadNaN, null, [payload], qs, ms);
+
+        MethodComparison.Compare("NumVal.cctor: statics", ContractNumVal, QNumVal.TypeInitializer!, null, [], MNumVal.TypeInitializer!, null, [],
+            _ => Statics(Side.Quire), _ => Statics(Side.Mathcad));
+
+        var (qAsResult, mAsResult) = Method(QNumVal, "asResult", DeclaredInstancePublic);
+        foreach (var dim in new[] { "identity", "L" })
+        {
+            var vQ = Side.Quire.Num(2.0, 0.0, dim);
+            var vM = Side.Mathcad.Num(2.0, 0.0, dim);
+            MethodComparison.Compare($"NumVal(2, {dim}).asResult is itself", ContractNumVal, qAsResult, vQ, [], mAsResult, vM, [],
+                r => ReferenceEquals(r, vQ) ? "itself" : qs(r), r => ReferenceEquals(r, vM) ? "itself" : ms(r), qs, ms);
+        }
+
+        var (qFuzzyEquals3, mFuzzyEquals3) = Method(QNumVal, "FuzzyEquals", DeclaredStaticPublic, QNumVal, QNumVal, typeof(double));
+        foreach (var (x, y, fuzz) in new[] { ((1.0, 1.0), (1.0, 0.0), 1e-11), ((1.0, 2.0), (1.0, 1.0), 1e-11), ((1.0, 1.0), (1.0, 1.01), 0.0045) })
+        {
+            MethodComparison.Compare($"FuzzyEquals({x}, {y}, {fuzz})", ContractNumVal,
+                qFuzzyEquals3, null, [Side.Quire.Num(x.Item1, x.Item2, "identity"), Side.Quire.Num(y.Item1, y.Item2, "identity"), fuzz],
+                mFuzzyEquals3, null, [Side.Mathcad.Num(x.Item1, x.Item2, "identity"), Side.Mathcad.Num(y.Item1, y.Item2, "identity"), fuzz], qs, ms);
+        }
+
+        var (qFormat, mFormat) = Method(QNumVal, "Format", DeclaredInstancePublic, typeof(IFormatProvider), typeof(string), typeof(bool), typeof(bool));
+        var qNumber = Side.Quire.Num(3.048, 0.6096, "L");
+        var mNumber = Side.Mathcad.Num(3.048, 0.6096, "L");
+        var qOld = Get(Side.Quire.T("Mcd.RuntimeOptions"), "the_unit_system");
+        var mOld = Get(Side.Mathcad.T("Mcd.RuntimeOptions"), "the_unit_system");
+        Set(Side.Quire.T("Mcd.RuntimeOptions"), "the_unit_system", Feet(Side.Quire));
+        Set(Side.Mathcad.T("Mcd.RuntimeOptions"), "the_unit_system", Feet(Side.Mathcad));
+        try
+        {
+            MethodComparison.Compare("Format(g15, units) in feet", ContractNumVal,
+                qFormat, qNumber, [CultureInfo.InvariantCulture, "g15", true, false], mFormat, mNumber, [CultureInfo.InvariantCulture, "g15", true, false],
+                qs, ms, StateNumVal(Side.Quire), StateNumVal(Side.Mathcad));
+        }
+        finally
+        {
+            Set(Side.Quire.T("Mcd.RuntimeOptions"), "the_unit_system", qOld);
+            Set(Side.Mathcad.T("Mcd.RuntimeOptions"), "the_unit_system", mOld);
+        }
+    }
 }

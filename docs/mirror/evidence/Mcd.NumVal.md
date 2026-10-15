@@ -76,10 +76,14 @@
 - Exact and fuzzy comparisons (nearly_equal, NearlyEqual)
 - Strict comparisons
 - Formatting in invariant and custom cultures
+- The statics the type initializer sets (shown with NaN payload bits), `LoadNaN` payload bits, `asResult` returning
+  the number itself when it has a dimension, `FuzzyEquals` of complex parts (real against complex, unequal imaginary
+  parts, a tolerance between the part-sum and part-difference bounds) and `Format` with units in a unit system whose
+  length unit is the foot
 
-## Unresolved structure
-
-- `Quire.Mcd.NumVal.get_IsReal`: conditional branches: Quire 1, Mathcad 0. Original IL in Mathcad Prime 12 (`mplrun.dll` token `0x06000583`) is `ldarg.0; ldflda Data; ldfld ip; ldc.r8 0.0; ceq; ret`. C# cannot return comparison bool as int without branching in debug build; original IL emitted direct `ceq; ret`.
+**Unreachable statements:** `LessThan`, `GreaterThan`, `LessEqThan` and `GreaterEqThan` end in `return false` after
+`AppException.Raise("incomparable")`, which always throws; the original has the same tail. Coverage reports those
+lines as unexecuted; no input reaches them.
 
 ## Scope reconciliation (2026-10-15)
 
@@ -91,4 +95,3 @@ The Phase 1 checkpoint in `docs/mirror/work/lane-b.md` reported a manifest-shape
 This reported blocker is not present in the current manifest or original artifact, so it is out of scope for
 implementation and has no direct-comparison test. The previous checkpoint note is corrected in
 `docs/mirror/work/lane-b.md`. Checkpoint and validation scope: [Lane A](../work/lane-a.md#numvalcompare-scope-correction).
-

@@ -131,7 +131,8 @@ public class RngValDifferentialTests
         }
         if (tName == "MatVal")
         {
-            return $"MatVal[{Get(v, "Rows")}x{Get(v, "Cols")},dim={side.DimText(Get(v, "m_dim"))}]";
+            var re = Get(v, "m_rarr") is double[] r ? $"[{string.Join(",", r.Select(Side.Bits))}]" : "null";
+            return $"MatVal[{Get(v, "Rows")}x{Get(v, "Cols")},re={re},dim={side.DimText(Get(v, "m_dim"))}]";
         }
         if (tName == "Dim") return side.DimText(v);
         return Text(v);
@@ -245,6 +246,10 @@ public class RngValDifferentialTests
             }
         }
 
+        var (qOdd, mOdd) = MakeRange(0.1, 0.25, 3, "identity");
+        MethodComparison.Compare("RngVal(0.1, 0.25, 3).GetHashCode", Contract,
+            qGetHashCode, qOdd, [], mGetHashCode, mOdd, [], qs, ms, qStateRng, mStateRng);
+
         // 4. Overridden methods on RngValInterpolate
         var (qInterpGet, mInterpGet) = Method(QRngValInterpolate, "get", DeclaredInstancePublic, typeof(int));
         var (qInterpRangeGet, mInterpRangeGet) = Method(QRngValInterpolate, "range_get", DeclaredInstancePublic, typeof(int));
@@ -259,6 +264,13 @@ public class RngValDifferentialTests
                 qInterpRangeGet, qI, [idx], mInterpRangeGet, mI, [idx], qs, ms, qStateRng, mStateRng);
             MethodComparison.Compare($"RngValInterpolate.iterator_get({idx})", Contract,
                 qInterpIterGet, qI, [idx], mInterpIterGet, mI, [idx], qs, ms, qStateRng, mStateRng);
+        }
+
+        var (qI2, mI2) = MakeInterp(1.0, 3.0, 4, "L");
+        foreach (int idx in new[] { 1, 3 })
+        {
+            MethodComparison.Compare($"RngValInterpolate(1, 3, 4).get({idx})", Contract,
+                qInterpGet, qI2, [idx], mInterpGet, mI2, [idx], qs, ms, qStateRng, mStateRng);
         }
 
         // 5. Matrix conversions on RngVal (Analyzed members)
@@ -276,6 +288,9 @@ public class RngValDifferentialTests
             qAsRealMatrix, qMatRng, ["m", 3u], mAsRealMatrix, mMatRng, ["m", 3u], qs, ms, qStateRng, mStateRng);
         MethodComparison.Compare("asRealVector('m', 4)", Contract,
             qAsRealVector, qMatRng, ["m", 4u], mAsRealVector, mMatRng, ["m", 4u], qs, ms, qStateRng, mStateRng);
+        var (qFrom2, mFrom2) = MakeRange(2.0, 1.0, 3, "L");
+        MethodComparison.Compare("RngVal(2, 1, 3).asRealVector('m', 4)", Contract,
+            qAsRealVector, qFrom2, ["m", 4u], mAsRealVector, mFrom2, ["m", 4u], qs, ms, qStateRng, mStateRng);
     }
 
     [SkippableFact]
@@ -484,6 +499,12 @@ public class RngValDifferentialTests
         var mMat2x3 = mMatCtor2.Invoke([2, 3])!;
         MethodComparison.Compare("forValue(matrix 2x3)", Contract,
             qForValue, null, [qMat2x3], mForValue, null, [mMat2x3], qs, ms);
+
+        foreach (var (r, c) in new[] { (1, 3), (3, 1) })
+        {
+            MethodComparison.Compare($"forValue(matrix {r}x{c})", Contract,
+                qForValue, null, [qMatCtor2.Invoke([r, c])], mForValue, null, [mMatCtor2.Invoke([r, c])], qs, ms);
+        }
 
         var qMat0x0 = qMatCtor2.Invoke([0, 0])!;
         var mMat0x0 = mMatCtor2.Invoke([0, 0])!;

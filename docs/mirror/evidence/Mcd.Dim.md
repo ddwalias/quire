@@ -85,10 +85,17 @@ coordinates plus whether they are the interned object, exceptions as type and me
 - the private interning: a new vector is kept, an equal vector finds the first, interning the scratch vector keeps
   it and hands the thread a fresh zeroed one, and vectors longer and shorter than the rank;
 - `Hash` on 404 vectors (empty, ranks 7 to 9, and 400 seeded random ones mixing zero, whole unit powers, mid-range
-  and full-range ints): both `GetHashCode` overloads, `Equals(int[], int[])` against a changed copy,
+  and full-range ints): both `GetHashCode` overloads, `Equals(int[], int[])` against a changed copy and a zero vector against one whose first coordinate is 1,
   `Equals(object, object)` against an equal copy, a non-array argument and a null vector;
 - on a new thread: the scratch vector and unit system before sync, `Mult` with identity and with two markers before
-  `ThreadInit`, then `ThreadInit` twice (keeping the vector), `Mult` and `Parse` afterwards.
+  `ThreadInit`, then `ThreadInit` twice (keeping the vector), `Mult` and `Parse` afterwards;
+- `intern(int[])` of a new vector that is the thread's scratch vector (the result must not keep sharing it),
+  `IsDimensioned` of a dimension whose only nonzero coordinate is the first, and `Pwr(Length, 0)` on a thread with
+  no scratch vector (identity, without touching it).
+
+**Unreachable statements:** `Id(Dim, uint)` and `Eq(Dim, Dim, uint)` end in `return null` after `OnError`, which
+always throws; the original has the same `call void OnError; ldnull; ret` tail. Coverage reports those lines as unexecuted; no
+input reaches them.
 
 **Inferred** (`DimTests`): equal coordinates giving the same object, interning handing the thread a new scratch
 vector, markers as distinct zero vectors equal to identity, hash packing of truncated unit powers, products and

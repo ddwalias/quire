@@ -261,9 +261,14 @@ public class DimDifferentialTests
     [SkippableFact]
     public void Hash_compares_and_hashes_vectors()
     {
-        Runtime.Sync();
         var qh = QHash;
         var mh = MHash;
+        var qHashArr = qh.GetMethod("GetHashCode", DeclaredStaticPublic, [typeof(int[])])!;
+        var mHashArr = mh.GetMethod("GetHashCode", DeclaredStaticPublic, [typeof(int[])])!;
+        // First in this test, before Runtime.Sync touches Dim, so that a type initializer failing in the hash is most likely
+        // seen inside a comparison (best effort: another test may already have run the initializer outside one).
+        MethodComparison.Compare("Hash.GetHashCode(zero vector), first use of Dim", Contract, qHashArr, null, [new int[8]], mHashArr, null, [new int[8]]);
+        Runtime.Sync();
 
         var qCtor = qh.GetConstructor(DeclaredInstancePublic, [])!;
         var mCtor = mh.GetConstructor(DeclaredInstancePublic, [])!;
@@ -277,8 +282,6 @@ public class DimDifferentialTests
         var qEqualsObj = qh.GetMethod("Equals", DeclaredInstancePublic, [typeof(object), typeof(object)])!;
         var mEqualsObj = mh.GetMethod("Equals", DeclaredInstancePublic, [typeof(object), typeof(object)])!;
 
-        var qHashArr = qh.GetMethod("GetHashCode", DeclaredStaticPublic, [typeof(int[])])!;
-        var mHashArr = mh.GetMethod("GetHashCode", DeclaredStaticPublic, [typeof(int[])])!;
         var qEqualsArr = qh.GetMethod("Equals", DeclaredStaticPublic, [typeof(int[]), typeof(int[])])!;
         var mEqualsArr = mh.GetMethod("Equals", DeclaredStaticPublic, [typeof(int[]), typeof(int[])])!;
 
@@ -303,7 +306,61 @@ public class DimDifferentialTests
         }
 
         MethodComparison.Compare("Hash.Equals(object, non-array)", Contract, qEqualsObj, qi, ["x", new int[8]], mEqualsObj, mi, ["x", new int[8]], null, null, _ => "Hash", _ => "Hash");
+        MethodComparison.Compare("Hash.Equals(first coordinate changed)", Contract, qEqualsArr, null, [new int[8], new[] { 1, 0, 0, 0, 0, 0, 0, 0 }],
+            mEqualsArr, null, [new int[8], new[] { 1, 0, 0, 0, 0, 0, 0, 0 }]);
         MethodComparison.Compare("Hash.GetHashCode(null)", Contract, qHashArr, null, [null], mHashArr, null, [null]);
+    }
+
+    /// <summary>Interning the thread's scratch vector hands it over to the new dimension; the first coordinate alone makes a
+    /// dimension; a zero power needs no scratch vector.</summary>
+    [SkippableFact]
+    public void Scratch_vector_and_first_coordinate()
+    {
+        Runtime.Sync();
+        var qInternArr = typeof(Q.Dim).GetMethod("intern", DeclaredStaticPrivate, [typeof(int[])])!;
+        var mInternArr = M.GetMethod("intern", DeclaredStaticPrivate, [typeof(int[])])!;
+        var qIsDimensioned = typeof(Q.Dim).GetMethod("IsDimensioned", DeclaredStaticPublic, [typeof(Q.Dim)])!;
+        var mIsDimensioned = M.GetMethod("IsDimensioned", DeclaredStaticPublic, [M])!;
+        var qPwr = typeof(Q.Dim).GetMethod("Pwr", DeclaredStaticPublic, [typeof(Q.Dim), typeof(double)])!;
+        var mPwr = M.GetMethod("Pwr", DeclaredStaticPublic, [M, typeof(double)])!;
+        Func<object?, string> Scratch(System.Type dim) => d =>
+            Show(dim)(d) + (d?.GetType() == dim && ReferenceEquals(Get(d, "Coordinates"), Get(dim, "s_vec")) ? " shares scratch" : "");
+
+        int[] Fresh(System.Type dim, int first)
+        {
+            var v = new int[(int)Get(dim, "s_rank")!];
+            v[0] = first;
+            return v;
+        }
+
+        var qVector = Fresh(typeof(Q.Dim), 424242);
+        var mVector = Fresh(M, 424242);
+        Set(typeof(Q.Dim), "s_vec", qVector);
+        Set(M, "s_vec", mVector);
+        MethodComparison.Compare("intern(the scratch vector, new)", Contract, qInternArr, null, [qVector], mInternArr, null, [mVector],
+            Scratch(typeof(Q.Dim)), Scratch(M));
+
+        var qFirst = Call(typeof(Q.Dim), "intern", Fresh(typeof(Q.Dim), 1));
+        var mFirst = Call(M, "intern", Fresh(M, 1));
+        MethodComparison.Compare("IsDimensioned(first coordinate only)", Contract, qIsDimensioned, null, [qFirst],
+            mIsDimensioned, null, [mFirst], Show(typeof(Q.Dim)), Show(M));
+
+        var qLength = Call(typeof(Q.Dim), "Parse", "V{Length 60000}");
+        var mLength = Call(M, "Parse", "V{Length 60000}");
+        var qScratch = Get(typeof(Q.Dim), "s_vec");
+        var mScratch = Get(M, "s_vec");
+        Set(typeof(Q.Dim), "s_vec", null);
+        Set(M, "s_vec", null);
+        try
+        {
+            MethodComparison.Compare("Pwr(Length, 0) without a scratch vector", Contract, qPwr, null, [qLength, 0.0],
+                mPwr, null, [mLength, 0.0], Show(typeof(Q.Dim)), Show(M));
+        }
+        finally
+        {
+            Set(typeof(Q.Dim), "s_vec", qScratch);
+            Set(M, "s_vec", mScratch);
+        }
     }
 
     [SkippableFact]

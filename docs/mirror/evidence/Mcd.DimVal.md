@@ -143,6 +143,20 @@ error handling, and dynamic call routing.
 - Dynamic and vector call dispatch
 - Static conversion and unit helpers
 - Matrix extension and setter operations
+- Inherited `PhysicalUnit`, `IsDimlessReal` and `asDimlessReal` bodies on real, complex, polymorphic and dimensioned `NumVal`s
+- `extend_1` and `matrix_set0_1` at indices 0 and 5, `extend_2` at (1, 0) and (0, 0), `matrix_set0_2` at (1, 0),
+  with the matrix shape, allocated rows, stored parts and imaginary storage shown
+- `Rfinal` on `Range(1, 5)`, `IncrRange(4, 3, 1)` and `IncrRange(-2, 0.5, 3)`, and `NearlyEqual` of two numbers and
+  of a number and a string
+
+**Unreachable statements:** these bodies end in a default return (`null`; `NaN` for `asReal`, `0` for `asInt`)
+after a call that always throws (`AppException.Raise`, `OnError`, `BadCall(-1, …)` or `WrongNumberOfArguments`), as
+the original's tails do: `asString(string, uint)`, `asReal(string, uint)`, `asInt(string, uint)`,
+`asVector(string, uint)`, `asRealVector(string, uint)`, `asRealMatrix(string, uint)`, `asMatrix(string, uint)`,
+`asTuple`, `asRange(string, uint)`, `asFunction(string, uint)`, `asFunctionN(int, uint)`, `matrix_get_1`,
+`sym_matrix_get_1`, `matrix_get_2`, `sym_matrix_get_2`, `Apply`, `WrongNumberOfArguments(int, int, uint)` (the
+closing braces after each `OnError` too), `BadCall(int, int, uint)` and `DynCall()`. Every raising call is compared;
+coverage reports the tails as unexecuted because no input reaches them.
 
 ## Not yet comparable
 
