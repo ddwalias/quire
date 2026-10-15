@@ -810,7 +810,7 @@
     "Quire.Mcd.RngValInterpolate::iterator_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.RngValInterpolate::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer::.ctor`0()->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mcd.RuntimeOptions::.cctor`0()->[System.Runtime]System.Void|True": "untested",
+    "Quire.Mcd.RuntimeOptions::.cctor`0()->[System.Runtime]System.Void|True": "compared",
     "Quire.Mcd.RuntimeOptions::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.RuntimeOptions::RemoveUnitSystem`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.RuntimeOptions::SaveThreadOptions`0()->[Quire.Mpl]Quire.Mcd.RuntimeOptions|True": "compared",
@@ -900,9 +900,9 @@
     "Quire.Mcd.Type::get_Name`0()->[System.Runtime]System.String|False": "declaration_only",
     "Quire.Mcd.Type::get_Root`0()->[System.Runtime]System.Char|False": "compared",
     "Quire.Mcd.Type::set_Item`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mcd.Unit::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.Double,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Unit::ToString`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Unit::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": "untested",
+    "Quire.Mcd.Unit::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.Double,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Unit::ToString`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Unit::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": "compared",
     "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[],[Quire.Mpl]Quire.Mcd.Unit)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.UnitSystem+Default::CompareTo`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|False": "compared",
@@ -926,7 +926,7 @@
     "Quire.Mcd.UnitSystem::Normalize`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
     "Quire.Mcd.UnitSystem::Reset`0()->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
     "Quire.Mcd.UnitSystem::Simplify`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
-    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": "uncovered",
+    "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.Int32[])->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
     "Quire.Mcd.UnitSystem::Simplify`0([System.Runtime]System.String)->[Quire.Mpl]Quire.Mcd.Units|False": "compared",
     "Quire.Mcd.UnitSystem::ToString`0()->[System.Runtime]System.String|False": "compared",
     "Quire.Mcd.UnitSystem::get_Basis`0()->[Quire.Mpl]Quire.Mcd.Unit[]|False": "compared",
@@ -944,15 +944,15 @@
     "Quire.Mcd.UnitSystemGroup::Reset`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
     "Quire.Mcd.UnitSystemGroup::addCopyWithRONumber`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
     "Quire.Mcd.UnitSystemGroup::addMember`0([Quire.Mpl]Quire.Mcd.UnitSystem)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mcd.UnitSystemGroup::changeMember`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "uncovered",
+    "Quire.Mcd.UnitSystemGroup::changeMember`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Unit[],[Quire.Mpl]Quire.Mcd.Unit[])->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.UnitSystemGroup::findMember`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.UnitSystem|False": "compared",
     "Quire.Mcd.UnitSystemGroup::get_Name`0()->[System.Runtime]System.String|False": "compared",
     "Quire.Mcd.UnitSystemGroup::removeMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.UnitSystemGroup::resetMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Unit,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Units+Power[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Units::ToString`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mcd.Units::get_magnitude`0()->[System.Runtime]System.Double|False": "untested",
+    "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Unit,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Units+Power[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Units::ToString`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Units::get_magnitude`0()->[System.Runtime]System.Double|False": "compared",
     "Quire.Mcd.Utilities::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.Utilities::AssertFinite`0([Quire.Mpl]Quire.Mcd.num_val)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mcd.Utilities::AssertFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Void|True": "compared",
@@ -3144,6 +3144,9 @@
     "Quire.Mcd.RuntimeOptions+RuntimeOptionsInitializer::.ctor`0()->[System.Runtime]System.Void|False": [
       "runtimeoptionsdifferentialtests"
     ],
+    "Quire.Mcd.RuntimeOptions::.cctor`0()->[System.Runtime]System.Void|True": [
+      "runtimeoptionsdifferentialtests"
+    ],
     "Quire.Mcd.RuntimeOptions::.ctor`0()->[System.Runtime]System.Void|False": [
       "runtimeoptionsdifferentialtests"
     ],
@@ -3384,6 +3387,15 @@
     "Quire.Mcd.Type::set_Item`0([System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Type)->[System.Runtime]System.Void|False": [
       "typedifferentialtests"
     ],
+    "Quire.Mcd.Unit::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.String,[System.Runtime]System.Double,[System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.Unit::ToString`0()->[System.Runtime]System.String|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.Unit::get_Dimensions`0()->[Quire.Mpl]Quire.Mcd.Type+Product|False": [
+      "unitsystemdifferentialtests"
+    ],
     "Quire.Mcd.UnitSystem+Default::.ctor`0([System.Runtime]System.Int32[])->[System.Runtime]System.Void|False": [
       "unitsystemdifferentialtests"
     ],
@@ -3521,6 +3533,18 @@
     ],
     "Quire.Mcd.UnitSystemGroup::resetMember`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "runtimeoptionsdifferentialtests"
+    ],
+    "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Unit,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Units+Power[])->[System.Runtime]System.Void|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.Units::ToString`0()->[System.Runtime]System.String|False": [
+      "unitsystemdifferentialtests"
+    ],
+    "Quire.Mcd.Units::get_magnitude`0()->[System.Runtime]System.Double|False": [
+      "unitsystemdifferentialtests"
     ],
     "Quire.Mcd.Utilities::.ctor`0()->[System.Runtime]System.Void|False": [
       "utilitiesdifferentialtests"
@@ -4783,10 +4807,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.RuntimeOptions": {
-      "compared": 4,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 1,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
@@ -4933,24 +4957,24 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.Unit": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
-      "verified_unsupported": 3
+      "verified_unsupported": 0
     },
     "Quire.Mcd.UnitSystem": {
-      "compared": 31,
+      "compared": 32,
       "declaration_only": 0,
       "excluded": 0,
       "missing": 0,
       "structure_mismatch": 0,
       "total": 32,
-      "uncovered": 1,
-      "verified_unsupported": 1
+      "uncovered": 0,
+      "verified_unsupported": 0
     },
     "Quire.Mcd.UnitSystem+Default": {
       "compared": 5,
@@ -4963,24 +4987,24 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.UnitSystemGroup": {
-      "compared": 8,
+      "compared": 9,
       "declaration_only": 0,
       "excluded": 0,
       "missing": 0,
       "structure_mismatch": 0,
       "total": 9,
-      "uncovered": 1,
-      "verified_unsupported": 1
+      "uncovered": 0,
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Units": {
-      "compared": 0,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
-      "structure_mismatch": 1,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 4,
       "uncovered": 0,
-      "verified_unsupported": 4
+      "verified_unsupported": 0
     },
     "Quire.Mcd.Utilities": {
       "compared": 8,
