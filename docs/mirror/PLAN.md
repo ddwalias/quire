@@ -15,7 +15,7 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 2. **Mirror:** Apply rules below. Analyze shared dependencies once, then implement and test the batch.
    Run affected behavior/regression and feasible differential tests; inspect failures, retain concise results.
    Refresh coverage/status once after member changes. Implement a stub by deleting its whole `[MirrorStub]` line
-   pair from `Generated/Mirror` (the gate allows only that there) and declaring the member with the same shape; never
+   pair from `Generated/Mirror` (the gate allows only that there; constant stubs stay) and declaring the member with the same shape; never
    commit `docs/mirror/manifest/*` (maintainer-owned: `git checkout main -- docs/mirror/manifest`). Regeneration and
    shape changes are maintainer work; never auto-accept removals. Broaden/repeat checks only for changes or unresolved failures.
 3. **Checkpoint:** Update member evidence/status, then replace WORK with remaining exact members, next action,
