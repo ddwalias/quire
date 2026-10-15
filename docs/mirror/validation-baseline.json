@@ -1010,7 +1010,7 @@
     "Quire.Mpl.MplSignature::get_ArgTypes`0()->[System.Runtime]System.Type[]|False": "compared",
     "Quire.Mpl.MplSignature::get_RetType`0()->[System.Runtime]System.Type|False": "compared",
     "Quire.Mpl.Run.AbortRequestedException::.ctor`0()->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mpl.Run.AppException::.cctor`0()->[System.Runtime]System.Void|True": "untested",
+    "Quire.Mpl.Run.AppException::.cctor`0()->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Exception)->[System.Runtime]System.Void|False": "compared",
@@ -1885,7 +1885,7 @@
     "Quire.Mpl.Run.SCons::walk_expression`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "uncovered",
     "Quire.Mpl.Run.SCons::walk_expressions`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "compared",
     "Quire.Mpl.Run.SCons::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "uncovered",
-    "Quire.Mpl.Run.SCons::walk_patterns`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "uncovered",
+    "Quire.Mpl.Run.SCons::walk_patterns`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "compared",
     "Quire.Mpl.Run.SList::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Cons,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.SList::.ctor`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.SList::FormatCons`0([Quire.Mpl]Quire.Mpl.Run.Cons)->[System.Runtime]System.String|True": "compared",
@@ -1905,7 +1905,7 @@
     "Quire.Mpl.Run.Sexpr::NotImplemented`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.Sexpr::QuotationNotImplemented`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.Sexpr::SyntaxError`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|True": "compared",
-    "Quire.Mpl.Run.Sexpr::WalkModule`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "untested",
+    "Quire.Mpl.Run.Sexpr::WalkModule`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "uncovered",
     "Quire.Mpl.Run.Sexpr::Walk`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Object[]|True": "compared",
     "Quire.Mpl.Run.Sexpr::get_AsKey`0()->[Quire.Mpl]Quire.Mpl.Run.Sym|False": "compared",
     "Quire.Mpl.Run.Sexpr::get_AsStr`0()->[System.Runtime]System.String|False": "compared",
@@ -1945,7 +1945,7 @@
     "Quire.Mpl.Run.Sym::get_quote_atom`0()->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "compared",
     "Quire.Mpl.Run.Sym::get_uid`0()->[System.Runtime]System.UInt32|False": "compared",
     "Quire.Mpl.Run.Sym::set_uid`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mpl.Run.Sym::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False": "untested",
+    "Quire.Mpl.Run.Sym::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False": "uncovered",
     "Quire.Mpl.Run.Sym::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False": "uncovered",
     "Quire.Mpl.Run.Sym::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "uncovered",
     "Quire.Mpl.Run.Tag::.ctor`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
@@ -1970,7 +1970,7 @@
     "Quire.Mpl.Run.True::.cctor`0()->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.True::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.True::ToString`0()->[System.Runtime]System.String|False": "compared",
-    "Quire.Mpl.Run.Tuple::.cctor`0()->[System.Runtime]System.Void|True": "untested",
+    "Quire.Mpl.Run.Tuple::.cctor`0()->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.Tuple::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Tuple::AllObjects`0([System.Runtime]System.Type[])->[System.Runtime]System.Boolean|True": "compared",
     "Quire.Mpl.Run.Tuple::GetFieldInfo`0([System.Runtime]System.Type,[System.Runtime]System.Int32)->[System.Runtime]System.Reflection.FieldInfo|True": "compared",
@@ -3570,6 +3570,9 @@
     "Quire.Mpl.Run.AbortRequestedException::.ctor`0()->[System.Runtime]System.Void|False": [
       "appexceptiondifferentialtests"
     ],
+    "Quire.Mpl.Run.AppException::.cctor`0()->[System.Runtime]System.Void|True": [
+      "appexceptiondifferentialtests"
+    ],
     "Quire.Mpl.Run.AppException::.ctor`0([System.Runtime]System.Exception,[System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
       "appexceptiondifferentialtests"
     ],
@@ -4099,6 +4102,9 @@
     "Quire.Mpl.Run.Sexpr::SyntaxError`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|True": [
       "sexprdifferentialtests"
     ],
+    "Quire.Mpl.Run.Sexpr::WalkModule`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": [
+      "sexprdifferentialtests"
+    ],
     "Quire.Mpl.Run.Sexpr::Walk`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Object[]|True": [
       "sexprdifferentialtests"
     ],
@@ -4216,6 +4222,9 @@
     "Quire.Mpl.Run.Sym::set_uid`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
       "sexprdifferentialtests"
     ],
+    "Quire.Mpl.Run.Sym::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False": [
+      "sexprdifferentialtests"
+    ],
     "Quire.Mpl.Run.Sym::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False": [
       "sexprdifferentialtests"
     ],
@@ -4274,6 +4283,9 @@
     "Quire.Mpl.Run.True::ToString`0()->[System.Runtime]System.String|False": [
       "mplrunhelpersdifferentialtests",
       "rtsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Tuple::.cctor`0()->[System.Runtime]System.Void|True": [
+      "mplrunhelpersdifferentialtests"
     ],
     "Quire.Mpl.Run.Tuple::.ctor`0()->[System.Runtime]System.Void|False": [
       "mplrunhelpersdifferentialtests"
@@ -5061,10 +5073,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.AppException": {
-      "compared": 29,
+      "compared": 30,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 1,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 31,
       "uncovered": 1,
@@ -6161,14 +6173,14 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.SCons": {
-      "compared": 25,
+      "compared": 26,
       "declaration_only": 0,
       "excluded": 0,
       "missing": 0,
       "structure_mismatch": 0,
       "total": 29,
-      "uncovered": 4,
-      "verified_unsupported": 2
+      "uncovered": 3,
+      "verified_unsupported": 1
     },
     "Quire.Mpl.Run.SList": {
       "compared": 4,
@@ -6184,20 +6196,20 @@
       "compared": 27,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 1,
       "structure_mismatch": 0,
       "total": 34,
-      "uncovered": 5,
+      "uncovered": 6,
       "verified_unsupported": 6
     },
     "Quire.Mpl.Run.Sym": {
       "compared": 21,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 1,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 24,
-      "uncovered": 2,
+      "uncovered": 3,
       "verified_unsupported": 1
     },
     "Quire.Mpl.Run.Tag": {
@@ -6241,10 +6253,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Tuple": {
-      "compared": 11,
+      "compared": 12,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 1,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 12,
       "uncovered": 0,
