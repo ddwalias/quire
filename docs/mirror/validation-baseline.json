@@ -756,29 +756,29 @@
     "Quire.Mcd.RangeIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
     "Quire.Mcd.RangeIterator::ri_first`0()->[System.Runtime]System.Object|False": "compared",
     "Quire.Mcd.RangeIterator::ri_next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
-    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": "structure_mismatch",
-    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Rational::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Rational::GCD`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "untested",
-    "Quire.Mcd.Rational::GetHashCode`0()->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.Rational::ToString`0()->[System.Runtime]System.String|False": "structure_mismatch",
-    "Quire.Mcd.Rational::get_IsIntegral`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.Rational::op_Division`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": "untested",
-    "Quire.Mcd.Rational::op_Division`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "untested",
-    "Quire.Mcd.Rational::op_Equality`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.Rational::op_Explicit`0([Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Int32|True": "untested",
-    "Quire.Mcd.Rational::op_GreaterThanOrEqual`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.Rational::op_GreaterThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.Rational::op_Implicit`0([Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Double|True": "untested",
-    "Quire.Mcd.Rational::op_Implicit`0([System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Rational|True": "untested",
-    "Quire.Mcd.Rational::op_Implicit`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "untested",
-    "Quire.Mcd.Rational::op_Inequality`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.Rational::op_LessThanOrEqual`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.Rational::op_LessThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "untested",
-    "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": "untested",
-    "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "untested",
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Rational::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Rational::GCD`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
+    "Quire.Mcd.Rational::GetHashCode`0()->[System.Runtime]System.Int32|False": "compared",
+    "Quire.Mcd.Rational::ToString`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mcd.Rational::get_IsIntegral`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.Rational::op_Division`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": "compared",
+    "Quire.Mcd.Rational::op_Division`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "compared",
+    "Quire.Mcd.Rational::op_Equality`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Rational::op_Explicit`0([Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Int32|True": "compared",
+    "Quire.Mcd.Rational::op_GreaterThanOrEqual`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Rational::op_GreaterThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Rational::op_Implicit`0([Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Double|True": "compared",
+    "Quire.Mcd.Rational::op_Implicit`0([System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Rational|True": "compared",
+    "Quire.Mcd.Rational::op_Implicit`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "compared",
+    "Quire.Mcd.Rational::op_Inequality`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Rational::op_LessThanOrEqual`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Rational::op_LessThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": "compared",
+    "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": "compared",
     "Quire.Mcd.RngVal::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.RngVal::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.RngVal::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
@@ -953,14 +953,14 @@
     "Quire.Mcd.Units::.ctor`0([Quire.Mpl]Quire.Mcd.Units+Power[])->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.Units::ToString`0()->[System.Runtime]System.String|False": "untested",
     "Quire.Mcd.Units::get_magnitude`0()->[System.Runtime]System.Double|False": "untested",
-    "Quire.Mcd.Utilities::.ctor`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Utilities::AssertFinite`0([Quire.Mpl]Quire.Mcd.num_val)->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mcd.Utilities::AssertFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Void|True": "untested",
-    "Quire.Mcd.Utilities::Divide`0([System.Runtime]System.Object,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": "structure_mismatch",
-    "Quire.Mcd.Utilities::GetUnits`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|True": "untested",
-    "Quire.Mcd.Utilities::IsFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Boolean|True": "structure_mismatch",
-    "Quire.Mcd.Utilities::Multiply`0([System.Runtime]System.Object,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": "untested",
-    "Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True": "structure_mismatch",
+    "Quire.Mcd.Utilities::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Utilities::AssertFinite`0([Quire.Mpl]Quire.Mcd.num_val)->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mcd.Utilities::AssertFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mcd.Utilities::Divide`0([System.Runtime]System.Object,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mcd.Utilities::GetUnits`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|True": "compared",
+    "Quire.Mcd.Utilities::IsFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Boolean|True": "compared",
+    "Quire.Mcd.Utilities::Multiply`0([System.Runtime]System.Object,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": "compared",
+    "Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mcd.num_val::.ctor`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.num_val::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Internal.AffineUnit::.ctor`0([Quire.Mpl]Quire.Mpl.Internal.AffineUnit)->[System.Runtime]System.Void|False": "no_counterpart",
@@ -2883,6 +2883,75 @@
     "Quire.Mcd.RangeIterator::ri_next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": [
       "rngvaldifferentialtests"
     ],
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Void|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::.ctor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::GCD`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::GetHashCode`0()->[System.Runtime]System.Int32|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::ToString`0()->[System.Runtime]System.String|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::get_IsIntegral`0()->[System.Runtime]System.Boolean|False": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Division`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Division`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Equality`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Explicit`0([Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Int32|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_GreaterThanOrEqual`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_GreaterThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Implicit`0([Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Double|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Implicit`0([System.Runtime]System.Double)->[Quire.Mpl]Quire.Mcd.Rational|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Implicit`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Inequality`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_LessThanOrEqual`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_LessThan`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[System.Runtime]System.Boolean|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[Quire.Mpl]Quire.Mcd.Rational)->[Quire.Mpl]Quire.Mcd.Rational|True": [
+      "rationaldifferentialtests"
+    ],
+    "Quire.Mcd.Rational::op_Multiply`0([Quire.Mpl]Quire.Mcd.Rational,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Rational|True": [
+      "rationaldifferentialtests"
+    ],
     "Quire.Mcd.RngVal::.ctor`0([Quire.Mpl]Quire.Mcd.RngVal)->[System.Runtime]System.Void|False": [
       "rngvaldifferentialtests"
     ],
@@ -2993,6 +3062,30 @@
     ],
     "Quire.Mcd.StrVal::get_m_string`0()->[System.Runtime]System.String|False": [
       "numvaldifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::.ctor`0()->[System.Runtime]System.Void|False": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::AssertFinite`0([Quire.Mpl]Quire.Mcd.num_val)->[System.Runtime]System.Void|True": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::AssertFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Void|True": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::Divide`0([System.Runtime]System.Object,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::GetUnits`0([Quire.Mpl]Quire.Mcd.Type+Product)->[Quire.Mpl]Quire.Mcd.Units|True": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::IsFinite`0([System.Runtime]System.Double)->[System.Runtime]System.Boolean|True": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::Multiply`0([System.Runtime]System.Object,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": [
+      "utilitiesdifferentialtests"
+    ],
+    "Quire.Mcd.Utilities::ScaleVector`0([System.Runtime]System.Double[],[System.Runtime]System.Double)->[System.Runtime]System.Void|True": [
+      "utilitiesdifferentialtests"
     ],
     "Quire.Mcd.num_val::.ctor`0([System.Runtime]System.Double)->[System.Runtime]System.Void|False": [
       "numvaldifferentialtests"
@@ -4084,14 +4177,14 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.Rational": {
-      "compared": 0,
+      "compared": 23,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 21,
-      "structure_mismatch": 2,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 23,
       "uncovered": 0,
-      "verified_unsupported": 23
+      "verified_unsupported": 0
     },
     "Quire.Mcd.RngVal": {
       "compared": 26,
@@ -4314,14 +4407,14 @@
       "verified_unsupported": 4
     },
     "Quire.Mcd.Utilities": {
-      "compared": 0,
+      "compared": 8,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 5,
-      "structure_mismatch": 3,
+      "missing": 0,
+      "structure_mismatch": 0,
       "total": 8,
       "uncovered": 0,
-      "verified_unsupported": 6
+      "verified_unsupported": 0
     },
     "Quire.Mcd.num_val": {
       "compared": 2,
