@@ -136,7 +136,7 @@ def name_changes(name_status):
     return list(zip(fields[0::2], fields[1::2]))
 
 
-def changed_types(coverage, name_status, previous=None, sources=None):
+def changed_types(coverage, name_status, previous=None, sources=None, test_types=None):
     """Types to mutate given `git diff -z --no-renames --name-status` output: those whose Quire.Mpl source was added
     or changed, and those whose comparisons live, or lived according to the baseline's `previous` method -> test
     classes map, in a test class changed_test_classes reports (a method whose cases were cut or whose test file was
@@ -157,12 +157,12 @@ def changed_types(coverage, name_status, previous=None, sources=None):
         # A file with no method bodies (enums, interfaces, attributes) has no sequence points and nothing to mutate.
         if name.lower().startswith("src/quire.mpl/") and name.lower().endswith(".cs"):
             types |= sources_by_file.get(name, set())
-    test_classes = changed_test_classes(changes, sources)
+    test_classes, _ = changed_test_classes(changes, sources, test_types)
     types |= {m["type"] for m in coverage["methods"]
-              if any(test_class(case["test"]) in test_classes for case in m.get("cases", []))}
+              if touches(test_classes, {test_class(case["test"]) for case in m.get("cases", [])})}
     known = {m["type"] for m in coverage["methods"]}
     types |= {name.split("::", 1)[0] for name, classes in (previous or {}).items()
-              if test_classes & set(classes) and name.split("::", 1)[0] in known}
+              if touches(test_classes, set(classes)) and name.split("::", 1)[0] in known}
     return types
 
 
@@ -170,22 +170,53 @@ def changed_types(coverage, name_status, previous=None, sources=None):
 DECLARATION = re.compile(r"^[ \t]*(?:(?:public|private|protected|internal|static|sealed|abstract|partial|readonly|ref|"
                          r"unsafe|file|new)\s+)*(?:class|struct|interface|enum|record(?:\s+(?:class|struct))?)\s+"
                          r"([A-Za-z_]\w*)", re.M)
+# changed_test_classes' answer when it cannot tell which classes a change reaches: every one.
+ALL_TEST_CLASSES = "all"
 
 
-def changed_test_classes(changes, sources=None):
-    """Lower-cased test classes whose behaviour an added, changed or deleted differential test file can change: the
-    classes it declares (the lint holds an agent test file to one top-level class named after it; nested classes count
-    as it), and, transitively, every class declared in a differential test source (`sources`, path -> text) that
-    names one of those classes, since shared helpers (`MatValDifferentialTests.Storage`) are used across classes.
-    Matching is textual on identifiers: conservative, it may select more than needed."""
-    sources = sources or {}
-    names = set()
-    affected = set()
-    for status, path in changes:
-        if status[0] in "AMD" and path.lower().startswith(DIFFERENTIAL_TESTS.lower()) and path.lower().endswith(".cs"):
-            names.add(Path(path).stem)
-            affected.add(path)
-            names |= set(DECLARATION.findall(sources.get(path, "")))
+def touches(test_classes, classes):
+    return bool(classes) and (test_classes == ALL_TEST_CLASSES or bool(test_classes & classes))
+
+
+def changed_test_classes(changes, sources=None, test_types=None):
+    """(lower-cased test classes, how) whose behaviour an added, changed or deleted differential test file can change:
+    the classes declared in it (the lint holds an agent test file to one top-level class named after it; nested
+    classes count as it), and, transitively, every class that uses one of those, since shared helpers
+    (`MatValDifferentialTests.Storage`, extension methods) are used across classes. Uses come from the built test
+    assembly's IL when `test_types` (the inventory's `test_types`, with `references`) is given (`how` = "IL"); else
+    from a textual identifier match over `sources` (path -> text; "text"), which misses extension-method calls;
+    with neither, every class counts as changed ("all")."""
+    files = [(status, path) for status, path in changes if status[0] in "AMD"
+             and path.lower().startswith(DIFFERENTIAL_TESTS.lower()) and path.lower().endswith(".cs")]
+    if not files:
+        return set(), "none"
+    stems = {Path(path).stem for _, path in files}
+    if test_types and all("references" in t for t in test_types):
+        root = ROOT.resolve().as_posix().lower() + "/"
+        paths = {path.lower() for _, path in files}
+        def relative(document):
+            document = Path(document).as_posix().lower()
+            return document[len(root):] if document.startswith(root) else document
+        simple = lambda name: name.rsplit(".", 1)[-1]
+        affected = {t["name"] for t in test_types
+                    if simple(t["name"]) in stems or any(relative(d) in paths for d in t["documents"])}
+        users = {}
+        for t in test_types:
+            for reference in t["references"]:
+                users.setdefault(reference, set()).add(t["name"])
+        pending = list(affected)
+        while pending:
+            for user in users.get(pending.pop(), ()):
+                if user not in affected:
+                    affected.add(user)
+                    pending.append(user)
+        return {simple(n).lower() for n in affected} | {s.lower() for s in stems}, "IL"
+    if sources is None:
+        return ALL_TEST_CLASSES, "all"
+    names = set(stems)
+    affected = {path for _, path in files}
+    for _, path in files:
+        names |= set(DECLARATION.findall(sources.get(path, "")))
     while names:
         pattern = re.compile(r"\b(?:" + "|".join(sorted(map(re.escape, names))) + r")\b")
         grown = {path for path, text in sources.items() if path not in affected and pattern.search(text)}
@@ -194,7 +225,13 @@ def changed_test_classes(changes, sources=None):
         affected |= grown
         for path in grown:
             names |= {Path(path).stem, *DECLARATION.findall(sources[path])}
-    return {n.lower() for n in names}
+    return {n.lower() for n in names}, "text"
+
+
+def is_accessor(method):
+    """A property, indexer or event accessor, or a compiler-generated method inside one."""
+    names = [method["signature"].split("`")[0], (method.get("owner") or {}).get("name") or ""]
+    return any(n.split(".")[-1].startswith(("get_", "set_", "add_", "remove_")) for n in names)
 
 
 def slot_of_key(signature):
@@ -217,7 +254,7 @@ def slot_of_key(signature):
     return f"{match.group(1).split('.')[-1]}`{match.group(2)}/{0 if empty else count + 1}"
 
 
-def changed_methods(coverage, name_status, baseline, sources=None):
+def changed_methods(coverage, name_status, baseline, sources=None, test_types=None):
     """(method key -> reasons, notes) for the methods the gate mutates (validation.md, "What the gate mutates"). A
     mutant's outcome depends on its method's IL, the tests that compare the method, and what runs under those tests.
     Changed are methods whose IL body hash differs from the baseline's (new methods included), and the hand-written
@@ -225,9 +262,11 @@ def changed_methods(coverage, name_status, baseline, sources=None):
     changed methods; methods compared by tests changed_test_classes reports, now or according to the baseline's
     method -> test classes map; methods compared now but not in the baseline; direct callers of a changed method by
     token, or through a virtual call to its slot, or to the slot of a method the baseline has and the build lacks (a
-    removed override); and readers of a field that a changed or removed method writes, now or in the baseline.
-    `baseline` must hold `bodies` (schema 4)."""
-    test_classes = changed_test_classes(name_changes(name_status), sources)
+    removed override); readers of a field that a changed or removed method writes, now or in the baseline, where
+    reading a field that holds a mutable reference (an array or collection a method may fill) counts as writing it;
+    and, when such a reader is an accessor, its callers, through chains of accessors. `baseline` must hold `bodies`
+    (schema 4)."""
+    test_classes, how = changed_test_classes(name_changes(name_status), sources, test_types)
     bodies, previous, stages = baseline["bodies"], baseline.get("tests") or {}, baseline.get("methods") or {}
     old_writes = baseline.get("writes") or {}
     rows = {f"{m['type']}::{m['signature']}": m for m in coverage["methods"]}
@@ -246,7 +285,7 @@ def changed_methods(coverage, name_status, baseline, sources=None):
         if m.get("body_sha256") and bodies.get(name) != m["body_sha256"]:
             changed.add(name)
             select(name, "IL changed" if name in bodies else "new body")
-        if test_classes & ({test_class(c["test"]) for c in m.get("cases", [])} | set(previous.get(name, []))):
+        if touches(test_classes, {test_class(c["test"]) for c in m.get("cases", [])} | set(previous.get(name, []))):
             select(name, "comparing tests changed")
         if m.get("validation") == "compared" and stages.get(name) != "compared":
             select(name, "newly compared")
@@ -260,9 +299,9 @@ def changed_methods(coverage, name_status, baseline, sources=None):
     tokens = {(rows[n].get("project"), rows[n]["token"]) for n in changed}
     slots = {rows[n]["slot"] for n in changed if rows[n].get("slot")}
     slots |= {slot_of_key(n.split("::", 1)[1]) for n in removed if n.endswith("|False")}
-    written = {f for n in changed for f in rows[n].get("field_writes", [])}
+    written = {f for n in changed for f in rows[n].get("field_writes", []) + rows[n].get("reference_reads", [])}
     written |= {f for n in changed | removed for f in old_writes.get(n, [])}
-    callers = {}
+    callers, readers = {}, []
     for name, m in rows.items():
         if any((m.get("project"), t) in tokens for t in m.get("calls", [])):
             select(name, "calls a changed method")
@@ -271,7 +310,23 @@ def changed_methods(coverage, name_status, baseline, sources=None):
             callers[slot] = callers.get(slot, 0) + 1
         if written & set(m.get("field_reads", [])):
             select(name, "reads a field a changed method writes")
+            readers.append(name)
+    # A getter that reads such a field passes its value on: its callers see the change too, through accessor chains.
+    pending = [n for n in readers if is_accessor(rows[n])]
+    pending += [o for n in pending for o, m in rows.items() if rows[n].get("owner")
+                and m["type"] == rows[n]["owner"]["type"] and m["signature"].split("`")[0] == rows[n]["owner"]["name"]]
+    seen = set(pending)
+    while pending:
+        accessor = rows[pending.pop()]
+        token, slot = (accessor.get("project"), accessor["token"]), accessor.get("slot")
+        for name, m in rows.items():
+            if token in {(m.get("project"), t) for t in m.get("calls", [])} or slot in m.get("virtual_calls", []):
+                select(name, "calls an accessor that reads a changed field")
+                if is_accessor(m) and name not in seen:
+                    seen.add(name)
+                    pending.append(name)
     notes += [f"slot {slot} selects {n} callers (all kept)" for slot, n in sorted(callers.items()) if n > WIDE_SLOT]
+    notes.append(f"test class dependencies: {how}")
     return reasons, notes
 
 
@@ -592,7 +647,8 @@ def main():
                                               if m["validation"] == "compared")
         if any(m["proposed_exempt_lines"] for m in coverage["methods"]):
             print("Coverage passes only with proposed unreachable lines, which await maintainer acceptance", flush=True)
-        integrity = integrity_module.check(json.loads(inventory_path.read_text()), findings=lint_findings)
+        inventory = json.loads(inventory_path.read_text())
+        integrity = integrity_module.check(inventory, findings=lint_findings)
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
         report["integrity"] = {"lint": len(integrity["lint"]), "complete": integrity["complete"]}
         print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
@@ -605,7 +661,8 @@ def main():
         mutate_methods = {}
         if args.mutate_since:
             # Also refuses PDB paths outside the repository, whichever scope applies.
-            types = changed_types(coverage, changed_names, (baseline or {}).get("tests"), sources)
+            types = changed_types(coverage, changed_names, (baseline or {}).get("tests"), sources,
+                                  inventory.get("test_types"))
             report["mutate_since"] = args.mutate_since
             if args.mutate_all or args.mutate_types_wide or not (baseline or {}).get("bodies"):
                 # Without the baseline's body hashes nothing says which methods changed: whole types, as before.
@@ -613,7 +670,8 @@ def main():
                 report["mutation_scope"] = ("types (requested)" if args.mutate_types_wide or args.mutate_all
                                             else "types (baseline has no body hashes)")
             else:
-                mutate_methods, notes = changed_methods(coverage, changed_names, baseline, sources)
+                mutate_methods, notes = changed_methods(coverage, changed_names, baseline, sources,
+                                                        inventory.get("test_types"))
                 report["mutation_scope"] = "changed methods"
                 report["mutation_notes"] = notes
                 for note in notes:

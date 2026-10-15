@@ -152,7 +152,7 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
         structure_differences = differences ?? [],
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
         body_sha256 = body?.Hash, calls = body?.Calls ?? [], virtual_calls = body?.VirtualCalls ?? [],
-        field_reads = body?.Reads ?? [], field_writes = body?.Writes ?? [], is_virtual = isVirtual,
+        field_reads = body?.Reads ?? [], field_writes = body?.Writes ?? [], reference_reads = body?.ReferenceReads ?? [], is_virtual = isVirtual,
         slot = isVirtual ? bodies[artifact].Slot(MetadataTokens.MethodDefinitionHandle(raw.Token)) : null,
         mutants = raw.BodyRva == 0 || exclusion != null && Owner(raw.Owner, raw.Name) == null ? []
             : Mutants.Find(artifact.Pe, artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)))
@@ -181,7 +181,8 @@ if (File.Exists(testAssembly))
         if (!type.GetDeclaringType().IsNil) continue;
         string name = md.GetString(type.Namespace) is { Length: > 0 } ns ? ns + "." + md.GetString(type.Name) : md.GetString(type.Name);
         if (name == "<Module>") continue;
-        testTypes.Add(new { name, documents = Documents(type).Distinct().Order().ToArray() });
+        testTypes.Add(new { name, documents = Documents(type).Distinct().Order().ToArray(),
+            references = TestTypes.References(md, pe, handle).Select(h => TestTypes.Name(md, h)).Order().ToArray() });
     }
 }
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
@@ -189,30 +190,9 @@ File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, e
 Console.WriteLine($"Method inventory: {rows.Count} declarations, {errors.Count} inspection errors; {output}");
 return errors.Count == 0 && rows.Count > 0 ? 0 : 1;
 
-// The hand-written method a compiler-generated one implements: a lambda or local function `<Name>b__…`/`<Name>g__…`
-// (in the type or a `<>c…` closure class), or an iterator/async state machine `<Name>d__…`. Null for shared closure
-// plumbing such as the constructors of `<>c`.
-static object? Owner(string typeName, string methodName)
-{
-    var parts = typeName.Split('+');
-    string type = string.Join('+', parts.TakeWhile(p => !p.StartsWith('<')));
-    // The text inside the leading <...>, brackets matched by depth (`<Ns.IFoo<T>.Bar>b__0_0`), unwrapped again when it
-    // is itself compiler-named (`<<Bar>g__Local|3_0>d` is the state machine of local function Local in Bar).
-    static string? Inner(string name)
-    {
-        if (!name.StartsWith('<')) return null;
-        int depth = 0;
-        for (int i = 0; i < name.Length; i++)
-        {
-            if (name[i] == '<') depth++;
-            else if (name[i] == '>' && --depth == 0)
-                return i <= 1 ? null : name[1] == '<' ? Inner(name[1..i]) : name[1..i];
-        }
-        return null;
-    }
-    string? name = Inner(methodName) ?? parts.Select(Inner).LastOrDefault(n => n != null);
-    return type.Length == 0 || name == null ? null : new { type, name };
-}
+// The hand-written method a compiler-generated one implements (CompilerGenerated.Owner), as the inventory spells it.
+static object? Owner(string typeName, string methodName) =>
+    CompilerGenerated.Owner(typeName, methodName) is { } owner ? new { type = owner.Type, name = owner.Name } : null;
 
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva);
 sealed class Artifact

@@ -30,7 +30,9 @@ def snapshot(coverage, integrity, profile):
                       for m in coverage['methods'] if m.get('cases')},
             'lint': sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint']),
             'bodies': {f"{m['type']}::{m['signature']}": m['body_sha256'] for m in coverage['methods'] if m.get('body_sha256')},
-            'writes': {f"{m['type']}::{m['signature']}": m['field_writes'] for m in coverage['methods'] if m.get('field_writes')}}
+            # Fields written, or read while holding a mutable reference (validate.changed_methods counts both).
+            'writes': {f"{m['type']}::{m['signature']}": sorted({*m.get('field_writes', []), *m.get('reference_reads', [])})
+                       for m in coverage['methods'] if m.get('field_writes') or m.get('reference_reads')}}
 
 
 def stage(method):

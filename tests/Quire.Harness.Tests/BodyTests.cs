@@ -20,6 +20,11 @@ public class BodyTests
     private static int OtherData(int i) => new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18 }[i];
     private static void Write(Holder<int> h) => h.Value = 1;
     private static int ReadValue(Holder<int> h) => h.Value;
+    private static readonly int[] Table = new int[3];
+    private static string Label = "";
+    private static void Fill() => Table[0] = Label.Length;
+    private static IEnumerable<int> Items() { yield return 1; }
+    private static async Task<int> Later() { await Task.Yield(); return 1; }
     private static int Constant() => 1;
     private static int Constant2() => 1;
 
@@ -59,4 +64,49 @@ public class BodyTests
         Assert.Equal(Body("Constant").Hash, Body("Constant2").Hash);
         Assert.NotEqual(Body("Data").Hash, Body("OtherData").Hash);
     }
+
+    [Fact]
+    public void Fields_holding_a_mutable_reference_count_as_written_through()
+    {
+        Assert.Equal([$"{typeof(BodyTests).FullName}::Table"], Body("Fill").ReferenceReads);
+        Assert.Equal([$"{typeof(BodyTests).FullName}::Label", $"{typeof(BodyTests).FullName}::Table"], Body("Fill").Reads);
+        Assert.Empty(Body("Fill").Writes);
+    }
+
+    [Theory]
+    [InlineData("Items")]
+    [InlineData("Later")]
+    public void Iterator_and_async_state_machines_belong_to_their_method(string method)
+    {
+        var machine = typeof(BodyTests).GetNestedTypes(System.Reflection.BindingFlags.NonPublic)
+            .Single(t => t.Name.StartsWith($"<{method}>d__"));
+        Assert.Equal((typeof(BodyTests).FullName!, method), CompilerGenerated.Owner(machine.FullName!, "MoveNext"));
+        Assert.Contains(Md.MethodDefinitions, h => Md.GetString(Md.GetMethodDefinition(h).Name) == "MoveNext"
+            && SigProvider.FullName(Md, Md.GetMethodDefinition(h).GetDeclaringType()) == machine.FullName);
+    }
+
+    [Fact]
+    public void Test_types_depend_on_the_helpers_their_IL_uses_including_extension_methods()
+    {
+        var user = Md.TypeDefinitions.Single(h => SigProvider.FullName(Md, h) == typeof(ExtensionUser).FullName);
+        var names = TestTypes.References(Md, Pe, user).Select(h => TestTypes.Name(Md, h)).ToList();
+        Assert.Contains(typeof(RenderExtensions).FullName!, names);
+        Assert.Contains(typeof(GenericHelper<>).FullName!, names);
+        Assert.DoesNotContain(typeof(BodyTests).FullName!, names);
+    }
+}
+
+public static class RenderExtensions
+{
+    public static string Render(this int value) => value.ToString();
+}
+
+public static class GenericHelper<T>
+{
+    public static List<T> Items { get; } = [];
+}
+
+public class ExtensionUser
+{
+    public string Show(int value) => value.Render() + GenericHelper<ExtensionUser>.Items.Count;
 }

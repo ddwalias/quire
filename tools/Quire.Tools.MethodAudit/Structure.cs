@@ -125,7 +125,8 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     }
 
     /// <summary>What <see cref="Body"/> reports of one method body.</summary>
-    public sealed record BodyFacts(string Hash, int[] Calls, string[] VirtualCalls, string[] Reads, string[] Writes);
+    public sealed record BodyFacts(string Hash, int[] Calls, string[] VirtualCalls, string[] Reads, string[] Writes,
+        string[] ReferenceReads);
 
     /// <summary>
     /// A SHA-256 of everything in the body that decides what it does, independent of metadata token numbering: each
@@ -136,7 +137,9 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     /// methods affected by another's change: the tokens of this module's methods the body references (calls,
     /// delegates, ldtoken; every same-named method of a local generic type reached through an instantiation), the
     /// dispatch slots (<see cref="SlotOf"/>) of its virtual calls, and the fields it reads and writes (taking a field's
-    /// address counts as both), as <c>DeclaringType::name</c> with generic instantiations reduced to their definition.
+    /// address counts as both), as <c>DeclaringType::name</c> with generic instantiations reduced to their definition;
+    /// and the fields it reads that hold a mutable reference (<see cref="HoldsReference"/>), through which it may change
+    /// what other readers see (an array or collection it fills) without storing to the field.
     /// </summary>
     public BodyFacts Body(MethodDefinitionHandle handle)
     {
@@ -154,6 +157,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var slots = new SortedSet<string>(StringComparer.Ordinal);
         var reads = new SortedSet<string>(StringComparer.Ordinal);
         var writes = new SortedSet<string>(StringComparer.Ordinal);
+        var referenceReads = new SortedSet<string>(StringComparer.Ordinal);
         while (il.RemainingBytes > 0)
         {
             text.Append(il.Offset).Append(' ');
@@ -191,7 +195,10 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                         text.Append(Field(token)).Append(' ').Append(Render(FieldType(token))).Append(InitialData(token));
                         string id = FieldId(token);
                         if (code == OpCodes.Ldfld || code == OpCodes.Ldsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
+                        {
                             reads.Add(id);
+                            if (HoldsReference(token)) referenceReads.Add(id);
+                        }
                         if (code == OpCodes.Stfld || code == OpCodes.Stsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
                             writes.Add(id);
                     }
@@ -208,12 +215,34 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
             text.Append('\n');
         }
         string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
-        return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes]);
+        return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads]);
     }
 
     private TypeSig FieldType(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition
         ? md.GetFieldDefinition((FieldDefinitionHandle)handle).DecodeSignature(decoder, null)
         : md.GetMemberReference((MemberReferenceHandle)handle).DecodeFieldSignature(decoder, null);
+
+    /// <summary>Whether a field's type may hold a mutable object: any reference type but <c>string</c>, and a type
+    /// parameter (it may be one).</summary>
+    private bool HoldsReference(EntityHandle handle)
+    {
+        var blob = md.GetBlobReader(handle.Kind == HandleKind.FieldDefinition
+            ? md.GetFieldDefinition((FieldDefinitionHandle)handle).Signature
+            : md.GetMemberReference((MemberReferenceHandle)handle).Signature);
+        blob.ReadSignatureHeader();
+        byte code = blob.ReadByte();
+        while (code is 0x1f or 0x20) // custom modifiers
+        {
+            blob.ReadTypeHandle();
+            code = blob.ReadByte();
+        }
+        return code switch
+        {
+            0x12 or 0x14 or 0x1c or 0x1d or 0x13 or 0x1e => true, // class, array, object, szarray, !n, !!n
+            0x15 => blob.ReadByte() == 0x12,                         // generic instance of a class
+            _ => false,                                              // primitives, string, value types, pointers
+        };
+    }
 
     /// <summary>The type definition a generic instantiation (<c>Foo&lt;int&gt;</c>) is made from; nil otherwise.</summary>
     private TypeDefinitionHandle GenericDefinition(EntityHandle parent)
@@ -382,5 +411,141 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         int nest = type.IndexOf('+');
         if (mapped == type && nest > 0) mapped = typeName(type[..nest]) + type[nest..];
         return string.Join("+", mapped.Split('+').Select(Member));
+    }
+}
+
+static class CompilerGenerated
+{
+    /// <summary>
+    /// The hand-written method a compiler-generated one implements: a lambda or local function <c>&lt;Name&gt;b__…</c> /
+    /// <c>&lt;Name&gt;g__…</c> (in the type or a <c>&lt;&gt;c…</c> closure class), or a method of an iterator or async
+    /// state machine <c>&lt;Name&gt;d__…</c>. Null for shared closure plumbing such as the constructors of <c>&lt;&gt;c</c>.
+    /// </summary>
+    public static (string Type, string Name)? Owner(string typeName, string methodName)
+    {
+        var parts = typeName.Split('+');
+        string type = string.Join('+', parts.TakeWhile(p => !p.StartsWith('<')));
+        // The text inside the leading <...>, brackets matched by depth (`<Ns.IFoo<T>.Bar>b__0_0`), unwrapped again when
+        // it is itself compiler-named (`<<Bar>g__Local|3_0>d` is the state machine of local function Local in Bar).
+        static string? Inner(string name)
+        {
+            if (!name.StartsWith('<')) return null;
+            int depth = 0;
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (name[i] == '<') depth++;
+                else if (name[i] == '>' && --depth == 0)
+                    return i <= 1 ? null : name[1] == '<' ? Inner(name[1..i]) : name[1..i];
+            }
+            return null;
+        }
+        string? name = Inner(methodName) ?? parts.Select(Inner).LastOrDefault(n => n != null);
+        return type.Length == 0 || name == null ? null : (type, name);
+    }
+}
+
+/// <summary>Dependencies between the top-level types of a test assembly, read from IL: which decide what a change
+/// to one test file can affect (shared helpers, including extension methods a text search cannot attribute).</summary>
+static class TestTypes
+{
+    public static string Name(MetadataReader md, TypeDefinitionHandle handle) => SigProvider.FullName(md, handle);
+
+    /// <summary>The top-level type declaring <paramref name="handle"/> (itself when it is top-level).</summary>
+    static TypeDefinitionHandle TopLevel(MetadataReader md, TypeDefinitionHandle handle)
+    {
+        while (md.GetTypeDefinition(handle).GetDeclaringType() is { IsNil: false } outer) handle = outer;
+        return handle;
+    }
+
+    /// <summary>Other top-level types of this assembly that <paramref name="top"/> or its nested types derive from,
+    /// or whose members or types their method bodies reference.</summary>
+    public static SortedSet<TypeDefinitionHandle> References(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, TypeDefinitionHandle top)
+    {
+        var found = new HashSet<TypeDefinitionHandle>();
+        void Type(EntityHandle handle)
+        {
+            switch (handle.Kind)
+            {
+                case HandleKind.TypeDefinition: found.Add(TopLevel(md, (TypeDefinitionHandle)handle)); break;
+                case HandleKind.TypeSpecification:
+                    // A generic instantiation, array or pointer: every type definition of this assembly in it.
+                    md.GetTypeSpecification((TypeSpecificationHandle)handle).DecodeSignature(new Collector(md, found), null);
+                    break;
+            }
+        }
+        void Member(EntityHandle handle)
+        {
+            switch (handle.Kind)
+            {
+                case HandleKind.MethodDefinition:
+                    Type(md.GetMethodDefinition((MethodDefinitionHandle)handle).GetDeclaringType()); break;
+                case HandleKind.FieldDefinition:
+                    Type(md.GetFieldDefinition((FieldDefinitionHandle)handle).GetDeclaringType()); break;
+                case HandleKind.MethodSpecification:
+                    var specification = md.GetMethodSpecification((MethodSpecificationHandle)handle);
+                    Member(specification.Method);
+                    specification.DecodeSignature(new Collector(md, found), null);
+                    break;
+                case HandleKind.MemberReference:
+                    Type(md.GetMemberReference((MemberReferenceHandle)handle).Parent); break;
+                default: Type(handle); break;
+            }
+        }
+        var types = new Stack<TypeDefinitionHandle>([top]);
+        while (types.Count > 0)
+        {
+            var type = md.GetTypeDefinition(types.Pop());
+            if (!type.BaseType.IsNil) Type(type.BaseType);
+            foreach (var nested in type.GetNestedTypes()) types.Push(nested);
+            foreach (var handle in type.GetMethods())
+            {
+                var method = md.GetMethodDefinition(handle);
+                if (method.RelativeVirtualAddress == 0) continue;
+                var il = pe.GetMethodBody(method.RelativeVirtualAddress).GetILReader();
+                while (il.RemainingBytes > 0)
+                {
+                    byte first = il.ReadByte();
+                    var code = StructureReader.Codes[first == 0xFE ? (ushort)(0xFE00 | il.ReadByte()) : first];
+                    switch (code.OperandType)
+                    {
+                        case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
+                            Member(MetadataTokens.EntityHandle(il.ReadInt32())); break;
+                        case OperandType.InlineSwitch: il.Offset += 4 * il.ReadInt32(); break;
+                        case OperandType.InlineNone: break;
+                        case OperandType.ShortInlineBrTarget or OperandType.ShortInlineI or OperandType.ShortInlineVar: il.Offset += 1; break;
+                        case OperandType.InlineVar: il.Offset += 2; break;
+                        case OperandType.InlineI8 or OperandType.InlineR: il.Offset += 8; break;
+                        default: il.Offset += 4; break;
+                    }
+                }
+            }
+        }
+        found.Remove(top);
+        return new SortedSet<TypeDefinitionHandle>(found, Comparer<TypeDefinitionHandle>.Create(
+            (a, b) => MetadataTokens.GetRowNumber(a).CompareTo(MetadataTokens.GetRowNumber(b))));
+    }
+
+    /// <summary>Records each type definition of this assembly a signature names; the shape it builds is unused.</summary>
+    sealed class Collector(MetadataReader md, HashSet<TypeDefinitionHandle> found) : ISignatureTypeProvider<int, object?>
+    {
+        public int GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind)
+        {
+            found.Add(TopLevel(md, handle));
+            return 0;
+        }
+        public int GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind) => 0;
+        public int GetTypeFromSpecification(MetadataReader reader, object? context, TypeSpecificationHandle handle, byte rawTypeKind) =>
+            reader.GetTypeSpecification(handle).DecodeSignature(this, context);
+        public int GetPrimitiveType(PrimitiveTypeCode typeCode) => 0;
+        public int GetSZArrayType(int elementType) => 0;
+        public int GetArrayType(int elementType, ArrayShape shape) => 0;
+        public int GetByReferenceType(int elementType) => 0;
+        public int GetPointerType(int elementType) => 0;
+        public int GetGenericInstantiation(int genericType, System.Collections.Immutable.ImmutableArray<int> typeArguments) => 0;
+        public int GetGenericTypeParameter(object? context, int index) => 0;
+        public int GetGenericMethodParameter(object? context, int index) => 0;
+        public int GetFunctionPointerType(MethodSignature<int> signature) => 0;
+        public int GetModifiedType(int modifier, int unmodifiedType, bool isRequired) => 0;
+        public int GetPinnedType(int elementType) => 0;
     }
 }

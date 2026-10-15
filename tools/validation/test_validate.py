@@ -42,7 +42,7 @@ class ChangedTypeTests(unittest.TestCase):
 
     def types(self, *names, status='M'):
         from validate import changed_types
-        return changed_types(self.coverage, ''.join(f'{status}\0{n}\0' for n in names))
+        return changed_types(self.coverage, ''.join(f'{status}\0{n}\0' for n in names), sources={})
 
     def test_changed_source_and_changed_tests_select_types(self):
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs'), {'Quire.Mcd.Dim'})
@@ -58,7 +58,7 @@ class ChangedTypeTests(unittest.TestCase):
         previous = {'Quire.Mcd.Dim::Pwr()': ['dimdifferentialtests'], 'Quire.Gone::X()': ['dimdifferentialtests']}
         for status in 'MD':  # cases cut from the file, or the whole file deleted
             names = f'{status}\0tests/Quire.Differential.Tests/DimDifferentialTests.cs\0'
-            self.assertEqual(changed_types(self.coverage, names, previous), {'Quire.Mcd.Dim'})
+            self.assertEqual(changed_types(self.coverage, names, previous, sources={}), {'Quire.Mcd.Dim'})
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs', status='D'), set())
 
     def test_source_without_methods_selects_nothing(self):
@@ -91,6 +91,8 @@ class ChangedMethodTests(unittest.TestCase):
             'Reader': method('R', 'r', reads=['Quire.T::f'], token=7),
             'Iterator': method('MoveNext', 'i', validation='excluded', owner=dict(type='Quire.T', name='B'),
                                type='Quire.T+<B>d__1', token=8),
+            'Async': method('MoveNext', 'as', validation='excluded', owner=dict(type='Quire.T', name='A'),
+                            type='Quire.T+<A>d__2', token=11),
             'BCaller': method('BC', 'bc', calls=[2], token=9),
         }
         self.baseline = {'bodies': {self.key(m): m['body_sha256'] for m in self.methods.values()},
@@ -101,10 +103,11 @@ class ChangedMethodTests(unittest.TestCase):
     def key(m):
         return f"{m['type']}::{m['signature']}"
 
-    def selected(self, names='', sources=None):
+    def selected(self, names='', sources=None, test_types=None):
         from validate import changed_methods
         status = ''.join(f'M\0{n}\0' for n in names.split()) if names else ''
-        reasons, _ = changed_methods({'methods': list(self.methods.values())}, status, self.baseline, sources)
+        sources = {} if sources is None and test_types is None else sources
+        reasons, _ = changed_methods({'methods': list(self.methods.values())}, status, self.baseline, sources, test_types)
         return {k.split('::')[1].split('`')[0] for k in reasons}
 
     def test_unchanged_build_selects_nothing(self):
@@ -141,6 +144,9 @@ class ChangedMethodTests(unittest.TestCase):
     def test_a_changed_state_machine_changes_its_owner_and_the_owners_callers(self):
         self.methods['Iterator']['body_sha256'] = 'i2'
         self.assertEqual(self.selected(), {'MoveNext', 'B', 'BC'})
+        self.methods['Iterator']['body_sha256'] = 'i'
+        self.methods['Async']['body_sha256'] = 'as2'  # an async method's state machine
+        self.assertEqual(self.selected(), {'MoveNext', 'A', 'Caller'})
 
     def test_changed_or_deleted_tests_select_the_methods_they_compare(self):
         self.assertEqual(self.selected('tests/Quire.Differential.Tests/BDifferentialTests.cs'), {'B'})
@@ -154,6 +160,43 @@ class ChangedMethodTests(unittest.TestCase):
                    'tests/Quire.Differential.Tests/CDifferentialTests.cs': 'class CDifferentialTests { }'}
         # B's helper reaches A through the protected Values class; C names neither.
         self.assertEqual(self.selected('tests/Quire.Differential.Tests/BDifferentialTests.cs', sources), {'A', 'B'})
+
+    def test_test_class_dependencies_come_from_the_built_assembly(self):
+        from validate import ROOT
+        file = f'{ROOT.resolve().as_posix()}/tests/Quire.Differential.Tests/BDifferentialTests.cs'
+        ns = 'Quire.Differential.Tests.'
+        test_types = [dict(name=ns + 'BDifferentialTests', documents=[file], references=[]),
+                      # A calls an extension method B declares: no textual mention of B, but an IL reference.
+                      dict(name=ns + 'ADifferentialTests', documents=[], references=[ns + 'BDifferentialTests']),
+                      dict(name=ns + 'CDifferentialTests', documents=[], references=[ns + 'ADifferentialTests'])]
+        self.assertEqual(self.selected('tests/Quire.Differential.Tests/BDifferentialTests.cs', test_types=test_types),
+                         {'A', 'B', 'Caller'})
+
+    def test_without_the_assembly_or_sources_every_test_class_counts_as_changed(self):
+        from validate import changed_methods
+        reasons, notes = changed_methods({'methods': list(self.methods.values())},
+                                         'M\0tests/Quire.Differential.Tests/BDifferentialTests.cs\0', self.baseline)
+        self.assertEqual({k.split('::')[1].split('`')[0] for k in reasons}, {'A', 'B', 'Caller'})
+        self.assertIn('test class dependencies: all', notes)
+
+    def test_reading_a_field_that_holds_a_mutable_reference_counts_as_writing_it(self):
+        # Def fills the table a field holds (ldsfld; stelem): readers of the field see the change.
+        self.methods['Def'] = dict(self.methods['B'], signature='Def`0()->[System.Runtime]System.Void|False', token=10,
+                                   body_sha256='def', cases=[], field_reads=['Quire.T::f'], reference_reads=['Quire.T::f'])
+        self.baseline['bodies'][self.key(self.methods['Def'])] = 'def2'
+        self.assertEqual(self.selected(), {'Def', 'R'})
+
+    def test_callers_of_accessors_reading_a_changed_field_selected_through_accessor_chains(self):
+        getter = lambda name, calls, token: dict(self.methods['Reader'], signature=f'{name}`0()->[System.Runtime]System.Int32|False',
+                                                  token=token, calls=calls, field_reads=[], body_sha256=name)
+        self.methods['Reader']['signature'] = 'get_F`0()->[System.Runtime]System.Int32|False'
+        self.methods['G'] = getter('get_G', [7], 20)     # a getter calling the field-reading getter
+        self.methods['U'] = getter('Use', [20], 21)      # an ordinary method calling that getter
+        self.methods['V'] = getter('Other', [21], 22)    # two calls away from an ordinary method: not followed
+        for m in self.methods.values():
+            self.baseline['bodies'][self.key(m)], self.baseline['methods'][self.key(m)] = m['body_sha256'], 'compared'
+        self.methods['Ctor']['body_sha256'] = 'k2'
+        self.assertEqual(self.selected(), {'.ctor', 'get_F', 'get_G', 'Use'})
 
     def test_new_and_newly_compared_methods_selected(self):
         del self.baseline['bodies'][self.key(self.methods['B'])]
@@ -181,10 +224,10 @@ class ChangedMethodTests(unittest.TestCase):
         from validate import changed_methods
         self.methods['A']['body_sha256'] = 'a2'
         reasons, notes = changed_methods({'methods': list(self.methods.values())},
-                                         'M\0tests/Quire.Differential.Tests/ADifferentialTests.cs\0', self.baseline)
+                                         'M\0tests/Quire.Differential.Tests/ADifferentialTests.cs\0', self.baseline, {})
         self.assertEqual(reasons[self.key(self.methods['A'])], ['IL changed', 'comparing tests changed'])
         self.assertEqual(reasons[self.key(self.methods['Caller'])], ['calls a changed method'])
-        self.assertEqual(notes, [])
+        self.assertEqual(notes, ['test class dependencies: text'])
 
 
 class VerdictTests(unittest.TestCase):

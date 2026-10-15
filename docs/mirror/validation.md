@@ -291,31 +291,44 @@ order passes it, which the direct comparisons must catch.
   runs under those tests. MethodAudit records for each method with a body:
   - `body_sha256`: a hash of its IL with every metadata token resolved to the member, type, field (with its type)
     or string it names, the initial data of fields that have some (`<PrivateImplementationDetails>` arrays), its
-    locals' types, exception regions and flags; token renumbering from unrelated edits does not change it;
+    locals' types, exception regions and flags; token renumbering from unrelated edits does not change it. When a
+    data field's size cannot be read from its type, only its name is hashed (` data ?`): that relies on the compiler
+    naming such fields after a hash of their contents, as Roslyn does;
   - `calls`: the `Quire.Mpl` methods it references (calls, delegate creation, `ldtoken`; through a generic
     instantiation, every same-named method of that type);
   - `virtual_calls`: the dispatch slots of its `callvirt`/`ldvirtftn` targets, `name`arity/parameter count` with the
     name unqualified; each virtual method's own `slot` (parameter types are left out, so `Base<int>.M(!0)` reaches
     overrides `M(int)` and `D<T>.M(T)` alike: this over-selects rather than misses);
   - `field_reads` / `field_writes`: fields it loads / stores, as declaring type (generic definition) and name; taking
-    a field's address counts as both.
+    a field's address counts as both; `reference_reads`: the fields it reads whose type can hold a mutable object
+    (any reference type but `string`, or a type parameter). Filling an array or collection a field holds
+    (`ldsfld Table; stelem`, `Table[k] = v`, `.Add`) stores to no field, so reading such a field counts as writing it.
 
-  The baseline (schema 4) stores each method's `body_sha256` (`bodies`) and `field_writes` (`writes`) from the last
-  gate run, which tested exactly the tree it merged. A changed method is one whose body hash differs from the
+  For the differential test assembly it records each top-level type's source files and `references`: the other
+  top-level types its IL (or its nested types', lambdas included) derives from or names in a call, field, type or
+  generic argument, so an extension method `value.Render()` declared in another class counts. The baseline (schema
+  4) stores each method's `body_sha256` (`bodies`) and its `field_writes` and `reference_reads` (`writes`) from the
+  last gate run, which tested exactly the tree it merged. A changed method is one whose body hash differs from the
   baseline's or that the baseline lacks, or the hand-written owner of a changed lambda, iterator or async state
   machine. Selected (`mutation.json` `methods`, with reasons; `mutated_methods` lists those actually mutated):
   1. **IL changed** / **new body** / **compiler-generated part changed:** the changed methods;
   2. **comparing tests changed:** methods compared, now or according to the baseline's method → test class map, by a
-     changed test class: one declared in an added, changed or deleted file under `tests/Quire.Differential.Tests`,
-     and, transitively, every class declared in a file there that names such a class (textual identifier match,
-     before any test runs). Shared helpers (`MatValDifferentialTests.Storage`, `TypeDifferentialTests.Signatures`)
-     are used across classes, so a changed helper selects the methods its users compare; a changed harness file
-     (`Values.cs`, `MethodComparison.cs`) selects nearly everything;
+     changed test class: a top-level type whose source files include an added, changed or deleted file under
+     `tests/Quire.Differential.Tests` (or named after it), and, transitively, every type whose IL `references` one.
+     Shared helpers (`MatValDifferentialTests.Storage`, `TypeDifferentialTests.Signatures`) are used across classes,
+     so a changed helper selects the methods its users compare; a changed harness file (`Values.cs`,
+     `MethodComparison.cs`) selects most of them. Without that record (an older MethodAudit), a textual scan of the
+     test sources read before any test runs stands in: a class counts when its file names a changed class, which
+     misses extension-method calls and type declarations its pattern (a line starting with modifiers and
+     `class`/`struct`/`interface`/`enum`/`record`) does not recognize. With neither, every test class counts as
+     changed. `mutation_notes` says which applied;
   3. **newly compared:** compared now but not in the baseline (its mutants have never run);
   4. **calls a changed method:** direct callers of a changed method by token, or by a virtual call to the slot of a
      changed virtual method or of an instance method the baseline has and the build lacks (a removed override);
-  5. **reads a field a changed method writes:** readers of a field that a changed or removed method writes, now or
-     according to the baseline (so a constructor or `.cctor` that stopped initializing a field still counts);
+  5. **reads a field a changed method writes:** readers of a field that a changed or removed method writes (or reads
+     while it holds a mutable reference), now or according to the baseline (so a constructor or `.cctor` that
+     stopped initializing a field still counts); when such a reader is a property, indexer or event accessor (or a
+     lambda in one), its callers too, and theirs while they are accessors, since a getter passes the value on;
   6. compiler-generated methods selected themselves, or owned by a selected method, since they run under the
      owner's tests.
 
@@ -329,13 +342,15 @@ order passes it, which the direct comparisons must catch.
   that holds as long as everything those tests execute behaves as before.
   - A changed callee, overriding method or field writer is caught one step away: a mutant killed before can survive
     now only if that change masks it (the helper now normalizes away the value the mutant corrupts).
-  - **Residual risk:** masking two or more steps away (a callee's callee; a field written by a method that a
-    selected method's callee calls), through a delegate or reflection, or through test setup and rendering that
+  - **Residual risk:** masking two or more steps away (a callee's callee; an object reached through a field and
+    changed by a callee of the method that read it; a value passed on by an ordinary method rather than an
+    accessor), through a delegate or reflection, or through test setup and rendering that
     reach changed code the mutated method never calls. Each needs the changed code to behave differently on inputs
     those tests reach, which its own direct comparisons against Mathcad (mutated under rule 1) would normally catch,
     but nothing proves it. Removing an `accepted-mutants.txt` entry and changing the Mathcad install select nothing.
-  - So a maintainer audits periodically, and after harness or install changes, with `--mutate-all` (every compared
-    method; `merge_gate.py --mutate-all` or an unscoped `validate.py --mutate-all`). `--mutate-types-wide` (both
+  - So a maintainer audits with `--mutate-all` (every compared method; `merge_gate.py --mutate-all` or an unscoped
+    `validate.py --mutate-all`) after every 10 gate merges or weekly, whichever comes first, and after any change to
+    the harness, maintainer-owned test helpers, `accepted-mutants.txt` or the Mathcad install. `--mutate-types-wide` (both
     scripts) restores the previous rule: every compared method of types whose `src/Quire.Mpl` source changed (by
     PDB path; files without method bodies select nothing) or whose comparisons live, or lived, in a changed test
     class. The gate also falls back to that rule when the baseline has no body hashes (schema 3); `summary.json`
