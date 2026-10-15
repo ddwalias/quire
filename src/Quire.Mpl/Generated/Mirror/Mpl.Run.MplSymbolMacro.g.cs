@@ -12,15 +12,5 @@ namespace Quire.Mpl.Run;
 public partial class MplSymbolMacro : global::Quire.Mpl.Run.MplMacro
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Sexpr m_replacement;
-    [global::Quire.Mirror.MirrorStub]
-    public MplSymbolMacro(global::Quire.Mpl.Run.Sym s, global::Quire.Mpl.Run.Sexpr rep) : base(default(global::Quire.Mpl.Run.Sym)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr ExpandRef(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Tok s) => base.ExpandRef(e, s);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr f) => base.ExpandCall(e, f);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.MplMacro make(global::Quire.Mpl.Run.Atom s, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
 }

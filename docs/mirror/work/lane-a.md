@@ -68,20 +68,31 @@ Merged to `main` at commit `71c16c5dc2fb` after passing independent review and t
 
 ## SCons.walk_pattern batch
 
-- Branch: `mirror/a-scons-pattern`
-- Worktree: `/root/src/quire-scons-pattern`
-- Scope: `Quire.Mpl.Run.SCons.walk_pattern(MplEnv)` and tests in `tests/Quire.Differential.Tests/SexprDifferentialTests.cs` and `tests/Quire.Mpl.Tests/Run/SexprTests.cs`.
-- Contract & Behavior:
-  - Non-symbol heads (integers, real numbers, string constants, nested lists) throw `AppException` ("bad pattern").
-  - Symbols with empty/null name throw `ArgumentOutOfRangeException` / `ArgumentNullException` on `LowId` access, matching Mathcad.
-  - Uppercase head symbols return a new `SCons(head, walk_patterns(env, tail))`.
-  - Single-element uppercase patterns preserve `head` and produce `Field2 = Nul.singleton` (with `.tail == null`).
-  - Lowercase head symbols dispatch to `env.LoadMacro(key)`. In Mathcad with `new LocalEnv()`, this raises `NullReferenceException` on `m_parent` lookup; in Quire `LoadMacro` remains a stub (`[MirrorAnalyzed]`).
+Merged to `main` at commit `92e763bf581a` after passing independent review and the runtime merge gate.
+
+## Environment helpers batch (mirror/a-env-helpers)
+
+- Branch: `mirror/a-env-helpers`
+- Worktree: `/root/src/quire-env-helpers`
+- Scope: Implementation of `MplEnv`, `BindingInfo`, `MacroBindingInfo`, `LocalEnv` (leaving `AddFunctionMacro` and `AddForeignMacro` stubs for subsequent batches), `MplMacro`, and `MplSymbolMacro` in `src/Quire.Mpl/Run/Env.cs`.
+- Contracts & Behavior:
+  - `Mpl.Run.MplEnv`: `Level => 0`; base mutation methods (`AddLocal`, `AddLocalEquation`, `AddSymbolMacro`, `AddFunctionMacro`, `AddForeignMacro`) reject modifications by calling `MayNotModify()`; `LoadMacro(Sym)` returns `null` for `Keyword` symbols and otherwise delegates to `lookup(s)?.macro`; `LoadForeignMacro` calls `CanNotResolve(sig)`; `CanNotResolve` throws `AppException("Can not resolve signature")`; `MayNotModify` throws `AppException("May not modify import environment")`; protected parameterless constructor.
+  - `Mpl.Run.BindingInfo`: `m_handle`, `m_zone`, `macro => null`, constructors `BindingInfo()`, `BindingInfo(uint)`, `BindingInfo(uint, int)`. Constants `Value = 0` and `Macro = 1` preserved in `.g.cs`. Subclass `MacroBindingInfo`: `m_macro`, `macro => m_macro`, constructor `(handle, macro)` calling `base(handle, 1)`.
+  - `Mpl.Run.LocalEnv`: `m_level`, `m_parent`, `m_table` (`SortedDictionary<string, BindingInfo>`); `Level => m_level`; constructors `LocalEnv(parent)` and `LocalEnv()`; `lookup_local` searches `m_table`; `lookup` queries `lookup_local` then delegates to `m_parent.lookup` (null parent throws `NullReferenceException` on miss); `LoadForeignMacro` delegates to `m_parent.LoadForeignMacro`; `AddLocal` adds new binding and throws `ArgumentException` on duplicates; `AddLocalEquation` sets/overwrites binding; `AddSymbolMacro` registers `MacroBindingInfo` wrapping `MplSymbolMacro`.
+  - `Mpl.Run.MplMacro`: `m_name`, constructor `(sym)`, default `ExpandRef` / `ExpandCall` calling `IllegalMacroRef` / `IllegalMacroCall` throwing `AppException("illegal macro reference" / "illegal macro call", 0u, handle)`; static `NotAtTopLevel` and `CanNotExpand` throwing `AppException`; `ToString() => m_name.ToString()`.
+  - `Mpl.Run.MplSymbolMacro`: `m_replacement`, constructor `(s, rep)` calling `base(s)`, `ExpandRef => m_replacement`, `ExpandCall` replaces head with `m_replacement` while preserving tail, static `make(Atom s, int n)` wrapping `int_constant.NewTok`, `ToString() => "MplSymbolMacro: " + m_name + " " + m_replacement`.
+- Evidence files:
+  - [Mpl.Run.MplEnv](../evidence/Mpl.Run.MplEnv.md)
+  - [Mpl.Run.BindingInfo](../evidence/Mpl.Run.BindingInfo.md)
+  - [Mpl.Run.LocalEnv](../evidence/Mpl.Run.LocalEnv.md)
+  - [Mpl.Run.MplMacro](../evidence/Mpl.Run.MplMacro.md)
+  - [Mpl.Run.MplSymbolMacro](../evidence/Mpl.Run.MplSymbolMacro.md)
 - Validation receipts:
-  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~SexprTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 16 passed, 0 failed, 0 skipped.
-  - `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~SexprDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 9 passed, 0 failed, 0 skipped.
-  - `git diff --check` — passed.
-- Next: independent review, then merge gate. Subsequent batch: `Tok.walk_expression(MplEnv)`.
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 166 passed, 0 failed, 0 skipped.
+  - `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 94 passed, 0 failed, 0 skipped.
+  - `git diff --check` — passed cleanly.
+  - `python3 tools/validation/merge_gate.py mirror/a-env-helpers` — passed (90/90 mutants evaluated, 0 unaccepted survivors, ratchet ok, 0 lint findings).
+- Unblocks: direct comparisons and full coverage of lowercase symbol handling in all AST walk methods (`Tok.walk_expression`, `Tok.walk_pattern`, `SCons.walk_pattern`, `SCons.walk_expression`, `Sym.walk_*`).
 
 ## Current method audit, separate from historical merges
 

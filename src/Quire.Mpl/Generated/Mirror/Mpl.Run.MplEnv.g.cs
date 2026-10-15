@@ -11,28 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplEnv, mplrun")]
 public abstract partial class MplEnv
 {
-    [global::Quire.Mirror.MirrorStub]
-    public virtual int Level { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.MplEnv AddLocal(global::Quire.Mpl.Run.Sym s, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.MplEnv AddLocalEquation(global::Quire.Mpl.Run.Sym s, uint tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.BindingInfo AddSymbolMacro(global::Quire.Mpl.Run.Sym s, uint tag, global::Quire.Mpl.Run.Sexpr rep) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.MplEnv AddFunctionMacro(global::Quire.Mpl.Run.Sym s, uint tag, global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.Sexpr rep) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.BindingInfo AddForeignMacro(global::Quire.Mpl.Run.Sym s, uint tag, string sig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public abstract global::Quire.Mpl.Run.BindingInfo lookup(global::Quire.Mpl.Run.Sym s);
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.MplMacro LoadMacro(global::Quire.Mpl.Run.Sym s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.MplMacro LoadForeignMacro(string foreign_id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void CanNotResolve(string sig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void MayNotModify() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected MplEnv() { }
 }

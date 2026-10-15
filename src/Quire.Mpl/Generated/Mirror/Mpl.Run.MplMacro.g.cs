@@ -12,21 +12,5 @@ namespace Quire.Mpl.Run;
 public abstract partial class MplMacro
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sym m_name;
-    [global::Quire.Mirror.MirrorStub]
-    public MplMacro(global::Quire.Mpl.Run.Sym sym) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.Sexpr ExpandRef(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Tok s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr form) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr IllegalMacroCall(global::Quire.Mpl.Run.Sexpr form) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mpl.Run.Sexpr IllegalMacroRef(global::Quire.Mpl.Run.Tok form) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void NotAtTopLevel(global::Quire.Mpl.Run.Sym s, uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void CanNotExpand(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
 }
