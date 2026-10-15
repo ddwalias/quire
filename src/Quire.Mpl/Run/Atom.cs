@@ -224,7 +224,7 @@ public partial class Sym : Atom
     /// A lower-case symbol naming a macro expands the form; otherwise the arguments are walked as expressions,
     /// keeping <paramref name="form"/> when none changed.
     /// </summary>
-    [MirrorAnalyzed("Mpl.Run.Sym")]
+    [MirrorVerified("SexprDifferentialTests")]
     public virtual Sexpr walk_expression_as(MplEnv env, SCons form)
     {
         MplMacro macro = LowId ? env.LoadMacro(this) : null;

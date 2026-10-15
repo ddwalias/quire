@@ -118,6 +118,41 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
   - Direct comparisons added: bound symbol macro, chained symbol macros, bound function macro (`AppException` "illegal macro reference"), scoped `LocalEnv(parent)` resolution and shadowing, bound local variable returning `this`, and enabled lowercase symbol comparison in empty `LocalEnv()`.
   - Format checks: `git diff --check` passed cleanly.
 
+## SCons.walk_expression and Sym.walk_expression_as batch (mirror/a-scons-expression)
+
+- Branch: `mirror/a-scons-expression`
+- Worktree: `/root/src/quire-scons-expression`
+- Scope: Verification of `SCons.walk_expression(MplEnv)`, `SCons.walk_expressions(MplEnv, SCons)` in `src/Quire.Mpl/Run/Sexpr.cs`, and `Sym.walk_expression_as(MplEnv, SCons)` in `src/Quire.Mpl/Run/Atom.cs`.
+- Contracts & Behavior:
+  - `Mpl.Run.Sym.walk_expression_as(MplEnv env, SCons form)`:
+    - If `LowId`: loads macro via `env.LoadMacro(this)`.
+    - If macro is present: invokes `macro.ExpandCall(env, form).walk_expression(env)`.
+    - If macro is null (or !LowId): walks arguments with `SCons.walk_expressions(env, form.tail)`. If arguments changed, returns `new SCons(form.head, expr)`; if unchanged, returns `form`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000097. Attribute updated to `[MirrorVerified("SexprDifferentialTests")]`.
+  - `Mpl.Run.SCons.walk_expression(MplEnv env)`:
+    - If `head.is_sym`: delegates to `head.sym.walk_expression_as(env, this)`.
+    - If `head` is not a symbol (e.g. integer constant, nested list): wraps as `(apply e1 e2 ...)` via `new SCons(new Tok(apply_sym, head.handle), this).walk_expression(env)`.
+    - Null head throws `NullReferenceException` when checking `head.is_sym`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x0600004b. Already `[MirrorVerified]`.
+  - `Mpl.Run.SCons.walk_expressions(MplEnv env, SCons exps)`:
+    - If `exps == null`: returns `Nul.singleton`.
+    - Walks `exps.head.walk_expression(env)` and `walk_expressions(env, exps.tail)`. If neither changed (by reference equality), returns `exps` unchanged; otherwise constructs and returns `new SCons(expr, expr2)`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x0600004a. Already `[MirrorVerified]`.
+  - Exception and handle propagation:
+    - `ExpandCall` on base `MplMacro` (or function macro not overriding `ExpandCall`) invokes `IllegalMacroCall`, throwing `AppException("illegal macro call", 0u, form.handle)`.
+    - Unbound lowercase symbols in empty `LocalEnv()` throw `NullReferenceException` due to null parent dereference on miss, matching Mathcad.
+    - Non-symbol heads preserve source handle in generated `apply` token (`head.handle`).
+- Evidence files:
+  - [Mpl.Run.Sym](../evidence/Mpl.Run.Sym.md): `walk_expression_as` updated to `Verified`.
+  - [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md): `walk_expression` and `walk_expressions` verified.
+- Test counts & Validation receipts:
+  - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 181 passed, 0 failed, 0 skipped.
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 100 passed (focused on SexprDifferentialTests: 9 passed, 0 failed, 0 skipped).
+  - Direct comparisons added:
+    - `Sym_members`: bound local (unchanged vs changed args), bound symbol macro, chained symbol macros, function macro throwing `AppException("illegal macro call", 0u, form.handle)`, nested `LocalEnv(parent)` scoping and shadowing.
+    - `SCons_members`: symbol macro call, function macro call throwing `AppException("illegal macro call")`, non-symbol heads `(1 2 3)` and `((a b) c)` wrapping in `apply` token, `walk_expressions` returning new chain when macro args change.
+  - Format checks: `git diff --check` passed cleanly.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run

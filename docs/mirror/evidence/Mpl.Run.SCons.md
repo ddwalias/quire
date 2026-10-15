@@ -42,10 +42,13 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 
 ## Test cases
 
-As in Mpl.Run.Sexpr.md.
+As in Mpl.Run.Sexpr.md. Direct differential comparisons against Mathcad in `SexprDifferentialTests` verify
+`SCons.walk_expression` and `SCons.walk_expressions` across symbol macro calls, function macro calls throwing
+`AppException("illegal macro call")`, non-symbol heads `(1 2 3)` and `((a b) c)` wrapping in `apply`, and
+`walk_expressions` returning a new chain when macro arguments change.
 
 ## Open
 
-- Null-environment cases (`SexprDifferentialTests`) pass a null `MplEnv` to both sides; they show only that the
+- Null-environment cases in `walk_declaration_lhs` pass a null `MplEnv` to both sides; they show only that the
   environment is dereferenced before any other observable effect, not which branch follows.
 - `walk_pattern`'s lower-case branch waits for `MplEnv.LoadMacro`/`MplMacro.ExpandCall` (Keyword/env batch).

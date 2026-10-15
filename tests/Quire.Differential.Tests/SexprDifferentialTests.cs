@@ -342,6 +342,132 @@ public class SexprDifferentialTests
         Compare("Sym.walk_expression_as lower, no env", "Mpl.Run.Sym", qWalkExprAs, symLowerQ, [null, lowerForm], mWalkExprAs, symLowerM, [null, mLowerForm]);
         Compare("Sym.walk_declaration_as lower, no env", "Mpl.Run.Sym", qWalkDeclAs, symLowerQ, [null, lowerForm], mWalkDeclAs, symLowerM, [null, mLowerForm]);
         Compare("Sym.walk_declaration_as upper, no env", "Mpl.Run.Sym", qWalkDeclAs, symUpperQ, [null, form], mWalkDeclAs, symUpperM, [null, mForm]);
+
+        // Direct comparisons for Sym.walk_expression_as with non-null LocalEnv:
+        // 1. Bound local variable: LoadMacro returns null -> walks arguments with walk_expressions.
+        var qEnvSymLocal = new LocalEnv();
+        var mEnvSymLocal = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symX = new Sym("x", null);
+        var mSymX = ToMathcad(symX)!;
+        qEnvSymLocal.AddLocal(symX, 1u);
+        Call(mEnvSymLocal, "AddLocal", ["Sym", "UInt32"], mSymX, 1u);
+
+        // 1a. Unchanged arguments: returns same form reference
+        var formUnchangedQ = L(new Tok(symX, 10u), I(1), I(2));
+        var formUnchangedM = ToMathcad(formUnchangedQ)!;
+        MethodComparison.Compare("Sym.walk_expression_as bound local unchanged", "Mpl.Run.Sym",
+            qWalkExprAs, symX, [qEnvSymLocal, formUnchangedQ],
+            mWalkExprAs, mSymX, [mEnvSymLocal, formUnchangedM],
+            quireShow: res => ReferenceEquals(res, formUnchangedQ) ? "same form" : Describe(res),
+            originalShow: res => ReferenceEquals(res, formUnchangedM) ? "same form" : Describe(res),
+            quireState: o => Describe(o), originalState: o => Describe(o));
+
+        // 1b. Changed arguments: argument contains a symbol macro that expands -> returns new SCons(head, newTail)
+        var symArgMacro = new Sym("m", null);
+        var mSymArgMacro = ToMathcad(symArgMacro)!;
+        qEnvSymLocal.AddSymbolMacro(symArgMacro, 2u, I(99));
+        Call(mEnvSymLocal, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymArgMacro, 2u, ToMathcad(I(99))!);
+        var formChangedQ = L(new Tok(symX, 10u), new Tok(symArgMacro, 20u));
+        var formChangedM = ToMathcad(formChangedQ)!;
+        MethodComparison.Compare("Sym.walk_expression_as bound local changed args", "Mpl.Run.Sym",
+            qWalkExprAs, symX, [qEnvSymLocal, formChangedQ],
+            mWalkExprAs, mSymX, [mEnvSymLocal, formChangedM],
+            quireShow: res => ReferenceEquals(res, formChangedQ) ? "same form" : (res is SCons r && ReferenceEquals(r.head, formChangedQ.head) ? "same head: " + Describe(res) : Describe(res)),
+            originalShow: res => ReferenceEquals(res, formChangedM) ? "same form" : (res != null && res.GetType().Name == "SCons" && ReferenceEquals(Reflect.Get(res, "Field1"), Reflect.Get(formChangedM, "Field1")) ? "same head: " + Describe(res) : Describe(res)),
+            quireState: o => Describe(o), originalState: o => Describe(o));
+
+        // 2. Bound symbol macro: LoadMacro returns macro -> ExpandCall replaces head, then walks expanded form
+        var qEnvSymMacro = new LocalEnv();
+        var mEnvSymMacro = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symCallMacro = new Sym("sm", null);
+        var mSymCallMacro = ToMathcad(symCallMacro)!;
+        var repSym = S("UpperTarget");
+        qEnvSymMacro.AddSymbolMacro(symCallMacro, 5u, repSym);
+        Call(mEnvSymMacro, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymCallMacro, 5u, ToMathcad(repSym)!);
+        var formCallMacroQ = L(new Tok(symCallMacro, 30u), I(1), I(2));
+        var formCallMacroM = ToMathcad(formCallMacroQ)!;
+        Compare("Sym.walk_expression_as bound symbol macro", "Mpl.Run.Sym",
+            qWalkExprAs, symCallMacro, [qEnvSymMacro, formCallMacroQ],
+            mWalkExprAs, mSymCallMacro, [mEnvSymMacro, formCallMacroM]);
+
+        // 3. Chained symbol macros: macro A expands to macro B which expands to a value
+        var qEnvSymChain = new LocalEnv();
+        var mEnvSymChain = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symA = new Sym("a", null);
+        var mSymA = ToMathcad(symA)!;
+        var symB = new Sym("b", null);
+        var mSymB = ToMathcad(symB)!;
+        var tokB = new Tok(symB, 11u);
+        var mTokB = ToMathcad(tokB)!;
+        var constVal = I(77, 12u);
+        var mConstVal = ToMathcad(constVal)!;
+        qEnvSymChain.AddSymbolMacro(symA, 1u, tokB);
+        Call(mEnvSymChain, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymA, 1u, mTokB);
+        qEnvSymChain.AddSymbolMacro(symB, 2u, constVal);
+        Call(mEnvSymChain, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymB, 2u, mConstVal);
+        var formChainQ = L(new Tok(symA, 15u), I(1));
+        var formChainM = ToMathcad(formChainQ)!;
+        Compare("Sym.walk_expression_as chained symbol macros", "Mpl.Run.Sym",
+            qWalkExprAs, symA, [qEnvSymChain, formChainQ],
+            mWalkExprAs, mSymA, [mEnvSymChain, formChainM]);
+
+        // 4. Bound function macro: calls base MplMacro.ExpandCall which throws AppException("illegal macro call", 0u, form.handle)
+        var qEnvSymFn = new LocalEnv();
+        var mEnvSymFn = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symFn = new Sym("fn", null);
+        var mSymFn = ToMathcad(symFn)!;
+        var qQuoteMacro = (MplMacro)New(typeof(MplQuoteMacro));
+        var mQuoteMacro = New(M("Mpl.Run.MplQuoteMacro"))!;
+        var qTableFn = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvSymFn, "m_table")!;
+        qTableFn["fn"] = new MacroBindingInfo(42u, qQuoteMacro);
+        var mTableFn = (System.Collections.IDictionary)Reflect.Get(mEnvSymFn, "m_table")!;
+        mTableFn["fn"] = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 42u, mQuoteMacro)!;
+        var formFnQ = L(new Tok(symFn, 88u));
+        var formFnM = ToMathcad(formFnQ)!;
+        Compare("Sym.walk_expression_as bound function macro throws illegal macro call", "Mpl.Run.Sym",
+            qWalkExprAs, symFn, [qEnvSymFn, formFnQ],
+            mWalkExprAs, mSymFn, [mEnvSymFn, formFnM]);
+
+        // 5. Nested LocalEnv(parent) scoping: parent resolution and child shadowing
+        var qParent = new LocalEnv();
+        var mParent = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symParent = new Sym("p", null);
+        var mSymParent = ToMathcad(symParent)!;
+        var symShadow = new Sym("s", null);
+        var mSymShadow = ToMathcad(symShadow)!;
+        qParent.AddSymbolMacro(symParent, 1u, S("ParentTarget"));
+        Call(mParent, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymParent, 1u, ToMathcad(S("ParentTarget"))!);
+        qParent.AddSymbolMacro(symShadow, 2u, S("ParentShadow"));
+        Call(mParent, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymShadow, 2u, ToMathcad(S("ParentShadow"))!);
+
+        var qChild = new LocalEnv(qParent);
+        var mChild = New(M("Mpl.Run.LocalEnv"), ["MplEnv"], mParent)!;
+        var symChild = new Sym("c", null);
+        var mSymChild = ToMathcad(symChild)!;
+        qChild.AddSymbolMacro(symShadow, 3u, S("ChildShadow"));
+        Call(mChild, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymShadow, 3u, ToMathcad(S("ChildShadow"))!);
+        qChild.AddSymbolMacro(symChild, 4u, S("ChildTarget"));
+        Call(mChild, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymChild, 4u, ToMathcad(S("ChildTarget"))!);
+
+        var formPQ = L(new Tok(symParent, 50u), I(1));
+        var formPM = ToMathcad(formPQ)!;
+        var formSQ = L(new Tok(symShadow, 51u), I(2));
+        var formSM = ToMathcad(formSQ)!;
+        var formCQ = L(new Tok(symChild, 52u), I(3));
+        var formCM = ToMathcad(formCQ)!;
+
+        // In child, parent symbol resolves through parent
+        Compare("Sym.walk_expression_as scoped parent resolution", "Mpl.Run.Sym",
+            qWalkExprAs, symParent, [qChild, formPQ], mWalkExprAs, mSymParent, [mChild, formPM]);
+        // In child, shadowed symbol resolves to child macro
+        Compare("Sym.walk_expression_as scoped shadowing in child", "Mpl.Run.Sym",
+            qWalkExprAs, symShadow, [qChild, formSQ], mWalkExprAs, mSymShadow, [mChild, formSM]);
+        // In parent, shadowed symbol resolves to parent macro
+        Compare("Sym.walk_expression_as scoped resolution in parent", "Mpl.Run.Sym",
+            qWalkExprAs, symShadow, [qParent, formSQ], mWalkExprAs, mSymShadow, [mParent, formSM]);
+        // In child, child symbol resolves in child
+        Compare("Sym.walk_expression_as scoped child resolution", "Mpl.Run.Sym",
+            qWalkExprAs, symChild, [qChild, formCQ], mWalkExprAs, mSymChild, [mChild, formCM]);
     }
 
     [SkippableFact]
@@ -907,6 +1033,55 @@ public class SexprDifferentialTests
             mWalkExprs, null, [mEnv, nestedApplyM],
             quireShow: res => ReferenceEquals(res, nestedApplyQ) ? "reused" : Describe(res),
             originalShow: res => ReferenceEquals(res, nestedApplyM) ? "reused" : Describe(res),
+            quireState: o => Describe(o), originalState: o => Describe(o));
+
+        // Direct comparisons for SCons.walk_expression calling into walk_expression_as and non-symbol apply:
+        // 1. Symbol macro call: list headed by lowercase macro symbol expands and walks as expression
+        var qEnvSCons = new LocalEnv();
+        var mEnvSCons = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symSConsMacro = new Sym("mcall", null);
+        var mSymSConsMacro = ToMathcad(symSConsMacro)!;
+        var sconsRep = S("UpperCalled");
+        qEnvSCons.AddSymbolMacro(symSConsMacro, 1u, sconsRep);
+        Call(mEnvSCons, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymSConsMacro, 1u, ToMathcad(sconsRep)!);
+        var formSConsMacroQ = L(new Tok(symSConsMacro, 60u), I(1), I(2));
+        var formSConsMacroM = ToMathcad(formSConsMacroQ)!;
+        Compare("SCons.walk_expression symbol macro call", "Mpl.Run.SCons",
+            qWalkExpr, formSConsMacroQ, [qEnvSCons], mWalkExpr, formSConsMacroM, [mEnvSCons]);
+
+        // 2. Function macro call throwing AppException("illegal macro call", 0u, form.handle)
+        var qTableSCons = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvSCons, "m_table")!;
+        var symSConsFn = new Sym("fncall", null);
+        var mSymSConsFn = ToMathcad(symSConsFn)!;
+        var qQuoteMacroSCons = (MplMacro)New(typeof(MplQuoteMacro));
+        var mQuoteMacroSCons = New(M("Mpl.Run.MplQuoteMacro"))!;
+        qTableSCons["fncall"] = new MacroBindingInfo(42u, qQuoteMacroSCons);
+        var mTableSCons = (System.Collections.IDictionary)Reflect.Get(mEnvSCons, "m_table")!;
+        mTableSCons["fncall"] = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 42u, mQuoteMacroSCons)!;
+        var formSConsFnQ = L(new Tok(symSConsFn, 70u));
+        var formSConsFnM = ToMathcad(formSConsFnQ)!;
+        Compare("SCons.walk_expression function macro call throws", "Mpl.Run.SCons",
+            qWalkExpr, formSConsFnQ, [qEnvSCons], mWalkExpr, formSConsFnM, [mEnvSCons]);
+
+        // 3. Non-symbol head wrapping in apply token: e.g. (1 2 3) and ((a b) c)
+        var nonSymList1Q = L(I(1, 10u), I(2), I(3));
+        var nonSymList1M = ToMathcad(nonSymList1Q)!;
+        Compare("SCons.walk_expression non-sym (1 2 3)", "Mpl.Run.SCons",
+            qWalkExpr, nonSymList1Q, [qEnvSCons], mWalkExpr, nonSymList1M, [mEnvSCons]);
+
+        var nonSymList2Q = L(L(S("Foo", 20u), I(1)), I(2));
+        var nonSymList2M = ToMathcad(nonSymList2Q)!;
+        Compare("SCons.walk_expression non-sym nested ((a b) c)", "Mpl.Run.SCons",
+            qWalkExpr, nonSymList2Q, [qEnvSCons], mWalkExpr, nonSymList2M, [mEnvSCons]);
+
+        // 4. SCons.walk_expressions where elements change via macro expansion -> returns new SCons chain
+        var exprsChangeQ = L(new Tok(symSConsMacro, 11u), I(5));
+        var exprsChangeM = ToMathcad(exprsChangeQ)!;
+        MethodComparison.Compare("SCons.walk_expressions(exps) macro changed", "Mpl.Run.SCons",
+            qWalkExprs, null, [qEnvSCons, exprsChangeQ],
+            mWalkExprs, null, [mEnvSCons, exprsChangeM],
+            quireShow: res => ReferenceEquals(res, exprsChangeQ) ? "reused" : Describe(res),
+            originalShow: res => ReferenceEquals(res, exprsChangeM) ? "reused" : Describe(res),
             quireState: o => Describe(o), originalState: o => Describe(o));
 
         // An upper-case pattern list always walks to a new cell, so it changes the head, the tail or both.

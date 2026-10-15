@@ -342,6 +342,214 @@ public class SexprTests
         Assert.Equal(400, ((int_constant)((Tok)tokK.walk_expression(child)).atom).IntCon);
     }
 
+    [Fact]
+    public void Sym_walk_expression_as_null_env_behavior()
+    {
+        var symLower = new Sym("lower", null);
+        var symUpper = new Sym("Upper", null);
+        var formLower = SCons.list2(new Tok(symLower, 10u), I(1));
+        var formUpper = SCons.list2(new Tok(symUpper, 20u), I(1));
+
+        // Lowercase symbol attempts env.LoadMacro(this), throwing NullReferenceException when env is null
+        Assert.Throws<NullReferenceException>(() => symLower.walk_expression_as(null!, formLower));
+
+        // Uppercase symbol skips LoadMacro (macro is null); form.tail (I(1)) walks safely with null env
+        var resultUpper = symUpper.walk_expression_as(null!, formUpper);
+        Assert.Same(formUpper, resultUpper);
+    }
+
+    [Fact]
+    public void Sym_walk_expression_as_unbound_or_bound_local()
+    {
+        var env = new LocalEnv();
+        var symX = new Sym("x", null);
+        var formUnbound = SCons.list3(new Tok(symX, 10u), I(1), I(2));
+
+        // Unbound in empty LocalEnv -> lookup delegates to null parent, throwing NullReferenceException
+        Assert.Throws<NullReferenceException>(() => symX.walk_expression_as(env, formUnbound));
+
+        // Bound as local variable -> LoadMacro is null -> walks arguments -> unchanged -> returns same form
+        env.AddLocal(symX, 1u);
+        var resLocal = symX.walk_expression_as(env, formUnbound);
+        Assert.Same(formUnbound, resLocal);
+
+        // If arguments change via symbol macro, returns a new SCons with preserved head
+        var symMacro = new Sym("m", null);
+        env.AddSymbolMacro(symMacro, 2u, I(99));
+        var formChanged = SCons.list2(new Tok(symX, 10u), new Tok(symMacro, 20u));
+        var resChanged = (SCons)symX.walk_expression_as(env, formChanged);
+
+        Assert.NotSame(formChanged, resChanged);
+        Assert.Same(formChanged.head, resChanged.head);
+        Assert.Equal(99, ((int_constant)((Tok)resChanged.second).atom).IntCon);
+    }
+
+    [Fact]
+    public void Sym_walk_expression_as_expands_bound_symbol_macro()
+    {
+        var env = new LocalEnv();
+        var symMacro = new Sym("sm", null);
+        var repSym = new Sym("TargetSym", null);
+        env.AddSymbolMacro(symMacro, 5u, new Tok(repSym, 12u));
+
+        var form = SCons.list3(new Tok(symMacro, 30u), I(1), I(2));
+        var result = (SCons)symMacro.walk_expression_as(env, form);
+
+        Assert.NotSame(form, result);
+        Assert.Equal("TargetSym", ((Sym)((Tok)result.head).atom).name);
+        Assert.Equal(1, ((int_constant)((Tok)result.second).atom).IntCon);
+        Assert.Equal(2, ((int_constant)((Tok)result.third).atom).IntCon);
+    }
+
+    [Fact]
+    public void Sym_walk_expression_as_chained_symbol_macros()
+    {
+        var env = new LocalEnv();
+        var symA = new Sym("a", null);
+        var symB = new Sym("b", null);
+        var targetSym = new Sym("FinalTarget", null);
+
+        env.AddSymbolMacro(symA, 1u, new Tok(symB, 11u));
+        env.AddSymbolMacro(symB, 2u, new Tok(targetSym, 12u));
+
+        var form = SCons.list2(new Tok(symA, 15u), I(10));
+        var result = (SCons)symA.walk_expression_as(env, form);
+
+        Assert.Equal("FinalTarget", ((Sym)((Tok)result.head).atom).name);
+        Assert.Equal(10, ((int_constant)((Tok)result.second).atom).IntCon);
+    }
+
+    [Fact]
+    public void Sym_walk_expression_as_throws_illegal_macro_call_for_function_macro()
+    {
+        var env = new LocalEnv();
+        var symFn = new Sym("fn", null);
+        var macro = new TestFunctionMacro(symFn);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(env)!;
+        table["fn"] = new MacroBindingInfo(42u, macro);
+
+        var form = SCons.list2(new Tok(symFn, 88u), I(1));
+        var ex = Assert.Throws<AppException>(() => symFn.walk_expression_as(env, form));
+
+        Assert.Equal("illegal macro call", ex.Message);
+        Assert.Equal(88u, ex.Handle);
+        Assert.Equal(0u, ex.Argument);
+    }
+
+    [Fact]
+    public void Sym_walk_expression_as_scoped_shadowing_and_parent_resolution()
+    {
+        var parent = new LocalEnv();
+        var symP = new Sym("p", null);
+        var symS = new Sym("s", null);
+        var symC = new Sym("c", null);
+
+        parent.AddSymbolMacro(symP, 1u, S("ParentP"));
+        parent.AddSymbolMacro(symS, 2u, S("ParentS"));
+
+        var child = new LocalEnv(parent);
+        child.AddSymbolMacro(symS, 3u, S("ChildS"));
+        child.AddSymbolMacro(symC, 4u, S("ChildC"));
+
+        var formP = SCons.list2(new Tok(symP, 50u), I(1));
+        var formS = SCons.list2(new Tok(symS, 51u), I(2));
+        var formC = SCons.list2(new Tok(symC, 52u), I(3));
+
+        // In child, parent symbol resolves through parent
+        var resP = (SCons)symP.walk_expression_as(child, formP);
+        Assert.Equal("ParentP", resP.head.sym.name);
+
+        // In child, shadowed symbol resolves to child macro
+        var resSChild = (SCons)symS.walk_expression_as(child, formS);
+        Assert.Equal("ChildS", resSChild.head.sym.name);
+
+        // In parent, shadowed symbol resolves to parent macro
+        var resSParent = (SCons)symS.walk_expression_as(parent, formS);
+        Assert.Equal("ParentS", resSParent.head.sym.name);
+
+        // In child, child symbol resolves
+        var resC = (SCons)symC.walk_expression_as(child, formC);
+        Assert.Equal("ChildC", resC.head.sym.name);
+    }
+
+    [Fact]
+    public void SCons_walk_expression_symbol_macro_and_function_macro()
+    {
+        var env = new LocalEnv();
+        var symMacro = new Sym("mcall", null);
+        env.AddSymbolMacro(symMacro, 1u, S("UpperTarget"));
+
+        var formMacro = SCons.list3(new Tok(symMacro, 60u), I(1), I(2));
+        var resMacro = (SCons)formMacro.walk_expression(env);
+        Assert.Equal("UpperTarget", resMacro.head.sym.name);
+
+        var symFn = new Sym("fncall", null);
+        var macro = new TestFunctionMacro(symFn);
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(env)!;
+        table["fncall"] = new MacroBindingInfo(42u, macro);
+
+        var formFn = SCons.list2(new Tok(symFn, 77u), I(1));
+        var ex = Assert.Throws<AppException>(() => formFn.walk_expression(env));
+        Assert.Equal("illegal macro call", ex.Message);
+        Assert.Equal(77u, ex.Handle);
+    }
+
+    [Fact]
+    public void SCons_walk_expression_non_symbol_head_wrapping()
+    {
+        var env = new LocalEnv();
+
+        // 1. Literal integer head: (1 2 3) -> wrapped with apply
+        var list1 = SCons.list3(I(1, 10u), I(2), I(3));
+        var res1 = (SCons)list1.walk_expression(env);
+        Assert.Equal("apply", res1.head.sym.name);
+        Assert.Equal(10u, res1.head.handle);
+        Assert.Same(list1, res1.tail);
+        Assert.Same(list1.head, res1.second);
+
+        // 2. Nested list head: ((Foo 1) 2) -> wrapped with apply
+        var inner = SCons.list2(S("Foo", 20u), I(1));
+        var list2 = SCons.list2(inner, I(2));
+        var res2 = (SCons)list2.walk_expression(env);
+        Assert.Equal("apply", res2.head.sym.name);
+        Assert.Equal(20u, res2.head.handle);
+        Assert.Same(list2, res2.tail);
+        Assert.Same(inner, res2.second);
+    }
+
+    [Fact]
+    public void SCons_walk_expressions_variations()
+    {
+        var env = new LocalEnv();
+        var symMacro = new Sym("argm", null);
+        env.AddSymbolMacro(symMacro, 1u, I(99));
+
+        // Null list returns Nul.singleton
+        Assert.Same(Nul.singleton, SCons.walk_expressions(env, null!));
+
+        // Unchanged list returns exact same reference
+        var unchanged = SCons.list3(I(1), I(2), I(3));
+        Assert.Same(unchanged, SCons.walk_expressions(env, unchanged));
+
+        // First item changes via macro expansion
+        var changedFirst = SCons.list2(new Tok(symMacro, 11u), I(2));
+        var resFirst = (SCons)SCons.walk_expressions(env, changedFirst);
+        Assert.NotSame(changedFirst, resFirst);
+        Assert.Equal(99, ((int_constant)((Tok)resFirst.head).atom).IntCon);
+        Assert.Same(changedFirst.tail, resFirst.tail);
+
+        // Second item changes via macro expansion
+        var changedSecond = SCons.list2(I(1), new Tok(symMacro, 12u));
+        var resSecond = (SCons)SCons.walk_expressions(env, changedSecond);
+        Assert.NotSame(changedSecond, resSecond);
+        Assert.Same(changedSecond.head, resSecond.head);
+        Assert.Equal(99, ((int_constant)((Tok)resSecond.second).atom).IntCon);
+    }
+
     /// <summary>A block whose declarations are given, and a symbol that defines each one as a marker.</summary>
     private sealed class Block(Cons decls) : Sexpr(99)
     {
