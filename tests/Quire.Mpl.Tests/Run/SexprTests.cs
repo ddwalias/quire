@@ -159,6 +159,22 @@ public class SexprTests
         Assert.Same(Nul.singleton, SCons.walk_patterns(env, null!));
         var nested = SCons.list2(SCons.list1(S("Bar")), I(2));
         Assert.NotSame(nested, SCons.walk_patterns(env, nested));
+
+        var patSingle = SCons.list1(S("Foo"));
+        var walkedSingle = (SCons)patSingle.walk_pattern(env);
+        Assert.NotSame(patSingle, walkedSingle);
+        Assert.Same(patSingle.head, walkedSingle.head);
+        Assert.Same(Nul.singleton, walkedSingle.Field2);
+        Assert.Null(walkedSingle.tail);
+
+        var badNested = SCons.list2(SCons.list2(I(1), I(2)), I(3));
+        var exNested = Assert.Throws<AppException>(() => badNested.walk_pattern(env));
+        Assert.Contains("bad pattern", exNested.Message);
+
+        Assert.Throws<AppException>(() => SCons.list2(new Tok(new real_constant(3.14), 0), I(1)).walk_pattern(env));
+        Assert.Throws<AppException>(() => SCons.list2(new Tok(new str_constant("str"), 0), I(1)).walk_pattern(env));
+        Assert.Throws<ArgumentOutOfRangeException>(() => SCons.list2(S(""), I(1)).walk_pattern(env));
+        Assert.Throws<ArgumentNullException>(() => SCons.list2(S(null!), I(1)).walk_pattern(env));
     }
 
     private sealed class TrackingEnv : MplEnv

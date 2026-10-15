@@ -64,18 +64,24 @@ and remaining runtime batch members outside Lane B. Lane B owns `MatVal*`, `MatD
 
 ## Tok.walk_pattern batch
 
-- Branch: `mirror/a-tok-pattern`
-- Scope: `Quire.Mpl.Run.Tok.walk_pattern(MplEnv)` and tests in `tests/Quire.Differential.Tests/SexprDifferentialTests.cs` and `tests/Quire.Mpl.Tests/Run/SexprTests.cs`.
+Merged to `main` at commit `71c16c5dc2fb` after passing independent review and the runtime merge gate (Harness 36, Mpl 160, Differential 88, Mutation 110/111 killed, 0 survivors).
+
+## SCons.walk_pattern batch
+
+- Branch: `mirror/a-scons-pattern`
+- Worktree: `/root/src/quire-scons-pattern`
+- Scope: `Quire.Mpl.Run.SCons.walk_pattern(MplEnv)` and tests in `tests/Quire.Differential.Tests/SexprDifferentialTests.cs` and `tests/Quire.Mpl.Tests/Run/SexprTests.cs`.
 - Contract & Behavior:
-  - Non-symbol tokens return `this`.
-  - Symbols with empty/null name throw argument exceptions on `UpId` / `LowId` access, matching Mathcad.
-  - Uppercase symbols dispatch to `env.LoadMacro(key)`. In Mathcad with `new LocalEnv()`, this raises `NullReferenceException` on `m_parent` lookup; in Quire `LoadMacro` remains a stub (`[MirrorAnalyzed]`).
-  - Lowercase symbols dispatch to `env.AddLocal(key, handle)` and return `this`. In Quire behaviour tests, `TrackingEnv` verifies local registration and instance return (covering lines 518–519).
+  - Non-symbol heads (integers, real numbers, string constants, nested lists) throw `AppException` ("bad pattern").
+  - Symbols with empty/null name throw `ArgumentOutOfRangeException` / `ArgumentNullException` on `LowId` access, matching Mathcad.
+  - Uppercase head symbols return a new `SCons(head, walk_patterns(env, tail))`.
+  - Single-element uppercase patterns preserve `head` and produce `Field2 = Nul.singleton` (with `.tail == null`).
+  - Lowercase head symbols dispatch to `env.LoadMacro(key)`. In Mathcad with `new LocalEnv()`, this raises `NullReferenceException` on `m_parent` lookup; in Quire `LoadMacro` remains a stub (`[MirrorAnalyzed]`).
 - Validation receipts:
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~SexprTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 16 passed, 0 failed, 0 skipped.
   - `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~SexprDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 9 passed, 0 failed, 0 skipped.
   - `git diff --check` — passed.
-- Next: independent review, then merge gate. Subsequent batches: `SCons.walk_pattern(MplEnv)`, then `Tok.walk_expression(MplEnv)`.
+- Next: independent review, then merge gate. Subsequent batch: `Tok.walk_expression(MplEnv)`.
 
 ## Current method audit, separate from historical merges
 

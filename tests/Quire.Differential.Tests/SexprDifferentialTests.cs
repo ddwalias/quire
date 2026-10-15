@@ -749,6 +749,30 @@ public class SexprDifferentialTests
         Compare("SCons.walk_pattern non-sym", "Mpl.Run.SCons", qWalkPat, patIntQ, [qEnv], mWalkPat, patIntM, [mEnv]);
         Compare("SCons.walk_pattern upper", "Mpl.Run.SCons", qWalkPat, patSymQ, [qEnv], mWalkPat, patSymM, [mEnv]);
 
+        var patRealQ = L(R(3.14), I(1));
+        var patRealM = ToMathcad(patRealQ)!;
+        Compare("SCons.walk_pattern real head", "Mpl.Run.SCons", qWalkPat, patRealQ, [qEnv], mWalkPat, patRealM, [mEnv]);
+
+        var patStrQ = L(Str("hello"), I(1));
+        var patStrM = ToMathcad(patStrQ)!;
+        Compare("SCons.walk_pattern str head", "Mpl.Run.SCons", qWalkPat, patStrQ, [qEnv], mWalkPat, patStrM, [mEnv]);
+
+        var patNestedQ = L(L(I(1), I(2)), I(3));
+        var patNestedM = ToMathcad(patNestedQ)!;
+        Compare("SCons.walk_pattern nested head", "Mpl.Run.SCons", qWalkPat, patNestedQ, [qEnv], mWalkPat, patNestedM, [mEnv]);
+
+        var patEmptySymQ = L(S(""), I(1));
+        var patEmptySymM = ToMathcad(patEmptySymQ)!;
+        Compare("SCons.walk_pattern empty sym head", "Mpl.Run.SCons", qWalkPat, patEmptySymQ, [qEnv], mWalkPat, patEmptySymM, [mEnv]);
+
+        var patNullSymQ = L(S(null), I(1));
+        var patNullSymM = ToMathcad(patNullSymQ)!;
+        Compare("SCons.walk_pattern null sym head", "Mpl.Run.SCons", qWalkPat, patNullSymQ, [qEnv], mWalkPat, patNullSymM, [mEnv]);
+
+        var patMultiUpperQ = L(S("Bar"), I(1), Str("s"));
+        var patMultiUpperM = ToMathcad(patMultiUpperQ)!;
+        Compare("SCons.walk_pattern multi upper", "Mpl.Run.SCons", qWalkPat, patMultiUpperQ, [qEnv], mWalkPat, patMultiUpperM, [mEnv]);
+
         Compare("SCons.walk_patterns(null)", "Mpl.Run.SCons", qWalkPats, null, [qEnv, null], mWalkPats, null, [mEnv, null]);
         MethodComparison.Compare("SCons.walk_patterns(pats) reused", "Mpl.Run.SCons",
             qWalkPats, null, [qEnv, patIntQ],
