@@ -130,6 +130,7 @@ public class FunctionDifferentialTests
         var (qGetPure, mGetPure) = InstanceMethod(QFunction, MFunction, "get_Purity");
         var (qGetMin, mGetMin) = InstanceMethod(QFunction, MFunction, "get_MinArgs");
         var (qGetVarargs, mGetVarargs) = InstanceMethod(QFunction, MFunction, "get_Varargs");
+        var (qGetIsFunction, mGetIsFunction) = InstanceMethod(QFunction, MFunction, "get_IsFunction");
         var (qOptFunc, mOptFunc) = InstanceMethod(QFunction, MFunction, "OptFunc", typeof(int));
         var (qIsFully, mIsFully) = InstanceMethod(QFunction, MFunction, "IsFullyApplied", typeof(int));
         var (qAssert, mAssert) = InstanceMethod(QFunction, MFunction, "AssertFullApp", typeof(int));
@@ -142,6 +143,7 @@ public class FunctionDifferentialTests
         MethodComparison.Compare("get_Purity", FunctionContract, qGetPure, qFn, [], mGetPure, mFn, [], qs, ms, qs, ms);
         MethodComparison.Compare("get_MinArgs", FunctionContract, qGetMin, qFn, [], mGetMin, mFn, [], qs, ms, qs, ms);
         MethodComparison.Compare("get_Varargs", FunctionContract, qGetVarargs, qFn, [], mGetVarargs, mFn, [], qs, ms, qs, ms);
+        MethodComparison.Compare("get_IsFunction", FunctionContract, qGetIsFunction, qFn, [], mGetIsFunction, mFn, [], qs, ms, qs, ms);
         MethodComparison.Compare("IgnoreVectorization(true)", FunctionContract, qIgnore, qFn, [true], mIgnore, mFn, [true], qs, ms, qs, ms);
         MethodComparison.Compare("OptFunc(1)", FunctionContract, qOptFunc, qFn, [1], mOptFunc, mFn, [1], qs, ms, qs, ms);
         foreach (int count in new[] { 0, 1, 2, 3 })
@@ -157,5 +159,11 @@ public class FunctionDifferentialTests
         var (qUnary, mUnary) = FunctionPair(1);
         MethodComparison.Compare("VecApply bypass when vectorization ignored", FunctionContract,
             qVec, qUnary, [new object[] { 7 }], mVec, mUnary, [new object[] { 7 }], qs, ms, qs, ms);
+
+        var (qInvokeVec, mInvokeVec) = InstanceMethod(QFunction, MFunction, "InvokeVec", typeof(object[]));
+        var (qVectorFunction, mVectorFunction) = FunctionPair(2);
+        MethodComparison.Compare("InvokeVec forwards its argument vector", FunctionContract,
+            qInvokeVec, qVectorFunction, [new object[] { "left", "right" }],
+            mInvokeVec, mVectorFunction, [new object[] { "left", "right" }], qs, ms, qs, ms);
     }
 }

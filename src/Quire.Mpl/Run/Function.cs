@@ -12,11 +12,17 @@ namespace Quire.Mpl.Run;
 /// </summary>
 public abstract partial class Function : FunctionUtilities
 {
+    [MirrorAnalyzed("Mpl.Run.Function")]
     protected int m_purity;
+    [MirrorAnalyzed("Mpl.Run.Function")]
     protected int m_n;
+    [MirrorAnalyzed("Mpl.Run.Function")]
     protected bool m_no_vectorize;
+    [MirrorAnalyzed("Mpl.Run.Function")]
     protected int m_minargs;
+    [MirrorAnalyzed("Mpl.Run.Function")]
     protected bool m_varargs;
+    [MirrorAnalyzed("Mpl.Run.Function")]
     protected string m_name;
 
     [MirrorAnalyzed("Mpl.Run.Function")]
@@ -37,8 +43,11 @@ public abstract partial class Function : FunctionUtilities
         m_dim = Dim.function_dim;
     }
 
+    [MirrorVerified("FunctionDifferentialTests")]
     public int Purity => m_purity;
+    [MirrorVerified("FunctionDifferentialTests")]
     public int MinArgs => m_minargs;
+    [MirrorVerified("FunctionDifferentialTests")]
     public bool Varargs => m_varargs;
 
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
@@ -60,6 +69,7 @@ public abstract partial class Function : FunctionUtilities
         set => m_inverse_function = value;
     }
 
+    [MirrorVerified("FunctionDifferentialTests")]
     public override Function IsFunction => this;
 
     [MirrorAnalyzed("Mpl.Run.Function")]
@@ -709,11 +719,8 @@ public abstract partial class Function : FunctionUtilities
     /// <summary>Calls the function with <paramref name="args"/> and stores its result in <paramref name="r"/>.</summary>
     public abstract void invVec<R>(out R r, object[] args);
 
-    public object InvokeVec(object[] args)
-    {
-        invVec(out object r, args);
-        return r;
-    }
+    [MirrorVerified("FunctionDifferentialTests")]
+    public object InvokeVec(object[] args) => DynApply(args);
 
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public override string ToString() => $"Function: {Name}";

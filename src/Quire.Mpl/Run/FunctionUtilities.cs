@@ -68,6 +68,7 @@ public abstract partial class FunctionUtilities : DimVal
         };
     }
 
+    [MirrorAnalyzed("Mpl.Run.FunctionUtilities")]
     protected FunctionUtilities() { }
 
     [MirrorAnalyzed("Mpl.Run.FunctionUtilities")]

@@ -18,11 +18,12 @@
 | `PushFront(object, object, object[])` | 0x0600027d | Allocates an array with two leading values and copies the source after them. | Direct comparison with a two-element source. | Analyzed |
 | `Push(object[], object)` | 0x0600027e | Copies the source then appends one value. | Direct comparison with a two-element source. | Analyzed |
 | `Push(object[], object, object)` | 0x0600027f | Copies the source then appends two values. | Direct comparison with a two-element source. | Analyzed |
+| `.ctor()` | 0x06000280 | Protected base constructor with no additional initialization. | Reflection cannot directly invoke a constructor whose declaring type is abstract; a derived constructor does not count as direct invocation. | Analyzed |
 
 ## Test cases
 
-`FunctionUtilities_array_operations_and_caches` directly compares each listed method with the same mplrun member. Inputs cover the copy and non-copy branches for `take`, both branches for `but`, empty/nonempty concatenation, all push overloads and `GetCallMethod` on either side of the fixed-arity limit.
+`FunctionUtilities_array_operations_and_caches` directly compares the callable listed methods with the same mplrun member. Inputs cover the copy and non-copy branches for `take`, both branches for `but`, empty/nonempty concatenation, all push overloads, and `GetCallMethod` on either side of the fixed-arity limit.
 
 ## Open
 
-The type initializer and protected constructor are not invoked directly; static initialization is observed through the methods above.
+The protected constructor remains Analyzed: direct reflection invocation is impossible because `FunctionUtilities` is abstract. The type initializer is observed through the methods above.
