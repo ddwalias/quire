@@ -62,27 +62,20 @@ Lane A owns the S-expression family and runtime helpers (`Cons`, `VecBuilder`, `
 and remaining runtime batch members outside Lane B. Lane B owns `MatVal*`, `MatDim`, `Function*`,
 `FunctionUtilities`, `DimVal.ApplyMatVal`, and `Quire.Engine`.
 
-## Next batch: token pattern walking
+## Tok.walk_pattern batch
 
-Start a new `mirror/a-tok-pattern` branch from current `main`. Scope is exactly
-`Quire.Mpl.Run.Tok.walk_pattern(MplEnv)` and its direct differential tests in
-`tests/Quire.Differential.Tests/SexprDifferentialTests.cs`:
-
-1. Read the existing [Tok evidence](../evidence/Mpl.Run.Tok.md), exact original overload and its
-   `LoadMacro`, `ExpandRef`, `AddLocal` contracts. Reuse artifact-bound evidence that still matches.
-2. Add direct original/Quire cases for the uppercase macro lookup/expansion path and lowercase
-   local registration path, including observed handle/state changes. The current audit leaves
-   `src/Quire.Mpl/Run/Sexpr.cs:516` and `:519` unexecuted. Confirm the precise reachable cases from
-   the original before changing implementation or marking the method Verified.
-3. Run affected behavior tests and:
-   `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~SexprDifferentialTests'`.
-   Record actual commands/counts/case limits here; obtain independent whole-diff review, then queue
-   one full runtime merge gate. Do not treat existing coverage deficits as newly verified behavior.
-
-After that batch, independently scope `SCons.walk_pattern(MplEnv)` (missing lowercase binding,
-macro expansion and bad-pattern cases), then `Tok.walk_expression(MplEnv)` (macro lookup/expansion).
-Keep unrelated types in separate batches. If a path needs an approval proposal, record its exact
-proof and continue the next independent batch while approval is pending.
+- Branch: `mirror/a-tok-pattern`
+- Scope: `Quire.Mpl.Run.Tok.walk_pattern(MplEnv)` and tests in `tests/Quire.Differential.Tests/SexprDifferentialTests.cs` and `tests/Quire.Mpl.Tests/Run/SexprTests.cs`.
+- Contract & Behavior:
+  - Non-symbol tokens return `this`.
+  - Symbols with empty/null name throw argument exceptions on `UpId` / `LowId` access, matching Mathcad.
+  - Uppercase symbols dispatch to `env.LoadMacro(key)`. In Mathcad with `new LocalEnv()`, this raises `NullReferenceException` on `m_parent` lookup; in Quire `LoadMacro` remains a stub (`[MirrorAnalyzed]`).
+  - Lowercase symbols dispatch to `env.AddLocal(key, handle)` and return `this`. In Quire behaviour tests, `TrackingEnv` verifies local registration and instance return (covering lines 518–519).
+- Validation receipts:
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~SexprTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 16 passed, 0 failed, 0 skipped.
+  - `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~SexprDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false` — 9 passed, 0 failed, 0 skipped.
+  - `git diff --check` — passed.
+- Next: independent review, then merge gate. Subsequent batches: `SCons.walk_pattern(MplEnv)`, then `Tok.walk_expression(MplEnv)`.
 
 ## Current method audit, separate from historical merges
 

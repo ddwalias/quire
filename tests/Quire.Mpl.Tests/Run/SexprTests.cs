@@ -161,6 +161,31 @@ public class SexprTests
         Assert.NotSame(nested, SCons.walk_patterns(env, nested));
     }
 
+    private sealed class TrackingEnv : MplEnv
+    {
+        public List<(Sym Sym, uint Handle)> AddedLocals { get; } = [];
+
+        public override MplEnv AddLocal(Sym s, uint tag)
+        {
+            AddedLocals.Add((s, tag));
+            return this;
+        }
+
+        public override BindingInfo lookup(Sym s) => null!;
+    }
+
+    [Fact]
+    public void Tok_walk_pattern_registers_local_for_lowercase_symbol()
+    {
+        var env = new TrackingEnv();
+        var tok = S("x", 5);
+        var result = tok.walk_pattern(env);
+        Assert.Same(tok, result);
+        Assert.Single(env.AddedLocals);
+        Assert.Equal("x", env.AddedLocals[0].Sym.name);
+        Assert.Equal(5u, env.AddedLocals[0].Handle);
+    }
+
     /// <summary>A block whose declarations are given, and a symbol that defines each one as a marker.</summary>
     private sealed class Block(Cons decls) : Sexpr(99)
     {

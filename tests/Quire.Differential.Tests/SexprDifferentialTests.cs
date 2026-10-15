@@ -400,7 +400,7 @@ public class SexprDifferentialTests
             bool isLowerSym = t.Key != null && !string.IsNullOrEmpty(t.Key.Field1) && t.Key.LowId;
             if (!isLowerSym)
                 Compare($"{label}.walk_expression", "Mpl.Run.Tok", qWalkExpr, t, [qEnv], mWalkExpr, m, [mEnv]);
-            if (t.Key == null)
+            if (t.Key == null || string.IsNullOrEmpty(t.Key.Field1))
                 Compare($"{label}.walk_pattern", "Mpl.Run.Tok", qWalkPat, t, [qEnv], mWalkPat, m, [mEnv]);
             // Without an environment every path that needs one fails at its first call (LoadMacro or AddLocal).
             Compare($"{label}.walk_expression, no env", "Mpl.Run.Tok", qWalkExpr, t, [null], mWalkExpr, m, [null]);
