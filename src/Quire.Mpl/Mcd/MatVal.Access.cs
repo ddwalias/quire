@@ -306,7 +306,12 @@ public sealed partial class MatVal
         return false;
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    private void set_ptrs_raw(int off, object p) => set_ptrs_at(off, NumVal.NotNoValue(p));
+    private void set_ptrs_raw(int off, object p)
+    {
+        if (m_parr == null) m_parr = new Hashtable();
+        m_parr[off] = NumVal.NotNoValue(p);
+        m_rarr[off] = PtrNan;
+    }
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_2i(int i, int j, double imag)
     {

@@ -144,3 +144,27 @@ git diff --check
 ```
 
 No production source changed, and no acceptance or unreachable proposal is made. Windows/native phase closure and the full runtime merge gate remain unperformed; the scoped run is not a phase-completion claim. This branch is one squashed commit pushed for backup. Its exact tip and independent review verdict will be recorded in the atomic handoff.
+
+## MatVal pointer-slot writers — active
+
+Branch `mirror/b-matval-pointer-slot-writers`, worktree `/root/src/quire-matval-pointer-slot-writers`, was initially based on clean main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`, then cleanly rebased onto `bc6a34e98922358bbde77eeb3a5f591d3d9df06e` and current main `d1f744900cc2cc6c7dc43056a9f0eaf4d030ee69` as Lane A integrations advanced main. Current branch/worktree inspection found no existing same-named branch; older queued branches remain separate unless Agent A reports otherwise. The exact Prime 12.0.1.0 artifact was refreshed with `python3 tools/reference/reference.py Mcd.MatVal --il`: SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+The coherent five-member writer chain is `set_ptrs_1(int,object)` token `0x06000517`, `set_ptrs_2(int,int,object)` `0x06000518`, private `set_ptrs(int,object)` `0x06000519`, private `set_ptrs_raw(int,object)` `0x0600051b`, and private `set_ptrs_at(int,object)` `0x06000521`. Same-artifact IL contracts are recorded in `docs/mirror/evidence/Mcd.MatVal.md`. Eighteen direct cases compare exact tokens, outcomes/exceptions, indexing, string/null/generic pointers, acyclic same-object storage and Immutable mutation, self/cyclic copying and source preservation, including packed clone backing, dimensions, flags, and pointer table contents; raw and direct slot writes; table/backing aliases and contents; and exception-time mutation. The `contains` method is a dependency and remains a separate direct-comparison gap.
+
+Direct comparison found an observable order difference: on `NumVal.NoValue`, Mathcad allocated an empty `m_parr` before `NotNoValue` threw, while Quire previously left the field null. `set_ptrs_raw` now allocates the table, applies `NotNoValue`, stores the value, and writes PtrNan in original order.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValPointerSlotWritersDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 4 facts passed, 18 direct MethodComparison cases, 0 failed/skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 python3 tools/validation/validate.py --method-type Quire.Mcd.MatVal --mutate --jobs 4
+=> on base `bc6a34e98922358bbde77eeb3a5f591d3d9df06e`: Harness 36/36, Mpl 166/166, Differential 97/97; inventory compared 44, missing 145, structure mismatches 108, uncovered 0, verified-unsupported 32; integrity 0/complete and ratchet pass; 189/189 mutants killed, 0 survivors/proposals. LOCAL CHECKS pass; scoped gate would pass with existing gaps. Receipt: /tmp/quire-validation-yvtdr1lj/summary.json.
+
+git diff --check
+=> passed.
+```
+
+The mutation receipt was generated on clean base `bc6a34e98922358bbde77eeb3a5f591d3d9df06e`. After the clean rebase to `d1f744900cc2cc6c7dc43056a9f0eaf4d030ee69`, the affected behavior command passed 8/8 and the strict direct differential command passed 4/4 facts (18 comparisons); `git diff --check` passed. Per PLAN, the clean rebase did not require repeating local mutation. No acceptance or unreachable proposal is made. Windows/native phase closure and the full runtime merge gate remain unperformed; this scoped run is not a phase-completion claim. The branch remains in progress pending independent whole-diff review, backup push and handoff.
