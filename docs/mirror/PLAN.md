@@ -25,9 +25,10 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    This still runs the focused profile's harness and Mpl
    regression tests; the filter only narrows differential tests. Every selected method must have a direct
    comparison in the selected tests, or the method gate will report the coverage gap. Inspect failures and
-   retain concise results. Run mutation validation for the completed batch before review/merge, not after
-   every edit; the merge gate remains authoritative. Do not use a filtered local run to claim project-wide
-   or phase completion.
+   retain concise results. Normal local iteration runs behavior, direct comparison, coverage and ratchet checks.
+   The merge gate runs mutation once for the completed batch; local mutation is optional unless the batch needs
+   survivor or unreachable-line proposals (step 4). Do not use a filtered local run to claim project-wide or
+   phase completion.
    Refresh coverage/status locally after member changes if needed (`MirrorGen manifest`; `coverage.md` and
    `status/*.txt` are generated and gitignored, see [status/README.md](status/README.md)). Implement a stub by deleting its whole `[MirrorStub]` line
    pair from `Generated/Mirror` (the gate allows only that there; constant stubs stay) and declaring the member with the same shape; never
@@ -45,11 +46,15 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      `main`; the maintainer, merging under `flock /tmp/quire-merge.lock`, rebases a queued branch that `main` has
      moved past and the gate then validates the rebased tip. So after a clean rebase do not re-validate locally;
      rerun the scoped validation only when the rebase had conflicts in `src/` or `tests/`.
-   - **Local validation:** before queueing, run only a scoped `validate.py --method-type <changed types> --mutate`.
-     It mutates every compared method of those types, a superset of what the gate mutates in them; the gate may also
-     mutate other types' methods (callers, field readers, users of a changed test helper). Its last line separates the run's own checks from the gate's
-     likely decision (`LOCAL CHECKS: … · GATE: …`; outcomes in
-     [validation.md](validation.md#branch-coverage-mutation-and-status)).
+   - **Local validation:** before queueing, run a scoped `validate.py --method-type <changed types>` with the
+     related differential test filter. Mutation runs at the merge gate; omit a duplicate local mutation pass for
+     ordinary batches. Add `--mutate` when investigating test sensitivity or preparing survivor/unreachable-line
+     proposals. It mutates every compared method of those types, a superset of what the gate mutates in them; the
+     gate may also mutate other types' methods (callers, field readers, users of a changed test helper). A local run
+     without mutation does not establish mutation readiness. The last line separates the run's own checks from the
+     gate's likely decision (`LOCAL CHECKS: … · GATE: …`; outcomes in
+     [validation.md](validation.md#branch-coverage-mutation-and-status)). Both commands accept `--jobs`; the default
+     is one worker per logical CPU, capped at 12. Lower it when memory or CPU contention slows the host.
    - **Survivors and uncovered lines:** a surviving mutant needs a stronger case; a mutant that crashes the test host
      is killed, never proposed. Only a provably equivalent survivor may be proposed. A line left `uncovered` needs a
      case; only a line that cannot execute in Mathcad's original either (e.g. `return null;` after a helper that
@@ -57,7 +62,8 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      ([validation.md](validation.md#branch-coverage-mutation-and-status)) whose reason says why it is unreachable in
      the original too; mutants on that line cannot be killed, so propose each for `accepted-mutants.txt` with the
      same reason. Never restructure or join source lines to avoid one. The path, for both:
-     1. the lane agent writes each exact key or entry with its proof in a scratch file, passes it to local runs
+     1. the lane agent runs scoped local mutation, writes each exact key or entry with its proof in a scratch file,
+        passes it to local runs
         (`--proposed-mutants` / `--proposed-unreachable`), and pastes the same lines into the lane file;
      2. an independent reviewer verifies each proof;
      3. the user approves;

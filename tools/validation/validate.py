@@ -21,6 +21,19 @@ ROOT = Path(os.environ.get("QUIRE_VALIDATOR_REPO") or Path(__file__).resolve().p
 NS = {"t": "http://microsoft.com/schemas/VisualStudio/TeamTest/2010"}
 
 
+def mutation_jobs(value=None):
+    """Bound the default worker count; explicit overrides must be positive integers."""
+    if value is None:
+        return min(12, max(1, os.cpu_count() or 1))
+    try:
+        jobs = int(value)
+    except (TypeError, ValueError):
+        raise argparse.ArgumentTypeError("--jobs must be a positive integer") from None
+    if jobs < 1:
+        raise argparse.ArgumentTypeError("--jobs must be a positive integer")
+    return jobs
+
+
 def read_trx(path, allow_skips=False):
     root = ET.parse(path).getroot()
     summary = root.find("t:ResultSummary", NS)
@@ -377,6 +390,8 @@ def verdict(report):
     scope = report.get("method_types")
     line = (f"LOCAL CHECKS: {local} · GATE: {gate}" + (f" ({'; '.join(reasons)})" if reasons else "")
             + (f" [scoped to {len(scope)} types; the gate validates all]" if scope else ""))
+    if report.get("profile") == "focused" and report.get("mutation_requested") is False:
+        line += " [mutation deferred to gate]"
     return {"local_checks": local, "gate": gate, "reasons": reasons, "pending_approval": pending, "line": line}
 
 
@@ -422,7 +437,8 @@ def main():
                         help="maintainer audits: with --mutate-since, mutate every compared method of each changed type")
     parser.add_argument("--mutate-all", action="store_true",
                         help="maintainer audits: mutate every compared method (unscoped runs)")
-    parser.add_argument("--jobs", type=int, default=4, help="parallel mutant test runs (default: 4)")
+    parser.add_argument("--jobs", type=mutation_jobs, default=mutation_jobs(),
+                        help="parallel mutant test runs (default: CPU count, at most 12)")
     parser.add_argument("--baseline", type=Path, help="ratchet baseline (default: docs/mirror/validation-baseline.json)")
     parser.add_argument("--write-baseline", type=Path, help="write this run's counts as a baseline (unscoped runs only)")
     parser.add_argument("--proposed-mutants", type=Path, metavar="PATH",
@@ -483,6 +499,7 @@ def main():
 
     run = str(uuid.uuid4())
     report = {"run": run, "method_types": args.method_type, "revision": git_output("rev-parse", "HEAD"), "working_tree": git_output("status", "--porcelain"), "profile": args.profile, "diff_filter": args.diff_filter,
+              "mutation_requested": bool(args.mutate or args.mutate_since or args.mutate_all),
               "complete": False, "gate_passed": False, "projects": [], "limitations":
               "Passing comparisons establish equivalence only for executed cases. Phase also requires render, coverage-excluded checks and independent review."}
     install = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0"
@@ -680,7 +697,7 @@ def main():
             mutate_types |= {m["type"] for m in coverage["methods"]}
             report["mutation_scope"] = "all compared methods (requested)"
         if mutate_types or mutate_methods:
-            print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
+            print(f"Mutating compared methods with {args.jobs} workers; each mutant reruns the differential tests", flush=True)
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
                                   args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json,
                                   proposed_mutants, mutant_cache_allowed(args), install, methods=mutate_methods)
@@ -689,6 +706,7 @@ def main():
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
                                                            "proposed_survivors", "stale_proposed")}
             report["mutation"]["mutated_methods"] = len(mutation["mutated_methods"])
+            report["mutation"]["jobs"] = args.jobs
             report["mutation"]["complete"] = mutation["complete"]
             # Proposed survivors keep the run incomplete, but only accepted-mutants.txt is gate-relevant; the merge
             # gate never passes proposals anyway.

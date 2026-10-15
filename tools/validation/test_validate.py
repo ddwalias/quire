@@ -5,6 +5,33 @@ import unittest.mock
 from validate import read_trx
 
 
+class MutationJobsTests(unittest.TestCase):
+    def test_default_is_bounded_by_cpu_count(self):
+        from validate import mutation_jobs
+        for cpus, expected in [(None, 1), (1, 1), (2, 2), (8, 8), (12, 12), (64, 12)]:
+            with self.subTest(cpus=cpus), unittest.mock.patch('validate.os.cpu_count', return_value=cpus):
+                self.assertEqual(mutation_jobs(), expected)
+
+    def test_explicit_worker_count_is_positive_and_can_override_the_cap(self):
+        import argparse
+        from validate import mutation_jobs
+        self.assertEqual(mutation_jobs('1'), 1)
+        self.assertEqual(mutation_jobs('16'), 16)
+        for invalid in ('0', '-1', 'auto', ''):
+            with self.subTest(invalid=invalid), self.assertRaises(argparse.ArgumentTypeError):
+                mutation_jobs(invalid)
+
+    def test_both_commands_reject_invalid_worker_counts_before_running(self):
+        import subprocess, sys
+        for script, args in [('validate.py', []), ('merge_gate.py', ['unused-branch'])]:
+            for invalid in ('0', '-1', 'auto'):
+                with self.subTest(script=script, jobs=invalid):
+                    result = subprocess.run([sys.executable, str(Path(__file__).parent / script), *args,
+                                             '--jobs', invalid], capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 2)
+                    self.assertIn('--jobs must be a positive integer', result.stderr)
+
+
 class ResultTests(unittest.TestCase):
     def check(self, outcomes, summary="Completed", allow=False):
         with tempfile.TemporaryDirectory() as directory:
@@ -263,6 +290,12 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(result['local_checks'], 'fail')
         self.assertIn('validation error: build failed', result['line'])
         self.assertTrue(self.verdict(method_types=['Quire.T'])['line'].endswith('[scoped to 1 types; the gate validates all]'))
+
+    def test_local_reports_disclose_deferred_mutation(self):
+        result = self.verdict(profile='focused', mutation_requested=False, mutation=None)
+        self.assertTrue(result['line'].endswith('[mutation deferred to gate]'))
+        self.assertNotIn('deferred', self.verdict(profile='focused', mutation_requested=True)['line'])
+        self.assertNotIn('deferred', self.verdict(profile='phase', mutation_requested=False)['line'])
 
 
 class SealTests(unittest.TestCase):

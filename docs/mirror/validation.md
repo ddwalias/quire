@@ -23,6 +23,13 @@ The existing test suite has not yet been migrated to this requirement; passing t
 still produce a failing validation report with precise coverage gaps.
 This profile covers mplrun, not engine/UI/other-project behavior; also run affected tests there.
 
+Use this scoped validation during iteration and before handoff. The merge gate performs the required mutation
+pass; ordinary batches can omit `--mutate` locally. Run scoped local mutation when investigating weak comparisons
+or preparing equivalent-mutant/unreachable-line proposals. Omitting local mutation delays that feedback until
+the gate; a passing local report without mutation does not establish that the gate's mutation checks will pass.
+The focused report records `mutation_requested` and appends `[mutation deferred to gate]` when local mutation
+was omitted.
+
 The focused project links the differential sources, targets `net10.0`, and references only
 Quire.Mpl. Its assembly name stays `Quire.Differential.Tests` to retain the existing internal
 access grant. It has its own output directory. Do not copy tests into it or add it to the solution:
@@ -256,7 +263,10 @@ order passes it, which the direct comparisons must catch.
   each proof, the user approves, and the maintainer adds the entries on the branch and merges it with
   `--allow-protected`, checking that `gate.json` `protected_changed` lists only `accepted-mutants.txt` and
   `unreachable-lines.txt` ([PLAN](PLAN.md) step 4). Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
-  merge gate blocks any summary that used it. `--jobs` sets parallel copies.
+  merge gate blocks any summary that used it. Both `validate.py` and `merge_gate.py` accept `--jobs` to set parallel
+  copies. The default is one worker per logical CPU, capped at 12; explicit positive counts override the cap.
+  Lower it on hosts with limited memory or CPU contention. The worker count is recorded in the mutation summary
+  and in `gate.json` as `mutation_jobs`. It changes scheduling, not the selected mutants or acceptance rules.
 - **Exit status and verdict:** `validate.py` exits 0 when the run is complete, 3 when the merge gate's requirements
   hold (`gate_passed`) but gaps remain, and 1 when blocked (2 for an incomplete run with `--allow-differential-skips`).
   A run given `--proposed-mutants` or `--proposed-unreachable` is never complete nor `gate_passed`, so it exits 1; its
@@ -396,6 +406,7 @@ that has `main` checked out:
 ```sh
 python3 tools/validation/merge_gate.py <branch>            # check only
 python3 tools/validation/merge_gate.py <branch> --apply    # check, fast-forward main, commit the new baseline
+python3 tools/validation/merge_gate.py <branch> --jobs 8   # choose the mutant worker count
 ```
 
 The gate blocks a branch that is not based on current `main`, has no changes, or contains paths that differ only in

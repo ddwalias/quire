@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tempfile
 import ratchet
+from validate import mutation_jobs
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -153,13 +154,14 @@ def restored_paths(base_files, rules, stubs, allow_protected):
     return restore
 
 
-def validation_command(tree, results, base, baseline, timeout, types_wide=False, everything=False):
+def validation_command(tree, results, base, baseline, timeout, types_wide=False, everything=False, jobs=None):
     """The clone's validator in gate mode: only accepted-mutants.txt excuses a survivor and only unreachable-lines.txt
     exempts a line (no --proposed-mutants or --proposed-unreachable), and the local mutant cache, which code under
     test could forge, is neither read nor written. `types_wide`: mutate whole changed types; `everything`: every compared
     method (maintainer audits)."""
     return [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
             '--mutate-since', base, '--write-baseline', str(baseline), '--timeout', str(timeout), '--no-mutant-cache',
+            '--jobs', str(mutation_jobs(jobs)),
             *(['--mutate-types-wide'] if types_wide else []), *(['--mutate-all'] if everything else [])]
 
 
@@ -207,6 +209,8 @@ def main():
                         help='maintainer only: accept src changes outside Quire.Mpl after a separate phase run')
     parser.add_argument('--results', type=Path, help='new directory for the validation results')
     parser.add_argument('--timeout', type=int, default=1800)
+    parser.add_argument('--jobs', type=mutation_jobs, default=mutation_jobs(),
+                        help='parallel mutant test runs (default: CPU count, at most 12)')
     parser.add_argument('--mutate-types-wide', action='store_true',
                         help='maintainer audits: mutate every compared method of each changed type, not only changed methods')
     parser.add_argument('--mutate-all', action='store_true', help='maintainer audits: mutate every compared method')
@@ -260,7 +264,7 @@ def main():
             code, reasons = None, [f'cannot prepare the validation clone: {error}']
         else:
             command = validation_command(tree, results, base, outputs / 'baseline.json', args.timeout,
-                                         args.mutate_types_wide, args.mutate_all)
+                                         args.mutate_types_wide, args.mutate_all, args.jobs)
             print('Validating:', ' '.join(command), flush=True)
             code = subprocess.run(command, cwd=tree).returncode
             summary_path = results / 'summary.json'
@@ -278,6 +282,7 @@ def main():
                 else:
                     reasons = baseline_regressions(base, baseline)
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,
+                  'mutation_jobs': args.jobs,
                   'stub_deletions': stubs,
                   'results': str(results), 'validator_exit': code, 'reasons': reasons}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')

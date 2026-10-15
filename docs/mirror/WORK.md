@@ -2,6 +2,17 @@
 
 Resume with [PLAN.md](PLAN.md). Phase 1 remains open and uncommitted; phase closure checks have not run.
 
+## Validation performance
+
+Branch `mirror/validation-speed` is based on `main` `08946db`. Normal local validation omits mutation; the merge
+gate retains the required mutation pass. Batches proposing equivalent mutants or unreachable lines still run
+scoped local mutation. Gate and validator worker defaults now follow the logical CPU count, capped at 12;
+`--jobs` overrides the count. The two differential passes remain separate because coverage instrumentation
+changes the method tokens used by direct comparisons. Changed paths: `tools/validation/{validate,merge_gate}.py`,
+their unit tests, PLAN, and validation documentation. Validation: `python3 -m unittest discover -s tools/validation
+-p 'test_*.py'` passed 143/143; both CLI help commands and `git diff --check` passed. Independent review passed
+with no blockers. End-to-end performance has not been benchmarked.
+
 ## Batch 2d: S-expression runtime types and helpers (completed)
 
 **Completed work:** [Mpl.Run.Sexpr](evidence/Mpl.Run.Sexpr.md), [Mpl.Run.SCons](evidence/Mpl.Run.SCons.md),

@@ -90,6 +90,13 @@ class MergeGateTests(unittest.TestCase):
         self.assertIn('--mutate-types-wide', merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60, True))
         self.assertIn('--mutate-all', merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60, False, True))
 
+    def test_gate_forwards_the_worker_count(self):
+        command = merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60, jobs=8)
+        self.assertEqual(command[command.index('--jobs') + 1], '8')
+        with mock.patch('validate.os.cpu_count', return_value=64):
+            command = merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60)
+        self.assertEqual(command[command.index('--jobs') + 1], '12')
+
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])
 
@@ -172,7 +179,7 @@ class RepositoryTests(unittest.TestCase):
         self.assertFalse(on_branch(dangling, self.repo))
         self.assertEqual(self.main(dangling)[0], 1)
 
-    def main(self, branch, fail=None):
+    def main(self, branch, fail=None, extra=()):
         """Exit code and gate.json (None when the gate stopped before validation) of a check against the scratch
         repository; git commands whose first argument is `fail` fail."""
         real, root = merge_gate.git, merge_gate.ROOT
@@ -182,11 +189,30 @@ class RepositoryTests(unittest.TestCase):
             return real(*args, cwd=self.repo if cwd in (None, root) else cwd, check=check)
         results = self.repo.parent / 'results'
         with mock.patch.object(merge_gate, 'git', git), mock.patch.object(merge_gate, 'ROOT', self.repo), \
-                mock.patch('sys.argv', ['merge_gate.py', branch, '--results', str(results)]), \
+                mock.patch('sys.argv', ['merge_gate.py', branch, '--results', str(results), *extra]), \
                 contextlib.redirect_stdout(io.StringIO()):
             code = merge_gate.main()
         gate = results / 'gate.json'
         return code, json.loads(gate.read_text()) if gate.is_file() else None
+
+    def test_cli_worker_count_reaches_validation_and_the_gate_record(self):
+        real, commands = subprocess.run, []
+        def run(command, *args, **kwargs):
+            if '--write-baseline' not in command:
+                return real(command, *args, **kwargs)
+            commands.append(command)
+            results = Path(command[command.index('--results') + 1])
+            results.mkdir(parents=True)
+            (results / 'summary.json').write_text(json.dumps(PASSED))
+            Path(command[command.index('--write-baseline') + 1]).write_text(json.dumps(self.BASELINE))
+            return subprocess.CompletedProcess(command, 0)
+        with mock.patch.object(merge_gate.subprocess, 'run', side_effect=run):
+            code, gate = self.main('work', extra=['--jobs', '8'])
+        self.assertEqual(code, 0, gate)
+        self.assertEqual(gate['mutation_jobs'], 8)
+        self.assertEqual(len(commands), 1)
+        self.assertEqual(commands[0][commands[0].index('--jobs') + 1], '8')
+        self.assertIn('--no-mutant-cache', commands[0])
 
     def test_failed_clone_is_recorded_as_blocked(self):
         for command in ('clone', 'remote'):
