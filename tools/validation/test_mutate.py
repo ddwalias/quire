@@ -2,6 +2,7 @@ import os
 import stat
 import sys
 import tempfile
+import time
 from pathlib import Path
 import unittest
 from unittest import mock
@@ -116,7 +117,6 @@ class MutationTests(unittest.TestCase):
                                  'survived (tests failed without a mismatch)')
 
     def test_a_looping_mutant_is_cut_off_relative_to_its_own_tests(self):
-        import time
         image = bytearray(self.image); image[9] = 3
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
         started = time.monotonic()
@@ -124,7 +124,8 @@ class MutationTests(unittest.TestCase):
             report = self.mutate()
         outcomes = {r['key'].split(' ', 1)[1]: r['outcome'] for r in report['mutants']}
         self.assertEqual(outcomes['brfalse.s -> brtrue.s'], 'killed (timeout)')
-        self.assertLess(report['mutant_timeout_seconds'], 10)
+        self.assertEqual(report['timeouts'], 1)
+        self.assertLess(report['max_mutant_timeout_seconds'], 60)
         self.assertLess(time.monotonic() - started, 30)
 
     def test_control_run_with_a_swallowed_mismatch_rejected(self):

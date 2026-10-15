@@ -190,8 +190,8 @@ order passes it, which the direct comparisons must catch.
   the test output. The mismatch is usually the mutated method's own, but the first mismatch ends a test, so it may
   belong to another method compared earlier (`killed (via another method compared first)`). Failures that record no
   mismatch, such as crashes in a type initializer or setup errors, do not count; a maintainer may accept such
-  mutants. A run that exceeds four times its test subset's control duration (at least 15 s; the control runs in a worker
-  under the same parallel load) is killed with its process tree and
+  mutants. A run that exceeds four times its test subset's control duration (at least 30 s and at most `--timeout`; the
+  control runs in a worker under the same parallel load) is killed with its process tree and
   counts as killed, so a test that stalls deliberately would also kill mutants; the lint forbids sleeps and delays.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). `--jobs` sets parallel copies.

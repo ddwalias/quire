@@ -15,7 +15,9 @@ import xml.etree.ElementTree as ET
 from validate import NS, ROOT, digest, files_under, sdk_directory
 
 ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
-MUTANT_MARGIN, MUTANT_FLOOR = 4, 15  # a mutant's timeout: its tests' unmutated duration times this, at least FLOOR s
+# A mutant's timeout: its tests' unmutated duration times MARGIN, at least FLOOR s. A false timeout counts as a kill and
+# could hide a weak test, so the floor stays generous; only mutants that loop pay it.
+MUTANT_MARGIN, MUTANT_FLOOR = 4, 30
 
 
 def key(method, mutant):
@@ -198,7 +200,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             outcome = 'survived (tests failed without a mismatch)'
         else:
             outcome = 'survived'
-        return {'key': key(method, mutant), 'outcome': outcome, 'accepted': key(method, mutant) in accepted_keys}
+        return {'key': key(method, mutant), 'outcome': outcome, 'accepted': key(method, mutant) in accepted_keys,
+                'timeout_seconds': round(limits[tests])}
 
     # Each worker owns one copy and takes the next mutant from a shared queue, so a slow mutant idles nobody else.
     pending = queue.Queue()
@@ -227,7 +230,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         for copy in copies:
             shutil.rmtree(copy, ignore_errors=True)
     survivors = [r['key'] for r in results if r['outcome'].startswith('survived') and not r['accepted']]
-    return {'types': sorted(types), 'total': len(results), 'mutant_timeout_seconds': round(max(limits.values(), default=0)),
+    return {'types': sorted(types), 'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
+            'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
             'survivors': survivors, 'complete': not survivors, 'mutants': results}
