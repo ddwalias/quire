@@ -168,16 +168,16 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
     - If `Key == null`: calls `BadPattern(this)` throwing `AppException("bad pattern", 0u, handle)`.
     - If `Key.LowId`: loads macro via `env.LoadMacro(Key)`. If macro is null and `Length == 1`, calls `env.AddLocal(Key, handle)` and returns `this`; if `Length != 1`, calls `BadPattern(this)` throwing `AppException("bad pattern", 0u, handle)`. If macro is present, returns `macro.ExpandCall(env, this).walk_pattern(env)`.
     - If `!Key.LowId`: returns `new SCons(head, walk_patterns(env, tail))`.
-    - Emits IL matching Mathcad `mplrun.dll` token 0x06000049. Attribute updated to `[MirrorVerified("SexprDifferentialTests")]`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000049. Attribute set to `[MirrorTested("Mpl.Run.SCons")]` (uncovered sequence points follow the `BadPattern` throwing helper).
   - `Mpl.Run.SCons.walk_declaration_lhs(MplEnv env)`:
     - If `Key == null`: calls `BadDeclaration(this)` throwing `AppException("illegal declaration", 0u, handle)`.
     - If `Key != null`: delegates to `Key.walk_declaration_as(env, this)`.
-    - Emits IL matching Mathcad `mplrun.dll` token 0x06000047. Attribute updated to `[MirrorVerified("SexprDifferentialTests")]`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000047. Attribute set to `[MirrorTested("Mpl.Run.SCons")]`.
   - `Mpl.Run.Sym.walk_declaration_as(MplEnv env, SCons form)`:
     - Loads macro via `env.LoadMacro(this)`.
     - If macro is null: calls `Sexpr.BadDeclaration(form)` throwing `AppException("illegal declaration", 0u, form.handle)`.
     - If macro is present: returns `macro.ExpandCall(env, form).walk_declaration_lhs(env)`.
-    - Emits IL matching Mathcad `mplrun.dll` token 0x06000095. Attribute updated to `[MirrorVerified("SexprDifferentialTests")]`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000095. Attribute retained as `[MirrorAnalyzed("Mpl.Run.Sym")]` pending full implementation of `MplQuoteMacro` in the Quote macro / Keyword batch.
   - Exception and handle propagation:
     - `ExpandCall` on base `MplMacro` (or function macro without `ExpandCall` override) invokes `IllegalMacroCall`, throwing `AppException("illegal macro call", 0u, form.handle)`.
     - `ExpandRef` on base `MplMacro` (or function macro without `ExpandRef` override) invokes `IllegalMacroRef`, throwing `AppException("illegal macro reference", 0u, handle)`.
@@ -185,8 +185,8 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
     - Unbound lowercase symbols in empty `LocalEnv()` throw `NullReferenceException` due to null parent dereference on miss, matching Mathcad.
 - Evidence files:
   - [Mpl.Run.Tok](../evidence/Mpl.Run.Tok.md): `walk_pattern` updated to `Verified`.
-  - [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md): `walk_pattern` and `walk_declaration_lhs` updated to `Verified`.
-  - [Mpl.Run.Sym](../evidence/Mpl.Run.Sym.md): `walk_declaration_as` updated to `Verified`.
+  - [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md): `walk_pattern` updated to `Tested`, `walk_declaration_lhs` updated to `Tested`.
+  - [Mpl.Run.Sym](../evidence/Mpl.Run.Sym.md): `walk_declaration_as` updated to `Analyzed`.
 - Test counts & Validation receipts:
   - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 185 passed, 0 failed, 0 skipped.
   - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 104 passed (focused on SexprDifferentialTests: 9 passed, 0 failed, 0 skipped).

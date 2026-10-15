@@ -205,7 +205,7 @@ public partial class Sym : Atom
     [MirrorVerified("SexprDifferentialTests")]
     public override string ToString() => Field1;
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorAnalyzed("Mpl.Run.Sym")]
     public virtual Cons walk_declaration_as(MplEnv env, SCons form)
     {
         MplMacro macro = env.LoadMacro(this);

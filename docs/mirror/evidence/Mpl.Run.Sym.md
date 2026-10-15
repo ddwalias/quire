@@ -41,7 +41,7 @@ names into "".
 | `.cctor` | 0x06000088 | — | Initialises make_sym and make_symq. | High | Verified |
 | `ToString()` | 0x06000093 | `e71fa0d7` | The name alone (same IL as `name`); null for a null name. | High | Verified |
 | `quote_atom` | 0x06000094 | `4b6bb7cf` | Qualified: `(make_symbolq "name" "qualifier")`; else `(Sym "name")`, the strings as `str_constant` tokens with handle 0. | High | Verified |
-| `walk_declaration_as(MplEnv, SCons)` | 0x06000095 | `3df98eb8` | The symbol's macro (`env.LoadMacro(this)`) expands the form, whose left-hand side is then walked; with no macro, `BadDeclaration(form)`. | High; verified across no macro (local symbol throwing BadDeclaration), function macro throwing AppException("illegal macro call"), and symbol macros expanding calls. | Verified |
+| `walk_declaration_as(MplEnv, SCons)` | 0x06000095 | `3df98eb8` | The symbol's macro (`env.LoadMacro(this)`) expands the form, whose left-hand side is then walked; with no macro, `BadDeclaration(form)`. | High; verified across no macro (local symbol throwing BadDeclaration), function macro throwing AppException("illegal macro call"), and symbol macros expanding calls. | Analyzed |
 | `walk_definition_as(MplEnv, SCons)` | 0x06000096 | `1072839c` | `BadDeclaration(form)`; keywords override it. | High | Verified |
 | `walk_expression_as(MplEnv, SCons)` | 0x06000097 | `b8c8b715` | A lower-case symbol with a macro expands the form and walks the result. Otherwise the arguments (`form.tail`) are walked as expressions: unchanged gives `form`, changed a new cell of `form.head` and the new arguments. | High; verified across macro expansion, unchanged arguments, changed arguments, function macro throwing AppException, and scoped LocalEnv(parent) resolution. | Verified |
 
