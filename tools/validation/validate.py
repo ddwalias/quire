@@ -153,6 +153,12 @@ def test_class(test):
     return test.rsplit(".", 1)[0].rsplit(".", 1)[-1].split("+")[0].lower()
 
 
+def mutant_cache_allowed(args):
+    """The mutant cache is local-only: code under test runs as the same user and could forge entries, so the gate
+    (--mutate-since, --write-baseline) never reads or writes it."""
+    return not (args.no_mutant_cache or args.mutate_since or args.write_baseline)
+
+
 def main():
     if not os.environ.get("QUIRE_VALIDATOR_REPO"):
         # Run from a private copy, isolated from PYTHONPATH and bytecode caches, so nothing code under test writes
@@ -184,6 +190,8 @@ def main():
     parser.add_argument("--proposed-mutants", type=Path, metavar="PATH",
                         help="local runs only: `<key> # reason` equivalent mutants proposed for maintainer review; "
                              "their survivors are reported apart and do not fail the run")
+    parser.add_argument("--no-mutant-cache", action="store_true",
+                        help="neither reuse nor record mutant outcomes (implied by --mutate-since and --write-baseline)")
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
@@ -301,6 +309,7 @@ def main():
             env["QUIRE_REQUIRE_MATHCAD"] = "0" if args.allow_differential_skips else "1"
             env.pop("QUIRE_METHOD_CASES", None)
             env.pop("QUIRE_VALIDATION_RUN", None)
+            env.pop("QUIRE_MUTANT_CACHE", None)
             if differential:
                 env["QUIRE_METHOD_CASES"] = str(output / "method-cases")
                 env["QUIRE_VALIDATION_RUN"] = run
@@ -378,7 +387,7 @@ def main():
         (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
         report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"]}
         print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
-        mutation_ok = True
+        mutation_ok = mutation_complete = True
         mutate_types = set(args.method_type) if args.mutate else set()
         if args.mutate_since:
             mutate_types |= changed_types(coverage, changed_names, (baseline or {}).get("tests"))
@@ -387,20 +396,25 @@ def main():
             print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
                                   args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json,
-                                  proposed_mutants)
+                                  proposed_mutants, mutant_cache_allowed(args), install)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
                                                            "proposed_survivors", "stale_proposed")}
-            mutation_ok = mutation["complete"]
+            # Proposed survivors keep the run incomplete, but only accepted-mutants.txt is gate-relevant; the merge
+            # gate never passes proposals anyway.
+            mutation_ok = not mutation["survivors"]
+            mutation_complete = mutation["complete"]
             print(f"Mutation: {mutation['killed']}/{mutation['total']} killed ({mutation['cached']} cached); "
                   f"survivors {len(mutation['survivors'])}", flush=True)
+            if mutation["proposed_survivors"]:
+                print(f"Mutation passes only with proposed mutants: {len(mutation['proposed_survivors'])} survivors "
+                      f"await maintainer acceptance", flush=True)
             if args.proposed_mutants:
-                print(f"Proposed (not yet accepted): {len(mutation['proposed_survivors'])} survivors; "
-                      f"stale proposals {mutation['stale_proposed']}", flush=True)
+                print(f"Stale proposals: {mutation['stale_proposed']}", flush=True)
         if args.proposed_mutants:
             report["proposed_mutants"] = str(args.proposed_mutants.resolve())
-        report["complete"] = coverage["complete"] and integrity["complete"] and mutation_ok
+        report["complete"] = coverage["complete"] and integrity["complete"] and mutation_ok and mutation_complete
         # The merge gate needs green tests, no regression and no surviving mutant; completeness is the end goal.
         report["gate_passed"] = ratchet_report["ok"] and mutation_ok
         seal.verify("the run")

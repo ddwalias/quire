@@ -140,18 +140,11 @@ def baseline_regressions(base, baseline, repo=ROOT):
         return [f'new baseline unusable: {error!r}']
 
 
-def gate_tree(parent=None):
-    """A new, empty directory for the validation clone, at the same path from gate to gate when it is free: built
-    outputs embed their absolute path, and the mutant cache only matches identical outputs. Concurrent gates, and a
-    directory a killed gate left behind, take the next slot."""
-    parent = Path(parent or tempfile.gettempdir())
-    for slot in range(100):
-        try:
-            (parent / f'quire-gate-tree-{slot}').mkdir(mode=0o700)
-            return parent / f'quire-gate-tree-{slot}'
-        except FileExistsError:
-            continue
-    return Path(tempfile.mkdtemp(prefix='quire-gate-', dir=parent))
+def validation_command(tree, results, base, baseline, timeout):
+    """The clone's validator in gate mode: only accepted-mutants.txt excuses a survivor (no --proposed-mutants), and
+    the local mutant cache, which code under test could forge, is neither read nor written."""
+    return [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
+            '--mutate-since', base, '--write-baseline', str(baseline), '--timeout', str(timeout), '--no-mutant-cache']
 
 
 def clone(tip, tree, repo=ROOT):
@@ -230,7 +223,7 @@ def main():
 
     if args.results and args.results.exists():
         parser.error('--results must name a new directory')
-    tree = gate_tree()
+    tree = Path(tempfile.mkdtemp(prefix='quire-gate-'))
     outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-gate-results-'))).resolve()
     outputs.mkdir(parents=True, exist_ok=True)
     results = outputs / 'run'
@@ -246,10 +239,7 @@ def main():
         except (RuntimeError, OSError) as error:
             code, reasons = None, [f'cannot prepare the validation clone: {error}']
         else:
-            command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
-                       '--mutate-since', base, '--write-baseline', str(outputs / 'baseline.json'),
-                       '--timeout', str(args.timeout)]
-            assert '--proposed-mutants' not in command, 'proposed mutants are for local runs; the gate accepts none'
+            command = validation_command(tree, results, base, outputs / 'baseline.json', args.timeout)
             print('Validating:', ' '.join(command), flush=True)
             code = subprocess.run(command, cwd=tree).returncode
             summary_path = results / 'summary.json'

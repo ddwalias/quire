@@ -79,6 +79,9 @@ class MutationTests(unittest.TestCase):
         (self.tests / 'Quire.Mpl.dll').write_bytes(self.image)
         (self.tests / 'Quire.Differential.Tests.dll').write_bytes(b'')
         self.cache = root / 'cache'
+        self.mathcad = root / 'mathcad'
+        self.mathcad.mkdir()
+        (self.mathcad / 'mplrun.dll').write_bytes(b'mathcad')
         patcher = mock.patch.dict(os.environ, QUIRE_MUTANT_CACHE=str(self.cache))
         patcher.start()
         self.addCleanup(patcher.stop)
@@ -93,9 +96,10 @@ class MutationTests(unittest.TestCase):
         self.coverage = {'methods': [self.method, dict(self.method, type='Quire.Other'),
                                      dict(self.method, signature='Stub()', validation='missing')]}
 
-    def mutate(self, accepted=frozenset(), jobs=1, proposed=None):
+    def mutate(self, accepted=frozenset(), jobs=1, proposed=None, use_cache=True):
         return run(self.coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl',
-                   str(self.dotnet), jobs=jobs, accepted_keys=accepted, proposed=proposed)
+                   str(self.dotnet), jobs=jobs, accepted_keys=accepted, proposed=proposed, use_cache=use_cache,
+                   mathcad=self.mathcad)
 
     def test_only_compared_methods_of_selected_types(self):
         self.assertEqual(len(select(self.coverage, {'Quire.T'})), 3)
@@ -125,7 +129,7 @@ class MutationTests(unittest.TestCase):
         path = Path(self.directory.name) / 'proposed.txt'
         path.write_text(f'# proposals\n{survivor} # dead branch\n{killed} # wrong\nQuire.Gone::X()@IL_0000 nop # gone\n')
         report = self.mutate(proposed=reasons(path))
-        self.assertTrue(report['complete'])
+        self.assertFalse(report['complete'])  # passes only with proposed mutants
         self.assertEqual(report['survivors'], [])
         self.assertEqual(report['proposed_survivors'], [{'key': survivor, 'reason': 'dead branch'}])
         self.assertEqual(report['stale_proposed'], sorted([killed, 'Quire.Gone::X()@IL_0000 nop']))
@@ -193,6 +197,32 @@ class MutationTests(unittest.TestCase):
         self.assertEqual(self.mutate()['cached'], 3)
         with mock.patch.dict(os.environ, FAKE_DOTNET_RUNTIME='Microsoft.NETCore.App 10.0.1'):
             self.assertEqual(self.mutate()['cached'], 0)
+        (self.mathcad / 'mplrun.dll').write_bytes(b'another Mathcad')
+        self.assertEqual(self.mutate()['cached'], 0)
+        self.assertEqual(self.mutate()['cached'], 3)
+        harness = Path(self.directory.name) / 'harness'
+        harness.mkdir()
+        for name in ('mutate.py', 'validate.py'):
+            (harness / name).write_bytes((Path(__file__).with_name(name)).read_bytes())
+        (harness / 'mutate.py').write_bytes(b'# edited\n' + (harness / 'mutate.py').read_bytes())
+        with mock.patch('mutate.__file__', str(harness / 'mutate.py')):
+            self.assertEqual(self.mutate()['cached'], 0)
+
+    def test_gate_mode_neither_reads_nor_writes_the_cache(self):
+        self.assertEqual(self.mutate(use_cache=False)['cached'], 0)
+        self.assertFalse(self.cache.exists())
+        self.mutate()
+        entries = {p: p.read_bytes() for p in self.cache.rglob('*') if p.is_file()}
+        self.assertEqual(len(entries), 3)
+        self.assertEqual(self.mutate(use_cache=False)['cached'], 0)
+        self.assertEqual({p: p.read_bytes() for p in self.cache.rglob('*') if p.is_file()}, entries)
+
+    def test_crashes_are_not_cached(self):
+        image = bytearray(self.image); image[9] = 4
+        (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
+        self.mutate()
+        cached = {r['key'].split(' ', 1)[1]: (r['outcome'], r['cached']) for r in self.mutate()['mutants']}
+        self.assertEqual(cached['brfalse.s -> brtrue.s'], ('killed (crash)', False))
 
     def test_timeouts_are_not_cached(self):
         image = bytearray(self.image); image[9] = 3

@@ -196,22 +196,27 @@ order passes it, which the direct comparisons must catch.
   such as exceptions in a type initializer or setup errors, do not count; a maintainer may accept such mutants. A run
   that exceeds four times its test subset's control duration (at least 30 s and at most `--timeout`; the control runs
   in a worker under the same parallel load) is killed with its process tree and counts as killed (`timeouts`), so a test
-  that stalls deliberately would also kill mutants; the lint forbids sleeps and delays.
+  that stalls deliberately would also kill mutants; the lint forbids sleeps and delays. Crash and timeout kills need
+  no comparison against Mathcad, so a test that recurses or loops on a hard-coded expectation could kill mutants
+  without one; reviewers must look for such tests.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). An agent proposes one in a scratch file or
   its lane file, same format, and passes `--proposed-mutants PATH` to local runs: those survivors are listed apart
-  under `proposed_survivors` (with reasons) and do not fail the run, and `stale_proposed` lists proposals that
+  under `proposed_survivors` (with reasons) and do not fail the run, though it stays incomplete and prints that
+  it passes only with proposed mutants, and `stale_proposed` lists proposals that
   matched no surviving mutant (killed, already accepted or not run). The user approves a proposal; a maintainer
   moves it into `accepted-mutants.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
   merge gate blocks any summary that used it. `--jobs` sets parallel copies.
-  Outcomes are cached outside the repository (`~/.cache/quire-mutants/`, or `QUIRE_MUTANT_CACHE`, which tests do not
-  see) by SHA-256 of the whole test output directory, SDK choice and installed runtimes, the mutant's key, offset and
-  bytes and its test set (not its timeout: a cached outcome was reached within one); only the validator writes entries, after a run. Timeouts are never cached and
-  every control still runs; `cached` in `mutation.json` counts reused outcomes. Built assemblies embed their
-  absolute path, so a hit needs the same build directory: the merge gate clones into the first free
-  `quire-gate-tree-N` under the temporary directory, and builds pass `EnableSourceControlManagerQueries=false` so the
-  commit is not stamped into them (a docs-only commit leaves the output byte-identical). Code under test, running as
-  the same user, could still write a forged entry at the default path; the cache trusts that it does not.
+  Local runs cache outcomes outside the repository (`~/.cache/quire-mutants/`, or `QUIRE_MUTANT_CACHE`, which no
+  test run sees) by SHA-256 of the whole test output directory, `mutate.py` and `validate.py`, SDK choice and
+  installed runtimes, the Mathcad install (`MATHCAD_DIR` and its DLLs' names, sizes and modification times), the
+  mutant's key, offset and bytes, and its test set; not its timeout, since only outcomes reached within one are
+  cached. Only the validator writes entries, after a run; timeouts and crashes (load- or memory-dependent) are never
+  cached, every control still runs, and `cached` in `mutation.json` counts reused outcomes. The cache is local-only:
+  code under test runs as the same user and could forge an entry, so gate runs (`--mutate-since`,
+  `--write-baseline`, or `--no-mutant-cache`, which the merge gate passes) neither read nor write it. Builds pass
+  `EnableSourceControlManagerQueries=false` so the commit is not stamped into assemblies; a docs-only commit leaves
+  the output in the same directory byte-identical (built assemblies embed their absolute path).
   `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
   nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in an added,
   changed or deleted differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie

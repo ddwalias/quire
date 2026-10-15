@@ -166,6 +166,15 @@ class MissingShapeTests(unittest.TestCase):
 
 
 class PrivateCopyTests(unittest.TestCase):
+    def test_gate_runs_never_use_the_mutant_cache(self):
+        from types import SimpleNamespace
+        from validate import mutant_cache_allowed
+        local = dict(no_mutant_cache=False, mutate_since=None, write_baseline=None)
+        self.assertTrue(mutant_cache_allowed(SimpleNamespace(**local)))
+        for gate in (dict(no_mutant_cache=True), dict(mutate_since='main'), dict(write_baseline=Path('b.json'))):
+            with self.subTest(gate=gate):
+                self.assertFalse(mutant_cache_allowed(SimpleNamespace(**dict(local, **gate))))
+
     def test_gate_runs_refuse_proposed_mutants(self):
         import os, subprocess, sys
         with tempfile.TemporaryDirectory() as directory:

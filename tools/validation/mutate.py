@@ -20,9 +20,11 @@ ACCEPTED = ROOT / 'docs/mirror/accepted-mutants.txt'
 # A mutant's timeout: its tests' unmutated duration times MARGIN, at least FLOOR s. A false timeout counts as a kill and
 # could hide a weak test, so the floor stays generous; only mutants that loop pay it.
 MUTANT_MARGIN, MUTANT_FLOOR = 4, 30
-# Outcomes of earlier runs of identical mutants (see cached_outcome). Bump the version when what an outcome means changes.
+# Local runs only: outcomes of earlier runs of identical mutants (see cached_outcome). Bump the version when what an
+# outcome means changes. Timeouts and crashes are not cached: load, memory pressure or a flaky crash would make them
+# permanent.
 CACHE_VERSION = 1
-CACHEABLE = {'killed', 'killed (via another method compared first)', 'killed (crash)', 'survived',
+CACHEABLE = {'killed', 'killed (via another method compared first)', 'survived',
              'survived (tests failed without a mismatch)'}
 
 
@@ -44,7 +46,7 @@ def cached_outcome(directory, digest_key):
         outcome = json.loads((directory / digest_key[:2] / f'{digest_key}.json').read_text())['outcome']
     except (OSError, ValueError, KeyError, TypeError):
         return None
-    return outcome if outcome in CACHEABLE else None
+    return outcome if isinstance(outcome, str) and outcome in CACHEABLE else None
 
 
 def store_outcome(directory, digest_key, outcome):
@@ -158,25 +160,33 @@ def mismatches(scratch, mvid):
 
 
 def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None,
-        global_json=b'{}\n', proposed=None):
+        global_json=b'{}\n', proposed=None, use_cache=False, mathcad=None):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test, or when it crashes
     the test host that ran them cleanly in the control run. Other test failures, and mismatches a test swallows,
     cannot kill it. `global_json`: the SDK choice each run gets (see
     validate.sdk_directory). `proposed`: key -> reason of equivalent mutants proposed for review; a local run reports
-    their survivors apart and does not fail on them (the merge gate never passes any)."""
+    their survivors apart and does not fail on them (the merge gate never passes any). `use_cache`: reuse and record
+    outcomes in the local cache; never in the gate. `mathcad`: the Mathcad install the tests compare against."""
     proposed = proposed or {}
     selected = select(coverage, types)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
-    cache = cache_directory()
     pristine = digest(files_under(test_dll.parent), test_dll.parent)
-    # The cache matches a mutant only on byte-identical test output (code under test, tests, the pinned Mathcad
-    # identity they check), SDK choice and installed runtimes, so a run over an unchanged build reuses outcomes.
-    with sdk_directory(global_json) as cwd:
-        toolchain = [subprocess.run([dotnet, flag], cwd=cwd, capture_output=True, text=True).stdout
-                     for flag in ('--version', '--list-runtimes')]
-    build = cache_key(sorted(pristine.items()), global_json.hex(), toolchain, project)
+    cache = build = None
+    if use_cache:
+        cache = cache_directory()
+        # A mutant matches only on byte-identical test output (code under test and tests), the same harness, SDK
+        # choice, installed runtimes and Mathcad install (its DLLs by name, size and modification time).
+        with sdk_directory(global_json) as cwd:
+            toolchain = [subprocess.run([dotnet, flag], cwd=cwd, capture_output=True, text=True).stdout
+                         for flag in ('--version', '--list-runtimes')]
+        harness = [hashlib.sha256(Path(__file__).with_name(f).read_bytes()).hexdigest() for f in ('mutate.py', 'validate.py')]
+        install = Path(mathcad) if mathcad else None
+        dlls = sorted((p.relative_to(install).as_posix(), p.stat().st_size, p.stat().st_mtime_ns)
+                      for p in install.rglob('*.dll') if p.is_file()) if install and install.is_dir() else []
+        build = cache_key(sorted(pristine.items()), global_json.hex(), toolchain, project, harness,
+                          str(install), dlls)
     copies = [Path(tempfile.mkdtemp(prefix='quire-mutant-')) for _ in range(max(1, jobs))]
     for copy in copies:
         shutil.copytree(test_dll.parent, copy, dirs_exist_ok=True)
@@ -254,7 +264,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         # which fails the run anyway. Neither direction lets a weak test pass.
         mutant_key = cache_key(build, key(method, mutant), mutant['file_offset'], mutant['original'],
                                mutant['replacement'], sorted(tests))
-        outcome = cached_outcome(cache, mutant_key)
+        outcome = cached_outcome(cache, mutant_key) if cache else None
         if outcome is not None:
             return result(method, mutant, outcome, tests, cached=True)
         target = copy / f'{project}.dll'
@@ -289,7 +299,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             outcome = 'survived (tests failed without a mismatch)'
         else:
             outcome = 'survived'
-        store_outcome(cache, mutant_key, outcome)  # not timeouts, which depend on the load
+        if cache:
+            store_outcome(cache, mutant_key, outcome)
         return result(method, mutant, outcome, tests, cached=False)
 
     def result(method, mutant, outcome, tests, cached):
@@ -332,4 +343,5 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             'accepted_survivors': sum(r['outcome'].startswith('survived') and r['accepted'] for r in results),
             'proposed_survivors': [{'key': r['key'], 'reason': proposed[r['key']]} for r in surviving if r['proposed']],
             'stale_proposed': sorted(set(proposed) - {r['key'] for r in surviving}),  # killed, accepted or not run
-            'survivors': survivors, 'complete': not survivors, 'mutants': results}
+            'survivors': survivors, 'complete': not survivors and not any(r['proposed'] for r in surviving),
+            'mutants': results}

@@ -80,13 +80,11 @@ class MergeGateTests(unittest.TestCase):
             self.assertEqual(subprocess.run(['git', 'cat-file', 'blob', f'{commit}:docs/mirror/validation-baseline.json'],
                                             cwd=repo, check=True, capture_output=True).stdout, b'{}\r\n')
 
-    def test_gate_tree_reuses_the_first_free_path(self):
-        with tempfile.TemporaryDirectory() as parent:
-            first, second = merge_gate.gate_tree(parent), merge_gate.gate_tree(parent)
-            self.assertEqual((first.name, second.name), ('quire-gate-tree-0', 'quire-gate-tree-1'))
-            first.rmdir()
-            self.assertEqual(merge_gate.gate_tree(parent), first)
-            self.assertFalse(list(first.iterdir()))
+    def test_gate_command_takes_no_proposals_and_no_cache(self):
+        command = merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60)
+        self.assertIn('--no-mutant-cache', command)
+        self.assertNotIn('--proposed-mutants', command)
+        self.assertEqual(command[command.index('--mutate-since') + 1], 'main')
 
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])
