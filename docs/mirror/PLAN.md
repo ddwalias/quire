@@ -44,6 +44,13 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    A surviving mutant needs a stronger case; only a provably equivalent one may be proposed (`<key> # reason` in
    the lane file or a scratch file, passed to local runs as `--proposed-mutants`). The user approves, a maintainer
    moves it into `accepted-mutants.txt`. A mutant that crashes the test host is killed, never proposed.
+   A line left `uncovered` needs a case; only a line that cannot execute in Mathcad's original either (e.g.
+   `return null;` after a helper that always throws) may be proposed. Generate the entry with
+   `method_coverage.py unreachable-entry` ([validation.md](validation.md#branch-coverage-mutation-and-status)), the
+   reason saying why the line is unreachable in the original too; put it in a scratch file passed to local runs as
+   `--proposed-unreachable`, and paste the same lines into the lane file for review. Mutants on that line cannot be
+   killed: propose each for `accepted-mutants.txt` with the same reason. Never restructure or join source lines to
+   avoid one. The user approves, a maintainer adds it to `unreachable-lines.txt`.
 
 ## 3c. Method-by-method fidelity
 

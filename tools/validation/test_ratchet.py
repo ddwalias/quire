@@ -43,6 +43,17 @@ class RatchetTests(unittest.TestCase):
         swapped = {'Quire.T::A()': 'missing', 'Quire.T::B()': 'compared'}
         self.assertEqual(compare(self.baseline, self.current(methods=swapped, **same)), ['Quire.T::A(): compared became missing'])
 
+    def test_unreachable_line_exemptions_move_methods_both_ways(self):
+        # Accepting an unreachable line upgrades uncovered to compared; removing it again is a backward move.
+        uncovered = dict(METHODS, **{'Quire.T::B()': 'uncovered'})
+        compared = dict(METHODS, **{'Quire.T::B()': 'compared'})
+        baseline = dict(self.baseline, types={'Quire.T': counts(compared=3, uncovered=2)}, methods=uncovered)
+        self.assertEqual(compare(baseline, self.current(methods=compared, **{'Quire.T': counts(compared=4, uncovered=1)})), [])
+        baseline = dict(self.baseline, types={'Quire.T': counts(compared=4, uncovered=1)}, methods=compared)
+        self.assertEqual(compare(baseline, self.current(methods=uncovered, **{'Quire.T': counts(compared=3, uncovered=2)})),
+                         ['Quire.T::B(): compared became uncovered', 'Quire.T: compared fell from 4 to 3',
+                          'Quire.T: unfinished methods rose from 1 to 2'])
+
     def test_methods_may_move_forward_between_unfinished_stages_but_not_back(self):
         same = {'Quire.T': counts(compared=3, missing=2)}
         stages = lambda b: dict(METHODS, **{'Quire.T::B()': b})

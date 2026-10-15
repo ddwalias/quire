@@ -141,8 +141,9 @@ def baseline_regressions(base, baseline, repo=ROOT):
 
 
 def validation_command(tree, results, base, baseline, timeout):
-    """The clone's validator in gate mode: only accepted-mutants.txt excuses a survivor (no --proposed-mutants), and
-    the local mutant cache, which code under test could forge, is neither read nor written."""
+    """The clone's validator in gate mode: only accepted-mutants.txt excuses a survivor and only unreachable-lines.txt
+    exempts a line (no --proposed-mutants or --proposed-unreachable), and the local mutant cache, which code under
+    test could forge, is neither read nor written."""
     return [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
             '--mutate-since', base, '--write-baseline', str(baseline), '--timeout', str(timeout), '--no-mutant-cache']
 
@@ -171,6 +172,9 @@ def verdict(summary):
         reasons += [f'regression: {r}' for r in ratchet['regressions']]
     if summary.get('proposed_mutants'):
         reasons.append('validation used --proposed-mutants; only accepted-mutants.txt may excuse a survivor')
+    if summary.get('proposed_unreachable'):
+        reasons.append('validation used --proposed-unreachable; only unreachable-lines.txt may exempt a line')
+    reasons += [f'listed unreachable line executed: {e}' for e in summary.get('executed_unreachable', [])]
     if summary.get('mutation', {}).get('survivors'):
         reasons += [f'surviving mutant: {s}' for s in summary['mutation']['survivors']]
     if not reasons and not summary.get('gate_passed'):

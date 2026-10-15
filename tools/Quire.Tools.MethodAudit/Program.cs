@@ -218,7 +218,8 @@ sealed class Artifact
     public PEReader Pe { get; }
     private readonly MetadataReader? _debug;
 
-    /// <summary>Statement lines of a method per source file, from its portable PDB; null without one.</summary>
+    /// <summary>Statement lines of a method per source file, from its portable PDB, with the checksum the compiler
+    /// recorded for the file it read; null without one.</summary>
     public object? Source(int token)
     {
         if (_debug == null) return null;
@@ -226,9 +227,26 @@ sealed class Artifact
             .GetSequencePoints().Where(p => !p.IsHidden).ToList();
         if (points.Count == 0) return null;
         // Constructors can span documents (field initializers in another partial file).
-        return points.GroupBy(p => p.Document).Select(g => new { file = _debug.GetString(_debug.GetDocument(g.Key).Name),
-            lines = g.Select(p => p.StartLine).Distinct().Order().ToArray() }).ToArray();
+        return points.GroupBy(p => p.Document).Select(g =>
+        {
+            var document = _debug.GetDocument(g.Key);
+            return new
+            {
+                file = _debug.GetString(document.Name),
+                lines = g.Select(p => p.StartLine).Distinct().Order().ToArray(),
+                checksum = new { algorithm = HashAlgorithmName(_debug.GetGuid(document.HashAlgorithm)),
+                                 hash = Convert.ToHexString(_debug.GetBlobBytes(document.Hash)).ToLowerInvariant() },
+            };
+        }).ToArray();
     }
+
+    /// <summary>The hashlib name of a portable PDB document checksum algorithm; the GUID itself when unknown.</summary>
+    static string HashAlgorithmName(Guid id) => id.ToString() switch
+    {
+        "8829d00f-11b8-4213-878b-770e8597ac16" => "sha256",
+        "ff1816ec-aa5e-4d10-87f7-6f4963833460" => "sha1",
+        var other => other,
+    };
     public MetadataReader Metadata { get; }
     public Artifact(string path)
     {

@@ -84,6 +84,7 @@ class MergeGateTests(unittest.TestCase):
         command = merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60)
         self.assertIn('--no-mutant-cache', command)
         self.assertNotIn('--proposed-mutants', command)
+        self.assertNotIn('--proposed-unreachable', command)
         self.assertEqual(command[command.index('--mutate-since') + 1], 'main')
 
     def test_clean_summary_passes(self):
@@ -99,6 +100,8 @@ class MergeGateTests(unittest.TestCase):
             (dict(PASSED, ratchet={'ok': False, 'regressions': ['T: missing rose']}), 'regression: T: missing rose'),
             (dict(PASSED, mutation={'survivors': ['T::M()@IL_0004 add -> sub']}), 'surviving mutant'),
             (dict(PASSED, proposed_mutants='/tmp/proposals.txt'), 'used --proposed-mutants'),
+            (dict(PASSED, proposed_unreachable='/tmp/lines.txt'), 'used --proposed-unreachable'),
+            (dict(PASSED, executed_unreachable=['T::M() src/T.cs:9 (accepted)']), 'listed unreachable line executed'),
             (dict(PASSED, gate_passed=False), 'did not report gate_passed'),
         ]
         for summary, reason in cases:

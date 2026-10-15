@@ -177,6 +177,46 @@ order passes it, which the direct comparisons must catch.
   every source document) are not all executed, or whose branch conditions are partly covered, becomes `uncovered`,
   with the lines named. Coverage counts any execution during the differential run, including test setup; mutation
   is the attributable check.
+- **Unreachable lines:** some lines can never execute, in Quire or in Mathcad's original, such as `return null;` and
+  the closing brace after a helper that always throws (`OnError(...)`, `AppException.Raise(...)`); rewriting them
+  would break IL-structure matching, and joining them onto one line to game the line metric is forbidden. A maintainer
+  lists them in `docs/mirror/unreachable-lines.txt` (protected), one per line:
+  `<Quire type>::<signature> <path>:<line> sha256=<hash> # reason`. The method key is the one `accepted-mutants.txt`
+  and the ratchet use; the path is repository-relative, under `src/`, and must exist; the reason explains why the
+  line is unreachable in the original too. The hash pins the reviewed source and the line's place in it: SHA-256 of
+  the listed line's offset from the method's first statement line in that file, a newline, then the method's
+  statement lines there (all its PDB lines, each stripped of trailing whitespace, joined by `\n`), recomputed from
+  the file as read before the build. MethodAudit exports, for each PDB document, the checksum the compiler recorded
+  (`source[].checksum`: algorithm and hash); it must be SHA-256 and equal the hash of those bytes, so the file
+  compiled is the file hashed. Two things this relies on: the source lint's `line directive` rule, which forbids
+  `#line` and `#pragma checksum` (either would let a file's sequence points or recorded checksum name another file);
+  and the validator and `dotnet` sharing one path namespace, so that PDB paths are paths the validator can relate to
+  the repository (never a Windows `dotnet.exe` driven from WSL). `python3 tools/validation/method_coverage.py unreachable-entry
+  <method-coverage.json> <key> <path>:<line> "<reason>"` prints a correctly hashed entry from a run's report.
+  Malformed or duplicate entries fail the run. A PDB document matches
+  the entry only when its path relative to the repository (the clone, in the gate) equals the entry's path,
+  case-insensitively for Windows-style paths. A listed line that the run leaves unexecuted no longer makes its
+  method `uncovered` (`method-coverage.json` names it under the method's `exempt_lines`). Only lines are exempt: a
+  partly covered branch, even one whose missing arm is a listed line, still leaves the method `uncovered`.
+  MethodAudit attributes to a method only its own sequence points, so a lambda's body is not part of its owner's
+  lines, but a lambda written on the owner's line puts statements of both methods on it; a line any other inventory
+  method also has statements on is never exempt. `stale_unreachable` lists entries that exempt nothing, by
+  `problem`: `no such method`, `ambiguous method key` (the key names methods in several assemblies, as the phase
+  profile's mirrored `Quire.ProductInfo` constants do), `document path mismatch` (a document of the method only ends in the entry's path, such
+  as a nested look-alike `src/X/Sub/src/X/T.cs`), `not a source line of the method`, `executed`, `line shared with
+  <methods>`, `inventory lacks checksums; rerun` (an inventory from an older MethodAudit), `document checksum
+  mismatch` and `method source changed` (the method stays `uncovered` until the entry
+  is re-reviewed and rehashed; moving the line within the method changes the hash too). Any stale accepted entry,
+  including one whose line has become shared, makes the run incomplete (the summary counts them under
+  `stale_unreachable`); an executed line is reachable,
+  so its entry is wrong and the gate fails too (`executed_unreachable` in the summary). A method compared through an
+  exemption is mutated like any other, but mutants on an exempt line can never be killed: each needs a matching
+  `accepted-mutants.txt` entry with the same reason. Removing an exemption that moves a method back to `uncovered` is
+  a ratchet regression. An agent proposes entries in a scratch file, same format, passes `--proposed-unreachable PATH`
+  to local runs, and pastes the same lines into its lane file for review. Proposed lines are exempted the same way
+  but listed under `proposed_exempt_lines`. The user approves a proposal; a maintainer moves it into
+  `unreachable-lines.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the merge gate
+  blocks any summary that used it.
 - **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
   byte changes in each compared method: negated branches; swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
   `cgt`/`clt`; `ceq` → `cgt.un`; `0`/`1` swapped; other integer constants plus one; floating constants plus one
@@ -210,11 +250,14 @@ order passes it, which the direct comparisons must catch.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
   maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). An agent proposes one in a scratch file or
   its lane file, same format, and passes `--proposed-mutants PATH` to local runs: those survivors are listed apart
-  under `proposed_survivors` (with reasons) and do not fail the run, though it stays incomplete and prints that
-  it passes only with proposed mutants, and `stale_proposed` lists proposals that
+  under `proposed_survivors` (with reasons), and `stale_proposed` lists proposals that
   matched no surviving mutant (killed, already accepted or not run). The user approves a proposal; a maintainer
   moves it into `accepted-mutants.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
   merge gate blocks any summary that used it. `--jobs` sets parallel copies.
+- **Exit status:** `validate.py` exits 0 when the run is complete, 3 when the merge gate's requirements hold
+  (`gate_passed`) but gaps remain, and 1 when blocked. A run given `--proposed-mutants` or `--proposed-unreachable`
+  is never complete nor `gate_passed`, so it exits 1; its summary records `passes_with_proposals`, whether the gate's
+  requirements would hold with the proposals accepted.
   Local runs cache outcomes outside the repository (`~/.cache/quire-mutants/`, or `QUIRE_MUTANT_CACHE`, which no
   test run sees) by SHA-256 of the whole test output directory, `mutate.py` and `validate.py`, SDK choice and
   installed runtimes, the Mathcad install (`MATHCAD_DIR` and its DLLs' names, sizes and modification times), the
@@ -293,7 +336,7 @@ limit what it can reach:
 
 - `validate.py` reruns itself from a private temporary copy with `python -I -B` and imports every module up front;
   it builds MethodAudit into a temporary directory and all test projects, then reads every verdict input (baseline,
-  accepted mutants, lint allowlist, deviations, protected rules, the `--mutate-since` diff) and runs the source lint
+  accepted mutants, unreachable lines, lint allowlist, deviations, protected rules, the `--mutate-since` diff) and runs the source lint
   before any test starts.
 - Tests run from their built assemblies, not their projects, so no MSBuild evaluation follows code under test.
   Coverage results go to a fresh temporary directory.

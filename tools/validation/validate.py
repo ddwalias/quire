@@ -190,6 +190,10 @@ def main():
     parser.add_argument("--proposed-mutants", type=Path, metavar="PATH",
                         help="local runs only: `<key> # reason` equivalent mutants proposed for maintainer review; "
                              "their survivors are reported apart and do not fail the run")
+    parser.add_argument("--proposed-unreachable", type=Path, metavar="PATH",
+                        help="local runs only: `<method key> <path>:<line> sha256=<hash> # reason` unreachable lines "
+                             "proposed for maintainer review (generate each with `method_coverage.py "
+                             "unreachable-entry`); they exempt coverage like accepted ones but leave the run incomplete")
     parser.add_argument("--no-mutant-cache", action="store_true",
                         help="neither reuse nor record mutant outcomes (implied by --mutate-since and --write-baseline)")
     args = parser.parse_args()
@@ -206,6 +210,11 @@ def main():
                      "docs/mirror/accepted-mutants.txt")
     if args.proposed_mutants and not args.proposed_mutants.is_file():
         parser.error(f"--proposed-mutants: {args.proposed_mutants} is not a file")
+    if args.proposed_unreachable and (args.mutate_since or args.write_baseline):
+        parser.error("--proposed-unreachable is for local runs; the gate (--mutate-since, --write-baseline) accepts "
+                     "only docs/mirror/unreachable-lines.txt")
+    if args.proposed_unreachable and not args.proposed_unreachable.is_file():
+        parser.error(f"--proposed-unreachable: {args.proposed_unreachable} is not a file")
     if args.write_baseline and args.method_type:
         parser.error("--write-baseline needs an unscoped run")
     if args.profile == "phase" and os.name != "nt":
@@ -248,6 +257,11 @@ def main():
         deviations = method_coverage.accepted_deviations(ROOT)
         accepted_mutants = mutate.accepted()
         proposed_mutants = mutate.reasons(args.proposed_mutants) if args.proposed_mutants else {}
+        unreachable = method_coverage.unreachable_lines()
+        proposed_unreachable = (method_coverage.unreachable_lines(args.proposed_unreachable)
+                                if args.proposed_unreachable else {})
+        # The source each entry's hash and the PDB checksums pin, as it is before the build and any code under test.
+        unreachable_sources = method_coverage.read_sources(unreachable, proposed_unreachable)
         lint_findings = integrity_module.lint(ROOT)
         global_json = (ROOT / "global.json").read_bytes() if (ROOT / "global.json").is_file() else b"{}\n"
         args.dotnet = resolve_dotnet(args.dotnet, ROOT)
@@ -375,10 +389,19 @@ def main():
         report["coverage_reports"] = [str(p) for p in cobertura]
         coverage = audit(json.loads(inventory_path.read_text()), records,
                          passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type,
-                         lines=read_cobertura(cobertura), deviations=deviations)
+                         lines=read_cobertura(cobertura), deviations=deviations, unreachable=unreachable,
+                         proposed_unreachable=proposed_unreachable, sources=unreachable_sources)
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
         report["method_coverage"] = coverage["counts"]
         print(f"Method coverage: {coverage['counts']}; {output / 'method-coverage.json'}", flush=True)
+        # An executed line is reachable, so the entry listing it is wrong: that fails the run and the gate.
+        report["executed_unreachable"] = [f"{e['key']} {e['line']} ({e['source']})"
+                                          for e in coverage["stale_unreachable"] if e["problem"] == "executed"]
+        report["stale_unreachable"] = sum(e["source"] == "accepted" for e in coverage["stale_unreachable"])
+        if coverage["stale_unreachable"]:
+            print(f"Stale unreachable-line entries: {coverage['stale_unreachable']}", flush=True)
+        if any(m["proposed_exempt_lines"] for m in coverage["methods"]):
+            print("Coverage passes only with proposed unreachable lines, which await maintainer acceptance", flush=True)
         integrity = integrity_module.check(json.loads(inventory_path.read_text()), findings=lint_findings)
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
         report["integrity"] = {"lint": len(integrity["lint"])}
@@ -414,15 +437,25 @@ def main():
                 print(f"Stale proposals: {mutation['stale_proposed']}", flush=True)
         if args.proposed_mutants:
             report["proposed_mutants"] = str(args.proposed_mutants.resolve())
-        report["complete"] = coverage["complete"] and integrity["complete"] and mutation_ok and mutation_complete
-        # The merge gate needs green tests, no regression and no surviving mutant; completeness is the end goal.
-        report["gate_passed"] = ratchet_report["ok"] and mutation_ok
+        if args.proposed_unreachable:
+            report["proposed_unreachable"] = str(args.proposed_unreachable.resolve())
+        # The merge gate needs green tests, no regression, no surviving mutant and no executed "unreachable" line;
+        # completeness is the end goal. A run with proposals is neither: it records whether the gate's requirements
+        # hold once the proposals are accepted.
+        gate_ok = ratchet_report["ok"] and mutation_ok and not report["executed_unreachable"]
+        proposals = bool(args.proposed_mutants or args.proposed_unreachable)
+        if proposals:
+            report["passes_with_proposals"] = gate_ok
+            print(f"Gate requirements {'hold' if gate_ok else 'fail'} with the proposals accepted", flush=True)
+        report["complete"] = (coverage["complete"] and integrity["complete"] and mutation_ok and mutation_complete
+                              and not proposals)
+        report["gate_passed"] = gate_ok and not proposals
         seal.verify("the run")
         # Written only now that no code under test runs again; the merge gate still checks it against main's.
         if args.write_baseline:
             args.write_baseline.write_text(json.dumps(ratchet_report["snapshot"], indent=2, sort_keys=True) + "\n",
                                            newline="\n")
-        # 0: complete; 3: the merge gate's requirements hold but gaps remain; 1: blocked.
+        # 0: complete; 3: the merge gate's requirements hold but gaps remain; 1: blocked (always with proposals).
         return 0 if report["complete"] else 3 if report["gate_passed"] else 1
     except (OSError, ValueError, KeyError, TypeError, ET.ParseError, subprocess.TimeoutExpired) as error:
         report["error"] = str(error)

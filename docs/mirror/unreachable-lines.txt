@@ -1,0 +1,5 @@
+# Maintainer-reviewed source lines that can never execute, in Quire or in Mathcad's original (validation.md,
+# "Branch coverage, mutation and status"): e.g. `return null;` and the closing brace after a helper that always
+# throws. Only uncovered lines are exempt; a partly covered branch still leaves its method uncovered.
+# One per line: <Quire type>::<signature> <src/ path>:<line> sha256=<method span hash> # reason it is unreachable in the
+# original too. Generate entries with `python3 tools/validation/method_coverage.py unreachable-entry`.
