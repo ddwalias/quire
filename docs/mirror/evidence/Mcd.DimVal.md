@@ -8,7 +8,7 @@ An abstract base class for dimensioned values, providing conversion methods, cap
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `ApplyMatVal(Mcd.DimVal, Mcd.DimVal)` | 0x060006b0 | Convert mv to MatVal with error position 2; pack its elements, pass that array to fv.Apply, and return the result or propagate the first error. | High; same-artifact C# and IL show this call order. Current run `scratch/dimval-apply-387a-r4` passed both direct cases, matched structure, and covered every line and branch. The wider DimVal audit still has unrelated gaps. | Verified |
+| `ApplyMatVal(Mcd.DimVal, Mcd.DimVal)` | 0x060006b0 | Convert mv to MatVal with error position 2; pack its elements, pass that array to fv.Apply, and return the result or propagate the first error. | High; same-artifact C# control flow confirms this call order. Current run `/tmp/quire-b-dimval-safe-renderer-9ccce8f` passed both direct cases, matched structure, and covered every line and branch. The wider DimVal audit still has unrelated gaps. | Verified |
 | `.ctor`0()` | 0x060006ce | .ctor`0() contract | High | Verified |
 | `get_IsPolymorphic`0()` | 0x06000660 | get_IsPolymorphic`0() contract | High | Verified |
 | `get_PhysicalUnit`0()` | 0x06000661 | get_PhysicalUnit`0() contract | High | Verified |
@@ -137,14 +137,15 @@ An abstract base class for dimensioned values, providing conversion methods, cap
 
 **Observed** (`DimValDifferentialTests`, against the installed `mplrun.dll`):
 - Capability queries and conversions over polymorphic null and interned dimensions.
+- `IsDimlessReal` and `asDimlessReal` on real, complex and unitful `NumVal` instances; `Rfinal` on singleton and multi-element ranges; and `NearlyEqual` on nearby numeric values.
 - Dynamic and vector call dispatch.
 - Static conversion and unit helpers.
-- Matrix extension and setter operations.
+- Matrix extension and setter operations, including zero and larger row indices; result rendering checks dimensions, stride, real and imaginary elements, and handles invalid mutated backing lengths without masking the value difference.
 
-**Verified this run** (`DimValApplyMatValDifferentialTests`, direct `MethodComparison.Compare` cases; run `scratch/dimval-apply-387a-r4`):
+**Verified this run** (`DimValApplyMatValDifferentialTests`, direct `MethodComparison.Compare` cases; run `/tmp/quire-b-dimval-safe-renderer-9ccce8f`):
 - A four-argument delegate returns all four values, checking that a 2×2 matrix is packed in row-major order and passed to `Apply`.
 - A scalar second argument fails during `asMatrix(2)` conversion before function invocation.
 
 ## Open
 
-- The full focused validation against main `387a7f9` passed Harness 27/27, Mpl 159/159, and Differential 79/79, with lint 0 and ratchet ok. It exits 3 because the wider DimVal audit has 21 uncovered methods and one missing protected constructor; `ApplyMatVal` itself has matching structure, no uncovered lines/branches, and passing direct cases. The merge gate at the prior base remains blocked on survivors in other DimVal methods; no gate rerun was made after this docs-only main movement.
+- Current scoped validation `/tmp/quire-b-dimval-safe-renderer-9ccce8f` passed Harness 29/29, Mpl 159/159 and Differential 79/79; lint 0 and ratchet ok. `ApplyMatVal` has matching structure and no uncovered lines or branches. The type-wide audit reports 21 uncovered members and one missing constructor. Mutation killed 92/111; the only 19 remaining mutants are proposed as equivalent because each base `DynCall`/`VecCall` overload calls `OnError(..., "bad_function", this)` before its `actual` count can reach `WrongNumberOfArguments`. The run used `/tmp/quire-dimval-proposed-mutants.txt`, so the merge gate cannot accept it until the proposal is reviewed and approved. See the Lane B checkpoint for the separate reviewer result and proposal list.

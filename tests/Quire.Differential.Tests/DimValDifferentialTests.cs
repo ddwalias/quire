@@ -4,9 +4,9 @@ using static Quire.Differential.Tests.Reflect;
 namespace Quire.Differential.Tests;
 
 /// <summary>
-/// Compares mplrun's <c>Mcd.DimVal</c> base behaviour with Quire's through <c>NotAVal</c>,
-/// covering all capability queries, conversion methods, call errors, dynamic dispatch,
-/// iteration and matrix methods, and static helpers using direct <see cref="MethodComparison.Compare"/> calls.
+/// Compares mplrun's <c>Mcd.DimVal</c> base behaviour with Quire's through <c>NotAVal</c> and representative
+/// numeric/range values, covering capability queries, conversions, call errors, dynamic dispatch, iteration,
+/// matrix methods and static helpers with direct <see cref="MethodComparison.Compare"/> calls.
 /// Cases are listed in docs/mirror/evidence/Mcd.DimVal.md.
 /// </summary>
 public class DimValDifferentialTests
@@ -15,11 +15,24 @@ public class DimValDifferentialTests
     private const BindingFlags DeclaredPublic = BindingFlags.Public | BindingFlags.DeclaredOnly;
     private const BindingFlags DeclaredStaticPublic = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
     private const BindingFlags DeclaredInstancePublic = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+    private const BindingFlags DeclaredInstanceNonPublic = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 
     private static System.Type M => Mathcad.Type("mplrun", "Mcd.DimVal");
     private static System.Type QVal => typeof(global::Quire.Mcd.DimVal);
     private static System.Type MDim => Mathcad.Type("mplrun", "Mcd.Dim");
     private static System.Type QDim => typeof(global::Quire.Mcd.Dim);
+
+    private static (object q, object m) Range(double init, double increment, int count, string dim = "identity")
+    {
+        var qType = typeof(global::Quire.Mcd.RngVal);
+        var mType = Mathcad.Type("mplrun", "Mcd.RngVal");
+        var qCtor = qType.GetConstructor(DeclaredInstanceNonPublic, null,
+            [typeof(double), typeof(double), typeof(int), QDim], null)!;
+        var mCtor = mType.GetConstructor(DeclaredInstanceNonPublic, null,
+            [typeof(double), typeof(double), typeof(int), MDim], null)!;
+        return (qCtor.Invoke([init, increment, count, Side.Quire.D(dim)])!,
+            mCtor.Invoke([init, increment, count, Side.Mathcad.D(dim)])!);
+    }
 
     private static System.Type MapToM(System.Type t)
     {
@@ -51,9 +64,39 @@ public class DimValDifferentialTests
         if (v is int[] a) return $"[{string.Join(",", a)}]";
         if (v is object[] arr) return $"[{string.Join(", ", arr.Select(x => ShowVal(side, x)))}]";
         if (v.GetType().Name == "Units") return Text(v);
-        if (v.GetType().Name == "MatVal" || v.GetType().FullName!.Contains("MatVal")) return $"MatVal[{Get(v, "Rows")}x{Get(v, "Cols")}]";
+        if (v.GetType().Name == "MatVal" || v.GetType().FullName!.Contains("MatVal"))
+        {
+            int rows = (int)Get(v, "Rows")!;
+            int cols = (int)Get(v, "Cols")!;
+            int stride = (int)Get(Get(v, "Data")!, "m_anr")!;
+            int offset = (int)Get(v, "m_offset")!;
+            var real = (double[])Get(v, "m_rarr")!;
+            var imaginary = (double[]?)Get(v, "m_iarr");
+            var values = new List<string>(rows * cols);
+            for (int row = 0; row < rows; row++)
+                for (int col = 0; col < cols; col++)
+                {
+                    int index = offset + row + col * stride;
+                    if (index < 0 || index >= real.Length)
+                    {
+                        values.Add("<missing>");
+                    }
+                    else if (imaginary == null)
+                    {
+                        values.Add(Text(real[index]));
+                    }
+                    else
+                    {
+                        values.Add(index >= imaginary.Length
+                            ? $"{Text(real[index])}+<missing>i"
+                            : $"{Text(real[index])}+{Text(imaginary[index])}i");
+                    }
+                }
+            return $"MatVal[{rows}x{cols}; stride={stride}; values={string.Join(",", values)}]";
+        }
         if (v.GetType().Name == "MatDim" || v.GetType().FullName!.Contains("MatDim")) return $"MatDim[{Get(v, "Rows")}x{Get(v, "Cols")}]";
         if (v.GetType().Name == "Dim") return side.DimText(v);
+        if (v.GetType().Name == "NumVal") return side.Show(v);
         if (v.GetType().Name is "NotAVal" or "StrVal" or "NumVal" || v.GetType().IsSubclassOf(side.T("Mcd.DimVal")))
         {
             return $"{v.GetType().Name}[dim={side.DimText(Get(v, "m_dim"))}]";
@@ -261,6 +304,38 @@ public class DimValDifferentialTests
             MethodComparison.Compare($"NotAVal_{dim}.asFunctionN(2, 6)", Contract,
                 qAsFuncN2, qTarget, [2, 6u], mAsFuncN2, mTarget, [2, 6u], qs, ms, qState, mState);
         }
+
+        var (qDimlessReal, mDimlessReal) = Method("get_IsDimlessReal", DeclaredInstancePublic);
+        foreach (var (name, qValue, mValue) in new[]
+        {
+            ("dimensionless real", Side.Quire.Num(3.0, 0.0, "identity"), Side.Mathcad.Num(3.0, 0.0, "identity")),
+            ("dimensionless complex", Side.Quire.Num(3.0, 1.0, "identity"), Side.Mathcad.Num(3.0, 1.0, "identity")),
+            ("unitful real", Side.Quire.Num(3.0, 0.0, "L"), Side.Mathcad.Num(3.0, 0.0, "L")),
+        })
+        {
+            MethodComparison.Compare($"NumVal {name}.IsDimlessReal", Contract,
+                qDimlessReal, qValue, [], mDimlessReal, mValue, [], qs, ms, qState, mState);
+        }
+
+        foreach (var (name, qValue, mValue) in new[]
+        {
+            ("dimensionless real", Side.Quire.Num(2.5, 0.0, "identity"), Side.Mathcad.Num(2.5, 0.0, "identity")),
+            ("dimensionless complex", Side.Quire.Num(2.5, 1.0, "identity"), Side.Mathcad.Num(2.5, 1.0, "identity")),
+            ("unitful real", Side.Quire.Num(2.5, 0.0, "L"), Side.Mathcad.Num(2.5, 0.0, "L")),
+        })
+        {
+            MethodComparison.Compare($"NumVal {name}.asDimlessReal(custom key, 5)", Contract,
+                qAsDimlessReal2, qValue, ["custom key", 5u],
+                mAsDimlessReal2, mValue, ["custom key", 5u], qs, ms, qState, mState);
+        }
+
+        var (qFinal, mFinal) = Method("get_Rfinal", DeclaredInstancePublic);
+        foreach (var (count, init, increment) in new[] { (1, 4.0, 3.0), (3, -2.0, 0.5) })
+        {
+            var (qRange, mRange) = Range(init, increment, count);
+            MethodComparison.Compare($"RngVal({init}, {increment}, {count}).Rfinal", Contract,
+                qFinal, qRange, [], mFinal, mRange, [], qs, ms, qState, mState);
+        }
     }
 
     [SkippableFact]
@@ -339,6 +414,10 @@ public class DimValDifferentialTests
             qExtend1, qTarget, [-1], mExtend1, mTarget, [-1], qs, ms, qState, mState);
         MethodComparison.Compare("NotAVal.extend_1(2)", Contract,
             qExtend1, qTarget, [2], mExtend1, mTarget, [2], qs, ms, qState, mState);
+        MethodComparison.Compare("NotAVal.extend_1(5)", Contract,
+            qExtend1, qTarget, [5], mExtend1, mTarget, [5], qs, ms, qState, mState);
+        MethodComparison.Compare("NotAVal.extend_1(0)", Contract,
+            qExtend1, qTarget, [0], mExtend1, mTarget, [0], qs, ms, qState, mState);
 
         MethodComparison.Compare("NotAVal.extend_2(-1, 0): out of bounds i", Contract,
             qExtend2, qTarget, [-1, 0], mExtend2, mTarget, [-1, 0], qs, ms, qState, mState);
@@ -346,6 +425,8 @@ public class DimValDifferentialTests
             qExtend2, qTarget, [0, -1], mExtend2, mTarget, [0, -1], qs, ms, qState, mState);
         MethodComparison.Compare("NotAVal.extend_2(1, 2)", Contract,
             qExtend2, qTarget, [1, 2], mExtend2, mTarget, [1, 2], qs, ms, qState, mState);
+        MethodComparison.Compare("NotAVal.extend_2(0, 0)", Contract,
+            qExtend2, qTarget, [0, 0], mExtend2, mTarget, [0, 0], qs, ms, qState, mState);
 
         MethodComparison.Compare("NotAVal.extend_1u(2)", Contract,
             qExtend1u, qTarget, [2], mExtend1u, mTarget, [2], qs, ms, qState, mState);
@@ -572,6 +653,14 @@ public class DimValDifferentialTests
                     qs, ms);
             }
         }
+
+        var qNear = Side.Quire.Num(1.0, 0.0, "identity");
+        var mNear = Side.Mathcad.Num(1.0, 0.0, "identity");
+        var qWithin = Side.Quire.Num(1.01, 0.0, "identity");
+        var mWithin = Side.Mathcad.Num(1.01, 0.0, "identity");
+        MethodComparison.Compare("NearlyEqual nearby NumVals use DimVal.nearly_equal", Contract,
+            qNearlyEqual, null, [qNear, qWithin, 0.02],
+            mNearlyEqual, null, [mNear, mWithin, 0.02], qs, ms);
 
         var qT1 = Side.Quire.NotAVal();
         var mT1 = Side.Mathcad.NotAVal();
