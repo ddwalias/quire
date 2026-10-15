@@ -457,11 +457,34 @@ static class TestTypes
         return handle;
     }
 
-    /// <summary>Other top-level types of this assembly that <paramref name="top"/> or its nested types derive from,
-    /// or whose members or types their method bodies reference.</summary>
+    /// <summary>The reflection name (<c>Namespace.Outer+Nested</c>) of a type definition or reference, as
+    /// attribute blobs serialize types.</summary>
+    static string ReflectionName(MetadataReader md, EntityHandle handle)
+    {
+        if (handle.Kind == HandleKind.TypeDefinition)
+        {
+            var type = md.GetTypeDefinition((TypeDefinitionHandle)handle);
+            return type.GetDeclaringType() is { IsNil: false } outer ? ReflectionName(md, outer) + "+" + md.GetString(type.Name)
+                : md.GetString(type.Namespace) is { Length: > 0 } ns ? ns + "." + md.GetString(type.Name) : md.GetString(type.Name);
+        }
+        if (handle.Kind == HandleKind.TypeReference)
+        {
+            var type = md.GetTypeReference((TypeReferenceHandle)handle);
+            return type.ResolutionScope.Kind == HandleKind.TypeReference ? ReflectionName(md, type.ResolutionScope) + "+" + md.GetString(type.Name)
+                : md.GetString(type.Namespace) is { Length: > 0 } ns ? ns + "." + md.GetString(type.Name) : md.GetString(type.Name);
+        }
+        return "?";
+    }
+
+    /// <summary>Other top-level types of this assembly that <paramref name="top"/> or its nested types derive from or
+    /// implement, whose members or types their method bodies reference, or that the custom attributes on them, their
+    /// methods, fields, properties and parameters construct or name in a <c>System.Type</c> argument
+    /// (<c>[MemberData(..., MemberType = typeof(A))]</c>, <c>[ClassData(typeof(A.Data))]</c>, a data attribute A
+    /// declares).</summary>
     public static SortedSet<TypeDefinitionHandle> References(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, TypeDefinitionHandle top)
     {
         var found = new HashSet<TypeDefinitionHandle>();
+        var byName = md.TypeDefinitions.ToDictionary(h => ReflectionName(md, h));
         void Type(EntityHandle handle)
         {
             switch (handle.Kind)
@@ -491,15 +514,60 @@ static class TestTypes
                 default: Type(handle); break;
             }
         }
+        // Every type name a serialized System.Type (`Ns.A+Data, Assembly, Version=...`, generic arguments in brackets)
+        // mentions; a name of another assembly that matches one of this assembly's types only over-approximates.
+        void Named(string? serialized)
+        {
+            foreach (var part in (serialized ?? "").Split(['[', ']', ',', ' '], StringSplitOptions.RemoveEmptyEntries))
+                if (byName.TryGetValue(part, out var handle)) found.Add(TopLevel(md, handle));
+        }
+        void Arguments(IEnumerable<CustomAttributeTypedArgument<string>> arguments)
+        {
+            foreach (var argument in arguments)
+            {
+                Named(argument.Type);  // an enum of this assembly
+                if (argument.Value is System.Collections.Immutable.ImmutableArray<CustomAttributeTypedArgument<string>> elements) Arguments(elements);
+                else if (argument.Type == AttributeTypes.SystemType) Named(argument.Value as string);
+            }
+        }
+        void Attributes(CustomAttributeHandleCollection attributes)
+        {
+            foreach (var handle in attributes)
+            {
+                var attribute = md.GetCustomAttribute(handle);
+                Member(attribute.Constructor);
+                try
+                {
+                    var value = attribute.DecodeValue(new AttributeTypes(md, byName));
+                    Arguments(value.FixedArguments);
+                    Arguments(value.NamedArguments.Select(a => new CustomAttributeTypedArgument<string>(a.Type, a.Value)));
+                }
+                catch (Exception e) when (e is BadImageFormatException or NotSupportedException)
+                {
+                    // An argument of an enum this assembly does not declare: its size is unknown, so the blob cannot
+                    // be decoded. Count every type of this assembly whose name the blob spells out.
+                    string blob = System.Text.Encoding.UTF8.GetString(md.GetBlobBytes(attribute.Value));
+                    foreach (var (name, type) in byName)
+                        if (blob.Contains(name, StringComparison.Ordinal)) found.Add(TopLevel(md, type));
+                }
+            }
+        }
         var types = new Stack<TypeDefinitionHandle>([top]);
         while (types.Count > 0)
         {
             var type = md.GetTypeDefinition(types.Pop());
             if (!type.BaseType.IsNil) Type(type.BaseType);
+            foreach (var implementation in type.GetInterfaceImplementations())
+                Type(md.GetInterfaceImplementation(implementation).Interface);
+            Attributes(type.GetCustomAttributes());
+            foreach (var field in type.GetFields()) Attributes(md.GetFieldDefinition(field).GetCustomAttributes());
+            foreach (var property in type.GetProperties()) Attributes(md.GetPropertyDefinition(property).GetCustomAttributes());
             foreach (var nested in type.GetNestedTypes()) types.Push(nested);
             foreach (var handle in type.GetMethods())
             {
                 var method = md.GetMethodDefinition(handle);
+                Attributes(method.GetCustomAttributes());
+                foreach (var parameter in method.GetParameters()) Attributes(md.GetParameter(parameter).GetCustomAttributes());
                 if (method.RelativeVirtualAddress == 0) continue;
                 var il = pe.GetMethodBody(method.RelativeVirtualAddress).GetILReader();
                 while (il.RemainingBytes > 0)
@@ -523,6 +591,34 @@ static class TestTypes
         found.Remove(top);
         return new SortedSet<TypeDefinitionHandle>(found, Comparer<TypeDefinitionHandle>.Create(
             (a, b) => MetadataTokens.GetRowNumber(a).CompareTo(MetadataTokens.GetRowNumber(b))));
+    }
+
+    /// <summary>Attribute argument types by reflection name, enough to decode an attribute blob: an enum's size comes
+    /// from its definition in this assembly, and an enum declared elsewhere cannot be decoded.</summary>
+    sealed class AttributeTypes(MetadataReader md, Dictionary<string, TypeDefinitionHandle> byName) : ICustomAttributeTypeProvider<string>
+    {
+        public const string SystemType = "System.Type";
+        public string GetPrimitiveType(PrimitiveTypeCode typeCode) => typeCode.ToString();
+        public string GetSystemType() => SystemType;
+        public bool IsSystemType(string type) => type == SystemType;
+        public string GetTypeFromSerializedName(string name) => name;
+        public string GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind) => ReflectionName(md, handle);
+        public string GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind) => ReflectionName(md, handle);
+        public string GetTypeFromSpecification(MetadataReader reader, object? context, TypeSpecificationHandle handle, byte rawTypeKind) => "?";
+        public string GetSZArrayType(string elementType) => elementType + "[]";
+        public PrimitiveTypeCode GetUnderlyingEnumType(string type)
+        {
+            // An enum's one instance field, `value__`, has the underlying primitive type.
+            if (byName.TryGetValue(type, out var handle))
+                foreach (var field in md.GetTypeDefinition(handle).GetFields().Select(md.GetFieldDefinition))
+                    if ((field.Attributes & FieldAttributes.Static) == 0)
+                    {
+                        var signature = md.GetBlobReader(field.Signature);
+                        signature.ReadSignatureHeader();
+                        return (PrimitiveTypeCode)signature.ReadSignatureTypeCode();
+                    }
+            throw new NotSupportedException($"enum {type} is not declared in this assembly");
+        }
     }
 
     /// <summary>Records each type definition of this assembly a signature names; the shape it builds is unused.</summary>

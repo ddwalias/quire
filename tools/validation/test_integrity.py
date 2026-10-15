@@ -80,6 +80,8 @@ class IntegrityTests(unittest.TestCase):
                            (header + 'Thread.Sleep(100000);', 'forbidden test API'),
                            (header + 'catch (Xunit.Sdk.XunitException) { }', 'forbidden test API'),
                            (header + 'var t = Type.GetType(name);', 'forbidden test API'),
+                           (header + 'var t = typeof(Dim).Assembly.GetType("Quire.Mcd.Dim");', 'forbidden test API'),
+                           (header + 'var t = a.GetType( $"Quire.{n}");', 'forbidden test API'),
                            (header + 'var f = typeof(MethodComparison).GetMethods();', 'forbidden test API'),
                            (header + 'file static class Assert { }', 'file-local type'),
                            (header + '[Obsolete] file sealed record Assert;', 'file-local type'),

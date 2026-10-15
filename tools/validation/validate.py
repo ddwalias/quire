@@ -207,50 +207,50 @@ def changed_test_classes(changes, sources=None, test_types=None):
     """(lower-cased test classes, how) whose behaviour an added, changed or deleted differential test file can change:
     the classes declared in it (the lint holds an agent test file to one top-level class named after it; nested
     classes count as it), and, transitively, every class that uses one of those, since shared helpers
-    (`MatValDifferentialTests.Storage`, extension methods) are used across classes. Uses come from the built test
-    assembly's IL when `test_types` (the inventory's `test_types`, with `references`) is given (`how` = "IL"); else
-    from a textual identifier match over `sources` (path -> text; "text"), which misses extension-method calls;
-    with neither, every class counts as changed ("all")."""
+    (`MatValDifferentialTests.Storage`, extension methods, `[MemberData(..., MemberType = ...)]`) are used across
+    classes. Uses come from the built test assembly's IL and attributes, `test_types` (the inventory's `test_types`,
+    with `references`), united with a textual identifier match over `sources` (path -> text) when given: each covers
+    what the other misses (`how` = "IL" or "IL and text"). Without `test_types`, or with an empty one, every class
+    counts as changed ("all"): the text alone misses extension-method calls."""
     files = [(status, path) for status, path in changes if status[0] in "AMD"
              and path.lower().startswith(DIFFERENTIAL_TESTS.lower()) and path.lower().endswith(".cs")]
     if not files:
         return set(), "none"
-    stems = {Path(path).stem for _, path in files}
-    if test_types and all("references" in t for t in test_types):
-        root = ROOT.resolve().as_posix().lower() + "/"
-        paths = {path.lower() for _, path in files}
-        def relative(document):
-            document = Path(document).as_posix().lower()
-            return document[len(root):] if document.startswith(root) else document
-        simple = lambda name: name.rsplit(".", 1)[-1]
-        affected = {t["name"] for t in test_types
-                    if simple(t["name"]) in stems or any(relative(d) in paths for d in t["documents"])}
-        users = {}
-        for t in test_types:
-            for reference in t["references"]:
-                users.setdefault(reference, set()).add(t["name"])
+    if not test_types or not all("references" in t for t in test_types):
+        return ALL_TEST_CLASSES, "all"
+    root = ROOT.resolve().as_posix().lower() + "/"
+    paths = {path.lower() for _, path in files}
+    def relative(document):
+        document = Path(document).as_posix().lower()
+        return document[len(root):] if document.startswith(root) else document
+    simple = lambda name: name.rsplit(".", 1)[-1].split("`")[0]
+    users = {}
+    for t in test_types:
+        for reference in t["references"]:
+            users.setdefault(reference, set()).add(t["name"])
+    names = {Path(path).stem for _, path in files}
+    affected = {t["name"] for t in test_types if any(relative(d) in paths for d in t["documents"])}
+    scanned = {path for _, path in files}
+    for path in scanned:
+        names |= set(DECLARATION.findall((sources or {}).get(path, "")))
+    while True:
+        known = len(names)
+        affected |= {t["name"] for t in test_types if simple(t["name"]) in names}
         pending = list(affected)
         while pending:
             for user in users.get(pending.pop(), ()):
                 if user not in affected:
                     affected.add(user)
                     pending.append(user)
-        return {simple(n).lower() for n in affected} | {s.lower() for s in stems}, "IL"
-    if sources is None:
-        return ALL_TEST_CLASSES, "all"
-    names = set(stems)
-    affected = {path for _, path in files}
-    for _, path in files:
-        names |= set(DECLARATION.findall(sources.get(path, "")))
-    while names:
-        pattern = re.compile(r"\b(?:" + "|".join(sorted(map(re.escape, names))) + r")\b")
-        grown = {path for path, text in sources.items() if path not in affected and pattern.search(text)}
-        if not grown:
-            break
-        affected |= grown
-        for path in grown:
-            names |= {Path(path).stem, *DECLARATION.findall(sources[path])}
-    return {n.lower() for n in names}, "text"
+        names |= {simple(n) for n in affected}
+        if sources is not None:
+            pattern = re.compile(r"\b(?:" + "|".join(sorted(map(re.escape, names))) + r")\b")
+            grown = {path for path, text in sources.items() if path not in scanned and pattern.search(text)}
+            scanned |= grown
+            for path in grown:
+                names |= {Path(path).stem, *DECLARATION.findall(sources[path])}
+        if len(names) == known:
+            return {n.lower() for n in names}, "IL" if sources is None else "IL and text"
 
 
 def is_accessor(method):

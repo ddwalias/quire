@@ -33,7 +33,7 @@ TEST_RULES = [
         r'\b(?:Environment|AppContext|Location|System\.IO|File|Directory|Path|Process|ModuleInitializer|DllImport|'
         r'LibraryImport|Emit|AssemblyLoadContext|Marshal|GetMethodBody|GetILAsByteArray|GetTypes|GetAssemblies|'
         r'(?:Get|Expand)EnvironmentVariables?|Sleep|SpinWait|Delay|XunitException|Xunit\.Sdk|MethodComparison\s*\)|'
-        r'Type\.GetType|Unsafe|GCHandle)\b|QUIRE_|typeof\s*\(\s*(?:MethodComparison|Reflect|'
+        r'Type\.GetType|Unsafe|GCHandle)\b|\.\s*GetType\s*\(\s*[@$]*"|QUIRE_|typeof\s*\(\s*(?:MethodComparison|Reflect|'
         r'Mathcad|Runtime|Side|Scenario|MplRunSides|HarnessException)\s*\)')),
 ]
 # Hand-written Quire.Mpl code also runs inside the harness process.

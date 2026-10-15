@@ -97,9 +97,13 @@ class ChangedTypeTests(unittest.TestCase):
             dict(type='Quire.Mcd.NumVal', source=[dict(file=f'{root}/src/Quire.Mpl/Mcd/NumVal.cs', lines=[1])],
                  cases=[dict(test='Quire.Differential.Tests.NumValDifferentialTests.Compare')])]}
 
+    TEST_TYPES = [dict(name=f'Quire.Differential.Tests.{n}DifferentialTests', documents=[], references=[])
+                  for n in ('Dim', 'NumVal')]
+
     def types(self, *names, status='M'):
         from validate import changed_types
-        return changed_types(self.coverage, ''.join(f'{status}\0{n}\0' for n in names), sources={})
+        return changed_types(self.coverage, ''.join(f'{status}\0{n}\0' for n in names), sources={},
+                             test_types=self.TEST_TYPES)
 
     def test_changed_source_and_changed_tests_select_types(self):
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs'), {'Quire.Mcd.Dim'})
@@ -115,7 +119,8 @@ class ChangedTypeTests(unittest.TestCase):
         previous = {'Quire.Mcd.Dim::Pwr()': ['dimdifferentialtests'], 'Quire.Gone::X()': ['dimdifferentialtests']}
         for status in 'MD':  # cases cut from the file, or the whole file deleted
             names = f'{status}\0tests/Quire.Differential.Tests/DimDifferentialTests.cs\0'
-            self.assertEqual(changed_types(self.coverage, names, previous, sources={}), {'Quire.Mcd.Dim'})
+            self.assertEqual(changed_types(self.coverage, names, previous, sources={}, test_types=self.TEST_TYPES),
+                             {'Quire.Mcd.Dim'})
         self.assertEqual(self.types('src/Quire.Mpl/Mcd/Dim.cs', status='D'), set())
 
     def test_source_without_methods_selects_nothing(self):
@@ -163,7 +168,10 @@ class ChangedMethodTests(unittest.TestCase):
     def selected(self, names='', sources=None, test_types=None):
         from validate import changed_methods
         status = ''.join(f'M\0{n}\0' for n in names.split()) if names else ''
-        sources = {} if sources is None and test_types is None else sources
+        if test_types is None:  # an inventory whose IL relates no test classes
+            test_types = [dict(name=f'Quire.Differential.Tests.{c}DifferentialTests', documents=[], references=[])
+                          for c in 'ABC']
+            sources = {} if sources is None else sources
         reasons, _ = changed_methods({'methods': list(self.methods.values())}, status, self.baseline, sources, test_types)
         return {k.split('::')[1].split('`')[0] for k in reasons}
 
@@ -215,8 +223,31 @@ class ChangedMethodTests(unittest.TestCase):
                    'tests/Quire.Differential.Tests/ADifferentialTests.cs': 'class ADifferentialTests { Values.X(); }',
                    'tests/Quire.Differential.Tests/Values.cs': 'class Values { X() => BDifferentialTests.Storage(); }',
                    'tests/Quire.Differential.Tests/CDifferentialTests.cs': 'class CDifferentialTests { }'}
-        # B's helper reaches A through the protected Values class; C names neither.
+        # B's helper reaches A through the protected Values class; C names neither. The IL relates none of them.
         self.assertEqual(self.selected('tests/Quire.Differential.Tests/BDifferentialTests.cs', sources), {'A', 'B'})
+
+    def test_il_and_text_dependencies_are_united(self):
+        from validate import changed_test_classes
+        ns = 'Quire.Differential.Tests.'
+        # C uses B's extension method (IL only); A names C (text only, say through an attribute the IL walk missed).
+        test_types = [dict(name=ns + n, documents=[], references=r) for n, r in
+                      [('BDifferentialTests', []), ('CDifferentialTests', [ns + 'BDifferentialTests']),
+                       ('ADifferentialTests', []), ('DDifferentialTests', [])]]
+        sources = {f'tests/Quire.Differential.Tests/{n}DifferentialTests.cs': f'class {n}DifferentialTests {{ {body} }}'
+                   for n, body in [('B', ''), ('C', 'void M() => 1.Render();'), ('A', 'CDifferentialTests c;'),
+                                   ('D', '')]}
+        classes, how = changed_test_classes([('M', 'tests/Quire.Differential.Tests/BDifferentialTests.cs')],
+                                            sources, test_types)
+        self.assertEqual(classes, {'adifferentialtests', 'bdifferentialtests', 'cdifferentialtests'})
+        self.assertEqual(how, 'IL and text')
+
+    def test_an_inventory_without_test_types_counts_every_test_class_as_changed(self):
+        from validate import ALL_TEST_CLASSES, changed_test_classes
+        sources = {'tests/Quire.Differential.Tests/BDifferentialTests.cs': 'class BDifferentialTests { }'}
+        for test_types in (None, [], [dict(name='Quire.Differential.Tests.BDifferentialTests', documents=[])]):
+            with self.subTest(test_types=test_types):
+                self.assertEqual(changed_test_classes([('M', 'tests/Quire.Differential.Tests/BDifferentialTests.cs')],
+                                                      sources, test_types), (ALL_TEST_CLASSES, 'all'))
 
     def test_test_class_dependencies_come_from_the_built_assembly(self):
         from validate import ROOT
@@ -281,10 +312,12 @@ class ChangedMethodTests(unittest.TestCase):
         from validate import changed_methods
         self.methods['A']['body_sha256'] = 'a2'
         reasons, notes = changed_methods({'methods': list(self.methods.values())},
-                                         'M\0tests/Quire.Differential.Tests/ADifferentialTests.cs\0', self.baseline, {})
+                                         'M\0tests/Quire.Differential.Tests/ADifferentialTests.cs\0', self.baseline, {},
+                                         [dict(name='Quire.Differential.Tests.ADifferentialTests', documents=[],
+                                               references=[])])
         self.assertEqual(reasons[self.key(self.methods['A'])], ['IL changed', 'comparing tests changed'])
         self.assertEqual(reasons[self.key(self.methods['Caller'])], ['calls a changed method'])
-        self.assertEqual(notes, ['test class dependencies: text'])
+        self.assertEqual(notes, ['test class dependencies: IL and text'])
 
 
 class VerdictTests(unittest.TestCase):

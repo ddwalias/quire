@@ -166,7 +166,7 @@ The same run also checks each reconstruction against the original IL:
   declare exactly `namespace Quire.Differential.Tests;` and one top-level type, `class <file name>` (checked outside
   braces, comments and strings, so no `Assert` or harness name can be shadowed and every test maps to its file),
   avoid `global using`, `file`-local types and `[assembly:]`/`[module:]` attributes, and not name the environment, files, processes, assembly locations, `QUIRE_*` variables,
-  code generation, marshalling, method bodies/IL, assembly or type enumeration, `Type.GetType`, harness types via
+  code generation, marshalling, method bodies/IL, assembly or type enumeration, `Type.GetType` or a type looked up by a string literal (`.GetType("`), harness types via
   `typeof`, xUnit exceptions, sleeps or delays. `src/Quire.Mpl` code, which runs in the same process, must not name
   module initializers, xUnit, `MethodComparison`, the `Quire.Differential` namespace, method IL, assembly
   enumeration, environment variables or `QUIRE_*` variables. These token rules are defence in depth, not containment
@@ -327,8 +327,12 @@ order passes it, which the direct comparisons must catch.
     (`ldsfld Table; stelem`, `Table[k] = v`, `.Add`) stores to no field, so reading such a field counts as writing it.
 
   For the differential test assembly it records each top-level type's source files and `references`: the other
-  top-level types its IL (or its nested types', lambdas included) derives from or names in a call, field, type or
-  generic argument, so an extension method `value.Render()` declared in another class counts. The baseline (schema
+  top-level types its IL (or its nested types', lambdas included) derives from, implements or names in a call, field,
+  type or generic argument, so an extension method `value.Render()` declared in another class counts, and those that
+  custom attributes on it, its methods, fields, properties or parameters construct or name in a `System.Type`
+  argument (`[MemberData(nameof(A.Cases), MemberType = typeof(A))]`, `[ClassData(typeof(A.Data))]`, a data
+  attribute `A` declares). An attribute with an argument of an enum declared in another assembly cannot be decoded;
+  every test type whose name its blob spells counts instead. The baseline (schema
   4) stores each method's `body_sha256` (`bodies`) and its `field_writes` and `reference_reads` (`writes`) from the
   last gate run, which tested exactly the tree it merged. A changed method is one whose body hash differs from the
   baseline's or that the baseline lacks, or the hand-written owner of a changed lambda, iterator or async state
@@ -339,11 +343,12 @@ order passes it, which the direct comparisons must catch.
      `tests/Quire.Differential.Tests` (or named after it), and, transitively, every type whose IL `references` one.
      Shared helpers (`MatValDifferentialTests.Storage`, `TypeDifferentialTests.Signatures`) are used across classes,
      so a changed helper selects the methods its users compare; a changed harness file (`Values.cs`,
-     `MethodComparison.cs`) selects most of them. Without that record (an older MethodAudit), a textual scan of the
-     test sources read before any test runs stands in: a class counts when its file names a changed class, which
-     misses extension-method calls and type declarations its pattern (a line starting with modifiers and
-     `class`/`struct`/`interface`/`enum`/`record`) does not recognize. With neither, every test class counts as
-     changed. `mutation_notes` says which applied;
+     `MethodComparison.cs`) selects most of them. A textual scan of the test sources read before any test runs is
+     united with the IL record, to a fixed point, since each covers what the other misses (reflection by name and the
+     like): a class counts when its file names a changed class; the scan alone misses extension-method calls and type
+     declarations its pattern (a line starting with modifiers and `class`/`struct`/`interface`/`enum`/`record`) does
+     not recognize. Without the IL record (missing or empty `test_types`, or entries without `references`), every
+     test class counts as changed. `mutation_notes` says which applied (`IL and text`, or `all`);
   3. **newly compared:** compared now but not in the baseline (its mutants have never run);
   4. **calls a changed method:** direct callers of a changed method by token, or by a virtual call to the slot of a
      changed virtual method or of an instance method the baseline has and the build lacks (a removed override);

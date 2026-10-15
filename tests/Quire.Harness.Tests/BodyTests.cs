@@ -94,7 +94,65 @@ public class BodyTests
         Assert.Contains(typeof(GenericHelper<>).FullName!, names);
         Assert.DoesNotContain(typeof(BodyTests).FullName!, names);
     }
+
+    private static List<string> References(Type type) => TestTypes.References(Md, Pe,
+        Md.TypeDefinitions.Single(h => SigProvider.FullName(Md, h) == type.FullName)).Select(h => TestTypes.Name(Md, h)).ToList();
+
+    [Fact]
+    public void Test_types_depend_on_types_their_attributes_name_and_interfaces_they_implement()
+    {
+        // MemberData's MemberType and ClassData's type are System.Type arguments in an attribute blob, not IL.
+        Assert.Equal([typeof(MemberSource).FullName!], References(typeof(MemberDataUser)));
+        Assert.Equal([typeof(ClassSource).FullName!], References(typeof(ClassDataUser)));
+        // A data attribute another type declares: the attribute's constructor.
+        Assert.Equal([typeof(AttributeSource).FullName!], References(typeof(DataAttributeUser)));
+        Assert.Equal([typeof(IMarker).FullName!], References(typeof(MarkerUser)));
+    }
 }
+
+public static class MemberSource
+{
+    public static IEnumerable<object[]> Cases => [[1]];
+}
+
+public static class ClassSource
+{
+    public sealed class Data : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator() => new List<object[]> { new object[] { 1 } }.GetEnumerator();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+}
+
+public static class AttributeSource
+{
+    public sealed class CasesAttribute : Xunit.Sdk.DataAttribute
+    {
+        public override IEnumerable<object[]> GetData(System.Reflection.MethodInfo testMethod) => [[1]];
+    }
+}
+
+public class MemberDataUser
+{
+    [Theory, MemberData(nameof(MemberSource.Cases), MemberType = typeof(MemberSource))]
+    public void Run(int value) => Assert.Equal(1, value);
+}
+
+public class ClassDataUser
+{
+    [Theory, ClassData(typeof(ClassSource.Data))]
+    public void Run(int value) => Assert.Equal(1, value);
+}
+
+public class DataAttributeUser
+{
+    [Theory, AttributeSource.Cases]
+    public void Run(int value) => Assert.Equal(1, value);
+}
+
+public interface IMarker;
+
+public class MarkerUser : IMarker;
 
 public static class RenderExtensions
 {
