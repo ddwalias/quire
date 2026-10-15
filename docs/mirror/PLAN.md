@@ -28,8 +28,9 @@ phase closure: the full `validate.py --profile phase`, `dotnet test Quire.slnx`,
 checks. Use Windows for native or mixed-mode evidence when the required analysis provider or target runtime needs
 Windows. Keep the phase open until all Windows-only checks and the independent review pass. Never retarget WPF
 projects or omit engine/UI tests to claim closure. Linux focused validation does not replace Windows phase closure.
-The Windows `validate.py` command also needs an installed Python 3 interpreter (`python` or `py -3`); the launcher
-alone is not sufficient. `dotnet test Quire.slnx` does not require Python.
+The Windows `validate.py` command also needs an installed Python 3 interpreter. On this workstation, use `python`
+(Python 3.14.5 via pyenv-win); `py -3` currently reports no registered Python, so that launcher alone is not
+sufficient. `dotnet test Quire.slnx` does not require Python.
 
 ## Execute: load → mirror → checkpoint → merge
 
