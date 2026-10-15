@@ -1518,7 +1518,7 @@
     "Quire.Mpl.Run.Function::Fixpoint`0([Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "untested",
     "Quire.Mpl.Run.Function::IgnoreVectorization`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
     "Quire.Mpl.Run.Function::IgnoreVectorization`0([System.Runtime]System.Boolean)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
-    "Quire.Mpl.Run.Function::InvokeVec`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "structure_mismatch",
+    "Quire.Mpl.Run.Function::InvokeVec`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "compared",
     "Quire.Mpl.Run.Function::IsFullyApplied`0([System.Runtime]System.Int32)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mpl.Run.Function::IsFunctionN`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
     "Quire.Mpl.Run.Function::OptFunc`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
@@ -1572,7 +1572,7 @@
     "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
     "Quire.Mpl.Run.Function::format_vector`0([System.Runtime]System.Object[])->[System.Runtime]System.String|True": "structure_mismatch",
     "Quire.Mpl.Run.Function::get_InverseFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
-    "Quire.Mpl.Run.Function::get_IsFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
+    "Quire.Mpl.Run.Function::get_IsFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
     "Quire.Mpl.Run.Function::get_MinArgs`0()->[System.Runtime]System.Int32|False": "compared",
     "Quire.Mpl.Run.Function::get_Name`0()->[System.Runtime]System.String|False": "structure_mismatch",
     "Quire.Mpl.Run.Function::get_Purity`0()->[System.Runtime]System.Int32|False": "compared",
@@ -3768,6 +3768,9 @@
       "functiondifferentialtests",
       "functionmatrixdifferentialtests"
     ],
+    "Quire.Mpl.Run.Function::InvokeVec`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": [
+      "functiondifferentialtests"
+    ],
     "Quire.Mpl.Run.Function::IsFullyApplied`0([System.Runtime]System.Int32)->[System.Runtime]System.Boolean|False": [
       "functiondifferentialtests",
       "functionmatrixdifferentialtests"
@@ -3796,6 +3799,9 @@
       "functiondifferentialtests"
     ],
     "Quire.Mpl.Run.Function::format_vector`0([System.Runtime]System.Object[])->[System.Runtime]System.String|True": [
+      "functiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.Function::get_IsFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": [
       "functiondifferentialtests"
     ],
     "Quire.Mpl.Run.Function::get_MinArgs`0()->[System.Runtime]System.Int32|False": [
@@ -5795,11 +5801,11 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Function": {
-      "compared": 16,
+      "compared": 18,
       "declaration_only": 1,
       "excluded": 5,
-      "missing": 136,
-      "structure_mismatch": 8,
+      "missing": 135,
+      "structure_mismatch": 7,
       "total": 166,
       "uncovered": 0,
       "verified_unsupported": 0
