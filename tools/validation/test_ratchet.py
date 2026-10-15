@@ -102,6 +102,15 @@ class RatchetTests(unittest.TestCase):
         same = {'Quire.T': counts(compared=3, missing=2)}
         self.assertIn('profile', compare(self.baseline, self.current(profile='phase', **same))[0])
         self.assertIn('schema', compare(dict(self.baseline, schema=1), self.current(**same))[0])
+        # Schema 3 lacks only the body hashes, which narrow mutation; the ratchet reads it unchanged.
+        self.assertEqual(compare(dict(self.baseline, schema=3), self.current(**same)), [])
+
+    def test_snapshot_records_body_hashes(self):
+        coverage = {'by_type': {}, 'methods': [
+            {'type': 'Quire.T', 'signature': 'A()', 'validation': 'compared', 'original': {}, 'body_sha256': 'ab'},
+            {'type': 'Quire.T', 'signature': 'B()', 'validation': 'missing', 'original': {}, 'body_sha256': None}]}
+        snapshot = check(coverage, {'lint': []}, False, 'focused', baseline=None)['snapshot']
+        self.assertEqual((snapshot['schema'], snapshot['bodies']), (SCHEMA, {'Quire.T::A()': 'ab'}))
 
     def test_removed_type_fails_full_run_but_not_scoped_run(self):
         self.assertIn('disappeared', compare(self.baseline, self.current(methods={}))[0])

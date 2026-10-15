@@ -6,10 +6,10 @@ from pathlib import Path
 from validate import ROOT, test_class
 
 BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
-SCHEMA = 3
-# Baseline schemas compare() reads and the merge gate accepts from a validator. Schema 4 adds only `bodies` and
-# `writes` (which narrow mutation selection, not the ratchet); accepting it first lets the branch that starts writing
-# it pass the gate run by this code.
+SCHEMA = 4
+# Baseline schemas compare() reads and the merge gate accepts from a validator. Schema 4 adds `bodies` and `writes`
+# (validate.changed_methods), which narrow mutation selection, not the ratchet; from a schema 3 baseline the gate
+# mutates whole changed types as before.
 READABLE = (3, 4)
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
 # Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
@@ -28,7 +28,9 @@ def snapshot(coverage, integrity, profile):
             'methods': {f"{m['type']}::{m['signature']}": stage(m) for m in coverage['methods']},
             'tests': {f"{m['type']}::{m['signature']}": sorted({test_class(c['test']) for c in m['cases']})
                       for m in coverage['methods'] if m.get('cases')},
-            'lint': sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint'])}
+            'lint': sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint']),
+            'bodies': {f"{m['type']}::{m['signature']}": m['body_sha256'] for m in coverage['methods'] if m.get('body_sha256')},
+            'writes': {f"{m['type']}::{m['signature']}": m['field_writes'] for m in coverage['methods'] if m.get('field_writes')}}
 
 
 def stage(method):

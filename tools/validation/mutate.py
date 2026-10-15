@@ -86,20 +86,24 @@ def accepted(path=ACCEPTED):
     return set(reasons(path))
 
 
-def select(coverage, types):
-    """Mutants of compared methods in the selected types, and of the compiler-generated methods (lambdas, local
-    functions, iterator and async bodies) those methods own, run against the owner's tests."""
+def select(coverage, types, methods=()):
+    """Mutants of compared methods in the selected types or among the selected `Type::signature` methods, and of the
+    compiler-generated methods (lambdas, local functions, iterator and async bodies) that are selected themselves or
+    owned by a selected method (they run against the owner's tests, so a change to those or to the owner reaches
+    them), run against the owner's tests."""
     owners = {}
     for m in coverage['methods']:
         if m['validation'] == 'compared':
             owners.setdefault((m['type'], re.split(r'[`(]', m['signature'])[0]), []).append(m)
     chosen = []
+    name = lambda m: f"{m['type']}::{m['signature']}"
     for m in coverage['methods']:
-        if m['validation'] == 'compared' and m['type'] in types:
+        if m['validation'] == 'compared' and (m['type'] in types or name(m) in methods):
             chosen.append(m)
-        elif m['validation'] == 'excluded' and m.get('owner') and m['owner']['type'] in types:
+        elif m['validation'] == 'excluded' and m.get('owner'):
             compared = owners.get((m['owner']['type'], m['owner']['name']), [])
-            if compared:
+            if compared and (m['owner']['type'] in types or name(m) in methods
+                             or any(name(o) in methods for o in compared)):
                 chosen.append(dict(m, cases=[c for o in compared for c in o['cases']]))
     return [(m, mutant) for m in chosen for mutant in m.get('mutants', [])]
 
@@ -160,16 +164,18 @@ def mismatches(scratch, mvid):
 
 
 def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600, accepted_keys=None,
-        global_json=b'{}\n', proposed=None, use_cache=False, mathcad=None):
+        global_json=b'{}\n', proposed=None, use_cache=False, mathcad=None, methods=None):
     """Patch a private copy of the test output per worker and run only the tests that directly compare the method; a
     mutant is killed when one of their comparisons against Mathcad mismatches and fails its test, or when it crashes
     the test host that ran them cleanly in the control run. Other test failures, and mismatches a test swallows,
     cannot kill it. `global_json`: the SDK choice each run gets (see
     validate.sdk_directory). `proposed`: key -> reason of equivalent mutants proposed for review; a local run reports
     their survivors apart and does not fail on them (the merge gate never passes any). `use_cache`: reuse and record
-    outcomes in the local cache; never in the gate. `mathcad`: the Mathcad install the tests compare against."""
+    outcomes in the local cache; never in the gate. `mathcad`: the Mathcad install the tests compare against.
+    `methods`: `Type::signature` -> reasons, methods selected individually (validate.changed_methods)."""
     proposed = proposed or {}
-    selected = select(coverage, types)
+    methods = methods or {}
+    selected = select(coverage, types, methods)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
     pristine = digest(files_under(test_dll.parent), test_dll.parent)
@@ -335,7 +341,9 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             shutil.rmtree(copy, ignore_errors=True)
     surviving = [r for r in results if r['outcome'].startswith('survived') and not r['accepted']]
     survivors = [r['key'] for r in surviving if not r['proposed']]
-    return {'types': sorted(types), 'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
+    mutated = sorted({f"{m['type']}::{m['signature']}" for m, _ in selected})
+    return {'types': sorted(types), 'methods': dict(sorted(methods.items())), 'mutated_methods': mutated,
+            'total': len(results), 'max_mutant_timeout_seconds': round(max(limits.values(), default=timeout)),
             'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
             'crashes': sum(r['outcome'] == 'killed (crash)' for r in results),
             'cached': sum(r['cached'] for r in results),

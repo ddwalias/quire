@@ -113,11 +113,22 @@ class MutationTests(unittest.TestCase):
         self.assertIn(('<M>b__0_0()', [dict(test='Ns.Tests.Compare')]), chosen)
         self.assertNotIn('<Stub>b__1_0()', [name for name, _ in chosen])  # its owner is not compared
 
+    def test_selected_methods_and_the_lambdas_they_own(self):
+        lambda_ = dict(self.method, type='Quire.T+<>c', signature='<M>b__0_0()', validation='excluded', cases=[],
+                       owner=dict(type='Quire.T', name='M'), token=0x06000005)
+        self.coverage['methods'].append(lambda_)
+        chosen = lambda methods: sorted({(m['type'], m['signature']) for m, _ in select(self.coverage, set(), methods)})
+        self.assertEqual(chosen({'Quire.Other::M()'}), [('Quire.Other', 'M()')])
+        self.assertEqual(chosen({'Quire.T::M()'}), [('Quire.T', 'M()'), ('Quire.T+<>c', '<M>b__0_0()')])
+        self.assertEqual(chosen({'Quire.T+<>c::<M>b__0_0()'}), [('Quire.T+<>c', '<M>b__0_0()')])
+        self.assertEqual(chosen({'Quire.T::Stub()'}), [])  # not compared
+
     def test_survivor_fails_until_accepted(self):
         for jobs in (1, 2):
             with self.subTest(jobs=jobs):
                 report = self.mutate(jobs=jobs)
                 self.assertEqual((report['total'], report['killed']), (3, 2))
+                self.assertEqual(report['mutated_methods'], ['Quire.T::M()'])  # not Quire.Other, nor the stub
                 self.assertEqual(report['survivors'], ['Quire.T::M()@IL_0005 brfalse.s -> brtrue.s'])
                 self.assertFalse(report['complete'])
         survivor = key(self.method, self.method['mutants'][1])

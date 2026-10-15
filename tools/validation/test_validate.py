@@ -70,6 +70,158 @@ class ChangedTypeTests(unittest.TestCase):
             self.types('src/Quire.Mpl/Mcd/Dim.cs')
 
 
+class ChangedMethodTests(unittest.TestCase):
+    """The gate mutates methods whose IL, comparing tests, callees or the fields they read changed, not whole types."""
+
+    def setUp(self):
+        def method(name, body, calls=(), virtual_calls=(), cases=(), validation='compared', slot=None, token=0,
+                   reads=(), writes=(), owner=None, type='Quire.T'):
+            return dict(type=type, signature=f'{name}`0()->[System.Runtime]System.Void|False', project='Quire.Mpl',
+                        token=token, body_sha256=body, calls=list(calls), virtual_calls=list(virtual_calls),
+                        is_virtual=bool(slot), slot=slot, validation=validation, field_reads=list(reads),
+                        field_writes=list(writes), owner=owner,
+                        cases=[dict(test=f'Quire.Differential.Tests.{c}.Compare') for c in cases])
+        self.methods = {
+            'A': method('A', 'a', cases=['ADifferentialTests'], token=1),
+            'B': method('B', 'b', cases=['BDifferentialTests'], token=2),
+            'Caller': method('Caller', 'c', calls=[1], cases=['CDifferentialTests'], token=3),
+            'Virtual': method('System.IFoo.Run', 'v', slot='Run`0/0', token=4),
+            'Dispatcher': method('D', 'd', virtual_calls=['Run`0/0'], token=5),
+            'Ctor': method('.ctor', 'k', writes=['Quire.T::f'], token=6),
+            'Reader': method('R', 'r', reads=['Quire.T::f'], token=7),
+            'Iterator': method('MoveNext', 'i', validation='excluded', owner=dict(type='Quire.T', name='B'),
+                               type='Quire.T+<B>d__1', token=8),
+            'BCaller': method('BC', 'bc', calls=[2], token=9),
+        }
+        self.baseline = {'bodies': {self.key(m): m['body_sha256'] for m in self.methods.values()},
+                         'methods': {self.key(m): 'compared' for m in self.methods.values()},
+                         'tests': {}, 'writes': {}}
+
+    @staticmethod
+    def key(m):
+        return f"{m['type']}::{m['signature']}"
+
+    def selected(self, names='', sources=None):
+        from validate import changed_methods
+        status = ''.join(f'M\0{n}\0' for n in names.split()) if names else ''
+        reasons, _ = changed_methods({'methods': list(self.methods.values())}, status, self.baseline, sources)
+        return {k.split('::')[1].split('`')[0] for k in reasons}
+
+    def test_unchanged_build_selects_nothing(self):
+        self.assertEqual(self.selected('src/Quire.Mpl/T.cs'), set())
+
+    def test_changed_il_selects_the_method_and_its_direct_callers_only(self):
+        self.methods['A']['body_sha256'] = 'a2'
+        self.assertEqual(self.selected(), {'A', 'Caller'})
+        self.methods['A']['body_sha256'], self.methods['Reader']['body_sha256'] = 'a', 'r2'
+        self.assertEqual(self.selected(), {'R'})
+
+    def test_virtual_calls_reach_overrides_and_interface_implementations(self):
+        self.methods['Virtual']['body_sha256'] = 'v2'
+        self.assertEqual(self.selected(), {'System.IFoo.Run', 'D'})
+        # A non-virtual method is reached only through its token.
+        self.methods['Virtual'].update(body_sha256='v3', slot=None, is_virtual=False)
+        self.assertEqual(self.selected(), {'System.IFoo.Run'})
+
+    def test_a_removed_override_selects_callers_of_its_slot(self):
+        del self.methods['Virtual']
+        self.assertEqual(self.selected(), {'D'})
+
+    def test_readers_of_fields_a_changed_or_removed_method_writes(self):
+        self.methods['Ctor']['body_sha256'] = 'k2'
+        self.assertEqual(self.selected(), {'.ctor', 'R'})
+        # A write the change removed still counts, from the baseline.
+        self.methods['Ctor']['field_writes'] = []
+        self.baseline['writes'] = {self.key(self.methods['Ctor']): ['Quire.T::f']}
+        self.assertEqual(self.selected(), {'.ctor', 'R'})
+        self.methods['Ctor']['body_sha256'] = 'k'
+        del self.methods['Ctor']
+        self.assertEqual(self.selected(), {'R'})
+
+    def test_a_changed_state_machine_changes_its_owner_and_the_owners_callers(self):
+        self.methods['Iterator']['body_sha256'] = 'i2'
+        self.assertEqual(self.selected(), {'MoveNext', 'B', 'BC'})
+
+    def test_changed_or_deleted_tests_select_the_methods_they_compare(self):
+        self.assertEqual(self.selected('tests/Quire.Differential.Tests/BDifferentialTests.cs'), {'B'})
+        self.baseline['tests'] = {self.key(self.methods['A']): ['gonedifferentialtests']}
+        self.assertEqual(self.selected('tests/Quire.Differential.Tests/GoneDifferentialTests.cs'), {'A'})
+
+    def test_classes_using_a_helper_of_a_changed_test_file_count_as_changed(self):
+        sources = {'tests/Quire.Differential.Tests/BDifferentialTests.cs': 'class BDifferentialTests { Helper h; }',
+                   'tests/Quire.Differential.Tests/ADifferentialTests.cs': 'class ADifferentialTests { Values.X(); }',
+                   'tests/Quire.Differential.Tests/Values.cs': 'class Values { X() => BDifferentialTests.Storage(); }',
+                   'tests/Quire.Differential.Tests/CDifferentialTests.cs': 'class CDifferentialTests { }'}
+        # B's helper reaches A through the protected Values class; C names neither.
+        self.assertEqual(self.selected('tests/Quire.Differential.Tests/BDifferentialTests.cs', sources), {'A', 'B'})
+
+    def test_new_and_newly_compared_methods_selected(self):
+        del self.baseline['bodies'][self.key(self.methods['B'])]
+        self.baseline['methods'][self.key(self.methods['A'])] = 'uncovered'
+        self.assertEqual(self.selected(), {'A', 'B', 'BC'})
+
+    def test_a_build_without_body_hashes_fails(self):
+        del self.methods['A']['body_sha256']
+        with self.assertRaises(ValueError):
+            self.selected()
+
+    def test_slots_derive_from_inventory_keys(self):
+        from validate import slot_of_key
+        for key, slot in [('ToString`0()->[System.Runtime]System.String|False', 'ToString`0/0'),
+                          ('System.Collections.Generic.IDictionary<K,V>.Add`0(!0,!1)->[System.Runtime]System.Void|False',
+                           'Add`0/2'),
+                          ('M`1([System.Runtime]System.Collections.Generic.Dictionary`2<[System.Runtime]System.String,'
+                           '!!0>,[System.Runtime]System.Int32[,])->!!0|False', 'M`1/2')]:
+            self.assertEqual(slot_of_key(key), slot)
+        self.methods['Virtual']['slot'] = 'Run`0/1'
+        with self.assertRaises(ValueError):
+            self.selected()
+
+    def test_reasons_recorded(self):
+        from validate import changed_methods
+        self.methods['A']['body_sha256'] = 'a2'
+        reasons, notes = changed_methods({'methods': list(self.methods.values())},
+                                         'M\0tests/Quire.Differential.Tests/ADifferentialTests.cs\0', self.baseline)
+        self.assertEqual(reasons[self.key(self.methods['A'])], ['IL changed', 'comparing tests changed'])
+        self.assertEqual(reasons[self.key(self.methods['Caller'])], ['calls a changed method'])
+        self.assertEqual(notes, [])
+
+
+class VerdictTests(unittest.TestCase):
+    BASE = dict(projects=[dict(project='P', exit_code=0, passed=3, failed=0, skipped=0)], ratchet=dict(ok=True, regressions=[]),
+                mutation=dict(survivors=[], proposed_survivors=[]), executed_unreachable=[],
+                method_coverage=dict(compared=5, missing=0), complete=True, gate_passed=True)
+
+    def verdict(self, **changes):
+        from validate import verdict
+        return verdict(dict(self.BASE, **changes))
+
+    def test_outcomes_follow_the_exit_status(self):
+        self.assertEqual(self.verdict()['line'], 'LOCAL CHECKS: pass · GATE: would pass')
+        gaps = self.verdict(complete=False, method_coverage=dict(compared=5, missing=2))
+        self.assertEqual(gaps['line'], 'LOCAL CHECKS: pass · GATE: would pass with gaps (2 missing)')
+        blocked = self.verdict(complete=False, gate_passed=False, mutation=dict(survivors=['k'], proposed_survivors=[]))
+        self.assertEqual(blocked['line'], 'LOCAL CHECKS: fail · GATE: would block (1 surviving mutants)')
+
+    def test_pending_proposals_block_the_gate_but_pass_locally(self):
+        result = self.verdict(complete=False, gate_passed=False, proposed_exempt_lines=1, proposed_mutants='/p',
+                              mutation=dict(survivors=[], proposed_survivors=[dict(key='k', reason='r')] * 2))
+        self.assertEqual(result['line'], 'LOCAL CHECKS: pass · GATE: would block (2 proposed mutants pending approval; '
+                                         '1 proposed unreachable lines pending approval)')
+        self.assertEqual(len(result['pending_approval']), 2)
+
+    def test_gaps_name_incomplete_integrity_and_mutation(self):
+        result = self.verdict(complete=False, integrity=dict(lint=1, complete=False),
+                              mutation=dict(survivors=[], proposed_survivors=[], complete=False))
+        self.assertEqual(result['reasons'], ['integrity incomplete', 'mutation incomplete'])
+
+    def test_errors_and_scoped_runs_are_labelled(self):
+        result = self.verdict(error='build failed', ratchet=None, complete=False, gate_passed=False)
+        self.assertEqual(result['local_checks'], 'fail')
+        self.assertIn('validation error: build failed', result['line'])
+        self.assertTrue(self.verdict(method_types=['Quire.T'])['line'].endswith('[scoped to 1 types; the gate validates all]'))
+
+
 class SealTests(unittest.TestCase):
     def test_changes_to_late_read_files_or_outputs_detected(self):
         from validate import Seal

@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -115,37 +116,213 @@ def resolve_dotnet(name, root):
     return os.path.abspath(found)  # not resolved: a launcher such as snap's picks its tool by the name it is run as
 
 
-def changed_types(coverage, name_status, previous=None):
+DIFFERENTIAL_TESTS = "tests/Quire.Differential.Tests/"
+# Callers of one dispatch slot above which a run notes the slot (object.ToString and the like): they are all still
+# selected, since leaving any out would be unsound, but the note says why a selection is large.
+WIDE_SLOT = 50
+
+
+def test_sources(root=None):
+    """Repository-relative path -> text of every C# file the differential test assemblies compile, read before any
+    test runs (see changed_test_classes)."""
+    root = Path(root or ROOT)
+    return {p.relative_to(root).as_posix(): p.read_text(encoding="utf-8", errors="replace")
+            for p in sorted((root / DIFFERENTIAL_TESTS).rglob("*.cs")) if p.is_file()}
+
+
+def name_changes(name_status):
+    """(status, path) pairs of `git diff -z --no-renames --name-status` output."""
+    fields = [f for f in name_status.split("\0") if f]
+    return list(zip(fields[0::2], fields[1::2]))
+
+
+def changed_types(coverage, name_status, previous=None, sources=None):
     """Types to mutate given `git diff -z --no-renames --name-status` output: those whose Quire.Mpl source was added
     or changed, and those whose comparisons live, or lived according to the baseline's `previous` method -> test
-    classes map, in an added, changed or deleted differential test file (a method whose cases were cut or whose
-    test file was deleted is mutated against what remains)."""
-    fields = [f for f in name_status.split("\0") if f]
-    changes = list(zip(fields[0::2], fields[1::2]))
+    classes map, in a test class changed_test_classes reports (a method whose cases were cut or whose test file was
+    deleted is mutated against what remains)."""
+    changes = name_changes(name_status)
     names = [n for status, n in changes if status[0] in "AM"]
     root = ROOT.resolve().as_posix() + "/"
-    sources = {}
+    sources_by_file = {}
     for method in coverage["methods"]:
         for document in method.get("source") or []:
             file = Path(document["file"]).as_posix()
             if not file.startswith(root):
                 raise ValueError(f"PDB source {file} of {method['type']} lies outside the repository; "
                                  "path maps and #line directives would hide changes from mutation")
-            sources.setdefault(file[len(root):], set()).add(method["type"])
+            sources_by_file.setdefault(file[len(root):], set()).add(method["type"])
     types = set()
     for name in names:
         # A file with no method bodies (enums, interfaces, attributes) has no sequence points and nothing to mutate.
         if name.lower().startswith("src/quire.mpl/") and name.lower().endswith(".cs"):
-            types |= sources.get(name, set())
-    # The lint holds each differential test file to one top-level class named after it; nested classes count as it.
-    test_classes = {Path(n).stem.lower() for status, n in changes if status[0] in "AMD"
-                    and n.lower().startswith("tests/quire.differential.tests/") and n.lower().endswith(".cs")}
+            types |= sources_by_file.get(name, set())
+    test_classes = changed_test_classes(changes, sources)
     types |= {m["type"] for m in coverage["methods"]
               if any(test_class(case["test"]) in test_classes for case in m.get("cases", []))}
     known = {m["type"] for m in coverage["methods"]}
     types |= {name.split("::", 1)[0] for name, classes in (previous or {}).items()
               if test_classes & set(classes) and name.split("::", 1)[0] in known}
     return types
+
+
+# A type declaration starting a line, after any modifiers: a type named in a comment or string does not count.
+DECLARATION = re.compile(r"^[ \t]*(?:(?:public|private|protected|internal|static|sealed|abstract|partial|readonly|ref|"
+                         r"unsafe|file|new)\s+)*(?:class|struct|interface|enum|record(?:\s+(?:class|struct))?)\s+"
+                         r"([A-Za-z_]\w*)", re.M)
+
+
+def changed_test_classes(changes, sources=None):
+    """Lower-cased test classes whose behaviour an added, changed or deleted differential test file can change: the
+    classes it declares (the lint holds an agent test file to one top-level class named after it; nested classes count
+    as it), and, transitively, every class declared in a differential test source (`sources`, path -> text) that
+    names one of those classes, since shared helpers (`MatValDifferentialTests.Storage`) are used across classes.
+    Matching is textual on identifiers: conservative, it may select more than needed."""
+    sources = sources or {}
+    names = set()
+    affected = set()
+    for status, path in changes:
+        if status[0] in "AMD" and path.lower().startswith(DIFFERENTIAL_TESTS.lower()) and path.lower().endswith(".cs"):
+            names.add(Path(path).stem)
+            affected.add(path)
+            names |= set(DECLARATION.findall(sources.get(path, "")))
+    while names:
+        pattern = re.compile(r"\b(?:" + "|".join(sorted(map(re.escape, names))) + r")\b")
+        grown = {path for path, text in sources.items() if path not in affected and pattern.search(text)}
+        if not grown:
+            break
+        affected |= grown
+        for path in grown:
+            names |= {Path(path).stem, *DECLARATION.findall(sources[path])}
+    return {n.lower() for n in names}
+
+
+def slot_of_key(signature):
+    """The dispatch slot (`name`arity/parameter count`, name unqualified) of an inventory signature
+    `Name`arity(parameters)->return|static`, as MethodAudit's StructureReader.SlotOf writes it."""
+    match = re.match(r"(.*?)`(\d+)\(", signature)
+    if not match:
+        raise ValueError(f"unexpected method signature {signature!r}")
+    depth, count, empty = 0, 0, True
+    for char in signature[match.end():]:
+        if char == ")" and depth == 0:
+            break
+        empty = False
+        if char in "<[(":
+            depth += 1
+        elif char in ">])":
+            depth -= 1
+        elif char == "," and depth == 0:
+            count += 1
+    return f"{match.group(1).split('.')[-1]}`{match.group(2)}/{0 if empty else count + 1}"
+
+
+def changed_methods(coverage, name_status, baseline, sources=None):
+    """(method key -> reasons, notes) for the methods the gate mutates (validation.md, "What the gate mutates"). A
+    mutant's outcome depends on its method's IL, the tests that compare the method, and what runs under those tests.
+    Changed are methods whose IL body hash differs from the baseline's (new methods included), and the hand-written
+    owners of changed compiler-generated methods (lambdas, iterator and async state machines). Selected are the
+    changed methods; methods compared by tests changed_test_classes reports, now or according to the baseline's
+    method -> test classes map; methods compared now but not in the baseline; direct callers of a changed method by
+    token, or through a virtual call to its slot, or to the slot of a method the baseline has and the build lacks (a
+    removed override); and readers of a field that a changed or removed method writes, now or in the baseline.
+    `baseline` must hold `bodies` (schema 4)."""
+    test_classes = changed_test_classes(name_changes(name_status), sources)
+    bodies, previous, stages = baseline["bodies"], baseline.get("tests") or {}, baseline.get("methods") or {}
+    old_writes = baseline.get("writes") or {}
+    rows = {f"{m['type']}::{m['signature']}": m for m in coverage["methods"]}
+    for name, m in rows.items():
+        if "body_sha256" not in m or (m.get("source") or m.get("mutants")) and not m["body_sha256"]:
+            raise ValueError(f"{name}: the inventory has no IL body hash, but the baseline selects mutants by them; "
+                             "is MethodAudit out of date?")
+        if m.get("slot") and m["slot"] != slot_of_key(m["signature"]):
+            raise ValueError(f"{name}: MethodAudit's slot {m['slot']!r} differs from {slot_of_key(m['signature'])!r}")
+    reasons, notes = {}, []
+    def select(name, reason):
+        if reason not in reasons.setdefault(name, []):
+            reasons[name].append(reason)
+    changed = set()
+    for name, m in rows.items():
+        if m.get("body_sha256") and bodies.get(name) != m["body_sha256"]:
+            changed.add(name)
+            select(name, "IL changed" if name in bodies else "new body")
+        if test_classes & ({test_class(c["test"]) for c in m.get("cases", [])} | set(previous.get(name, []))):
+            select(name, "comparing tests changed")
+        if m.get("validation") == "compared" and stages.get(name) != "compared":
+            select(name, "newly compared")
+    for name in list(changed):
+        owner = rows[name].get("owner")
+        for other, m in rows.items():
+            if owner and m["type"] == owner["type"] and m["signature"].split("`")[0] == owner["name"]:
+                changed.add(other)
+                select(other, "compiler-generated part changed")
+    removed = {name for name in bodies if name not in rows}
+    tokens = {(rows[n].get("project"), rows[n]["token"]) for n in changed}
+    slots = {rows[n]["slot"] for n in changed if rows[n].get("slot")}
+    slots |= {slot_of_key(n.split("::", 1)[1]) for n in removed if n.endswith("|False")}
+    written = {f for n in changed for f in rows[n].get("field_writes", [])}
+    written |= {f for n in changed | removed for f in old_writes.get(n, [])}
+    callers = {}
+    for name, m in rows.items():
+        if any((m.get("project"), t) in tokens for t in m.get("calls", [])):
+            select(name, "calls a changed method")
+        for slot in slots & set(m.get("virtual_calls", [])):
+            select(name, "calls a changed method")
+            callers[slot] = callers.get(slot, 0) + 1
+        if written & set(m.get("field_reads", [])):
+            select(name, "reads a field a changed method writes")
+    notes += [f"slot {slot} selects {n} callers (all kept)" for slot, n in sorted(callers.items()) if n > WIDE_SLOT]
+    return reasons, notes
+
+
+def verdict(report):
+    """The one-line answer a run gives: whether its own checks held (tests, ratchet, mutation, unreachable lines),
+    and what the merge gate would make of the same results. `gate` follows the exit status: `would pass` (0,
+    complete), `would pass with gaps` (3), `would block` (1 or 2). Proposals awaiting approval block the gate but
+    are not local failures: a run whose only blockers are pending proposals is the expected review state."""
+    failures, pending, gaps = [], [], []
+    if report.get("error"):
+        failures.append(f"validation error: {report['error'][:200]}")
+    for project in report.get("projects", []):
+        if project.get("exit_code") or project.get("failed") or project.get("skipped"):
+            failures.append(f"{project['project']}: tests did not all pass")
+    ratchet_report = report.get("ratchet")
+    if ratchet_report and not ratchet_report["ok"]:
+        failures.append(f"{len(ratchet_report['regressions'])} ratchet regressions")
+    mutation = report.get("mutation") or {}
+    if mutation.get("survivors"):
+        failures.append(f"{len(mutation['survivors'])} surviving mutants")
+    if report.get("executed_unreachable"):
+        failures.append(f"{len(report['executed_unreachable'])} listed unreachable lines executed")
+    if mutation.get("proposed_survivors"):
+        pending.append(f"{len(mutation['proposed_survivors'])} proposed mutants pending approval")
+    if report.get("proposed_exempt_lines"):
+        pending.append(f"{report['proposed_exempt_lines']} proposed unreachable lines pending approval")
+    if not failures and not ratchet_report:
+        failures.append("checks did not finish")
+    if not report.get("complete"):
+        gaps = [f"{n} {state}" for state, n in (report.get("method_coverage") or {}).items()
+                if state in ("missing", "structure_mismatch", "uncovered", "verified_unsupported") and n]
+        if report.get("stale_unreachable"):
+            gaps.append(f"{report['stale_unreachable']} stale unreachable-line entries")
+        if (report.get("integrity") or {}).get("complete") is False:
+            gaps.append("integrity incomplete")
+        if mutation and mutation.get("complete") is False:
+            gaps.append("mutation incomplete")
+    if report.get("complete"):
+        gate, reasons = "would pass", []
+    elif report.get("gate_passed"):
+        gate, reasons = "would pass with gaps", gaps
+    else:
+        reasons = failures + pending
+        if not reasons and (report.get("proposed_mutants") or report.get("proposed_unreachable")):
+            reasons = ["run used proposals; rerun without them"]
+        gate = "would block"
+    local = "fail" if failures else "pass"
+    scope = report.get("method_types")
+    line = (f"LOCAL CHECKS: {local} · GATE: {gate}" + (f" ({'; '.join(reasons)})" if reasons else "")
+            + (f" [scoped to {len(scope)} types; the gate validates all]" if scope else ""))
+    return {"local_checks": local, "gate": gate, "reasons": reasons, "pending_approval": pending, "line": line}
 
 
 def test_class(test):
@@ -183,7 +360,13 @@ def main():
     parser.add_argument("--timeout", type=int, default=600, help="maximum seconds per test project (default: 600)")
     parser.add_argument("--results", type=Path, help="new result directory (must not exist)")
     parser.add_argument("--mutate", action="store_true", help="IL-mutate compared methods of the --method-type types")
-    parser.add_argument("--mutate-since", metavar="REV", help="IL-mutate compared methods of types whose source changed since REV")
+    parser.add_argument("--mutate-since", metavar="REV",
+                        help="IL-mutate compared methods whose IL, comparing tests or callees changed since the baseline "
+                             "(test files: since REV)")
+    parser.add_argument("--mutate-types-wide", action="store_true",
+                        help="maintainer audits: with --mutate-since, mutate every compared method of each changed type")
+    parser.add_argument("--mutate-all", action="store_true",
+                        help="maintainer audits: mutate every compared method (unscoped runs)")
     parser.add_argument("--jobs", type=int, default=4, help="parallel mutant test runs (default: 4)")
     parser.add_argument("--baseline", type=Path, help="ratchet baseline (default: docs/mirror/validation-baseline.json)")
     parser.add_argument("--write-baseline", type=Path, help="write this run's counts as a baseline (unscoped runs only)")
@@ -203,7 +386,11 @@ def main():
         parser.error("--results must name a new directory")
     if args.mutate and not args.method_type:
         parser.error("--mutate needs --method-type; use --mutate-since for unscoped runs")
-    if (args.mutate or args.mutate_since) and args.profile != "focused":
+    if args.mutate_types_wide and not args.mutate_since:
+        parser.error("--mutate-types-wide widens --mutate-since")
+    if args.mutate_all and args.method_type:
+        parser.error("--mutate-all needs an unscoped run")
+    if (args.mutate or args.mutate_since or args.mutate_all) and args.profile != "focused":
         parser.error("mutation runs in the focused profile")
     if args.proposed_mutants and (args.mutate_since or args.write_baseline):
         parser.error("--proposed-mutants is for local runs; the gate (--mutate-since, --write-baseline) accepts only "
@@ -265,8 +452,9 @@ def main():
         lint_findings = integrity_module.lint(ROOT)
         global_json = (ROOT / "global.json").read_bytes() if (ROOT / "global.json").is_file() else b"{}\n"
         args.dotnet = resolve_dotnet(args.dotnet, ROOT)
-        changed_names = None
+        changed_names = sources = None
         if args.mutate_since:
+            sources = test_sources()
             changed_names = git_output("diff", "-z", "--no-renames", "--name-status", args.mutate_since)
             if changed_names is None:
                 raise ValueError(f"cannot diff against {args.mutate_since}")
@@ -400,11 +588,13 @@ def main():
         report["stale_unreachable"] = sum(e["source"] == "accepted" for e in coverage["stale_unreachable"])
         if coverage["stale_unreachable"]:
             print(f"Stale unreachable-line entries: {coverage['stale_unreachable']}", flush=True)
+        report["proposed_exempt_lines"] = sum(len(m["proposed_exempt_lines"]) for m in coverage["methods"]
+                                              if m["validation"] == "compared")
         if any(m["proposed_exempt_lines"] for m in coverage["methods"]):
             print("Coverage passes only with proposed unreachable lines, which await maintainer acceptance", flush=True)
         integrity = integrity_module.check(json.loads(inventory_path.read_text()), findings=lint_findings)
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
-        report["integrity"] = {"lint": len(integrity["lint"])}
+        report["integrity"] = {"lint": len(integrity["lint"]), "complete": integrity["complete"]}
         print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
         ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.profile, baseline_path, baseline)
         (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
@@ -412,18 +602,36 @@ def main():
         print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
         mutation_ok = mutation_complete = True
         mutate_types = set(args.method_type) if args.mutate else set()
+        mutate_methods = {}
         if args.mutate_since:
-            mutate_types |= changed_types(coverage, changed_names, (baseline or {}).get("tests"))
+            # Also refuses PDB paths outside the repository, whichever scope applies.
+            types = changed_types(coverage, changed_names, (baseline or {}).get("tests"), sources)
             report["mutate_since"] = args.mutate_since
-        if mutate_types:
+            if args.mutate_all or args.mutate_types_wide or not (baseline or {}).get("bodies"):
+                # Without the baseline's body hashes nothing says which methods changed: whole types, as before.
+                mutate_types |= types
+                report["mutation_scope"] = ("types (requested)" if args.mutate_types_wide or args.mutate_all
+                                            else "types (baseline has no body hashes)")
+            else:
+                mutate_methods, notes = changed_methods(coverage, changed_names, baseline, sources)
+                report["mutation_scope"] = "changed methods"
+                report["mutation_notes"] = notes
+                for note in notes:
+                    print(f"Mutation selection: {note}", flush=True)
+        if args.mutate_all:
+            mutate_types |= {m["type"] for m in coverage["methods"]}
+            report["mutation_scope"] = "all compared methods (requested)"
+        if mutate_types or mutate_methods:
             print("Mutating compared methods; each mutant reruns the differential tests", flush=True)
             mutation = mutate.run(coverage, mutate_types, assemblies["Quire.Focused.Differential.Tests"], "Quire.Mpl",
                                   args.dotnet, args.jobs, args.timeout, accepted_mutants, global_json,
-                                  proposed_mutants, mutant_cache_allowed(args), install)
+                                  proposed_mutants, mutant_cache_allowed(args), install, methods=mutate_methods)
             seal.verify("mutation")
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
                                                            "proposed_survivors", "stale_proposed")}
+            report["mutation"]["mutated_methods"] = len(mutation["mutated_methods"])
+            report["mutation"]["complete"] = mutation["complete"]
             # Proposed survivors keep the run incomplete, but only accepted-mutants.txt is gate-relevant; the merge
             # gate never passes proposals anyway.
             mutation_ok = not mutation["survivors"]
@@ -464,8 +672,15 @@ def main():
     finally:
         for directory in holder.values():
             shutil.rmtree(directory, ignore_errors=True)
+        try:
+            report["verdict"] = verdict(report)
+        except Exception as error:  # the summary must still be written
+            report["verdict"] = {"line": f"LOCAL CHECKS: fail · GATE: would block (verdict failed: {error!r})",
+                                 "local_checks": "fail", "gate": "would block", "reasons": [repr(error)],
+                                 "pending_approval": []}
         (output / "summary.json").write_text(json.dumps(report, indent=2) + "\n")
         print(f"Report: {output / 'summary.json'}", flush=True)
+        print(report["verdict"]["line"], flush=True)
 
 
 if __name__ == "__main__":

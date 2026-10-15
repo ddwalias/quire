@@ -41,9 +41,10 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
     }
 }
 
-/// <summary>Reads <see cref="Structure"/> from method bodies, naming every referenced member as Mathcad would.</summary>
+/// <summary>Reads <see cref="Structure"/> from method bodies, naming every referenced member as Mathcad would.
+/// <paramref name="exact"/> keeps compiler-generated names (for <see cref="Body"/>, which names members as declared).</summary>
 sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, SigProvider decoder,
-    Func<string, string> typeName, Func<int, string?> methodName)
+    Func<string, string> typeName, Func<int, string?> methodName, bool exact = false)
 {
     internal static readonly Dictionary<ushort, OpCode> Codes = typeof(OpCodes)
         .GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -123,6 +124,194 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         return new([.. calls], [.. fields], [.. types], [.. constants], handlers, branches, switchTargets, throws, rethrows);
     }
 
+    /// <summary>What <see cref="Body"/> reports of one method body.</summary>
+    public sealed record BodyFacts(string Hash, int[] Calls, string[] VirtualCalls, string[] Reads, string[] Writes);
+
+    /// <summary>
+    /// A SHA-256 of everything in the body that decides what it does, independent of metadata token numbering: each
+    /// instruction with its operand (tokens resolved to the member, type or string they denote; fields with their type,
+    /// and for fields with initial data (<c>&lt;PrivateImplementationDetails&gt;</c> arrays and spans) a hash of those
+    /// bytes), the locals' types, exception regions and the method's flags. Unchanged unless the method's IL changed,
+    /// so the validator mutates only methods whose hash differs from the last validated build. Also what selects
+    /// methods affected by another's change: the tokens of this module's methods the body references (calls,
+    /// delegates, ldtoken; every same-named method of a local generic type reached through an instantiation), the
+    /// dispatch slots (<see cref="SlotOf"/>) of its virtual calls, and the fields it reads and writes (taking a field's
+    /// address counts as both), as <c>DeclaringType::name</c> with generic instantiations reduced to their definition.
+    /// </summary>
+    public BodyFacts Body(MethodDefinitionHandle handle)
+    {
+        var definition = md.GetMethodDefinition(handle);
+        var body = pe.GetMethodBody(definition.RelativeVirtualAddress);
+        var il = body.GetILReader();
+        var text = new System.Text.StringBuilder($"{definition.Attributes} {definition.ImplAttributes} {body.LocalVariablesInitialized}\n");
+        if (!body.LocalSignature.IsNil)
+            text.Append("locals ").AppendJoin(",", md.GetStandaloneSignature(body.LocalSignature)
+                .DecodeLocalSignature(decoder, null).Select(Render)).Append('\n');
+        foreach (var r in body.ExceptionRegions)
+            text.Append($"{r.Kind} {r.TryOffset} {r.TryLength} {r.HandlerOffset} {r.HandlerLength} {r.FilterOffset} "
+                + (r.Kind == ExceptionRegionKind.Catch ? Type(r.CatchType) : "") + "\n");
+        var calls = new SortedSet<int>();
+        var slots = new SortedSet<string>(StringComparer.Ordinal);
+        var reads = new SortedSet<string>(StringComparer.Ordinal);
+        var writes = new SortedSet<string>(StringComparer.Ordinal);
+        while (il.RemainingBytes > 0)
+        {
+            text.Append(il.Offset).Append(' ');
+            byte first = il.ReadByte();
+            var code = Codes[first == 0xFE ? (ushort)(0xFE00 | il.ReadByte()) : first];
+            text.Append(code.Name).Append(' ');
+            switch (code.OperandType)
+            {
+                case OperandType.InlineNone: break;
+                case OperandType.ShortInlineBrTarget: text.Append(il.ReadSByte()); break;
+                case OperandType.ShortInlineI: text.Append(code == OpCodes.Ldc_I4_S ? il.ReadSByte() : il.ReadByte()); break;
+                case OperandType.ShortInlineVar: text.Append(il.ReadByte()); break;
+                case OperandType.InlineVar: text.Append(il.ReadUInt16()); break;
+                case OperandType.InlineBrTarget or OperandType.InlineI: text.Append(il.ReadInt32()); break;
+                case OperandType.InlineI8: text.Append(il.ReadInt64()); break;
+                case OperandType.ShortInlineR: text.Append(BitConverter.SingleToInt32Bits(il.ReadSingle())); break;
+                case OperandType.InlineR: text.Append(BitConverter.DoubleToInt64Bits(il.ReadDouble())); break;
+                case OperandType.InlineSwitch:
+                    int targets = il.ReadInt32();
+                    for (int i = 0; i < targets; i++) text.Append(il.ReadInt32()).Append(',');
+                    break;
+                case OperandType.InlineString:
+                    text.Append(System.Text.Json.JsonSerializer.Serialize(md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32()))));
+                    break;
+                case OperandType.InlineSig:
+                    var signature = md.GetStandaloneSignature((StandaloneSignatureHandle)MetadataTokens.EntityHandle(il.ReadInt32()))
+                        .DecodeMethodSignature(decoder, null);
+                    text.Append(Signature("calli", signature));
+                    break;
+                case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
+                    var token = MetadataTokens.EntityHandle(il.ReadInt32());
+                    if (token.Kind is HandleKind.FieldDefinition || token.Kind is HandleKind.MemberReference
+                        && md.GetMemberReference((MemberReferenceHandle)token).GetKind() == MemberReferenceKind.Field)
+                    {
+                        text.Append(Field(token)).Append(' ').Append(Render(FieldType(token))).Append(InitialData(token));
+                        string id = FieldId(token);
+                        if (code == OpCodes.Ldfld || code == OpCodes.Ldsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
+                            reads.Add(id);
+                        if (code == OpCodes.Stfld || code == OpCodes.Stsfld || code == OpCodes.Ldflda || code == OpCodes.Ldsflda)
+                            writes.Add(id);
+                    }
+                    else if (token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
+                    {
+                        text.Append(Method(token));
+                        Callees(token, calls);
+                        if (code == OpCodes.Callvirt || code == OpCodes.Ldvirtftn) slots.Add(Slot(token));
+                    }
+                    else text.Append(Type(token));
+                    break;
+                default: throw new BadImageFormatException($"Unknown operand type {code.OperandType}");
+            }
+            text.Append('\n');
+        }
+        string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
+        return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes]);
+    }
+
+    private TypeSig FieldType(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition
+        ? md.GetFieldDefinition((FieldDefinitionHandle)handle).DecodeSignature(decoder, null)
+        : md.GetMemberReference((MemberReferenceHandle)handle).DecodeFieldSignature(decoder, null);
+
+    /// <summary>The type definition a generic instantiation (<c>Foo&lt;int&gt;</c>) is made from; nil otherwise.</summary>
+    private TypeDefinitionHandle GenericDefinition(EntityHandle parent)
+    {
+        if (parent.Kind != HandleKind.TypeSpecification) return default;
+        var blob = md.GetBlobReader(md.GetTypeSpecification((TypeSpecificationHandle)parent).Signature);
+        if (blob.ReadSignatureTypeCode() != SignatureTypeCode.GenericTypeInstance) return default;
+        blob.ReadCompressedInteger();  // CLASS or VALUETYPE
+        return blob.ReadTypeHandle() is { Kind: HandleKind.TypeDefinition } type ? (TypeDefinitionHandle)type : default;
+    }
+
+    /// <summary><c>DeclaringType::name</c> of a field operand, as declared (instantiations reduced to their
+    /// definition), so readers and writers of one field match whatever instantiation each names.</summary>
+    private string FieldId(EntityHandle handle)
+    {
+        if (handle.Kind == HandleKind.FieldDefinition)
+        {
+            var field = md.GetFieldDefinition((FieldDefinitionHandle)handle);
+            return $"{SigProvider.FullName(md, field.GetDeclaringType())}::{md.GetString(field.Name)}";
+        }
+        var reference = md.GetMemberReference((MemberReferenceHandle)handle);
+        var generic = GenericDefinition(reference.Parent);
+        return $"{(generic.IsNil ? Owner(reference.Parent) : SigProvider.FullName(md, generic))}::{md.GetString(reference.Name)}";
+    }
+
+    /// <summary>For a field of this module with initial data (an RVA field), the SHA-256 of that data, whose size its
+    /// type gives (a primitive, or a value type's class layout); empty for other fields. A size it cannot tell hashes
+    /// nothing, and the field's name (a content hash for compiler-emitted data) still distinguishes it.</summary>
+    private string InitialData(EntityHandle handle)
+    {
+        if (handle.Kind != HandleKind.FieldDefinition) return "";
+        var field = md.GetFieldDefinition((FieldDefinitionHandle)handle);
+        if ((field.Attributes & System.Reflection.FieldAttributes.HasFieldRVA) == 0) return "";
+        var blob = md.GetBlobReader(field.Signature);
+        blob.ReadSignatureHeader();
+        var code = blob.ReadSignatureTypeCode();
+        int size = code switch
+        {
+            SignatureTypeCode.Boolean or SignatureTypeCode.SByte or SignatureTypeCode.Byte => 1,
+            SignatureTypeCode.Char or SignatureTypeCode.Int16 or SignatureTypeCode.UInt16 => 2,
+            SignatureTypeCode.Int32 or SignatureTypeCode.UInt32 or SignatureTypeCode.Single => 4,
+            SignatureTypeCode.Int64 or SignatureTypeCode.UInt64 or SignatureTypeCode.Double => 8,
+            SignatureTypeCode.TypeHandle when blob.ReadTypeHandle() is { Kind: HandleKind.TypeDefinition } type
+                => md.GetTypeDefinition((TypeDefinitionHandle)type).GetLayout().Size,
+            _ => 0,
+        };
+        if (size <= 0) return " data ?";
+        var data = pe.GetSectionData(field.GetRelativeVirtualAddress()).GetContent(0, size);
+        return " data " + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(data.AsSpan()));
+    }
+
+    /// <summary>Tokens of this module's method definitions a method operand can reach.</summary>
+    private void Callees(EntityHandle handle, SortedSet<int> calls)
+    {
+        switch (handle.Kind)
+        {
+            case HandleKind.MethodDefinition: calls.Add(MetadataTokens.GetToken(handle)); break;
+            case HandleKind.MethodSpecification: Callees(md.GetMethodSpecification((MethodSpecificationHandle)handle).Method, calls); break;
+            case HandleKind.MemberReference:
+                var reference = md.GetMemberReference((MemberReferenceHandle)handle);
+                // A method of a generic type of this module, through an instantiation: its same-named methods.
+                var type = GenericDefinition(reference.Parent);
+                if (!type.IsNil)
+                    foreach (var method in md.GetTypeDefinition(type).GetMethods())
+                        if (md.StringComparer.Equals(md.GetMethodDefinition(method).Name, md.GetString(reference.Name)))
+                            calls.Add(MetadataTokens.GetToken(method));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// A dispatch slot: <c>name`arity/parameter count</c>, the name unqualified (an explicit implementation
+    /// <c>Ns.IFoo&lt;T&gt;.Bar</c> is <c>Bar</c>). Parameter types are left out on purpose: a call through
+    /// <c>Base&lt;int&gt;::M(!0)</c> must match the override <c>M(int)</c> and <c>D&lt;T&gt;::M(!0)</c> alike, so
+    /// this over-selects rather than misses. <c>validate.slot_of_key</c> derives the same text from an inventory key.
+    /// </summary>
+    public static string SlotOf(string name, int arity, int parameters) => $"{name.Split('.')[^1]}`{arity}/{parameters}";
+
+    /// <summary>The slot of a method definition (for the inventory's virtual methods).</summary>
+    public string Slot(MethodDefinitionHandle handle) => Slot((EntityHandle)handle);
+
+    private string Slot(EntityHandle handle)
+    {
+        switch (handle.Kind)
+        {
+            case HandleKind.MethodSpecification:
+                return Slot(md.GetMethodSpecification((MethodSpecificationHandle)handle).Method);
+            case HandleKind.MethodDefinition:
+                var definition = md.GetMethodDefinition((MethodDefinitionHandle)handle);
+                var sig = definition.DecodeSignature(decoder, null);
+                return SlotOf(md.GetString(definition.Name), sig.GenericParameterCount, sig.ParameterTypes.Length);
+            default:
+                var reference = md.GetMemberReference((MemberReferenceHandle)handle);
+                var refSig = reference.DecodeMethodSignature(decoder, null);
+                return SlotOf(md.GetString(reference.Name), refSig.GenericParameterCount, refSig.ParameterTypes.Length);
+        }
+    }
+
     private string Method(EntityHandle handle)
     {
         switch (handle.Kind)
@@ -184,7 +373,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     };
 
     /// <summary>Compiler-generated names (closures, iterators, backing fields) differ between compilers.</summary>
-    private static string Member(string name) => name.Contains('<') ? "<generated>" : name;
+    private string Member(string name) => !exact && name.Contains('<') ? "<generated>" : name;
 
     /// <summary>Mathcad's name for a type: mirrored types map whole, else their outermost mirrored declaring type.</summary>
     private string Name(string type)

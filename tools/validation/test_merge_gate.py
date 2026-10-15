@@ -86,6 +86,9 @@ class MergeGateTests(unittest.TestCase):
         self.assertNotIn('--proposed-mutants', command)
         self.assertNotIn('--proposed-unreachable', command)
         self.assertEqual(command[command.index('--mutate-since') + 1], 'main')
+        self.assertNotIn('--mutate-types-wide', command)
+        self.assertIn('--mutate-types-wide', merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60, True))
+        self.assertIn('--mutate-all', merge_gate.validation_command(Path('/t'), Path('/r'), 'main', Path('/b.json'), 60, False, True))
 
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])

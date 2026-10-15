@@ -118,8 +118,13 @@ StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, ou
     : structures[a] = new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name),
         isQuire ? MathcadType : name => name,
         isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null);
+// Quire's own names, unmapped and exact: what the body hash and call graph identify.
+var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true));
 foreach (var (artifact, raw, type, method, status, exclusion, original, counterpart) in matched)
 {
+    var body = raw.BodyRva == 0 ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
+    bool isVirtual = (artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)).Attributes
+        & MethodAttributes.Virtual) != 0;
     List<string>? differences = null;
     if (exclusion == null && counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
     {
@@ -146,6 +151,9 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
+        body_sha256 = body?.Hash, calls = body?.Calls ?? [], virtual_calls = body?.VirtualCalls ?? [],
+        field_reads = body?.Reads ?? [], field_writes = body?.Writes ?? [], is_virtual = isVirtual,
+        slot = isVirtual ? bodies[artifact].Slot(MetadataTokens.MethodDefinitionHandle(raw.Token)) : null,
         mutants = raw.BodyRva == 0 || exclusion != null && Owner(raw.Owner, raw.Name) == null ? []
             : Mutants.Find(artifact.Pe, artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)))
                 .Select(m => new { il_offset = m.IlOffset, file_offset = m.FileOffset, original = m.Original,

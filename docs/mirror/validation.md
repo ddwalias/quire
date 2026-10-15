@@ -214,8 +214,9 @@ order passes it, which the direct comparisons must catch.
   `accepted-mutants.txt` entry with the same reason. Removing an exemption that moves a method back to `uncovered` is
   a ratchet regression. An agent proposes entries in a scratch file, same format, passes `--proposed-unreachable PATH`
   to local runs, and pastes the same lines into its lane file for review. Proposed lines are exempted the same way
-  but listed under `proposed_exempt_lines`. The user approves a proposal; a maintainer moves it into
-  `unreachable-lines.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the merge gate
+  but listed under `proposed_exempt_lines`. They follow the same path as proposed mutants: independent review of the
+  reason, the user's approval, then the maintainer adds them to `unreachable-lines.txt` and merges with
+  `--allow-protected`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the merge gate
   blocks any summary that used it.
 - **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
   byte changes in each compared method: negated branches; swapped `add`/`sub`, `mul`/`div`, `and`/`or`, `shl`/`shr`,
@@ -248,16 +249,32 @@ order passes it, which the direct comparisons must catch.
   no comparison against Mathcad, so a test that recurses or loops on a hard-coded expectation could kill mutants
   without one; reviewers must look for such tests.
   `mutation.json` lists survivors: a missing case or a lossy renderer. Equivalent mutants are accepted only by a
-  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). An agent proposes one in a scratch file or
-  its lane file, same format, and passes `--proposed-mutants PATH` to local runs: those survivors are listed apart
-  under `proposed_survivors` (with reasons), and `stale_proposed` lists proposals that
-  matched no surviving mutant (killed, already accepted or not run). The user approves a proposal; a maintainer
-  moves it into `accepted-mutants.txt`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
+  maintainer in `docs/mirror/accepted-mutants.txt` (`<key> # reason`). An agent proposes one, with its proof, in a
+  scratch file, same format, passes `--proposed-mutants PATH` to local runs, and pastes the same lines into its lane
+  file: those survivors are listed apart under `proposed_survivors` (with reasons), and `stale_proposed` lists
+  proposals that matched no surviving mutant (killed, already accepted or not run). An independent reviewer verifies
+  each proof, the user approves, and the maintainer adds the entries on the branch and merges it with
+  `--allow-protected`, checking that `gate.json` `protected_changed` lists only `accepted-mutants.txt` and
+  `unreachable-lines.txt` ([PLAN](PLAN.md) step 4). Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
   merge gate blocks any summary that used it. `--jobs` sets parallel copies.
-- **Exit status:** `validate.py` exits 0 when the run is complete, 3 when the merge gate's requirements hold
-  (`gate_passed`) but gaps remain, and 1 when blocked. A run given `--proposed-mutants` or `--proposed-unreachable`
-  is never complete nor `gate_passed`, so it exits 1; its summary records `passes_with_proposals`, whether the gate's
-  requirements would hold with the proposals accepted.
+- **Exit status and verdict:** `validate.py` exits 0 when the run is complete, 3 when the merge gate's requirements
+  hold (`gate_passed`) but gaps remain, and 1 when blocked (2 for an incomplete run with `--allow-differential-skips`).
+  A run given `--proposed-mutants` or `--proposed-unreachable` is never complete nor `gate_passed`, so it exits 1; its
+  summary records `passes_with_proposals`, whether the gate's requirements would hold with the proposals accepted.
+  Its last line, also `summary.json`'s `verdict` (`local_checks`, `gate`, `reasons`, `pending_approval`, `line`),
+  separates the run's own checks from what the gate would decide on the same results:
+
+  | Last line | Exit | Meaning | Next |
+  |---|---|---|---|
+  | `LOCAL CHECKS: pass · GATE: would pass` | 0 | complete | queue the gate |
+  | `LOCAL CHECKS: pass · GATE: would pass with gaps (<gaps>)` | 3 | gate requirements hold; methods remain `missing`/`uncovered`/… | queue, or close the gaps first |
+  | `LOCAL CHECKS: pass · GATE: would block (N proposed mutants pending approval; …)` | 1 | only proposals block: the expected review state | hand off proposals for review ([PLAN](PLAN.md) step 4) |
+  | `LOCAL CHECKS: fail · GATE: would block (<failures>)` | 1/2 | failing or skipped tests, error, ratchet regression, surviving mutant, executed "unreachable" line | fix them |
+
+  `LOCAL CHECKS: fail` names only failures of this run; pending proposals are not failures. A `--method-type` run
+  ends with `[scoped to N types; the gate validates all]`: the gate runs unscoped and mutates by its own selection
+  (below), so a scoped `would pass` is not a promise. The gate also blocks for reasons outside the validator
+  (protected paths, not rebased); see Merge gate.
   Local runs cache outcomes outside the repository (`~/.cache/quire-mutants/`, or `QUIRE_MUTANT_CACHE`, which no
   test run sees) by SHA-256 of the whole test output directory, `mutate.py` and `validate.py`, SDK choice and
   installed runtimes, the Mathcad install (`MATHCAD_DIR` and its DLLs' names, sizes and modification times), the
@@ -268,10 +285,66 @@ order passes it, which the direct comparisons must catch.
   `--write-baseline`, or `--no-mutant-cache`, which the merge gate passes) neither read nor write it. Builds pass
   `EnableSourceControlManagerQueries=false` so the commit is not stamped into assemblies; a docs-only commit leaves
   the output in the same directory byte-identical (built assemblies embed their absolute path).
-  `--mutate-since` selects types whose `src/Quire.Mpl` source changed (files without method bodies select
-  nothing) or whose comparisons live, or lived according to the baseline's method → test class map, in an added,
-  changed or deleted differential test file (by its single top-level class, nested classes included), and fails when PDB paths lie
-  outside the repository.
+- **What the gate mutates** (`--mutate-since REV`, which the merge gate passes): not every compared method of a
+  changed type, but the compared methods whose mutants could now have a different outcome. A mutant's outcome is
+  decided by the mutated method's IL, the tests that directly compare that method (only those run it), and whatever
+  runs under those tests. MethodAudit records for each method with a body:
+  - `body_sha256`: a hash of its IL with every metadata token resolved to the member, type, field (with its type)
+    or string it names, the initial data of fields that have some (`<PrivateImplementationDetails>` arrays), its
+    locals' types, exception regions and flags; token renumbering from unrelated edits does not change it;
+  - `calls`: the `Quire.Mpl` methods it references (calls, delegate creation, `ldtoken`; through a generic
+    instantiation, every same-named method of that type);
+  - `virtual_calls`: the dispatch slots of its `callvirt`/`ldvirtftn` targets, `name`arity/parameter count` with the
+    name unqualified; each virtual method's own `slot` (parameter types are left out, so `Base<int>.M(!0)` reaches
+    overrides `M(int)` and `D<T>.M(T)` alike: this over-selects rather than misses);
+  - `field_reads` / `field_writes`: fields it loads / stores, as declaring type (generic definition) and name; taking
+    a field's address counts as both.
+
+  The baseline (schema 4) stores each method's `body_sha256` (`bodies`) and `field_writes` (`writes`) from the last
+  gate run, which tested exactly the tree it merged. A changed method is one whose body hash differs from the
+  baseline's or that the baseline lacks, or the hand-written owner of a changed lambda, iterator or async state
+  machine. Selected (`mutation.json` `methods`, with reasons; `mutated_methods` lists those actually mutated):
+  1. **IL changed** / **new body** / **compiler-generated part changed:** the changed methods;
+  2. **comparing tests changed:** methods compared, now or according to the baseline's method → test class map, by a
+     changed test class: one declared in an added, changed or deleted file under `tests/Quire.Differential.Tests`,
+     and, transitively, every class declared in a file there that names such a class (textual identifier match,
+     before any test runs). Shared helpers (`MatValDifferentialTests.Storage`, `TypeDifferentialTests.Signatures`)
+     are used across classes, so a changed helper selects the methods its users compare; a changed harness file
+     (`Values.cs`, `MethodComparison.cs`) selects nearly everything;
+  3. **newly compared:** compared now but not in the baseline (its mutants have never run);
+  4. **calls a changed method:** direct callers of a changed method by token, or by a virtual call to the slot of a
+     changed virtual method or of an instance method the baseline has and the build lacks (a removed override);
+  5. **reads a field a changed method writes:** readers of a field that a changed or removed method writes, now or
+     according to the baseline (so a constructor or `.cctor` that stopped initializing a field still counts);
+  6. compiler-generated methods selected themselves, or owned by a selected method, since they run under the
+     owner's tests.
+
+  A slot with more than 50 callers (`ToString`, `Equals`, enumerator members) keeps them all and adds a line to
+  `summary.json` `mutation_notes`: dropping any would be unsound, so the note only explains a large selection. A run
+  whose baseline has body hashes fails if the inventory lacks them, and if a method's `slot` disagrees with the one
+  derived from its key.
+
+  Not selected: compared methods whose IL, comparing test classes, direct callees and read fields are unchanged.
+  Their mutants were all killed (or accepted) by the gate run that last selected them, against the same IL and tests;
+  that holds as long as everything those tests execute behaves as before.
+  - A changed callee, overriding method or field writer is caught one step away: a mutant killed before can survive
+    now only if that change masks it (the helper now normalizes away the value the mutant corrupts).
+  - **Residual risk:** masking two or more steps away (a callee's callee; a field written by a method that a
+    selected method's callee calls), through a delegate or reflection, or through test setup and rendering that
+    reach changed code the mutated method never calls. Each needs the changed code to behave differently on inputs
+    those tests reach, which its own direct comparisons against Mathcad (mutated under rule 1) would normally catch,
+    but nothing proves it. Removing an `accepted-mutants.txt` entry and changing the Mathcad install select nothing.
+  - So a maintainer audits periodically, and after harness or install changes, with `--mutate-all` (every compared
+    method; `merge_gate.py --mutate-all` or an unscoped `validate.py --mutate-all`). `--mutate-types-wide` (both
+    scripts) restores the previous rule: every compared method of types whose `src/Quire.Mpl` source changed (by
+    PDB path; files without method bodies select nothing) or whose comparisons live, or lived, in a changed test
+    class. The gate also falls back to that rule when the baseline has no body hashes (schema 3); `summary.json`
+    `mutation_scope` says which applied. `--mutate-since` fails when PDB paths lie outside the repository.
+  - Local `--mutate --method-type` runs mutate every compared method of the named types: for those types, a superset
+    of what the gate mutates; the gate may also mutate methods of other types (callers, field readers, users of a
+    changed test helper).
+  - Keep helpers that several test classes use in maintainer-owned files; a helper in an agent test file widens every
+    change to that file to all its users, and maintainer-owned files must not name agent test classes.
 - **Status:** a `Verified` method that this run does not show as compared (or declaration-only) counts as
   `verified_unsupported`. A `Deviation` status skips the structure check only when the `deviations.md` index lists
   its id with `accepted-temporary` or `accepted-permanent` and names the method as `Quire.Type::Member` in the scope
@@ -285,9 +358,9 @@ order passes it, which the direct comparisons must catch.
 
 ### Ratchet
 
-`ratchet.json` compares a run with `docs/mirror/validation-baseline.json` (schema 3), which records its profile,
-per-type counts, each method's stage (emitted by the audit) and test classes, and each lint finding by identity
-(counted). The stages, in order: `no_counterpart`, `missing`, `structure_mismatch`, `untested` (structure matches but no
+`ratchet.json` compares a run with `docs/mirror/validation-baseline.json` (schema 4), which records its profile,
+per-type counts, each method's stage (emitted by the audit), test classes and IL body hash (`bodies`, used only to
+select mutants), and each lint finding by identity (counted). A schema 3 baseline (no `bodies`) is still read. The stages, in order: `no_counterpart`, `missing`, `structure_mismatch`, `untested` (structure matches but no
 passing direct comparison), `unchecked_state` (an instance method compared without checking its state), `uncovered`,
 `compared`; `untested` and `unchecked_state` are counted as `missing`. Fixing one gap exposes the next, so a method
 may move forward but never back (deleting tests never counts as progress), and any other change of state must reach
@@ -327,7 +400,7 @@ attribute, edits, additions, regeneration, deleting the file, or a change that d
 only its test projects, it blocks `src/` and `tests/` changes outside them unless a maintainer passes
 `--allow-unvalidated` after a Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
 protected file** (with `--allow-protected`, the branch's, except `docs/mirror/validation-baseline.json`, which always
-comes from `main`): an unscoped focused run, mutating the changed types. It merges only when all tests pass, the
+comes from `main`): an unscoped focused run, mutating the changed methods (see What the gate mutates). It merges only when all tests pass, the
 ratchet holds, no mutant survives, and the new baseline parses and holds the ratchet against `main`'s committed one.
 `gate.json` beside the results records the decision, including a failure to prepare the clone. A branch whose tip is
 not on a local branch is blocked, since the clone copies only local branches.
