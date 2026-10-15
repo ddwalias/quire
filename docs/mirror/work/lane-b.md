@@ -1,10 +1,10 @@
 # Lane B checkpoint
 
-Updated: 2026-10-15
+Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `b107792` (after the NumVal scope correction). Lane B history is retained compactly here; older Windows worktree results are historical and are not the active handoff.
+Checkpoint base: Linux main `6bfaea5f1646e45f81330beebaaa625d3ac220ac` (current main observed before these queued batches). Earlier checkpoint bases below are historical and must not be treated as current integration state. Lane B history is retained compactly here; older Windows worktree results are historical and are not the active handoff.
 
 | Batch | Main status |
 |---|---|
@@ -31,6 +31,33 @@ The stronger DimVal candidate is `mirror/a-dimval-sensitivity` at `b4867dc`, reb
 - After the pending DimVal proposal approval, the coordinator should rebase both reviewed runtime batches onto current main, review the complete final diff and conflict resolutions, preserve their separate squashed commits on an integration branch, and run the combined full runtime gate under the current PLAN. Merge only if that fresh full audit passes; a scoped pass is not a substitute.
 - If approval does not arrive, leave both pending batches out and continue independent PLAN work.
 
-The next small Lane B batch is the four MatVal pointer helpers: `Canonicalize()`, `TidyPtrs(int,int,Dim,bool)`, `IsUniformPtrs()`, and `IsUniformPtrsNoChange()`. Reconstruct direct tests from original source/cases. Read the exact original signatures/tokens and existing MatVal evidence first; add artifact-bound direct comparisons for each private helper and its state effects. Treat pointer-related properties (`HasPtrs`, uniformity and dimension queries) as a separate follow-up. Use targeted local comparisons and the final gate under PLAN.
+## Queued Lane B handoffs
+
+The current main hash was inspected before opening these branches. Neither queued branch is assumed merged; Agent A owns integration and must reconcile the shared `Mcd.MatVal.md` evidence file.
+
+| Batch | Branch / tip | Status | Scope |
+|---|---|---|---|
+| MatVal pointer helpers | `mirror/b-matval-pointer-helpers` / `3cf3136cbacf3ab44e99e3b3cf4e767e2797efdc` | Frozen, independently reviewed, pushed, ready handoff at [`matval-pointer-helpers.md`](../../../../quire-handoffs/lane-b/matval-pointer-helpers.md) | `Canonicalize`, `TidyPtrs`, `IsUniformPtrs`, `IsUniformPtrsNoChange`; 34 direct comparisons. |
+| MatVal pointer properties | `mirror/b-matval-pointer-properties` / frozen tip recorded in handoff | Reviewed, pushed, ready handoff at [`matval-pointer-properties.md`](../../../../quire-handoffs/lane-b/matval-pointer-properties.md) | `HasPtrs`, `RepHasPtrs`, `IsUniformScalar`, `IsUniformScalarPtrs`, `IsUniform`; 40 direct comparisons. |
+
+## MatVal pointer property batch — active checkpoint
+
+Base: `6bfaea5f1646e45f81330beebaaa625d3ac220ac`; worktree `/root/src/quire-matval-pointer-properties`.
+Original identity remains mplrun Prime 12.0.1.0 SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; reference source and IL were regenerated/read through `python3 tools/reference/reference.py Mcd.MatVal --il`.
+Exact direct member tokens are recorded in `docs/mirror/evidence/Mcd.MatVal.md`; five test facts compare 40 cases (HasPtrs 9, RepHasPtrs 4, IsUniformScalar 8, IsUniformScalarPtrs 9, IsUniform 10), including return/exception, storage/table/pointer identity and mutation states. The state observer retains the prior Hashtable alias to check that `RepHasPtrs` empties it before nulling the field. This is case-limited evidence, not whole-type equivalence.
+
+Commands and receipts:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatValAccessTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValPointerPropertiesDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped; 40 direct MethodComparison cases.
+```
+
+No implementation source changed, no scoped mutation run was requested or used, and no acceptance exception was proposed. Independent whole-diff review passed after adding a prior-table alias observation for the `RepHasPtrs` clear. Windows/native and full merge-gate checks remain unperformed and are not claimed; the focused Linux differential run was strict and loaded the pinned Mathcad artifact. The branch is a single reviewed commit, pushed as backup, and frozen at the exact tip in the atomic handoff linked above. Next action: start the dimension-query batch on a new branch from freshly inspected current main.
+
+The next independent batch is the four dimension queries `get_IsDimless`, `IsUniformDimOf`, `get_PhysicalDimension`, and `get_UniformDimension`; isolate `get_MatrixDimension` because it crosses into MatDim factory behavior. Use the evidence analysis and exact member contracts before changing files.
 
 Keep this checkpoint authoritative for Lane B; WORK is an index. Do not repeat old run logs here.

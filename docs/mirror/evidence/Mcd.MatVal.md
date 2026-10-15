@@ -41,6 +41,11 @@
 | ThePtrNan() | 0x0600052e | bc5d51b552b5ac23d06e569ccbfc1511bd060b45acbabba89c7569718ab9b433 | Return double with all 64 bits set. | Static observed; direct cases below only | Verified |
 | IsPtrNan(i4, i4) | 0x0600052f | 36abb07aca75a638661364cc8d75713b0e53196acd75b7f89472e32566310b83 | By-reference overload tests upper 32 bits equal 0xffffffff without changing input; private two-index overload tests indexed real backing. | Static observed; direct cases below only | Tested |
 | AllocImaginary() | 0x06000530 | ab164ac11450fc305fd20ab7bf9386dc8b5cea91bb534259564d201ff54c94c8 | Replace imaginary backing with newly allocated zero array of real backing length; null real backing throws. | Static observed; direct cases below only | Verified |
+| get_HasPtrs() | 0x06000434 | — | Return false for a null pointer table; otherwise return the negation of IsUniformScalar, which may inspect and canonicalize live pointers. | Same-artifact ILSpy; 9 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_RepHasPtrs() | 0x06000435 | — | Return false for a null table; return true for any PtrNan-marked live offset; if none are live, clear the table, set it to null, and return false. | Same-artifact ILSpy; 4 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsUniformScalar() | 0x0600043e | — | Return true for a null table; otherwise delegate to IsUniformScalarPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
+| IsUniformScalarPtrs() | 0x0600043f | — | Inspect only PtrNan-marked entries; return false for a live non-NumVal or incompatible nonspecial dimension, accept mcd_zero dimensions, and pass the live count/common dimension to TidyPtrs. May mutate matrix and pointer state. | Same-artifact ILSpy; 9 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsUniform() | 0x06000457 | — | Return true for a null table; otherwise delegate to IsUniformPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ILSpy; 10 direct comparisons; finite cases in lane checkpoint | Verified |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 
