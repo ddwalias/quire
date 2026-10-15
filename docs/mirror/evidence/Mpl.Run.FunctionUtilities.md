@@ -24,7 +24,7 @@
 
 `FunctionUtilities_array_operations_and_caches` directly compares the callable listed methods with the same mplrun member. Inputs cover the copy and non-copy branches for `take`, both branches for `but`, empty/nonempty concatenation, all push overloads, and `GetCallMethod` on either side of the fixed-arity limit.
 
-Current focused run `scratch/function-verify-8da5693-r2` passed Harness 27/27, Mpl 159/159, and six selected Differential tests, with lint 0, ratchet ok, and zero uncovered lines/branches. The protected abstract constructor remains Analyzed because it cannot be directly invoked.
+Current focused run `/tmp/quire-b-function-verify-scratch/function-verify-8da5693-r2` passed Harness 27/27, Mpl 159/159, and six selected Differential tests, with lint 0, ratchet ok, and zero uncovered lines/branches. The protected abstract constructor remains Analyzed because it cannot be directly invoked.
 
 ## Open
 

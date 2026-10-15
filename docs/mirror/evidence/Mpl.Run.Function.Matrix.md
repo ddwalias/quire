@@ -25,7 +25,7 @@
 
 `Function_arity_checks_apply_and_delegate_projection` compares the arity predicates, assertion, optional padding, exact application, successful delegate projections, and their too-few-arguments exceptions. `Function_matrix_call_bridge_vectorizes_only_matrix_inputs` compares all three `VecCall` overloads over every scalar/matrix argument mask with vectorization on and every nonempty matrix mask with vectorization disabled. Matrix-sensitive ordered delegates distinguish elementwise vectorization from passing the whole matrix to dynamic dispatch. It also covers both `VecApply` branches and uses real `MatVal` values with `DelegateFunction` fixtures. No emitted probe types are used.
 
-Current focused run `scratch/function-verify-8da5693-r2` passed Harness 27/27, Mpl 159/159, and six selected Differential tests, with lint 0, ratchet ok and zero uncovered lines/branches. The wider audit remains incomplete for methods outside this record.
+Current focused run `/tmp/quire-b-function-verify-scratch/function-verify-8da5693-r2` passed Harness 27/27, Mpl 159/159, and six selected Differential tests, with lint 0, ratchet ok and zero uncovered lines/branches. The wider audit remains incomplete for methods outside this record.
 
 ## Open
 
