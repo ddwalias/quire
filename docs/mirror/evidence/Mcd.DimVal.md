@@ -11,7 +11,7 @@ error handling, and dynamic call routing.
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
-| `ApplyMatVal`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)` | 0x060006b0 | IL | ApplyMatVal`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal) contract | High | Stub |
+| `ApplyMatVal`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)` | 0x060006b0 | — | Convert `mv` with `asMatrix(2u)`, pack its elements with `PackObjects()`, and pass that array to virtual `fv.Apply`; conversion exceptions occur before application. | Same-artifact ILSpy/IL; five direct cases in Lane B checkpoint | Verified |
 | `.ctor`0()` | 0x060006ce | IL | .ctor`0() contract | High | Verified |
 | `get_IsPolymorphic`0()` | 0x06000660 | IL | get_IsPolymorphic`0() contract | High | Verified |
 | `get_PhysicalUnit`0()` | 0x06000661 | IL | get_PhysicalUnit`0() contract | High | Verified |
@@ -147,5 +147,8 @@ error handling, and dynamic call routing.
 ## Not yet comparable
 
 - `Quire.Mcd.DimVal..ctor()`: Protected constructor of an abstract class; cannot be invoked directly via ConstructorInfo.Invoke without concrete instantiation.
-- `Quire.Mcd.DimVal.ApplyMatVal(Quire.Mcd.DimVal, Quire.Mcd.DimVal)`: Stub method deferred to Batch 2e.
+
+## ApplyMatVal
+
+The original public static method (`0x060006b0`) is artifact-bound to the Prime 12.0.1.0 assembly identified above. Its IL loads `mv`, calls virtual `DimVal.asMatrix(uint)` (`0x06000685`) with `2u`, stores the returned `MatVal`, calls virtual `MatVal.PackObjects()` (`0x06000539`), then calls virtual `fv.Apply(object[])` and returns that result. The overload delegates to `DimVal.asMatrix(string,uint)` (`0x06000686`), whose base implementation raises at argument position 2; the `MatVal` override (`0x0600046b`) returns itself. `PackObjects()` traverses columns outer and rows inner, calling `MatVal.get_2(int,int)` (`0x060004d1`); a live pointer is returned as an object, while a stale pointer marker with no table entry can be replaced by NaN in real storage. The result, conversion exception and source-matrix effects are directly compared in `DimValApplyMatValDifferentialTests`.
 

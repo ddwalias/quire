@@ -163,3 +163,29 @@ git diff --check
 ```
 
 No production source changed, so no scoped mutation run was required. No acceptance or unreachable proposal is made. Windows/native and full merge-gate checks remain unperformed; these focused Linux checks do not establish whole-type equivalence or phase completion. Independent whole-diff review, squash, backup push and frozen handoff are pending. Remaining Lane B work follows the current queue in `WORK.md`; this branch must remain isolated from the queued pointer-slot-writer tip.
+
+## DimVal.ApplyMatVal — active checkpoint
+
+Current main was first inspected at `71c16c5dc2fba8a836f398a78c24fd41159012de`; after Agent A integrated the unrelated SCons batch, this active branch was rebased onto current main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. Worktree `/root/src/quire-dimval-apply-current`, branch `mirror/b-dimval-apply-current`. The old `origin/mirror/b-dimval-apply` tip `73c53d539871700ea0cc41536a7a60ad4eacc936` remains separate and is not the base for this batch because it is not descended from current main and its full diff includes unrelated intervening changes.
+
+Scope is only public static `DimVal.ApplyMatVal(DimVal fv, DimVal mv)` (`0x060006b0`). Fresh same-artifact IL/C# and member index were generated in this worktree with `python3 tools/reference/reference.py Mcd.DimVal --il`: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Original flow is `mv.asMatrix(2u)`, then `MatVal.PackObjects()`, then virtual `fv.Apply(object[])`. Relevant caller/dependency behavior: base `DimVal.asMatrix(uint)` delegates to the error conversion at argument 2; `MatVal.asMatrix` returns itself; `PackObjects` loops columns outer/rows inner through `get_2` and can expose pointer objects or mutate stale-marker storage. No production caller was found. Contracts are in `docs/mirror/evidence/Mcd.DimVal.md`.
+
+The implementation is a separate partial member matching that observed order; the generated `[MirrorStub]` pair was removed per PLAN. Five `MethodComparison` cases in `DimValApplyMatValDifferentialTests` cover a padded non-symmetric 2×3 matrix and column-major packed order, live pointer identity, retained stale table entry, missing pointer marker conversion/mutation to NaN, base `Apply` exception, and matrix-conversion exception before callback invocation. The comparisons observe callback calls, ordered arguments, returned array identity, pointer aliases, and matrix storage/table state. Do not import the old branch's unrelated broader DimVal test changes. Do not edit or accept `accepted-mutants.txt`, `unreachable-lines.txt`, or any of the 19 proposed DynCall/VecCall arity exceptions; those remain unapproved and outside this member batch.
+
+Commands and receipts:
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~FunctionTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~DimValApplyMatValDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 3 passed, 0 failed, 0 skipped; 5 direct MethodComparison cases.
+
+git diff --check
+=> passed.
+
+python3 tools/validation/validate.py --method-type Quire.Mcd.DimVal --jobs 4
+=> Harness 36/36, Mpl 160/160, Differential 91/91; lint 0, integrity complete, ratchet ok. Scoped method coverage: compared 102, declaration-only 0, missing 1, structure mismatch 0, uncovered 21, verified-unsupported 22. LOCAL CHECKS: pass; GATE: would pass with gaps; mutation deferred to gate. Receipt: `/tmp/quire-validation-w_v25vbn/summary.json`.
+```
+
+An initial filtered type-scoped diagnostic selected only these three facts, so it left existing `DimVal` comparisons untested and produced 125 ratchet regressions; the unfiltered receipt above is the complete scoped run. Strict comparisons loaded the pinned Mathcad artifact. No scoped mutation was run; the full runtime merge gate owns mutation. Windows/native and full runtime merge-gate checks remain unperformed, and this member result does not claim phase completion. No acceptance proposal was made. Next: obtain independent whole-diff review, squash/push, and publish a ready handoff.
