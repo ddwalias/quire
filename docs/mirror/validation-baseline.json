@@ -3577,8 +3577,8 @@
     "Quire.Mcd.MatDim+c_dim::dmult1`0([Quire.Mpl]Quire.Mcd.MatDim)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatDim+c_dim::dmult2`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatDim+c_dim::dmult2`0([Quire.Mpl]Quire.Mcd.MatDim+r_dim)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
-    "Quire.Mcd.MatDim+c_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.MatDim+c_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": "untested",
+    "Quire.Mcd.MatDim+c_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.MatDim+c_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatDim+c_dim::get_ColDimensions`0()->[Quire.Mpl]Quire.Mcd.Dim[]|False": "untested",
     "Quire.Mcd.MatDim+c_dim::get_IsLinear`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
     "Quire.Mcd.MatDim+c_dim::invert`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
@@ -5983,6 +5983,12 @@
     ],
     "Quire.Mcd.MatDim+c_dim::.ctor`0([Quire.Mpl]Quire.Mcd.Dim[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "matdimcdimconstructordifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+c_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[System.Runtime]System.Boolean|False": [
+      "matdimcdimequalitydifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+c_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": [
+      "matdimcdimequalitydifferentialtests"
     ],
     "Quire.Mcd.MatDim+c_dim::make`0([Quire.Mpl]Quire.Mcd.Dim[],[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatDim+c_dim|True": [
       "matdimcdimconstructordifferentialtests"
@@ -8437,10 +8443,10 @@
       "verified_unsupported": 9
     },
     "Quire.Mcd.MatDim+c_dim": {
-      "compared": 2,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 16,
+      "missing": 14,
       "structure_mismatch": 0,
       "total": 18,
       "uncovered": 0,
