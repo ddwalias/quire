@@ -520,7 +520,7 @@ public sealed partial class MatVal
         if (!IsRealMatrix) AppException.Raise(m, a);
         return this;
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAsRealVectorDifferentialTests")]
     public static MatVal asRealVector(object mm) => mm is MatVal matrix && matrix.IsRealVector ? matrix : null;
     [MirrorAnalyzed("Mcd.MatVal")]
     public void assertRealVector() => assertRealVector(0);
