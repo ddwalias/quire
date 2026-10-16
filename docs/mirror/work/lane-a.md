@@ -409,23 +409,76 @@ never establishes phase completion.
 | `AppException` | 0 | 1 | 1 |
 | `Mcd.Type` | 1 | 0 | 0 |
 
-Exact remaining members in those types:
+The scoped audit below supersedes the older exact-member list for `Sexpr`, `SCons`, `Sym`, `Tok` and
+`AppException`. It does not audit `Atom` or `Mcd.Type` constructors.
 
-- Missing direct comparisons: `Atom..ctor(int)`, `Sexpr..ctor(int)`, `Mcd.Type..ctor()`.
-  Abstract base construction needs a direct comparison approach; caller coverage does not satisfy it.
-- `Sexpr`: `get_quotation`, `get_quote`, `get_scons`, `WalkModule(MplEnv,Sexpr)`,
-  `walk_pattern(MplEnv)`, `walk_expression(MplEnv)`.
-- `SCons`: `walk_declaration_lhs(MplEnv)`, `walk_pattern(MplEnv)`, `walk_expression(MplEnv)`.
-- `Sym`: `walk_declaration_as(MplEnv,SCons)`, `walk_definition_as(MplEnv,SCons)`,
-  `walk_expression_as(MplEnv,SCons)`.
-- `Tok`: `walk_pattern(MplEnv)`, `walk_expression(MplEnv)`.
-- `AppException.Raise(object[],uint)`.
+Scoped run on source revision `cbec14e` (rebased onto current `main`; no runtime source changed):
 
-Some uncovered locations follow helpers that throw. Verify original reachability before proposing exact
-unreachable-line entries; never reshape source to hide them. No new acceptance proposal is made here.
-This is a queue for the listed scopes, not an exhaustive list of all remaining Lane A runtime types.
-`Rational`, `Utilities`, `UnitSystem` and `RuntimeOptions` have no missing/structure/uncovered methods in
-this report; their passing recorded cases still do not prove every possible input.
+```text
+validate.py --profile focused --method-type Quire.Mpl.Run.Sexpr --method-type Quire.Mpl.Run.SCons \
+  --method-type Quire.Mpl.Run.Sym --method-type Quire.Mpl.Run.Tok \
+  --method-type Quire.Mpl.Run.AppException --mutate --jobs 2 \
+  --proposed-unreachable /tmp/a-walk-unreachable.txt --proposed-mutants /tmp/a-walk-mutants.txt
+```
+
+Corrected run `5e07bf65-e829-48f0-a127-81122f9011c5`, summary `/tmp/quire-validation-bypvjvcp/summary.json`:
+Harness 52, Mpl 188 and Differential 118 passed; no failures or skips; lint 0; ratchet ok; 129 direct
+comparisons, 1 missing (`Sexpr..ctor(int)`), 1 uncovered (`SCons.walk_expression`, one branch at `Sexpr.cs:418`
+partly covered), 123 exact IL matches and 8 structure-only matches. Mutation: 157/161 killed, 3 previously
+accepted, 0 unproposed survivors; one equivalent mutant is proposed below. The corrected file supplies 16
+unreachable-line entries; the validator counts 15 because `SCons.walk_expression` remains uncovered, while its
+line 421 tail follows the always-throwing `BadApplication` call. Local checks pass; proposals await review/approval,
+and the uncovered branch remains unresolved. Exact before/after: no methods were changed by this audit; the
+scoped report has 123 exact / 8 structure-only matches. The report is incomplete because the constructor and
+branch gap remain and the two proposal classes are pending.
+Independent review of tip `c88b7df` returned **MERGE** after verifying the corrected 16 unreachable hashes and
+singleton-aware mutant proof. The audit is not merged: its proposal classes still await user approval and
+maintainer acceptance.
+
+Original ILSpy inspection confirmed the helper-call tails proposed below. Independent review rejected the
+`SCons.walk_expression` entries at lines 419–420: `SCons` is nonsealed, `Key` is virtual, and its public mutable
+`Field1` can change between the `Key` and `head` reads. A derived `SCons` whose `Key` returns null can reach that
+branch on both artifacts. Line 421 remains unreachable after `BadApplication`, which always throws.
+
+A passing paired test for the branch at line 418 needs a Quire subclass plus an emitted Mathcad subclass overriding
+`Key`. The differential test linter rejects `Reflection.Emit`; `docs/mirror/lint-allowed.txt` is maintainer-protected.
+Record that specific allowlist dependency before resuming this path. The remaining direct-comparison gap is the
+abstract-base constructor, which still needs the maintainer's protected `MethodComparison.cs` change.
+
+### Pending unreachable-line proposals (`mirror/a-walk-tail-audit`)
+
+The corrected proposal list has 16 entries. These exact proposals need independent proof review and user approval
+before maintainer acceptance:
+
+```text
+Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True src/Quire.Mpl/Run/AppException.cs:121 sha256=1cd5ef76c619b6a791bef083c8101ae4676bdc7735513402fa6726a96e7f9285 # Raise(object[], uint) ends with a call to Raise(string, uint), which always throws; the original has the same call and no reachable return.
+Quire.Mpl.Run.SCons::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:379 sha256=d156cebb9a11c53fc08e7c7f35b48c7ca4a14d2ce210a2dac4b05e4ae7c12416 # BadPattern(this) always throws; Mathcad’s original method has the same helper call before its continuation.
+Quire.Mpl.Run.SCons::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:391 sha256=dacfc95bb68222a0feb2763810a0a9adfdc42aaa2523a3d19ce8cfb35370278a # BadPattern(this) always throws; Mathcad’s original method has the same helper call before its continuation.
+Quire.Mpl.Run.SCons::walk_expression`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:421 sha256=c6efb9208e124e593a055a2f607a4f62d88f066ad9f254b8d49bc64145fdbfbf # BadApplication(this) always throws, so its continuation is unreachable in Mathcad too.
+Quire.Mpl.Run.Sexpr::get_quotation`0()->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:93 sha256=e9e198333eefc5c5c9baeb3393cc737b243eb32039692e00290996bc2cc9f43e # NotAQuotation(this) always throws; Mathcad’s original getter has the same call before its default return.
+Quire.Mpl.Run.Sexpr::get_quotation`0()->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:94 sha256=e269f0aee80758be872a17c93a5607f47e40d317b658e6e0eaff418272c4845a # NotAQuotation(this) always throws; Mathcad’s original getter has the same call before its default return.
+Quire.Mpl.Run.Sexpr::get_quote`0()->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:103 sha256=b1ffc0ca496265edc9de420feabb3379d9d7ac158bd8a1c26de90d8db0615cbd # QuotationNotImplemented(this) always throws; Mathcad’s original getter has the same call before its default return.
+Quire.Mpl.Run.Sexpr::get_quote`0()->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:104 sha256=b6f662b818744ab77a3b0f03761d7751d7e73ddf86503cbacffbe0154c2e7a79 # QuotationNotImplemented(this) always throws; Mathcad’s original getter has the same call before its default return.
+Quire.Mpl.Run.Sexpr::get_scons`0()->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/Sexpr.cs:114 sha256=0c2a2c8bab9a2b33d58095f19e4003f7b371b2a1dabaf21ade8315cde64d2803 # ExpectedAList(this) always throws; Mathcad’s original getter has the same call before its default return.
+Quire.Mpl.Run.Sexpr::get_scons`0()->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/Sexpr.cs:115 sha256=bb2b2d0e60132d8ae333ba096f45706dcf43a15ef91dc91a7a7e8755abf4c98f # ExpectedAList(this) always throws; Mathcad’s original getter has the same call before its default return.
+Quire.Mpl.Run.Sexpr::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:169 sha256=1280e59633028dd28a3fb2c6abc6cdbaa1f0e70cb96e00044608ff5f316bfc40 # BadPattern(this) always throws; Mathcad’s original method has the same helper call before its default return.
+Quire.Mpl.Run.Sexpr::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:170 sha256=507e676d61298687603fe6ef4d742a9021ec377cb49f3359e2fd6237f801aea0 # BadPattern(this) always throws; Mathcad’s original method has the same helper call before its default return.
+Quire.Mpl.Run.Sexpr::walk_expression`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:176 sha256=5aac091a3436030a4b3b81d42d8606868854a7a6c06b679b386259b369243649 # BadExpression(this) always throws; Mathcad’s original method has the same helper call before its default return.
+Quire.Mpl.Run.Sexpr::walk_expression`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:177 sha256=cddb5ad3a965760ef5a6601d2d67c3ebc3e76e284f3ca05637e6d37e7d106049 # BadExpression(this) always throws; Mathcad’s original method has the same helper call before its default return.
+Quire.Mpl.Run.Sym::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/Atom.cs:220 sha256=559ca912479841742244bc34d698f558fe74d686929efc918131dde42230c779 # BadDeclaration(form) always throws; Mathcad’s original method has the same helper call before its default return.
+Quire.Mpl.Run.Sym::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/Atom.cs:221 sha256=fb191e7155093fd65a5ec1b44dcf72c365f66977716df3844c42e73c2b6fc7b3 # BadDeclaration(form) always throws; Mathcad’s original method has the same helper call before its default return.
+```
+
+### Pending mutant proposal
+
+```text
+Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True@IL_0021 ldc.i4.1 -> ldc.i4.0 body=43545d78b7d2491c2752703ef05576c4e26935a3fa089e19b564d7601e0fa15e # Equivalent: null and empty arrays return through the prior guard. For length 1, both implementations call msgs[0].ToString() once, then invoke the same Raise; the mutant skips the loop. Lengths >=2 use the same loop. Null elements or throwing ToString calls propagate identically, with one call in either path.
+```
+
+Next unowned Lane A member after this audit: `case_keyword` (separate branch).
+
+`Rational`, `Utilities`, `UnitSystem` and `RuntimeOptions` have no missing/structure/uncovered methods in the
+historical project-wide report; their passing recorded cases still do not prove every possible input.
 
 ## NumVal.Compare scope correction
 
