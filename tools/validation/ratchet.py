@@ -16,7 +16,8 @@ READABLE = (3, 4)
 # States in which a method's IL is not compared with Mathcad's at all.
 UNCOMPARED = ('no_counterpart', 'excluded', 'declaration_only')
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
-# Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
+# Compiler-generated methods (excluded), and types holding only those, may come and go with idiomatic code: mutation
+# covers them through their owner.
 # A method's stage (method_coverage.audit) says how far it has got; fixing one gap exposes the next, so a method may
 # move forward between unfinished stages but never back. Tests that compare without checking instance state rank
 # above having none, so deleting them is never progress. Per type, the unfinished methods may not grow in number, and
@@ -61,7 +62,8 @@ def compare(baseline, current, scoped=False):
     old_methods, new_methods = baseline.get('methods', {}), current['methods']
     if not scoped:
         for name in sorted(set(old_types) - set(new_types)):
-            regressions.append(f'{name}: type disappeared from the inventory')
+            if old_types[name].get('excluded', 0) != old_types[name].get('total'):
+                regressions.append(f'{name}: type disappeared from the inventory')
         for name in sorted(set(old_methods) - set(new_methods)):
             if old_methods[name] != 'excluded':
                 regressions.append(f'{name}: method disappeared from the inventory')

@@ -34,6 +34,13 @@ class RatchetTests(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertIn(text, compare(self.baseline, self.current(**{'Quire.T': counts(**change)}))[0])
 
+    def test_a_type_of_only_excluded_methods_may_disappear(self):
+        self.baseline['types']['Quire.T+<>c'] = counts(excluded=3, total=3)
+        self.assertEqual(compare(self.baseline, self.current(**{'Quire.T': counts(compared=3, missing=2)})), [])
+        self.baseline['types']['Quire.T+<>c'] = counts(excluded=2, missing=1, total=3)
+        self.assertEqual(compare(self.baseline, self.current(**{'Quire.T': counts(compared=3, missing=2)})),
+                         ['Quire.T+<>c: type disappeared from the inventory'])
+
     def test_swapped_findings_fail_although_counts_hold(self):
         same = {'Quire.T': counts(compared=3, missing=2)}
         self.assertEqual(compare(self.baseline, self.current(lint=['b.cs | goto statement | goto y;'], **same)),
