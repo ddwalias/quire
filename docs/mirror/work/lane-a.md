@@ -470,6 +470,24 @@ Unit 4 claim of full settlement was a classification checkpoint and is supersede
 | **Unit 3b** | `AppException`, `Type`, `UnitSystem`, `RuntimeOptions` | `main` (`d7b5a63`) | **Merged to main** via `merge_gate.py --apply` | 165 | 0 | 0 | ok | 655 / 678 (23 accepted survivors) |
 | **Unit 4** | Remaining batch 2e unclassified members | `main` | **Historical classification checkpoint only; current audit gaps remain** | Not established | Not established | Not rerun | Not rerun | N/A |
 
+## defun_keyword mirror batch (`mirror/a-defun-keyword`)
+
+- Branch: `mirror/a-defun-keyword`, based on `a9f3933`; implementation and checkpoint are in progress.
+- Scope: `defun_keyword` singleton, constructor, token factory, declaration and definition walks, and both `MakeDefun` overloads. Removed only the seven generated stub attribute/member pairs.
+- Evidence: [defun_keyword](../evidence/Mpl.Run.defun_keyword.md); original `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+- Differential test: `DefunKeywordDifferentialTests.Singleton_factories_and_walks` compares all seven methods, singleton and alias identity, environment changes, factory handles at 0/interior/max values, declaration registration, a normal definition, and malformed definition arity. The earlier revision passed the filtered test 1/1; the current revision passed the full focused differential suite (127/127).
+- Release audit: 7 exact methods, 0 structure-only. Exact IL before/after: 0/7 generated stubs -> 7/7 exact; no baseline-exact method regressed.
+- Focused validation receipt: `/tmp/quire-validation-jujf6m7_`; Harness 79/79, Mpl 188/188, focused Differential 127/127, no failures/skips; lint 0, ratchet ok, 6/6 mutants killed. Scoped method coverage is 7 compared, 0 missing, 0 structure mismatch, 0 uncovered after applying the proposal; this is a valid local-check pass but the gate remains blocked pending approval/acceptance of the proposed unreachable line.
+- The uncovered point is the closing-brace sequence point after `Sexpr.BadDeclaration(form)`. The four-cell happy path and malformed-arity case directly compare against Mathcad. The original helper always throws, and Mathcad's IL has the same call on the non-four-cell branch; the sequence point after that call cannot execute. The independent reviewer verified the proposal proof and reviewed the corrected observers; user approval and maintainer acceptance are pending.
+- Pending unreachable-line proposal (1):
+
+  ```text
+  Quire.Mpl.Run.defun_keyword::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/DefunKeyword.cs:40 sha256=3b8e351557c66a469a32c56968ebfad14315b669951ac0ad18d68e302c92e69d # Sexpr.BadDeclaration(form) always throws on the non-four-cell branch; Mathcad has the same call before the definition walk can continue.
+  ```
+
+  Generated with `method_coverage.py unreachable-entry` from `/tmp/quire-validation-6ju5w192/method-coverage.json`; the independent reviewer confirmed the source and proposal hashes and the throwing-path proof. User approval and maintainer acceptance are pending. The successful focused run used this entry through `--proposed-unreachable`; the gate correctly remains blocked until acceptance.
+- Next: obtain user approval and maintainer acceptance for the proposal, then rebase onto current main and rerun the merge gate. Continue another unblocked Lane A member while that approval is pending.
+
 
 Historical mutant proposals and reasoning remain in Git history. They are not a current approval queue;
 consult `accepted-mutants.txt` for existing accepted keys. Under current PLAN rules, test-host crashes
