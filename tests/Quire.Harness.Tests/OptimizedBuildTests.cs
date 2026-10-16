@@ -72,15 +72,60 @@ public class OptimizedBuildTests : IDisposable
         il.Emit(OpCodes.Ret);
     }
 
-    /// <summary>Runs MethodAudit on a Debug build of Fix.T, bound to the original Orig.T, with an optimized build
-    /// (none: an empty folder) when <paramref name="release"/> is given, and returns its exit code and inventory.</summary>
+    // `if (x > 2) return x; return 2;` and `x <= 2 ? 2 : x`: the same structure, branches laid out the other way.
+    private static void IfReturn(ILGenerator il) => Pick(il, OpCodes.Ble_S, OpCodes.Ldarg_0, OpCodes.Ldc_I4_2);
+    private static void Ternary(ILGenerator il) => Pick(il, OpCodes.Bgt_S, OpCodes.Ldc_I4_2, OpCodes.Ldarg_0);
+
+    private static void Pick(ILGenerator il, OpCode branch, OpCode first, OpCode second)
+    {
+        Label other = il.DefineLabel();
+        il.Emit(OpCodes.Ldarg_0);
+        il.Emit(OpCodes.Ldc_I4_2);
+        il.Emit(branch, other);
+        il.Emit(first);
+        il.Emit(OpCodes.Ret);
+        il.MarkLabel(other);
+        il.Emit(second);
+        il.Emit(OpCodes.Ret);
+    }
+
+    /// <summary>IfReturn with long encodings: <c>ble</c>, <c>ldarg 0</c>, <c>ldc.i4 2</c>.</summary>
+    private static void IfReturnLong(ILGenerator il)
+    {
+        Label other = il.DefineLabel();
+        il.Emit(OpCodes.Ldarg, (short)0);
+        il.Emit(OpCodes.Ldc_I4, 2);
+        il.Emit(OpCodes.Ble, other);
+        il.Emit(OpCodes.Ldarg, (short)0);
+        il.Emit(OpCodes.Ret);
+        il.MarkLabel(other);
+        il.Emit(OpCodes.Ldc_I4, 2);
+        il.Emit(OpCodes.Ret);
+    }
+
+    /// <summary>`x > 2` through local <paramref name="slot"/> of two.</summary>
+    private static void ThroughLocal(ILGenerator il, short slot)
+    {
+        il.DeclareLocal(typeof(int));
+        il.DeclareLocal(typeof(int));
+        il.Emit(OpCodes.Ldarg_0);
+        il.Emit(OpCodes.Stloc, slot);
+        il.Emit(OpCodes.Ldloc, slot);
+        il.Emit(OpCodes.Ldc_I4_2);
+        il.Emit(OpCodes.Cgt);
+        il.Emit(OpCodes.Ret);
+    }
+
+    /// <summary>Runs MethodAudit on a Debug build of Fix.T, bound to the original Orig.T (body
+    /// <paramref name="original"/>, default <see cref="Optimized"/>), with an optimized build (none: an empty folder)
+    /// when <paramref name="release"/> is given, and returns its exit code and inventory.</summary>
     private (int Exit, JsonElement Inventory) Audit(Action<ILGenerator>? release, string? extra = null, int helpers = 0,
-        bool none = false, Action<TypeBuilder>? more = null)
+        bool none = false, Action<TypeBuilder>? more = null, Action<ILGenerator>? original = null)
     {
         Directory.CreateDirectory(Path.Combine(_dir, "repo/docs/mirror"));
         File.WriteAllText(Path.Combine(_dir, "repo/docs/mirror/type-map.csv"),
             "mathcad_assembly,mathcad_type,kind,visibility,quire_type,status,phase,group\nOrig.dll,Orig.T,class,public,Fix.T,exists,1,managed\n");
-        Build("install", "Orig", "Orig.T", Optimized);
+        Build("install", "Orig", "Orig.T", original ?? Optimized);
         Build("debug", "Fix", "Fix.T", Debug, "Orig.T, Orig", helpers: helpers, more: more);
         string output = Path.Combine(_dir, "inventory.json");
         List<string> args = ["--repo", Path.Combine(_dir, "repo"), "--assemblies", Path.Combine(_dir, "debug"),
@@ -110,6 +155,22 @@ public class OptimizedBuildTests : IDisposable
         Assert.True(F(inventory).GetProperty("structure_matches").GetBoolean());
         // The body hash, and so mutant selection, still follow the Debug build.
         Assert.Equal(F(debugOnly).GetProperty("body_sha256").GetString(), F(inventory).GetProperty("body_sha256").GetString());
+    }
+
+    [Fact]
+    public void An_exact_match_needs_the_same_instructions_in_the_same_order()
+    {
+        var (_, debugOnly) = Audit(null);
+        Assert.False(F(debugOnly).GetProperty("exact_match").GetBoolean());
+        Assert.True(F(Audit(Optimized).Inventory).GetProperty("exact_match").GetBoolean());
+        // Short and long encodings of the same instructions match exactly, and so do differently numbered locals.
+        Assert.True(F(Audit(IfReturnLong, original: IfReturn).Inventory).GetProperty("exact_match").GetBoolean());
+        Assert.True(F(Audit(il => ThroughLocal(il, 0), original: il => ThroughLocal(il, 1)).Inventory)
+            .GetProperty("exact_match").GetBoolean());
+        // A ternary for if/return keeps the structure but not the branch direction and block order.
+        var ternary = F(Audit(Ternary, original: IfReturn).Inventory);
+        Assert.True(ternary.GetProperty("structure_matches").GetBoolean());
+        Assert.False(ternary.GetProperty("exact_match").GetBoolean());
     }
 
     [Fact]

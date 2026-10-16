@@ -112,6 +112,40 @@ class RatchetTests(unittest.TestCase):
         snapshot = check(coverage, {'lint': []}, False, 'focused', baseline=None)['snapshot']
         self.assertEqual((snapshot['schema'], snapshot['bodies']), (SCHEMA, {'Quire.T::A()': 'ab'}))
 
+    def test_exact_il_matches_may_not_be_lost(self):
+        same = {'Quire.T': counts(compared=3, missing=2)}
+        baseline = dict(self.baseline, exact=['Quire.T::A()'])
+        self.assertEqual(compare(baseline, dict(self.current(**same), exact=['Quire.T::A()', 'Quire.T::B()'])), [])
+        self.assertEqual(compare(baseline, dict(self.current(**same), exact=[])),
+                         ["Quire.T::A(): IL no longer matches Mathcad's exactly"])
+        # A new exact method is welcome; a new inexact one is not held (it never matched).
+        fresh = dict(METHODS, **{'Quire.T::C()': 'missing'})
+        self.assertEqual(compare(baseline, dict(self.current(methods=fresh, **{'Quire.T': counts(compared=3, missing=2)}),
+                                                exact=['Quire.T::A()'])), [])
+        # A method that disappeared or was renamed is reported as such, not as a lost match; a scoped run skips it.
+        gone = {'Quire.T::B()': 'missing'}
+        self.assertEqual(compare(baseline, dict(self.current(methods=gone, **same), exact=[])),
+                         ['Quire.T::A(): method disappeared from the inventory'])
+        self.assertEqual(compare(baseline, dict(self.current(methods=gone, **same), exact=[]), scoped=True), [])
+        # One that is no longer compared says why.
+        excluded = dict(METHODS, **{'Quire.T::A()': 'excluded'})
+        self.assertIn("Quire.T::A(): matched Mathcad's IL exactly but is now excluded, so its IL is not compared",
+                      compare(baseline, dict(self.current(methods=excluded, **same), exact=[])))
+
+    def test_baseline_without_exact_data_holds_no_exact_matches(self):
+        same = {'Quire.T': counts(compared=3, missing=2)}
+        for schema in (3, 4):
+            with self.subTest(schema=schema):
+                self.assertEqual(compare(dict(self.baseline, schema=schema), dict(self.current(**same), exact=[])), [])
+
+    def test_snapshot_records_exact_matches(self):
+        coverage = {'by_type': {}, 'methods': [
+            {'type': 'Quire.T', 'signature': 'A()', 'validation': 'compared', 'original': {}, 'exact_match': True},
+            {'type': 'Quire.T', 'signature': 'B()', 'validation': 'compared', 'original': {}, 'exact_match': False},
+            {'type': 'Quire.T', 'signature': 'C()', 'validation': 'missing', 'original': {}, 'exact_match': None},
+            {'type': 'Quire.T', 'signature': 'D()', 'validation': 'missing', 'original': {}}]}
+        self.assertEqual(check(coverage, {'lint': []}, False, 'focused', baseline=None)['snapshot']['exact'], ['Quire.T::A()'])
+
     def test_removed_type_fails_full_run_but_not_scoped_run(self):
         self.assertIn('disappeared', compare(self.baseline, self.current(methods={}))[0])
         self.assertEqual(compare(self.baseline, self.current(methods={}), scoped=True), [])

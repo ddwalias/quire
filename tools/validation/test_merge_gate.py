@@ -210,6 +210,8 @@ class RepositoryTests(unittest.TestCase):
 
     def test_baseline_schemas_3_and_4_accepted(self):
         self.assertEqual(self.regressions(dict(self.BASELINE, schema=4, bodies={'T::A()': 'ab'})), [])
+        # `exact` needs no new schema: a baseline without it holds none, so the first one with it is accepted.
+        self.assertEqual(self.regressions(dict(self.BASELINE, schema=4, exact=['T::A()'])), [])
         self.assertIn('schema', self.regressions(dict(self.BASELINE, schema=5))[0])
 
     def test_clone_always_takes_the_base_baseline(self):

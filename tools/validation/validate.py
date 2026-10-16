@@ -693,6 +693,10 @@ def main():
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
         report["method_coverage"] = coverage["counts"]
         print(f"Method coverage: {coverage['counts']}; {output / 'method-coverage.json'}", flush=True)
+        exact = sum(m.get("exact_match") is True for m in coverage["methods"])
+        report["il_match"] = {"exact": exact, "structure_only": sum(
+            m.get("structure_matches") is True for m in coverage["methods"]) - exact}
+        print(f"IL match: {exact} exact, {report['il_match']['structure_only']} structure only", flush=True)
         # An executed line is reachable, so the entry listing it is wrong: that fails the run and the gate.
         report["executed_unreachable"] = [f"{e['key']} {e['line']} ({e['source']})"
                                           for e in coverage["stale_unreachable"] if e["problem"] == "executed"]

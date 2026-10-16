@@ -26,6 +26,39 @@ public class StructureTests
     private static int Constant(int x) => x > 3 ? Left() : Right();
     private static int CatchArgument() { try { return Left(); } catch (ArgumentException) { return Right(); } }
     private static int CatchOperation() { try { return Left(); } catch (InvalidOperationException) { return Right(); } }
+    private static int Pick(int x, int y)
+    {
+        if (x > 2) return y;
+        return x;
+    }
+    private static int PickAgain(int x, int y)
+    {
+        if (x > 2) return y;
+        return x;
+    }
+    private static int PickTernary(int x, int y) => x <= 2 ? x : y;
+    private static int Apply(Func<int> f) => f();
+    private static int SameLocalFunction()
+    {
+        return Apply(L) + Apply(L);
+        static int L() => 1;
+    }
+    private static int OtherLocalFunction()
+    {
+        return Apply(L) + Apply(K);
+        static int L() => 1;
+        static int K() => 1;
+    }
+    private static int Difference(int x, int y)
+    {
+        int a = x * 3, b = y * 5;
+        return a - b;
+    }
+    private static int DifferenceSwapped(int x, int y)
+    {
+        int a = x * 3, b = y * 5;
+        return b - a;
+    }
     private static int Throws(int x) => x > 2 ? Left() : throw new ArgumentException("x");
     /// <summary>Same simple name as the framework type, but defined here, so not a capacity constructor.</summary>
     private sealed class StringBuilder(int capacity) { public int Capacity => capacity; }
@@ -68,6 +101,43 @@ public class StructureTests
     [Fact]
     public void Branch_layout_is_part_of_the_structure() =>
         Assert.Contains(Read("IfElse").Compare(Read("Ternary")), d => d.StartsWith("calls"));
+
+    /// <summary>Locals are numbered by first use, so which local an instruction reads still counts.</summary>
+    [Fact]
+    public void An_exact_match_keeps_which_local_is_read() =>
+        Assert.False(Read("Difference").Exact(Read("DifferenceSwapped")));
+
+    /// <summary>Compiler-generated names are all `&lt;generated&gt;` to the structure, but numbered by first use here.</summary>
+    [Fact]
+    public void An_exact_match_keeps_which_generated_member_is_named()
+    {
+        Assert.Empty(Read("SameLocalFunction").Compare(Read("OtherLocalFunction")));
+        Assert.False(Read("SameLocalFunction").Exact(Read("OtherLocalFunction")));
+    }
+
+    [Fact]
+    public void An_exact_match_keeps_branch_direction_and_block_order()
+    {
+        Assert.True(Read("Pick").Exact(Read("PickAgain")));
+        Assert.False(Read("Pick").Exact(Read("PickTernary")));
+    }
+
+    /// <summary>Encodings fold to one spelling (Read then renumbers locals by first use); argument numbers and branch
+    /// kinds are kept.</summary>
+    [Fact]
+    public void Exact_matching_ignores_encodings_and_local_numbering()
+    {
+        Assert.Equal("ldc.i4 2", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldc_I4_2, ""));
+        Assert.Equal("ldc.i4 2", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldc_I4_S, "2"));
+        Assert.Equal("ldc.i4 -1", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldc_I4_M1, ""));
+        Assert.Equal("ldarg 1", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldarg_1, ""));
+        Assert.Equal("ldarg 1", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldarg_S, "1"));
+        Assert.Equal("stloc 7", StructureReader.Folded(System.Reflection.Emit.OpCodes.Stloc_S, "7"));
+        Assert.Equal("stloc 0", StructureReader.Folded(System.Reflection.Emit.OpCodes.Stloc_0, ""));
+        Assert.Equal("ldloca 3", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldloca_S, "3"));
+        Assert.Equal("beq", StructureReader.Folded(System.Reflection.Emit.OpCodes.Beq_S, ""));
+        Assert.Equal("bne.un", StructureReader.Folded(System.Reflection.Emit.OpCodes.Bne_Un, ""));
+    }
 
     [Theory]
     [InlineData("Swapped", "calls")]

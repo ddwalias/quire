@@ -8,11 +8,17 @@ using Quire.Tools.MirrorGen;
 /// The logic-bearing structure of one method body: what it calls, which fields it touches, which types it tests or
 /// creates, its constants, exception regions and branching. Locals, nops, stack shuffling and branch encoding are
 /// ignored. MethodAudit reads it from the optimized (Release) build given by --structure-assemblies, which the
-/// validator always passes, so it compiles like the original.
+/// validator always passes, so it compiles like the original. <see cref="Code"/> is the whole instruction sequence,
+/// for <see cref="Exact"/>.
 /// </summary>
 sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[] Constants, string[] Handlers,
-    int Branches, int SwitchTargets, int Throws, int Rethrows)
+    int Branches, int SwitchTargets, int Throws, int Rethrows, string[] Code)
 {
+    /// <summary>Whether the instruction sequences are equal (<see cref="StructureReader.Folded"/>), branch targets and
+    /// exception regions as instruction indices: unlike <see cref="Compare"/>, branch direction and block order count,
+    /// so <c>if (c) return a; return b;</c> and <c>c ? a : b</c> differ.</summary>
+    public bool Exact(Structure original) => Code.SequenceEqual(original.Code);
+
     /// <summary>Differences from <paramref name="original"/>, one line each; empty when the structures match.</summary>
     public List<string> Compare(Structure original)
     {
@@ -61,12 +67,19 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     {
         var body = pe.GetMethodBody(md.GetMethodDefinition(handle).RelativeVirtualAddress);
         var il = body.GetILReader();
-        List<string> calls = [], fields = [], types = [], constants = [];
+        List<string> calls = [], fields = [], types = [], constants = [], sequence = [];
+        List<int> starts = [];
+        var jumps = new Dictionary<int, int[]>();  // instruction index -> branch target offsets
+        // Locals and compiler-generated names, numbered by first use: compilers number and name them differently.
+        Dictionary<string, int> locals = [], names = [];
+        generated = [];
         int branches = 0, switchTargets = 0, throws = 0, rethrows = 0;
         while (il.RemainingBytes > 0)
         {
+            starts.Add(il.Offset);
             byte first = il.ReadByte();
             var code = Codes[first == 0xFE ? (ushort)(0xFE00 | il.ReadByte()) : first];
+            string operand = "";
             switch (code.OperandType)
             {
                 case OperandType.InlineNone:
@@ -76,58 +89,97 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                         constants.Add("i4 " + (code == OpCodes.Ldc_I4_M1 ? "-1" : code.Name[^1..]));
                     break;
                 case OperandType.ShortInlineBrTarget:
-                    il.ReadSByte();
+                    int near = il.ReadSByte();
+                    jumps[starts.Count - 1] = [il.Offset + near];
                     if (code.FlowControl == FlowControl.Cond_Branch) branches++;
                     break;
                 case OperandType.InlineBrTarget:
-                    il.ReadInt32();
+                    int far = il.ReadInt32();
+                    jumps[starts.Count - 1] = [il.Offset + far];
                     if (code.FlowControl == FlowControl.Cond_Branch) branches++;
                     break;
                 case OperandType.InlineSwitch:
-                    int targets = il.ReadInt32();
-                    for (int i = 0; i < targets; i++) il.ReadInt32();
-                    switchTargets += targets;
+                    int[] targets = new int[il.ReadInt32()];
+                    for (int i = 0; i < targets.Length; i++) targets[i] = il.ReadInt32();
+                    jumps[starts.Count - 1] = [.. targets.Select(t => il.Offset + t)];
+                    switchTargets += targets.Length;
                     break;
                 case OperandType.ShortInlineI:
                     int small = code == OpCodes.Ldc_I4_S ? il.ReadSByte() : il.ReadByte();
                     if (code == OpCodes.Ldc_I4_S && small is not (0 or 1)) constants.Add($"i4 {small}");
+                    operand = $"{small}";
                     break;
                 case OperandType.InlineI:
                     int value = il.ReadInt32();
                     if (value is not (0 or 1)) constants.Add($"i4 {value}");
+                    operand = $"{value}";
                     break;
-                case OperandType.InlineI8: constants.Add($"i8 {il.ReadInt64()}"); break;
-                case OperandType.ShortInlineR: constants.Add($"r8 {(double)il.ReadSingle():R}"); break;
-                case OperandType.InlineR: constants.Add($"r8 {il.ReadDouble():R}"); break;
+                case OperandType.InlineI8: constants.Add(operand = $"i8 {il.ReadInt64()}"); break;
+                case OperandType.ShortInlineR: constants.Add(operand = $"r8 {(double)il.ReadSingle():R}"); break;
+                case OperandType.InlineR: constants.Add(operand = $"r8 {il.ReadDouble():R}"); break;
                 case OperandType.InlineString:
-                    constants.Add("str " + md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())));
+                    constants.Add(operand = "str " + md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())));
                     break;
                 case OperandType.InlineMethod:
-                    calls.Add($"{code.Name} {Method(MetadataTokens.EntityHandle(il.ReadInt32()))}");
+                    calls.Add($"{code.Name} {operand = Method(MetadataTokens.EntityHandle(il.ReadInt32()))}");
                     break;
                 case OperandType.InlineField:
-                    fields.Add($"{code.Name} {Field(MetadataTokens.EntityHandle(il.ReadInt32()))}");
+                    fields.Add($"{code.Name} {operand = Field(MetadataTokens.EntityHandle(il.ReadInt32()))}");
                     break;
                 case OperandType.InlineType:
                 case OperandType.InlineTok:
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
                     if (code == OpCodes.Ldtoken && token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference)
-                        calls.Add($"ldtoken {Method(token)}");
+                        calls.Add($"ldtoken {operand = Method(token)}");
                     else if (code != OpCodes.Constrained && code != OpCodes.Ldobj && code != OpCodes.Stobj
                              && code != OpCodes.Initobj && code != OpCodes.Ldelema)
-                        types.Add($"{code.Name} {Type(token)}");
+                        types.Add($"{code.Name} {operand = Type(token)}");
+                    else operand = Type(token);
                     break;
-                case OperandType.InlineSig: il.ReadInt32(); calls.Add("calli"); break;
-                case OperandType.ShortInlineVar: il.ReadByte(); break;
-                case OperandType.InlineVar: il.ReadUInt16(); break;
+                case OperandType.InlineSig:
+                    operand = Signature("calli", md.GetStandaloneSignature((StandaloneSignatureHandle)MetadataTokens.EntityHandle(il.ReadInt32()))
+                        .DecodeMethodSignature(decoder, null));
+                    calls.Add("calli");
+                    break;
+                case OperandType.ShortInlineVar: operand = $"{il.ReadByte()}"; break;
+                case OperandType.InlineVar: operand = $"{il.ReadUInt16()}"; break;
                 default: throw new BadImageFormatException($"Unknown operand type {code.OperandType}");
             }
+            string text = Folded(code, operand);
+            if (text.Split(' ') is [("ldloc" or "ldloca" or "stloc") and var family, var slot]) text = $"{family} {Number(locals, slot)}";
+            if (generated.Count > 0) text += " #" + string.Join(",", generated.Select(g => Number(names, g)));
+            generated.Clear();
+            sequence.Add(text);
         }
+        generated = null;
         constants.Sort(StringComparer.Ordinal);
-        var handlers = body.ExceptionRegions.OrderBy(r => r.TryOffset).ThenByDescending(r => r.TryLength)
+        // Branch targets and exception regions as instruction indices: relative for branches, so block order counts.
+        var index = starts.Select((offset, i) => (offset, i)).ToDictionary(p => p.offset, p => p.i);
+        index[il.Offset] = starts.Count;
+        string At(int offset) => index.TryGetValue(offset, out int i) ? $"{i}" : "?";
+        foreach (var (at, targets) in jumps)
+            sequence[at] += " " + string.Join(",", targets.Select(t => index.TryGetValue(t, out int i) ? $"{i - at}" : "?"));
+        var regions = body.ExceptionRegions.OrderBy(r => r.TryOffset).ThenByDescending(r => r.TryLength).ToList();
+        sequence.AddRange(regions.Select(r => $".try {At(r.TryOffset)}-{At(r.TryOffset + r.TryLength)} " +
+            $"{r.Kind} {(r.Kind == ExceptionRegionKind.Filter ? At(r.FilterOffset) + " " : "")}{At(r.HandlerOffset)}-{At(r.HandlerOffset + r.HandlerLength)}"));
+        var handlers = regions
             .Select(r => r.Kind == ExceptionRegionKind.Catch ? "catch " + Type(r.CatchType) : r.Kind.ToString().ToLowerInvariant())
             .ToArray();
-        return new([.. calls], [.. fields], [.. types], [.. constants], handlers, branches, switchTargets, throws, rethrows);
+        return new([.. calls], [.. fields], [.. types], [.. constants], handlers, branches, switchTargets, throws, rethrows, [.. sequence]);
+    }
+
+    private static int Number(Dictionary<string, int> numbers, string key) =>
+        numbers.TryGetValue(key, out int n) ? n : numbers[key] = numbers.Count;
+
+    /// <summary>One instruction with its encoding folded: short forms (<c>br.s</c>, <c>ldc.i4.s</c>, <c>ldarg.s</c>) as
+    /// their long form, and macro forms (<c>ldarg.0</c>, <c>ldc.i4.m1</c>, <c>stloc.2</c>) as the long form with the
+    /// operand they imply. <see cref="Read"/> then renumbers local slots by first use.</summary>
+    internal static string Folded(OpCode op, string operand)
+    {
+        string name = op.Name!.EndsWith(".s") ? op.Name[..^2] : op.Name;
+        var macro = System.Text.RegularExpressions.Regex.Match(name, @"^(ldarg|starg|ldloc|stloc|ldc\.i4)\.(\d|m1)$");
+        if (macro.Success) (name, operand) = (macro.Groups[1].Value, macro.Groups[2].Value == "m1" ? "-1" : macro.Groups[2].Value);
+        return operand.Length == 0 ? name : $"{name} {operand}";
     }
 
     /// <summary>What <see cref="Body"/> reports of one method body.</summary>
@@ -420,8 +472,16 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         _ => sig.ToString(),
     };
 
+    /// <summary>The compiler-generated names <see cref="Read"/>'s current instruction mentions; null outside it.</summary>
+    private List<string>? generated;
+
     /// <summary>Compiler-generated names (closures, iterators, backing fields) differ between compilers.</summary>
-    private string Member(string name) => !exact && name.Contains('<') ? "<generated>" : name;
+    private string Member(string name)
+    {
+        if (exact || !name.Contains('<')) return name;
+        generated?.Add(name);
+        return "<generated>";
+    }
 
     /// <summary>Mathcad's name for a type: mirrored types map whole, else their outermost mirrored declaring type.</summary>
     private string Name(string type)

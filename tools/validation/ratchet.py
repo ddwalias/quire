@@ -9,8 +9,12 @@ BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
 SCHEMA = 4
 # Baseline schemas compare() reads and the merge gate accepts from a validator. Schema 4 adds `bodies` and `writes`
 # (validate.changed_methods), which narrow mutation selection, not the ratchet; from a schema 3 baseline the gate
-# mutates whole changed types as before.
+# mutates whole changed types as before. `exact` (the methods whose IL matches Mathcad's instruction for instruction,
+# MethodAudit's exact_match) is optional: a baseline without it holds no exact matches, and a validator that does not
+# know it ignores it, so adding it needs no new schema.
 READABLE = (3, 4)
+# States in which a method's IL is not compared with Mathcad's at all.
+UNCOMPARED = ('no_counterpart', 'excluded', 'declaration_only')
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
 # Compiler-generated methods (excluded) may come and go with idiomatic code: mutation covers them through their owner.
 # A method's stage (method_coverage.audit) says how far it has got; fixing one gap exposes the next, so a method may
@@ -32,7 +36,8 @@ def snapshot(coverage, integrity, profile):
             'bodies': {f"{m['type']}::{m['signature']}": m['body_sha256'] for m in coverage['methods'] if m.get('body_sha256')},
             # Fields written, or read while holding a mutable reference (validate.changed_methods counts both).
             'writes': {f"{m['type']}::{m['signature']}": sorted({*m.get('field_writes', []), *m.get('reference_reads', [])})
-                       for m in coverage['methods'] if m.get('field_writes') or m.get('reference_reads')}}
+                       for m in coverage['methods'] if m.get('field_writes') or m.get('reference_reads')},
+            'exact': sorted(f"{m['type']}::{m['signature']}" for m in coverage['methods'] if m.get('exact_match'))}
 
 
 def stage(method):
@@ -68,6 +73,13 @@ def compare(baseline, current, scoped=False):
             regressions.append(f'{name}: new method is {state}')
         elif old is not None and state != old and state != 'compared' and not forward(old, state):
             regressions.append(f'{name}: {old} became {state}')
+    # A method whose IL matched Mathcad's exactly must keep matching; one that disappeared is reported above.
+    exact = set(current.get('exact', ()))
+    for name in sorted(set(baseline.get('exact', ())) - exact):
+        if new_methods.get(name) in UNCOMPARED:
+            regressions.append(f"{name}: matched Mathcad's IL exactly but is now {new_methods[name]}, so its IL is not compared")
+        elif name in new_methods:
+            regressions.append(f"{name}: IL no longer matches Mathcad's exactly")
     for name, counts in sorted(new_types.items()):
         old = old_types.get(name)
         if old is None:

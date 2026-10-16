@@ -432,7 +432,7 @@ order passes it, which the direct comparisons must catch.
 
 `ratchet.json` compares a run with `docs/mirror/validation-baseline.json` (schema 4), which records its profile,
 per-type counts, each method's stage (emitted by the audit), test classes and IL body hash (`bodies`, used only to
-select mutants), and each lint finding by identity (counted). A schema 3 baseline (no `bodies`) is still read. The stages, in order: `no_counterpart`, `missing`, `structure_mismatch`, `untested` (structure matches but no
+select mutants), the methods whose IL matches Mathcad's exactly (`exact`, optional), and each lint finding by identity (counted). A schema 3 baseline (no `bodies`) is still read. The stages, in order: `no_counterpart`, `missing`, `structure_mismatch`, `untested` (structure matches but no
 passing direct comparison), `unchecked_state` (an instance method compared without checking its state), `uncovered`,
 `compared`; `untested` and `unchecked_state` are counted as `missing`. Fixing one gap exposes the next, so a method
 may move forward but never back (deleting tests never counts as progress), and any other change of state must reach
@@ -441,9 +441,24 @@ may move forward but never back (deleting tests never counts as progress), and a
 method without a Mathcad counterpart is rejected, and a new method in an existing type may not arrive as
 `structure_mismatch`, `unchecked_state` or `uncovered`, so progress elsewhere cannot pay for it. Unscoped runs also forbid any new lint finding (fixing one does not pay for another) and
 disappearing types or methods. New types with counterparts start their own baseline. A baseline from another profile
-or schema is rejected; schemas 3 and 4 are both read (4 adds data that selects mutants, not ratchet data). `--write-baseline PATH` writes a run's snapshot (unscoped runs only) once every test and mutation
+or schema is rejected; schemas 3 and 4 are both read (4 adds data that selects mutants, not ratchet data; either may carry `exact`). `--write-baseline PATH` writes a run's snapshot (unscoped runs only) once every test and mutation
 run has finished and the final seal check has passed. A maintainer creates the first baseline from an
 unscoped focused run on `main`; afterwards only the merge gate updates it.
+
+Beside `structure_matches`, MethodAudit reports `exact_match` for each method whose structure it compares (null
+otherwise): true when the optimized Quire body and Mathcad's are the same instruction sequence, with short and long
+forms folded (`br.s` is `br`, `ldc.i4.2` and `ldc.i4.s 2` are `ldc.i4 2`, `ldarg.1` is `ldarg 1`), local slot
+numbers and compiler-generated names (which the structure check spells `<generated>`) renumbered by first use within
+the method (so which local or closure an instruction uses still counts), operands otherwise named as the structure
+check names them, `calli` with its signature, and branch targets and exception regions as instruction indices.
+Unlike the structure check, branch direction and block order count: `if (c) return a; return b;` rewritten as
+`c ? a : b` keeps the structure but loses the exact match. The baseline lists the exactly matching methods (`exact`),
+and a method listed there that is still in the inventory may not lose its exact match; one that disappeared or was
+renamed is reported as such, and one no longer compared (now `excluded`, `declaration_only` or without a counterpart)
+says so. A baseline without `exact` holds no exact matches, so the first gate merge that writes it starts the list.
+After an SDK update or a change to this normalisation, a maintainer regenerates the baseline from an unscoped run on
+`main`. `summary.json` (`il_match`) and the console report how many methods match exactly and how many match the
+structure only.
 
 ### Merge gate
 

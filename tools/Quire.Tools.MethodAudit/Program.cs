@@ -153,13 +153,19 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
     bool isVirtual = (artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)).Attributes
         & MethodAttributes.Virtual) != 0;
     List<string>? differences = null;
+    bool exact = false;
     if (exclusion == null && counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
     {
         try
         {
-            differences = StructureToken(artifact, raw) is not { } token ? ["not comparable: the optimized build lacks this method"]
-                : Reader(optimized.TryGetValue(artifact, out var o) ? o.Build : artifact, true).Read(MetadataTokens.MethodDefinitionHandle(token))
-                .Compare(Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token)));
+            if (StructureToken(artifact, raw) is not { } token) differences = ["not comparable: the optimized build lacks this method"];
+            else
+            {
+                var mine = Reader(optimized.TryGetValue(artifact, out var o) ? o.Build : artifact, true).Read(MetadataTokens.MethodDefinitionHandle(token));
+                var theirs = Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token));
+                differences = mine.Compare(theirs);
+                exact = differences.Count == 0 && mine.Exact(theirs);
+            }
         }
         catch (Exception e) when (e is BadImageFormatException or KeyNotFoundException or InvalidOperationException)
         {
@@ -178,6 +184,8 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
         shape_matches = counterpart != null && method.Access.ToString() == counterpart.Access,
         structure_matches = differences == null ? (bool?)null : differences.Count == 0,
         structure_differences = differences ?? [],
+        // Same instructions in the same order (Structure.Exact); null where the structure is not compared.
+        exact_match = differences == null ? (bool?)null : exact,
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
         body_sha256 = body?.Hash, calls = body?.Calls ?? [], virtual_calls = body?.VirtualCalls ?? [],
         field_reads = body?.Reads ?? [], field_writes = body?.Writes ?? [], reference_reads = body?.ReferenceReads ?? [], is_virtual = isVirtual,
