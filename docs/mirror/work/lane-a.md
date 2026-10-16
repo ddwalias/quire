@@ -470,6 +470,16 @@ Unit 4 claim of full settlement was a classification checkpoint and is supersede
 | **Unit 3b** | `AppException`, `Type`, `UnitSystem`, `RuntimeOptions` | `main` (`d7b5a63`) | **Merged to main** via `merge_gate.py --apply` | 165 | 0 | 0 | ok | 655 / 678 (23 accepted survivors) |
 | **Unit 4** | Remaining batch 2e unclassified members | `main` | **Historical classification checkpoint only; current audit gaps remain** | Not established | Not established | Not rerun | Not rerun | N/A |
 
+## deftype_keyword mirror batch (`mirror/a-deftype-keyword`)
+
+- Branch: `mirror/a-deftype-keyword`, based on current `main` `d63cb60`.
+- Scope: `deftype_keyword` singleton, constructor, token factory and declaration/definition walks; generated stubs removed from `Mpl.Run.deftype_keyword.g.cs`.
+- Evidence: [deftype_keyword](../evidence/Mpl.Run.deftype_keyword.md); original `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+- Differential test: `DeftypeKeywordDifferentialTests.Singleton_factory_and_walks` directly compares initialization, constructor, `NewTok` handles 0, 2 and `uint.MaxValue`, the declaration wrapper and reference to its original form, and definition identity reuse. Filtered direct test passed 1/1.
+- Focused validator run `c651e36c-fdf9-4e5f-8493-ced7ca1289fb`: Harness 52, Mpl 188 and Differential 127 passed; 5 methods compared, 5 exact, no missing/uncovered/unsupported methods; lint 0, ratchet ok, mutations 1/1 killed. `LOCAL CHECKS: pass · GATE: would pass`, scoped to `Quire.Mpl.Run.deftype_keyword`.
+- Exact IL before/after: 0/5 stubbed declarations -> 5/5 exact; no baseline-exact method regressed. Pending proposals: none.
+- Next: independent review and runtime merge gate, then continue to the next unowned Lane A member while the separate `define_keyword` proposal awaits maintainer acceptance.
+
 
 Historical mutant proposals and reasoning remain in Git history. They are not a current approval queue;
 consult `accepted-mutants.txt` for existing accepted keys. Under current PLAN rules, test-host crashes
