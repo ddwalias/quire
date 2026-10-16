@@ -17,4 +17,17 @@ internal partial class CodeArg
 
     [MirrorVerified("MplRunCodeArgMechanicalDifferentialTests")]
     public override void EndArg(ILGenerator il, int i) => m_end.EmitCode(il);
+    [MirrorVerified("CodeArgDifferentialTests")]
+    public CodeArg(Code beg, Code end)
+    {
+        m_beg = beg;
+        m_end = end;
+    }
+
+    [MirrorVerified("CodeArgDifferentialTests")]
+    public CodeArg(Code beg)
+    {
+        m_beg = beg;
+        m_end = Code.NullCode;
+    }
 }

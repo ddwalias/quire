@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.CodeArg, mplrun")]
 internal partial class CodeArg : global::Quire.Mpl.Run.Code
 {
-    [global::Quire.Mirror.MirrorStub]
-    public CodeArg(global::Quire.Mpl.Run.Code beg, global::Quire.Mpl.Run.Code end) { }
-    [global::Quire.Mirror.MirrorStub]
-    public CodeArg(global::Quire.Mpl.Run.Code beg) { }
 }
