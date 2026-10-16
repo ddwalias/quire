@@ -14,8 +14,6 @@ public partial class let_keyword : global::Quire.Mpl.Run.Keyword
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.let_keyword singleton;
     [global::Quire.Mirror.MirrorStub]
-    public let_keyword() : base(default(string), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Mpl.Run.Sexpr ExpandDefs(uint tag, global::Quire.Mpl.Run.SCons defs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

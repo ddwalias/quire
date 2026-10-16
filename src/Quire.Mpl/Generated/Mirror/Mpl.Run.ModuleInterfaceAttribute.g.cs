@@ -11,12 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.ModuleInterfaceAttribute, mplrun")]
 public sealed partial class ModuleInterfaceAttribute : global::System.Attribute
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string m_txt;
-    [global::Quire.Mirror.MirrorStub]
-    public string Interface { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public ModuleInterfaceAttribute(string s) { }
 }

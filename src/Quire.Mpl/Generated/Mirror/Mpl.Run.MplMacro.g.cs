@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplMacro, mplrun")]
 public abstract partial class MplMacro
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

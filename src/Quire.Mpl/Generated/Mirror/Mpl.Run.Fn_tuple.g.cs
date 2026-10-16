@@ -12,9 +12,5 @@ namespace Quire.Mpl.Run;
 public partial class Fn_tuple : global::Quire.Mpl.Run.Function
 {
     [global::Quire.Mirror.MirrorStub]
-    private object[] m_args;
-    [global::Quire.Mirror.MirrorStub]
-    public Fn_tuple(object[] ptup, int purity) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

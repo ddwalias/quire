@@ -14,8 +14,6 @@ public partial class locally_keyword : global::Quire.Mpl.Run.Keyword
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.locally_keyword singleton;
     [global::Quire.Mirror.MirrorStub]
-    public locally_keyword() : base(default(string), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok NewTok(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Mpl.Run.Sexpr walk_expression_as(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons form) => base.walk_expression_as(env, form);

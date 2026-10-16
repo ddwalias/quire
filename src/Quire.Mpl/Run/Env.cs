@@ -215,6 +215,9 @@ public abstract partial class MplMacro
     {
         throw new AppException("Can not expand this macro in the current compilation unit.", 0u, handle);
     }
+
+    [MirrorVerified("MplRunMplMacroMechanicalDifferentialTests")]
+    public override string ToString() => m_name.ToString();
 }
 
 /// <summary>

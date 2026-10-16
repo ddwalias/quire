@@ -13,6 +13,4 @@ public partial class CloDblFunction : global::Quire.Mpl.Run.DelegateFunction
 {
     [global::Quire.Mirror.MirrorStub]
     public double m_clo;
-    [global::Quire.Mirror.MirrorStub]
-    private CloDblFunction() : base(default(global::System.Delegate), default(int)) { }
 }

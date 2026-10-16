@@ -24,9 +24,23 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `cle_f8(double, double)` | 0x0600037d | 1 when `x <= y`; 0 when either is NaN. | High | Verified |
 | `cgt_f8(double, double)` | 0x0600037e | 1 when `x > y`; 0 when either is NaN. | High | Verified |
 | `cge_f8(double, double)` | 0x0600037f | 1 when `x >= y`; 0 when either is NaN. | High | Verified |
+| `Throw(Exception)` | 0x06000368 | MemberGen: `throw e` | Mechanical; Release IL equals Mathcad's | Verified |
+| `identity(object)` | 0x06000382 | MemberGen: `o` | Mechanical; Release IL equals Mathcad's | Verified |
+| `dup(object)` | 0x06000383 | MemberGen: `throw new AppException("may not capture pseudo function")` | Mechanical; Release IL equals Mathcad's | Verified |
+| `build(object, object)` | 0x06000392 | MemberGen: `throw new AppException("build: must inline")` | Mechanical; Release IL equals Mathcad's | Verified |
+| `dfoldr(object, object, object)` | 0x06000393 | MemberGen: `throw new AppException("dfoldr: must inline")` | Mechanical; Release IL equals Mathcad's | Verified |
+| `conv_void(object)` | 0x06000394 | MemberGen: `public static void conv_void(object o) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `invalid(object)` | 0x0600039a | MemberGen: `throw new AppException("compiler error")` | Mechanical; Release IL equals Mathcad's | Verified |
+| `mpl_type(object)` | 0x0600039b | MemberGen: `throw new AppException("compiler error")` | Mechanical; Release IL equals Mathcad's | Verified |
+| `rv(double)` | 0x0600039d | MemberGen: `new NumVal(r, 0.0)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `rrv(double, double)` | 0x0600039e | MemberGen: `new NumVal(r, i)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `seq(object, object)` | 0x060003a5 | MemberGen: `y` | Mechanical; Release IL equals Mathcad's | Verified |
+| `seq_void(object, object)` | 0x060003a6 | MemberGen: `throw new AppException("compiler error")` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PrimitiveDifferentialTests`, against the installed `mplrun.dll`; results compared as values):
 - each `_i4` comparison on every ordered pair of `int.MinValue`, -1, 0, 1 and `int.MaxValue`;
 - each `_f8` comparison on every ordered pair of -∞, -1, -0, 0, 1, +∞ and NaN.
+
+MemberGen members are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.

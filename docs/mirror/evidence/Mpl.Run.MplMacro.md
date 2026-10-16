@@ -18,9 +18,11 @@ Base class for MPL macros, providing standard expand hook defaults, error dispat
 | `IllegalMacroRef(Tok)` | 0x0600012a | `fed031ac` | Throws `AppException("illegal macro reference", 0u, form.handle)`. | High | Verified |
 | `NotAtTopLevel(Sym, uint)` | 0x0600012b | `a775f6fe` | Throws `AppException("function macro definition not at top level", 0u, handle)`. | High | Verified |
 | `CanNotExpand(uint)` | 0x0600012c | `3e55906f` | Throws `AppException("Can not expand this macro in the current compilation unit.", 0u, handle)`. | High | Verified |
-| `ToString()` | 0x0600012d | `1f4c6078` | Returns `m_name.ToString()`. | High | Stub |
+| `ToString()` | 0x0600012d | `1f4c6078` | MemberGen: `m_name.ToString()` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 - **Observed** (`EnvDifferentialTests`): Direct comparisons of `IllegalMacroCall`, `IllegalMacroRef`, `NotAtTopLevel`, and `CanNotExpand`.
 - **Inferred** (`EnvTests`): Base `MplMacro` virtual methods (`ExpandRef`, `ExpandCall`) and constructor tested via test subclass.
+
+MemberGen members are compared by `Quire.Differential.Tests.MplRunMplMacroMechanicalDifferentialTests`.

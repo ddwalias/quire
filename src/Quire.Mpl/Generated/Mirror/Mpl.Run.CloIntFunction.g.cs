@@ -13,6 +13,4 @@ public partial class CloIntFunction : global::Quire.Mpl.Run.DelegateFunction
 {
     [global::Quire.Mirror.MirrorStub]
     public int m_clo;
-    [global::Quire.Mirror.MirrorStub]
-    private CloIntFunction() : base(default(global::System.Delegate), default(int)) { }
 }

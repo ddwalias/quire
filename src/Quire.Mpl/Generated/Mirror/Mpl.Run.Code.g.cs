@@ -19,6 +19,4 @@ public partial class Code
     public virtual void BegArg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void EndArg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Code() { }
 }

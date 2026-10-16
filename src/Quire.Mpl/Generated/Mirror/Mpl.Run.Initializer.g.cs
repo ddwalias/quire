@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Initializer, mplrun")]
 public sealed partial class Initializer : global::System.MarshalByRefObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeAssemblyPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Initializer() { }
 }
