@@ -17,7 +17,7 @@ public abstract partial class Atom : Tag
     [MirrorVerified("SexprDifferentialTests")] public const int StrTag = 4;
     [MirrorVerified("SexprDifferentialTests")] public const int KeyTag = 5;
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Atom")]
     public Atom(int tag) : base(tag) { }
 
     [MirrorVerified("SexprDifferentialTests")]
@@ -213,7 +213,7 @@ public partial class Sym : Atom
         return macro.ExpandCall(env, form).walk_declaration_lhs(env);
     }
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sym")]
     public virtual SCons walk_definition_as(MplEnv env, SCons form)
     {
         Sexpr.BadDeclaration(form);

@@ -35,7 +35,7 @@ public abstract partial class Sexpr : Tag
     [MirrorVerified("SexprDifferentialTests")] public const int SAppendTag = 7;
     [MirrorVerified("SexprDifferentialTests")] public const int SListTag = 8;
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sexpr")]
     public Sexpr(int tag) : base(tag) { }
 
     /// <summary>The source handle; 0 unless a token (or a list, through its first element) carries one.</summary>
@@ -84,7 +84,7 @@ public abstract partial class Sexpr : Tag
         }
     }
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sexpr")]
     public virtual Sexpr quotation
     {
         get
@@ -94,7 +94,7 @@ public abstract partial class Sexpr : Tag
         }
     }
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sexpr")]
     public virtual Sexpr quote
     {
         get
@@ -105,7 +105,7 @@ public abstract partial class Sexpr : Tag
     }
 
     /// <summary>The cons cell of a non-empty list; <see cref="Nul"/> gives null and anything else throws.</summary>
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sexpr")]
     public virtual SCons scons
     {
         get
@@ -162,14 +162,14 @@ public abstract partial class Sexpr : Tag
     [MirrorVerified("SexprDifferentialTests")]
     public virtual Cons walk_declaration_lhs(MplEnv env) => null;
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sexpr")]
     public virtual Sexpr walk_pattern(MplEnv env)
     {
         BadPattern(this);
         return null;
     }
 
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.Sexpr")]
     public virtual Sexpr walk_expression(MplEnv env)
     {
         BadExpression(this);
@@ -408,7 +408,7 @@ public partial class SCons : Sexpr
     /// A list headed by a symbol is walked by that symbol; any other list becomes an <c>apply</c> of all its
     /// elements. The null-head check can't fire: <see cref="Key"/> already dereferences the head.
     /// </summary>
-    [MirrorVerified("SexprDifferentialTests")]
+    [MirrorTested("Mpl.Run.SCons")]
     public override Sexpr walk_expression(MplEnv env)
     {
         Sym key = Key;

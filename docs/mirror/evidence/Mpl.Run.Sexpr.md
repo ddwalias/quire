@@ -24,19 +24,19 @@ Abstract base of the S-expression family. It overrides nothing from `object`, so
 | `AsSym` | 0x06000011 | `feb5278b` | `sym`, or `NotASymbol(this)` when null. | High | Verified |
 | `AsStr` | 0x06000012 | `f98947eb` | `str`, or `NotAString(this)` when null. | High | Verified |
 | `AsKey` | 0x06000013 | `f45f1d23` | `Key`, or `NotAKeyword(this)` when null. | High | Verified |
-| `quotation` | 0x06000014 | `1c7bba9a` | `NotAQuotation(this)`. | High | Verified |
-| `quote` | 0x06000015 | `321df6ab` | `QuotationNotImplemented(this)`. | High | Verified |
-| `scons` | 0x06000016 | `b124948e` | `ExpectedAList(this)`; only lists override it (Nul gives null). | High | Verified |
+| `quotation` | 0x06000014 | `1c7bba9a` | `NotAQuotation(this)`. | High | Tested |
+| `quote` | 0x06000015 | `321df6ab` | `QuotationNotImplemented(this)`. | High | Tested |
+| `scons` | 0x06000016 | `b124948e` | `ExpectedAList(this)`; only lists override it (Nul gives null). | High | Tested |
 | `FormatTail()` | 0x06000017 | `297fc615` | `" . " + ToString()`: the dotted tail of an improper list, without the closing parenthesis (the list adds it). | High | Verified |
 | `FormatAppend()` | 0x06000018 | `05f10a6f` | `" " + ToString()`. | High | Verified |
 | `Walk(MplEnv, Sexpr)` | 0x06000019 | `14fee3d4` | `block.walk(env, out e)`, returned as `[e, definitions]`. | High | Verified |
-| `WalkModule(MplEnv, Sexpr)` | 0x0600001a | `273fd630` | `block.walk(env, out _)`, then a list headed by `block_keyword.NewTok(0)` followed by `SCons.as_Sexpr` of the definitions. | High; `block_keyword.NewTok` is a stub in Quire (Keyword batch) | Analyzed |
+| `WalkModule(MplEnv, Sexpr)` | 0x0600001a | `273fd630` | `block.walk(env, out _)`, then a list headed by `block_keyword.NewTok(0)` followed by `SCons.as_Sexpr` of the definitions. | High | Verified |
 | `walk(MplEnv, out MplEnv)` | 0x0600001b | `f1c250b4` | Makes `new LocalEnv(env)` the out environment, then `walk_definitions(walk_declaration_lhs(outenv), outenv)`. | High; Quire's `LocalEnv(parent)` is still a no-op stub, so the parent link isn't observable yet | Verified |
 | `walk_definitions(Cons, MplEnv)` | 0x0600001c | `8d61c081` | For each cell, replaces `Field1` with `walk_definition(Field1 as SCons, env)`, in place; returns the first cell. | High | Tested |
 | `walk_definition(SCons, MplEnv)` | 0x0600001d | `c824ae41` | `decl.Key.walk_definition_as(env, decl)`; a non-symbol head throws `NullReferenceException`. | High | Tested |
 | `walk_declaration_lhs(MplEnv)` | 0x0600001e | `ce2965e0` | null. | High | Verified |
-| `walk_pattern(MplEnv)` | 0x0600001f | `a1b033ff` | `BadPattern(this)`. | High | Verified |
-| `walk_expression(MplEnv)` | 0x06000020 | `f11dedb3` | `BadExpression(this)`. | High | Verified |
+| `walk_pattern(MplEnv)` | 0x0600001f | `a1b033ff` | `BadPattern(this)`. | High | Tested |
+| `walk_expression(MplEnv)` | 0x06000020 | `f11dedb3` | `BadExpression(this)`. | High | Tested |
 | `walk_with_bindings(MplEnv, SCons, out Sexpr)` | 0x06000021 | `07826449` | In `new LocalEnv(env)`: the out value is `SCons.walk_patterns(scope, pats)`, the result `walk_expression(scope)` on this. | High | Verified |
 | `BadDeclaration … QuotationNotImplemented` | 0x06000022, 0x06000023, 0x06000024, 0x06000025, 0x06000026, 0x06000027, 0x06000028, 0x06000029, 0x0600002a, 0x0600002b, 0x0600002c, 0x0600002d | `9751fe68` (first) | Each throws `new AppException(message, 0, form.handle)` with its message: "illegal declaration", "bad pattern", "bad expression", "expected a list", "syntax error", "bad application", "expected a symbol", "expected a string", "expected a keyword", "not implemented", "not a quotation", "quotation not implemented". A null form throws `NullReferenceException` first. | High; messages not compared (Quire `AppException` is a stub) | Verified |
 

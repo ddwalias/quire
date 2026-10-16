@@ -332,6 +332,36 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
   - Format checks: `git diff --check` passed cleanly with 0 findings.
   - Protected paths: `merge_gate.stub_deletions` verified stub removals from `Mpl.Run.Keyword.g.cs` (8 member deletions) and `Mpl.Run.block_keyword.g.cs` (5 member deletions) cleanly without modifying any other protected files.
 
+## Rationalization of MirrorTested attributes for abstract base constructors and unreachable throwing tails (mirror/a-tested-attributes)
+
+- Branch: `mirror/a-tested-attributes`
+- Worktree: `/root/src/quire-tested-attributes`
+- Scope: Correct status attributes from `[MirrorVerified]` to `[MirrorTested]` across 10 methods in 5 Lane A runtime types (`Atom`, `Sym`, `Sexpr`, `SCons`, `AppException`):
+  1. `src/Quire.Mpl/Run/Atom.cs`:
+     - `Atom(int tag)`: `[MirrorTested("Mpl.Run.Atom")]` (abstract base constructor cannot be instantiated directly via reflection in `MethodComparison.Compare`).
+     - `Sym.walk_definition_as(MplEnv env, SCons form)`: `[MirrorTested("Mpl.Run.Sym")]` (unreachable `return null;` following unconditionally throwing `Sexpr.BadDeclaration(form)`).
+  2. `src/Quire.Mpl/Run/Sexpr.cs`:
+     - `Sexpr(int tag)`: `[MirrorTested("Mpl.Run.Sexpr")]` (abstract base constructor cannot be instantiated directly in `MethodComparison.Compare`).
+     - `Sexpr.quotation`: `[MirrorTested("Mpl.Run.Sexpr")]` (unreachable `return null;` after throwing helper `NotAQuotation(this)`).
+     - `Sexpr.quote`: `[MirrorTested("Mpl.Run.Sexpr")]` (unreachable `return null;` after throwing helper `QuotationNotImplemented(this)`).
+     - `Sexpr.scons`: `[MirrorTested("Mpl.Run.Sexpr")]` (unreachable `return null;` after throwing helper `ExpectedAList(this)`).
+     - `Sexpr.walk_pattern(MplEnv env)`: `[MirrorTested("Mpl.Run.Sexpr")]` (unreachable `return null;` after throwing helper `BadPattern(this)`).
+     - `Sexpr.walk_expression(MplEnv env)`: `[MirrorTested("Mpl.Run.Sexpr")]` (unreachable `return null;` after throwing helper `BadExpression(this)`).
+     - `SCons.walk_expression(MplEnv env)`: `[MirrorTested("Mpl.Run.SCons")]` (unreachable `BadApplication(this); return null;` fallback because `Key` property dereferences `head` first).
+  3. `src/Quire.Mpl/Run/AppException.cs`:
+     - `AppException.Raise(object[] msgs, uint handle)`: `[MirrorTested("Mpl.Run.AppException")]` (unreachable method closing brace `}` because every execution path throws via `Raise(text, handle)`).
+- Contracts & Behavior:
+  - All 10 methods have 100% behavioral test coverage in `Quire.Mpl.Tests` and direct differential test comparisons in `Quire.Differential.Tests`.
+  - In decompiled PTC Mathcad Prime 12.0.1.0 `mplrun.dll`, the identical `ldnull; ret` sequence points exist due to C# compiler constraints following void-returning throwing methods, but are physically unreachable at runtime.
+  - Per Quire mirror policy and precedents (`Keyword.walk_declaration_as`, `SCons.walk_pattern`, and `Mcd.Type`), methods with full behavioral test coverage whose physical sequence points cannot be reached without maintainer unreachable-line exemptions are properly designated `[MirrorTested]`.
+  - Abstract base constructors cannot be invoked directly by `MethodComparison.Compare` via `ConstructorInfo.Invoke(args)` because reflection throws `MemberAccessException: Cannot create an instance of an abstract class`. They are properly designated `[MirrorTested]`.
+- Evidence files updated:
+  - [Mpl.Run.Atom](../evidence/Mpl.Run.Atom.md): `Atom(int)` status confirmed as `Tested`.
+  - [Mpl.Run.Sym](../evidence/Mpl.Run.Sym.md): `walk_definition_as` status updated to `Tested`.
+  - [Mpl.Run.Sexpr](../evidence/Mpl.Run.Sexpr.md): `quotation`, `quote`, `scons`, `walk_pattern`, `walk_expression` updated to `Tested`; `WalkModule` confirmed as `Verified`.
+  - [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md): `walk_expression` status updated to `Tested`.
+  - [Mpl.Run.AppException](../evidence/Mpl.Run.AppException.md): `Raise(object[], uint)` status updated to `Tested`.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run
