@@ -28,6 +28,8 @@
 | Invert(class:568[]) | 0x0600062e | 971e5728cd33f04e61e0bb5950cca53e5a18bf5e2c19486e338f6f91731f0398 | Allocate fresh array of Dim.Pwr(element, −1); empty input yields empty array. | Static observed; direct cases below only | Verified |
 | Product(class:568, class:568[]) | 0x0600062f | 72cbd49035442b1826246d70ac9545b2b4b9b4540d1a3db8c148ee6cf0f3f01e | Fold Dim.Mult from scalar through array; empty returns scalar. | Static observed; direct cases below only | Verified |
 | Push(class:568, class:568[]) | 0x06000630 | b00faf7f38063b4d17d9f945ef6c4a67b61bd927a52e73159530a1d1d46cba4b | Allocate new array with first dimension prepended; input is unchanged. | Static observed; direct cases below only | Verified |
+| c_dim..ctor(class:568[], i4) | 0x060007d5 | 3ed8e46824c37c277efd830868b9b37158da6f3f688e0bc88d50f509a4c5c4ee | Initialize base rows, cols from c.Length; assign m_coldim to c. | Same-artifact IL; 4 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| c_dim.make(class:568[], i4) | 0x060007d6 | 936602215b8315df780417f85d815de32230a6876e5ad336e53ff7c72c277f1d | Construct and return new c_dim instance with supplied column array and row count. | Same-artifact IL; 4 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 
 ## Fields
 

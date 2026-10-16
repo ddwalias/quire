@@ -274,9 +274,9 @@ public abstract partial class MatDim
     {
         [MirrorAnalyzed("Mcd.MatDim")]
         public readonly Dim[] m_coldim;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimConstructorDifferentialTests")]
         private c_dim(Dim[] c, int r) : base(r, c.Length) => m_coldim = c;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimConstructorDifferentialTests")]
         public static c_dim make(Dim[] c, int r) => new(c, r);
         [MirrorAnalyzed("Mcd.MatDim")]
         public override MatDim IsLinear => this;
