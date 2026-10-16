@@ -369,3 +369,90 @@ public partial class char_constant : Atom
     [MirrorVerified("SexprDifferentialTests")]
     public override string ToString() => Field1.ToString();
 }
+
+public partial class Keyword : Sym
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public static string keyword;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    protected readonly int m_keynum;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Tok key_tok;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override int KeyNum => m_keynum;
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr quote_atom => SCons.list2(key_tok, int_constant.NewTok(m_keynum, 0u));
+
+    static Keyword()
+    {
+        key_tok = Sym.MakeSymQ("Key", "MplMacro");
+        keyword = string.Intern("Keyword");
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public Keyword(string nm, int keynum) : base(nm, keyword, 5)
+    {
+        m_keynum = keynum;
+    }
+
+    [MirrorTested("Mpl.Run.Keyword")]
+    public override Cons walk_declaration_as(MplEnv env, SCons form)
+    {
+        Sexpr.BadDeclaration(form);
+        return null;
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Sexpr walk_expression_as(MplEnv env, SCons form)
+    {
+        Sexpr sexpr = SCons.walk_expressions(env, form.tail);
+        if (sexpr == form.Field2)
+        {
+            return form;
+        }
+        return new SCons(form.head, sexpr);
+    }
+}
+
+public partial class block_keyword : Keyword
+{
+    [MirrorVerified("SexprDifferentialTests")]
+    public static block_keyword singleton;
+
+    static block_keyword()
+    {
+        singleton = new block_keyword();
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public block_keyword() : base("block", 4)
+    {
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Tok NewTok(uint handle)
+    {
+        return new Tok(singleton, handle);
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public override Cons walk_declaration_as(MplEnv env, SCons form)
+    {
+        SCons tail = form.tail;
+        if (tail != null)
+        {
+            return Cons.destructive_append(tail.head.walk_declaration_lhs(env), walk_declaration_as(env, tail));
+        }
+        return form.Field2.walk_declaration_lhs(env);
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static SCons MakeBlock(uint handle, Sexpr forms)
+    {
+        return new SCons(new Tok(singleton, handle), forms);
+    }
+}

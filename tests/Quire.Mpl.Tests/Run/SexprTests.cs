@@ -926,4 +926,82 @@ public class SexprTests
         Assert.Equal("illegal macro call", ex3.Message);
         Assert.Equal(309u, ex3.Handle);
     }
+
+    [Fact]
+    public void Keyword_and_block_keyword_behaviours()
+    {
+        // Keyword base properties
+        Assert.Equal("Keyword", Keyword.keyword);
+        Assert.Equal("Key", Keyword.key_tok.sym.name);
+        Assert.Null(Keyword.key_tok.sym.qualifier);
+        Assert.Equal(0u, Keyword.key_tok.handle);
+
+        var kw = new Keyword("testkw", 7);
+        Assert.Equal("testkw", kw.name);
+        Assert.Equal("Keyword", kw.qualifier);
+        Assert.Equal("testkw.Keyword", kw.long_name);
+        Assert.Equal(5, kw.m_tag);
+        Assert.Equal(7, kw.KeyNum);
+        Assert.Equal("(Key 7)", kw.quote_atom.ToString());
+
+        var env = new LocalEnv();
+        var formDecl = SCons.list2(new Tok(kw, 50u), I(1, 51u));
+        var ex = Assert.Throws<AppException>(() => kw.walk_declaration_as(env, formDecl));
+        Assert.Equal("illegal declaration", ex.Message);
+        Assert.Equal(50u, ex.Handle);
+
+        // walk_expression_as: unchanged
+        var formExpr = SCons.list2(new Tok(kw, 52u), I(10));
+        var resUnchanged = kw.walk_expression_as(env, formExpr);
+        Assert.Same(formExpr, resUnchanged);
+
+        // walk_expression_as: changed
+        var symRep = new Sym("kwrep", null);
+        env.AddSymbolMacro(symRep, 1u, I(99, 53u));
+        var formExprChange = SCons.list2(new Tok(kw, 54u), new Tok(symRep, 55u));
+        var resChanged = kw.walk_expression_as(env, formExprChange);
+        Assert.NotSame(formExprChange, resChanged);
+        Assert.Equal("(#T36 testkw #T35 99)", resChanged.ToString());
+
+        // block_keyword
+        Assert.NotNull(block_keyword.singleton);
+        Assert.Equal("block", block_keyword.singleton.name);
+        Assert.Equal(4, block_keyword.singleton.KeyNum);
+
+        var tok = block_keyword.NewTok(42u);
+        Assert.Same(block_keyword.singleton, tok.atom);
+        Assert.Equal(42u, tok.handle);
+
+        var forms = SCons.list1(I(1));
+        var blk = block_keyword.MakeBlock(43u, forms);
+        Assert.Equal(43u, blk.head.handle);
+        Assert.Same(block_keyword.singleton, ((Tok)blk.head).atom);
+        Assert.Same(forms, blk.tail);
+
+        // walk_declaration_as on empty block: (block)
+        var emptyBlock = SCons.list1(block_keyword.NewTok(60u));
+        var emptyDefs = block_keyword.singleton.walk_declaration_as(env, emptyBlock);
+        Assert.Null(emptyDefs);
+
+        // walk_declaration_as on block with quote statement: (block (quote x))
+        var table = (SortedDictionary<string, BindingInfo>)typeof(LocalEnv)
+            .GetField("m_table", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(env)!;
+        table["quote"] = new MacroBindingInfo(0u, MplQuoteMacro.singleton);
+        var quoteStmt = SCons.list2(new Tok(new Sym("quote", null), 61u), S("x", 62u));
+        var blockWithQuote = SCons.list2(block_keyword.NewTok(63u), quoteStmt);
+        var quoteDefs = block_keyword.singleton.walk_declaration_as(env, blockWithQuote);
+        Assert.Null(quoteDefs);
+
+        // Sexpr.WalkModule
+        var modEmpty = Sexpr.WalkModule(env, Nul.singleton);
+        Assert.Equal("(block)", modEmpty.ToString());
+        Assert.Equal(0u, ((SCons)modEmpty).head.handle);
+        Assert.Same(block_keyword.singleton, ((Tok)((SCons)modEmpty).head).atom);
+
+        var modWithQuote = Sexpr.WalkModule(env, blockWithQuote);
+        Assert.NotNull(modWithQuote);
+        Assert.Equal(0u, ((SCons)modWithQuote).head.handle);
+        Assert.Same(block_keyword.singleton, ((Tok)((SCons)modWithQuote).head).atom);
+    }
 }

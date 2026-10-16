@@ -130,7 +130,7 @@ public abstract partial class Sexpr : Tag
         return [outenv, defs];
     }
 
-    [MirrorAnalyzed("Mpl.Run.Sexpr")]
+    [MirrorVerified("SexprDifferentialTests")]
     public static Sexpr WalkModule(MplEnv env, Sexpr block)
     {
         Cons defs = block.walk(env, out _);

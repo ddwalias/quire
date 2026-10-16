@@ -294,6 +294,44 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
   - Format checks: `git diff --check` passed cleanly.
   - Protected paths: `merge_gate.stub_deletions` verified stub removals from `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplQuoteMacro.g.cs` cleanly without modifying any other protected files.
 
+## Keyword and block_keyword mirror and Sexpr.WalkModule verification batch (mirror/a-keyword-block)
+
+- Branch: `mirror/a-keyword-block`
+- Worktree: `/root/src/quire-keyword-block`
+- Scope: Implementation of `Keyword` base members (type token `0x02000011`, fields `keyword` `0x04000030`, `key_tok` `0x0400003f`, `m_keynum` `0x0400003e`, ctor `(string, int)` `0x0600009a`, cctor `()` `0x06000099`, `get_KeyNum()` `0x06000098`, `get_quote_atom()` `0x0600009d`, `walk_declaration_as(MplEnv, SCons)` `0x0600009e`, `walk_expression_as(MplEnv, SCons)` `0x0600009f`) and `block_keyword` (type token `0x02000014`, field `singleton` `0x04000040`, cctor `()` `0x060000aa`, ctor `()` `0x060000ab`, `NewTok(uint)` `0x060000ac`, `MakeBlock(uint, Sexpr)` `0x060000ae`, `walk_declaration_as(MplEnv, SCons)` `0x060000ad`) in `src/Quire.Mpl/Run/Atom.cs` with stub deletions in `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Keyword.g.cs` and `src/Quire.Mpl/Generated/Mirror/Mpl.Run.block_keyword.g.cs`, and promoting `Sexpr.WalkModule(MplEnv, Sexpr)` (token `0x0600004e`) in `src/Quire.Mpl/Run/Sexpr.cs` from `[MirrorAnalyzed]` to `[MirrorVerified("SexprDifferentialTests")]`.
+- Contracts & Behavior:
+  - `Mpl.Run.Keyword`:
+    - Inherits `Sym(nm, keyword, 5)`.
+    - `public static string keyword;` initialized to `string.Intern("Keyword")` in `.cctor()`.
+    - `public static Tok key_tok;` initialized to `Sym.MakeSymQ("Key", "MplMacro")` in `.cctor()`.
+    - `m_keynum`: stores integer keyword index.
+    - `KeyNum`: returns `m_keynum`.
+    - `quote_atom`: returns `SCons.list2(key_tok, int_constant.NewTok(m_keynum, 0u))`.
+    - `walk_declaration_as(MplEnv env, SCons form)`: calls `Sexpr.BadDeclaration(form)` which throws `AppException("illegal declaration", 0u, form.handle)`, returns `null`. Marked `[MirrorTested("Mpl.Run.Keyword")]` because `return null;` is unreachable after the throwing call.
+    - `walk_expression_as(MplEnv env, SCons form)`: walks expressions via `SCons.walk_expressions(env, form.tail)`. If unchanged returns `form`, otherwise returns `new SCons(form.head, walkedTail)`.
+    - `key(int)` and `keytok(int)` remain stubs in `.g.cs` until all 15 keyword singletons are implemented.
+  - `Mpl.Run.block_keyword`:
+    - Inherits `Keyword("block", 4)`.
+    - `public static block_keyword singleton;` initialized in `.cctor()`.
+    - `NewTok(uint handle)`: returns `new Tok(singleton, handle)`.
+    - `MakeBlock(uint handle, Sexpr forms)`: returns `new SCons(new Tok(singleton, handle), forms)`.
+    - `walk_declaration_as(MplEnv env, SCons form)`: if `form.tail != null`, appends `tail.head.walk_declaration_lhs(env)` to recursive `walk_declaration_as(env, tail)`; otherwise returns `form.Field2.walk_declaration_lhs(env)`.
+  - `Mpl.Run.Sexpr.WalkModule(MplEnv env, Sexpr block)`:
+    - Calls `Cons defs = block.walk(env, out _)`.
+    - Returns `new SCons(block_keyword.NewTok(0u), SCons.as_Sexpr(defs))`.
+    - Attribute updated from `[MirrorAnalyzed("Mpl.Run.Sexpr")]` to `[MirrorVerified("SexprDifferentialTests")]`.
+- Evidence files:
+  - [Mpl.Run.Keyword](../evidence/Mpl.Run.Keyword.md): Created with `Verified` status across implemented members, `Tested` on `walk_declaration_as` (unreachable return after throw), and `Stub` on `key`/`keytok`.
+  - [Mpl.Run.block_keyword](../evidence/Mpl.Run.block_keyword.md): Created with `Verified` status across all members.
+- Test counts & Validation receipts:
+  - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 187 passed, 0 failed, 0 skipped.
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 116 passed, 0 failed, 0 skipped (`SexprDifferentialTests`: 10 passed, 0 failed).
+  - Validation audit: `python3 tools/validation/validate.py --method-type Quire.Mpl.Run.Keyword --method-type Quire.Mpl.Run.block_keyword` — Harness 42, Mpl 187, Differential 116 passed; Method coverage: 10 compared, 0 structure mismatch, 2 missing stubs (`key`/`keytok`), 1 uncovered (`walk_declaration_as`), 0 verified_unsupported; Ratchet: ok; LOCAL CHECKS: pass.
+  - Direct comparisons added:
+    - `SexprDifferentialTests.Keyword_and_block_keyword_members`: Direct comparisons for `Keyword.cctor`, `Keyword.keyword`, `Keyword.key_tok`, `Keyword(string, int)` constructor across multiple names and keynums, `KeyNum`, `quote_atom`, `walk_declaration_as` throwing `AppException("illegal declaration", 0u, handle)`, `walk_expression_as` across unchanged arguments returning identity and changed arguments returning new SCons; `block_keyword.cctor`, `block_keyword()`, `singleton` identity, `NewTok(uint)` across multiple handles, `MakeBlock(uint, Sexpr)` on empty and populated lists, `walk_declaration_as` on empty block `(block)` and block with quote declaration; `Sexpr.WalkModule(env, Nul)` and `Sexpr.WalkModule(env, (block))`.
+  - Format checks: `git diff --check` passed cleanly with 0 findings.
+  - Protected paths: `merge_gate.stub_deletions` verified stub removals from `Mpl.Run.Keyword.g.cs` (8 member deletions) and `Mpl.Run.block_keyword.g.cs` (5 member deletions) cleanly without modifying any other protected files.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run

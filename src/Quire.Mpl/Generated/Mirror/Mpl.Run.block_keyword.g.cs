@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.block_keyword, mplrun")]
 public partial class block_keyword : global::Quire.Mpl.Run.Keyword
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.block_keyword singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public block_keyword() : base(default(string), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Cons walk_declaration_as(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons form) => base.walk_declaration_as(env, form);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons MakeBlock(uint handle, global::Quire.Mpl.Run.Sexpr forms) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

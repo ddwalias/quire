@@ -12,8 +12,6 @@ namespace Quire.Mpl.Run;
 public partial class Keyword : global::Quire.Mpl.Run.Sym
 {
     [global::Quire.Mirror.MirrorStub]
-    public static string keyword;
-    [global::Quire.Mirror.MirrorStub]
     public const int KeyDefun = 0;
     [global::Quire.Mirror.MirrorStub]
     public const int KeyDefine = 1;
@@ -46,21 +44,7 @@ public partial class Keyword : global::Quire.Mpl.Run.Sym
     [global::Quire.Mirror.MirrorStub]
     public const int Nkeys = 15;
     [global::Quire.Mirror.MirrorStub]
-    protected readonly int m_keynum;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok key_tok;
-    [global::Quire.Mirror.MirrorStub]
-    public override int KeyNum { get => base.KeyNum; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr quote_atom { get => base.quote_atom; }
-    [global::Quire.Mirror.MirrorStub]
-    public Keyword(string nm, int keynum) : base(default(object)) { }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Keyword key(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Tok keytok(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Cons walk_declaration_as(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons form) => base.walk_declaration_as(env, form);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_expression_as(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons form) => base.walk_expression_as(env, form);
 }

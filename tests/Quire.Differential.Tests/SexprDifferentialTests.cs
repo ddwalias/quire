@@ -1444,12 +1444,18 @@ public class SexprDifferentialTests
         Compare("Sexpr.Walk(qEnv, Nul)", "Mpl.Run.Sexpr", qWalkStatic, null, [qEnv, qNul], mWalkStatic, null, [mEnv, mNul]);
         Compare("Sexpr.Walk(qEnv, Tok)", "Mpl.Run.Sexpr", qWalkStatic, null, [qEnv, qTokUpper], mWalkStatic, null, [mEnv, mTokUpper]);
 
-        // WalkModule: a block that fails while walking. A successful walk needs block_keyword.NewTok (a stub).
+        // WalkModule: a block that fails while walking, and valid blocks.
         var (qWalkModule, mWalkModule) = Method(typeof(Sexpr), "WalkModule", DeclaredStaticPublic, typeof(MplEnv), typeof(Sexpr));
         var badBlock = L(I(1, 8), I(2));
         var mBadBlock = ToMathcad(badBlock);
         Compare("Sexpr.WalkModule non-sym declaration throws", "Mpl.Run.Sexpr", qWalkModule, null, [qEnv, badBlock], mWalkModule, null, [mEnv, mBadBlock]);
         Compare("Sexpr.WalkModule null block throws", "Mpl.Run.Sexpr", qWalkModule, null, [qEnv, null], mWalkModule, null, [mEnv, null]);
+        Compare("Sexpr.WalkModule(qEnv, Nul)", "Mpl.Run.Sexpr", qWalkModule, null, [qEnv, qNul], mWalkModule, null, [mEnv, mNul]);
+        var qBkTok = block_keyword.NewTok(0u);
+        var mBkTok = Call(M("Mpl.Run.block_keyword"), null, "NewTok", ["UInt32"], [0u]);
+        var validBlockQ = new SCons(qBkTok, Nul.singleton);
+        var validBlockM = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], mBkTok, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!);
+        Compare("Sexpr.WalkModule(qEnv, (block))", "Mpl.Run.Sexpr", qWalkModule, null, [qEnv, validBlockQ], mWalkModule, null, [mEnv, validBlockM]);
 
         // walk_definitions and walk_definition
         Compare("Sexpr.walk_definitions(null)", "Mpl.Run.Sexpr", qWalkDefs, null, [null, qEnv], mWalkDefs, null, [null, mEnv]);
@@ -1482,5 +1488,141 @@ public class SexprDifferentialTests
             Compare($"Sexpr.{h}(Nul)", "Mpl.Run.Sexpr", qErr, null, [qNul], mErr, null, [mNul]);
             Compare($"Sexpr.{h}(null) throws", "Mpl.Run.Sexpr", qErr, null, [null], mErr, null, [null]);
         }
+    }
+
+    [SkippableFact]
+    public void Keyword_and_block_keyword_members()
+    {
+        Runtime.Sync();
+
+        // Keyword.cctor
+        var (qKwCctor, mKwCctor) = (typeof(Keyword).TypeInitializer!, MType(typeof(Keyword)).TypeInitializer!);
+        Compare("Keyword.cctor", "Mpl.Run.Keyword", qKwCctor, null, [], mKwCctor, null, []);
+
+        // Keyword.keyword field
+        var qKwField = typeof(Keyword).GetField("keyword", DeclaredStaticPublic)!;
+        var mKwField = MType(typeof(Keyword)).GetField("keyword", DeclaredStaticPublic)!;
+        Assert.Equal("Keyword", (string)qKwField.GetValue(null)!);
+        Assert.Equal("Keyword", (string)mKwField.GetValue(null)!);
+
+        // Keyword.key_tok field
+        var qKeyTokField = typeof(Keyword).GetField("key_tok", DeclaredStaticPublic)!;
+        var mKeyTokField = MType(typeof(Keyword)).GetField("key_tok", DeclaredStaticPublic)!;
+        var qKeyTok = (Tok)qKeyTokField.GetValue(null)!;
+        var mKeyTok = mKeyTokField.GetValue(null)!;
+        Assert.Equal("Key", qKeyTok.sym.name);
+        Assert.Null(qKeyTok.sym.qualifier);
+        Assert.Equal(0u, qKeyTok.handle);
+        Assert.Equal("Key", (string)Reflect.Get(Reflect.Get(mKeyTok, "sym")!, "name")!);
+        Assert.Null(Reflect.Get(Reflect.Get(mKeyTok, "sym")!, "qualifier"));
+
+        // Keyword.ctor(string, int)
+        var (qKwCtor, mKwCtor) = Ctor(typeof(Keyword), DeclaredInstancePublic, typeof(string), typeof(int));
+        foreach (var (nm, kn) in new[] { ("mykw", 7), ("block", 4), ("", 0), ("custom", -1) })
+        {
+            Compare($"Keyword({Text(nm)}, {kn})", "Mpl.Run.Keyword", qKwCtor, null, [nm, kn], mKwCtor, null, [nm, kn]);
+        }
+
+        // Keyword.KeyNum, quote_atom, walk_declaration_as, walk_expression_as
+        var (qKeyNum, mKeyNum) = Method(typeof(Keyword), "get_KeyNum", DeclaredInstancePublic);
+        var (qQuoteAtom, mQuoteAtom) = Method(typeof(Keyword), "get_quote_atom", DeclaredInstancePublic);
+        var (qKwWalkDecl, mKwWalkDecl) = Method(typeof(Keyword), "walk_declaration_as", DeclaredInstancePublic, typeof(MplEnv), typeof(SCons));
+        var (qKwWalkExpr, mKwWalkExpr) = Method(typeof(Keyword), "walk_expression_as", DeclaredInstancePublic, typeof(MplEnv), typeof(SCons));
+
+        var qKwInst = new Keyword("testkw", 10);
+        var mKwInst = New(MType(typeof(Keyword)), ["String", "Int32"], "testkw", 10)!;
+
+        Compare("Keyword.KeyNum", "Mpl.Run.Keyword", qKeyNum, qKwInst, [], mKeyNum, mKwInst, []);
+        Compare("Keyword.quote_atom", "Mpl.Run.Keyword", qQuoteAtom, qKwInst, [], mQuoteAtom, mKwInst, []);
+
+        var qEnv = new LocalEnv();
+        var mEnv = New(M("Mpl.Run.LocalEnv"), [])!;
+
+        // Keyword.walk_declaration_as throws AppException("illegal declaration", 0u, form.handle)
+        var formKwDeclQ = SCons.list2(new Tok(qKwInst, 50u), I(1, 51u));
+        var formKwDeclM = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            New(M("Mpl.Run.Tok"), ["Atom", "UInt32"], mKwInst, 50u),
+            New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], ToMathcad(I(1, 51u))!, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!))!;
+        Compare("Keyword.walk_declaration_as throws illegal declaration", "Mpl.Run.Keyword",
+            qKwWalkDecl, qKwInst, [qEnv, formKwDeclQ], mKwWalkDecl, mKwInst, [mEnv, formKwDeclM]);
+
+        // Keyword.walk_expression_as:
+        // 1. unchanged arguments: returns form identity
+        Compare("Keyword.walk_expression_as unchanged", "Mpl.Run.Keyword",
+            qKwWalkExpr, qKwInst, [qEnv, formKwDeclQ], mKwWalkExpr, mKwInst, [mEnv, formKwDeclM]);
+
+        // 2. changed arguments: returns new SCons
+        var symToExpand = new Sym("kwrep", null);
+        var mSymToExpand = ToMathcad(symToExpand)!;
+        qEnv.AddSymbolMacro(symToExpand, 1u, I(99, 52u));
+        Call(mEnv, "AddSymbolMacro", ["Sym", "UInt32", "Sexpr"], mSymToExpand, 1u, ToMathcad(I(99, 52u))!);
+
+        var formKwChangeQ = SCons.list2(new Tok(qKwInst, 53u), new Tok(symToExpand, 54u));
+        var formKwChangeM = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            New(M("Mpl.Run.Tok"), ["Atom", "UInt32"], mKwInst, 53u),
+            New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], ToMathcad(new Tok(symToExpand, 54u))!, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!))!;
+        Compare("Keyword.walk_expression_as changed arguments", "Mpl.Run.Keyword",
+            qKwWalkExpr, qKwInst, [qEnv, formKwChangeQ], mKwWalkExpr, mKwInst, [mEnv, formKwChangeM]);
+
+
+        // block_keyword.cctor
+        var (qBkCctor, mBkCctor) = (typeof(block_keyword).TypeInitializer!, MType(typeof(block_keyword)).TypeInitializer!);
+        Compare("block_keyword.cctor", "Mpl.Run.block_keyword", qBkCctor, null, [], mBkCctor, null, []);
+
+        // block_keyword.ctor()
+        var (qBkCtor, mBkCtor) = Ctor(typeof(block_keyword), DeclaredInstancePublic);
+        Compare("block_keyword()", "Mpl.Run.block_keyword", qBkCtor, null, [], mBkCtor, null, []);
+
+        // block_keyword.singleton
+        var qBkSingleton = block_keyword.singleton;
+        var mBkSingleton = Reflect.Get(MType(typeof(block_keyword)), "singleton")!;
+        Assert.NotNull(qBkSingleton);
+        Assert.NotNull(mBkSingleton);
+        Assert.Equal("block", qBkSingleton.name);
+        Assert.Equal(4, qBkSingleton.KeyNum);
+
+        // block_keyword.NewTok(uint)
+        var (qBkNewTok, mBkNewTok) = Method(typeof(block_keyword), "NewTok", DeclaredStaticPublic, typeof(uint));
+        foreach (uint h in new[] { 0u, 1u, 42u, 0xFFFFFFFFu })
+        {
+            Compare($"block_keyword.NewTok({h})", "Mpl.Run.block_keyword", qBkNewTok, null, [h], mBkNewTok, null, [h]);
+        }
+
+        // block_keyword.MakeBlock(uint, Sexpr)
+        var (qBkMakeBlock, mBkMakeBlock) = Method(typeof(block_keyword), "MakeBlock", DeclaredStaticPublic, typeof(uint), typeof(Sexpr));
+        var formsQ = SCons.list1(I(1));
+        var formsM = ToMathcad(formsQ)!;
+        Compare("block_keyword.MakeBlock(0u, Nul)", "Mpl.Run.block_keyword", qBkMakeBlock, null, [0u, Nul.singleton], mBkMakeBlock, null, [0u, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!]);
+        Compare("block_keyword.MakeBlock(12u, forms)", "Mpl.Run.block_keyword", qBkMakeBlock, null, [12u, formsQ], mBkMakeBlock, null, [12u, formsM]);
+
+        // block_keyword.walk_declaration_as(MplEnv, SCons)
+        var (qBkWalkDecl, mBkWalkDecl) = Method(typeof(block_keyword), "walk_declaration_as", DeclaredInstancePublic, typeof(MplEnv), typeof(SCons));
+
+        // 1. empty block: (block) -> tail is null -> returns Field2.walk_declaration_lhs(env) which is null
+        var formEmptyBlockQ = SCons.list1(block_keyword.NewTok(60u));
+        var formEmptyBlockM = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            Call(M("Mpl.Run.block_keyword"), null, "NewTok", ["UInt32"], [60u]),
+            Reflect.Get(M("Mpl.Run.Nul"), "singleton")!)!;
+        Compare("block_keyword.walk_declaration_as empty block (block)", "Mpl.Run.block_keyword",
+            qBkWalkDecl, qBkSingleton, [qEnv, formEmptyBlockQ], mBkWalkDecl, mBkSingleton, [mEnv, formEmptyBlockM]);
+
+        // 2. block with quote declaration: (block (quote x))
+        var symQuoteInBlock = new Sym("quote", null);
+        var mSymQuoteInBlock = ToMathcad(symQuoteInBlock)!;
+        var qEnvBlock = new LocalEnv();
+        var mEnvBlock = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qTableBk = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvBlock, "m_table")!;
+        qTableBk["quote"] = new MacroBindingInfo(0u, MplQuoteMacro.singleton);
+        var mTableBk = (System.Collections.IDictionary)Reflect.Get(mEnvBlock, "m_table")!;
+        mTableBk["quote"] = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 0u, Reflect.Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!)!;
+
+        var formQuoteStmtQ = SCons.list2(new Tok(symQuoteInBlock, 61u), S("x", 62u));
+        var formQuoteStmtM = ToMathcad(formQuoteStmtQ)!;
+        var formBlockWithQuoteQ = SCons.list2(block_keyword.NewTok(63u), formQuoteStmtQ);
+        var formBlockWithQuoteM = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            Call(M("Mpl.Run.block_keyword"), null, "NewTok", ["UInt32"], [63u]),
+            New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], formQuoteStmtM, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!))!;
+        Compare("block_keyword.walk_declaration_as with quote declaration", "Mpl.Run.block_keyword",
+            qBkWalkDecl, qBkSingleton, [qEnvBlock, formBlockWithQuoteQ], mBkWalkDecl, mBkSingleton, [mEnvBlock, formBlockWithQuoteM]);
     }
 }
