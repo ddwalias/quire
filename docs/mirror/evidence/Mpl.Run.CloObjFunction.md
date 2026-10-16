@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x0600025b | MemberGen: `private CloObjFunction() : base(null, 0) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x0600025b | MemberGen: `: base(null, 0) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

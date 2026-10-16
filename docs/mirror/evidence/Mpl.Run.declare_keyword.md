@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000be | MemberGen: `public declare_keyword() : base("declare", 5) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000be | MemberGen: `: base("declare", 5) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `walk_definition_as(MplEnv, SCons)` | 0x060000c1 | MemberGen: `form` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases

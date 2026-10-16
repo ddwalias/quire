@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000de | MemberGen: `public case_keyword() : base("case", 10) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000de | MemberGen: `: base("case", 10) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

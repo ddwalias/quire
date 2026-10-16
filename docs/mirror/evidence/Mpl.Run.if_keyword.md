@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000cb | MemberGen: `public if_keyword() : base("if", 9) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000cb | MemberGen: `: base("if", 9) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

@@ -13,10 +13,4 @@ public partial class Code
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Mpl.Run.Code NullCode;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void BegArg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void EndArg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il, int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

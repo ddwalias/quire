@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000e6 | MemberGen: `public do_keyword() : base("do", 11) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000e6 | MemberGen: `: base("do", 11) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

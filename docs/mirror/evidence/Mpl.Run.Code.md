@@ -6,7 +6,10 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x06000347 | MemberGen: `public Code() { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `EmitCode(ILGenerator)` | 0x06000344 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `BegArg(ILGenerator, int)` | 0x06000345 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `EndArg(ILGenerator, int)` | 0x06000346 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x06000347 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

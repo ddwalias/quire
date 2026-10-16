@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000d8 | MemberGen: `public let_keyword() : base("let", 7) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000d8 | MemberGen: `: base("let", 7) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

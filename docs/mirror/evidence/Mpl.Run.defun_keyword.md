@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000b7 | MemberGen: `public defun_keyword() : base("defun", 0) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000b7 | MemberGen: `: base("defun", 0) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

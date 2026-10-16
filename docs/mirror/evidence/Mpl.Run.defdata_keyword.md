@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000a1 | MemberGen: `public defdata_keyword() : base("defdata", 3) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000a1 | MemberGen: `: base("defdata", 3) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `walk_declaration_as(MplEnv, SCons)` | 0x060000a3 | MemberGen: `new Cons(form, null)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `walk_definition_as(MplEnv, SCons)` | 0x060000a4 | MemberGen: `form` | Mechanical; Release IL equals Mathcad's | Verified |
 

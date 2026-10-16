@@ -7,7 +7,7 @@
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
 | `InitializeAssemblyPath(string)` | 0x060003b0 | MemberGen: `Rts.AssemblyPath = path` | Mechanical; Release IL equals Mathcad's | Verified |
-| `.ctor()` | 0x060003b1 | MemberGen: `public Initializer() { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060003b1 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 

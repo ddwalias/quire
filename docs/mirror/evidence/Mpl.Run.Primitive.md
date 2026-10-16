@@ -29,7 +29,7 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `dup(object)` | 0x06000383 | MemberGen: `throw new AppException("may not capture pseudo function")` | Mechanical; Release IL equals Mathcad's | Verified |
 | `build(object, object)` | 0x06000392 | MemberGen: `throw new AppException("build: must inline")` | Mechanical; Release IL equals Mathcad's | Verified |
 | `dfoldr(object, object, object)` | 0x06000393 | MemberGen: `throw new AppException("dfoldr: must inline")` | Mechanical; Release IL equals Mathcad's | Verified |
-| `conv_void(object)` | 0x06000394 | MemberGen: `public static void conv_void(object o) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `conv_void(object)` | 0x06000394 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `invalid(object)` | 0x0600039a | MemberGen: `throw new AppException("compiler error")` | Mechanical; Release IL equals Mathcad's | Verified |
 | `mpl_type(object)` | 0x0600039b | MemberGen: `throw new AppException("compiler error")` | Mechanical; Release IL equals Mathcad's | Verified |
 | `rv(double)` | 0x0600039d | MemberGen: `new NumVal(r, 0.0)` | Mechanical; Release IL equals Mathcad's | Verified |

@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `.ctor()` | 0x060000c5 | MemberGen: `public lambda_keyword() : base("lambda", 6) { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x060000c5 | MemberGen: `: base("lambda", 6) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
