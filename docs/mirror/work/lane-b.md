@@ -4,7 +4,7 @@ Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `42c7a097037b2b05235ae22515beeb9cb96bc0ea`. Lane B history is retained compactly here; older worktree results are historical.
+Checkpoint base: Linux main `9e982ce09a197a37e808b8c650ca19428cda1cf5`. Lane B history is retained compactly here; older worktree results are historical.
 
 | Batch | Main status |
 |---|---|
@@ -84,10 +84,26 @@ Branch `mirror/b-matval-dimension-arrays` (`339fcad`).
 Exact signatures and tokens: `ColDimArray(int) -> Dim[]` `0x06000438` and `RowDimArray(int) -> Dim[]` `0x06000439`. Contracts in `docs/mirror/evidence/Mcd.MatVal.md`.
 22 direct comparisons across two facts (11 per method) in `MatValDimensionArraysDifferentialTests`. Merged via `merge_gate.py --apply`.
 
+## MatVal IsRange / IsIntegral accessors — active checkpoint
+
+Branch `mirror/b-matval-range-integral`, based on current clean main `9e982ce09a19`. The batch changes direct tests, verified status annotations for these accessors, and the four contracts in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signatures/tokens/hashes are in that table. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; REA `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8`.
+
+The original getters short-circuit to false when their own JoeyBit/Integral bit is clear; otherwise they evaluate `IsRealVector`. That path can clear an all-zero imaginary array or canonicalize full pointer coverage. Setter cases verify that each accessor changes only its own bit while preserving the other flag and unrelated high bits. Getter cases compare true vectors, false non-vectors despite a stored flag, absent-bit short-circuit against a malformed pointer map, flagged `IndexOutOfRangeException` on that map, zero-imaginary cleanup, nonzero-imaginary false results without cleanup, and full-pointer canonicalization. The state observer retains old array/table aliases and entries and compares current matrix storage, pointer values and identity, exceptions, return values and dimensions.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatVal' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 44 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValRangeIntegralDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 fact passed, 0 failed, 0 skipped; 18 direct MethodComparison cases against the pinned artifact.
+```
+
+Setters use compound assignments (`|=` / `&=`) matching Mathcad IL exactly; all four accessors are exact opcode matches in Release IL. Local scoped mutation on `Quire.Mcd.MatVal` passed with 286/286 mutants killed (0 survivors). Independent review passed.
+
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
 1. **MatDim specialized coordinate queries and operations** (`c_dim`, `r_dim`, `rc_dim`, `uniform_dim`, `crazy_dim` constructors, equality, multiplication, transforms, and dimension array accessors).
-2. **MatVal flag and classifier members** (`get/set_IsRange`, `get/set_IsIntegral` tokens 0x06000464–0x06000467; `asRealVector` token 0x06000468; real classifiers).
+2. **MatVal flag and classifier members** (`asRealVector` token 0x06000468; real classifiers).
 3. **Function / FunctionUtilities** (`FunctionUtilities.take`/`but` boundary cases; `Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
 4. **Engine projects** (interface and factory members, subject to Linux/Windows capability).
