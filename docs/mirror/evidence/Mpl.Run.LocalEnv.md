@@ -18,14 +18,14 @@ Scoped local environment supporting parent chaining, local variable bindings, eq
 | `.ctor()` | 0x0600011d | `ce0e3e24` | Sets `m_level = 0`, `m_parent = null`, allocates `m_table`. | High | Verified |
 | `lookup_local(Sym)` | 0x0600011e | `5a294127` | Looks up `s.name` in `m_table`. | High | Verified |
 | `lookup(Sym)` | 0x0600011f | `3fb6be4f` | Returns `lookup_local(s) ?? m_parent.lookup(s)`. Throws `NullReferenceException` if parent is null and key is absent. | High | Verified |
-| `LoadForeignMacro(string)` | 0x06000120 | `27c0e5e0` | Calls `m_parent.LoadForeignMacro(sig)`. Throws `NullReferenceException` if parent is null. | High | Verified |
+| `LoadForeignMacro(string)` | 0x06000120 | Exact match | Calls `m_parent.LoadForeignMacro(sig)`. Throws `NullReferenceException` if parent is null. | High | Tested |
 | `AddLocal(Sym, uint)` | 0x06000121 | `0dc6628b` | `m_table.Add(s.name, new BindingInfo(handle))`; returns `this`. Duplicate key throws `ArgumentException`. | High | Verified |
 | `AddLocalEquation(Sym, uint)` | 0x06000122 | `d18d0b3e` | `m_table[s.name] = new BindingInfo(handle)`; returns `this`. Overwrites existing binding. | High | Verified |
 | `AddSymbolMacro(Sym, uint, Sexpr)` | 0x06000123 | `11e25260` | Adds `MacroBindingInfo` wrapping `MplSymbolMacro(s, e)`; returns the binding. Duplicate key throws `ArgumentException`. | High | Verified |
-| `AddFunctionMacro(Sym, uint, MplEnv, Sexpr)` | 0x06000124 | `0baab39c` | Stub (pending function macro batch). | High | Blocked |
-| `AddForeignMacro(Sym, uint, string)` | 0x06000125 | `d8a66716` | Stub (pending foreign macro batch). | High | Blocked |
+| `AddFunctionMacro(Sym, uint, MplEnv, Sexpr)` | 0x06000124 | Exact match | At `Level <= 1`, adds a `MacroBindingInfo` wrapping `MplLocalFunctionMacro(env, s, handle, def)` under `s.name` and returns `this`; at deeper levels calls `NotAtTopLevel(s, handle)`. Duplicate names throw `ArgumentException`. | High | Tested |
+| `AddForeignMacro(Sym, uint, string)` | 0x06000125 | Exact match | Adds a `MacroBindingInfo(handle, new MplForeignMacro(this, s, sig))` under `s.name` and returns the binding. Duplicate names throw `ArgumentException`. | High | Verified |
 
 ## Test cases
 
-- **Observed** (`EnvDifferentialTests`): Direct comparisons of constructors, `Level`, `lookup_local`, `lookup`, `LoadForeignMacro`, `AddLocal`, `AddLocalEquation`, and `AddSymbolMacro` across hierarchy chains, duplicate key additions, overwrites, and parent delegating lookups.
+- **Observed** (`EnvDifferentialTests`): Direct comparisons of constructors, `Level`, `lookup_local`, `lookup`, `LoadForeignMacro`, `AddLocal`, `AddLocalEquation`, `AddSymbolMacro`, `AddFunctionMacro` at levels 0/1/2 and on duplicate names, and `AddForeignMacro` on duplicate names; `LoadForeignMacro` delegates to a child parent and throws for a null parent.
 - **Inferred** (`EnvTests`): Behavioural unit tests for scoping, parent chaining, and dictionary lookup edge cases.

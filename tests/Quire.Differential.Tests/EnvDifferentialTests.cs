@@ -7,14 +7,15 @@ using static Quire.Differential.Tests.MplRunSides;
 namespace Quire.Differential.Tests;
 
 /// <summary>
-/// Compares Quire's <see cref="MplEnv"/>, <see cref="BindingInfo"/>, <see cref="MacroBindingInfo"/>,
-/// <see cref="LocalEnv"/>, <see cref="MplMacro"/>, <see cref="MplSymbolMacro"/>, <see cref="MplQuoteMacro"/> and <see cref="MplBackquoteMacro"/> with mplrun's on the same inputs.
+/// Compares Quire's environment, binding and macro helpers with mplrun's on the same inputs.
 /// Evidence records: docs/mirror/evidence/Mpl.Run.MplEnv.md, Mpl.Run.BindingInfo.md, Mpl.Run.LocalEnv.md,
-/// Mpl.Run.MplMacro.md, Mpl.Run.MplSymbolMacro.md, Mpl.Run.MplQuoteMacro.md, Mpl.Run.MplBackquoteMacro.md.
+/// Mpl.Run.MplMacro.md, Mpl.Run.MplSymbolMacro.md, Mpl.Run.MplLocalFunctionMacro.md,
+/// Mpl.Run.MplForeignMacro.md, Mpl.Run.MplQuoteMacro.md and Mpl.Run.MplBackquoteMacro.md.
 /// </summary>
 public class EnvDifferentialTests
 {
     private const BindingFlags DeclaredInstancePublic = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+    private const BindingFlags DeclaredInstanceNonPublic = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
     private const BindingFlags DeclaredStaticPublic = BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly;
 
     private static System.Type MType(System.Type qType) =>
@@ -283,6 +284,8 @@ public class EnvDifferentialTests
         var (qAddLocalEq, mAddLocalEq) = Method(typeof(LocalEnv), "AddLocalEquation", DeclaredInstancePublic, typeof(Sym), typeof(uint));
         var (qAddSymbolMacro, mAddSymbolMacro) = Method(typeof(LocalEnv), "AddSymbolMacro", DeclaredInstancePublic, typeof(Sym), typeof(uint), typeof(Sexpr));
         var (qLoadForeign, mLoadForeign) = Method(typeof(LocalEnv), "LoadForeignMacro", DeclaredInstancePublic, typeof(string));
+        var (qAddFunctionMacro, mAddFunctionMacro) = Method(typeof(LocalEnv), "AddFunctionMacro", DeclaredInstancePublic, typeof(Sym), typeof(uint), typeof(MplEnv), typeof(Sexpr));
+        var (qAddForeignMacro, mAddForeignMacro) = Method(typeof(LocalEnv), "AddForeignMacro", DeclaredInstancePublic, typeof(Sym), typeof(uint), typeof(string));
 
         Func<object?, string> show = o => Describe(o);
         Func<object?, string> envState = o => EnvState(o);
@@ -340,6 +343,34 @@ public class EnvDifferentialTests
         MethodComparison.Compare("LocalEnv.AddSymbolMacro duplicate", "Mpl.Run.LocalEnv",
             qAddSymbolMacro, qRoot, [qSymZ, 50u, qRep], mAddSymbolMacro, mRoot, [mSymZ, 50u, mRep], show, show, envState, envState);
 
+        // AddFunctionMacro: levels 0 and 1 allow definitions; deeper environments reject them.
+        var qFunctionSym = new Sym("f_local", null);
+        var mFunctionSym = ToMathcad(qFunctionSym)!;
+        var qLambda = int_constant.NewTok(812, 0u);
+        var mLambda = ToMathcad(qLambda)!;
+        MethodComparison.Compare("LocalEnv.AddFunctionMacro at level 0", "Mpl.Run.LocalEnv",
+            qAddFunctionMacro, qRoot, [qFunctionSym, 810u, qChild, qLambda], mAddFunctionMacro, mRoot, [mFunctionSym, 810u, mChild, mLambda], show, show, envState, envState);
+
+        var qChildFunctionSym = new Sym("f_child", null);
+        var mChildFunctionSym = ToMathcad(qChildFunctionSym)!;
+        MethodComparison.Compare("LocalEnv.AddFunctionMacro at level 1", "Mpl.Run.LocalEnv",
+            qAddFunctionMacro, qChild, [qChildFunctionSym, 811u, qRoot, qLambda], mAddFunctionMacro, mChild, [mChildFunctionSym, 811u, mRoot, mLambda], show, show, envState, envState);
+        MethodComparison.Compare("LocalEnv.AddFunctionMacro duplicate", "Mpl.Run.LocalEnv",
+            qAddFunctionMacro, qRoot, [qFunctionSym, 812u, qRoot, qLambda], mAddFunctionMacro, mRoot, [mFunctionSym, 812u, mRoot, mLambda], show, show, envState, envState);
+
+        var qDeepFunctionSym = new Sym("f_deep", null);
+        var mDeepFunctionSym = ToMathcad(qDeepFunctionSym)!;
+        MethodComparison.Compare("LocalEnv.AddFunctionMacro at level 2", "Mpl.Run.LocalEnv",
+            qAddFunctionMacro, qGrandchild, [qDeepFunctionSym, 813u, qRoot, qLambda], mAddFunctionMacro, mGrandchild, [mDeepFunctionSym, 813u, mRoot, mLambda], show, show, envState, envState);
+
+        // AddForeignMacro stores the binding and rejects duplicate names.
+        var qForeignSym = new Sym("f_foreign", null);
+        var mForeignSym = ToMathcad(qForeignSym)!;
+        MethodComparison.Compare("LocalEnv.AddForeignMacro", "Mpl.Run.LocalEnv",
+            qAddForeignMacro, qRoot, [qForeignSym, 820u, "Foreign.F"], mAddForeignMacro, mRoot, [mForeignSym, 820u, "Foreign.F"], show, show, envState, envState);
+        MethodComparison.Compare("LocalEnv.AddForeignMacro duplicate", "Mpl.Run.LocalEnv",
+            qAddForeignMacro, qRoot, [qForeignSym, 821u, "Foreign.Other"], mAddForeignMacro, mRoot, [mForeignSym, 821u, "Foreign.Other"], show, show, envState, envState);
+
         // lookup_local
         MethodComparison.Compare("LocalEnv.lookup_local(x)", "Mpl.Run.LocalEnv",
             qLookupLocal, qRoot, [qSymX], mLookupLocal, mRoot, [mSymX], show, show, envState, envState);
@@ -372,7 +403,66 @@ public class EnvDifferentialTests
         // LoadForeignMacro: on root env (null parent) throws NullReferenceException
         MethodComparison.Compare("LocalEnv.LoadForeignMacro on root throws NullRef", "Mpl.Run.LocalEnv",
             qLoadForeign, qRoot, ["sig_foreign"], mLoadForeign, mRoot, ["sig_foreign"], show, show, envState, envState);
+
+
     }
+
+    [SkippableFact]
+    public void MplLocalFunctionMacro_and_MplForeignMacro_members()
+    {
+        Runtime.Sync();
+        var (qLocalCtor, mLocalCtor) = Ctor(typeof(MplLocalFunctionMacro), DeclaredInstancePublic, typeof(MplEnv), typeof(Sym), typeof(uint), typeof(Sexpr));
+        var (qLocalExpandCall, mLocalExpandCall) = Method(typeof(MplLocalFunctionMacro), "ExpandCall", DeclaredInstancePublic, typeof(MplEnv), typeof(Sexpr));
+        var (qLocalExpandRef, mLocalExpandRef) = Method(typeof(MplLocalFunctionMacro), "ExpandRef", DeclaredInstancePublic, typeof(MplEnv), typeof(Tok));
+        var (qForeignCtor, mForeignCtor) = Ctor(typeof(MplForeignMacro), DeclaredInstancePublic, typeof(MplEnv), typeof(Sym), typeof(string));
+        var (qForeignMacro, mForeignMacro) = Method(typeof(MplForeignMacro), "get_Macro", DeclaredInstanceNonPublic);
+        var (qForeignExpandCall, mForeignExpandCall) = Method(typeof(MplForeignMacro), "ExpandCall", DeclaredInstancePublic, typeof(MplEnv), typeof(Sexpr));
+        var (qForeignExpandRef, mForeignExpandRef) = Method(typeof(MplForeignMacro), "ExpandRef", DeclaredInstancePublic, typeof(MplEnv), typeof(Tok));
+        Func<object?, string> show = o => Describe(o);
+
+        var qEnv = new LocalEnv();
+        var mEnv = New(M("Mpl.Run.LocalEnv"), [])!;
+        var qSym = new Sym("fn", null);
+        var mSym = ToMathcad(qSym)!;
+        var qLambda = int_constant.NewTok(101, 0u);
+        var mLambda = ToMathcad(qLambda)!;
+        MethodComparison.Compare("MplLocalFunctionMacro.ctor", "Mpl.Run.MplLocalFunctionMacro",
+            qLocalCtor, null, [qEnv, qSym, 91u, qLambda], mLocalCtor, null, [mEnv, mSym, 91u, mLambda], show, show);
+
+        var qLocal = new MplLocalFunctionMacro(qEnv, qSym, 91u, qLambda);
+        var mLocal = New(M("Mpl.Run.MplLocalFunctionMacro"), ["MplEnv", "Sym", "UInt32", "Sexpr"], mEnv, mSym, 91u, mLambda)!;
+        var qForm = new SCons(int_constant.NewTok(1, 15u), Nul.singleton);
+        var mForm = ToMathcad(qForm)!;
+        MethodComparison.Compare("MplLocalFunctionMacro.ExpandCall", "Mpl.Run.MplLocalFunctionMacro",
+            qLocalExpandCall, qLocal, [qEnv, qForm], mLocalExpandCall, mLocal, [mEnv, mForm], show, show, show, show);
+        var qRef = int_constant.NewTok(3, 18u);
+        var mRef = ToMathcad(qRef)!;
+        MethodComparison.Compare("MplLocalFunctionMacro.ExpandRef", "Mpl.Run.MplLocalFunctionMacro",
+            qLocalExpandRef, qLocal, [qEnv, qRef], mLocalExpandRef, mLocal, [mEnv, mRef], show, show, show, show);
+
+        MethodComparison.Compare("MplForeignMacro.ctor", "Mpl.Run.MplForeignMacro",
+            qForeignCtor, null, [qEnv, qSym, "Foreign.F"], mForeignCtor, null, [mEnv, mSym, "Foreign.F"], show, show);
+        var qForeign = new MplForeignMacro(qEnv, qSym, "Foreign.F");
+        var mForeign = New(M("Mpl.Run.MplForeignMacro"), ["MplEnv", "Sym", "String"], mEnv, mSym, "Foreign.F")!;
+        MethodComparison.Compare("MplForeignMacro.Macro lazy failure", "Mpl.Run.MplForeignMacro",
+            qForeignMacro, qForeign, [], mForeignMacro, mForeign, [], show, show, show, show);
+        MethodComparison.Compare("MplForeignMacro.ExpandCall lazy failure", "Mpl.Run.MplForeignMacro",
+            qForeignExpandCall, qForeign, [qEnv, qForm], mForeignExpandCall, mForeign, [mEnv, mForm], show, show, show, show);
+        MethodComparison.Compare("MplForeignMacro.ExpandRef lazy failure", "Mpl.Run.MplForeignMacro",
+            qForeignExpandRef, qForeign, [qEnv, qRef], mForeignExpandRef, mForeign, [mEnv, mRef], show, show, show, show);
+
+        var qResolvedMacro = new MplSymbolMacro(qSym, qLambda);
+        var mResolvedMacro = New(M("Mpl.Run.MplSymbolMacro"), ["Sym", "Sexpr"], mSym, mLambda)!;
+        Set(qForeign, "m_macro", qResolvedMacro);
+        Set(mForeign, "m_macro", mResolvedMacro);
+        MethodComparison.Compare("MplForeignMacro.Macro cached", "Mpl.Run.MplForeignMacro",
+            qForeignMacro, qForeign, [], mForeignMacro, mForeign, [], show, show, show, show);
+        MethodComparison.Compare("MplForeignMacro.ExpandCall cached", "Mpl.Run.MplForeignMacro",
+            qForeignExpandCall, qForeign, [qEnv, qForm], mForeignExpandCall, mForeign, [mEnv, mForm], show, show, show, show);
+        MethodComparison.Compare("MplForeignMacro.ExpandRef cached", "Mpl.Run.MplForeignMacro",
+            qForeignExpandRef, qForeign, [qEnv, qRef], mForeignExpandRef, mForeign, [mEnv, mRef], show, show, show, show);
+    }
+
 
     [SkippableFact]
     public void MplQuoteMacro_members()

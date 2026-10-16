@@ -159,6 +159,7 @@ public partial class LocalEnv : MplEnv
         return m_parent.lookup(s);
     }
 
+    [MirrorTested("Mpl.Run.LocalEnv")]
     public override MplMacro LoadForeignMacro(string sig)
     {
         return m_parent.LoadForeignMacro(sig);
@@ -181,6 +182,98 @@ public partial class LocalEnv : MplEnv
         BindingInfo bindingInfo = new MacroBindingInfo(handle, new MplSymbolMacro(s, e));
         m_table.Add(s.name, bindingInfo);
         return bindingInfo;
+    }
+
+    [MirrorTested("Mpl.Run.LocalEnv")]
+    public override MplEnv AddFunctionMacro(Sym s, uint handle, MplEnv env, Sexpr def)
+    {
+        if (Level > 1)
+        {
+            MplMacro.NotAtTopLevel(s, handle);
+        }
+
+        m_table.Add(s.name, new MacroBindingInfo(handle, new MplLocalFunctionMacro(env, s, handle, def)));
+        return this;
+    }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override BindingInfo AddForeignMacro(Sym s, uint handle, string sig)
+    {
+        BindingInfo bindingInfo = new MacroBindingInfo(handle, new MplForeignMacro(this, s, sig));
+        m_table.Add(s.name, bindingInfo);
+        return bindingInfo;
+    }
+}
+
+public partial class MplLocalFunctionMacro : MplMacro
+{
+    private MplEnv m_env;
+    private uint m_handle;
+    private Sexpr m_lambda;
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public MplLocalFunctionMacro(MplEnv env, Sym s, uint handle, Sexpr lambda)
+        : base(s)
+    {
+        m_env = env;
+        m_handle = handle;
+        m_lambda = lambda;
+    }
+
+    [MirrorTested("Mpl.Run.MplLocalFunctionMacro")]
+    public override Sexpr ExpandCall(MplEnv e, Sexpr form)
+    {
+        CanNotExpand(form.handle);
+        return null;
+    }
+
+    [MirrorTested("Mpl.Run.MplLocalFunctionMacro")]
+    public override Sexpr ExpandRef(MplEnv e, Tok s)
+    {
+        CanNotExpand(s.handle);
+        return null;
+    }
+}
+
+public partial class MplForeignMacro : MplMacro
+{
+    private MplEnv m_env;
+    private string m_sig;
+    private MplMacro m_macro;
+    [MirrorTested("Mpl.Run.MplForeignMacro")]
+    private MplMacro Macro
+    {
+        get
+        {
+            if (m_macro != null)
+            {
+                return m_macro;
+            }
+
+            m_macro = m_env.LoadForeignMacro(m_sig);
+            return m_macro;
+        }
+    }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public MplForeignMacro(MplEnv env, Sym s, string sig)
+        : base(s)
+    {
+        m_env = env;
+        m_sig = sig;
+        m_macro = null;
+    }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override Sexpr ExpandCall(MplEnv e, Sexpr form)
+    {
+        return Macro.ExpandCall(e, form);
+    }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override Sexpr ExpandRef(MplEnv e, Tok s)
+    {
+        return Macro.ExpandRef(e, s);
     }
 }
 
