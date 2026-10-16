@@ -470,6 +470,23 @@ Unit 4 claim of full settlement was a classification checkpoint and is supersede
 | **Unit 3b** | `AppException`, `Type`, `UnitSystem`, `RuntimeOptions` | `main` (`d7b5a63`) | **Merged to main** via `merge_gate.py --apply` | 165 | 0 | 0 | ok | 655 / 678 (23 accepted survivors) |
 | **Unit 4** | Remaining batch 2e unclassified members | `main` | **Historical classification checkpoint only; current audit gaps remain** | Not established | Not established | Not rerun | Not rerun | N/A |
 
+## define_keyword mirror batch (`mirror/a-define-keyword`)
+
+- Branch: `mirror/a-define-keyword`, based on `5c387e4`; implementation commit `b99a587`. Independent reviewer returned **MERGE** for full diff tip `7420926` and confirmed the unreachable-line proof.
+- Scope: `define_keyword` singleton, constructor, token factory, both `MakeDefine` overloads and declaration/definition walks; generated stubs removed from `Mpl.Run.define_keyword.g.cs`.
+- Evidence: [define_keyword](../evidence/Mpl.Run.define_keyword.md); original `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+- Differential test: `DefineKeywordDifferentialTests.Singleton_factories_and_walks` compares initialization, constructor, `NewTok` and both factories at handles 0, 17 and `uint.MaxValue`; unchanged/rebuilt declaration patterns, bad declaration length, and unchanged/transformed definitions. The unchanged declaration result observes identity reuse of the original form; the unchanged definition case observes that the original form is returned by identity.
+- Checks: filtered direct comparison passed 1/1. Focused validator run `16794760-c4a9-4a34-9ff5-9b096cf52d01`: Harness 52, Mpl 188 and Differential 125 passed; 7 methods compared, 7 exact, no missing/uncovered/unsupported methods; lint 0, ratchet ok, mutations 12/12 killed. `LOCAL CHECKS: pass · GATE: would block (1 proposed unreachable line pending approval)`. This is scoped to `Quire.Mpl.Run.define_keyword`.
+- Exact IL before/after: 0/7 stubbed declarations -> 7/7 exact; no baseline-exact method regressed.
+- Pending proposal: one unreachable line after `Sexpr.BadDeclaration(form)`, which always throws in Mathcad; the reviewer confirmed the proof and the user approved it on 2026-10-17. Maintainer acceptance remains pending. No mutant proposal.
+- Next: resolve the proposal through the approval path, then continue to the next unowned Lane A member.
+
+### Pending unreachable-line proposals (define_keyword, 1)
+
+```text
+Quire.Mpl.Run.define_keyword::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False src/Quire.Mpl/Run/DefineKeyword.cs:32 sha256=57ce20db81e4742b41b0771631454872e1412c29376e5b61f0b4d220f28b4e13 # Sexpr.BadDeclaration(form) always throws on the non-three-cell branch; Mathcad has the same call before the declaration walk can continue.
+```
+
 
 Historical mutant proposals and reasoning remain in Git history. They are not a current approval queue;
 consult `accepted-mutants.txt` for existing accepted keys. Under current PLAN rules, test-host crashes
