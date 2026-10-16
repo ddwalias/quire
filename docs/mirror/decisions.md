@@ -10,12 +10,34 @@
   `InternalsVisibleTo`.
 - **D8:** `System.Reflection.Emit.PTC.Mathcad.Mpl` → `System.Reflection.Emit.Quire.Mpl` (literal).
 - **D9 (2026-10-14):** Method analysis, implementation, evidence, tests, and deviations follow the authoritative [PLAN.md §3c](PLAN.md#3c-method-by-method-fidelity). User approval for original-counterpart analysis is already given; no per-method renewal. Applicable licensing/legal constraints still need confirming.
+- **D4 (2026-10-16):** Stubbed features are hidden in the shipping UI until they are real. They do not surface
+  and throw.
+- **D5 (2026-10-16):** The Creo platform libraries ([scope.md §1.4](scope.md#14-ptc-creo-platform-libraries-ptc-but-shared-across-creo-products-not-mathcad-specific))
+  are deferred along with licensing.
+- **D10 (2026-10-16):** Native engine internals (Phase 11 and the native side of Phase 10) are not mirrored
+  method by method. Quire's engine sits behind `IEngine`, and an outside harness checks it by running the same
+  expressions and worksheets through Mathcad's `IEngine` and Quire's. Each difference becomes a deviation
+  proposal in [deviations.md](deviations.md).
+- **D11 (2026-10-16): tiered scope and definition of done.** Each member is assigned one tier. The per-member
+  lists and per-type table are in [tiers/](tiers/).
+
+  | Tier | Members | What | Done means |
+  |---|---:|---|---|
+  | A | 3,789 | Reachable from the engine, calculation, `mplrun` and document I/O | PLAN §3c rule 7 |
+  | A2 | 1,481 | Equation tree and parser | Stretch goal; same bar as A |
+  | B | 17,002 | Mechanical members (accessors, constructors, forwarding, constants) | Generated; exact Release-IL match with Mathcad and every callee settled, in place of a per-member direct comparison |
+  | C | 18,651 | UI and region behaviour, MPL-compiled libraries | Deferred; stays a stub, hidden under D4 |
+  | D | 14,066, plus Phase 11 outside metadata | Shell, automation, Excel, 3D, whiteboard, OLE, licensing, mixed C++/CLI internals, Phase 11 | Out of scope; stays a stub, hidden under D4 |
+
+  The 5,174 abstract members are already settled. A Tier B member the generator can't match exactly returns to
+  Tier A if it is reached from the Tier A roots, and to Tier C otherwise.
+- **D12 (2026-10-16):** The user accepts the legal risk of generating Tier B members to match Mathcad's
+  Release IL, so Tier B work proceeds without waiting for D9's licensing confirmation. This is a risk
+  acceptance, not a legal confirmation. Generated source still follows PLAN §3c rule 3 (no decompiler
+  artifacts), and no Mathcad IL is committed.
 
 ### Still open (none of these block Phase 0)
 
-- **D4: stubs in the shipping build.** Either exclude stubbed features from the UI until they're real
-  (recommended), or let them surface and throw.
-- **D5: Creo platform libraries (§1.4).** Mirror them as PTC code, or defer them with licensing (recommended)?
 - **D6: substitutes for commercial components** (§1.2). Fluent.Ribbon + AvalonDock for DevComponents, IPOPT or
   NLopt for Knitro, MathNet.Numerics for MKL. Are these acceptable, or do you prefer others?
   *Checked on net10.0-windows:* `Fluent.Ribbon` 11.0.2, `Dirkster.AvalonDock` 5.0.1,

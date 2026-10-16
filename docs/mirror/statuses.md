@@ -13,6 +13,9 @@ Each member of a mirrored type has one status (PLAN.md §3c), from its attribute
 - **Abstract** (no attribute, no body): an abstract or interface member without a default body. Mathcad's has
   no body either, so the declaration, which the manifest checks, is the whole contract.
 - **Quire-only** `[QuireOnly]`: no Mathcad counterpart.
+- **Generated** (Tier B, [D11](decisions.md); the attribute arrives with the member generator): emitted
+  by the generator and accepted on an exact Release-IL match with every callee settled. Until the gate supports
+  it, generated members are reported as Stub.
 
 *Settled* is Tested + Verified + Deviation + Abstract + Quire-only (§3c rule 7). Blocked, documented and analyzed members
 are open. Settled says nothing about untested inputs, and deviations are counted apart from matches.

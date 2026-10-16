@@ -143,6 +143,8 @@ Stable rule numbers/anchor for D9 and existing reports.
 7. **Done:** Every in-scope member needs evidenced implementation/tests, accepted tested deviation, or justified
    declaration-only/Quire-only status. Stub/Unclassified/Blocked/Documented/Analyzed prevent behavioral completion.
    Separate matches, case-limited verification, deviations; disclose unresolved work at administrative closure.
+   In-scope and done are per tier ([D11](decisions.md)): Tiers A/A2 as above; Tier B by exact Release-IL match with
+   settled callees, which replaces rule 3's per-method direct comparison once the gate supports it; C/D stay stubs.
 
 **Phase closure only (Windows):** `dotnet build Quire.slnx` for full solution compilation, then
 `python tools/validation/validate.py --profile phase` for all test projects and strict reports. The phase runner
@@ -161,10 +163,11 @@ Passing tests/type presence alone never establish equivalence.
 | Generator/merge/shape | [tooling.md](tooling.md), relevant `notes.txt` entries |
 | Engine result/Phase 2 consumer | [result-contract.md](result-contract.md): gates dependent work |
 | Another phase | [roadmap.md](roadmap.md): 11 phases; prioritize Phase 1 value/runtime dependencies |
-| Decision/substitute | [decisions.md](decisions.md): D4–D7 open; no inferred approval |
+| Decision/substitute | [decisions.md](decisions.md): D6–D7 open; no inferred approval |
+| Tier of a member/type | [tiers/](tiers/) per [D11](decisions.md) |
 | Audit/history | [STATE.md](STATE.md), [history.md](history.md): dated, not current evidence |
 
 Member attributes own live classifications (reported by generated `coverage.md`/`status/`); CSV `missing`/`exists` are inventory labels. Licensing/COM assemblies
-remain deferred; native/scripts/Axiom/user-function C API remain in scope. Substitutes require recorded decisions.
+remain deferred; native internals, scripts, Axiom and the user-function C API are tiered by D10/D11. Substitutes require recorded decisions.
 MirrorGen reads structural metadata; it neither executes methods nor analyzes bodies. Keep original code, raw
 analysis and logs outside checkpoint/repository; never reload whole inventories/generated trees/history by default.

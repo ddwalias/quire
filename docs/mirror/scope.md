@@ -84,7 +84,10 @@ Licence entries marked *verify* still need confirming before release.
 | ATL types | Microsoft | Proprietary | Deferred with COM interop |
 | `axiom/` core: Axiom computer-algebra system | Axiom project | BSD-3 | **Dependency**: FriCAS (BSD-3, the maintained Axiom fork) as the symbolic engine |
 
-### 1.3 Mathcad components outside .NET metadata, which must also be mirrored
+### 1.3 Mathcad components outside .NET metadata
+
+Under [D10/D11](decisions.md) these are Tier D; engine behaviour is checked from outside through `IEngine`.
+The table records what each component is and how it would be mirrored if the scope is reopened.
 
 | Component | What is visible | Size | Treatment |
 |---|---|---|---|
@@ -104,5 +107,5 @@ These are `baselibmt`, `asyncoremt`, `coretools_sh`, `coreutils_sh`, `dlmmgrmt`,
 `prod_dcu.exe`. Together they export about 17,300 symbols (≈ 650 C++ classes and 6,800 C functions). They provide
 licensing agents, service management, crash and telemetry logging, i18n, string utilities and process plumbing, and
 even Ansys CUDA hooks. They're PTC code, but not Mathcad's, so whether they count as "from Mathcad" is **decision
-D5**. The recommendation is to defer them with licensing, because nothing in the calculation or worksheet path
+D5**, decided 2026-10-16: they are deferred with licensing, because nothing in the calculation or worksheet path
 depends on them.
