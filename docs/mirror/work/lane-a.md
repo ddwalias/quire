@@ -459,3 +459,23 @@ Unit 4 claim of full settlement was a classification checkpoint and is supersede
 Historical mutant proposals and reasoning remain in Git history. They are not a current approval queue;
 consult `accepted-mutants.txt` for existing accepted keys. Under current PLAN rules, test-host crashes
 count as killed mutants and must never be proposed for equivalence acceptance.
+
+## `case_keyword` mirror (`mirror/a-case-keyword`)
+
+- Branch: `mirror/a-case-keyword`
+- Worktree: `/mnt/c/Projects/Quire-wt/a-case-keyword`
+- Scope: `Mpl.Run.case_keyword` type `0x0200001c`, `singleton` field `0x04000048`, `.cctor()` `0x060000dd`, `.ctor()` `0x060000de`, `NewTok(uint)` `0x060000df`, and `walk_expression_as(MplEnv, SCons)` `0x060000e0`.
+- Contracts: the singleton is initialized with `new case_keyword()`; the constructor calls `Keyword("case", 10)`; `NewTok(handle)` creates `Tok(singleton, handle)`; `walk_expression_as` calls `Sexpr.NotImplemented(form)` then has Mathcad's unreachable `return null` tail. Its attribute is `[MirrorTested("Mpl.Run.case_keyword")]`.
+- Evidence: [Mpl.Run.case_keyword](../evidence/Mpl.Run.case_keyword.md).
+- Differential case: `CaseKeywordDifferentialTests.Singleton_constructor_tokens_and_unimplemented_walk` directly compares `.cctor()`, `.ctor()`, `NewTok` with handles 0, 17 and `uint.MaxValue`, and the throwing walk with matching form state.
+- Tests: filtered `CaseKeywordDifferentialTests` passed 1/1. Focused validation suite passed 119/119, no failures or skips.
+- Exact IL: before/after, 0/3 stubbed method bodies -> 3/3 exact; the compiler-generated `.cctor` also matches exactly. The scoped report has 4 comparisons, 4 exact IL matches, 0 structure-only matches, no missing or uncovered methods.
+- Pending unreachable lines: these source-hashed entries follow the original's always-throwing `Sexpr.NotImplemented(form)`. They require independent proof review, user approval and maintainer acceptance; the batch cannot merge while they are pending.
+
+```text
+Quire.Mpl.Run.case_keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/case_keyword.cs:30 sha256=2fc7ba17d69cac7f51d1c1bb44bd6c09ac48ff47e3bf0c598109dde8b62ec2bf # Sexpr.NotImplemented(form) always throws and Mathcad has the same trailing return IL.
+Quire.Mpl.Run.case_keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/case_keyword.cs:31 sha256=e4c2d686c452df1aca248ba8a35cd7f104576cd3ac47d0949db6c18006fe682e # Sexpr.NotImplemented(form) always throws and Mathcad has the same trailing return IL.
+```
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.case_keyword --mutate --jobs 2 --proposed-unreachable /tmp/a-case-keyword-unreachable.txt`. Run `f345245b-333b-4a65-a02c-51339a9841f8`, summary `/tmp/quire-validation-h4gw39k5/summary.json`: Harness 52, Mpl 188, Differential 119 passed; lint 0; ratchet ok; 1/1 mutants killed; no survivors. Verdict: local checks pass; gate would block while the two unreachable-line proposals await approval.
+- Independent review of tip `4dbf225` returned **MERGE**: all four IL bodies, stub removals, direct comparisons and both proposal hashes/proofs were verified. The branch is not merged pending proposal approval and maintainer acceptance.
+- Next: `Rts.GetTypeInitializer(TypeBuilder)` is blocked by the protected `docs/mirror/lint-allowed.txt` dependency because a paired emitted Mathcad `TypeBuilder` test is needed and the differential linter rejects `Reflection.Emit`. Record this blocker and continue with the next unowned Primitive member after the case batch review.
