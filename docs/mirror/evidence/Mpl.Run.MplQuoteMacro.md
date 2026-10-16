@@ -17,5 +17,5 @@ MPL quote macro that expands calls `(quote x)` to quoted expressions `'x` (`Qt(x
 
 ## Test cases
 
-- **Observed** (`EnvDifferentialTests`): Direct comparisons of `singleton` identity and `ExpandCall` across valid length-2 lists (`(quote x)` returning `Qt(x)`), invalid length-3 lists (`(quote x y)` throwing `AppException("illegal macro call")`), invalid length-1 lists (`(quote)` throwing `AppException("illegal macro call")`), non-SCons tokens throwing `NullReferenceException`, and null input throwing `NullReferenceException`.
+- **Observed** (`EnvDifferentialTests`): Direct comparisons of `.ctor()`, `.cctor()`, `singleton` identity and `ExpandCall` across valid length-2 lists (`(quote x)` returning `Qt(x)`), invalid length-3 lists (`(quote x y)` throwing `AppException("illegal macro call")`), invalid length-1 lists (`(quote)` throwing `AppException("illegal macro call")`), non-SCons tokens throwing `NullReferenceException`, and null input throwing `NullReferenceException`.
 - **Inferred** (`EnvTests`): Unit tests covering `singleton` initialization, `ExpandCall` return type `Qt`, argument preservation, exception messages, and handle propagation.

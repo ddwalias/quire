@@ -276,7 +276,7 @@ public partial class MplQuoteMacro : MplMacro
     public override Sexpr ExpandCall(MplEnv e, Sexpr f)
     {
         SCons scons = f as SCons;
-        if (scons == null || scons.Length != 2) IllegalMacroCall(scons);
+        if (scons.Length != 2) IllegalMacroCall(scons);
         return new Qt(scons.second);
     }
 }

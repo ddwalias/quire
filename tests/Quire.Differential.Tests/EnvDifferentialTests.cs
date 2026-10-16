@@ -378,15 +378,27 @@ public class EnvDifferentialTests
     public void MplQuoteMacro_members()
     {
         Runtime.Sync();
-        var qSingleton = MplQuoteMacro.singleton;
-        var mSingleton = Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!;
-
-        Assert.Equal(Describe(mSingleton), Describe(qSingleton));
-
+        var (qCtor, mCtor) = Ctor(typeof(MplQuoteMacro), BindingFlags.NonPublic | BindingFlags.Instance);
+        var (qCc, mCc) = (typeof(MplQuoteMacro).TypeInitializer!, MType(typeof(MplQuoteMacro)).TypeInitializer!);
         var (qExpandCall, mExpandCall) = Method(typeof(MplQuoteMacro), "ExpandCall", DeclaredInstancePublic, typeof(MplEnv), typeof(Sexpr));
 
         Func<object?, string> show = o => Describe(o);
         Func<object, string> state = o => Describe(o);
+
+        MethodComparison.Compare("MplQuoteMacro()", "Mpl.Run.MplQuoteMacro",
+            qCtor, null, [], mCtor, null, [], show, show);
+
+        MethodComparison.Compare("MplQuoteMacro.cctor", "Mpl.Run.MplQuoteMacro",
+            qCc, null, [],
+            mCc, null, [],
+            quireShow: _ => $"singleton={Describe(MplQuoteMacro.singleton)}",
+            originalShow: _ => $"singleton={Describe(Get(MType(typeof(MplQuoteMacro)), "singleton"))}",
+            quireState: o => Describe(o), originalState: o => Describe(o));
+
+        var qSingleton = MplQuoteMacro.singleton;
+        var mSingleton = Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!;
+
+        Assert.Equal(Describe(mSingleton), Describe(qSingleton));
 
         // 1. Valid length-2 list: (quote x) -> Qt(x)
         var qSymQuote = new Sym("quote", null);
