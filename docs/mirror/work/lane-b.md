@@ -210,3 +210,25 @@ git diff --check
 ```
 
 These are affected behavior and targeted direct checks only. `git diff --check` passed. An independent whole-diff review initially found that the malformed-object fixture was a `StrVal`; it was replaced with `new object()` and both commands above were rerun successfully. Reviewer `lane_b_pointer_review` passed the corrected exact tip `0595d535e2eea262444589c5af75a51ab8499e07`; the final checkpoint amendment is documentation-only. Scoped mutation, Windows/native validation, and the full runtime merge gate have not been run; no phase-completion claim or mutant exception proposal is made. No additional approval is required for this scope. Next: review the final checkpoint amendment, push the squashed branch for backup, and publish its atomic frozen handoff.
+
+## Function.closure<CLO> — queued direct comparison
+
+Branch `mirror/b-function-closure-direct`, worktree `/root/src/quire-function-closure-direct`, was rebased from `e9d973e61e9a159c37c4c7e4f5daf353b96b9266` onto current clean main `f447eedbea9027d5491a4a5785101aefba3f7131`. Original Prime 12.0.1.0 `mplrun.dll` identity is SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Exact public static signature is `Mpl.Run.Function.closure<CLO>(Delegate,CLO,int) -> Function`, token `0x060001a3`; the method body is 67 bytes / 26 instructions, normalized IL SHA-256 `46e4a99f5e55c1802db02473bce3befda14a3975de4da8f96ebea6dc79cf2aba`. Original IL dispatches purities 2–5 to four `FunctionClosure_1..4` wrappers and constructs `Fn_clo<CLO>` for all other values. The sole original production caller is `DelegateFunction.clo<CLO>`; this batch tests the factory directly and does not change that caller or any implementation body.
+
+`FunctionClosureDirectDifferentialTests` has one fact and 14 direct comparisons: closure factory output and downstream `Apply` at typed purities 1–6 (each special arm and the default arm on both sides of 2–5), plus a non-`F<>` delegate fallback at purity 2. The captured type is a reference object; side-specific graph checks confirm the wrapper retains its supplied capture by reference, and invocation checks compare capture value, call count, argument order and result. This is finite case coverage; the caller chain, other captured types, null delegates, and helper fallback at other purities are outside this comparison. The evidence row keeps the method `Analyzed`: Quire uses two conditional branches while the original uses a switch. No deviation or acceptance exception is proposed.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~FunctionTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 8 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~FunctionClosureDirectDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 fact passed, 0 failed, 0 skipped; 14 direct comparisons against the pinned artifact.
+
+python3 tools/validation/validate.py --method-type Quire.Mpl.Run.Function --jobs 4
+=> `/tmp/quire-validation-93m1c9jw/summary.json`: Harness 36/36, Mpl 185/185, Differential 111/111; method coverage compared 18, declaration-only 1, excluded 5, missing 135, structure mismatch 7, uncovered 0, verified-unsupported 0; integrity lint 0/complete; ratchet ok. LOCAL CHECKS pass; scoped type gate would pass with inventory gaps; mutation deferred to full gate.
+
+git diff --check
+=> passed.
+```
+
+An exploratory validator run filtered to only the closure fact correctly failed the ratchet because it dropped existing `Function` comparisons; its result is not used as a gate receipt. The unfiltered type run above retains the baseline. After adding the capture-reference assertion, strict direct tests passed again. A refreshed unfiltered audit `/tmp/quire-validation-k10zkash/summary.json` ran Harness 36/36, Mpl 185/185, Differential 111/111, then was interrupted during coverage collection while Agent A's 12-worker mutation gate was active; it has no completed coverage or final ratchet receipt and is not used as a gate result. The prior completed type audit is the scoped receipt above; the final direct test run separately verifies capture identity. No production method body changed, so no scoped mutation run was required. Windows/native phase closure and the full runtime merge gate remain unperformed; this scoped result makes no phase-completion claim. Agent A authorized rebasing this queued test-only batch and confirmed no conflicting edits to `Mpl.Run.Function.md`. Independent whole-diff review passed; the one-commit branch is pushed for backup and frozen in the atomic ready [handoff](../../../../quire-handoffs/lane-b/function-closure-direct.md). Agent A owns the integration gate.
