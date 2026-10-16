@@ -451,11 +451,23 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 - Checks: filtered direct test passed 1/1. Post-rebase scoped focused validation passed Harness 52, Mpl 188 and Differential 122; 6 methods compared, 0 missing or uncovered, 6 exact, 0 structure-only, lint 0, ratchet ok, mutations 2/2 killed with no survivors. Run `8009ac32-79a2-422d-b6b5-791cf7c37deb`; receipt `/tmp/quire-validation-whc2ts20/summary.json`.
 - Exact IL before/after: 0/6 stubbed bodies -> 6/6 exact. No exact method regressed.
 - Pending proposals: none. Independent review is outstanding.
-- Next: once this batch is reviewed and merged, proceed to an unowned Lane A runtime member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
+- Next: the independent `define_keyword` batch is under way on `mirror/a-define-keyword`. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
+
+## `defdata_keyword` batch (`mirror/a-defdata-keyword`)
+
+- Branch: `mirror/a-defdata-keyword`, based on `5c387e4`.
+- Reviewed implementation tip: `a8cc2b3`.
+- Scope: the `defdata` singleton, constructor (key number 3), `NewTok(uint)`, `walk_declaration_as(MplEnv, SCons)`, and `walk_definition_as(MplEnv, SCons)`.
+- Tests: `DefdataKeywordDifferentialTests.Singleton_tokens_and_declaration_walks` directly compares the initializer, constructor, token factory at handles 0, 1, 37 and `uint.MaxValue`, and both walks for representative and null forms.
+- Evidence: [defdata_keyword](../evidence/Mpl.Run.defdata_keyword.md). Original artifact identity, method tokens, C# and IL were read with `tools/reference/reference.py` before implementation.
+- Checks: filtered direct test passed 1/1. Scoped focused validation passed Harness 52, Mpl 188 and Differential 125; 5 methods compared, 0 missing or uncovered, 5 exact, 0 structure-only, lint 0, ratchet ok, mutation 1/1 killed with no survivors. Run `2d8286cf-9a76-4298-a366-0624ac0f6fed`; receipt `/tmp/quire-validation-6vtxr0aj/summary.json`.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.defdata_keyword --mutate --jobs 2`.
+- Exact IL before/after: 0/5 stubbed bodies -> 5/5 exact; no previously exact method regressed.
+- Pending proposals: none. Independent review returned **MERGE** at `a8cc2b3`; no previously exact method regressed.
 
 ## User-approved proposals awaiting maintainer acceptance
 
-On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
+On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. On 2026-10-16, the user also approved the four independently reviewed unreachable-line proposals on `mirror/a-keyword-do-try`; the reviewer returned MERGE at `1f699f7`, and the approval/checkpoint update is pushed at `dbdcd4c`. All approved proposals await maintainer updates to the protected acceptance lists. Affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
 
 ## Historical batch results
 
