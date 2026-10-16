@@ -485,15 +485,22 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Final current branch tip: this single squashed batch commit on `mirror/a-mpl-function-macro`, including this checkpoint update.
 - Next: after this batch, resume blocked `let_keyword` once its `define_keyword` and `lambda_keyword` dependencies reach main; otherwise select the next unowned Lane A member.
 
-## CodeArg constructors batch (`mirror/a-codearg`)
+## CodeArg constructors (`mirror/a-codearg`)
 
-- Branch `mirror/a-codearg` was rebased onto `561f85b` after the user's instruction to keep only the two `CodeArg` constructors. The current diff adds only those constructors to the existing `CodeArg` implementation, removes their two generated stub pairs, and adds their direct tests/evidence/checkpoint. No `Code` source or generated file changes remain.
-- Scope: `.ctor(Code, Code)` and `.ctor(Code)` in `CodeArg`; the existing `m_beg`/`m_end` fields and `BegArg`/`EndArg` came from `mirror/gen-mpl-2` on main. `Code.NullCode` remains a generated stub and its initializer is outside this batch.
+- Rebasing after `mirror/gen-mpl-2` merged to main followed the user's direction: this batch kept only the two `CodeArg` constructors. The fields and argument walks are supplied by MemberGen; no overlapping `Code.cs` changes remain.
+- Scope: `.ctor(Code, Code)` and `.ctor(Code)` in `CodeArg`; `Code.NullCode` remains a generated stub and its initializer is outside the batch.
 - Original tokens: `.ctor(Code, Code)` `0x0600034c`; `.ctor(Code)` `0x0600034d`. Contracts: [Mpl.Run.CodeArg](../evidence/Mpl.Run.CodeArg.md).
-- Direct test after rebase: `dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~CodeArgDifferentialTests|FullyQualifiedName~MplRunCodeArgMechanicalDifferentialTests'` passed 3/3. The test seeds Quire's `Code.NullCode` with a `Code` object before invoking the one-argument constructor, so the constructor's field read is directly checked without claiming the static initializer.
-- Scoped validation: `validate.py --profile focused --method-type Quire.Mpl.Run.CodeArg --diff-filter 'FullyQualifiedName~CodeArgDifferentialTests|FullyQualifiedName~MplRunCodeArgMechanicalDifferentialTests' --mutate --jobs 2`. Harness 86, Mpl 188, Differential 3 passed; 4 compared, 0 missing, 0 structure mismatch, 0 uncovered, 0 unsupported Verified; 4 exact, 0 structure-only, lint 0, ratchet ok, mutation 0/0 (no eligible mutants). Run `58162f55-2d80-4251-b25d-0d854f0e2568`; receipt `/tmp/quire-validation-_64jgbb3/summary.json`. Local checks pass; scoped gate would pass.
-- Exact IL before/after: CodeArg's two existing methods were exact; constructors raise the type from 2/4 to 4/4 exact. No baseline exact method regressed. Independent review pending; no pending proposals.
-- Next: continue to the next unowned Lane A member while this batch awaits review.
+- Post-rebase differential tests: 3 passed. Scoped validation: Harness 86, Mpl 188 and Differential 3 passed; 4 methods compared, 4 exact, 0 missing/structure mismatch/uncovered/unsupported, lint 0, ratchet ok, mutation 0/0 (no eligible mutants). Run `58162f55-2d80-4251-b25d-0d854f0e2568`; receipt `/tmp/quire-validation-_64jgbb3/summary.json`.
+- Exact IL before/after: the two implemented `CodeArg` members remained exact; constructors raised the type from 2/4 to 4/4 exact. Runtime gate passed and merged to main at `cb6911a`, then pushed. No exact method regressed; no proposals pending.
+
+## CodeFunction constructor and argument walks (`mirror/a-codefunction`)
+
+- Scope: `CodeFunction(Code, Code[])`, `BegArg(ILGenerator, int)`, and `EndArg(ILGenerator, int)`; `EmitCode` was already implemented by MemberGen on main.
+- Original tokens: ctor `0x0600034b`, `BegArg` `0x06000348`, `EndArg` `0x0600034a`. Evidence: [Mpl.Run.CodeFunction](../evidence/Mpl.Run.CodeFunction.md).
+- Differential tests: constructor with empty and populated arrays, with explicit reference identity checks for both fields; `BegArg`/`EndArg` at indices 0 and 1 use an asymmetric pair of argument slots to distinguish selection and forwarded index. The existing mechanical `EmitCode` comparison also runs.
+- Tests: filtered focused run passed 3/3. Scoped Release validation passed Harness 86, Mpl 188 and Differential 3; 4 compared, 0 missing/structure mismatch/uncovered/unsupported, 4 exact, lint 0, ratchet ok, mutation 0/0. Run `b5cc1abc-fd31-47d5-939c-c45b5e5fd7e7`; receipt `/tmp/quire-validation-yf10d0_k/summary.json`.
+- Exact IL before/after: `EmitCode` was exact; the three new methods raise the type from 1/4 to 4/4 exact. No exact method regressed. Pending proposals: none. Independent review is pending.
+- Next: finish independent review, then gate.
 
 ## Historical batch results
 
