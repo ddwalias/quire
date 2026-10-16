@@ -11,10 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplFunctionMacro, mplrun")]
 public partial class MplFunctionMacro : global::Quire.Mpl.Run.MplMacro
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MplFunctionMacro(string name, global::Quire.Mpl.Run.Function expander) : base(default(global::Quire.Mpl.Run.Sym)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.MplMacro make(string name, global::Quire.Mpl.Run.Function expander) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr form) => base.ExpandCall(e, form);
 }

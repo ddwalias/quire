@@ -14,6 +14,25 @@ public partial class MplFunctionMacro
         m_expander = expander;
     }
 
+    [MirrorVerified("MplFunctionMacroDifferentialTests")]
+    public MplFunctionMacro(string name, Function expander) : this(new Sym(name, null), expander) { }
+
+    [MirrorVerified("MplFunctionMacroDifferentialTests")]
+    public static MplMacro make(string name, Function expander) => new MplFunctionMacro(name, expander);
+
+    [MirrorVerified("MplFunctionMacroDifferentialTests")]
+    public override Sexpr ExpandCall(MplEnv e, Sexpr form)
+    {
+        try
+        {
+            return (Sexpr)m_expander.Call(e, form);
+        }
+        catch (AppException inner)
+        {
+            throw new AppException("illegal macro call", inner, form.handle);
+        }
+    }
+
     [MirrorVerified("MplRunMplFunctionMacroMechanicalDifferentialTests")]
     public override Sexpr ExpandRef(MplEnv e, Tok s) => base.IllegalMacroCall(s);
 }

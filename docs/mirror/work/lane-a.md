@@ -455,19 +455,35 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 
 ## User-approved proposals awaiting maintainer acceptance
 
-On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
+On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). On 2026-10-17, the user also approved the four unreachable-line proposals on `mirror/a-keyword-do-try` and the one unreachable-line proposal on `mirror/a-define-keyword`. These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
 
 ## locally_keyword mirror batch (`mirror/a-locally-keyword`)
 
-- Branch: `mirror/a-locally-keyword`, rebased onto `c4529f9`; tip `a85af9d` (checkpoint-only amend after review).
+- Branch: `mirror/a-locally-keyword`, rebased onto `c4529f9`; tip `ea6d03d` (reviewed candidate; merged as `44af299`).
 - Scope: `locally_keyword` singleton, `NewTok`, `walk_expression_as`, and the three `MakeLocally` overloads in `src/Quire.Mpl/Run/locally_keyword.cs`; removed their generated stub pairs.
 - Original: inspected the installed `mplrun.dll` with ilspycmd; tokens `.cctor` `0x060000d0`, ctor `0x060000d1`, `NewTok` `0x060000d2`, walk `0x060000d3`, factories `0x060000d4`–`0x060000d6`.
 - Direct comparisons: type initializer, ctor, `NewTok` at 0/1/42/`uint.MaxValue`, all factory overloads (including null and `Cons` inputs), valid empty-block walk and invalid-arity exception.
 - Validation: `validate.py --profile focused --method-type Quire.Mpl.Run.locally_keyword --mutate --jobs 2`. Harness 79/79, Mpl 188/188, Differential 186/186; 6 compared, 0 missing, 0 structure mismatch, 1 uncovered branch, 0 unsupported Verified statuses; 7/7 exact, lint 0, ratchet ok, mutation 1/1 killed. Local checks pass; gate would pass with the known gap. Run `7fb7a302-0da9-4f64-8cef-25018532ca31`; receipt `/tmp/quire-validation-lslp8664/summary.json`.
 - Coverage blocker: `locally_keyword.walk_expression_as`'s `cons != null` branch at line 23 is reachable, but needs a declaration form. This base still has the generated `define_keyword.MakeDefine` stub, so the differential case cannot produce declarations. Keep the method `[MirrorTested]`; add the branch comparison after that dependency reaches main. No unreachable-line proposal is appropriate.
 - Evidence: [Mpl.Run.locally_keyword](../evidence/Mpl.Run.locally_keyword.md).
-- Pending proposals: none. Exact IL before/after: 0/6 implemented method bodies -> 6/6 exact; the original type initializer is also exact. Independent review returned MERGE; runtime gate remains before merge.
+- Pending proposals: none. Exact IL before/after: 0/6 implemented method bodies -> 6/6 exact; the original type initializer is also exact. Independent review returned MERGE. Runtime gate passed and merged to main at `44af299` (gate candidate `ea6d03df756e`); the full inventory retained its existing ratcheted gaps. Main was pushed to origin.
 - Next: continue with another unowned Lane A member while the declaration dependency is pending.
+
+## let_keyword dependency blocker
+
+Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one recorded in [let_keyword evidence](../evidence/Mpl.Run.let_keyword.md). Its `ExpandDefs` branches call `define_keyword.MakeDefine` and `lambda_keyword.MakeLambda`, while `ExpandLet` calls `locally_keyword.MakeLocally`. The definition and lambda batches are still unmerged, so direct comparisons of these reachable branches cannot pass against the generated stubs on main. Do not mark these lines unreachable. Resume this member after those dependencies merge; `locally_keyword` is now on main.
+
+## MplFunctionMacro mirror batch (`mirror/a-mpl-function-macro`)
+
+- Branch: `mirror/a-mpl-function-macro`, rebased onto `7ee2d00`.
+- Scope: implement the string constructor, `make`, and `ExpandCall` in `src/Quire.Mpl/Run/MplFunctionMacro.cs`; remove only their generated stub pairs. The existing `Sym` constructor and `ExpandRef` remain exact.
+- Original: inspected `mplrun.dll` C# and IL with ilspycmd. New method tokens: ctor `0x06000137`, `make` `0x06000138`, `ExpandCall` `0x06000139`.
+- Direct cases: ordinary/empty/null string names for ctor and `make`; a successful identity expansion; a directly thrown `AppException` wrapped at the form handle.
+- Evidence: [Mpl.Run.MplFunctionMacro](../evidence/Mpl.Run.MplFunctionMacro.md).
+- Validation: filtered `MplFunctionMacroDifferentialTests` passed 2/2. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.MplFunctionMacro --mutate --jobs 2`: Harness 79, Mpl 188, Differential 192 passed; 5 compared, 0 missing, 0 structure mismatch, 0 uncovered, 0 unsupported Verified statuses; 5 exact, 0 structure-only, lint 0, ratchet ok, mutation 0/0 (no eligible mutants). Run `ffa1d80c-b1ae-4102-b535-6092b30d5fbb`; receipt `/tmp/quire-validation-_aqlz2mq/summary.json`.
+- Exact IL before/after: 2/5 implemented method bodies -> 5/5 exact; no baseline exact method regressed. Independent review returned MERGE. Pending proposals: none.
+- Final current branch tip: this single squashed batch commit on `mirror/a-mpl-function-macro`, including this checkpoint update.
+- Next: after this batch, resume blocked `let_keyword` once its `define_keyword` and `lambda_keyword` dependencies reach main; otherwise select the next unowned Lane A member.
 
 ## Historical batch results
 
