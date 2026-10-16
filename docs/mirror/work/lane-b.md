@@ -210,3 +210,19 @@ git diff --check
 ```
 
 These are affected behavior and targeted direct checks only. `git diff --check` passed. An independent whole-diff review initially found that the malformed-object fixture was a `StrVal`; it was replaced with `new object()` and both commands above were rerun successfully. Reviewer `lane_b_pointer_review` passed the corrected exact tip `0595d535e2eea262444589c5af75a51ab8499e07`; the final checkpoint amendment is documentation-only. Scoped mutation, Windows/native validation, and the full runtime merge gate have not been run; no phase-completion claim or mutant exception proposal is made. No additional approval is required for this scope. Next: review the final checkpoint amendment, push the squashed branch for backup, and publish its atomic frozen handoff.
+
+## MatVal IsRange / IsIntegral accessors — active checkpoint
+
+Branch `mirror/b-matval-range-integral-direct`, worktree `/root/src/quire-matval-range-integral-direct`, was rebased from freshly inspected main `7210ee00f40e53d5c7cc6e0b5c6087422c8c9a62` onto current clean main `f447eedbea9027d5491a4a5785101aefba3f7131`. The batch changes direct tests, verified status annotations for these accessors, and the four contracts in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signatures/tokens/hashes are in that table. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; REA `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8`.
+
+The original getters short-circuit to false when their own JoeyBit/Integral bit is clear; otherwise they evaluate `IsRealVector`. That path can clear an all-zero imaginary array or canonicalize full pointer coverage. Setter cases verify that each accessor changes only its own bit while preserving the other flag and unrelated high bits. Getter cases compare true vectors, false non-vectors despite a stored flag, absent-bit short-circuit against a malformed pointer map, flagged `IndexOutOfRangeException` on that map, zero-imaginary cleanup, nonzero-imaginary false results without cleanup, and full-pointer canonicalization. The state observer retains old array/table aliases and entries and compares current matrix storage, pointer values and identity, exceptions, return values and dimensions.
+
+```text
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatVal' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 44 passed, 0 failed, 0 skipped.
+
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValRangeIntegralDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 fact passed, 0 failed, 0 skipped; 16 direct MethodComparison cases against the pinned artifact.
+```
+
+No source body changed, so no local mutation run was required; the full runtime gate owns mutation validation. This is focused Linux evidence only. Windows/native phase closure and the full merge gate have not run, and no phase-completion claim or acceptance proposal is made. Independent reviewer `lane_b_pointer_review` passed the whole diff at tip `aaf16cad4e37666fe2b9587c32a4659fdce94182`; the single-commit branch is pushed and frozen. The ready handoff is [MatVal IsRange / IsIntegral](../../../../quire-handoffs/lane-b/matval-range-integral.md). Next: freshly inspect current main and take the next independent unclaimed item in `WORK`/the Lane B queue.

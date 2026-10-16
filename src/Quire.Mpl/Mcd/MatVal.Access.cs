@@ -65,13 +65,13 @@ public sealed partial class MatVal
             return true;
         }
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValRangeIntegralDifferentialTests")]
     public bool IsRange
     {
         get => (Data.m_flags & Flags.JoeyBit) != 0 && IsRealVector;
         set => Data.m_flags = value ? Data.m_flags | Flags.JoeyBit : Data.m_flags & ~Flags.JoeyBit;
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValRangeIntegralDifferentialTests")]
     public bool IsIntegral
     {
         get => (Data.m_flags & Flags.Integral) != 0 && IsRealVector;
