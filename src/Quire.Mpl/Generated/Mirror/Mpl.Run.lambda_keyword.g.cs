@@ -11,16 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.lambda_keyword, mplrun")]
 public partial class lambda_keyword : global::Quire.Mpl.Run.Keyword
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.lambda_keyword singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public lambda_keyword() : base(default(string), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr walk_expression_as(global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.SCons form) => base.walk_expression_as(env, form);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons MakeLambda(uint handle, global::Quire.Mpl.Run.Sexpr forms) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.SCons MakeLambda(uint handle, global::Quire.Mpl.Run.Sexpr pats, global::Quire.Mpl.Run.Sexpr body) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

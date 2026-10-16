@@ -453,6 +453,17 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 - Pending proposals: none. Independent review is outstanding.
 - Next: once this batch is reviewed and merged, proceed to an unowned Lane A runtime member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
 
+## lambda_keyword singleton and walk batch (`mirror/a-lambda-keyword`)
+
+- Branch: `mirror/a-lambda-keyword`, based on `9daefbf`.
+- Scope: implement the singleton, constructor, `NewTok(uint)`, both `MakeLambda` overloads, and `walk_expression_as(MplEnv, SCons)` in `src/Quire.Mpl/Run/LambdaKeyword.cs`; remove the corresponding generated stubs.
+- Evidence: [lambda_keyword](../evidence/Mpl.Run.lambda_keyword.md). Original IL was inspected from the pinned `mplrun.dll` with `tools/reference/reference.py` before implementation.
+- Direct differential test: `LambdaKeywordDifferentialTests.Singleton_factories_and_walk` compares initialization, construction, token creation at handles 0, 6 and `uint.MaxValue`, both factory overloads at those handles, and walking `(lambda (x) x)` through its pattern-bound local scope.
+- Checks: filtered direct test passed 1/1. Focused validation run `c207c0e4-4dc6-41ea-8888-012885d4e303`, receipt `/tmp/quire-validation-edv1eqzh/summary.json`: Harness 52, Mpl 188, Differential 127 passed, no failures or skips; 6 compared, 0 missing/structure mismatch/uncovered, lint 0, ratchet ok, mutations 1/1 killed. `LOCAL CHECKS: pass · GATE: would pass` (scoped to `lambda_keyword`).
+- Exact IL before/after: 0/6 stubbed bodies -> 6/6 exact; no baseline-exact method regressed. Pending proposals: none. Review requested an identity-aware walk observer; it is added and the corrected test passed in the run above.
+- Independent review: **MERGE** at `0040951` (`review_keyword_singletons`). The batch is ready for the merge gate after rebasing from `9daefbf` onto current `main` `a9f3933`; no conflict has yet been encountered.
+- Next: continue with the next unowned Lane A member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
+
 ## User-approved proposals awaiting maintainer acceptance
 
 On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
