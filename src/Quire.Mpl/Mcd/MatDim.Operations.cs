@@ -198,9 +198,9 @@ public abstract partial class MatDim
         public override Dim dim(int i, int j) => m_dim;
         [MirrorAnalyzed("Mcd.MatDim")]
         public override MatDim matdim(int i, int j) => this;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformEqBDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(m_dim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformEq2BDifferentialTests")]
         protected override bool eq2_b(Dim d2) => Dim.Eq_b(m_dim, d2);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
