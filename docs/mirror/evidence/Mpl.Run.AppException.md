@@ -35,7 +35,7 @@ differential-verified for the cases in "Test cases", except `NonCriticalExceptio
 | `EfiMessage` | 0x060003d3 | `ea064b68` | The message, prefixed by the argument and a dot when there is one (`3.msg`). | High | Verified |
 | `asAppException(Exception)` | 0x060003d4 | `f3ef1e72` | The first `AppException` in the exception's inner chain (the exception itself included); otherwise a new wrapper with handle 0. Null throws `NullReferenceException` from the wrapper. | High | Verified |
 | `Raise()` | 0x060003d5 | `a6bebde4` | Throws "unknown mpl exception". | High | Verified |
-| `Raise(object[], uint)` | 0x060003d6 | `cf772325` | Null or empty: `Raise("error", handle)`. One element: its text. More: the elements' texts joined by tabs (null elements after the first as empty). Raised through `Raise(string, uint)` with the handle passed as the argument, so tags are parsed. A null first element throws `NullReferenceException`. | High | Tested |
+| `Raise(object[], uint)` | 0x060003d6 | `cf772325` | Null or empty: `Raise("error", handle)`. One element: its text. More: the elements' texts joined by tabs (null elements after the first as empty). Raised through `Raise(string, uint)` with the handle passed as the argument, so tags are parsed. A null first element throws `NullReferenceException`. | High | Verified |
 | `ChainTaggedError(string, uint)` | 0x060003d7 | `a1321499` | When the first `>` is past position 0, the text before it parses as a uint (current culture, integer style: leading/trailing white space and a leading sign allowed) and something follows it, returns the error for the rest wrapped in one with that tag as handle; tags therefore nest outward and the argument lands on the innermost. Otherwise a plain error with the message and argument. | High | Verified |
 | `ChainTagAndArgument(string)` | 0x060003d8 | `3ad6f13e` | When the first `@` is past position 0, not last, and the text after it parses as a uint, splits it off as the argument; then `ChainTaggedError`. Otherwise `ChainTaggedError` with no argument. | High | Verified |
 | `Raise(object)` | 0x060003d9 | `6072a6e1` | `Raise(string)` of the value's `Convert.ToString` (null becomes empty). | High | Verified |
@@ -65,8 +65,9 @@ Fields: the two delimiters and `NonCriticalException`'s three reason names are V
 
 ## Test cases
 
-**Observed** (`AppExceptionDifferentialTests`, against the installed `mplrun.dll`; each exception compared as type,
-message, argument, handle, region, tag, `EfiMessage` and its inner chain):
+**Observed** (`AppExceptionDifferentialTests`, against the installed `mplrun.dll`; thrown exceptions are compared by
+type, message, argument, handle and inner chain through `Reflect.Thrown`; returned exception values are rendered with
+region, tag and `EfiMessage`):
 - every `AppException` constructor with messages `"m"`, `""` and null, null and non-null inner exceptions, and every
   pair from the arguments/handles 0, 1, 3, 0xFFFF, 0x10000, `uint.MaxValue − 1` and `uint.MaxValue` (as argument,
   handle, tag and region); `(Exception, uint)` with a null inner;
@@ -94,6 +95,6 @@ probing spending the stack budget and checking cancellation.
 
 - Tag and argument parsing use the current culture's uint parsing; only the test process's culture was compared.
 - `Raise(object[], uint)`: its closing brace never runs, since every path returns a call that always throws (as in
-  the original); the branch-coverage gate reports that line as uncovered.
+  the original); the line-121 unreachable-line proposal records this coverage exclusion.
 - Binary serialization and the COM class interface (`AutoDual`, fixed GUID) are declared as in the original but not
   exercised.

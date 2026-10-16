@@ -457,6 +457,20 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 
 On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
 
+## AppException.Raise(object[], uint) audit (`mirror/a-app-exception-raise`)
+
+- Branch: `mirror/a-app-exception-raise`, rebased onto `e38ab20`; tip `03e97e857fb22e5294f3d549e134a323be786bee`.
+- Scope: verified `AppException.Raise(object[], uint)` based on the existing direct comparisons in `AppExceptionDifferentialTests.Raise_parses_tags_and_arguments`; clarified exception-comparison limits and the unreachable closing-brace coverage note in [AppException evidence](../evidence/Mpl.Run.AppException.md).
+- Original: `mplrun.dll` token `0x060003d6`; inspected with ilspycmd. All paths call `Raise(string, uint)` then return; that overload ultimately throws. This matches the original IL.
+- Exact IL before/after: `Raise(object[], uint)` remains exact (1/1); focused audit exact matches were 31/31, with no structure-only methods.
+- Validation after rebase: `validate.py --profile focused --method-type Quire.Mpl.Run.AppException --mutate --proposed-unreachable /tmp/quire-app-exception-proposed-unreachable.txt --proposed-mutants /tmp/quire-app-exception-proposed-mutants.txt --jobs 2`. Harness 79/79, Mpl 188/188, Differential 185/185; 31 compared, 0 missing, 0 structure mismatches, 0 uncovered after proposal, lint 0, ratchet ok; mutations 70/74 killed, 3 previously accepted survivors, 0 unproposed survivors, 1 proposed equivalent survivor, 1 timeout after retry and 2 crashes. Local checks pass with the proposals; gate blocks pending their approval and maintainer acceptance. Run `5296b9f5-a228-4fc4-805c-bff259b55c5d`; receipt `/tmp/quire-validation-rxpwsuea/summary.json`.
+- Pending unreachable-line proposal:
+  ``Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True src/Quire.Mpl/Run/AppException.cs:121 sha256=1cd5ef76c619b6a791bef083c8101ae4676bdc7735513402fa6726a96e7f9285 # Every branch returns a call to Raise(string,uint), which always throws; Mathcad has the same call-and-ret structure and never reaches the closing-brace sequence point.``
+- Pending equivalent-mutant proposal:
+  ``Quire.Mpl.Run.AppException::Raise`0([System.Runtime]System.Object[],[System.Runtime]System.UInt32)->[System.Runtime]System.Object|True@IL_0021 ldc.i4.1 -> ldc.i4.0 body=43545d78b7d2491c2752703ef05576c4e26935a3fa089e19b564d7601e0fa15e # Changing the singleton-length check to zero sends a one-element array through the join path, which initializes the same first element and skips the loop; the existing null/empty check handles length zero first. Both paths call Raise with the same string and handle.``
+- Independent reviewer verified both proofs and the method comparisons; final verdict awaits the rebased proposal-enabled validation receipt. Neither proposal has user approval or maintainer acceptance yet. No protected paths changed.
+- Next: complete this review and backup, then continue to the next unowned, unblocked Lane A member.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
