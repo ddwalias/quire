@@ -453,6 +453,17 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 - Pending proposals: none. Independent review is outstanding.
 - Next: once this batch is reviewed and merged, proceed to an unowned Lane A runtime member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
 
+## if_keyword singleton and walk batch (`mirror/a-if-keyword`)
+
+- Branch: `mirror/a-if-keyword`, based on `9daefbf`.
+- Scope: implement the singleton, constructor, `NewTok(uint)`, both `MakeIf` overloads, and `walk_expression_as(MplEnv, SCons)` in `src/Quire.Mpl/Run/IfKeyword.cs`; remove the corresponding generated stubs.
+- Evidence: [if_keyword](../evidence/Mpl.Run.if_keyword.md). Original IL was inspected from the pinned `mplrun.dll` with `tools/reference/reference.py` before implementation.
+- Direct differential test: `IfKeywordDifferentialTests.Singleton_factories_and_walk` compares initialization, construction, token creation at handles 0, 9 and `uint.MaxValue`, both factories at those handles, and walking a form with literal arguments while checking the result identity.
+- Checks: filtered direct test passed 1/1. Focused validation run `0b872954-5b00-4729-b757-5c9e67c9e4bb`, receipt `/tmp/quire-validation-m3znzfku/summary.json`: Harness 52, Mpl 188, Differential 127 passed, no failures or skips; 6 compared, 0 missing/structure mismatch/uncovered, lint 0, ratchet ok, mutations 1/1 killed. `LOCAL CHECKS: pass · GATE: would pass` (scoped to `if_keyword`).
+- Exact IL before/after: 0/6 stubbed bodies -> 6/6 exact; no baseline-exact method regressed. Pending proposals: none.
+- Independent review: **MERGE** at `d0c1df5` (`review_keyword_singletons`). The batch has no pending proposals and is ready for the merge gate when `main` can be fast-forwarded from `origin/main` under PLAN's pull-first procedure.
+- Next: continue with the next unowned Lane A member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
+
 ## User-approved proposals awaiting maintainer acceptance
 
 On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
