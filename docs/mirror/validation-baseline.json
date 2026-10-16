@@ -3774,7 +3774,7 @@
     "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.MatVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
-    "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "untested",
+    "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "compared",
     "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.MatVal::asTuple`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": "compared",
@@ -6001,6 +6001,9 @@
     "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
       "matvalviewdifferentialtests"
     ],
+    "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
+      "matvalasrealvectordifferentialtests"
+    ],
     "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
       "matvalviewdifferentialtests"
     ],
@@ -8089,10 +8092,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatVal": {
-      "compared": 52,
+      "compared": 53,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 140,
+      "missing": 139,
       "structure_mismatch": 105,
       "total": 297,
       "uncovered": 0,
