@@ -7232,13 +7232,15 @@
       "functiondifferentialtests"
     ],
     "Quire.Mpl.Run.FunctionUtilities::but`1([System.Runtime]System.Int32,!!0[])->!!0[]|True": [
-      "functiondifferentialtests"
+      "functiondifferentialtests",
+      "functionutilitiesbutdifferentialtests"
     ],
     "Quire.Mpl.Run.FunctionUtilities::concat`0([System.Runtime]System.Object[],[System.Runtime]System.Object[])->[System.Runtime]System.Object[]|True": [
       "functiondifferentialtests"
     ],
     "Quire.Mpl.Run.FunctionUtilities::take`1([System.Runtime]System.Int32,!!0[])->!!0[]|True": [
-      "functiondifferentialtests"
+      "functiondifferentialtests",
+      "functionutilitiestakenegativedifferentialtests"
     ],
     "Quire.Mpl.Run.Keyword::.cctor`0()->[System.Runtime]System.Void|True": [
       "sexprdifferentialtests"
