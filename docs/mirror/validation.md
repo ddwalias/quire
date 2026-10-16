@@ -465,6 +465,8 @@ main's baseline: its changed-method scope covers both batches. If either batch o
 10-batch audit interval; weekly audits still apply. Reject the whole candidate on any gate failure. A failed or
 interrupted earlier audit is not a passing receipt and must not be hidden by a narrower rerun.
 
+Before every gate merge, fast-forward `main` to `origin/main` first ([PLAN.md](PLAN.md), "Pull first").
+
 Pending approvals and scopes without required separate runtime evidence cannot be bundled. Batching never
 grants permission for additional protected paths or `--allow-unvalidated`; inspect the complete protected-path
 list against existing exact authorization. Only the final combined tip is validated: intermediate preserved
