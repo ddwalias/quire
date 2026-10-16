@@ -42,6 +42,8 @@
 | rc_dim.eq2_b(class:575) | 0x060007bb | e7178386af3591bf902bfdd49bd41cbeff74a23e0b7c727f2d9c576c6df97948 | Compare row and column factor arrays via Eq_b(m_rowdim, m1.m_rowdim) & Eq_b(m_coldim, m1.m_coldim). | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 | crazy_dim..ctor(MatVal) | 0x060007ad | 7ff0599165db240939134df5fcff1eaede0e162d44cb06e96bde6851d83fb242 | Initialize base rows from m.Rows, cols from m.Cols; assign m_matrix to m. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 | crazy_dim.make(MatVal) | 0x060007b2 | de5613a5a2ce61aa5c74eb1ca33d5ee947b3cb2f30c50bfeb8932bd417d837aa | Construct and return new crazy_dim instance wrapping supplied matrix. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| crazy_dim.eq_b(class:572) | 0x060007b0 | 1aaa594cfb249e74c879b2c072d8c63e6e4acb519b17138baf488e7fa772ac0b | Dispatch equality to m2.eq2_b(this). | Same-artifact IL; 9 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| crazy_dim.eq2_b(class:576) | 0x060007b1 | 6ac593fa6e76cfd5ea7a17da09eb21e7aadb3f985e7ae7447a870a6cecb7a5bf | Compare matrix shape then every cell dimension via Eq_b(matdim(r, c), m1.matdim(r, c)). | Same-artifact IL; 7 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 
 ## Fields
 

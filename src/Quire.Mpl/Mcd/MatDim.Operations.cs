@@ -374,14 +374,14 @@ public abstract partial class MatDim
         public override Dim dim(int i, int j) => m_matrix.get_2_dim(i, j);
         [MirrorAnalyzed("Mcd.MatDim")]
         public override MatDim matdim(int i, int j) => m_matrix.get_2_matdim(i, j);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCrazyDimEqualityDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCrazyDimEqualityDifferentialTests")]
         protected override bool eq2_b(crazy_dim m1)
         {
-            if ((Rows != m1.Rows) | (Cols != m1.Cols)) return false;
-            for (int r = 0; r < Rows; r++)
-            for (int c = 0; c < Cols; c++)
+            if ((m_row != m1.m_row) | (m_col != m1.m_col)) return false;
+            for (int r = 0; r < m_row; r++)
+            for (int c = 0; c < m_col; c++)
                 if (!Eq_b(matdim(r, c), m1.matdim(r, c))) return false;
             return true;
         }
