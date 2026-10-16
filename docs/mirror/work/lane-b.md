@@ -210,3 +210,22 @@ git diff --check
 ```
 
 These are affected behavior and targeted direct checks only. `git diff --check` passed. An independent whole-diff review initially found that the malformed-object fixture was a `StrVal`; it was replaced with `new object()` and both commands above were rerun successfully. Reviewer `lane_b_pointer_review` passed the corrected exact tip `0595d535e2eea262444589c5af75a51ab8499e07`; the final checkpoint amendment is documentation-only. Scoped mutation, Windows/native validation, and the full runtime merge gate have not been run; no phase-completion claim or mutant exception proposal is made. No additional approval is required for this scope. Next: review the final checkpoint amendment, push the squashed branch for backup, and publish its atomic frozen handoff.
+
+## MatDim c_dim dot-product dispatch — active checkpoint
+
+Worktree `/root/src/quire-matdim-c-dim-dmult`, branch `mirror/b-matdim-c-dim-dmult`, was created from freshly fetched `origin/main` `da4e651a44972fbf14ac33fcd2b71cc8b00b0dae`. The original artifact was refreshed with `python3 tools/reference/reference.py Mcd.MatDim --il`: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Exact signatures and normalized IL hashes are in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md).
+
+The single direct test `MatDimCDimDmultDifferentialTests` invokes the exact original members `c_dim.dmult1(MatDim)` (`0x060007e1`), `c_dim.dmult2(r_dim)` (`0x060007e2`), and `c_dim.dmult2(c_dim)` (`0x060007e3`) in 17 finite `MethodComparison` calls. It covers dmult1 delegation to r_dim/c_dim overloads, inherited uniform_dim/rc_dim null fallbacks, compatible and inconsistent factor products, null-argument exceptions, and empty first/second factor arrays (which preserve the helper's `IndexOutOfRangeException`). Result rendering asserts exact side-local helper-product references; receiver and RHS shape, axis-array identities, axis element identities, and stored dimension identity are checked before and after. Independent review found the c_dim-to-c_dim delegated oracle operands reversed; the expected call is now `Mult(original receiver columns, RHS columns)`, and strict/behavior runs passed after correction. Only these three c_dim method status attributes were promoted; behavior bodies were unchanged.
+
+```text
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatDimCDimDmultDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 passed, 0 failed, 0 skipped; 17 direct comparisons against the pinned artifact.
+
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDimTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped.
+
+git diff --check
+=> passed.
+```
+
+These focused receipts support the three exact methods only. Scoped mutation, Windows/native checks, and the full merge gate have not been run; no phase-completion claim or acceptance-exception proposal is made. The test/evidence/status diff is awaiting final whole-diff review. Next: freeze the reviewed tip for Agent A; select subsequent work only after a fresh current-main/queue scan.

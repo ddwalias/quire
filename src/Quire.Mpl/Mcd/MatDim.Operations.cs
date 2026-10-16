@@ -297,11 +297,11 @@ public abstract partial class MatDim
         protected override MatDim mmult2(uniform_dim m1) => make(Mult(m1.m_dim, m_coldim), m1.Rows);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override MatDim mmult2(r_dim m1) => rc_dim.make_rc(m1.m_rowdim, m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimDmultDifferentialTests")]
         protected override Dim dmult1(MatDim m2) => m2.dmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimDmultDifferentialTests")]
         protected override Dim dmult2(r_dim m1) => Mult(m1.m_rowdim, m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimDmultDifferentialTests")]
         protected override Dim dmult2(c_dim m1) => Mult(m1.m_coldim, m_coldim);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override MatDim transpose() => r_dim.make(m_coldim, Rows);
