@@ -288,9 +288,9 @@ public abstract partial class MatDim
         public override MatDim matdim(int i, int j) => uniform_dim.make(m_coldim[j], 1, 1);
         [MirrorAnalyzed("Mcd.MatDim")]
         public override Dim[] RowDimensionArray(int r) => m_coldim;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimEqualityDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimEqualityDifferentialTests")]
         protected override bool eq2_b(c_dim m1) => Eq_b(m_coldim, m1.m_coldim);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
