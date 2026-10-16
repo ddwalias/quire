@@ -47,14 +47,16 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      `main`; the maintainer, merging under `flock /tmp/quire-merge.lock`, rebases a queued branch that `main` has
      moved past and the gate then validates the rebased tip. So after a clean rebase do not re-validate locally;
      rerun affected tests and review the resolved hunks when the rebase had conflicts in `src/` or `tests/`.
-   - **Pull first:** other checkouts also merge into `origin/main`. Before every gate merge, under the lock, the
-     maintainer runs `git fetch origin` and `git merge --ff-only origin/main` on `main`, then rebases the queued
+   - **Pull first:** other checkouts also merge into `origin/main`. Before every gate merge, under the lock, whoever
+     merges runs `git fetch origin` and `git merge --ff-only origin/main` on `main`, then rebases the queued
      branch onto that new base and gates it there. If the fast-forward fails because local `main` has merges not
      yet on `origin`, stop: replay those commits onto `origin/main` in an integration branch, leaving out the
      generated "Update validation baseline after merging ..." commits (the gate rewrites the baseline), and gate
      it. The lock covers only this checkout; another checkout can still push in between, and the push is then
-     rejected as non-fast-forward, so pull and integrate again. Never force-push `main`; the maintainer pushes it
-     when the user asks, which is what lets other checkouts pull a merge.
+     rejected as non-fast-forward, so pull and integrate again. Never force-push `main`.
+   - **Pushing `main`** (user decision, 2026-10-16; it replaces "never push `main`" above): whoever merges a branch
+     through the gate, lane agent or maintainer, pushes `main` to `origin` right after the merge (with the gate's baseline commit), still
+     under the lock, so the other checkouts pull it. Only a gate-applied fast-forward is pushed; never force-push `main`.
    - **Local validation:** affected behavior/direct differential tests are the normal handoff check. Full local
      shape, coverage, ratchet and mutation validation is optional for ordinary batches; the runtime gate requires
      all of it. Use scoped `validate.py --method-type <changed types> --mutate` when investigating test sensitivity
