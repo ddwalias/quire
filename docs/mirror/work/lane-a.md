@@ -442,6 +442,20 @@ or skips, lint 0 and ratchet ok. No methods were selected for mutation. Receipt:
 `/tmp/quire-numval-final-runtime-gate/gate.json`; validator exit 3 records existing project-wide gaps,
 not phase completion. The reviewed branch and gate-approved main were pushed to origin.
 
+## Primitive kind predicates (`mirror/a-primitive-isforeign`)
+
+- Branch: `mirror/a-primitive-isforeign`
+- Worktree: `/mnt/c/Projects/Quire-wt/a-primitive-isforeign`
+- Scope: `Mpl.Run.Primitive` type `0x02000070`: `IsOpCodePrimitive()` `0x06000359`, `IsCodePrimitive()` `0x0600035a`, `IsMethodPrimitive()` `0x0600035b`, and `IsForeignPrimitive()` `0x0600035c`.
+- Contracts: opcode primitive requires `m_code == null && m_opcodes != null`; code primitive tests `m_code != null`; method primitive requires `m_method != null && m_code == null && m_opcodes == null`; foreign primitive tests `m_foreign != null` (including an empty string). These instance methods do not touch static state. All four use `[MirrorVerified("PrimitiveDifferentialTests")]`.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Differential case: `PrimitiveDifferentialTests.Primitive_kind_predicates` uses fresh uninitialized targets on both sides and covers each predicate's true and false branches. It sets only instance fields and avoids running the static initializer, whose Code/Instruction table has Lane B dependencies.
+- Tests: filtered `PrimitiveDifferentialTests` passed 1/1 after the four predicates were added. Focused validation passed Harness 52, Mpl 188 and Differential 120; no failures or skips.
+- Exact IL: before/after, 0/4 stubbed bodies -> 4/4 exact, 0 structure-only; no method is uncovered. The other Primitive members remain unimplemented and account for the 82 missing direct comparisons in this scoped report.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --mutate --jobs 2`. Run `b80b37fb-3a76-47d2-8350-88491f8031e6`, summary `/tmp/quire-validation-_goudv3z/summary.json`: lint 0; ratchet ok; 12/12 mutants killed; no survivors. Local checks pass; gate would pass with the 82 remaining missing members.
+- Independent review of tip `b4980eb` returned **MERGE**. The four bodies match original IL, and the report's 82 other missing members are outside this batch. The reviewed branch is ready for the runtime gate.
+- Next blocker: `Rts.GetTypeInitializer(TypeBuilder)` requires a paired emitted Mathcad `TypeBuilder` test. The differential linter rejects `Reflection.Emit`, and `docs/mirror/lint-allowed.txt` is protected; record this dependency and leave that member unmodified. Then continue with other unowned Primitive methods that do not trigger its static initializer.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
