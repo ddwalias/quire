@@ -73,3 +73,16 @@ Per-member tokens/hashes and test statuses are appended when these members are v
 - Error messages use tab-separated key, fixed dimension text, and zero-based element indices. PickLoser scans
   columns==1 as vector, otherwise row then column; it reports the winner's first differing dimension, or raises
   array unit mismatch when no element difference is found. No shape prevalidation is added.
+
+
+## c_dim transforms — direct member evidence
+
+Original artifact identity is the pinned Prime 12.0.1.0 `mplrun.dll` recorded above. Same-artifact REA evidence `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` reports the exact signatures, tokens and normalized IL hashes below. The source/IL view was refreshed with `python3 tools/reference/reference.py Mcd.MatDim --il`.
+
+| Member | Token | Normalized IL SHA-256 | Observed contract | Confidence / case limits | Status |
+|---|---|---|---|---|---|
+| `Mcd.MatDim+c_dim.transpose() -> MatDim` | 0x060007e4 | 224e4e6f8227228a5c873f6ece0f39aa3ad041c920d29bc7fa42cc09683517db | Return `r_dim.make(m_coldim, Rows)`, retaining the exact column-axis array as the result row axis and preserving the original row count as result columns. | Direct comparison: input 5×3 to result 3×5, and input 4×0 to result 0×4; result shape/type/axis alias, receiver shape/axis and each factor reference. | Verified |
+| `Mcd.MatDim+c_dim.det(int) -> Dim` | 0x060007e5 | 6563d2e2964e6984146f0b4901a5d692c3c8cd03300c170da4b07dda21990d51 | Ignore `n`; return `Product(Dim.identity, m_coldim)`, including the empty product identity. | Seven direct cases: `n` at Int32 min, -1, 0, 1, max; empty axis; null factor entry. Compares exact side-local Product reference and unchanged receiver/factor identities. | Verified |
+| `Mcd.MatDim+c_dim.invert() -> MatDim` | 0x060007e6 | 98249f0a91002bd5861608fc97d924e93be96b8f40c7383c2ed73dd20773a870 | Return `r_dim.make(Invert(m_coldim), m_coldim.Length)`; output row axis is fresh, each element is the exact side-local `Dim.Pwr(input, -1.0)` result, and output column count equals original axis length. | Three direct cases: nonempty heterogeneous, empty, and null factor entry. Compares type/shape, fresh array and exact per-slot Pwr references; receiver/factor identities remain unchanged. | Verified |
+
+`MatDimCDimTransformsDifferentialTests` directly invokes the exact three methods in 12 cases. The Linux focused strict differential passed 1/1 fact; `MatDimTests` passed 5/5. A direct run of the Windows-targeted `Quire.Differential.Tests` project built but its testhost could not run on Linux because `Microsoft.WindowsDesktop.App` 10.0 is unavailable; the PLAN-prescribed `Quire.Focused.Differential.Tests` strict run did execute against the pinned Mathcad artifact. No mutation run or Windows/native validation is claimed; no phase completion or exception proposal is made.

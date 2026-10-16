@@ -303,11 +303,11 @@ public abstract partial class MatDim
         protected override Dim dmult2(r_dim m1) => Mult(m1.m_rowdim, m_coldim);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override Dim dmult2(c_dim m1) => Mult(m1.m_coldim, m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimTransformsDifferentialTests")]
         protected override MatDim transpose() => r_dim.make(m_coldim, Rows);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimTransformsDifferentialTests")]
         protected override MatDim invert() => r_dim.make(Invert(m_coldim), m_coldim.Length);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimTransformsDifferentialTests")]
         protected override Dim det(int n) => Product(Dim.identity, m_coldim);
     }
     protected partial class rc_dim : MatDim

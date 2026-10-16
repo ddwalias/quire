@@ -210,3 +210,26 @@ git diff --check
 ```
 
 These are affected behavior and targeted direct checks only. `git diff --check` passed. An independent whole-diff review initially found that the malformed-object fixture was a `StrVal`; it was replaced with `new object()` and both commands above were rerun successfully. Reviewer `lane_b_pointer_review` passed the corrected exact tip `0595d535e2eea262444589c5af75a51ab8499e07`; the final checkpoint amendment is documentation-only. Scoped mutation, Windows/native validation, and the full runtime merge gate have not been run; no phase-completion claim or mutant exception proposal is made. No additional approval is required for this scope. Next: review the final checkpoint amendment, push the squashed branch for backup, and publish its atomic frozen handoff.
+
+
+## MatDim c_dim transform batch — active checkpoint
+
+Branch `mirror/b-matdim-c-dim-transforms`, worktree `/root/src/quire-matdim-c-dim-transforms`, base `da4e651a44972fbf14ac33fcd2b71cc8b00b0dae`. Scope is only `c_dim.transpose()` `0x060007e4`, `c_dim.det(int)` `0x060007e5`, and `c_dim.invert()` `0x060007e6`; exact artifact-bound signatures/hashes/contracts are recorded in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Behavior bodies are unchanged; only these three member statuses were promoted after direct comparison.
+
+`MatDimCDimTransformsDifferentialTests` contains one fact and 12 exact-token direct cases: transpose 2, determinant 7, inversion 3. It observes output subtype/shape, transpose axis alias, determinant's ignored n and exact `Product(identity, axis)` identity, inversion's fresh factor array and exact per-element `Dim.Pwr(...,-1.0)` references, null factor entries, receiver state, axis-array identity and each stored factor identity.
+
+```text
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatDimCDimTransformsDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 1 passed, 0 failed, 0 skipped; 12 direct MethodComparison cases.
+
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDimTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped.
+
+`git diff --cached --check`
+=> passed on the complete staged diff before commit.
+
+`git show --check HEAD`
+=> passed on the squashed commit.
+```
+
+A direct attempt to run the Windows-targeted differential project with `-p:EnableWindowsTargeting=true` built but aborted because the Linux host lacks `Microsoft.WindowsDesktop.App` 10.0. The strict Linux focused project above is the executed differential receipt. No mutation run, Windows/native validation, or phase-completion claim is made; no exception proposal is made. Next: independent whole-diff review, then squash/push and publish a frozen handoff only after review PASS.
