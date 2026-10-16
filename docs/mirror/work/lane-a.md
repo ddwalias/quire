@@ -444,14 +444,33 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 
 ## List_keyword and Tuple_keyword singleton batch (`mirror/a-keyword-singletons`)
 
-- Branch: `mirror/a-keyword-singletons`, rebased onto `2930f1a`; implementation commit `a602f5f`.
+- Branch: `mirror/a-keyword-singletons`, rebased onto `2930f1a`; reviewed tip `cc84555`, merged to main as `d78a73c` after the runtime gate.
 - Scope: `List_keyword` and `Tuple_keyword` static singletons, constructors and `NewTok(uint)` factories. The constructors preserve the original keyword strings and key numbers 13 and 14.
 - Differential tests: `SimpleKeywordDifferentialTests.Singleton_constructors_and_tokens` directly compares both type initializers and constructors and compares each factory at handles 0, 1, 37 and `uint.MaxValue`.
 - Evidence: [List_keyword](../evidence/Mpl.Run.List_keyword.md), [Tuple_keyword](../evidence/Mpl.Run.Tuple_keyword.md). Original IL was inspected with ilspycmd before implementation.
-- Checks: filtered direct test passed 1/1. Post-rebase scoped focused validation passed Harness 52, Mpl 188 and Differential 122; 6 methods compared, 0 missing or uncovered, 6 exact, 0 structure-only, lint 0, ratchet ok, mutations 2/2 killed with no survivors. Run `8009ac32-79a2-422d-b6b5-791cf7c37deb`; receipt `/tmp/quire-validation-whc2ts20/summary.json`.
-- Exact IL before/after: 0/6 stubbed bodies -> 6/6 exact. No exact method regressed.
-- Pending proposals: none. Independent review is outstanding.
-- Next: once this batch is reviewed and merged, proceed to an unowned Lane A runtime member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
+- Checks: filtered direct test passed 1/1. Post-rebase scoped focused validation passed Harness 52, Mpl 188 and Differential 122; 6 methods compared, 0 missing or uncovered, 6 exact, 0 structure-only, lint 0, ratchet ok, mutations 2/2 killed with no survivors. Run `8009ac32-79a2-422d-b6b5-791cf7c37deb`; receipt `/tmp/quire-validation-whc2ts20/summary.json`. The full gate passed Harness 52, Mpl 188 and Differential 122; 820 methods compared, 866 missing, 130 structure mismatches, 13 uncovered, 43 unsupported verified, 1321 exact, 103 structure-only, lint 0, ratchet ok, mutations 2/2 killed. Gate receipt `/tmp/quire-keyword-singletons-gate-final/run/summary.json`.
+- Exact IL before/after: 0/6 stubbed bodies -> 6/6 exact. Independent review returned **MERGE** at `cc84555`. No exact method regressed.
+- Pending proposals: none.
+- Completed next batch: `do_keyword` and `try_keyword` singletons, token factories and unimplemented expression walks are recorded below.
+
+## `do_keyword` and `try_keyword` batch (`mirror/a-keyword-do-try`)
+
+- Branch: `mirror/a-keyword-do-try`, rebased onto `5c387e4`; latest tip recorded after approval below.
+- Scope: `do_keyword` (key 11) and `try_keyword` (key 12), including singleton initialization, constructors, `NewTok(uint)`, and `walk_expression_as(MplEnv, SCons)`. Each walk calls `Sexpr.NotImplemented(form)` and retains Mathcad's trailing `return null`.
+- Tests: `DoTryKeywordDifferentialTests.Singleton_constructors_tokens_and_unimplemented_walks` directly compares each initializer, constructor, token factory at handles 0, 17 and `uint.MaxValue`, and the throwing walk.
+- Evidence: [do_keyword](../evidence/Mpl.Run.do_keyword.md), [try_keyword](../evidence/Mpl.Run.try_keyword.md).
+- Checks: filtered direct test passed 1/1. After rebase, proposal-enabled focused validation passed Harness 52, Mpl 188 and Differential 125; 8 methods compared, 0 missing or uncovered after proposals, 8 exact, 0 structure-only, lint 0, ratchet ok, 2/2 mutants killed with no survivors. Four proposed unreachable lines remain pending review and approval. Run `421a368c-9742-41dd-8cbe-fb3a51d93899`; receipt `/tmp/quire-validation-ij3zxcxy/summary.json`.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.do_keyword --method-type Quire.Mpl.Run.try_keyword --mutate --jobs 2 --proposed-unreachable /tmp/a-keyword-do-try-unreachable.txt`.
+- Exact IL before/after: 0/8 stubbed bodies -> 8/8 exact; no previously exact method regressed.
+- Independent review: MERGE at `1f699f7`; reviewer verified all four unreachable-line proposals. The user approved the four proposals on 2026-10-16; maintainer acceptance remains protected.
+- Next: proceed to the next unowned runtime member after this batch's review and proposal approval. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist.
+
+```text
+Quire.Mpl.Run.do_keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/DoTryKeywords.cs:30 sha256=2fc7ba17d69cac7f51d1c1bb44bd6c09ac48ff47e3bf0c598109dde8b62ec2bf # Sexpr.NotImplemented(form) always throws; Mathcad has the same trailing null return IL.
+Quire.Mpl.Run.do_keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/DoTryKeywords.cs:31 sha256=e4c2d686c452df1aca248ba8a35cd7f104576cd3ac47d0949db6c18006fe682e # Sexpr.NotImplemented(form) always throws; Mathcad has the same trailing null return IL.
+Quire.Mpl.Run.try_keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/DoTryKeywords.cs:59 sha256=2fc7ba17d69cac7f51d1c1bb44bd6c09ac48ff47e3bf0c598109dde8b62ec2bf # Sexpr.NotImplemented(form) always throws; Mathcad has the same trailing null return IL.
+Quire.Mpl.Run.try_keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/DoTryKeywords.cs:60 sha256=e4c2d686c452df1aca248ba8a35cd7f104576cd3ac47d0949db6c18006fe682e # Sexpr.NotImplemented(form) always throws; Mathcad has the same trailing null return IL.
+```
 
 ## User-approved proposals awaiting maintainer acceptance
 
