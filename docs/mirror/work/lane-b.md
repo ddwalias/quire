@@ -164,6 +164,25 @@ git diff --check
 
 No production source changed, so no scoped mutation run was required. No acceptance or unreachable proposal is made. Windows/native and full merge-gate checks remain unperformed; these focused Linux checks do not establish whole-type equivalence or phase completion. Independent whole-diff review, squash, backup push and frozen handoff are pending. Remaining Lane B work follows the current queue in `WORK.md`; this branch must remain isolated from the queued pointer-slot-writer tip.
 
+## MatDim c_dim multiplication dispatch — coordinated successor
+
+Branch `mirror/b-matdim-c-dim-mmult`, worktree `/root/src/quire-matdim-c-dim-mmult`, validated against base `da4e651a44972fbf14ac33fcd2b71cc8b00b0dae`. The reviewed test-only predecessor was `74b36e93ef221864bc2b53ed5822abb4d731a36e`; this coordinated successor's exact tip is recorded in its atomic handoff. The pinned Prime 12.0.1.0 artifact identity is SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. REA member inspection supplied artifact-bound normalized IL hashes now recorded in `docs/mirror/evidence/Mcd.MatDim.md` for `c_dim.mmult1(MatDim)` token `0x060007de`, `c_dim.mmult2(uniform_dim)` token `0x060007df`, and `c_dim.mmult2(r_dim)` token `0x060007e0`.
+
+Direct tests cover 13 finite comparisons across the three exact bodies, including RHS virtual dispatch/fallback, compatible and incompatible factor products, returned types/shapes and axis identities, unchanged operand state, null arguments, and a zero-length column-axis result whose fresh output array is now asserted on both runtimes. Only these three source methods are promoted to `[MirrorVerified("MatDimCDimMmultDifferentialTests")]`; no other attribute is changed. Independent whole-diff review by `lane_b_pointer_review` passed at exact tip `d714510459f9e7bc69adf8c349c6225444508d28`; the final wording-only successor awaits exact-tip re-review.
+
+```text
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatDimCDimMmultDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 3 passed, 0 failed, 0 skipped; 13 direct MethodComparison comparisons.
+
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDimTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped.
+
+git diff --check
+=> passed on the complete test/evidence/checkpoint/status diff before the final squash.
+```
+
+Next untested independent c_dim queue from the same pinned member inventory, with no exact-token direct comparisons found in the current tree: `c_dim.dmult1(MatDim) -> Dim` token `0x060007e1`, `c_dim.dmult2(r_dim) -> Dim` token `0x060007e2`, and `c_dim.dmult2(c_dim) -> Dim` token `0x060007e3`. Do not start it until this coordinated successor passes review. These focused checks do not establish phase completion; Windows/native gate and mutation receipt were not run or claimed. No behavior body changed in this batch; only the three directly tested member statuses were promoted. No acceptance exception is proposed.
+
 ## DimVal.ApplyMatVal — active checkpoint
 
 Current main was first inspected at `71c16c5dc2fba8a836f398a78c24fd41159012de`; after Agent A integrated the unrelated SCons batch, this active branch was rebased onto current main `92e763bf581a737c8c7ce3aac0fa5f3c4175f0c1`. Worktree `/root/src/quire-dimval-apply-current`, branch `mirror/b-dimval-apply-current`. The old `origin/mirror/b-dimval-apply` tip `73c53d539871700ea0cc41536a7a60ad4eacc936` remains separate and is not the base for this batch because it is not descended from current main and its full diff includes unrelated intervening changes.

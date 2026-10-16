@@ -28,6 +28,9 @@
 | Invert(class:568[]) | 0x0600062e | 971e5728cd33f04e61e0bb5950cca53e5a18bf5e2c19486e338f6f91731f0398 | Allocate fresh array of Dim.Pwr(element, −1); empty input yields empty array. | Static observed; direct cases below only | Verified |
 | Product(class:568, class:568[]) | 0x0600062f | 72cbd49035442b1826246d70ac9545b2b4b9b4540d1a3db8c148ee6cf0f3f01e | Fold Dim.Mult from scalar through array; empty returns scalar. | Static observed; direct cases below only | Verified |
 | Push(class:568, class:568[]) | 0x06000630 | b00faf7f38063b4d17d9f945ef6c4a67b61bd927a52e73159530a1d1d46cba4b | Allocate new array with first dimension prepended; input is unchanged. | Static observed; direct cases below only | Verified |
+| c_dim.mmult1(Mcd.MatDim) -> MatDim | 0x060007de | 130c16d7f1b232eec1c9a2216155c9cdefc772d70b045e0a8b3446afab764c17 | Virtual-dispatch to the RHS `mmult2(c_dim)` overload; no null check before dispatch. | Static observed; 5 direct cases, finite fixtures only | Verified |
+| c_dim.mmult2(uniform_dim) -> MatDim | 0x060007df | 7fd5de26ce61903777cb85c0e57ab1213de68e038bedd734bd9894abb898e835 | Scale each receiver column factor by the RHS uniform factor with `MatDim.Mult`; return `c_dim` with rows from RHS; output factor array is fresh, including for an empty axis. | Static observed; 5 direct cases including empty column-axis identity; finite fixtures only | Verified |
+| c_dim.mmult2(r_dim) -> MatDim | 0x060007e0 | c2d2a33468ce2c702792a98ce6be6f154bb41edea3cf2eb5bd80f9d330fcde35 | Return `rc_dim.make_rc(RHS.m_rowdim, receiver.m_coldim)`, retaining both exact axis arrays. | Static observed; 3 direct cases, finite fixtures only | Verified |
 
 ## Fields
 
