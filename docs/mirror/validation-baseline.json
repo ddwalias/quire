@@ -1059,8 +1059,8 @@
     "Quire.Mpl.Run.Code::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "a4b8dbd129bb6032abad0825c72326767fbbf31c51fd38ecc76ab499fdf78cb3",
     "Quire.Mpl.Run.Code::EmitCode`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator)->[System.Runtime]System.Void|False": "a4b8dbd129bb6032abad0825c72326767fbbf31c51fd38ecc76ab499fdf78cb3",
     "Quire.Mpl.Run.Code::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "a4b8dbd129bb6032abad0825c72326767fbbf31c51fd38ecc76ab499fdf78cb3",
-    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "71bfde81a9baea84e899092f6057f65390706682393dcd1094720d25783a8ef9",
-    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "71bfde81a9baea84e899092f6057f65390706682393dcd1094720d25783a8ef9",
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "e2de6c6d9e06f891c5aaa8cf6985301a7209d11011049bfec79d069d5b214988",
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "d7a501d1617018fc69a928b6f7a8fc2bc8371a6e7bc5e5795be97aa51ad14eb1",
     "Quire.Mpl.Run.CodeArg::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "2db245fac747d40bddd767cca562082d8defbf52448cd2b11a35186af9169eff",
     "Quire.Mpl.Run.CodeArg::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "77a540cc4cedc376a6421d36093931caeb409837f0bc3f68cf34f024b6d25ae8",
     "Quire.Mpl.Run.CodeFunction::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code[])->[System.Runtime]System.Void|False": "71bfde81a9baea84e899092f6057f65390706682393dcd1094720d25783a8ef9",
@@ -2716,6 +2716,8 @@
     "Quire.Mpl.Run.Code::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Code::EmitCode`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Code::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.CodeArg::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.CodeArg::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.CodeFunction::EmitCode`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator)->[System.Runtime]System.Void|False",
@@ -4430,8 +4432,8 @@
     "Quire.Mpl.Run.Code::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Code::EmitCode`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Code::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "missing",
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.CodeArg::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.CodeArg::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.CodeFunction::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code[])->[System.Runtime]System.Void|False": "missing",
@@ -7289,6 +7291,12 @@
     "Quire.Mpl.Run.Code::EndArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "mplruncodemechanicaldifferentialtests"
     ],
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": [
+      "codeargdifferentialtests"
+    ],
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": [
+      "codeargdifferentialtests"
+    ],
     "Quire.Mpl.Run.CodeArg::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "mplruncodeargmechanicaldifferentialtests"
     ],
@@ -9106,10 +9114,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.CodeArg": {
-      "compared": 2,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 4,
       "uncovered": 0,
@@ -12233,6 +12241,15 @@
     ],
     "Quire.Mpl.Run.Cm::ToString`0()->[System.Runtime]System.String|False": [
       "Quire.Mpl.Run.Cm::Field1"
+    ],
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Code::NullCode",
+      "Quire.Mpl.Run.CodeArg::m_beg",
+      "Quire.Mpl.Run.CodeArg::m_end"
+    ],
+    "Quire.Mpl.Run.CodeArg::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Code,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.CodeArg::m_beg",
+      "Quire.Mpl.Run.CodeArg::m_end"
     ],
     "Quire.Mpl.Run.CodeArg::BegArg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.CodeArg::m_beg"
