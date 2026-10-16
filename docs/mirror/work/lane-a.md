@@ -457,6 +457,18 @@ not phase completion. The reviewed branch and gate-approved main were pushed to 
 
 On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
 
+## locally_keyword mirror batch (`mirror/a-locally-keyword`)
+
+- Branch: `mirror/a-locally-keyword`, rebased onto `c4529f9`; tip `a85af9d` (checkpoint-only amend after review).
+- Scope: `locally_keyword` singleton, `NewTok`, `walk_expression_as`, and the three `MakeLocally` overloads in `src/Quire.Mpl/Run/locally_keyword.cs`; removed their generated stub pairs.
+- Original: inspected the installed `mplrun.dll` with ilspycmd; tokens `.cctor` `0x060000d0`, ctor `0x060000d1`, `NewTok` `0x060000d2`, walk `0x060000d3`, factories `0x060000d4`–`0x060000d6`.
+- Direct comparisons: type initializer, ctor, `NewTok` at 0/1/42/`uint.MaxValue`, all factory overloads (including null and `Cons` inputs), valid empty-block walk and invalid-arity exception.
+- Validation: `validate.py --profile focused --method-type Quire.Mpl.Run.locally_keyword --mutate --jobs 2`. Harness 79/79, Mpl 188/188, Differential 186/186; 6 compared, 0 missing, 0 structure mismatch, 1 uncovered branch, 0 unsupported Verified statuses; 7/7 exact, lint 0, ratchet ok, mutation 1/1 killed. Local checks pass; gate would pass with the known gap. Run `7fb7a302-0da9-4f64-8cef-25018532ca31`; receipt `/tmp/quire-validation-lslp8664/summary.json`.
+- Coverage blocker: `locally_keyword.walk_expression_as`'s `cons != null` branch at line 23 is reachable, but needs a declaration form. This base still has the generated `define_keyword.MakeDefine` stub, so the differential case cannot produce declarations. Keep the method `[MirrorTested]`; add the branch comparison after that dependency reaches main. No unreachable-line proposal is appropriate.
+- Evidence: [Mpl.Run.locally_keyword](../evidence/Mpl.Run.locally_keyword.md).
+- Pending proposals: none. Exact IL before/after: 0/6 implemented method bodies -> 6/6 exact; the original type initializer is also exact. Independent review returned MERGE; runtime gate remains before merge.
+- Next: continue with another unowned Lane A member while the declaration dependency is pending.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
