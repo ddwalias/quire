@@ -19,6 +19,15 @@
     <Compile Include="../../tools/Quire.Tools.MethodAudit/Mutants.cs" Link="Mutants.cs" />
     <Compile Include="../../tools/Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
     <Compile Include="../../tools/Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
+    <Compile Include="../../tools/Quire.Tools.MethodAudit/Artifact.cs" Link="Artifact.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Il.cs" Link="MemberGen/Il.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/World.cs" Link="MemberGen/World.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Names.cs" Link="MemberGen/Names.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Decompiler.cs" Link="MemberGen/Decompiler.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Renderer.cs" Link="MemberGen/Renderer.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Stubs.cs" Link="MemberGen/Stubs.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Emitter.cs" Link="MemberGen/Emitter.cs" />
+    <Compile Include="../../tools/Quire.Tools.MemberGen/Emitter.Files.cs" Link="MemberGen/Emitter.Files.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- MethodAudit itself, copied beside the tests to run in process (OptimizedBuildTests). -->

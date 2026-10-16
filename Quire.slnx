@@ -46,5 +46,6 @@
   <Folder Name="/tools/">
     <Project Path="tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj" />
     <Project Path="tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj" />
+    <Project Path="tools/Quire.Tools.MemberGen/Quire.Tools.MemberGen.csproj" />
   </Folder>
 </Solution>

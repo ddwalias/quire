@@ -92,3 +92,42 @@ The four §5 "moves into mirrored types" stay for each phase; Phase 0 only made 
 Coverage counts in the original tooling inventory above are historical. Current totals and per-member classifications are generated, uncommitted, in `coverage.md` and `status/` (see [status/README.md](status/README.md); definitions in [statuses.md](statuses.md)). MirrorGen reads metadata for structure; behavior analysis is a separate workflow in [evidence/README.md](evidence/README.md).
 
 For repeatable batch commands, strict result reporting, harness checks and platform limits, see [validation.md](validation.md).
+
+## MemberGen
+
+`tools/Quire.Tools.MemberGen` reconstructs the mechanical stubs: members whose Mathcad body is straight-line code
+without locals, branches or exception handling (accessors, auto-properties, field-like events, forwarding calls,
+constant returns, `throw new …`, constructors that chain and store their arguments). It reads Mathcad's IL with
+`System.Reflection.Metadata` and turns it into C# in Quire's names: `=> expression;` for one statement, a block
+otherwise, short type names where unambiguous. Each member moves from `Generated/Mirror` (its `[MirrorStub]` line
+pair deleted, as PLAN step 2 allows) into the hand-written partial that declares its type, or a new file named after
+it, with `[MirrorVerified("<Type>MechanicalDifferentialTests")]`; the stub fields its body uses move with it. Each
+Mathcad type gets a test class of one fact per method (`Mechanical.Compare(typeof(T), token)`: zero/null and
+distinct values for every parameter and target field, targets created without a constructor) and evidence rows
+with the tokens.
+
+Only Tier B members are generated (the maintainer's tier lists in `docs/mirror/tiers/`): a member is written
+only when every method key it has (`Owner::Key`, the format of `tier-a.txt`) is listed in `tier-b.txt`. With
+`--include-tier-a`, keys in `tier-a.txt` and `tier-a2.txt` are allowed as well, for a lane generating its own Tier A
+members under normal review. C, D and unlisted members are never generated. `emit` fails when `tier-b.txt` is
+missing.
+
+```sh
+dotnet run --project tools/Quire.Tools.MemberGen -- survey --repo . --install <Mathcad dir> --output .mirror-cache/membergen/survey.md
+python3 tools/Quire.Tools.MemberGen/accept.py --project Quire.Mpl [--include-tier-a] [--no-mutate] [--work DIR]
+```
+
+`survey` classifies every remaining stub by the shape of Mathcad's body (from the Debug builds under `src/*/bin`).
+`emit` is internal to `accept.py`: it marks what it writes `[MirrorVerified]` and Verified in the evidence before
+anything is verified, and only `accept.py` keeps what then passes. `accept.py` keeps a member only when the merge
+gate's method checks pass for it. Each round it restores the tree, emits everything not yet rejected, and builds;
+a compile error rejects the member whose lines (or moved fields) it is in. It then runs MethodAudit on the Release
+build and the generated comparisons, and rejects every member whose IL is not an exact match (`exact_match`) or
+whose test fails; it fails outright when MethodAudit fails or a generated test does not run. When that rejects
+nothing, it runs the scoped validation (`validate.py --profile focused --method-type` the touched types, with
+`--mutate` unless `--no-mutate`) and rejects every member whose methods are not `compared` there (uncovered,
+verified but unsupported, ...) or have a surviving mutant. It repeats until a round rejects nothing and leaves the
+accepted members in the working tree, with `summary.json` (kept, rejected with reasons) in its work directory
+(default `.mirror-cache/membergen/<project>-<time>`). On any failure or interruption it restores the tree. A lock
+file, `.mirror-cache/membergen.lock`, keeps a second run out of the same worktree, and builds run without build
+servers. Only `Quire.Mpl` has a portable differential host; other projects need the Windows differential project.

@@ -657,7 +657,8 @@ static class TestTypes
                     {
                         case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
                             Member(MetadataTokens.EntityHandle(il.ReadInt32())); break;
-                        case OperandType.InlineSwitch: il.Offset += 4 * il.ReadInt32(); break;
+                        // Read the count before taking the offset: `il.Offset += 4 * il.ReadInt32()` would drop the count's 4 bytes.
+                        case OperandType.InlineSwitch: { int targets = il.ReadInt32(); il.Offset += 4 * targets; break; }
                         case OperandType.InlineNone: break;
                         case OperandType.ShortInlineBrTarget or OperandType.ShortInlineI or OperandType.ShortInlineVar: il.Offset += 1; break;
                         case OperandType.InlineVar: il.Offset += 2; break;

@@ -185,6 +185,36 @@ public class StructureTests
     public void Capacity_hints_are_mutated_where_capacity_is_read() =>
         Assert.Equal(["ldc.i4.s 100 -> 101"], ConstantMutants("CapacityRead"));
 
+    /// <summary>The reader skips a switch's count and all its targets, so the instructions after it still count. The
+    /// target is 0x24 bytes on, an unassigned opcode: a reader four bytes short decodes it and fails.</summary>
+    [Fact]
+    public void Test_type_references_are_read_past_a_switch()
+    {
+        var assembly = new System.Reflection.Emit.PersistedAssemblyBuilder(new System.Reflection.AssemblyName("Switch"), typeof(object).Assembly);
+        var module = assembly.DefineDynamicModule("Switch");
+        var referenced = module.DefineType("B", System.Reflection.TypeAttributes.Public);
+        referenced.CreateType();
+        var t = module.DefineType("A", System.Reflection.TypeAttributes.Public);
+        var il = t.DefineMethod("F", System.Reflection.MethodAttributes.Public | System.Reflection.MethodAttributes.Static, typeof(void), [typeof(int)]).GetILGenerator();
+        var target = il.DefineLabel();
+        il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);
+        il.Emit(System.Reflection.Emit.OpCodes.Switch, [target]);
+        il.Emit(System.Reflection.Emit.OpCodes.Ldtoken, referenced);                                              // 5 bytes
+        il.Emit(System.Reflection.Emit.OpCodes.Call, typeof(Type).GetMethod(nameof(Type.GetTypeFromHandle))!);    // 5
+        il.Emit(System.Reflection.Emit.OpCodes.Pop);                                                              // 1
+        for (int i = 11; i < 0x24; i++) il.Emit(System.Reflection.Emit.OpCodes.Nop);
+        il.MarkLabel(target);
+        il.Emit(System.Reflection.Emit.OpCodes.Ret);
+        t.CreateType();
+        var image = new MemoryStream();
+        assembly.Save(image);
+        image.Position = 0;
+        using var pe = new PEReader(image);
+        var md = pe.GetMetadataReader();
+        var a = md.TypeDefinitions.Single(h => SigProvider.FullName(md, h) == "A");
+        Assert.Equal(["B"], TestTypes.References(md, pe, a).Select(h => TestTypes.Name(md, h)));
+    }
+
     [Fact]
     public void Quire_types_are_named_after_their_Mathcad_binding()
     {
