@@ -4,7 +4,7 @@ Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `3dda9942425f26ba3c8e404b9e24a1dc5f9a69ee`. Lane B history is retained compactly here; older worktree results are historical.
+Checkpoint base: Linux main `dc927923cd325455fa1a0709f2dd06c27891ee1e`. Lane B history is retained compactly here; older worktree results are historical.
 
 | Batch | Main status |
 |---|---|
@@ -20,6 +20,7 @@ Checkpoint base: Linux main `3dda9942425f26ba3c8e404b9e24a1dc5f9a69ee`. Lane B h
 | DimVal.ApplyMatVal | Merged to main at `dffea4d` via `mirror/b-dimval-apply-current` (`a00b684`). 5 direct comparisons; stub removed. |
 | MatVal ColDimArray / RowDimArray | Merged to main at `f447eed` (`339fcad`). 22 direct comparisons. |
 | MatVal IsRange / IsIntegral accessors | Merged to main at `3dda994` (`78d636f`). Four accessors; exact IL; 18 direct comparisons. |
+| MatVal asRealVector(object) | Merged to main at `dc92792` (`f0ae439`). Exact IL; 9 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -89,24 +90,28 @@ Exact signatures and tokens: `ColDimArray(int) -> Dim[]` `0x06000438` and `RowDi
 
 Branch `mirror/b-matval-range-integral` (`78d636f`), based on clean main `9e982ce09a19`. Verified status annotations and contracts for `get_IsRange` (0x06000464), `set_IsRange` (0x06000465), `get_IsIntegral` (0x06000466), and `set_IsIntegral` (0x06000467). Setters use compound assignments (`|=` / `&=`) matching Mathcad IL exactly; all four accessors are exact opcode matches in Release IL. 18 direct MethodComparison cases in `MatValRangeIntegralDifferentialTests`. Scoped mutation on `Quire.Mcd.MatVal` passed with 286/286 mutants killed (0 survivors). Merged via `merge_gate.py --apply`.
 
-## MatVal asRealVector(object) — active checkpoint
+### MatVal asRealVector(object) (merged to main at dc92792)
 
-Branch `mirror/b-matval-asrealvector`, based on current clean main `3dda994`. The batch adds direct differential tests, verified status annotation, and the contract in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signature, token 0x06000468, and baseline hash `ef8374270a85abf2d28331ffad9e8c7ee7292fea727d03ddc032d37d525d19e4` (exact IL match in baseline). Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matval-asrealvector` (`f0ae439`), based on clean main `3dda994`. Added direct differential tests, verified status annotation, and contract in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signature, token 0x06000468, and baseline hash `ef8374270a85abf2d28331ffad9e8c7ee7292fea727d03ddc032d37d525d19e4` (exact IL match in baseline). 9 direct MethodComparison cases in `MatValAsRealVectorDifferentialTests`. Merged via `merge_gate.py --apply`.
 
-The method returns the target `MatVal` if the input is a `MatVal` and its `IsRealVector` property evaluates to true; otherwise returns `null`. Direct differential tests cover null input, non-MatVal object input, real vector with null imaginary backing returning identical matrix, rectangular matrix returning null, complex vector with nonzero imaginary value returning null, all-zero imaginary vector normalized while returned by identity, full pointer coverage canonicalization before return, nonuniform live pointer clearing zero imaginary backing, and live out-of-range pointer marker exception forwarding.
+## MatDim RowDimensionArray / ColDimensionArray — active checkpoint
+
+Branch `mirror/b-matdim-dimension-arrays`, based on current clean main `dc92792`. The batch adds direct differential tests in `MatDimDimensionArraysDifferentialTests.cs`, verified status annotations on `RowDimensionArray(int)` (token 0x06000613) and `ColDimensionArray(int)` (token 0x06000614) in `src/Quire.Mpl/Mcd/MatDim.cs`, and contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures and hashes are in that table. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+Methods allocate a new array of dimensions (`Cols` or `Rows`) and query `dim(row, col)` across indices. In Mathcad, the loop uses local variable bounds. Both methods compile to exact opcode matches in Release IL. 8 direct MethodComparison cases (4 per method) test uniform dimensions, zero-length dimensions, crazy matrices with padded cells and pointer dimension aliasing, and out-of-range lookup exceptions.
 
 ```text
-dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatVal' -m:1 -nr:false -p:UseSharedCompilation=false
-=> 44 passed, 0 failed, 0 skipped.
+dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~MatDim' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 5 passed, 0 failed, 0 skipped.
 
-QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatValAsRealVectorDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
-=> 1 fact passed, 0 failed, 0 skipped; 9 direct MethodComparison cases against the pinned artifact.
+QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~MatDimDimensionArraysDifferentialTests' -m:1 -nr:false -p:UseSharedCompilation=false
+=> 2 facts passed, 0 failed, 0 skipped; 8 direct MethodComparison cases against the pinned artifact.
 ```
 
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
-1. **MatDim specialized coordinate queries and operations** (`c_dim`, `r_dim`, `rc_dim`, `uniform_dim`, `crazy_dim` constructors, equality, multiplication, transforms, and dimension array accessors).
+1. **MatDim specialized coordinate queries and operations** (`c_dim`, `r_dim`, `rc_dim`, `uniform_dim`, `crazy_dim` constructors, equality, multiplication, transforms).
 2. **MatVal flag and classifier members** (`asRealMatrix`, `assertRealVector`, `assertRealMatrix`, real classifiers).
 3. **Function / FunctionUtilities** (`FunctionUtilities.take`/`but` boundary cases; `Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
 4. **Engine projects** (interface and factory members, subject to Linux/Windows capability).

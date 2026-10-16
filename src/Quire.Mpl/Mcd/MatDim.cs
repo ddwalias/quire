@@ -27,18 +27,20 @@ public abstract partial class MatDim
     public abstract Dim dim(int i, int j);
     public abstract MatDim matdim(int i, int j);
 
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimDimensionArraysDifferentialTests")]
     public virtual Dim[] RowDimensionArray(int r)
     {
-        var result = new Dim[Cols];
-        for (int col = 0; col < result.Length; col++) result[col] = dim(r, col);
+        int cols = Cols;
+        var result = new Dim[cols];
+        for (int col = 0; col < cols; col++) result[col] = dim(r, col);
         return result;
     }
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimDimensionArraysDifferentialTests")]
     public virtual Dim[] ColDimensionArray(int c)
     {
-        var result = new Dim[Rows];
-        for (int row = 0; row < result.Length; row++) result[row] = dim(row, c);
+        int rows = Rows;
+        var result = new Dim[rows];
+        for (int row = 0; row < rows; row++) result[row] = dim(row, c);
         return result;
     }
 
