@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplBackquoteMacro, mplrun")]
 public partial class MplBackquoteMacro : global::Quire.Mpl.Run.MplMacro
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Mpl.Run.Sym backquote;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Mpl.Run.MplBackquoteMacro singleton;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Mpl.Run.MplMacro m_macro;
-    [global::Quire.Mirror.MirrorStub]
-    private MplBackquoteMacro() : base(default(global::Quire.Mpl.Run.Sym)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr form) => base.ExpandCall(e, form);
 }

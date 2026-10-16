@@ -280,3 +280,38 @@ public partial class MplQuoteMacro : MplMacro
         return new Qt(scons.second);
     }
 }
+
+/// <summary>
+/// MPL backquote macro that expands quasiquoted expressions via MplMacro.backquote foreign macro (docs/mirror/evidence/Mpl.Run.MplBackquoteMacro.md).
+/// </summary>
+public partial class MplBackquoteMacro : MplMacro
+{
+    [MirrorVerified("EnvDifferentialTests")]
+    public static readonly Sym backquote;
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public static readonly MplBackquoteMacro singleton;
+
+    private static MplMacro m_macro;
+
+    static MplBackquoteMacro()
+    {
+        backquote = new Sym("backquote", "MplMacro");
+        singleton = new MplBackquoteMacro();
+    }
+
+    private MplBackquoteMacro()
+        : base(backquote)
+    {
+    }
+
+    [MirrorTested("Mpl.Run.MplBackquoteMacro")]
+    public override Sexpr ExpandCall(MplEnv e, Sexpr form)
+    {
+        if (m_macro == null)
+        {
+            m_macro = e.LoadForeignMacro("MplMacro.backquote");
+        }
+        return m_macro.ExpandCall(e, form);
+    }
+}

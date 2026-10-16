@@ -362,6 +362,34 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
   - [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md): `walk_expression` status updated to `Tested`.
   - [Mpl.Run.AppException](../evidence/Mpl.Run.AppException.md): `Raise(object[], uint)` status updated to `Tested`.
 
+## MplBackquoteMacro mirror batch (mirror/a-backquote-macro)
+
+- Branch: `mirror/a-backquote-macro`
+- Worktree: `/root/src/quire-backquote-macro`
+- Scope: Implementation of `MplBackquoteMacro` (type token `0x0200002c`, fields `backquote` `0x04000067`, `singleton` `0x04000068`, `m_macro` `0x04000069`, cctor `()` `0x0600013f`, ctor `()` `0x06000140`, `ExpandCall(MplEnv, Sexpr)` `0x06000141`) in `src/Quire.Mpl/Run/Env.cs` and deletion of all 5 matching stubs in `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplBackquoteMacro.g.cs`.
+- Contracts & Behavior:
+  - `Mpl.Run.MplBackquoteMacro`:
+    - Inherits `MplMacro(backquote)`.
+    - `public static readonly Sym backquote;` initialized in `.cctor()` to `new Sym("backquote", "MplMacro")` (qualifier dropped per `Sym.ctor(string, string)` contract).
+    - `public static readonly MplBackquoteMacro singleton;` initialized in `.cctor()`.
+    - `private MplBackquoteMacro() : base(backquote) { }`.
+    - `ExpandCall(MplEnv e, Sexpr form)`:
+      - Checks `m_macro == null`. If null, resolves `m_macro = e.LoadForeignMacro("MplMacro.backquote")`.
+      - When `e` is null, throws `NullReferenceException` on `e.LoadForeignMacro`.
+      - When `e` is `LocalEnv()` with null parent, throws `NullReferenceException` from `m_parent.LoadForeignMacro`.
+      - When `e` is `MplEnv`, throws `AppException("Can not resolve signature")` via `CanNotResolve`.
+      - When `m_macro` is populated, delegates directly to `m_macro.ExpandCall(e, form)`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000141 byte-for-byte. Attribute on `ExpandCall` set to `[MirrorTested("Mpl.Run.MplBackquoteMacro")]` because `MplEnv.LoadForeignMacro` unconditionally throws `AppException("Can not resolve signature")` in `mplrun.dll`, preventing unmocked foreign macro assignment in differential runs without an external host.
+- Evidence files:
+  - [Mpl.Run.MplBackquoteMacro](../evidence/Mpl.Run.MplBackquoteMacro.md): Created with `Verified` status across static fields/constructors and `Tested` on `ExpandCall`.
+- Test counts & Validation receipts:
+  - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 188 passed, 0 failed, 0 skipped.
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 117 passed, 0 failed, 0 skipped (`EnvDifferentialTests.MplBackquoteMacro_members`: passed).
+  - Direct comparisons added:
+    - `EnvDifferentialTests.MplBackquoteMacro_members`: `.ctor()`, `.cctor()`, `singleton` identity, `backquote` identity/qualifier-drop, `ExpandCall(null, form)` throwing `NullReferenceException` on `m_macro == null`, `ExpandCall(LocalEnv, form)` throwing `NullReferenceException` from parent lookup, and `ExpandCall` with populated `m_macro` across valid macro expansion and invalid argument forms throwing `AppException`.
+  - Format checks: `git diff --check` passed cleanly.
+  - Protected paths: `merge_gate.stub_deletions` verified stub removals from `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplBackquoteMacro.g.cs` (5 member deletions) cleanly without modifying any other protected files.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run

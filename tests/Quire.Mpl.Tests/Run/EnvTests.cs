@@ -246,4 +246,60 @@ public class EnvTests
         Assert.Throws<NullReferenceException>(() => qm.ExpandCall(null, tokQuote));
         Assert.Throws<NullReferenceException>(() => qm.ExpandCall(null, null));
     }
+
+    [Fact]
+    public void MplBackquoteMacro_expansion()
+    {
+        var bqm = MplBackquoteMacro.singleton;
+        Assert.NotNull(bqm);
+        Assert.Same(bqm, MplBackquoteMacro.singleton);
+        Assert.NotNull(MplBackquoteMacro.backquote);
+        Assert.Equal("backquote", MplBackquoteMacro.backquote.name);
+        Assert.Null(MplBackquoteMacro.backquote.qualifier);
+        Assert.Same(MplBackquoteMacro.backquote, bqm.m_name);
+
+        var tokBq = new Tok(MplBackquoteMacro.backquote, 10u);
+        var arg = int_constant.NewTok(42, 20u);
+        var call = SCons.list2(tokBq, arg);
+
+        // 1. When e is null, throws NullReferenceException on LoadForeignMacro call
+        Assert.Throws<NullReferenceException>(() => bqm.ExpandCall(null, call));
+
+        // 2. When e is LocalEnv with null parent, throws NullReferenceException on LoadForeignMacro delegation
+        var envNullParent = new LocalEnv();
+        Assert.Throws<NullReferenceException>(() => bqm.ExpandCall(envNullParent, call));
+
+        // 3. When e is a mock environment returning a macro
+        var customMacro = new MplSymbolMacro(new Sym("bqTarget", null), arg);
+        var mockEnv = new FakeBackquoteEnv(customMacro);
+
+        try
+        {
+            var res = bqm.ExpandCall(mockEnv, call);
+            var consRes = Assert.IsType<SCons>(res);
+            Assert.Same(arg, consRes.head);
+            Assert.Same(call.tail, consRes.tail);
+
+            // Subsequent call with null e uses cached m_macro
+            var resCached = bqm.ExpandCall(null, call);
+            var consCached = Assert.IsType<SCons>(resCached);
+            Assert.Same(arg, consCached.head);
+            Assert.Same(call.tail, consCached.tail);
+        }
+        finally
+        {
+            // Reset cached m_macro via reflection
+            typeof(MplBackquoteMacro)
+                .GetField("m_macro", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)!
+                .SetValue(null, null);
+        }
+    }
+
+    private class FakeBackquoteEnv : MplEnv
+    {
+        private readonly MplMacro _macro;
+        public FakeBackquoteEnv(MplMacro macro) { _macro = macro; }
+        public override BindingInfo lookup(Sym s) => null;
+        public override MplMacro LoadForeignMacro(string foreign_id) => _macro;
+    }
 }

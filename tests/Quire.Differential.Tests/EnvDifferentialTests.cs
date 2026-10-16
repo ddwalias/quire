@@ -8,9 +8,9 @@ namespace Quire.Differential.Tests;
 
 /// <summary>
 /// Compares Quire's <see cref="MplEnv"/>, <see cref="BindingInfo"/>, <see cref="MacroBindingInfo"/>,
-/// <see cref="LocalEnv"/>, <see cref="MplMacro"/>, <see cref="MplSymbolMacro"/> and <see cref="MplQuoteMacro"/> with mplrun's on the same inputs.
+/// <see cref="LocalEnv"/>, <see cref="MplMacro"/>, <see cref="MplSymbolMacro"/>, <see cref="MplQuoteMacro"/> and <see cref="MplBackquoteMacro"/> with mplrun's on the same inputs.
 /// Evidence records: docs/mirror/evidence/Mpl.Run.MplEnv.md, Mpl.Run.BindingInfo.md, Mpl.Run.LocalEnv.md,
-/// Mpl.Run.MplMacro.md, Mpl.Run.MplSymbolMacro.md, Mpl.Run.MplQuoteMacro.md.
+/// Mpl.Run.MplMacro.md, Mpl.Run.MplSymbolMacro.md, Mpl.Run.MplQuoteMacro.md, Mpl.Run.MplBackquoteMacro.md.
 /// </summary>
 public class EnvDifferentialTests
 {
@@ -443,5 +443,77 @@ public class EnvDifferentialTests
         // 5. Null form throws NullReferenceException
         MethodComparison.Compare("MplQuoteMacro.ExpandCall null throws NullRef", "Mpl.Run.MplQuoteMacro",
             qExpandCall, qSingleton, [null, null], mExpandCall, mSingleton, [null, null], show, show, state, state);
+    }
+
+    [SkippableFact]
+    public void MplBackquoteMacro_members()
+    {
+        Runtime.Sync();
+        var (qCtor, mCtor) = Ctor(typeof(MplBackquoteMacro), BindingFlags.NonPublic | BindingFlags.Instance);
+        var (qCc, mCc) = (typeof(MplBackquoteMacro).TypeInitializer!, MType(typeof(MplBackquoteMacro)).TypeInitializer!);
+        var (qExpandCall, mExpandCall) = Method(typeof(MplBackquoteMacro), "ExpandCall", DeclaredInstancePublic, typeof(MplEnv), typeof(Sexpr));
+
+        Func<object?, string> show = o => Describe(o);
+        Func<object, string> state = o => Describe(o);
+
+        MethodComparison.Compare("MplBackquoteMacro()", "Mpl.Run.MplBackquoteMacro",
+            qCtor, null, [], mCtor, null, [], show, show);
+
+        MethodComparison.Compare("MplBackquoteMacro.cctor", "Mpl.Run.MplBackquoteMacro",
+            qCc, null, [],
+            mCc, null, [],
+            quireShow: _ => $"singleton={Describe(MplBackquoteMacro.singleton)},backquote={Describe(MplBackquoteMacro.backquote)}",
+            originalShow: _ => $"singleton={Describe(Get(MType(typeof(MplBackquoteMacro)), "singleton"))},backquote={Describe(Get(MType(typeof(MplBackquoteMacro)), "backquote"))}",
+            quireState: o => Describe(o), originalState: o => Describe(o));
+
+        var qSingleton = MplBackquoteMacro.singleton;
+        var mSingleton = Get(M("Mpl.Run.MplBackquoteMacro"), "singleton")!;
+        Assert.Equal(Describe(mSingleton), Describe(qSingleton));
+
+        var qBackquote = MplBackquoteMacro.backquote;
+        var mBackquote = Get(M("Mpl.Run.MplBackquoteMacro"), "backquote")!;
+        Assert.Equal(Describe(mBackquote), Describe(qBackquote));
+
+        var qForm = SCons.list2(new Tok(qBackquote, 10u), int_constant.NewTok(42, 20u));
+        var mForm = ToMathcad(qForm)!;
+
+        // 1. ExpandCall with null environment throws NullReferenceException on m_macro == null path
+        MethodComparison.Compare("MplBackquoteMacro.ExpandCall(null, form) throws NullRef", "Mpl.Run.MplBackquoteMacro",
+            qExpandCall, qSingleton, [null, qForm], mExpandCall, mSingleton, [null, mForm], show, show, state, state);
+
+        // 2. ExpandCall with LocalEnv() (null parent) throws NullReferenceException on m_macro == null path
+        var qEnv = new LocalEnv();
+        var mEnv = New(M("Mpl.Run.LocalEnv"), [])!;
+        MethodComparison.Compare("MplBackquoteMacro.ExpandCall(LocalEnv, form) throws NullRef", "Mpl.Run.MplBackquoteMacro",
+            qExpandCall, qSingleton, [qEnv, qForm], mExpandCall, mSingleton, [mEnv, mForm], show, show, state, state);
+
+        // 3. ExpandCall when m_macro is populated via reflection
+        try
+        {
+            SetStaticField(typeof(MplBackquoteMacro), "m_macro", MplQuoteMacro.singleton);
+            SetStaticField(MType(typeof(MplBackquoteMacro)), "m_macro", Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!);
+
+            // Valid quote call through backquote macro
+            MethodComparison.Compare("MplBackquoteMacro.ExpandCall (cached m_macro valid)", "Mpl.Run.MplBackquoteMacro",
+                qExpandCall, qSingleton, [qEnv, qForm], mExpandCall, mSingleton, [mEnv, mForm], show, show, state, state);
+
+            // Invalid call through backquote macro (length 3 throws)
+            var qFormLen3 = SCons.list3(new Tok(qBackquote, 10u), int_constant.NewTok(1, 0u), int_constant.NewTok(2, 0u));
+            var mFormLen3 = ToMathcad(qFormLen3)!;
+            MethodComparison.Compare("MplBackquoteMacro.ExpandCall (cached m_macro length 3 throws)", "Mpl.Run.MplBackquoteMacro",
+                qExpandCall, qSingleton, [qEnv, qFormLen3], mExpandCall, mSingleton, [mEnv, mFormLen3], show, show, state, state);
+        }
+        finally
+        {
+            SetStaticField(typeof(MplBackquoteMacro), "m_macro", null);
+            SetStaticField(MType(typeof(MplBackquoteMacro)), "m_macro", null);
+        }
+    }
+
+    private static void SetStaticField(System.Type t, string name, object? value)
+    {
+        var f = t.GetField(name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)
+            ?? throw new MissingMemberException(t.Name, name);
+        f.SetValue(null, value);
     }
 }
