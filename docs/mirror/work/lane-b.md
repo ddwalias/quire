@@ -4,7 +4,7 @@ Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `2930f1a9c2d585e13d9685ee2a2b757e7545b74c`. Lane B history is retained compactly here; older worktree results are historical.
+Checkpoint base: Linux main `27c06a07861c8a1435272a9dfa37a54471966a4f`. Lane B history is retained compactly here; older worktree results are historical.
 
 | Batch | Main status |
 |---|---|
@@ -22,6 +22,7 @@ Checkpoint base: Linux main `2930f1a9c2d585e13d9685ee2a2b757e7545b74c`. Lane B h
 | MatVal IsRange / IsIntegral accessors | Merged to main at `3dda994` (`78d636f`). Four accessors; exact IL; 18 direct comparisons. |
 | MatVal asRealVector(object) | Merged to main at `dc92792` (`f0ae439`). Exact IL; 9 direct comparisons. |
 | MatDim RowDimensionArray / ColDimensionArray | Merged to main at `2930f1a` (`5bd227c`). Exact IL; 8 direct comparisons. |
+| FunctionUtilities but / take | Merged to main at `27c06a0` (`6e27dc2`). Exact IL; 17 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -99,19 +100,15 @@ Branch `mirror/b-matval-asrealvector` (`f0ae439`), based on clean main `3dda994`
 
 Branch `mirror/b-matdim-dimension-arrays` (`5bd227c`), based on clean main `dc92792`. Added direct differential tests in `MatDimDimensionArraysDifferentialTests.cs`, verified status annotations on `RowDimensionArray(int)` (token 0x06000613) and `ColDimensionArray(int)` (token 0x06000614) in `src/Quire.Mpl/Mcd/MatDim.cs`, and contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures and hashes are in that table. Both methods compile to exact opcode matches in Release IL. 8 direct MethodComparison cases (4 per method) in `MatDimDimensionArraysDifferentialTests`. Scoped mutation on `Quire.Mcd.MatDim` passed with 10/10 mutants killed (0 survivors). Merged via `merge_gate.py --apply`.
 
-## FunctionUtilities take / but boundary cases — active checkpoint
+### FunctionUtilities take / but boundary cases (merged to main at 27c06a0)
 
-Branch `mirror/b-functionutilities-take-negative`, based on current clean main `2930f1a`. The batch adds direct differential tests in `FunctionUtilitiesButDifferentialTests.cs` and `FunctionUtilitiesTakeNegativeDifferentialTests.cs`, verified status annotations on `but<T>` (token 0x0600027a) and `take<T>` (token 0x0600027b) in `src/Quire.Mpl/Run/FunctionUtilities.cs`, and updated contracts in [Mpl.Run.FunctionUtilities evidence](../evidence/Mpl.Run.FunctionUtilities.md). Exact original signatures and tokens are in that table; both methods are exact IL matches in baseline (`exact: True`). Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-functionutilities-take-negative` (`6e27dc2`), based on clean main `2930f1a`. Added direct differential tests in `FunctionUtilitiesButDifferentialTests.cs` and `FunctionUtilitiesTakeNegativeDifferentialTests.cs`, verified status annotations on `but<T>` (token 0x0600027a) and `take<T>` (token 0x0600027b) in `src/Quire.Mpl/Run/FunctionUtilities.cs`, and updated contracts in [Mpl.Run.FunctionUtilities evidence](../evidence/Mpl.Run.FunctionUtilities.md). Exact original signatures and tokens are in that table; both methods are exact IL matches in baseline (`exact: True`). 17 direct MethodComparison cases against the pinned artifact. Merged via `merge_gate.py --apply`.
 
-Direct differential tests cover negative counts, negative-index `Array.Copy` exceptions, integer overflow on negative suffix lengths, null input checking (`Length` property access), empty array returns on count >= length, copy prefix vs input array reference identity, and suffix extraction.
+## MatDim base getters — active checkpoint
 
-```text
-dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~Function' -m:1 -nr:false -p:UseSharedCompilation=false
-=> 17 passed, 0 failed, 0 skipped.
+Branch `mirror/b-matdim-base-getters`, based on current clean main `27c06a0`. The batch adds direct differential tests in `MatDimBaseGettersDifferentialTests.cs`, verified status annotations on `get_UniformDim` (token 0x0600060e), `get_RowDimensions` (token 0x06000611), `get_ColDimensions` (token 0x06000612), and `get_IsLinear` (token 0x06000619) in `src/Quire.Mpl/Mcd/MatDim.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`ce2965e0f5bbb04ab5d1eb4e0cc84a9790f9d24a539a14fd7c2dbc5ba7a2867f`) are in that table. All four base getters return `null` (`ldnull; ret`), matching Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
 
-QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~FunctionUtilities' -m:1 -nr:false -p:UseSharedCompilation=false
-=> 3 facts passed, 0 failed, 0 skipped; 17 direct MethodComparison cases against the pinned artifact.
-```
+Direct differential tests compare the base getter definitions on `crazy_dim` instances (both padded with live/stale pointers and empty), verifying that each getter returns `null` without reading or mutating matrix state (8 direct comparisons).
 
 ## Next Lane B queue
 

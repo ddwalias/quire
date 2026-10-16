@@ -16,13 +16,13 @@ public abstract partial class MatDim
     public int Rows => m_row;
     [MirrorTested("Mcd.MatDim")]
     public int Cols => m_col;
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimBaseGettersDifferentialTests")]
     public virtual Dim UniformDim => null;
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimBaseGettersDifferentialTests")]
     public virtual Dim[] RowDimensions => null;
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimBaseGettersDifferentialTests")]
     public virtual Dim[] ColDimensions => null;
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimBaseGettersDifferentialTests")]
     public virtual MatDim IsLinear => null;
     public abstract Dim dim(int i, int j);
     public abstract MatDim matdim(int i, int j);
