@@ -7228,7 +7228,7 @@
       "structure_mismatch": 0,
       "total": 31,
       "uncovered": 1,
-      "verified_unsupported": 1
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Atom": {
       "compared": 8,
@@ -7238,7 +7238,7 @@
       "structure_mismatch": 0,
       "total": 9,
       "uncovered": 0,
-      "verified_unsupported": 1
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.BinaryDelegateFunction": {
       "compared": 0,
@@ -8328,7 +8328,7 @@
       "structure_mismatch": 0,
       "total": 29,
       "uncovered": 2,
-      "verified_unsupported": 1
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.SList": {
       "compared": 4,
@@ -8348,7 +8348,7 @@
       "structure_mismatch": 0,
       "total": 34,
       "uncovered": 5,
-      "verified_unsupported": 6
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Sym": {
       "compared": 23,
@@ -8358,7 +8358,7 @@
       "structure_mismatch": 0,
       "total": 24,
       "uncovered": 1,
-      "verified_unsupported": 1
+      "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Tag": {
       "compared": 1,
