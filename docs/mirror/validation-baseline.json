@@ -1500,8 +1500,9 @@
     "Quire.Mpl.Run.ModuleTextAttribute::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "25c57a75dfc9e436bfe1d6b1172d6d6b9dd7a8056376f9e545aa35c409654e1b",
     "Quire.Mpl.Run.ModuleTextAttribute::ToString`0()->[System.Runtime]System.String|False": "ff05f8b93181524745e044a9101a0fe65d15eb62f3c21b624cb5200c74cf29d9",
     "Quire.Mpl.Run.ModuleTextAttribute::get_Text`0()->[System.Runtime]System.String|False": "70159f0ce88bc914867b6673ed0a0a28cab1cf31026cfc143d3b1ab19b0ec881",
-    "Quire.Mpl.Run.MplBackquoteMacro::.ctor`0()->[System.Runtime]System.Void|False": "c88188744e9ef76647f2385fdfda7fbc246c2fd6e0acb73409b9dcdc68c505f4",
-    "Quire.Mpl.Run.MplBackquoteMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "5540cb12bd329b595975a69eb30eef46bd5c6815495493d6366145a92bf84dbf",
+    "Quire.Mpl.Run.MplBackquoteMacro::.cctor`0()->[System.Runtime]System.Void|True": "acd733888badd64566aa1862a6529e393260e4847627309c156ea9bfa639fc23",
+    "Quire.Mpl.Run.MplBackquoteMacro::.ctor`0()->[System.Runtime]System.Void|False": "63dcebf048091ed3ad550741b82941aa53def7707b9b67a6e3435b4febb426ca",
+    "Quire.Mpl.Run.MplBackquoteMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "34d1915ffd4bd0e855ebadb07c3dad7546a368313cd6fa351a746cb296044b00",
     "Quire.Mpl.Run.MplDestructuringBind::.ctor`0()->[System.Runtime]System.Void|False": "c88188744e9ef76647f2385fdfda7fbc246c2fd6e0acb73409b9dcdc68c505f4",
     "Quire.Mpl.Run.MplDestructuringBind::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "5540cb12bd329b595975a69eb30eef46bd5c6815495493d6366145a92bf84dbf",
     "Quire.Mpl.Run.MplDestructuringBind::as_pattern`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "d35706d5e8a61d45e716822be88a0a9a1c3f6b3efd99cb8043fd5ecc4c7b18b8",
@@ -3593,8 +3594,9 @@
     "Quire.Mpl.Run.ModuleTextAttribute::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.ModuleTextAttribute::ToString`0()->[System.Runtime]System.String|False": "missing",
     "Quire.Mpl.Run.ModuleTextAttribute::get_Text`0()->[System.Runtime]System.String|False": "missing",
-    "Quire.Mpl.Run.MplBackquoteMacro::.ctor`0()->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.MplBackquoteMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
+    "Quire.Mpl.Run.MplBackquoteMacro::.cctor`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.MplBackquoteMacro::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.MplBackquoteMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "uncovered",
     "Quire.Mpl.Run.MplDestructuringBind::.ctor`0()->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.MplDestructuringBind::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
     "Quire.Mpl.Run.MplDestructuringBind::as_pattern`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|True": "missing",
@@ -5941,6 +5943,15 @@
     "Quire.Mpl.Run.MacroBindingInfo::get_macro`0()->[Quire.Mpl]Quire.Mpl.Run.MplMacro|False": [
       "envdifferentialtests"
     ],
+    "Quire.Mpl.Run.MplBackquoteMacro::.cctor`0()->[System.Runtime]System.Void|True": [
+      "envdifferentialtests"
+    ],
+    "Quire.Mpl.Run.MplBackquoteMacro::.ctor`0()->[System.Runtime]System.Void|False": [
+      "envdifferentialtests"
+    ],
+    "Quire.Mpl.Run.MplBackquoteMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
+      "envdifferentialtests"
+    ],
     "Quire.Mpl.Run.MplEnv::CanNotResolve`0([System.Runtime]System.String)->[System.Runtime]System.Void|True": [
       "envdifferentialtests"
     ],
@@ -8151,13 +8162,13 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.MplBackquoteMacro": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 0,
       "structure_mismatch": 0,
-      "total": 2,
-      "uncovered": 0,
+      "total": 3,
+      "uncovered": 1,
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.MplDestructuringBind": {
@@ -10990,6 +11001,16 @@
     ],
     "Quire.Mpl.Run.MacroBindingInfo::get_macro`0()->[Quire.Mpl]Quire.Mpl.Run.MplMacro|False": [
       "Quire.Mpl.Run.MacroBindingInfo::m_macro"
+    ],
+    "Quire.Mpl.Run.MplBackquoteMacro::.cctor`0()->[System.Runtime]System.Void|True": [
+      "Quire.Mpl.Run.MplBackquoteMacro::backquote",
+      "Quire.Mpl.Run.MplBackquoteMacro::singleton"
+    ],
+    "Quire.Mpl.Run.MplBackquoteMacro::.ctor`0()->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.MplBackquoteMacro::backquote"
+    ],
+    "Quire.Mpl.Run.MplBackquoteMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
+      "Quire.Mpl.Run.MplBackquoteMacro::m_macro"
     ],
     "Quire.Mpl.Run.MplMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym)->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.MplMacro::m_name"
