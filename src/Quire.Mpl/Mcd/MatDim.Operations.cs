@@ -331,9 +331,9 @@ public abstract partial class MatDim
         public override Dim[] RowDimensionArray(int r) => Mult(m_rowdim[r], m_coldim);
         [MirrorAnalyzed("Mcd.MatDim")]
         public override Dim[] ColDimensionArray(int c) => Mult(m_coldim[c], m_rowdim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimEqualityDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimEqualityDifferentialTests")]
         protected override bool eq2_b(rc_dim m1) => Eq_b(m_rowdim, m1.m_rowdim) & Eq_b(m_coldim, m1.m_coldim);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
