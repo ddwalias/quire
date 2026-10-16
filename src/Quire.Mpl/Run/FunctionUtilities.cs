@@ -94,7 +94,7 @@ public abstract partial class FunctionUtilities : DimVal
         return array;
     }
 
-    [MirrorAnalyzed("Mpl.Run.FunctionUtilities")]
+    [MirrorVerified("FunctionUtilitiesButDifferentialTests")]
     public static T[] but<T>(int i, T[] a)
     {
         int len = a.Length;
@@ -107,7 +107,7 @@ public abstract partial class FunctionUtilities : DimVal
         return new T[0];
     }
 
-    [MirrorAnalyzed("Mpl.Run.FunctionUtilities")]
+    [MirrorVerified("FunctionUtilitiesTakeNegativeDifferentialTests")]
     public static T[] take<T>(int i, T[] a)
     {
         if (i < a.Length)
