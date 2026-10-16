@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Quire.Mirror;
 
 namespace Quire.Mpl.Run;
 
@@ -253,5 +254,29 @@ public partial class MplSymbolMacro : MplMacro
     public static MplMacro make(Atom s, int n)
     {
         return new MplSymbolMacro(s as Sym, int_constant.NewTok(n, 0u));
+    }
+}
+
+/// <summary>
+/// MPL quote macro that quotes its single argument: (quote x) -> 'x (docs/mirror/evidence/Mpl.Run.MplQuoteMacro.md).
+/// </summary>
+public partial class MplQuoteMacro : MplMacro
+{
+    [MirrorVerified("EnvDifferentialTests")]
+    public static MplQuoteMacro singleton;
+
+    private MplQuoteMacro() : base(new Sym("quote", null)) { }
+
+    static MplQuoteMacro()
+    {
+        singleton = new MplQuoteMacro();
+    }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override Sexpr ExpandCall(MplEnv e, Sexpr f)
+    {
+        SCons scons = f as SCons;
+        if (scons == null || scons.Length != 2) IllegalMacroCall(scons);
+        return new Qt(scons.second);
     }
 }

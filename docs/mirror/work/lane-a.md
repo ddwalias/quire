@@ -254,6 +254,45 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
   - Merge gate dry-run (`validate.py --mutate-since e9d973e61e9a`): Ratchet ok, 0 unaccepted survivors, gate would pass.
   - Format checks: `git diff --check` passed cleanly.
 
+## MplQuoteMacro mirror and SCons.walk_declaration_lhs / Sym.walk_declaration_as verification batch (mirror/a-quote-macro-decl)
+
+- Branch: `mirror/a-quote-macro-decl`
+- Worktree: `/root/src/quire-quote-macro-decl`
+- Scope: Implementation of `MplQuoteMacro` (token `0x06000185`, fields `singleton`, ctor `()`, `ExpandCall(MplEnv, Sexpr)`) in `src/Quire.Mpl/Run/Env.cs` and deletion of stubs in `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplQuoteMacro.g.cs`, and verification of `SCons.walk_declaration_lhs(MplEnv)` (token `0x06000047`) in `src/Quire.Mpl/Run/Sexpr.cs` and `Sym.walk_declaration_as(MplEnv, SCons)` (token `0x06000095`) in `src/Quire.Mpl/Run/Atom.cs`.
+- Contracts & Behavior:
+  - `Mpl.Run.MplQuoteMacro`:
+    - Inherits `MplMacro(new Sym("quote", null))`.
+    - `public static MplQuoteMacro singleton;` initialized in static constructor.
+    - `private MplQuoteMacro() : base(new Sym("quote", null)) { }`.
+    - `ExpandCall(MplEnv e, Sexpr f)`:
+      - Casts `f as SCons`. If null or length != 2, invokes `IllegalMacroCall(sCons)`, throwing `AppException("illegal macro call", 0u, sCons.handle)`. Non-SCons or null input dereferences null, throwing `NullReferenceException`, matching Mathcad.
+      - If valid length 2, returns `new Qt(sCons.second)`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000135 (normalized IL `bac33f95`). Attributes set to `[MirrorVerified("EnvDifferentialTests")]`.
+  - `Mpl.Run.Sym.walk_declaration_as(MplEnv env, SCons form)`:
+    - Loads macro via `env.LoadMacro(this)`.
+    - If macro is null, calls `Sexpr.BadDeclaration(form)`, throwing `AppException("illegal declaration", 0u, form.handle)`.
+    - If macro is present, returns `macro.ExpandCall(env, form).walk_declaration_lhs(env)`.
+    - When macro is `MplQuoteMacro`, `ExpandCall` returns `new Qt(form.second)`. `Qt.walk_declaration_lhs(env)` returns `null`, so `Sym.walk_declaration_as` returns `null`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000095. Attribute updated to `[MirrorVerified("SexprDifferentialTests")]`.
+  - `Mpl.Run.SCons.walk_declaration_lhs(MplEnv env)`:
+    - If `Key == null`, calls `BadDeclaration(this)`, throwing `AppException("illegal declaration", 0u, handle)`.
+    - If `Key != null`, delegates to `Key.walk_declaration_as(env, this)`.
+    - When `Key.walk_declaration_as` returns `null` (such as with `MplQuoteMacro`), `SCons.walk_declaration_lhs` returns `null`.
+    - Emits IL matching Mathcad `mplrun.dll` token 0x06000047. Attribute updated to `[MirrorVerified("SexprDifferentialTests")]`.
+- Evidence files:
+  - [Mpl.Run.MplQuoteMacro](../evidence/Mpl.Run.MplQuoteMacro.md): Created with `Verified` status across all members.
+  - [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md): `walk_declaration_lhs` updated from `Tested` to `Verified`.
+  - [Mpl.Run.Sym](../evidence/Mpl.Run.Sym.md): `walk_declaration_as` updated from `Analyzed` to `Verified`.
+- Test counts & Validation receipts:
+  - Unit tests: `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 186 passed, 0 failed, 0 skipped.
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 111 passed, 0 failed, 0 skipped (`EnvDifferentialTests`: 6 passed; `SexprDifferentialTests`: 9 passed).
+  - Direct comparisons added:
+    - `EnvDifferentialTests.MplQuoteMacro_members`: singleton identity, `ExpandCall` on valid length 2 list `(quote x)` returning `Qt(x)`, invalid length 3 list `(quote x y)` throwing `AppException("illegal macro call", 0u, handle)`, invalid length 1 list `(quote)` throwing `AppException("illegal macro call", 0u, handle)`, non-SCons token throwing `NullReferenceException`, and null form throwing `NullReferenceException`.
+    - `SexprDifferentialTests.Sym_members`: `Sym.walk_declaration_as` with bound `MplQuoteMacro.singleton` returning `null` on length 2 `(quote x)`, throwing `AppException("illegal macro call")` on length 3 and length 1 forms.
+    - `SexprDifferentialTests.SCons_members`: `SCons.walk_declaration_lhs` with bound `MplQuoteMacro.singleton` returning `null` on length 2 `(quote x)`, throwing `AppException("illegal macro call")` on length 3 and length 1 forms.
+  - Format checks: `git diff --check` passed cleanly.
+  - Protected paths: `merge_gate.stub_deletions` verified stub removals from `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplQuoteMacro.g.cs` cleanly without modifying any other protected files.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run

@@ -351,7 +351,7 @@ public partial class SCons : Sexpr
     [MirrorVerified("SexprDifferentialTests")]
     public override string ToString() => "(" + Field1.ToString() + Field2.FormatTail() + ")";
 
-    [MirrorTested("Mpl.Run.SCons")]
+    [MirrorVerified("SexprDifferentialTests")]
     public override Cons walk_declaration_lhs(MplEnv env)
     {
         Sym key = Key;

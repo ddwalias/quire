@@ -829,6 +829,19 @@ public class SexprTests
         var formQuote = SCons.list2(new Tok(symQuote, 204u), S("target", 205u));
         Assert.Null(formQuote.walk_declaration_lhs(env));
 
+        // 4b. Symbol head with real MplQuoteMacro.singleton:
+        table["realquote"] = new MacroBindingInfo(42u, MplQuoteMacro.singleton);
+        var symRealQuote = new Sym("realquote", null);
+        var formRealQuote = SCons.list2(new Tok(symRealQuote, 204u), S("target", 205u));
+        Assert.Null(formRealQuote.walk_declaration_lhs(env));
+
+        // Invalid length 3 throws illegal macro call
+        var formRealQuoteBad = SCons.list3(new Tok(symRealQuote, 209u), S("a"), S("b"));
+        var exRealQuote = Assert.Throws<AppException>(() => formRealQuoteBad.walk_declaration_lhs(env));
+        Assert.Equal("illegal macro call", exRealQuote.Message);
+        Assert.Equal(209u, exRealQuote.Handle);
+
+
         // 5. Symbol head with macro expanding to non-symbol head: throws illegal declaration with rep.handle
         var symIntMacro = new Sym("mint", null);
         env.AddSymbolMacro(symIntMacro, 2u, I(88, 206u));
@@ -867,6 +880,19 @@ public class SexprTests
         var formQ = SCons.list2(new Tok(symQ, 302u), S("val", 303u));
         var resultQ = symQ.walk_declaration_as(env, formQ);
         Assert.Null(resultQ);
+
+        // 2b. real MplQuoteMacro.singleton: ExpandCall returns Qt -> returns null
+        var symRealQ = new Sym("realquote", null);
+        table["realquote"] = new MacroBindingInfo(42u, MplQuoteMacro.singleton);
+        var formRealQ = SCons.list2(new Tok(symRealQ, 310u), S("val", 311u));
+        Assert.Null(symRealQ.walk_declaration_as(env, formRealQ));
+
+        // Invalid length 3 throws illegal macro call
+        var formRealQBad = SCons.list3(new Tok(symRealQ, 312u), I(1), I(2));
+        var exRealQ = Assert.Throws<AppException>(() => symRealQ.walk_declaration_as(env, formRealQBad));
+        Assert.Equal("illegal macro call", exRealQ.Message);
+        Assert.Equal(312u, exRealQ.Handle);
+
 
         // 3. macro != null, ExpandCall returns Nul.singleton: Nul.walk_declaration_lhs returns null -> method returns null
         var symNulMacro = new Sym("nulmacro", null);

@@ -196,4 +196,54 @@ public class EnvTests
         Assert.NotNull(nonSymMade);
         Assert.Null(nonSymMade.m_name);
     }
+
+    [Fact]
+    public void MplQuoteMacro_expansion()
+    {
+        var qm = MplQuoteMacro.singleton;
+        Assert.NotNull(qm);
+        Assert.Same(qm, MplQuoteMacro.singleton);
+        Assert.Equal("quote", qm.m_name?.name);
+
+        // Valid length 2: (quote x) -> Qt(x)
+        var symQuote = new Sym("quote", null);
+        var tokQuote = new Tok(symQuote, 10u);
+        var arg = int_constant.NewTok(42, 20u);
+        var call = SCons.list2(tokQuote, arg);
+        var res = qm.ExpandCall(null, call);
+        var qt = Assert.IsType<Qt>(res);
+        Assert.Same(arg, qt.Field1);
+
+        // Valid with different expressions: symbol, nested list
+        var argSym = new Tok(new Sym("z", null), 21u);
+        var callSym = SCons.list2(tokQuote, argSym);
+        var resSym = qm.ExpandCall(null, callSym);
+        var qtSym = Assert.IsType<Qt>(resSym);
+        Assert.Same(argSym, qtSym.Field1);
+
+        // Invalid length 3: (quote x y) -> throws AppException("illegal macro call", 0u, handle)
+        var call3 = SCons.list3(new Tok(symQuote, 55u), arg, int_constant.NewTok(99, 30u));
+        var ex3 = Assert.Throws<AppException>(() => qm.ExpandCall(null, call3));
+        Assert.Equal("illegal macro call", ex3.Message);
+        Assert.Equal(0u, ex3.Argument);
+        Assert.Equal(55u, ex3.Handle);
+
+        // Invalid length 1: (quote) -> throws AppException("illegal macro call", 0u, handle)
+        var call1 = SCons.list1(new Tok(symQuote, 66u));
+        var ex1 = Assert.Throws<AppException>(() => qm.ExpandCall(null, call1));
+        Assert.Equal("illegal macro call", ex1.Message);
+        Assert.Equal(0u, ex1.Argument);
+        Assert.Equal(66u, ex1.Handle);
+
+        // Invalid length 4: (quote a b c) -> throws AppException("illegal macro call", 0u, handle)
+        var call4 = SCons.list4(new Tok(symQuote, 77u), arg, arg, arg);
+        var ex4 = Assert.Throws<AppException>(() => qm.ExpandCall(null, call4));
+        Assert.Equal("illegal macro call", ex4.Message);
+        Assert.Equal(0u, ex4.Argument);
+        Assert.Equal(77u, ex4.Handle);
+
+        // Non-SCons: throws NullReferenceException
+        Assert.Throws<NullReferenceException>(() => qm.ExpandCall(null, tokQuote));
+        Assert.Throws<NullReferenceException>(() => qm.ExpandCall(null, null));
+    }
 }

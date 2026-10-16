@@ -8,9 +8,9 @@ namespace Quire.Differential.Tests;
 
 /// <summary>
 /// Compares Quire's <see cref="MplEnv"/>, <see cref="BindingInfo"/>, <see cref="MacroBindingInfo"/>,
-/// <see cref="LocalEnv"/>, <see cref="MplMacro"/> and <see cref="MplSymbolMacro"/> with mplrun's on the same inputs.
+/// <see cref="LocalEnv"/>, <see cref="MplMacro"/>, <see cref="MplSymbolMacro"/> and <see cref="MplQuoteMacro"/> with mplrun's on the same inputs.
 /// Evidence records: docs/mirror/evidence/Mpl.Run.MplEnv.md, Mpl.Run.BindingInfo.md, Mpl.Run.LocalEnv.md,
-/// Mpl.Run.MplMacro.md, Mpl.Run.MplSymbolMacro.md.
+/// Mpl.Run.MplMacro.md, Mpl.Run.MplSymbolMacro.md, Mpl.Run.MplQuoteMacro.md.
 /// </summary>
 public class EnvDifferentialTests
 {
@@ -372,5 +372,64 @@ public class EnvDifferentialTests
         // LoadForeignMacro: on root env (null parent) throws NullReferenceException
         MethodComparison.Compare("LocalEnv.LoadForeignMacro on root throws NullRef", "Mpl.Run.LocalEnv",
             qLoadForeign, qRoot, ["sig_foreign"], mLoadForeign, mRoot, ["sig_foreign"], show, show, envState, envState);
+    }
+
+    [SkippableFact]
+    public void MplQuoteMacro_members()
+    {
+        Runtime.Sync();
+        var qSingleton = MplQuoteMacro.singleton;
+        var mSingleton = Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!;
+
+        Assert.Equal(Describe(mSingleton), Describe(qSingleton));
+
+        var (qExpandCall, mExpandCall) = Method(typeof(MplQuoteMacro), "ExpandCall", DeclaredInstancePublic, typeof(MplEnv), typeof(Sexpr));
+
+        Func<object?, string> show = o => Describe(o);
+        Func<object, string> state = o => Describe(o);
+
+        // 1. Valid length-2 list: (quote x) -> Qt(x)
+        var qSymQuote = new Sym("quote", null);
+        var qTokQuote = new Tok(qSymQuote, 10u);
+        var qArgX = int_constant.NewTok(42, 20u);
+        var qCallValid = SCons.list2(qTokQuote, qArgX);
+        var mCallValid = ToMathcad(qCallValid)!;
+
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall (quote x)", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, qCallValid], mExpandCall, mSingleton, [null, mCallValid], show, show, state, state);
+
+        var qArgSym = new Tok(new Sym("y", null), 30u);
+        var qCallSym = SCons.list2(qTokQuote, qArgSym);
+        var mCallSym = ToMathcad(qCallSym)!;
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall (quote y)", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, qCallSym], mExpandCall, mSingleton, [null, mCallSym], show, show, state, state);
+
+        var qArgList = SCons.list2(int_constant.NewTok(1, 0u), int_constant.NewTok(2, 0u));
+        var qCallList = SCons.list2(qTokQuote, qArgList);
+        var mCallList = ToMathcad(qCallList)!;
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall (quote (1 2))", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, qCallList], mExpandCall, mSingleton, [null, mCallList], show, show, state, state);
+
+        // 2. Invalid length list: (quote x y) (length 3) throws AppException("illegal macro call")
+        var qCallLen3 = SCons.list3(qTokQuote, qArgX, qArgSym);
+        var mCallLen3 = ToMathcad(qCallLen3)!;
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall length 3 throws", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, qCallLen3], mExpandCall, mSingleton, [null, mCallLen3], show, show, state, state);
+
+        // 3. Length-1 list: (quote) throws AppException("illegal macro call")
+        var qCallLen1 = SCons.list1(qTokQuote);
+        var mCallLen1 = ToMathcad(qCallLen1)!;
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall length 1 throws", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, qCallLen1], mExpandCall, mSingleton, [null, mCallLen1], show, show, state, state);
+
+        // 4. Non-SCons: Tok throws NullReferenceException
+        var qTokNonSCons = qTokQuote;
+        var mTokNonSCons = ToMathcad(qTokNonSCons)!;
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall non-SCons throws NullRef", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, qTokNonSCons], mExpandCall, mSingleton, [null, mTokNonSCons], show, show, state, state);
+
+        // 5. Null form throws NullReferenceException
+        MethodComparison.Compare("MplQuoteMacro.ExpandCall null throws NullRef", "Mpl.Run.MplQuoteMacro",
+            qExpandCall, qSingleton, [null, null], mExpandCall, mSingleton, [null, null], show, show, state, state);
     }
 }

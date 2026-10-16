@@ -32,7 +32,7 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 | `quote` | 0x06000044 | `a3eca7e8` | `list3(token, Field1.quote, Field2.quote)`. | High | Verified |
 | `FormatTail()` | 0x06000045 | `7067159c` | `" " + Field1 + Field2.FormatTail()`. | High | Verified |
 | `ToString()` | 0x06000046 | `7de30975` | `"(" + Field1 + Field2.FormatTail() + ")"`; a null `Field2` throws. | High | Verified |
-| `walk_declaration_lhs(MplEnv)` | 0x06000047 | `38d77543` | `BadDeclaration(this)` without a head symbol, else `Key.walk_declaration_as(env, this)`. | High; verified across non-symbol heads, symbol heads without macro, function macros throwing AppException("illegal macro call"), and symbol macros expanding to non-symbols. | Tested |
+| `walk_declaration_lhs(MplEnv)` | 0x06000047 | `38d77543` | `BadDeclaration(this)` without a head symbol, else `Key.walk_declaration_as(env, this)`. | High; verified across non-symbol heads, symbol heads without macro, function macros throwing AppException("illegal macro call"), symbol macros expanding to non-symbols, and MplQuoteMacro returning null. | Verified |
 | `walk_patterns(MplEnv, SCons)` | 0x06000048 | `e00e6f0f` | null gives `Nul.singleton`; otherwise walks the head as a pattern and the tail recursively, returning the original cell when both are unchanged (by reference), else a new cell. | High | Verified |
 | `walk_pattern(MplEnv)` | 0x06000049 | `4ddb05a3` | No head symbol: `BadPattern`. A head symbol that isn't lower case: a new cell of the head and `walk_patterns(tail)` (always a new top cell). A lower-case one: its macro expands the form and walks the result as a pattern; with no macro a one-element list adds a local `(key, handle)` and returns this, a longer one is `BadPattern`. | High; differential and unit tests cover all paths. Uncovered sequence points follow the `BadPattern` throwing helper. | Tested |
 | `walk_expressions(MplEnv, SCons)` | 0x0600004a | `cba4af7e` | As `walk_patterns`, with `walk_expression`. | High | Verified |
@@ -44,11 +44,10 @@ A list cell. Field values are kept as given: a null `Field2` is not read as the 
 
 As in Mpl.Run.Sexpr.md. Direct differential comparisons against Mathcad in `SexprDifferentialTests` verify
 `SCons.walk_expression`, `SCons.walk_expressions`, `SCons.walk_pattern`, and `SCons.walk_declaration_lhs` across
-symbol macro calls, function macro calls throwing `AppException("illegal macro call")`, non-symbol heads `(1 2 3)`
-and `((a b) c)` in expression and pattern positions, single-element lowercase patterns registering locals in
-`LocalEnv`, and `walk_expressions` returning a new chain when macro arguments change.
+symbol macro calls, function macro calls throwing `AppException("illegal macro call")`, `(quote x)` returning `null`
+via `MplQuoteMacro`, non-symbol heads `(1 2 3)` and `((a b) c)` in expression and pattern positions, single-element
+lowercase patterns registering locals in `LocalEnv`, and `walk_expressions` returning a new chain when macro arguments change.
 
 ## Open
 
-- Null-environment cases in `walk_declaration_lhs` pass a null `MplEnv` to both sides; they show only that the
-  environment is dereferenced before any other observable effect, not which branch follows.
+- Uncovered sequence points in `walk_pattern` follow the `BadPattern` throwing helper.

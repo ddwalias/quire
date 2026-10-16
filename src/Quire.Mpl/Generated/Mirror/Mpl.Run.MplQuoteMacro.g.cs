@@ -11,10 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplQuoteMacro, mplrun")]
 public partial class MplQuoteMacro : global::Quire.Mpl.Run.MplMacro
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.MplQuoteMacro singleton;
-    [global::Quire.Mirror.MirrorStub]
-    private MplQuoteMacro() : base(default(global::Quire.Mpl.Run.Sym)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr f) => base.ExpandCall(e, f);
 }

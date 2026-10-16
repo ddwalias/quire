@@ -492,6 +492,33 @@ public class SexprDifferentialTests
         Compare("Sym.walk_declaration_as bound function macro throws illegal macro call", "Mpl.Run.Sym",
             qWalkDeclAs, symDeclFn, [qEnvDeclFn, formDeclFnQ], mWalkDeclAs, mSymDeclFn, [mEnvDeclFn, formDeclFnM]);
 
+        // 2b. Bound MplQuoteMacro.singleton with valid length 2: (quote x) returns null
+        var qEnvSymQuote = new LocalEnv();
+        var mEnvSymQuote = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symQuoteSym = new Sym("quote", null);
+        var mSymQuoteSym = ToMathcad(symQuoteSym)!;
+        var qTableSymQuote = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvSymQuote, "m_table")!;
+        qTableSymQuote["quote"] = new MacroBindingInfo(0u, MplQuoteMacro.singleton);
+        var mTableSymQuote = (System.Collections.IDictionary)Reflect.Get(mEnvSymQuote, "m_table")!;
+        var mQuoteSingletonSym = Reflect.Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!;
+        mTableSymQuote["quote"] = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 0u, mQuoteSingletonSym)!;
+
+        var formQuoteSymXQ = SCons.list2(new Tok(symQuoteSym, 88u), I(42, 89u));
+        var formQuoteSymXM = ToMathcad(formQuoteSymXQ)!;
+        Compare("Sym.walk_declaration_as bound MplQuoteMacro (quote x) returns null", "Mpl.Run.Sym",
+            qWalkDeclAs, symQuoteSym, [qEnvSymQuote, formQuoteSymXQ], mWalkDeclAs, mSymQuoteSym, [mEnvSymQuote, formQuoteSymXM]);
+
+        var formQuoteSymBadLenQ = SCons.list3(new Tok(symQuoteSym, 90u), I(1), I(2));
+        var formQuoteSymBadLenM = ToMathcad(formQuoteSymBadLenQ)!;
+        Compare("Sym.walk_declaration_as bound MplQuoteMacro (quote x y) throws illegal macro call", "Mpl.Run.Sym",
+            qWalkDeclAs, symQuoteSym, [qEnvSymQuote, formQuoteSymBadLenQ], mWalkDeclAs, mSymQuoteSym, [mEnvSymQuote, formQuoteSymBadLenM]);
+
+        var formQuoteSymLen1Q = SCons.list1(new Tok(symQuoteSym, 91u));
+        var formQuoteSymLen1M = ToMathcad(formQuoteSymLen1Q)!;
+        Compare("Sym.walk_declaration_as bound MplQuoteMacro (quote) throws illegal macro call", "Mpl.Run.Sym",
+            qWalkDeclAs, symQuoteSym, [qEnvSymQuote, formQuoteSymLen1Q], mWalkDeclAs, mSymQuoteSym, [mEnvSymQuote, formQuoteSymLen1M]);
+
+
         // 3. Bound symbol macro expanding to SCons with integer head: throws AppException("illegal declaration", 0u, rep.handle)
         var qEnvDeclMacro = new LocalEnv();
         var mEnvDeclMacro = New(M("Mpl.Run.LocalEnv"), [])!;
@@ -1246,6 +1273,33 @@ public class SexprDifferentialTests
         var formSConsDeclFnM = ToMathcad(formSConsDeclFnQ)!;
         Compare("SCons.walk_declaration_lhs function macro throws illegal macro call", "Mpl.Run.SCons",
             qWalkDecl, formSConsDeclFnQ, [qEnvSCons], mWalkDecl, formSConsDeclFnM, [mEnvSCons]);
+
+        // 2b. Symbol head with MplQuoteMacro.singleton with valid length 2: (quote x).walk_declaration_lhs returns null
+        var qEnvQuoteDecl = new LocalEnv();
+        var mEnvQuoteDecl = New(M("Mpl.Run.LocalEnv"), [])!;
+        var symQuoteDecl = new Sym("quote", null);
+        var mSymQuoteDecl = ToMathcad(symQuoteDecl)!;
+        var qTableQuoteDecl = (SortedDictionary<string, BindingInfo>)Reflect.Get(qEnvQuoteDecl, "m_table")!;
+        qTableQuoteDecl["quote"] = new MacroBindingInfo(0u, MplQuoteMacro.singleton);
+        var mTableQuoteDecl = (System.Collections.IDictionary)Reflect.Get(mEnvQuoteDecl, "m_table")!;
+        var mQuoteSingletonSCons = Reflect.Get(M("Mpl.Run.MplQuoteMacro"), "singleton")!;
+        mTableQuoteDecl["quote"] = New(M("Mpl.Run.MacroBindingInfo"), ["UInt32", "MplMacro"], 0u, mQuoteSingletonSCons)!;
+
+        var formQuoteXQ = SCons.list2(new Tok(symQuoteDecl, 35u), I(42, 36u));
+        var formQuoteXM = ToMathcad(formQuoteXQ)!;
+        Compare("SCons.walk_declaration_lhs (quote x) returns null", "Mpl.Run.SCons",
+            qWalkDecl, formQuoteXQ, [qEnvQuoteDecl], mWalkDecl, formQuoteXM, [mEnvQuoteDecl]);
+
+        var formQuoteBadLenQ = SCons.list3(new Tok(symQuoteDecl, 37u), I(1), I(2));
+        var formQuoteBadLenM = ToMathcad(formQuoteBadLenQ)!;
+        Compare("SCons.walk_declaration_lhs (quote x y) throws illegal macro call", "Mpl.Run.SCons",
+            qWalkDecl, formQuoteBadLenQ, [qEnvQuoteDecl], mWalkDecl, formQuoteBadLenM, [mEnvQuoteDecl]);
+
+        var formQuoteLen1Q = SCons.list1(new Tok(symQuoteDecl, 38u));
+        var formQuoteLen1M = ToMathcad(formQuoteLen1Q)!;
+        Compare("SCons.walk_declaration_lhs (quote) throws illegal macro call", "Mpl.Run.SCons",
+            qWalkDecl, formQuoteLen1Q, [qEnvQuoteDecl], mWalkDecl, formQuoteLen1M, [mEnvQuoteDecl]);
+
 
         // 3. Symbol head with MplSymbolMacro expanding to integer head: throws AppException("illegal declaration", 0u, handle)
         var qEnvSConsDecl = new LocalEnv();
