@@ -4,7 +4,7 @@ Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `7ee2d00e177dd7fc692c89f5bcad7f827c19b222`. Lane B history is retained compactly here; older worktree results are historical.
+Checkpoint base: Linux main `67615ea40a417530beee6107314545d06456fae8`. Lane B history is retained compactly here; older worktree results are historical.
 
 | Batch | Main status |
 |---|---|
@@ -26,6 +26,7 @@ Checkpoint base: Linux main `7ee2d00e177dd7fc692c89f5bcad7f827c19b222`. Lane B h
 | MatDim base getters | Merged to main at `e38ab20` (`3138ad2`). Exact IL; 8 direct comparisons. |
 | MatDim c_dim constructor / factory | Merged to main at `c4529f9` (`93d9ee2`). Exact IL; 8 direct comparisons. |
 | MatDim r_dim constructor / factory | Merged to main at `7ee2d00` (`3c83bbf`). Exact IL; 8 direct comparisons. |
+| MatDim rc_dim constructor / factory | Merged to main at `67615ea` (`a63d30e`). Exact IL; 12 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -119,11 +120,15 @@ Branch `mirror/b-matdim-c-dim-constructor` (`93d9ee2`), based on clean main `e38
 
 Branch `mirror/b-matdim-r-dim-constructor` (`3c83bbf`), based on clean main `c4529f9`. The batch adds direct differential tests in `MatDimRDimConstructorDifferentialTests.cs`, verified status annotations on `r_dim..ctor(Dim[], int)` (token 0x060007c3) and `r_dim.make(Dim[], int)` (token 0x060007c4) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`5d60a56b9ab2c338259a2f61867e4e387da38cb6ec2bd577d9177372b8720549` and `b8375eed03f58bc3c1a15dcc3dad1dd507a2224acdb8fd7523413eb1ad3faf80`) are in that table. Both constructor and factory match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Merged via `merge_gate.py --apply`.
 
-## MatDim rc_dim constructor and factory — active checkpoint
+### MatDim rc_dim constructor and factory (merged to main at 67615ea)
 
-Branch `mirror/b-matdim-rc-dim-constructor`, based on current clean main `7ee2d00`. The batch adds direct differential tests in `MatDimRcDimConstructionDifferentialTests.cs`, verified status annotations on `rc_dim..ctor(Dim[], Dim[])` (token 0x060007b3) and `rc_dim.make_rc(Dim[], Dim[])` (token 0x060007b4) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`36f0aab7306cee9c64d72148666c18aa9084f1bfa0a74b4233e0a739d7294d9b` and `137790307c7b431b8b12f55af9aecd00aea49189f013cf73acb27b81411dbf0d`) are in that table. Both constructor and factory match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matdim-rc-dim-constructor` (`a63d30e`), based on clean main `7ee2d00`. The batch adds direct differential tests in `MatDimRcDimConstructionDifferentialTests.cs`, verified status annotations on `rc_dim..ctor(Dim[], Dim[])` (token 0x060007b3) and `rc_dim.make_rc(Dim[], Dim[])` (token 0x060007b4) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`36f0aab7306cee9c64d72148666c18aa9084f1bfa0a74b4233e0a739d7294d9b` and `137790307c7b431b8b12f55af9aecd00aea49189f013cf73acb27b81411dbf0d`) are in that table. Both constructor and factory match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Merged via `merge_gate.py --apply`.
 
-Direct differential tests compare constructor initialization and factory forwarding (12 direct cases / 6 pairs), verifying row/column geometry, field retention by reference, array immutability, and null-argument exceptions.
+## MatDim crazy_dim constructor and factory — active checkpoint
+
+Branch `mirror/b-matdim-crazy-dim-constructor`, based on current clean main `67615ea`. The batch adds direct differential tests in `MatDimCrazyDimConstructionDifferentialTests.cs`, verified status annotations on `crazy_dim..ctor(MatVal)` (token 0x060007ad) and `crazy_dim.make(MatVal)` (token 0x060007b2) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`7ff0599165db240939134df5fcff1eaede0e162d44cb06e96bde6851d83fb242` and `de5613a5a2ce61aa5c74eb1ca33d5ee947b3cb2f30c50bfeb8932bd417d837aa`) are in that table. Both constructor and factory match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+Direct differential tests compare constructor initialization and factory forwarding (12 direct cases / 6 pairs), verifying shape, field retention by reference, backing matrix immutability, and null-argument exceptions.
 
 ## Next Lane B queue
 

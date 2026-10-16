@@ -34,6 +34,8 @@
 | r_dim.make(class:568[], i4) | 0x060007c4 | b8375eed03f58bc3c1a15dcc3dad1dd507a2224acdb8fd7523413eb1ad3faf80 | Construct and return new r_dim instance with supplied row array and column count. | Same-artifact IL; 4 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 | rc_dim..ctor(class:568[], class:568[]) | 0x060007b3 | 36f0aab7306cee9c64d72148666c18aa9084f1bfa0a74b4233e0a739d7294d9b | Initialize base rows from r.Length, cols from c.Length; assign m_rowdim to r, m_coldim to c. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 | rc_dim.make_rc(class:568[], class:568[]) | 0x060007b4 | 137790307c7b431b8b12f55af9aecd00aea49189f013cf73acb27b81411dbf0d | Construct and return new rc_dim instance with supplied row and column arrays. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| crazy_dim..ctor(MatVal) | 0x060007ad | 7ff0599165db240939134df5fcff1eaede0e162d44cb06e96bde6851d83fb242 | Initialize base rows from m.Rows, cols from m.Cols; assign m_matrix to m. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| crazy_dim.make(MatVal) | 0x060007b2 | de5613a5a2ce61aa5c74eb1ca33d5ee947b3cb2f30c50bfeb8932bd417d837aa | Construct and return new crazy_dim instance wrapping supplied matrix. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 
 ## Fields
 

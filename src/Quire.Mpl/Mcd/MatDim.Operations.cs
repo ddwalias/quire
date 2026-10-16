@@ -366,9 +366,9 @@ public abstract partial class MatDim
     {
         [MirrorAnalyzed("Mcd.MatDim")]
         private readonly MatVal m_matrix;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCrazyDimConstructionDifferentialTests")]
         protected crazy_dim(MatVal m) : base(m.Rows, m.Cols) => m_matrix = m;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCrazyDimConstructionDifferentialTests")]
         public static new crazy_dim make(MatVal m) => new(m);
         [MirrorAnalyzed("Mcd.MatDim")]
         public override Dim dim(int i, int j) => m_matrix.get_2_dim(i, j);
