@@ -95,6 +95,9 @@ foreach (var artifact in quire)
     }
 var typeNames = quire.SelectMany(a => a.Model.Types).Where(t => t.MirrorOf != null)
     .GroupBy(t => t.FullName).ToDictionary(g => g.Key, g => g.First().MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
+// A type of a project not audited here (one a signature or a call names) maps through the reviewed type map, as its
+// own [MirrorOf] would; the audited projects' bindings were checked against it above.
+foreach (var (name, binding) in reviewed) typeNames.TryAdd(name, binding);
 TypeSig Map(TypeSig sig) => sig switch
 {
     NamedSig n => n with { Name = typeNames.TryGetValue(n.Name, out var names) ? names[0] : n.Name,

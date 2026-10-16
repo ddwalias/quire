@@ -17,7 +17,14 @@ public class MemberGenTests : IDisposable
     public MemberGenTests()
     {
         var assembly = new PersistedAssemblyBuilder(new AssemblyName("Fx"), typeof(object).Assembly);
-        var t = assembly.DefineDynamicModule("Fx").DefineType("Fx.T", TypeAttributes.Public);
+        var module = assembly.DefineDynamicModule("Fx");
+        var b = module.DefineType("Fx.B", TypeAttributes.Public);
+        var n = b.DefineMethod("N", MethodAttributes.Public, typeof(int), []);
+        Emit(n.GetILGenerator(), il => il.Emit(OpCodes.Ldc_I4_1));
+        var v = b.DefineMethod("V", MethodAttributes.Public | MethodAttributes.Virtual, typeof(int), []);
+        Emit(v.GetILGenerator(), il => il.Emit(OpCodes.Ldc_I4_2));
+        b.CreateType();
+        var t = module.DefineType("Fx.T", TypeAttributes.Public, b);
         var x = t.DefineField("_x", typeof(int), FieldAttributes.Private);
         var ctor = t.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, [typeof(int)]);
         Emit(ctor.GetILGenerator(), il =>
@@ -59,6 +66,9 @@ public class MemberGenTests : IDisposable
             il.Emit(OpCodes.Shl);
         });
         Method(t, "Big", typeof(long), [], il => il.Emit(OpCodes.Ldc_I8, 5L));
+        // Inherited methods called non-virtually on this: only the virtual one needs `base.`.
+        Method(t, "CallN", typeof(int), [], il => { il.Emit(OpCodes.Ldarg_0); il.Emit(OpCodes.Call, n); }, instance: true);
+        Method(t, "CallV", typeof(int), [], il => { il.Emit(OpCodes.Ldarg_0); il.Emit(OpCodes.Call, v); }, instance: true);
         Method(t, "Kind", typeof(Type), [], il =>
         {
             il.Emit(OpCodes.Ldtoken, typeof(string));
@@ -120,6 +130,8 @@ public class MemberGenTests : IDisposable
     [InlineData("Shift", "v << n", "v", "n")]
     [InlineData("Big", "5L")]
     [InlineData("Kind", "typeof(string)")]
+    [InlineData("CallN", "N()")]
+    [InlineData("CallV", "base.V()")]
     public void Lowered_forms_render_as_their_source(string method, string expression, params string[] parameters) =>
         Assert.Equal(expression, Render(method, parameters).Expression);
 
@@ -182,6 +194,14 @@ public class MemberGenTests : IDisposable
         Assert.Equal("global::R.Part", Named(names, "R.Part"));
         Assert.DoesNotContain("R", names.Usings);
     }
+
+    /// <summary>An evidence row's contract is the member's body, not its declaration.</summary>
+    [Theory]
+    [InlineData("public int GetX() => m_x;", "`m_x`")]
+    [InlineData("public static void conv_void(int x) { }", "`{ }`")]
+    [InlineData("public T(int x) : base(x) { }", "`: base(x) { }`")]
+    [InlineData("public int P { get; set; }", "`public int P { get; set; }`")]
+    public void Evidence_contracts_show_the_body(string line, string contract) => Assert.Equal(contract, Emitter.Contract([line]));
 
     [Fact]
     public void Names_use_keyword_aliases_and_escape_reserved_words()

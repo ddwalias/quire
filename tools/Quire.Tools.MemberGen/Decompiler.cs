@@ -9,6 +9,8 @@ using Quire.Tools.MirrorGen;
 sealed class NotMechanical(string category) : Exception(category);
 
 sealed record FieldRef(TypeSig Owner, string Name, TypeSig Type, bool Static);
+/// <summary>A called method; <paramref name="Virtual"/> is false only for a definition known to be non-virtual (a
+/// method of another assembly may be virtual).</summary>
 sealed record MethodRef(TypeSig Owner, string Name, MethodSignature<TypeSig> Sig, ImmutableArray<TypeSig> TypeArgs, bool Virtual)
 {
     public bool Instance => Sig.Header.IsInstance;
@@ -158,7 +160,8 @@ static class Decompiler
                     }
                     // Type.GetTypeFromHandle(ldtoken T) is typeof(T).
                     if (m is { Name: "GetTypeFromHandle", Owner: NamedSig { Name: "System.Type" } } && args is [TypeOf t]) { stack.Push(t); break; }
-                    var call = new Call(target, m, args, op == "call" && target is This && !m.Owner.Equals(owner));
+                    // A non-virtual call to an inherited virtual method is `base.`; to a non-virtual one, a plain call.
+                    var call = new Call(target, m, args, op == "call" && target is This && m.Virtual && !m.Owner.Equals(owner));
                     if (op == "call" && target != null && target is not This) throw new NotMechanical("non-virtual call on another object");
                     if (m.Sig.ReturnType is NamedSig { Name: "System.Void" }) Statement(new Do(call));
                     else stack.Push(call);
@@ -315,7 +318,7 @@ static class Decompiler
             case HandleKind.MemberReference:
                 var r = md.GetMemberReference((MemberReferenceHandle)h);
                 if (r.Parent.Kind == HandleKind.MethodDefinition) throw new NotMechanical("vararg call site");
-                return new(Type(a, r.Parent), md.GetString(r.Name), r.DecodeMethodSignature(decoder, null), [], false);
+                return new(Type(a, r.Parent), md.GetString(r.Name), r.DecodeMethodSignature(decoder, null), [], true);
             case HandleKind.MethodSpecification:
                 var s = md.GetMethodSpecification((MethodSpecificationHandle)h);
                 return Method(a, s.Method) with { TypeArgs = s.DecodeSignature(decoder, null) };

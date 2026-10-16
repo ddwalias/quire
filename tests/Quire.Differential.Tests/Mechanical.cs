@@ -20,6 +20,8 @@ public static class Mechanical
     private const BindingFlags Declared = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
     private const int Rounds = 3;
     private const int Depth = 2;
+    /// <summary>Sample numbers per round and per slot: a slot's values are <c>round*Round + index*Slot + k</c>.</summary>
+    private const int Round = 1_000_000, Slot = 10_000;
 
     public static void Compare(System.Type quireOuter, int token)
     {
@@ -147,29 +149,32 @@ public static class Mechanical
 
     /// <summary>The same value on both sides: zero, false or null in round 0; otherwise a value that differs between
     /// rounds, between slots (<paramref name="index"/>: an argument, or the target) and between the values within a
-    /// slot (<paramref name="k"/> counts the slot's elements and fields): <c>round*1000 + index*50 + k</c>.</summary>
+    /// slot (<paramref name="k"/> counts the slot's elements and fields): <c>round*Round + index*Slot + k</c>. Booleans
+    /// and enums alternate with the same three.</summary>
     private static (object?, object?) Sample(System.Type q, System.Type m, int round, int index, int depth, ref int k)
     {
         if (q.IsPointer || m.IsPointer) throw new HarnessException("pointer parameter");
         if (round == 0 || depth > Depth) return (Default(q), Default(m));
-        int n = round * 1000 + index * 50 + k++ % 50 + 1;
+        int value = k++, n = Number(round, index, value);
         if (q.IsEnum && m.IsEnum)
         {
             var values = Enum.GetValues(q);
             if (values.Length == 0) return (Default(q), Default(m));
-            object v = values.GetValue((round + index) % values.Length)!;
+            object v = values.GetValue(Choice(round, index, value, values.Length))!;
             return (v, Enum.ToObject(m, System.Convert.ToInt64(v, CultureInfo.InvariantCulture)));
         }
         object? Scalar(System.Type t) => System.Type.GetTypeCode(t) switch
         {
-            TypeCode.Boolean => (round + index) % 2 == 1,
+            TypeCode.Boolean => Choice(round, index, value, 2) == 1,
             TypeCode.Char => (char)('a' + n % 26),
             TypeCode.String => $"s{n}",
             TypeCode.Double => n + 0.5,
             TypeCode.Single => n + 0.5f,
             TypeCode.Decimal => n + 0.5m,
+            // Narrow integers cannot hold every sample number: they wrap within their range.
             TypeCode.SByte or TypeCode.Byte => System.Convert.ChangeType(n % 127, t, CultureInfo.InvariantCulture),
-            TypeCode.Int16 or TypeCode.UInt16 or TypeCode.Int32 or TypeCode.UInt32
+            TypeCode.Int16 or TypeCode.UInt16 => System.Convert.ChangeType(n % 32_767, t, CultureInfo.InvariantCulture),
+            TypeCode.Int32 or TypeCode.UInt32
                 or TypeCode.Int64 or TypeCode.UInt64 => System.Convert.ChangeType(n, t, CultureInfo.InvariantCulture),
             _ => null,
         };
@@ -192,6 +197,14 @@ public static class Mechanical
             return Instance(q, m, null, round, index, depth, ref k);
         return (Default(q), Default(m));
     }
+
+    /// <summary>The sample number of a slot's <paramref name="value"/>th value; no two slots or rounds share one.</summary>
+    internal static int Number(int round, int index, int value) => value < Slot ? round * Round + index * Slot + value + 1
+        : throw new HarnessException($"more than {Slot} sample values in one slot");
+
+    /// <summary>One of <paramref name="count"/> choices (a boolean, an enum value), alternating between consecutive
+    /// values of a slot as well as between slots and rounds.</summary>
+    internal static int Choice(int round, int index, int value, int count) => (round + index + value) % count;
 
     private static object? Default(System.Type t) => t.IsValueType && t != typeof(void) ? RuntimeHelpers.GetUninitializedObject(t) : null;
 

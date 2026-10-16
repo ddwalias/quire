@@ -27,10 +27,15 @@ sealed partial class Emitter
         });
     }
 
-    private static string Contract(List<string> lines)
+    /// <summary>A member's body for its evidence row: the expression, the statements, a constructor's initializer
+    /// with its empty body, <c>{ }</c>, or a declaration without a body (a field, an auto-property, an event).</summary>
+    internal static string Contract(List<string> lines)
     {
-        string code = lines.Count == 1 && lines[0].Contains(" => ") ? lines[0][(lines[0].IndexOf(" => ", StringComparison.Ordinal) + 4)..].TrimEnd(';')
-            : lines.Count == 1 ? lines[0].Trim() : string.Join(" ", lines.Skip(2).SkipLast(1).Select(l => l.Trim()));
+        string line = lines[0];
+        int initializer = Math.Max(line.IndexOf(" : base(", StringComparison.Ordinal), line.IndexOf(" : this(", StringComparison.Ordinal));
+        string code = lines.Count == 1 && line.Contains(" => ") ? line[(line.IndexOf(" => ", StringComparison.Ordinal) + 4)..].TrimEnd(';')
+            : lines.Count == 1 && line.EndsWith(" { }") ? initializer >= 0 ? line[(initializer + 1)..] : "{ }"
+            : lines.Count == 1 ? line.Trim() : string.Join(" ", lines.Skip(2).SkipLast(1).Select(l => l.Trim()));
         code = code.Replace("|", "\\|");
         return "`" + (code.Length > 140 ? code[..137] + "..." : code) + "`";
     }

@@ -120,12 +120,13 @@ public class OptimizedBuildTests : IDisposable
     /// <paramref name="original"/>, default <see cref="Optimized"/>), with an optimized build (none: an empty folder)
     /// when <paramref name="release"/> is given, and returns its exit code and inventory.</summary>
     private (int Exit, JsonElement Inventory) Audit(Action<ILGenerator>? release, string? extra = null, int helpers = 0,
-        bool none = false, Action<TypeBuilder>? more = null, Action<ILGenerator>? original = null)
+        bool none = false, Action<TypeBuilder>? more = null, Action<ILGenerator>? original = null,
+        Action<TypeBuilder>? moreOriginal = null, string bindings = "")
     {
         Directory.CreateDirectory(Path.Combine(_dir, "repo/docs/mirror"));
         File.WriteAllText(Path.Combine(_dir, "repo/docs/mirror/type-map.csv"),
-            "mathcad_assembly,mathcad_type,kind,visibility,quire_type,status,phase,group\nOrig.dll,Orig.T,class,public,Fix.T,exists,1,managed\n");
-        Build("install", "Orig", "Orig.T", original ?? Optimized);
+            "mathcad_assembly,mathcad_type,kind,visibility,quire_type,status,phase,group\nOrig.dll,Orig.T,class,public,Fix.T,exists,1,managed\n" + bindings);
+        Build("install", "Orig", "Orig.T", original ?? Optimized, more: moreOriginal);
         Build("debug", "Fix", "Fix.T", Debug, "Orig.T, Orig", helpers: helpers, more: more);
         string output = Path.Combine(_dir, "inventory.json");
         List<string> args = ["--repo", Path.Combine(_dir, "repo"), "--assemblies", Path.Combine(_dir, "debug"),
@@ -221,5 +222,24 @@ public class OptimizedBuildTests : IDisposable
         Assert.Equal(1, assert.Exit);
         Assert.Contains("Fix.T::Check`0()->[System.Runtime]System.Void|True calls System.Diagnostics.Debug",
             Assert.Single(assert.Inventory.GetProperty("errors").EnumerateArray()).GetString());
+    }
+
+    /// <summary>A signature naming a mirrored type of a project not audited (Fix.Dep in FixDep, bound to Orig.Dep in
+    /// OrigDep) still finds its counterpart, through the reviewed type map.</summary>
+    [Fact]
+    public void Types_of_projects_not_audited_map_through_the_type_map()
+    {
+        Build("install", "OrigDep", "Orig.Dep", Optimized);
+        Build("debug", "FixDep", "Fix.Dep", Optimized, "Orig.Dep, OrigDep");
+        var dep = new System.Runtime.Loader.AssemblyLoadContext("dependencies");
+        var quire = dep.LoadFromAssemblyPath(Path.Combine(_dir, "debug", "FixDep.dll")).GetType("Fix.Dep")!;
+        var mathcad = dep.LoadFromAssemblyPath(Path.Combine(_dir, "install", "OrigDep.dll")).GetType("Orig.Dep")!;
+        Action<TypeBuilder> G(Type parameter) => t =>
+            t.DefineMethod("G", MethodAttributes.Public | MethodAttributes.Static, typeof(void), [parameter]).GetILGenerator().Emit(OpCodes.Ret);
+        var (exit, inventory) = Audit(Optimized, more: G(quire), moreOriginal: G(mathcad),
+            bindings: "OrigDep.dll,Orig.Dep,class,public,Fix.Dep,exists,1,managed\n");
+        Assert.Equal(0, exit);
+        var g = inventory.GetProperty("methods").EnumerateArray().Single(m => m.GetProperty("signature").GetString()!.StartsWith("G`"));
+        Assert.True(g.GetProperty("exact_match").GetBoolean());
     }
 }
