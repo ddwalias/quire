@@ -20,4 +20,9 @@
     <Compile Include="../../tools/Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
     <Compile Include="../../tools/Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- MethodAudit itself, copied beside the tests to run in process (OptimizedBuildTests). -->
+    <ProjectReference Include="../../tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj"
+                      ReferenceOutputAssembly="false" OutputItemType="Content" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

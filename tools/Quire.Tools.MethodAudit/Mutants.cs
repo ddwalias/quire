@@ -179,7 +179,7 @@ static class Mutants
     private static double Changed(double v) => v == 0 ? 1 : v + 1 != v ? v + 1 : v * 2;
     private static float Changed(float v) => v == 0 ? 1 : v + 1 != v ? v + 1 : v * 2;
 
-    private static void Skip(ref BlobReader il, OpCode op)
+    internal static void Skip(ref BlobReader il, OpCode op)
     {
         switch (op.OperandType)
         {

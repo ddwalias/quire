@@ -55,6 +55,14 @@ class IntegrityTests(unittest.TestCase):
         self.source('[ModuleInitializer] static void Init() { }', 'Quire.Engine/X.cs')
         self.assertEqual([f for f in lint(self.repo) if 'Engine' in f['file']], [])
 
+    def test_src_compiles_the_same_in_debug_and_release(self):
+        for text in ('#if DEBUG\n#endif', '  # elif !RELEASE && X', '#if X || DEBUG'):
+            with self.subTest(text=text):
+                self.assertEqual(self.source(text, 'Quire.Engine.cs'), ['configuration-dependent code'])
+        for text in ('#if QUIRE_MIRROR_STUB_FREE\n#endif', 'x = Conditional(a, b);', '// Debug.Assert(x);'):
+            with self.subTest(text=text):
+                self.assertEqual(self.source(text, 'Quire.Engine.cs'), [])
+
     def differential(self, text, name='XDifferentialTests.cs'):
         directory = self.repo / 'tests/Quire.Differential.Tests'
         (directory / name).parent.mkdir(parents=True, exist_ok=True)

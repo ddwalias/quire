@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Reflection.Emit;
 using Microsoft.VisualBasic.FileIO;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
@@ -21,14 +22,16 @@ if (args is ["members", var assemblyPath, var typeName])
 var options = new Dictionary<string, List<string>>();
 for (int i = 0; i < args.Length; i += 2)
 {
-    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--install" or "--output" or "--project"))
-        throw new ArgumentException("MethodAudit --repo DIR --assemblies DIR --install DIR --output FILE [--project NAME ...]");
+    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--structure-assemblies" or "--install" or "--output" or "--project"))
+        throw new ArgumentException("MethodAudit --repo DIR --assemblies DIR [--structure-assemblies DIR] --install DIR --output FILE [--project NAME ...]");
     if (!options.TryGetValue(args[i], out var list)) options[args[i]] = list = [];
     list.Add(args[i + 1]);
 }
 string One(string name) => options.TryGetValue(name, out var values) && values.Count == 1
     ? Path.GetFullPath(values[0]) : throw new ArgumentException($"Exactly one {name} is required");
 string repo = One("--repo"), assemblies = One("--assemblies"), install = One("--install"), output = One("--output");
+// An optimized build of the same sources, like Mathcad's: only method structure is read from it.
+string? structureAssemblies = options.ContainsKey("--structure-assemblies") ? One("--structure-assemblies") : null;
 var projects = options.GetValueOrDefault("--project") ?? Directory.GetFiles(Path.Combine(repo, "docs/mirror/manifest"), "*.txt")
     .Select(Path.GetFileNameWithoutExtension).OfType<string>().ToList();
 var rows = new List<object>();
@@ -48,10 +51,31 @@ using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.cs
 }
 var originals = new Dictionary<string, Artifact>();
 var quire = new List<Artifact>();
+var optimized = new Dictionary<Artifact, (Artifact Build, Dictionary<(string, string), int> Tokens)>();
 foreach (string project in projects.Distinct())
 {
-    string path = Path.Combine(assemblies, project + ".dll");
-    try { quire.Add(new Artifact(path)); }
+    try
+    {
+        var artifact = new Artifact(Path.Combine(assemblies, project + ".dll"));
+        if (structureAssemblies != null)
+        {
+            var built = new Artifact(Path.Combine(structureAssemblies, project + ".dll"));
+            // Closures, state machines and helpers the compiler generates differ between builds; nothing else may.
+            static RawMethod? OnlyIn(Artifact a, Artifact other)
+            {
+                var keys = other.Methods.Select(m => (m.Owner, m.Key)).ToHashSet();
+                return a.Methods.FirstOrDefault(m => !m.Owner.Contains('<') && !m.Name.StartsWith('<') && !keys.Contains((m.Owner, m.Key)));
+            }
+            static string Describe(RawMethod? m) => m == null ? "none" : $"{m.Owner}::{m.Key} (0x{m.Token:x8})";
+            RawMethod? debug = OnlyIn(artifact, built), release = OnlyIn(built, artifact);
+            if (debug != null || release != null)
+                throw new InvalidDataException($"the optimized build declares other methods: only in Debug {Describe(debug)}, only optimized {Describe(release)}");
+            if (CompiledAway(artifact) is { } reason)
+                throw new InvalidDataException($"the optimized build compiles away code the tests run: {reason}");
+            optimized[artifact] = (built, built.Methods.ToDictionary(m => (m.Owner, m.Key), m => m.Token));
+        }
+        quire.Add(artifact);
+    }
     catch (Exception e) { errors.Add($"{project}: cannot inspect required assembly: {e.Message}"); }
 }
 foreach (var artifact in quire)
@@ -110,8 +134,11 @@ foreach (var artifact in quire)
         matched.Add((artifact, raw, type, method, status, exclusion, original, counterpart));
     }
 // Calls to Quire methods are named after their Mathcad counterparts; types after their MirrorOf binding.
-var originalNames = matched.Where(m => m.Counterpart != null)
-    .ToDictionary(m => (m.Artifact.Name, m.Raw.Token), m => m.Counterpart!.Name);
+// The token a method has in the build its structure is read from; null when the optimized build lacks it.
+int? StructureToken(Artifact a, RawMethod raw) => !optimized.TryGetValue(a, out var o) ? raw.Token
+    : o.Tokens.TryGetValue((raw.Owner, raw.Key), out int token) ? token : null;
+var originalNames = matched.Where(m => m.Counterpart != null && StructureToken(m.Artifact, m.Raw) != null)
+    .ToDictionary(m => (m.Artifact.Name, StructureToken(m.Artifact, m.Raw)!.Value), m => m.Counterpart!.Name);
 string MathcadType(string name) => typeNames.TryGetValue(name, out var names) ? names[0] : name;
 var structures = new Dictionary<Artifact, StructureReader>();
 StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, out var reader) ? reader
@@ -130,7 +157,8 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
     {
         try
         {
-            differences = Reader(artifact, true).Read(MetadataTokens.MethodDefinitionHandle(raw.Token))
+            differences = StructureToken(artifact, raw) is not { } token ? ["not comparable: the optimized build lacks this method"]
+                : Reader(optimized.TryGetValue(artifact, out var o) ? o.Build : artifact, true).Read(MetadataTokens.MethodDefinitionHandle(token))
                 .Compare(Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token)));
         }
         catch (Exception e) when (e is BadImageFormatException or KeyNotFoundException or InvalidOperationException)
@@ -189,6 +217,51 @@ Directory.CreateDirectory(Path.GetDirectoryName(output)!);
 File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows, test_types = testTypes }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
 Console.WriteLine($"Method inventory: {rows.Count} declarations, {errors.Count} inspection errors; {output}");
 return errors.Count == 0 && rows.Count > 0 ? 0 : 1;
+
+// [Conditional] code, and calls to Debug and Contract (whose methods are [Conditional]), exist in Debug builds only.
+static string? CompiledAway(Artifact a)
+{
+    var md = a.Metadata;
+    string Type(EntityHandle type) => type.Kind switch
+    {
+        HandleKind.TypeReference => md.GetTypeReference((TypeReferenceHandle)type) is var r
+            ? $"{md.GetString(r.Namespace)}.{md.GetString(r.Name)}" : "",
+        HandleKind.TypeDefinition => SigProvider.FullName(md, (TypeDefinitionHandle)type),
+        _ => "",
+    };
+    string Owner(EntityHandle member) => member.Kind switch
+    {
+        HandleKind.MemberReference => Type(md.GetMemberReference((MemberReferenceHandle)member).Parent),
+        HandleKind.MethodDefinition => Type(md.GetMethodDefinition((MethodDefinitionHandle)member).GetDeclaringType()),
+        HandleKind.MethodSpecification => Owner(md.GetMethodSpecification((MethodSpecificationHandle)member).Method),
+        _ => "",
+    };
+    foreach (var handle in md.CustomAttributes)
+    {
+        var attribute = md.GetCustomAttribute(handle);
+        if (Owner(attribute.Constructor) != "System.Diagnostics.ConditionalAttribute") continue;
+        return attribute.Parent.Kind switch
+        {
+            HandleKind.MethodDefinition => a.Methods.Where(m => m.Token == MetadataTokens.GetToken(attribute.Parent))
+                .Select(m => $"{m.Owner}::{m.Key} is [Conditional]").Single(),
+            HandleKind.TypeDefinition => $"{Type(attribute.Parent)} is [Conditional]",
+            _ => "a [Conditional] attribute",
+        };
+    }
+    foreach (var m in a.Methods.Where(m => m.BodyRva != 0))
+    {
+        var il = a.Pe.GetMethodBody(m.BodyRva).GetILReader();
+        while (il.RemainingBytes > 0)
+        {
+            byte first = il.ReadByte();
+            var op = StructureReader.Codes[first == 0xFE ? (ushort)(0xFE00 | il.ReadByte()) : first];
+            if (op.OperandType is not (OperandType.InlineMethod or OperandType.InlineTok)) { Mutants.Skip(ref il, op); continue; }
+            if (Owner(MetadataTokens.EntityHandle(il.ReadInt32())) is ("System.Diagnostics.Debug" or "System.Diagnostics.Contracts.Contract") and var type)
+                return $"{m.Owner}::{m.Key} calls {type}";
+        }
+    }
+    return null;
+}
 
 // The hand-written method a compiler-generated one implements (CompilerGenerated.Owner), as the inventory spells it.
 static object? Owner(string typeName, string methodName) =>

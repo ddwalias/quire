@@ -79,6 +79,11 @@ def files_under(*directories):
     return sorted(p for d in directories if Path(d).is_dir() for p in Path(d).rglob("*") if p.is_file())
 
 
+def digest_outputs(*directories):
+    """Fingerprints of run-owned build outputs, compared again after code under test has run."""
+    return [digest(files_under(d), d) for d in directories]
+
+
 class Seal:
     """Content fingerprints of what the validator reads after code under test has run: the given repository files,
     and every file at any depth under the given directories (records and built test outputs), so a file added,
@@ -113,6 +118,20 @@ def sdk_directory(global_json):
         yield directory
     finally:
         shutil.rmtree(directory, ignore_errors=True)
+
+
+def method_audit(dotnet, tool_dir, structure_dir, install, inventory, profile):
+    """The project to build optimized (Release) into `structure_dir`, with its build arguments, and the MethodAudit
+    command. Structure is compared on that build, as Mathcad's assemblies are optimized; coverage, mutation and body
+    hashes use the Debug build the tests run."""
+    host, framework = (("Quire.Focused.Differential.Tests", "net10.0") if profile == "focused"
+                       else ("Quire.Mirror.Tests", "net10.0-windows"))
+    scan = [dotnet, str(tool_dir / "Quire.Tools.MethodAudit.dll"),
+            "--repo", str(ROOT), "--assemblies", str(ROOT / "tests" / host / "bin/Debug" / framework),
+            "--structure-assemblies", str(structure_dir), "--install", str(install), "--output", str(inventory)]
+    if profile == "focused":
+        scan += ["--project", "Quire.Mpl"]
+    return (ROOT / "tests" / host / f"{host}.csproj", ["-c", "Release", "--no-incremental", "-o", str(structure_dir)]), scan
 
 
 def missing_shape(dotnet, generator_dir, global_json, assembly, timeout):
@@ -564,16 +583,19 @@ def main():
         tool_dir = holder["tool"] = Path(tempfile.mkdtemp(prefix="quire-audit-tool-"))
         generator = ROOT / "tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"
         generator_dir = holder["generator"] = Path(tempfile.mkdtemp(prefix="quire-mirrorgen-"))
+        structure_dir = holder["structure"] = Path(tempfile.mkdtemp(prefix="quire-audit-release-"))
+        inventory_path = output / "method-inventory.json"
+        structure_build, scan = method_audit(args.dotnet, tool_dir, structure_dir, install, inventory_path, args.profile)
         print("Building the method audit and test projects", flush=True)
         with (output / "build.log").open("w") as log:
-            for target, extra in [(tool, ["-o", str(tool_dir)]), (generator, ["-o", str(generator_dir)])] + [
-                    (ROOT / "tests" / p / f"{p}.csproj", []) for p in projects]:
+            for target, extra in [(tool, ["-o", str(tool_dir)]), (generator, ["-o", str(generator_dir)]),
+                                  structure_build] + [(ROOT / "tests" / p / f"{p}.csproj", []) for p in projects]:
                 with sdk_directory(global_json) as sdk:
                     result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=sdk,
                                             stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
                 if result.returncode:
                     raise ValueError(f"build of {target.name} failed; inspect build.log")
-        tool_digest = digest(files_under(tool_dir), tool_dir)
+        sealed_digest = digest_outputs(tool_dir, structure_dir)
         # Test assemblies are run directly rather than through their projects, so no MSBuild evaluation (which
         # imports obj/*.props and *.targets that earlier tests could plant) happens after code under test has run.
         # Run that way, VSTest finds the coverage collector only through the directory the Microsoft.CodeCoverage
@@ -651,17 +673,9 @@ def main():
         if any(p["skipped"] for p in report["projects"]):
             return 2
         from method_coverage import audit, passed_tests
-        inventory_path = output / "method-inventory.json"
-        if digest(files_under(tool_dir), tool_dir) != tool_digest:
-            raise ValueError("the method audit build changed while tests ran")
-        host = "Quire.Focused.Differential.Tests" if args.profile == "focused" else "Quire.Mirror.Tests"
-        framework = "net10.0" if args.profile == "focused" else "net10.0-windows"
-        scan = [args.dotnet, str(tool_dir / "Quire.Tools.MethodAudit.dll"),
-                "--repo", str(ROOT), "--assemblies", str(ROOT / "tests" / host / "bin/Debug" / framework),
-                "--install", str(install), "--output", str(inventory_path)]
-        if args.profile == "focused":
-            scan += ["--project", "Quire.Mpl"]
-        report["method_commands"] = [scan]
+        if digest_outputs(tool_dir, structure_dir) != sealed_digest:
+            raise ValueError("the method audit or Release build changed while tests ran")
+        report["method_commands"] = [[args.dotnet, "build", str(structure_build[0]), *build_flags, *structure_build[1]], scan]
         print("Auditing every selected method, including private methods and accessors", flush=True)
         with (output / "method-audit.log").open("w") as log, sdk_directory(global_json) as sdk:
             result = subprocess.run(scan, cwd=sdk, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)

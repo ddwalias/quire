@@ -7,7 +7,8 @@ using Quire.Tools.MirrorGen;
 /// <summary>
 /// The logic-bearing structure of one method body: what it calls, which fields it touches, which types it tests or
 /// creates, its constants, exception regions and branching. Locals, nops, stack shuffling and branch encoding are
-/// ignored, so a Debug reconstruction can match a Release original.
+/// ignored. MethodAudit reads it from the optimized (Release) build given by --structure-assemblies, which the
+/// validator always passes, so it compiles like the original.
 /// </summary>
 sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[] Constants, string[] Handlers,
     int Branches, int SwitchTargets, int Throws, int Rethrows)

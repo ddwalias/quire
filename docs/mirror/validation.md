@@ -154,8 +154,9 @@ The same run also checks each reconstruction against the original IL:
   the ordered calls (`call`/`callvirt`/`newobj`/`ldftn`), field reads/writes, type operations (`isinst`,
   `castclass`, `box`, `newarr`, `ldtoken`), constants (sorted; `0`/`1` ignored), exception regions and catch types,
   conditional-branch and switch-target counts, `throw`/`rethrow` counts. Quire types/methods are named after their
-  Mathcad binding; locals, nops, stack shuffling, branch encoding and compiler-generated names are ignored, so a
-  Debug build can match. A difference makes the method `structure_mismatch` with the first differing item. Only a
+  Mathcad binding; locals, nops, stack shuffling, branch encoding and compiler-generated names are ignored, and the
+  structure is read from an optimized (Release) build, like the original; coverage, mutation and body hashes use the
+  Debug build. A difference makes the method `structure_mismatch` with the first differing item. Only a
   `Deviation` status whose accepted ledger row names the member may differ (see Status below). A matching structure
   never substitutes for a direct comparison.
 - **Lint** (`integrity.json`): hand-written `src/` code (any `.cs` file, whatever its case) and agent-writable
@@ -169,7 +170,9 @@ The same run also checks each reconstruction against the original IL:
   code generation, marshalling, method bodies/IL, assembly or type enumeration, `Type.GetType` or a type looked up by a string literal (`.GetType("`), harness types via
   `typeof`, xUnit exceptions, sleeps or delays. `src/Quire.Mpl` code, which runs in the same process, must not name
   module initializers, xUnit, `MethodComparison`, the `Quire.Differential` namespace, method IL, assembly
-  enumeration, environment variables or `QUIRE_*` variables. These token rules are defence in depth, not containment
+  enumeration, environment variables or `QUIRE_*` variables. No `src/` code may depend on the build configuration
+  (`#if`/`#elif` naming `DEBUG` or `RELEASE`), and MethodAudit refuses `[Conditional]` code and calls to `Debug` or
+  `Contract`, which only Debug builds keep. These token rules are defence in depth, not containment
   (string building and reflection can evade them), so test diffs still need review. `file`-local types are matched
   on each raw line and on the line with comments and strings blanked, skipping only `//` comments and simple one-line
   strings; after anything a simple lexer cannot follow (verbatim, raw or nested-quote strings, block comments) nothing

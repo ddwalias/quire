@@ -43,6 +43,9 @@ SRC_RULES = [
         r'\b(?:ModuleInitializer|Xunit|MethodComparison|GetMethodBody|GetILAsByteArray|GetAssemblies|'
         r'(?:Get|Expand)EnvironmentVariables?|EnvironmentVariables)\b|QUIRE_(?!MIRROR_)|Quire\.Differential')),
 ]
+# Structure is compared on a Release build, tests, coverage and mutation on Debug: both must compile the same code.
+# MethodAudit refuses [Conditional] code and Debug and Contract calls from the build itself.
+CONFIGURATION_RULES = [('configuration-dependent code', re.compile(r'^\s*#\s*(?:if|elif)\b.*\b(?:DEBUG|RELEASE)\b'))]
 TESTS = 'tests/Quire.Differential.Tests'
 # C# ends a line comment at any of its line terminators, so code after one cannot hide as comment.
 CODE = re.compile(r'//[^\n\r\x85\u2028\u2029]*|/\*.*?\*/|\$*("{3,}).*?\1|\$*@"(?:[^"]|"")*"|@?\$*"(?:[^"\\\n]|\\.)*"|'
@@ -139,7 +142,8 @@ def lint(repo=ROOT, allow=None):
     for directory, subdirectories, files in os.walk(repo / 'src'):
         subdirectories[:] = [d for d in subdirectories if d not in SKIPPED]
         mpl = Path(directory).relative_to(repo).as_posix().lower().startswith('src/quire.mpl')
-        sources += [(Path(directory) / f, ARTIFACTS + (SRC_RULES if mpl else [])) for f in files if f.lower().endswith('.cs')]
+        rules = ARTIFACTS + CONFIGURATION_RULES + (SRC_RULES if mpl else [])
+        sources += [(Path(directory) / f, rules) for f in files if f.lower().endswith('.cs')]
     tests = agent_tests(repo) if (repo / TESTS).is_dir() else []
     sources += [(path, ARTIFACTS + TEST_RULES) for path in tests]
     findings = []

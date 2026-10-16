@@ -458,6 +458,30 @@ class DotnetTests(unittest.TestCase):
                 resolve_dotnet(str(Path(tools) / 'missing'), repo)
 
 
+class MethodAuditTests(unittest.TestCase):
+    def test_structure_is_compared_on_a_release_build_of_the_debug_assemblies_host(self):
+        import validate
+        for profile, host, framework in [('focused', 'Quire.Focused.Differential.Tests', 'net10.0'),
+                                         ('phase', 'Quire.Mirror.Tests', 'net10.0-windows')]:
+            (project, build), scan = validate.method_audit('dotnet', Path('tool'), Path('release'), Path('install'),
+                                                           Path('inventory.json'), profile)
+            self.assertEqual(project, validate.ROOT / 'tests' / host / f'{host}.csproj')
+            self.assertEqual(build, ['-c', 'Release', '--no-incremental', '-o', 'release'])
+            self.assertEqual(scan[scan.index('--structure-assemblies') + 1], 'release')
+            self.assertEqual(Path(scan[scan.index('--assemblies') + 1]), validate.ROOT / 'tests' / host / 'bin/Debug' / framework)
+            self.assertEqual('--project' in scan, profile == 'focused')
+
+
+    def test_a_release_build_changed_after_it_was_sealed_is_detected(self):
+        import validate
+        with tempfile.TemporaryDirectory() as tool, tempfile.TemporaryDirectory() as release:
+            (Path(release) / 'Quire.Mpl.dll').write_bytes(b'built')
+            sealed = validate.digest_outputs(tool, release)
+            self.assertEqual(validate.digest_outputs(tool, release), sealed)
+            (Path(release) / 'Quire.Mpl.dll').write_bytes(b'planted')
+            self.assertNotEqual(validate.digest_outputs(tool, release), sealed)
+
+
 class MissingShapeTests(unittest.TestCase):
     """Every line of the maintainer-owned manifest must still match the build; added lines are fine."""
     def test_missing_and_changed_lines_are_reported(self):
