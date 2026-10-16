@@ -1475,8 +1475,9 @@
     "Quire.Mpl.Run.Keyword::keytok`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "17eccbfd971f31754fd63305a12cdf70028eba87e1c7b42d4559c87425778bdd",
     "Quire.Mpl.Run.Keyword::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False": "caf27ddd4273384b4230dbbac3337a8fbce1eb73802db7133147357263841bd6",
     "Quire.Mpl.Run.Keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "796d5d4c7223d2a60e32b19759aab8a4ffab5a5cc54e501157eb7262a1824bd6",
-    "Quire.Mpl.Run.List_keyword::.ctor`0()->[System.Runtime]System.Void|False": "a90b5329793aa9dad57d264c6ff81077ed6ffb8abf91b99c5fd87a7d0e91e649",
-    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "7813d839da958e4bf6aa110e9fe68c468ada3ef3dc24b1ad20be0bb3bfcef2af",
+    "Quire.Mpl.Run.List_keyword::.cctor`0()->[System.Runtime]System.Void|True": "586a753678d19862177248bd91d19db430877e6578c1d78c49ce258aed605076",
+    "Quire.Mpl.Run.List_keyword::.ctor`0()->[System.Runtime]System.Void|False": "0005f96a36d123c0db91e5f1b212aa0974f735741c8f0000f669bce842466941",
+    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "42204a7276113ddbdd6886ba7d0c53bd5706b4e7024aaa3e5d9595f899ebc61f",
     "Quire.Mpl.Run.LocalEnv::.ctor`0()->[System.Runtime]System.Void|False": "ce0e3e24c0098856c899ae3fe66bf5b4f51bb1b2a684a61ff5ca1ce5d353f16a",
     "Quire.Mpl.Run.LocalEnv::.ctor`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[System.Runtime]System.Void|False": "b5223c1434f9e98757ed2a3294a95f704d5f2f0c389d5096d139c15e68b5deec",
     "Quire.Mpl.Run.LocalEnv::AddForeignMacro`0([Quire.Mpl]Quire.Mpl.Run.Sym,[System.Runtime]System.UInt32,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.BindingInfo|False": "d8a667163d09478e894911e3886ecdadbe84dd6cdc0a975557585d0f475209e3",
@@ -1819,8 +1820,9 @@
     "Quire.Mpl.Run.Tuple::TupleRep`0([Quire.Mpl]Quire.Mpl.Run.Tuple+Rep&,[System.Runtime]System.Type[])->[System.Runtime]System.Type|True": "74f5f724e8c911ec55d473af8f30a433fd7e8b1461d85087826762c486783895",
     "Quire.Mpl.Run.Tuple::TupleType`0([System.Runtime]System.Type[])->[System.Runtime]System.Type|True": "00cfc7128614d087e7a54eceaedc5e7a484bb66bf0f277fcbaa74773b03f493a",
     "Quire.Mpl.Run.Tuple::tuple_length`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|True": "d858c1faf72c4db3d3435b4af40c5b2c79e580fff44c5dee0d2eb909feb61586",
-    "Quire.Mpl.Run.Tuple_keyword::.ctor`0()->[System.Runtime]System.Void|False": "a90b5329793aa9dad57d264c6ff81077ed6ffb8abf91b99c5fd87a7d0e91e649",
-    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "84e2b5392d985c0ee2ad73d3d41e1da66a12fbba7cfcb3fe16fb7dbb869b3658",
+    "Quire.Mpl.Run.Tuple_keyword::.cctor`0()->[System.Runtime]System.Void|True": "c341206a33dd9764e01e1a963bc5beeaacb3590acc0a24e298fd745f2c14693f",
+    "Quire.Mpl.Run.Tuple_keyword::.ctor`0()->[System.Runtime]System.Void|False": "2f9192be2334e3ddcee46cc9f4ceb23c35d2db022408dbf3c6c6f21f762241eb",
+    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "f9523604bfa7d87e40ac8c3c7712aa0525ffab559444ef08457c68e2f0b8383c",
     "Quire.Mpl.Run.Tuple`2::.ctor`0()->[System.Runtime]System.Void|False": "f0952033fcf22149708445c8b3c8b5f25de0578e9600f03ad3dd3ac0d5686f3e",
     "Quire.Mpl.Run.Tuple`3::.ctor`0()->[System.Runtime]System.Void|False": "f0952033fcf22149708445c8b3c8b5f25de0578e9600f03ad3dd3ac0d5686f3e",
     "Quire.Mpl.Run.Tuple`4::.ctor`0()->[System.Runtime]System.Void|False": "f0952033fcf22149708445c8b3c8b5f25de0578e9600f03ad3dd3ac0d5686f3e",
@@ -2981,6 +2983,9 @@
     "Quire.Mpl.Run.Keyword::get_quote_atom`0()->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
     "Quire.Mpl.Run.Keyword::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False",
     "Quire.Mpl.Run.Keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
+    "Quire.Mpl.Run.List_keyword::.cctor`0()->[System.Runtime]System.Void|True",
+    "Quire.Mpl.Run.List_keyword::.ctor`0()->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True",
     "Quire.Mpl.Run.LocalEnv::.ctor`0()->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.LocalEnv::.ctor`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.LocalEnv::AddLocalEquation`0([Quire.Mpl]Quire.Mpl.Run.Sym,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.MplEnv|False",
@@ -3194,6 +3199,9 @@
     "Quire.Mpl.Run.Tuple::SetField`1([System.Runtime]System.Object[],[System.Runtime]System.Int32,!!0)->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.Tuple::Setter`0([System.Runtime]System.Type)->[System.Runtime]System.Reflection.MethodInfo|True",
     "Quire.Mpl.Run.Tuple::TupleRep`0([Quire.Mpl]Quire.Mpl.Run.Tuple+Rep&,[System.Runtime]System.Type[])->[System.Runtime]System.Type|True",
+    "Quire.Mpl.Run.Tuple_keyword::.cctor`0()->[System.Runtime]System.Void|True",
+    "Quire.Mpl.Run.Tuple_keyword::.ctor`0()->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True",
     "Quire.Mpl.Run.Tuple`2::.ctor`0()->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Tuple`3::.ctor`0()->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Tuple`4::.ctor`0()->[System.Runtime]System.Void|False",
@@ -4886,8 +4894,9 @@
     "Quire.Mpl.Run.Keyword::keytok`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "missing",
     "Quire.Mpl.Run.Keyword::walk_declaration_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Cons|False": "uncovered",
     "Quire.Mpl.Run.Keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "compared",
-    "Quire.Mpl.Run.List_keyword::.ctor`0()->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "missing",
+    "Quire.Mpl.Run.List_keyword::.cctor`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.List_keyword::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "compared",
     "Quire.Mpl.Run.LocalEnv::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.LocalEnv::.ctor`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.LocalEnv::AddForeignMacro`0([Quire.Mpl]Quire.Mpl.Run.Sym,[System.Runtime]System.UInt32,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.BindingInfo|False": "missing",
@@ -5231,8 +5240,9 @@
     "Quire.Mpl.Run.Tuple::TupleRep`0([Quire.Mpl]Quire.Mpl.Run.Tuple+Rep&,[System.Runtime]System.Type[])->[System.Runtime]System.Type|True": "compared",
     "Quire.Mpl.Run.Tuple::TupleType`0([System.Runtime]System.Type[])->[System.Runtime]System.Type|True": "compared",
     "Quire.Mpl.Run.Tuple::tuple_length`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|True": "compared",
-    "Quire.Mpl.Run.Tuple_keyword::.ctor`0()->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "missing",
+    "Quire.Mpl.Run.Tuple_keyword::.cctor`0()->[System.Runtime]System.Void|True": "compared",
+    "Quire.Mpl.Run.Tuple_keyword::.ctor`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": "compared",
     "Quire.Mpl.Run.Tuple`2::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Tuple`3::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Tuple`4::.ctor`0()->[System.Runtime]System.Void|False": "compared",
@@ -7248,6 +7258,15 @@
     "Quire.Mpl.Run.Keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
       "sexprdifferentialtests"
     ],
+    "Quire.Mpl.Run.List_keyword::.cctor`0()->[System.Runtime]System.Void|True": [
+      "simplekeyworddifferentialtests"
+    ],
+    "Quire.Mpl.Run.List_keyword::.ctor`0()->[System.Runtime]System.Void|False": [
+      "simplekeyworddifferentialtests"
+    ],
+    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": [
+      "simplekeyworddifferentialtests"
+    ],
     "Quire.Mpl.Run.LocalEnv::.ctor`0()->[System.Runtime]System.Void|False": [
       "envdifferentialtests"
     ],
@@ -7801,6 +7820,15 @@
     ],
     "Quire.Mpl.Run.Tuple::tuple_length`0([System.Runtime]System.Object)->[System.Runtime]System.Int32|True": [
       "mplrunhelpersdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Tuple_keyword::.cctor`0()->[System.Runtime]System.Void|True": [
+      "simplekeyworddifferentialtests"
+    ],
+    "Quire.Mpl.Run.Tuple_keyword::.ctor`0()->[System.Runtime]System.Void|False": [
+      "simplekeyworddifferentialtests"
+    ],
+    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": [
+      "simplekeyworddifferentialtests"
     ],
     "Quire.Mpl.Run.Tuple`2::.ctor`0()->[System.Runtime]System.Void|False": [
       "mplrunhelpersdifferentialtests"
@@ -9440,12 +9468,12 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.List_keyword": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 0,
       "structure_mismatch": 0,
-      "total": 2,
+      "total": 3,
       "uncovered": 0,
       "verified_unsupported": 0
     },
@@ -9760,12 +9788,12 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Tuple_keyword": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 2,
+      "missing": 0,
       "structure_mismatch": 0,
-      "total": 2,
+      "total": 3,
       "uncovered": 0,
       "verified_unsupported": 0
     },
@@ -12306,6 +12334,12 @@
     "Quire.Mpl.Run.Keyword::walk_expression_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
       "Quire.Mpl.Run.SCons::Field2"
     ],
+    "Quire.Mpl.Run.List_keyword::.cctor`0()->[System.Runtime]System.Void|True": [
+      "Quire.Mpl.Run.List_keyword::singleton"
+    ],
+    "Quire.Mpl.Run.List_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": [
+      "Quire.Mpl.Run.List_keyword::singleton"
+    ],
     "Quire.Mpl.Run.LocalEnv::.ctor`0()->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.LocalEnv::m_level",
       "Quire.Mpl.Run.LocalEnv::m_parent",
@@ -12703,6 +12737,12 @@
     ],
     "Quire.Mpl.Run.Tuple::TupleType`0([System.Runtime]System.Type[])->[System.Runtime]System.Type|True": [
       "Quire.Mpl.Run.Tuple::tup_types"
+    ],
+    "Quire.Mpl.Run.Tuple_keyword::.cctor`0()->[System.Runtime]System.Void|True": [
+      "Quire.Mpl.Run.Tuple_keyword::singleton"
+    ],
+    "Quire.Mpl.Run.Tuple_keyword::NewTok`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Tok|True": [
+      "Quire.Mpl.Run.Tuple_keyword::singleton"
     ],
     "Quire.Mpl.Run.UnaryDelegateFunction::.ctor`0([Quire.Mpl]Quire.Mpl.Run.F`2<[System.Runtime]System.Object,[System.Runtime]System.Object>)->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.UnaryDelegateFunction::m_F"
