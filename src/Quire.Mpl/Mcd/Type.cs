@@ -88,14 +88,10 @@ public abstract partial class Type
         {
             return (Product)type;
         }
-        Product.Power[] array = new Product.Power[1];
-        array[0].Base = type;
-        array[0].Exponent = 1;
-        bool isVar = type is Variable;
-        unsafe
-        {
-            return new Product(array, *(byte*)&isVar);
-        }
+        var powers = new Product.Power[1];
+        powers[0].Base = type;
+        powers[0].Exponent = 1;
+        return new Product(powers, type is Variable ? 1 : 0);
     }
 
     /// <summary>The term in signature syntax.</summary>
@@ -389,36 +385,26 @@ public abstract partial class Type
             int start = m_off;
             if (char.IsLetter(c))
             {
-                while (char.IsLetterOrDigit(m_src[++m_off]))
-                {
-                }
+                while (char.IsLetterOrDigit(m_src[++m_off])) { }
                 c = (char.IsUpper(c) ? 'C' : 'a');
             }
             else if (char.IsDigit(c))
             {
-                while (char.IsDigit(m_src[++m_off]))
-                {
-                }
+                while (char.IsDigit(m_src[++m_off])) { }
                 c = 'i';
             }
-            else
+            else if (c == '-')
             {
-                switch (c)
+                if (m_src[++m_off] == '>')
                 {
-                    case '-':
-                        if (m_src[++m_off] == '>')
-                        {
-                            m_off++;
-                            start++;
-                            c = '>';
-                        }
-                        break;
-                    default:
-                        m_off++;
-                        break;
-                    case '$':
-                        break;
+                    m_off++;
+                    start++;
+                    c = '>';
                 }
+            }
+            else if (c != '$')
+            {
+                m_off++;
             }
             lexeme = m_src.Substring(start, m_off - start);
             return c;
@@ -504,14 +490,8 @@ public abstract partial class Type
         private int ParseExponent()
         {
             int exponent = 1;
-            if (GetNextTokenIf("-"))
-            {
-                exponent = -exponent;
-            }
-            if (GetNextTokenIf("i"))
-            {
-                exponent *= int.Parse(m_val);
-            }
+            if (GetNextTokenIf("-")) exponent = -exponent;
+            if (GetNextTokenIf("i")) exponent *= int.Parse(m_val);
             return exponent;
         }
 
@@ -568,43 +548,31 @@ public abstract partial class Type
             switch (t.Root)
             {
                 case '(':
-                {
-                    bool isFirst = true;
+                    bool first = true;
                     m_out.Append('(');
-                    Type[] operands = t.Operands;
-                    foreach (Type operand in operands)
+                    foreach (var operand in t.Operands)
                     {
-                        if (isFirst)
-                        {
-                            isFirst = false;
-                        }
-                        else
-                        {
-                            m_out.Append(", ");
-                        }
+                        if (first) first = false;
+                        else m_out.Append(", ");
                         Traverse(operand);
                     }
                     m_out.Append(')');
                     break;
-                }
                 case '>':
                     Traverse(t.Operands[0]);
                     m_out.Append("->");
                     Traverse(t.Operands[1]);
                     break;
                 default:
-                {
                     m_out.Append('(');
                     Traverse(t.Operator);
-                    Type[] operands = t.Operands;
-                    foreach (Type operand in operands)
+                    foreach (var operand in t.Operands)
                     {
                         m_out.Append(' ');
                         Traverse(operand);
                     }
                     m_out.Append(')');
                     break;
-                }
             }
         }
 
@@ -612,20 +580,12 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         public override void Visit(Product t)
         {
-            bool isFirst = true;
+            bool first = true;
             m_out.Append('{');
-            Product.Power[] powers = t.Powers;
-            for (int i = 0; i < powers.Length; i++)
+            foreach (var power in t.Powers)
             {
-                Product.Power power = powers[i];
-                if (isFirst)
-                {
-                    isFirst = false;
-                }
-                else
-                {
-                    m_out.Append(' ');
-                }
+                if (first) first = false;
+                else m_out.Append(' ');
                 Traverse(power.Base);
                 if (power.Exponent != 1)
                 {
@@ -662,7 +622,7 @@ public abstract partial class Type
             if (t.Name.Length == 1)
             {
                 m_out.Append("any");
-                m_out.Append(t.Name[0] - 97 + 1);
+                m_out.Append(t.Name[0] - 'a' + 1);
             }
             else if (t.Name[0] == 't' && char.IsDigit(t.Name[1]))
             {

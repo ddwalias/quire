@@ -222,21 +222,16 @@ public partial class UnitSystem : MarshalByRefObject
     {
         get
         {
-            Unit[] array = new Unit[m_defs.Count * 2];
+            var all = new Unit[m_defs.Count * 2];
             int count = 0;
-            foreach (IList value in m_defs.Values)
-            {
-                foreach (Default item in value)
+            foreach (IList group in m_defs.Values)
+                foreach (Default d in group)
                 {
-                    array[count] = item.Unit;
+                    all[count] = d.Unit;
                     count++;
                 }
-            }
-            Unit[] result = new Unit[count];
-            for (int i = 0; i != count; i++)
-            {
-                result[i] = array[i];
-            }
+            var result = new Unit[count];
+            for (int i = 0; i != count; i++) result[i] = all[i];
             return result;
         }
         set

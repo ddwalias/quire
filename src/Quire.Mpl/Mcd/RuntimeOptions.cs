@@ -29,10 +29,7 @@ public partial class UnitSystemGroup : MarshalByRefObject
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public UnitSystem findMember(int num)
     {
-        if (!m_unitsys_list.ContainsKey(num))
-        {
-            return null;
-        }
+        if (!m_unitsys_list.ContainsKey(num)) return null;
         return m_unitsys_list[num];
     }
 
@@ -52,19 +49,13 @@ public partial class UnitSystemGroup : MarshalByRefObject
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public void addMember(UnitSystem unit_system)
     {
-        if (!m_unitsys_list.ContainsKey(unit_system.RO_number))
-        {
-            m_unitsys_list[unit_system.RO_number] = unit_system;
-        }
+        if (!m_unitsys_list.ContainsKey(unit_system.RO_number)) m_unitsys_list[unit_system.RO_number] = unit_system;
     }
 
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public void removeMember(int num)
     {
-        if (m_unitsys_list.ContainsKey(num))
-        {
-            m_unitsys_list.Remove(num);
-        }
+        if (m_unitsys_list.ContainsKey(num)) m_unitsys_list.Remove(num);
     }
 
     /// <summary>Gives member <paramref name="num"/> (never the initial one) the initial member's current basis and
@@ -72,16 +63,12 @@ public partial class UnitSystemGroup : MarshalByRefObject
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public void resetMember(int num)
     {
-        if (num != 0 && m_unitsys_list.ContainsKey(num))
-        {
-            UnitSystem member = m_unitsys_list[num];
-            if (m_unitsys_list.ContainsKey(init_id))
-            {
-                UnitSystem initial = m_unitsys_list[init_id];
-                member.Basis = initial.Basis;
-                member.Defaults = initial.Defaults;
-            }
-        }
+        if (num == 0 || !m_unitsys_list.ContainsKey(num)) return;
+        var member = m_unitsys_list[num];
+        if (!m_unitsys_list.ContainsKey(init_id)) return;
+        var initial = m_unitsys_list[init_id];
+        member.Basis = initial.Basis;
+        member.Defaults = initial.Defaults;
     }
 
     /// <summary>Resets member <paramref name="num"/>, or else the initial member, to its construction-time units
@@ -89,14 +76,8 @@ public partial class UnitSystemGroup : MarshalByRefObject
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public UnitSystem Reset(int num)
     {
-        if (m_unitsys_list.ContainsKey(num))
-        {
-            return m_unitsys_list[num].Reset();
-        }
-        if (m_unitsys_list.ContainsKey(init_id))
-        {
-            return m_unitsys_list[init_id].Reset();
-        }
+        if (m_unitsys_list.ContainsKey(num)) return m_unitsys_list[num].Reset();
+        if (m_unitsys_list.ContainsKey(init_id)) return m_unitsys_list[init_id].Reset();
         return null;
     }
 
@@ -105,17 +86,11 @@ public partial class UnitSystemGroup : MarshalByRefObject
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public UnitSystem addCopyWithRONumber(int num)
     {
-        if (m_unitsys_list.ContainsKey(num))
-        {
-            return m_unitsys_list[num];
-        }
+        if (m_unitsys_list.ContainsKey(num)) return m_unitsys_list[num];
         UnitSystem initial = findMember(init_id);
         if (initial != null)
         {
-            UnitSystem copy = new UnitSystem(initial.Name, initial.Code, initial.Guid, initial.Basis, initial.Defaults)
-            {
-                RO_number = num
-            };
+            var copy = new UnitSystem(initial.Name, initial.Code, initial.Guid, initial.Basis, initial.Defaults) { RO_number = num };
             addMember(copy);
             return copy;
         }

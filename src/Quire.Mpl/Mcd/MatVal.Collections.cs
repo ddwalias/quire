@@ -80,9 +80,9 @@ public sealed partial class MatVal
         }
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
-    private MatVal PromoteDim() { if (m_dim == null) m_dim = Dim.identity; return this; }
+    private MatVal PromoteDim() { m_dim ??= Dim.identity; return this; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
-    private MatVal PromoteDim(Dim d) { if (m_dim == null) m_dim = Dim.intern(d); return this; }
+    private MatVal PromoteDim(Dim d) { m_dim ??= Dim.intern(d); return this; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static MatVal Replicate(object o, int n) => new MatVal(n).FillThis(o, 0, 1, n).PromoteDim();
     [MirrorAnalyzed("Mcd.MatVal.Collections")]

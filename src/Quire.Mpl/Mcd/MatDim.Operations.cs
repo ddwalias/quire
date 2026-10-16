@@ -14,12 +14,12 @@ public abstract partial class MatDim
     [MirrorAnalyzed("Mcd.MatDim")]
     public static void Eq(MatDim d1, MatDim d2, uint param)
     {
-        if (!Eq_b(d1, d2)) PickLoser(d1, d2, param);
+        if (!d1.eq_b(d2)) PickLoser(d1, d2, param);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
     public static void Eq(MatDim d1, Dim d2, uint param)
     {
-        if (!Eq_b(d1, d2)) OnError(d2, param);
+        if (!d1.eq2_b(d2)) OnError(d2, param);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim MMult(MatDim m1, MatDim m2) => m1.mmult1(m2);
@@ -97,8 +97,8 @@ public abstract partial class MatDim
     public static MatDim make(RC rc, Dim[] dims, int n)
     {
         Dim common = Uniform(dims);
-        if (common != null) return uniform_dim.make(common, dims.Length, dims.Length);
-        return rc == RC.ROW ? r_dim.make(dims, n) : c_dim.make(dims, n);
+        if (common == null) return rc == RC.ROW ? r_dim.make(dims, n) : c_dim.make(dims, n);
+        return uniform_dim.make(common, dims.Length, dims.Length);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim makeRowDimension(Dim d1, Dim d2, int c) => make(RC.ROW, [d1, d2], c);
@@ -114,7 +114,8 @@ public abstract partial class MatDim
         Dim common = Uniform(rows);
         if (common != null) return make(RC.COL, Mult(common, cols), rows.Length);
         common = Uniform(cols);
-        return common != null ? make(RC.ROW, Mult(common, rows), cols.Length) : rc_dim.make_rc(rows, cols);
+        if (common != null) return make(RC.ROW, Mult(common, rows), cols.Length);
+        return rc_dim.make_rc(rows, cols);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
     private static MatDim makeColumnVectorDim(MatVal m)
@@ -161,13 +162,13 @@ public abstract partial class MatDim
     }
 
     [MirrorAnalyzed("Mcd.MatDim")]
-    public static void OnError(string m, Dim d, uint a) => AppException.Raise($"{m}\t{Dim.FixDimension(d).Format()}", a);
+    public static void OnError(string m, Dim d, uint a) => AppException.Raise(string.Format("{0}\t{1}", m, Dim.FixDimension(d).Format()), a);
     [MirrorAnalyzed("Mcd.MatDim")]
     public static void OnError(Dim d, uint a) => OnError("bad matrix dimension", d, a);
     [MirrorAnalyzed("Mcd.MatDim")]
-    public static void OnError(string m, Dim d, int i, uint a) => AppException.Raise($"{m}\t{Dim.FixDimension(d).Format()}\t{i}", a);
+    public static void OnError(string m, Dim d, int i, uint a) => AppException.Raise(string.Format("{0}\t{1}\t{2}", m, Dim.FixDimension(d).Format(), i), a);
     [MirrorAnalyzed("Mcd.MatDim")]
-    public static void OnError(string m, Dim d, int i, int j, uint a) => AppException.Raise($"{m}\t{Dim.FixDimension(d).Format()}\t{i}\t{j}", a);
+    public static void OnError(string m, Dim d, int i, int j, uint a) => AppException.Raise(string.Format("{0}\t{1}\t{2}\t{3}", m, Dim.FixDimension(d).Format(), i, j), a);
     [MirrorAnalyzed("Mcd.MatDim")]
     private static void PickLoser(MatDim loser, MatDim winner, uint param)
     {

@@ -131,6 +131,16 @@ Stable rule numbers/anchor for D9 and existing reports.
    for the selected scope: every method with a body, including private methods, needs an artifact-bound direct
    Mathcad comparison from a passing test in the current run. Public-caller coverage does not satisfy private
    method validation. Report all remaining gaps; a scoped pass is not project-wide completion.
+   **Release compiler shapes** (structure is compared on a Release build; each verified against `mplrun`):
+   `c ? 1 : 0` compiles to a branchless `ceq`/`cgt`/`clt`, so no unsafe byte reads; `if (c) return A; return B;`
+   compiles like `!c ? B : A`, so `c ? A : B` flips the branch and arm order of `if (c) return A; return B;`: keep
+   the `if` form rather than writing an inverted ternary; `a ?? b` compiles to `dup; brtrue; pop`, unlike an
+   if-null-return through a local; merging early returns into `&&`/`||`, or inlining a local, also changes the IL; write
+   `string.Format`, not interpolation, where Mathcad calls `Format`; write `new T[0]`, not `[]`, for an empty array
+   (`[]` emits `Array.Empty`); `?.` and `??=` on a type with `op_Equality` (`Type`, `FieldInfo`) differ from
+   `== null`; `x is T t` drops the `castclass` of `x is T` then `(T)x`; keep Mathcad's own dead reads
+   (`_ = head;`) and explicit default-value field writes. MethodAudit's structure match ignores branch direction
+   and block order, so it is weaker than an exact match: compare the Release opcode sequence with Mathcad's too.
 4. **Deviation:** Before relying on a departure, require an explicitly accepted, tested
    [ledger entry](deviations.md) with evidence, behavior, rationale, impact, revisit plan, decision.
    Report separately from matches. Notes authorize nothing; unknowns stay open, bugs need fixing.

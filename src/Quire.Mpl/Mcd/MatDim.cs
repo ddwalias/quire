@@ -51,7 +51,8 @@ public abstract partial class MatDim
     {
         if (dims == null) return null;
         Dim candidate = dims[0];
-        return Array.TrueForAll(dims, d => ReferenceEquals(d, candidate)) ? candidate : null;
+        foreach (Dim d in dims) if (d != candidate) return null;
+        return candidate;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static bool Eq_b(Dim[] d1, Dim[] d2)
@@ -99,7 +100,7 @@ public abstract partial class MatDim
     {
         var result = new Dim[d2.Length + 1];
         result[0] = d1;
-        d2.CopyTo(result, 1);
+        Array.Copy(d2, 0, result, 1, d2.Length);
         return result;
     }
 }

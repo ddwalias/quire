@@ -373,10 +373,7 @@ public partial class SCons : Sexpr
     public override Sexpr walk_pattern(MplEnv env)
     {
         Sym key = Key;
-        if (key == null)
-        {
-            BadPattern(this);
-        }
+        if (key == null) BadPattern(this);
         if (key.LowId)
         {
             MplMacro macro = env.LoadMacro(key);
@@ -498,10 +495,7 @@ public partial class Tok : Sexpr
     [MirrorVerified("SexprDifferentialTests")]
     public override string ToString()
     {
-        if (Field2 == 0)
-        {
-            return Field1.ToString();
-        }
+        if (Field2 == 0) return Field1.ToString();
         return "#T" + Field2.ToString("X") + " " + Field1.ToString();
     }
 

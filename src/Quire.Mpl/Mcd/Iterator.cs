@@ -126,21 +126,13 @@ public abstract partial class Iterator
     [MirrorAnalyzed("Mcd.RngVal")]
     public static Iterator forValue(object o)
     {
-        MatVal matVal = o as MatVal;
-        if (matVal == null)
+        if (o is not MatVal mat)
         {
-            RngVal rngVal = o as RngVal;
-            if (rngVal == null)
-            {
-                return new ScalarIterator(o);
-            }
-            return forRange(rngVal);
+            if (o is not RngVal rng) return new ScalarIterator(o);
+            return forRange(rng);
         }
-        if (matVal.Rows <= 0 || matVal.Cols <= 0)
-        {
-            return null;
-        }
-        return new MatrixIterator(matVal);
+        if (mat.Rows <= 0 || mat.Cols <= 0) return null;
+        return new MatrixIterator(mat);
     }
 
     [MirrorVerified("RngValDifferentialTests")]

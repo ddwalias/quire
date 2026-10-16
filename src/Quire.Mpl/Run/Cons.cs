@@ -44,10 +44,7 @@ public partial class Cons
     [MirrorVerified("MplRunHelpersDifferentialTests")]
     private string FormatItems()
     {
-        if (Field2 == null)
-        {
-            return Field1.ToString();
-        }
+        if (Field2 == null) return Field1.ToString();
         return Field1.ToString() + ", " + (Field2 as Cons).FormatItems();
     }
 

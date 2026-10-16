@@ -29,7 +29,7 @@ public abstract partial class Function : FunctionUtilities
     private Function m_inverse_function;
 
     [MirrorAnalyzed("Mpl.Run.Function")]
-    private Function() : this(0, 0) { }
+    private Function() { }
 
     /// <param name="function_purity">The original function purity/arity counter before captures.</param>
     /// <param name="n">The captured-argument count subtracted from that counter.</param>
@@ -37,7 +37,7 @@ public abstract partial class Function : FunctionUtilities
     protected Function(int function_purity, int n)
     {
         m_n = n;
-        m_purity = function_purity - n;
+        m_purity = function_purity - m_n;
         m_minargs = m_purity;
         m_no_vectorize = false;
         m_dim = Dim.function_dim;
@@ -53,7 +53,7 @@ public abstract partial class Function : FunctionUtilities
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual string Name
     {
-        get => m_name ?? "<anonymous>";
+        get => m_name == null ? "<anonymous>" : m_name;
         set => m_name = value;
     }
 
@@ -78,11 +78,11 @@ public abstract partial class Function : FunctionUtilities
         if (v == null || v.Length == 0)
             return "[]";
         if (v.Length == 1)
-            return $"[{v[0]}]";
+            return string.Format("[{0}]", v[0]);
         string text = v[0].ToString();
         for (int i = 1; i < v.Length; i++)
-            text = $"{text},{v[i]}";
-        return $"[{text}]";
+            text = string.Format("{0},{1}", text, v[i]);
+        return string.Format("[{0}]", text);
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
@@ -100,7 +100,7 @@ public abstract partial class Function : FunctionUtilities
             string[] array = text.Split(label_delimiter);
             text = string.Format("{0}{1}{2}", array[0], "{", array[1]);
             for (int i = 2; i < array.Length; i++)
-                text = $"{text},{array[i]}";
+                text = string.Format("{0},{1}", text, array[i]);
             text = string.Format("{0}{1}", text, "}");
         }
         return text;
@@ -544,32 +544,31 @@ public abstract partial class Function : FunctionUtilities
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b)
     {
-        if (!(m_no_vectorize | !(b is MatVal)))
-            return MatVal.vectorize(this, new object[1] { b });
+        if (!m_no_vectorize & b is MatVal)
+            return MatVal.vectorize(this, [b]);
         return DynCall(b);
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b, object c)
     {
-        if (!(m_no_vectorize | (!(b is MatVal) & !(c is MatVal))))
-            return MatVal.vectorize(this, new object[2] { b, c });
+        if (!m_no_vectorize & (b is MatVal | c is MatVal))
+            return MatVal.vectorize(this, [b, c]);
         return DynCall(b, c);
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b, object c, object d)
     {
-        if (!(m_no_vectorize | (!(b is MatVal) & !(c is MatVal) & !(d is MatVal))))
-            return MatVal.vectorize(this, new object[3] { b, c, d });
+        if (!m_no_vectorize & (b is MatVal | c is MatVal | d is MatVal))
+            return MatVal.vectorize(this, [b, c, d]);
         return DynCall(b, c, d);
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecApply(object[] args)
     {
-        if (!m_no_vectorize)
-            return MatVal.vectorize(this, args);
+        if (!m_no_vectorize) return MatVal.vectorize(this, args);
         return Apply(args);
     }
 
@@ -601,14 +600,11 @@ public abstract partial class Function : FunctionUtilities
     public Function CurryMatVal()
     {
         F<object, object> f = AsDelegate_1(1u);
-        return new Fn_varargs(DelegateFunction.make((F<object, object>)((object args) => f(new MatVal((object[])args))), 1));
+        return new Fn_varargs(DelegateFunction.make((F<object, object>)(args => f(new MatVal((object[])args))), 1));
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
-    public Function UnCurryMatVal()
-    {
-        return DelegateFunction.make((F<object, object>)((object m) => Apply((m as DimVal).asMatrix(1u).PackObjects())), 1);
-    }
+    public Function UnCurryMatVal() => DelegateFunction.make((F<object, object>)(m => Apply((m as DimVal).asMatrix(1u).PackObjects())), 1);
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public static Function ConstantFunction(object c) => new FnConstant(c);
@@ -616,23 +612,23 @@ public abstract partial class Function : FunctionUtilities
     [MirrorAnalyzed("Mpl.Run.Function")]
     public static Function VectorFunction(object vv)
     {
-        if (!(vv is MatVal { Cols: 1 } matVal))
+        if (vv is not MatVal { Cols: 1 } matVal)
             return null;
         int r = matVal.Rows;
-        bool flag = false;
+        bool anyFunction = false;
         Function[] fvec = new Function[r];
         for (int i = 0; i < r; i++)
         {
             object obj = matVal.get_1(i);
-            if (!(obj is Function function))
+            if (obj is not Function function)
             {
                 fvec[i] = ConstantFunction(obj);
                 continue;
             }
-            flag = true;
+            anyFunction = true;
             fvec[i] = function;
         }
-        if (!flag)
+        if (!anyFunction)
             return null;
         int num = 2;
         foreach (Function f in fvec)
@@ -723,5 +719,5 @@ public abstract partial class Function : FunctionUtilities
     public object InvokeVec(object[] args) => DynApply(args);
 
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public override string ToString() => $"Function: {Name}";
+    public override string ToString() => string.Format("Function: {0}", Name);
 }

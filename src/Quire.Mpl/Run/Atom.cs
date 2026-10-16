@@ -149,10 +149,7 @@ public partial class Sym : Atom
     {
         get
         {
-            if (Field2 != null)
-            {
-                return Field1 + "." + Field2;
-            }
+            if (Field2 != null) return Field1 + "." + Field2;
             return Field1;
         }
     }
@@ -173,10 +170,7 @@ public partial class Sym : Atom
     {
         get
         {
-            if (qualifier != null)
-            {
-                return SCons.list3(make_symq, str_constant.NewTok(Field1, 0u), str_constant.NewTok(Field2, 0u));
-            }
+            if (qualifier != null) return SCons.list3(make_symq, str_constant.NewTok(Field1, 0u), str_constant.NewTok(Field2, 0u));
             return SCons.list2(make_sym, str_constant.NewTok(Field1, 0u));
         }
     }
@@ -230,12 +224,8 @@ public partial class Sym : Atom
         MplMacro macro = LowId ? env.LoadMacro(this) : null;
         if (macro == null)
         {
-            Sexpr sexpr = SCons.walk_expressions(env, form.tail);
-            if (sexpr == form.Field2)
-            {
-                return form;
-            }
-            return new SCons(form.head, sexpr);
+            Sexpr args = SCons.walk_expressions(env, form.tail);
+            return args == form.Field2 ? form : new SCons(form.head, args);
         }
         return macro.ExpandCall(env, form).walk_expression(env);
     }

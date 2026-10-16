@@ -60,10 +60,7 @@ public partial struct Rational
             rest -= a;
             double pNext = a * p + pPrev;
             double qNext = a * q + qPrev;
-            if (Math.Max(p + whole * qNext, qNext) > 2147483647.0)
-            {
-                break;
-            }
+            if (Math.Max(p + whole * qNext, qNext) > int.MaxValue) break;
             pPrev = p;
             qPrev = q;
             p = pNext;
@@ -140,10 +137,7 @@ public partial struct Rational
     [MirrorVerified("RationalDifferentialTests")]
     public override string ToString()
     {
-        if (IsIntegral)
-        {
-            return Numerator.ToString();
-        }
+        if (IsIntegral) return Numerator.ToString();
         return string.Format("{0}/{1}", Numerator, Denominator);
     }
 

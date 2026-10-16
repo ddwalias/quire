@@ -35,19 +35,10 @@ public abstract partial class FunctionUtilities : DimVal
         empty_vec = new object[0];
         FcnCtor = typeof(DelegateFunction).GetMethod("make");
         CloCtorGeneric = typeof(Function).GetMethod("closure");
-        MethCtor = typeof(MethFunction).GetConstructor(new System.Type[2]
-        {
-            typeof(RuntimeMethodHandle),
-            typeof(int)
-        });
-        ObjMethCtor = typeof(MethFunction).GetConstructor(new System.Type[3]
-        {
-            typeof(RuntimeMethodHandle),
-            typeof(int),
-            typeof(object)
-        });
-        CallMethod = new MethodInfo[17]
-        {
+        MethCtor = typeof(MethFunction).GetConstructor([typeof(RuntimeMethodHandle), typeof(int)]);
+        ObjMethCtor = typeof(MethFunction).GetConstructor([typeof(RuntimeMethodHandle), typeof(int), typeof(object)]);
+        CallMethod =
+        [
             null,
             typeof(Function).GetMethod("Call_1"),
             typeof(Function).GetMethod("Call_2"),
@@ -64,8 +55,8 @@ public abstract partial class FunctionUtilities : DimVal
             typeof(Function).GetMethod("Call_13"),
             typeof(Function).GetMethod("Call_14"),
             typeof(Function).GetMethod("Call_15"),
-            typeof(Function).GetMethod("Call_16")
-        };
+            typeof(Function).GetMethod("Call_16"),
+        ];
     }
 
     [MirrorAnalyzed("Mpl.Run.FunctionUtilities")]
@@ -80,7 +71,7 @@ public abstract partial class FunctionUtilities : DimVal
     [MirrorAnalyzed("Mpl.Run.FunctionUtilities")]
     public static MethodInfo GetCallMethod(System.Type r, System.Type[] args)
     {
-        if (args.Length > 16)
+        if (args.Length > maxargs)
             return typeof(Function).GetMethod("Call_vec").MakeGenericMethod(r);
         return CallMethod[args.Length].MakeGenericMethod(Delegates.fparams(r, args));
     }
@@ -100,9 +91,9 @@ public abstract partial class FunctionUtilities : DimVal
         int len = a.Length;
         if (i < len)
         {
-            T[] array = new T[len - i];
-            Array.Copy(a, i, array, 0, len - i);
-            return array;
+            var rest = new T[len - i];
+            Array.Copy(a, i, rest, 0, len - i);
+            return rest;
         }
         return new T[0];
     }
@@ -112,9 +103,9 @@ public abstract partial class FunctionUtilities : DimVal
     {
         if (i < a.Length)
         {
-            T[] array = new T[i];
-            Array.Copy(a, array, i);
-            return array;
+            var first = new T[i];
+            Array.Copy(a, first, i);
+            return first;
         }
         return a;
     }

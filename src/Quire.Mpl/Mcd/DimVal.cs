@@ -100,11 +100,8 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static Units GetUnits(Dim d, bool simplify)
     {
-        int[] coordinates = (d != null ? d.Coordinates : Dim.identity.Coordinates);
-        if (!simplify)
-        {
-            return RuntimeOptions.the_unit_system.Normalize(coordinates);
-        }
+        int[] coordinates = d != null ? d.Coordinates : Dim.identity.Coordinates;
+        if (!simplify) return RuntimeOptions.the_unit_system.Normalize(coordinates);
         return RuntimeOptions.the_unit_system.Simplify(coordinates);
     }
 

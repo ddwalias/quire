@@ -182,7 +182,7 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public override string ToString()
     {
-        string result = $"MatVal[{Rows},{Cols}]";
+        string result = "MatVal[" + Rows + "," + Cols + "]";
         for (int row = 0; row < Math.Min(Rows, 10); row++)
         {
             if (Cols == 0) continue;

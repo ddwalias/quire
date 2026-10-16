@@ -92,7 +92,7 @@ public class FunctionDifferentialTests
         var qs = Show;
         var ms = Show;
         var (qFormat, mFormat) = StaticMethod(QFunction, MFunction, "format_vector", typeof(object[]));
-        foreach (object[]? values in new object[]?[] { [], null, [42], [1, "abc", 3.5], [null, "x"], [1, null] })
+        foreach (object[]? values in new object[]?[] { [], null, [42], [null], [1, "abc", 3.5], [null, "x"], [1, null] })
             MethodComparison.Compare("format_vector", FunctionContract, qFormat, null, [values], mFormat, null, [values], qs, ms);
 
         var (qCanonical, mCanonical) = StaticMethod(QFunction, MFunction, "canonical_name", typeof(string));

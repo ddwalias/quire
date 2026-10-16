@@ -27,66 +27,30 @@ public partial class Delegates
 
     static Delegates()
     {
-        clo_method = new MethodInfo[2]
-        {
-            null,
-            typeof(Delegates).GetMethod("Closure_1", BindingFlags.NonPublic | BindingFlags.Static)
-        };
+        clo_method = [null, typeof(Delegates).GetMethod("Closure_1")];
         PI_1 = pi_21<object, object>();
         PI_2 = pi_22<object, object>();
-        gtypes = new Type[20]
-        {
-            null,
-            typeof(F<>),
-            typeof(F<,>),
-            typeof(F<,,>),
-            typeof(F<,,,>),
-            typeof(F<,,,,>),
-            typeof(F<,,,,,>),
-            typeof(F<,,,,,,>),
-            typeof(F<,,,,,,,>),
-            typeof(F<,,,,,,,,>),
-            typeof(F<,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,,,,,,>),
-            typeof(F<,,,,,,,,,,,,,,,,,,>)
-        };
-        vtypes = new Type[19]
-        {
-            typeof(Io),
-            typeof(FV<>),
-            typeof(FV<,>),
-            typeof(FV<,,>),
-            typeof(FV<,,,>),
-            typeof(FV<,,,,>),
-            typeof(FV<,,,,,>),
-            typeof(FV<,,,,,,>),
-            typeof(FV<,,,,,,,>),
-            typeof(FV<,,,,,,,,>),
-            typeof(FV<,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,,,,,,>),
-            typeof(FV<,,,,,,,,,,,,,,,,,>)
-        };
-        imethods = new MethodInfo[5]
-        {
-            null,
-            typeof(Delegates).GetMethod("Invoke1"),
-            typeof(Delegates).GetMethod("Invoke2"),
-            typeof(Delegates).GetMethod("Invoke3"),
-            typeof(Delegates).GetMethod("Invoke4")
-        };
+        gtypes =
+        [
+            null, typeof(F<>), typeof(F<,>), typeof(F<,,>), typeof(F<,,,>), typeof(F<,,,,>), typeof(F<,,,,,>),
+            typeof(F<,,,,,,>), typeof(F<,,,,,,,>), typeof(F<,,,,,,,,>), typeof(F<,,,,,,,,,>), typeof(F<,,,,,,,,,,>),
+            typeof(F<,,,,,,,,,,,>), typeof(F<,,,,,,,,,,,,>), typeof(F<,,,,,,,,,,,,,>), typeof(F<,,,,,,,,,,,,,,>),
+            typeof(F<,,,,,,,,,,,,,,,>), typeof(F<,,,,,,,,,,,,,,,,>), typeof(F<,,,,,,,,,,,,,,,,,>),
+            typeof(F<,,,,,,,,,,,,,,,,,,>),
+        ];
+        vtypes =
+        [
+            typeof(Io), typeof(FV<>), typeof(FV<,>), typeof(FV<,,>), typeof(FV<,,,>), typeof(FV<,,,,>),
+            typeof(FV<,,,,,>), typeof(FV<,,,,,,>), typeof(FV<,,,,,,,>), typeof(FV<,,,,,,,,>), typeof(FV<,,,,,,,,,>),
+            typeof(FV<,,,,,,,,,,>), typeof(FV<,,,,,,,,,,,>), typeof(FV<,,,,,,,,,,,,>), typeof(FV<,,,,,,,,,,,,,>),
+            typeof(FV<,,,,,,,,,,,,,,>), typeof(FV<,,,,,,,,,,,,,,,>), typeof(FV<,,,,,,,,,,,,,,,,>),
+            typeof(FV<,,,,,,,,,,,,,,,,,>),
+        ];
+        imethods =
+        [
+            null, typeof(Delegates).GetMethod("Invoke1"), typeof(Delegates).GetMethod("Invoke2"),
+            typeof(Delegates).GetMethod("Invoke3"), typeof(Delegates).GetMethod("Invoke4"),
+        ];
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
@@ -179,68 +143,60 @@ public partial class Delegates
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static F<object, object> DelegateClosure_1<CLO>(Delegate d, CLO clo)
     {
-        if (d is F<object, CLO, object> f)
-            return Closure_1(f, clo);
+        if (d is F<object, CLO, object> f) return Closure_1(f, clo);
         return null;
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static Function FunctionClosure_1<CLO>(Delegate d, CLO clo)
     {
-        F<object, object> f = DelegateClosure_1(d, clo);
-        if (f == null)
-            return new Fn_clo<CLO>(d, clo, 2);
+        var f = DelegateClosure_1(d, clo);
+        if (f == null) return new Fn_clo<CLO>(d, clo, 2);
         return DelegateFunction.makeF(f, null);
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static F<object, object, object> DelegateClosure_2<CLO>(Delegate d, CLO clo)
     {
-        if (d is F<object, CLO, object, object> f)
-            return Closure_2(f, clo);
+        if (d is F<object, CLO, object, object> f) return Closure_2(f, clo);
         return null;
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static Function FunctionClosure_2<CLO>(Delegate d, CLO clo)
     {
-        F<object, object, object> f = DelegateClosure_2(d, clo);
-        if (f == null)
-            return new Fn_clo<CLO>(d, clo, 3);
+        var f = DelegateClosure_2(d, clo);
+        if (f == null) return new Fn_clo<CLO>(d, clo, 3);
         return DelegateFunction.makeF(f, null);
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static F<object, object, object, object> DelegateClosure_3<CLO>(Delegate d, CLO clo)
     {
-        if (d is F<object, CLO, object, object, object> f)
-            return Closure_3(f, clo);
+        if (d is F<object, CLO, object, object, object> f) return Closure_3(f, clo);
         return null;
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static Function FunctionClosure_3<CLO>(Delegate d, CLO clo)
     {
-        F<object, object, object, object> f = DelegateClosure_3(d, clo);
-        if (f == null)
-            return new Fn_clo<CLO>(d, clo, 4);
+        var f = DelegateClosure_3(d, clo);
+        if (f == null) return new Fn_clo<CLO>(d, clo, 4);
         return DelegateFunction.makeF(f, null);
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static F<object, object, object, object, object> DelegateClosure_4<CLO>(Delegate d, CLO clo)
     {
-        if (d is F<object, CLO, object, object, object, object> f)
-            return Closure_4(f, clo);
+        if (d is F<object, CLO, object, object, object, object> f) return Closure_4(f, clo);
         return null;
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static Function FunctionClosure_4<CLO>(Delegate d, CLO clo)
     {
-        F<object, object, object, object, object> f = DelegateClosure_4(d, clo);
-        if (f == null)
-            return new Fn_clo<CLO>(d, clo, 5);
+        var f = DelegateClosure_4(d, clo);
+        if (f == null) return new Fn_clo<CLO>(d, clo, 5);
         return DelegateFunction.makeF(f, null);
     }
 
@@ -298,26 +254,13 @@ public partial class Delegates
     public static Type MethodToDelegateType(MethodInfo mi) => FType(fparams(mi));
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
-    public static ConstructorInfo MethodToDelegateCtor(MethodInfo mi) => MethodToDelegateType(mi).GetConstructor(new Type[2]
-    {
-        typeof(object),
-        typeof(uint)
-    });
+    public static ConstructorInfo MethodToDelegateCtor(MethodInfo mi) => MethodToDelegateType(mi).GetConstructor([typeof(object), typeof(uint)]);
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
-    public static Type ParameterTypesToDelegateType(Type r, Type[] args)
-    {
-        if (r != typeof(void))
-            return FType(fparams(r, args));
-        return VType(args);
-    }
+    public static Type ParameterTypesToDelegateType(Type r, Type[] args) => r == typeof(void) ? VType(args) : FType(fparams(r, args));
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
-    public static ConstructorInfo ParameterTypesToDelegateCtor(Type r, Type[] args) => ParameterTypesToDelegateType(r, args).GetConstructor(new Type[2]
-    {
-        typeof(object),
-        typeof(nint)
-    });
+    public static ConstructorInfo ParameterTypesToDelegateCtor(Type r, Type[] args) => ParameterTypesToDelegateType(r, args).GetConstructor([typeof(object), typeof(nint)]);
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static F<object, object> Wrap1<A, B>(F<A, B> f) => (object x) => f((B)x);

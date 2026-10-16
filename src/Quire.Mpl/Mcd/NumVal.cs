@@ -163,31 +163,10 @@ public sealed partial class NumVal : DimVal
 
     /// <summary>1 for a real whose (saturating) int conversion is exact, else 0.</summary>
     [MirrorVerified("NumValDifferentialTests")]
-    public int IsInt
-    {
-        get
-        {
-            if (Data.ip == 0.0 && (double)(int)Data.rp == Data.rp)
-            {
-                return 1;
-            }
-            return 0;
-        }
-    }
+    public int IsInt => Data.ip == 0.0 && (int)Data.rp == Data.rp ? 1 : 0;
 
     [MirrorVerified("NumValDifferentialTests")]
-    public override int IsReal
-    {
-        get
-        {
-            bool isReal = Data.ip == 0.0;
-            // Reads the bool's byte without a branch, as the original's `ceq; ret` does.
-            unsafe
-            {
-                return *(byte*)&isReal;
-            }
-        }
-    }
+    public override int IsReal => Data.ip == 0.0 ? 1 : 0;
 
     [MirrorVerified("NumValDifferentialTests")]
     public static NumVal NumDv(double r, double i) => new(r, i, Dim.identity);
@@ -224,14 +203,7 @@ public sealed partial class NumVal : DimVal
     }
 
     [MirrorVerified("NumValDifferentialTests")]
-    public static bool ExactEquals(NumVal x, NumVal y)
-    {
-        if (x.Data.rp == y.Data.rp)
-        {
-            return x.Data.ip == y.Data.ip;
-        }
-        return false;
-    }
+    public static bool ExactEquals(NumVal x, NumVal y) => x.Data.rp == y.Data.rp && x.Data.ip == y.Data.ip;
 
     [MirrorVerified("NumValDifferentialTests")]
     public static bool FuzzyEquals(double x, double y) => FuzzyEquals(x, y, default_fuzz);
@@ -240,10 +212,7 @@ public sealed partial class NumVal : DimVal
     [MirrorVerified("NumValDifferentialTests")]
     public static bool FuzzyEquals(double x, double y, double fuzz)
     {
-        if (x == y)
-        {
-            return true;
-        }
+        if (x == y) return true;
         return Math.Abs(x - y) < fuzz * Math.Abs(x + y);
     }
 
@@ -257,16 +226,10 @@ public sealed partial class NumVal : DimVal
     {
         if (x.Data.ip == 0.0 && y.Data.ip == 0.0)
         {
-            if (x.Data.rp == y.Data.rp)
-            {
-                return true;
-            }
+            if (x.Data.rp == y.Data.rp) return true;
             return Math.Abs(x.Data.rp - y.Data.rp) < fuzz * Math.Abs(x.Data.rp + y.Data.rp);
         }
-        if (x.Data.rp == y.Data.rp && x.Data.ip == y.Data.ip)
-        {
-            return true;
-        }
+        if (x.Data.rp == y.Data.rp && x.Data.ip == y.Data.ip) return true;
         return Math.Abs(x.Data.rp - y.Data.rp) + Math.Abs(x.Data.ip - y.Data.ip) < fuzz * (Math.Abs(x.Data.rp + y.Data.rp) + Math.Abs(x.Data.ip + y.Data.ip));
     }
 
@@ -275,17 +238,11 @@ public sealed partial class NumVal : DimVal
     [MirrorVerified("NumValDifferentialTests")]
     public override bool Equals(object obj)
     {
-        if (!(obj is NumVal numVal))
+        if (obj is not NumVal n) return false;
+        if (Dim.Eq_b(m_dim, n.m_dim))
         {
-            return false;
-        }
-        if (Dim.Eq_b(m_dim, numVal.m_dim))
-        {
-            if (RuntimeOptions.strict_comparisons)
-            {
-                return ExactEquals(this, numVal);
-            }
-            return FuzzyEquals(this, numVal);
+            if (RuntimeOptions.strict_comparisons) return ExactEquals(this, n);
+            return FuzzyEquals(this, n);
         }
         return false;
     }
@@ -294,17 +251,11 @@ public sealed partial class NumVal : DimVal
     [MirrorVerified("NumValDifferentialTests")]
     public bool Equals1(object obj)
     {
-        if (!(obj is NumVal numVal))
+        if (obj is not NumVal n) return false;
+        if (Dim.Eq_b1(m_dim, n.m_dim))
         {
-            return false;
-        }
-        if (Dim.Eq_b1(m_dim, numVal.m_dim))
-        {
-            if (RuntimeOptions.strict_comparisons)
-            {
-                return ExactEquals(this, numVal);
-            }
-            return FuzzyEquals(this, numVal);
+            if (RuntimeOptions.strict_comparisons) return ExactEquals(this, n);
+            return FuzzyEquals(this, n);
         }
         return false;
     }
@@ -312,72 +263,34 @@ public sealed partial class NumVal : DimVal
     [MirrorVerified("NumValDifferentialTests")]
     public override bool nearly_equal(DimVal obj, double fuzz)
     {
-        if (!(obj is NumVal numVal))
-        {
-            return false;
-        }
-        if (Dim.Eq_b(m_dim, numVal.m_dim))
-        {
-            return FuzzyEquals(this, numVal, fuzz);
-        }
+        if (obj is not NumVal n) return false;
+        if (Dim.Eq_b(m_dim, n.m_dim)) return FuzzyEquals(this, n, fuzz);
         return false;
     }
 
     /// <summary>Less by more than the fuzz (any amount when strict).</summary>
     [MirrorVerified("NumValDifferentialTests")]
-    public static bool LT(double n1, double n2)
-    {
-        if (n1 < n2)
-        {
-            if (RuntimeOptions.strict_comparisons)
-            {
-                return true;
-            }
-            return !(n2 - n1 < default_fuzz * Math.Abs(n1 + n2));
-        }
-        return false;
-    }
+    public static bool LT(double n1, double n2) =>
+        n1 < n2 && (RuntimeOptions.strict_comparisons || !(n2 - n1 < default_fuzz * Math.Abs(n1 + n2)));
 
     [MirrorVerified("NumValDifferentialTests")]
-    public static bool GT(double n1, double n2)
-    {
-        if (n1 > n2)
-        {
-            if (RuntimeOptions.strict_comparisons)
-            {
-                return true;
-            }
-            return !(n1 - n2 < default_fuzz * Math.Abs(n1 + n2));
-        }
-        return false;
-    }
+    public static bool GT(double n1, double n2) =>
+        n1 > n2 && (RuntimeOptions.strict_comparisons || !(n1 - n2 < default_fuzz * Math.Abs(n1 + n2)));
 
     /// <summary>Less or equal, or (not strict) greater by less than the fuzz.</summary>
     [MirrorVerified("NumValDifferentialTests")]
     public static bool LE(double n1, double n2)
     {
-        if (n1 <= n2)
-        {
-            return true;
-        }
-        if (RuntimeOptions.strict_comparisons)
-        {
-            return false;
-        }
+        if (n1 <= n2) return true;
+        if (RuntimeOptions.strict_comparisons) return false;
         return n1 - n2 < default_fuzz * Math.Abs(n1 + n2);
     }
 
     [MirrorVerified("NumValDifferentialTests")]
     public static bool GE(double n1, double n2)
     {
-        if (n1 >= n2)
-        {
-            return true;
-        }
-        if (RuntimeOptions.strict_comparisons)
-        {
-            return false;
-        }
+        if (n1 >= n2) return true;
+        if (RuntimeOptions.strict_comparisons) return false;
         return n2 - n1 < default_fuzz * Math.Abs(n1 + n2);
     }
 
@@ -462,10 +375,7 @@ public sealed partial class NumVal : DimVal
         double fuzz = 2.2737367544323206E-13;
         double bound = Math.Abs(r) * fuzz;
         *res = Convert.ToInt32(r);
-        if (Math.Abs((double)(*res) - r) < bound)
-        {
-            return true;
-        }
+        if (Math.Abs(*res - r) < bound) return true;
         return false;
     }
 
@@ -480,9 +390,9 @@ public sealed partial class NumVal : DimVal
         if (Data.ip == 0.0)
         {
             double normalized = Data.rp + normalize_exponent;
-            if (Data.rp == (double)(*(uint*)(&normalized)))
+            if (Data.rp == *(uint*)&normalized)
             {
-                *res = *(int*)(&normalized);
+                *res = *(int*)&normalized;
                 return true;
             }
             return isNearInt(res, Data.rp);
@@ -557,10 +467,7 @@ public sealed partial class NumVal : DimVal
             pattern = addFormat;
         }
         string formatted = string.Format(culture, pattern, re, im);
-        if (units != null)
-        {
-            return string.Format("{0}{1}", formatted, units);
-        }
+        if (units != null) return string.Format("{0}{1}", formatted, units);
         return formatted;
     }
 
@@ -590,10 +497,7 @@ public sealed partial class NumVal : DimVal
     [MirrorVerified("NumValDifferentialTests")]
     public override DimVal asResult()
     {
-        if (m_dim != null)
-        {
-            return this;
-        }
+        if (m_dim != null) return this;
         return new NumVal(Data.rp, Data.ip, Dim.FixDimension(m_dim));
     }
 
@@ -602,10 +506,10 @@ public sealed partial class NumVal : DimVal
     public static unsafe double LoadNaN(int payload)
     {
         double result;
-        int* ptr = (int*)(&result);
-        *ptr = payload;
-        ptr[1] = 2146959360;
-        return *(double*)ptr;
+        int* words = (int*)&result;
+        words[0] = payload;
+        words[1] = 0x7FF80000;
+        return result;
     }
 
     [MirrorVerified("NumValDifferentialTests")]
@@ -651,11 +555,8 @@ public partial class StrVal : DimVal
     [MirrorVerified("NumValDifferentialTests")]
     public override bool Equals(object obj)
     {
-        if (!(obj is StrVal strVal))
-        {
-            return false;
-        }
-        return Field1 == strVal.Field1;
+        if (obj is not StrVal s) return false;
+        return Field1 == s.Field1;
     }
 
     [MirrorVerified("NumValDifferentialTests")]

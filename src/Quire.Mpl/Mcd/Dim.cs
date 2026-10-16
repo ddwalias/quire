@@ -222,16 +222,8 @@ public sealed partial class Dim
     [MirrorVerified("DimDifferentialTests")]
     public static Dim Mult(Dim x, Dim y)
     {
-        if (x == identity || y == null)
-        {
-            if (y == mcd_zero) return identity;
-            return y;
-        }
-        if (y == identity || x == null)
-        {
-            if (x == mcd_zero) return identity;
-            return x;
-        }
+        if (x == identity || y == null) return y == mcd_zero ? identity : y;
+        if (y == identity || x == null) return x == mcd_zero ? identity : x;
         for (int i = 0, n = s_rank; i < n; i++)
             s_vec[i] = x.m_vec[i] + y.m_vec[i];
         return intern();

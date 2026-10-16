@@ -33,10 +33,7 @@ public sealed partial class Utilities
 
     /// <summary>Neither infinite nor NaN.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
-    public unsafe static bool IsFinite(double d)
-    {
-        return (((int*)(&d))[1] & 0x7FF00000) != 2146435072;
-    }
+    public static unsafe bool IsFinite(double d) => (((int*)&d)[1] & 0x7FF00000) != 0x7FF00000;
 
     /// <summary>Raises "floating point error" for an infinite or NaN value.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
@@ -59,14 +56,8 @@ public sealed partial class Utilities
         if (scalar != 1.0)
         {
             if (scalar == 0.0) AppException.Raise("illegal factor");
-            if (value is NumVal nv)
-            {
-                return nv / scalar;
-            }
-            if (value is MatVal mv)
-            {
-                return mv / scalar;
-            }
+            if (value is NumVal nv) return nv / scalar;
+            if (value is MatVal mv) return mv / scalar;
         }
         return value;
     }
@@ -74,10 +65,7 @@ public sealed partial class Utilities
     [MirrorVerified("UtilitiesDifferentialTests")]
     public static object Multiply(object value, double scalar)
     {
-        if (scalar != 1.0)
-        {
-            return Divide(value, 1.0 / scalar);
-        }
+        if (scalar != 1.0) return Divide(value, 1.0 / scalar);
         return value;
     }
 }

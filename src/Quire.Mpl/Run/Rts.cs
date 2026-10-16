@@ -51,12 +51,12 @@ public static partial class Rts
         m_max_stack = 250;
         s_paths = new string[0];
         ms_dummy_cancellation_token = new CancellationTokenSource();
-        m_tag_ctor = typeof(Tag).GetConstructor(new System.Type[1] { typeof(int) });
-        m_exception_ctor = typeof(AppException).GetConstructor(new System.Type[1] { typeof(string) });
-        m_rethrow_ctor = typeof(AppException).GetConstructor(new System.Type[2] { typeof(Exception), typeof(uint) });
+        m_tag_ctor = typeof(Tag).GetConstructor([typeof(int)]);
+        m_exception_ctor = typeof(AppException).GetConstructor([typeof(string)]);
+        m_rethrow_ctor = typeof(AppException).GetConstructor([typeof(Exception), typeof(uint)]);
         m_fcn_type = typeof(object);
         _ = AppDomain.CurrentDomain;
-        AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(OnResolveAssembly);
+        AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
     }
 
     /// <summary>The calling thread's remaining stack budget, starting at <see cref="m_max_stack"/>.</summary>
@@ -81,10 +81,7 @@ public static partial class Rts
     {
         get
         {
-            if (m_stack_depth_field_info == null)
-            {
-                m_stack_depth_field_info = typeof(Rts).GetField("m_stack_depth");
-            }
+            if (m_stack_depth_field_info == null) m_stack_depth_field_info = typeof(Rts).GetField("m_stack_depth");
             return m_stack_depth_field_info;
         }
     }
@@ -111,10 +108,7 @@ public static partial class Rts
     {
         if (ms_thread_cancellation_token != null)
         {
-            if (ms_thread_cancellation_token == ms_dummy_cancellation_token)
-            {
-                return false;
-            }
+            if (ms_thread_cancellation_token == ms_dummy_cancellation_token) return false;
             if (ms_thread_cancellation_token.Token.IsCancellationRequested)
             {
                 ms_thread_cancellation_token = ms_dummy_cancellation_token;

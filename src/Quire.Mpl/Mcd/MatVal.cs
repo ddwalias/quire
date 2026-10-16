@@ -41,7 +41,7 @@ public sealed partial class MatVal : DimVal
     [MirrorVerified("MatValDifferentialTests")]
     static MatVal()
     {
-        NanMask = 2146959360u;
+        NanMask = 0x7FF80000u;
         PtrNan = ThePtrNan();
     }
 
@@ -119,7 +119,7 @@ public sealed partial class MatVal : DimVal
         get
         {
             if (m_iarr == null) return false;
-            if (Array.Exists(m_iarr, value => value != 0)) return true;
+            for (int i = 0; i < m_iarr.Length; i++) if (m_iarr[i] != 0) return true;
             m_iarr = null;
             return false;
         }

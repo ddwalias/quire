@@ -50,11 +50,29 @@ public class RtsDifferentialTests
         var qs = Member;
         var ms = Member;
 
+        // The first call into Rts runs its .cctor; a .cctor that throws fails every call with the same exception.
+        var (qFcnType, mFcnType) = Method("FcnType", DeclaredStaticPublic);
+        MethodComparison.Compare("FcnType() first call", Contract,
+            qFcnType, null, [], mFcnType, null, [], qs, ms);
+
         // Static constructor (.cctor)
         var qCctor = QRts.TypeInitializer ?? QRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
         var mCctor = MRts.TypeInitializer ?? MRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
         MethodComparison.Compare(".cctor() initialization", Contract,
             qCctor, null, [], mCctor, null, [], qs, ms);
+
+        // What the .cctor set: the stack budget a reset restores, and an empty search path that resolves nothing.
+        var (qResetStackDepth, mResetStackDepth) = Method("ResetStackDepth", DeclaredStaticPublic);
+        var (qGetStackDepthProp, mGetStackDepthProp) = Method("get_m_stack_depth", DeclaredStaticPublic);
+        MethodComparison.Compare("ResetStackDepth() after .cctor", Contract,
+            qResetStackDepth, null, [], mResetStackDepth, null, [], qs, ms);
+        MethodComparison.Compare("get_m_stack_depth() after .cctor", Contract,
+            qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
+        var (qOnResolve, mOnResolve) = Method("OnResolveAssembly", DeclaredStaticNonPublic, typeof(object), typeof(ResolveEventArgs));
+        var qAbsent = new object?[] { AppDomain.CurrentDomain, new ResolveEventArgs("Absent") };
+        var mAbsent = new object?[] { AppDomain.CurrentDomain, new ResolveEventArgs("Absent") };
+        MethodComparison.Compare("OnResolveAssembly('Absent') after .cctor", Contract,
+            qOnResolve, null, qAbsent, mOnResolve, null, mAbsent, qs, ms);
 
         // Reflection handles
         var (qExceptionCtor, mExceptionCtor) = Method("ExceptionCtor", DeclaredStaticPublic);
@@ -69,7 +87,6 @@ public class RtsDifferentialTests
         MethodComparison.Compare("TagCtor()", Contract,
             qTagCtor, null, [], mTagCtor, null, [], qs, ms);
 
-        var (qFcnType, mFcnType) = Method("FcnType", DeclaredStaticPublic);
         MethodComparison.Compare("FcnType()", Contract,
             qFcnType, null, [], mFcnType, null, [], qs, ms);
 
@@ -165,6 +182,14 @@ public class RtsDifferentialTests
         MethodComparison.Compare("get_m_stack_depth() after reset", Contract,
             qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
 
+        // 4b. A thread's first read (init flag clear) starts from m_max_stack, not the budget set before it
+        MethodComparison.Compare("set_m_stack_depth(3) before the first read", Contract,
+            qSetStackDepthProp, null, [3], mSetStackDepthProp, null, [3], qs, ms);
+        Set(QRts, "m_stack_depth_init__", 0);
+        Set(MRts, "m_stack_depth_init__", 0);
+        MethodComparison.Compare("get_m_stack_depth() first read on the thread", Contract,
+            qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
+
         // 5. Register active source: branch Token.IsCancellationRequested == false
         var cts = new CancellationTokenSource();
         MethodComparison.Compare("RegisterThreadForCancellationChecking(cts live)", Contract,
@@ -236,8 +261,8 @@ public class RtsDifferentialTests
         {
             File.Copy(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.Location, Path.Combine(dir, "Probe.dll"));
             string searchPath = Path.Combine(dir, "missing") + ";" + dir;
-            qSetAssemblyPath.Invoke(null, [searchPath]);
-            mSetAssemblyPath.Invoke(null, [searchPath]);
+            MethodComparison.Compare("set_AssemblyPath(missing;dir)", Contract,
+                qSetAssemblyPath, null, [searchPath], mSetAssemblyPath, null, [searchPath], qs, ms);
             try
             {
                 foreach (var name in new[] { "Probe", "Probe, Version=1.0.0.0, Culture=neutral", "Absent", "" })
@@ -252,6 +277,14 @@ public class RtsDifferentialTests
                     MethodComparison.Compare($"OnResolveAssembly('{name}') null sender", Contract,
                         qOnResolve, null, qArgsNull, mOnResolve, null, mArgsNull, qs, ms);
                 }
+
+                // The probe in the first (only) search directory.
+                qSetAssemblyPath.Invoke(null, [dir]);
+                mSetAssemblyPath.Invoke(null, [dir]);
+                var qFirst = new object?[] { AppDomain.CurrentDomain, new ResolveEventArgs("Probe") };
+                var mFirst = new object?[] { AppDomain.CurrentDomain, new ResolveEventArgs("Probe") };
+                MethodComparison.Compare("OnResolveAssembly('Probe') first directory", Contract,
+                    qOnResolve, null, qFirst, mOnResolve, null, mFirst, qs, ms);
 
                 var qArgsNonDomain = new object?[] { "x", new ResolveEventArgs("Probe") };
                 var mArgsNonDomain = new object?[] { "x", new ResolveEventArgs("Probe") };

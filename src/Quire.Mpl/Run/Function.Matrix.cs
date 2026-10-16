@@ -11,7 +11,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     private static char[] label_delimiter;
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    static Function() { OptArg = null; label_delimiter = new[] { '#' }; }
+    static Function() { OptArg = null; label_delimiter = ['#']; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public bool IsFullyApplied(int n) => m_varargs || (m_minargs <= n && n <= m_purity);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
@@ -60,7 +60,7 @@ public abstract partial class Function
         result = default;
     }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A>(out R result, A aa) => invVec(out result, new object[] { aa });
+    public virtual void inv<R, A>(out R result, A aa) => invVec(out result, [aa]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual void app<R, A>(out R result, A aa)
     {
@@ -71,7 +71,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A>(A aa) { app(out object result, aa); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B>(out R result, A aa, B bb) => invVec(out result, new object[] { aa, bb });
+    public virtual void inv<R, A, B>(out R result, A aa, B bb) => invVec(out result, [aa, bb]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual void app<R, A, B>(out R result, A aa, B bb)
     {
@@ -82,7 +82,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B>(A aa, B bb) { app(out object result, aa, bb); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C>(out R result, A aa, B bb, C cc) => invVec(out result, new object[] { aa, bb, cc });
+    public virtual void inv<R, A, B, C>(out R result, A aa, B bb, C cc) => invVec(out result, [aa, bb, cc]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual void app<R, A, B, C>(out R result, A aa, B bb, C cc)
     {
@@ -93,7 +93,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C>(A aa, B bb, C cc) { app(out object result, aa, bb, cc); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D>(out R result, A aa, B bb, C cc, D dd) => invVec(out result, new object[] { aa, bb, cc, dd });
+    public virtual void inv<R, A, B, C, D>(out R result, A aa, B bb, C cc, D dd) => invVec(out result, [aa, bb, cc, dd]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual void app<R, A, B, C, D>(out R result, A aa, B bb, C cc, D dd)
     {
@@ -104,7 +104,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D>(A aa, B bb, C cc, D dd) { app(out object result, aa, bb, cc, dd); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E>(out R result, A aa, B bb, C cc, D dd, E ee) => invVec(out result, new object[] { aa, bb, cc, dd, ee });
+    public virtual void inv<R, A, B, C, D, E>(out R result, A aa, B bb, C cc, D dd, E ee) => invVec(out result, [aa, bb, cc, dd, ee]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E>(out R result, A aa, B bb, C cc, D dd, E ee)
     {
@@ -115,7 +115,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E>(A aa, B bb, C cc, D dd, E ee) { app(out object result, aa, bb, cc, dd, ee); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F>(out R result, A aa, B bb, C cc, D dd, E ee, F ff) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff });
+    public virtual void inv<R, A, B, C, D, E, F>(out R result, A aa, B bb, C cc, D dd, E ee, F ff) => invVec(out result, [aa, bb, cc, dd, ee, ff]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F>(out R result, A aa, B bb, C cc, D dd, E ee, F ff)
     {
@@ -126,7 +126,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F>(A aa, B bb, C cc, D dd, E ee, F ff) { app(out object result, aa, bb, cc, dd, ee, ff); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg });
+    public virtual void inv<R, A, B, C, D, E, F, G>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg)
     {
@@ -137,7 +137,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G>(A aa, B bb, C cc, D dd, E ee, F ff, G gg) { app(out object result, aa, bb, cc, dd, ee, ff, gg); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh });
+    public virtual void inv<R, A, B, C, D, E, F, G, H>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh)
     {
@@ -148,7 +148,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii)
     {
@@ -159,7 +159,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj)
     {
@@ -170,7 +170,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk)
     {
@@ -181,7 +181,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J, K>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll)
     {
@@ -192,7 +192,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J, K, L>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm)
     {
@@ -203,7 +203,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn)
     {
@@ -214,7 +214,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo)
     {
@@ -225,7 +225,7 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => invVec(out result, new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp });
+    public virtual void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) => invVec(out result, [aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp]);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public void app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R result, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp)
     {
@@ -282,7 +282,7 @@ public partial class Fn_clo<CLO> : Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     private CLO m_clo;
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public override string Name => $"{m_func.Name}[{m_clo.ToString()}]";
+    public override string Name => string.Format("{0}[{1}]", m_func.Name, m_clo.ToString());
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public Fn_clo(Function f, CLO clo) : base(f.Purity, 1) { m_func = f; m_clo = clo; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]

@@ -47,11 +47,10 @@ public abstract partial class MplEnv
 
     public MplMacro LoadMacro(Sym s)
     {
-        if (s is Keyword)
-        {
-            return null;
-        }
-        return lookup(s)?.macro;
+        if (s is Keyword) return null;
+        BindingInfo binding = lookup(s);
+        if (binding != null) return binding.macro;
+        return null;
     }
 
     public virtual MplMacro LoadForeignMacro(string foreign_id)
@@ -70,9 +69,6 @@ public abstract partial class MplEnv
         throw new AppException("May not modify import environment");
     }
 
-    protected MplEnv()
-    {
-    }
 }
 
 /// <summary>
@@ -152,17 +148,11 @@ public partial class LocalEnv : MplEnv
     public override BindingInfo lookup(Sym s)
     {
         BindingInfo bindingInfo = lookup_local(s);
-        if (bindingInfo != null)
-        {
-            return bindingInfo;
-        }
+        if (bindingInfo != null) return bindingInfo;
         return m_parent.lookup(s);
     }
 
-    public override MplMacro LoadForeignMacro(string sig)
-    {
-        return m_parent.LoadForeignMacro(sig);
-    }
+    public override MplMacro LoadForeignMacro(string sig) => m_parent.LoadForeignMacro(sig);
 
     public override MplEnv AddLocal(Sym s, uint handle)
     {
@@ -240,10 +230,7 @@ public partial class MplSymbolMacro : MplMacro
         m_replacement = rep;
     }
 
-    public override Sexpr ExpandRef(MplEnv e, Tok s)
-    {
-        return m_replacement;
-    }
+    public override Sexpr ExpandRef(MplEnv e, Tok s) => m_replacement;
 
     public override Sexpr ExpandCall(MplEnv e, Sexpr f)
     {
@@ -251,10 +238,7 @@ public partial class MplSymbolMacro : MplMacro
         return new SCons(m_replacement, sCons.tail);
     }
 
-    public static MplMacro make(Atom s, int n)
-    {
-        return new MplSymbolMacro(s as Sym, int_constant.NewTok(n, 0u));
-    }
+    public static MplMacro make(Atom s, int n) => new MplSymbolMacro(s as Sym, int_constant.NewTok(n, 0u));
 }
 
 /// <summary>
