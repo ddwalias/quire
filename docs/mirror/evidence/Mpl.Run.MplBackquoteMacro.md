@@ -10,8 +10,8 @@ MPL backquote macro that expands quasiquoted expressions via the `MplMacro.backq
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
-| `backquote` | 0x04000067 | — | Static readonly `Sym("backquote", "MplMacro")` token. | High | Verified |
-| `singleton` | 0x04000068 | — | Public static singleton instance. | High | Verified |
+| `backquote` | 0x04000064 | — | Static readonly `Sym("backquote", "MplMacro")` token. | High | Verified |
+| `singleton` | 0x04000065 | — | Public static singleton instance. | High | Verified |
 | `.ctor()` | 0x06000140 | `c8818874` | Private ctor calling `base(backquote)`. | High | Verified |
 | `.cctor()` | 0x0600013f | — | Initializes `backquote = new Sym("backquote", "MplMacro")` and `singleton = new MplBackquoteMacro()`. | High | Verified |
 | `ExpandCall(MplEnv, Sexpr)` | 0x06000141 | `5540cb12` | If `m_macro == null`, loads foreign macro via `e.LoadForeignMacro("MplMacro.backquote")`; delegates call to `m_macro.ExpandCall(e, form)`. In mplrun, base `MplEnv.LoadForeignMacro` unconditionally throws `AppException("Can not resolve signature")`. | High | Tested |

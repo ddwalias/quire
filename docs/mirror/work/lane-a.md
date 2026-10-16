@@ -366,7 +366,7 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
 
 - Branch: `mirror/a-backquote-macro`
 - Worktree: `/root/src/quire-backquote-macro`
-- Scope: Implementation of `MplBackquoteMacro` (type token `0x0200002c`, fields `backquote` `0x04000067`, `singleton` `0x04000068`, `m_macro` `0x04000069`, cctor `()` `0x0600013f`, ctor `()` `0x06000140`, `ExpandCall(MplEnv, Sexpr)` `0x06000141`) in `src/Quire.Mpl/Run/Env.cs` and deletion of all 5 matching stubs in `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplBackquoteMacro.g.cs`.
+- Scope: Implementation of `MplBackquoteMacro` (type token `0x0200002e`, fields `backquote` `0x04000064`, `singleton` `0x04000065`, `m_macro` `0x04000066`, cctor `()` `0x0600013f`, ctor `()` `0x06000140`, `ExpandCall(MplEnv, Sexpr)` `0x06000141`) in `src/Quire.Mpl/Run/Env.cs` and deletion of all 5 matching stubs in `src/Quire.Mpl/Generated/Mirror/Mpl.Run.MplBackquoteMacro.g.cs`.
 - Contracts & Behavior:
   - `Mpl.Run.MplBackquoteMacro`:
     - Inherits `MplMacro(backquote)`.
