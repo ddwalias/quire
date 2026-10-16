@@ -44,6 +44,8 @@
 | crazy_dim.make(MatVal) | 0x060007b2 | de5613a5a2ce61aa5c74eb1ca33d5ee947b3cb2f30c50bfeb8932bd417d837aa | Construct and return new crazy_dim instance wrapping supplied matrix. | Same-artifact IL; 6 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 | crazy_dim.eq_b(class:572) | 0x060007b0 | 1aaa594cfb249e74c879b2c072d8c63e6e4acb519b17138baf488e7fa772ac0b | Dispatch equality to m2.eq2_b(this). | Same-artifact IL; 9 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 | crazy_dim.eq2_b(class:576) | 0x060007b1 | 6ac593fa6e76cfd5ea7a17da09eb21e7aadb3f985e7ae7447a870a6cecb7a5bf | Compare matrix shape then every cell dimension via Eq_b(matdim(r, c), m1.matdim(r, c)). | Same-artifact IL; 7 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| uniform_dim.eq_b(class:572) | 0x060007a2 | c1ab43140edd236a05dcf85a3883e24cf988f49903ee1b8ff97b568d54e6dbe5 | Dispatch equality to m2.eq2_b(m_dim). | Same-artifact IL; 7 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
+| uniform_dim.eq2_b(class:568) | 0x060007a3 | 1e6e753b6c063dcaf6acb620558a456be804d0a774385708691e19fbfe5067ec | Compare stored dimension via Dim.Eq_b(m_dim, d2); ignore matrix shapes. | Same-artifact IL; 5 direct cases; state paths limited as documented in Lane B checkpoint | Verified |
 
 ## Fields
 
