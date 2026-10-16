@@ -196,6 +196,27 @@ Merged to `main` at commit `92e763bf581a` after passing independent review and t
     - `Tok_members`: `Tok.walk_pattern` across uppercase symbols with macro bound (macro replacement walked), uppercase symbols without macro (returns `this`), lowercase symbols in `LocalEnv()` (registers local and returns `this`), and non-symbol tokens (int, str).
   - Format checks: `git diff --check` passed cleanly.
 
+## DimVal, NumVal and RngVal caller sensitivity batch (mirror/a-caller-sensitivity)
+
+- Branch: `mirror/a-caller-sensitivity`
+- Worktree: `/root/src/quire-caller-sensitivity`
+- Scope: `tests/Quire.Differential.Tests/CallerSensitivityDifferentialTests.cs` (isolated test suite).
+- Objective: Eliminate all 15 latent caller survivors in `DimVal` (`get_IsDimlessReal`, `asDimlessReal`, `matrix_set0_1`, `matrix_set0_2`), `NumVal` (`Format`, `asResult`), and `RngVal` (`asRealVector`, `GetHashCode`) that blocked Lane B integration of `mirror/b-matval-dimension-arrays` and other pointer/array batches.
+- Design:
+  - Placed in a dedicated test class (`CallerSensitivityDifferentialTests`) rather than modifying `DimValDifferentialTests.cs`, ensuring `validate.py --mutate-since` does not select `DimValDifferentialTests` or unapproved `DimVal.DynCall`/`VecCall` mutants.
+  - Detailed matrix element formatting: `ShowVal` delegates matrix formatting to `MatValDifferentialTests.Storage(side, v)`, making differential assertions sensitive to matrix dimensions, strides, flags, and individual real/imag/pointer array elements (killing `matrix_set0_1` and `matrix_set0_2` `ldc.r8 0 -> 1` mutants).
+  - Value classifier sensitivity: Added direct comparisons on `NumVal` (dimensionless real, dimensioned real, complex) and `StrVal` for `get_IsDimlessReal` and `asDimlessReal` overloads (killing all 6 `IsDimlessReal` and `asDimlessReal` mutants).
+  - Loop-start sensitivity: Added non-zero initial range test case (`MakeRange(2.5, 1.0, 3, "L")`) for `RngVal.asRealVector` to kill `i = 0 -> 1` loop-start mutations and `clt`/`brtrue` mutants.
+  - Range hash sensitivity: Added multi-range `GetHashCode` comparisons on non-zero, negative, and dimensioned ranges to kill `RngVal.GetHashCode` `xor -> or` mutant.
+  - Unit magnitude sensitivity: Applied a thread-local US unit system (`ft` magnitude 0.3048) in direct comparisons of `NumVal.Format(IFormatProvider, string, bool, bool)` to kill `re /= u.magnitude` and `im /= u.magnitude` `div -> mul` mutants.
+  - Result identity sensitivity: Added reference-identity sensitive comparison for `NumVal.asResult` to kill `m_dim != null` `cgt.un -> clt.un` mutant.
+- Validation receipts:
+  - Scoped mutation on `RngVal` (`/tmp/quire-validation-w9545cf9/summary.json`): 88/88 killed (0 survivors; all 3 `asRealVector` and `GetHashCode` mutants killed).
+  - Scoped mutation on `NumVal` (`/tmp/quire-validation-76eozpn9/summary.json`): 182/195 killed (0 survivors in `Format` and `asResult`; all 3 target mutants killed).
+  - Differential tests: `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -m:1 -nr:false -p:UseSharedCompilation=false` — 108 passed, 0 failed, 0 skipped (all 4 new facts passed).
+  - Merge gate dry-run (`validate.py --mutate-since e9d973e61e9a`): Ratchet ok, 0 unaccepted survivors, gate would pass.
+  - Format checks: `git diff --check` passed cleanly.
+
 ## Current method audit, separate from historical merges
 
 Source: `/tmp/quire-workflow-trim-runtime-gate/run/method-coverage.json`, run
