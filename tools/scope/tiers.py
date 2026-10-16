@@ -5,7 +5,7 @@
 
 DATA is the original-IL scan (methods.tsv, edges.tsv, hier_*.tsv, types.tsv, assemblies.tsv); KEYS is a directory of
 reduced inventories, one per project. Standard library only; docs/mirror/tiers/README.md explains the method."""
-import argparse, collections, glob, json, os, re
+import argparse, collections, glob, json, os, re, sys
 
 TIERS = ['A', 'A2', 'B', 'C', 'D', 'abstract']
 MECH = {'auto-accessor', 'field-accessor', 'trivial', 'const', 'empty', 'ctor-base', 'forwarder', 'throw',
@@ -279,7 +279,7 @@ def classify(D, KEYS, OUT):
         phases = collections.Counter(x['phase'] for x, k in zip(m, tiers) if k == t)
         print(f'  {t} by phase:', dict(sorted(phases.items(), key=lambda p: int(p[0]))))
 
-    # Quire keys: owner, then name, then parameter count, then parameter types with assembly scopes stripped.
+    # Quire keys: same owner, name and parameter types, with assembly scopes stripped.
     q2o = {p[2]: p[1] for p in types}
 
     def norm(t, quire=False):
@@ -297,6 +297,9 @@ def classify(D, KEYS, OUT):
             if excl:
                 continue
             name, ps = parse(qs)
+            if '.' in name.lstrip('.'):  # explicit interface implementation: name the interface as Mathcad does
+                iface, method = name.removeprefix('global::').rsplit('.', 1)
+                name = q2o.get(iface, iface) + '.' + method
             if osig:
                 params = [norm(p) for p in split_params(parse(osig)[1])]
             else:
@@ -308,21 +311,24 @@ def classify(D, KEYS, OUT):
         """The scan omits generic arity and return type, so overloads that differ only there map as a group."""
         name, ps = r['member'].split('(')[0], r['member'][r['member'].index('(') + 1:-1]
         params = [norm(p) for p in split_params(ps)]
-        c = [x for x in quire.get(r['quire'], {}).get(name, []) if len(x[1]) == len(params)]
-        if len(c) > 1:
-            c = [x for x in c if x[1] == params]
+        c = [x for x in quire.get(r['quire'], {}).get(name, []) if x[1] == params]
         return [x[0] for x in c] if len(c) == same[(r['asm'], r['type'], r['member'])] else []
     os.makedirs(OUT, exist_ok=True)
-    for t in ('A', 'A2'):
+    listed = {}
+    for t in ('A', 'A2', 'B'):
         found, missing = set(), set()
         for x, k in zip(m, tiers):
-            if k != t:
+            if k != t or x['kind'] == 'F':  # MethodAudit keys methods only; Tier B fields are not listed
                 continue
             rs = accessors[(x['asm'], x['type'], x['member'])] if x['kind'] in ('P', 'E') else [x]
             got = [keys_of(r) for r in rs]
             found.update(key for g in got for key in g)
             if not rs or [] in got:
                 missing.add(f"{x['asm']}\t{x['type']}::{x['member']}")
+        listed[t] = found, missing
+    if listed['B'][0] & (listed['A'][0] | listed['A2'][0]):
+        sys.exit('a Quire key is in Tier B and in Tier A/A2')  # tier-b.txt is the generator's allowlist
+    for t, (found, missing) in listed.items():
         write(f'{OUT}/tier-{t.lower()}.txt', ''.join(k + '\n' for k in sorted(found)))
         write(f'{OUT}/tier-{t.lower()}-unmapped.txt', ''.join(k + '\n' for k in sorted(missing)))
         print(f'mapped {t}: {len(found)} Quire keys; {len(missing)} members not (fully) mapped')

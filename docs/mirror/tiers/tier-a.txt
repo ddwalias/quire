@@ -208,6 +208,7 @@ Quire.Calculation.Core.ComplexSimpleResultNode::ToString`0()->[System.Runtime]Sy
 Quire.Calculation.Core.DefaultUnitDescriptorTable::.ctor`0()->[System.Runtime]System.Void|False
 Quire.Calculation.Core.DefaultUnitDescriptorTable::InitializeComponent`0()->[System.Runtime]System.Void|False
 Quire.Calculation.Core.DefaultUnitDescriptorTable::InitializeUnitSystems`0()->[System.Runtime]System.Void|False
+Quire.Calculation.Core.DefaultUnitDescriptorTable::global::System.Windows.Markup.IComponentConnector.Connect`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.DisplayMatrixSimpleResultNode::.ctor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[Quire.Core]Quire.TableCoordinate,[Quire.Core]Quire.TableSize)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.DisplayMatrixSimpleResultNode::get_Count`0()->[System.Runtime]System.Int32|False
 Quire.Calculation.Core.DisplayMatrixSimpleResultNode::get_Item`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Calculation.Core]Quire.Calculation.Core.SimpleResultNode|False
@@ -239,6 +240,7 @@ Quire.Calculation.Core.EngineErrorMessages::GetDisplayMessage`0([Quire.Calculati
 Quire.Calculation.Core.EngineErrorMessages::GetStringByKey`0([System.Runtime]System.String)->[System.Runtime]System.String|True
 Quire.Calculation.Core.EngineErrorMessages::InitializeComponent`0()->[System.Runtime]System.Void|False
 Quire.Calculation.Core.EngineErrorMessages::MergeDictionary`0([PresentationFramework]System.Windows.ResourceDictionary)->[System.Runtime]System.Void|True
+Quire.Calculation.Core.EngineErrorMessages::global::System.Windows.Markup.IComponentConnector.Connect`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.EngineResult::.ctor`0([Quire.Calculation.Core]Quire.Calculation.Core.EngineResult,[Quire.Calculation.Core]Quire.Calculation.Core.EngineError)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.EngineResult::.ctor`0([Quire.Calculation.Core]Quire.Calculation.Core.EngineResult,[Quire.Calculation.Core]Quire.Calculation.Core.IResultNode)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.EngineResult::.ctor`0([Quire.Calculation.Core]Quire.Calculation.Core.EngineResult,[Quire.Calculation.Core]Quire.Calculation.Core.SynchronizationStatus)->[System.Runtime]System.Void|False
@@ -265,6 +267,7 @@ Quire.Calculation.Core.RealSimpleResultNode::Equals`0([System.Runtime]System.Obj
 Quire.Calculation.Core.RealSimpleResultNode::ToString`0()->[System.Runtime]System.String|False
 Quire.Calculation.Core.RedefinitionWarningsDictionary::.ctor`0()->[System.Runtime]System.Void|False
 Quire.Calculation.Core.RedefinitionWarningsDictionary::InitializeComponent`0()->[System.Runtime]System.Void|False
+Quire.Calculation.Core.RedefinitionWarningsDictionary::global::System.Windows.Markup.IComponentConnector.Connect`0([System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.RequestShowErrorEventArgs::.ctor`0([Quire.Calculation.Core]Quire.Calculation.Core.EngineError)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.ResultConverter::ConvertFromIResultNode`0([Quire.Calculation.Core]Quire.Calculation.Core.SimpleResultNode)->[System.Runtime]System.Object|True
 Quire.Calculation.Core.ResultConverter::ConvertToIResultNode`0([System.Runtime]System.Object,[System.Runtime]System.Boolean)->[Quire.Calculation.Core]Quire.Calculation.Core.SimpleResultNode|True
@@ -454,6 +457,7 @@ Quire.Calculation.Core.UnitDescriptor::set_RL`0([System.Runtime]System.String)->
 Quire.Calculation.Core.UnitedValueSimpleResultNode::.ctor`0()->[System.Runtime]System.Void|False
 Quire.Calculation.Core.UnitedValueSimpleResultNode::AddUnit`0([System.Runtime]System.String,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.UnitedValueSimpleResultNode::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False
+Quire.Calculation.Core.UnitedValueSimpleResultNode::global::Quire.Calculation.Core.IUnitedValueResultNode.set_Value`0([Quire.Calculation.Core]Quire.Calculation.Core.IResultNode)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.UnitedValueSimpleResultNode::isUnitsEquals`0([System.Runtime]System.Collections.Generic.IList`1<[Quire.Calculation.Core]Quire.Calculation.Core.Unit>)->[System.Runtime]System.Boolean|False
 Quire.Calculation.Core.XmcdToIResultNodeTransform::AddElementsToMatrix`0([System.Runtime]System.Collections.Generic.IEnumerable`1<[System.Xml.ReaderWriter]System.Xml.XmlNode>,[Quire.Calculation.Core]Quire.Calculation.Core.IEagerMatrixResultNode)->[System.Runtime]System.Void|False
 Quire.Calculation.Core.XmcdToIResultNodeTransform::BuildAxisInfo`0([System.Xml.ReaderWriter]System.Xml.XmlNode)->[Quire.Calculation.Core]Quire.Calculation.Core.ITraceAxisInfo|True
@@ -3489,6 +3493,7 @@ Quire.PersistentData.oleBaseContainerType::get_itemidref`0()->[System.Runtime]Sy
 Quire.PersistentData.oleBaseContainerType::set_itemidref`0([System.Runtime]System.String)->[System.Runtime]System.Void|False
 Quire.PersistentData.oleObjectRegionType::.ctor`0([Quire.Core]Quire.PersistentData.IOleSizeData)->[System.Runtime]System.Void|False
 Quire.PersistentData.oleObjectRegionType::get_HasFakeOleViewportSize`0()->[System.Runtime]System.Boolean|False
+Quire.PersistentData.oleObjectRegionType::global::Quire.PersistentData.IOleSizeData.get_OleViewportSize`0()->[WindowsBase]System.Windows.Size|False
 Quire.PersistentData.worksheet::get_Regions`0()->[System.Runtime]System.Collections.Generic.IEnumerable`1<[Quire.Core]Quire.PersistentDataObjects.IRegionType>|False
 Quire.PersistentData.worksheet::get_WorksheetConvertedFromMC14`0()->[System.Runtime]System.Boolean|False
 Quire.PersistentData.worksheet::set_Regions`0([System.Runtime]System.Collections.Generic.IEnumerable`1<[Quire.Core]Quire.PersistentDataObjects.IRegionType>)->[System.Runtime]System.Void|False
