@@ -1518,10 +1518,10 @@
     "Quire.Mpl.Run.MplForeignMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "ad358de24ade9e47bfb47fae703dc5711c74f44603c42900f677d1a775087c01",
     "Quire.Mpl.Run.MplForeignMacro::get_Macro`0()->[Quire.Mpl]Quire.Mpl.Run.MplMacro|False": "6322961b568c209ed4bc63bf967a90241f43e61610bb7054b9a31bad622854c6",
     "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "b768b696f16c51fb7ce8580bc8e5203b006ac913316dba909cfa00601aa8cf6c",
-    "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "e60bbb884e76796eeaa972cbbddd2ffca633aaa100d781f6aa37087ca6105662",
-    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "5540cb12bd329b595975a69eb30eef46bd5c6815495493d6366145a92bf84dbf",
+    "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "9e2e017c9f0e439a4510317943ad8901cad9c6df5eee6ff2c770bdc6a7a7d698",
+    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "c8b6fbb0df6570cb34f8429f54a6cb4b7d2ac1cca6967d54b770e227675771ac",
     "Quire.Mpl.Run.MplFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "cc3f67325ea324327244ec465343170a5739a9e25f3e0e81b9e322ef1557e3b7",
-    "Quire.Mpl.Run.MplFunctionMacro::make`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "cf79aff42e282ee228f0e60595390f59f1780a41cd64db6851ce8daeae5cfd37",
+    "Quire.Mpl.Run.MplFunctionMacro::make`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "bbda69036ff409f41b9366fdf94f90237c8e6a12e6f71b690dcb0a0022870ae0",
     "Quire.Mpl.Run.MplLocalFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sym,[System.Runtime]System.UInt32,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "e60bbb884e76796eeaa972cbbddd2ffca633aaa100d781f6aa37087ca6105662",
     "Quire.Mpl.Run.MplLocalFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "5540cb12bd329b595975a69eb30eef46bd5c6815495493d6366145a92bf84dbf",
     "Quire.Mpl.Run.MplLocalFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "ad358de24ade9e47bfb47fae703dc5711c74f44603c42900f677d1a775087c01",
@@ -3055,7 +3055,10 @@
     "Quire.Mpl.Run.MplEnv::MayNotModify`0()->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.MplEnv::get_Level`0()->[System.Runtime]System.Int32|False",
     "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
     "Quire.Mpl.Run.MplFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
+    "Quire.Mpl.Run.MplFunctionMacro::make`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True",
     "Quire.Mpl.Run.MplMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.MplMacro::CanNotExpand`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.MplMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
@@ -5033,10 +5036,10 @@
     "Quire.Mpl.Run.MplForeignMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
     "Quire.Mpl.Run.MplForeignMacro::get_Macro`0()->[Quire.Mpl]Quire.Mpl.Run.MplMacro|False": "missing",
     "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
+    "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "compared",
     "Quire.Mpl.Run.MplFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "compared",
-    "Quire.Mpl.Run.MplFunctionMacro::make`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "missing",
+    "Quire.Mpl.Run.MplFunctionMacro::make`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "compared",
     "Quire.Mpl.Run.MplLocalFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sym,[System.Runtime]System.UInt32,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.MplLocalFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
     "Quire.Mpl.Run.MplLocalFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "missing",
@@ -7516,8 +7519,17 @@
     "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": [
       "mplrunmplfunctionmacromechanicaldifferentialtests"
     ],
+    "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": [
+      "mplfunctionmacrodifferentialtests"
+    ],
+    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
+      "mplfunctionmacrodifferentialtests"
+    ],
     "Quire.Mpl.Run.MplFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
       "mplrunmplfunctionmacromechanicaldifferentialtests"
+    ],
+    "Quire.Mpl.Run.MplFunctionMacro::make`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": [
+      "mplfunctionmacrodifferentialtests"
     ],
     "Quire.Mpl.Run.MplMacro::CanNotExpand`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|True": [
       "envdifferentialtests"
@@ -9893,10 +9905,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.MplFunctionMacro": {
-      "compared": 2,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
@@ -12726,6 +12738,9 @@
       "Quire.Mpl.Run.MplBackquoteMacro::m_macro"
     ],
     "Quire.Mpl.Run.MplFunctionMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.MplFunctionMacro::m_expander"
+    ],
+    "Quire.Mpl.Run.MplFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
       "Quire.Mpl.Run.MplFunctionMacro::m_expander"
     ],
     "Quire.Mpl.Run.MplMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym)->[System.Runtime]System.Void|False": [
