@@ -442,6 +442,21 @@ or skips, lint 0 and ratchet ok. No methods were selected for mutation. Receipt:
 `/tmp/quire-numval-final-runtime-gate/gate.json`; validator exit 3 records existing project-wide gaps,
 not phase completion. The reviewed branch and gate-approved main were pushed to origin.
 
+## List_keyword and Tuple_keyword singleton batch (`mirror/a-keyword-singletons`)
+
+- Branch: `mirror/a-keyword-singletons`, rebased onto `2930f1a`; implementation commit `a602f5f`.
+- Scope: `List_keyword` and `Tuple_keyword` static singletons, constructors and `NewTok(uint)` factories. The constructors preserve the original keyword strings and key numbers 13 and 14.
+- Differential tests: `SimpleKeywordDifferentialTests.Singleton_constructors_and_tokens` directly compares both type initializers and constructors and compares each factory at handles 0, 1, 37 and `uint.MaxValue`.
+- Evidence: [List_keyword](../evidence/Mpl.Run.List_keyword.md), [Tuple_keyword](../evidence/Mpl.Run.Tuple_keyword.md). Original IL was inspected with ilspycmd before implementation.
+- Checks: filtered direct test passed 1/1. Post-rebase scoped focused validation passed Harness 52, Mpl 188 and Differential 122; 6 methods compared, 0 missing or uncovered, 6 exact, 0 structure-only, lint 0, ratchet ok, mutations 2/2 killed with no survivors. Run `8009ac32-79a2-422d-b6b5-791cf7c37deb`; receipt `/tmp/quire-validation-whc2ts20/summary.json`.
+- Exact IL before/after: 0/6 stubbed bodies -> 6/6 exact. No exact method regressed.
+- Pending proposals: none. Independent review is outstanding.
+- Next: once this batch is reviewed and merged, proceed to an unowned Lane A runtime member. `Rts.GetTypeInitializer(TypeBuilder)` remains blocked by the protected Reflection.Emit linter allowlist; do not edit that policy file.
+
+## User-approved proposals awaiting maintainer acceptance
+
+On 2026-10-16, the user approved the independently reviewed proposal sets on `mirror/a-walk-tail-audit` (one equivalent mutant and 16 unreachable-line entries) and `mirror/a-case-keyword` (two unreachable-line entries). These approvals are recorded here while the proposals await maintainer updates to the protected acceptance lists. The affected batches remain unmerged until that acceptance is recorded; this Lane A agent does not edit the protected lists.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old

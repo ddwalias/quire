@@ -11,10 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Tuple_keyword, mplrun")]
 public partial class Tuple_keyword : global::Quire.Mpl.Run.Keyword
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tuple_keyword singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public Tuple_keyword() : base(default(string), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
