@@ -159,15 +159,19 @@ Branch `mirror/b-matdim-uniform-dim-equality` (`74c9787`), based on clean main `
 
 Branch `mirror/b-matval-real-classifiers` (`ad7e8b4`), based on clean main `168be17`. The batch adds direct differential tests in `MatValRealClassifiersDifferentialTests.cs`, verified status annotations on `IsVector` (0x0600045b), `IsRealMatrix` (0x0600045c), `IsScalarMatrix` (0x0600045d), `IsRealMatrixMixed` (0x0600045e), and `IsRealVector` (0x0600045f) in `src/Quire.Mpl/Mcd/MatVal.Access.cs`, and updated contracts in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signatures, tokens, and hashes are recorded in that table. Exact Release IL matches confirmed for `IsVector`, `IsRealMatrix`, and `IsRealVector`. 46 direct MethodComparison cases against Prime 12.0.1.0 `mplrun.dll`. Merged via `merge_gate.py --apply`.
 
-## MatVal assertions and casts — active checkpoint
+### MatVal assertions and casts (merged to main at 41f234b)
 
-Branch `mirror/b-matval-assertions-casts`, based on current clean main `28bee78`. The batch adds direct differential tests in `MatValAssertionsAndCastsDifferentialTests.cs`, verified status annotations on `asVector` (0x06000469), `asRealVector` (0x0600046a), `asMatrix` (0x0600046b), `asRealMatrix` (0x0600046c), `assertRealVector()` (0x0600046e), `assertRealVector(uint)` (0x0600046f), and `assertRealMatrix(uint)` (0x06000470) in `src/Quire.Mpl/Mcd/MatVal.Access.cs`, and updated contracts in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signatures, tokens, and hashes are in that table. All 7 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matval-assertions-casts` (`50a27be`), based on clean main `28bee78`. The batch adds direct differential tests in `MatValAssertionsAndCastsDifferentialTests.cs`, verified status annotations on `asVector` (0x06000469), `asRealVector` (0x0600046a), `asMatrix` (0x0600046b), `asRealMatrix` (0x0600046c), `assertRealVector()` (0x0600046e), `assertRealVector(uint)` (0x0600046f), and `assertRealMatrix(uint)` (0x06000470) in `src/Quire.Mpl/Mcd/MatVal.Access.cs`, and updated contracts in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Exact original signatures, tokens, and hashes are in that table. All 7 methods match Mathcad IL exactly in Release builds. 30 direct MethodComparison cases against Prime 12.0.1.0 `mplrun.dll`; 100% mutation kill rate (16/16). Merged via `merge_gate.py --apply`.
 
-Direct differential tests compare all seven methods across 27 direct cases covering success returns (`this` identity and unchanged matrix storage), shape validation failures (0/1/2 columns), imaginary value detection, non-NumVal pointers, and AppException arguments/messages.
+## MatDim uniform_dim construction and coordinates — active checkpoint
+
+Branch `mirror/b-matdim-uniform-dim-construction`, based on current clean main `41f234b`. The batch adds direct differential tests in `MatDimUniformDimConstructionDifferentialTests.cs`, verified status annotations on `uniform_dim..ctor(Dim, int, int)` (token 0x0600079c), `uniform_dim.make(Dim, int, int)` (token 0x0600079d), `uniform_dim.dim(int, int)` (token 0x0600079e), `uniform_dim.matdim(int, int)` (token 0x0600079f), `uniform_dim.get_UniformDim()` (token 0x060007a0), `uniform_dim.get_IsLinear()` (token 0x060007a1), and `uniform_dim.transpose()` (token 0x060007a9) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 7 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+Direct differential tests compare all seven methods across 26 direct cases covering constructor shape and null fallback, factory creation, coordinate dimension lookup across valid and out-of-bounds indices, `this` referential identity on `matdim`/`IsLinear`/`transpose`, and property getters.
 
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
-1. **MatDim specialized coordinate queries and operations** (`uniform_dim` multiplication, transforms).
+1. **MatDim uniform_dim arithmetic operations** (`mmult1`, `mmult2(uniform_dim)`, `mmult2(r_dim)`, `dmult1`, `dmult2`, `det`, `invert`, `pwr`).
 2. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
 3. **Engine projects** (interface and factory members, subject to Linux/Windows capability).

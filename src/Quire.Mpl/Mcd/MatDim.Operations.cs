@@ -184,19 +184,19 @@ public abstract partial class MatDim
 
     protected partial class uniform_dim : MatDim
     {
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         public readonly Dim m_dim;
-        [MirrorAnalyzed("Mcd.MatDim")]
-        private uniform_dim(Dim d, int r, int c) : base(r, c) => m_dim = d ?? Dim.identity;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
+        private uniform_dim(Dim d, int r, int c) : base(r, c) => m_dim = d != null ? d : Dim.identity;
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         public static uniform_dim make(Dim d, int r, int c) => new(d, r, c);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         public override Dim UniformDim => m_dim;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         public override MatDim IsLinear => this;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         public override Dim dim(int i, int j) => m_dim;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         public override MatDim matdim(int i, int j) => this;
         [MirrorVerified("MatDimUniformEqBDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(m_dim);
@@ -212,7 +212,7 @@ public abstract partial class MatDim
         protected override Dim dmult1(MatDim m2) => m2.dmult2(this);
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override Dim dmult2(uniform_dim m1) => Dim.Mult(m1.m_dim, m_dim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         protected override MatDim transpose() => this;
         [MirrorAnalyzed("Mcd.MatDim")]
         protected override MatDim invert() => make(Dim.Pwr(m_dim, -1), Rows, Cols);
