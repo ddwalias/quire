@@ -773,6 +773,15 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Runtime gate passed on `9ff806b0ae8b`, based on `07bc80aafefd`, then merged to main at `18f780e` and pushed. Receipt `/tmp/quire-gate-dynamic-type-explode/gate.json`, run `99a0e8ab-e1d5-4938-a15b-5b67bc9a545c`, summary `/tmp/quire-gate-dynamic-type-explode/run/summary.json`: Harness 86, Mpl 188 and Differential 318 passed with no failures/skips; 1121 compared, 1520 exact, 93 structure-only, 596 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported; lint 0, integrity complete, ratchet ok, 0 eligible mutants selected by the gate. Existing inventory gaps remain ratcheted; no baseline-exact method regressed. No proposals.
 - Next: continue the active `MplForeignMacro` batch in its separate worktree; then take another unowned Lane A member.
 
+## DynamicType.NameMangle (`mirror/a-dynamic-type-namemangle`)
+
+- Scope: implement private static `NameMangle(string, Type[])` (`0x06000413`), remove its generated stub, and compare direct results against Mathcad.
+- Original: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Starts with `prefix`, loops over `types` in index order, appends `TypeToName(ty)` via `String.Concat(string, string)`, and returns the accumulated text. The verified type-name map returns `_I`, `_F`, `_O`, and `.ref` for unmapped types. Direct cases cover an empty array, mapped and unknown types, mixed order, null prefix and null array.
+- Branch base: `a3ff845`. Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-dynamic-type-namemangle`. Run summary: `/tmp/quire-validation-dynamic-type-namemangle/summary.json`. Harness 86, Mpl 188 and Differential 13 passed with no failures/skips; 14 compared, 16 existing stubs missing, 0 structure mismatches/uncovered/verified-unsupported; all 14 are exact, lint 0, integrity complete and ratchet ok. Mutation 35/35 killed, no survivors/crashes; two mutants timed out in parallel and were killed on serial retry. `LOCAL CHECKS: pass · GATE: would pass with gaps (16 missing)`.
+- Exact Release IL before/after: 13/31 -> 14/31; `NameMangle` is exact and all 13 previously exact methods remain exact. No proposals.
+- Independent review and runtime gate pending.
+- Next: continue the active `MplForeignMacro` batch in its separate worktree; then take another unowned Lane A member.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old

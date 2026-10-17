@@ -36,8 +36,6 @@ public partial class DynamicType
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Type[] NameDemangle(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string NameMangle(string prefix, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Type[] TupleNameDemangle(string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string TupleNameMangle(global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -2,7 +2,7 @@
 
 - **Original:** `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`
 - **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
-- **Quire:** `src/Quire.Mpl`; tests: `Quire.Differential.Tests.MplRunDynamicTypeMechanicalDifferentialTests`, `DynamicTypeConcat2MiDifferentialTests`, `DynamicTypeConcat3MiDifferentialTests`, `DynamicTypeGetShortNameDifferentialTests`, `DynamicTypeExplodeDifferentialTests`
+- **Quire:** `src/Quire.Mpl`; tests: `Quire.Differential.Tests.MplRunDynamicTypeMechanicalDifferentialTests`, `DynamicTypeConcat2MiDifferentialTests`, `DynamicTypeConcat3MiDifferentialTests`, `DynamicTypeGetShortNameDifferentialTests`, `DynamicTypeExplodeDifferentialTests`, `DynamicTypeNameMangleDifferentialTests`
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
@@ -19,6 +19,7 @@
 | `Concat3Mi()` | 0x06000406 | Resolves and returns `DynamicType.MplConcat3` through `Type.GetMethod(string)` | High; direct comparison records declaring type, method name, parameter types, return type and static flag | Verified |
 | `GetShortName(string)` | 0x06000409 | Uses a colon suffix if the colon is not first; otherwise uses the suffix after a nonleading dot; returns the input for leading/no separators | High; direct cases cover colon/dot positions (including index one and leading colon before a later dot), no separators, trailing dot and null | Verified |
 | `Explode(string)` | 0x0600040e | Splits the name using the `_` delimiter and preserves empty entries | High; direct cases cover normal, repeated/trailing, comma-containing, empty and absent delimiters, plus null; the renderer length-prefixes each element | Verified |
+| `NameMangle(string, Type[])` | 0x06000413 | Starts with `prefix`, then concatenates `TypeToName` for each array entry in order | High; direct cases cover empty, mapped, fallback, mixed and null inputs; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
@@ -32,6 +33,8 @@ parameter and field), comparing the result, the arguments and the target's field
 **Observed** (`DynamicTypeGetShortNameDifferentialTests`): Directly invokes the private helper with colon and dot at indexes zero, one and later, a leading colon before a later dot, trailing dot, plain text and null.
 
 **Observed** (`DynamicTypeExplodeDifferentialTests`): Directly invokes the private helper with ordinary, comma-containing, repeated/trailing, empty, delimiter-free and null inputs; the renderer encodes array length and length-prefixes every element.
+
+**Observed** (`DynamicTypeNameMangleDifferentialTests`): Directly invokes the private helper with an empty type array, mapped and fallback types, mixed values, null prefix and null array.
 
 **Observed** (`DynamicTypeFieldNamesDifferentialTests`): the type initializer's static fields and all entries in its three
 tables; `FieldNames` results for 0, 1 and 4; matching negative-length exceptions for -1; and reference identity on a repeated count.
