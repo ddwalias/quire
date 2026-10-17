@@ -4820,13 +4820,13 @@
     "Quire.Mpl.Run.F`9::BeginInvoke`0(!1,!2,!3,!4,!5,!6,!7,!8,[System.Runtime]System.AsyncCallback,[System.Runtime]System.Object)->[System.Runtime]System.IAsyncResult|False": "declaration_only",
     "Quire.Mpl.Run.F`9::EndInvoke`0([System.Runtime]System.IAsyncResult)->!0|False": "declaration_only",
     "Quire.Mpl.Run.F`9::Invoke`0(!1,!2,!3,!4,!5,!6,!7,!8)->!0|False": "declaration_only",
-    "Quire.Mpl.Run.FnCompose::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.FnCompose::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mpl.Run.FnCompose::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.FnCompose::inv`2(!!0&,!!1)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.FnCompose::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.FnCompose::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.FnCompose::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mpl.Run.FnCompose::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.FnCompose::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mpl.Run.FnCompose::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.FnCompose::inv`2(!!0&,!!1)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.FnCompose::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.FnCompose::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.FnCompose::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.FnConstant::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mpl.Run.FnConstant::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "untested",
     "Quire.Mpl.Run.FnConstant::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "untested",
@@ -7804,6 +7804,27 @@
     "Quire.Mpl.Run.DynamicType::TypeToName`0([System.Runtime]System.Type)->[System.Runtime]System.String|True": [
       "dynamictypenamemapsdifferentialtests"
     ],
+    "Quire.Mpl.Run.FnCompose::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": [
+      "fncomposedifferentialtests"
+    ],
+    "Quire.Mpl.Run.FnCompose::get_Name`0()->[System.Runtime]System.String|False": [
+      "fncomposedifferentialtests"
+    ],
+    "Quire.Mpl.Run.FnCompose::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
+      "fncomposedifferentialtests"
+    ],
+    "Quire.Mpl.Run.FnCompose::inv`2(!!0&,!!1)->[System.Runtime]System.Void|False": [
+      "fncomposedifferentialtests"
+    ],
+    "Quire.Mpl.Run.FnCompose::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": [
+      "fncomposedifferentialtests"
+    ],
+    "Quire.Mpl.Run.FnCompose::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": [
+      "fncomposedifferentialtests"
+    ],
+    "Quire.Mpl.Run.FnCompose::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": [
+      "fncomposedifferentialtests"
+    ],
     "Quire.Mpl.Run.Fn_CurryTuple::get_Name`0()->[System.Runtime]System.String|False": [
       "mplrunfn_currytuplemechanicaldifferentialtests"
     ],
@@ -10415,10 +10436,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.FnCompose": {
-      "compared": 0,
+      "compared": 7,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 7,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 7,
       "uncovered": 0,
