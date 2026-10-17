@@ -3645,8 +3645,8 @@
     "Quire.Mcd.MatDim+uniform_dim::dim`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatDim+uniform_dim::dmult1`0([Quire.Mpl]Quire.Mcd.MatDim)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatDim+uniform_dim::dmult2`0([Quire.Mpl]Quire.Mcd.MatDim+uniform_dim)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
-    "Quire.Mcd.MatDim+uniform_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.MatDim+uniform_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": "untested",
+    "Quire.Mcd.MatDim+uniform_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.MatDim+uniform_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatDim+uniform_dim::get_IsLinear`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
     "Quire.Mcd.MatDim+uniform_dim::get_UniformDim`0()->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatDim+uniform_dim::invert`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
@@ -6040,6 +6040,12 @@
     ],
     "Quire.Mcd.MatDim+rc_dim::make_rc`0([Quire.Mpl]Quire.Mcd.Dim[],[Quire.Mpl]Quire.Mcd.Dim[])->[Quire.Mpl]Quire.Mcd.MatDim+rc_dim|True": [
       "matdimrcdimconstructiondifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+uniform_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": [
+      "matdimuniformeq2bdifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+uniform_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": [
+      "matdimuniformeqbdifferentialtests"
     ],
     "Quire.Mcd.MatDim::ColDimensionArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": [
       "matdimdimensionarraysdifferentialtests"
@@ -8546,10 +8552,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatDim+uniform_dim": {
-      "compared": 0,
+      "compared": 2,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 17,
+      "missing": 15,
       "structure_mismatch": 0,
       "total": 17,
       "uncovered": 0,
