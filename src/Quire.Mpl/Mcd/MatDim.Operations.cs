@@ -292,24 +292,24 @@ public abstract partial class MatDim
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
         [MirrorVerified("MatDimCDimEqualityDifferentialTests")]
         protected override bool eq2_b(c_dim m1) => Eq_b(m_coldim, m1.m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(uniform_dim m1) => make(Mult(m1.m_dim, m_coldim), m1.Rows);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(r_dim m1) => rc_dim.make_rc(m1.m_rowdim, m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override Dim dmult1(MatDim m2) => m2.dmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override Dim dmult2(r_dim m1) => Mult(m1.m_rowdim, m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override Dim dmult2(c_dim m1) => Mult(m1.m_coldim, m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override MatDim transpose() => r_dim.make(m_coldim, Rows);
-        [MirrorAnalyzed("Mcd.MatDim")]
-        protected override MatDim invert() => r_dim.make(Invert(m_coldim), m_coldim.Length);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
         protected override Dim det(int n) => Product(Dim.identity, m_coldim);
+        [MirrorVerified("MatDimCDimArithmeticDifferentialTests")]
+        protected override MatDim invert() => r_dim.make(Invert(m_coldim), m_coldim.Length);
     }
     protected partial class rc_dim : MatDim
     {
