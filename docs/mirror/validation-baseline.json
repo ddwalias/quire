@@ -1594,9 +1594,9 @@
     "Quire.Mpl.Run.Primitive::add_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "c86ad7305f95ff2e98a9f82eb4da05fbccf7bfd1cda3dd02c0034d6ea97d9255",
     "Quire.Mpl.Run.Primitive::add_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "c86ad7305f95ff2e98a9f82eb4da05fbccf7bfd1cda3dd02c0034d6ea97d9255",
     "Quire.Mpl.Run.Primitive::and_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "40f1b9555854cfff09b78efd31c68a3f8a2cab6dd5fbf6a93fed865a485e6617",
-    "Quire.Mpl.Run.Primitive::arr_f8`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|True": "10959b140db94efb914769b80783e3555df490e131f76753d15afa5883ed4b52",
-    "Quire.Mpl.Run.Primitive::arr_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32[]|True": "76605ed9070510604b20db1e2322e419894259b6ee7391618cc740a9ef23c9db",
-    "Quire.Mpl.Run.Primitive::arr_ref`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|True": "4645aea78d524c9a9db9cd3d18f74a6194d815610aa9e9df29d21759448cc2aa",
+    "Quire.Mpl.Run.Primitive::arr_f8`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|True": "c66164e2999c7a2be9eba1893898eced27a509cec7b8312eda4e7d09235280a4",
+    "Quire.Mpl.Run.Primitive::arr_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32[]|True": "5eff693578f1d34a9e5c8d6ecc16bf9d6639c29144f4035744b6941842f7a496",
+    "Quire.Mpl.Run.Primitive::arr_ref`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|True": "ef0a891f206fefd97ff59fc297088c921e5322248cf587dd98d0ba0737878632",
     "Quire.Mpl.Run.Primitive::as_function`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "5ea7260cf223be20bd1d9ecde73f2b4b94613784ecc3b91c41861fa81a7fffc7",
     "Quire.Mpl.Run.Primitive::as_matrix`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "a9163337010df5c1c47338b548aedd5aaee80db0eb292bcabb71f890d7970a54",
     "Quire.Mpl.Run.Primitive::as_number`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "60e1e02794ecb4d68d7f743771ce580e9127de1aeb8fb54a21b7986eb02c432b",
@@ -3124,6 +3124,9 @@
     "Quire.Mpl.Run.Primitive::add_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True",
     "Quire.Mpl.Run.Primitive::add_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
     "Quire.Mpl.Run.Primitive::and_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True",
+    "Quire.Mpl.Run.Primitive::arr_f8`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|True",
+    "Quire.Mpl.Run.Primitive::arr_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32[]|True",
+    "Quire.Mpl.Run.Primitive::arr_ref`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|True",
     "Quire.Mpl.Run.Primitive::as_function`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True",
     "Quire.Mpl.Run.Primitive::as_matrix`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True",
     "Quire.Mpl.Run.Primitive::as_number`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True",
@@ -5150,9 +5153,9 @@
     "Quire.Mpl.Run.Primitive::add_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "compared",
     "Quire.Mpl.Run.Primitive::add_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Primitive::and_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
-    "Quire.Mpl.Run.Primitive::arr_f8`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|True": "missing",
-    "Quire.Mpl.Run.Primitive::arr_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32[]|True": "missing",
-    "Quire.Mpl.Run.Primitive::arr_ref`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|True": "missing",
+    "Quire.Mpl.Run.Primitive::arr_f8`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|True": "compared",
+    "Quire.Mpl.Run.Primitive::arr_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32[]|True": "compared",
+    "Quire.Mpl.Run.Primitive::arr_ref`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|True": "compared",
     "Quire.Mpl.Run.Primitive::as_function`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mpl.Run.Primitive::as_matrix`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mpl.Run.Primitive::as_number`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
@@ -7764,6 +7767,15 @@
     "Quire.Mpl.Run.Primitive::and_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": [
       "primitivereferencedifferentialtests"
     ],
+    "Quire.Mpl.Run.Primitive::arr_f8`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|True": [
+      "primitivearraydifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::arr_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32[]|True": [
+      "primitivearraydifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::arr_ref`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|True": [
+      "primitivearraydifferentialtests"
+    ],
     "Quire.Mpl.Run.Primitive::as_function`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": [
       "mplrunprimitivemechanicaldifferentialtests",
       "primitivedifferentialtests"
@@ -10211,10 +10223,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Primitive": {
-      "compared": 48,
+      "compared": 51,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 38,
+      "missing": 35,
       "structure_mismatch": 0,
       "total": 86,
       "uncovered": 0,
