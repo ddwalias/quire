@@ -90,6 +90,11 @@ public partial class Primitive
     [MirrorVerified("PrimitiveReferenceDifferentialTests")]
     public static object and_ref(object x, object y) { if (x != null) return y; return null; }
 
+    [MirrorVerified("PrimitiveConversionDifferentialTests")]
+    public static int conv_i4(double x) => (int)x;
+    [MirrorVerified("PrimitiveConversionDifferentialTests")]
+    public static double conv_f8(int x) => x;
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

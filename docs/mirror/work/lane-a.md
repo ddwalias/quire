@@ -543,7 +543,19 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Checks: filtered Primitive differential suite passed 28/28. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 28; 46 compared, 0 structure mismatch/uncovered/unsupported, 46 exact, lint 0, ratchet ok, mutation 62/62 killed. Run `5b485f25-73e8-4aa8-90aa-96e05f436f12`; receipt `/tmp/quire-validation-wg6rs863/summary.json`. The 40 missing methods are pre-existing Primitive stubs outside this batch.
 - Exact IL before/after: both reference selectors compile to Mathcad's null branch shapes; Primitive rose from 44/86 to 46/86 exact, with no baseline-exact method regressed.
 - Independent review returned MERGE for the complete diff; the reviewer rebuilt Release and checked both original/current IL bodies. Pending proposals: none.
-- Next: complete independent review, then gate and merge; next inspect `Primitive.conv_i4` and `Primitive.conv_f8`.
+- Final rebased branch tip `b211405dee8b35e537ff604d5923585253256703` passed the runtime gate and merged to main at `fbf7627d7e26`; main was pushed. Gate receipt `/tmp/quire-a-primitive-ref-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-ref-gate/run/summary.json`: Harness 86, Mpl 188, Differential 240; 970 compared, 1459 exact, 98 structure-only, 0 lint, ratchet ok, mutations 4/4 killed. Existing inventory gaps remain (744 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported). No proposals pending.
+- Next: implement and directly compare `Primitive.conv_i4` and `Primitive.conv_f8`.
+
+## Primitive numeric conversion helpers (`mirror/a-primitive-conv`)
+
+- Scope: `Primitive.conv_i4(double)` and `conv_f8(int)`.
+- Original: inspected the installed `mplrun.dll` before implementation; tokens 0x06000380 and 0x06000381. `conv_i4` is a direct `conv.i4`; `conv_f8` is a direct `conv.r8`.
+- Cases: fractional and boundary double-to-int conversions, out-of-range values, NaN and infinities; representative int-to-double values including both signed bounds.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered Primitive differential suite passed 30/30. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests|FullyQualifiedName~PrimitiveConversionDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 30; 48 compared, 0 structure mismatch/uncovered/unsupported, 48 exact, lint 0, ratchet ok, mutation 62/62 killed. Run `b0e39438-42b4-4f91-8997-6037bd0bbc01`; receipt `/tmp/quire-validation-e06izcc7/summary.json`. The 38 missing methods are pre-existing Primitive stubs outside this batch.
+- Exact IL before/after: both conversions compile to the original `conv.i4` / `conv.r8` bodies; Primitive rose from 46/86 to 48/86 exact, with no baseline-exact method regressed.
+- Independent review returned MERGE; the reviewer independently rebuilt Release and checked both conversion bodies. Pending proposals: none.
+- Next: complete independent review and gate; then inspect `Primitive.arr_i4`, `arr_f8` and `arr_ref`.
 
 ## Historical batch results
 
