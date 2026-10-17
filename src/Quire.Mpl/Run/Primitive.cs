@@ -148,6 +148,78 @@ public partial class Primitive
         return True.singleton;
     }
 
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, System.Reflection.Emit.OpCode code, System.Reflection.MethodInfo mi)
+    {
+        m_name = nm;
+        m_opcodes = new System.Reflection.Emit.OpCode[1] { code };
+        m_method = mi;
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, System.Reflection.Emit.OpCode[] codes, System.Reflection.MethodInfo mi)
+    {
+        m_name = nm;
+        m_opcodes = codes;
+        m_method = mi;
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, System.Reflection.Emit.OpCode code)
+    {
+        m_name = nm;
+        m_opcodes = new System.Reflection.Emit.OpCode[1] { code };
+        m_method = typeof(Primitive).GetMethod(nm);
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, Code code)
+    {
+        m_name = nm;
+        m_code = code;
+        m_method = typeof(Primitive).GetMethod(nm);
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, System.Reflection.Emit.OpCode[] codes)
+    {
+        m_name = nm;
+        m_opcodes = codes;
+        m_method = typeof(Primitive).GetMethod(nm);
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, System.Reflection.MethodInfo mi)
+    {
+        m_name = nm;
+        m_opcodes = null;
+        m_method = mi;
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm)
+    {
+        m_name = nm;
+        m_opcodes = null;
+        m_method = typeof(Primitive).GetMethod(nm);
+        m_foreign = null;
+    }
+
+    [MirrorVerified("PrimitiveConstructorDifferentialTests")]
+    private Primitive(string nm, string def)
+    {
+        m_name = nm;
+        m_opcodes = null;
+        m_method = null;
+        m_foreign = def;
+    }
+
     [MirrorVerified("PrimitiveCallDifferentialTests")]
     public static object Call(int prim, object x) => m_primitive[prim].m_method.Invoke(null, new object[1] { x });
     [MirrorVerified("PrimitiveCallDifferentialTests")]

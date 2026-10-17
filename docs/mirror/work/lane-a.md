@@ -629,6 +629,17 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Final reviewed tip `982a403b788c` passed the runtime gate and merged to main at `4dad38b56e16`; main was pushed. Gate receipt `/tmp/quire-a-primitive-call-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-call-gate/run/summary.json`: Harness 86, Mpl 188, Differential 259; 1017 compared, 1492 exact, 97 structure-only, lint 0, ratchet ok, mutations 29/29 killed. Existing inventory gaps remain (697 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported). No proposals pending.
 - Next: implement and directly compare the remaining private `Primitive` constructors.
 
+## Primitive private constructors (`mirror/a-primitive-constructors`)
+
+- Scope: all eight private `Primitive` constructors (`0x060003a7`–`0x060003ae`), covering scalar/array opcodes, explicit and reflected `MethodInfo`, `Code`, and foreign definitions.
+- Original: inspected the installed `mplrun.dll` C# and IL with `tools/reference/reference.py`; contracts are in [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Direct tests: all constructor overloads; compare field contents, method lookup, exact opcode-array/method reference retention and explicit null fields. Reviewer-requested strengthening adds a non-null `Code` argument with identity rendering and distinct `neg_i4`/`add_i4` opcodes for scalar and array constructors. Post-rebase `PrimitiveConstructorDifferentialTests` passed 1/1 on Windows .NET 10.
+- Rebased from `2d03eea` onto `85003e9` as `2af717d`, then onto current main `d866b18` as `976d09a`; production and test hunks applied cleanly. The only conflict was `WORK.md`, resolved to point to the constructor gate and then the `Primitive` static initializer.
+- Scoped validation: `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~Primitive' --mutate --jobs 2`; Harness 86, Mpl 188 and Differential 46 passed, 0 failures/skips; 86 compared, 0 missing/structure mismatch/uncovered/unsupported, 86 exact, lint 0, ratchet ok, mutations 109/109 killed (41 cached), no survivors. Run `b0e97290-dee8-4f14-925c-e7a14e0e497b`; receipt `/mnt/c/q/quire-validation-primitive-constructors-final/summary.json`. The earlier narrow filter failed ratchet because it omitted previously verified Primitive tests (52 regressions); it is superseded by this complete scoped run. Historical Harness cleanup and Windows clone path errors are superseded by this run and the successful hybrid gate path.
+- Exact IL before/after: all eight constructors compile exactly to the original field writes, opcode array allocations, `Type.GetMethod` lookup and explicit null writes; Primitive rose from 78/86 to 86/86 exact, with no baseline-exact method regressed.
+- Independent review: MERGE for rebased production/tests/evidence; requested checkpoint next-action correction is reflected here. Pending proposals: none. Runtime gate: pending.
+- Next: pass the rebased constructors batch through the runtime gate, then implement and directly compare the `Primitive` static initializer and its static fields.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old

@@ -25,20 +25,4 @@ public partial class Primitive
     public global::System.Reflection.MethodInfo m_method;
     [global::Quire.Mirror.MirrorStub]
     public string m_foreign;
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, global::System.Reflection.Emit.OpCode code, global::System.Reflection.MethodInfo mi) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, global::System.Reflection.Emit.OpCode[] codes, global::System.Reflection.MethodInfo mi) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, global::System.Reflection.Emit.OpCode code) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, global::Quire.Mpl.Run.Code code) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, global::System.Reflection.Emit.OpCode[] codes) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, global::System.Reflection.MethodInfo mi) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm) { }
-    [global::Quire.Mirror.MirrorStub]
-    private Primitive(string nm, string def) { }
 }
