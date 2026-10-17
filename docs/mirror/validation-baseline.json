@@ -3699,19 +3699,19 @@
     "Quire.Mcd.MatDim+rc_dim::.ctor`0([Quire.Mpl]Quire.Mcd.Dim[],[Quire.Mpl]Quire.Mcd.Dim[])->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::ColDimensionArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::RowDimensionArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": "compared",
-    "Quire.Mcd.MatDim+rc_dim::det`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
+    "Quire.Mcd.MatDim+rc_dim::det`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::dim`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::eq2_b`0([Quire.Mpl]Quire.Mcd.MatDim+rc_dim)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::eq_b`0([Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::get_IsLinear`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
-    "Quire.Mcd.MatDim+rc_dim::invert`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
+    "Quire.Mcd.MatDim+rc_dim::invert`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
     "Quire.Mcd.MatDim+rc_dim::make_rc`0([Quire.Mpl]Quire.Mcd.Dim[],[Quire.Mpl]Quire.Mcd.Dim[])->[Quire.Mpl]Quire.Mcd.MatDim+rc_dim|True": "compared",
     "Quire.Mcd.MatDim+rc_dim::matdim`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
-    "Quire.Mcd.MatDim+rc_dim::mmult1`0([Quire.Mpl]Quire.Mcd.MatDim)->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
-    "Quire.Mcd.MatDim+rc_dim::mmult2`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
-    "Quire.Mcd.MatDim+rc_dim::mmult2`0([Quire.Mpl]Quire.Mcd.MatDim+rc_dim)->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
-    "Quire.Mcd.MatDim+rc_dim::pwr`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
-    "Quire.Mcd.MatDim+rc_dim::transpose`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
+    "Quire.Mcd.MatDim+rc_dim::mmult1`0([Quire.Mpl]Quire.Mcd.MatDim)->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
+    "Quire.Mcd.MatDim+rc_dim::mmult2`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
+    "Quire.Mcd.MatDim+rc_dim::mmult2`0([Quire.Mpl]Quire.Mcd.MatDim+rc_dim)->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
+    "Quire.Mcd.MatDim+rc_dim::pwr`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
+    "Quire.Mcd.MatDim+rc_dim::transpose`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "compared",
     "Quire.Mcd.MatDim+uniform_dim::.ctor`0([Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatDim+uniform_dim::det`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "compared",
     "Quire.Mcd.MatDim+uniform_dim::dim`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": "compared",
@@ -6196,6 +6196,9 @@
     "Quire.Mcd.MatDim+rc_dim::RowDimensionArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": [
       "matdimrcdimcoordinatesdifferentialtests"
     ],
+    "Quire.Mcd.MatDim+rc_dim::det`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
+    ],
     "Quire.Mcd.MatDim+rc_dim::dim`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim|False": [
       "matdimrcdimcoordinatesdifferentialtests"
     ],
@@ -6208,11 +6211,29 @@
     "Quire.Mcd.MatDim+rc_dim::get_IsLinear`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": [
       "matdimrcdimcoordinatesdifferentialtests"
     ],
+    "Quire.Mcd.MatDim+rc_dim::invert`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
+    ],
     "Quire.Mcd.MatDim+rc_dim::make_rc`0([Quire.Mpl]Quire.Mcd.Dim[],[Quire.Mpl]Quire.Mcd.Dim[])->[Quire.Mpl]Quire.Mcd.MatDim+rc_dim|True": [
       "matdimrcdimconstructiondifferentialtests"
     ],
     "Quire.Mcd.MatDim+rc_dim::matdim`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatDim|False": [
       "matdimrcdimcoordinatesdifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+rc_dim::mmult1`0([Quire.Mpl]Quire.Mcd.MatDim)->[Quire.Mpl]Quire.Mcd.MatDim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+rc_dim::mmult2`0([Quire.Mpl]Quire.Mcd.MatDim+c_dim)->[Quire.Mpl]Quire.Mcd.MatDim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+rc_dim::mmult2`0([Quire.Mpl]Quire.Mcd.MatDim+rc_dim)->[Quire.Mpl]Quire.Mcd.MatDim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+rc_dim::pwr`0([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatDim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
+    ],
+    "Quire.Mcd.MatDim+rc_dim::transpose`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": [
+      "matdimrcdimarithmeticdifferentialtests"
     ],
     "Quire.Mcd.MatDim+uniform_dim::.ctor`0([Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "matdimuniformdimconstructiondifferentialtests"
@@ -9003,10 +9024,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatDim+rc_dim": {
-      "compared": 9,
+      "compared": 16,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 7,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 16,
       "uncovered": 0,
