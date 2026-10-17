@@ -198,7 +198,7 @@
     "Quire.Mcd.DimVal::sym_matrix_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "14e15049670a59adf0808e1d470909ba18d5bbff02d8c83f951cebdb1053a43b",
     "Quire.Mcd.Iterator+MatrixIterator::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "9ad5d3fc31fa11d5216908fe17e5882a13f710fb14bc287097d67579d6d85ae0",
     "Quire.Mcd.Iterator+MatrixIterator::first`0()->[System.Runtime]System.Object|False": "30c3040152e7855e1ea6563d2ea3e4c3f730dc50a5974ea50102f84ac1eb3e72",
-    "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "4a359269f26cd2e4cd6de6b797d87ba579d672f0e861a89793e848167d89fa2f",
+    "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "780725846298135ab7bbfeaa4eb9ba090fd6473efd93ff55b7ff01bc9893c94b",
     "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "4f158f35ba7ed6d00b2e2f9937811c844a6a7a24724fd89ee02a579768cb0361",
     "Quire.Mcd.Iterator+ScalarIterator::first`0()->[System.Runtime]System.Object|False": "b1edf9da9937d38ba9b71ba457ca29ff3385018b57e7a040f836642ed8e31837",
     "Quire.Mcd.Iterator+ScalarIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "aaa563219cc1e26980225935d408846b81b06ee8a7822a20a848a79c7182f3f4",
@@ -2084,6 +2084,7 @@
     "Quire.Mcd.DimVal::sym_matrix_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False",
     "Quire.Mcd.Iterator+MatrixIterator::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False",
     "Quire.Mcd.Iterator+MatrixIterator::first`0()->[System.Runtime]System.Object|False",
+    "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False",
     "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False",
     "Quire.Mcd.Iterator+ScalarIterator::first`0()->[System.Runtime]System.Object|False",
     "Quire.Mcd.Iterator+ScalarIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False",
@@ -3639,9 +3640,9 @@
     "Quire.Mcd.DimVal::range_get`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.DimVal::sym_matrix_get_1`0([System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "compared",
     "Quire.Mcd.DimVal::sym_matrix_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "compared",
-    "Quire.Mcd.Iterator+MatrixIterator::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.Iterator+MatrixIterator::first`0()->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "untested",
+    "Quire.Mcd.Iterator+MatrixIterator::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.Iterator+MatrixIterator::first`0()->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
     "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.Iterator+ScalarIterator::first`0()->[System.Runtime]System.Object|False": "compared",
     "Quire.Mcd.Iterator+ScalarIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": "compared",
@@ -6029,6 +6030,15 @@
     "Quire.Mcd.DimVal::sym_matrix_get_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": [
       "dimvaldifferentialtests"
     ],
+    "Quire.Mcd.Iterator+MatrixIterator::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": [
+      "matrixiteratordifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+MatrixIterator::first`0()->[System.Runtime]System.Object|False": [
+      "matrixiteratordifferentialtests"
+    ],
+    "Quire.Mcd.Iterator+MatrixIterator::next`0()->[Quire.Mpl]Quire.Mcd.Iterator|False": [
+      "matrixiteratordifferentialtests"
+    ],
     "Quire.Mcd.Iterator+ScalarIterator::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
       "rngvaldifferentialtests"
     ],
@@ -6066,6 +6076,7 @@
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.Iterator::forValue`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.Iterator|True": [
+      "matrixiteratordifferentialtests",
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.Iterator::forValues`0([Quire.Mpl]Quire.Mcd.Iterator[])->[Quire.Mpl]Quire.Mcd.Iterator|True": [
@@ -9077,10 +9088,10 @@
       "verified_unsupported": 1
     },
     "Quire.Mcd.Iterator+MatrixIterator": {
-      "compared": 0,
+      "compared": 3,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 3,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 3,
       "uncovered": 0,
