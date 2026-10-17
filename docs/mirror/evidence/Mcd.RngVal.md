@@ -107,12 +107,12 @@ Signatures retain REA's exact decoded metadata types (`class:<coded-index>`); to
 
 | Member/signature | Token | Normalized IL prefix | Contract | Current classification / limits |
 |---|---|---|---|---|
-| `m_mat : class:532` | 0x040001b7 | field | Matrix reference. | Analyzed; static only |
-| `m_row : i4` | 0x040001b8 | field | Current row. | Analyzed; static only |
-| `m_col : i4` | 0x040001b9 | field | Current column. | Analyzed; static only |
-| `.ctor(class:532) -> void` | 0x060007ee | 9fb8262546ff42cc | Store matrix and initialize row/column zero without validating shape. | Analyzed; static only |
-| `first() -> object` | 0x060007ef | c502343e728aeadd | Read matrix.get_2 at current row and column. | Analyzed; static only |
-| `next() -> class:604` | 0x060007f0 | ee0b15624f44f86f | Increment row; when past current row count, increment column and either return null at current column count or reset row zero. Return this otherwise; matrix shape is read live. | Analyzed; static only |
+| `m_mat : class:532` | 0x040001b7 | field | Matrix reference. | Verified in `MatrixIteratorDifferentialTests`; read through `first()` |
+| `m_row : i4` | 0x040001b8 | field | Current row. | Verified in `MatrixIteratorDifferentialTests`; compared before/after each advance |
+| `m_col : i4` | 0x040001b9 | field | Current column. | Verified in `MatrixIteratorDifferentialTests`; compared before/after each advance |
+| `.ctor(class:532) -> void` | 0x060007ee | 9fb8262546ff42cc | Store matrix and initialize row/column zero without validating shape. | Verified in `MatrixIteratorDifferentialTests` |
+| `first() -> object` | 0x060007ef | c502343e728aeadd | Read matrix.get_2 at current row and column. | Verified in `MatrixIteratorDifferentialTests` |
+| `next() -> class:604` | 0x060007f0 | ee0b15624f44f86f | Increment row; when past current row count, increment column and either return null at current column count or reset row zero. Return this otherwise; matrix shape is read live. | Verified in `MatrixIteratorDifferentialTests` |
 
 ## Existing differential cases
 
@@ -123,7 +123,7 @@ The suite contains four scenarios, pending the focused rerun in this session:
 - `Equality`: plain/interpolating ranges with matching/different dimensions, count and increment; comparison to number/null; polymorphic hash and physical dimension.
 - `Iterators`: every forRange overload, explicit zero count, descending/fractional ranges, units/errors, forValue for range/scalar/string/null and 2x3, 1x3, 3x1 and 0x0 matrices, `GetHashCode` of a range whose hash bits overlap its count, interpolation `get` from a nonzero start, `asRealVector` elements of a range starting at 2, sequence cursors with empty and nonempty children, it_incr past end, and direct RangeIterator first/next past end. Traversal is bounded at 30 values.
 
-The `Iterators` scenario compares the RngVal matrix conversions (`asVector`, `asMatrix`, `asRealMatrix` on one range; `asRealVector` on two, with elements shown), which stay Analyzed because only those cases are recorded; MatrixIterator is not exercised and remains Analyzed. Field annotations derive from constructors/query/iteration scenarios; they do not establish all arbitrary reflected mutations.
+The `Iterators` scenario compares the RngVal matrix conversions (`asVector`, `asMatrix`, `asRealMatrix` on one range; `asRealVector` on two, with elements shown), which stay Analyzed because only those cases are recorded. `MatrixIteratorDifferentialTests` directly compares the MatrixIterator constructor and methods on a 2x3 matrix: `first()` at each row/column, `next()` through all elements, identity of each returned cursor, row-to-column transitions, and the terminal null. Field annotations report the state observed in these cases; they do not establish all arbitrary reflected mutations.
 
 ## Not yet comparable
 

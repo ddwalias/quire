@@ -58,16 +58,16 @@ public abstract partial class Iterator
     /// <summary>The elements of a matrix in column order.</summary>
     public partial class MatrixIterator : Iterator
     {
-        [MirrorAnalyzed("Mcd.RngVal")]
+        [MirrorVerified("MatrixIteratorDifferentialTests")]
         private MatVal m_mat;
 
-        [MirrorAnalyzed("Mcd.RngVal")]
+        [MirrorVerified("MatrixIteratorDifferentialTests")]
         private int m_row;
 
-        [MirrorAnalyzed("Mcd.RngVal")]
+        [MirrorVerified("MatrixIteratorDifferentialTests")]
         private int m_col;
 
-        [MirrorAnalyzed("Mcd.RngVal")]
+        [MirrorVerified("MatrixIteratorDifferentialTests")]
         public MatrixIterator(MatVal mat)
         {
             m_mat = mat;
@@ -75,15 +75,17 @@ public abstract partial class Iterator
             m_col = 0;
         }
 
-        [MirrorAnalyzed("Mcd.RngVal")]
+        [MirrorVerified("MatrixIteratorDifferentialTests")]
         public override object first() => m_mat.get_2(m_row, m_col);
 
-        [MirrorAnalyzed("Mcd.RngVal")]
+        [MirrorVerified("MatrixIteratorDifferentialTests")]
         public override Iterator next()
         {
-            if (++m_row < m_mat.Data.m_rows) return this;
-            if (++m_col >= m_mat.Data.m_cols) return null;
-            m_row = 0;
+            if (++m_row >= m_mat.Data.m_rows)
+            {
+                if (++m_col >= m_mat.Data.m_cols) return null;
+                m_row = 0;
+            }
             return this;
         }
     }
