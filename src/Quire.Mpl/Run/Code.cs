@@ -6,6 +6,12 @@ namespace Quire.Mpl.Run;
 
 public partial class Code
 {
+    [MirrorVerified("CodeNullCodeDifferentialTests")]
+    public static Code NullCode;
+
+    [MirrorVerified("CodeNullCodeDifferentialTests")]
+    static Code() => NullCode = new Code();
+
     [MirrorVerified("MplRunCodeMechanicalDifferentialTests")]
     public virtual void EmitCode(ILGenerator il) { }
 

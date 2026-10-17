@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Code, mplrun")]
 public partial class Code
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Code NullCode;
 }

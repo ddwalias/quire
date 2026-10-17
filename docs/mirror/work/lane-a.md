@@ -488,10 +488,21 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 ## CodeArg constructors (`mirror/a-codearg`)
 
 - Rebasing after `mirror/gen-mpl-2` merged to main followed the user's direction: this batch kept only the two `CodeArg` constructors. The fields and argument walks are supplied by MemberGen; no overlapping `Code.cs` changes remain.
-- Scope: `.ctor(Code, Code)` and `.ctor(Code)` in `CodeArg`; `Code.NullCode` remains a generated stub and its initializer is outside the batch.
+- Scope: `.ctor(Code, Code)` and `.ctor(Code)` in `CodeArg`; `Code.NullCode` is now initialized by the separately reviewed `mirror/a-code-nullcode` batch below.
 - Original tokens: `.ctor(Code, Code)` `0x0600034c`; `.ctor(Code)` `0x0600034d`. Contracts: [Mpl.Run.CodeArg](../evidence/Mpl.Run.CodeArg.md).
 - Post-rebase differential tests: 3 passed. Scoped validation: Harness 86, Mpl 188 and Differential 3 passed; 4 methods compared, 4 exact, 0 missing/structure mismatch/uncovered/unsupported, lint 0, ratchet ok, mutation 0/0 (no eligible mutants). Run `58162f55-2d80-4251-b25d-0d854f0e2568`; receipt `/tmp/quire-validation-_64jgbb3/summary.json`.
 - Exact IL before/after: the two implemented `CodeArg` members remained exact; constructors raised the type from 2/4 to 4/4 exact. Runtime gate passed and merged to main at `cb6911a`, then pushed. No exact method regressed; no proposals pending.
+
+
+## Code.NullCode type initializer (`mirror/a-code-nullcode`)
+
+- Scope: the `Code` type initializer and its public static `NullCode` field; original initializer token `0x06000343`.
+- Original: `tools/reference/reference.py Mpl.Run.Code --il`; `new Code()`, store into `NullCode`, return. The Release body matches exactly.
+- Direct tests: `CodeNullCodeDifferentialTests`, `CodeArgDifferentialTests` and `MplRunCodeMechanicalDifferentialTests` passed 6/6 on Windows .NET 10. `Quire.Mpl` Release build succeeded.
+- Scoped validation: hybrid Linux/Windows run `/mnt/c/q/quire-validation-code-nullcode-hybrid-with-cases/summary.json`, run `b5407258-e7fc-48b5-8c7c-07ed5af2048c`; Harness 86, Mpl 188 and Differential 6 passed, 0 failures/skips. All 5 selected Code methods compared, 5 exact, 0 missing/structure mismatch/uncovered/unsupported, lint 0, ratchet ok, mutation 0/0 (no eligible mutants). The earlier Windows Harness cleanup failure and two wrapper setup failures are incomplete attempts, not validation results.
+- Exact IL before/after: `.cctor` matches `newobj Code::.ctor; stsfld NullCode; ret`; all five selected Code Release bodies are exact, with no exact method regressed. Independent review returned MERGE. Pending proposals: none.
+- The reviewed `mirror/a-primitive-constructors` branch (`2d03eea`) remains unmerged. Its targeted tests and independent review passed; the earlier validator/gate attempts did not complete. Consider it with this batch for a single reviewed two-batch gate once both are rebased to current main.
+- Next: pass this prerequisite and the private `Primitive` constructors through the runtime gate, then implement and directly compare the `Primitive` type initializer and its static fields.
 
 ## CodeFunction constructor and argument walks (`mirror/a-codefunction`)
 

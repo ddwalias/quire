@@ -17,4 +17,4 @@
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
 **Observed** (`CodeArgDifferentialTests`): both constructors with distinct references, plus the one-argument overload with nonnull and null `beg`. The test fixture
-seeds Quire's `Code.NullCode` with a `Code` object so the constructor's field read can be directly compared; the `Code` static initializer remains outside this batch.
+sets Quire's `Code.NullCode` to a default `Code` object to match Mathcad's initialized value while comparing reference retention.
