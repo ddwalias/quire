@@ -4523,38 +4523,38 @@
     "Quire.Mpl.Run.Cons::destructive_append`0([Quire.Mpl]Quire.Mpl.Run.Cons,[Quire.Mpl]Quire.Mpl.Run.Cons)->[Quire.Mpl]Quire.Mpl.Run.Cons|True": "compared",
     "Quire.Mpl.Run.Cons::get_head`0()->[System.Runtime]System.Object|False": "compared",
     "Quire.Mpl.Run.Cons::get_tail`0()->[Quire.Mpl]Quire.Mpl.Run.Cons|False": "compared",
-    "Quire.Mpl.Run.DelegateFunction::.ctor`0([System.Runtime]System.Delegate,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::AsF`2([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`2<!!0,!!1>|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::AsF`3([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`3<!!0,!!1,!!2>|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::AsF`4([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`4<!!0,!!1,!!2,!!3>|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::AsF`5([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`5<!!0,!!1,!!2,!!3,!!4>|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::app0`0()->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
+    "Quire.Mpl.Run.DelegateFunction::.ctor`0([System.Runtime]System.Delegate,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::AsF`2([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`2<!!0,!!1>|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::AsF`3([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`3<!!0,!!1,!!2>|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::AsF`4([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`4<!!0,!!1,!!2,!!3>|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::AsF`5([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`5<!!0,!!1,!!2,!!3,!!4>|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::app0`0()->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
     "Quire.Mpl.Run.DelegateFunction::get_Name`0()->[System.Runtime]System.String|False": "compared",
-    "Quire.Mpl.Run.DelegateFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`1(!!0&)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`12(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`13(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`14(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`15(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`16(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`17(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15,!!16)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`2(!!0&,!!1)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`6(!!0&,!!1,!!2,!!3,!!4,!!5)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`7(!!0&,!!1,!!2,!!3,!!4,!!5,!!6)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`8(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::inv`9(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`2<[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "untested",
-    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`3<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "untested",
-    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`4<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "untested",
-    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`5<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "untested",
-    "Quire.Mpl.Run.DelegateFunction::make`0([System.Runtime]System.Delegate,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "untested",
-    "Quire.Mpl.Run.DelegateFunction::remove_module_suffix`0([System.Runtime]System.String)->[System.Runtime]System.String|False": "untested",
+    "Quire.Mpl.Run.DelegateFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`1(!!0&)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`12(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`13(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`14(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`15(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`16(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`17(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15,!!16)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`2(!!0&,!!1)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`6(!!0&,!!1,!!2,!!3,!!4,!!5)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`7(!!0&,!!1,!!2,!!3,!!4,!!5,!!6)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`8(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::inv`9(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`2<[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "compared",
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`3<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "compared",
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`4<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "compared",
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`5<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "compared",
+    "Quire.Mpl.Run.DelegateFunction::make`0([System.Runtime]System.Delegate,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": "compared",
+    "Quire.Mpl.Run.DelegateFunction::remove_module_suffix`0([System.Runtime]System.String)->[System.Runtime]System.String|False": "compared",
     "Quire.Mpl.Run.Delegates+<>c__44`2::.cctor`0()->[System.Runtime]System.Void|True": "excluded",
     "Quire.Mpl.Run.Delegates+<>c__44`2::.ctor`0()->[System.Runtime]System.Void|False": "excluded",
     "Quire.Mpl.Run.Delegates+<>c__44`2::<project21>b__44_0`0(!0,!1)->!0|False": "excluded",
@@ -7636,8 +7636,102 @@
       "mplrunhelpersdifferentialtests",
       "sexprdifferentialtests"
     ],
+    "Quire.Mpl.Run.DelegateFunction::.ctor`0([System.Runtime]System.Delegate,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::AsF`2([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`2<!!0,!!1>|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::AsF`3([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`3<!!0,!!1,!!2>|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::AsF`4([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`4<!!0,!!1,!!2,!!3>|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::AsF`5([System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.F`5<!!0,!!1,!!2,!!3,!!4>|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::app0`0()->[System.Runtime]System.Object|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": [
+      "delegatefunctiondifferentialtests"
+    ],
     "Quire.Mpl.Run.DelegateFunction::get_Name`0()->[System.Runtime]System.String|False": [
+      "delegatefunctiondifferentialtests",
       "functiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`1(!!0&)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`12(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`13(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`14(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`15(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`16(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`17(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15,!!16)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`2(!!0&,!!1)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`6(!!0&,!!1,!!2,!!3,!!4,!!5)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`7(!!0&,!!1,!!2,!!3,!!4,!!5,!!6)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`8(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::inv`9(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8)->[System.Runtime]System.Void|False": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`2<[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`3<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`4<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::makeF`0([Quire.Mpl]Quire.Mpl.Run.F`5<[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object>,[System.Runtime]System.String)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::make`0([System.Runtime]System.Delegate,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.DelegateFunction|True": [
+      "delegatefunctiondifferentialtests"
+    ],
+    "Quire.Mpl.Run.DelegateFunction::remove_module_suffix`0([System.Runtime]System.String)->[System.Runtime]System.String|False": [
+      "delegatefunctiondifferentialtests"
     ],
     "Quire.Mpl.Run.DynamicType::.ctor`0()->[System.Runtime]System.Void|False": [
       "mplrundynamictypemechanicaldifferentialtests"
@@ -9650,10 +9744,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.DelegateFunction": {
-      "compared": 1,
+      "compared": 32,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 31,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 32,
       "uncovered": 0,
