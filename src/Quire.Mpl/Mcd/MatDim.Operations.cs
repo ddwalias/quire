@@ -202,23 +202,23 @@ public abstract partial class MatDim
         protected override bool eq_b(MatDim m2) => m2.eq2_b(m_dim);
         [MirrorVerified("MatDimUniformEq2BDifferentialTests")]
         protected override bool eq2_b(Dim d2) => Dim.Eq_b(m_dim, d2);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(uniform_dim m1) => make(Dim.Mult(m1.m_dim, m_dim), m1.Rows, Cols);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(r_dim m1) => r_dim.make(Mult(m_dim, m1.m_rowdim), Cols);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override Dim dmult1(MatDim m2) => m2.dmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override Dim dmult2(uniform_dim m1) => Dim.Mult(m1.m_dim, m_dim);
         [MirrorVerified("MatDimUniformDimConstructionDifferentialTests")]
         protected override MatDim transpose() => this;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override MatDim invert() => make(Dim.Pwr(m_dim, -1), Rows, Cols);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override Dim det(int n) => Dim.Pwr(m_dim, n);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimUniformDimArithmeticDifferentialTests")]
         protected override MatDim pwr(uint n) => make(Dim.Pwr(m_dim, n), Rows, Cols);
     }
     protected partial class r_dim : MatDim
