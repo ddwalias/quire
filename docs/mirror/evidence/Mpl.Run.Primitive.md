@@ -6,8 +6,8 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons and five typed cast helpers are implemented alongside the listed MemberGen members; other
-Primitive members remain stubs. Each comparison is a single
+The twelve comparisons, four primitive-kind predicates and five typed cast helpers are implemented alongside the
+listed MemberGen members; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
 
@@ -30,6 +30,10 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `as_string(object)` | 0x06000397 | Returns the input when it is a string; otherwise null. | High | Verified |
 | `as_function(object)` | 0x06000398 | Returns the input when it is a `Function`; otherwise null. | High | Verified |
 | `as_range(object)` | 0x06000399 | Returns the input when it is an `RngVal`; otherwise null. | High | Verified |
+| `IsOpCodePrimitive()` | 0x06000359 | True when `m_code` is null and `m_opcodes` is non-null. | High | Verified |
+| `IsCodePrimitive()` | 0x0600035a | True when `m_code` is non-null. | High | Verified |
+| `IsMethodPrimitive()` | 0x0600035b | True when `m_method` is non-null, `m_code` is null and `m_opcodes` is null. | High | Verified |
+| `IsForeignPrimitive()` | 0x0600035c | True when `m_foreign` is non-null, including the empty string. | High | Verified |
 | `Throw(Exception)` | 0x06000368 | MemberGen: `throw e` | Mechanical; Release IL equals Mathcad's | Verified |
 | `identity(object)` | 0x06000382 | MemberGen: `o` | Mechanical; Release IL equals Mathcad's | Verified |
 | `dup(object)` | 0x06000383 | MemberGen: `throw new AppException("may not capture pseudo function")` | Mechanical; Release IL equals Mathcad's | Verified |
@@ -49,5 +53,7 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 - each `_i4` comparison on every ordered pair of `int.MinValue`, -1, 0, 1 and `int.MaxValue`;
 - each `_f8` comparison on every ordered pair of -∞, -1, -0, 0, 1, +∞ and NaN.
 - each cast helper with a matching target instance, rendered as the same reference only when the result is reference-identical to its input.
+- primitive-kind predicates with states that independently vary `m_code`, `m_opcodes`, `m_method`, and `m_foreign`, including an empty foreign string.
 
 MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
+Primitive-kind predicates are compared by `Quire.Differential.Tests.PrimitivePredicateDifferentialTests`.

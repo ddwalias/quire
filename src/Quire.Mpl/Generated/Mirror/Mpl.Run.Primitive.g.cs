@@ -26,14 +26,6 @@ public partial class Primitive
     [global::Quire.Mirror.MirrorStub]
     public string m_foreign;
     [global::Quire.Mirror.MirrorStub]
-    public bool IsOpCodePrimitive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCodePrimitive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsMethodPrimitive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsForeignPrimitive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static object Call(int prim, object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object Call(int prim, object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

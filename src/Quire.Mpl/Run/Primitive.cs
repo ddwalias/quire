@@ -50,6 +50,18 @@ public partial class Primitive
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object as_range(object o) => o as RngVal;
 
+    [MirrorVerified("PrimitivePredicateDifferentialTests")]
+    public bool IsOpCodePrimitive() { if (m_code == null) return m_opcodes != null; return false; }
+
+    [MirrorVerified("PrimitivePredicateDifferentialTests")]
+    public bool IsCodePrimitive() => m_code != null;
+
+    [MirrorVerified("PrimitivePredicateDifferentialTests")]
+    public bool IsMethodPrimitive() { if (m_method != null && m_code == null) return m_opcodes == null; return false; }
+
+    [MirrorVerified("PrimitivePredicateDifferentialTests")]
+    public bool IsForeignPrimitive() => m_foreign != null;
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

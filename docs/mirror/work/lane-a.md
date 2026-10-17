@@ -509,7 +509,17 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Tests: five token-bound mechanical comparisons retain null/wrong-type inputs; direct differential cases now also use matching target instances and verify the returned reference for each helper.
 - Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
 - Checks: filtered focused tests passed 20/20; scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 20; 29 compared, 0 structure mismatches/uncovered/unsupported, 29 exact, lint 0, ratchet ok, mutations 37/37 killed. Run `6214f1be-d9a8-4eb9-91d5-cf9c5a6d3545`; receipt `/tmp/quire-validation-2o8xpa5h/summary.json`. Scoped status notes 57 pre-existing Primitive stubs; the full gate validates all.
-- Exact IL before/after: 24 existing exact methods -> 29 exact; no existing exact method regressed. Pending proposals: none. Independent review is pending.
+- Exact IL before/after: 24 existing exact methods -> 29 exact; no existing exact method regressed. Independent review returned MERGE. Runtime gate passed after rebase at `08527c9` and merged to main at `168be17`; gate receipt `/tmp/quire-a-primitive-casts-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-casts-gate/run/summary.json`. Gate: Harness 86, Mpl 188, Differential 220; 941 compared, 1440 exact, 97 structure-only, lint 0, ratchet ok, mutation 37/37 killed. Existing inventory gaps remain (770 missing, 106 structure mismatches, 13 uncovered, 43 verified unsupported). Main was pushed. Pending proposals: none.
+- Next: implement and directly compare `Primitive.IsOpCodePrimitive`, `IsCodePrimitive`, `IsMethodPrimitive`, and `IsForeignPrimitive`.
+
+## Primitive classification predicates (`mirror/a-primitive-predicates`)
+
+- Scope: `Primitive.IsOpCodePrimitive`, `IsCodePrimitive`, `IsMethodPrimitive`, and `IsForeignPrimitive`; they classify by nullness of `m_code`, `m_opcodes`, `m_method`, and `m_foreign`.
+- Original: inspected `mplrun.dll` with ilspycmd before implementation. Tokens 0x06000359–0x0600035c. The method predicate uses `MethodInfo.op_Inequality`; the foreign predicate accepts an empty string.
+- Tests: direct differential cases vary each relevant field independently, including the code-suppresses-opcode/method branches and empty foreign name.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered focused tests passed 4/4. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 24; 33 compared, 0 structure mismatches/uncovered/unsupported, 33 exact, lint 0, ratchet ok and mutations 49/49 killed. Run `2564a8b9-35df-463e-afc8-728b18bce55f`; receipt `/tmp/quire-validation-tawm_vq8/summary.json`. Scoped status notes 53 pre-existing Primitive stubs; the full gate validates all.
+- Exact IL before/after: the four predicate bodies are exact; Primitive increased from 29/86 to 33/86 exact, with no exact method regressed. Pending proposals: none.
 - Next: complete independent review, then runtime gate.
 
 ## Historical batch results
