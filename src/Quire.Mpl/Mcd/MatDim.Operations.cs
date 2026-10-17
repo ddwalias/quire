@@ -321,15 +321,15 @@ public abstract partial class MatDim
         private rc_dim(Dim[] r, Dim[] c) : base(r.Length, c.Length) { m_rowdim = r; m_coldim = c; }
         [MirrorVerified("MatDimRcDimConstructionDifferentialTests")]
         public static rc_dim make_rc(Dim[] r, Dim[] c) => new(r, c);
-        [MirrorAnalyzed("Mcd.MatDim")]
-        public override MatDim IsLinear => this;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimCoordinatesDifferentialTests")]
         public override Dim dim(int i, int j) => Dim.Mult(m_rowdim[i], m_coldim[j]);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimCoordinatesDifferentialTests")]
         public override MatDim matdim(int i, int j) => uniform_dim.make(dim(i, j), 1, 1);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimCoordinatesDifferentialTests")]
+        public override MatDim IsLinear => this;
+        [MirrorVerified("MatDimRcDimCoordinatesDifferentialTests")]
         public override Dim[] RowDimensionArray(int r) => Mult(m_rowdim[r], m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimCoordinatesDifferentialTests")]
         public override Dim[] ColDimensionArray(int c) => Mult(m_coldim[c], m_rowdim);
         [MirrorVerified("MatDimRcDimEqualityDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
