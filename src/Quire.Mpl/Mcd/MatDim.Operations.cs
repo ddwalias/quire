@@ -368,11 +368,9 @@ public abstract partial class MatDim
         private readonly MatVal m_matrix;
         [MirrorVerified("MatDimCrazyDimConstructionDifferentialTests")]
         protected crazy_dim(MatVal m) : base(m.Rows, m.Cols) => m_matrix = m;
-        [MirrorVerified("MatDimCrazyDimConstructionDifferentialTests")]
-        public static new crazy_dim make(MatVal m) => new(m);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCrazyDimCoordinatesDifferentialTests")]
         public override Dim dim(int i, int j) => m_matrix.get_2_dim(i, j);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimCrazyDimCoordinatesDifferentialTests")]
         public override MatDim matdim(int i, int j) => m_matrix.get_2_matdim(i, j);
         [MirrorVerified("MatDimCrazyDimEqualityDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
@@ -385,5 +383,7 @@ public abstract partial class MatDim
                 if (!Eq_b(matdim(r, c), m1.matdim(r, c))) return false;
             return true;
         }
+        [MirrorVerified("MatDimCrazyDimConstructionDifferentialTests")]
+        public static new crazy_dim make(MatVal m) => new(m);
     }
 }
