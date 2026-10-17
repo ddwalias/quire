@@ -517,21 +517,21 @@ public sealed partial class MatVal
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private MatVal dvm(Dim d) { m_dim = d; return Canonicalize(); }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public override MatVal asVector(string m, uint a)
     {
         if (!IsVector) AppException.Raise(m, a);
         return this;
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public override MatVal asMatrix(string m, uint a) => this;
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public override MatVal asRealVector(string m, uint a)
     {
         if (!IsRealVector) AppException.Raise(m, a);
         return this;
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public override MatVal asRealMatrix(string m, uint a)
     {
         if (!IsRealMatrix) AppException.Raise(m, a);
@@ -539,10 +539,10 @@ public sealed partial class MatVal
     }
     [MirrorVerified("MatValAsRealVectorDifferentialTests")]
     public static MatVal asRealVector(object mm) => mm is MatVal matrix && matrix.IsRealVector ? matrix : null;
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public void assertRealVector() => assertRealVector(0);
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public void assertRealVector(uint param) { if (!IsRealVector) AppException.Raise("must be real vector", param); }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValAssertionsAndCastsDifferentialTests")]
     public void assertRealMatrix(uint param) { if (!IsRealMatrix) AppException.Raise("must be real", param); }
 }
