@@ -552,13 +552,13 @@
     "Quire.Mcd.MatVal::get_IsIntegral`0()->[System.Runtime]System.Boolean|False": "5880360594c115b956a71ad671d52faf387f9b9e1eb330d81917114c454b7cf0",
     "Quire.Mcd.MatVal::get_IsMatrix`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "3f4a8904e79dcb4f754a3d797ac2940a64ce67abeda8a981547dd0b68a727349",
     "Quire.Mcd.MatVal::get_IsRange`0()->[System.Runtime]System.Boolean|False": "9ac4fe22628b0763a2d26a0cdde85100debcca1d13ef07c0d95d5cb48b4988b3",
-    "Quire.Mcd.MatVal::get_IsRealMatrixMixed`0()->[System.Runtime]System.Boolean|False": "0642cebc9d1a5907f1475dc742598adb340d05a12a93c617bfebe3493942eee9",
+    "Quire.Mcd.MatVal::get_IsRealMatrixMixed`0()->[System.Runtime]System.Boolean|False": "3a2a2a96234717722d1cdcee07836c25713016b24e4a071849d8a3cc37027114",
     "Quire.Mcd.MatVal::get_IsRealMatrix`0()->[System.Runtime]System.Boolean|False": "011a4ef7f855cc45bb3703c7b5ed8136b463b56e0dd84d1adcf9db6e9dee8b2e",
-    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False": "31bd54bf260c3009d6e0f3d7f65eae777b08c5e544a43c01df3f53b4ca018202",
-    "Quire.Mcd.MatVal::get_IsScalarMatrix`0()->[System.Runtime]System.Boolean|False": "84bb144374626c377a1131eb047fdbadf4af09f9472abd3408d9a2cb54edd420",
+    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False": "9034022a85ad0de8204afda88c74c95b86e2b95922e615f4cb711c37b534ce7c",
+    "Quire.Mcd.MatVal::get_IsScalarMatrix`0()->[System.Runtime]System.Boolean|False": "7960b58150ebd306e2e787b56ddbc6f059d661436cb591d7435bb0ac5edf48dc",
     "Quire.Mcd.MatVal::get_IsUniformScalar`0()->[System.Runtime]System.Boolean|False": "b6a571a07a0358c53a09a6a70196de6d2f2362280091bf9753aaa31a074a2ffb",
     "Quire.Mcd.MatVal::get_IsUniform`0()->[System.Runtime]System.Boolean|False": "7ef7ddcbce5c93e03986fd80d36c78a942598a84edaee666ebc786d7e3a4e436",
-    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False": "01407023db64e5a64a6e3ba83acaaace11e60ac87988f6505606c8cf0f632109",
+    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False": "ddf53f8077180794fb0ee9e784d639d920afeb6381d43c2c1ca12a062cc53a1c",
     "Quire.Mcd.MatVal::get_Isize`0()->[System.Runtime]System.Int32|False": "434e5af6b529aa356dfab7bea703d8776c8df2ff3ee4ce476b75b5fd12c42afb",
     "Quire.Mcd.MatVal::get_MatrixDimension`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "5a86f21a4e147c807bfc35af0fa6dff4be13297f51037c1a96ed9710d64a8232",
     "Quire.Mcd.MatVal::get_Offset`0()->[System.Runtime]System.Int32|False": "412b47fd1420e91daa20bc6ca8509cad7a47fb5c3e6cd3e8755f7053ed3ca32d",
@@ -2335,8 +2335,10 @@
     "Quire.Mcd.MatVal::get_IsMatrix`0()->[Quire.Mpl]Quire.Mcd.MatVal|False",
     "Quire.Mcd.MatVal::get_IsRange`0()->[System.Runtime]System.Boolean|False",
     "Quire.Mcd.MatVal::get_IsRealMatrix`0()->[System.Runtime]System.Boolean|False",
+    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False",
     "Quire.Mcd.MatVal::get_IsUniformScalar`0()->[System.Runtime]System.Boolean|False",
     "Quire.Mcd.MatVal::get_IsUniform`0()->[System.Runtime]System.Boolean|False",
+    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False",
     "Quire.Mcd.MatVal::get_Isize`0()->[System.Runtime]System.Int32|False",
     "Quire.Mcd.MatVal::get_MatrixDimension`0()->[Quire.Mpl]Quire.Mcd.MatDim|False",
     "Quire.Mcd.MatVal::get_Offset`0()->[System.Runtime]System.Int32|False",
@@ -3927,13 +3929,13 @@
     "Quire.Mcd.MatVal::get_IsIntegral`0()->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::get_IsMatrix`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::get_IsRange`0()->[System.Runtime]System.Boolean|False": "compared",
-    "Quire.Mcd.MatVal::get_IsRealMatrixMixed`0()->[System.Runtime]System.Boolean|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::get_IsRealMatrix`0()->[System.Runtime]System.Boolean|False": "untested",
-    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::get_IsScalarMatrix`0()->[System.Runtime]System.Boolean|False": "untested",
+    "Quire.Mcd.MatVal::get_IsRealMatrixMixed`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.MatVal::get_IsRealMatrix`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False": "compared",
+    "Quire.Mcd.MatVal::get_IsScalarMatrix`0()->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::get_IsUniformScalar`0()->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::get_IsUniform`0()->[System.Runtime]System.Boolean|False": "compared",
-    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False": "structure_mismatch",
+    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::get_Isize`0()->[System.Runtime]System.Int32|False": "untested",
     "Quire.Mcd.MatVal::get_MatrixDimension`0()->[Quire.Mpl]Quire.Mcd.MatDim|False": "untested",
     "Quire.Mcd.MatVal::get_Offset`0()->[System.Runtime]System.Int32|False": "untested",
@@ -6226,11 +6228,26 @@
     "Quire.Mcd.MatVal::get_IsRange`0()->[System.Runtime]System.Boolean|False": [
       "matvalrangeintegraldifferentialtests"
     ],
+    "Quire.Mcd.MatVal::get_IsRealMatrixMixed`0()->[System.Runtime]System.Boolean|False": [
+      "matvalrealclassifiersdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::get_IsRealMatrix`0()->[System.Runtime]System.Boolean|False": [
+      "matvalrealclassifiersdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False": [
+      "matvalrealclassifiersdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::get_IsScalarMatrix`0()->[System.Runtime]System.Boolean|False": [
+      "matvalrealclassifiersdifferentialtests"
+    ],
     "Quire.Mcd.MatVal::get_IsUniformScalar`0()->[System.Runtime]System.Boolean|False": [
       "matvalpointerpropertiesdifferentialtests"
     ],
     "Quire.Mcd.MatVal::get_IsUniform`0()->[System.Runtime]System.Boolean|False": [
       "matvalpointerpropertiesdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False": [
+      "matvalrealclassifiersdifferentialtests"
     ],
     "Quire.Mcd.MatVal::get_PhysicalDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False": [
       "matvaldimensionpropertiesdifferentialtests"
@@ -8587,11 +8604,11 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatVal": {
-      "compared": 53,
+      "compared": 58,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 140,
-      "structure_mismatch": 104,
+      "missing": 138,
+      "structure_mismatch": 101,
       "total": 297,
       "uncovered": 0,
       "verified_unsupported": 32
@@ -11316,7 +11333,11 @@
     ],
     "Quire.Mcd.MatVal::get_IsRealMatrixMixed`0()->[System.Runtime]System.Boolean|False": [
       "Quire.Mcd.MatVal::m_parr",
-      "Quire.Mcd.MatVal::m_rarr"
+      "Quire.Mcd.MatVal::m_rarr",
+      "Quire.Mcd.NumVal::Data"
+    ],
+    "Quire.Mcd.MatVal::get_IsRealVector`0()->[System.Runtime]System.Boolean|False": [
+      "Quire.Mcd.MatVal::Data"
     ],
     "Quire.Mcd.MatVal::get_IsScalarMatrix`0()->[System.Runtime]System.Boolean|False": [
       "Quire.Mcd.MatVal::m_parr",
@@ -11327,6 +11348,9 @@
     ],
     "Quire.Mcd.MatVal::get_IsUniform`0()->[System.Runtime]System.Boolean|False": [
       "Quire.Mcd.MatVal::m_parr"
+    ],
+    "Quire.Mcd.MatVal::get_IsVector`0()->[System.Runtime]System.Boolean|False": [
+      "Quire.Mcd.MatVal::Data"
     ],
     "Quire.Mcd.MatVal::get_Packed`0()->[System.Runtime]System.Boolean|False": [
       "Quire.Mcd.MatVal::m_rarr"
