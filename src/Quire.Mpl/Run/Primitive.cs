@@ -136,6 +136,18 @@ public partial class Primitive
     [MirrorVerified("PrimitiveBitwiseDifferentialTests")]
     public static double nrt_f8(double x, double y) => Math.Pow(y, 1.0 / x);
 
+    [MirrorVerified("PrimitiveValueDifferentialTests")]
+    public static object iv(int i) => new NumVal(i, 0.0);
+
+    [MirrorVerified("PrimitiveValueDifferentialTests")]
+    public static object with_bool(object o)
+    {
+        NumVal numVal = o as NumVal;
+        if (numVal == null) AppException.Raise("must be scalar");
+        if (numVal.Data.rp == 0.0 && numVal.Data.ip == 0.0) return null;
+        return True.singleton;
+    }
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 
