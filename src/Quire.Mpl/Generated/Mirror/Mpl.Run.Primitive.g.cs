@@ -44,10 +44,6 @@ public partial class Primitive
     [global::Quire.Mirror.MirrorStub]
     public static double Call_c(int prim, int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static object or_ref(object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object and_ref(object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static int conv_i4(double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double conv_f8(int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

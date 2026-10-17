@@ -85,6 +85,11 @@ public partial class Primitive
     [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
     public static double div_f8(double x, double y) => x / y;
 
+    [MirrorVerified("PrimitiveReferenceDifferentialTests")]
+    public static object or_ref(object x, object y) { if (x == null) return y; return x; }
+    [MirrorVerified("PrimitiveReferenceDifferentialTests")]
+    public static object and_ref(object x, object y) { if (x != null) return y; return null; }
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

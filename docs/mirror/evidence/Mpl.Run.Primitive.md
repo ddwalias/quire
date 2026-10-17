@@ -6,7 +6,7 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons, eleven arithmetic helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
+The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
 listed MemberGen members; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
@@ -34,6 +34,8 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `IsCodePrimitive()` | 0x0600035a | True when `m_code` is non-null. | High | Verified |
 | `IsMethodPrimitive()` | 0x0600035b | True when `m_method` is non-null, `m_code` is null and `m_opcodes` is null. | High | Verified |
 | `IsForeignPrimitive()` | 0x0600035c | True when `m_foreign` is non-null, including the empty string. | High | Verified |
+| `or_ref(object, object)` | 0x06000366 | Returns `y` when `x` is null; otherwise returns `x`. | High; direct null branch | Verified |
+| `and_ref(object, object)` | 0x06000367 | Returns `y` when `x` is non-null; otherwise returns null. | High; direct null branch | Verified |
 | `neg_i4(int)` | 0x06000369 | Returns the unchecked integer negation of `x`. | High; direct `neg` opcode | Verified |
 | `add_i4(int, int)` | 0x0600036a | Returns the unchecked integer sum of `x` and `y`. | High; direct `add` opcode | Verified |
 | `sub_i4(int, int)` | 0x0600036b | Returns the unchecked integer difference of `x` and `y`. | High; direct `sub` opcode | Verified |
@@ -67,7 +69,9 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 - primitive-kind predicates with states that independently vary `m_code`, `m_opcodes`, `m_method`, and `m_foreign`, including an empty foreign string.
 - integer arithmetic with overflow wraparound, signed division/remainder, zero divisors and the `int.MinValue` / `-1` edge;
 - double arithmetic with NaN, infinities, signed zero, zero divisors and overflow to infinity.
+- reference selection with all nullness combinations; output renderers distinguish the first input, second input and null by reference identity.
 
 MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
 Primitive-kind predicates are compared by `Quire.Differential.Tests.PrimitivePredicateDifferentialTests`.
 Arithmetic helpers are compared by `Quire.Differential.Tests.PrimitiveArithmeticDifferentialTests`.
+Reference-selection helpers are compared by `Quire.Differential.Tests.PrimitiveReferenceDifferentialTests`.
