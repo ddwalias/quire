@@ -486,16 +486,16 @@ public partial class PremiumFunction : Function
 
 public partial class FnCompose : Function
 {
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     private Function m_f;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     private Function m_g;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public override string Name => string.Format("compose({0},{1})", m_f.Name, m_g.Name);
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public FnCompose(Function f, Function g)
         : base(g.Purity, 0)
     {
@@ -503,35 +503,35 @@ public partial class FnCompose : Function
         m_g = g;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public override void invVec<R>(out R r, object[] args)
     {
         m_g.invVec<R>(out var r2, args);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public override void inv<R, A>(out R r, A aa)
     {
         m_g.app<R, A>(out var r2, aa);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public override void inv<R, A, B>(out R r, A aa, B bb)
     {
         m_g.app<R, A, B>(out var r2, aa, bb);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc)
     {
         m_g.app<R, A, B, C>(out var r2, aa, bb, cc);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnCompose")]
     public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd)
     {
         m_g.app<R, A, B, C, D>(out var r2, aa, bb, cc, dd);
