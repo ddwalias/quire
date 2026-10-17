@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Fn_CurryTuple, mplrun")]
 public partial class Fn_CurryTuple : global::Quire.Mpl.Run.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Function m_f;
-    [global::Quire.Mirror.MirrorStub]
-    public Fn_CurryTuple(global::Quire.Mpl.Run.Function f, int purity, object name) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Apply(object[] args) => base.Apply(args);
-    [global::Quire.Mirror.MirrorStub]
-    public override object DynApply(object[] args) => base.DynApply(args);
 }
