@@ -335,27 +335,27 @@ public abstract partial class MatDim
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
         [MirrorVerified("MatDimRcDimEqualityDifferentialTests")]
         protected override bool eq2_b(rc_dim m1) => Eq_b(m_rowdim, m1.m_rowdim) & Eq_b(m_coldim, m1.m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(c_dim m1)
         {
             Dim factor = Mult(m1.m_coldim, m_rowdim);
             return factor == null ? null : c_dim.make(Mult(factor, m_coldim), m1.Rows);
         }
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(rc_dim m1)
         {
             Dim factor = Mult(m1.m_coldim, m_rowdim);
             return factor == null ? null : make_rc(Mult(factor, m1.m_rowdim), m_coldim);
         }
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
         protected override MatDim transpose() => make_rc(m_coldim, m_rowdim);
-        [MirrorAnalyzed("Mcd.MatDim")]
-        protected override MatDim invert() => make_rc(Invert(m_coldim), Invert(m_rowdim));
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
         protected override Dim det(int n) => Product(Product(Dim.identity, m_rowdim), m_coldim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
+        protected override MatDim invert() => make_rc(Invert(m_coldim), Invert(m_rowdim));
+        [MirrorVerified("MatDimRcDimArithmeticDifferentialTests")]
         protected override MatDim pwr(uint n)
         {
             Dim factor = Mult(m_coldim, m_rowdim);
