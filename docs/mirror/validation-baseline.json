@@ -4867,15 +4867,15 @@
     "Quire.Mpl.Run.Fn_papp::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "missing",
     "Quire.Mpl.Run.Fn_tuple::.ctor`0([System.Runtime]System.Object[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Fn_tuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Fn_varargs::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object)->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::get_Name`0()->[System.Runtime]System.String|False": "untested",
-    "Quire.Mpl.Run.Fn_varargs::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mpl.Run.Fn_varargs::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object)->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::get_Name`0()->[System.Runtime]System.String|False": "compared",
+    "Quire.Mpl.Run.Fn_varargs::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Function+<>c__DisplayClass92_0::.ctor`0()->[System.Runtime]System.Void|False": "excluded",
     "Quire.Mpl.Run.Function+<>c__DisplayClass92_0::<CurryMatVal>b__0`0([System.Runtime]System.Object)->[System.Runtime]System.Object|False": "excluded",
     "Quire.Mpl.Run.Function+<>c__DisplayClass95_0::.ctor`0()->[System.Runtime]System.Void|False": "excluded",
@@ -7921,6 +7921,33 @@
     "Quire.Mpl.Run.Fn_tuple::.ctor`0([System.Runtime]System.Object[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "mplrunfn_tuplemechanicaldifferentialtests"
     ],
+    "Quire.Mpl.Run.Fn_varargs::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object)->[System.Runtime]System.Object|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::get_Name`0()->[System.Runtime]System.String|False": [
+      "fnvarargsdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_varargs::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
+      "fnvarargsdifferentialtests"
+    ],
     "Quire.Mpl.Run.Function::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": [
       "functionclosuredirectdifferentialtests",
       "functiondifferentialtests",
@@ -10523,10 +10550,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Fn_varargs": {
-      "compared": 0,
+      "compared": 9,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 9,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 9,
       "uncovered": 0,
