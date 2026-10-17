@@ -1191,7 +1191,7 @@
     "Quire.Mpl.Run.DynamicType::DefineTuple`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ModuleBuilder,[System.Runtime]System.String)->[Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.TypeBuilder|True": "994f8611c19da8e2645432e3fd195e0fbf6d2027f7b0e8e92fd6c353b0f0136f",
     "Quire.Mpl.Run.DynamicType::DefineTuple`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ModuleBuilder,[System.Runtime]System.Type[])->[Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.TypeBuilder|True": "994f8611c19da8e2645432e3fd195e0fbf6d2027f7b0e8e92fd6c353b0f0136f",
     "Quire.Mpl.Run.DynamicType::Explode`0([System.Runtime]System.String)->[System.Runtime]System.String[]|True": "6dbafbb8b45ab2b26f49020842318b0b2bbba5a902f4b3e986a1dc2061c62ef1",
-    "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "06839f2f94ed1dd04162ce60083bd90d2fc6f49039e207aba8a308f20202201f",
+    "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "be8279abf53a94062fbf3d87f206c0c9b854ebda833eba09bff07af6542c4f4c",
     "Quire.Mpl.Run.DynamicType::FieldNames`0([System.Runtime]System.Int32)->[System.Runtime]System.String[]|True": "72d5d65f9a7b399b8a8fc598d94b7b3546de91ad052f13941cf021e884efe2b4",
     "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "291aed8b16bc63e7f1a6a44c99548c357d2506e17b3a5db48dde77a20b16bf83",
     "Quire.Mpl.Run.DynamicType::Ldarg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "a3b7371f04acb2d028c26272ead2cc27750efdbc3c0946cdafdf5e7382465de2",
@@ -1203,8 +1203,8 @@
     "Quire.Mpl.Run.DynamicType::TupleNameDemangle`0([System.Runtime]System.String)->[System.Runtime]System.Type[]|True": "4c0ce137466299c37734c053857f3204f4279e47ad12873c4fe8c51bc9cd3504",
     "Quire.Mpl.Run.DynamicType::TupleNameMangle`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "46d6dcf4771590bb8728119f46cb89ad7eb55f8b8a0950bd42a651942ecacae3",
     "Quire.Mpl.Run.DynamicType::TupleNameMangle`0([System.Runtime]System.Type[])->[System.Runtime]System.String|True": "46d6dcf4771590bb8728119f46cb89ad7eb55f8b8a0950bd42a651942ecacae3",
-    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "ef03004c41f78e6fe9683bd277a723c78c5cadc577fbfffe512034f6f4ea566d",
-    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.String,[System.Runtime]System.Int32)->[System.Runtime]System.String|True": "ef03004c41f78e6fe9683bd277a723c78c5cadc577fbfffe512034f6f4ea566d",
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "15a68708519c2218143511ab2e1191a5e46e5d64c59db9e41a8d55ee6ce1aaf3",
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.String,[System.Runtime]System.Int32)->[System.Runtime]System.String|True": "d4c9e7372e71ecb7f004d0e10bcea5dd325ac39c766ce582d24830ddc488d9cc",
     "Quire.Mpl.Run.DynamicType::TypeToName`0([System.Runtime]System.Type)->[System.Runtime]System.String|True": "defa58b611e602fc08de80092dff6c68fbbe658266045a69b3cc1def45dbbfea",
     "Quire.Mpl.Run.FnCompose::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False": "8d68b899cef3ae4fe50b7da9adae3c2e8abdbeb38f108b1bba9674644cf4653a",
     "Quire.Mpl.Run.FnCompose::get_Name`0()->[System.Runtime]System.String|False": "e567553d5f4b70219301dc0e461bf2e68e0a44f29bd55bf76669ea54e7df8c18",
@@ -2809,6 +2809,9 @@
     "Quire.Mpl.Run.Delegates::project22`2()->[Quire.Mpl]Quire.Mpl.Run.F`3<!!1,!!0,!!1>|True",
     "Quire.Mpl.Run.Delegates::toFDelegate`0([System.Runtime]System.Type,[System.Runtime]System.Delegate)->[System.Runtime]System.Delegate|True",
     "Quire.Mpl.Run.DynamicType::.ctor`0()->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True",
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True",
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.String,[System.Runtime]System.Int32)->[System.Runtime]System.String|True",
     "Quire.Mpl.Run.FnCompose::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[Quire.Mpl]Quire.Mpl.Run.Function)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.FnCompose::get_Name`0()->[System.Runtime]System.String|False",
     "Quire.Mpl.Run.FnCompose::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False",
@@ -4636,7 +4639,7 @@
     "Quire.Mpl.Run.DynamicType::DefineTuple`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ModuleBuilder,[System.Runtime]System.String)->[Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.TypeBuilder|True": "missing",
     "Quire.Mpl.Run.DynamicType::DefineTuple`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ModuleBuilder,[System.Runtime]System.Type[])->[Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.TypeBuilder|True": "missing",
     "Quire.Mpl.Run.DynamicType::Explode`0([System.Runtime]System.String)->[System.Runtime]System.String[]|True": "missing",
-    "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "missing",
+    "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "compared",
     "Quire.Mpl.Run.DynamicType::FieldNames`0([System.Runtime]System.Int32)->[System.Runtime]System.String[]|True": "missing",
     "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "missing",
     "Quire.Mpl.Run.DynamicType::Ldarg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "missing",
@@ -4648,8 +4651,8 @@
     "Quire.Mpl.Run.DynamicType::TupleNameDemangle`0([System.Runtime]System.String)->[System.Runtime]System.Type[]|True": "missing",
     "Quire.Mpl.Run.DynamicType::TupleNameMangle`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "missing",
     "Quire.Mpl.Run.DynamicType::TupleNameMangle`0([System.Runtime]System.Type[])->[System.Runtime]System.String|True": "missing",
-    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "missing",
-    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.String,[System.Runtime]System.Int32)->[System.Runtime]System.String|True": "missing",
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "compared",
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.String,[System.Runtime]System.Int32)->[System.Runtime]System.String|True": "compared",
     "Quire.Mpl.Run.DynamicType::TypeToName`0([System.Runtime]System.Type)->[System.Runtime]System.String|True": "missing",
     "Quire.Mpl.Run.FV`10::.ctor`0([System.Runtime]System.Object,[System.Runtime]System.IntPtr)->[System.Runtime]System.Void|False": "declaration_only",
     "Quire.Mpl.Run.FV`10::BeginInvoke`0(!0,!1,!2,!3,!4,!5,!6,!7,!8,!9,[System.Runtime]System.AsyncCallback,[System.Runtime]System.Object)->[System.Runtime]System.IAsyncResult|False": "declaration_only",
@@ -7612,6 +7615,15 @@
     "Quire.Mpl.Run.DynamicType::.ctor`0()->[System.Runtime]System.Void|False": [
       "mplrundynamictypemechanicaldifferentialtests"
     ],
+    "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": [
+      "dynamictypenamehelpersdifferentialtests"
+    ],
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": [
+      "dynamictypenamehelpersdifferentialtests"
+    ],
+    "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.String,[System.Runtime]System.Int32)->[System.Runtime]System.String|True": [
+      "dynamictypenamehelpersdifferentialtests"
+    ],
     "Quire.Mpl.Run.Fn_CurryTuple::get_Name`0()->[System.Runtime]System.String|False": [
       "mplrunfn_currytuplemechanicaldifferentialtests"
     ],
@@ -9761,10 +9773,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.DynamicType": {
-      "compared": 1,
+      "compared": 4,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 28,
+      "missing": 25,
       "structure_mismatch": 0,
       "total": 29,
       "uncovered": 0,
