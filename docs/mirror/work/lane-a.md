@@ -688,9 +688,9 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Branch based on `origin/main` at `10457bf`. Scope: constructor, `ExpandCall` and `ExpandRef` (`0x06000146`–`0x06000148`). Original contracts are bound to `mplrun` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; see [Mpl.Run.MplLocalFunctionMacro](../evidence/Mpl.Run.MplLocalFunctionMacro.md).
 - Direct Windows .NET 10 test: `MplLocalFunctionMacroDifferentialTests` passed 1/1. It compares constructor field state and both `CanNotExpand` exception outcomes with distinct handles.
 - Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.MplLocalFunctionMacro --diff-filter 'FullyQualifiedName~MplLocalFunctionMacroDifferentialTests' --mutate --proposed-unreachable /tmp/quire-mpl-local-function-macro-proposed-unreachable.txt --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-mpl-local-function-macro-proposals`.
-- Run `f413e638-8193-4193-8a73-9934a2f11f8a`, summary `/tmp/quire-validation-mpl-local-function-macro-proposals/summary.json`: Harness 86, Mpl 188, Differential 1 passed; 3 compared, 0 missing/structure mismatch/uncovered/verified-unsupported; IL 3 exact; lint 0, integrity complete, ratchet ok, 0 mutants generated/0 survivors. Local checks pass; gate would block on four proposed unreachable lines pending approval. No baseline-exact method regressed.
+- Run `f413e638-8193-4193-8a73-9934a2f11f8a`, summary `/tmp/quire-validation-mpl-local-function-macro-proposals/summary.json`: Harness 86, Mpl 188, Differential 1 passed; 3 compared, 0 missing/structure mismatch/uncovered/verified-unsupported; IL 3 exact; lint 0, integrity complete, ratchet ok, 0 mutants generated/0 survivors. Local checks pass; gate would block on four proposed unreachable lines pending maintainer acceptance. No baseline-exact method regressed.
 - Exact Release IL before/after: 0/3 implemented methods to 3/3 exact.
-- Independent review verified all four unreachable-line proofs and hashes, and found no production/test mismatch. Full batch remains blocked until user approval and maintainer acceptance. Pending entries:
+- Independent review verified all four unreachable-line proofs and hashes, and found no production/test mismatch. The user approved all four entries on 2026-10-18; they now await maintainer acceptance in `docs/mirror/unreachable-lines.txt`. Pending entries:
 
 ```text
 Quire.Mpl.Run.MplLocalFunctionMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/MplLocalFunctionMacro.cs:29 sha256=c2e9aaa45313964d659c95642d90226f598d93560970f334bae13073c17f7e82 # MplMacro.CanNotExpand(form.handle) always throws AppException in Mathcad before the null return.
@@ -699,7 +699,7 @@ Quire.Mpl.Run.MplLocalFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv
 Quire.Mpl.Run.MplLocalFunctionMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/MplLocalFunctionMacro.cs:37 sha256=268589f97438c1918526706226460e7ea8250372286c01be89ac6f75a875ba1d # The preceding Mathcad CanNotExpand call always throws AppException, so control cannot reach this method-closing line.
 ```
 
-- Next: obtain user approval and maintainer acceptance for the pending entries; meanwhile continue with another independent unowned Lane A member.
+- Next: maintainer acceptance for the approved pending entries; meanwhile continue with another independent unowned Lane A member.
 
 ## Historical batch results
 
