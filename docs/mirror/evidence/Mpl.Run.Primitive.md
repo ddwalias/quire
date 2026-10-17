@@ -6,7 +6,7 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, two scalar-value helpers, nine reflective call overloads, three array constructors, eleven array element operations, five bitwise/shift/root helpers, four primitive-kind predicates and five typed cast helpers, eight private constructors, and the listed MemberGen members are implemented; other Primitive members remain stubs. Each comparison is a single
+The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, two scalar-value helpers, nine reflective call overloads, three array constructors, eleven array element operations, five bitwise/shift/root helpers, four primitive-kind predicates and five typed cast helpers, eight private constructors, the static initializer and its two static fields, and the listed MemberGen members are implemented; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
 
@@ -98,6 +98,9 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `rrv(double, double)` | 0x0600039e | MemberGen: `new NumVal(r, i)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `seq(object, object)` | 0x060003a5 | MemberGen: `y` | Mechanical; Release IL equals Mathcad's | Verified |
 | `seq_void(object, object)` | 0x060003a6 | MemberGen: `throw new AppException("compiler error")` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.cctor` | 0x060003af | Initializes `m_stelem_vec`, constructs the four Code/CodeFunction values used by primitive entries, performs the unused `Math.Pow` reflection lookup, and creates the ordered 88-entry primitive table. | High; original C# and IL inspected; direct state comparison executes the initializer and compares both artifacts' fields | Verified |
+| `m_primitive` | field | Stores the 88 primitive definitions in original order, retaining shared CodeFunction/CodeArg objects and each opcode array, method reference, or foreign definition. | High; complete table structurally compared, including alias identity | Verified |
+| `m_stelem_vec` | field | Stores `typeof(Primitive).GetMethod("stelem_vec")`. | High; exact reflection result compared | Verified |
 
 ## Test cases
 
@@ -128,3 +131,5 @@ Bitwise, shift and nth-root helpers are compared by `Quire.Differential.Tests.Pr
 Scalar-value helpers are compared by `Quire.Differential.Tests.PrimitiveValueDifferentialTests`.
 Reflective call overloads are compared by `Quire.Differential.Tests.PrimitiveCallDifferentialTests`.
 Private constructors are compared by `Quire.Differential.Tests.PrimitiveConstructorDifferentialTests`.
+
+The static initializer and both fields are compared by `Quire.Differential.Tests.PrimitiveInitializerDifferentialTests`, which compares both artifacts alongside the static table state. Its structural renderer compares all 88 entries, nested arrays, method/type references, and shared-object aliases.

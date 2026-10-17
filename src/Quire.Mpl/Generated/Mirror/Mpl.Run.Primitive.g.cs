@@ -12,10 +12,6 @@ namespace Quire.Mpl.Run;
 public partial class Primitive
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Primitive[] m_primitive;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo m_stelem_vec;
-    [global::Quire.Mirror.MirrorStub]
     public string m_name;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.OpCode[] m_opcodes;
