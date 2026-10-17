@@ -41,13 +41,17 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public F<object, object, object> AsDelegate_2(uint errpos) => AsF<object, object, object>(errpos);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    protected virtual Function clo<CLO>(CLO value) => new Fn_clo<CLO>(this, value);
+    protected virtual Function clo<CLO>(CLO a) => new Fn_clo<CLO>(this, a);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     protected virtual Function clovec<CLO>(CLO[] args)
     {
-        Function result = this;
-        foreach (CLO value in args) result = result.clo(value);
-        return result;
+        Function function = this;
+        int num = args.Length;
+        for (int i = 0; i < num; i++)
+        {
+            function = function.clo(args[i]);
+        }
+        return function;
     }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public virtual void inv<R>(out R result) => invVec(out result, empty_vec);
@@ -236,42 +240,53 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public object apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp) { app(out object result, aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public void appVec<R>(out R result, object[] args)
+    public void appVec<R>(out R r, object[] args)
     {
-        int count = args.Length;
-        if (m_varargs) { invVec(out result, args); return; }
-        switch (count)
+        int num = args.Length;
+        if (m_varargs)
         {
-            case 1: app(out result, args[0]); return;
-            case 2: app(out result, args[0], args[1]); return;
-            case 3: app(out result, args[0], args[1], args[2]); return;
-            case 4: app(out result, args[0], args[1], args[2], args[3]); return;
-            case 5: app(out result, args[0], args[1], args[2], args[3], args[4]); return;
-            case 6: app(out result, args[0], args[1], args[2], args[3], args[4], args[5]); return;
-            case 7: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6]); return;
-            case 8: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]); return;
-            case 9: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]); return;
-            case 10: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]); return;
-            case 11: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]); return;
-            case 12: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]); return;
-            case 13: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12]); return;
-            case 14: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13]); return;
-            case 15: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13], args[14]); return;
-            case 16: app(out result, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13], args[14], args[15]); return;
+            invVec(out r, args);
+            return;
         }
-        if (m_purity == count) invVec(out result, args);
-        else if (m_purity < count)
+        switch (num)
         {
-            invVec(out object next, take(m_purity, args));
-            ((Function)next).appVec(out result, but(m_purity, args));
+            case 1: app(out r, args[0]); return;
+            case 2: app(out r, args[0], args[1]); return;
+            case 3: app(out r, args[0], args[1], args[2]); return;
+            case 4: app(out r, args[0], args[1], args[2], args[3]); return;
+            case 5: app(out r, args[0], args[1], args[2], args[3], args[4]); return;
+            case 6: app(out r, args[0], args[1], args[2], args[3], args[4], args[5]); return;
+            case 7: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6]); return;
+            case 8: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]); return;
+            case 9: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]); return;
+            case 10: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]); return;
+            case 11: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]); return;
+            case 12: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]); return;
+            case 13: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12]); return;
+            case 14: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13]); return;
+            case 15: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13], args[14]); return;
+            case 16: app(out r, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13], args[14], args[15]); return;
         }
-        else if (m_minargs <= count)
+        if (m_purity == num)
         {
-            var padded = new object[m_purity];
-            Array.Copy(args, padded, count);
-            invVec(out result, padded);
+            invVec(out r, args);
         }
-        else result = (R)(object)clovec(args);
+        else if (m_purity < num)
+        {
+            object[] args2 = FunctionUtilities.take(m_purity, args);
+            invVec<object>(out var r2, args2);
+            ((Function)r2).appVec(out r, FunctionUtilities.but(m_purity, args));
+        }
+        else if (m_minargs <= num)
+        {
+            object[] array = new object[m_purity];
+            Array.Copy(args, array, num);
+            invVec(out r, array);
+        }
+        else
+        {
+            r = (R)(object)clovec(args);
+        }
     }
 }
 
