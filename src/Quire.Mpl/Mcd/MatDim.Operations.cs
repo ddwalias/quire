@@ -243,31 +243,31 @@ public abstract partial class MatDim
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
         [MirrorVerified("MatDimRDimEqualityDifferentialTests")]
         protected override bool eq2_b(r_dim m1) => Eq_b(m_rowdim, m1.m_rowdim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override MatDim mmult1(MatDim m2) => m2.mmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(c_dim m1)
         {
             Dim factor = Mult(m1.m_coldim, m_rowdim);
             return factor == null ? null : uniform_dim.make(factor, m1.Rows, Cols);
         }
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override MatDim mmult2(rc_dim m1)
         {
             Dim factor = Mult(m1.m_coldim, m_rowdim);
             return factor == null ? null : make(Mult(factor, m1.m_rowdim), Cols);
         }
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override Dim dmult1(MatDim m2) => m2.dmult2(this);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override Dim dmult2(r_dim m1) => Mult(m1.m_rowdim, m_rowdim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override Dim dmult2(c_dim m1) => Mult(m1.m_coldim, m_rowdim);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override MatDim transpose() => c_dim.make(m_rowdim, Cols);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override MatDim invert() => c_dim.make(Invert(m_rowdim), Rows);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimArithmeticDifferentialTests")]
         protected override Dim det(int n) => Product(Dim.identity, m_rowdim);
     }
     protected partial class c_dim : MatDim
