@@ -1194,7 +1194,7 @@
     "Quire.Mpl.Run.DynamicType::Explode`0([System.Runtime]System.String)->[System.Runtime]System.String[]|True": "6dbafbb8b45ab2b26f49020842318b0b2bbba5a902f4b3e986a1dc2061c62ef1",
     "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "be8279abf53a94062fbf3d87f206c0c9b854ebda833eba09bff07af6542c4f4c",
     "Quire.Mpl.Run.DynamicType::FieldNames`0([System.Runtime]System.Int32)->[System.Runtime]System.String[]|True": "b4c336759b9ce7d1544017eb9b4500e8d55e1a5880d6c12cd9186397f74962c9",
-    "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "291aed8b16bc63e7f1a6a44c99548c357d2506e17b3a5db48dde77a20b16bf83",
+    "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "2d0ce70f39e23055b1a5fb7c15ac25730ed064be749d3180b4d4b348566e20ec",
     "Quire.Mpl.Run.DynamicType::Ldarg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "a3b7371f04acb2d028c26272ead2cc27750efdbc3c0946cdafdf5e7382465de2",
     "Quire.Mpl.Run.DynamicType::MplConcat3`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.String|True": "8123634c0fbbf577d1c63c77c94a883506b131c5de99658f61fa9d6ab1ae5f7e",
     "Quire.Mpl.Run.DynamicType::NameDemangle`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Type[]|True": "635d86d4096c89e5cd278995c0d734bf6e5bba736d86c758a3773be00a869b41",
@@ -2816,6 +2816,7 @@
     "Quire.Mpl.Run.DynamicType::Concat3Mi`0()->[System.Runtime]System.Reflection.MethodInfo|True",
     "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True",
     "Quire.Mpl.Run.DynamicType::FieldNames`0([System.Runtime]System.Int32)->[System.Runtime]System.String[]|True",
+    "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True",
     "Quire.Mpl.Run.DynamicType::MplConcat3`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.String|True",
     "Quire.Mpl.Run.DynamicType::NameToType`0([System.Runtime]System.String)->[System.Runtime]System.Type|True",
     "Quire.Mpl.Run.DynamicType::TypeParameterName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True",
@@ -4656,7 +4657,7 @@
     "Quire.Mpl.Run.DynamicType::Explode`0([System.Runtime]System.String)->[System.Runtime]System.String[]|True": "missing",
     "Quire.Mpl.Run.DynamicType::FieldName`0([System.Runtime]System.Int32)->[System.Runtime]System.String|True": "compared",
     "Quire.Mpl.Run.DynamicType::FieldNames`0([System.Runtime]System.Int32)->[System.Runtime]System.String[]|True": "compared",
-    "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "missing",
+    "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "compared",
     "Quire.Mpl.Run.DynamicType::Ldarg`0([Quire.Mpl.Emit]System.Reflection.Emit.Quire.Mpl.ILGenerator,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "missing",
     "Quire.Mpl.Run.DynamicType::MplConcat3`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.String|True": "compared",
     "Quire.Mpl.Run.DynamicType::NameDemangle`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Type[]|True": "missing",
@@ -7776,6 +7777,9 @@
     "Quire.Mpl.Run.DynamicType::FieldNames`0([System.Runtime]System.Int32)->[System.Runtime]System.String[]|True": [
       "dynamictypefieldnamesdifferentialtests"
     ],
+    "Quire.Mpl.Run.DynamicType::GetShortName`0([System.Runtime]System.String)->[System.Runtime]System.String|True": [
+      "dynamictypegetshortnamedifferentialtests"
+    ],
     "Quire.Mpl.Run.DynamicType::MplConcat3`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.String|True": [
       "dynamictypemplconcat3differentialtests"
     ],
@@ -9959,10 +9963,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.DynamicType": {
-      "compared": 11,
+      "compared": 12,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 19,
+      "missing": 18,
       "structure_mismatch": 0,
       "total": 30,
       "uncovered": 0,
