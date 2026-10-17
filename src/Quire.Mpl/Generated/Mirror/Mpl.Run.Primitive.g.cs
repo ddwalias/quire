@@ -44,12 +44,6 @@ public partial class Primitive
     [global::Quire.Mirror.MirrorStub]
     public static double Call_c(int prim, int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int[] arr_i4(int size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double[] arr_f8(int size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object[] arr_ref(int size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static int ldelem_i4(int[] arr, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void stelem_i4_void(int[] arr, int index, int val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

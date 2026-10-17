@@ -95,6 +95,13 @@ public partial class Primitive
     [MirrorVerified("PrimitiveConversionDifferentialTests")]
     public static double conv_f8(int x) => x;
 
+    [MirrorVerified("PrimitiveArrayDifferentialTests")]
+    public static int[] arr_i4(int size) => new int[size];
+    [MirrorVerified("PrimitiveArrayDifferentialTests")]
+    public static double[] arr_f8(int size) => new double[size];
+    [MirrorVerified("PrimitiveArrayDifferentialTests")]
+    public static object[] arr_ref(int size) => new object[size];
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

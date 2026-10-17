@@ -6,7 +6,7 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
+The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, three array constructors, four primitive-kind predicates and five typed cast helpers are implemented alongside the
 listed MemberGen members; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
@@ -38,6 +38,9 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `and_ref(object, object)` | 0x06000367 | Returns `y` when `x` is non-null; otherwise returns null. | High; direct null branch | Verified |
 | `conv_i4(double)` | 0x06000380 | Converts the double to int using the runtime's `conv.i4` behavior. | High; direct cast | Verified |
 | `conv_f8(int)` | 0x06000381 | Converts the int to double using `conv.r8`. | High; direct widening conversion | Verified |
+| `arr_i4(int)` | 0x06000384 | Creates a zero-initialized `int[]` of the requested length. | High; direct `newarr int` | Verified |
+| `arr_f8(int)` | 0x06000385 | Creates a zero-initialized `double[]` of the requested length. | High; direct `newarr double` | Verified |
+| `arr_ref(int)` | 0x06000386 | Creates a null-initialized `object[]` of the requested length. | High; direct `newarr object` | Verified |
 | `neg_i4(int)` | 0x06000369 | Returns the unchecked integer negation of `x`. | High; direct `neg` opcode | Verified |
 | `add_i4(int, int)` | 0x0600036a | Returns the unchecked integer sum of `x` and `y`. | High; direct `add` opcode | Verified |
 | `sub_i4(int, int)` | 0x0600036b | Returns the unchecked integer difference of `x` and `y`. | High; direct `sub` opcode | Verified |
@@ -73,9 +76,11 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 - double arithmetic with NaN, infinities, signed zero, zero divisors and overflow to infinity.
 - reference selection with all nullness combinations; output renderers distinguish the first input, second input and null by reference identity.
 - double-to-int conversion with fractional values, integer bounds, out-of-range values, NaN and infinities; int-to-double conversion at signed bounds and representative values.
+- integer, double and object array creation with lengths 0, 1, 3 and -1; renderers compare runtime array type, element values and resulting exceptions.
 
 MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
 Primitive-kind predicates are compared by `Quire.Differential.Tests.PrimitivePredicateDifferentialTests`.
 Arithmetic helpers are compared by `Quire.Differential.Tests.PrimitiveArithmeticDifferentialTests`.
 Reference-selection helpers are compared by `Quire.Differential.Tests.PrimitiveReferenceDifferentialTests`.
 Conversion helpers are compared by `Quire.Differential.Tests.PrimitiveConversionDifferentialTests`.
+Array constructors are compared by `Quire.Differential.Tests.PrimitiveArrayDifferentialTests`.

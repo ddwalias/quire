@@ -555,7 +555,19 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Checks: filtered Primitive differential suite passed 30/30. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests|FullyQualifiedName~PrimitiveConversionDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 30; 48 compared, 0 structure mismatch/uncovered/unsupported, 48 exact, lint 0, ratchet ok, mutation 62/62 killed. Run `b0e39438-42b4-4f91-8997-6037bd0bbc01`; receipt `/tmp/quire-validation-e06izcc7/summary.json`. The 38 missing methods are pre-existing Primitive stubs outside this batch.
 - Exact IL before/after: both conversions compile to the original `conv.i4` / `conv.r8` bodies; Primitive rose from 46/86 to 48/86 exact, with no baseline-exact method regressed.
 - Independent review returned MERGE; the reviewer independently rebuilt Release and checked both conversion bodies. Pending proposals: none.
-- Next: complete independent review and gate; then inspect `Primitive.arr_i4`, `arr_f8` and `arr_ref`.
+- Final branch tip `5a784f23ade1184707032d2653bb29d9052dc1ef` passed the runtime gate and merged to main at `2fe5ed63e710`; main was pushed. Gate receipt `/tmp/quire-a-primitive-conv-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-conv-gate/run/summary.json`: Harness 86, Mpl 188, Differential 242; 972 compared, 1461 exact, 98 structure-only, 0 lint, ratchet ok, mutations 0/0 selected by the gate. The scoped pre-gate mutation run killed 62/62. Existing inventory gaps remain (742 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported). No proposals pending.
+- Next: inspect `Primitive.arr_i4`, `arr_f8` and `arr_ref`.
+
+## Primitive array constructors (`mirror/a-primitive-array`)
+
+- Scope: `Primitive.arr_i4(int)`, `arr_f8(int)` and `arr_ref(int)`.
+- Original: inspected the installed `mplrun.dll` before implementation; tokens 0x06000384–0x06000386. Each method loads the requested length, executes `newarr` for its element type, and returns the new array.
+- Cases: lengths 0, 1, 3 and -1 for all three element types; explicit renderers compare array type and every element, and direct comparisons check the negative-length exception.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered Primitive differential suite passed 33/33. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests|FullyQualifiedName~PrimitiveConversionDifferentialTests|FullyQualifiedName~PrimitiveArrayDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 33; 51 compared, 0 structure mismatch/uncovered/unsupported, 51 exact, lint 0, ratchet ok, mutation 62/62 killed. Run `4fd2bb08-03ab-4ef6-b106-6cd89af267d8`; receipt `/tmp/quire-validation-bykdevvg/summary.json`. The 35 missing methods are pre-existing Primitive stubs outside this batch.
+- Exact IL before/after: all three constructors compile to their original `ldarg.0; newarr; ret` bodies; Primitive rose from 48/86 to 51/86 exact, with no baseline-exact method regressed.
+- Independent review returned MERGE; the reviewer independently rebuilt Release and confirmed all three `newarr` bodies. Pending proposals: none.
+- Next: gate and merge; then inspect Primitive array accessors and setters.
 
 ## Historical batch results
 
