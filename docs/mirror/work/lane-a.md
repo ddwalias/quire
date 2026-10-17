@@ -704,10 +704,6 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Independent review of the prior diff requested the source-shape fix; review of this final diff is pending. Re-review, then squash/push and queue for runtime gate.
 - Next: continue with the active `MplForeignMacro` batch in its separate worktree; then return to independent unowned Lane A members.
 
-## Approved proposals awaiting maintainer acceptance
-
-The user approved the single independently reviewed `NameToType` unreachable-line proposal on `mirror/a-dynamic-type-name-maps` (source line 15 after `AppException.Raise`; original IL has the same unconditional throw path). Maintainer acceptance in `docs/mirror/unreachable-lines.txt` is still required before that branch can pass the gate.
-
 ## DynamicType.MplConcat3 (`mirror/a-dynamic-type-mplconcat3`)
 
 - Scope: implement `MplConcat3(object, object, object)` (`0x06000405`), remove its generated stub, and add direct differential comparisons.
@@ -718,6 +714,17 @@ The user approved the single independently reviewed `NameToType` unreachable-lin
 - Exact Release IL before/after: DynamicType was 6/30 exact before and 7/30 after; `MplConcat3` matches the original 39-byte body opcode for opcode. No previously exact method regressed. No proposals.
 - Independent review returned MERGE for the full five-path diff at implementation tip `1457793`. The branch is rebased on current main `0cd49a5`; runtime gate follows the MatrixIterator gate and a rebase to that resulting main. No proposals.
 - Next: continue with the independent `MplForeignMacro` members indexed in `WORK.md`.
+
+## DynamicType name maps (`mirror/a-dynamic-type-name-maps`)
+
+- Branch `mirror/a-dynamic-type-name-maps`, code commit reviewed as `b171497`, rebased onto current main `c0a4e7a`; scope: `NameToType(string)` (`0x06000410`) and `TypeToName(Type)` (`0x06000411`), direct differential tests and generated-stub removals.
+- Original: installed `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. `NameToType` looks up the key and raises `demangle error` on a miss; `TypeToName` returns the mapped name or `.ref`. See [Mpl.Run.DynamicType](../evidence/Mpl.Run.DynamicType.md).
+- Direct Windows .NET 10 test: `DynamicTypeNameMapsDifferentialTests` passed 2/2. The scoped run passed Harness 86, Mpl 188 and Differential 7 with no failures/skips. Cases cover every mapped key, unmapped and null keys.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH TMPDIR=/tmp python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --mutate --jobs 2 --proposed-unreachable /tmp/quire-name-map-unreachable.txt --results /tmp/quire-validation-dynamic-type-name-maps-native`. Run `bb08d760-8950-4606-99b9-4286027568c5`; summary `/tmp/quire-validation-dynamic-type-name-maps-native/summary.json`: 8 compared, 22 pre-existing missing stubs, no structure mismatches/uncovered/unsupported, 8 exact, lint 0, ratchet ok, 14/14 mutants killed (one timeout killed on retry). `LOCAL CHECKS: pass · GATE: would block (1 proposed unreachable line pending acceptance)`.
+- At the original scoped-run base, DynamicType exact totals were 6/30 before and 8/30 after; both added methods were exact. Current main also contains `MplConcat3`, so the protected runtime gate will report totals against the rebased baseline. No previously exact method regressed in the scoped run.
+- The reviewed unreachable-line proposal is `Quire.Mpl.Run.DynamicType::NameToType`0([System.Runtime]System.String)->[System.Runtime]System.Type|True src/Quire.Mpl/Run/DynamicType.NameMaps.cs:15 sha256=e227ce95d7373cf69bba874573b5501acd84cc1e476b842fb42c9e2d9eb01883`: `AppException.Raise("demangle error")` always throws, and Mathcad token `0x06000410` has the same `pop; ret` tail, unreachable in the original too. The user approved it; the maintainer acceptance entry is included in `docs/mirror/unreachable-lines.txt` on this branch.
+- Independent review of the resolved full diff returned MERGE at code commit `b171497`, including the protected unreachable-line proof and acceptance. Checkpoint-only amendments clarify the pre-rebase exact totals and record the review verdict; the implementation and protected entry are unchanged. No mutant proposals.
+- Next: continue with the active `MplForeignMacro` batch; then proceed to independent unowned Lane A members.
 
 ## Historical batch results
 
