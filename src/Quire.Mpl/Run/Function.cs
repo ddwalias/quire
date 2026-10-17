@@ -531,15 +531,23 @@ public abstract partial class Function : FunctionUtilities
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
-    public static Function closure<CLO>(Delegate d, CLO clo, int purity) => purity switch
+    [MirrorVerified("FunctionClosureDirectDifferentialTests")]
+    public static Function closure<CLO>(Delegate d, CLO clo, int purity)
     {
-        2 => Delegates.FunctionClosure_1(d, clo),
-        3 => Delegates.FunctionClosure_2(d, clo),
-        4 => Delegates.FunctionClosure_3(d, clo),
-        5 => Delegates.FunctionClosure_4(d, clo),
-        _ => new Fn_clo<CLO>(d, clo, purity),
-    };
+        switch (purity)
+        {
+            case 2:
+                return Delegates.FunctionClosure_1(d, clo);
+            case 3:
+                return Delegates.FunctionClosure_2(d, clo);
+            case 4:
+                return Delegates.FunctionClosure_3(d, clo);
+            case 5:
+                return Delegates.FunctionClosure_4(d, clo);
+            default:
+                return new Fn_clo<CLO>(d, clo, purity);
+        }
+    }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b)
