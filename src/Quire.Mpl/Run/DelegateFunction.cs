@@ -19,19 +19,19 @@ public partial class DelegateFunction : Function
         }
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public static DelegateFunction makeF(F<object, object> f, string name) => new UnaryDelegateFunction(f) { Name = canonical_name(name) };
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public static DelegateFunction makeF(F<object, object, object> f, string name) => new BinaryDelegateFunction(f) { Name = canonical_name(name) };
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public static DelegateFunction makeF(F<object, object, object, object> f, string name) => new TernaryDelegateFunction(f) { Name = canonical_name(name) };
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public static DelegateFunction makeF(F<object, object, object, object, object> f, string name) => new QuartnaryDelegateFunction(f) { Name = canonical_name(name) };
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public static DelegateFunction make(Delegate f, int function_purity)
     {
         switch (function_purity)
@@ -68,24 +68,24 @@ public partial class DelegateFunction : Function
         return new DelegateFunction(f, function_purity);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public DelegateFunction(Delegate f, int function_purity)
         : base(function_purity, 0)
     {
         m_f = f;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     private object app0()
     {
         if (m_purity == 0) return m_f.DynamicInvoke(empty_vec);
         return this;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     protected override Function clo<CLO>(CLO a) => closure(m_f, a, m_purity);
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     private string remove_module_suffix(string name)
     {
         StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase;
@@ -96,150 +96,150 @@ public partial class DelegateFunction : Function
         return name;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void invVec<R>(out R r, object[] args) => r = (R)m_f.DynamicInvoke(args);
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R>(out R r)
     {
         var f = m_f as F<R>;
-        r = f == null ? (R)m_f.DynamicInvoke(new object[0]) : f();
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[0]) : f();
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A>(out R r, A aa)
     {
         var f = m_f as F<R, A>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa) : f(aa);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa }) : f(aa);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B>(out R r, A aa, B bb)
     {
         var f = m_f as F<R, A, B>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb) : f(aa, bb);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb }) : f(aa, bb);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc)
     {
         var f = m_f as F<R, A, B, C>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc) : f(aa, bb, cc);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc }) : f(aa, bb, cc);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd)
     {
         var f = m_f as F<R, A, B, C, D>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd) : f(aa, bb, cc, dd);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd }) : f(aa, bb, cc, dd);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E>(out R r, A aa, B bb, C cc, D dd, E ee)
     {
         var f = m_f as F<R, A, B, C, D, E>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee) : f(aa, bb, cc, dd, ee);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee }) : f(aa, bb, cc, dd, ee);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F>(out R r, A aa, B bb, C cc, D dd, E ee, F ff)
     {
         var f = m_f as F<R, A, B, C, D, E, F>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff) : f(aa, bb, cc, dd, ee, ff);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff }) : f(aa, bb, cc, dd, ee, ff);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg) : f(aa, bb, cc, dd, ee, ff, gg);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg }) : f(aa, bb, cc, dd, ee, ff, gg);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh) : f(aa, bb, cc, dd, ee, ff, gg, hh);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh }) : f(aa, bb, cc, dd, ee, ff, gg, hh);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J, K>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J, K>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J, K, L>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J, K, L, M>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override void inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R r, A aa, B bb, C cc, D dd, E ee, F ff, G gg, H hh, I ii, J jj, K kk, L ll, M mm, N nn, O oo, P pp)
     {
         var f = m_f as F<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>;
-        r = f == null ? (R)m_f.DynamicInvoke(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp);
+        r = (f == null) ? (R)m_f.DynamicInvoke(new object[] { aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp }) : f(aa, bb, cc, dd, ee, ff, gg, hh, ii, jj, kk, ll, mm, nn, oo, pp);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override F<A, B> AsF<A, B>(uint errpos)
     {
         if (m_f is F<A, B> result) return result;
         return base.AsF<A, B>(errpos);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override F<A, B, C> AsF<A, B, C>(uint errpos)
     {
         if (m_f is F<A, B, C> result) return result;
         return base.AsF<A, B, C>(errpos);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override F<A, B, C, D> AsF<A, B, C, D>(uint errpos)
     {
         if (m_f is F<A, B, C, D> result) return result;
         return base.AsF<A, B, C, D>(errpos);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorVerified("DelegateFunctionDifferentialTests")]
     public override F<A, B, C, D, E> AsF<A, B, C, D, E>(uint errpos)
     {
         if (m_f is F<A, B, C, D, E> result) return result;

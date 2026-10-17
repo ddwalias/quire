@@ -43,6 +43,8 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatDim c_dim arithmetic | Merged to main at `38be34e` (`86f7e1c`). 9 arithmetic methods; exact IL; 29 direct comparisons. |
 | MatDim rc_dim coordinates | Merged to main at `2a8ce47` (`32ed171`). 5 coordinate methods; exact IL; 31 direct comparisons. |
 | MatDim rc_dim arithmetic | Merged to main at `e0f81c9` (`2490dd7`). 7 arithmetic methods; exact IL; 40 direct comparisons. |
+| MatDim crazy_dim coordinates | Merged to main at `f7afb21` (`58659d6`). 2 coordinate methods; exact IL; 24 direct comparisons. |
+| DelegateFunction invocation and projections | Active batch on `mirror/b-delegatefunction-inv`. 31 methods; exact IL for 17 `inv`, `invVec`, 4 `AsF`; 56 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -204,14 +206,26 @@ Branch `mirror/b-matdim-rc-dim-coordinates` (`32ed171`), based on clean main `38
 
 Branch `mirror/b-matdim-rc-dim-arithmetic` (`2490dd7`), based on clean main `2a8ce47` (merged to main at `e0f81c9` after rebase). The batch adds direct differential tests in `MatDimRcDimArithmeticDifferentialTests.cs`, verified status annotations on `rc_dim.mmult1(MatDim)` (token 0x060007bc), `rc_dim.mmult2(c_dim)` (token 0x060007bd), `rc_dim.mmult2(rc_dim)` (token 0x060007be), `rc_dim.transpose()` (token 0x060007bf), `rc_dim.det(int)` (token 0x060007c0), `rc_dim.invert()` (token 0x060007c1), and `rc_dim.pwr(uint)` (token 0x060007c2) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 7 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. 40 direct MethodComparison cases; 100% mutation kill rate (0 survivors). Merged via `merge_gate.py --apply`.
 
-## MatDim crazy_dim coordinates — active checkpoint
+### MatDim crazy_dim coordinates (merged to main at f7afb21)
 
-Branch `mirror/b-matdim-crazy-dim-coordinates`, based on current clean main `e0f81c9`. The batch adds direct differential tests in `MatDimCrazyDimCoordinatesDifferentialTests.cs`, verified status annotations on `crazy_dim.dim(int, int)` (token 0x060007ae) and `crazy_dim.matdim(int, int)` (token 0x060007af) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. Both methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matdim-crazy-dim-coordinates` (`58659d6`), based on clean main `e0f81c9` (merged to main at `f7afb21`). The batch adds direct differential tests in `MatDimCrazyDimCoordinatesDifferentialTests.cs`, verified status annotations on `crazy_dim.dim(int, int)` (token 0x060007ae) and `crazy_dim.matdim(int, int)` (token 0x060007af) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. Both methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. 24 direct MethodComparison cases; 100% mutation kill rate (0 survivors). Merged via `merge_gate.py --apply`.
 
-Direct differential tests compare both methods across direct cases covering coordinate cell dimension lookup via `m_matrix.get_2_dim(i, j)` and cell matrix dimension lookup via `m_matrix.get_2_matdim(i, j)` across normal matrices, non-uniform/polymorphic matrices, out-of-bounds row/col indices, and negative indices.
+## DelegateFunction invocation & projections — active checkpoint
+
+Branch `mirror/b-delegatefunction-inv`, based on clean main `f7afb21`. The batch adds direct differential tests in `DelegateFunctionDifferentialTests.cs`, verified status annotations on all 31 remaining methods of `DelegateFunction` in `src/Quire.Mpl/Run/DelegateFunction.cs`, and updated contracts in [Mpl.Run.Function evidence](../evidence/Mpl.Run.Function.md).
+Exact original signatures, tokens, and hashes are in that table. All 17 generic `inv` overloads (`0x060001fa` - `0x0600020a`), `invVec` (`0x060001f9`), and 4 `AsF` projections (`0x0600020b` - `0x0600020e`) match Mathcad IL exactly in Release builds.
+
+Direct differential tests cover 7 test facts with 67 direct comparisons against Prime 12.0.1.0 `mplrun.dll`:
+- Direct `F<...>` and fallback `DynamicInvoke` paths across all 17 `inv` arities (34 comparisons).
+- `invVec`, `app0` with purity 0 and 1, and `clo<CLO>` (4 comparisons).
+- `remove_module_suffix` with DLL and non-DLL names (5 comparisons).
+- Constructor `.ctor(Delegate, int)` and 4 `makeF` factory methods across purities (5 comparisons).
+- `make(Delegate, int)` factory across purities 1..5 with matching and fallback delegates (9 comparisons).
+- All 4 `AsF` delegate projections covering matching F-delegate and non-matching fallback paths (8 comparisons).
+- Cached and fallback `Name.get` accessors (2 comparisons).
 
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
-1. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
+1. **Function core dispatch & closures** (`Function.closure`, `clo`, `clovec`, `appVec`).
 2. **Engine projects** (interface and factory members, subject to Linux/Windows capability).
