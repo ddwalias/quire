@@ -1367,7 +1367,7 @@
     "Quire.Mpl.Run.Function::VecCall`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "04b8251d63a6efd6af4c4d6fefc468953372b581ffe8ef412f9be8114d5ceeac",
     "Quire.Mpl.Run.Function::VecCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "471272b4909fd543582faee10ef1f0bef88190d691019a9c76eae7f123807fad",
     "Quire.Mpl.Run.Function::VectorFunction`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "9f5e519f10fbd60e994ee472638311a7563e7f598048c7ab1d6bcf90c0897c65",
-    "Quire.Mpl.Run.Function::appVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "45e3845de6228ef0c8b29e87689b78c5a82695589c65dea16f59ae3098ab6ded",
+    "Quire.Mpl.Run.Function::appVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "9caa2c32fe5a3a63f8d20a5b8a3d812c329db6ff72706fdfa8beace3206577d4",
     "Quire.Mpl.Run.Function::app`1(!!0&)->[System.Runtime]System.Void|False": "249a1abffc67290a30548277fc2cf815ff8eb5a0913b122f7defa0d76a07596b",
     "Quire.Mpl.Run.Function::app`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False": "1e028c664925eebb523fb6d79e2e8adb6ee5ca1be2a578701e06d4fc33e68c7b",
     "Quire.Mpl.Run.Function::app`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False": "73e57adc241f60fdeabfa315ec1f615627fd59bd09d7abdbbdc264784cdf2f47",
@@ -1406,7 +1406,7 @@
     "Quire.Mpl.Run.Function::canonical_name`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "3f0b160190e1e1bed12fe6a479d215ad636a3f95d06d27e421633dddcfa918c5",
     "Quire.Mpl.Run.Function::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "f2f692f231be760b2a9f96b4adfe8a098241f01dae9ce44b094956f1aeb1ddce",
     "Quire.Mpl.Run.Function::closure`1([System.Runtime]System.Delegate,!!0,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "905b66d6da4f333bf63361c62b0eafeea8b717102d7d53ddca5fa88c8fde0ec5",
-    "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False": "aed5b946b9f5fa37766b82250b34ba99a539c57e1af825ab4975220143facd41",
+    "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False": "b3dacade31607822cbd3a9e56b7f118afa8e940720af024f1043410433dcd5b7",
     "Quire.Mpl.Run.Function::format_vector`0([System.Runtime]System.Object[])->[System.Runtime]System.String|True": "3e40721f1e76f33433f12b962d002e7be64c2ee1c56fef59cdb3db0a8b383e0a",
     "Quire.Mpl.Run.Function::get_InverseFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "e6cbcac19ca58f07ae72e1c1963f38d2e40263fef36892ff5dda925cff1be1e9",
     "Quire.Mpl.Run.Function::get_IsFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "3f4a8904e79dcb4f754a3d797ac2940a64ce67abeda8a981547dd0b68a727349",
@@ -2956,6 +2956,7 @@
     "Quire.Mpl.Run.Function::UnCurryMatVal`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False",
     "Quire.Mpl.Run.Function::VecApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False",
     "Quire.Mpl.Run.Function::VectorFunction`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mpl.Run.Function|True",
+    "Quire.Mpl.Run.Function::appVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Function::app`1(!!0&)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Function::app`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Function::app`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False",
@@ -2994,6 +2995,7 @@
     "Quire.Mpl.Run.Function::canonical_name`0([System.Runtime]System.String)->[System.Runtime]System.String|True",
     "Quire.Mpl.Run.Function::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False",
     "Quire.Mpl.Run.Function::closure`1([System.Runtime]System.Delegate,!!0,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Function|True",
+    "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False",
     "Quire.Mpl.Run.Function::format_vector`0([System.Runtime]System.Object[])->[System.Runtime]System.String|True",
     "Quire.Mpl.Run.Function::get_InverseFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False",
     "Quire.Mpl.Run.Function::get_IsFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False",
@@ -4975,7 +4977,7 @@
     "Quire.Mpl.Run.Function::VecCall`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "compared",
     "Quire.Mpl.Run.Function::VecCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "compared",
     "Quire.Mpl.Run.Function::VectorFunction`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "untested",
-    "Quire.Mpl.Run.Function::appVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mpl.Run.Function::appVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Function::app`1(!!0&)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mpl.Run.Function::app`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mpl.Run.Function::app`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False": "untested",
@@ -5012,9 +5014,9 @@
     "Quire.Mpl.Run.Function::asFunctionN`0([System.Runtime]System.Int32,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
     "Quire.Mpl.Run.Function::asFunction`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
     "Quire.Mpl.Run.Function::canonical_name`0([System.Runtime]System.String)->[System.Runtime]System.String|True": "compared",
-    "Quire.Mpl.Run.Function::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
+    "Quire.Mpl.Run.Function::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
     "Quire.Mpl.Run.Function::closure`1([System.Runtime]System.Delegate,!!0,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "compared",
-    "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
+    "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
     "Quire.Mpl.Run.Function::format_vector`0([System.Runtime]System.Object[])->[System.Runtime]System.String|True": "compared",
     "Quire.Mpl.Run.Function::get_InverseFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "untested",
     "Quire.Mpl.Run.Function::get_IsFunction`0()->[Quire.Mpl]Quire.Mpl.Run.Function|False": "compared",
@@ -7846,11 +7848,20 @@
     "Quire.Mpl.Run.Function::VecCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": [
       "functionmatrixdifferentialtests"
     ],
+    "Quire.Mpl.Run.Function::appVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
+      "functionappvecdirectdifferentialtests"
+    ],
     "Quire.Mpl.Run.Function::canonical_name`0([System.Runtime]System.String)->[System.Runtime]System.String|True": [
       "functiondifferentialtests"
     ],
+    "Quire.Mpl.Run.Function::clo`1(!!0)->[Quire.Mpl]Quire.Mpl.Run.Function|False": [
+      "functionappvecdirectdifferentialtests"
+    ],
     "Quire.Mpl.Run.Function::closure`1([System.Runtime]System.Delegate,!!0,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.Function|True": [
       "functionclosuredirectdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Function::clovec`1(!!0[])->[Quire.Mpl]Quire.Mpl.Run.Function|False": [
+      "functionappvecdirectdifferentialtests"
     ],
     "Quire.Mpl.Run.Function::format_vector`0([System.Runtime]System.Object[])->[System.Runtime]System.String|True": [
       "functiondifferentialtests"
@@ -10398,10 +10409,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Function": {
-      "compared": 22,
+      "compared": 25,
       "declaration_only": 1,
       "excluded": 5,
-      "missing": 138,
+      "missing": 135,
       "structure_mismatch": 0,
       "total": 166,
       "uncovered": 0,
