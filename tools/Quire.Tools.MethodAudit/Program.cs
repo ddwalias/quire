@@ -36,7 +36,9 @@ var projects = options.GetValueOrDefault("--project") ?? Directory.GetFiles(Path
     .Select(Path.GetFileNameWithoutExtension).OfType<string>().ToList();
 var rows = new List<object>();
 var errors = new List<string>();
-var reviewed = new Dictionary<string, string[]>();
+// Quire type -> every (Mathcad type, Mathcad assembly) the type map binds it to: one Quire name stands for one type per
+// Mathcad assembly when a source file is linked into each, or a native header compiled into several.
+var reviewed = new Dictionary<string, List<string[]>>();
 using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.csv")))
 {
     csv.SetDelimiters(",");
@@ -45,11 +47,25 @@ using (var csv = new TextFieldParser(Path.Combine(repo, "docs/mirror/type-map.cs
     while (!csv.EndOfData)
     {
         var fields = csv.ReadFields()!;
-        if (fields[5] is "missing" or "exists" or "exists-elsewhere")
-            reviewed[fields[4]] = [fields[1], Path.GetFileNameWithoutExtension(fields[0])];
+        if (fields[5] is "missing" or "exists" or "exists-elsewhere" or "shared source (linked into each assembly)"
+            or "duplicate (shared native header)")
+        {
+            if (!reviewed.TryGetValue(fields[4], out var bound)) reviewed[fields[4]] = bound = [];
+            bound.Add([fields[1], Path.GetFileNameWithoutExtension(fields[0])]);
+        }
     }
 }
-var originals = new Dictionary<string, Artifact>();
+// Windows names assemblies case-insensitively; the type map records install file names, not assembly names.
+bool Reviewed(string quireType, string[] binding) => binding.Length >= 2 && reviewed.TryGetValue(quireType, out var bound)
+    && bound.Any(b => b[0] == binding[0] && string.Equals(b[1], binding[1], StringComparison.OrdinalIgnoreCase));
+string InstallFile(string assembly)
+{
+    var found = Directory.EnumerateFiles(install, "*.dll")
+        .Where(f => string.Equals(Path.GetFileNameWithoutExtension(f), assembly, StringComparison.OrdinalIgnoreCase)).ToList();
+    return found.Count == 1 ? found[0]
+        : throw new FileNotFoundException($"{(found.Count == 0 ? "no" : "several")} {assembly}.dll in {install}");
+}
+var originals = new Dictionary<string, Artifact>(StringComparer.OrdinalIgnoreCase);
 var quire = new List<Artifact>();
 var optimized = new Dictionary<Artifact, (Artifact Build, Dictionary<(string, string), int> Tokens)>();
 foreach (string project in projects.Distinct())
@@ -78,30 +94,71 @@ foreach (string project in projects.Distinct())
     }
     catch (Exception e) { errors.Add($"{project}: cannot inspect required assembly: {e.Message}"); }
 }
+// Each Quire copy of a name bound in several Mathcad assemblies claims its own binding. Two copies claiming one would
+// both pair with that original and leave another unchecked.
+var claims = new Dictionary<(string Name, string Type, string Assembly), (string Assembly, List<string> Projects)>();
 foreach (var artifact in quire)
     foreach (var t in artifact.Model.Types.Where(t => t.MirrorOf != null))
     {
         var binding = t.MirrorOf!.Split(',').Select(s => s.Trim()).ToArray();
-        if (!reviewed.TryGetValue(t.FullName, out var expected) || binding.Length < 2
-            || binding[0] != expected[0] || binding[1] != expected[1])
+        if (!Reviewed(t.FullName, binding))
         {
             errors.Add($"{t.FullName}: MirrorOf does not match the reviewed type-map binding");
             continue;
         }
         string assembly = binding[1];
+        if (reviewed[t.FullName].Count > 1)
+        {
+            var key = (t.FullName, binding[0], assembly.ToLowerInvariant());
+            if (!claims.TryGetValue(key, out var claim)) claims[key] = claim = (assembly, []);
+            claim.Projects.Add(artifact.Name);
+        }
         if (originals.ContainsKey(assembly)) continue;
-        try { originals[assembly] = new Artifact(Path.Combine(install, assembly + ".dll")); }
+        try { originals[assembly] = new Artifact(InstallFile(assembly)); }
         catch (Exception e) { errors.Add($"{assembly}: original unavailable: {e.Message}"); }
     }
-var typeNames = quire.SelectMany(a => a.Model.Types).Where(t => t.MirrorOf != null)
-    .GroupBy(t => t.FullName).ToDictionary(g => g.Key, g => g.First().MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
+foreach (var ((name, type, _), (assembly, claimants)) in claims.Where(c => c.Value.Projects.Count > 1))
+    errors.Add($"{name}: {string.Join(", ", claimants)} all claim the binding {type}, {assembly}; each copy binds its own");
+// A reviewed binding no copy claims is not an error: Quire keeps one copy of a type a native header duplicates into
+// several Mathcad assemblies (one [MirrorOf]), so the other assemblies' bindings stay unclaimed.
+// Bindings by declaring Quire assembly and type: the same name may be bound differently in each project.
+var typeNames = new Dictionary<(string Assembly, string Name), string[]>();
+foreach (var artifact in quire)
+    foreach (var t in artifact.Model.Types.Where(t => t.MirrorOf != null))
+        typeNames.TryAdd((artifact.Name, t.FullName), t.MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
+var referenced = new Dictionary<string, AssemblyModel?>();
+var assemblyNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 // A type of a project not audited here (one a signature or a call names) maps through the reviewed type map, as its
-// own [MirrorOf] would; the audited projects' bindings were checked against it above.
-foreach (var (name, binding) in reviewed) typeNames.TryAdd(name, binding);
+// own [MirrorOf] would; the audited projects' bindings were checked against it above. Where the type map binds the
+// name in several assemblies, the [MirrorOf] of the Quire assembly declaring it decides, if it is a reviewed binding.
+// The assembly is named as its metadata names it, which the type map's file name may not match in case.
+string[]? Binding(string assembly, string name)
+{
+    if (typeNames.TryGetValue((assembly, name), out var own)) return own;
+    if (!reviewed.TryGetValue(name, out var bound)) return null;
+    string[]? binding = bound.Count == 1 ? bound[0] : null;
+    if (binding == null)
+    {
+        if (!referenced.TryGetValue(assembly, out var model))
+        {
+            string path = Path.Combine(assemblies, assembly + ".dll");
+            referenced[assembly] = model = File.Exists(path) ? MetadataLoader.Load(path) : null;
+        }
+        binding = model?.Types.FirstOrDefault(t => t.FullName == name)?.MirrorOf?.Split(',').Select(s => s.Trim()).ToArray();
+        if (binding == null || !Reviewed(name, binding)) return null;
+    }
+    if (!assemblyNames.TryGetValue(binding[1], out var canonical))
+    {
+        try { canonical = originals.TryGetValue(binding[1], out var loaded) ? loaded.Name : MetadataLoader.Load(InstallFile(binding[1]))?.Name ?? binding[1]; }
+        catch (Exception e) when (e is IOException or BadImageFormatException) { canonical = binding[1]; }
+        assemblyNames[binding[1]] = canonical;
+    }
+    return [binding[0], canonical];
+}
 TypeSig Map(TypeSig sig) => sig switch
 {
-    NamedSig n => n with { Name = typeNames.TryGetValue(n.Name, out var names) ? names[0] : n.Name,
-        Assembly = typeNames.TryGetValue(n.Name, out var owner) ? owner[1] : n.Assembly, Args = [.. n.Args.Select(Map)] },
+    NamedSig n => Binding(n.Assembly, n.Name) is { } b ? n with { Name = b[0], Assembly = b[1], Args = [.. n.Args.Select(Map)] }
+        : n with { Args = [.. n.Args.Select(Map)] },
     ArraySig a => a with { Element = Map(a.Element) },
     ByRefSig b => b with { Element = Map(b.Element) },
     PointerSig p => p with { Element = Map(p.Element) },
@@ -132,7 +189,20 @@ foreach (var artifact in quire)
         {
             string[] fields = mirror.Split(',');
             if (originals.TryGetValue(fields[1].Trim(), out original))
-                counterpart = original.Methods.SingleOrDefault(m => m.Owner == fields[0].Trim() && m.Key == Key(method, true));
+            {
+                var sameKey = original.Methods.Where(m => m.Owner == fields[0].Trim() && m.Key == Key(method, true)).ToList();
+                // Keys leave out custom modifiers, which C# cannot write (C++/CLI's IsLong, IsConst...). They only break a
+                // tie between originals that differ in nothing else, for the one whose modifiers are the Quire method's.
+                if (sameKey.Count > 1)
+                {
+                    var tied = sameKey.Where(m => m.Modifiers == raw.Modifiers).ToList();
+                    if (tied.Count != 1)
+                        errors.Add($"{raw.Owner}::{raw.Key}: {sameKey.Count} methods of {original.Name} match and custom modifiers "
+                            + $"do not single one out: {string.Join(", ", sameKey.Select(m => $"0x{m.Token:x8}"))}");
+                    sameKey = tied.Count == 1 ? tied : [];
+                }
+                counterpart = sameKey.SingleOrDefault();
+            }
         }
         matched.Add((artifact, raw, type, method, status, exclusion, original, counterpart));
     }
@@ -142,11 +212,11 @@ int? StructureToken(Artifact a, RawMethod raw) => !optimized.TryGetValue(a, out 
     : o.Tokens.TryGetValue((raw.Owner, raw.Key), out int token) ? token : null;
 var originalNames = matched.Where(m => m.Counterpart != null && StructureToken(m.Artifact, m.Raw) != null)
     .ToDictionary(m => (m.Artifact.Name, StructureToken(m.Artifact, m.Raw)!.Value), m => m.Counterpart!.Name);
-string MathcadType(string name) => typeNames.TryGetValue(name, out var names) ? names[0] : name;
+
 var structures = new Dictionary<Artifact, StructureReader>();
 StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, out var reader) ? reader
     : structures[a] = new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name),
-        isQuire ? MathcadType : name => name,
+        isQuire ? name => (Binding(a.Name, name)?[0] ?? name) : name => name,
         isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null);
 // Quire's own names, unmapped and exact: what the body hash and call graph identify; the checkout path left out.
 var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true, root: repo));

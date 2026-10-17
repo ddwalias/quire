@@ -5,7 +5,10 @@ using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using Quire.Tools.MirrorGen;
 
-sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva);
+/// <summary><paramref name="Modifiers"/>: the custom modifiers of the return type and each parameter, which the key leaves
+/// out (see ModifierProvider).</summary>
+sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva,
+    string Modifiers = "");
 sealed class Artifact
 {
     public AssemblyModel Model { get; }
@@ -74,8 +77,11 @@ sealed class Artifact
                     MethodAttributes.Assembly => "Internal", MethodAttributes.Family => "Protected",
                     MethodAttributes.FamANDAssem => "PrivateProtected", MethodAttributes.FamORAssem => "ProtectedInternal", _ => "Private" };
                 string key = Signatures.Method(name, sig.GenericParameterCount, sig.ParameterTypes, sig.ReturnType, isStatic);
+                var modified = m.DecodeSignature(new ModifierProvider(), null);
+                string modifiers = string.Join(";", new[] { modified.ReturnType }.Concat(modified.ParameterTypes)
+                    .Select(t => string.Join(" ", ModifierProvider.Modifier.Matches(t).Select(x => x.Value))));
                 Methods.Add(new(owner, name, key, MetadataTokens.GetToken(mh), access,
-                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress));
+                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers));
             }
         }
     }
@@ -93,4 +99,33 @@ static class Signatures
         PointerSig p => Type(p.Element) + "*",
         _ => signature.ToString()
     };
+}
+
+/// <summary>A signature type written out with its custom modifiers, from which RawMethod.Modifiers takes them.</summary>
+sealed class ModifierProvider : ISignatureTypeProvider<string, object?>
+{
+    public static readonly System.Text.RegularExpressions.Regex Modifier = new(@"mod(?:opt|req)\([^()]*\)");
+    public string GetModifiedType(string modifier, string unmodifiedType, bool isRequired) =>
+        $"{unmodifiedType} {(isRequired ? "modreq" : "modopt")}({modifier})";
+    public string GetPrimitiveType(PrimitiveTypeCode typeCode) => typeCode.ToString();
+    public string GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind) =>
+        SigProvider.FullName(reader, handle);
+    public string GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind)
+    {
+        var reference = reader.GetTypeReference(handle);
+        string ns = reader.GetString(reference.Namespace);
+        return (ns.Length > 0 ? ns + "." : "") + reader.GetString(reference.Name);
+    }
+    public string GetTypeFromSpecification(MetadataReader reader, object? context, TypeSpecificationHandle handle, byte rawTypeKind) =>
+        reader.GetTypeSpecification(handle).DecodeSignature(this, context);
+    public string GetSZArrayType(string elementType) => elementType + "[]";
+    public string GetArrayType(string elementType, ArrayShape shape) => elementType + "[" + new string(',', shape.Rank - 1) + "]";
+    public string GetByReferenceType(string elementType) => elementType + "&";
+    public string GetPointerType(string elementType) => elementType + "*";
+    public string GetPinnedType(string elementType) => elementType;
+    public string GetGenericInstantiation(string genericType, System.Collections.Immutable.ImmutableArray<string> typeArguments) =>
+        genericType + "<" + string.Join(",", typeArguments) + ">";
+    public string GetGenericMethodParameter(object? context, int index) => "!!" + index;
+    public string GetGenericTypeParameter(object? context, int index) => "!" + index;
+    public string GetFunctionPointerType(MethodSignature<string> signature) => "method";
 }

@@ -103,6 +103,29 @@ types, generic arity and static/instance signatures, and checks accessibility. I
 versions, MVIDs and SHA-256 values. Existing shape/status checks remain necessary for broader shape,
 inheritance, constraints, evidence classifications and phase closure requirements.
 
+**Reviewed bindings.** A type-map row is a reviewed binding when its status is `missing`, `exists`,
+`exists-elsewhere`, `shared source (linked into each assembly)` or `duplicate (shared native header)`. One Quire
+name can therefore have one binding per Mathcad assembly. For example, `Quire.ProductInfo.Constants` is in 19
+assemblies; `Quire.Properties.Settings` is `Spirit.Properties.Settings` in Quire and `Ptc.Properties.Settings` in
+Quire.Core.
+- A type's `MirrorOf` must equal one of its bindings exactly in Mathcad type and assembly. The assembly comparison
+  ignores case, because the type map records install file names (`efisymbolicslexer.dll`), `MirrorOf` names the
+  assembly (`EfiSymbolicsLexer`), and Windows treats both case-insensitively. Originals are found in the install
+  directory case-insensitively too.
+- Two audited projects may not claim the same binding of a name with several: both copies would pair with one
+  original and leave another unchecked, so that is an inspection error. A binding no project claims is not:
+  Quire keeps one copy of a type that a native header duplicates into several Mathcad assemblies, so the other
+  assemblies' bindings stay unclaimed (149 of them in a full phase audit).
+- A signature that names a Quire type maps through the binding of the project that declares it. For a project not
+  audited in the run, the type map's binding is used when it is the only one. Otherwise that project's own
+  `MirrorOf` is used, and only if it is a reviewed binding.
+- Keys leave out custom modifiers, because C# cannot write them. When one key matches several originals that
+  differ only in modifiers (C++/CLI's `long` is `int modopt(IsLong)`), the original whose modifiers equal the Quire
+  method's is chosen. If the modifiers do not single one out, the member is an inspection error.
+- msgen's `gen.IlAsm::Push(uint32 modopt(IsLong))` and `Push(int32 modopt(IsLong))` (Tier D, D10/D11) are
+  therefore known originals without a counterpart. Quire's `Push(uint)` and `Push(int)` pair with the unmodified
+  overloads, and MirrorGen's notes list the two as skipped overloads.
+
 `method-inventory.json` is the complete compiled inventory for the selected project(s).
 `method-coverage.json` identifies each method as compared, declaration-only, excluded or missing,
 with reasons, exact identities, case/test/contract references and totals by accessibility.
@@ -620,6 +643,11 @@ QUIRE_WINDOWS_TEMP=/mnt/c/Projects/quire-temp python3 tools/validation/validate.
   `C:\...` there, so a Linux `dotnet` given the `/mnt` path would leave the checkout path in every stub's hash.
 - **Baseline.** Phase runs ratchet against their own `docs/mirror/validation-baseline-phase.json` (protected; a
   baseline holds a single profile). A local run writes one with `--write-baseline`, and the gate writes it after a phase run.
+  Its keys carry the project, because one type name can be compiled into several projects (shared source, shared
+  native headers, compiler helpers). Methods are `Project|Type::signature` and types `Project|Type`, for example
+  `Quire.Calculation|Quire.ProductInfo.Constants::.ctor`0()->[System.Runtime]System.Void|False`. The ratchet
+  compares entries by these keys. The focused baseline, accepted mutants, unreachable lines and changed-method
+  selection keep `Type::signature`.
 - **Builds.** A checkout's `bin/` and `obj/` belong to the CLI that last built it. Do not alternate Linux and
   Windows builds in one checkout; use a separate copy, or delete them first. The gate always uses fresh clones.
 - **Not covered.** A timeout stops the WSL side of the process. A Windows process it started can outlive it.

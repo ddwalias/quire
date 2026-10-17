@@ -123,24 +123,39 @@ public class OptimizedBuildTests : IDisposable
         bool none = false, Action<TypeBuilder>? more = null, Action<ILGenerator>? original = null,
         Action<TypeBuilder>? moreOriginal = null, string bindings = "")
     {
-        Directory.CreateDirectory(Path.Combine(_dir, "repo/docs/mirror"));
-        File.WriteAllText(Path.Combine(_dir, "repo/docs/mirror/type-map.csv"),
-            "mathcad_assembly,mathcad_type,kind,visibility,quire_type,status,phase,group\nOrig.dll,Orig.T,class,public,Fix.T,exists,1,managed\n" + bindings);
         Build("install", "Orig", "Orig.T", original ?? Optimized, more: moreOriginal);
         Build("debug", "Fix", "Fix.T", Debug, "Orig.T, Orig", helpers: helpers, more: more);
-        string output = Path.Combine(_dir, "inventory.json");
-        List<string> args = ["--repo", Path.Combine(_dir, "repo"), "--assemblies", Path.Combine(_dir, "debug"),
-            "--install", Path.Combine(_dir, "install"), "--output", output, "--project", "Fix"];
+        List<string> args = ["--project", "Fix"];
         if (release != null)
         {
             Directory.CreateDirectory(Path.Combine(_dir, "release"));
             if (!none) Build("release", "Fix", "Fix.T", release, "Orig.T, Orig", extra, more: more);
             args.AddRange(["--structure-assemblies", Path.Combine(_dir, "release")]);
         }
+        return Run("Orig.dll,Orig.T,class,public,Fix.T,exists,1,managed\n" + bindings, args);
+    }
+
+    /// <summary>Runs MethodAudit on the Quire assemblies in debug/ against the originals in install/, with the given
+    /// type-map rows and further arguments (the projects), and returns its exit code and inventory.</summary>
+    private (int Exit, JsonElement Inventory) Run(string typeMap, IEnumerable<string> extra)
+    {
+        Directory.CreateDirectory(Path.Combine(_dir, "repo/docs/mirror"));
+        File.WriteAllText(Path.Combine(_dir, "repo/docs/mirror/type-map.csv"),
+            "mathcad_assembly,mathcad_type,kind,visibility,quire_type,status,phase,group\n" + typeMap);
+        string output = Path.Combine(_dir, "inventory.json");
+        List<string> args = ["--repo", Path.Combine(_dir, "repo"), "--assemblies", Path.Combine(_dir, "debug"),
+            "--install", Path.Combine(_dir, "install"), "--output", output, .. extra];
         var tool = Assembly.LoadFrom(Path.Combine(AppContext.BaseDirectory, "Quire.Tools.MethodAudit.dll"));
         int exit = (int)tool.EntryPoint!.Invoke(null, [args.ToArray()])!;
         return (exit, JsonDocument.Parse(File.ReadAllText(output)).RootElement);
     }
+
+    private static string[] Errors(JsonElement inventory) =>
+        [.. inventory.GetProperty("errors").EnumerateArray().Select(e => e.GetString()!)];
+
+    private static JsonElement Method(JsonElement inventory, string project, string name) =>
+        inventory.GetProperty("methods").EnumerateArray().Single(m => m.GetProperty("project").GetString() == project
+            && m.GetProperty("signature").GetString()!.StartsWith(name + "`"));
 
     private static JsonElement F(JsonElement inventory) =>
         inventory.GetProperty("methods").EnumerateArray().Single(m => m.GetProperty("type").GetString() == "Fix.T"
@@ -242,5 +257,117 @@ public class OptimizedBuildTests : IDisposable
         Assert.Equal(0, exit);
         var g = inventory.GetProperty("methods").EnumerateArray().Single(m => m.GetProperty("signature").GetString()!.StartsWith("G`"));
         Assert.True(g.GetProperty("exact_match").GetBoolean());
+    }
+
+    /// <summary>The type map records install file names (efisymbolicslexer.dll), [MirrorOf] the assembly's own name
+    /// (EfiSymbolicsLexer); Windows names both case-insensitively, so they bind, and the original is found on disk.</summary>
+    [Fact]
+    public void Assembly_names_bind_and_load_case_insensitively()
+    {
+        Build("staging", "OrigCase", "Orig.C", Optimized);
+        Directory.CreateDirectory(Path.Combine(_dir, "install"));
+        File.Move(Path.Combine(_dir, "staging", "OrigCase.dll"), Path.Combine(_dir, "install", "origcase.dll"));
+        Build("debug", "Fix", "Fix.C", Optimized, "Orig.C, OrigCase");
+        var (exit, inventory) = Run("origcase.dll,Orig.C,class,public,Fix.C,missing,1,engine-native\n", ["--project", "Fix"]);
+        Assert.Empty(Errors(inventory));
+        Assert.Equal(0, exit);
+        Assert.Equal("OrigCase", Method(inventory, "Fix", "F").GetProperty("original").GetProperty("assembly").GetString());
+    }
+
+    /// <summary>A shared source file linked into each Mathcad assembly, or a native header compiled into several, is one
+    /// Quire name with one reviewed binding per assembly; each project's copy binds to its own.</summary>
+    [Theory]
+    [InlineData("shared source (linked into each assembly)")]
+    [InlineData("duplicate (shared native header)")]
+    public void Each_copy_of_a_shared_type_binds_to_its_own_assembly(string disposition)
+    {
+        Build("install", "OrigA", "P.Shared", Optimized);
+        Build("install", "OrigB", "P.Shared", Optimized);
+        Build("debug", "FixA", "Fix.Shared", Optimized, "P.Shared, OrigA");
+        var (exit, inventory) = Run($"OrigA.dll,P.Shared,class,internal,Fix.Shared,{disposition},3,managed\n"
+            + "OrigB.dll,P.Shared,class,internal,Fix.Shared,missing,3,managed\n", ["--project", "FixA"]);
+        Assert.Empty(Errors(inventory));
+        Assert.Equal(0, exit);
+        Assert.Equal("OrigA", Method(inventory, "FixA", "F").GetProperty("original").GetProperty("assembly").GetString());
+        // Still exact on type and assembly: a binding the type map does not list is refused.
+        Build("debug", "FixC", "Fix.Shared", Optimized, "P.Shared, OrigC");
+        Assert.Contains("Fix.Shared: MirrorOf does not match the reviewed type-map binding",
+            Errors(Run($"OrigA.dll,P.Shared,class,internal,Fix.Shared,{disposition},3,managed\n", ["--project", "FixC"]).Inventory));
+    }
+
+    /// <summary>Two copies of a shared type claiming one assembly's binding would both pair with that original and leave
+    /// the other unchecked.</summary>
+    [Theory]
+    [InlineData("shared source (linked into each assembly)")]
+    [InlineData("duplicate (shared native header)")]
+    public void Each_binding_of_a_shared_type_is_claimed_by_one_project(string disposition)
+    {
+        Build("install", "OrigA", "P.Shared", Optimized);
+        Build("install", "OrigB", "P.Shared", Optimized);
+        Build("debug", "FixA", "Fix.Shared", Optimized, "P.Shared, OrigB");
+        Build("debug", "FixB", "Fix.Shared", Optimized, "P.Shared, OrigB");
+        string typeMap = $"OrigA.dll,P.Shared,class,internal,Fix.Shared,{disposition},3,managed\n"
+            + $"OrigB.dll,P.Shared,class,internal,Fix.Shared,{disposition},3,managed\n";
+        string[] both = ["--project", "FixA", "--project", "FixB"];
+        var (exit, inventory) = Run(typeMap, both);
+        Assert.Equal(["Fix.Shared: FixA, FixB all claim the binding P.Shared, OrigB; each copy binds its own"], Errors(inventory));
+        Assert.Equal(1, exit);
+        Build("debug", "FixB", "Fix.Shared", Optimized, "P.Shared, OrigA");
+        var (fixedExit, fixedRun) = Run(typeMap, both);
+        Assert.Empty(Errors(fixedRun));
+        Assert.Equal(0, fixedExit);
+    }
+
+    /// <summary>Quire.Properties.Settings is Spirit.Properties.Settings in Quire and Ptc.Properties.Settings in
+    /// Quire.Core: signatures naming the type map through the binding of the project that declares it.</summary>
+    [Fact]
+    public void One_quire_name_in_two_projects_maps_through_each_projects_binding()
+    {
+        Action<TypeBuilder> G = t =>
+            t.DefineMethod("G", MethodAttributes.Public | MethodAttributes.Static, typeof(void), [t]).GetILGenerator().Emit(OpCodes.Ret);
+        Build("install", "OrigA", "OrigA.S", Optimized, more: G);
+        Build("install", "OrigB", "OrigB.S", Optimized, more: G);
+        Build("debug", "FixA", "Fix.S", Optimized, "OrigA.S, OrigA", more: G);
+        Build("debug", "FixB", "Fix.S", Optimized, "OrigB.S, OrigB", more: G);
+        var (exit, inventory) = Run("OrigA.dll,OrigA.S,class,public,Fix.S,missing,1,managed\n"
+            + "OrigB.dll,OrigB.S,class,public,Fix.S,missing,1,managed\n", ["--project", "FixA", "--project", "FixB"]);
+        Assert.Empty(Errors(inventory));
+        Assert.Equal(0, exit);
+        foreach (var (project, original) in new[] { ("FixA", "OrigA.S"), ("FixB", "OrigB.S") })
+        {
+            var g = Method(inventory, project, "G").GetProperty("original");
+            Assert.Equal(JsonValueKind.Object, g.ValueKind);
+            Assert.Equal(original, g.GetProperty("type").GetString());
+        }
+    }
+
+    /// <summary>C++/CLI's `long` is `int modopt(IsLong)`; keys leave modifiers out (C# cannot write them), so
+    /// msgen's Push(long) and Push(int) share one. Modifiers break the tie, for the original whose modifiers are the
+    /// Quire method's (none); when they do not single one out, the member is an inspection error, not a crash or a guess.</summary>
+    [Theory]
+    [InlineData(typeof(System.Runtime.CompilerServices.IsLong), null)]
+    [InlineData(typeof(System.Runtime.CompilerServices.IsLong), typeof(System.Runtime.CompilerServices.IsConst))]
+    public void Custom_modifiers_only_break_a_tie_between_originals(Type first, Type? second)
+    {
+        Action<TypeBuilder> Push(Type? modifier) => t => t.DefineMethod("Push", MethodAttributes.Public | MethodAttributes.Static,
+            CallingConventions.Standard, typeof(void), null, null, [typeof(int)], null,
+            [modifier == null ? Type.EmptyTypes : [modifier]]).GetILGenerator().Emit(OpCodes.Ret);
+        // Push(int modopt(first)) is the original's second method (after F), its other Push the third.
+        Build("install", "Orig", "Orig.P", Optimized, more: t => { Push(first)(t); Push(second)(t); });
+        Build("debug", "Fix", "Fix.P", Optimized, "Orig.P, Orig", more: Push(null));
+        var (exit, inventory) = Run("Orig.dll,Orig.P,class,public,Fix.P,missing,10,engine-native\n", ["--project", "Fix"]);
+        var original = Method(inventory, "Fix", "Push").GetProperty("original");
+        if (second == null)
+        {
+            Assert.Empty(Errors(inventory));
+            Assert.Equal(0, exit);
+            Assert.Equal(0x06000003, original.GetProperty("token").GetInt32());
+        }
+        else
+        {
+            Assert.NotEqual(0, exit);
+            Assert.Equal(JsonValueKind.Null, original.ValueKind);
+            Assert.Contains(Errors(inventory), e => e.StartsWith("Fix.P::Push`0(") && e.Contains("custom modifiers do not single one out"));
+        }
     }
 }

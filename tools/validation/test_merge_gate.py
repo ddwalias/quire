@@ -560,6 +560,9 @@ class PhaseGateTests(unittest.TestCase):
         first = self.git('rev-list', '--max-parents=0', 'main')
         commit = baseline_commit(tip, b'{"f": 1}\n', 'probe', 'r', self.repo, None, first)
         self.assertNotIn(merge_gate.PHASE_BASELINE, self.git('ls-tree', '-r', '--name-only', commit).splitlines())
+        # Any other failure to read the base's phase baseline is not taken for its absence.
+        with self.assertRaises(subprocess.CalledProcessError):
+            baseline_commit(tip, b'{"f": 1}\n', 'probe', 'r', self.repo, None, '0' * 40)
 
     def test_no_phase_baseline_on_the_base_blocks_before_any_run(self):
         self.git('rm', '-q', merge_gate.PHASE_BASELINE); self.git('commit', '-qm', 'no phase baseline')

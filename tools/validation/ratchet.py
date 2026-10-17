@@ -29,18 +29,28 @@ UNFINISHED = ('missing', 'structure_mismatch', 'uncovered')
 NEW_GAPS = ('structure_mismatch', 'unchecked_state', 'uncovered')
 
 
+def owner(method, profile):
+    """The key of a method's type: `Type`; in the phase profile `Project|Type`, since its inventory spans every manifest
+    project and one type name can be compiled into several (shared source, shared native headers, compiler helpers)."""
+    return f"{method['project']}|{method['type']}" if profile == 'phase' else method['type']
+
+
 def snapshot(coverage, integrity, profile):
-    """Identities, not just counts, so fixing one finding cannot pay for a new one."""
-    return {'schema': SCHEMA, 'profile': profile, 'types': coverage['by_type'],
-            'methods': {f"{m['type']}::{m['signature']}": stage(m) for m in coverage['methods']},
+    """Identities, not just counts, so fixing one finding cannot pay for a new one. Methods are keyed
+    `Type::signature`, or `Project|Type::signature` in the phase profile (see owner)."""
+    from method_coverage import by_type
+    methods = [dict(m, type=owner(m, profile)) for m in coverage['methods']]
+    return {'schema': SCHEMA, 'profile': profile,
+            'types': by_type(methods) if profile == 'phase' else coverage['by_type'],
+            'methods': {f"{m['type']}::{m['signature']}": stage(m) for m in methods},
             'tests': {f"{m['type']}::{m['signature']}": sorted({test_class(c['test']) for c in m['cases']})
-                      for m in coverage['methods'] if m.get('cases')},
+                      for m in methods if m.get('cases')},
             'lint': sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity['lint']),
-            'bodies': {f"{m['type']}::{m['signature']}": m['body_sha256'] for m in coverage['methods'] if m.get('body_sha256')},
+            'bodies': {f"{m['type']}::{m['signature']}": m['body_sha256'] for m in methods if m.get('body_sha256')},
             # Fields written, or read while holding a mutable reference (validate.changed_methods counts both).
             'writes': {f"{m['type']}::{m['signature']}": sorted({*m.get('field_writes', []), *m.get('reference_reads', [])})
-                       for m in coverage['methods'] if m.get('field_writes') or m.get('reference_reads')},
-            'exact': sorted(f"{m['type']}::{m['signature']}" for m in coverage['methods'] if m.get('exact_match'))}
+                       for m in methods if m.get('field_writes') or m.get('reference_reads')},
+            'exact': sorted(f"{m['type']}::{m['signature']}" for m in methods if m.get('exact_match'))}
 
 
 def stage(method):

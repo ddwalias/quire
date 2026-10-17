@@ -185,5 +185,41 @@ class RatchetTests(unittest.TestCase):
             self.assertTrue(check(coverage, integrity, False, 'focused', path)['ok'])
 
 
+class PhaseKeyTests(unittest.TestCase):
+    """The phase inventory spans every manifest project, and one type name can be compiled into several (shared source
+    such as ProductInfo.Constants, shared native headers, compiler helpers): its baseline keys carry the project."""
+    def coverage(self, second='compared'):
+        def row(project, validation, exact):
+            return {'project': project, 'type': 'Quire.ProductInfo.Constants', 'signature': '.ctor`0()->Void|False',
+                    'validation': validation, 'original': {'token': 1}, 'body_sha256': project, 'exact_match': exact,
+                    'status_supported': True, 'cases': []}
+        rows = [row('Quire.Calculation', 'compared', True), row('Quire.Controls', second, second == 'compared')]
+        return {'by_type': {}, 'methods': rows}
+
+    def test_methods_and_types_of_one_name_in_several_projects_stay_apart(self):
+        snapshot = check(self.coverage(), {'lint': []}, False, 'phase', baseline=None)['snapshot']
+        keys = ['Quire.Calculation|Quire.ProductInfo.Constants::.ctor`0()->Void|False',
+                'Quire.Controls|Quire.ProductInfo.Constants::.ctor`0()->Void|False']
+        self.assertEqual(sorted(snapshot['methods']), keys)
+        self.assertEqual(snapshot['exact'], keys)
+        self.assertEqual(sorted(snapshot['bodies'].values()), ['Quire.Calculation', 'Quire.Controls'])
+        self.assertEqual(sorted(snapshot['types']), ['Quire.Calculation|Quire.ProductInfo.Constants',
+                                                     'Quire.Controls|Quire.ProductInfo.Constants'])
+        self.assertEqual(snapshot['types']['Quire.Controls|Quire.ProductInfo.Constants']['compared'], 1)
+
+    def test_a_regression_in_one_project_is_not_hidden_by_another(self):
+        baseline = check(self.coverage(), {'lint': []}, False, 'phase', baseline=None)['snapshot']
+        regressions = check(self.coverage(second='missing'), {'lint': []}, False, 'phase', baseline=baseline)['regressions']
+        self.assertIn('Quire.Controls|Quire.ProductInfo.Constants::.ctor`0()->Void|False: compared became missing', regressions)
+        self.assertIn("Quire.Controls|Quire.ProductInfo.Constants::.ctor`0()->Void|False: IL no longer matches Mathcad's exactly",
+                      regressions)
+        self.assertFalse(any(r.startswith('Quire.Calculation|') for r in regressions), regressions)
+
+    def test_the_focused_baseline_keeps_its_keys(self):
+        coverage = self.coverage()
+        coverage['methods'] = coverage['methods'][:1]
+        snapshot = check(coverage, {'lint': []}, False, 'focused', baseline=None)['snapshot']
+        self.assertEqual(list(snapshot['methods']), ['Quire.ProductInfo.Constants::.ctor`0()->Void|False'])
+
 if __name__ == '__main__':
     unittest.main()

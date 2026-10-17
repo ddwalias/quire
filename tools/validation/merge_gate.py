@@ -486,8 +486,12 @@ def baseline_commit(tip, baseline, branch, results, repo=ROOT, phase_baseline=No
     if phase_baseline is not None:
         baselines[PHASE_BASELINE] = phase_baseline
     elif base is not None:
-        found = subprocess.run(['git', 'cat-file', 'blob', f'{base}:{PHASE_BASELINE}'], cwd=repo, capture_output=True)
-        baselines[PHASE_BASELINE] = found.stdout if found.returncode == 0 else None
+        # None only when base has no phase baseline; any other failure to read it stops the merge.
+        listed = subprocess.run(['git', 'ls-tree', '--name-only', base, '--', PHASE_BASELINE], cwd=repo, check=True,
+                                capture_output=True, text=True).stdout.splitlines()
+        baselines[PHASE_BASELINE] = (subprocess.run(['git', 'cat-file', 'blob', f'{base}:{PHASE_BASELINE}'], cwd=repo,
+                                                    check=True, capture_output=True).stdout
+                                     if PHASE_BASELINE in listed else None)
     with tempfile.TemporaryDirectory() as scratch:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(scratch) / 'index'))
         def run(*command, data=None):

@@ -785,7 +785,6 @@ def main():
                    for line in path.read_text().splitlines() if line]
         from branch_coverage import read_cobertura
         cobertura = sorted(coverage_dir.rglob("*.cobertura.xml"))
-        report["coverage_reports"] = [str(p) for p in cobertura]
         def read_inventory():
             inventory = json.loads(inventory_path.read_text())
             return wsl_inventory(inventory, windows_root) if windows else inventory
