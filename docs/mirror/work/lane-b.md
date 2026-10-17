@@ -38,6 +38,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatDim uniform_dim construction | Merged to main at `8bcc959` (`c8a7843`). 7 methods; exact IL; 26 direct comparisons. |
 | MatDim uniform_dim arithmetic | Merged to main at `5b1a7cc` (`d0f0b59`). 8 arithmetic methods; exact IL; 25 direct comparisons. |
 | MatDim r_dim coordinates | Merged to main at `51def4e` (`d34b1e2`). 5 coordinate methods; exact IL; 28 direct comparisons. |
+| MatDim r_dim arithmetic | Merged to main at `df8b3a8` (`ac3d573`). 9 arithmetic methods; exact IL; 30 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -179,16 +180,19 @@ Branch `mirror/b-matdim-uniform-dim-arithmetic` (`d0f0b59`), based on clean main
 
 Branch `mirror/b-matdim-r-dim-coordinates` (`d34b1e2`), based on clean main `5b1a7cc`. The batch adds direct differential tests in `MatDimRDimCoordinatesDifferentialTests.cs`, verified status annotations on `r_dim.dim(int, int)` (token 0x060007c5), `r_dim.matdim(int, int)` (token 0x060007c6), `r_dim.get_IsLinear()` (token 0x060007c7), `r_dim.get_RowDimensions()` (token 0x060007c8), and `r_dim.ColDimensionArray(int)` (token 0x060007c9) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are recorded in that table. All 5 methods match Mathcad IL exactly in Release builds. 28 direct MethodComparison cases against Prime 12.0.1.0 `mplrun.dll`; 100% mutation kill rate (2/2). Merged via `merge_gate.py --apply`.
 
-## MatDim r_dim arithmetic operations — active checkpoint
+### MatDim r_dim arithmetic operations (merged to main at df8b3a8)
 
-Branch `mirror/b-matdim-r-dim-arithmetic`, based on current clean main `28d0434`. The batch adds direct differential tests in `MatDimRDimArithmeticDifferentialTests.cs`, verified status annotations on `r_dim.mmult1(MatDim)` (token 0x060007cc), `r_dim.mmult2(c_dim)` (token 0x060007cd), `r_dim.mmult2(rc_dim)` (token 0x060007ce), `r_dim.dmult1(MatDim)` (token 0x060007cf), `r_dim.dmult2(r_dim)` (token 0x060007d0), `r_dim.dmult2(c_dim)` (token 0x060007d1), `r_dim.transpose()` (token 0x060007d2), `r_dim.det(int)` (token 0x060007d3), and `r_dim.invert()` (token 0x060007d4) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 9 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matdim-r-dim-arithmetic` (`ac3d573`), based on clean main `28d0434`. The batch adds direct differential tests in `MatDimRDimArithmeticDifferentialTests.cs`, verified status annotations on `r_dim.mmult1(MatDim)` (token 0x060007cc), `r_dim.mmult2(c_dim)` (token 0x060007cd), `r_dim.mmult2(rc_dim)` (token 0x060007ce), `r_dim.dmult1(MatDim)` (token 0x060007cf), `r_dim.dmult2(r_dim)` (token 0x060007d0), `r_dim.dmult2(c_dim)` (token 0x060007d1), `r_dim.transpose()` (token 0x060007d2), `r_dim.det(int)` (token 0x060007d3), and `r_dim.invert()` (token 0x060007d4) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 9 methods match Mathcad IL exactly in Release builds. 30 direct MethodComparison cases against Prime 12.0.1.0 `mplrun.dll`; 100% mutation kill rate (2/2). Merged via `merge_gate.py --apply`.
 
-Direct differential tests compare all nine methods across 28 direct cases covering matrix multiplication dispatch (`c_dim`, `uniform_dim`, and `r_dim`/`crazy_dim` null return), inner length compatibility and unit summation compatibility across `c_dim` and `rc_dim`, dot multiplication dispatch and scalar evaluation across `r_dim`, `c_dim`, and `uniform_dim`, axis-swapping transposition to `c_dim`, determinant dimension products with varied exponent parameters, and inversion to `c_dim` across varied shape configurations.
+## MatDim c_dim coordinates and properties — active checkpoint
+
+Branch `mirror/b-matdim-c-dim-coordinates`, based on current clean main `df8b3a8`. The batch adds direct differential tests in `MatDimCDimCoordinatesDifferentialTests.cs`, verified status annotations on `c_dim.dim(int, int)` (token 0x060007d7), `c_dim.matdim(int, int)` (token 0x060007d8), `c_dim.get_IsLinear()` (token 0x060007d9), `c_dim.get_ColDimensions()` (token 0x060007da), and `c_dim.RowDimensionArray(int)` (token 0x060007db) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are recorded in that table. All 5 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+Direct differential tests compare all five methods across 28 direct cases covering origin coordinate access, varied column indexing, column out-of-bounds exceptions, row index invariance, linear identity return, column dimension array reference equality, and row dimension array lookup invariance across empty, singleton, and multi-dimensional matrices.
 
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
-1. **MatDim c_dim coordinates and properties** (`c_dim.dim`, `c_dim.matdim`, `c_dim.get_IsLinear`, `c_dim.get_ColDimensions`, `c_dim.RowDimensionArray`).
-2. **MatDim c_dim arithmetic operations** (`c_dim.mmult1`, `c_dim.mmult2(uniform_dim)`, `c_dim.mmult2(r_dim)`, `c_dim.dmult1`, `c_dim.dmult2(r_dim)`, `c_dim.dmult2(c_dim)`, `c_dim.transpose`, `c_dim.det`, `c_dim.invert`).
-3. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
-4. **Engine projects** (interface and factory members, subject to Linux/Windows capability).
+1. **MatDim c_dim arithmetic operations** (`c_dim.mmult1`, `c_dim.mmult2(uniform_dim)`, `c_dim.mmult2(r_dim)`, `c_dim.dmult1`, `c_dim.dmult2(r_dim)`, `c_dim.dmult2(c_dim)`, `c_dim.transpose`, `c_dim.det`, `c_dim.invert`).
+2. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
+3. **Engine projects** (interface and factory members, subject to Linux/Windows capability).
