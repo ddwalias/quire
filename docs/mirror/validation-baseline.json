@@ -1570,14 +1570,14 @@
     "Quire.Mpl.Run.PremiumFunction::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "87b2400bfb7f3bd4cdf77777f8e890250432f5ce25af7aa6fb01ccabe3a8ef6a",
     "Quire.Mpl.Run.PremiumFunction::get_Name`0()->[System.Runtime]System.String|False": "311d3a7b0756fd126a21157e5be0c9a35668816119790f811e5aea4f2e9968a7",
     "Quire.Mpl.Run.PremiumFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "cd9bcb2fbfcc059e070a359655c7c972bf9aeb09a3061c1c7556f047f573b72a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "67caa602d4dfe163a3a687a2273959500a627f29696cdd436fd969cfb152e45a",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "c352068acceaf221241212befbc570f60184d93fd1bea0c7bb44f8074b89069e",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "113d97929575aca8e708bdb878912e82cc9d1d691bec418b32d65cbf87c54a7d",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False": "f4026e18006fe3273695abdafa874e56a778a499cac139be9fcbc7c6015a86fd",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "36d2fa6ce64ff284061272ac86d48d73cb07effb975b9ed99837c9730e067261",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False": "18a29ca0f6526dd58b0bbd1d234ba4c24b08d38a9f83ab7983383bf500ae4751",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "d8f6ab965336ef243c829ffd446d224ac56c95971243e8760b45baf2de5d85c3",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "c2817f00e4715f4b19ba701c05df4478feef8f213930c1de442a7ff22b7cab02",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "fad1d273890df81aab7047f36ed9c33b1bb29cdcf2fdcee5c1c239b2d0ad28a6",
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Int32|True": "0f462d037c717fdb493fc3b04da3d1c726879012f51c9cbf2ee9866853b7799f",
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double|True": "f265cb6e430daf0e6ba392c42841ba1a557a9bf8f79672fe19b8c7cd3bdc7cd0",
     "Quire.Mpl.Run.Primitive::Call`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "1cf58f8fd30293933c836bd75d78312b0e9a68054b7219c2f98100d35807d8e8",
@@ -3119,6 +3119,14 @@
     "Quire.Mpl.Run.PremiumFunction::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False",
     "Quire.Mpl.Run.PremiumFunction::get_Name`0()->[System.Runtime]System.String|False",
     "Quire.Mpl.Run.PremiumFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Int32|True",
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double|True",
     "Quire.Mpl.Run.Primitive::Call`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Double|True",
@@ -5159,14 +5167,14 @@
     "Quire.Mpl.Run.PremiumFunction::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mpl.Run.PremiumFunction::get_Name`0()->[System.Runtime]System.String|False": "untested",
     "Quire.Mpl.Run.PremiumFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "missing",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double|True": "compared",
     "Quire.Mpl.Run.Primitive::Call`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "compared",
@@ -7879,6 +7887,30 @@
     "Quire.Mpl.Run.Nul::get_scons`0()->[Quire.Mpl]Quire.Mpl.Run.SCons|False": [
       "sexprdifferentialtests"
     ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "primitiveconstructordifferentialtests"
+    ],
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Int32|True": [
       "primitivecalldifferentialtests"
     ],
@@ -10440,10 +10472,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Primitive": {
-      "compared": 78,
+      "compared": 86,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 8,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 86,
       "uncovered": 0,
@@ -13324,6 +13356,54 @@
     ],
     "Quire.Mpl.Run.PremiumFunction::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.PremiumFunction::m_func"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[Quire.Mpl]Quire.Mpl.Run.Code)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_code",
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[])->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Reflection.Primitives]System.Reflection.Emit.OpCode[],[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.Reflection.MethodInfo)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
+    ],
+    "Quire.Mpl.Run.Primitive::.ctor`0([System.Runtime]System.String,[System.Runtime]System.String)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Primitive::m_foreign",
+      "Quire.Mpl.Run.Primitive::m_method",
+      "Quire.Mpl.Run.Primitive::m_name",
+      "Quire.Mpl.Run.Primitive::m_opcodes"
     ],
     "Quire.Mpl.Run.Primitive::Call_c`0([System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Int32|True": [
       "Quire.Mpl.Run.Primitive::m_method",
