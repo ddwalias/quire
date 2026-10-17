@@ -10,6 +10,21 @@ public class MplRunPrimitiveMechanicalDifferentialTests
     public void Throw_06000368() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000368);
 
     [SkippableFact]
+    public void as_matrix_06000395() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000395);
+
+    [SkippableFact]
+    public void as_number_06000396() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000396);
+
+    [SkippableFact]
+    public void as_string_06000397() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000397);
+
+    [SkippableFact]
+    public void as_function_06000398() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000398);
+
+    [SkippableFact]
+    public void as_range_06000399() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000399);
+
+    [SkippableFact]
     public void identity_06000382() => Mechanical.Compare(typeof(global::Quire.Mpl.Run.Primitive), 0x06000382);
 
     [SkippableFact]

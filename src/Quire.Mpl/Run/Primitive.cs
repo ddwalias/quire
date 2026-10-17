@@ -36,6 +36,21 @@ public partial class Primitive
     public static object Throw(Exception e) => throw e;
 
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
+    public static object as_matrix(object o) => o as MatVal;
+
+    [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
+    public static object as_number(object o) => o as NumVal;
+
+    [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
+    public static object as_string(object o) => o as string;
+
+    [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
+    public static object as_function(object o) => o as Function;
+
+    [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
+    public static object as_range(object o) => o as RngVal;
+
+    [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]

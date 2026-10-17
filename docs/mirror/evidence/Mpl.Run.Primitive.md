@@ -6,7 +6,8 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-Only the twelve comparisons are implemented; every other member is still a stub. Each comparison is a single
+The twelve comparisons and five typed cast helpers are implemented alongside the listed MemberGen members; other
+Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
 
@@ -24,6 +25,11 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `cle_f8(double, double)` | 0x0600037d | 1 when `x <= y`; 0 when either is NaN. | High | Verified |
 | `cgt_f8(double, double)` | 0x0600037e | 1 when `x > y`; 0 when either is NaN. | High | Verified |
 | `cge_f8(double, double)` | 0x0600037f | 1 when `x >= y`; 0 when either is NaN. | High | Verified |
+| `as_matrix(object)` | 0x06000395 | Returns the input when it is a `MatVal`; otherwise null. | High | Verified |
+| `as_number(object)` | 0x06000396 | Returns the input when it is a `NumVal`; otherwise null. | High | Verified |
+| `as_string(object)` | 0x06000397 | Returns the input when it is a string; otherwise null. | High | Verified |
+| `as_function(object)` | 0x06000398 | Returns the input when it is a `Function`; otherwise null. | High | Verified |
+| `as_range(object)` | 0x06000399 | Returns the input when it is an `RngVal`; otherwise null. | High | Verified |
 | `Throw(Exception)` | 0x06000368 | MemberGen: `throw e` | Mechanical; Release IL equals Mathcad's | Verified |
 | `identity(object)` | 0x06000382 | MemberGen: `o` | Mechanical; Release IL equals Mathcad's | Verified |
 | `dup(object)` | 0x06000383 | MemberGen: `throw new AppException("may not capture pseudo function")` | Mechanical; Release IL equals Mathcad's | Verified |
@@ -42,5 +48,6 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 **Observed** (`PrimitiveDifferentialTests`, against the installed `mplrun.dll`; results compared as values):
 - each `_i4` comparison on every ordered pair of `int.MinValue`, -1, 0, 1 and `int.MaxValue`;
 - each `_f8` comparison on every ordered pair of -∞, -1, -0, 0, 1, +∞ and NaN.
+- each cast helper with a matching target instance, rendered as the same reference only when the result is reference-identical to its input.
 
-MemberGen members are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
+MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.

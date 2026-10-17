@@ -499,8 +499,18 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Original tokens: ctor `0x0600034b`, `BegArg` `0x06000348`, `EndArg` `0x0600034a`. Evidence: [Mpl.Run.CodeFunction](../evidence/Mpl.Run.CodeFunction.md).
 - Differential tests: constructor with empty and populated arrays, with explicit reference identity checks for both fields; `BegArg`/`EndArg` at indices 0 and 1 use an asymmetric pair of argument slots to distinguish selection and forwarded index. The existing mechanical `EmitCode` comparison also runs.
 - Tests: filtered focused run passed 3/3. Scoped Release validation passed Harness 86, Mpl 188 and Differential 3; 4 compared, 0 missing/structure mismatch/uncovered/unsupported, 4 exact, lint 0, ratchet ok, mutation 0/0. Run `b5cc1abc-fd31-47d5-939c-c45b5e5fd7e7`; receipt `/tmp/quire-validation-yf10d0_k/summary.json`.
-- Exact IL before/after: `EmitCode` was exact; the three new methods raise the type from 1/4 to 4/4 exact. No exact method regressed. Pending proposals: none. Independent review is pending.
-- Next: finish independent review, then gate.
+- Exact IL before/after: `EmitCode` was exact; the three new methods raised the type from 1/4 to 4/4 exact. No exact method regressed. Independent review returned MERGE. Runtime gate passed and merged to main at `244324a4deae`; receipt `/tmp/quire-a-codefunction-gate/run/summary.json`. Gate: Harness 86, Mpl 188, Differential 212; 934 compared, 1435 exact, 97 structure-only, 0 lint, ratchet ok, mutation 0/0; existing inventory gaps remain (777 missing, 106 structure mismatches, 13 uncovered, 43 verified unsupported). Main was pushed.
+- Pending proposals: none.
+
+## Primitive cast helpers (`mirror/a-primitive-casts`)
+
+- Scope: `Primitive.as_matrix`, `as_number`, `as_string`, `as_function`, and `as_range`; each returns its input when it has the target runtime type and null otherwise.
+- Original: inspected `mplrun.dll` C# with ilspycmd and CIL metadata with REA. Tokens 0x06000395–0x06000399; each body is `ldarg.0; isinst <target>; ret`.
+- Tests: five token-bound mechanical comparisons retain null/wrong-type inputs; direct differential cases now also use matching target instances and verify the returned reference for each helper.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered focused tests passed 20/20; scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 20; 29 compared, 0 structure mismatches/uncovered/unsupported, 29 exact, lint 0, ratchet ok, mutations 37/37 killed. Run `6214f1be-d9a8-4eb9-91d5-cf9c5a6d3545`; receipt `/tmp/quire-validation-2o8xpa5h/summary.json`. Scoped status notes 57 pre-existing Primitive stubs; the full gate validates all.
+- Exact IL before/after: 24 existing exact methods -> 29 exact; no existing exact method regressed. Pending proposals: none. Independent review is pending.
+- Next: complete independent review, then runtime gate.
 
 ## Historical batch results
 
