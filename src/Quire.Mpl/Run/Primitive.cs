@@ -62,6 +62,29 @@ public partial class Primitive
     [MirrorVerified("PrimitivePredicateDifferentialTests")]
     public bool IsForeignPrimitive() => m_foreign != null;
 
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static int neg_i4(int x) => -x;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static int add_i4(int x, int y) => x + y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static int sub_i4(int x, int y) => x - y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static int mul_i4(int x, int y) => x * y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static int div_i4(int x, int y) => x / y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static int rem_i4(int x, int y) => x % y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static double neg_f8(double x) => -x;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static double add_f8(double x, double y) => x + y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static double sub_f8(double x, double y) => x - y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static double mul_f8(double x, double y) => x * y;
+    [MirrorVerified("PrimitiveArithmeticDifferentialTests")]
+    public static double div_f8(double x, double y) => x / y;
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

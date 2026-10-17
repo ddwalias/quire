@@ -6,7 +6,7 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons, four primitive-kind predicates and five typed cast helpers are implemented alongside the
+The twelve comparisons, eleven arithmetic helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
 listed MemberGen members; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
@@ -34,6 +34,17 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `IsCodePrimitive()` | 0x0600035a | True when `m_code` is non-null. | High | Verified |
 | `IsMethodPrimitive()` | 0x0600035b | True when `m_method` is non-null, `m_code` is null and `m_opcodes` is null. | High | Verified |
 | `IsForeignPrimitive()` | 0x0600035c | True when `m_foreign` is non-null, including the empty string. | High | Verified |
+| `neg_i4(int)` | 0x06000369 | Returns the unchecked integer negation of `x`. | High; direct `neg` opcode | Verified |
+| `add_i4(int, int)` | 0x0600036a | Returns the unchecked integer sum of `x` and `y`. | High; direct `add` opcode | Verified |
+| `sub_i4(int, int)` | 0x0600036b | Returns the unchecked integer difference of `x` and `y`. | High; direct `sub` opcode | Verified |
+| `mul_i4(int, int)` | 0x0600036c | Returns the unchecked integer product of `x` and `y`. | High; direct `mul` opcode | Verified |
+| `div_i4(int, int)` | 0x0600036d | Returns signed integer division; zero divisor and `int.MinValue / -1` throw `DivideByZeroException` and `OverflowException`. | High; direct `div` opcode | Verified |
+| `rem_i4(int, int)` | 0x0600036e | Returns signed integer remainder; zero divisor and `int.MinValue % -1` throw `DivideByZeroException` and `OverflowException`. | High; direct `rem` opcode | Verified |
+| `neg_f8(double)` | 0x06000375 | Returns the IEEE double negation of `x`. | High; direct `neg` opcode | Verified |
+| `add_f8(double, double)` | 0x06000376 | Returns the IEEE double sum of `x` and `y`. | High; direct `add` opcode | Verified |
+| `sub_f8(double, double)` | 0x06000377 | Returns the IEEE double difference of `x` and `y`. | High; direct `sub` opcode | Verified |
+| `mul_f8(double, double)` | 0x06000378 | Returns the IEEE double product of `x` and `y`. | High; direct `mul` opcode | Verified |
+| `div_f8(double, double)` | 0x06000379 | Returns the IEEE double quotient; zero divisors produce infinity or NaN as defined by IEEE arithmetic. | High; direct `div` opcode, no finite-result check | Verified |
 | `Throw(Exception)` | 0x06000368 | MemberGen: `throw e` | Mechanical; Release IL equals Mathcad's | Verified |
 | `identity(object)` | 0x06000382 | MemberGen: `o` | Mechanical; Release IL equals Mathcad's | Verified |
 | `dup(object)` | 0x06000383 | MemberGen: `throw new AppException("may not capture pseudo function")` | Mechanical; Release IL equals Mathcad's | Verified |
@@ -54,6 +65,9 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 - each `_f8` comparison on every ordered pair of -∞, -1, -0, 0, 1, +∞ and NaN.
 - each cast helper with a matching target instance, rendered as the same reference only when the result is reference-identical to its input.
 - primitive-kind predicates with states that independently vary `m_code`, `m_opcodes`, `m_method`, and `m_foreign`, including an empty foreign string.
+- integer arithmetic with overflow wraparound, signed division/remainder, zero divisors and the `int.MinValue` / `-1` edge;
+- double arithmetic with NaN, infinities, signed zero, zero divisors and overflow to infinity.
 
 MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
 Primitive-kind predicates are compared by `Quire.Differential.Tests.PrimitivePredicateDifferentialTests`.
+Arithmetic helpers are compared by `Quire.Differential.Tests.PrimitiveArithmeticDifferentialTests`.

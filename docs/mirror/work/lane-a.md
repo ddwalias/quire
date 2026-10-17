@@ -519,8 +519,19 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Tests: direct differential cases vary each relevant field independently, including the code-suppresses-opcode/method branches and empty foreign name.
 - Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
 - Checks: filtered focused tests passed 4/4. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 24; 33 compared, 0 structure mismatches/uncovered/unsupported, 33 exact, lint 0, ratchet ok and mutations 49/49 killed. Run `2564a8b9-35df-463e-afc8-728b18bce55f`; receipt `/tmp/quire-validation-tawm_vq8/summary.json`. Scoped status notes 53 pre-existing Primitive stubs; the full gate validates all.
-- Exact IL before/after: the four predicate bodies are exact; Primitive increased from 29/86 to 33/86 exact, with no exact method regressed. Pending proposals: none.
-- Next: complete independent review, then runtime gate.
+- Exact IL before/after: the four predicate bodies are exact; Primitive increased from 29/86 to 33/86 exact, with no exact method regressed. Independent review returned MERGE. Runtime gate passed after rebase at `d57aadbf` and merged to main at `ca3f68b8`; gate receipt `/tmp/quire-a-primitive-predicates-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-predicates-gate/run/summary.json`. Gate: Harness 86, Mpl 188, Differential 229; 950 compared, 1446 exact, 98 structure-only, lint 0, ratchet ok, mutation 12/12 killed. Existing inventory gaps remain (764 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported). Main was pushed. Pending proposals: none.
+- Next: implement and directly compare the integer and double arithmetic helpers on `Primitive`.
+
+## Primitive arithmetic helpers (`mirror/a-primitive-arithmetic`)
+
+- Scope: `neg_i4`, `add_i4`, `sub_i4`, `mul_i4`, `div_i4`, `rem_i4`, `neg_f8`, `add_f8`, `sub_f8`, `mul_f8`, and `div_f8`.
+- Original: inspected `mplrun.dll` before implementation. Tokens 0x06000369–0x0600036e and 0x06000375–0x06000379; each is a direct arithmetic opcode with no exception region. Integer division and remainder throw on zero and on `int.MinValue / -1`; floating division follows IEEE results.
+- Tests: direct comparisons include wraparound, signed division/remainder, integer exceptional cases, NaN, infinities, signed zero and floating overflow.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered Primitive differential suite passed 26/26. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 26; 44 compared, 0 structure mismatch/uncovered/unsupported, 44 exact, lint 0, ratchet ok, mutation 58/58 killed. Run `b4133d07-318c-49cb-a2d6-0ebf5cacf7a7`; final receipt after signed-zero bit-rendering change `/tmp/quire-validation-gv812y1o/summary.json`. The 42 missing methods are pre-existing Primitive stubs outside this batch.
+- Exact IL before/after: the 11 arithmetic helpers compile to the original direct operators; Primitive rose from 33/86 to 44/86 exact, with no baseline-exact method regressed.
+- Independent review returned MERGE for the complete diff, including the double bit-pattern renderer. Pending proposals: none.
+- Next: gate and merge; then directly compare `Primitive.or_ref` and `Primitive.and_ref`.
 
 ## Historical batch results
 
