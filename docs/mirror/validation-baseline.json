@@ -3909,17 +3909,17 @@
     "Quire.Mcd.MatVal::aref_1`0([System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::aref_2`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Object|False": "untested",
     "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
-    "Quire.Mcd.MatVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
-    "Quire.Mcd.MatVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
+    "Quire.Mcd.MatVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "compared",
-    "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": "compared",
     "Quire.Mcd.MatVal::asTuple`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": "compared",
-    "Quire.Mcd.MatVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
+    "Quire.Mcd.MatVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
     "Quire.Mcd.MatVal::as_object_vector`0([Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Object[]|True": "untested",
-    "Quire.Mcd.MatVal::assertRealMatrix`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal::assertRealVector`0()->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal::assertRealVector`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::assertRealMatrix`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.MatVal::assertRealVector`0()->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mcd.MatVal::assertRealVector`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::contains`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::dvm`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::element_types`0([Quire.Mpl]Quire.Mcd.MatAxis,[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Collections.Generic.IEnumerable`1<[Quire.Mpl]Quire.Mcd.ElementType>|False": "untested",
@@ -6213,14 +6213,35 @@
     "Quire.Mcd.MatVal::asImmutable`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
       "matvalviewdifferentialtests"
     ],
+    "Quire.Mcd.MatVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalassertionsandcastsdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalassertionsandcastsdifferentialtests"
+    ],
     "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalasrealvectordifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalassertionsandcastsdifferentialtests"
     ],
     "Quire.Mcd.MatVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
       "matvalviewdifferentialtests"
     ],
     "Quire.Mcd.MatVal::asTuple`0([System.Runtime]System.UInt32,[System.Runtime]System.UInt32,[System.Runtime]System.UInt32)->[System.Runtime]System.Object[]|False": [
       "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "matvalassertionsandcastsdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::assertRealMatrix`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "matvalassertionsandcastsdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::assertRealVector`0()->[System.Runtime]System.Void|False": [
+      "matvalassertionsandcastsdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::assertRealVector`0([System.Runtime]System.UInt32)->[System.Runtime]System.Void|False": [
+      "matvalassertionsandcastsdifferentialtests"
     ],
     "Quire.Mcd.MatVal::contains`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": [
       "matvalcontainsdifferentialtests"
@@ -8664,10 +8685,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatVal": {
-      "compared": 58,
+      "compared": 65,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 138,
+      "missing": 131,
       "structure_mismatch": 101,
       "total": 297,
       "uncovered": 0,
