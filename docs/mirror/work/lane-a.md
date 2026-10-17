@@ -673,6 +673,16 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Runtime gate: passed on rebased tip `15dd30c1372b`; merged at `d8f2e26fb28d`, and main was pushed. Receipt `/tmp/quire-a-dynamic-type-field-cache-gate/gate.json`; run `89238d41-6523-4736-83f3-5a02786e087a` at `/tmp/quire-a-dynamic-type-field-cache-gate/run/summary.json`. Harness 86, Mpl 188 and Differential 280 passed with no failures/skips; 1105 compared, 1507 exact, 97 structure-only, lint 0, integrity complete and ratchet OK. Mutation 7/7 killed; one mutant timed out on its first attempt and was killed on retry. Existing gaps: 612 missing, 103 structure mismatches, 13 uncovered and 43 verified unsupported.
 - Next: implement `DynamicType.NameToType(string)` and `TypeToName(Type)` on a fresh branch from current main; the original contracts are prepared and recorded in the field-cache session notes.
 
+## MplDestructuringBind.as_pattern (`mirror/a-mpl-destructuring-bind`)
+
+- Branch `mirror/a-mpl-destructuring-bind`, based on `main` `34ccce6`; work commit `98b875c`. Scope: `as_pattern(Sexpr)` (`0x06000144`), its differential test, generated stub removal and evidence.
+- Original: installed `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Read the original C# and IL with `tools/reference/reference.py Mpl.Run.MplDestructuringBind --il`. Cons cells recurse and become `(Cons head tail)`; a `Ca` head is unwrapped, `Nul` quotes, `Cm` unwraps, and other nodes pass through.
+- Direct Windows .NET 10 test `MplDestructuringBindDifferentialTests` passed 1/1. It covers `Nul`, `Cm`, `Ca`, splice-head, recursive and ordinary lists, an unchanged `Qt`, and null input.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.MplDestructuringBind --diff-filter 'FullyQualifiedName~MplDestructuringBindDifferentialTests' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-mpl-destructuring-bind-final`. Run `11da75e3-3b74-4296-805f-c37de3fa150a`; summary `/tmp/quire-validation-mpl-destructuring-bind-final/summary.json`. Harness 86, Mpl 188 and Differential 1 passed with 0 failures/skips; 1 compared, 2 pre-existing stubs missing, 0 structure mismatches/uncovered/unsupported, 1 exact, lint 0, ratchet ok, 8/8 mutants killed. `LOCAL CHECKS: pass · GATE: would pass with gaps (2 missing)`.
+- Exact Release IL before/after: 0/3 to 1/3 methods exact; `as_pattern` matches the original 116-byte body opcode for opcode. No previously exact method regressed.
+- No proposals. Independent full-diff review and runtime gate remain.
+- Next: inspect and implement the independent `MplForeignMacro` members; `MplDestructuringBind.ExpandCall` remains dependent on the generated `define_keyword.MakeDefine` stub reaching main.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
