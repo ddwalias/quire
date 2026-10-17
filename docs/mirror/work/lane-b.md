@@ -4,7 +4,7 @@ Updated: 2026-10-16
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `561f85b62045561a32a67e4125b29dbba5dd0bf3`. Lane B history is retained compactly here; older worktree results are historical.
+Checkpoint base: Linux main `2d7c3ae5e5f417f735ca01625828d1c97a514d02`. Lane B history is retained compactly here; older worktree results are historical.
 
 | Batch | Main status |
 |---|---|
@@ -32,6 +32,7 @@ Checkpoint base: Linux main `561f85b62045561a32a67e4125b29dbba5dd0bf3`. Lane B h
 | MatDim r_dim equality | Merged to main at `ae8e99b` (`8aad7a6`). Exact IL; 9 direct comparisons. |
 | MatDim rc_dim equality | Merged to main at `8f84097` (`8a1bbc1`). Exact IL; 13 direct comparisons. |
 | MatDim crazy_dim equality | Merged to main at `561f85b` (`0cf9fef`). Exact IL; 16 direct comparisons. |
+| MatDim uniform_dim equality | Merged to main at `2d7c3ae` (`74c9787`). Exact IL; 12 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -149,16 +150,20 @@ Branch `mirror/b-matdim-rc-dim-equality` (`8a1bbc1`), based on clean main `ae8e9
 
 Branch `mirror/b-matdim-crazy-dim-equality` (`0cf9fef`), based on clean main `8f84097`. The batch adds direct differential tests in `MatDimCrazyDimEqualityDifferentialTests.cs`, verified status annotations on `crazy_dim.eq_b(MatDim)` (token 0x060007b0) and `crazy_dim.eq2_b(crazy_dim)` (token 0x060007b1) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`1aaa594cfb249e74c879b2c072d8c63e6e4acb519b17138baf488e7fa772ac0b` and `6ac593fa6e76cfd5ea7a17da09eb21e7aadb3f985e7ae7447a870a6cecb7a5bf`) are in that table. Both methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Merged via `merge_gate.py --apply`.
 
-## MatDim uniform_dim equality — active checkpoint
+### MatDim uniform_dim equality (merged to main at 2d7c3ae)
 
-Branch `mirror/b-matdim-uniform-dim-equality`, based on current clean main `561f85b`. The batch adds direct differential tests in `MatDimUniformEqBDifferentialTests.cs` and `MatDimUniformEq2BDifferentialTests.cs`, verified status annotations on `uniform_dim.eq_b(MatDim)` (token 0x060007a2) and `uniform_dim.eq2_b(Dim)` (token 0x060007a3) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`c1ab43140edd236a05dcf85a3883e24cf988f49903ee1b8ff97b568d54e6dbe5` and `1e6e753b6c063dcaf6acb620558a456be804d0a774385708691e19fbfe5067ec`) are in that table. Both methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matdim-uniform-dim-equality` (`74c9787`), based on clean main `561f85b`. The batch adds direct differential tests in `MatDimUniformEqBDifferentialTests.cs` and `MatDimUniformEq2BDifferentialTests.cs`, verified status annotations on `uniform_dim.eq_b(MatDim)` (token 0x060007a2) and `uniform_dim.eq2_b(Dim)` (token 0x060007a3) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes (`c1ab43140edd236a05dcf85a3883e24cf988f49903ee1b8ff97b568d54e6dbe5` and `1e6e753b6c063dcaf6acb620558a456be804d0a774385708691e19fbfe5067ec`) are in that table. Both methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Merged via `merge_gate.py --apply`.
 
-Direct differential tests compare virtual dispatch to RHS eq2_b overloads (7 direct cases) and dimension comparison via Dim.Eq_b (5 direct cases), verifying equality with identical and distinct units, shape-ignoring comparison, dispatch across matrix dimension representations, and null exception handling.
+## MatVal real classifiers — active checkpoint
+
+Branch `mirror/b-matval-real-classifiers`, based on current clean main `2d7c3ae`. The batch adds direct differential tests in `MatValRealClassifiersDifferentialTests.cs`, verified status annotations on `IsVector` (0x0600045b), `IsRealMatrix` (0x0600045c), `IsScalarMatrix` (0x0600045d), `IsRealMatrixMixed` (0x0600045e), and `IsRealVector` (0x0600045f) in `src/Quire.Mpl/Mcd/MatVal.Access.cs`, and updated contracts in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md). Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+Direct differential tests compare all five properties across 45+ cases covering logical dimensions, imaginary backing (zero/nonzero/padding/NaN), and live/stale pointer table combinations.
 
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
 1. **MatDim specialized coordinate queries and operations** (`uniform_dim` multiplication, transforms).
-2. **MatVal flag and classifier members** (`asRealMatrix`, `assertRealVector`, `assertRealMatrix`, real classifiers).
+2. **MatVal flag and classifier members** (`asRealMatrix`, `assertRealVector`, `assertRealMatrix`).
 3. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
 4. **Engine projects** (interface and factory members, subject to Linux/Windows capability).

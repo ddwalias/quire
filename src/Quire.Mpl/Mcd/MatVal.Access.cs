@@ -10,8 +10,8 @@ public sealed partial class MatVal
 {
     [MirrorAnalyzed("Mcd.MatVal")]
     public override MatVal IsMatrix => this;
-    [MirrorAnalyzed("Mcd.MatVal")]
-    public bool IsVector => Cols == 1;
+    [MirrorVerified("MatValRealClassifiersDifferentialTests")]
+    public bool IsVector => Data.m_cols == 1;
     [MirrorAnalyzed("Mcd.MatVal")]
     public bool HasPtrs => m_parr != null && !IsUniformScalar;
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -38,30 +38,47 @@ public sealed partial class MatVal
     public override Dim UniformDimension => IsUniform ? m_dim : Dim.mixed_matrix_dim;
     [MirrorAnalyzed("Mcd.MatVal")]
     public override MatDim MatrixDimension => MatDim.make(this);
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValRealClassifiersDifferentialTests")]
     public bool IsRealMatrix => IsUniformScalar & !HasImag;
-    [MirrorAnalyzed("Mcd.MatVal")]
-    public bool IsRealVector => IsVector && IsRealMatrix;
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValRealClassifiersDifferentialTests")]
+    public bool IsRealVector
+    {
+        get
+        {
+            if (Data.m_cols == 1) return IsRealMatrix;
+            return false;
+        }
+    }
+    [MirrorVerified("MatValRealClassifiersDifferentialTests")]
     public bool IsScalarMatrix
     {
         get
         {
-            if (m_parr != null)
-                foreach (DictionaryEntry entry in m_parr)
-                    if (IsPtrNan(ref m_rarr[(int)entry.Key]) && entry.Value is not NumVal) return false;
+            if (m_parr == null) return true;
+            foreach (DictionaryEntry entry in m_parr)
+            {
+                if (IsPtrNan(ref m_rarr[(int)entry.Key]) && !(entry.Value is NumVal))
+                    return false;
+            }
             return true;
         }
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorVerified("MatValRealClassifiersDifferentialTests")]
     public bool IsRealMatrixMixed
     {
         get
         {
             if (HasImag) return false;
-            if (m_parr != null)
-                foreach (DictionaryEntry entry in m_parr)
-                    if (IsPtrNan(ref m_rarr[(int)entry.Key]) && (entry.Value is not NumVal n || n.Imag != 0)) return false;
+            if (m_parr == null) return true;
+            foreach (DictionaryEntry entry in m_parr)
+            {
+                if (IsPtrNan(ref m_rarr[(int)entry.Key]))
+                {
+                    NumVal numVal = entry.Value as NumVal;
+                    if (numVal == null || numVal.Data.ip != 0.0)
+                        return false;
+                }
+            }
             return true;
         }
     }
