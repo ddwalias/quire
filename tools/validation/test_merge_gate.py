@@ -1,7 +1,9 @@
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -383,6 +385,230 @@ class RepositoryTests(unittest.TestCase):
         self.assertEqual((tree / 'docs/x.md').read_text(), 'work')
         recorded = [p for p in (tree / '.git').rglob('*') if p.is_file() and str(self.repo).encode() in p.read_bytes()]
         self.assertEqual(recorded, [])  # config, reflogs, FETCH_HEAD, packed-refs...
+
+
+class PhaseGateTests(unittest.TestCase):
+    """A branch changing a Windows project: the phase profile runs after the focused one where Windows' dotnet.exe is
+    at hand, and the gate blocks it as before where it is not. RepositoryTests' scratch repository, plus a phase
+    baseline on `main` and an `engine` branch."""
+    BASELINE, git, main = RepositoryTests.BASELINE, RepositoryTests.git, RepositoryTests.main
+    PHASE = dict(RepositoryTests.BASELINE, profile='phase', types={'E': {
+        'compared': 0, 'total': 1, 'missing': 1, 'structure_mismatch': 0, 'uncovered': 0, 'verified_unsupported': 0}},
+        methods={'E::M()': 'missing'})
+
+    def setUp(self):
+        RepositoryTests.setUp(self)
+        with (self.repo / 'tools/validation/protected.txt').open('a') as rules:
+            rules.write(merge_gate.PHASE_BASELINE + '\n')
+        (self.repo / merge_gate.PHASE_BASELINE).write_text(json.dumps(self.PHASE))
+        self.git('add', '-A'); self.git('commit', '-qm', 'phase baseline')
+        self.base = self.git('rev-parse', 'HEAD')
+        self.git('checkout', '-qb', 'engine')
+        (self.repo / 'src/Quire.Engine').mkdir(parents=True)
+        (self.repo / 'src/Quire.Engine/A.cs').write_text('class A {}\n')
+        self.git('add', '-A'); self.git('commit', '-qm', 'engine')
+        self.git('checkout', '-q', 'main')
+        self.temp = self.repo.parent / 'windows-temp'
+        self.temp.mkdir()
+
+    @contextlib.contextmanager
+    def runs(self, dotnet='/mnt/c/dotnet/dotnet.exe', focused=PASSED, phase=PASSED, phase_baseline=None):
+        real, commands = subprocess.run, []
+        new_phase = phase_baseline or dict(self.PHASE, methods={'E::M()': 'compared'})
+        def run(command, *args, **kwargs):
+            if '--write-baseline' not in command:
+                return real(command, *args, **kwargs)
+            commands.append(command)
+            is_phase = '--profile' in command
+            results = Path(command[command.index('--results') + 1])
+            results.mkdir(parents=True)
+            (results / 'summary.json').write_text(json.dumps(phase if is_phase else focused))
+            Path(command[command.index('--write-baseline') + 1]).write_text(
+                json.dumps(new_phase if is_phase else self.BASELINE))
+            return subprocess.CompletedProcess(command, 0)
+        with mock.patch.object(merge_gate.subprocess, 'run', side_effect=run), \
+                mock.patch.object(merge_gate, 'phase_dotnet', return_value=dotnet), \
+                mock.patch.object(merge_gate, 'windows_temp', return_value=str(self.temp)):
+            yield commands
+
+    def gate(self, branch, extra=()):
+        """main's exit code, gate.json and what it printed."""
+        printed = []
+        with mock.patch.object(merge_gate, 'print', create=True, side_effect=lambda *a, **k: printed.append(' '.join(map(str, a)))):
+            code, gate = self.main(branch, extra=extra)
+        return code, gate, '\n'.join(printed)
+
+    def branch(self, name, files, start='main'):
+        self.git('checkout', '-qb', name, start)
+        for path, text in files.items():
+            (self.repo / path).parent.mkdir(parents=True, exist_ok=True)
+            (self.repo / path).write_text(text)
+        self.git('add', '-A'); self.git('commit', '-qm', name)
+        self.git('checkout', '-q', 'main')
+
+    def test_windows_project_changes_are_unvalidated(self):
+        self.assertEqual(merge_gate.unvalidated_paths(['src/Quire.Engine/A.cs', 'src/Quire.Mpl/B.cs']),
+                         ['src/Quire.Engine/A.cs'])
+
+    def test_without_phase_the_gate_blocks_as_before(self):
+        with self.runs(dotnet=None) as commands:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                code, gate = self.main('engine')
+        self.assertEqual((code, gate, commands), (1, None, []))
+
+    def test_both_profiles_run_and_must_both_pass(self):
+        with self.runs() as commands:
+            code, gate = self.main('engine')
+        self.assertEqual(code, 0, gate)
+        self.assertEqual(len(commands), 2)
+        focused, phase = commands
+        self.assertNotIn('--profile', focused)
+        self.assertEqual(phase[phase.index('--profile') + 1], 'phase')
+        self.assertEqual(phase[phase.index('--dotnet') + 1], '/mnt/c/dotnet/dotnet.exe')
+        self.assertTrue(phase[phase.index('--baseline') + 1].endswith(merge_gate.PHASE_BASELINE))
+        self.assertNotIn('--mutate-since', phase)
+        # The phase clone and results live under the Windows temporary directory; the clone is removed.
+        self.assertTrue(Path(phase[phase.index('--results') + 1]).is_relative_to(self.temp))
+        self.assertFalse(list(self.temp.glob('quire-gate-phase-*/tree')))
+        self.assertEqual(gate['phase']['validator_exit'], 0)
+        self.assertEqual(gate['phase']['reasons'], [])
+        self.assertEqual(gate['validation_mode'], 'runtime')
+
+    def test_a_failing_phase_blocks(self):
+        failing = dict(PASSED, projects=[{'project': 'Quire.Engine.Tests', 'exit_code': 1, 'passed': 3, 'failed': 1,
+                                          'skipped': 0}])
+        with self.runs(phase=failing):
+            code, gate = self.main('engine')
+        self.assertEqual(code, 1)
+        self.assertEqual(gate['reasons'], ['phase: Quire.Engine.Tests: tests did not all pass'])
+
+    def test_a_phase_baseline_regression_blocks(self):
+        with self.runs(phase_baseline=dict(self.PHASE, types={})):
+            code, gate = self.main('engine')
+        self.assertEqual(code, 1)
+        self.assertTrue(any(r.startswith('phase: new baseline: E: type disappeared') for r in gate['reasons']), gate)
+
+    def test_a_failing_focused_run_skips_the_phase(self):
+        with self.runs(focused=dict(PASSED, ratchet={'ok': False, 'regressions': ['T::A(): compared became missing']})) \
+                as commands:
+            code, gate = self.main('engine')
+        self.assertEqual(code, 1)
+        self.assertEqual(len(commands), 1)
+        self.assertEqual(gate['phase'], {'skipped': 'the focused validation blocked'})
+
+    def test_allow_unvalidated_keeps_the_maintainer_route(self):
+        with self.runs() as commands:
+            code, gate = self.main('engine', extra=['--allow-unvalidated'])
+        self.assertEqual(code, 0, gate)
+        self.assertEqual(len(commands), 1)
+        self.assertIsNone(gate['phase'])
+
+    def test_apply_commits_both_baselines(self):
+        new_phase = dict(self.PHASE, methods={'E::M()': 'compared'})
+        with self.runs(phase_baseline=new_phase):
+            code, gate = self.main('engine', extra=['--apply'])
+        self.assertEqual(code, 0, gate)
+        head = self.git('rev-parse', 'main')
+        self.assertEqual(self.git('rev-parse', f'{head}^'), self.git('rev-parse', 'engine'))
+        self.assertEqual(sorted(self.git('diff', '--name-only', 'engine', head).splitlines()),
+                         [merge_gate.PHASE_BASELINE])  # the focused baseline bytes equal the tip's here
+        self.assertEqual(json.loads(self.git('show', f'{head}:{merge_gate.PHASE_BASELINE}')), new_phase)
+        self.assertEqual(json.loads(self.git('show', f'{head}:{merge_gate.BASELINE}')), self.BASELINE)
+
+    def test_phase_baseline_is_restored_from_the_base_and_protected(self):
+        files = ['tools/validation/validate.py', merge_gate.BASELINE, merge_gate.PHASE_BASELINE, 'docs/x.md']
+        rules = merge_gate.patterns((Path(__file__).parent / 'protected.txt').read_text())
+        self.assertEqual(merge_gate.restored_paths(files, rules, {}, True), [merge_gate.BASELINE, merge_gate.PHASE_BASELINE])
+        self.assertEqual(merge_gate.protected([merge_gate.PHASE_BASELINE], rules), [merge_gate.PHASE_BASELINE])
+
+    def test_baseline_commit_writes_only_the_baselines(self):
+        tip = self.git('rev-parse', 'engine')
+        commit = baseline_commit(tip, b'{"f": 1}\n', 'engine', 'r', self.repo, b'{"p": 1}\n')
+        self.assertEqual(sorted(self.git('diff', '--name-only', tip, commit).splitlines()),
+                         sorted([merge_gate.BASELINE, merge_gate.PHASE_BASELINE]))
+        only_focused = baseline_commit(tip, b'{"f": 2}\n', 'engine', 'r', self.repo)
+        self.assertEqual(self.git('diff', '--name-only', tip, only_focused), merge_gate.BASELINE)
+
+    def test_a_branch_cannot_change_the_phase_baseline_when_phase_does_not_run(self):
+        # Even with every maintainer override that skips the phase run, main keeps the base's phase baseline.
+        emptied = json.dumps(dict(self.PHASE, types={}))
+        blob = self.git('rev-parse', f'main:{merge_gate.PHASE_BASELINE}')
+        for name, files, extra in [
+                ('probe', {merge_gate.PHASE_BASELINE: emptied}, ['--allow-protected', '--apply']),
+                ('probe-engine', {merge_gate.PHASE_BASELINE: emptied, 'src/Quire.Engine/B.cs': 'class B {}\n'},
+                 ['--allow-protected', '--allow-unvalidated', '--apply'])]:
+            with self.subTest(name):
+                self.branch(name, files)
+                shutil.rmtree(self.repo.parent / 'results', ignore_errors=True)
+                with self.runs() as commands:
+                    code, gate, out = self.gate(name, extra)
+                self.assertEqual(code, 0, out)
+                self.assertEqual(len(commands), 1)  # the focused run only
+                self.assertIsNone(gate['phase'])
+                self.assertEqual(self.git('rev-parse', 'main^'), self.git('rev-parse', name))
+                self.assertEqual(self.git('rev-parse', f'main:{merge_gate.PHASE_BASELINE}'), blob)
+                self.assertEqual(self.git('diff', '--name-only', name, 'main'), merge_gate.PHASE_BASELINE)
+
+    def test_baseline_commit_keeps_the_bases_phase_baseline(self):
+        self.branch('probe', {merge_gate.PHASE_BASELINE: '{}'})
+        tip = self.git('rev-parse', 'probe')
+        commit = baseline_commit(tip, b'{"f": 1}\n', 'probe', 'r', self.repo, None, self.base)
+        self.assertEqual(self.git('rev-parse', f'{commit}:{merge_gate.PHASE_BASELINE}'),
+                         self.git('rev-parse', f'{self.base}:{merge_gate.PHASE_BASELINE}'))
+        # A base without one: a branch cannot add it either.
+        first = self.git('rev-list', '--max-parents=0', 'main')
+        commit = baseline_commit(tip, b'{"f": 1}\n', 'probe', 'r', self.repo, None, first)
+        self.assertNotIn(merge_gate.PHASE_BASELINE, self.git('ls-tree', '-r', '--name-only', commit).splitlines())
+
+    def test_no_phase_baseline_on_the_base_blocks_before_any_run(self):
+        self.git('rm', '-q', merge_gate.PHASE_BASELINE); self.git('commit', '-qm', 'no phase baseline')
+        self.git('rebase', '-q', 'main', 'engine'); self.git('checkout', '-q', 'main')
+        with self.runs() as commands:
+            code, gate, out = self.gate('engine')
+        self.assertEqual((code, gate, commands), (1, None, []))
+        self.assertIn('a maintainer must create the phase baseline first', out)
+
+    def test_an_unusable_phase_temp_blocks_before_any_run(self):
+        with self.runs() as commands, mock.patch.object(merge_gate, 'windows_temp',
+                                                        side_effect=ValueError('/tmp/x is not on a Windows drive')):
+            code, gate, out = self.gate('engine')
+        self.assertEqual((code, gate, commands), (1, None, []))
+        self.assertIn('BLOCKED: phase: /tmp/x is not on a Windows drive', out)
+
+    def test_old_phase_runs_are_pruned(self):
+        for age in range(5):
+            run = self.temp / f'quire-gate-phase-{age}'
+            (run / 'run').mkdir(parents=True)
+            os.utime(run, (1000 - age, 1000 - age))
+        (self.temp / 'other').mkdir()
+        with mock.patch.object(merge_gate, 'print', create=True):
+            merge_gate.prune_phase_runs(self.temp, keep=3)
+        self.assertEqual(sorted(d.name for d in self.temp.iterdir()), ['other', 'quire-gate-phase-0', 'quire-gate-phase-1'])
+
+    def test_remove_tree_reports_what_it_could_not_remove(self):
+        printed = []
+        with mock.patch.object(merge_gate.shutil, 'rmtree', side_effect=lambda d, onexc: onexc(
+                os.unlink, f'{d}/locked.dll', PermissionError('in use'))), \
+                mock.patch.object(merge_gate, 'print', create=True, side_effect=lambda *a, **k: printed.extend(a)):
+            self.assertFalse(merge_gate.remove_tree(self.temp))
+        self.assertEqual(printed, [f'could not remove {self.temp}/locked.dll: in use'])
+
+    def test_phase_cli_detection(self):
+        with mock.patch.object(merge_gate.os, 'name', 'nt'):
+            self.assertEqual(merge_gate.phase_dotnet({}), 'dotnet')
+        with mock.patch.object(merge_gate.os, 'name', 'posix'):
+            self.assertIsNone(merge_gate.phase_dotnet({}))  # plain Linux: no Windows CLI
+            cli = self.repo.parent / 'dotnet.exe'
+            self.assertIsNone(merge_gate.phase_dotnet({'WSL_DISTRO_NAME': 'x', 'QUIRE_WINDOWS_DOTNET': str(cli)}))
+            cli.write_text('')
+            self.assertEqual(merge_gate.phase_dotnet({'WSL_DISTRO_NAME': 'x', 'QUIRE_WINDOWS_DOTNET': str(cli)}), str(cli))
+
+    def test_phase_command(self):
+        command = merge_gate.phase_command(Path('/w/tree'), Path('/w/run'), Path('/w/b.json'), 900, 'dotnet.exe')
+        self.assertEqual(command[2:], ['-B', '/w/tree/tools/validation/validate.py', '--profile', 'phase', '--results',
+                                       '/w/run', '--baseline', f'/w/tree/{merge_gate.PHASE_BASELINE}',
+                                       '--write-baseline', '/w/b.json', '--timeout', '900', '--dotnet', 'dotnet.exe'])
 
 
 class StubDeletionTests(unittest.TestCase):

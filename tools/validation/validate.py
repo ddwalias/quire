@@ -120,18 +120,18 @@ def sdk_directory(global_json):
         shutil.rmtree(directory, ignore_errors=True)
 
 
-def method_audit(dotnet, tool_dir, structure_dir, install, inventory, profile):
+def method_audit(dotnet, tool_dir, structure_dir, install, inventory, profile, path=str):
     """The project to build optimized (Release) into `structure_dir`, with its build arguments, and the MethodAudit
     command. Structure is compared on that build, as Mathcad's assemblies are optimized; coverage, mutation and body
-    hashes use the Debug build the tests run."""
+    hashes use the Debug build the tests run. `path` names a path for `dotnet` (windows_path from WSL)."""
     host, framework = (("Quire.Focused.Differential.Tests", "net10.0") if profile == "focused"
                        else ("Quire.Mirror.Tests", "net10.0-windows"))
-    scan = [dotnet, str(tool_dir / "Quire.Tools.MethodAudit.dll"),
-            "--repo", str(ROOT), "--assemblies", str(ROOT / "tests" / host / "bin/Debug" / framework),
-            "--structure-assemblies", str(structure_dir), "--install", str(install), "--output", str(inventory)]
+    scan = [dotnet, path(tool_dir / "Quire.Tools.MethodAudit.dll"),
+            "--repo", path(ROOT), "--assemblies", path(ROOT / "tests" / host / "bin/Debug" / framework),
+            "--structure-assemblies", path(structure_dir), "--install", path(install), "--output", path(inventory)]
     if profile == "focused":
         scan += ["--project", "Quire.Mpl"]
-    return (ROOT / "tests" / host / f"{host}.csproj", ["-c", "Release", "--no-incremental", "-o", str(structure_dir)]), scan
+    return (ROOT / "tests" / host / f"{host}.csproj", ["-c", "Release", "--no-incremental", "-o", path(structure_dir)]), scan
 
 
 def missing_shape(dotnet, generator_dir, global_json, assembly, timeout):
@@ -160,6 +160,76 @@ def resolve_dotnet(name, root):
     return os.path.abspath(found)  # not resolved: a launcher such as snap's picks its tool by the name it is run as
 
 
+# The phase profile from WSL (validation.md, "Phase profile from WSL"): Windows' dotnet.exe builds, tests and audits,
+# so everything it is given is a Windows path on a Windows drive, and it sees only the variables WSLENV names.
+WINDOWS_DOTNET = "/mnt/c/Program Files/dotnet/dotnet.exe"
+# What test code reads from its environment (Environment.GetEnvironmentVariable in tests/ and src/), beside the
+# Windows user's own variables. QUIRE_METHOD_CASES is converted before it is set; `/p` converts MATHCAD_DIR.
+FORWARDED = ("QUIRE_REQUIRE_MATHCAD", "QUIRE_METHOD_CASES", "QUIRE_VALIDATION_RUN", "MATHCAD_DIR/p")
+
+
+def is_wsl(environ=os.environ):
+    return os.name != "nt" and bool(environ.get("WSL_DISTRO_NAME") or environ.get("WSL_INTEROP"))
+
+
+def windows_dotnet(requested="dotnet", environ=os.environ):
+    """The Windows CLI a phase run from WSL drives, or None: `--dotnet` when given, else QUIRE_WINDOWS_DOTNET when
+    set, else WINDOWS_DOTNET when installed. Only a Windows `.exe` qualifies."""
+    if requested == "dotnet":
+        requested = environ.get("QUIRE_WINDOWS_DOTNET") or (WINDOWS_DOTNET if Path(WINDOWS_DOTNET).is_file() else "")
+    return requested if requested.lower().endswith(".exe") else None
+
+
+def windows_path(path):
+    """`path` as a Windows process started from WSL names it (`wslpath -w`). Only a path on a Windows drive
+    (/mnt/<drive>) qualifies: anything else would reach Windows only through the \\\\wsl.localhost share."""
+    path = os.path.realpath(path)
+    result = subprocess.run(["wslpath", "-w", path], capture_output=True, text=True)
+    converted = result.stdout.strip()
+    if result.returncode or not converted or converted.startswith("\\\\"):
+        raise ValueError(f"{path} is not on a Windows drive (/mnt/<drive>); a phase run from WSL needs the repository, "
+                         "results and temporary directories there, where Windows' dotnet.exe can reach them")
+    return converted
+
+
+def wsl_document(path, windows_root, root=ROOT):
+    """A path a Windows build recorded (PDB documents, coverage files, MSBuild properties) as the validator reads it:
+    inside the repository (case-insensitively, as on Windows) the repository's own path; elsewhere on a drive its
+    /mnt/<drive> path; anything else unchanged."""
+    prefix, normal = windows_root.rstrip("\\") + "\\", path.replace("/", "\\")
+    if normal.lower().startswith(prefix.lower()):
+        return Path(root).as_posix().rstrip("/") + "/" + normal[len(prefix):].replace("\\", "/")
+    if re.match(r"[A-Za-z]:\\", normal):
+        return f"/mnt/{normal[0].lower()}/" + normal[3:].replace("\\", "/")
+    return path
+
+
+def wsl_inventory(inventory, windows_root, root=ROOT):
+    """The method inventory with the source documents of its methods and test types read back through WSL."""
+    for method in inventory.get("methods", []):
+        for document in method.get("source") or []:
+            document["file"] = wsl_document(document["file"], windows_root, root)
+    for test_type in inventory.get("test_types", []):
+        test_type["documents"] = [wsl_document(d, windows_root, root) for d in test_type["documents"]]
+    return inventory
+
+
+def wslenv(env):
+    """`env` with WSLENV also naming FORWARDED, the variables the Windows test process must see."""
+    names = {f.split("/")[0] for f in FORWARDED}
+    kept = [n for n in env.get("WSLENV", "").split(":") if n and n.split("/")[0] not in names]
+    return dict(env, WSLENV=":".join(kept + list(FORWARDED)))
+
+
+def windows_temp(environ=os.environ, root=ROOT):
+    """The temporary directory of a phase run from WSL, created if missing: QUIRE_WINDOWS_TEMP, else
+    `.quire-windows-temp` beside the checkout. Refused unless it is on a Windows drive."""
+    directory = Path(environ.get("QUIRE_WINDOWS_TEMP") or Path(root).resolve().parent / ".quire-windows-temp").resolve()
+    windows_path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    return str(directory)
+
+
 # The mutation scratch directory (in the system temporary directory, so the stale sweep covers it), and the file in
 # the results naming it, so the merge gate can remove it if the validator dies.
 SCRATCH_PREFIX, SCRATCH_RECORD = "quire-mutant-scratch-", "mutation-scratch.txt"
@@ -167,6 +237,12 @@ DIFFERENTIAL_TESTS = "tests/Quire.Differential.Tests/"
 # Callers of one dispatch slot above which a run notes the slot (object.ToString and the like): they are all still
 # selected, since leaving any out would be unsound, but the note says why a selection is large.
 WIDE_SLOT = 50
+
+
+def default_baseline(profile):
+    """The baseline a profile ratchets against unless --baseline names another: each profile has its own."""
+    import ratchet
+    return ratchet.PHASE_BASELINE if profile == "phase" else ratchet.BASELINE
 
 
 def test_sources(root=None):
@@ -520,8 +596,22 @@ def main():
         parser.error(f"--proposed-unreachable: {args.proposed_unreachable} is not a file")
     if args.write_baseline and args.method_type:
         parser.error("--write-baseline needs an unscoped run")
+    windows = None  # Windows' dotnet.exe, for a phase run from WSL
     if args.profile == "phase" and os.name != "nt":
-        parser.error("phase tests require Windows and the Windows Desktop runtime; use focused for the portable runtime slice")
+        windows = windows_dotnet(args.dotnet) if is_wsl() else None
+        if not windows:
+            parser.error("phase tests require Windows and the Windows Desktop runtime: run on Windows, or from WSL with "
+                         f"a Windows dotnet.exe (--dotnet, QUIRE_WINDOWS_DOTNET or {WINDOWS_DOTNET}); use focused for "
+                         "the portable runtime slice")
+        args.dotnet = windows
+        try:
+            # Every temporary directory (dotnet's working directories, build outputs, coverage, default results).
+            tempfile.tempdir = windows_temp()
+            windows_path(ROOT)
+            if args.results:
+                windows_path(args.results.resolve().parent)
+        except ValueError as error:
+            parser.error(str(error))
     if args.profile == "phase" and args.method_type:
         parser.error("phase validation must audit every method; omit --method-type")
     if args.profile == "phase" and args.diff_filter:
@@ -549,13 +639,19 @@ def main():
     artifact = install / "mplrun.dll"
     report["original"] = {"path": str(artifact), "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else None}
     holder = {}
+    # How dotnet names a path it is given; from WSL, Windows paths, and a Windows build's paths read back.
+    to_dotnet = windows_path if windows else str
+    if windows:
+        windows_root = windows_path(ROOT)
+        report["wsl"] = {"dotnet": windows, "temp": tempfile.tempdir, "windows_root": windows_root}
+    from_dotnet = (lambda p: wsl_document(p, windows_root)) if windows else (lambda p: p)
     try:
         if args.profile == "phase":
             projects = phase_projects()
         # Everything the verdict depends on is loaded or built before any code under test runs; afterwards the seal
         # catches tests that rewrite maintainer-owned files or built outputs on disk.
         # Verdict inputs are read, and the source lint run, before any code under test can touch them.
-        baseline_path = args.baseline or ratchet.BASELINE
+        baseline_path = args.baseline or default_baseline(args.profile)
         baseline = json.loads(baseline_path.read_text()) if baseline_path.is_file() else None
         deviations = method_coverage.accepted_deviations(ROOT)
         accepted_mutants = mutate.accepted()
@@ -574,7 +670,7 @@ def main():
             changed_names = git_output("diff", "-z", "--no-renames", "--name-status", args.mutate_since)
             if changed_names is None:
                 raise ValueError(f"cannot diff against {args.mutate_since}")
-        coverage_dir = Path(tempfile.mkdtemp(prefix="quire-coverage-"))
+        coverage_dir = holder["coverage"] = Path(tempfile.mkdtemp(prefix="quire-coverage-"))
         # No source control queries: they stamp the commit into every assembly, so a docs-only commit would change
         # the build output and miss the mutant cache.
         build_flags = ["-m:1", "-nr:false", "-p:UseSharedCompilation=false", "-p:NuGetAudit=false",
@@ -585,13 +681,14 @@ def main():
         generator_dir = holder["generator"] = Path(tempfile.mkdtemp(prefix="quire-mirrorgen-"))
         structure_dir = holder["structure"] = Path(tempfile.mkdtemp(prefix="quire-audit-release-"))
         inventory_path = output / "method-inventory.json"
-        structure_build, scan = method_audit(args.dotnet, tool_dir, structure_dir, install, inventory_path, args.profile)
+        structure_build, scan = method_audit(args.dotnet, tool_dir, structure_dir, install, inventory_path, args.profile,
+                                             to_dotnet)
         print("Building the method audit and test projects", flush=True)
         with (output / "build.log").open("w") as log:
-            for target, extra in [(tool, ["-o", str(tool_dir)]), (generator, ["-o", str(generator_dir)]),
+            for target, extra in [(tool, ["-o", to_dotnet(tool_dir)]), (generator, ["-o", to_dotnet(generator_dir)]),
                                   structure_build] + [(ROOT / "tests" / p / f"{p}.csproj", []) for p in projects]:
                 with sdk_directory(global_json) as sdk:
-                    result = subprocess.run([args.dotnet, "build", str(target), *build_flags, *extra], cwd=sdk,
+                    result = subprocess.run([args.dotnet, "build", to_dotnet(target), *build_flags, *extra], cwd=sdk,
                                             stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
                 if result.returncode:
                     raise ValueError(f"build of {target.name} failed; inspect build.log")
@@ -603,18 +700,18 @@ def main():
         assemblies, collectors = {}, {}
         for project in projects:
             with sdk_directory(global_json) as sdk:
-                query = subprocess.run([args.dotnet, "msbuild", str(ROOT / "tests" / project / f"{project}.csproj"),
+                query = subprocess.run([args.dotnet, "msbuild", to_dotnet(ROOT / "tests" / project / f"{project}.csproj"),
                                         "-getProperty:TargetPath", "-getProperty:TraceDataCollectorDirectoryPath",
                                         "-nologo"], cwd=sdk, capture_output=True, text=True, timeout=args.timeout)
             try:
                 properties = json.loads(query.stdout)["Properties"]
             except (ValueError, KeyError, TypeError):
                 properties = {}
-            path = properties.get("TargetPath", "")
+            path = from_dotnet(properties.get("TargetPath", ""))
             if not path or not Path(path).is_file():
                 raise ValueError(f"{project}: built assembly not found ({query.stdout.strip()!r})")
             assemblies[project] = Path(path)
-            collectors[project] = properties.get("TraceDataCollectorDirectoryPath", "")
+            collectors[project] = from_dotnet(properties.get("TraceDataCollectorDirectoryPath", ""))
         if args.profile == "focused":
             report["missing_shape"] = missing_shape(args.dotnet, generator_dir, global_json,
                                                     assemblies["Quire.Focused.Differential.Tests"].parent / "Quire.Mpl.dll",
@@ -632,11 +729,13 @@ def main():
             env.pop("QUIRE_VALIDATION_RUN", None)
             env.pop("QUIRE_MUTANT_CACHE", None)
             if differential:
-                env["QUIRE_METHOD_CASES"] = str(output / "method-cases")
+                env["QUIRE_METHOD_CASES"] = to_dotnet(output / "method-cases")
                 env["QUIRE_VALIDATION_RUN"] = run
             trx = output / f"{project}.trx"
-            command = [args.dotnet, "test", str(assemblies[project]),
-                       "--logger", f"trx;LogFileName={trx.name}", "--results-directory", str(output)]
+            if windows:
+                env = wslenv(env)
+            command = [args.dotnet, "test", to_dotnet(assemblies[project]),
+                       "--logger", f"trx;LogFileName={trx.name}", "--results-directory", to_dotnet(output)]
             if differential and args.diff_filter:
                 command += ["--filter", args.diff_filter]
             print(f"Running {project}; log: {output / (project + '.log')}", flush=True)
@@ -657,11 +756,11 @@ def main():
                 env.pop("QUIRE_VALIDATION_RUN", None)
                 coverage_trx = output / f"{project}.coverage.trx"
                 coverage_command = [c if not c.startswith("trx;") else f"trx;LogFileName={coverage_trx.name}" for c in command]
-                coverage_command[coverage_command.index("--results-directory") + 1] = str(coverage_dir)
+                coverage_command[coverage_command.index("--results-directory") + 1] = to_dotnet(coverage_dir)
                 if not collectors[project] or not Path(collectors[project]).is_dir():
                     raise ValueError(f"{project}: no coverage collector; does it reference Microsoft.NET.Test.Sdk?")
                 coverage_command += ["--collect", "Code Coverage;Format=cobertura",
-                                     "--test-adapter-path", str(Path(collectors[project]))]
+                                     "--test-adapter-path", to_dotnet(Path(collectors[project]))]
                 item["coverage_command"] = coverage_command
                 print(f"Measuring branch coverage of {project}", flush=True)
                 with (output / f"{project}.coverage.log").open("w") as log, sdk_directory(global_json) as sdk:
@@ -675,7 +774,8 @@ def main():
         from method_coverage import audit, passed_tests
         if digest_outputs(tool_dir, structure_dir) != sealed_digest:
             raise ValueError("the method audit or Release build changed while tests ran")
-        report["method_commands"] = [[args.dotnet, "build", str(structure_build[0]), *build_flags, *structure_build[1]], scan]
+        report["method_commands"] = [[args.dotnet, "build", to_dotnet(structure_build[0]), *build_flags, *structure_build[1]],
+                                     scan]
         print("Auditing every selected method, including private methods and accessors", flush=True)
         with (output / "method-audit.log").open("w") as log, sdk_directory(global_json) as sdk:
             result = subprocess.run(scan, cwd=sdk, stdout=log, stderr=subprocess.STDOUT, timeout=args.timeout)
@@ -686,9 +786,12 @@ def main():
         from branch_coverage import read_cobertura
         cobertura = sorted(coverage_dir.rglob("*.cobertura.xml"))
         report["coverage_reports"] = [str(p) for p in cobertura]
-        coverage = audit(json.loads(inventory_path.read_text()), records,
+        def read_inventory():
+            inventory = json.loads(inventory_path.read_text())
+            return wsl_inventory(inventory, windows_root) if windows else inventory
+        coverage = audit(read_inventory(), records,
                          passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type,
-                         lines=read_cobertura(cobertura), deviations=deviations, unreachable=unreachable,
+                         lines=read_cobertura(cobertura, from_dotnet), deviations=deviations, unreachable=unreachable,
                          proposed_unreachable=proposed_unreachable, sources=unreachable_sources)
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
         report["method_coverage"] = coverage["counts"]
@@ -707,7 +810,7 @@ def main():
                                               if m["validation"] == "compared")
         if any(m["proposed_exempt_lines"] for m in coverage["methods"]):
             print("Coverage passes only with proposed unreachable lines, which await maintainer acceptance", flush=True)
-        inventory = json.loads(inventory_path.read_text())
+        inventory = read_inventory()
         report["stale_accepted"] = stale_accepted(inventory, accepted_mutants)
         if report["stale_accepted"]:
             print(f"Stale accepted-mutant entries: {report['stale_accepted']}", flush=True)

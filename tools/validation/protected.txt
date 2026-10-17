@@ -41,6 +41,7 @@ docs/mirror/evidence/README.md
 docs/mirror/deviations.md
 docs/mirror/decisions.md
 docs/mirror/validation-baseline.json
+docs/mirror/validation-baseline-phase.json
 docs/mirror/accepted-mutants.txt
 docs/mirror/unreachable-lines.txt
 docs/mirror/lint-allowed.txt

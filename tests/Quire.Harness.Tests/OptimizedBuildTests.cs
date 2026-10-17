@@ -231,9 +231,10 @@ public class OptimizedBuildTests : IDisposable
     {
         Build("install", "OrigDep", "Orig.Dep", Optimized);
         Build("debug", "FixDep", "Fix.Dep", Optimized, "Orig.Dep, OrigDep");
+        // From bytes, not by path: Windows locks an assembly loaded from its file, and Dispose deletes the directory.
         var dep = new System.Runtime.Loader.AssemblyLoadContext("dependencies");
-        var quire = dep.LoadFromAssemblyPath(Path.Combine(_dir, "debug", "FixDep.dll")).GetType("Fix.Dep")!;
-        var mathcad = dep.LoadFromAssemblyPath(Path.Combine(_dir, "install", "OrigDep.dll")).GetType("Orig.Dep")!;
+        var quire = dep.LoadFromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(_dir, "debug", "FixDep.dll")))).GetType("Fix.Dep")!;
+        var mathcad = dep.LoadFromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(_dir, "install", "OrigDep.dll")))).GetType("Orig.Dep")!;
         Action<TypeBuilder> G(Type parameter) => t =>
             t.DefineMethod("G", MethodAttributes.Public | MethodAttributes.Static, typeof(void), [parameter]).GetILGenerator().Emit(OpCodes.Ret);
         var (exit, inventory) = Audit(Optimized, more: G(quire), moreOriginal: G(mathcad),

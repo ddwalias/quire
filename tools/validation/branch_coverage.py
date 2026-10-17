@@ -6,14 +6,15 @@ import xml.etree.ElementTree as ET
 CONDITIONS = re.compile(r'\((\d+)/(\d+)\)')
 
 
-def read_cobertura(paths):
+def read_cobertura(paths, document=lambda name: name):
     """{(file, line): (hits, covered conditions, total conditions)}. Duplicate entries keep the most executions and
-    the least covered branch ratio, so one fully covered entry cannot hide another's partial branch."""
+    the least covered branch ratio, so one fully covered entry cannot hide another's partial branch. `document` maps
+    each file name (a Windows build's, read from WSL: validate.wsl_document)."""
     lines = {}
     for path in paths:
         root = ET.parse(path).getroot()
         for cls in root.iter('class'):
-            name = Path(cls.get('filename', '')).as_posix()
+            name = document(Path(cls.get('filename', '')).as_posix())
             for line in cls.iter('line'):
                 key = (name, int(line.get('number')))
                 hits = int(line.get('hits', '0'))

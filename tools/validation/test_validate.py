@@ -537,5 +537,144 @@ class PrivateCopyTests(unittest.TestCase):
             self.assertFalse(list(copy.rglob("*.pyc")))
 
 
+class WslPhaseTests(unittest.TestCase):
+    """The phase profile from WSL: Windows' dotnet.exe gets Windows paths and WSLENV, and its outputs are read back."""
+    def test_windows_dotnet_precedence(self):
+        from validate import WINDOWS_DOTNET, windows_dotnet
+        installed = unittest.mock.patch('validate.Path.is_file', return_value=True)
+        missing = unittest.mock.patch('validate.Path.is_file', return_value=False)
+        with installed:
+            self.assertEqual(windows_dotnet('/mnt/d/dotnet/dotnet.exe', {}), '/mnt/d/dotnet/dotnet.exe')
+            self.assertIsNone(windows_dotnet('/usr/bin/dotnet', {}))  # an explicit Linux CLI is not silently replaced
+            self.assertEqual(windows_dotnet('dotnet', {'QUIRE_WINDOWS_DOTNET': '/mnt/e/x/dotnet.exe'}), '/mnt/e/x/dotnet.exe')
+            self.assertIsNone(windows_dotnet('dotnet', {'QUIRE_WINDOWS_DOTNET': '/usr/bin/dotnet'}))
+            self.assertEqual(windows_dotnet('dotnet', {}), WINDOWS_DOTNET)
+        with missing:
+            self.assertIsNone(windows_dotnet('dotnet', {}))
+
+    def test_wsl_is_detected_only_off_windows(self):
+        import validate
+        with unittest.mock.patch.object(validate.os, 'name', 'posix'):
+            self.assertTrue(validate.is_wsl({'WSL_DISTRO_NAME': 'Ubuntu'}))
+            self.assertFalse(validate.is_wsl({}))
+        with unittest.mock.patch.object(validate.os, 'name', 'nt'):
+            self.assertFalse(validate.is_wsl({'WSL_DISTRO_NAME': 'Ubuntu'}))
+
+    def test_paths_are_converted_and_only_windows_drives_qualify(self):
+        import subprocess
+        import validate
+        def wslpath(output, code=0):
+            return unittest.mock.patch.object(validate.subprocess, 'run',
+                                              return_value=subprocess.CompletedProcess([], code, output + '\n', ''))
+        with wslpath(r'C:\Projects\Quire\tests\T.csproj') as run:
+            self.assertEqual(validate.windows_path('/mnt/c/Projects/Quire/tests/T.csproj'), r'C:\Projects\Quire\tests\T.csproj')
+            self.assertEqual(run.call_args[0][0][:2], ['wslpath', '-w'])
+        for output, code in [(r'\\wsl.localhost\Ubuntu\tmp\x', 0), ('', 0), ('', 1)]:
+            with self.subTest(output=output, code=code), wslpath(output, code), \
+                    self.assertRaisesRegex(ValueError, 'not on a Windows drive'):
+                validate.windows_path('/tmp/x')
+
+    def test_method_audit_paths_go_through_the_converter(self):
+        import validate
+        (project, build), scan = validate.method_audit('dotnet.exe', Path('tool'), Path('release'), Path('install'),
+                                                       Path('inventory.json'), 'phase', lambda p: f'W[{p}]')
+        self.assertEqual(build[-1], 'W[release]')
+        for flag in ('--repo', '--assemblies', '--structure-assemblies', '--install', '--output'):
+            with self.subTest(flag=flag):
+                self.assertTrue(scan[scan.index(flag) + 1].startswith('W['))
+        self.assertTrue(scan[1].startswith('W[') and scan[1].endswith('Quire.Tools.MethodAudit.dll]'))
+
+    def test_windows_outputs_are_read_back_through_their_mount(self):
+        from validate import wsl_document, wsl_inventory
+        root, windows_root = Path('/mnt/c/Projects/Quire'), 'C:\\Projects\\Quire'
+        # Inside the repository: case-insensitive, as on Windows, and mapped onto the repository's own path.
+        self.assertEqual(wsl_document('c:\\projects\\QUIRE\\src\\A.cs', windows_root, root), '/mnt/c/Projects/Quire/src/A.cs')
+        self.assertEqual(wsl_document('C:/Projects/Quire/src/A.cs', windows_root, root), '/mnt/c/Projects/Quire/src/A.cs')
+        self.assertEqual(wsl_document('C:\\Users\\u\\.nuget\\packages\\x\\a.cs', windows_root, root),
+                         '/mnt/c/Users/u/.nuget/packages/x/a.cs')
+        self.assertEqual(wsl_document('C:\\Projects\\QuireOther\\a.cs', windows_root, root), '/mnt/c/Projects/QuireOther/a.cs')
+        for unchanged in ('/_/src/a.cs', 'relative.cs', ''):
+            self.assertEqual(wsl_document(unchanged, windows_root, root), unchanged)
+        inventory = wsl_inventory({'methods': [{'source': [{'file': 'C:\\Projects\\Quire\\src\\A.cs'}]}, {'source': None}],
+                                   'test_types': [{'documents': ['C:\\Projects\\Quire\\tests\\T.cs']}]}, windows_root, root)
+        self.assertEqual(inventory['methods'][0]['source'][0]['file'], '/mnt/c/Projects/Quire/src/A.cs')
+        self.assertEqual(inventory['test_types'][0]['documents'], ['/mnt/c/Projects/Quire/tests/T.cs'])
+
+    def test_coverage_file_names_are_mapped_before_duplicates_merge(self):
+        from branch_coverage import read_cobertura
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / 'a.cobertura.xml'
+            report.write_text('<coverage><packages><package><classes>'
+                              '<class filename="C:\\R\\A.cs"><lines><line number="3" hits="1" condition-coverage="50% (1/2)"/></lines></class>'
+                              '<class filename="c:\\r\\A.cs"><lines><line number="3" hits="2" condition-coverage="100% (2/2)"/></lines></class>'
+                              '</classes></package></packages></coverage>')
+            lines = read_cobertura([report], lambda name: '/mnt/c/R/' + name.replace('\\', '/').rsplit('/', 1)[-1])
+        self.assertEqual(lines, {('/mnt/c/R/A.cs', 3): (2, 1, 2)})  # the partial branch is not hidden
+
+    def test_wslenv_forwards_what_tests_read(self):
+        from validate import FORWARDED, wslenv
+        env = wslenv({'WSLENV': 'WT_SESSION:QUIRE_REQUIRE_MATHCAD/u:MATHCAD_DIR', 'PATH': '/usr/bin'})
+        names = env['WSLENV'].split(':')
+        self.assertEqual(names, ['WT_SESSION', *FORWARDED])
+        self.assertEqual(env['PATH'], '/usr/bin')
+        for name in ('QUIRE_REQUIRE_MATHCAD', 'QUIRE_METHOD_CASES', 'QUIRE_VALIDATION_RUN', 'MATHCAD_DIR/p'):
+            self.assertIn(name, names)
+        self.assertEqual(wslenv({})['WSLENV'], ':'.join(FORWARDED))
+
+    def test_windows_temp_must_be_on_a_windows_drive(self):
+        import validate
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / 'scratch'
+            with unittest.mock.patch.object(validate, 'windows_path', side_effect=ValueError('not on a Windows drive')), \
+                    self.assertRaisesRegex(ValueError, 'Windows drive'):
+                validate.windows_temp({'QUIRE_WINDOWS_TEMP': str(target)})
+            self.assertFalse(target.exists())
+            with unittest.mock.patch.object(validate, 'windows_path', return_value='C:\\scratch'):
+                self.assertEqual(validate.windows_temp({'QUIRE_WINDOWS_TEMP': str(target)}), str(target.resolve()))
+                self.assertTrue(target.is_dir())
+                self.assertEqual(validate.windows_temp({}, Path(directory) / 'repo'),
+                                 str((Path(directory) / '.quire-windows-temp').resolve()))
+
+    def run_validate(self, *args, env=None):
+        import os, subprocess, sys
+        with tempfile.TemporaryDirectory() as directory:
+            environ = {k: v for k, v in os.environ.items() if not k.startswith(('WSL', 'QUIRE_WINDOWS'))}
+            return subprocess.run([sys.executable, "-I", "-B", str(Path(__file__).parent / "validate.py"), *args],
+                                  env=dict(environ, QUIRE_VALIDATOR_REPO=directory, **(env or {})),
+                                  capture_output=True, text=True)
+
+    def test_phase_off_windows_needs_wsl_and_a_windows_cli(self):
+        import os
+        if os.name == 'nt':
+            self.skipTest('native Windows runs the phase profile directly')
+        result = self.run_validate('--profile', 'phase')
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('from WSL with a Windows dotnet.exe', result.stderr)
+        result = self.run_validate('--profile', 'phase', '--dotnet', '/usr/bin/dotnet', env={'WSL_DISTRO_NAME': 'x'})
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('from WSL with a Windows dotnet.exe', result.stderr)
+
+    def test_phase_from_wsl_refuses_a_checkout_off_the_windows_drives(self):
+        import os, shutil
+        if os.name == 'nt' or not shutil.which('wslpath'):
+            self.skipTest('needs WSL')
+        # The test repository is a new directory in /tmp, which Windows reaches only through \\wsl.localhost.
+        result = self.run_validate('--profile', 'phase', '--dotnet', '/mnt/c/x/dotnet.exe',
+                                   env={'WSL_DISTRO_NAME': 'x', 'QUIRE_WINDOWS_TEMP': '/tmp'})
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('not on a Windows drive', result.stderr)
+
+    def test_phase_runs_ratchet_against_their_own_baseline(self):
+        import ratchet
+        from validate import default_baseline
+        self.assertNotEqual(ratchet.PHASE_BASELINE, ratchet.BASELINE)
+        self.assertEqual(ratchet.PHASE_BASELINE.parent, ratchet.BASELINE.parent)
+        self.assertEqual(default_baseline("phase"), ratchet.PHASE_BASELINE)
+        self.assertEqual(default_baseline("focused"), ratchet.BASELINE)
+        # main takes it from there, so neither profile can read the other's baseline.
+        source = (Path(__file__).parent / "validate.py").read_text()
+        self.assertIn("baseline_path = args.baseline or default_baseline(args.profile)", source)
+
+
 if __name__ == "__main__":
     unittest.main()

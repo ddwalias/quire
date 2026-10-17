@@ -6,6 +6,8 @@ from pathlib import Path
 from validate import ROOT, test_class
 
 BASELINE = ROOT / 'docs/mirror/validation-baseline.json'
+# The phase profile's own baseline: its inventory spans every manifest project, and a baseline holds one profile.
+PHASE_BASELINE = ROOT / 'docs/mirror/validation-baseline-phase.json'
 SCHEMA = 4
 # Baseline schemas compare() reads and the merge gate accepts from a validator. Schema 4 adds `bodies` and `writes`
 # (validate.changed_methods), which narrow mutation selection, not the ratchet; from a schema 3 baseline the gate

@@ -52,3 +52,30 @@ The earlier `02ecce1` full audit at `/tmp/quire-matval-final-runtime-gate` was i
 1,180/2,112 mutants when unmerged DimVal comparison fixes and their pending approvals were identified.
 Its gate receipt is blocked (validator exit 241, no sealed summary); it is not a passing audit or merge
 authorization. The corrected candidate still requires a fresh complete full audit.
+
+## Phase profile from WSL and Windows-project gating
+
+`validate.py --profile phase` now runs from WSL through Windows' `dotnet.exe`: `--dotnet`, else
+`QUIRE_WINDOWS_DOTNET`, else `/mnt/c/Program Files/dotnet/dotnet.exe`. The checkout, results and `QUIRE_WINDOWS_TEMP`
+must be on `/mnt/<drive>`; paths are converted with `wslpath -w`, test variables are forwarded through `WSLENV`, and
+the build's PDB/coverage paths are read back through `/mnt`. MethodAudit also runs under `dotnet.exe`. Phase runs
+ratchet against `docs/mirror/validation-baseline-phase.json`. For a branch whose `src/`/`tests/` changes the focused
+profile does not cover, the merge gate runs the phase profile after the focused run where that CLI is available, and
+passes only when both pass; `--apply` commits both baselines. Without the CLI it blocks as before. See
+[validation.md](../validation.md#phase-profile-from-wsl).
+
+First phase run of main from WSL: all nine phase test projects passed, 0 skipped
+(Calculation 8, Controls 16, Core 7, Differential 272 plus its coverage run, Engine 94, EquationEditor 88, Mirror 32,
+Mpl 188, Harness 86). Harness needed this commit's fix to `OptimizedBuildTests`: on Windows an assembly loaded by
+path stays locked, so the test's cleanup failed; it now loads from bytes. The method audit then failed for reasons that are independent of
+WSL. MethodAudit crashes on `Quire.Engine.Native` (`Program.cs:135`, two Mathcad methods match one key), and
+several projects report `MirrorOf` and type-map inspection errors (Efi 396, Mpl.Modules 82, Mcd 9, Quire 2, and a
+shared `Quire.ProductInfo.Constants` error that appears once in each of 17 more projects). So there is no phase
+baseline yet, and until a maintainer fixes these, the gate's phase run blocks every Windows-project branch with
+these specific reasons. Phase mutation is not implemented.
+
+Review follow-up: the gate commits `main`'s phase baseline unchanged on every merge without a phase run, so no
+branch can change either baseline, even with `--allow-protected`/`--allow-unvalidated`. A branch needing the
+phase run is blocked before any run while `main` has no phase baseline (a maintainer bootstraps it on `main`;
+see validation.md) or the Windows temporary directory is unusable. The gate keeps the 3 newest phase run
+directories.
