@@ -587,13 +587,13 @@ public partial class FnConstant : Function
 
 public partial class Fn_varargs : Function
 {
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     private Function m_f;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override string Name => m_f.Name;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public Fn_varargs(Function f)
         : base(1024, 0)
     {
@@ -601,45 +601,45 @@ public partial class Fn_varargs : Function
         m_f = f;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override void invVec<R>(out R r, object[] args) => m_f.inv<R, object[]>(out r, args);
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override object Apply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override object DynApply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override object DynCall(object arg1)
     {
         m_f.inv<object, object[]>(out var r, [arg1]);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override object DynCall(object arg1, object arg2)
     {
         m_f.inv<object, object[]>(out var r, [arg1, arg2]);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override object DynCall(object arg1, object arg2, object arg3)
     {
         m_f.inv<object, object[]>(out var r, [arg1, arg2, arg3]);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     public override object DynCall(object arg1, object arg2, object arg3, object arg4)
     {
         m_f.inv<object, object[]>(out var r, [arg1, arg2, arg3, arg4]);
