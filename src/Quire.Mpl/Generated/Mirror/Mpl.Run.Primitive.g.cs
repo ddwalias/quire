@@ -26,24 +26,6 @@ public partial class Primitive
     [global::Quire.Mirror.MirrorStub]
     public string m_foreign;
     [global::Quire.Mirror.MirrorStub]
-    public static object Call(int prim, object x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object Call(int prim, object x, object y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object Call(int prim, object x, object y, object z) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int Call(int prim, int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int Call(int prim, int x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double Call(int prim, double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double Call(int prim, double x, double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int Call_c(int prim, double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double Call_c(int prim, int x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private Primitive(string nm, global::System.Reflection.Emit.OpCode code, global::System.Reflection.MethodInfo mi) { }
     [global::Quire.Mirror.MirrorStub]
     private Primitive(string nm, global::System.Reflection.Emit.OpCode[] codes, global::System.Reflection.MethodInfo mi) { }

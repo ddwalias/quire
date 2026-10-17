@@ -148,6 +148,25 @@ public partial class Primitive
         return True.singleton;
     }
 
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static object Call(int prim, object x) => m_primitive[prim].m_method.Invoke(null, new object[1] { x });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static object Call(int prim, object x, object y) => m_primitive[prim].m_method.Invoke(null, new object[2] { x, y });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static object Call(int prim, object x, object y, object z) => m_primitive[prim].m_method.Invoke(null, new object[3] { x, y, z });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static int Call(int prim, int x) => (int)m_primitive[prim].m_method.Invoke(null, new object[1] { x });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static int Call(int prim, int x, int y) => (int)m_primitive[prim].m_method.Invoke(null, new object[2] { x, y });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static double Call(int prim, double x) => (double)m_primitive[prim].m_method.Invoke(null, new object[1] { x });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static double Call(int prim, double x, double y) => (double)m_primitive[prim].m_method.Invoke(null, new object[2] { x, y });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static int Call_c(int prim, double x) => (int)m_primitive[prim].m_method.Invoke(null, new object[1] { x });
+    [MirrorVerified("PrimitiveCallDifferentialTests")]
+    public static double Call_c(int prim, int x) => (double)m_primitive[prim].m_method.Invoke(null, new object[1] { x });
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

@@ -604,7 +604,18 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Exact IL before/after: both helpers compile to the original `NumVal` construction and scalar checks; Primitive rose from 67/86 to 69/86 exact, with no baseline-exact method regressed.
 - Independent review returned MERGE. Pending proposals: none.
 - Final rebased tip `2a47ab9740330398e88a597c4b384ecfe703c15a` passed the runtime gate and merged to main at `4b9b5cfddd6a`; main was pushed. Gate receipt `/tmp/quire-a-primitive-values-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-values-gate/run/summary.json`: Harness 86, Mpl 188, Differential 257; 1008 compared, 1483 exact, 97 structure-only, lint 0, ratchet ok; 163/167 mutants killed, 4 existing accepted survivors, 1 timeout retry. Existing inventory gaps remain (706 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported). No proposals pending.
-- Next: implement and directly compare remaining `Primitive` dispatch and constructor members.
+- Next: implement and directly compare the remaining private `Primitive` constructors.
+
+## Primitive reflective call overloads (`mirror/a-primitive-call`)
+
+- Scope: the seven `Call` and two `Call_c` overloads on `Primitive`.
+- Original: re-read installed `mplrun.dll` using `tools/reference/reference.py Mpl.Run.Primitive --il`; artifact SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Tokens `0x0600035d`–`0x06000365`; each selects `m_primitive[prim].m_method`, invokes it with a newly allocated exact-size argument array, and returns the result directly or unboxes the requested primitive type.
+- Direct tests: all overloads with primitive index 1 and mapped target methods; identity-aware renderers check returned object/array references and first/second argument selection, the 3-argument call mutates and returns the same array, and finite noncommutative integer/double subtraction checks binary argument order.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered `PrimitiveCallDifferentialTests` passed 2/2. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests|FullyQualifiedName~PrimitiveConversionDifferentialTests|FullyQualifiedName~PrimitiveArrayDifferentialTests|FullyQualifiedName~PrimitiveArrayAccessDifferentialTests|FullyQualifiedName~PrimitiveBitwiseDifferentialTests|FullyQualifiedName~PrimitiveValueDifferentialTests|FullyQualifiedName~PrimitiveCallDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 45; 78 compared, 0 structure mismatch/uncovered/unsupported, 78 exact, lint 0, ratchet ok and 105/105 mutants killed. Run `ef343c45-93df-4781-a2fa-a422ab0a33c1`; receipt `/tmp/quire-validation-apoas5b3/summary.json`. The 8 missing methods are pre-existing Primitive stubs outside this batch.
+- Exact IL before/after: all nine overloads match the original argument-array, `Invoke` and optional unboxing shapes; Primitive rose from 69/86 to 78/86 exact, with no baseline-exact method regressed.
+- Independent review: pending. Pending proposals: none.
+- Next: implement and directly compare the remaining private `Primitive` constructors.
 
 ## Historical batch results
 

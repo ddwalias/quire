@@ -6,7 +6,7 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, two scalar-value helpers, three array constructors, eleven array element operations, five bitwise/shift/root helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
+The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, two scalar-value helpers, nine reflective call overloads, three array constructors, eleven array element operations, five bitwise/shift/root helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
 listed MemberGen members; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
@@ -34,6 +34,15 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `IsCodePrimitive()` | 0x0600035a | True when `m_code` is non-null. | High | Verified |
 | `IsMethodPrimitive()` | 0x0600035b | True when `m_method` is non-null, `m_code` is null and `m_opcodes` is null. | High | Verified |
 | `IsForeignPrimitive()` | 0x0600035c | True when `m_foreign` is non-null, including the empty string. | High | Verified |
+| `Call(int, object)` | 0x0600035d | Invokes the selected primitive method with one object argument and returns its object result. | High; `MethodInfo.Invoke(null, new object[1])` | Verified |
+| `Call(int, object, object)` | 0x0600035e | Invokes the selected primitive method with two object arguments and returns its object result. | High; `MethodInfo.Invoke(null, new object[2])` | Verified |
+| `Call(int, object, object, object)` | 0x0600035f | Invokes the selected primitive method with three object arguments and returns its object result. | High; `MethodInfo.Invoke(null, new object[3])` | Verified |
+| `Call(int, int)` | 0x06000360 | Invokes the selected primitive method with one boxed integer argument and unboxes an integer result. | High; one-element argument array, `unbox.any int` | Verified |
+| `Call(int, int, int)` | 0x06000361 | Invokes the selected primitive method with two boxed integer arguments and unboxes an integer result. | High; two-element argument array, `unbox.any int` | Verified |
+| `Call(int, double)` | 0x06000362 | Invokes the selected primitive method with one boxed double argument and unboxes a double result. | High; one-element argument array, `unbox.any double` | Verified |
+| `Call(int, double, double)` | 0x06000363 | Invokes the selected primitive method with two boxed double arguments and unboxes a double result. | High; two-element argument array, `unbox.any double` | Verified |
+| `Call_c(int, double)` | 0x06000364 | Invokes the selected primitive method with one boxed double argument and unboxes an integer result. | High; one-element argument array, `unbox.any int` | Verified |
+| `Call_c(int, int)` | 0x06000365 | Invokes the selected primitive method with one boxed integer argument and unboxes a double result. | High; one-element argument array, `unbox.any double` | Verified |
 | `or_ref(object, object)` | 0x06000366 | Returns `y` when `x` is null; otherwise returns `x`. | High; direct null branch | Verified |
 | `and_ref(object, object)` | 0x06000367 | Returns `y` when `x` is non-null; otherwise returns null. | High; direct null branch | Verified |
 | `conv_i4(double)` | 0x06000380 | Converts the double to int using the runtime's `conv.i4` behavior. | High; direct cast | Verified |
@@ -98,6 +107,7 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 - typed integer/double/object array loads and stores, mutation, returned-array identity, index failures, and object-array length including null input.
 - XOR patterns, signed and unsigned shift counts including negative and masked counts, and nth-root results including zero, negative and non-finite operands.
 - integer-to-`NumVal` construction at signed bounds; scalar truth conversion for zero, signed zero, nonzero real/imaginary values, NaN, infinities and invalid inputs.
+- all nine `Call`/`Call_c` overloads with selected primitive index 1; object identity/selection, three-argument array mutation, integer and double arguments, arithmetic results and double/integer conversions.
 
 MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
 Primitive-kind predicates are compared by `Quire.Differential.Tests.PrimitivePredicateDifferentialTests`.
@@ -108,3 +118,4 @@ Array constructors are compared by `Quire.Differential.Tests.PrimitiveArrayDiffe
 Array element operations are compared by `Quire.Differential.Tests.PrimitiveArrayAccessDifferentialTests`.
 Bitwise, shift and nth-root helpers are compared by `Quire.Differential.Tests.PrimitiveBitwiseDifferentialTests`.
 Scalar-value helpers are compared by `Quire.Differential.Tests.PrimitiveValueDifferentialTests`.
+Reflective call overloads are compared by `Quire.Differential.Tests.PrimitiveCallDifferentialTests`.
