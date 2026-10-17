@@ -26,8 +26,6 @@ public partial class DynamicType
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.ConstructorInfo DefineConstructor(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, int tag, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string MplConcat3(object o1, object o2, object o3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Reflection.MethodInfo Concat3Mi() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Reflection.MethodInfo Concat2Mi() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

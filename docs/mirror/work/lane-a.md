@@ -708,6 +708,17 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 
 The user approved the single independently reviewed `NameToType` unreachable-line proposal on `mirror/a-dynamic-type-name-maps` (source line 15 after `AppException.Raise`; original IL has the same unconditional throw path). Maintainer acceptance in `docs/mirror/unreachable-lines.txt` is still required before that branch can pass the gate.
 
+## DynamicType.MplConcat3 (`mirror/a-dynamic-type-mplconcat3`)
+
+- Scope: implement `MplConcat3(object, object, object)` (`0x06000405`), remove its generated stub, and add direct differential comparisons.
+- Original: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Mathcad substitutes the string `"null"` for each null argument and calls `String.Concat(object, object, object)`.
+- Direct Windows .NET 10 test: `DynamicTypeMplConcat3DifferentialTests` passed 1/1, covering all-null, each individual null position, literal `"null"`, and mixed boxed values.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-dynamic-type-mplconcat3-wide`. Run `60067ba8-2e59-44a8-8198-c1c668f41ba1`; summary `/tmp/quire-validation-dynamic-type-mplconcat3-wide/summary.json`: Harness 86, Mpl 188, Differential 6 passed, no failures/skips; 7 compared, 23 pre-existing missing stubs, 0 structure mismatches/uncovered/verified-unsupported; 7 exact, lint 0, integrity complete, ratchet ok, 14/14 mutants killed (3 cached; 1 timed out then killed on retry). `LOCAL CHECKS: pass · GATE: would pass with gaps (23 missing)`.
+- A diagnostic run filtered only to the new test passed its direct test and killed 3/3 mutants, but narrowed away six existing DynamicType comparisons and correctly failed the ratchet. The broad run above includes the existing test classes and is the scoped handoff result.
+- Exact Release IL before/after: DynamicType was 6/30 exact before and 7/30 after; `MplConcat3` matches the original 39-byte body opcode for opcode. No previously exact method regressed. No proposals.
+- Independent review returned MERGE for the full five-path diff at implementation tip `1457793`. The branch is rebased on current main `0cd49a5`; runtime gate follows the MatrixIterator gate and a rebase to that resulting main. No proposals.
+- Next: continue with the independent `MplForeignMacro` members indexed in `WORK.md`.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old

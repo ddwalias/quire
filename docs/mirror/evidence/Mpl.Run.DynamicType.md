@@ -12,6 +12,7 @@
 | `FieldName(int)` | 0x06000417 | Calls `String.Concat(object, object)` with `"Field"` and boxed `i + 1` | Original IL; direct cases include zero and distinct positive integers | Verified |
 | `.cctor()` | 0x060003fd | Initializes `TuplePrefix`, `FieldNameTable`, `DelimiterString`, and both type-name lookup tables in declaration order | Directly compared static field and table contents; Release IL equals Mathcad's | Verified |
 | `FieldNames(int)` | 0x06000418 | Returns the cached array for `n`; otherwise allocates `string[n]`, fills it with `FieldName(i)`, stores and returns it | Direct cases cover 0, 1, 4, -1 and cached-array identity; Release IL equals Mathcad's | Verified |
+| `MplConcat3(object, object, object)` | 0x06000405 | Replaces each null argument with the string `"null"`, then calls `String.Concat(object, object, object)` | Direct cases cover all-null, each null position, the literal string `"null"`, and mixed boxed values; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
@@ -20,3 +21,6 @@ parameter and field), comparing the result, the arguments and the target's field
 
 **Observed** (`DynamicTypeFieldNamesDifferentialTests`): the type initializer's static fields and all entries in its three
 tables; `FieldNames` results for 0, 1 and 4; matching negative-length exceptions for -1; and reference identity on a repeated count.
+
+**Observed** (`DynamicTypeMplConcat3DifferentialTests`): all-null, each individual null position, a literal `"null"` value,
+and mixed strings and boxed values.
