@@ -34,6 +34,9 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatDim crazy_dim equality | Merged to main at `561f85b` (`0cf9fef`). Exact IL; 16 direct comparisons. |
 | MatDim uniform_dim equality | Merged to main at `2d7c3ae` (`74c9787`). Exact IL; 12 direct comparisons. |
 | MatVal real classifiers | Merged to main at `28bee78` (`ad7e8b4`). 5 classifiers; exact IL; 46 direct comparisons. |
+| MatVal assertions and casts | Merged to main at `41f234b` (`50a27be`). 7 methods; exact IL; 30 direct comparisons. |
+| MatDim uniform_dim construction | Merged to main at `8bcc959` (`c8a7843`). 7 methods; exact IL; 26 direct comparisons. |
+| MatDim uniform_dim arithmetic | Merged to main at `5b1a7cc` (`d0f0b59`). 8 arithmetic methods; exact IL; 25 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -167,15 +170,20 @@ Branch `mirror/b-matval-assertions-casts` (`50a27be`), based on clean main `28be
 
 Branch `mirror/b-matdim-uniform-dim-construction` (`c8a7843`), based on clean main `41f234b`. The batch adds direct differential tests in `MatDimUniformDimConstructionDifferentialTests.cs`, verified status annotations on `uniform_dim..ctor(Dim, int, int)` (token 0x0600079c), `uniform_dim.make(Dim, int, int)` (token 0x0600079d), `uniform_dim.dim(int, int)` (token 0x0600079e), `uniform_dim.matdim(int, int)` (token 0x0600079f), `uniform_dim.get_UniformDim()` (token 0x060007a0), `uniform_dim.get_IsLinear()` (token 0x060007a1), and `uniform_dim.transpose()` (token 0x060007a9) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 7 methods match Mathcad IL exactly in Release builds. 26 direct MethodComparison cases against Prime 12.0.1.0 `mplrun.dll`; 100% mutation kill rate (100/100). Merged via `merge_gate.py --apply`.
 
-## MatDim uniform_dim arithmetic operations — active checkpoint
+### MatDim uniform_dim arithmetic operations (merged to main at 5b1a7cc)
 
-Branch `mirror/b-matdim-uniform-dim-arithmetic`, based on current clean main `8bcc959`. The batch adds direct differential tests in `MatDimUniformDimArithmeticDifferentialTests.cs`, verified status annotations on `uniform_dim.mmult1(MatDim)` (token 0x060007a4), `uniform_dim.mmult2(uniform_dim)` (token 0x060007a5), `uniform_dim.mmult2(r_dim)` (token 0x060007a6), `uniform_dim.dmult1(MatDim)` (token 0x060007a7), `uniform_dim.dmult2(uniform_dim)` (token 0x060007a8), `uniform_dim.det(int)` (token 0x060007aa), `uniform_dim.invert()` (token 0x060007ab), and `uniform_dim.pwr(uint)` (token 0x060007ac) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 8 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Branch `mirror/b-matdim-uniform-dim-arithmetic` (`d0f0b59`), based on clean main `8bcc959`. The batch adds direct differential tests in `MatDimUniformDimArithmeticDifferentialTests.cs`, verified status annotations on `uniform_dim.mmult1(MatDim)` (token 0x060007a4), `uniform_dim.mmult2(uniform_dim)` (token 0x060007a5), `uniform_dim.mmult2(r_dim)` (token 0x060007a6), `uniform_dim.dmult1(MatDim)` (token 0x060007a7), `uniform_dim.dmult2(uniform_dim)` (token 0x060007a8), `uniform_dim.det(int)` (token 0x060007aa), `uniform_dim.invert()` (token 0x060007ab), and `uniform_dim.pwr(uint)` (token 0x060007ac) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are in that table. All 8 methods match Mathcad IL exactly in Release builds. 25 direct MethodComparison cases against Prime 12.0.1.0 `mplrun.dll`; 100% mutation kill rate (1/1). Merged via `merge_gate.py --apply`.
 
-Direct differential tests compare all eight methods across 25 direct cases covering matrix multiplication dispatch (`uniform_dim` and fallback `crazy_dim`), dimension products with varied shapes and empty dimensions, `r_dim` multiplication across multiple row elements, dot multiplication dispatch and scalar evaluation, determinant powers (positive, negative, zero), inversion preserving dimensions and shape, and integer powers.
+## MatDim r_dim coordinates and properties — active checkpoint
+
+Branch `mirror/b-matdim-r-dim-coordinates`, based on current clean main `5b1a7cc`. The batch adds direct differential tests in `MatDimRDimCoordinatesDifferentialTests.cs`, verified status annotations on `r_dim.dim(int, int)` (token 0x060007c5), `r_dim.matdim(int, int)` (token 0x060007c6), `r_dim.get_IsLinear()` (token 0x060007c7), `r_dim.get_RowDimensions()` (token 0x060007c8), and `r_dim.ColDimensionArray(int)` (token 0x060007c9) in `src/Quire.Mpl/Mcd/MatDim.Operations.cs`, and updated contracts in [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md). Exact original signatures, tokens, and hashes are recorded in that table. All 5 methods match Mathcad IL exactly in Release builds. Artifact: Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+
+Direct differential tests compare all five methods across 28 direct cases covering row coordinate indexing within bounds, out-of-bounds row index throwing IndexOutOfRangeException on both sides, column index parameter invariance, 1x1 uniform_dim coordinate extraction via `matdim`, self-reference return for `get_IsLinear`, direct reference return of the underlying `m_rowdim` array for `get_RowDimensions` and `ColDimensionArray(int)` across empty, singleton, and multi-element row dimension configurations.
 
 ## Next Lane B queue
 
 The following independent Lane B batches are next in line:
-1. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
-2. **Engine projects** (interface and factory members, subject to Linux/Windows capability).
-3. **MatDim c_dim and r_dim arithmetic/operations** (`c_dim.mmult1`, `c_dim.mmult2`, `r_dim.mmult1`, `r_dim.mmult2`).
+1. **MatDim r_dim arithmetic operations** (`r_dim.mmult1`, `r_dim.mmult2(c_dim)`, `r_dim.mmult2(rc_dim)`, `r_dim.dmult1`, `r_dim.dmult2(r_dim)`, `r_dim.dmult2(c_dim)`, `r_dim.transpose`, `r_dim.det`, `r_dim.invert`).
+2. **MatDim c_dim coordinates and properties** (`c_dim.dim`, `c_dim.matdim`, `c_dim.get_IsLinear`, `c_dim.get_ColDimensions`, `c_dim.RowDimensionArray`).
+3. **Function / DelegateFunction** (`Function.closure`; `Function.appVec`; `DelegateFunction.inv`).
+4. **Engine projects** (interface and factory members, subject to Linux/Windows capability).

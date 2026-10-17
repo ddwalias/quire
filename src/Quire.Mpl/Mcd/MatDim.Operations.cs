@@ -229,15 +229,15 @@ public abstract partial class MatDim
         private r_dim(Dim[] r, int c) : base(r.Length, c) => m_rowdim = r;
         [MirrorVerified("MatDimRDimConstructorDifferentialTests")]
         public static r_dim make(Dim[] r, int n) => new(r, n);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimCoordinatesDifferentialTests")]
         public override MatDim IsLinear => this;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimCoordinatesDifferentialTests")]
         public override Dim[] RowDimensions => m_rowdim;
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimCoordinatesDifferentialTests")]
         public override Dim dim(int i, int j) => m_rowdim[i];
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimCoordinatesDifferentialTests")]
         public override MatDim matdim(int i, int j) => uniform_dim.make(m_rowdim[i], 1, 1);
-        [MirrorAnalyzed("Mcd.MatDim")]
+        [MirrorVerified("MatDimRDimCoordinatesDifferentialTests")]
         public override Dim[] ColDimensionArray(int c) => m_rowdim;
         [MirrorVerified("MatDimRDimEqualityDifferentialTests")]
         protected override bool eq_b(MatDim m2) => m2.eq2_b(this);
