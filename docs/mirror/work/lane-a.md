@@ -660,6 +660,18 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Pending proposals: none. Independent review and runtime gate: pending.
 - Next: obtain independent review, then pass the batch through the runtime gate.
 
+## DynamicType field-name cache (`mirror/a-dynamic-type-field-cache`)
+
+- Branch: `mirror/a-dynamic-type-field-cache`, based on `origin/main` at `f7afb21`.
+- Scope: five `DynamicType` static fields, `.cctor()` (`0x060003fd`) and `FieldNames(int)` (`0x06000418`).
+- Original: inspected the installed `mplrun.dll` C# and IL with `tools/reference/reference.py Mpl.Run.DynamicType --il`; SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. The initializer creates the field-name cache, sets the tuple prefix and delimiter, and fills the name/type maps. `FieldNames` returns the cached array or constructs and stores one using `FieldName(i)`.
+- Direct test: `DynamicTypeFieldNamesDifferentialTests` compares initializer state and maps, field-name arrays for counts 0, 1 and 4, the negative-count exception, and repeated-array identity. Windows .NET command `dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter FullyQualifiedName~DynamicTypeFieldNamesDifferentialTests -m:1 -nr:false -p:UseSharedCompilation=false` passed 1/1.
+- Evidence: [Mpl.Run.DynamicType](../evidence/Mpl.Run.DynamicType.md).
+- Scoped validation: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --mutate --jobs 2`; Harness 86, Mpl 188 and Focused Differential 5 passed, 0 failures/skips; 6 compared, 24 pre-existing stubs missing, 0 structure mismatches/uncovered/unsupported, 6 exact, lint 0, ratchet ok, 11/11 mutants killed, no survivors/crashes, 1 timeout mutant killed after retry. Run `65dd2e2e-b832-4b4f-a194-5b04a15f876c`; receipt `/tmp/quire-dynamic-type-field-cache-final/summary.json`. Local checks pass; the type-scoped gate prediction is pass with the existing 24 missing stubs.
+- Exact IL before/after: DynamicType was 4/29 exact before and 6/30 after; the initializer and `FieldNames` match Mathcad's Release IL exactly, and no previously exact method regressed.
+- Independent review returned MERGE for the complete diff. Runtime gate: pending. No proposals.
+- Next: inspect `DynamicType.NameToType` and `TypeToName`.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old

@@ -12,16 +12,6 @@ namespace Quire.Mpl.Run;
 public partial class DynamicType
 {
     [global::Quire.Mirror.MirrorStub]
-    private static string DelimiterString;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Hashtable NameToTypeTable;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Hashtable TypeToNameTable;
-    [global::Quire.Mirror.MirrorStub]
-    public static string TuplePrefix;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Hashtable FieldNameTable;
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineTuple(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineTuple(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, global::System.Type[] fieldTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -67,8 +57,6 @@ public partial class DynamicType
     public static string TupleNameMangle(global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string TupleNameMangle(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string[] FieldNames(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Ldarg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator m_il, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
