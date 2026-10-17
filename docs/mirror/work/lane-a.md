@@ -681,7 +681,21 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.MplDestructuringBind --diff-filter 'FullyQualifiedName~MplDestructuringBindDifferentialTests' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-mpl-destructuring-bind-final`. Run `11da75e3-3b74-4296-805f-c37de3fa150a`; summary `/tmp/quire-validation-mpl-destructuring-bind-final/summary.json`. Harness 86, Mpl 188 and Differential 1 passed with 0 failures/skips; 1 compared, 2 pre-existing stubs missing, 0 structure mismatches/uncovered/unsupported, 1 exact, lint 0, ratchet ok, 8/8 mutants killed. `LOCAL CHECKS: pass · GATE: would pass with gaps (2 missing)`.
 - Exact Release IL before/after: 0/3 to 1/3 methods exact; `as_pattern` matches the original 116-byte body opcode for opcode. No previously exact method regressed.
 - No proposals. Independent full-diff review and runtime gate remain.
-- Next: inspect and implement the independent `MplForeignMacro` members; `MplDestructuringBind.ExpandCall` remains dependent on the generated `define_keyword.MakeDefine` stub reaching main.
+- Next: implement and directly compare `MplSymbolMacro.ToString()` as recorded below; `MplDestructuringBind.ExpandCall` remains dependent on the generated `define_keyword.MakeDefine` stub reaching main.
+
+## MplSymbolMacro.ToString (`mirror/a-mpl-symbol-macro`)
+
+- Scope: implement `MplSymbolMacro.ToString()` (`0x06000132`), remove its generated stub, and add direct comparisons for normal and null-field cases.
+- Original: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. The body calls both fields' virtual `ToString()` methods in order and concatenates four strings.
+- Direct Windows .NET 10 test: `EnvDifferentialTests.MplSymbolMacro_members` passed 1/1, covering ordinary values and null `m_name` / `m_replacement` exceptions. Independent review returned MERGE for implementation and tests.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.MplSymbolMacro --diff-filter 'FullyQualifiedName~EnvDifferentialTests.MplSymbolMacro_members' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-mpl-symbol-macro`. Run `ae7c5315-8444-4253-ba4a-8255f942f636`; summary `/tmp/quire-validation-mpl-symbol-macro/summary.json`. Harness 86, Mpl 188 and Differential 1 passed, 0 failures/skips; 5 compared, 0 missing/uncovered/structure mismatches/unsupported, 5 exact, lint 0, integrity complete, ratchet ok, 1/1 mutant killed. `LOCAL CHECKS: pass · GATE: would pass [scoped to 1 types; the gate validates all]`.
+- Exact Release IL before/after: 4/5 to 5/5 methods exact; `ToString()` now matches Mathcad's 38-byte body opcode for opcode. No baseline-exact method regressed. No proposals.
+- The independent reviewer requested this checkpoint pointer correction; it is now reconciled, and final review is pending. Then squash and push; runtime gate follows current-main rebase if needed.
+- Next: continue with the independent `MplForeignMacro` members, as indexed in `WORK.md`; then proceed to the standalone `DynamicType.MplConcat3(object, object, object)` member already under implementation.
+
+## Approved proposals awaiting maintainer acceptance
+
+The user approved the single independently reviewed `NameToType` unreachable-line proposal on `mirror/a-dynamic-type-name-maps` (source line 15 after `AppException.Raise`; original IL has the same unconditional throw path). Maintainer acceptance in `docs/mirror/unreachable-lines.txt` is still required before that branch can pass the gate.
 
 ## Historical batch results
 

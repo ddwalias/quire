@@ -15,9 +15,10 @@ MPL symbol macro that expands references to a fixed replacement expression, and 
 | `ExpandRef(MplEnv, Tok)` | 0x0600012f | `3ecf0fe3` | Returns `m_replacement`. | High | Verified |
 | `ExpandCall(MplEnv, Sexpr)` | 0x06000130 | `ee1bca87` | Returns `new SCons(m_replacement, ((SCons)f).tail)`. | High | Verified |
 | `make(Atom, int)` | 0x06000131 | `4ea091e4` | Returns `new MplSymbolMacro(s as Sym, int_constant.NewTok(n, 0u))`. | High | Verified |
-| `ToString()` | 0x06000132 | `39e627fd` | Returns `"MplSymbolMacro: " + m_name + " " + m_replacement`. | High | Stub |
+| `ToString()` | 0x06000132 | `39e627fd` | Returns `"MplSymbolMacro: " + m_name.ToString() + " " + m_replacement.ToString()` using four-string `String.Concat`. | High | Verified |
 
 ## Test cases
 
 - **Observed** (`EnvDifferentialTests`): Direct comparisons of `.ctor`, `make`, `ExpandRef`, and `ExpandCall` across atoms, symbols, lists, non-lists, and null inputs.
+- **Observed** (`EnvDifferentialTests`): Direct `ToString()` comparison for a symbol/replacement pair and null `m_name` or `m_replacement`, which throw during the corresponding virtual `ToString()` call.
 - **Inferred** (`EnvTests`): Behavioural tests covering replacement substitution and call tail preservation.

@@ -242,6 +242,12 @@ public partial class MplSymbolMacro : MplMacro
     }
 
     public static MplMacro make(Atom s, int n) => new MplSymbolMacro(s as Sym, int_constant.NewTok(n, 0u));
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override string ToString()
+    {
+        return "MplSymbolMacro: " + m_name.ToString() + " " + m_replacement.ToString();
+    }
 }
 
 /// <summary>

@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplSymbolMacro, mplrun")]
 public partial class MplSymbolMacro : global::Quire.Mpl.Run.MplMacro
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

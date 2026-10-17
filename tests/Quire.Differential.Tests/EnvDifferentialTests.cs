@@ -123,6 +123,7 @@ public class EnvDifferentialTests
         var (qMake, mMake) = Method(typeof(MplSymbolMacro), "make", DeclaredStaticPublic, typeof(Atom), typeof(int));
         var (qExpandRef, mExpandRef) = Method(typeof(MplSymbolMacro), "ExpandRef", DeclaredInstancePublic, typeof(MplEnv), typeof(Tok));
         var (qExpandCall, mExpandCall) = Method(typeof(MplSymbolMacro), "ExpandCall", DeclaredInstancePublic, typeof(MplEnv), typeof(Sexpr));
+        var (qToString, mToString) = Method(typeof(MplSymbolMacro), "ToString", DeclaredInstancePublic);
 
         Func<object?, string> show = o => Describe(o);
         Func<object, string> state = o => Describe(o);
@@ -137,6 +138,19 @@ public class EnvDifferentialTests
 
         var qMacroX = new MplSymbolMacro(qSymX, qRep1);
         var mMacroX = New(M("Mpl.Run.MplSymbolMacro"), ["Sym", "Sexpr"], mSymX, mRep1)!;
+
+        MethodComparison.Compare("MplSymbolMacro.ToString", "Mpl.Run.MplSymbolMacro",
+            qToString, qMacroX, [], mToString, mMacroX, [], show, show, state, state);
+
+        var qNullNameMacro = new MplSymbolMacro(null, qRep1);
+        var mNullNameMacro = New(M("Mpl.Run.MplSymbolMacro"), ["Sym", "Sexpr"], null, mRep1)!;
+        MethodComparison.Compare("MplSymbolMacro.ToString null name", "Mpl.Run.MplSymbolMacro",
+            qToString, qNullNameMacro, [], mToString, mNullNameMacro, [], show, show, state, state);
+
+        var qNullReplacementMacro = new MplSymbolMacro(qSymX, null);
+        var mNullReplacementMacro = New(M("Mpl.Run.MplSymbolMacro"), ["Sym", "Sexpr"], mSymX, null)!;
+        MethodComparison.Compare("MplSymbolMacro.ToString null replacement", "Mpl.Run.MplSymbolMacro",
+            qToString, qNullReplacementMacro, [], mToString, mNullReplacementMacro, [], show, show, state, state);
 
         var qTokX = new Tok(qSymX, 5u);
         var mTokX = ToMathcad(qTokX)!;
