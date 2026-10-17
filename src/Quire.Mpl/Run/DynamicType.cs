@@ -17,4 +17,10 @@ public partial class DynamicType
     {
         return typeof(string).GetMethod("Concat", new System.Type[] { typeof(object), typeof(object) });
     }
+
+    [MirrorVerified("DynamicTypeConcat3MiDifferentialTests")]
+    private static System.Reflection.MethodInfo Concat3Mi()
+    {
+        return typeof(DynamicType).GetMethod("MplConcat3");
+    }
 }

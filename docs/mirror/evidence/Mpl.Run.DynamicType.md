@@ -2,7 +2,7 @@
 
 - **Original:** `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`
 - **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
-- **Quire:** `src/Quire.Mpl`; tests: `Quire.Differential.Tests.MplRunDynamicTypeMechanicalDifferentialTests`, `DynamicTypeConcat2MiDifferentialTests`
+- **Quire:** `src/Quire.Mpl`; tests: `Quire.Differential.Tests.MplRunDynamicTypeMechanicalDifferentialTests`, `DynamicTypeConcat2MiDifferentialTests`, `DynamicTypeConcat3MiDifferentialTests`
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
@@ -16,6 +16,7 @@
 | `FieldNames(int)` | 0x06000418 | Returns the cached array for `n`; otherwise allocates `string[n]`, fills it with `FieldName(i)`, stores and returns it | Direct cases cover 0, 1, 4, -1 and cached-array identity; Release IL equals Mathcad's | Verified |
 | `MplConcat3(object, object, object)` | 0x06000405 | Replaces each null argument with the string "null", then calls `String.Concat(object, object, object)` | Direct cases cover all-null, each null position, the literal string "null", and mixed boxed values; Release IL equals Mathcad's | Verified |
 | `Concat2Mi()` | 0x06000407 | Resolves and returns `System.String.Concat(System.Object, System.Object)` through `Type.GetMethod(string, Type[])` | High; direct comparison records declaring type, method name, parameter types, return type and static flag | Verified |
+| `Concat3Mi()` | 0x06000406 | Resolves and returns `DynamicType.MplConcat3` through `Type.GetMethod(string)` | High; direct comparison records declaring type, method name, parameter types, return type and static flag | Verified |
 
 ## Test cases
 
@@ -23,6 +24,8 @@
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
 **Observed** (`DynamicTypeConcat2MiDifferentialTests`): Directly invokes the private helper on each assembly and compares the resolved method signature.
+
+**Observed** (`DynamicTypeConcat3MiDifferentialTests`): Directly invokes the private helper on each assembly and compares the resolved method signature.
 
 **Observed** (`DynamicTypeFieldNamesDifferentialTests`): the type initializer's static fields and all entries in its three
 tables; `FieldNames` results for 0, 1 and 4; matching negative-length exceptions for -1; and reference identity on a repeated count.

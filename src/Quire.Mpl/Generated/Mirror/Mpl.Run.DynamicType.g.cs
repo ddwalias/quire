@@ -26,8 +26,6 @@ public partial class DynamicType
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.ConstructorInfo DefineConstructor(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, int tag, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Reflection.MethodInfo Concat3Mi() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.MethodInfo DefinePrinter(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetShortName(string nm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

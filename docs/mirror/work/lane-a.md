@@ -740,6 +740,17 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Runtime gate: rebased base `0ac0569afb22`, gate-validated tip `0bab5a631566`; passed and merged to main at `0bab5a6`, followed by baseline update `ae26cbe`. Main was pushed. Gate receipt `/tmp/quire-gate-dynamic-type-concat2mi/gate.json`, summary `/tmp/quire-gate-dynamic-type-concat2mi/run/summary.json`: Harness 86, Mpl 188, Differential 287 passed; 1,115 compared, 1,515 exact, 95 structure-only, 602 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported; lint 0, integrity complete, ratchet ok, 3/3 selected mutants killed, no timeouts/survivors/crashes. Existing inventory gaps remain ratcheted. No baseline-exact method regressed; no proposals.
 - Next: continue with the active `MplForeignMacro` batch; then proceed to other independent Lane A members.
 
+## DynamicType.Concat3Mi (`mirror/a-dynamic-type-concat3mi`)
+
+- Scope: implement private `Concat3Mi()` (`0x06000406`), remove its generated stub, and directly compare the resolved `MethodInfo` signature.
+- Original: installed `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Original IL loads `typeof(DynamicType)`, the name `MplConcat3`, and calls `Type.GetMethod(string)`, returning that method. REA inspected member token `0x06000406`; ILSpy C# confirms `typeof(DynamicType).GetMethod("MplConcat3")`.
+- Test: `DynamicTypeConcat3MiDifferentialTests` directly invokes the private method in both assemblies and compares declaring type, method name, parameter types, return type and static flag.
+- Branch base: `45aee7e` (current main after the Concat2Mi receipt); no overlapping active DynamicType implementation branch found.
+- Scoped validation: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-dynamic-type-concat3mi-rerun`. Harness 86, Mpl 188 and Differential 10 passed with no failures/skips; 11 methods compared (all exact), 19 pre-existing stubs, no structure mismatches/uncovered/unsupported, lint 0, integrity complete, ratchet ok, 20/20 mutants killed, no survivors (one `FieldNames` mutant timed out in parallel and was killed again on its single-worker retry). `LOCAL CHECKS: pass · GATE: would pass with gaps (19 missing)`. Summary: `/tmp/quire-validation-dynamic-type-concat3mi-rerun/summary.json`.
+- Exact Release IL before/after: `Concat3Mi` was a generated stub and was not baseline-exact before; it is exact after. All ten baseline-exact DynamicType methods remain exact; the current scoped inventory has 11/30 exact methods, with no regressions. No proposals.
+- Independent review: pending.
+- No proposals. Next: continue with the active `MplForeignMacro` batch; then select another unowned Lane A member.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
