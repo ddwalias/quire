@@ -541,13 +541,13 @@ public partial class FnCompose : Function
 
 public partial class FnConstant : Function
 {
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     private object m_val;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override string Name => m_val.ToString();
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public FnConstant(object val)
         : base(1024, 0)
     {
@@ -555,33 +555,33 @@ public partial class FnConstant : Function
         m_val = val;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override void invVec<R>(out R r, object[] args) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override object Apply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override object DynApply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override void inv<R, A>(out R r, A aa) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override void inv<R, A, B>(out R r, A aa, B bb) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.Function")]
+    [MirrorAnalyzed("Mpl.Run.FnConstant")]
     public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => r = (R)m_val;
 }
 
