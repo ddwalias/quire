@@ -1223,11 +1223,11 @@
     "Quire.Mpl.Run.FnConstant::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": "6fa697da8a79e16326e23e7e82cc5c7874267b7483d03fac0b9bf7076c3bcd9d",
     "Quire.Mpl.Run.FnConstant::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": "6fa697da8a79e16326e23e7e82cc5c7874267b7483d03fac0b9bf7076c3bcd9d",
     "Quire.Mpl.Run.FnConstant::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "6fa697da8a79e16326e23e7e82cc5c7874267b7483d03fac0b9bf7076c3bcd9d",
-    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "1f44fef0b539dd16c6afd39fa0c589d61376c69b2d857db7b4b6dc7cab3512cf",
-    "Quire.Mpl.Run.Fn_CurryTuple::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "ec0ef46beee1a7e7cc50fd96dd0833cffa463b539d304d4594afd61fdeeefe51",
-    "Quire.Mpl.Run.Fn_CurryTuple::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "b5055c05403a5e4c6a3f2c6dc8774b57ab1a5ad60ac515f58ac1ab8fe6ad1bdf",
+    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "d6c5480a297c2704c6e9a9ade1f0d5e38ced82789cbd1099e506bc074e44e54b",
+    "Quire.Mpl.Run.Fn_CurryTuple::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "f355c93599d1621171d560951d50755aa1bdf134655d469fff320a96ea9d9c24",
+    "Quire.Mpl.Run.Fn_CurryTuple::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "f355c93599d1621171d560951d50755aa1bdf134655d469fff320a96ea9d9c24",
     "Quire.Mpl.Run.Fn_CurryTuple::get_Name`0()->[System.Runtime]System.String|False": "405c6f876c482979230de44e9f0ea605c15b832f5ae7a823e985b4b4b25f696b",
-    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "b1db2f828c21ddd5e3e50aff49fd2fb0cd55f7fec92fd51f3cdf58070beff800",
+    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "b3763d7e25689b02dba6eb934ed220b1fa7925b6acea0f3d4a45f813bca53a98",
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,!0)->[System.Runtime]System.Void|False": "5715deec1b34fe453f9b0d8942394977f9977b90d8c4c3643c31dfe9b60f00ce",
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([System.Runtime]System.Delegate,!0,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "fbf605a69b64415d2342402f696f065f447b7a157da41bb815f163328ef6c6a1",
     "Quire.Mpl.Run.Fn_clo`1::Fixpoint`0([Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "e60e90dae94fe3538a902b351ab2605c32d3eeee065495b737685d5395ce6af8",
@@ -2840,7 +2840,11 @@
     "Quire.Mpl.Run.FnConstant::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.FnConstant::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.FnConstant::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False",
+    "Quire.Mpl.Run.Fn_CurryTuple::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False",
+    "Quire.Mpl.Run.Fn_CurryTuple::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False",
     "Quire.Mpl.Run.Fn_CurryTuple::get_Name`0()->[System.Runtime]System.String|False",
+    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,!0)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([System.Runtime]System.Delegate,!0,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Fn_clo`1::Fixpoint`0([Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.Function|True",
@@ -4837,11 +4841,11 @@
     "Quire.Mpl.Run.FnConstant::inv`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.FnConstant::inv`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.FnConstant::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "missing",
-    "Quire.Mpl.Run.Fn_CurryTuple::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "missing",
-    "Quire.Mpl.Run.Fn_CurryTuple::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "missing",
+    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
+    "Quire.Mpl.Run.Fn_CurryTuple::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "compared",
+    "Quire.Mpl.Run.Fn_CurryTuple::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": "compared",
     "Quire.Mpl.Run.Fn_CurryTuple::get_Name`0()->[System.Runtime]System.String|False": "compared",
-    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "missing",
+    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,!0)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([System.Runtime]System.Delegate,!0,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Fn_clo`1::Fixpoint`0([Quire.Mpl]Quire.Mpl.Run.Function)->[Quire.Mpl]Quire.Mpl.Run.Function|True": "compared",
@@ -7853,8 +7857,21 @@
     "Quire.Mpl.Run.FnConstant::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": [
       "fnconstantdifferentialtests"
     ],
+    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "fncurrytupledifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_CurryTuple::Apply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": [
+      "fncurrytupledifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_CurryTuple::DynApply`0([System.Runtime]System.Object[])->[System.Runtime]System.Object|False": [
+      "fncurrytupledifferentialtests"
+    ],
     "Quire.Mpl.Run.Fn_CurryTuple::get_Name`0()->[System.Runtime]System.String|False": [
+      "fncurrytupledifferentialtests",
       "mplrunfn_currytuplemechanicaldifferentialtests"
+    ],
+    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
+      "fncurrytupledifferentialtests"
     ],
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,!0)->[System.Runtime]System.Void|False": [
       "fnclodifferentialtests"
@@ -10515,10 +10532,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Fn_CurryTuple": {
-      "compared": 1,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 4,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
@@ -13368,6 +13385,14 @@
     ],
     "Quire.Mpl.Run.FnConstant::inv`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.FnConstant::m_val"
+    ],
+    "Quire.Mpl.Run.Fn_CurryTuple::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Fn_CurryTuple::m_f",
+      "Quire.Mpl.Run.Function::m_name",
+      "Quire.Mpl.Run.Function::m_varargs"
+    ],
+    "Quire.Mpl.Run.Fn_CurryTuple::invVec`1(!!0&,[System.Runtime]System.Object[])->[System.Runtime]System.Void|False": [
+      "Quire.Mpl.Run.Fn_CurryTuple::m_f"
     ],
     "Quire.Mpl.Run.Fn_clo`1::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Function,!0)->[System.Runtime]System.Void|False": [
       "Quire.Mpl.Run.Fn_clo`1::m_clo",
