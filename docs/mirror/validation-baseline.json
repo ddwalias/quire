@@ -1541,7 +1541,7 @@
     "Quire.Mpl.Run.MplSymbolMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "5b28f587134050b0a64c6ef6e181432200d679a7a686d8b48cbc395d3825b69c",
     "Quire.Mpl.Run.MplSymbolMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "ee1bca871bf8a0034d3fe6521d651756cbf73a0448a6a1183174d74463846c25",
     "Quire.Mpl.Run.MplSymbolMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "1d9dc0c40e14ee218ad601fcdb3c3c6b247b30342e40ffdf3ba4747fc70cbea1",
-    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": "aea7695c06764bed0b1be39876df0a67b8b8d958a6a5daaa84da9e2f795c6294",
+    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": "39e627fda2f845d77cc2e6a04f8cfda1cb03808b86e2fb1c445e158306934bcb",
     "Quire.Mpl.Run.MplSymbolMacro::make`0([Quire.Mpl]Quire.Mpl.Run.Atom,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "a3a49afebbcdb3640fcb3a43b7969242e37b9e5e0aa4479c63ce5933dbe4b563",
     "Quire.Mpl.Run.NonCriticalException::.cctor`0()->[System.Runtime]System.Void|True": "17af5ce154b01391f35a2ca292a729e5df6c6c99c78a87e7a7ff07533a960003",
     "Quire.Mpl.Run.NonCriticalException::.ctor`0()->[System.Runtime]System.Void|False": "4907bda3c7b52b1f257ad8b529b1032a93a50e7e1068054fa909be6fa4c44c11",
@@ -3098,6 +3098,7 @@
     "Quire.Mpl.Run.MplSymbolMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.MplSymbolMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
     "Quire.Mpl.Run.MplSymbolMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False",
+    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False",
     "Quire.Mpl.Run.MplSymbolMacro::make`0([Quire.Mpl]Quire.Mpl.Run.Atom,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True",
     "Quire.Mpl.Run.NonCriticalException::.cctor`0()->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.NonCriticalException::.ctor`0()->[System.Runtime]System.Void|False",
@@ -5147,7 +5148,7 @@
     "Quire.Mpl.Run.MplSymbolMacro::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sym,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.MplSymbolMacro::ExpandCall`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Sexpr)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "compared",
     "Quire.Mpl.Run.MplSymbolMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": "compared",
-    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": "missing",
+    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": "compared",
     "Quire.Mpl.Run.MplSymbolMacro::make`0([Quire.Mpl]Quire.Mpl.Run.Atom,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": "compared",
     "Quire.Mpl.Run.NonCriticalException::.cctor`0()->[System.Runtime]System.Void|True": "untested",
     "Quire.Mpl.Run.NonCriticalException::.ctor`0()->[System.Runtime]System.Void|False": "compared",
@@ -8052,6 +8053,9 @@
     "Quire.Mpl.Run.MplSymbolMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
       "envdifferentialtests"
     ],
+    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": [
+      "envdifferentialtests"
+    ],
     "Quire.Mpl.Run.MplSymbolMacro::make`0([Quire.Mpl]Quire.Mpl.Run.Atom,[System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mpl.Run.MplMacro|True": [
       "envdifferentialtests"
     ],
@@ -10628,10 +10632,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.MplSymbolMacro": {
-      "compared": 4,
+      "compared": 5,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 1,
+      "missing": 0,
       "structure_mismatch": 0,
       "total": 5,
       "uncovered": 0,
@@ -13497,6 +13501,10 @@
       "Quire.Mpl.Run.MplSymbolMacro::m_replacement"
     ],
     "Quire.Mpl.Run.MplSymbolMacro::ExpandRef`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.Tok)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
+      "Quire.Mpl.Run.MplSymbolMacro::m_replacement"
+    ],
+    "Quire.Mpl.Run.MplSymbolMacro::ToString`0()->[System.Runtime]System.String|False": [
+      "Quire.Mpl.Run.MplMacro::m_name",
       "Quire.Mpl.Run.MplSymbolMacro::m_replacement"
     ],
     "Quire.Mpl.Run.NonCriticalException::.cctor`0()->[System.Runtime]System.Void|True": [
