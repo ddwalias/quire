@@ -23,4 +23,24 @@ public partial class DynamicType
     {
         return typeof(DynamicType).GetMethod("MplConcat3");
     }
+
+    [MirrorVerified("DynamicTypeGetShortNameDifferentialTests")]
+    private static string GetShortName(string nm)
+    {
+        int num = nm.IndexOf(":");
+        if (num > 0)
+        {
+            return nm.Substring(num);
+        }
+        if (num == 0)
+        {
+            return nm;
+        }
+        num = nm.LastIndexOf(".");
+        if (num > 0)
+        {
+            return nm.Substring(num + 1);
+        }
+        return nm;
+    }
 }

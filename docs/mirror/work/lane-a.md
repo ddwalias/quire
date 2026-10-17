@@ -752,6 +752,16 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Runtime gate: rebased base `45aee7eb3f1d`, gate-validated tip `2d1d08a0c1e8`; passed and merged to main at `2d1d08a`, followed by baseline update `d15149e`. Main was pushed. Gate receipt `/tmp/quire-gate-dynamic-type-concat3mi/gate.json`, summary `/tmp/quire-gate-dynamic-type-concat3mi/run/summary.json`: Harness 86, Mpl 188, Differential 288 passed; 1,116 compared, 1,516 exact, 95 structure-only, 601 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported; lint 0, integrity complete, ratchet ok, 0 eligible selected mutants. Existing inventory gaps remain ratcheted. No baseline-exact method regressed; no proposals.
 - No proposals. Next: continue with the active `MplForeignMacro` batch; then select another unowned Lane A member.
 
+## DynamicType.GetShortName (`mirror/a-dynamic-type-getshortname`)
+
+- Scope: implement the private static `GetShortName(string)` (`0x06000409`), remove its generated stub, and compare direct results against Mathcad.
+- Original: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. A colon after index zero returns the suffix beginning at the colon; a leading colon returns the full input; otherwise a dot after index zero returns the suffix after the dot. If neither separator applies, it returns the input. Null throws at `IndexOf`.
+- Test: `DynamicTypeGetShortNameDifferentialTests` directly invokes the private member in both artifacts. Cases cover colon at indexes zero, one and later; a leading colon before a later dot; dot at indexes zero, one and later; trailing dot; plain text; and null.
+- Branch base: `790fccc`. Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-dynamic-type-getshortname-rerun`. Run summary: `/tmp/quire-validation-dynamic-type-getshortname-rerun/summary.json`. Harness 86, Mpl 188 and Differential 11 passed with no failures/skips; 12 compared, 18 pre-existing stubs missing, 0 structure mismatches/uncovered/unsupported, 12 exact, lint 0, integrity complete and ratchet ok; 31/31 mutants killed, no survivors (one unrelated `FieldNames` mutant timed out in parallel and was killed on its serial retry). `LOCAL CHECKS: pass · GATE: would pass with gaps (18 missing)`.
+- Exact Release IL before/after: 11/30 -> 12/30; `GetShortName` is exact and all 11 previously exact methods remain exact. No proposals.
+- Independent review and runtime gate pending.
+- Next: continue the active `MplForeignMacro` batch in its separate worktree; then take another unowned Lane A member.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
