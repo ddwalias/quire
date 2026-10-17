@@ -7,6 +7,9 @@
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
 | `.ctor()` | 0x0600041a | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `TypeParameterName(int)` | 0x0600040c | Calls `TypeParameterName("T", i)` | Original IL; direct cases include zero and distinct positive integers | Verified |
+| `TypeParameterName(string, int)` | 0x0600040d | Calls `String.Concat(object, object)` with `prefix` and boxed `i + 1` | Original IL; direct cases include null and distinct string/integer arguments | Verified |
+| `FieldName(int)` | 0x06000417 | Calls `String.Concat(object, object)` with `"Field"` and boxed `i + 1` | Original IL; direct cases include zero and distinct positive integers | Verified |
 
 ## Test cases
 
