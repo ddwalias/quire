@@ -102,6 +102,29 @@ public partial class Primitive
     [MirrorVerified("PrimitiveArrayDifferentialTests")]
     public static object[] arr_ref(int size) => new object[size];
 
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static int ldelem_i4(int[] arr, int index) => arr[index];
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static void stelem_i4_void(int[] arr, int index, int val) { arr[index] = val; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static int[] stelem_i4(int[] arr, int index, int val) { arr[index] = val; return arr; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static double ldelem_f8(double[] arr, int index) => arr[index];
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static void stelem_f8_void(double[] arr, int index, double val) { arr[index] = val; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static double[] stelem_f8(double[] arr, int index, double val) { arr[index] = val; return arr; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static object ldelem_ref(object[] arr, int index) => arr[index];
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static void stelem_ref_void(object[] arr, int index, object val) { arr[index] = val; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static object[] stelem_ref(object[] arr, int index, object val) { arr[index] = val; return arr; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static void stelem_vec(object val, object[] clo, int index) { clo[index] = val; }
+    [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
+    public static int ldlen(object[] arr) => arr.Length;
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 
