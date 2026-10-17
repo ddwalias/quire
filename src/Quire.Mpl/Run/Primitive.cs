@@ -125,6 +125,17 @@ public partial class Primitive
     [MirrorVerified("PrimitiveArrayAccessDifferentialTests")]
     public static int ldlen(object[] arr) => arr.Length;
 
+    [MirrorVerified("PrimitiveBitwiseDifferentialTests")]
+    public static int xor(int x, int y) => x ^ y;
+    [MirrorVerified("PrimitiveBitwiseDifferentialTests")]
+    public static int shl(int x, int y) => x << y;
+    [MirrorVerified("PrimitiveBitwiseDifferentialTests")]
+    public static int shr(int x, int y) => x >> y;
+    [MirrorVerified("PrimitiveBitwiseDifferentialTests")]
+    public static uint shr_u4(uint x, int y) => x >> y;
+    [MirrorVerified("PrimitiveBitwiseDifferentialTests")]
+    public static double nrt_f8(double x, double y) => Math.Pow(y, 1.0 / x);
+
     [MirrorVerified("MplRunPrimitiveMechanicalDifferentialTests")]
     public static object identity(object o) => o;
 

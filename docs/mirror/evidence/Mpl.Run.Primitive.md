@@ -6,7 +6,7 @@
 - **Quire:** `src/Quire.Mpl/Run/Primitive.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Primitive.g.cs` (stubs);
   tests: `Quire.Differential.Tests.PrimitiveDifferentialTests`
 
-The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, three array constructors, eleven array element operations, four primitive-kind predicates and five typed cast helpers are implemented alongside the
+The twelve comparisons, eleven arithmetic helpers, two reference-selection helpers, two conversion helpers, three array constructors, eleven array element operations, five bitwise/shift/root helpers, four primitive-kind predicates and five typed cast helpers are implemented alongside the
 listed MemberGen members; other Primitive members remain stubs. Each comparison is a single
 `ceq`/`cgt`/`clt` (negated with `ceq 0` for `!=`, `<=` and `>=`, using `cgt.un`/`clt.un` for doubles so NaN gives 0)
 returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly.
@@ -52,6 +52,11 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 | `stelem_ref(object[], int, object)` | 0x0600038f | Stores `val` at `index` and returns the same `arr` reference. | High; direct reference array store and argument return | Verified |
 | `stelem_vec(object, object[], int)` | 0x06000390 | Stores `val` at `index` in `clo`. | High; direct reference array store | Verified |
 | `ldlen(object[])` | 0x06000391 | Returns the array length. | High; direct `ldlen` and `conv.i4` | Verified |
+| `xor(int, int)` | 0x060003a0 | Returns the bitwise XOR of the operands. | High; direct `xor` | Verified |
+| `shl(int, int)` | 0x060003a1 | Shifts `x` left by `y & 31` bits. | High; direct masked `shl` | Verified |
+| `shr(int, int)` | 0x060003a2 | Arithmetic-right-shifts `x` by `y & 31` bits. | High; direct masked `shr` | Verified |
+| `shr_u4(uint, int)` | 0x060003a3 | Logical-right-shifts `x` by `y & 31` bits. | High; direct masked `shr.un` | Verified |
+| `nrt_f8(double, double)` | 0x060003a4 | Returns `Math.Pow(y, 1.0 / x)`. | High; direct `Math.Pow` call and operand order | Verified |
 | `neg_i4(int)` | 0x06000369 | Returns the unchecked integer negation of `x`. | High; direct `neg` opcode | Verified |
 | `add_i4(int, int)` | 0x0600036a | Returns the unchecked integer sum of `x` and `y`. | High; direct `add` opcode | Verified |
 | `sub_i4(int, int)` | 0x0600036b | Returns the unchecked integer difference of `x` and `y`. | High; direct `sub` opcode | Verified |
@@ -89,6 +94,7 @@ returning 1 or 0, which the Release build of `x OP y ? 1 : 0` reproduces exactly
 - double-to-int conversion with fractional values, integer bounds, out-of-range values, NaN and infinities; int-to-double conversion at signed bounds and representative values.
 - integer, double and object array creation with lengths 0, 1, 3 and -1; renderers compare runtime array type, element values and resulting exceptions.
 - typed integer/double/object array loads and stores, mutation, returned-array identity, index failures, and object-array length including null input.
+- XOR patterns, signed and unsigned shift counts including negative and masked counts, and nth-root results including zero, negative and non-finite operands.
 
 MemberGen members and null/wrong-type cast-helper cases are compared by `Quire.Differential.Tests.MplRunPrimitiveMechanicalDifferentialTests`.
 Primitive-kind predicates are compared by `Quire.Differential.Tests.PrimitivePredicateDifferentialTests`.
@@ -97,3 +103,4 @@ Reference-selection helpers are compared by `Quire.Differential.Tests.PrimitiveR
 Conversion helpers are compared by `Quire.Differential.Tests.PrimitiveConversionDifferentialTests`.
 Array constructors are compared by `Quire.Differential.Tests.PrimitiveArrayDifferentialTests`.
 Array element operations are compared by `Quire.Differential.Tests.PrimitiveArrayAccessDifferentialTests`.
+Bitwise, shift and nth-root helpers are compared by `Quire.Differential.Tests.PrimitiveBitwiseDifferentialTests`.

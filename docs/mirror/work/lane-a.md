@@ -579,7 +579,19 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Checks: filtered Primitive differential suite passed 37/37. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests|FullyQualifiedName~PrimitiveConversionDifferentialTests|FullyQualifiedName~PrimitiveArrayDifferentialTests|FullyQualifiedName~PrimitiveArrayAccessDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 37; 62 compared, 0 structure mismatch/uncovered/unsupported, 62 exact, lint 0, ratchet ok, mutation 62/62 killed. Run `cf818868-eb8a-48c3-9eac-cf1a4e14e279`; receipt `/tmp/quire-validation-vjr0hwk_/summary.json`. The 24 missing methods are pre-existing Primitive stubs outside this batch.
 - Exact IL before/after: all eleven operations compile to their original typed array access/store and length bodies; Primitive rose from 51/86 to 62/86 exact, with no baseline-exact method regressed.
 - Independent review returned MERGE. Pending proposals: none.
-- Next: gate and merge; then continue with remaining Primitive helpers.
+- Final branch tip `0d16a5c06c3ae495a6f54188ab608e63664e0106` passed the runtime gate and merged to main at `307ff70880ef`; main was pushed after the shared merge lock was released. Gate receipt `/tmp/quire-a-primitive-array-access-gate/gate.json`, validation receipt `/tmp/quire-a-primitive-array-access-gate/run/summary.json`: Harness 86, Mpl 188, Differential 249; 986 compared, 1475 exact, 98 structure-only, 0 lint, ratchet ok, mutation 0/0 selected by the gate. The scoped pre-gate mutation run killed 62/62. Existing inventory gaps remain (728 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported). No proposals pending.
+- Next: inspect `Primitive.xor`, shifts and `nrt_f8`.
+
+## Primitive bitwise, shift and nth-root helpers (`mirror/a-primitive-bitops`)
+
+- Scope: `Primitive.xor`, `shl`, `shr`, `shr_u4`, and `nrt_f8`.
+- Original: inspected the installed `mplrun.dll` before implementation; tokens `0x060003a0`–`0x060003a4`. XOR is direct; each shift masks the count with 31 (unsigned right shift uses `shr.un`); `nrt_f8` calls `Math.Pow(y, 1.0 / x)`.
+- Cases: XOR bit patterns; signed and unsigned shifts over edge values with counts 0, 1, 31, 32, 33, -1 and `int.MinValue`; nth-root normal, zero, negative and non-finite inputs with bit-exact double renderers.
+- Evidence: [Mpl.Run.Primitive](../evidence/Mpl.Run.Primitive.md).
+- Checks: filtered `PrimitiveBitwiseDifferentialTests` passed 4/4. Scoped `validate.py --profile focused --method-type Quire.Mpl.Run.Primitive --diff-filter 'FullyQualifiedName~PrimitiveDifferentialTests|FullyQualifiedName~MplRunPrimitiveMechanicalDifferentialTests|FullyQualifiedName~PrimitivePredicateDifferentialTests|FullyQualifiedName~PrimitiveArithmeticDifferentialTests|FullyQualifiedName~PrimitiveReferenceDifferentialTests|FullyQualifiedName~PrimitiveConversionDifferentialTests|FullyQualifiedName~PrimitiveArrayDifferentialTests|FullyQualifiedName~PrimitiveArrayAccessDifferentialTests|FullyQualifiedName~PrimitiveBitwiseDifferentialTests' --mutate --jobs 2` passed Harness 86, Mpl 188 and Differential 41; 67 compared, 0 structure mismatch/uncovered/unsupported, 67 exact, lint 0, ratchet ok, 73/73 mutants killed. Run `ece77bff-1d47-4870-a06a-b8ed310252a3`; receipt `/tmp/quire-validation-6uzix4a2/summary.json`. The 19 missing methods are pre-existing Primitive stubs outside this batch.
+- Exact IL before/after: all five helpers compile to the original XOR/shift/Math.Pow opcodes; Primitive rose from 62/86 to 67/86 exact, with no baseline-exact method regressed.
+- Independent review returned MERGE. Pending proposals: none.
+- Next: implement and directly compare the remaining `Primitive` value helpers.
 
 ## Historical batch results
 

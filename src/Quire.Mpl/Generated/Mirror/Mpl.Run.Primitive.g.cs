@@ -48,16 +48,6 @@ public partial class Primitive
     [global::Quire.Mirror.MirrorStub]
     public static object with_bool(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int xor(int x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int shl(int x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int shr(int x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static uint shr_u4(uint x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double nrt_f8(double x, double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private Primitive(string nm, global::System.Reflection.Emit.OpCode code, global::System.Reflection.MethodInfo mi) { }
     [global::Quire.Mirror.MirrorStub]
     private Primitive(string nm, global::System.Reflection.Emit.OpCode[] codes, global::System.Reflection.MethodInfo mi) { }
