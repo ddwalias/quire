@@ -125,7 +125,7 @@ public abstract partial class Iterator
     public static Iterator forValues(Iterator[] its) => new SeqIterator(its);
 
     /// <summary>A matrix iterates its elements (null when it is empty), a range its values, anything else itself.</summary>
-    [MirrorAnalyzed("Mcd.RngVal")]
+    [MirrorVerified("RngValDifferentialTests")]
     public static Iterator forValue(object o)
     {
         if (o is not MatVal mat)
