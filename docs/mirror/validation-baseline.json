@@ -1634,16 +1634,16 @@
     "Quire.Mpl.Run.Primitive::mul_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "f657320b9dc6b1004ced79041e2c23d7e37e1ce9a330fa4c94615ca231fb8be0",
     "Quire.Mpl.Run.Primitive::neg_f8`0([System.Runtime]System.Double)->[System.Runtime]System.Double|True": "a9f62ab909c2e537f032f0ab44028c124aa098bb5d1a9dc652bd30ee5f5de2e5",
     "Quire.Mpl.Run.Primitive::neg_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "a9f62ab909c2e537f032f0ab44028c124aa098bb5d1a9dc652bd30ee5f5de2e5",
-    "Quire.Mpl.Run.Primitive::nrt_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "11a5d53f8650779bff320df84ae329f5b5f105af67069e088303d14273b8aa5d",
+    "Quire.Mpl.Run.Primitive::nrt_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "c86d981b50d860c3c23e8e46f83767327bb2483e79e1aa79f6db64f6987a45ca",
     "Quire.Mpl.Run.Primitive::or_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "3fc775f29a2684f087ff7f5e503a915fa3fe4e6356eb5096c1205504fbbe403c",
     "Quire.Mpl.Run.Primitive::rem_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "6d4ead7cd9fac8b41ebc6ad708deaafc5a36c0d87bd6df19822b497e6a445cf7",
     "Quire.Mpl.Run.Primitive::rrv`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": "8a1f371db9d1e6f782a50ac31b4f3a68c83bd5ab6fcfd067ff8bc01cdc4a8874",
     "Quire.Mpl.Run.Primitive::rv`0([System.Runtime]System.Double)->[System.Runtime]System.Object|True": "dde98cc8d9fba8664e9c004a5e3893c98824e5e2f854ad36925c5a9779fcb40d",
     "Quire.Mpl.Run.Primitive::seq_void`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "8854b8fc16512b448960a9ce8dc959677fd62aba5848467a8ec6984f480ab412",
     "Quire.Mpl.Run.Primitive::seq`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "22e17fd50eaf1c752430ac5121a2d4c973ada00b528486ff031ac98b415803f7",
-    "Quire.Mpl.Run.Primitive::shl`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "a33390bf32c4f0f74a1829aeab4768caed9f59533d1385c829f00e0b921a7e65",
-    "Quire.Mpl.Run.Primitive::shr_u4`0([System.Runtime]System.UInt32,[System.Runtime]System.Int32)->[System.Runtime]System.UInt32|True": "5dec508ea3df1fea153d5e2f7a8d8fa5cb20cd860dea401c2cf59f4d2801328f",
-    "Quire.Mpl.Run.Primitive::shr`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "c9ce442fe0b9ab22076c82cf09ac69a470ea3c2381b44b2da93990f02077f986",
+    "Quire.Mpl.Run.Primitive::shl`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "d8df90014227c58fc0f2311551b24359a325befcd0327ec14380e957150c53f0",
+    "Quire.Mpl.Run.Primitive::shr_u4`0([System.Runtime]System.UInt32,[System.Runtime]System.Int32)->[System.Runtime]System.UInt32|True": "17d7b820072027af3ca7b85be0de0b1408958eefe6b40f0bcdf63efcdcde8771",
+    "Quire.Mpl.Run.Primitive::shr`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "847478048e6fbf3ed88fee90cdd0c0646095a1d0daa44510ee5fe9ea6f382293",
     "Quire.Mpl.Run.Primitive::stelem_f8_void`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Void|True": "d5439c8bd21e92dd54240ef04f65704171d1d68d2591fdb9b133e47356b725f5",
     "Quire.Mpl.Run.Primitive::stelem_f8`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Double[]|True": "4c0a07a3a079d3703a70b6822038d21407a4cd51943b74de902001b6ac4798ec",
     "Quire.Mpl.Run.Primitive::stelem_i4_void`0([System.Runtime]System.Int32[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "ef12c17b6a79c7b63b293a8be98bcfabb477b7c2aa337c6e9b54a76478081eea",
@@ -1654,7 +1654,7 @@
     "Quire.Mpl.Run.Primitive::sub_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "e40cd61f43576fe36b363c9a5f4b2901f5aa51b55aa3f9c4e1488e2606111082",
     "Quire.Mpl.Run.Primitive::sub_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "e40cd61f43576fe36b363c9a5f4b2901f5aa51b55aa3f9c4e1488e2606111082",
     "Quire.Mpl.Run.Primitive::with_bool`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "02898787d36e744c302cc694cdf84f671119c2889669c19c8d6df19cd8d1b8c2",
-    "Quire.Mpl.Run.Primitive::xor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "bf9d3520154273ff8515a665e02a650c58c5dfde24654446c672496bc65755ef",
+    "Quire.Mpl.Run.Primitive::xor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "e663e85a59766f58b53c72344a5efaccba69f55938c575afbdf9a82b5b5a5caf",
     "Quire.Mpl.Run.Qt::.cctor`0()->[System.Runtime]System.Void|True": "ad44f3c7621f70fea466b7d755b2fdddd37b56e804ec9d2d2f0fcca51a71e5ad",
     "Quire.Mpl.Run.Qt::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "49a7cd97d9c9cbbb4af4453bb35422dffe050eab56141a0fcbea4315c48e1a80",
     "Quire.Mpl.Run.Qt::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "98c59eebf7581d7791923745ad40b57e8c3863fa6f010c3ac637108db6358bf0",
@@ -3164,12 +3164,16 @@
     "Quire.Mpl.Run.Primitive::mul_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
     "Quire.Mpl.Run.Primitive::neg_f8`0([System.Runtime]System.Double)->[System.Runtime]System.Double|True",
     "Quire.Mpl.Run.Primitive::neg_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
+    "Quire.Mpl.Run.Primitive::nrt_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True",
     "Quire.Mpl.Run.Primitive::or_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True",
     "Quire.Mpl.Run.Primitive::rem_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
     "Quire.Mpl.Run.Primitive::rrv`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Object|True",
     "Quire.Mpl.Run.Primitive::rv`0([System.Runtime]System.Double)->[System.Runtime]System.Object|True",
     "Quire.Mpl.Run.Primitive::seq_void`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True",
     "Quire.Mpl.Run.Primitive::seq`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True",
+    "Quire.Mpl.Run.Primitive::shl`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
+    "Quire.Mpl.Run.Primitive::shr_u4`0([System.Runtime]System.UInt32,[System.Runtime]System.Int32)->[System.Runtime]System.UInt32|True",
+    "Quire.Mpl.Run.Primitive::shr`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
     "Quire.Mpl.Run.Primitive::stelem_f8_void`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.Primitive::stelem_f8`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Double[]|True",
     "Quire.Mpl.Run.Primitive::stelem_i4_void`0([System.Runtime]System.Int32[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True",
@@ -3179,6 +3183,7 @@
     "Quire.Mpl.Run.Primitive::stelem_vec`0([System.Runtime]System.Object,[System.Runtime]System.Object[],[System.Runtime]System.Int32)->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.Primitive::sub_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True",
     "Quire.Mpl.Run.Primitive::sub_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
+    "Quire.Mpl.Run.Primitive::xor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True",
     "Quire.Mpl.Run.Qt::.cctor`0()->[System.Runtime]System.Void|True",
     "Quire.Mpl.Run.Qt::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False",
     "Quire.Mpl.Run.Qt::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False",
@@ -5205,16 +5210,16 @@
     "Quire.Mpl.Run.Primitive::mul_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Primitive::neg_f8`0([System.Runtime]System.Double)->[System.Runtime]System.Double|True": "compared",
     "Quire.Mpl.Run.Primitive::neg_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
-    "Quire.Mpl.Run.Primitive::nrt_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "missing",
+    "Quire.Mpl.Run.Primitive::nrt_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "compared",
     "Quire.Mpl.Run.Primitive::or_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mpl.Run.Primitive::rem_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Primitive::rrv`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mpl.Run.Primitive::rv`0([System.Runtime]System.Double)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mpl.Run.Primitive::seq_void`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
     "Quire.Mpl.Run.Primitive::seq`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "compared",
-    "Quire.Mpl.Run.Primitive::shl`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "missing",
-    "Quire.Mpl.Run.Primitive::shr_u4`0([System.Runtime]System.UInt32,[System.Runtime]System.Int32)->[System.Runtime]System.UInt32|True": "missing",
-    "Quire.Mpl.Run.Primitive::shr`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "missing",
+    "Quire.Mpl.Run.Primitive::shl`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
+    "Quire.Mpl.Run.Primitive::shr_u4`0([System.Runtime]System.UInt32,[System.Runtime]System.Int32)->[System.Runtime]System.UInt32|True": "compared",
+    "Quire.Mpl.Run.Primitive::shr`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Primitive::stelem_f8_void`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.Primitive::stelem_f8`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Double[]|True": "compared",
     "Quire.Mpl.Run.Primitive::stelem_i4_void`0([System.Runtime]System.Int32[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "compared",
@@ -5225,7 +5230,7 @@
     "Quire.Mpl.Run.Primitive::sub_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": "compared",
     "Quire.Mpl.Run.Primitive::sub_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Primitive::with_bool`0([System.Runtime]System.Object)->[System.Runtime]System.Object|True": "missing",
-    "Quire.Mpl.Run.Primitive::xor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "missing",
+    "Quire.Mpl.Run.Primitive::xor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": "compared",
     "Quire.Mpl.Run.Qt::.cctor`0()->[System.Runtime]System.Void|True": "compared",
     "Quire.Mpl.Run.Qt::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mpl.Run.Qt::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": "compared",
@@ -7922,6 +7927,9 @@
     "Quire.Mpl.Run.Primitive::neg_i4`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": [
       "primitivearithmeticdifferentialtests"
     ],
+    "Quire.Mpl.Run.Primitive::nrt_f8`0([System.Runtime]System.Double,[System.Runtime]System.Double)->[System.Runtime]System.Double|True": [
+      "primitivebitwisedifferentialtests"
+    ],
     "Quire.Mpl.Run.Primitive::or_ref`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": [
       "primitivereferencedifferentialtests"
     ],
@@ -7939,6 +7947,15 @@
     ],
     "Quire.Mpl.Run.Primitive::seq`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": [
       "mplrunprimitivemechanicaldifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::shl`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": [
+      "primitivebitwisedifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::shr_u4`0([System.Runtime]System.UInt32,[System.Runtime]System.Int32)->[System.Runtime]System.UInt32|True": [
+      "primitivebitwisedifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::shr`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": [
+      "primitivebitwisedifferentialtests"
     ],
     "Quire.Mpl.Run.Primitive::stelem_f8_void`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double)->[System.Runtime]System.Void|True": [
       "primitivearrayaccessdifferentialtests"
@@ -7966,6 +7983,9 @@
     ],
     "Quire.Mpl.Run.Primitive::sub_i4`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": [
       "primitivearithmeticdifferentialtests"
+    ],
+    "Quire.Mpl.Run.Primitive::xor`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|True": [
+      "primitivebitwisedifferentialtests"
     ],
     "Quire.Mpl.Run.Qt::.cctor`0()->[System.Runtime]System.Void|True": [
       "sexprdifferentialtests"
@@ -10289,10 +10309,10 @@
       "verified_unsupported": 0
     },
     "Quire.Mpl.Run.Primitive": {
-      "compared": 62,
+      "compared": 67,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 24,
+      "missing": 19,
       "structure_mismatch": 0,
       "total": 86,
       "uncovered": 0,
