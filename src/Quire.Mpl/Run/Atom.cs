@@ -207,7 +207,7 @@ public partial class Sym : Atom
         return macro.ExpandCall(env, form).walk_declaration_lhs(env);
     }
 
-    [MirrorTested("Mpl.Run.Sym")]
+    [MirrorVerified("SexprDifferentialTests")]
     public virtual SCons walk_definition_as(MplEnv env, SCons form)
     {
         Sexpr.BadDeclaration(form);

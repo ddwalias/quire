@@ -841,6 +841,19 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Exact Release IL before/after: 39/39 baseline-exact methods remain exact; all source changes are status attributes only. No method body changed and no exact method regressed. No proposals.
 - Independent review returned MERGE on `e2f281a`. The runtime gate passed and merged the batch to main at `a8357c5109bf`; main was pushed. Receipt: `/tmp/quire-gate-results-kkq0vim6/gate.json`. Gate tests: Harness 94, Mpl 188, Differential 367 passed with no failures or skips; 1,250 methods compared, 1,530 exact, 91 structure-only, 467 missing, 103 structure mismatches, 13 uncovered and 43 verified unsupported; lint 0, integrity complete, ratchet OK. No methods were selected for mutation because the changes only updated statuses/evidence. No exact Release-IL regressions; all 39 baseline-exact methods in the selected types remained exact. Next: continue with the independent `MplForeignMacro` work, then another unowned Lane A member.
 
+## Sym.walk_definition_as direct comparison (`mirror/a-sym-walk-definition`)
+
+- Scope: promote `Sym.walk_definition_as(MplEnv, SCons)` (`0x06000096`) to `MirrorVerified`; the runtime body and existing direct-comparison test are unchanged. Original inspected through `reference.py` in `mplrun.dll` 12.0.1.0 (SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`). `SexprDifferentialTests` compares a valid form (which raises `BadDeclaration`) and a null form (which raises `NullReferenceException`) directly against Mathcad.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.Sym --diff-filter 'FullyQualifiedName~SexprDifferentialTests' --proposed-unreachable /tmp/quire-a-sym-walk-definition.proposed-unreachable.txt --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-sym-walk-definition-proposed`. Harness 94, Mpl 188 and Differential 10 passed; 24 methods compared, 24 exact, 0 structure-only/missing/uncovered/unsupported with the proposals; lint 0, integrity complete, ratchet OK. The unproposed mutating run killed 19/19 mutants and had no survivors. Exact Release IL before/after: 24/24 exact; only status and evidence changed.
+- Pending unreachable-line proposals (user-approved under the user's blanket approval to proceed):
+
+  ```text
+  Quire.Mpl.Run.Sym::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/Atom.cs:214 sha256=559ca912479841742244bc34d698f558fe74d686929efc918131dde42230c779 # Return null after Sexpr.BadDeclaration(form), which always throws; Mathcad token 0x06000096 has the same call followed by ldnull; ret.
+  Quire.Mpl.Run.Sym::walk_definition_as`0([Quire.Mpl]Quire.Mpl.Run.MplEnv,[Quire.Mpl]Quire.Mpl.Run.SCons)->[Quire.Mpl]Quire.Mpl.Run.SCons|False src/Quire.Mpl/Run/Atom.cs:215 sha256=fb191e7155093fd65a5ec1b44dcf72c365f66977716df3844c42e73c2b6fc7b3 # Closing sequence after Sexpr.BadDeclaration(form), which always throws; Mathcad token 0x06000096 has the same call followed by ldnull; ret.
+  ```
+
+  The original's `Sexpr.BadDeclaration` call throws before `ldnull; ret`, and token `0x06000096` has this same IL. Independent review returned MERGE on `10ad4ca` and confirmed both lines are unreachable in Mathcad. User approval is covered by the standing blanket approval. Maintainer acceptance remains pending, so the batch cannot enter the runtime gate yet. Next: continue with the active `MplForeignMacro` batch in its separate worktree, then select another unowned Lane A member.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
