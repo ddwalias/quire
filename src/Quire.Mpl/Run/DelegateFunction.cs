@@ -492,10 +492,10 @@ public partial class FnCompose : Function
     [MirrorAnalyzed("Mpl.Run.FnCompose")]
     private Function m_g;
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public override string Name => string.Format("compose({0},{1})", m_f.Name, m_g.Name);
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public FnCompose(Function f, Function g)
         : base(g.Purity, 0)
     {
@@ -503,35 +503,35 @@ public partial class FnCompose : Function
         m_g = g;
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public override void invVec<R>(out R r, object[] args)
     {
         m_g.invVec<R>(out var r2, args);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public override void inv<R, A>(out R r, A aa)
     {
         m_g.app<R, A>(out var r2, aa);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public override void inv<R, A, B>(out R r, A aa, B bb)
     {
         m_g.app<R, A, B>(out var r2, aa, bb);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc)
     {
         m_g.app<R, A, B, C>(out var r2, aa, bb, cc);
         m_f.app<R, R>(out r, r2);
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnCompose")]
+    [MirrorVerified("FnComposeDifferentialTests")]
     public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd)
     {
         m_g.app<R, A, B, C, D>(out var r2, aa, bb, cc, dd);
@@ -544,10 +544,10 @@ public partial class FnConstant : Function
     [MirrorAnalyzed("Mpl.Run.FnConstant")]
     private object m_val;
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override string Name => m_val.ToString();
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public FnConstant(object val)
         : base(1024, 0)
     {
@@ -555,33 +555,33 @@ public partial class FnConstant : Function
         m_val = val;
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override void invVec<R>(out R r, object[] args) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override object Apply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override object DynApply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override void inv<R, A>(out R r, A aa) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override void inv<R, A, B>(out R r, A aa, B bb) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override void inv<R, A, B, C>(out R r, A aa, B bb, C cc) => r = (R)m_val;
 
-    [MirrorAnalyzed("Mpl.Run.FnConstant")]
+    [MirrorVerified("FnConstantDifferentialTests")]
     public override void inv<R, A, B, C, D>(out R r, A aa, B bb, C cc, D dd) => r = (R)m_val;
 }
 
@@ -590,10 +590,10 @@ public partial class Fn_varargs : Function
     [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
     private Function m_f;
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override string Name => m_f.Name;
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public Fn_varargs(Function f)
         : base(1024, 0)
     {
@@ -601,45 +601,45 @@ public partial class Fn_varargs : Function
         m_f = f;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override void invVec<R>(out R r, object[] args) => m_f.inv<R, object[]>(out r, args);
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override object Apply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override object DynApply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override object DynCall(object arg1)
     {
         m_f.inv<object, object[]>(out var r, [arg1]);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override object DynCall(object arg1, object arg2)
     {
         m_f.inv<object, object[]>(out var r, [arg1, arg2]);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override object DynCall(object arg1, object arg2, object arg3)
     {
         m_f.inv<object, object[]>(out var r, [arg1, arg2, arg3]);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_varargs")]
+    [MirrorVerified("FnVarargsDifferentialTests")]
     public override object DynCall(object arg1, object arg2, object arg3, object arg4)
     {
         m_f.inv<object, object[]>(out var r, [arg1, arg2, arg3, arg4]);
