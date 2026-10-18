@@ -337,7 +337,13 @@ public partial class SCons : Sexpr
         get
         {
             uint n = 0;
-            for (SCons c = this; c != null; c = c.tail) n++;
+            SCons c = this;
+            do
+            {
+                n++;
+                c = c.tail;
+            }
+            while (c != null);
             return n;
         }
     }
@@ -366,7 +372,8 @@ public partial class SCons : Sexpr
         if (pats == null) return Nul.singleton;
         Sexpr h = pats.head.walk_pattern(env);
         Sexpr t = walk_patterns(env, pats.tail);
-        return h == pats.head && t == pats.Field2 ? pats : new SCons(h, t);
+        if (h == pats.head && t == pats.Field2) return pats;
+        return new SCons(h, t);
     }
 
     [MirrorTested("Mpl.Run.SCons")]
@@ -398,7 +405,11 @@ public partial class SCons : Sexpr
         if (exps == null) return Nul.singleton;
         Sexpr h = exps.head.walk_expression(env);
         Sexpr t = walk_expressions(env, exps.tail);
-        return h == exps.head && t == exps.Field2 ? exps : new SCons(h, t);
+        if (h == exps.head)
+        {
+            if (t == exps.Field2) return exps;
+        }
+        return new SCons(h, t);
     }
 
     /// <summary>
@@ -435,8 +446,11 @@ public partial class SCons : Sexpr
 
     /// <summary>An S-expression list of a <see cref="Cons"/> list; items that aren't S-expressions become null.</summary>
     [MirrorVerified("SexprDifferentialTests")]
-    public static Sexpr as_Sexpr(Cons list) =>
-        list == null ? Nul.singleton : new SCons(list.head, (object)as_Sexpr(list.tail));
+    public static Sexpr as_Sexpr(Cons list)
+    {
+        if (list == null) return Nul.singleton;
+        return new SCons(list.head, (object)as_Sexpr(list.tail));
+    }
 }
 
 /// <summary>An atom in an S-expression, with the source handle it came from.</summary>

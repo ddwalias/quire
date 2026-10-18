@@ -3,7 +3,7 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-rts-resolve-assembly-controlflow` batch is completing the `Rts.OnResolveAssembly` IL match.
+separate `mirror/a-scons-il-shape` batch is addressing a `walk_expressions` mutation survivor.
 `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
@@ -176,7 +176,35 @@ batch receipts below are history, not a task queue.
 - Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~RtsTests'`
   — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~RtsDifferentialTests.Resolves_assemblies_from_the_search_path'` — 1 passed, 0 failed or
-  skipped. No proposals; branch gate pending.
+  skipped. Gate: `lane_merge.py mirror/a-rts-resolve-assembly-controlflow --jobs 14` passed and merged tip
+  `97ee77bad9bedfbf399bff4c80bd787775d9de9d` to `main`; `origin/main` is `7f660b74`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-akxgwxu0\gate.json`; no reasons or protected paths. Harness 97, Mpl 188,
+  Differential 392 passed, no failures or skips; coverage 1,399 compared, 1,535 exact and 88 structure-only; lint 0,
+  integrity complete, ratchet OK. Mutation 19/19 killed, no survivors; one timed-out mutant was retried and killed.
+  Existing inventory gaps: 298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported.
+
+## SCons exact IL shape corrections (`mirror/a-scons-il-shape`)
+
+- Scope: correct `SCons.as_Sexpr(Cons)`, `SCons.Length`, `SCons.walk_expressions(MplEnv, SCons)`, and
+  `SCons.walk_patterns(MplEnv, SCons)`, the four remaining Tier A SCons structure mismatches. The related `a-scons-*`
+  refs are on main and have no source diff.
+- Reference: `python tools\reference\reference.py Mpl.Run.SCons --il`; evidence is
+  [Mpl.Run.SCons](../evidence/Mpl.Run.SCons.md). The two uncovered instance walk methods remain outside this scope.
+- Scoped checks passed: `SexprTests` 36; direct Mathcad `SCons_members` 1. Exact inventory improved to 1,537 exact
+  and 86 structure-only. Gate blocked at tip `eefbdc549442d87a89e5a2c04b435719dbd161d1` on base
+  `737ceafb8f4757885b40b8b0987373f9aa827987`. Mutation 47/49 killed, with one accepted survivor and one live
+  survivor: `Quire.Mpl.Run.SCons::walk_expressions(MplEnv,SCons)->Sexpr|True@IL_003b ceq -> cgt.un` at
+  `src/Quire.Mpl/Run/Sexpr.cs:408`, source `if (h == exps.head && t == exps.Field2) return exps;`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-7ysuemwx\gate.json`; validator exited 1 and this batch did not merge.
+
+## SCons walk_expressions mutation follow-up (`mirror/a-scons-il-shape`)
+
+- Scope: preserve the two reference-equality branches with nested `if` checks so the compiled IL cannot collapse the
+  comparisons to the mutation-sensitive `ceq` condition.
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~SexprTests'`
+  — 36 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~SexprDifferentialTests.SCons_members'` — 1 passed, 0 failed or skipped. No proposals;
+  branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
