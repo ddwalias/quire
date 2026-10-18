@@ -485,10 +485,10 @@ public partial class UnitSystem : MarshalByRefObject
         [MirrorTested("Mcd.UnitSystem")]
         public readonly Unit Unit;
 
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public Default(int[] global, Unit unit) : this(global) { Unit = unit; }
 
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public Default(int[] global)
         {
             Vector = (int[])global.Clone();
@@ -524,7 +524,7 @@ public partial class UnitSystem : MarshalByRefObject
             }
         }
 
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public override int GetHashCode()
         {
             int h = 0;
@@ -532,7 +532,7 @@ public partial class UnitSystem : MarshalByRefObject
             return h;
         }
 
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public override bool Equals(object o)
         {
             var other = (Default)o;
@@ -542,7 +542,7 @@ public partial class UnitSystem : MarshalByRefObject
         }
 
         /// <summary>Descending <see cref="Order"/>.</summary>
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public int CompareTo(object o) => ((Default)o).Order.CompareTo(Order);
     }
 }

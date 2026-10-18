@@ -48,11 +48,11 @@ cases"; `GetDimensionIndex`, `GetDimensions(string)`, `Inverse`, `IsSmall` and b
 | `IsSmall(double)` | 0x060005de | `d39e96df` | Strictly between −1e-12 and 1e-12 (NaN is not small). | High | Verified |
 | `Count(int[])` | 0x060005df | `5f37b750` | The number of nonzero entries. | High | Verified |
 | `Count(double[])` | 0x060005e0 | `4f20f9f4` | The number of nonzero entries (NaN counts). | High | Verified |
-| `Default.ctor(int[], Unit)` | 0x06000792 | `b5df5311` | As the one-argument constructor, then keeps the unit. | High | Tested |
-| `Default.ctor(int[])` | 0x06000793 | `14e2df4d` | Copies the coordinates. The scalar is the GCD of the nonzero ones, negated when the first nonzero one is negative; order is its magnitude. The copy is divided by the scalar unless the scalar is 0 or +1, so the direction's first nonzero coordinate is positive. | High | Tested |
-| `Default.GetHashCode()` | 0x06000794 | `97519dce` | Over the direction: rotate the hash left by 4 bits and xor in each coordinate's signed remainder mod 16. | High | Tested |
-| `Default.Equals(object)` | 0x06000795 | `8ab1de7f` | Same direction, compared over this one's length; the scalar and unit are ignored. Casts without checking. | High | Tested |
-| `Default.CompareTo(object)` | 0x06000796 | `01fc23b2` | Descending order (larger GCD first). | High | Tested |
+| `Default.ctor(int[], Unit)` | 0x06000792 | `b5df5311` | As the one-argument constructor, then keeps the unit. | High; directly compared over the 24 selected coordinate vectors in `UnitSystem_Default_methods`; other vectors/units are not established. | Verified |
+| `Default.ctor(int[])` | 0x06000793 | `14e2df4d` | Copies the coordinates. The scalar is the GCD of the nonzero ones, negated when the first nonzero one is negative; order is its magnitude. The copy is divided by the scalar unless the scalar is 0 or +1, so the direction's first nonzero coordinate is positive. | High; directly compared over 24 selected vectors spanning empty/zero, sign, GCD and multiple-rank cases; other vectors are not established. | Verified |
+| `Default.GetHashCode()` | 0x06000794 | `97519dce` | Over the direction: rotate the hash left by 4 bits and xor in each coordinate's signed remainder mod 16. | High; directly compared for those same 24 selected vectors; other vectors are not established. | Verified |
+| `Default.Equals(object)` | 0x06000795 | `8ab1de7f` | Same direction, compared over this one's length; the scalar and unit are ignored. Casts without checking. | High; directly compared for eight self, same/different-direction, and differing-coordinate cases, including one-element vectors; other vector lengths and null/wrong types are not established. | Verified |
+| `Default.CompareTo(object)` | 0x06000796 | `01fc23b2` | Descending order (larger GCD first). | High; directly compared for larger, smaller and equal order cases; other objects are not established. | Verified |
 
 **Choosing a default.** `Simplify` therefore prefers, among dividing defaults in one direction, the smallest
 positive power, and among negative powers the one nearest zero; once a positive power is chosen a negative one
