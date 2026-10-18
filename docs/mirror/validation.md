@@ -345,13 +345,14 @@ order passes it, which the direct comparisons must catch.
   `--write-baseline`, or `--no-mutant-cache`, which the merge gate passes) neither read nor write it. Builds pass
   `EnableSourceControlManagerQueries=false` so the commit is not stamped into assemblies; a docs-only commit leaves
   the output in the same directory byte-identical (built assemblies embed their absolute path).
-- **Timed-out mutants are rerun alone:** load from the other workers can stretch a slow but terminating mutant past
-  its limit, and a timeout counts as a kill. So once every worker has finished, each mutant that timed out is rerun
-  alone in the process (one copy, nothing else running) with a limit from a fresh control run of its tests (the same
-  formula). It stays `killed (timeout)` only if it times out again; otherwise its rerun outcome stands and
-  `parallel_outcome` records the first. `mutation.json` and `summary.json` `mutation` record `timeouts` (after
-  reruns), `timed_out` (their keys), `timeout_retries` and `crashes`; runtime `gate.json` copies them as
-  `mutation_timeouts`, `mutation_timed_out`, `mutation_timeout_retries` and `mutation_crashes`.
+- **Timed-out mutants are retried in parallel:** each worker limit is calibrated from its unmutated test control
+  (`max(MUTANT_FLOOR, MUTANT_MARGIN × measured seconds)`, capped by the run timeout). Worker count is capped to the
+  CPUs available to the process, including Linux CPU affinity. After the first pass finishes, fresh controls for
+  timed-out test sets run in parallel at that worker count. When a test set has several timed-out mutants, controls
+  are sampled up to the retry worker count and the slowest measurement sets its budget. The timed-out mutants then
+  retry in parallel on separate copies with those calibrated budgets. A second timeout counts as `killed (timeout)`;
+  otherwise the retry outcome stands and `parallel_outcome` records the first. `mutation.json` records retry workers,
+  control count and retry wall time; `summary.json` and runtime `gate.json` retain the timeout and retry counts.
 - **Mutant scratch space:** the copies of the test output and each mutant run's directory live in a new
   `quire-mutant-scratch-*` directory of the system temporary directory, outside the results (code under test runs
   from a copy, so the results must not be a fixed path away from it). The validator removes it when the run ends and

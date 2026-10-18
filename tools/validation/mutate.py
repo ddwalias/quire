@@ -178,6 +178,22 @@ def select(coverage, types, methods=()):
     return [(m, mutant) for m in chosen for mutant in m.get('mutants', [])]
 
 
+def effective_jobs(jobs):
+    """Cap workers to CPUs available to this process, including taskset/cgroup affinity where exposed."""
+    requested = max(1, int(jobs))
+    affinity = getattr(os, 'sched_getaffinity', None)
+    try:
+        available = len(affinity(0)) if affinity else os.cpu_count()
+    except OSError:
+        available = os.cpu_count()
+    return max(1, min(requested, available or requested))
+
+
+def mutant_timeout(control_seconds, maximum):
+    """Calibrate a mutant's limit from its unmutated test duration on the currently available machine."""
+    return min(maximum, max(MUTANT_FLOOR, MUTANT_MARGIN * control_seconds))
+
+
 # Where run() sweeps (None: the system temporary directory); tests point it elsewhere.
 SWEEP_DIRECTORY = None
 # Entries examined per directory before it counts as in use: a tree this large is left alone.
@@ -299,6 +315,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     selected = select(coverage, types, methods)
     accepted_keys = accepted() if accepted_keys is None else accepted_keys
     test_dll = Path(test_dll)
+    requested_jobs = max(1, int(jobs))
+    jobs = effective_jobs(requested_jobs)
     pristine = digest(files_under(test_dll.parent), test_dll.parent)
     cache = build = None
     if use_cache:
@@ -370,7 +388,8 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     controlled, limits, control_lock, failures = {}, {}, threading.Lock(), []
 
     def limit_for(copy, tests):
-        return min(timeout, max(MUTANT_FLOOR, MUTANT_MARGIN * control(copy, tests, timeout)))
+        measured = control(copy, tests, timeout)
+        return mutant_timeout(measured, timeout), measured
 
     def tests_of(method):
         return frozenset(case['test'] for case in method['cases'])
@@ -389,7 +408,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             done_control = controlled.setdefault(tests, threading.Event())
         if first:
             try:
-                limits[tests] = limit_for(copy, tests)
+                limits[tests] = limit_for(copy, tests)[0]
             except BaseException as error:
                 failures.append(error)
                 raise
@@ -465,6 +484,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
                     print(f'  mutants: {done[0]}/{len(selected)} run', flush=True)
 
     retried, retry_limits = [], []
+    retry_jobs, retry_elapsed, retry_controls = 0, 0.0, 0
     try:
         with ThreadPoolExecutor(len(copies)) as pool:
             for future in [pool.submit(worker, copy) for copy in copies]:
@@ -474,23 +494,75 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         # stays a kill only if it times out again; otherwise its real outcome stands.
         retried = [i for i, r in enumerate(results) if r['outcome'] == 'killed (timeout)']
         if retried:
-            print(f'  rerunning {len(retried)} timed-out mutants one at a time', flush=True)
-        # One fresh control per test set, now that nothing else runs.
-        fresh = {}
-        for index in retried:
-            tests = tests_of(selected[index][0])
-            if tests not in fresh:
-                fresh[tests] = limit_for(copies[0], tests)
-        for index in retried:
-            method, mutant = selected[index]
-            tests = tests_of(method)
-            seconds = fresh[tests]
-            outcome = outcome_of(copies[0], method, mutant, tests, seconds)
-            if cache:
-                store_outcome(cache, mutant_cache_key(method, mutant, tests), outcome)
-            results[index] = dict(result(method, mutant, outcome, seconds, cached=False),
-                                  parallel_outcome='killed (timeout)', parallel_timeout_seconds=results[index]['timeout_seconds'])
-            retry_limits.append(seconds)
+            retry_started = time.monotonic()
+            retry_jobs = min(jobs, len(retried))
+            print(f'  rerunning {len(retried)} timed-out mutants with {retry_jobs} workers; calibrating from controls',
+                  flush=True)
+
+            # Measure controls at retry concurrency. A 4-core taskset or a slow CI runner therefore gets budgets
+            # from its actual throughput, rather than from the faster unconstrained host.
+            counts = {}
+            for index in retried:
+                tests = tests_of(selected[index][0])
+                counts[tests] = counts.get(tests, 0) + 1
+            controls = queue.Queue()
+            for tests, count in sorted(counts.items(), key=lambda item: tuple(sorted(item[0]))):
+                for _ in range(min(count, retry_jobs)):
+                    controls.put(tests)
+            samples = {}
+            sample_lock = threading.Lock()
+
+            def calibrate_worker(copy):
+                while True:
+                    try:
+                        tests = controls.get_nowait()
+                    except queue.Empty:
+                        return
+                    limit, measured = limit_for(copy, tests)
+                    with sample_lock:
+                        samples.setdefault(tests, []).append((measured, limit))
+
+            with ThreadPoolExecutor(max_workers=min(retry_jobs, controls.qsize())) as pool:
+                for future in [pool.submit(calibrate_worker, copy) for copy in copies[:min(retry_jobs, controls.qsize())]]:
+                    future.result()
+            retry_controls = sum(len(values) for values in samples.values())
+            fresh = {}
+            for tests, values in samples.items():
+                measured, limit = max(values, key=lambda pair: pair[0])
+                fresh[tests] = (limit, measured, len(values))
+
+            pending_retries = queue.Queue()
+            for index in retried:
+                pending_retries.put(index)
+            retried_count, retry_lock = [0], threading.Lock()
+
+            def retry_worker(copy):
+                while True:
+                    try:
+                        index = pending_retries.get_nowait()
+                    except queue.Empty:
+                        return
+                    method, mutant = selected[index]
+                    tests = tests_of(method)
+                    seconds, measured, samples_count = fresh[tests]
+                    outcome = outcome_of(copy, method, mutant, tests, seconds)
+                    if cache:
+                        store_outcome(cache, mutant_cache_key(method, mutant, tests), outcome)
+                    results[index] = dict(
+                        result(method, mutant, outcome, seconds, cached=False),
+                        parallel_outcome='killed (timeout)',
+                        parallel_timeout_seconds=results[index]['timeout_seconds'],
+                        retry_control_seconds=round(measured, 3), retry_control_samples=samples_count)
+                    retry_limits.append(seconds)
+                    with retry_lock:
+                        retried_count[0] += 1
+                        if retried_count[0] % 10 == 0 or retried_count[0] == len(retried):
+                            print(f'  timeout retries: {retried_count[0]}/{len(retried)} run', flush=True)
+
+            with ThreadPoolExecutor(max_workers=retry_jobs) as pool:
+                for future in [pool.submit(retry_worker, copy) for copy in copies[:retry_jobs]]:
+                    future.result()
+            retry_elapsed = time.monotonic() - retry_started
     finally:
         for copy in copies:
             shutil.rmtree(copy, ignore_errors=True)
@@ -498,10 +570,12 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
     survivors = [r['key'] for r in surviving if not r['proposed']]
     mutated = sorted({f"{m['type']}::{m['signature']}" for m, _ in selected})
     return {'types': sorted(types), 'methods': dict(sorted(methods.items())), 'mutated_methods': mutated,
+            'jobs': jobs, 'requested_jobs': requested_jobs,
             'total': len(results), 'max_mutant_timeout_seconds': round(max([*limits.values(), *retry_limits], default=timeout)),
             'timeouts': sum(r['outcome'] == 'killed (timeout)' for r in results),
             'timed_out': [r['key'] for r in results if r['outcome'] == 'killed (timeout)'],
-            'timeout_retries': len(retried),
+            'timeout_retries': len(retried), 'timeout_retry_jobs': retry_jobs,
+            'timeout_retry_controls': retry_controls, 'timeout_retry_elapsed_seconds': round(retry_elapsed, 3),
             'crashes': sum(r['outcome'] == 'killed (crash)' for r in results),
             'cached': sum(r['cached'] for r in results),
             'killed': sum(r['outcome'].startswith('killed') for r in results),

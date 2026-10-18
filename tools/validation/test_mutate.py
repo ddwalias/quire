@@ -54,6 +54,14 @@ if image[6] == 0x5B:  # mul -> div: another method compared first mismatches; al
     finish(True, 'other:100663297', 'mvid:100663298')
 if image[8] == 0x2D and image[9] == 3:  # the mutant loops forever
     import time; time.sleep(120)
+if image[9] in (7, 8, 10, 11):  # parallel retry fixtures: four independent looping mutants
+    import time; time.sleep(120)
+if image[9] in (17, 18):  # time out once under load, then complete on retry
+    state = Path(os.environ['FAKE_DOTNET_STATE'] + str(image[9]))
+    if not state.exists():
+        state.write_text('slow')
+        import time; time.sleep(120)
+    finish(False)
 if image[8] == 0x2D and image[9] == 4:  # the test host crashes (stack overflow): VSTest records no test result
     (scratch / 'run.trx').write_text(
         '<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010"><ResultSummary outcome="Failed">'
@@ -119,6 +127,19 @@ class MutationTests(unittest.TestCase):
 
     def test_only_compared_methods_of_selected_types(self):
         self.assertEqual(len(select(self.coverage, {'Quire.T'})), 3)
+
+    def test_worker_count_respects_process_cpu_affinity(self):
+        from mutate import effective_jobs
+        with mock.patch('mutate.os.sched_getaffinity', return_value={0, 1, 2, 3}):
+            self.assertEqual(effective_jobs(14), 4)
+            self.assertEqual(effective_jobs(2), 2)
+
+    def test_mutant_timeout_scales_with_measured_control_speed_and_keeps_a_floor(self):
+        from mutate import mutant_timeout
+        with mock.patch('mutate.MUTANT_FLOOR', 3), mock.patch('mutate.MUTANT_MARGIN', 4):
+            self.assertEqual(mutant_timeout(0.5, 60), 3)
+            self.assertEqual(mutant_timeout(2, 60), 8)
+            self.assertEqual(mutant_timeout(20, 60), 60)
 
     def test_compiler_generated_methods_use_their_compared_owner_tests(self):
         lambda_ = dict(self.method, type='Quire.T+<>c', signature='<M>b__0_0()', validation='excluded', cases=[],
@@ -268,6 +289,40 @@ class MutationTests(unittest.TestCase):
                                                'Quire.T::M()@IL_0007 brfalse.s -> brtrue.s (again)'])
         # Two controls and four mutants, then one fresh control for the shared test set and two reruns.
         self.assertEqual(log.read_text().count('|'), 9)
+
+    def test_timed_out_mutants_retry_in_parallel_with_affinity_calibrated_controls(self):
+        loops = [dict(il_offset=offset, file_offset=9, original='00', replacement=f'{value:02x}',
+                      description=f'loop {value}')
+                 for offset, value in zip((7, 8, 10, 11), (7, 8, 10, 11))]
+        method = dict(self.method, mutants=loops)
+        coverage = {'methods': [method]}
+        with mock.patch('mutate.MUTANT_FLOOR', 1), mock.patch('mutate.MUTANT_MARGIN', 4):
+            started = time.monotonic()
+            report = run(coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl',
+                         str(self.dotnet), jobs=4, accepted_keys={}, use_cache=False)
+            elapsed = time.monotonic() - started
+        self.assertEqual((report['total'], report['timeouts'], report['timeout_retries']), (4, 4, 4))
+        self.assertEqual((report['timeout_retry_jobs'], report['timeout_retry_controls']), (4, 4))
+        self.assertEqual((report['jobs'], report['requested_jobs']), (4, 4))
+        self.assertTrue(report['complete'])
+        self.assertEqual({r['outcome'] for r in report['mutants']}, {'killed (timeout)'})
+        self.assertLess(report['timeout_retry_elapsed_seconds'], 3)
+        self.assertLess(elapsed, 10)
+
+    def test_parallel_retries_still_accept_a_slow_mutant_that_finishes_on_retry(self):
+        loops = [dict(il_offset=offset, file_offset=9, original='00', replacement=f'{value:02x}',
+                      description=f'slow {value}')
+                 for offset, value in zip((17, 18), (17, 18))]
+        coverage = {'methods': [dict(self.method, mutants=loops)]}
+        with mock.patch('mutate.MUTANT_FLOOR', 1), mock.patch.dict(os.environ,
+                FAKE_DOTNET_STATE=str(Path(self.directory.name) / 'parallel-state')):
+            report = run(coverage, {'Quire.T'}, self.tests / 'Quire.Differential.Tests.dll', 'Quire.Mpl',
+                         str(self.dotnet), jobs=2, accepted_keys={}, use_cache=False)
+        self.assertEqual((report['timeout_retries'], report['timeouts']), (2, 0))
+        self.assertEqual(report['timeout_retry_jobs'], 2)
+        self.assertEqual({r['parallel_outcome'] for r in report['mutants']}, {'killed (timeout)'})
+        self.assertEqual({r['outcome'] for r in report['mutants']}, {'survived'})
+        self.assertEqual(report['survivors'], sorted(r['key'] for r in report['mutants']))
 
     def test_copies_and_run_directories_live_under_the_given_scratch_directory(self):
         scratch = Path(self.directory.name) / 'results/mutation-scratch'

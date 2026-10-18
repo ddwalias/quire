@@ -845,7 +845,9 @@ def main():
             mutate_types |= {m["type"] for m in coverage["methods"]}
             report["mutation_scope"] = "all compared methods (requested)"
         if mutate_types or mutate_methods:
-            print(f"Mutating compared methods with {args.jobs} workers; each mutant reruns the differential tests", flush=True)
+            mutant_workers = mutate.effective_jobs(args.jobs)
+            print(f"Mutating compared methods with {mutant_workers} workers (requested {args.jobs}); "
+                  "each mutant reruns the differential tests", flush=True)
             # Copies of the test output live in a directory of their own, outside the results that code under test
             # could otherwise reach from them; removed afterwards, and by the merge gate if this process is killed.
             scratch = holder["mutation"] = Path(tempfile.mkdtemp(prefix=SCRATCH_PREFIX))
@@ -858,10 +860,13 @@ def main():
             (output / "mutation.json").write_text(json.dumps(mutation, indent=2) + "\n")
             report["mutation"] = {k: mutation[k] for k in ("total", "killed", "accepted_survivors", "survivors",
                                                            "proposed_survivors", "stale_proposed")}
-            # Timeouts that held when rerun alone, and crashes: kills without a comparison against Mathcad.
-            report["mutation"].update({k: mutation[k] for k in ("timeouts", "timed_out", "timeout_retries", "crashes")})
+            # Timeouts that held after retry, and crashes: kills without a comparison against Mathcad.
+            report["mutation"].update({k: mutation[k] for k in (
+                "timeouts", "timed_out", "timeout_retries", "timeout_retry_jobs", "timeout_retry_controls",
+                "timeout_retry_elapsed_seconds", "crashes")})
             report["mutation"]["mutated_methods"] = len(mutation["mutated_methods"])
-            report["mutation"]["jobs"] = args.jobs
+            report["mutation"]["jobs"] = mutation["jobs"]
+            report["mutation"]["requested_jobs"] = args.jobs
             report["mutation"]["complete"] = mutation["complete"]
             # Proposed survivors keep the run incomplete, but only accepted-mutants.txt is gate-relevant; the merge
             # gate never passes proposals anyway.
