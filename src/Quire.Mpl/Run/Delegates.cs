@@ -25,6 +25,7 @@ public partial class Delegates
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     private static MethodInfo[] clo_method;
 
+    [MirrorAnalyzed("Mpl.Run.Delegates")]
     static Delegates()
     {
         clo_method = [null, typeof(Delegates).GetMethod("Closure_1")];
@@ -80,8 +81,11 @@ public partial class Delegates
         ParameterInfo[] parameters = m.GetParameters();
         Type[] array = new Type[parameters.Length + 1];
         array[0] = m.ReturnType;
-        for (int i = 0; i < parameters.Length; i++)
-            array[i + 1] = parameters[i].ParameterType;
+        int num = 1;
+        foreach (ParameterInfo parameterInfo in parameters)
+        {
+            array[num++] = parameterInfo.ParameterType;
+        }
         return array;
     }
 
@@ -201,14 +205,22 @@ public partial class Delegates
     }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
-    public static Delegate DelegateClosure<CLO>(Delegate d, CLO clo, int purity) => purity switch
+    public static Delegate DelegateClosure<CLO>(Delegate d, CLO clo, int purity)
     {
-        2 => (Delegate)DelegateClosure_1(d, clo),
-        3 => DelegateClosure_2(d, clo),
-        4 => DelegateClosure_3(d, clo),
-        5 => DelegateClosure_4(d, clo),
-        _ => null,
-    };
+        switch (purity)
+        {
+            case 2:
+                return DelegateClosure_1(d, clo);
+            case 3:
+                return DelegateClosure_2(d, clo);
+            case 4:
+                return DelegateClosure_3(d, clo);
+            case 5:
+                return DelegateClosure_4(d, clo);
+            default:
+                return null;
+        }
+    }
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static Delegate toFDelegate(Type F, Delegate d)
