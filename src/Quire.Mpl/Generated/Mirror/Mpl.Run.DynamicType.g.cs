@@ -32,11 +32,5 @@ public partial class DynamicType
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.FieldInfo[] DefineFields(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string RemovePrefix(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type[] NameDemangle(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type[] TupleNameDemangle(string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void Ldarg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator m_il, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -20,6 +20,9 @@
 | `GetShortName(string)` | 0x06000409 | Uses a colon suffix if the colon is not first; otherwise uses the suffix after a nonleading dot; returns the input for leading/no separators | High; direct cases cover colon/dot positions (including index one and leading colon before a later dot), no separators, trailing dot and null | Verified |
 | `Explode(string)` | 0x0600040e | Splits the name using the `_` delimiter and preserves empty entries | High; direct cases cover normal, repeated/trailing, comma-containing, empty and absent delimiters, plus null; the renderer length-prefixes each element | Verified |
 | `NameMangle(string, Type[])` | 0x06000413 | Starts with `prefix`, then concatenates `TypeToName` for each array entry in order | High; direct cases cover empty, mapped, fallback, mixed and null inputs; Release IL equals Mathcad's | Verified |
+| `RemovePrefix(string, string)` | 0x0600040f | Finds the first occurrence of `prefix`; raises a demangle error if absent, otherwise returns the substring after the match and one additional character | High; direct cases cover an initial and later match, empty/missing/null prefixes, missing/null name and prefix-only input | Verified |
+| `NameDemangle(string, string)` | 0x06000412 | Calls `RemovePrefix`, splits the suffix with `Explode`, then maps each token with `NameToType` into a new `Type[]` | High; direct cases cover mapped names, an unknown token, repeated delimiters, prefix-only and null name | Verified |
+| `TupleNameDemangle(string)` | 0x06000414 | Calls `NameDemangle(tyName, TuplePrefix)` | High; direct cases cover mapped and unknown tuples, repeated delimiters, prefix-only and null name | Verified |
 | `TupleNameMangle(Type[])` | 0x06000415 | Calls `NameMangle(TuplePrefix, types)` and returns its result | High; direct cases cover empty, mapped, fallback and mixed arrays, plus null array; Release IL equals Mathcad's | Verified |
 | `TupleNameMangle(int)` | 0x06000416 | Allocates `Type[n]`, fills every element with `typeof(object)`, and calls `TupleNameMangle(Type[])` | High; direct cases cover 0, 1, 3 and -1; Release IL equals Mathcad's | Verified |
 
@@ -37,6 +40,8 @@ parameter and field), comparing the result, the arguments and the target's field
 **Observed** (`DynamicTypeExplodeDifferentialTests`): Directly invokes the private helper with ordinary, comma-containing, repeated/trailing, empty, delimiter-free and null inputs; the renderer encodes array length and length-prefixes every element.
 
 **Observed** (`DynamicTypeNameMangleDifferentialTests`): Directly invokes the private helper with an empty type array, mapped and fallback types, mixed values, null prefix and null array.
+
+**Observed** (`DynamicTypeDemangleDifferentialTests`): Directly invokes both private helpers and the public wrapper against the installed Mathcad artifact. `RemovePrefix` covers a match at the start and later in the string, empty/missing/null prefixes, missing/null names, and a prefix-only input. The type-array results render each returned `Type` so mapped values and exceptions compare injectively; cases cover integer, double and object names, unknown and repeated delimiters, malformed prefix-only values and null names.
 
 **Observed** (`DynamicTypeTupleNameMangleDifferentialTests`): Directly invokes both public overloads against the installed Mathcad artifact. The array overload compares empty, mapped, fallback, mixed and null arrays; the integer overload compares 0, 1, 3 and -1, including matching allocation exceptions.
 

@@ -442,6 +442,15 @@ or skips, lint 0 and ratchet ok. No methods were selected for mutation. Receipt:
 `/tmp/quire-numval-final-runtime-gate/gate.json`; validator exit 3 records existing project-wide gaps,
 not phase completion. The reviewed branch and gate-approved main were pushed to origin.
 
+## DynamicType demangling batch (`mirror/a-dynamic-type-demangle`)
+
+- Scope: `RemovePrefix(string,string)`, `NameDemangle(string,string)`, and `TupleNameDemangle(string)`.
+- Worktree: `/root/src/worktrees/a-dynamic-type-demangle`; branch `mirror/a-dynamic-type-demangle` from `f070193`.
+- Focused validation: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH QUIRE_REQUIRE_MATHCAD=1 python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --jobs 2 --proposed-unreachable /tmp/quire-a-dynamic-type-demangle.proposed-unreachable.txt --results /tmp/quire-validation-dynamic-type-demangle-proposed` passed Harness 94, Mpl 188 and Differential 18; 19 compared, 19 exact, 11 pre-existing missing, 0 uncovered, 0 verified-unsupported, lint 0, ratchet ok. The local report remains gate-blocked only because the proposed exemption awaits maintainer acceptance. No mutation was run locally; mutation runs in the runtime gate.
+- Exact IL before/after: 16/19 exact methods in the scoped type; all three changed methods match Mathcad exactly, with no exact method regressed.
+- Pending proposal: one unreachable line at `src/Quire.Mpl/Run/DynamicType.NameParsing.cs:15`, generated in `/tmp/quire-a-dynamic-type-demangle.proposed-unreachable.txt`. The line is the closing brace after `AppException.Raise("demangle error")`, which always throws; original Mathcad `RemovePrefix` 0x0600040f has the same unreachable tail. The user approved proposals generally; independent review returned MERGE and verified the IL, throwing behavior, and exact hash. Maintainer acceptance in the protected list remains pending, so this batch cannot enter the gate yet.
+- Commit/push and runtime gate are pending acceptance. Next: continue another unowned Lane A member while this proposal waits for the maintainer.
+
 ## List_keyword and Tuple_keyword singleton batch (`mirror/a-keyword-singletons`)
 
 - Branch: `mirror/a-keyword-singletons`, rebased onto `2930f1a`; implementation commit `a602f5f`.
