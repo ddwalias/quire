@@ -239,6 +239,25 @@ class RepositoryTests(unittest.TestCase):
                          ['docs/mirror/validation-baseline.json', 'tools/validation/validate.py'])
         self.assertEqual(merge_gate.restored_paths(files, rules, {}, True), ['docs/mirror/validation-baseline.json'])
 
+    def test_checkout_paths_restores_large_literal_path_list(self):
+        paths = [f'protected/{i:04d}/' + 'x' * 45 + '.txt' for i in range(600)]
+        paths[0] = 'protected/0000/literal[ab].txt'
+        for path in paths:
+            target = self.repo / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text('base')
+        self.git('add', '-A'); self.git('commit', '-qm', 'many protected paths')
+        base = self.git('rev-parse', 'HEAD')
+        self.git('checkout', '-qb', 'many-path-changes')
+        for path in paths:
+            (self.repo / path).write_text('branch')
+        self.git('add', '-A'); self.git('commit', '-qm', 'change many paths')
+
+        merge_gate.checkout_paths(base, paths, cwd=self.repo)
+
+        self.assertEqual((self.repo / paths[0]).read_text(), 'base')
+        self.assertEqual((self.repo / paths[-1]).read_text(), 'base')
+
     def test_only_commits_on_a_local_branch_can_be_cloned(self):
         self.assertTrue(on_branch(self.git('rev-parse', 'work'), self.repo))
         dangling = self.git('commit-tree', f'{self.base}^{{tree}}', '-p', self.base, '-m', 'dangling')
