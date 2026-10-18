@@ -2,7 +2,7 @@
 
 - **Original:** mplrun.dll 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
 - **Reference:** ilspycmd 11.1.0.9782 member index and C# view from `tools/reference/reference.py`.
-- **Quire:** [Function.cs](../../../src/Quire.Mpl/Run/Function.cs), [Function.Matrix.cs](../../../src/Quire.Mpl/Run/Function.Matrix.cs); tests: `FunctionMatrixDifferentialTests`.
+- **Quire:** [Function.cs](../../../src/Quire.Mpl/Run/Function.cs), [Function.Matrix.cs](../../../src/Quire.Mpl/Run/Function.Matrix.cs); tests: `FunctionMatrixDifferentialTests`, `FunctionAppVecDirectDifferentialTests`, `FunctionInvApplyDifferentialTests`.
 
 `Function`'s matrix-call bridge routes `VecCall` through `MatVal.vectorize` when at least one argument is a matrix and vectorization is enabled. Scalar arguments use the matching dynamic call. `VecApply` vectorizes its argument vector unless `IgnoreVectorization(true)` has disabled that path. `IsFullyApplied` and `AssertFullApp` enforce the stored arity range; `OptFunc` changes its lower bound. The delegate projections validate their requested arity and return typed invocation delegates.
 
@@ -23,13 +23,47 @@
 | `clo<CLO>(CLO)` | 0x060001a4 | Constructs a closure wrapping this function and one argument. | Current focused run directly compared `clo` returning `Fn_clo<CLO>` wrapping receiver and argument. Exact IL match. | Verified |
 | `clovec<CLO>(CLO[])` | 0x060001a5 | Iteratively wraps each argument in `clo`. | Current focused run directly compared `clovec` returning chained `Fn_clo<CLO>` wrappers. Exact IL match. | Verified |
 | `appVec<R>(out R, object[])` | 0x060001a9 | Dispatches argument vectors across arities 1–16, varargs, exact purity, overapplication, optional padding, and partial closure. | Current focused run directly compared count 0..18, varargs, overapplication remainder arguments, high-arity optional padding, and below-minimum partial closures. Exact IL match. | Verified |
+| `apply<A>(A)` | 0x06000193 | Calls `app` with single argument and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B>(A, B)` | 0x06000194 | Calls `app` with 2 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C>(A, B, C)` | 0x06000195 | Calls `app` with 3 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D>(A, B, C, D)` | 0x06000196 | Calls `app` with 4 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E>(A, B, C, D, E)` | 0x06000197 | Calls `app` with 5 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F>(A, B, C, D, E, F)` | 0x06000198 | Calls `app` with 6 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G>(A, B, C, D, E, F, G)` | 0x06000199 | Calls `app` with 7 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H>(A, B, C, D, E, F, G, H)` | 0x0600019a | Calls `app` with 8 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I>(A, B, C, D, E, F, G, H, I)` | 0x0600019b | Calls `app` with 9 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J>(A, B, C, D, E, F, G, H, I, J)` | 0x0600019c | Calls `app` with 10 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J, K>(A, B, C, D, E, F, G, H, I, J, K)` | 0x0600019d | Calls `app` with 11 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J, K, L>(A, B, C, D, E, F, G, H, I, J, K, L)` | 0x0600019e | Calls `app` with 12 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J, K, L, M>(A, B, C, D, E, F, G, H, I, J, K, L, M)` | 0x0600019f | Calls `app` with 13 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(A, B, C, D, E, F, G, H, I, J, K, L, M, N)` | 0x060001a0 | Calls `app` with 14 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O)` | 0x060001a1 | Calls `app` with 15 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `apply<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P)` | 0x060001a2 | Calls `app` with 16 arguments and returns result. | Current focused run directly compared `apply` dispatch. Exact IL match. | Verified |
+| `inv<R>(out R)` | 0x060001bc | Invokes function with empty argument vector via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A>(out R, A)` | 0x060001bd | Invokes function with 1 argument via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B>(out R, A, B)` | 0x060001be | Invokes function with 2 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C>(out R, A, B, C)` | 0x060001bf | Invokes function with 3 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D>(out R, A, B, C, D)` | 0x060001c0 | Invokes function with 4 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E>(out R, A, B, C, D, E)` | 0x060001c1 | Invokes function with 5 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F>(out R, A, B, C, D, E, F)` | 0x060001c2 | Invokes function with 6 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G>(out R, A, B, C, D, E, F, G)` | 0x060001c3 | Invokes function with 7 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H>(out R, A, B, C, D, E, F, G, H)` | 0x060001c4 | Invokes function with 8 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I>(out R, A, B, C, D, E, F, G, H, I)` | 0x060001c5 | Invokes function with 9 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J>(out R, A, B, C, D, E, F, G, H, I, J)` | 0x060001c6 | Invokes function with 10 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J, K>(out R, A, B, C, D, E, F, G, H, I, J, K)` | 0x060001c7 | Invokes function with 11 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R, A, B, C, D, E, F, G, H, I, J, K, L)` | 0x060001c8 | Invokes function with 12 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M)` | 0x060001c9 | Invokes function with 13 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N)` | 0x060001ca | Invokes function with 14 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O)` | 0x060001cb | Invokes function with 15 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
+| `inv<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P)` | 0x060001cc | Invokes function with 16 arguments via `invVec`. | Current focused run directly compared `inv` dispatch. Exact IL match. | Verified |
 
 ## Test cases
 
 `Function_arity_checks_apply_and_delegate_projection` compares the arity predicates, assertion, optional padding, exact application, successful delegate projections, and their too-few-arguments exceptions. `Function_matrix_call_bridge_vectorizes_only_matrix_inputs` compares all three `VecCall` overloads over every scalar/matrix argument mask with vectorization on and every nonempty matrix mask with vectorization disabled. Matrix-sensitive ordered delegates distinguish elementwise vectorization from passing the whole matrix to dynamic dispatch. It also covers both `VecApply` branches and uses real `MatVal` values with `DelegateFunction` fixtures. No emitted probe types are used.
 `FunctionAppVecDirectDifferentialTests` directly compares `Function.clo<CLO>`, `Function.clovec<CLO>`, and `Function.appVec<R>` across 11 test facts covering counts 0..18, boundary arities 16 and 17, varargs precedence, overapplication remainder preservation, optional argument padding, below-minimum closure creation, null arguments, and delegate exception preservation.
+`FunctionInvApplyDifferentialTests` directly compares all 17 generic `inv` overloads (0x060001bc–0x060001cc) and all 16 `apply` overloads (0x06000193–0x060001a2) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 2 test facts, verifying exact parameter dispatch, `out R result` assignment, and return value consistency. All 33 methods have exact IL match in Release builds.
 
-Current focused run passed Harness, Mpl, and the differential tests, with lint 0, ratchet ok and exact IL matches for `clo<CLO>`, `clovec<CLO>`, and `appVec<R>`.
+Current focused run passed Harness, Mpl, and the differential tests, with lint 0, ratchet ok and exact IL matches for all 33 methods.
 
 ## Open
 
