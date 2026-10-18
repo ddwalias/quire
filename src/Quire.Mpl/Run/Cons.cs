@@ -60,10 +60,15 @@ public partial class Cons
     public static Cons destructive_append(Cons xs, Cons ys)
     {
         if (xs == null) return ys;
-        Cons last = xs;
-        while (last.Field2 != null) last = last.Field2 as Cons;
-        last.Field2 = ys;
-        return xs;
+        Cons first = xs;
+        object tail = xs.Field2;
+        while (tail != null)
+        {
+            xs = tail as Cons;
+            tail = xs.Field2;
+        }
+        xs.Field2 = ys;
+        return first;
     }
 }
 

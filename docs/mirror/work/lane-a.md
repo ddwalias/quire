@@ -3,7 +3,8 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-runtime-options-init-field` batch is verifying `RuntimeOptions.s_init`. `MplDestructuringBind.ExpandCall`
+separate `mirror/a-cons-destructive-append` batch is correcting `Cons.destructive_append` to match reference IL.
+`MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
 
@@ -59,7 +60,40 @@ batch receipts below are history, not a task queue.
   — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~RuntimeOptionsDifferentialTests'` — 3 passed, 0 failed or skipped. The direct
   initializer comparison now renders `s_init`'s full nested type identity and asserts it is non-null on both sides.
-  No runtime body change or proposals; branch gate pending.
+  No runtime body change or proposals. Gate: `lane_merge.py mirror/a-runtime-options-init-field --jobs 14` passed
+  and merged tip `549f8e894084bcce0bdd6e9b38a988b4a7b6ac53` to `main` and `origin/main`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-s00lpp9e\gate.json`; no reasons or protected paths. Harness 97, Mpl 188,
+  Differential 392 passed, no failures or skips; lint 0, integrity complete, ratchet OK. Mutation 77/79 killed,
+  2 accepted survivors, no live survivors, timeouts or crashes. Existing inventory gaps: 298 missing,
+  103 structure mismatches, 34 uncovered and 41 verified unsupported.
+
+## UnitSystem private field-state verification (`mirror/a-unit-system-field-state`)
+
+- Scope: upgrade the 13 `UnitSystem` private fields and four nested `Default` fields from Tested to Verified, rendering
+  backing scalar fields, arrays, matrices, the defaults table and unit-symbol set in the existing
+  `UnitSystemDifferentialTests` state comparison. Behavior tests passed: `UnitSystemTests` 9/9; Mathcad differential
+  tests passed 4/4 after correcting the defaults-table renderer to serialize nested `Default` records.
+- Gate blocked at rebased tip `7b9f7faf4dc43995e064e3a86ecd7650ff18110e` on base
+  `84a4d567cb057b44d26404b8d20b4ef43548b16f`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-6l6nfo43\gate.json`. Harness 97, Mpl 188 and Differential 392 passed;
+  coverage 1,399 compared (1,532 exact, 91 structure-only), lint 0, integrity complete, ratchet OK. Mutation stopped
+  at 790/808 when Windows returned `[Errno 13] Permission denied` opening
+  `C:\Users\DuyDang\AppData\Local\Temp\quire-mutant-scratch-qm__t95e\quire-mutant-0kyluej4\Quire.Mpl.dll`;
+  validator exited 1, so the batch did not merge. Continue on independent Lane A work while this branch remains pending.
+
+## Cons.destructive_append IL shape correction (`mirror/a-cons-destructive-append`)
+
+- Scope: reconstruct the loop to retain the original head separately and advance the `xs` argument through the list,
+  matching `Mpl.Run.Cons` token `0x060003f1`. The coverage inventory marks this Tier A member `structure_mismatch`;
+  no remote `a-cons` branch or active worktree owns it. Reference IL was obtained using
+  `python tools\reference\reference.py Mpl.Run.Cons --il`.
+- Evidence: [Mpl.Run.Cons](../evidence/Mpl.Run.Cons.md). Existing `MplRunHelpersDifferentialTests.Cons_members`
+  compares the result and linked list for every pair among eight proper, null and improper-list inputs.
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter
+  'FullyQualifiedName~MplRunHelpersTests.Cons_lists_print_count_and_append'` — 1 passed;
+  `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~MplRunHelpersDifferentialTests.Cons_members'` — 1 passed. `git diff --check` passed.
+  No proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
