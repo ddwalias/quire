@@ -20,6 +20,8 @@
 | `GetShortName(string)` | 0x06000409 | Uses a colon suffix if the colon is not first; otherwise uses the suffix after a nonleading dot; returns the input for leading/no separators | High; direct cases cover colon/dot positions (including index one and leading colon before a later dot), no separators, trailing dot and null | Verified |
 | `Explode(string)` | 0x0600040e | Splits the name using the `_` delimiter and preserves empty entries | High; direct cases cover normal, repeated/trailing, comma-containing, empty and absent delimiters, plus null; the renderer length-prefixes each element | Verified |
 | `NameMangle(string, Type[])` | 0x06000413 | Starts with `prefix`, then concatenates `TypeToName` for each array entry in order | High; direct cases cover empty, mapped, fallback, mixed and null inputs; Release IL equals Mathcad's | Verified |
+| `TupleNameMangle(Type[])` | 0x06000415 | Calls `NameMangle(TuplePrefix, types)` and returns its result | High; direct cases cover empty, mapped, fallback and mixed arrays, plus null array; Release IL equals Mathcad's | Verified |
+| `TupleNameMangle(int)` | 0x06000416 | Allocates `Type[n]`, fills every element with `typeof(object)`, and calls `TupleNameMangle(Type[])` | High; direct cases cover 0, 1, 3 and -1; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
@@ -35,6 +37,8 @@ parameter and field), comparing the result, the arguments and the target's field
 **Observed** (`DynamicTypeExplodeDifferentialTests`): Directly invokes the private helper with ordinary, comma-containing, repeated/trailing, empty, delimiter-free and null inputs; the renderer encodes array length and length-prefixes every element.
 
 **Observed** (`DynamicTypeNameMangleDifferentialTests`): Directly invokes the private helper with an empty type array, mapped and fallback types, mixed values, null prefix and null array.
+
+**Observed** (`DynamicTypeTupleNameMangleDifferentialTests`): Directly invokes both public overloads against the installed Mathcad artifact. The array overload compares empty, mapped, fallback, mixed and null arrays; the integer overload compares 0, 1, 3 and -1, including matching allocation exceptions.
 
 **Observed** (`DynamicTypeFieldNamesDifferentialTests`): the type initializer's static fields and all entries in its three
 tables; `FieldNames` results for 0, 1 and 4; matching negative-length exceptions for -1; and reference identity on a repeated count.

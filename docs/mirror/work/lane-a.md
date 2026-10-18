@@ -822,6 +822,16 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Both Bq and all four RngVal conversion methods remain exact; no baseline-exact method regressed. Gate report retains the pre-existing completeness gaps above; no new exemption proposals were used.
 - The user asked to stop after these batches were merged and pushed. Lane A work stops here; no next member was started.
 
+## Resumed Lane A: DynamicType.TupleNameMangle (`mirror/a-dynamic-type-tuple-name-mangle`)
+
+- The user resumed the Lane A queue and supplied a native ext4 worktree pipeline. This batch uses `/root/src/worktrees/a-dynamic-type-tuple-name-mangle`, branch `mirror/a-dynamic-type-tuple-name-mangle`, based on current `main` `50c84d8`.
+- Scope: implement the public `TupleNameMangle(Type[])` (`0x06000415`) and `TupleNameMangle(int)` (`0x06000416`) overloads in `src/Quire.Mpl/Run/DynamicType.NameMangle.cs`, remove only their generated stub pairs, add direct differential cases and evidence.
+- Original: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; read via `tools/reference/reference.py Mpl.Run.DynamicType --il`. The array overload calls `NameMangle(TuplePrefix, types)`. The integer overload allocates `Type[n]`, caches `typeof(object)` in a local, fills the array with an indexed loop, and delegates to the array overload. Both reconstructed bodies follow the original C# and Release opcode sequence.
+- Direct test: `DynamicTypeTupleNameMangleDifferentialTests` compares empty, mapped, fallback, mixed and null type arrays; and counts 0, 1, 3 and -1, including matching array-allocation exceptions. Both methods are directly invoked against the installed Mathcad artifact.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH QUIRE_REQUIRE_MATHCAD=1 python3 tools/validation/validate.py --profile focused --method-type Quire.Mpl.Run.DynamicType --diff-filter 'FullyQualifiedName~DynamicType' --jobs 2 --results /tmp/quire-validation-dynamic-type-tuple-name-mangle-type`. Harness 94, Mpl 188 and Differential 15 passed with no failures or skips; 16 methods compared, 14 pre-existing methods remain missing, 0 structure mismatches/uncovered/verified-unsupported; all 16 compared methods exact, lint 0, integrity complete and ratchet OK. Mutation is deferred to the merge gate under the supplied pipeline. Summary: `/tmp/quire-validation-dynamic-type-tuple-name-mangle-type/summary.json`.
+- Exact Release IL before/after: 14/31 -> 16/33; both new methods match Mathcad exactly and all 14 previously exact methods remain exact. No proposals.
+- Runtime gate and independent review: pending. Next: after this batch, return to the independent `MplForeignMacro` work and then continue with another unowned Lane A member.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old

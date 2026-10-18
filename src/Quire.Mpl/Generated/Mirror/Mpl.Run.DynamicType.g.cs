@@ -38,9 +38,5 @@ public partial class DynamicType
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Type[] TupleNameDemangle(string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string TupleNameMangle(global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string TupleNameMangle(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void Ldarg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator m_il, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
