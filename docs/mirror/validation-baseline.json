@@ -6921,22 +6921,26 @@
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::asMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvalconversionsdifferentialtests",
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::asRange`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.RngVal|False": [
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::asRealMatrix`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvalconversionsdifferentialtests",
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::asRealVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "callersensitivitydifferentialtests",
+      "rngvalconversionsdifferentialtests",
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::asResult`0()->[Quire.Mpl]Quire.Mcd.DimVal|False": [
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::asVector`0([System.Runtime]System.String,[System.Runtime]System.UInt32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
+      "rngvalconversionsdifferentialtests",
       "rngvaldifferentialtests"
     ],
     "Quire.Mcd.RngVal::get_Integral`0()->[System.Runtime]System.Boolean|False": [
@@ -7567,15 +7571,19 @@
       "envdifferentialtests"
     ],
     "Quire.Mpl.Run.Bq::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": [
+      "bqdifferentialtests",
       "sexprdifferentialtests"
     ],
     "Quire.Mpl.Run.Bq::.ctor`0([System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
+      "bqdifferentialtests",
       "sexprdifferentialtests"
     ],
     "Quire.Mpl.Run.Bq::ToString`0()->[System.Runtime]System.String|False": [
+      "bqdifferentialtests",
       "sexprdifferentialtests"
     ],
     "Quire.Mpl.Run.Bq::walk_expression`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False": [
+      "bqdifferentialtests",
       "sexprdifferentialtests"
     ],
     "Quire.Mpl.Run.Ca::.ctor`0([Quire.Mpl]Quire.Mpl.Run.Sexpr)->[System.Runtime]System.Void|False": [
