@@ -21,7 +21,14 @@ CACHE = ROOT / '.mirror-cache'
 ERROR = re.compile(r'^(?P<path>[^(\n]+)\((?P<line>\d+),\d+\): error (?P<code>CS\d+): (?P<message>.*?)(?: \[[^\]]+\])?$', re.M)
 TRX = '{http://microsoft.com/schemas/VisualStudio/TeamTest/2010}'
 # The focused host runs mplrun comparisons portably; other projects need the Windows differential project.
-HOSTS = {'Quire.Mpl': ('Quire.Focused.Differential.Tests', 'net10.0')}
+HOSTS = {
+    'Quire.Mpl': ('Quire.Focused.Differential.Tests', 'net10.0'),
+    'Quire.Core': ('Quire.Differential.Tests', 'net10.0-windows'),
+    'Quire.Calculation.Core': ('Quire.Differential.Tests', 'net10.0-windows'),
+    'Quire.Calculation': ('Quire.Differential.Tests', 'net10.0-windows'),
+    'Quire.Controls.Core': ('Quire.Differential.Tests', 'net10.0-windows'),
+    'Quire.Controls': ('Quire.Differential.Tests', 'net10.0-windows'),
+}
 
 
 class Failure(Exception):
@@ -166,16 +173,17 @@ def accept(args, work, log):
                                else 'no Mathcad counterpart' if row['exact_match'] is None
                                else '; '.join(row['structure_differences'][:1]) or 'opcode sequence differs')
                         rejected.setdefault(m['id'], f'IL: {why}')
-            trx = work / f'tests{round}.trx'
-            env = dict(os.environ, QUIRE_REQUIRE_MATHCAD='1', MATHCAD_DIR=args.install)
-            run([args.dotnet, 'test', ROOT / 'tests' / host / 'bin' / 'Debug' / framework / 'Quire.Differential.Tests.dll',
-                 '--filter', 'FullyQualifiedName~MechanicalDifferentialTests', '--logger', f'trx;LogFileName={trx.name}',
-                 '--results-directory', work], log, env=env)
-            results = outcomes(trx, tests)
-            for name, member in tests.items():
-                if results[name] != 'Passed':
-                    rejected.setdefault(member, f'test: {results[name]} {name.rsplit(".", 1)[1]}')
-        if not rejected:
+            if not args.no_test:
+                trx = work / f'tests{round}.trx'
+                env = dict(os.environ, QUIRE_REQUIRE_MATHCAD='1', MATHCAD_DIR=args.install)
+                run([args.dotnet, 'test', ROOT / 'tests' / host / 'bin' / 'Debug' / framework / 'Quire.Differential.Tests.dll',
+                     '--filter', 'FullyQualifiedName~MechanicalDifferentialTests', '--logger', f'trx;LogFileName={trx.name}',
+                     '--results-directory', work], log, env=env)
+                results = outcomes(trx, tests)
+                for name, member in tests.items():
+                    if results[name] != 'Passed':
+                        rejected.setdefault(member, f'test: {results[name]} {name.rsplit(".", 1)[1]}')
+        if not rejected and args.project == 'Quire.Mpl':
             # The gate's own coverage (and mutation) audit of the touched types.
             validation = work / f'validation{round}'
             types = sorted({method.split('::')[1] for m in report['members'] for method in m['methods']})
@@ -212,6 +220,7 @@ def main():
                         help='also generate Tier A/A2 members (a lane, for its own members, under normal review)')
     parser.add_argument('--no-mutate', action='store_true', help='skip mutation in the coverage step (faster; the gate '
                         'still mutates, so a survivor then blocks the merge instead of being rejected here)')
+    parser.add_argument('--no-test', action='store_true', help='skip running differential tests (e.g. where Release IL match is the acceptance bar)')
     args = parser.parse_args()
     if args.project not in HOSTS:
         sys.exit(f'{args.project}: no portable differential host; only {", ".join(HOSTS)} runs here')
