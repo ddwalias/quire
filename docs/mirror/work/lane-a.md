@@ -3,8 +3,9 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-scons-il-shape` batch is addressing a `walk_expressions` mutation survivor.
-`MplDestructuringBind.ExpandCall`
+separate `mirror/a-scons-il-shape` batch is blocked by a surviving `walk_expressions` mutation after three gate
+attempts. No independent Tier A batch is currently clear: the inventory's next result is `SList.FormatCons` in the
+same `Sexpr.cs` file as this pending change. `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
 
@@ -205,7 +206,14 @@ batch receipts below are history, not a task queue.
 - Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~SexprTests'`
   — 36 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~SexprDifferentialTests.SCons_members'` — 1 passed, 0 failed or skipped with the new
-  identity assertions. No proposals; branch gate pending.
+  identity assertions. Gate at tip `0efd79c493d8f26fdee271e8078f26e6b24828d9` on base
+  `7f660b74457b9fba1960c8244c97bbc03c269da6` blocked. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-n2q9qv1w\gate.json`. Harness 97, Mpl 188 and Differential 392 passed;
+  coverage 1,399 compared, 1,539 exact and 84 structure-only; lint 0, integrity complete, ratchet OK. Mutation killed
+  153/155, with one accepted survivor and one live survivor, no timeouts or crashes. The live mutant is
+  `Quire.Mpl.Run.SCons::walk_expressions(MplEnv,SCons)->Sexpr|True@IL_0042 ceq -> cgt.un` at
+  `src/Quire.Mpl/Run/Sexpr.cs:410`, `if (t == exps.Field2) return exps;`; the explicit Mathcad and Quire identity
+  assertions did not kill it. Validator exited 1, so this batch did not merge.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
