@@ -155,13 +155,19 @@ public static partial class Rts
     [MirrorVerified("RtsDifferentialTests")]
     private static Assembly OnResolveAssembly(object s, ResolveEventArgs a)
     {
-        if ((AppDomain)s != AppDomain.CurrentDomain) return null;
-        foreach (string dir in s_paths)
+        if ((AppDomain)s == AppDomain.CurrentDomain)
         {
-            string path = a.Name.Split(',', StringSplitOptions.None)[0];
-            path = Path.Combine(dir, path);
-            path += ".dll";
-            if (File.Exists(path)) return Assembly.LoadFile(path);
+            string[] paths = s_paths;
+            foreach (string dir in paths)
+            {
+                string path = a.Name.Split(',', StringSplitOptions.None)[0];
+                path = Path.Combine(dir, path);
+                path += ".dll";
+                if (File.Exists(path))
+                {
+                    return Assembly.LoadFile(path);
+                }
+            }
         }
         return null;
     }
