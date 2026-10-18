@@ -16,17 +16,9 @@ public partial class Property
     [global::Quire.Mirror.MirrorStub]
     protected internal string _propertyName;
     [global::Quire.Mirror.MirrorStub]
-    protected internal global::System.ComponentModel.PropertyDescriptor Descriptor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected internal object PropertyValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected internal global::System.ComponentModel.TypeConverter Converter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected internal string StringPropertyValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseDependencyPropertyDefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool DontResetValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected internal Property(object o, string propertyName, global::System.ComponentModel.TypeConverter converter) { }
     [global::Quire.Mirror.MirrorStub]

@@ -14,16 +14,6 @@ public partial class ObservableUIElementCollection : global::System.Windows.Cont
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.UIElement this[int index] { get => base[index]; set => base[index] = value; }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public ObservableUIElementCollection(global::System.Windows.UIElement visualParent, global::System.Windows.FrameworkElement logicalParent) : base(default(global::System.Windows.UIElement), default(global::System.Windows.FrameworkElement)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override int Add(global::System.Windows.UIElement element) => base.Add(element);
     [global::Quire.Mirror.MirrorStub]
     public override void Remove(global::System.Windows.UIElement element) => base.Remove(element);
@@ -41,8 +31,6 @@ public partial class ObservableUIElementCollection : global::System.Windows.Cont
     public override void RemoveRange(int index, int count) => base.RemoveRange(index, count);
     [global::Quire.Mirror.MirrorStub]
     private void OnChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, bool range = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnItemChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnPropertiesChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

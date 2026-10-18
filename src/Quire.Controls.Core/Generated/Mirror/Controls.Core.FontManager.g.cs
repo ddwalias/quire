@@ -22,8 +22,6 @@ public partial class FontManager : global::Quire.Controls.Core.IFontManager, glo
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.FontManager.FontKey, global::System.DateTime> _fontCacheMru;
     [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ExtendedFont GetFont(string fontFamilyName, double fontPointSize, bool isItalic, bool isBold, bool isUnderline, global::System.Nullable<global::System.Windows.Media.Color> fontColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ExtendedFont GetFont(global::Quire.Controls.Core.IMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -41,19 +39,5 @@ public partial class FontManager : global::Quire.Controls.Core.IFontManager, glo
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FontManager+FontKey, Ptc.Controls.Core")]
     private partial class FontKey : global::System.Tuple<string, double, bool, bool, bool, global::System.Windows.Media.Color>
     {
-        [global::Quire.Mirror.MirrorStub]
-        public string FontFamilyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public double FontPointSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsItalic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsBold { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsUnderline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Media.Color FontColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public FontKey(string fontFamilyName, double fontPointSize, bool isItalic, bool isBold, bool isUnderline, global::System.Windows.Media.Color fontColor) : base(default(string), default(double), default(bool), default(bool), default(bool), default(global::System.Windows.Media.Color)) { }
     }
 }

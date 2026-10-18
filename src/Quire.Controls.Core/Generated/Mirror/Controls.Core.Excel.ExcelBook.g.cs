@@ -13,6 +13,4 @@ public partial class ExcelBook
 {
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.Excel.ExcelSheet> Sheets;
-    [global::Quire.Mirror.MirrorStub]
-    public ExcelBook() { }
 }

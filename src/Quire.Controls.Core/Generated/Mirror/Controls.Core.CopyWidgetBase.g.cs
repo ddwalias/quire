@@ -19,6 +19,4 @@ public abstract partial class CopyWidgetBase : global::System.Windows.Controls.P
     public abstract global::System.Windows.Controls.Border ChildBorder { get; }
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected CopyWidgetBase() { }
 }

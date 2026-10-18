@@ -12,19 +12,9 @@ namespace Quire.Controls.Core;
 public abstract partial class VisualAdorner : global::Quire.Controls.Core.VisualAdornerBase
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Controls.UIElementCollection _visualChildren;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.UIElementCollection VisualChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
     protected VisualAdorner(global::System.Windows.UIElement adornedElement, bool trackVisibility = false) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnLostFocus(object sender, global::System.Windows.RoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected void Hookup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
     [global::Quire.Mirror.MirrorStub]
     protected void AddVisualChild(global::System.Windows.Media.Visual child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -30,11 +30,7 @@ public partial class MatrixFormatSerializer : global::System.Xml.Serialization.I
     [global::Quire.Mirror.MirrorStub]
     private const string PositionAttrName = "position";
     [global::Quire.Mirror.MirrorStub]
-    public bool MatrixFormatWasRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public MatrixFormatSerializer(global::Quire.Controls.Core.MatrixFormat matrixFormat, string nameSpace) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

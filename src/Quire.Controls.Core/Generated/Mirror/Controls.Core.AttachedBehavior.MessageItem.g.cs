@@ -11,14 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.MessageItem, Ptc.Controls.Core")]
 public partial class MessageItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NodeMessageAdornerType MessageType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.AttachedBehavior.MessageCategory MessageCategory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string MessageResourceKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MessageItem() { }
 }

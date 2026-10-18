@@ -38,10 +38,6 @@ public static partial class AttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty ProhibitSizeChangedEventHandlerProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CanActivateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HandlesContextMenuProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SupportsInputsOutputsProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsOnVisiblePageProperty;
@@ -98,13 +94,9 @@ public static partial class AttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static void SetCanActivate(global::System.Windows.DependencyObject dObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void ClearCanActivate(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool GetHandlesContextMenu(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetHandlesContextMenu(global::System.Windows.DependencyObject dObj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearHandlesContextMenu(global::System.Windows.DependencyObject dObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SupportsInputsOutputsPropertyChangedHandler(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

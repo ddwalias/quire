@@ -12,9 +12,5 @@ namespace Quire.Controls.Core;
 public partial struct FileDialogFilterPair
 {
     [global::Quire.Mirror.MirrorStub]
-    public string FilterString;
-    [global::Quire.Mirror.MirrorStub]
     public string Extension;
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

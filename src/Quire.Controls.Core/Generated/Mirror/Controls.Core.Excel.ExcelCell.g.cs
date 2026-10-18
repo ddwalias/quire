@@ -11,12 +11,4 @@ namespace Quire.Controls.Core.Excel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Excel.ExcelCell, Ptc.Controls.Core")]
 public partial class ExcelCell
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int Row { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Column { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ExcelCell() { }
 }

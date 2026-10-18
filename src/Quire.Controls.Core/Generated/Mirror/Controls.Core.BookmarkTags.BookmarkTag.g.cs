@@ -12,12 +12,6 @@ namespace Quire.Controls.Core.BookmarkTags;
 public static partial class BookmarkTag
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BookmarkTagProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetBookmarkTag(global::System.Windows.DependencyObject element, string tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearBookmarkTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string GetBookmarkTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool HasBookmarkTag(global::System.Windows.DependencyObject element, string tagValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

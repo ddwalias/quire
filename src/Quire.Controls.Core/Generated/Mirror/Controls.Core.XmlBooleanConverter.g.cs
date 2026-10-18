@@ -13,6 +13,4 @@ public partial class XmlBooleanConverter : global::System.ComponentModel.Boolean
 {
     [global::Quire.Mirror.MirrorStub]
     public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
-    [global::Quire.Mirror.MirrorStub]
-    public XmlBooleanConverter() { }
 }

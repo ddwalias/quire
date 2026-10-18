@@ -12,11 +12,7 @@ namespace Quire.Controls.Core;
 public static partial class WorksheetPropertyNames
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfWorksheetProperties;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string[] _names;
     [global::Quire.Mirror.MirrorStub]
     public const string PageSizeValue = "PageSizeValue";
     [global::Quire.Mirror.MirrorStub]
@@ -47,8 +43,4 @@ public static partial class WorksheetPropertyNames
     public const string HelpServerPath = "HelpServerPath";
     [global::Quire.Mirror.MirrorStub]
     public static bool Contains(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string[] GetNames() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type GetTypeOfWorksheetProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

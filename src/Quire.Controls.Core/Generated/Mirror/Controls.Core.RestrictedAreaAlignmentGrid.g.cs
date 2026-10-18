@@ -12,14 +12,6 @@ namespace Quire.Controls.Core;
 public partial class RestrictedAreaAlignmentGrid : global::Quire.Controls.Core.AlignmentGrid, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid, global::Quire.Controls.Core.IAlignmentGrid, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> _restrictedAreas;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> _protectedAreas;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> RestrictedAreas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<object, global::Quire.Pair<double, double>> ProtectedAreas { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Pair<double, double>> AreasToSkip { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public RestrictedAreaAlignmentGrid() { }
@@ -31,10 +23,6 @@ public partial class RestrictedAreaAlignmentGrid : global::Quire.Controls.Core.A
     public override global::System.Windows.Point GetNextIntersection(global::System.Windows.Point startPoint, global::Quire.Direction direction) => base.GetNextIntersection(startPoint, direction);
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Point GetNearestIntersectionPointDisregardingBounds(global::System.Windows.Point startPoint, global::Quire.Controls.Core.GridRestriction restriction, params global::Quire.Direction[] directionsToIgnore) => base.GetNearestIntersectionPointDisregardingBounds(startPoint, restriction, directionsToIgnore);
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetNextIntersectionIgnoringRestrictedAreas(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetNearestIntersectionInDirectionIgnoringRestrictedAreas(global::System.Windows.Point startPoint, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetNearestInsertionPointIgnoringRestrictedAreas(global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

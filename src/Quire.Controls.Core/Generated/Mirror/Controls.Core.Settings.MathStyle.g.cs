@@ -16,11 +16,7 @@ public partial class MathStyle : global::Quire.Controls.Core.Serialization.XElem
     [global::Quire.Mirror.MirrorStub]
     public const string localName = "mathStyle";
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IdLabels Label { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ExtendedFont Font { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Settings.TextDecorationsToAttributesSerializer TextDecorationSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MathStyle() : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]

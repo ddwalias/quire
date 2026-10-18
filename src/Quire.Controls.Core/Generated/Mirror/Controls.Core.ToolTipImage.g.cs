@@ -12,9 +12,5 @@ namespace Quire.Controls.Core;
 public partial class ToolTipImage : global::System.Windows.Controls.Image, global::Quire.Core.IMaybeHasPointThatSnapsToPixel
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.SnappableItemHelper _snappableHelper;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.ISnapToPixelHelper SnappingHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ToolTipImage() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.RoutedEventBindingCollection, Ptc.Controls.Core")]
 public partial class RoutedEventBindingCollection : global::System.Collections.Generic.List<global::Quire.Controls.Core.AttachedBehavior.RoutedEventBinding>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public RoutedEventBindingCollection() { }
 }

@@ -16,29 +16,11 @@ public partial class McdxSerializer : global::Quire.Serialization.IS11NProvider,
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.Serialization.ISerializationStrategy _serializationStrategy;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Serialization.ISerializationHelper _serializationHelper;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.PersistentData.IRegionCollectionSerializer _regionCollectionSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.IO.Packaging.PackagePart _packagePart;
     [global::Quire.Mirror.MirrorStub]
     private readonly string _worksheetNodeName;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
-    [global::Quire.Mirror.MirrorStub]
     public bool IsConverterApplication { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlDocument XmlContentDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.ISerializationHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNamespaceManager NameSpaceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public McdxSerializer(global::System.IO.Packaging.PackagePart part, global::Quire.Controls.Core.Serialization.ISerializationStrategy serializationStrategy, global::Quire.Serialization.ISerializationHelper helper, global::Quire.PersistentData.IRegionCollectionSerializer regionCollectionSerializer, global::System.Action<global::System.Xml.Schema.XmlSchemaException> onWriteValidationFailed, bool useOverrides, global::Quire.ITextStyleChangedHandler textStyleChangedHandler = default) { }
     [global::Quire.Mirror.MirrorStub]

@@ -11,8 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CustomInsertedContextMenuItem, Ptc.Controls.Core")]
 public partial class CustomInsertedContextMenuItem : global::System.Windows.Controls.MenuItem, global::Quire.Controls.Core.ICustomInsertedMenuPart
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.RoutedUICommand NextItemCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CustomInsertedContextMenuItem() { }
 }

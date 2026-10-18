@@ -17,6 +17,4 @@ public partial class PrimeContextMenu : global::System.Windows.Controls.ContextM
     public global::System.Windows.Style PrimeContextMenuStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static void HandlePrimeContextMenuStyleChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PrimeContextMenu() { }
 }

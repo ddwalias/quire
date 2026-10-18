@@ -15,6 +15,4 @@ public partial class PropertyBindersCollection : global::System.Collections.Gene
     public void Attach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Detach(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyBindersCollection() { }
 }

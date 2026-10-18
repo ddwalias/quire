@@ -14,13 +14,7 @@ internal partial class ResultElementsSerializer : global::Quire.Controls.Core.Se
     [global::Quire.Mirror.MirrorStub]
     public const string ResultsElemName = "resultsList";
     [global::Quire.Mirror.MirrorStub]
-    public bool ShouldValidateOnWrite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShouldValidateOnRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ResultElementsSerializer() : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Xml.Schema.XmlSchema GetSchema() => base.GetSchema();
-    [global::Quire.Mirror.MirrorStub]
-    public void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

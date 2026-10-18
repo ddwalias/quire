@@ -20,8 +20,6 @@ public abstract partial class ViewModelBaseWithDataErrors : global::Quire.Contro
     [global::Quire.Mirror.MirrorStub]
     public bool HasErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::System.ComponentModel.DataErrorsChangedEventArgs> ErrorsChanged;
-    [global::Quire.Mirror.MirrorStub]
     protected ViewModelBaseWithDataErrors(global::System.Windows.ResourceDictionary errorsDictionary) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.IEnumerable GetErrors(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

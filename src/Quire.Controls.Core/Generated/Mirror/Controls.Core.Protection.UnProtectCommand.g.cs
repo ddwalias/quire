@@ -12,13 +12,5 @@ namespace Quire.Controls.Core.Protection;
 public partial class UnProtectCommand : global::Quire.Controls.Core.Protection.ProtectionCommonBase, global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public UnProtectCommand(global::Quire.Controls.Core.Protection.IProtectableModel model, global::System.Action<string> showWarningDialogRequest) : base(default(global::Quire.Controls.Core.Protection.IProtectableModel), default(global::System.Action<string>)) { }
-    [global::Quire.Mirror.MirrorStub]
     public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -17,8 +17,4 @@ public partial class PropertyValueKeeper : global::Quire.Controls.Core.AttachedB
     public string PropertyPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void SetBinding(global::System.Windows.DependencyObject sourceObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveBinding(global::System.Windows.DependencyObject sourceObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyValueKeeper() { }
 }

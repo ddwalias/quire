@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MatrixFormatWithKey, Ptc.Controls.Core")]
 public partial class MatrixFormatWithKey
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TableCoordinate Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MatrixFormat Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixFormatWithKey() { }
 }

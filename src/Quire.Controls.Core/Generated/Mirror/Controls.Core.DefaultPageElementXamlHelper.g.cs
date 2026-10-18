@@ -13,6 +13,4 @@ public partial class DefaultPageElementXamlHelper : global::Quire.Controls.Core.
 {
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Windows.UIElement GetPrintView(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public DefaultPageElementXamlHelper() { }
 }

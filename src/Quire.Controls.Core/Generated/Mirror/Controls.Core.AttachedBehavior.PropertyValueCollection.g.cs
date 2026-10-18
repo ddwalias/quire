@@ -20,15 +20,9 @@ public partial class PropertyValueCollection : global::System.Windows.ResourceDi
     [global::Quire.Mirror.MirrorStub]
     private void OnUnloaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnLoaded(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnUnloaded(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected void AddValuesToResources(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void RemoveValuesFromResources(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void ForEachDictionary(global::System.Action<global::System.Windows.ResourceDictionary> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyValueCollection() { }
 }

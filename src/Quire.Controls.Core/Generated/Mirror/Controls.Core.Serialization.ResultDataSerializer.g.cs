@@ -29,6 +29,4 @@ public partial class ResultDataSerializer : global::Quire.Controls.Core.Serializ
     public void Read(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ClearResults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.Linq.XName GetXNameWithResultNameSpace(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

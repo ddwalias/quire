@@ -43,6 +43,4 @@ public partial class FontConstants
     public static global::Quire.Controls.Core.ExtendedFont GetDefaultFontForMath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.ExtendedFont GetDefaultIdLabelFormat(global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FontConstants() { }
 }

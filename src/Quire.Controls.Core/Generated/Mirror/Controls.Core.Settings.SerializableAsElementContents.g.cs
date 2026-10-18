@@ -12,8 +12,6 @@ namespace Quire.Controls.Core.Settings;
 public partial class SerializableAsElementContents : global::Quire.Controls.Core.Serialization.IXElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.Serialization.XElementSerializable Serializable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public SerializableAsElementContents(global::Quire.Controls.Core.Serialization.XElementSerializable serializable) { }
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.Linq.XElement xElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

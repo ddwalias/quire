@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.PropertyToAttribute, Ptc.Controls.Core")]
 public partial class PropertyToAttribute : global::Quire.Controls.Core.Serialization.Property
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected internal readonly string attributeName;
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyToAttribute(object o, string propertyName, string attributeName) : base(default(object), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyToAttribute(object o, string propertyName, string attributeName, global::System.ComponentModel.TypeConverter typeConverter) : base(default(object), default(string)) { }
 }

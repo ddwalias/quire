@@ -19,6 +19,4 @@ public partial class IdLabelToStringConverter : global::System.Windows.Data.IVal
     public static global::System.Nullable<global::Quire.Controls.Core.IdLabels> ConvertBack(string value, global::System.Nullable<bool> noneNotNull) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object ConvertBack(object value, global::System.Type targetType, object noneNotNull, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public IdLabelToStringConverter() { }
 }

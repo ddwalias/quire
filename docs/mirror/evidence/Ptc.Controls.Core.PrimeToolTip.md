@@ -1,0 +1,17 @@
+# Ptc.Controls.Core.PrimeToolTip
+
+- **Original:** `Ptc.Controls.Core.dll` 12.0.1.0, SHA-256 `6b4b032634fa4c3f3718f42de0d769248c787dff9c37bf39abe21b09a16b2f61`, MVID `12616361-9bfc-40b5-82d2-bb6f4644e027`
+- **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
+- **Quire:** `src/Quire.Controls.Core`; tests: `Quire.Differential.Tests.PtcControlsCorePrimeToolTipMechanicalDifferentialTests`
+
+| Member | Token | Contract | Confidence / limits | Status |
+|---|---|---|---|---|
+| `Header get` | 0x0600054a | MemberGen: `base.GetValue(HeaderProperty); set => base.SetValue(HeaderProperty, value); }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Header set` | 0x0600054b | MemberGen: `base.GetValue(HeaderProperty); set => base.SetValue(HeaderProperty, value); }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ContentBody get` | 0x0600054c | MemberGen: `base.GetValue(ContentBodyProperty); set => base.SetValue(ContentBodyProperty, value); }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ContentBody set` | 0x0600054d | MemberGen: `base.GetValue(ContentBodyProperty); set => base.SetValue(ContentBodyProperty, value); }` | Mechanical; Release IL equals Mathcad's | Verified |
+
+## Test cases
+
+**Observed** (`PtcControlsCorePrimeToolTipMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
+parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.

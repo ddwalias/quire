@@ -13,6 +13,4 @@ public partial class FullWidthDecorator : global::System.Windows.Controls.Decora
 {
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    [global::Quire.Mirror.MirrorStub]
-    public FullWidthDecorator() { }
 }

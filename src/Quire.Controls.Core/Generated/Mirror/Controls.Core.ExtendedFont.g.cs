@@ -40,8 +40,6 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.IDictionary<string, global::System.Windows.Media.GlyphRun> GlyphRunCache;
     [global::Quire.Mirror.MirrorStub]
-    public int RevisionNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.FontFamily FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -66,13 +64,9 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     [global::Quire.Mirror.MirrorStub]
     public double BaselineAdjustment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::System.Windows.DependencyPropertyChangedEventArgs> FormatChanged;
-    [global::Quire.Mirror.MirrorStub]
     private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Rect SafeComputeInkBoundingBox(global::System.Windows.Media.GlyphRun glyphRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ExtendedFont() { }
     [global::Quire.Mirror.MirrorStub]
     public ExtendedFont(global::System.Windows.Media.FontFamily fontFamily, double fontSize, global::System.Windows.FontStyle fontStyle, global::System.Windows.FontWeight fontWeight, global::System.Windows.FontStretch fontStretch, global::System.Windows.TextDecorationCollection textDecorations, global::System.Windows.Media.Brush foreground) { }
     [global::Quire.Mirror.MirrorStub]
@@ -93,6 +87,4 @@ public partial class ExtendedFont : global::System.Windows.Freezable, global::Sy
     object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CopyTo(global::Quire.Controls.Core.ExtendedFont target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,10 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.ModifiedTextMenuItem, Ptc.Controls.Core")]
 public partial class ModifiedTextMenuItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.RoutedUICommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ModifiedTextMenuItem() { }
 }

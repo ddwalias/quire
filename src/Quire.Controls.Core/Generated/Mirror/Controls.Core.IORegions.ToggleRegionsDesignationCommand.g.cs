@@ -16,13 +16,7 @@ public partial class ToggleRegionsDesignationCommand : global::Quire.Undo.IUndoa
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> _commands;
     [global::Quire.Mirror.MirrorStub]
-    private readonly string _name;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ToggleRegionsDesignationCommand(global::System.Collections.Generic.List<global::Quire.Undo.UndoableCommand> commands, string name) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Execute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

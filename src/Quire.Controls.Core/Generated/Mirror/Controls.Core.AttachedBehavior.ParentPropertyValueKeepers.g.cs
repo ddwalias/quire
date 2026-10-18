@@ -15,6 +15,4 @@ public partial class ParentPropertyValueKeepers : global::Quire.Controls.Core.At
     protected override void OnLoaded(global::System.Windows.FrameworkElement element) => base.OnLoaded(element);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnUnloaded(global::System.Windows.FrameworkElement element) => base.OnUnloaded(element);
-    [global::Quire.Mirror.MirrorStub]
-    public ParentPropertyValueKeepers() { }
 }

@@ -12,16 +12,6 @@ namespace Quire.Controls.Core;
 public partial class MathFormatForPaste : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.MathFormatForPaste _instance;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.MathFormatForPaste Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IMathFormat DocumentMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DocumentLabeledIdFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private MathFormatForPaste() { }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.MathFormatForPaste Generate(global::Quire.Controls.Core.IMathFormatDeserializationProvider propertiesSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.MathFormatForPaste Generate(global::Quire.Controls.Core.IMathFormat targetMathFormat, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> targetLabeledIdFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

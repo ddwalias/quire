@@ -18,8 +18,6 @@ public partial class NumberFormatSerializer : global::System.Xml.Serialization.I
     [global::Quire.Mirror.MirrorStub]
     public const string roundTripDecimalPlaces = "round-trip-decimal-places";
     [global::Quire.Mirror.MirrorStub]
-    public bool NumberFormatWasRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.NumberFormat.NumberStyles NumberStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private string ShowTrailingZeros { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -43,8 +41,6 @@ public partial class NumberFormatSerializer : global::System.Xml.Serialization.I
     private global::Quire.PersistentDataObjects.resultFormatGeneralTypeImaginaryvalue ResultFormatImaginaryValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public NumberFormatSerializer(global::Quire.Controls.Core.NumberFormat numberFormat, string nameSpace) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

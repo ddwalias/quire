@@ -14,8 +14,6 @@ public partial class SnappableItemHelper : global::Quire.Controls.Core.Snappable
     [global::Quire.Mirror.MirrorStub]
     private global::System.EventHandler _onLayoutUpdated;
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.SnappableItemHelper Create(global::System.Windows.UIElement itemElement, bool isPageDescendant) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private SnappableItemHelper(global::System.Windows.UIElement itemElement, bool isPageDescendant) : base(default(global::System.Windows.UIElement), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
     public override void Dispose() => base.Dispose();

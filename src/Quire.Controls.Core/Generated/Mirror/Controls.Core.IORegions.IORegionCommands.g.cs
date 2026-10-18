@@ -23,6 +23,4 @@ public partial class IORegionCommands
     public static readonly global::System.Windows.Input.RoutedUICommand ToggleAnInputRegion;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ToggleAnOutputRegion;
-    [global::Quire.Mirror.MirrorStub]
-    public IORegionCommands() { }
 }

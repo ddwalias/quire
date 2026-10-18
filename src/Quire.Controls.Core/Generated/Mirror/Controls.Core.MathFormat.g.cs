@@ -22,10 +22,6 @@ public partial class MathFormat : global::Quire.Controls.Core.IMathFormat, globa
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedUICommand ClearMathFormatCommand;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.DependencyObject _owner;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IList<global::System.Windows.DependencyProperty> _readonlyProperties;
-    [global::Quire.Mirror.MirrorStub]
     public string FontFamilyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<double> FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -40,23 +36,7 @@ public partial class MathFormat : global::Quire.Controls.Core.IMathFormat, globa
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Media.Color> HighlightColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsFontFamilyNameSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFontSizeSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsItalicSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsBoldSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsUnderlineSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFontColorSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsHighlightColorSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool AreAnyPropertiesSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public MathFormat(global::System.Windows.DependencyObject owner) { }
     [global::Quire.Mirror.MirrorStub]
@@ -84,10 +64,6 @@ public partial class MathFormat : global::Quire.Controls.Core.IMathFormat, globa
     [global::Quire.Mirror.MirrorStub]
     private object GetValue(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetValue(global::System.Windows.DependencyProperty dependencyProperty, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ClearValue(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ClearAllValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreInitialValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -101,8 +77,6 @@ public partial class MathFormat : global::Quire.Controls.Core.IMathFormat, globa
     public void FromStaticMathFormat(global::Quire.Controls.Core.StaticMathFormat mathFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleOwnerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsPropertyReadonly(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetReadonlyProperty(global::System.Windows.DependencyProperty dependencyProperty, object val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

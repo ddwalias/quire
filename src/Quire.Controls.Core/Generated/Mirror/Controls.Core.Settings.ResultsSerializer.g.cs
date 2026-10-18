@@ -24,8 +24,6 @@ public partial class ResultsSerializer : global::System.Xml.Serialization.IXmlSe
     [global::Quire.Mirror.MirrorStub]
     public ResultsSerializer(global::Quire.Controls.Core.IEngineeringDocument document, global::System.Xml.Linq.XNamespace nameSpace) { }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

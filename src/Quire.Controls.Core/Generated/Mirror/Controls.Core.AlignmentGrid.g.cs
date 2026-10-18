@@ -16,8 +16,6 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Size DefaultGridCellSize;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Rect DefaultGridArea;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty GridCellSizeProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty GridAreaProperty;
@@ -33,8 +31,6 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     protected double HighestValidY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected double HighestValidX { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AlignmentGrid() { }
     [global::Quire.Mirror.MirrorStub]
     public AlignmentGrid(global::System.Windows.Rect rect) { }
     [global::Quire.Mirror.MirrorStub]
@@ -63,6 +59,4 @@ public partial class AlignmentGrid : global::System.Windows.DependencyObject, gl
     private global::System.Windows.Point Clip(global::System.Windows.Point point, params global::Quire.Direction[] directionsToIgnore) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point GetCandidateIntersectionPoint(global::System.Windows.Point startPoint, double cellWidth, double cellHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Dispose() { }
 }

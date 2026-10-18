@@ -31,8 +31,6 @@ public partial class PlotCommonProperties : global::System.Windows.DependencyObj
     public static global::System.Windows.FrameworkPropertyMetadata CreateShowNumbersMetadata(global::System.Windows.PropertyChangedCallback propertyChangedCallback) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.FrameworkPropertyMetadata CreateShowNumbersMetadata() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PlotCommonProperties() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.PlotCommonProperties+PropertyNames, Ptc.Controls.Core")]
     public static partial class PropertyNames

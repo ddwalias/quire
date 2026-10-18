@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FileDialogFilterExtensions, Ptc.Controls.Core")]
 public static partial class FileDialogFilterExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string ToFilterString(this global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.FileDialogFilterPair> filterList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

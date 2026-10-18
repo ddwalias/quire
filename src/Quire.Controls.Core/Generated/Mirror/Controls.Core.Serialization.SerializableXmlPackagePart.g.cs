@@ -18,8 +18,6 @@ public partial class SerializableXmlPackagePart : global::Quire.Controls.Core.Se
     [global::Quire.Mirror.MirrorStub]
     public static void OnWriteValidationFailedDevAssert(global::System.Xml.Schema.XmlSchemaException ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public SerializableXmlPackagePart(global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable xmlSerializable) { }
-    [global::Quire.Mirror.MirrorStub]
     public SerializableXmlPackagePart(global::Quire.Controls.Core.Serialization.IXmlAndXElementSerializable xmlSerializable, global::System.Action<global::System.Xml.Schema.XmlSchemaException> onWriteValidationFailed) { }
     [global::Quire.Mirror.MirrorStub]
     public void Write(global::System.IO.Packaging.PackagePart part, bool useTempFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

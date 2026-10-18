@@ -12,25 +12,13 @@ namespace Quire.Controls.Core.IORegions;
 public static partial class IOTag
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IOTagProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static event global::System.Action<global::System.Windows.DependencyObject, bool> IOTagSet;
-    [global::Quire.Mirror.MirrorStub]
-    public static event global::System.Action<global::System.Windows.DependencyObject, bool> IOTagUnSet;
-    [global::Quire.Mirror.MirrorStub]
     private static void HandleIOTagPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIOTag(global::System.Windows.DependencyObject element, global::Quire.Controls.Core.IORegions.IOTagType tagType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearIOTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IORegions.IOTagType GetIOTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsIOTagged(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsRegionOfType(global::System.Windows.DependencyObject element, global::Quire.Controls.Core.IORegions.IOTagType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasInputTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasOutputTag(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

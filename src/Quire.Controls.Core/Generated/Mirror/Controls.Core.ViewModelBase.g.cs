@@ -12,25 +12,11 @@ namespace Quire.Controls.Core;
 public abstract partial class ViewModelBase : global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.Input.CommandBindingCollection _commandBindings;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string DisplayName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.CommandBindingCollection CommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnPropertyChanged(string propertyName = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void ModelPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void ModelPropertyChangedInner(object sender, global::System.ComponentModel.PropertyChangedEventArgs propertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnDispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void CreateCommandBinding(global::System.Windows.Input.ICommand command, global::System.Action<object> execute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void CreateCommandBinding(global::System.Windows.Input.ICommand command, global::System.Action<object> execute, global::System.Predicate<object> canExecute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -38,12 +38,6 @@ public static partial class MC14MathConversionValidation
     [global::Quire.Mirror.MirrorStub]
     private static void ContainsExponentialNotation(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool ContainsSymbolicEvaluationAsEquals(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ContainsBooleanEqualityAsEquals(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ContainsLocalDefinitionAsEquals(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void ContainsPercentOperatorInResult(global::System.Xml.Linq.XDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ContainsOperatorWhichDisplayWasChanged(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -81,8 +75,6 @@ public static partial class MC14MathConversionValidation
     public static bool ContainsAttributeWithValue(string nodeName, string attributeName, string attributeValue, global::System.Xml.Linq.XContainer doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool ContainsAttributeWithValueNotEqualTo(string nodeName, string attributeName, string attributeValue, global::System.Xml.Linq.XContainer doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.Linq.XName GetMc14Math30XName(string localName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> GetRealAndImaginaryElements(global::System.Xml.Linq.XContainer document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

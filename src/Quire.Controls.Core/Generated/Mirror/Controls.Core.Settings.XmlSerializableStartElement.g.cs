@@ -12,19 +12,7 @@ namespace Quire.Controls.Core.Settings;
 internal partial class XmlSerializableStartElement : global::System.Xml.Serialization.IXmlSerializable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly string prefix;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string localName;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string ns;
-    [global::Quire.Mirror.MirrorStub]
     public XmlSerializableStartElement(string prefix, string localName, string ns) { }
     [global::Quire.Mirror.MirrorStub]
-    public XmlSerializableStartElement(string localName) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

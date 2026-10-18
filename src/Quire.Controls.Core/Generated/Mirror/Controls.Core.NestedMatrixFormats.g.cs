@@ -13,6 +13,4 @@ public partial class NestedMatrixFormats : global::Quire.Matrices.SparseMatrix<g
 {
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.MatrixFormatDictionary ItemMap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public NestedMatrixFormats() { }
 }

@@ -26,31 +26,7 @@ public partial class SerializationHelper : global::Quire.Serialization.ISerializ
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<global::Quire.Pair<string, global::System.DateTime>, global::Quire.Pair<string, global::System.Uri>> _cachedWorksheetsTable;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle> _textStyles;
-    [global::Quire.Mirror.MirrorStub]
-    public string ApplicationName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Version AppVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Release { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Version FormatVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string EngineVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Xml.SchemasManager.SchemaNameEnum, global::System.Version> SerializedSchemaVersions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.MC14Conversion.Mathcad14TextStyle> MC14TextStyles { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> MainRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> HeaderRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> FooterRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> FirstPageHeaderRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> FirstPageFooterRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ErrorsOccurredWhenLoadingRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -93,7 +69,5 @@ public partial class SerializationHelper : global::Quire.Serialization.ISerializ
         public bool Equals(byte[] x, byte[] y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public int GetHashCode(byte[] values) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public BytesComparer() { }
     }
 }

@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CustomInsertedContextMenuSeparator, Ptc.Controls.Core")]
 public partial class CustomInsertedContextMenuSeparator : global::System.Windows.Controls.Separator, global::Quire.Controls.Core.ICustomInsertedMenuPart
 {
-    [global::Quire.Mirror.MirrorStub]
-    public CustomInsertedContextMenuSeparator() { }
 }

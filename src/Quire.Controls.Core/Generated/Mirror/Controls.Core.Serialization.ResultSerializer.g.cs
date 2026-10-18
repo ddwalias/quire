@@ -54,11 +54,7 @@ public partial class ResultSerializer : global::Quire.Controls.Core.Serializatio
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::Quire.Calculation.Core.XmcdToIResultNodeTransform _xmcdToResultNodeTransform;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.EngineError> _errorMap;
-    [global::Quire.Mirror.MirrorStub]
     private int _nextKey;
-    [global::Quire.Mirror.MirrorStub]
-    private void AddError(global::Quire.Calculation.Core.EngineError error, int id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int AddError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

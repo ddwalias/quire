@@ -11,6 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.MatrixFormatDictionary, Ptc.Controls.Core")]
 public partial class MatrixFormatDictionary : global::System.Collections.Generic.List<global::Quire.Controls.Core.MatrixFormatWithKey>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixFormatDictionary() { }
 }

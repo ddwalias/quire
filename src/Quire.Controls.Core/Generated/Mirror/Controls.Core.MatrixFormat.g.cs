@@ -38,10 +38,6 @@ public partial class MatrixFormat : global::Quire.Controls.Core.IPropertyAggrega
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NestedMatrixFormats NestedMatrixFormats { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Controls.Core.ActionByPropertyNameAndValue FormatChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     private void HandleMatrixFormatChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public MatrixFormat() { }

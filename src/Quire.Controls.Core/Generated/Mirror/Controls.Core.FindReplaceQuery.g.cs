@@ -14,26 +14,6 @@ public partial class FindReplaceQuery : global::Quire.Controls.Core.IFindReplace
     [global::Quire.Mirror.MirrorStub]
     public global::System.Action<bool> PostReplaceAndFindNext;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.FindOptions FindReplaceOption { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ValueToFind { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ValueToReplaceWith { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Pair<int, int>> FindSubscriptPositions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Pair<int, int>> ReplaceSubscriptPositions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Core.FindReplaceStatus> Status { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFindContainSubscript { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool FindIsFullySubscript { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsReplaceContainSubscript { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ReplaceIsFullySubscript { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsFullySubscript(global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public FindReplaceQuery(string oldValue, string newValue, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> findSubscriptPositions = default, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> replaceSubscriptPositions = default) { }

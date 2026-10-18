@@ -12,7 +12,5 @@ namespace Quire.Controls.Core;
 public partial class DragEventArgs : global::System.Windows.RoutedEventArgs
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Vector DraggingVector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public DragEventArgs(global::System.Windows.RoutedEvent routedEvent, global::System.Windows.Vector vector) { }
 }

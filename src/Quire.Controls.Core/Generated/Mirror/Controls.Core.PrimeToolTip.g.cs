@@ -12,17 +12,9 @@ namespace Quire.Controls.Core;
 public partial class PrimeToolTip : global::System.Windows.Controls.ToolTip, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HeaderProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ContentBodyProperty;
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Core.PrimeToolTip _this;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public object Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object ContentBody { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public PrimeToolTip() { }
     [global::Quire.Mirror.MirrorStub]

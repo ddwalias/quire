@@ -12,16 +12,6 @@ namespace Quire.Controls.Core.Serialization;
 public partial class AnnotationTypeList : global::System.Collections.Generic.ICollection<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType>, global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType>, global::System.Collections.IEnumerable, global::Quire.Controls.Core.Serialization.IFreezable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType> _annotationsList;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.MC14ConversionAnnotationType this[int idx] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFrozen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public AnnotationTypeList() { }
     [global::Quire.Mirror.MirrorStub]
     public AnnotationTypeList(global::Quire.Controls.Core.Serialization.AnnotationTypeList source, bool isFrozen = false) { }
@@ -36,13 +26,7 @@ public partial class AnnotationTypeList : global::System.Collections.Generic.ICo
     [global::Quire.Mirror.MirrorStub]
     public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool Contains(global::Quire.PersistentDataObjects.MC14ConversionAnnotationType item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CopyTo(global::Quire.PersistentDataObjects.MC14ConversionAnnotationType[] array, int arrayIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool Remove(global::Quire.PersistentDataObjects.MC14ConversionAnnotationType item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Freeze() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerator<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType> GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

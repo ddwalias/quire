@@ -16,8 +16,6 @@ public partial class MathFormatSerializer : global::Quire.Controls.Core.Serializ
     [global::Quire.Mirror.MirrorStub]
     private bool _ignoreUnsetProperty;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MathFormat MathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public MathFormatSerializer(string localName, string nameSpace, global::Quire.Controls.Core.MathFormat mathFormat, bool ignoreUnsetProperty = true) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void CreateChildren(global::System.Xml.Linq.XElement thisElement = default) => base.CreateChildren(thisElement);

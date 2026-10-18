@@ -12,8 +12,6 @@ namespace Quire.Controls.Core;
 public partial class MathFormatAttachedProperties
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty FontFamilyNameProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FontSizeProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty BoldProperty;
@@ -26,13 +24,7 @@ public partial class MathFormatAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty HighlightColorProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty OverrideLabelColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HandleChangesEnabledProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static string GetFontFamilyName(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetFontFamilyName(global::System.Windows.DependencyObject depObj, string fontFamilyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double GetFontSize(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -64,19 +56,13 @@ public partial class MathFormatAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static void SetOverrideLabelColor(global::System.Windows.DependencyObject obj, bool val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void ClearOverrideLabelColor(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool GetHandleChangesEnabled(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetHandleChangesEnabled(global::System.Windows.DependencyObject obj, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearHandleChangesEnabled(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void HandleMathFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceFontFamily(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceFontSize(global::System.Windows.DependencyObject d, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MathFormatAttachedProperties() { }
 }

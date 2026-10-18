@@ -50,17 +50,9 @@ public partial class CalculationOptions : global::System.Windows.DependencyObjec
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.SymbolicEngineType SymbolicEngineType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool EngineTypeAutoCorrected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool RestrictedMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate2<string, object> CalculationOptionChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate2<string, object> BinOctHexModeOptionChanged;
     [global::Quire.Mirror.MirrorStub]
     private static void HandleOptionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e, string optionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void HandleBinOctHexModeOptionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e, string optionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationOptions() { }
 }

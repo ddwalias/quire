@@ -12,8 +12,6 @@ namespace Quire.Controls.Core;
 public partial class UIElementFacade : global::Quire.Controls.Core.IUIElementFacade, global::Quire.Services.IService, global::Quire.Controls.Core.IUIElementArrangeInfoProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool SetFocus(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Measure(object obj, global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -45,6 +43,4 @@ public partial class UIElementFacade : global::Quire.Controls.Core.IUIElementFac
     protected static global::System.Windows.UIElement GetUIElement(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ExecuteOnLayoutUpdated(object control, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public UIElementFacade() { }
 }

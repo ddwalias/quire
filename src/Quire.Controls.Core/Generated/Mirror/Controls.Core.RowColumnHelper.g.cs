@@ -12,12 +12,6 @@ namespace Quire.Controls.Core;
 public partial class RowColumnHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    private int _columnCount;
-    [global::Quire.Mirror.MirrorStub]
-    public int ColumnCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RowColumnHelper(int columnCount) { }
-    [global::Quire.Mirror.MirrorStub]
     public int RowIndexFromCellIndex(int cellIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int ColIndexFromCellIndex(int cellIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

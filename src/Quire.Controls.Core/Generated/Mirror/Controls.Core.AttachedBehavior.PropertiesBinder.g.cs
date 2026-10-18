@@ -14,23 +14,13 @@ public partial class PropertiesBinder : global::System.Windows.DependencyObject,
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SourceValueConnectorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TargetValueConnectorProperty;
-    [global::Quire.Mirror.MirrorStub]
     private string _pathToSource;
     [global::Quire.Mirror.MirrorStub]
     private string _pathToTarget;
     [global::Quire.Mirror.MirrorStub]
-    public object SourceValueConnector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object TargetValueConnector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string PathToSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string PathToTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool BlockUndoWhenBindingToTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static void OnValueChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

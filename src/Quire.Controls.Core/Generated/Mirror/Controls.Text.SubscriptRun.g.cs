@@ -14,10 +14,6 @@ public partial class SubscriptRun : global::Quire.Controls.Text.CustomScriptRunB
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type TypeOfThis;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.BaselineAlignment DefaultAlignment;
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.FontVariants FontVariantsForCopy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static object CoerceBaselineAlignmentCallback(global::System.Windows.DependencyObject depObj, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SubscriptRun() { }
@@ -25,6 +21,4 @@ public partial class SubscriptRun : global::Quire.Controls.Text.CustomScriptRunB
     public SubscriptRun(string text) { }
     [global::Quire.Mirror.MirrorStub]
     public SubscriptRun(string text, global::System.Windows.Documents.TextPointer insertionPosition) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void InitBaseline() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

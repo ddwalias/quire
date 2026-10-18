@@ -54,8 +54,6 @@ public partial class CalculationVariables : global::System.Windows.DependencyObj
     [global::Quire.Mirror.MirrorStub]
     public double RandSeed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate2<string, object> CalculationVariableChanged;
-    [global::Quire.Mirror.MirrorStub]
     public CalculationVariables() { }
     [global::Quire.Mirror.MirrorStub]
     private static void HandleTolChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

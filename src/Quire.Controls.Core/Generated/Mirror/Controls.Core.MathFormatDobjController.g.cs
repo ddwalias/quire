@@ -12,8 +12,6 @@ namespace Quire.Controls.Core;
 public partial class MathFormatDobjController : global::Quire.Controls.Core.IMathFormatDobjController, global::Quire.Controls.Core.IMathFormat
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.DependencyObject Owner { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string FontFamilyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<double> FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

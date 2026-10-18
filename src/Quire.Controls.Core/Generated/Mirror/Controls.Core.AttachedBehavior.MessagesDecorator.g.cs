@@ -14,11 +14,7 @@ public partial class MessagesDecorator : global::Quire.Controls.Core.AttachedBeh
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.FrameworkElement _elem;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.List<global::Quire.Controls.Core.NodeMessageAdorner> _adornerList;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.AttachedBehavior.MessageList _messageList;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.NodeMessageAdorner> AdornerList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public MessagesDecorator(global::Quire.Controls.Core.AttachedBehavior.MessageList list) { }
     [global::Quire.Mirror.MirrorStub]

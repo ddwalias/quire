@@ -22,8 +22,6 @@ public partial class CommonDragger
     [global::Quire.Mirror.MirrorStub]
     protected readonly global::System.Windows.FrameworkElement _container;
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Point _startPoint;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point _currentPoint;
     [global::Quire.Mirror.MirrorStub]
     private bool _started;
@@ -62,13 +60,7 @@ public partial class CommonDragger
     [global::Quire.Mirror.MirrorStub]
     protected void CacheOriginalHeights() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Vector OffsetTo(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void MouseUp_ResizeRightMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected void MouseMove_ResizeRightMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void MouseUp_ResizeBottomMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void MouseMove_ResizeBottomMode(global::System.Windows.Vector offset, global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

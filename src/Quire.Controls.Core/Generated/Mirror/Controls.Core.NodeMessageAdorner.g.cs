@@ -12,17 +12,9 @@ namespace Quire.Controls.Core;
 public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdorner
 {
     [global::Quire.Mirror.MirrorStub]
-    private string _message;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Controls.TextBox _messageTextBox;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Controls.Border _messageBorder;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.NodeMessageAdornerType _type;
-    [global::Quire.Mirror.MirrorStub]
-    public string Message { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NodeMessageAdornerType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point RelativeLocation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -53,8 +45,6 @@ public partial class NodeMessageAdorner : global::Quire.Controls.Core.VisualAdor
     private double GetOffset(global::Quire.Controls.Core.NodeMessageAdorner current) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static double CalculateOffset(global::System.Collections.Generic.IList<global::Quire.Controls.Core.NodeMessageAdorner> adorners, int idx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void AddToAdornerLayer() => base.AddToAdornerLayer();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.FrameworkElement GetAdornedElement(global::System.Windows.FrameworkElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

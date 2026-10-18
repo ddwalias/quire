@@ -20,10 +20,6 @@ public abstract partial class MessageDialogBase<T> : global::System.Windows.Wind
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::System.Windows.Controls.ItemsControl Buttons { get; }
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Button CancelButton { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Nullable<T> Result { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected MessageDialogBase(global::System.Windows.Window ownerWindow, string caption) { }
     [global::Quire.Mirror.MirrorStub]
     protected void SetMessageImageAndButtons(string messageText, global::System.Windows.MessageBoxImage imageName, string defaultButtonKey, string cancelButtonKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

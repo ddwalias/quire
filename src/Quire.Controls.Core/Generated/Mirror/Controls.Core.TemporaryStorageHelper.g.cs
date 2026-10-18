@@ -12,8 +12,6 @@ namespace Quire.Controls.Core;
 public partial class TemporaryStorageHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    public string StorageFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public void SaveIfFileNameNullOrEmpty(global::System.Func<global::System.Windows.Media.Imaging.BitmapSource> getImageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SaveBitmap(string filename, global::System.Func<global::System.Windows.Media.Imaging.BitmapSource> getImageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -23,6 +21,4 @@ public partial class TemporaryStorageHelper
     public void CleanStorage(bool deleteFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SaveIfFileNameNullOrEmpty(global::System.Action<string> save) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public TemporaryStorageHelper() { }
 }

@@ -11,10 +11,4 @@ namespace Quire.Controls.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Serialization.SerializationInfo, Ptc.Controls.Core")]
 public partial class SerializationInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Serialization.SerializationFlags Flags { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object DefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SerializationInfo() { }
 }

@@ -22,17 +22,9 @@ public partial class ResultFormat : global::System.Windows.DependencyObject, glo
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.MatrixFormat MatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool NumberFormatWasRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool MatrixFormatWasRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RootNodeFormatName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ResultFormat(string ns) { }
     [global::Quire.Mirror.MirrorStub]
     public ResultFormat(global::Quire.Controls.Core.NumberFormat numberFormat, global::Quire.Controls.Core.MatrixFormat matrixFormat, string ns) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

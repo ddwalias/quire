@@ -24,10 +24,6 @@ public static partial class DocumentAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CustomBaseUnitSystemProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DocCalculationOptionsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DocCalculationVariablesProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PreRecalculateAllProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly double defaultVerticalPageGutter;
@@ -39,22 +35,6 @@ public static partial class DocumentAttachedProperties
     public static readonly global::System.Windows.DependencyProperty CacheWorksheetProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ShowInputOutputDesignationProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty InputOutputRegionManagerProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BookmarksManagerProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LabelProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FilePathProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsInPrintingProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsInCopyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsInPastingProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CopyAsImageSettingsProperty;
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceZoom(global::System.Windows.DependencyObject obj, object basevalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -72,11 +52,7 @@ public static partial class DocumentAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.CalculationOptions GetDocCalculationOptions(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SetDocCalculationOptions(global::System.Windows.DependencyObject o, global::Quire.Controls.CalculationOptions value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.CalculationVariables GetDocCalculationVariables(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetDocCalculationVariables(global::System.Windows.DependencyObject o, global::Quire.Controls.CalculationVariables value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetPreRecalculateAll(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -100,43 +76,27 @@ public static partial class DocumentAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.IORegions.IIORegionManager GetInputOutputRegionManager(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SetInputOutputRegionManager(global::System.Windows.DependencyObject region, global::Quire.Controls.Core.IORegions.IIORegionManager value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.BookmarkTags.IBookmarksManager GetBookmarksManager(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SetBookmarksManager(global::System.Windows.DependencyObject region, global::Quire.Controls.Core.BookmarkTags.IBookmarksManager value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string GetLabel(global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetLabel(global::System.Windows.DependencyObject dependencyObject, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceFilePath(global::System.Windows.DependencyObject dependencyObject, object baseValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetFilePath(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SetFilePath(global::System.Windows.DependencyObject o, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool GetIsInPrinting(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsInPrinting(global::System.Windows.DependencyObject o, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearIsInPrinting(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetIsInCopyNonSerializable(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsInCopy(global::System.Windows.DependencyObject o, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void ClearIsInCopy(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool GetIsInPasting(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsInPasting(global::System.Windows.DependencyObject o, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void ClearIsInPasting(global::System.Windows.DependencyObject o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Nullable<global::Quire.Controls.Core.RegionImageSettings> GetCopyAsImageSettings(global::System.Windows.DependencyObject target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetCopyAsImageSettings(global::System.Windows.DependencyObject target, global::System.Nullable<global::Quire.Controls.Core.RegionImageSettings> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearCopyAsImageSettings(global::System.Windows.DependencyObject target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

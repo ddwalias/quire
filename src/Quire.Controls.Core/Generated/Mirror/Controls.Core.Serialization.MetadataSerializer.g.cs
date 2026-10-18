@@ -21,6 +21,4 @@ public abstract partial class MetadataSerializer : global::Quire.Controls.Core.S
     protected abstract void FillInMetadataModel(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel);
     [global::Quire.Mirror.MirrorStub]
     protected abstract void FillInXmlMetadata(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel);
-    [global::Quire.Mirror.MirrorStub]
-    protected MetadataSerializer() { }
 }

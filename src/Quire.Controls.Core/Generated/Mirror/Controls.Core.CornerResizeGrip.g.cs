@@ -19,6 +19,4 @@ public partial class CornerResizeGrip : global::Quire.Controls.Core.ResizeGrip
     protected override global::System.Windows.Rect GetBoundingRect() => base.GetBoundingRect();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Point GetLocation(global::System.Windows.Rect regionBorderBoundingRect, double gripThickness) => base.GetLocation(regionBorderBoundingRect, gripThickness);
-    [global::Quire.Mirror.MirrorStub]
-    public CornerResizeGrip() { }
 }

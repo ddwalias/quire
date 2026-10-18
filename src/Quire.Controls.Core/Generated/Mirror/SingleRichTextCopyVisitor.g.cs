@@ -12,12 +12,6 @@ namespace Quire;
 public partial class SingleRichTextCopyVisitor : global::Quire.ISpecialCopyVisitor
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.IDataObject _dataObject;
-    [global::Quire.Mirror.MirrorStub]
-    public SingleRichTextCopyVisitor(global::System.Windows.IDataObject dataObject) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Controls.Core.IEquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Controls.Core.IRichTextWithEmbeddedItem textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Controls.Core.ICollapsibleAreaControl collapsibleArea) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

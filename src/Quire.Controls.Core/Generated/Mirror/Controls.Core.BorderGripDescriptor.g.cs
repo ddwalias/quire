@@ -23,6 +23,4 @@ public partial class BorderGripDescriptor : global::System.Windows.DependencyObj
     public bool CanResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool PreserveDimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public BorderGripDescriptor() { }
 }

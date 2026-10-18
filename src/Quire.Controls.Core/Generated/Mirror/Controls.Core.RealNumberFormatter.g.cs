@@ -14,8 +14,6 @@ public partial class RealNumberFormatter
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.IFormatterHelper _helper;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NumberFormat DisplayNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public RealNumberFormatter(global::Quire.Controls.Core.NumberFormat numberFormat, global::Quire.Controls.Core.IFormatterHelper helper) { }
     [global::Quire.Mirror.MirrorStub]
     public string FormatReal(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

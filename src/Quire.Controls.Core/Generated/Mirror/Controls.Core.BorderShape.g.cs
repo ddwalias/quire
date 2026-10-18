@@ -18,8 +18,6 @@ internal partial class BorderShape : global::System.Windows.Shapes.Shape
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CornerRadiusProperty;
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry DefiningGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool RightEdgeVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.CornerRadius CornerRadius { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -33,6 +31,4 @@ internal partial class BorderShape : global::System.Windows.Shapes.Shape
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.PathGeometry GetBorderGeometry() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public BorderShape() { }
 }

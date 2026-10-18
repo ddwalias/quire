@@ -12,43 +12,11 @@ namespace Quire.Controls.Core;
 public abstract partial class TableLayoutManager : global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
-    private int _columns;
-    [global::Quire.Mirror.MirrorStub]
-    private double _paddingX;
-    [global::Quire.Mirror.MirrorStub]
-    private double _paddingY;
-    [global::Quire.Mirror.MirrorStub]
-    private double _matrixBaseline;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::System.Windows.Rect> _cellArrangements;
-    [global::Quire.Mirror.MirrorStub]
-    private double _baselineToMidPointAdjustment;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size _matrixSize;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.TableLayoutManager.RowMetric[] _rowMetrics;
     [global::Quire.Mirror.MirrorStub]
     private double[] _columnWidths;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Generic.IList<global::Quire.Controls.Core.LayoutMetrics> _cellsInfo;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Thickness _padding;
-    [global::Quire.Mirror.MirrorStub]
-    public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double PaddingX { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double PaddingY { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness Padding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double MatrixBaseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::System.Windows.Rect> CellArrangements { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double BaselineToMidPointAdjustment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size MatrixSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected TableLayoutManager() { }
     [global::Quire.Mirror.MirrorStub]

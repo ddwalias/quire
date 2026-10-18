@@ -12,13 +12,7 @@ namespace Quire.Controls.Core.Serialization;
 internal partial class IntegrationElementsSerializer : global::Quire.Controls.Core.Serialization.XElementSerializable, global::Quire.Serialization.IShouldValidate, global::Quire.Controls.Core.Serialization.IXDocumentRepairer
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool ShouldValidateOnWrite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShouldValidateOnRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public IntegrationElementsSerializer(global::Quire.Controls.Core.IORegions.IIORegionContainer area, global::Quire.Serialization.ISerializationHelper helper) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Xml.Schema.XmlSchema GetSchema() => base.GetSchema();
-    [global::Quire.Mirror.MirrorStub]
-    public void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

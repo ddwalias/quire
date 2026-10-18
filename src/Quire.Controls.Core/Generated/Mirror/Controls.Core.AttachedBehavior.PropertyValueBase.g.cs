@@ -13,10 +13,4 @@ public partial class PropertyValueBase : global::System.Windows.DependencyObject
 {
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PropertyValueProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public object PropertyValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyValueBase() { }
 }

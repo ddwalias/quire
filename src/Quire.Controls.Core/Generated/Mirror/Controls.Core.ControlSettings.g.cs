@@ -27,6 +27,4 @@ public partial class ControlSettings
     public int MinPointsForForceDensity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int DensityPointsPrintDPI { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private ControlSettings() { }
 }

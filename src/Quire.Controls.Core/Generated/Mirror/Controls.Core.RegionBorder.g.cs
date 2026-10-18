@@ -52,8 +52,6 @@ public sealed partial class RegionBorder : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.BusyClock _busyClock;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Shapes.Shape _busyProgressBar;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Shapes.Rectangle _marchingAnts;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Shapes.Rectangle _background;
@@ -250,11 +248,7 @@ public sealed partial class RegionBorder : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private void ShowBusyStateElements() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HideBusyStateElements() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateZIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RegionBorder() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+RequestMoveAndResizeHandler, Ptc.Controls.Core")]
     public delegate void RequestMoveAndResizeHandler(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs e);

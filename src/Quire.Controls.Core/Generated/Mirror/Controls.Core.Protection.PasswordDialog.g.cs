@@ -18,17 +18,11 @@ public abstract partial class PasswordDialog : global::System.Windows.Window, gl
     [global::Quire.Mirror.MirrorStub]
     protected abstract bool DoPasswordsMatch { get; }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     protected void FirePropertyChanged(string propName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void OnCancelButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected void OnPasswordChanged(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnAcceptPasswordButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected PasswordDialog() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Protection.PasswordDialog+Properties, Ptc.Controls.Core")]
     public partial class Properties
@@ -37,7 +31,5 @@ public abstract partial class PasswordDialog : global::System.Windows.Window, gl
         public const string ShowError = "ShowError";
         [global::Quire.Mirror.MirrorStub]
         public const string AreaBorder = "AreaBorder";
-        [global::Quire.Mirror.MirrorStub]
-        public Properties() { }
     }
 }

@@ -15,6 +15,4 @@ public partial class FrameworkElementXamlHelper : global::Quire.Controls.Core.De
     public override global::System.Windows.UIElement GetPrintView(global::System.Windows.UIElement element) => base.GetPrintView(element);
     [global::Quire.Mirror.MirrorStub]
     private static void ClearBitmapEffects(global::System.Windows.DependencyObject visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FrameworkElementXamlHelper() { }
 }

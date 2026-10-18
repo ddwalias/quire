@@ -29,6 +29,4 @@ public partial class ResizeGrip : global::System.Windows.Shapes.Shape
     protected virtual global::System.Windows.Rect GetBoundingRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Windows.Point GetLocation(global::System.Windows.Rect regionBorderBoundingRect, double gripThickness) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ResizeGrip() { }
 }

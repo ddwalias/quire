@@ -43,6 +43,4 @@ public partial class IntegrationDataSerializer : global::Quire.Controls.Core.Ser
     public void Write(global::System.IO.Packaging.Package package, bool useTempFile = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Read(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.Linq.XName GetXNameWithIntegrationNameSpace(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

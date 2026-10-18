@@ -20,9 +20,5 @@ internal partial class DependencyObjectSerializer : global::System.Xml.Serializa
     [global::Quire.Mirror.MirrorStub]
     public DependencyObjectSerializer(global::System.Collections.Generic.Dictionary<string, global::System.Windows.DependencyProperty> property, global::System.Windows.DependencyObject dependencyObject, string localName) { }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

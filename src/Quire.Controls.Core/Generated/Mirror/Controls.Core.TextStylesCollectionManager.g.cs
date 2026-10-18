@@ -14,17 +14,9 @@ public partial class TextStylesCollectionManager : global::Quire.Controls.Core.I
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.TextStyleData> _stylesCollection;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.TextStyleChangedHandler _textStyleChangedHandler;
-    [global::Quire.Mirror.MirrorStub]
     private const string StyleResourceKey = "Style.";
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.TextStyleData> StylesCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate0 StyleCollectionChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public TextStylesCollectionManager() { }
     [global::Quire.Mirror.MirrorStub]

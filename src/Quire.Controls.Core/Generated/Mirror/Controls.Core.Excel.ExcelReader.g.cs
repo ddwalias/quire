@@ -20,8 +20,6 @@ public partial class ExcelReader
     [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlDocument _sharedStringDoc;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Excel.ExcelBook WorkBook { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static int GetRow(string address) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetColumn(string address) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

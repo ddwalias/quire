@@ -16,17 +16,9 @@ public partial class CalculationSettings : global::Quire.Controls.Core.Serializa
     [global::Quire.Mirror.MirrorStub]
     private const string LocalName = "calculation";
     [global::Quire.Mirror.MirrorStub]
-    public bool ShouldValidateOnWrite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShouldValidateOnRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public CalculationSettings(global::Quire.Controls.Core.IEngineeringDocument document, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     public CalculationSettings(global::Quire.Controls.CalculationVariables calcVars, global::Quire.Controls.CalculationOptions calcOptions, string nameSpaceUri) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Xml.Schema.XmlSchema GetSchema() => base.GetSchema();
-    [global::Quire.Mirror.MirrorStub]
-    protected static void OnSchemaValidation(object sender, global::System.Xml.Schema.ValidationEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RepairXDocument(global::System.Xml.Linq.XDocument xDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

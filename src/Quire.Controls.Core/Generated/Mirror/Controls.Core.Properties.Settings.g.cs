@@ -12,10 +12,6 @@ namespace Quire.Controls.Core.Properties;
 internal sealed partial class Settings : global::Quire.ApplicationSettingsSafe
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.Properties.Settings defaultInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Controls.Core.Properties.Settings Default { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool HandleFocusForIme { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool EnableFontCaching { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -29,6 +25,4 @@ internal sealed partial class Settings : global::Quire.ApplicationSettingsSafe
     public int MinPointsForForceDensity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int DensityPointsPrintDPI { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Settings() { }
 }

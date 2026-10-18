@@ -29,8 +29,6 @@ public partial class CommonRoutedEvents
     public static readonly global::System.Windows.RoutedEvent BlockedPreviewMouseDownEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent WasMeasuredEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public CommonRoutedEvents() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonRoutedEvents+CaretLeavesTextRegionEventHandler, Ptc.Controls.Core")]
     public delegate void CaretLeavesTextRegionEventHandler(object sender, global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args);
@@ -38,8 +36,6 @@ public partial class CommonRoutedEvents
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.CommonRoutedEvents+CaretLeavesTextRegionEventArgs, Ptc.Controls.Core")]
     public partial class CaretLeavesTextRegionEventArgs : global::System.Windows.RoutedEventArgs
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection LeavingDirection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public CaretLeavesTextRegionEventArgs(global::System.Windows.RoutedEvent routedEvent) { }
 

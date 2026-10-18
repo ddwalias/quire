@@ -27,6 +27,4 @@ public partial class MessageDialogsKeys
     public const string SaveAndSyncButtonKey = "SaveAndSync";
     [global::Quire.Mirror.MirrorStub]
     public const string OkButtonKey = "Ok";
-    [global::Quire.Mirror.MirrorStub]
-    public MessageDialogsKeys() { }
 }

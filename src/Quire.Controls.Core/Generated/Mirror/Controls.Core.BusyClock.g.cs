@@ -17,6 +17,4 @@ public partial class BusyClock : global::System.Windows.Shapes.Shape
     public double BusyClockAngle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Geometry DefiningGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public BusyClock() { }
 }

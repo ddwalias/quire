@@ -17,6 +17,4 @@ public partial class ImeHandler
     public static void HandleImeFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void PositioningIme(global::Quire.Controls.Core.IImeClient client) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ImeHandler() { }
 }

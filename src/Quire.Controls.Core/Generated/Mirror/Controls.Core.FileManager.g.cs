@@ -14,8 +14,6 @@ public partial class FileManager
     [global::Quire.Mirror.MirrorStub]
     public static void EnsureStreamRelease(global::System.IO.FileStream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsPackage(string path, string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsPackage(string path, string extension, bool mcdxOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsWorksheet(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -23,8 +21,6 @@ public partial class FileManager
     public static void WaitFor(int seconds, global::System.Threading.WaitHandle handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsPrimeExtension(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FileManager() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.FileManager+Extension, Ptc.Controls.Core")]
     public partial class Extension
@@ -45,7 +41,5 @@ public partial class FileManager
         public const string Pdf = ".pdf";
         [global::Quire.Mirror.MirrorStub]
         public const string All = ".*";
-        [global::Quire.Mirror.MirrorStub]
-        public Extension() { }
     }
 }

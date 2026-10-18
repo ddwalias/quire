@@ -24,8 +24,6 @@ public partial class TextDecorationsToAttributesSerializer : global::Quire.Contr
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.Settings.TextDecorationsToAttributesSerializer.TextDecorationsExistence> _existingDecorations;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextDecorationCollection TextDecorationsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool HasUnderline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasOverLine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

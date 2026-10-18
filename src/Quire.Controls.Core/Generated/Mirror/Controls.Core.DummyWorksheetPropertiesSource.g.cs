@@ -30,10 +30,6 @@ internal partial class DummyWorksheetPropertiesSource : global::Quire.Controls.C
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Thickness PageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Color PageBackgroundColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasScriptableControls { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size PageSizeValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Size GridCellSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -60,9 +56,5 @@ internal partial class DummyWorksheetPropertiesSource : global::Quire.Controls.C
     [global::Quire.Mirror.MirrorStub]
     public string HelpServerPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.DummyWorksheetPropertiesSource GetInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private DummyWorksheetPropertiesSource() { }
 }

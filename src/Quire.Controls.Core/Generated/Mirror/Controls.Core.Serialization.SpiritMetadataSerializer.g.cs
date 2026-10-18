@@ -14,11 +14,7 @@ public partial class SpiritMetadataSerializer : global::Quire.Controls.Core.Seri
     [global::Quire.Mirror.MirrorStub]
     private const string schemaNamespaceURI = "http://schemas.openxmlformats.org/package/2006/metadata/core-properties";
     [global::Quire.Mirror.MirrorStub]
-    protected override void CreateSchemas(global::System.Xml.XmlDocument xmlMetadata) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void FillInMetadataModel(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void FillInXmlMetadata(global::System.Xml.XmlDocument xmlMetadata, global::Quire.Controls.Core.Serialization.IMetadataModel metadataModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SpiritMetadataSerializer() { }
 }

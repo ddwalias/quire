@@ -12,19 +12,5 @@ namespace Quire.Controls.Core.Serialization;
 public partial class MetadataModel : global::Quire.Controls.Core.Serialization.IMetadataModel
 {
     [global::Quire.Mirror.MirrorStub]
-    private string _creator;
-    [global::Quire.Mirror.MirrorStub]
-    private string _lastModified;
-    [global::Quire.Mirror.MirrorStub]
-    private int _version;
-    [global::Quire.Mirror.MirrorStub]
-    public string Creator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string LastModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Version { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public MetadataModel() { }
-    [global::Quire.Mirror.MirrorStub]
-    public MetadataModel(global::System.Xml.XmlDocument xmlMetadata) { }
 }

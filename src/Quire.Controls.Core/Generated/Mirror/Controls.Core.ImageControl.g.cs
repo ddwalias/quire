@@ -16,8 +16,6 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Core.ImageControlDictionary _dictionary;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Uri _originalImageUri;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty SourceProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent ChangedEvent;
@@ -25,8 +23,6 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     public static readonly global::System.Windows.Input.RoutedCommand BrowseForImageCommand;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.ImageControl _boundTo;
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] OriginalStreamHash { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.ImageSource Source { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -36,23 +32,7 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ImageControl BoundTo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double VerticalAlignmentOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool PreserveAspectRatio { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.SubElementToResizeData SubElementToResizeData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.ResizeToFitState ResizeState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Direction> RequestRemove;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IResizeToFitWhiteboardItem> RequestResizeToFitOrClearRestriction;
     [global::Quire.Mirror.MirrorStub]
     private static void HandleSourcePropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -67,8 +47,6 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     private static global::System.Windows.Media.Imaging.BitmapSource GetBitmapSourceFromUri(global::System.Uri sourceUri, out byte[] streamHash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetImageExtension(global::System.Uri imageUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetImageExtension() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ShouldSerializeSource() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -86,8 +64,6 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public object Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -95,6 +71,4 @@ public partial class ImageControl : global::System.Windows.Controls.Control, glo
     private string GetImageRelationshipId(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

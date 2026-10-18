@@ -16,10 +16,6 @@ public partial class TextFormatSerializer : global::Quire.Controls.Core.Serializ
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.ITextStyleObject _textFormat;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.Settings.TextDecorationsToAttributesSerializer TextDecorationSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string StyleKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ITextStyleObject TextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TextFormatSerializer(global::Quire.ITextStyleObject textFormat, global::System.Xml.Linq.XNamespace ns, string styleKey) : base(default(global::System.Xml.Linq.XName), default(object[])) { }

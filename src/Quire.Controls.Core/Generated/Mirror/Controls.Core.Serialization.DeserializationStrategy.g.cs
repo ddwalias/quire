@@ -14,17 +14,11 @@ public abstract partial class DeserializationStrategy : global::Quire.Controls.C
     [global::Quire.Mirror.MirrorStub]
     public abstract global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get; }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IMathFormat DeserializeMathFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.Controls.Core.IRegionFactory RegionFactory { get; }
     [global::Quire.Mirror.MirrorStub]
     public abstract void AddRegion(global::System.Windows.UIElement element, global::System.Windows.Point location);
     [global::Quire.Mirror.MirrorStub]
     public abstract void DeleteRegion(global::System.Windows.UIElement control);
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual bool IsRegionNotAffectingCalculation(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool IsRegionNotAffectingCalculation(global::Quire.PersistentDataObjects.IRegionType regionData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -35,10 +29,4 @@ public abstract partial class DeserializationStrategy : global::Quire.Controls.C
     protected virtual void AddRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void CleanUpLastRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void DeserializeRegionProlog(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void DeserializeRegionsEpilog(global::System.Xml.XmlDocument xmlContentDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected DeserializationStrategy() { }
 }

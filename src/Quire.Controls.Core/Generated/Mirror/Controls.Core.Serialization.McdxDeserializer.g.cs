@@ -12,39 +12,11 @@ namespace Quire.Controls.Core.Serialization;
 public partial class McdxDeserializer : global::Quire.Serialization.IDeS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.IO.Packaging.PackagePart _packagePart;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Serialization.ISerializationHelper _serializationHelper;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.Serialization.IDeserializationStrategy _deserializationStrategy;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly string _filePath;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.PersistentData.IRegionCollectionSerializer _regionCollectionSerializer;
     [global::Quire.Mirror.MirrorStub]
     private readonly string _worksheetNodeName;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.XmlDocument _xmlContentDocument;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> DeserializedRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SkipRegionsNotAffectingCalculation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.ISerializationHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNamespaceManager NameSpaceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlDocument XmlContentDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void Deserialize(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

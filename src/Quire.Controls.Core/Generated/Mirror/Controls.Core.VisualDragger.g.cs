@@ -44,8 +44,6 @@ public partial class VisualDragger : global::System.Windows.Controls.ContentCont
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.IInputElement ReferenceElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point DragStartPoint { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Windows.RoutedEventHandler DragEnd;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Windows.Input.MouseEventHandler DragStart;
@@ -56,11 +54,7 @@ public partial class VisualDragger : global::System.Windows.Controls.ContentCont
     [global::Quire.Mirror.MirrorStub]
     private static void DirectionPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuOpening(e);
-    [global::Quire.Mirror.MirrorStub]
     private void StartDrag(global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetDrag(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void StopDrag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

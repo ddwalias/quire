@@ -11,6 +11,4 @@ namespace Quire.Controls.Core.AttachedBehavior;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.AttachedBehavior.MessageList, Ptc.Controls.Core")]
 public partial class MessageList : global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.AttachedBehavior.MessageItem>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MessageList() { }
 }

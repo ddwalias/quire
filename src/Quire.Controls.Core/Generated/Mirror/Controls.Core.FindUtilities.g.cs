@@ -23,6 +23,4 @@ public partial class FindUtilities
     public static global::System.Func<string, int> CreateSearchFunctionForGivenString(string valueToFind, bool isCaseSensitiveMatch, bool isWholeWordOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Func<string, int> CreateCaseInsensitiveSearchFunctionForGivenString(string valueToFind, string valueToReplaceWith, bool isWholeWordOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FindUtilities() { }
 }

@@ -89,6 +89,4 @@ public partial class PageLayoutConstants
     public const double USMajorGridLinesInInches = 1d;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.Core.PageSizeUnits GetPageSizeUnitsByPageSize(global::Quire.Controls.Core.PageSize pageSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PageLayoutConstants() { }
 }

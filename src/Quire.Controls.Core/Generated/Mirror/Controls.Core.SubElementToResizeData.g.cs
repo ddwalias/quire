@@ -12,11 +12,5 @@ namespace Quire.Controls.Core;
 public partial class SubElementToResizeData
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FrameworkElement Element { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SerializeDimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFullSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public SubElementToResizeData(global::System.Windows.FrameworkElement element, bool serializeDimensions, bool isFullSize) { }
 }

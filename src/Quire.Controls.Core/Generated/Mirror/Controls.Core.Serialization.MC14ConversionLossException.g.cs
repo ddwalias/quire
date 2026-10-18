@@ -12,8 +12,6 @@ namespace Quire.Controls.Core.Serialization;
 public partial class MC14ConversionLossException : global::System.Exception
 {
     [global::Quire.Mirror.MirrorStub]
-    public string[] Messages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public MC14ConversionLossException(string message, global::System.Exception innerEx) { }
     [global::Quire.Mirror.MirrorStub]
     public MC14ConversionLossException(string[] messages) { }

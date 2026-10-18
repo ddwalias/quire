@@ -55,6 +55,4 @@ public partial class FrameworkElementFacade : global::Quire.Controls.Core.UIElem
     public bool GetOverrideLabelColor(object equationVisualElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> GetLabeledIdFormatProperty(object equationVisualElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FrameworkElementFacade() { }
 }

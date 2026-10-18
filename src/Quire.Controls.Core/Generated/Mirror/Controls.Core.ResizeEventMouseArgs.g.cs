@@ -22,7 +22,5 @@ public partial class ResizeEventMouseArgs : global::System.Windows.RoutedEventAr
     [global::Quire.Mirror.MirrorStub]
     public readonly bool Automation;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IResizer Resizer { internal get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal ResizeEventMouseArgs(global::System.Windows.RoutedEvent routedEvent, global::Quire.Controls.Core.DragMode mode, global::System.Windows.FrameworkElement element, global::System.Windows.Point startPosition, global::System.Windows.DependencyObject originalEventSource, bool automation) { }
 }

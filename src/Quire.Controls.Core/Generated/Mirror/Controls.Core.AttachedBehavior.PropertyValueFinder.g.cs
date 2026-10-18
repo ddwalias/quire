@@ -25,6 +25,4 @@ public partial class PropertyValueFinder : global::Quire.Controls.Core.AttachedB
     public global::System.Type PropertyOwnerType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeValue(global::System.Windows.FrameworkElement element, object propertyProviderKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyValueFinder() { }
 }

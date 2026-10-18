@@ -14,17 +14,11 @@ public partial class IOItemsAliasManager
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Controls.Core.IORegions.IIOItem> _aliasesToItemsMap;
-    [global::Quire.Mirror.MirrorStub]
     public const string EvaluationDefaultAlias = "out";
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty InAliasMapProperty;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty OutAliasMapProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static event global::System.Action<global::System.Windows.DependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs> InAliasMapChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public static event global::System.Action<global::System.Windows.DependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs> OutAliasMapChanged;
     [global::Quire.Mirror.MirrorStub]
     public IOItemsAliasManager() { }
     [global::Quire.Mirror.MirrorStub]
@@ -45,12 +39,6 @@ public partial class IOItemsAliasManager
     public static global::System.Collections.Generic.List<string> GetAliases(global::System.Windows.DependencyObject element, bool isInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SetAliases(global::System.Windows.DependencyObject element, global::System.Collections.Generic.IList<string> aliases, bool isInp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetInputAliases(global::System.Windows.DependencyObject element, global::System.Collections.Generic.List<string> aliases) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetOutputAliases(global::System.Windows.DependencyObject element, global::System.Collections.Generic.List<string> aliases) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsExist(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Add(string alias, global::Quire.Controls.Core.IORegions.IIOItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

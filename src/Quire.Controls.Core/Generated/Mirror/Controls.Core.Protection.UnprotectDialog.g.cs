@@ -14,13 +14,9 @@ public partial class UnprotectDialog : global::Quire.Controls.Core.Protection.Pa
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Func<string, bool> _doesPasswordsMatch;
     [global::Quire.Mirror.MirrorStub]
-    private readonly bool _hasPassword;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.PasswordBox _PasswordBox;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPassword { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override bool DoPasswordsMatch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -29,8 +25,6 @@ public partial class UnprotectDialog : global::Quire.Controls.Core.Protection.Pa
     private UnprotectDialog(global::System.Func<string, bool> doesPasswordsMatch, global::System.Windows.ResourceDictionary customControlStringsDictionary) { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

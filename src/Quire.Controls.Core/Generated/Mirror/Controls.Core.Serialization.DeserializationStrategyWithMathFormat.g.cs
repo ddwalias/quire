@@ -13,6 +13,4 @@ public abstract partial class DeserializationStrategyWithMathFormat : global::Qu
 {
     [global::Quire.Mirror.MirrorStub]
     public override void DeserializeRegionProlog(global::System.Windows.UIElement region) => base.DeserializeRegionProlog(region);
-    [global::Quire.Mirror.MirrorStub]
-    protected DeserializationStrategyWithMathFormat() { }
 }

@@ -18,8 +18,6 @@ public partial class SelectionDragger : global::Quire.Controls.Core.ISelectionDr
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.SelectionDraggerRubberBand _selectionDraggerRubberBand;
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Windows.Point> DragDone;
-    [global::Quire.Mirror.MirrorStub]
     public SelectionDragger(global::System.Windows.UIElement container, global::System.Windows.Point startPosition) { }
     [global::Quire.Mirror.MirrorStub]
     private void MouseUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

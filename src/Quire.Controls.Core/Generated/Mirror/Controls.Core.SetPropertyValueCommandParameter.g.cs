@@ -16,21 +16,11 @@ public partial class SetPropertyValueCommandParameter : global::System.Windows.F
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty PropertyNameProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty DependencyPropValProperty;
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IPropertyAggregate TargetObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string PropertyName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public object DependencyPropVal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string UserData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public SetPropertyValueCommandParameter(global::Quire.Controls.Core.IPropertyAggregate obj, string propertyName, object val, string userData = default) { }
     [global::Quire.Mirror.MirrorStub]
-    public SetPropertyValueCommandParameter() { }
-    [global::Quire.Mirror.MirrorStub]
     private static object CoercePropertyName(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

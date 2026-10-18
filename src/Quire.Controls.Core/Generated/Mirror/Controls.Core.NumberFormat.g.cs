@@ -100,10 +100,6 @@ public partial class NumberFormat : global::Quire.Controls.Core.IPropertyAggrega
     [global::Quire.Mirror.MirrorStub]
     public bool ComplexStyleIsPolar { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Controls.Core.ActionByPropertyNameAndValue FormatChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     private static bool IsValidDecimalPlaces(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int CoerceDecimalPlaces(int value, int increment) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -111,12 +107,6 @@ public partial class NumberFormat : global::Quire.Controls.Core.IPropertyAggrega
     public bool ShouldBeDisplayedAsScientific(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsNumberInRange(global::System.Nullable<int> num, int minimum, int maximum) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsInValidExponentialThresholdRange(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsInValidZeroThresholdRange(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsInValidComplexThresholdRange(global::System.Nullable<int> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleNumberFormatPropertyChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
