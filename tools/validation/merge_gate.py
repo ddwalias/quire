@@ -39,6 +39,20 @@ def git(*args, cwd=ROOT, check=True):
     return result.stdout.strip()
 
 
+def checkout_paths(revision, paths, cwd=ROOT):
+    """Restore explicit paths from a revision without putting the path list on the command line.
+
+    The merge gate can restore thousands of protected paths. Passing them as argv exceeds Windows' command-line
+    length limit, so send NUL-delimited literal pathspecs through Git's pathspec-file interface instead.
+    """
+    pathspecs = b''.join(b':(literal)' + os.fsencode(path) + b'\0' for path in paths)
+    command = ['git', 'checkout', revision, '--pathspec-from-file=-', '--pathspec-file-nul']
+    result = subprocess.run(command, cwd=cwd, input=pathspecs, capture_output=True)
+    if result.returncode:
+        detail = os.fsdecode(result.stderr).strip()
+        raise RuntimeError(f"git checkout {revision} --pathspec-from-file=- --pathspec-file-nul: {detail}")
+
+
 def patterns(text):
     return [line.strip() for line in text.splitlines() if line.strip() and not line.startswith('#')]
 
@@ -271,7 +285,7 @@ def phase_validation(tip, base, restore, dotnet, timeout, temp, repo=ROOT):
         try:
             clone(tip, tree, repo)
             if restore:
-                git('checkout', base, '--', *restore, cwd=tree)
+                checkout_paths(base, restore, cwd=tree)
         except (RuntimeError, OSError) as error:
             return None, [f'phase: cannot prepare the validation clone: {error}'], results, None
         command = phase_command(tree, results, baseline, timeout, dotnet)
@@ -765,7 +779,7 @@ def main():
             restore = restored_paths(git('ls-tree', '-r', '--name-only', base).splitlines(), rules, stubs,
                                      args.allow_protected)
             if restore:
-                git('checkout', base, '--', *restore, cwd=tree)
+                checkout_paths(base, restore, cwd=tree)
         except (RuntimeError, OSError) as error:
             code, reasons, mutation = None, [f'cannot prepare the validation clone: {error}'], {}
         else:
