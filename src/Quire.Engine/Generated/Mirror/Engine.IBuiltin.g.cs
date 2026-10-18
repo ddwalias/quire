@@ -11,12 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IBuiltin, iengine")]
 public partial interface IBuiltin
 {
-    [global::Quire.Mirror.MirrorStub]
-    object GetVariable(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetVariable(string A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UnsetVariable(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IList GetBuiltins() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

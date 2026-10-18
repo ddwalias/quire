@@ -11,8 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IFactory, iengine")]
 public partial interface IFactory : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Initialize(string appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool VerifyIntegrity() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

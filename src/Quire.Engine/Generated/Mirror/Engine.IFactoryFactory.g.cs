@@ -11,6 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IFactoryFactory, iengine")]
 public partial interface IFactoryFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    void AppendPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

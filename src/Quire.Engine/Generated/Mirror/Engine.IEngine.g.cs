@@ -12,8 +12,6 @@ namespace Quire.Engine;
 public partial interface IEngine : global::System.IDisposable
 {
     [global::Quire.Mirror.MirrorStub]
-    bool IsUpToDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     int AddAfterAndSet(int h, string expr, int priority, int client_cookie, string valuespec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int AddBeforeAndSet(int h, string expr, int priority, int client_cookie, string valuespec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -113,6 +111,4 @@ public partial interface IEngine : global::System.IDisposable
     global::Quire.Engine.IMathcadComponent LookupComponent(int handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Engine.IMathcadComponent UnregisterComponent(int handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RecalculateAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

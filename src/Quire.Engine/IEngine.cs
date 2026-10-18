@@ -88,8 +88,38 @@ public partial interface IEngine : IDisposable
 
     void AddNodeCallback(NodeCallback A_0);
 
+    bool IsUpToDate { get; }
+
+    void RecalculateAll();
+
     /// <summary>Brings every node up to date; <paramref name="h"/> = 0 means all of them, otherwise the
     /// calculation stops after node <paramref name="h"/>. Stops early with <see cref="OperationCanceledException"/>
     /// when the calling thread's calculation is cancelled (see <c>Rts.RegisterThreadForCancellationChecking</c>).</summary>
     void CalculateNow(int h);
 }
+
+public partial interface IBuiltin
+{
+    object GetVariable(string name);
+    void SetVariable(string name, object value);
+    void UnsetVariable(string name);
+    IList GetBuiltins();
+}
+
+public partial interface IEnginePriv : IEngine
+{
+    void Initialize(string appData);
+}
+
+public partial interface IEngineUnstable : IEngine
+{
+    int GetNodeType(int h);
+}
+
+public partial interface IMCEngine : IEngine
+{
+    void AddNotify(nint cookie);
+    void RemoveNotify(nint cookie);
+    void StartNotify();
+}
+
