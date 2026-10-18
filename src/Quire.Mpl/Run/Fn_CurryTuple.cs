@@ -8,10 +8,10 @@ public partial class Fn_CurryTuple
     [MirrorAnalyzed("Mpl.Run.Fn_CurryTuple")]
     private Function m_f;
 
-    [MirrorAnalyzed("Mpl.Run.Fn_CurryTuple")]
+    [MirrorVerified("FnCurryTupleDifferentialTests")]
     public override string Name => m_name;
 
-    [MirrorAnalyzed("Mpl.Run.Fn_CurryTuple")]
+    [MirrorVerified("FnCurryTupleDifferentialTests")]
     public Fn_CurryTuple(Function f, int purity, object name)
         : base(purity, 0)
     {
@@ -20,21 +20,21 @@ public partial class Fn_CurryTuple
         m_f = f;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_CurryTuple")]
+    [MirrorVerified("FnCurryTupleDifferentialTests")]
     public override void invVec<R>(out R r, object[] args)
     {
         AssertFullApp(args.Length);
         m_f.inv<R, object[]>(out r, args);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_CurryTuple")]
+    [MirrorVerified("FnCurryTupleDifferentialTests")]
     public override object Apply(object[] args)
     {
         invVec<object>(out var r, args);
         return r;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Fn_CurryTuple")]
+    [MirrorVerified("FnCurryTupleDifferentialTests")]
     public override object DynApply(object[] args)
     {
         invVec<object>(out var r, args);
