@@ -16,8 +16,13 @@
 | `MatrixProxy set` | 0x060001e1 | MemberGen: `public IMatrixValueProxyWrapper MatrixProxy { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `TransformValueToResult get` | 0x060001e2 | MemberGen: `public Func<IValueProxyWrapper, IResultNode> TransformValueToResult { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `TransformValueToResult set` | 0x060001e3 | MemberGen: `public Func<IValueProxyWrapper, IResultNode> TransformValueToResult { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ToString()` | 0x060001e5 | MemberGen: `string.Format("LazyMatrix: ({0},{1})", Rows, Columns)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Xml get` | 0x060001d5 | MemberGen: `MatrixProxy.Xml` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Count get` | 0x060001da | MemberGen: `Rows * Columns` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreLazyMatrixSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreLazyMatrixSimpleResultNodeMechanicalDifferentialTests`.

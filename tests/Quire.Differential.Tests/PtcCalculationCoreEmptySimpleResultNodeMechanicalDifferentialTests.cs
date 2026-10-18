@@ -14,4 +14,7 @@ public class PtcCalculationCoreEmptySimpleResultNodeMechanicalDifferentialTests
 
     [SkippableFact]
     public void ctor_0600018b() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.EmptySimpleResultNode), 0x0600018b);
+
+    [SkippableFact]
+    public void Equals_06000189() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.EmptySimpleResultNode), 0x06000189);
 }

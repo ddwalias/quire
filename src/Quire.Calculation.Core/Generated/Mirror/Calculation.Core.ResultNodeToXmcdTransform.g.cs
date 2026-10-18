@@ -74,8 +74,6 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     public static string Transform(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void WritePlaceholderXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void WriteRealXml(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void WriteImaginaryXml(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -84,21 +82,9 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     private void WriteDisplayMatrixXml(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IRealResultNode real) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IImaginaryResultNode imag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IComplexResultNode complex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IStringResultNode str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IFunctionResultNode function) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IUnitedValueResultNode unitedValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Visit(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.ILazyMatrixResultNode lazyMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.ISymbolicResultNode symbolic) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -113,6 +99,4 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     private static global::System.Nullable<TTarget> ConvertAndGetNullableValue<TTarget>(global::System.Enum sourceEnumValue) where TTarget : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void WriteVectorsAsJson<T>(global::Quire.Calculation.Core.IVectorListResultNode vectorsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Visit(global::Quire.Calculation.Core.Unit unit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

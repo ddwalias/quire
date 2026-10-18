@@ -14,4 +14,7 @@ public class PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialT
 
     [SkippableFact]
     public void GetUnitPowerNumerator_06000238() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.XmcdToIResultNodeTransform), 0x06000238);
+
+    [SkippableFact]
+    public void BuildSymbolic_0600022c() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.XmcdToIResultNodeTransform), 0x0600022c);
 }

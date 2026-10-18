@@ -12,8 +12,11 @@
 | `RValue set` | 0x060001a4 | MemberGen: `public double RValue { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `IValue get` | 0x060001a5 | MemberGen: `public double IValue { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `IValue set` | 0x060001a6 | MemberGen: `public double IValue { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ToString()` | 0x060001a7 | MemberGen: `string.Format("Complex: {0}+{1}i", RValue, IValue)` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreComplexSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreComplexSimpleResultNodeMechanicalDifferentialTests`.

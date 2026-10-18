@@ -28,8 +28,6 @@ public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.ITraceAxisInfo BuildAxisInfo(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ISymbolicResultNode BuildSymbolic(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode BuildComplex(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode BuildMatrix(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

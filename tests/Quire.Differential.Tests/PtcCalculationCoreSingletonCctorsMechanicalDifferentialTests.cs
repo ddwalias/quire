@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
-public class PtcCalculationCoreSingletonCctorsDifferentialTests
+public class PtcCalculationCoreSingletonCctorsMechanicalDifferentialTests
 {
     private static void CompareCctor(Type quireType, Type mathcadType, string contract, string field)
     {

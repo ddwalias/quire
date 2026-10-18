@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
@@ -16,4 +17,7 @@ public partial class ComplexSimpleResultNode
 
     [MirrorVerified("PtcCalculationCoreComplexSimpleResultNodeMechanicalDifferentialTests")]
     public double IValue { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreComplexSimpleResultNodeMechanicalDifferentialTests")]
+    public override string ToString() => string.Format("Complex: {0}+{1}i", RValue, IValue);
 }

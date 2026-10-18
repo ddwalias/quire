@@ -32,4 +32,7 @@ public class PtcCalculationCoreDisplayMatrixSimpleResultNodeMechanicalDifferenti
 
     [SkippableFact]
     public void Viewport_set_060001c0() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.DisplayMatrixSimpleResultNode), 0x060001c0);
+
+    [SkippableFact]
+    public void Count_get_060001b7() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.DisplayMatrixSimpleResultNode), 0x060001b7);
 }

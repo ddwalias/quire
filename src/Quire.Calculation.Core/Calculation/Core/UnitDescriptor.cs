@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
@@ -46,4 +47,10 @@ public partial class UnitDescriptor
 
     [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
     public bool IsSymbolResultNode { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public int CompareTo(object obj) => ToString().CompareTo(obj.ToString());
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public string FullName => DisplayName + " (" + Symbol + ")";
 }

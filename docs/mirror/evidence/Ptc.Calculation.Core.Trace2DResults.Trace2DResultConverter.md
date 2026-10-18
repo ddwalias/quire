@@ -7,8 +7,11 @@
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
 | `.ctor(ITrace2DConverterHelper)` | 0x06000296 | MemberGen: `_helper = helper;` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ReadAsColumns get` | 0x0600029c | MemberGen: `_helper.CurrentType != TraceType.Boxes` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreTrace2DResultsTrace2DResultConverterMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreTrace2DResultsTrace2DResultConverterMechanicalDifferentialTests`.

@@ -20,4 +20,7 @@ public class PtcCalculationCoreUnitedValueSimpleResultNodeMechanicalDifferential
 
     [SkippableFact]
     public void Units_set_06000195() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitedValueSimpleResultNode), 0x06000195);
+
+    [SkippableFact]
+    public void ctor_0600018c() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitedValueSimpleResultNode), 0x0600018c);
 }

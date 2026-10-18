@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
@@ -13,4 +14,7 @@ public partial class RealSimpleResultNode
 
     [MirrorVerified("PtcCalculationCoreRealSimpleResultNodeMechanicalDifferentialTests")]
     public double Value { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreRealSimpleResultNodeMechanicalDifferentialTests")]
+    public override string ToString() => string.Format("Real: {0}", Value);
 }

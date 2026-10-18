@@ -23,4 +23,7 @@ public class PtcCalculationCoreTrace2DResultsTraceAxisInfoMechanicalDifferential
 
     [SkippableFact]
     public void Units_set_060002af() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.TraceAxisInfo), 0x060002af);
+
+    [SkippableFact]
+    public void ctor_060002a9() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.TraceAxisInfo), 0x060002a9);
 }

@@ -15,8 +15,12 @@
 | `Count get` | 0x0600024a | MemberGen: `_vectors.Count` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Item get` | 0x0600024b | MemberGen: `_vectors[index]; set => _vectors[index] = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Item set` | 0x0600024c | MemberGen: `_vectors[index]; set => _vectors[index] = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `GetVectorValuesType(int)` | 0x06000249 | MemberGen: `GetResultType(Vectors[index])` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ElementsCount get` | 0x06000240 | MemberGen: `Count * SingleVectorLength` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests`.

@@ -29,6 +29,4 @@ public static partial class TraceErrorCodes
     public const string ErrorTooManyPointsInResult = "PlotControl.Error.TooManyPoints";
     [global::Quire.Mirror.MirrorStub]
     public const string UnsupportedType = "PlotControl.Error.UnsupportedType";
-    [global::Quire.Mirror.MirrorStub]
-    public static string CreateTooManyPointsInResultMessage(int maximalAllowedNumberOfPoints) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

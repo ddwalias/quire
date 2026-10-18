@@ -14,8 +14,6 @@ public partial class DisplayMatrixSimpleResultNode : global::Quire.Calculation.C
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Calculation.Core.EmptySimpleResultNode _emptyNode;
     [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.SimpleResultNode this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

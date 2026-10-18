@@ -24,8 +24,12 @@
 | `IsFunction set` | 0x0600021e | MemberGen: `public bool IsFunction { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `IsSymbolResultNode get` | 0x0600021f | MemberGen: `public bool IsSymbolResultNode { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `IsSymbolResultNode set` | 0x06000220 | MemberGen: `public bool IsSymbolResultNode { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `CompareTo(object)` | 0x06000221 | MemberGen: `ToString().CompareTo(obj.ToString())` | Mechanical; Release IL equals Mathcad's | Verified |
+| `FullName get` | 0x0600020d | MemberGen: `DisplayName + " (" + Symbol + ")"` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests`.

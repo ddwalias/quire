@@ -9,8 +9,11 @@
 | `.ctor(IList)` | 0x0600025d | MemberGen: `: base(data, -1) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `.ctor(IList, string, int)` | 0x0600025e | MemberGen: `: base(data, paddingValue, minLength) { }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `NeutralValue get` | 0x06000260 | MemberGen: `null` | Mechanical; Release IL equals Mathcad's | Verified |
+| `IsMeaningfulValue(string)` | 0x0600025f | MemberGen: `value != null` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreTrace2DResultsStringListResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreTrace2DResultsStringListResultNodeMechanicalDifferentialTests`.

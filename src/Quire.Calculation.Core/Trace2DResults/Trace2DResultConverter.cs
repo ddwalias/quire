@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core.Trace2DResults;
 
@@ -13,4 +14,7 @@ public partial class Trace2DResultConverter
     {
         _helper = helper;
     }
+
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsTrace2DResultConverterMechanicalDifferentialTests")]
+    private bool ReadAsColumns => _helper.CurrentType != TraceType.Boxes;
 }

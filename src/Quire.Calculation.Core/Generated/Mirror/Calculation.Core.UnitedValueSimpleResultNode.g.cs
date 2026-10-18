@@ -14,8 +14,6 @@ public partial class UnitedValueSimpleResultNode : global::Quire.Calculation.Cor
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IUnitedValueResultNode.Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public UnitedValueSimpleResultNode() { }
-    [global::Quire.Mirror.MirrorStub]
     private bool isUnitsEquals(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> comparedUnits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);

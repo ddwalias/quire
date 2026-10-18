@@ -59,4 +59,10 @@ public class PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests
 
     [SkippableFact]
     public void IsSymbolResultNode_set_06000220() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000220);
+
+    [SkippableFact]
+    public void CompareTo_06000221() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000221);
+
+    [SkippableFact]
+    public void FullName_get_0600020d() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x0600020d);
 }
