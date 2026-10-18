@@ -3,7 +3,7 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-runtime-options-init-field` batch is verifying `RuntimeOptions.s_init`. `MplDestructuringBind.ExpandCall`
+separate `mirror/a-unit-system-field-state` batch is verifying `UnitSystem` private field state. `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
 
@@ -59,7 +59,29 @@ batch receipts below are history, not a task queue.
   — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~RuntimeOptionsDifferentialTests'` — 3 passed, 0 failed or skipped. The direct
   initializer comparison now renders `s_init`'s full nested type identity and asserts it is non-null on both sides.
-  No runtime body change or proposals; branch gate pending.
+  No runtime body change or proposals. Gate: `lane_merge.py mirror/a-runtime-options-init-field --jobs 14` passed
+  and merged tip `549f8e894084bcce0bdd6e9b38a988b4a7b6ac53` to `main` and `origin/main`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-s00lpp9e\gate.json`; no reasons or protected paths. Harness 97, Mpl 188,
+  Differential 392 passed, no failures or skips; lint 0, integrity complete, ratchet OK. Mutation 77/79 killed,
+  2 accepted survivors, no live survivors, timeouts or crashes. Existing inventory gaps: 298 missing,
+  103 structure mismatches, 34 uncovered and 41 verified unsupported.
+
+## UnitSystem private field-state verification (`mirror/a-unit-system-field-state`)
+
+- Ownership: `Mcd.UnitSystem`'s methods are already verified. The prior `mirror/a-unit-system-helper-verification`
+  branch is on main and has no remaining source diff in `Units.cs` or the differential tests; no active Lane A worktree
+  owns this field-state scope.
+- Scope: promote all 13 private `UnitSystem` fields and four nested `Default` fields from Tested to Verified. Extend
+  `UnitSystemDifferentialTests.SystemState` to directly render the backing name/code/options number/guid/rank, basis,
+  dimensions, matrices, original arrays, defaults table, and unit-symbol set; `DefaultState` already reads all four
+  nested fields directly.
+- Evidence: [Mcd.UnitSystem](../evidence/Mcd.UnitSystem.md). Existing differential cases compare constructors,
+  getters, setters, reset, conversions, simplification, normalization and direct private helpers.
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~UnitSystemTests'`
+  — 9 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~UnitSystemDifferentialTests'` — 4 passed, 0 failed or skipped. The first differential
+  attempt exposed that `m_defs` values are lists of nested `Default` records, not `Unit`s; the renderer was corrected
+  and the entire class then passed. No runtime body changes or proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 

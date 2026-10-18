@@ -61,7 +61,8 @@ never replaces it. Groups are sorted by descending order, so ties go to the unit
 
 **Private members.** `GetDimensionIndex`, `GetDimensions(string)`, `Inverse`, `IsSmall` and both `Count`s are directly compared. `Default` constructors, hash, equality and ordering are directly compared in `UnitSystemDifferentialTests`; other private members are exercised through the public members that use them (construction, `Basis`, `Defaults`, `Simplify`, `Normalize`, `GetCoordinates`, `GetUnits`, `GetDimensions`).
 
-Fields: all `UnitSystem` fields and `Default`'s are private state, Tested through the members that use them.
+Fields: all 13 `UnitSystem` fields and all four nested `Default` fields are Verified by `UnitSystemDifferentialTests`;
+its state renderer reads each private field on both artifacts after the directly compared members.
 
 ## Test cases
 

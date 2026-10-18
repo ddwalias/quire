@@ -92,19 +92,59 @@ public class UnitSystemDifferentialTests
 
     private static string UnitsDetailed(object? a) => a == null ? "null" : string.Join(" ", ((Array)a).Cast<object?>().Select(UnitText));
 
+    private static string MatrixState(object? value)
+    {
+        if (value is not double[,] matrix) return value == null ? "null" : Unmap(Text(value));
+        var entries = new List<string>(matrix.Length);
+        foreach (double entry in matrix) entries.Add(Text(entry));
+        return $"{matrix.GetLength(0)}x{matrix.GetLength(1)}:[{string.Join(",", entries)}]";
+    }
+
+    private static string DefinitionsState(object? value)
+    {
+        if (value is not System.Collections.IDictionary table) return "null";
+        var entries = new List<string>();
+        foreach (System.Collections.DictionaryEntry entry in table)
+        {
+            string key = entry.Key == null ? "null" : DefaultState(entry.Key);
+            string units = entry.Value is System.Collections.IEnumerable values
+                ? string.Join(" ", values.Cast<object?>().Select(value => value == null ? "null" : DefaultState(value)))
+                : Unmap(Text(entry.Value));
+            entries.Add($"{key}=>[{units}]");
+        }
+        entries.Sort(StringComparer.Ordinal);
+        return string.Join(";", entries);
+    }
+
+    private static string SymbolsState(object? value)
+    {
+        if (value is not System.Collections.IDictionary table) return "null";
+        var entries = new List<string>();
+        foreach (System.Collections.DictionaryEntry entry in table)
+            entries.Add($"{entry.Key}={Text(entry.Value)}");
+        entries.Sort(StringComparer.Ordinal);
+        return string.Join(",", entries);
+    }
+
     private static string SystemState(object s)
     {
-        string name = (string)Get(s, "Name")!;
-        uint code = (uint)Get(s, "Code")!;
-        string guid = (string)Get(s, "Guid")!;
-        int ro = (int)Get(s, "RO_number")!;
-        int rank = (int)Get(s, "Rank")!;
-        string dims = Dims(Get(s, "Dimensions"));
-        string basis = UnitsDetailed(Get(s, "Basis"));
+        string name = (string)Get(s, "m_name")!;
+        uint code = (uint)Get(s, "m_code")!;
+        string guid = (string)Get(s, "m_guid")!;
+        int ro = (int)Get(s, "m_ro_number")!;
+        int rank = (int)Get(s, "m_rank")!;
+        string dims = Dims(Get(s, "m_dims"));
+        string basis = UnitsDetailed(Get(s, "m_base"));
         string defaults;
         try { defaults = UnitsDetailed(Get(s, "Defaults")); }
         catch (Exception e) { defaults = Thrown(e); }
-        return $"UnitSystem({name}, code={code}, guid={guid}, ro={ro}, rank={rank}, dims=[{dims}], basis=[{basis}], defaults=[{defaults}])";
+        string basisOriginal = UnitsDetailed(Get(s, "m_basis_orig"));
+        string defaultsOriginal = UnitsDetailed(Get(s, "m_defaults_orig"));
+        string forward = MatrixState(Get(s, "m_ltog"));
+        string inverse = MatrixState(Get(s, "m_gtol"));
+        string definitions = DefinitionsState(Get(s, "m_defs"));
+        string symbols = SymbolsState(Get(s, "m_unit_syms"));
+        return $"UnitSystem({name}, code={code}, guid={guid}, ro={ro}, rank={rank}, dims=[{dims}], basis=[{basis}], defaults=[{defaults}], basisOrig=[{basisOriginal}], defaultsOrig=[{defaultsOriginal}], ltog={forward}, gtol={inverse}, defs=[{definitions}], symbols=[{symbols}])";
     }
 
     private static string DefaultState(object d)

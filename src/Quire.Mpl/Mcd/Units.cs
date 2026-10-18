@@ -113,31 +113,31 @@ public partial class Units
 /// </summary>
 public partial class UnitSystem : MarshalByRefObject
 {
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private string m_name;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private uint m_code;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private int m_ro_number;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private string m_guid;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private int m_rank;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private Unit[] m_base;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private Type[] m_dims;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private double[,] m_ltog;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private double[,] m_gtol;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private Hashtable m_defs;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private Unit[] m_basis_orig;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private Unit[] m_defaults_orig;
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private Hashtable m_unit_syms = new();
 
     [MirrorVerified("UnitSystemDifferentialTests")]
@@ -476,13 +476,13 @@ public partial class UnitSystem : MarshalByRefObject
     /// </summary>
     private partial class Default : IComparable
     {
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public readonly int[] Vector;
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public readonly int Scalar;
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public readonly int Order;
-        [MirrorTested("Mcd.UnitSystem")]
+        [MirrorVerified("UnitSystemDifferentialTests")]
         public readonly Unit Unit;
 
         [MirrorVerified("UnitSystemDifferentialTests")]
