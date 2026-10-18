@@ -110,7 +110,7 @@ public partial class AppException : ApplicationException
 
     /// <summary>The messages joined by tabs ("error" when there are none), raised with <paramref name="handle"/> as
     /// the argument.</summary>
-    [MirrorTested("Mpl.Run.AppException")]
+    [MirrorVerified("AppExceptionDifferentialTests")]
     public static object Raise(object[] msgs, uint handle)
     {
         if (msgs == null || msgs.Length == 0) return Raise("error", handle);
