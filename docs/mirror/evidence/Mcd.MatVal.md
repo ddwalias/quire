@@ -1,8 +1,8 @@
 # Mcd.MatVal — batch 2b foundations
 
 - **Original:** mplrun.dll, Prime 12.0.1.0; SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`; MVID `17a0933b-4988-4c18-963d-563998321cc8`.
-- **REA:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (inspect_managed_members, 2026-10-14).
-- **Decompiled view:** ILSpy 11.1.0.9782, run under Linux .NET 10 against the same installed file; raw view remains in /tmp.
+- **Inspection record:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (managed-member inspection, 2026-10-14).
+- **Decompiled view:** ilspycmd 11.1.0.9782, run under Linux .NET 10 against the same installed file; raw view remains in /tmp.
 - **Quire:** src/Quire.Mpl/Mcd/MatVal.cs; behavior tests MatValTests; direct scenarios MatValDifferentialTests.
 - Scope is the exact rows below. Other methods, including nested MatDim implementations, remain open.
 
@@ -59,19 +59,19 @@
 | IsPtrNan(i4, i4) | 0x0600052f | 36abb07aca75a638661364cc8d75713b0e53196acd75b7f89472e32566310b83 | By-reference overload tests upper 32 bits equal 0xffffffff without changing input; private two-index overload tests indexed real backing. | Static observed; direct cases below only | Tested |
 | contains(object) | 0x0600051a | — | Return false for a null table; otherwise enumerate all values, return true on object reference identity or recursively search MatVal values. Does not inspect keys, pointer markers, dimensions, or value equality, and does not mutate state. | Same-artifact IL; 15 direct comparisons; finite acyclic inputs only; see Lane B checkpoint | Verified |
 | AllocImaginary() | 0x06000530 | ab164ac11450fc305fd20ab7bf9386dc8b5cea91bb534259564d201ff54c94c8 | Replace imaginary backing with newly allocated zero array of real backing length; null real backing throws. | Static observed; direct cases below only | Verified |
-| Canonicalize() | 0x0600043b | — | If the pointer table is nonnull, call `CanonicalizePtrs`; always return this matrix. Canonicalization may change the matrix dimension, pointer table, backing arrays, stride, offset, Shared flag, pointer keys, and pointed-to zero dimensions. | Same-artifact ILSpy/IL; 10 direct cases; finite cases in Lane B checkpoint | Verified |
+| Canonicalize() | 0x0600043b | — | If the pointer table is nonnull, call `CanonicalizePtrs`; always return this matrix. Canonicalization may change the matrix dimension, pointer table, backing arrays, stride, offset, Shared flag, pointer keys, and pointed-to zero dimensions. | Same-artifact ilspycmd/IL; 10 direct cases; finite cases in Lane B checkpoint | Verified |
 | TidyPtrs(int32, int32, Mcd.Dim, bool) | 0x06000442 | — | With zero compatible pointers, retain the table and return false when another live pointer is incompatible; otherwise clear it and return true. For full logical coverage, adopt a nonnull common dimension and reinsert pointers, using zero-aware reinsertion only when every pointer is zero. For partial coverage, require matrix/common-dimension compatibility, merge dimensions, and reinsert; otherwise return false without reinsertion. Reinsertion may repack shared storage and mutate zero-pointer dimensions. | Same-artifact IL/parameters; 15 direct comparisons; internal count arguments are explicit | Verified |
 | IsUniformPtrs() | 0x06000458 | — | Inspect only entries whose real slot has the pointer-NaN marker; merge compatible dimensions, allow `mcd_zero` values, return false on other incompatible dimensions, then pass the live count and common dimension to `TidyPtrs`. May canonicalize pointer storage and dimensions. | Same-artifact IL; 15 direct cases; finite cases in Lane B checkpoint | Verified |
 | IsUniformPtrsNoChange() | 0x06000459 | — | Return true for a null table; ignore stale entries; for each live pointer return false when its dimension is nonscalar or differs from the matrix dimension and is not special. Does not change matrix or pointer state. | Same-artifact IL; 6 direct cases including nonscalar nested-matrix dimensions; finite cases in Lane B checkpoint | Verified |
-| get_HasPtrs() | 0x06000434 | — | Return false for a null pointer table; otherwise return the negation of IsUniformScalar, which may inspect and canonicalize live pointers. | Same-artifact ILSpy; 9 direct comparisons; finite cases in lane checkpoint | Verified |
-| get_RepHasPtrs() | 0x06000435 | — | Return false for a null table; return true for any PtrNan-marked live offset; if none are live, clear the table, set it to null, and return false. | Same-artifact ILSpy; 4 direct comparisons; finite cases in lane checkpoint | Verified |
-| get_IsUniformScalar() | 0x0600043e | — | Return true for a null table; otherwise delegate to IsUniformScalarPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
-| IsUniformScalarPtrs() | 0x0600043f | — | Inspect only PtrNan-marked entries; return false for a live non-NumVal or incompatible nonspecial dimension, accept mcd_zero dimensions, and pass the live count/common dimension to TidyPtrs. May mutate matrix and pointer state. | Same-artifact ILSpy; 9 direct comparisons; finite cases in lane checkpoint | Verified |
-| get_IsUniform() | 0x06000457 | — | Return true for a null table; otherwise delegate to IsUniformPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ILSpy; 10 direct comparisons; finite cases in lane checkpoint | Verified |
-| IsUniformDimOf(Mcd.Dim) | 0x06000437 | — | Inspect only live PtrNan entries and compare their values against the current matrix dimension; if live count equals logical area, assign the exact requested dimension reference and return true, including null and zero-area requests; otherwise fall back to equality with the current matrix dimension. | Same-artifact ILSpy; 10 direct comparisons; finite cases in lane checkpoint | Verified |
-| get_IsDimless() | 0x0600043a | — | First require IsUniformScalar; return false without checking m_dim when that fails; otherwise return Dim.Id_b(m_dim). | Same-artifact ILSpy; 7 direct comparisons; finite cases in lane checkpoint | Verified |
-| get_PhysicalDimension() | 0x06000452 | — | Return the virtual UniformDimension property result. | Same-artifact ILSpy; 6 direct comparisons; finite cases in lane checkpoint | Verified |
-| get_UniformDimension() | 0x06000453 | — | Return mixed_matrix_dim when IsUniform is false; otherwise return m_dim. May canonicalize pointer storage through IsUniform. | Same-artifact ILSpy; 8 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_HasPtrs() | 0x06000434 | — | Return false for a null pointer table; otherwise return the negation of IsUniformScalar, which may inspect and canonicalize live pointers. | Same-artifact ilspycmd; 9 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_RepHasPtrs() | 0x06000435 | — | Return false for a null table; return true for any PtrNan-marked live offset; if none are live, clear the table, set it to null, and return false. | Same-artifact ilspycmd; 4 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsUniformScalar() | 0x0600043e | — | Return true for a null table; otherwise delegate to IsUniformScalarPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ilspycmd; 8 direct comparisons; finite cases in lane checkpoint | Verified |
+| IsUniformScalarPtrs() | 0x0600043f | — | Inspect only PtrNan-marked entries; return false for a live non-NumVal or incompatible nonspecial dimension, accept mcd_zero dimensions, and pass the live count/common dimension to TidyPtrs. May mutate matrix and pointer state. | Same-artifact ilspycmd; 9 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsUniform() | 0x06000457 | — | Return true for a null table; otherwise delegate to IsUniformPtrs, which may canonicalize pointer storage and dimensions. | Same-artifact ilspycmd; 10 direct comparisons; finite cases in lane checkpoint | Verified |
+| IsUniformDimOf(Mcd.Dim) | 0x06000437 | — | Inspect only live PtrNan entries and compare their values against the current matrix dimension; if live count equals logical area, assign the exact requested dimension reference and return true, including null and zero-area requests; otherwise fall back to equality with the current matrix dimension. | Same-artifact ilspycmd; 10 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_IsDimless() | 0x0600043a | — | First require IsUniformScalar; return false without checking m_dim when that fails; otherwise return Dim.Id_b(m_dim). | Same-artifact ilspycmd; 7 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_PhysicalDimension() | 0x06000452 | — | Return the virtual UniformDimension property result. | Same-artifact ilspycmd; 6 direct comparisons; finite cases in lane checkpoint | Verified |
+| get_UniformDimension() | 0x06000453 | — | Return mixed_matrix_dim when IsUniform is false; otherwise return m_dim. May canonicalize pointer storage through IsUniform. | Same-artifact ilspycmd; 8 direct comparisons; finite cases in lane checkpoint | Verified |
 | ColDimArray(i4) | 0x06000438 | — | Allocate `Dim[Rows]`; scan from `Offset + c * Anr` through `start + Rows` by one. Check the real backing pointer marker before reading `m_dim`; live pointer values are converted through `DimVal.DimOf`, and a nonscalar dimension returns null immediately. No logical column bounds check. | Same-artifact IL; 11 direct cases; physically safe inputs only; finite cases in lane checkpoint | Verified |
 | RowDimArray(i4) | 0x06000439 | — | Allocate `Dim[Cols]`; compute `start = Offset + r`, cache `Anr`, then scan to `start + stride * Cols` by that stride. Check the real backing pointer marker before reading `m_dim`; live pointer values are converted through `DimVal.DimOf`, and a nonscalar dimension returns null immediately. No logical row bounds check. | Same-artifact IL; 11 direct cases; physically safe inputs only; finite cases in lane checkpoint | Verified |
 | CanonicalizePtrs() | 0x06000441 | — | Normalize `string_dim` to identity, seed the common dimension from `m_dim` only when logical cells include non-pointer data, then classify only PtrNan-marked table entries. Merge compatible NumVal dimensions, accept `mcd_zero`, flag other live values/dimensions, and pass live/zero counts plus the common dimension to `TidyPtrs`; may mutate matrix and pointer state through reinsertion. | Same-artifact IL; 18 direct comparisons | Verified |
@@ -95,13 +95,13 @@ The static initializer is explicit (the original type is not beforefieldinit). F
 
 ## Test cases and open work
 
-MatValTests: 4/4 passed in process. MatValDifferentialTests: 2/2 passed against the installed assembly in process (0 skipped), covering 16 constructor scenarios, negative/short/inconsistent storage without validation, shape/hash/index queries (−1,0,1,7), zero-stride errors, flag set/clear, padding NaN/zero imaginary arrays, and four NaN/finite payload patterns. Wrapping alias behavior and private IsPtrNan(i,j) also have independent assertions. No whole-type equivalence is claimed. Pointer fields are declaration-only analysis; their native lifecycle remains open. The manifest review also checked earlier pending changes: NumVal.Zero (0x040000fb) and One (0x040000fe) have field flags 22 (public static, mutable), and the complete REA Mcd.RngVal method inventory contains no declared ToString override. The three previous manifest lines were removed/replaced on that structural evidence; scalar/range behavior is not certified here.
+MatValTests: 4/4 passed in process. MatValDifferentialTests: 2/2 passed against the installed assembly in process (0 skipped), covering 16 constructor scenarios, negative/short/inconsistent storage without validation, shape/hash/index queries (−1,0,1,7), zero-stride errors, flag set/clear, padding NaN/zero imaginary arrays, and four NaN/finite payload patterns. Wrapping alias behavior and private IsPtrNan(i,j) also have independent assertions. No whole-type equivalence is claimed. Pointer fields are declaration-only analysis; their native lifecycle remains open. The manifest review also checked earlier pending changes: NumVal.Zero (0x040000fb) and One (0x040000fe) have field flags 22 (public static, mutable), and the complete inspection Mcd.RngVal method inventory contains no declared ToString override. The three previous manifest lines were removed/replaced on that structural evidence; scalar/range behavior is not certified here.
 
 Matrix pointer canonicalization, access/mutation, dimension factories, nested dimensions, arithmetic, copy-on-write, and native lifecycle remain outside this foundation contract.
 
 ## Access / pointer representation contracts (implementation in progress)
 
-Same-artifact REA inventory and ILSpy view establish these contracts before implementation:
+same-artifact member inventory and ilspycmd view establish these contracts before implementation:
 
 - Raw access uses backing offset/allocated stride without logical bounds checks. One-index access uses the raw
   offset, not row-major or logical flattening. get returns a live pointer value only when the slot has PtrNan;
@@ -129,7 +129,7 @@ Same-artifact REA inventory and ILSpy view establish these contracts before impl
   Copy constructor clears flags to MatrixTag, packs storage, preserves the shared dimension, and shallow-copies
   live pointer objects/table (nested pointed-to values are not recursively copied).
 - DimVal.MatrixDimension builds a 1×1 uniform MatDim from m_dim; MatDimOf dereferences the value and delegates.
-  These dependency contracts are bound to the same REA artifact and will be recorded separately.
+  These dependency contracts are bound to the same inspection artifact and will be recorded separately.
 
 ## Indexed access, axis enumeration and scalar arithmetic contracts
 
@@ -166,10 +166,10 @@ unbounded equivalence or automatically promote every private member.
 
 Combined independent in-process run: 123 passed, 0 failed, 0 skipped. Focused direct comparison run: 24 passed,
 0 failed, 0 skipped (21 matrix/function scenarios plus 3 pre-existing UnitSystem scenarios). The root core and
-remaining MatDim methods need their exact token/hash rows appended from the retained REA inventory; child
+remaining MatDim methods need their exact token/hash rows appended from the retained inspection inventory; child
 records already contain their selected rows. This is the next evidence bookkeeping task, not missing code.
 
 Three old Quire-only helpers were removed after their callers were replaced with original owning members:
-Check(int,int), CopyElement(MatVal,int,int,int,int), Like(int,int). Complete same-artifact REA MatVal method
+Check(int,int), CopyElement(MatVal,int,int,int,int), Like(int,int). complete same-artifact MatVal method
 inventory has no methods with these names. Removing their old manifest rows is intentional; no original
 member was removed. Native pointer default/layout checks now pass, but their statuses have not been promoted.

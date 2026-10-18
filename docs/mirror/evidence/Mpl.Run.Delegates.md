@@ -1,7 +1,7 @@
 # Mpl.Run.Delegates
 
 - Original mplrun.dll 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
-- REA `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8`; same-artifact ILSpy output retained outside repository.
+- inspection record `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8`; same-artifact ilspycmd output retained outside repository.
 
 Delegates provides reflection caches, delegate factories, currying, and projections for MPL function evaluation:
 - Static type caches:
@@ -29,7 +29,7 @@ Delegates provides reflection caches, delegate factories, currying, and projecti
   - `project21`, `project22`: binary projection delegates returning first or second argument.
   - `pi_21`, `pi_22`: `DelegateFunction` instances wrapping `project21` and `project22`.
 
-| Exact member (REA decoded signature) | Token | Normalized IL prefix | Status |
+| Exact member (decoded signature) | Token | Normalized IL prefix | Status |
 |---|---|---|---|
 | `Mpl.Run.Delegates..cctor()` | 0x06000319 | 290077c082ce36bd | Analyzed |
 | `Mpl.Run.Delegates.clo_params(System.Type[])` | 0x0600031a | 36c46086f40c398e | Verified |

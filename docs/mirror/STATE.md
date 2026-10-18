@@ -13,8 +13,8 @@ current generated coverage/status supersedes this dated snapshot.
   `RationalTests` and `RationalDifferentialTests`. Non-ASCII negative-sign culture comparison remains open.
 - **Open:** Remaining Phase 1 methods and hand-written classifications; coverage-excluded surface;
   generator-note reconciliation; D4–D7 and licensing/legal confirmation. No accepted deviations recorded.
-- **Access checkpoint:** Installed binaries accessible; REA MCP was not exposed in the reconciliation session.
-  Recheck availability on resume. If still unavailable, record blocked analysis; do independent work under PLAN rule 5.
+- **Access checkpoint:** Installed binaries are accessible. Use `ilspycmd` for readable managed IL and C#; record
+  unavailable native or mixed-mode details as blocked under PLAN rule 5 and continue independent work.
 
 ## Recorded validation
 

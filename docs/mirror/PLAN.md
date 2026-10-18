@@ -136,14 +136,15 @@ Stable rule numbers/anchor for D9 and existing reports.
 
 1. **Ownership:** Confirm original owning member before moving behavior. Preserve private/nested members;
    evidence remaining Quire-only code. No name-based or bulk helper migration.
-2. **Evidence:** Before behavior changes, read the original with the tool its artifact needs, per
-   [evidence/README.md](evidence/README.md): for IL-only assemblies (`mplrun`) the local reference
-   (`tools/reference/reference.py`: ILSpy C#, member tokens, IL on request); for native and mixed-mode C++/CLI
-   assemblies (`iengine`) REA, including its native decompiler. Use REA cross-references and call paths to settle
-   ownership (rule 1) and trace callers. Record per-member contract, confidence/limits, observed/inferred
-   cases; trace relevant helpers, calls, errors, mutation, edge cases, initialization/events/lifecycle.
-   Documentation/black-box results corroborate; documentation alone is incomplete. Original code (IL or
-   decompiled) stays in the gitignored `.mirror-cache/` and is never committed. Analysis already authorized;
+2. **Evidence:** Before behavior changes, generate the local reference with
+   `python tools\reference\reference.py <type> --il`. It uses `ilspycmd` to save an artifact-bound C# view, member
+   index and type IL under the ignored `.mirror-cache/`. Record artifact identity, member tokens, signatures and the
+   IL/C# evidence used. If native or mixed-mode implementation details are not visible, use verified metadata and
+   direct observations; leave unresolved behavior open or blocked rather than inferring it. Record per-member
+   contract, confidence/limits, observed/inferred cases; trace relevant helpers,
+   calls, errors, mutation, edge cases, initialization/events/lifecycle. Documentation and black-box results
+   corroborate; documentation alone is incomplete. Original code (IL or decompiled) stays in the gitignored
+   `.mirror-cache/` and is never committed. Analysis already authorized;
    applicable licensing/legal constraints still need confirming.
 3. **Tests:** Reconstruct each body from the original as its source most likely was: same control
    flow, evaluation order, calls, locals, exceptions and mutation, written as idiomatic C# (no decompiler

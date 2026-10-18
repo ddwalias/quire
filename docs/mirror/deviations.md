@@ -36,7 +36,7 @@ Copy this template for each proposed deviation. Keep its ID stable if the entry 
 - **Status:** proposed | accepted-temporary | accepted-permanent | rejected | superseded
 - **Category:** structural | behavioral
 - **Original counterpart:** assembly and version; type; member and full signature (or type/signature for a structural difference)
-- **Original contract and evidence:** assembly metadata for structural shape; REA analysis, documentation, and/or direct differential observations for behavior. Distinguish observed from inferred behavior; include confidence and limits. Unknown behavioral contract is not an intentional deviation.
+- **Original contract and evidence:** assembly metadata for structural shape; `ilspycmd` inspection where readable, documentation, and/or direct differential observations for behavior. Distinguish observed from inferred behavior; include confidence and limits. Unknown behavioral contract is not an intentional deviation.
 - **Quire counterpart and behavior:** exact behavior and source path(s); link relevant callers/helpers when needed.
 - **Difference:** concise statement of how Quire intentionally differs from the established original contract.
 - **Reason / necessity:** evidence-backed reason this difference is required or accepted.

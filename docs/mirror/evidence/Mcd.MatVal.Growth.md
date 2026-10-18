@@ -1,7 +1,7 @@
 # Mcd.MatVal growth and assignment
 
 - **Original:** mplrun.dll 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
-- **Reference:** ilspycmd 11.1.0.9782 (tools/reference); REA `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (inspect_managed_members).
+- **Reference:** ilspycmd 11.1.0.9782 (tools/reference); inspection record `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (managed-member inspection).
 - **Quire:** `src/Quire.Mpl/Mcd/MatVal.Growth.cs`; tests: `MatValGrowthTests`, `MatValGrowthDifferentialTests`.
 
 | Member | Token | Contract | Confidence / limits | Status |

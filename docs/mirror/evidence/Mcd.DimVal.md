@@ -2,7 +2,7 @@
 
 - **Original:** `mplrun.dll` 12.0.1.0 (IL-only, net10.0), SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`,
   MVID `17a0933b-4988-4c18-963d-563998321cc8`
-- **REA:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (inspect_managed_members, 2026-10-14);
+- **Inspection record:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (managed-member inspection, 2026-10-14);
   decompiled view: ilspycmd 11.1.0.9782
 - **Quire:** `src/Quire.Mpl/Mcd/DimVal.cs`; tests: `Quire.Differential.Tests.DimValDifferentialTests`
 
@@ -11,7 +11,7 @@ error handling, and dynamic call routing.
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
-| `ApplyMatVal`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)` | 0x060006b0 | — | Convert `mv` with `asMatrix(2u)`, pack its elements with `PackObjects()`, and pass that array to virtual `fv.Apply`; conversion exceptions occur before application. | Same-artifact ILSpy/IL; five direct cases in Lane B checkpoint | Verified |
+| `ApplyMatVal`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)` | 0x060006b0 | — | Convert `mv` with `asMatrix(2u)`, pack its elements with `PackObjects()`, and pass that array to virtual `fv.Apply`; conversion exceptions occur before application. | Same-artifact ilspycmd/IL; five direct cases in Lane B checkpoint | Verified |
 | `.ctor`0()` | 0x060006ce | IL | .ctor`0() contract | High | Verified |
 | `get_IsPolymorphic`0()` | 0x06000660 | IL | get_IsPolymorphic`0() contract | High | Verified |
 | `get_PhysicalUnit`0()` | 0x06000661 | IL | get_PhysicalUnit`0() contract | High | Verified |

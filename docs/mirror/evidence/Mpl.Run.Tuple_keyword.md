@@ -2,7 +2,7 @@
 
 - **Original:** `mplrun.dll` 12.0.1.0 (IL-only, net10.0), SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`,
   MVID `17a0933b-4988-4c18-963d-563998321cc8`
-- **Original inspection:** `ilspycmd` 11.1.0.9782 (`-t` and `-il`), 2026-10-16; temporary output `/tmp/a-tuple-keyword.cs` and `/tmp/a-list-il.txt`
+- **Original Inspection record:** `ilspycmd` 11.1.0.9782 (`-t` and `-il`), 2026-10-16; temporary output `/tmp/a-tuple-keyword.cs` and `/tmp/a-list-il.txt`
 - **Quire:** `src/Quire.Mpl/Run/ListAndTupleKeywords.cs`; tests: `Quire.Differential.Tests.SimpleKeywordDifferentialTests`
 
 `Tuple_keyword` is the `Tuple` keyword with key number 14.

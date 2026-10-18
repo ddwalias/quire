@@ -1,8 +1,8 @@
 # Mcd.MatDim — batch 2b foundations
 
 - **Original:** mplrun.dll, Prime 12.0.1.0; SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`; MVID `17a0933b-4988-4c18-963d-563998321cc8`.
-- **REA:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (inspect_managed_members, 2026-10-14).
-- **Decompiled view:** ILSpy 11.1.0.9782, run under Linux .NET 10 against the same installed file; raw view remains in /tmp.
+- **Inspection record:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (managed-member inspection, 2026-10-14).
+- **Decompiled view:** ilspycmd 11.1.0.9782, run under Linux .NET 10 against the same installed file; raw view remains in /tmp.
 - **Quire:** src/Quire.Mpl/Mcd/MatDim.cs; behavior tests MatDimTests; direct scenarios MatDimDifferentialTests.
 - Scope is the exact rows below. Other methods, including nested MatDim implementations, remain open.
 
@@ -144,7 +144,7 @@ MatDimTests: 3/3 passed in process. MatDimDifferentialTests: 1/1 passed against 
 
 ## Remaining MatDim contracts (implementation in progress)
 
-Same-artifact REA member inventory and ILSpy view establish the following additional contracts.
+Same-artifact inspection member inventory and ilspycmd view establish the following additional contracts.
 Per-member tokens/hashes and test statuses are appended when these members are validated.
 
 - Base dispatch: Eq_b, MMult, DMult, Transpose and Det call the corresponding virtual member without null checks.

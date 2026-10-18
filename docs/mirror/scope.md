@@ -91,7 +91,7 @@ The table records what each component is and how it would be mirrored if the sco
 
 | Component | What is visible | Size | Treatment |
 |---|---|---|---|
-| `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` (native-only PTC DLLs) | Exported symbols; REA native analysis where supported | ≈ 1,390 exports, ≈ 42 exported classes | Mirror the exported surface (decoded C++ names become classes and methods). REA may expose additional internals for analysis; inspect the original counterpart before implementing behavior where supported, and record unavailable or ambiguous internals as limits/blocked rather than assuming behavior. |
+| `efistatsci_`, `efisymbolics-umgd`, `engutils`, `mcaduser`, `mctranslator`, `mshex`, `msmpl`, `mspcons`, `msprolog`, `utl` (native-only PTC DLLs) | Exported symbols; readable metadata and IL via `ilspycmd` where available | ≈ 1,390 exports, ≈ 42 exported classes | Mirror the exported surface (decoded C++ names become classes and methods). Implement behavior only when supported by visible evidence or direct observations; record unavailable or ambiguous internals as limits/blocked rather than assuming behavior. |
 | `MathcadPrime.exe`, `LicenseWizard.exe` (native hosts) | No exports: application host stubs | n/a | `Quire.exe` already covers the app host; licensing is deferred |
 | `axiom/MC*.NRLIB` | 64 compiled Axiom packages written by Mathcad | 64 packages | Mirror as independently written FriCAS (SPAD) packages, keeping the package and operation names |
 | The 22 non-`MC` `axiom/*.NRLIB` modules (`EXPR`, `GF`, `ALG2`, `KLEENEAN`, …) | Standard Axiom names | 22 | *Verify*: identical to upstream means dependency (FriCAS); modified by PTC means mirror |

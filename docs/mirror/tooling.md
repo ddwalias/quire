@@ -16,8 +16,8 @@
 | `docs/mirror/native/` | The §1.3 inventory: 1,389 exports from 11 native DLLs (47 exported classes), 464 Lisp definitions, 712 Prolog predicates, 86 Axiom packages with 2,497 operations, and the `MCADINCL.H` API. Names and signatures only. |
 | `tests/Quire.Mirror.Tests` | Fails when a manifest line changes or disappears, or when an in-scope Mathcad type has no Quire type. It guards against drift; fidelity to Mathcad is the generator's job, and `notes.txt` lists every known difference. |
 
-The reader was cross-checked with REA: for `Ptc.Controls.SolveBlock.dll` the method counts of all 23 named types
-match REA's managed-member inventory, and for `mshex.dll` the 380 exports match exactly.
+The reader was cross-checked with Inspection record: for `Ptc.Controls.SolveBlock.dll` the method counts of all 23 named types
+match inspection's managed-member inventory, and for `mshex.dll` the 380 exports match exactly.
 
 ### Which members are mirrored
 

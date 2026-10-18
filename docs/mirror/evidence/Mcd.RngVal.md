@@ -1,12 +1,12 @@
 # Mcd.RngVal and iteration prerequisites
 
 - **Original:** Mathcad Prime 12.0.1.0 `mplrun.dll`, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
-- **REA:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (`inspect_managed_members`), same-artifact managed metadata, instruction anchors, call edges and body hashes. Decompiled view: retained ILSpy files `mplrun/Mcd/RngVal.cs`, `RngValInterpolate.cs`, `Iterator.cs`, `RangeIterator.cs` in the preceding implementation's external scratchpad. No proprietary bodies are retained here.
+- **Inspection record:** `ev_c8ca49d8286456aa09639a00185113080927a4662dda8cb0c122b48acc2f6af8` (`managed-member inspection`), same-artifact managed metadata, instruction anchors, call edges and body hashes. Decompiled view: retained ilspycmd files `mplrun/Mcd/RngVal.cs`, `RngValInterpolate.cs`, `Iterator.cs`, `RangeIterator.cs` in the preceding implementation's external scratchpad. No proprietary bodies are retained here.
 - **Quire:** `src/Quire.Mpl/Mcd/RngVal.cs`, `src/Quire.Mpl/Mcd/Iterator.cs`; existing differential suite: `RngValDifferentialTests`.
 
 The RngVal conversion methods are directly compared in `RngValConversionsDifferentialTests`; matrix iteration is directly compared in `MatrixIteratorDifferentialTests`. Managed numeric conversion behavior, especially NaN/infinity/out-of-range double-to-int results, requires runtime corroboration on the comparison host.
 
-Signatures retain REA's exact decoded metadata types (`class:<coded-index>`); tokens and hashes are meaningful only with the artifact identity above. Nested iterator names are unqualified in REA's retained inventory; their type tokens bind them to `Mcd.Iterator`'s same-artifact nested declarations.
+Signatures retain exact decoded metadata types in the inspection record (`class:<coded-index>`); tokens and hashes are meaningful only with the artifact identity above. Nested iterator names are unqualified in the retained inspection inventory; their type tokens bind them to `Mcd.Iterator`'s same-artifact nested declarations.
 
 ## Mcd.RngVal (`0x02000095`)
 
