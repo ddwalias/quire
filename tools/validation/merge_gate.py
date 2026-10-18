@@ -445,7 +445,8 @@ def replay(base, tip, main, repo=ROOT):
                           else ['update-index', '--add', '--cacheinfo', entry]))
                 except subprocess.CalledProcessError as error:
                     raise ReplayConflict(f'cannot replay {commit[:12]} onto {main[:12]}: {path} is a file on one side '
-                                         f'and a directory on the other ({error.stderr.decode().strip()})') from error
+                                         f'and a directory on the other ({error.stderr.decode().strip()}); rebase the '
+                                         'branch onto main, resolve it, and run --validate-only again') from error
             name, email, date, message = run('show', '-s', '--format=%an%x00%ae%x00%ad%x00%B', commit).split('\0', 3)
             parent = run('commit-tree', run('write-tree'), '-p', parent, '-m', message, extra={
                 'GIT_AUTHOR_NAME': name, 'GIT_AUTHOR_EMAIL': email, 'GIT_AUTHOR_DATE': date})
@@ -525,12 +526,13 @@ def apply_validated(args):
         if record['validation_mode'] == 'runtime':
             landed = baseline_commit(landed, files['baseline.json'], args.branch, record['results'], ROOT,
                                      files.get('phase-baseline.json'), main)
-        # main may have moved outside the gate (a maintainer commit): the source lint must still be the one recorded.
-        # Findings read from the test assembly come from focused inputs, which stale_reasons has shown unchanged.
-        expected = json.loads(files['baseline.json'] if record['validation_mode'] == 'runtime'
-                              else git('show', f'{main}:{BASELINE}')).get('lint', [])
-        if landed_lint(landed, ROOT) != sorted(f for f in expected if f.split(' | ')[1:2] != ['test assembly type']):
-            reasons = ['the source lint on the landed tree differs from the validated baseline\'s']
+            # main may have moved outside the gate (a maintainer commit): the source lint must still be the one the
+            # run recorded. Findings read from the test assembly come from focused inputs, shown unchanged above. A
+            # prose run lints nothing, in the one-shot gate too, so it has no lint to compare.
+            expected = json.loads(files['baseline.json']).get('lint', [])
+            if landed_lint(landed, ROOT) != sorted(f for f in expected
+                                                   if f.split(' | ')[1:2] != ['test assembly type']):
+                reasons = ['the source lint on the landed tree differs from the validated baseline\'s']
     if reasons:
         delete_record(args.branch, ROOT)
         durations = record.get('durations') or {}

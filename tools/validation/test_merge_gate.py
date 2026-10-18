@@ -910,6 +910,22 @@ class OptimisticGateTests(unittest.TestCase):
                           self.on_main({'src/Quire.Engine/Dec.cs': 'class D { void F() { goto IL_0001; IL_0001: ; } }\n'}))
         self.assertNotEqual(merge_gate.landed_lint('main', self.repo), [])
 
+    def test_a_prose_record_lands_over_a_lint_change_on_main(self):
+        # A maintainer commit that changes the lint (main's committed baseline does not record it) must not leave
+        # prose records stale forever: a prose run lints nothing, in the one-shot gate too.
+        dec = {'src/Quire.Engine/Dec.cs': 'class D { void F() { goto IL_0001; IL_0001: ; } }\n'}
+        self.on_main(dec)
+        self.branch('receipt', {'docs/mirror/WORK.md': 'Receipt\n'})
+        self.assertEqual(self.validate('receipt')[0], 0)
+        code, out = self.apply('receipt')  # V == M
+        self.assertEqual(code, 0, out)
+        self.branch('receipt2', {'README.md': 'Receipt\n'})
+        self.assertEqual(self.validate('receipt2')[0], 0)
+        self.on_main({'src/Quire.Engine/Dec2.cs': dec['src/Quire.Engine/Dec.cs']})
+        code, out = self.apply('receipt2')  # V != M, main's move changes the lint again
+        self.assertEqual(code, 0, out)
+        self.assertNotEqual(merge_gate.landed_lint('main', self.repo), [])
+
     def test_the_branchs_changes_come_from_git_not_the_record(self):
         self.validate()
         record, files = self.record()
@@ -955,6 +971,7 @@ class OptimisticGateTests(unittest.TestCase):
         with self.assertRaises(merge_gate.ReplayConflict) as raised:
             merge_gate.replay(base, self.git('rev-parse', 'file'), self.git('rev-parse', 'main'), self.repo)
         self.assertIn('is a file on one side and a directory on the other', str(raised.exception))
+        self.assertIn('rebase the branch onto main, resolve it, and run --validate-only again', str(raised.exception))
         with mock.patch.object(merge_gate, 'stale_reasons', return_value=[]), \
                 mock.patch.object(merge_gate, 'read_record', return_value=(
                     {'branch': 'file', 'base': base, 'tip': self.git('rev-parse', 'file'), 'validation_mode': 'prose',
@@ -1053,28 +1070,35 @@ class LaneSnippetTests(unittest.TestCase):
             script = re.search(r'```sh\n(#!/bin/sh\n.*?)```', flow, re.S)[1]
             script = (script.replace('MAIN=/mnt/c/Projects/Quire', f'MAIN={t}/main')
                       .replace('LOCK=/tmp/quire-merge.lock', f'LOCK={t}/lock')
-                      .replace('PULL="git fetch -q origin && git merge -q --ff-only origin/main"', 'PULL=true')
+                      .replace('PULL="git fetch -q origin && git merge -q --ff-only origin/main"',
+                               f'PULL="echo PULL >> {t}/log"')
                       .replace('PUSH', f'echo PUSHED >> {t}/log'))
             (t / 'run.sh').write_text(script)
             lane = t / 'lane'
             lane.mkdir()
-            for command in (['init', '-q', '-b', 'main'], ['-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q',
-                            '--allow-empty', '-m', 'base'], ['checkout', '-qb', 'b']):
+            # The lane's checkout is on main, and main has moved past b's base: the script rebases b itself.
+            commit = ['-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q', '--allow-empty', '-m']
+            for command in (['init', '-q', '-b', 'main'], [*commit, 'base'], ['branch', 'b'], [*commit, 'moved']):
                 subprocess.run(['git', *command], cwd=lane, check=True)
             code = subprocess.run(['sh', str(t / 'run.sh'), 'b'], cwd=lane, env=dict(os.environ, T=str(t)),
                                   capture_output=True).returncode
+            git = lambda *a: subprocess.run(['git', *a], cwd=lane, capture_output=True, text=True).stdout.strip()
+            self.assertEqual(git('merge-base', 'main', 'b'), git('rev-parse', 'main'))
             return code, (t / 'log').read_text().split('\n')[:-1]
 
     @unittest.skipUnless(shutil.which('flock') and shutil.which('sh'), 'needs sh and flock')
     def test_the_lane_script(self):
-        v, a, one = '--validate-only 0', '--apply-validated', '--apply'
+        # Each validation starts from a fresh main (PULL), and each landing pulls first under the lock.
+        v, a, one, pull = '--validate-only 0', '--apply-validated', '--apply', 'PULL'
         for codes, expected in [
-                ({'apply_validated': '0'}, (0, [v, f'{a} 0', 'PUSHED'])),
-                ({'apply_validated': '1'}, (1, [v, f'{a} 1'])),
-                ({'validate_only': '1'}, (1, ['--validate-only 1'])),
-                ({'apply_validated': '4 0'}, (0, [v, f'{a} 4', v, f'{a} 0', 'PUSHED'])),
-                ({'apply_validated': '4 4', 'apply': '0'}, (0, [v, f'{a} 4', v, f'{a} 4', f'{one} 0', 'PUSHED'])),
-                ({'apply_validated': '4 4', 'apply': '1'}, (1, [v, f'{a} 4', v, f'{a} 4', f'{one} 1']))]:
+                ({'apply_validated': '0'}, (0, [pull, v, pull, f'{a} 0', 'PUSHED'])),
+                ({'apply_validated': '1'}, (1, [pull, v, pull, f'{a} 1'])),
+                ({'validate_only': '1'}, (1, [pull, '--validate-only 1'])),
+                ({'apply_validated': '4 0'}, (0, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 0', 'PUSHED'])),
+                ({'apply_validated': '4 4', 'apply': '0'},
+                 (0, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4', pull, f'{one} 0', 'PUSHED'])),
+                ({'apply_validated': '4 4', 'apply': '1'},
+                 (1, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4', pull, f'{one} 1']))]:
             with self.subTest(codes):
                 self.assertEqual(self.run_script(**codes), expected)
 

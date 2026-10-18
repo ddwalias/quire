@@ -657,10 +657,11 @@ flock /tmp/quire-merge.lock python3 tools/validation/merge_gate.py <branch> --ap
     makes it stale;
   - M's `validation-baseline.json` differs from V's in any byte, or, for a run that included the phase profile,
     M's phase baseline does; or the recorded baseline no longer holds the ratchet against M's;
-  - the source lint, run on the landed tree, finds other findings than the recorded baseline's `lint` (for a prose
-    record, M's): the lint reads every `src/` file, not only the focused projects', and `main` can move by a
-    maintainer commit that never passed the gate. Findings read from the test assembly are left out of this
-    comparison, since they come from focused inputs.
+  - the source lint, run on the landed tree, finds other findings than the recorded baseline's `lint`: the lint
+    reads every `src/` file, not only the focused projects', and `main` can move by a maintainer commit that never
+    passed the gate. Findings read from the test assembly are left out of this comparison, since they come from
+    focused inputs. A prose record has no lint to compare: a prose run, in the one-shot gate as well, runs no lint and
+    keeps M's baseline, so a lint change on `main` cannot make it stale.
 - **Baselines.** The branch's baselines are never combined with entries `main` gained meanwhile: a different
   focused baseline on `main` means focused code changed, and the combined tree was never tested, so the run is
   stale. When the run lands, its baseline replaces M's (equal to V's, against which it was checked); without a

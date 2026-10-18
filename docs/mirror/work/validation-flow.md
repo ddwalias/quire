@@ -94,7 +94,8 @@ LOCK=/tmp/quire-merge.lock
 PULL="git fetch -q origin && git merge -q --ff-only origin/main"
 stale=0
 while :; do
-  git rebase -q main || { echo "rebase conflict: resolve and review, then rerun"; exit 1; }
+  flock "$LOCK" sh -c "cd '$MAIN' && $PULL" || exit $?                    # fresh main, briefly under the lock
+  git rebase -q main "$B" || { echo "rebase conflict: resolve and review, then rerun"; exit 1; }
   (cd "$MAIN" && $GATE "$B" --validate-only --jobs 6) || exit $?          # BLOCKED: fix the branch
   flock "$LOCK" sh -c "cd '$MAIN' && $PULL && $GATE '$B' --apply-validated && PUSH"
   code=$?
@@ -103,7 +104,7 @@ while :; do
   stale=$((stale + 1))
   [ $stale -lt 2 ] && continue                                           # stale: validate again
   # Two stale results in a row: the one-shot gate, holding the lock for the whole validation.
-  flock "$LOCK" sh -c "cd '$MAIN' && $PULL && git -C '$PWD' rebase -q main && $GATE '$B' --apply && PUSH"
+  flock "$LOCK" sh -c "cd '$MAIN' && $PULL && git -C '$PWD' rebase -q main '$B' && $GATE '$B' --apply && PUSH"
   exit $?
 done
 ```
