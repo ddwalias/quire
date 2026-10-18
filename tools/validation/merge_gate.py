@@ -18,6 +18,7 @@ import os
 import re
 from pathlib import Path
 import shutil
+import stat
 import subprocess
 import sys
 import tarfile
@@ -235,7 +236,16 @@ PHASE_RUNS_KEPT = 3
 def remove_tree(directory):
     """Remove `directory`, reporting what could not be removed (on Windows, files a lingering process holds open)."""
     failed = []
-    shutil.rmtree(directory, onexc=lambda function, path, error: failed.append(f'{path}: {error}'))
+    def onexc(function, path, error):
+        if os.name == 'nt' and isinstance(error, PermissionError) and Path(path).exists():
+            try:
+                os.chmod(path, stat.S_IREAD | stat.S_IWRITE)
+                function(path)
+                return
+            except OSError as retry_error:
+                error = retry_error
+        failed.append(f'{path}: {error}')
+    shutil.rmtree(directory, onexc=onexc)
     for failure in failed[:10]:
         print(f'could not remove {failure}', flush=True)
     return not failed
@@ -594,7 +604,7 @@ def nightly(args):
               + f'\nResults: {outputs}')
         return 1 if reasons else 0
     finally:
-        shutil.rmtree(tree, ignore_errors=True)
+        remove_tree(tree)
         remove_scratch(results)
 
 
@@ -810,7 +820,7 @@ def main():
             print(f'MERGED: {args.base} -> {merged[:12]}')
         return 0
     finally:
-        shutil.rmtree(tree, ignore_errors=True)
+        remove_tree(tree)
         remove_scratch(results)
 
 
@@ -856,7 +866,9 @@ def baseline_commit(tip, baseline, branch, results, repo=ROOT, phase_baseline=No
             if data is None:
                 run('update-index', '--force-remove', path)
                 continue
-            blob = run('hash-object', '-w', '--stdin', '--path', path, data=data)
+            # The gate records the exact validator bytes. Do not apply working-tree filters (notably CRLF conversion
+            # from core.autocrlf on Windows) when writing the object.
+            blob = run('hash-object', '-w', '--stdin', '--no-filters', data=data)
             run('update-index', '--add', '--cacheinfo', f'100644,{blob},{path}')
         tree = run('write-tree')
         if tree == run('rev-parse', f'{tip}^{{tree}}'):

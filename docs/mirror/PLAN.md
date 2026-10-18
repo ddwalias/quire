@@ -12,14 +12,15 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 **Pipeline** (user decision, 2026-10-18; it supersedes conflicting text in the steps below):
 - **Where:** lanes run as native Windows sessions in worktrees of the NTFS clone `C:\Projects\Quire`, at
   `C:\Projects\Quire-wt\<branch>`; remove the worktree (`git -C C:\Projects\Quire worktree remove --force <path>`)
-  once its branch has merged. Mathcad stays read-only at its install path. (Linux/WSL: worktrees of the ext4 clone
-  `/root/src/quire-main` at `/root/src/worktrees/<branch>`, never under `/mnt/c`; Windows-project work from WSL
-  stays under `/mnt/c`.)
+  once its branch has merged. Mathcad stays read-only at its install path. (Linux/WSL: use the ext4 repository
+  `/root/src/Quire`, with `main` checked out at `/root/src/quire-main`; create new worktrees at
+  `/root/src/worktrees/<branch>`, never under `/mnt/c`. Windows-project work from WSL stays under `/mnt/c`.)
 - **Batch:** a whole class or a functional cluster of about 15–30 methods (the remaining Function methods; whole
   MatVal or MatDim operations).
-- **Local checks:** `dotnet test` of the affected differential tests, then
-  `validate.py --profile focused --method-type <Type> --jobs 14` **without** `--mutate`: exact Release IL and
-  passing comparisons. Run local `--mutate` only to prepare proposals or to chase a gate survivor.
+- **Local checks:** run only the affected behavior and differential test classes. Do not run the focused validator or
+  advisory `quick_check.py` on every batch; the merge gate performs the authoritative shape, coverage, ratchet and
+  mutation checks. Use scoped validation or `quick_check.py` to diagnose a specific issue, and local `--mutate` only
+  to prepare proposals or chase a gate survivor.
 - **One mutation pass:** the gate's, in its own clone with `--no-mutant-cache`. There is no reviewer ([D14](decisions.md)).
 - **Jobs:** `--jobs 14` for `validate.py` and `merge_gate.py` (16 cores, 31 GiB).
 - **Scratch:** before a new unit, `python tools\validation\sweep.py` removes stale validation, coverage, audit and
@@ -61,8 +62,8 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 4. **Merge:** only the [merge gate](validation.md#merge-gate) merges into `main`.
    - **Branches:** one `mirror/<lane>-<unit>` branch per batch, based on current `main`. Never commit to `main`, not
      even lane notes or evidence: they reach `main` through the gate like code. Push only your own `mirror/*` branches
-     to `origin`, for backup, and use `--force-with-lease` only on those; never push or force-push `main` (the
-     maintainer pushes it when the user asks). Review the complete diff; squash once before queueing the gate.
+     to `origin`, for backup, and use `--force-with-lease` only on those; never force-push `main`. The gate pushes
+     `main` after it applies a passing batch. Read your complete diff; squash once before queueing the gate.
      Rebase only when `main` has moved past the branch's base. `merge_gate.py` blocks a branch not based on current
      `main`; `lane_merge.py` pulls `main`, rebases the branch onto it and the gate then validates the rebased
      tip. So after a clean rebase do not re-validate locally;
@@ -77,9 +78,9 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    - **Pushing `main`** (user decision, 2026-10-16; it replaces "never push `main`" above): whoever merges a branch
      through the gate, lane agent or maintainer, pushes `main` to `origin` right after the merge (with the gate's baseline commit), still
      under the lock, so the other checkouts pull it. Only a gate-applied fast-forward is pushed; never force-push `main`.
-   - **Local validation:** affected behavior/direct differential tests are the normal handoff check. Full local
-     shape, coverage, ratchet and mutation validation is optional for ordinary batches; the runtime gate requires
-     all of it. Use scoped `validate.py --method-type <changed types> --mutate` when investigating test sensitivity
+  - **Local validation:** affected behavior/direct differential tests are the normal handoff check. Full local shape,
+    coverage, ratchet and mutation validation is optional for ordinary batches; the runtime gate requires all of it.
+    Use scoped `validate.py --method-type <changed types> --mutate` when investigating test sensitivity
      or preparing survivor/unreachable-line proposals. It mutates every compared method of those types, a superset
      of what the gate mutates in them; the gate may also mutate other types' methods (callers, field readers, users
      of a changed test helper). A local run
@@ -89,7 +90,7 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      is one worker per logical CPU, capped at 12. Lower it when memory or CPU contention slows the host.
    - **Prose edits:** the gate has an explicit allowlist for existing UTF-8, non-executable prose files, including
      WORK and the lane checkpoints. Eligible edits retain the existing baseline and skip runtime validation;
-     normal branch, protected-path, case-collision and independent-review checks still apply. Evidence, policy,
+     normal branch, protected-path and case-collision checks still apply. Evidence, policy,
      configuration, tooling, additions/deletions and mixed changes use the full gate. `--full-validation` forces
      the runtime gate; explicit mutation audit flags also force it. See [validation.md](validation.md#merge-gate).
    - **Survivors and uncovered lines:** a surviving mutant needs a stronger case; a mutant that crashes the test host
@@ -112,21 +113,25 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      the lane file, hand the proposals to the maintainer, and continue with other independent work on a new branch
      from `main`.
    - **Review:** there is no independent review step ([D14](decisions.md)); the merge gate is the check before
-     `main`. The author reads its complete diff before merging. `src/` changes in types another lane owns still
+     `main`. The author reads the complete diff before merging. `src/` changes in types another lane owns still
      need that lane owner's OK; protected-file changes need the maintainer. D14 supersedes the review requirements
      that remain in the prose-shortcut and two-batch sections.
-   - **Two-batch integration:** the maintainer may combine at most two already-reviewed queued batches on a
+   - **Two-batch integration:** the maintainer may combine at most two queued batches on a
      `mirror/integration-<unit>` branch from current `main`, preserving each batch's squashed commit. Each batch
-     keeps its own branch, owner, coherent scope and checkpoint. Record the original and integrated commit ids,
-     owners, review verdicts, exact approvals, and final base/tip in the lane checkpoints. Independently review
-     the complete combined diff, including conflict resolutions and accepted-mutant keys/proofs, before the gate.
-     Keep that candidate fixed during validation. Under the merge lock, run the unchanged gate once against
+     keeps its own branch, owner, coherent scope and checkpoint. Each author reads their complete diff; the
+     integrator reads the combined diff and conflict resolutions. Record original and integrated commit ids,
+     owners, and final base/tip in the lane checkpoints. Keep the candidate fixed during validation. Under the merge
+     lock, run the unchanged gate once against
      current `main`'s baseline and apply atomically only on a pass. Its changed-method scope includes both batches;
      use `--mutate-all` if either batch or the audit schedule requires it. Count this as two logical batch merges
-     for the periodic audit schedule. Unresolved approvals and scopes lacking required runtime evidence stay out;
+     for the periodic audit schedule. Unresolved maintainer-owned acceptance changes and scopes lacking required runtime evidence stay out;
      batching grants no extra protected-path or unvalidated-scope authority. Inspect the entire protected-path
      list. Only the final combined tip is gate-validated; intermediate commits are not validated rollback targets.
      A failed or interrupted earlier run never authorizes this candidate. See [validation.md](validation.md#merge-gate).
+
+     A lane may continue on the next independent batch while another batch is in the gate: use a fresh worktree and
+     branch, avoid owned files and shared helpers, and queue it against current `main` after the earlier merge. Never
+     edit a candidate whose validation is in progress.
 
 ## 3c. Method-by-method fidelity
 
@@ -180,7 +185,7 @@ Stable rule numbers/anchor for D9 and existing reports.
 `python tools/validation/validate.py --profile phase` for all test projects and strict reports. The phase runner
 rejects solution test projects it would omit. Keep manifest-shape/status-record checks, planned stub reduction,
 coverage-excluded checks, `Quire.exe --render` screenshots, a passing direct-method gate for the phase's projects
-(existing differential tests migrated to `MethodComparison.Compare`), and independent review before phase commit.
+(existing differential tests migrated to `MethodComparison.Compare`), and the phase gate before merge.
 The phase runner supplies the required test execution; a second `dotnet test Quire.slnx` is not required.
 Passing tests/type presence alone never establish equivalence.
 

@@ -1,8 +1,14 @@
 # Lane B checkpoint
 
-Updated: 2026-10-16
+## Active handoff
 
-## Current main and merged work
+`FnCompose` is already merged and verified on current WSL `main` at `bf985ce`; the old `mirror/b-fncompose` row
+below is historical. Select the next unowned Engine interface/factory batch after checking the tier inventory,
+current ownership and whether Windows-only execution is required. Follow [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md).
+
+Everything below this summary is historical context and receipts, not a queue of unfinished work.
+
+## Historical batch index
 
 Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B history is retained compactly here; older worktree results are historical.
 
@@ -46,7 +52,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | DelegateFunction invocation and projections | Merged to main at `53036b0` (`e7f720a`). 31 methods; exact IL for 17 `inv`, `invVec`, 4 `AsF`; 67 direct comparisons. |
 | Function core dispatch | Merged to main at `f29abb6` (`9549041`). `Function.clo<CLO>(CLO)`, `Function.clovec<CLO>(CLO[])`, `Function.appVec<R>(out R, object[])`; exact IL; 28 direct comparisons. |
 | Fn_clo partial closure | Merged to main at `aaa1a47` (`edc808f`). `Fn_clo<CLO>` 21 methods (`.ctor` x2, `Fixpoint`, `Name`, `invVec`, `inv` x16); exact IL; 21 direct comparisons. |
-| FnCompose function composition | Active batch on `mirror/b-fncompose`. `FnCompose` 7 methods (`.ctor`, `Name`, `invVec`, `inv` x4); exact IL; 7 direct comparisons. |
+| FnCompose function composition | Merged to main at `bf985ce`. Seven methods; exact IL; seven direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -228,8 +234,7 @@ Direct differential tests cover 14 direct comparisons against Prime 12.0.1.0 `mp
 - Downstream `Apply` on all resulting closure instances verifying state and reference retention of captured objects.
 - 100% mutation kill rate (79/79 mutants killed, 0 survivors).
 
-## Next Lane B queue
+## Historical next-queue note (superseded)
 
-The following independent Lane B batches are next in line:
-1. **Function core dispatch & vector application** (`Function.clo`, `clovec`, `appVec`).
-2. **Engine projects** (interface and factory members, subject to Linux/Windows capability).
+The old queue listed Function core dispatch and FnCompose; both have since merged to main. Continue with Engine
+interfaces and factories if current ownership and the tier inventory still show unowned work.

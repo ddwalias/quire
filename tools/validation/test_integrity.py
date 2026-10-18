@@ -66,7 +66,7 @@ class IntegrityTests(unittest.TestCase):
     def differential(self, text, name='XDifferentialTests.cs'):
         directory = self.repo / 'tests/Quire.Differential.Tests'
         (directory / name).parent.mkdir(parents=True, exist_ok=True)
-        (directory / name).write_text(text)
+        (directory / name).write_text(text, encoding='utf-8')
         return [f['rule'] for f in lint(self.repo) if f['file'].startswith('tests/')]
 
     def test_differential_tests_cannot_shadow_or_escape_the_harness(self):

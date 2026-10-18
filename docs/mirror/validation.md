@@ -511,12 +511,12 @@ python3 tools/validation/merge_gate.py <branch> --jobs 8   # choose the mutant w
 python3 tools/validation/merge_gate.py <branch> --full-validation # validate even allowlisted prose edits
 ```
 
-To share one final validation pass, the maintainer may combine **at most two** independently reviewed queued
-batches on a `mirror/integration-<unit>` branch from current `main`. Preserve each batch's squashed commit and
-its own coherent scope/checkpoint. Record original and integrated commit ids, owners, review verdicts, exact
-approvals, final base and final tip; obtain independent review of the entire combined diff, including conflict
-resolutions and accepted-mutant proofs/keys. Hold the merge lock through final base checks, gate application
-and push. Keep the candidate fixed during validation. Run the same gate on the final candidate against current
+To share one final validation pass, the maintainer may combine **at most two** queued batches on a
+`mirror/integration-<unit>` branch from current `main`. Preserve each batch's squashed commit and its own coherent
+scope/checkpoint. Each author reads their complete diff; the integrator reads the combined diff, including conflict
+resolutions and accepted-mutant proofs/keys. Record original and integrated commit ids, owners, final base and final
+tip. Hold the merge lock through final base checks, gate application and push. Keep the candidate fixed during
+validation. Run the same gate on the final candidate against current
 main's baseline: its changed-method scope covers both batches. If either batch or the audit schedule needs
 `--mutate-all`, the combined gate needs it too. Two combined batches count as two logical merges toward the
 10-batch audit interval; weekly audits still apply. Reject the whole candidate on any gate failure. A failed or
@@ -524,12 +524,16 @@ interrupted earlier audit is not a passing receipt and must not be hidden by a n
 
 Before every gate merge, fast-forward `main` to `origin/main` first ([PLAN.md](PLAN.md), "Pull first").
 
-Pending approvals and scopes without required separate runtime evidence cannot be bundled. Batching never
+Pending maintainer-owned acceptance changes and scopes without required separate runtime evidence cannot be bundled. Batching never
 grants permission for additional protected paths or `--allow-unvalidated`; inspect the complete protected-path
 list against existing exact authorization. Only the final combined tip is validated: intermediate preserved
 commits have not passed independently and are not validated rollback targets. Keep the two constituent
 checkpoints separate and link them to the same final receipt. Failure attribution can take more work, so keep
-the limit of two and use a single batch when the changes are difficult to review together.
+the limit of two and use a single batch when the changes are difficult to understand together.
+
+A lane may continue on the next independent batch while another batch is in the gate. Start from a fresh worktree
+and branch, avoid files and shared helpers owned by the active batch, and queue against current `main` after it
+lands. Never edit a candidate whose validation is in progress.
 
 An automatic prose route skips cloning, builds, tests, coverage, auditing and mutation only when every changed
 path is one of these exact names:
@@ -546,9 +550,10 @@ Every changed file must exist as a regular, non-executable UTF-8 file without NU
 Additions, deletions, renames between those names, mode changes, other paths and mixed changes use runtime
 validation. A protected path never uses the shortcut, even with `--allow-protected`. `--full-validation`,
 `--mutate-all` and `--mutate-types-wide` explicitly request the runtime route. The normal ancestry, local-branch,
-protected-path and case-collision checks still run, and independent review is still required. `gate.json` records
+protected-path and case-collision checks still run. Authors read their complete diffs; the gate is the pre-merge
+check ([D14](decisions.md)). `gate.json` records
 `validation_mode: prose`, `baseline_reused_from`, and null runtime results/exit status: no tests are claimed.
-`--apply` fast-forwards to the reviewed prose tip while retaining the base's exact baseline, without a baseline
+`--apply` fast-forwards to the authored prose tip while retaining the base's exact baseline, without a baseline
 commit. Evidence, manifests, type maps, policy/configuration and tooling are outside this allowlist. Runtime
 gates record `validation_mode: runtime` and retain the complete validation process below.
 
@@ -611,7 +616,8 @@ tampering of this kind is out of scope for the gate; review agent diffs for it.
 
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.
-Review test quality and retain the analysis and independent-review requirements of PLAN.
+The author checks test quality and reads the complete diff. The runtime gate is the pre-merge check; there is no
+separate independent reviewer ([D14](decisions.md)).
 
 ### Validating outside the merge lock
 
@@ -792,9 +798,9 @@ The status gate checks that references resolve; it does **not** prove that a dif
 covers each attributed member or that its comparisons ran. The shape gate checks missing expected
 manifest lines, not behavioral fidelity. Neither gate alone validates coverage-excluded interfaces,
 enums, delegates, artifact-bound evidence, or an accepted deviation's tested behavior. Inspect the
-selected records, refresh/review shape/status inventories when required, check planned stub reduction,
-perform `Quire.exe --render` screenshot validation, and obtain the independent reviewer pass required
-by PLAN. Do not auto-accept manifest removals or rewrite statuses to make a gate green.
+selected records, refresh/review shape/status inventories when required, and check planned stub reduction.
+Run `Quire.exe --render` screenshot validation when a visual change needs it. Do not auto-accept manifest
+removals or rewrite statuses to make a gate green.
 
 ## Audit in this sandbox (2026-10-14)
 

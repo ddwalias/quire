@@ -344,7 +344,11 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         """Exit code (None on timeout) and a fresh scratch directory, outside the copy the tests can see, holding
         the mismatch record and TRX report."""
         directory = Path(tempfile.mkdtemp(prefix='quire-mutant-run-', dir=scratch))
-        command = [dotnet, 'test', str(copy / test_dll.name), '--filter', test_filter(tests),
+        filter_value = test_filter(tests)
+        # When a Windows test adapter is a batch file, keep cmd.exe from treating the filter's `|` as a pipeline.
+        if os.name == 'nt' and dotnet.lower().endswith(('.cmd', '.bat')) and '|' in filter_value:
+            filter_value = f'"{filter_value}"'
+        command = [dotnet, 'test', str(copy / test_dll.name), '--filter', filter_value,
                    '--logger', 'trx;LogFileName=run.trx', '--results-directory', str(directory)]
         kills = directory / f'kills-{uuid.uuid4().hex}.txt'
         with sdk_directory(global_json) as cwd:

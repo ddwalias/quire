@@ -262,7 +262,8 @@ class CoverageTests(unittest.TestCase):
         self.assertTrue(method_coverage.matches('C:\\Clone\\Src\\T.cs', 'src/T.cs', 'c:/clone'))
         self.assertFalse(method_coverage.matches('C:\\Clone\\Sub\\src\\T.cs', 'src/T.cs', 'c:/clone'))
         self.assertTrue(method_coverage.look_alike('C:\\Clone\\Sub\\src\\T.cs', 'src/T.cs', 'c:/clone'))
-        self.assertFalse(method_coverage.matches(self.file.upper(), 'src/T.cs', self.repo))  # posix paths are exact
+        # A POSIX path remains case-sensitive even when this test runs on Windows.
+        self.assertFalse(method_coverage.matches('/repo/SRC/T.cs', 'src/T.cs', '/repo'))
 
     def test_nested_look_alike_not_exempted(self):
         (self.repo / 'src/Sub/src').mkdir(parents=True)

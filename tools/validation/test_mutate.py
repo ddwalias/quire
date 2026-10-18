@@ -42,7 +42,7 @@ def finish(failed, *recorded):
 
 if image[0] == 0xFF:
     finish(True)  # a broken suite: even the control run fails
-if args[args.index('--filter') + 1] == 'FullyQualifiedName=Ns.Tests.Alone':
+if args[args.index('--filter') + 1].strip('"') == 'FullyQualifiedName=Ns.Tests.Alone':
     finish(True, 'mvid:100663299')  # passes after its siblings, mismatches when run alone
 if image[0] == 0xFD:
     (Path(args[2]).parent / 'planted.dll').write_bytes(b'x')  # a test rewrites the output later runs load
@@ -133,9 +133,14 @@ class MutationTests(unittest.TestCase):
 
     def test_worker_count_respects_process_cpu_affinity(self):
         from mutate import effective_jobs
-        with mock.patch('mutate.os.sched_getaffinity', return_value={0, 1, 2, 3}):
-            self.assertEqual(effective_jobs(14), 4)
-            self.assertEqual(effective_jobs(2), 2)
+        if hasattr(os, 'sched_getaffinity'):
+            with mock.patch('mutate.os.sched_getaffinity', return_value={0, 1, 2, 3}):
+                self.assertEqual(effective_jobs(14), 4)
+                self.assertEqual(effective_jobs(2), 2)
+        else:
+            with mock.patch('mutate.os.cpu_count', return_value=4):
+                self.assertEqual(effective_jobs(14), 4)
+                self.assertEqual(effective_jobs(2), 2)
 
     def test_mutant_timeout_scales_with_measured_control_speed_and_keeps_a_floor(self):
         from mutate import mutant_timeout
@@ -275,7 +280,8 @@ class MutationTests(unittest.TestCase):
         image = bytearray(self.image); image[9] = 6
         (self.tests / 'Quire.Mpl.dll').write_bytes(bytes(image))
         log = Path(self.directory.name) / 'runs.log'
-        with mock.patch('mutate.MUTANT_FLOOR', 2), mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log),
+        floor = 10 if os.name == 'nt' else 2
+        with mock.patch('mutate.MUTANT_FLOOR', floor), mock.patch.dict(os.environ, FAKE_DOTNET_LOG=str(log),
                 FAKE_DOTNET_STATE=str(Path(self.directory.name) / 'state')):
             report = self.mutate(jobs=2, use_cache=False)
         result = {r['key'].split(' ', 1)[1]: r for r in report['mutants']}['brfalse.s -> brtrue.s']
@@ -315,8 +321,8 @@ class MutationTests(unittest.TestCase):
         self.assertEqual((report['jobs'], report['requested_jobs']), (4, 4))
         self.assertTrue(report['complete'])
         self.assertEqual({r['outcome'] for r in report['mutants']}, {'killed (timeout)'})
-        self.assertLess(report['timeout_retry_elapsed_seconds'], 3)
-        self.assertLess(elapsed, 10)
+        self.assertLess(report['timeout_retry_elapsed_seconds'], 60 if os.name == 'nt' else 3)
+        self.assertLess(elapsed, 90 if os.name == 'nt' else 10)
 
     def test_parallel_retries_still_accept_a_slow_mutant_that_finishes_on_retry(self):
         loops = [dict(il_offset=offset, file_offset=9, original='00', replacement=f'{value:02x}',

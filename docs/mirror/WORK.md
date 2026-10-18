@@ -1,11 +1,33 @@
 # Execution checkpoint
 
-Read [PLAN.md](PLAN.md). Phase 1 remains open; Windows phase closure checks have not run.
+Phase 1 remains open. The Windows phase closure audit has not completed; see [validation workflow](work/validation-flow.md)
+for its current blocker. Read the execution rules in [PLAN.md](PLAN.md#execute-load--mirror--checkpoint--merge); use the
+lane checkpoints below only for the active batch and its dependencies. Older receipts are historical.
 
-| Active work | Canonical checkpoint |
-|---|---|
-| Lane A: runtime helpers and remaining batch members | [Lane A](work/lane-a.md) |
-| Lane B: matrix, dimensions, functions and engine | [Lane B](work/lane-b.md) |
-| Workflow simplification | [Validation workflow](work/validation-flow.md) |
+| Lane | Current batch | Checkpoint |
+|---|---|---|
+| A | Continue the in-progress `MplForeignMacro` batch on `mirror/a-mpl-foreign-macro` at `/mnt/c/Projects/Quire-wt/a-mpl-foreign-macro`; it has uncommitted source, test and evidence changes in the WSL checkout. Do not duplicate or open it with Windows Git. `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`; skip it. | [Lane A](work/lane-a.md) |
+| B | `FnCompose` is already merged to current WSL `main` at `bf985ce`. The old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
-Next: implement the independent `MplForeignMacro` members. `MplDestructuringBind.as_pattern` is implemented and locally validated; its `ExpandCall` remains blocked on `define_keyword.MakeDefine`. The DynamicType name-map proposal passed its protected runtime gate and merged to main at `1d5ebb7`. The field-name cache passed its runtime gate and merged at `d8f2e26`; the `Primitive` static initializer and `DynamicType` name helpers are already on main. Bitwise, shift and nth-root helpers passed the runtime gate and merged to main at `771dbe07`; main was pushed. Array element operations merged at `307ff708`; array constructors at `9e5f3e3`; numeric conversions at `2fe5ed63`; reference-selection helpers at `fbf7627d`; arithmetic helpers at `faf91ae3`; classification predicates at `ca3f68b8`; the five `Primitive` cast helpers at `168be17`. `CodeFunction` merged at `244324a4deae`; `MplFunctionMacro` at `24668bd`; `CodeArg` was rebased after MemberGen merged, kept only its two constructors, passed post-rebase validation and the runtime gate, and is on main. `Code.NullCode` is on main at `85003e9`; the private `Primitive` constructors are on main at `f4188dd`. There is no independent review (D14) and no user approval for proposals, accepted mutants or unreachable lines (D16): the lane's proof and the merge gate are the path to main, and the maintainer adds the accepted entries. Lanes A and B are the active lanes. Merge with `lane_merge.py`: it validates outside the merge lock and lands under it ([validation-flow](work/validation-flow.md#merge-gate-throughput)). `let_keyword` remains blocked on `define_keyword` and `lambda_keyword` reaching main. Record each batch's commands, counts, limits and blockers once in its checkpoint. Keep member contracts in [evidence](evidence/README.md) and link run results to the lane checkpoint. Completed checkpoint detail remains in Git history; broader context is in [history.md](history.md) and [STATE.md](STATE.md).
+## Fast lane loop
+
+1. Use one branch and worktree per agent from the shared clone for that OS: Windows agents share `C:\Projects\Quire`;
+   WSL agents use the repository at `/root/src/Quire` and its main worktree `/root/src/quire-main`. Create new WSL
+   worktrees under `/root/src/worktrees/`. Do not share one checkout or worktree registration between Windows Git and
+   WSL Git.
+2. Fetch `origin`, then take one coherent class or functional batch (about 15–30 methods). Check ownership and
+   dependencies before editing.
+3. Run only the affected behavior and differential test classes. The full focused validator, `quick_check.py`, local
+   mutation, and the Python harness unit suite are diagnostic/maintainer checks, not routine batch checks.
+4. Commit the batch and update its lane checkpoint with scope, evidence, tests, remaining work and blockers. Read the
+   complete diff yourself. The merge gate is the pre-merge check; no separate reviewer or user approval is required.
+5. Queue at most two ready batches for one final gate. While a gate runs, continue on a fresh branch/worktree only for
+   work that does not touch the active batch's files or shared helpers. Never edit the candidate being validated.
+6. A gate merges and pushes `main` only after the complete required validation passes. If main moves first, rebase via
+   `lane_merge.py`; rerun affected tests only if the rebase changed source/test hunks.
+
+The lane proves any proposed equivalent mutants or unreachable lines; the maintainer updates the protected acceptance
+lists, then the gate checks them. See [D14 and D16](decisions.md).
+
+Keep member contracts in [evidence](evidence/README.md). Record only active batch state here and in the lane files;
+completed receipts stay in Git history and broader project status is in [STATE.md](STATE.md).

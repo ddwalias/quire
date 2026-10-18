@@ -94,6 +94,9 @@ class MergeGateTests(unittest.TestCase):
                 return subprocess.run(['git', '-c', 'user.name=t', '-c', 'user.email=t@t', *args], cwd=repo, check=True,
                                       capture_output=True, text=True).stdout.strip()
             git('init', '-q')
+            git('config', '--local', 'user.name', 't')
+            git('config', '--local', 'user.email', 't@t')
+            git('config', '--local', 'core.autocrlf', 'true')
             (repo / 'src.cs').write_text('committed')
             git('add', '-A'); git('commit', '-qm', 'tip')
             tip = git('rev-parse', 'HEAD')
@@ -192,6 +195,9 @@ class RepositoryTests(unittest.TestCase):
         (self.repo / 'docs/mirror/WORK.md').write_text('Current checkpoint\n')
         (self.repo / 'README.md').write_text('Project overview\n')
         self.git('init', '-q', '-b', 'main')
+        # Scratch repositories must not inherit the host user's global Git identity.
+        self.git('config', '--local', 'user.name', 't')
+        self.git('config', '--local', 'user.email', 't@t')
         self.git('add', '-A'); self.git('commit', '-qm', 'base')
         self.base = self.git('rev-parse', 'HEAD')
         self.git('checkout', '-qb', 'work')
@@ -438,7 +444,7 @@ class PhaseGateTests(unittest.TestCase):
             return subprocess.CompletedProcess(command, 0)
         with mock.patch.object(merge_gate.subprocess, 'run', side_effect=run), \
                 mock.patch.object(merge_gate, 'phase_dotnet', return_value=dotnet), \
-                mock.patch.object(merge_gate, 'windows_temp', return_value=str(self.temp)):
+                mock.patch.object(merge_gate, 'phase_temp', return_value=self.temp):
             yield commands
 
     def gate(self, branch, extra=()):
@@ -476,7 +482,7 @@ class PhaseGateTests(unittest.TestCase):
         self.assertNotIn('--profile', focused)
         self.assertEqual(phase[phase.index('--profile') + 1], 'phase')
         self.assertEqual(phase[phase.index('--dotnet') + 1], '/mnt/c/dotnet/dotnet.exe')
-        self.assertTrue(phase[phase.index('--baseline') + 1].endswith(merge_gate.PHASE_BASELINE))
+        self.assertTrue(phase[phase.index('--baseline') + 1].replace('\\', '/').endswith(merge_gate.PHASE_BASELINE))
         self.assertNotIn('--mutate-since', phase)
         # The phase clone and results live under the Windows temporary directory; the clone is removed.
         self.assertTrue(Path(phase[phase.index('--results') + 1]).is_relative_to(self.temp))
@@ -583,7 +589,7 @@ class PhaseGateTests(unittest.TestCase):
         self.assertIn('a maintainer must create the phase baseline first', out)
 
     def test_an_unusable_phase_temp_blocks_before_any_run(self):
-        with self.runs() as commands, mock.patch.object(merge_gate, 'windows_temp',
+        with self.runs() as commands, mock.patch.object(merge_gate, 'phase_temp',
                                                         side_effect=ValueError('/tmp/x is not on a Windows drive')):
             code, gate, out = self.gate('engine')
         self.assertEqual((code, gate, commands), (1, None, []))
@@ -619,9 +625,10 @@ class PhaseGateTests(unittest.TestCase):
 
     def test_phase_command(self):
         command = merge_gate.phase_command(Path('/w/tree'), Path('/w/run'), Path('/w/b.json'), 900, 'dotnet.exe')
-        self.assertEqual(command[2:], ['-B', '/w/tree/tools/validation/validate.py', '--profile', 'phase', '--results',
-                                       '/w/run', '--baseline', f'/w/tree/{merge_gate.PHASE_BASELINE}',
-                                       '--write-baseline', '/w/b.json', '--timeout', '900', '--dotnet', 'dotnet.exe'])
+        self.assertEqual(command[2:], ['-B', str(Path('/w/tree/tools/validation/validate.py')), '--profile', 'phase',
+                                       '--results', str(Path('/w/run')), '--baseline',
+                                       str(Path('/w/tree') / merge_gate.PHASE_BASELINE), '--write-baseline',
+                                       str(Path('/w/b.json')), '--timeout', '900', '--dotnet', 'dotnet.exe'])
 
 
 class OptimisticGateTests(unittest.TestCase):
@@ -1002,8 +1009,14 @@ class OptimisticGateTests(unittest.TestCase):
 
     def test_case_collisions_on_the_landed_tree_are_blocked(self):
         self.validate()
-        self.on_main({'docs/mirror/work/lane-a.md': 'a\n', 'docs/mirror/work/LANE-A.md': 'b\n'})
-        with mock.patch.object(merge_gate, 'stale_reasons', return_value=[]):
+        self.on_main({'docs/mirror/work/lane-a.md': 'a\n'})
+        real, root = merge_gate.git, merge_gate.ROOT
+        def git(*args, cwd=None, check=True):
+            result = real(*args, cwd=self.repo if cwd in (None, root) else cwd, check=check)
+            if args[:3] == ('ls-tree', '-r', '--name-only'):
+                return result + '\nDocs/mirror/work/LANE-A.md'
+            return result
+        with mock.patch.object(merge_gate, 'git', git), mock.patch.object(merge_gate, 'stale_reasons', return_value=[]):
             code, out = self.apply()
         self.assertEqual(code, 1, out)
         self.assertIn('paths differ only in case', out)

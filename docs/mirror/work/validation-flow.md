@@ -12,8 +12,8 @@ Branch: `mirror/workflow-trim`, based on `main` `fff8ec0`.
 - Squash once before queueing, rebase only when needed, and keep batch results once in the lane checkpoint.
 
 Changed code: `tools/validation/merge_gate.py`, `validate.py`, and their Python unit tests. Workflow documentation:
-PLAN, validation.md and the short WORK index. The existing mutation selection, survivor approvals, runtime
-acceptance rules, independent review, and separate differential/coverage passes remain in force.
+PLAN, validation.md and the short WORK index. Mutation selection and runtime acceptance rules remain unchanged.
+D14 removed independent review; D16 removed user approval for accepted mutants and unreachable lines.
 
 ## Validation and next action
 
@@ -21,7 +21,7 @@ acceptance rules, independent review, and separate differential/coverage passes 
 prose check/apply routing, unchanged baseline bytes, protected/mixed/non-text changes, explicit audit overrides,
 stale branches and phase project selection. CLI help and `git diff --check` passed.
 
-Independent review passed with no blockers. A real CLI check/apply smoke run in a scratch repository completed
+The original tooling change passed its gate. A real CLI check/apply smoke run in a scratch repository completed
 the prose route without invoking .NET and preserved the baseline bytes (0.08 s on this workstation; not a full
 workflow benchmark).
 
@@ -32,10 +32,10 @@ not establish Windows phase completion.
 
 ## Two-batch integration amendment
 
-The user requested following PLAN and improving any demonstrably wasteful execution step. Two independently
-reviewed queued batches may now share one unchanged final merge gate, with at most two batches per integration
-candidate. Each retains its own coherent scope, squashed commit, ownership and checkpoint. Full combined-diff
-review and all required approvals precede validation; audit triggers use the union of both batches and count
+The user requested following PLAN and improving wasteful execution steps. Two queued batches may share one final
+merge gate, with at most two batches per integration candidate. Each retains its own coherent scope, squashed
+commit, owner and checkpoint. Each author reads their own diff; the integrator reads the combined diff and resolves
+conflicts before validation. Audit triggers use the union of both batches and count
 logical batches so frequency is retained. No gate implementation, test/mutation selection, acceptance rule or
 evidence requirement changes. Only the final candidate is validated, and the entire candidate fails together.
 
@@ -82,9 +82,11 @@ directories.
 
 ## Merge gate throughput
 
-Lanes follow PLAN's pipeline: native Windows sessions in worktrees of the NTFS clone `C:\Projects\Quire`, batches of
-a whole class or functional cluster, local checks without mutation, and one mutation pass in the gate. A batch goes
-through this template (PowerShell; the Linux/WSL form is in the footnote below):
+Lanes follow PLAN's pipeline: native Windows agents use separate worktrees and branches in the shared NTFS clone
+`C:\Projects\Quire`; Linux/WSL agents use separate worktrees in the ext4 clone `/root/src/Quire`, whose main
+worktree is `/root/src/quire-main`. Keep those clones separate because worktree registrations and merge locks are OS-specific. Batches are a whole class or
+functional cluster; local checks run only affected tests, and the gate owns the mutation pass. A batch goes through
+this template (PowerShell; the Linux/WSL form is in the footnote below):
 
 ```powershell
 $U = 'b-<unit>'; $B = "mirror/$U"; $W = "C:\Projects\Quire-wt\$U"
@@ -95,9 +97,6 @@ cd $W
 # implement the batch, then the fast local checks (no --mutate):
 $env:QUIRE_REQUIRE_MATHCAD = '1'
 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~<TestClass>'
-python tools\validation\validate.py --profile focused --method-type <Type> --jobs 14
-# fast, advisory check of only the changed methods in this worktree; also accepts --method-type or --method:
-python tools\validation\quick_check.py
 git add <paths>; git commit -m '<summary>' -m 'Co-Authored-By: <model> <noreply@anthropic.com>'
 python C:\Projects\Quire\tools\validation\lane_merge.py $B       # validate, then land and push
 cd C:\Projects; git -C C:\Projects\Quire worktree remove --force $W
@@ -116,6 +115,11 @@ means `main` gained something that can change the verdict; the script validates 
 in a row falls back to the one-shot `--apply`, which cannot go stale but holds the lock for the whole validation
 (the stale message says for how long). Rules: validation.md, "Validating outside the merge lock".
 
+The Python validation-harness unit suite is separate from a lane's local checks. Agents do not run it for ordinary
+batches. A maintainer runs it when changing `tools/validation`; on Windows the standard
+`python -m unittest discover -s tools\validation -p "test_*.py"` suite took about 17 minutes for 263 tests in this
+checkout. It is not part of the lane loop.
+
 The merge lock (`merge_lock.py`) is `msvcrt.locking` on `%TEMP%\quire-merge.lock` on Windows, shared by every
 session of the user on the machine, and `fcntl.flock` on `/tmp/quire-merge.lock` on Linux, the lock
 `flock /tmp/quire-merge.lock` takes too. A WSL session and a Windows session do not share it, so do not land from
@@ -125,9 +129,10 @@ and retries. `QUIRE_MERGE_LOCK` names another lock file.
 `sweep.py` removes `quire-validation-*`, `quire-coverage-*`, `quire-audit-*` and `quire-gate-*` directories in the
 temporary directory in which nothing beneath them changed for 12 hours; `--dry-run` lists them.
 
-Linux/WSL: the same steps with `python3`, the ext4 clone `/root/src/quire-main` and worktrees at
-`/root/src/worktrees/<branch>` (never under `/mnt/c`): `python3 tools/validation/sweep.py`, then
-`python3 /root/src/quire-main/tools/validation/lane_merge.py "$B"`. Windows-project work from WSL stays under
+Linux/WSL: the same steps with `python3`, the ext4 repository `/root/src/Quire` (with `main` checked out at
+`/root/src/quire-main`) and new worktrees at `/root/src/worktrees/<branch>` (never under `/mnt/c`). Run
+`python3 /root/src/Quire/tools/validation/sweep.py`, then
+`python3 /root/src/Quire/tools/validation/lane_merge.py "$B"`. Windows-project work from WSL stays under
 `/mnt/c` ([Phase profile from WSL](#phase-profile-from-wsl-and-windows-project-gating)).
 
 - **Batch members.** Every gate run pays about 3 minutes before any mutant runs (build, the differential suite

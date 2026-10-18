@@ -1,6 +1,14 @@
 # Lane A work checkpoint
 
-## DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
+## Active handoff
+
+Continue with independent `MplForeignMacro` members. `MplDestructuringBind.ExpandCall` depends on
+`define_keyword.MakeDefine`; leave that member parked and select independent work. Before resuming, check whether the
+existing WSL branch/worktree is active; do not try to open a WSL-registered worktree with Windows Git. Use the current
+instructions in [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). All dated batch receipts below are history, not a
+current task queue.
+
+## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
 Branch `mirror/a-dimval`, rebased onto `c022010`: one work commit, then the maintainer's acceptance commit on top.
 It supersedes `mirror/a-dimval-sensitivity` (`b4867dc`). That branch's stronger `MatVal` renderer, the `NumVal` renderer,
@@ -19,7 +27,8 @@ passed, no failures or skips; lint 0; ratchet ok; 258 compared, 0 uncovered, 3 m
 0 other survivors. Verdict: `LOCAL CHECKS: pass · GATE: would block (5 proposed mutants pending approval; 47
 proposed unreachable lines pending approval)`, `passes_with_proposals` true. Scoped; the gate validates all.
 
-Next: independent review of the proposals below, user approval, maintainer acceptance, then the runtime gate.
+This proposal set was later accepted and merged to main (see Lane B's DimVal batch status). The original review and
+user-approval wording below records the old process and is superseded by D14/D16.
 
 ### Pending unreachable-line proposals (47)
 
