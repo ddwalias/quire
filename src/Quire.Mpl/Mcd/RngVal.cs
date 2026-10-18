@@ -155,17 +155,17 @@ public partial class RngVal : DimVal
     [MirrorVerified("RngValDifferentialTests")]
     public static RngVal IncrRange(double first, double incr, int n, Dim d) => new(first, incr, n, d);
 
-    [MirrorAnalyzed("Mcd.RngVal")]
+    [MirrorVerified("RngValConversionsDifferentialTests")]
     public override MatVal asVector(string m, uint a) => asRealVector(m, a);
 
-    [MirrorAnalyzed("Mcd.RngVal")]
+    [MirrorVerified("RngValConversionsDifferentialTests")]
     public override MatVal asMatrix(string m, uint a) => asRealVector(m, a);
 
-    [MirrorAnalyzed("Mcd.RngVal")]
+    [MirrorVerified("RngValConversionsDifferentialTests")]
     public override MatVal asRealMatrix(string m, uint a) => asRealVector(m, a);
 
     /// <summary>A column of the values (by <see cref="get"/>) with the range's dimension.</summary>
-    [MirrorAnalyzed("Mcd.RngVal")]
+    [MirrorVerified("RngValConversionsDifferentialTests")]
     public override MatVal asRealVector(string m, uint a)
     {
         int n = m_n;

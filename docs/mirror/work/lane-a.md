@@ -793,6 +793,18 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Runtime gate passed on `5f2e31bb2c8e`, based on `a3ff845ae3fc`, then merged to main at `c96f51a` and pushed. Receipt `/tmp/quire-gate-dynamic-type-namemangle/gate.json`, run `c57d1e17-4464-4689-9074-f4c71ac47031`, summary `/tmp/quire-gate-dynamic-type-namemangle/run/summary.json`: Harness 86, Mpl 188 and Differential 319 passed with no failures/skips; 1122 compared, 1521 exact, 93 structure-only, 595 missing, 103 structure mismatches, 13 uncovered, 43 verified unsupported; lint 0, integrity complete, ratchet ok, 4/4 gate-selected mutants killed with no survivors (one mutant timed out in parallel and was killed on retry). Existing inventory gaps remain ratcheted; no baseline-exact method regressed. No proposals.
 - Next: continue the active `MplForeignMacro` batch in its separate worktree; then take another unowned Lane A member.
 
+## RngVal matrix conversions (`mirror/a-rngval-value-conversions`)
+
+- Branch base: `b609716`, rebased onto current main `353e4d5` after the focused run; one source, one new differential test, one evidence record and this lane checkpoint.
+- Scope: `asVector`, `asMatrix`, `asRealMatrix` and `asRealVector` (`0x060006ee`–`0x060006f1`). The first three call `asRealVector`; that method builds a one-column matrix from the range's virtual `get` values and copies its dimension.
+- Original: installed `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. C# and IL were read using `tools/reference/reference.py Mcd.RngVal --il`; all four C# bodies match the reconstructed bodies.
+- Direct comparisons: `RngValConversionsDifferentialTests` compares all four methods on ordinary, interpolated and empty ranges, rendering matrix shape, values and dimensions. The helper arguments are the same nondefault ignored values on each side.
+- Scoped command: `DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$HOME/.dotnet/tools:$PATH EnableWindowsTargeting=true TMPDIR=/tmp QUIRE_REQUIRE_MATHCAD=1 WSLENV=QUIRE_REQUIRE_MATHCAD python3 tools/validation/validate.py --profile focused --method-type Quire.Mcd.RngVal --diff-filter 'FullyQualifiedName~RngValDifferentialTests|FullyQualifiedName~RngValConversionsDifferentialTests' --mutate --jobs 2 --dotnet /tmp/quire-dotnet-dual --results /tmp/quire-validation-rngval-conversions-full`. Summary `/tmp/quire-validation-rngval-conversions-full/summary.json`: Harness 86, Mpl 188 and Differential 6 passed with no failures/skips; 26 compared, no missing, structure mismatches, uncovered or verified-unsupported methods; 25 exact, 1 structure-only; lint 0, integrity complete, ratchet ok; 88/88 mutants killed, no survivors/crashes (one timed out in parallel and was killed on retry). `LOCAL CHECKS: pass · GATE: would pass [scoped to 1 type; the gate validates all]`.
+- The diagnostic run filtered only to the new test passed its direct fact and killed 5/5 selected mutants, but omitted existing RngVal comparisons and failed the type ratchet. The broad run above is the handoff result.
+- Exact Release IL before/after: all four methods were in the baseline exact set and remain exact; RngVal remains 25/26 exact with 1 structure-only. No baseline-exact method regressed. No proposals.
+- Independent review and runtime gate: pending. The user asked to stop Lane A work after this batch and the outstanding Bq batch are merged and pushed.
+- Next: complete the combined Bq and RngVal runtime gate and push `main`, then stop as requested.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
