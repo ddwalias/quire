@@ -26,8 +26,6 @@ public partial class EngineErrorMessages : global::System.Windows.ResourceDictio
     [global::Quire.Mirror.MirrorStub]
     public static string GetDisplayMessage(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string EscapeForFormatString(string original) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void MergeDictionary(global::System.Windows.ResourceDictionary dictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -10,8 +10,11 @@
 | `.ctor()` | 0x060001ec | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Xml get` | 0x060001e7 | MemberGen: `public string Xml { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Xml set` | 0x060001e8 | MemberGen: `public string Xml { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ToString()` | 0x060001e9 | MemberGen: `string.Format("Symbolic: {0}", Xml)` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreSymbolicSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreSymbolicSimpleResultNodeMechanicalDifferentialTests`.

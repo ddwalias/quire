@@ -9,8 +9,11 @@
 | `ToString()` | 0x06000188 | MemberGen: `"Empty"` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Accept(IResultNodeVisitor)` | 0x0600018a | MemberGen: `visitor.Visit(this)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `.ctor()` | 0x0600018b | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Equals(object)` | 0x06000189 | MemberGen: `obj is EmptySimpleResultNode` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreEmptySimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreEmptySimpleResultNodeMechanicalDifferentialTests`.

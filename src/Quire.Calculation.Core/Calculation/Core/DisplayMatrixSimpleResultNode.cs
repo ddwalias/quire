@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
@@ -19,4 +20,7 @@ public partial class DisplayMatrixSimpleResultNode
 
     [MirrorVerified("PtcCalculationCoreDisplayMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public IEagerMatrixResultNode Viewport { get; private set; }
+
+    [MirrorVerified("PtcCalculationCoreDisplayMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    public int Count => Rows * Columns;
 }

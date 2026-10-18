@@ -15,8 +15,11 @@
 | `ViewportOffset set` | 0x060001be | MemberGen: `public TableCoordinate ViewportOffset { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Viewport get` | 0x060001bf | MemberGen: `public IEagerMatrixResultNode Viewport { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Viewport set` | 0x060001c0 | MemberGen: `public IEagerMatrixResultNode Viewport { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Count get` | 0x060001b7 | MemberGen: `Rows * Columns` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreDisplayMatrixSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreDisplayMatrixSimpleResultNodeMechanicalDifferentialTests`.

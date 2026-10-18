@@ -35,4 +35,13 @@ public class PtcCalculationCoreLazyMatrixSimpleResultNodeMechanicalDifferentialT
 
     [SkippableFact]
     public void TransformValueToResult_set_060001e3() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.LazyMatrixSimpleResultNode), 0x060001e3);
+
+    [SkippableFact]
+    public void ToString_060001e5() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.LazyMatrixSimpleResultNode), 0x060001e5);
+
+    [SkippableFact]
+    public void Xml_get_060001d5() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.LazyMatrixSimpleResultNode), 0x060001d5);
+
+    [SkippableFact]
+    public void Count_get_060001da() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.LazyMatrixSimpleResultNode), 0x060001da);
 }

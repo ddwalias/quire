@@ -15,6 +15,4 @@ public static partial class IResultManagerHelper
     public const int ResultRefIdMinusOne = -1;
     [global::Quire.Mirror.MirrorStub]
     public static bool SetResultIfRefIdSpecified(this global::Quire.Calculation.Core.IResultManager resultManager, int resultRefId, bool resultRefIdSpecified, global::Quire.Calculation.Core.ICalculatableResultOwner calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsResultRefIdSpecified(int resultRefId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

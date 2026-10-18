@@ -10,6 +10,7 @@
 | `.ctor(IResultNodeFactory)` | 0x06000225 | MemberGen: `_resultNodeFactory = resultNodeFactory;` | Mechanical; Release IL equals Mathcad's | Verified |
 | `GetUnitPowerDenominator(XmlNode)` | 0x06000237 | MemberGen: `GetIntegerFromAttribute(node, "power-denominator", 1)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `GetUnitPowerNumerator(XmlNode)` | 0x06000238 | MemberGen: `GetIntegerFromAttribute(node, "power-numerator", 1)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `BuildSymbolic(XmlNode)` | 0x0600022c | MemberGen: `_resultNodeFactory.CreateSymbolicResultNode(node.InnerXml)` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
@@ -17,3 +18,5 @@
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
 **Observed** (`PtcCalculationCoreXmcdToIResultNodeTransformCctorDifferentialTests`): invokes `.cctor()` on both artifacts and compares the XSLT output for a text node and nested vector nodes.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests`.

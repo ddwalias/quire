@@ -12,8 +12,11 @@
 | `Min set` | 0x060002ad | MemberGen: `public double Min { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Units get` | 0x060002ae | MemberGen: `public IList<Unit> Units { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Units set` | 0x060002af | MemberGen: `public IList<Unit> Units { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor(double, double, IEnumerable)` | 0x060002a9 | MemberGen: `Units = Enumerable.ToList<Unit>(units); Min = min; Max = max;` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreTrace2DResultsTraceAxisInfoMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreTrace2DResultsTraceAxisInfoMechanicalDifferentialTests`.

@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core.Trace2DResults;
 
@@ -25,4 +26,10 @@ public partial class VectorListResultNode
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
     public IListResultNode this[int index] { get => _vectors[index]; set => _vectors[index] = value; }
+
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
+    public ResultValueType GetVectorValuesType(int index) => GetResultType(Vectors[index]);
+
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDifferentialTests")]
+    public int ElementsCount => Count * SingleVectorLength;
 }

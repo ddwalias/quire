@@ -11,8 +11,11 @@
 | `Value set` | 0x06000190 | MemberGen: `public SimpleResultNode Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Units get` | 0x06000194 | MemberGen: `public IList<Unit> Units { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Units set` | 0x06000195 | MemberGen: `public IList<Unit> Units { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor()` | 0x0600018c | MemberGen: `Units = new List<Unit>();` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreUnitedValueSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreUnitedValueSimpleResultNodeMechanicalDifferentialTests`.

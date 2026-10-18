@@ -10,8 +10,11 @@
 | `.ctor()` | 0x060001b0 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Value get` | 0x060001ab | MemberGen: `public string Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Value set` | 0x060001ac | MemberGen: `public string Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ToString()` | 0x060001ad | MemberGen: `string.Format("String: \"{0}\"", Value)` | Mechanical; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreStringSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreStringSimpleResultNodeMechanicalDifferentialTests`.

@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.TraceAxisInfo, Ptc.Calculation.Core")]
 public partial class TraceAxisInfo : global::Quire.Calculation.Core.ITraceAxisInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TraceAxisInfo(double min, double max, global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Unit> units) { }
 }

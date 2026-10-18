@@ -1,7 +1,11 @@
 #nullable disable
 using System.IO;
+using System.IO;
 using System.Xml;
 using System.Xml.Xsl;
+using System.Xml;
+using System.Xml.Xsl;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
@@ -36,4 +40,7 @@ public partial class XmcdToIResultNodeTransform
 
     [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
     private static int GetUnitPowerNumerator(XmlNode node) => GetIntegerFromAttribute(node, "power-numerator", 1);
+
+    [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
+    private ISymbolicResultNode BuildSymbolic(XmlNode node) => _resultNodeFactory.CreateSymbolicResultNode(node.InnerXml);
 }

@@ -28,8 +28,6 @@ public partial class UnitDescriptor : global::System.IComparable
     [global::Quire.Mirror.MirrorStub]
     public string Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public string FullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string RL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.UnitSystems DerivedUnitSystem { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -51,6 +49,4 @@ public partial class UnitDescriptor : global::System.IComparable
     private void SetUnitSystem(ref global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> unitSystems, global::Quire.Calculation.Core.UnitSystems value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public int CompareTo(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

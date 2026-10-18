@@ -32,4 +32,10 @@ public class PtcCalculationCoreTrace2DResultsVectorListResultNodeMechanicalDiffe
 
     [SkippableFact]
     public void Item_set_0600024c() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.VectorListResultNode), 0x0600024c);
+
+    [SkippableFact]
+    public void GetVectorValuesType_06000249() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.VectorListResultNode), 0x06000249);
+
+    [SkippableFact]
+    public void ElementsCount_get_06000240() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.VectorListResultNode), 0x06000240);
 }
