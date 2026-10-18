@@ -3,7 +3,7 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-cons-destructive-append` batch is correcting `Cons.destructive_append` to match reference IL.
+separate `mirror/a-tuple-shapes` batch is correcting two `Tuple` methods to match reference IL.
 `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
@@ -93,6 +93,38 @@ batch receipts below are history, not a task queue.
   'FullyQualifiedName~MplRunHelpersTests.Cons_lists_print_count_and_append'` — 1 passed;
   `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~MplRunHelpersDifferentialTests.Cons_members'` — 1 passed. `git diff --check` passed.
+  No proposals. Gate: `lane_merge.py mirror/a-cons-destructive-append --jobs 14` passed and merged tip
+  `c48e7b1277883329fa195f7ca62b0104a0dde93e` to `main`; `origin/main` is `737ceafb`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-i1j2qsot\gate.json`; no reasons or protected paths. Harness 97, Mpl 188,
+  Differential 392 passed, no failures or skips; coverage 1,399 compared, 1,533 exact and 90 structure-only; lint 0,
+  integrity complete, ratchet OK. Mutation 17/17 killed, no survivors, timeouts or crashes. Existing inventory gaps:
+  298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported.
+
+## SCons exact IL shape corrections (`mirror/a-scons-il-shape`)
+
+- Scope: correct `SCons.as_Sexpr(Cons)`, `SCons.Length`, `SCons.walk_expressions(MplEnv, SCons)`, and
+  `SCons.walk_patterns(MplEnv, SCons)`, the four remaining Tier A SCons structure mismatches. The related `a-scons-*`
+  refs are on main and have no source diff.
+- Checks: `SexprTests` 36 passed; direct Mathcad `SCons_members` 1 passed. Coverage and exact-IL audit passed with
+  1,537 exact and 86 structure-only. Mutation blocked at 48/49 evaluated: one prior accepted survivor and one live
+  survivor. The exact live survivor is
+  `Quire.Mpl.Run.SCons::walk_expressions(MplEnv,SCons)->Sexpr|True@IL_003b ceq -> cgt.un` at
+  `src/Quire.Mpl/Run/Sexpr.cs:408`, source `if (h == exps.head && t == exps.Field2) return exps;`. Harness 97, Mpl 188,
+  Differential 392 passed; lint 0, integrity complete, ratchet OK. Gate report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-7ysuemwx\gate.json`; validator exited 1 and the batch did not merge.
+  Continue on independent Lane A work while the SCons branch remains pending.
+
+## Tuple method IL shape corrections (`mirror/a-tuple-shapes`)
+
+- Scope: correct the two remaining Tier A `Mpl.Run.Tuple` structure mismatches: `TupleType(Type[])` and
+  `tuple_length(object)`. The tuple name-mangle refs have no source diff for `Tuple.cs` or helper tests; no active
+  Lane A worktree owns these methods.
+- Reference: `python tools\reference\reference.py Mpl.Run.Tuple --il`; artifact identity is recorded in
+  [Mpl.Run.Tuple](../evidence/Mpl.Run.Tuple.md).
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter
+  'FullyQualifiedName~MplRunHelpersTests.Tuple_representations'` — 1 passed;
+  `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~MplRunHelpersDifferentialTests.Tuple_members'` — 1 passed, 0 failed or skipped.
   No proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)

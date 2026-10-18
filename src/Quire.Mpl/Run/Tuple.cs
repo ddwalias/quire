@@ -32,7 +32,13 @@ public partial class Tuple
 
     /// <summary>0 for null, the length of an object array, otherwise 1.</summary>
     [MirrorVerified("MplRunHelpersDifferentialTests")]
-    public static int tuple_length(object o) => o == null ? 0 : o is object[] a ? a.Length : 1;
+    public static int tuple_length(object o)
+    {
+        if (o == null) return 0;
+        object[] a = o as object[];
+        if (a != null) return a.Length;
+        return 1;
+    }
 
     /// <summary>Throws for fewer than 2 types (no class) and past 5 (index out of range).</summary>
     [MirrorVerified("MplRunHelpersDifferentialTests")]
@@ -48,7 +54,11 @@ public partial class Tuple
 
     /// <summary>The generic tuple class for the types; null past 5 types, and throws below 2.</summary>
     [MirrorVerified("MplRunHelpersDifferentialTests")]
-    public static System.Type TupleType(System.Type[] tys) => tys.Length >= tup_types.Length ? null : IType(tys);
+    public static System.Type TupleType(System.Type[] tys)
+    {
+        if (tys.Length < tup_types.Length) return IType(tys);
+        return null;
+    }
 
     /// <summary>
     /// One type stands for itself; only reference types give an object array; 2 to 5 types with a value type give
