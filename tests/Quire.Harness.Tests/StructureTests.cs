@@ -94,6 +94,24 @@ public class StructureTests
         return new StructureReader(md, Pe, new SigProvider("Quire.Harness.Tests"), typeName ?? (n => n), _ => null).Read(handle);
     }
 
+    /// <summary>il_diff.py's output: the first differing instruction with context, both sides, each Quire instruction
+    /// with the source line of its IL offset; nothing for an exact match.</summary>
+    [Fact]
+    public void Diff_shows_the_first_differing_instruction_with_context()
+    {
+        Assert.Empty(Read("Pick").Diff(Read("PickAgain"), 3, _ => "x"));
+        Structure quire = Read("IfElse"), mathcad = Read("Ternary");
+        Assert.Equal(quire.Code.Length - quire.Handlers.Length, quire.Offsets.Length);
+        var lines = quire.Diff(mathcad, 1, offset => $"at {offset}");
+        int at = Enumerable.Range(0, quire.Code.Length).First(i => quire.Code[i] != mathcad.Code[i]);
+        Assert.Equal($"first difference at instruction #{at} (Quire | Mathcad  [Quire source line])", lines[0]);
+        var marked = Assert.Single(lines, l => l.StartsWith('>'));
+        Assert.StartsWith($"> #{at} ", marked);
+        Assert.Matches($@" {System.Text.RegularExpressions.Regex.Escape(quire.Code[at])} +\| ", marked);
+        Assert.EndsWith($"| {mathcad.Code[at]}  [at {quire.Offsets[at]}]", marked);
+        Assert.Equal(Math.Min(at, 1) + 2, lines.Count - 1);  // one instruction either side, fewer at the start
+    }
+
     [Fact]
     public void Locals_and_expression_bodies_do_not_count() => Assert.Empty(Read("WithLocal").Compare(Read("Inline")));
 

@@ -134,6 +134,12 @@ def method_audit(dotnet, tool_dir, structure_dir, install, inventory, profile, p
     return (ROOT / "tests" / host / f"{host}.csproj", ["-c", "Release", "--no-incremental", "-o", path(structure_dir)]), scan
 
 
+def mathcad_install(environ=os.environ):
+    """The Mathcad Prime install directory: MATHCAD_DIR, else its default path on Windows or from WSL."""
+    return Path(environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0"
+                            if os.name == "nt" else "/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0"))
+
+
 def missing_shape(dotnet, generator_dir, global_json, assembly, timeout):
     """Lines of the Quire.Mpl manifest (maintainer-owned) that the built assembly no longer matches: a type or member
     that disappeared or changed kind, access, modifiers or signature. Agents may delete generated stubs, and the
@@ -634,8 +640,7 @@ def main():
               "mutation_requested": bool(args.mutate or args.mutate_since or args.mutate_all),
               "complete": False, "gate_passed": False, "projects": [], "limitations":
               "Passing comparisons establish equivalence only for executed cases. Phase also requires render, coverage-excluded checks and independent review."}
-    install = Path(os.environ.get("MATHCAD_DIR", r"C:\Program Files\PTC\Mathcad Prime 12.0.1.0"
-                   if os.name == "nt" else "/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0"))
+    install = mathcad_install()
     artifact = install / "mplrun.dll"
     report["original"] = {"path": str(artifact), "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else None}
     holder = {}

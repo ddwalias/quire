@@ -42,6 +42,15 @@ sealed class Artifact
         }).ToArray();
     }
 
+    /// <summary>`file:line` of the statement holding the instruction at IL <paramref name="offset"/> of a method, from
+    /// the last visible sequence point at or before it; null without a PDB or such a point.</summary>
+    public string? Line(int token, int offset)
+    {
+        var point = _debug?.GetMethodDebugInformation(MetadataTokens.MethodDefinitionHandle(token).ToDebugInformationHandle())
+            .GetSequencePoints().Where(p => !p.IsHidden && p.Offset <= offset).Select(p => (SequencePoint?)p).LastOrDefault();
+        return point is { } p ? $"{_debug!.GetString(_debug.GetDocument(p.Document).Name)}:{p.StartLine}" : null;
+    }
+
     /// <summary>The hashlib name of a portable PDB document checksum algorithm; the GUID itself when unknown.</summary>
     static string HashAlgorithmName(Guid id) => id.ToString() switch
     {

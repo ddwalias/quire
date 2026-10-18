@@ -9,10 +9,11 @@ using Quire.Tools.MirrorGen;
 /// creates, its constants, exception regions and branching. Locals, nops, stack shuffling and branch encoding are
 /// ignored. MethodAudit reads it from the optimized (Release) build given by --structure-assemblies, which the
 /// validator always passes, so it compiles like the original. <see cref="Code"/> is the whole instruction sequence,
-/// for <see cref="Exact"/>.
+/// for <see cref="Exact"/>; <see cref="Offsets"/> the IL offset of each of its instructions (the exception regions
+/// that follow them have none).
 /// </summary>
 sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[] Constants, string[] Handlers,
-    int Branches, int SwitchTargets, int Throws, int Rethrows, string[] Code)
+    int Branches, int SwitchTargets, int Throws, int Rethrows, string[] Code, int[] Offsets)
 {
     /// <summary>Whether the instruction sequences are equal (<see cref="StructureReader.Folded"/>), branch targets and
     /// exception regions as instruction indices: unlike <see cref="Compare"/>, branch direction and block order count,
@@ -45,6 +46,24 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
         Count("throws", Throws, original.Throws);
         Count("rethrows", Rethrows, original.Rethrows);
         return differences;
+    }
+
+    /// <summary>Where <see cref="Code"/> first differs from <paramref name="original"/>'s: that instruction and
+    /// <paramref name="context"/> on either side, Quire's then Mathcad's, each Quire instruction with the source line
+    /// <paramref name="where"/> gives its IL offset. Empty when <see cref="Exact"/>.</summary>
+    public List<string> Diff(Structure original, int context, Func<int, string?> where)
+    {
+        if (Exact(original)) return [];
+        int at = 0;
+        while (at < Code.Length && at < original.Code.Length && Code[at] == original.Code[at]) at++;
+        int from = Math.Max(0, at - context), to = Math.Min(Math.Max(Code.Length, original.Code.Length) + 1, at + context + 1);
+        static string Side(string[] code, int i) => i < code.Length ? code[i] : i == code.Length ? "(end)" : "";
+        int width = Enumerable.Range(from, to - from).Max(i => Side(Code, i).Length);
+        var lines = new List<string> { $"first difference at instruction #{at} (Quire | Mathcad  [Quire source line])" };
+        for (int i = from; i < to; i++)
+            lines.Add($"{(i == at ? ">" : " ")} #{i,-4} {Side(Code, i).PadRight(width)} | {Side(original.Code, i)}"
+                + (i < Offsets.Length && where(Offsets[i]) is { } line ? $"  [{line}]" : ""));
+        return lines;
     }
 }
 
@@ -165,7 +184,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var handlers = regions
             .Select(r => r.Kind == ExceptionRegionKind.Catch ? "catch " + Type(r.CatchType) : r.Kind.ToString().ToLowerInvariant())
             .ToArray();
-        return new([.. calls], [.. fields], [.. types], [.. constants], handlers, branches, switchTargets, throws, rethrows, [.. sequence]);
+        return new([.. calls], [.. fields], [.. types], [.. constants], handlers, branches, switchTargets, throws, rethrows, [.. sequence], [.. starts]);
     }
 
     private static int Number(Dictionary<string, int> numbers, string key) =>

@@ -104,6 +104,9 @@ sh /root/src/lane-merge.sh "$B"                                       # validate
 cd /root/src && git -C /root/src/quire-main worktree remove --force "$W"
 ```
 
+When a method is not exact, `python3 tools/validation/il_diff.py <Type | Type::Name | Type::signature> ...` prints its
+first Release-IL instruction that differs from Mathcad's, with context on both sides and the Quire source line (stdout only).
+
 `lane-merge.sh` (keep a copy at `/root/src/lane-merge.sh`) validates without the merge lock and lands under it.
 Run it in the worktree that has the branch checked out (it rebases there); it exits with the gate's code. `MAIN`
 defaults to the worktree that has `main` checked out, where the gate must run:

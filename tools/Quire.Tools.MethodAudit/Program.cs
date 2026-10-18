@@ -27,14 +27,19 @@ for (int i = 0; i < args.Length; i += 2)
         options[args[i]] = ["true"];
         continue;
     }
-    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--structure-assemblies" or "--install" or "--output" or "--project" or "--type"))
-        throw new ArgumentException("MethodAudit --repo DIR --assemblies DIR [--structure-assemblies DIR] --install DIR --output FILE [--project NAME ...] [--type TYPE ...] [--inventory-only]");
+    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--structure-assemblies" or "--install" or "--output" or "--project" or "--type" or "--diff"))
+        throw new ArgumentException("MethodAudit --repo DIR --assemblies DIR [--structure-assemblies DIR] --install DIR (--output FILE | --diff KEY ...) [--project NAME ...] [--type TYPE ...] [--inventory-only]");
     if (!options.TryGetValue(args[i], out var list)) options[args[i]] = list = [];
     list.Add(args[i + 1]);
 }
 string One(string name) => options.TryGetValue(name, out var values) && values.Count == 1
     ? Path.GetFullPath(values[0]) : throw new ArgumentException($"Exactly one {name} is required");
-string repo = One("--repo"), assemblies = One("--assemblies"), install = One("--install"), output = One("--output");
+// `--diff KEY`: instead of the inventory, print to stdout where each matching method's instructions first differ from
+// Mathcad's (Structure.Diff); KEY is a type, `Type::Name` (every overload) or an inventory key `Type::signature`.
+var diffs = options.GetValueOrDefault("--diff");
+string repo = One("--repo"), assemblies = One("--assemblies"), install = One("--install");
+string? output = diffs == null ? One("--output") : null;
+int shown = 0;
 // An optimized build of the same sources, like Mathcad's: only method structure is read from it.
 string? structureAssemblies = options.ContainsKey("--structure-assemblies") ? One("--structure-assemblies") : null;
 var projects = options.GetValueOrDefault("--project") ?? Directory.GetFiles(Path.Combine(repo, "docs/mirror/manifest"), "*.txt")
@@ -230,10 +235,12 @@ var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.P
 foreach (var (artifact, raw, type, method, status, exclusion, original, counterpart) in matched)
 {
     if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
+    bool wanted = diffs != null && diffs.Any(d => d == raw.Owner || d == $"{raw.Owner}::{raw.Name}" || d == $"{raw.Owner}::{raw.Key}");
+    if (diffs != null && !wanted) continue;
     var body = raw.BodyRva == 0 ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
     bool isVirtual = (artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)).Attributes
         & MethodAttributes.Virtual) != 0;
-    List<string>? differences = null;
+    List<string>? differences = null, diff = null;
     bool exact = false;
     if (!inventoryOnly && exclusion == null && counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
     {
@@ -242,16 +249,27 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
             if (StructureToken(artifact, raw) is not { } token) differences = ["not comparable: the optimized build lacks this method"];
             else
             {
-                var mine = Reader(optimized.TryGetValue(artifact, out var o) ? o.Build : artifact, true).Read(MetadataTokens.MethodDefinitionHandle(token));
+                var build = optimized.TryGetValue(artifact, out var o) ? o.Build : artifact;
+                var mine = Reader(build, true).Read(MetadataTokens.MethodDefinitionHandle(token));
                 var theirs = Reader(original!, false).Read(MetadataTokens.MethodDefinitionHandle(counterpart.Token));
                 differences = mine.Compare(theirs);
                 exact = differences.Count == 0 && mine.Exact(theirs);
+                if (wanted) diff = mine.Diff(theirs, 3, offset => build.Line(token, offset) is { } line ? Path.GetRelativePath(repo, line) : null);
             }
         }
         catch (Exception e) when (e is BadImageFormatException or KeyNotFoundException or InvalidOperationException)
         {
             differences = [$"IL unreadable: {e.Message}"];
         }
+    }
+    if (wanted)
+    {
+        shown++;
+        Console.WriteLine($"{raw.Owner}::{raw.Key}" + (counterpart == null ? "" : $" (Mathcad {original!.Name} 0x{counterpart.Token:x8})") + ": "
+            + (differences == null ? "not compared: " + (exclusion ?? (counterpart == null ? "no Mathcad counterpart" : "no IL body"))
+               : exact ? "exact" : differences.Count == 0 ? "structure matches; instructions differ" : string.Join("; ", differences)));
+        foreach (var line in diff ?? []) Console.WriteLine("  " + line);
+        continue;
     }
     rows.Add(new {
         id = artifact.Name + "::" + raw.Owner + "::" + raw.Key, project = artifact.Name, type = raw.Owner, signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
@@ -301,6 +319,12 @@ if (File.Exists(testAssembly))
         testTypes.Add(new { name, documents = Documents(type).Distinct().Order().ToArray(),
             references = TestTypes.References(md, pe, handle).Select(h => TestTypes.Name(md, h)).Order().ToArray() });
     }
+}
+if (output == null)
+{
+    if (shown == 0) Console.Error.WriteLine($"No method matches {string.Join(", ", diffs!)}");
+    foreach (var error in errors) Console.Error.WriteLine(error);
+    return shown > 0 ? 0 : 1;
 }
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
 File.WriteAllText(output, JsonSerializer.Serialize(new { schema = 2, projects, errors, methods = rows, test_types = testTypes }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
