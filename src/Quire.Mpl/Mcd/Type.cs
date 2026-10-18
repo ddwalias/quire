@@ -436,7 +436,7 @@ public abstract partial class Type
         }
 
         /// <summary><c>application [-> type]</c>, the arrow associating to the right.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public Type Parse()
         {
             var domain = ParseApplication();
