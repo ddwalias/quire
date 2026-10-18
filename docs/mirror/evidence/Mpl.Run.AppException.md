@@ -61,7 +61,9 @@ compared directly by rerunning it; for `NonCriticalException.cctor` the differen
 **Constructor order.** The two-parameter constructors `(string, Exception)` and `(string, uint)` have the same IL size;
 their rows follow declaration order, which matches Quire's source order for all eight.
 
-Fields: the two delimiters and `NonCriticalException`'s three reason names are Verified; `m_argument` and `m_handle` are private state, Tested.
+Fields: the two delimiters and `NonCriticalException`'s three reason names are Verified. `m_argument` and `m_handle`
+are Verified from the direct constructor, property, and mutation comparisons: `Dump` renders both public values
+(`Argument` and `Handle`) for every compared exception, including inner exception chains.
 
 ## Test cases
 

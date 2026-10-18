@@ -20,9 +20,9 @@ public partial class AppException : ApplicationException
     [MirrorVerified("AppExceptionDifferentialTests")]
     public static char errorArgDelimiter = '@';
 
-    [MirrorTested("Mpl.Run.AppException")]
+    [MirrorVerified("AppExceptionDifferentialTests")]
     private uint m_argument;
-    [MirrorTested("Mpl.Run.AppException")]
+    [MirrorVerified("AppExceptionDifferentialTests")]
     private uint m_handle;
 
     [MirrorVerified("AppExceptionDifferentialTests")]
