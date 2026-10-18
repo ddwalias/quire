@@ -25,6 +25,11 @@
 - **Validation:**
   - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (97/97 passed)
   - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryDifferentialTests'` (2/2 passed)
+- **Gate status & Blocker:**
+  - `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/b-engine-factory --jobs 14` exited with code 1:
+    `BLOCKED: maintainer-owned paths changed:` listing the 8 modified `src/Quire.Engine/Generated/Mirror/*.g.cs` stub files.
+  - Root cause: `tools/validation/merge_gate.py` line 63 defines `GENERATED = 'src/quire.mpl/generated/mirror/*.g.cs'` and `tools/validation/protected.txt` line 5 explicitly exempts stub deletions only in `src/Quire.Mpl/Generated/Mirror/*.g.cs`.
+  - Required maintainer action: Land `mirror/b-engine-factory` with `--allow-protected` (or update `tools/validation/merge_gate.py` and `protected.txt` to allow stub deletions in `src/Quire.Engine/Generated/Mirror/*.g.cs`). All implementation, tests, and evidence are complete and passing.
 
 Everything below this summary is historical context and receipts, not a queue of unfinished work.
 
