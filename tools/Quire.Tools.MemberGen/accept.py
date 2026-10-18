@@ -35,11 +35,20 @@ class Failure(Exception):
     """A run that cannot continue; the tree is restored before it is reported."""
 
 
+def to_host_path(p, is_windows):
+    s = str(p)
+    if is_windows and s.startswith('/mnt/'):
+        return re.sub(r'^/mnt/([a-zA-Z])/', lambda m: m.group(1).upper() + ':/', s)
+    return s
+
+
 def run(command, log, **kwargs):
     """Runs a command, appending its output to `log`; returns (exit code, output)."""
-    result = subprocess.run([str(c) for c in command], cwd=ROOT, capture_output=True, text=True, **kwargs)
+    is_windows = str(command[0]).lower().endswith('.exe')
+    cmd = [str(command[0])] + [to_host_path(c, is_windows) for c in command[1:]]
+    result = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, **kwargs)
     with open(log, 'a') as f:
-        f.write(f"$ {' '.join(map(str, command))}\n{result.stdout}{result.stderr}\n")
+        f.write(f"$ {' '.join(map(str, cmd))}\n{result.stdout}{result.stderr}\n")
     return result.returncode, result.stdout + result.stderr
 
 
@@ -175,7 +184,7 @@ def accept(args, work, log):
                         rejected.setdefault(m['id'], f'IL: {why}')
             if not args.no_test:
                 trx = work / f'tests{round}.trx'
-                env = dict(os.environ, QUIRE_REQUIRE_MATHCAD='1', MATHCAD_DIR=args.install)
+                env = dict(os.environ, QUIRE_REQUIRE_MATHCAD='1', MATHCAD_DIR=args.install, WSLENV='QUIRE_REQUIRE_MATHCAD:MATHCAD_DIR/p')
                 run([args.dotnet, 'test', ROOT / 'tests' / host / 'bin' / 'Debug' / framework / 'Quire.Differential.Tests.dll',
                      '--filter', 'FullyQualifiedName~MechanicalDifferentialTests', '--logger', f'trx;LogFileName={trx.name}',
                      '--results-directory', work], log, env=env)
