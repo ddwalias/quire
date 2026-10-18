@@ -11,6 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.Factory, iengine")]
 public sealed partial class Factory : global::Quire.Engine.IFactoryFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void AppendPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IEnginePriv, iengine")]
 public partial interface IEnginePriv : global::Quire.Engine.IEngine
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Initialize(string appData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

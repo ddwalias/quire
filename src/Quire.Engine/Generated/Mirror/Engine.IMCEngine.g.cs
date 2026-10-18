@@ -11,10 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IMCEngine, iengine")]
 public partial interface IMCEngine : global::Quire.Engine.IEngine
 {
-    [global::Quire.Mirror.MirrorStub]
-    void AddNotify(nint A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveNotify(nint A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void StartNotify() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

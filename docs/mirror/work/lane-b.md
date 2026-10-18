@@ -2,9 +2,29 @@
 
 ## Active handoff
 
-`FnCompose` is already merged and verified on `main` at `bf985ce`; the old `mirror/b-fncompose` row
-below is historical. Select the next unowned Engine interface/factory batch after checking the tier inventory,
-current ownership and whether Windows-only execution is required. Follow [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md).
+- **Current Batch:** Engine factory and interfaces batch
+- **Branch:** `mirror/b-engine-factory`
+- **Scope:** 23 methods across Engine interfaces and factories:
+  - `Engine.Factory`: `.ctor` (0x060000bd), `AppendPath` (0x060000be), `NewFactory` (0x060000bf), `CreateFactory` (0x060000c0).
+  - `Engine.IFactoryFactory`: `AppendPath` (0x060000bb), `NewFactory` (0x060000bc).
+  - `Engine.IFactory`: `Initialize` (0x060000b5), `VerifyIntegrity` (0x060000b6).
+  - `Engine.IBuiltin`: `GetVariable` (0x060000a0), `SetVariable` (0x060000a1), `UnsetVariable` (0x060000a2), `GetBuiltins` (0x060000a3).
+  - `Engine.IEnginePriv`: `Initialize` (0x060000a4).
+  - `Engine.IEngineUnstable`: `GetNodeType` (0x0600009c).
+  - `Engine.IMCEngine`: `AddNotify` (0x0600009d), `RemoveNotify` (0x0600009e), `StartNotify` (0x0600009f).
+  - `Engine.IEngine`: `get_IsUpToDate` (0x06000089), `RecalculateAll` (0x0600009a).
+- **Evidence:**
+  - [Engine.Factory](../evidence/Engine.Factory.md)
+  - [Engine.IFactoryFactory](../evidence/Engine.IFactoryFactory.md)
+  - [Engine.IFactory](../evidence/Engine.IFactory.md)
+  - [Engine.IBuiltin](../evidence/Engine.IBuiltin.md)
+  - [Engine.IEnginePriv](../evidence/Engine.IEnginePriv.md)
+  - [Engine.IEngineUnstable](../evidence/Engine.IEngineUnstable.md)
+  - [Engine.IMCEngine](../evidence/Engine.IMCEngine.md)
+  - [Engine.IEngine](../evidence/Engine.IEngine.md)
+- **Validation:**
+  - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (97/97 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryDifferentialTests'` (2/2 passed)
 
 Everything below this summary is historical context and receipts, not a queue of unfinished work.
 

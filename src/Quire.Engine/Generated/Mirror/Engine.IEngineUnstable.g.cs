@@ -11,6 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.IEngineUnstable, iengine")]
 public partial interface IEngineUnstable : global::Quire.Engine.IEngine
 {
-    [global::Quire.Mirror.MirrorStub]
-    int GetNodeType(int h) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

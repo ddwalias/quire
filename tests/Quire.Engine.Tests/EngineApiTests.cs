@@ -137,4 +137,59 @@ public class EngineApiTests
         _engine.Remove(c, 0);
         Assert.Equal([b, a], _engine.GetTopNodes().Cast<int>());
     }
+
+    [Fact]
+    public void Factory_AppendPath_appends_to_assembly_path()
+    {
+        string original = Rts.AssemblyPath;
+        try
+        {
+            Rts.AssemblyPath = "";
+            var factory = new Factory();
+            factory.AppendPath("dir1");
+            Assert.Equal("dir1", Rts.AssemblyPath);
+            factory.AppendPath("dir2");
+            Assert.Equal("dir1;dir2", Rts.AssemblyPath);
+            factory.AppendPath(null!);
+            Assert.Equal("dir1;dir2", Rts.AssemblyPath);
+        }
+        finally
+        {
+            Rts.AssemblyPath = original;
+        }
+    }
+
+    [Fact]
+    public void Factory_Initialize_and_VerifyIntegrity()
+    {
+        using var factory = new Factory().NewFactory();
+        factory.Initialize("testAppData");
+        Assert.True(factory.VerifyIntegrity());
+    }
+
+    [Fact]
+    public void Engine_IsUpToDate_and_RecalculateAll()
+    {
+        var engine = new Factory().NewFactory().NewEngine();
+        Assert.False(engine.IsUpToDate);
+        engine.CalculateNow(0);
+        Assert.True(engine.IsUpToDate);
+
+        engine.SetAutoCalc(false);
+        int h = engine.AddAfter(0, "(eval 42)", 0, 0);
+        Assert.False(engine.IsUpToDate);
+        // Under manual calc, RecalculateAll marks dirty without computing
+        engine.RecalculateAll();
+        Assert.False(engine.IsUpToDate);
+        // CalculateNow brings it up to date
+        engine.CalculateNow(0);
+        Assert.True(engine.IsUpToDate);
+        // Under auto calc, RecalculateAll recomputes immediately
+        engine.SetAutoCalc(true);
+        engine.RecalculateAll();
+        Assert.True(engine.IsUpToDate);
+        var r = engine.GetValueSync(h, 0);
+        Assert.Equal(NodeStatus.NODE_READY, r[ResultKeys.Status]);
+        Assert.Equal(42.0, ((NumVal)r[ResultKeys.Value]!).Real);
+    }
 }

@@ -12,6 +12,10 @@ internal sealed class EngineFactory : IFactory
 
     public int WorkerStackSize { get; set; }
 
+    public void Initialize(string appData) { }
+
+    public bool VerifyIntegrity() => true;
+
     public IEngine NewEngine()
     {
         var e = new WorksheetEngine();
