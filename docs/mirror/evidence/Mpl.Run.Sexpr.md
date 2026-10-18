@@ -32,7 +32,7 @@ Abstract base of the S-expression family. It overrides nothing from `object`, so
 | `Walk(MplEnv, Sexpr)` | 0x06000019 | `14fee3d4` | `block.walk(env, out e)`, returned as `[e, definitions]`. | High | Verified |
 | `WalkModule(MplEnv, Sexpr)` | 0x0600001a | `273fd630` | `block.walk(env, out _)`, then a list headed by `block_keyword.NewTok(0)` followed by `SCons.as_Sexpr` of the definitions. | High | Verified |
 | `walk(MplEnv, out MplEnv)` | 0x0600001b | `f1c250b4` | Makes `new LocalEnv(env)` the out environment, then `walk_definitions(walk_declaration_lhs(outenv), outenv)`. | High; Quire's `LocalEnv(parent)` is still a no-op stub, so the parent link isn't observable yet | Verified |
-| `walk_definitions(Cons, MplEnv)` | 0x0600001c | `8d61c081` | For each cell, replaces `Field1` with `walk_definition(Field1 as SCons, env)`, in place; returns the first cell. | High | Tested |
+| `walk_definitions(Cons, MplEnv)` | 0x0600001c | `8d61c081` | For each cell, replaces `Field1` with `walk_definition(Field1 as SCons, env)`, in place; returns the first cell. | High | Verified |
 | `walk_definition(SCons, MplEnv)` | 0x0600001d | `c824ae41` | `decl.Key.walk_definition_as(env, decl)`; a non-symbol head throws `NullReferenceException`. | High | Tested |
 | `walk_declaration_lhs(MplEnv)` | 0x0600001e | `ce2965e0` | null. | High | Verified |
 | `walk_pattern(MplEnv)` | 0x0600001f | `a1b033ff` | `BadPattern(this)`. | High | Tested |
@@ -48,7 +48,7 @@ and non-zero, symbols upper/lower/empty/null/non-ASCII, qualified and keyword-ta
 atoms including NaN, -0 and null text, null atoms, improper lists, null `Field1`/`Field2`, shared cells, nested
 lists, quote forms, `SAPPEND` chains, `SLIST`s ending in `Nul.singleton`, in another `Nul` and in a token); on each,
 `ToString`, `FormatTail`, `FormatAppend`, `handle`, `Key`, `sym`, `str`, `AsSym`, `AsStr`, `AsKey`, `quotation`,
-`quote`, `scons`, `m_tag`, and on lists `Length`, `head`, `tail`, `car`, `cdr`, `first`…`fifth`. Environment-free
+`quote`, `scons`, `m_tag`, and on lists `Length`, `head`, `tail`, `car`, `cdr`, `first`…`fifth`. Successful `walk_definitions` traversals over one and two `deftype_keyword` declarations (the override returns each form), a successful first declaration followed by a throwing second declaration, and the existing null/error cases. The two-cell error case makes advancing to the second declaration observable; the identity assertions confirm the method returns the original head. Since current keyword overrides return their input form, these direct cases do not distinguish a `Field1` assignment from leaving the same form in place. Environment-free
 walks (`walk_expression`, `walk_pattern`, `walk_declaration_lhs`, `walk_patterns`, `walk_expressions`,
 `walk_with_bindings`, `walk`, `Walk`, `as_Sexpr`, `Sym.walk_definition_as`) on inputs that never reach a lower-case
 symbol in expression position or an upper-case one in pattern position, with a Mathcad `LocalEnv` on Mathcad's side;
