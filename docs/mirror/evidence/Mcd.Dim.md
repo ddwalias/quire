@@ -65,7 +65,10 @@ Luminosity, Mass, Money, Substance, Temperature, Time.
 `3-4i [{Length 60000}]`). The Quire-only extras `Denominator`, `BaseNames`, `Symbols`, `Combine` and `Require` were
 removed.
 
-Fields: the five markers, `polymorphic` and the thread scratch `s_vec` are Verified (compared directly by `DimDifferentialTests`); `s_rank`, `s_map` and `m_vec` are private state, Tested through the members that use them.
+Fields: the five markers, `polymorphic`, thread scratch `s_vec`, private static `s_rank` and `s_map`, and private
+instance `m_vec` are Verified by direct state renderers in `DimDifferentialTests`. The initializer renderer compares
+the full rank, scratch vector, marker coordinates and identity relationships, and every map key/value coordinate
+entry; the private array constructor comparison also checks that the supplied vector is retained by reference.
 
 ## Test cases
 
