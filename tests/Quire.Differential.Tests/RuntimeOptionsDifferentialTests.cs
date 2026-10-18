@@ -247,7 +247,9 @@ public class RuntimeOptionsDifferentialTests
         var mInitType = M.GetNestedType("RuntimeOptionsInitializer", BindingFlags.NonPublic)!;
         var qInitCtor = qInitType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
         var mInitCtor = mInitType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!;
+        Assert.Equal(StaticState(M), StaticState(typeof(Q.RuntimeOptions)));
         MethodComparison.Compare("RuntimeOptionsInitializer.ctor()", Contract, qInitCtor, null, [], mInitCtor, null, [], Show, Show);
+        Assert.Equal(StaticState(M), StaticState(typeof(Q.RuntimeOptions)));
     }
 
     private static string UnitDetail(object? u) => u == null ? "null"
@@ -273,6 +275,9 @@ public class RuntimeOptionsDifferentialTests
         parts.Add($"the_unit_system={SystemText(Get(t, "the_unit_system"))}");
         var group = Get(t, "the_unit_system_group");
         parts.Add($"the_unit_system_group={(group == null ? "null" : GroupState(group))}");
+        System.Type dim = t.Assembly == typeof(Q.RuntimeOptions).Assembly ? typeof(Q.Dim) : Mathcad.Type("mplrun", "Mcd.Dim");
+        var scratch = (int[]?)Get(dim, "s_vec");
+        parts.Add($"Dim.s_vec={(scratch == null ? "null" : "[" + string.Join(", ", scratch) + "]")}");
         return string.Join(", ", parts);
     }
 

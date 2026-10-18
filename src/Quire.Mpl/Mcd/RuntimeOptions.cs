@@ -108,7 +108,7 @@ public partial class RuntimeOptions
 {
     private partial class RuntimeOptionsInitializer
     {
-        [MirrorTested("Mcd.RuntimeOptions")]
+        [MirrorVerified("RuntimeOptionsDifferentialTests")]
         public RuntimeOptionsInitializer()
         {
             new RuntimeOptions().SyncToThread();

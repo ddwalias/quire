@@ -33,7 +33,7 @@ cases in "Test cases", except the initializer.
 | `SaveThreadOptions()` | 0x06000650 | `9ba6e537` | A new instance whose fields are the calling thread's current static options (so on a never-synced thread: all flags off, no unit system or group, number 0). The new instance's own initial group is replaced. | High | Verified |
 | `.ctor()` | 0x06000651 | `0d962389` | The defaults described above; each instance gets a new group around the default SI. Doesn't change the counter. | High | Verified |
 | `.cctor` | 0x06000652 | `79eec023` | Sets restricted mode off and the counter to 0, builds the default SI system, then runs the initializer, which syncs default options to the initialising thread and increments the counter. | High | — (type initializer; not counted) |
-| `RuntimeOptionsInitializer.ctor()` | 0x060007e7 | `a01bce3f` | Creates default options, syncs them to the calling thread and increments `s_ro_counter`. | High | Tested |
+| `RuntimeOptionsInitializer.ctor()` | 0x060007e7 | `a01bce3f` | Creates default options, syncs them to the calling thread (including `Dim.s_vec` if absent) and increments `s_ro_counter`. | High | Verified |
 
 **Type initializer.** Quire has no explicit static constructor; the static field initializers, declared in this
 order with the initializer instance last, are the `.cctor`. The mirror tooling doesn't count type initializers, so
@@ -54,6 +54,8 @@ Fields: every public instance and thread-static option field, `s_restricted_mode
   the thread's fields and scratch-vector length after it; `SaveThreadOptions` again and whether its group is the
   thread's; `addCopyWithRONumber(17)` on the instance's group, `RemoveUnitSystem` and the group afterwards, and
   `RemoveUnitSystem` with a null group;
+- direct `RuntimeOptionsInitializer.ctor()` invocation, with the full static/thread option state, `s_ro_counter`,
+  and `Dim.s_vec` compared before and after on both artifacts;
 - a group script: `Name`, `findMember` of 0 and a missing key, `addMember` of a new and of a duplicate key,
   `changeMember` of an existing member with a one-unit basis (the padded basis throws), of the same member with the
   default SI basis and a one-unit default list, and of a missing member, `resetMember` of a member and of 0,
