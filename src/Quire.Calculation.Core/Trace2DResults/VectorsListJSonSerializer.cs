@@ -8,6 +8,9 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public static partial class VectorsListJSonSerializer<T>
 {
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorsListJSonSerializer1MechanicalDifferentialTests")]
+    static VectorsListJSonSerializer() => _jSonVectorsListSerializer = new DataContractJsonSerializer(typeof(T[]));
+
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorsListJSonSerializer1MechanicalDifferentialTests")]
     private static readonly DataContractJsonSerializer _jSonVectorsListSerializer;
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorsListJSonSerializer1MechanicalDifferentialTests")]
