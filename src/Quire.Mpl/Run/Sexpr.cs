@@ -148,7 +148,7 @@ public abstract partial class Sexpr : Tag
         return walk_definitions(walk_declaration_lhs(outenv), outenv);
     }
 
-    [MirrorTested("Mpl.Run.Sexpr")]
+    [MirrorVerified("SexprDifferentialTests")]
     private static Cons walk_definitions(Cons decls, MplEnv env)
     {
         for (Cons c = decls; c != null; c = c.Field2 as Cons)

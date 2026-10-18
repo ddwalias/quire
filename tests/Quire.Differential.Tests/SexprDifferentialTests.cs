@@ -1464,6 +1464,41 @@ public class SexprDifferentialTests
         var mDeclCons = ToMathcad(declCons);
         Compare("Sexpr.walk_definitions(decls)", "Mpl.Run.Sexpr", qWalkDefs, null, [declCons, qEnv], mWalkDefs, null, [mDeclCons, mEnv]);
 
+        // The keyword override succeeds, so walk_definitions visits each cell and returns the original head.
+        var qDefType = new deftype_keyword();
+        var mDefType = New(M("Mpl.Run.deftype_keyword"), [])!;
+        var qDefForm1 = SCons.list2(new Tok(qDefType, 80u), I(1, 81u));
+        var mDefArg1 = ToMathcad(I(1, 81u))!;
+        var mDefForm1 = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            New(M("Mpl.Run.Tok"), ["Atom", "UInt32"], mDefType, 80u)!,
+            New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], mDefArg1, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!)!)!;
+        var qDefForm2 = SCons.list2(new Tok(qDefType, 82u), I(2, 83u));
+        var mDefArg2 = ToMathcad(I(2, 83u))!;
+        var mDefForm2 = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            New(M("Mpl.Run.Tok"), ["Atom", "UInt32"], mDefType, 82u)!,
+            New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], mDefArg2, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!)!)!;
+        var qOneDecl = new Cons(qDefForm1, null);
+        var mOneDecl = New(M("Mpl.Run.Cons"), ["Object", "Object"], mDefForm1, null)!;
+        Compare("Sexpr.walk_definitions one successful declaration", "Mpl.Run.Sexpr",
+            qWalkDefs, null, [qOneDecl, qEnv], mWalkDefs, null, [mOneDecl, mEnv]);
+        var qTwoDecls = new Cons(qDefForm1, new Cons(qDefForm2, null));
+        var mTwoDecls = New(M("Mpl.Run.Cons"), ["Object", "Object"], mDefForm1,
+            New(M("Mpl.Run.Cons"), ["Object", "Object"], mDefForm2, null)!)!;
+        Compare("Sexpr.walk_definitions two successful declarations", "Mpl.Run.Sexpr",
+            qWalkDefs, null, [qTwoDecls, qEnv], mWalkDefs, null, [mTwoDecls, mEnv]);
+        Assert.Same(qTwoDecls, qWalkDefs.Invoke(null, [qTwoDecls, qEnv]));
+        Assert.Same(mTwoDecls, mWalkDefs.Invoke(null, [mTwoDecls, mEnv]));
+
+        var qBadSecond = SCons.list2(I(3, 84u), I(4, 85u));
+        var mBadSecond = New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"],
+            ToMathcad(I(3, 84u))!,
+            New(M("Mpl.Run.SCons"), ["Sexpr", "Sexpr"], ToMathcad(I(4, 85u))!, Reflect.Get(M("Mpl.Run.Nul"), "singleton")!)!)!;
+        var qSuccessThenBad = new Cons(qDefForm1, new Cons(qBadSecond, null));
+        var mSuccessThenBad = New(M("Mpl.Run.Cons"), ["Object", "Object"], mDefForm1,
+            New(M("Mpl.Run.Cons"), ["Object", "Object"], mBadSecond, null)!)!;
+        Compare("Sexpr.walk_definitions reaches a throwing second declaration", "Mpl.Run.Sexpr",
+            qWalkDefs, null, [qSuccessThenBad, qEnv], mWalkDefs, null, [mSuccessThenBad, mEnv]);
+
         var declForm = L(S("foo"), I(1));
         var mDeclForm = ToMathcad(declForm);
         Compare("Sexpr.walk_definition sym", "Mpl.Run.Sexpr", qWalkDef, null, [declForm, qEnv], mWalkDef, null, [mDeclForm, mEnv]);
