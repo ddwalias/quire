@@ -210,7 +210,8 @@ sealed partial class Emitter
         string cls = TestClass(outer);
         string path = Path.Combine(repo, "tests", "Quire.Differential.Tests", cls + ".cs");
         var type = quire.Model.Types.First(t => t.MirrorOf != null && t.MirrorOf.Split(',')[0].Trim() == outer);
-        string typeName = "global::" + type.FullName.Split('`')[0];
+        string typeArgs = type.GenericParams.Length == 0 ? "" : "<" + new string(',', type.GenericParams.Length - 1) + ">";
+        string typeName = "global::" + type.FullName.Split('`')[0] + typeArgs;
         var methods = facts.Select(f => $"    [SkippableFact]\n    public void {f.Test}() => Mechanical.Compare(typeof({typeName}), 0x{f.Token:x8});").ToList();
         if (File.Exists(path))
         {

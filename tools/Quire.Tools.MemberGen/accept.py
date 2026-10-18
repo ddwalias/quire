@@ -81,9 +81,21 @@ def owners(report):
     return lines, tests
 
 
+def repo_relpath(p):
+    p = p.strip().replace('\\', '/')
+    if not (p.startswith('/') or re.match(r'^[a-zA-Z]:', p)):
+        return p
+    if os.name != 'nt':
+        p = re.sub(r'^[a-zA-Z]:/', lambda m: f'/mnt/{m.group(0)[0].lower()}/', p)
+    return os.path.relpath(p, ROOT).replace('\\', '/')
+
+
 def test_owner(path, line, tests, root=ROOT):
     """The member whose generated fact holds `line` of a test file."""
-    text = (root / path).read_text().split('\n')
+    f = root / path
+    if not f.exists():
+        return None
+    text = f.read_text().split('\n')
     for n in range(min(line, len(text)) - 1, -1, -1):
         found = re.search(r'public void (\w+)\(', text[n])
         if found:
@@ -155,7 +167,7 @@ def accept(args, work, log):
         rejected = {}
         code, out = run([args.dotnet, 'build', f'tests/{host}', *flags], log)
         for e in ERROR.finditer(out):
-            path = os.path.relpath(e['path'].strip(), ROOT).replace('\\', '/')
+            path = repo_relpath(e['path'])
             owner = lines.get((path, int(e['line']))) or (test_owner(path, int(e['line']), tests) if path.startswith('tests/') else None)
             if owner is None:
                 raise Failure(f'build error outside the emitted members: {e[0]}')
