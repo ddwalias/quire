@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Quire.Mpl\Quire.Mpl.csproj" />
-    <Compile Include="../Quire.Differential.Tests/*.cs" Link="%(Filename)%(Extension)" />
+    <Compile Include="../Quire.Differential.Tests/*.cs" Exclude="../Quire.Differential.Tests/*MechanicalDifferentialTests.cs" Link="%(Filename)%(Extension)" />
+    <Compile Include="../Quire.Differential.Tests/MplRun*MechanicalDifferentialTests.cs" Link="%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>
