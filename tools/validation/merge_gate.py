@@ -3,9 +3,16 @@
 Run from the checkout that has the base branch checked out:
     python3 tools/validation/merge_gate.py mirror/Quire.Mcd.NumVal            # check only
     python3 tools/validation/merge_gate.py mirror/Quire.Mcd.NumVal --apply    # check, then fast-forward main
+
+Validating outside the merge lock, then landing under it (exit 4: validate again):
+    python3 tools/validation/merge_gate.py mirror/Quire.Mcd.NumVal --validate-only
+    python3 tools/validation/merge_gate.py mirror/Quire.Mcd.NumVal --apply-validated
+Nightly audit of main (merges nothing):
+    python3 tools/validation/merge_gate.py --nightly --results DIR
 """
 import argparse
 import fnmatch
+import io
 import json
 import os
 import re
@@ -13,7 +20,9 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
+import time
 import ratchet
 from validate import mutation_jobs
 from validate import SCRATCH_PREFIX, SCRATCH_RECORD
@@ -277,6 +286,312 @@ def phase_validation(tip, base, restore, dotnet, timeout, temp, repo=ROOT):
             remove_tree(tree)
 
 
+# Validating outside the merge lock (--validate-only, then --apply-validated under it). The record of a passed run is a
+# commit object at RECORD_REF + branch in this repository, written by the gate process after the validator exited;
+# code under test runs in a clone that has neither this repository's path nor a remote, so it cannot reach it by
+# accident. Apply deletes the record when it merges or finds it stale.
+RECORD_REF = 'refs/quire-gate/'
+# The gate's own code, whose blobs at the validated base the record names and apply compares.
+GATE_TOOLS = ('tools/validation/merge_gate.py', 'tools/validation/validate.py')
+# --apply-validated: main moved in a way that may change the verdict, or the branch moved; validate again.
+STALE = 4
+# Projects the focused profile builds under src/ and tests/: the closure of its test projects' ProjectReference, Compile
+# and Import items, through imported .props and .targets files (Quire.Mpl's Generated/Mirror.props references
+# Quire.Mirror and Quire.Mpl.Emit), pinned by a test. Everything else outside PROSE_PATHS, under tools/, docs/ or the
+# root, counts as an input too; and the source lint reads every src/ file, which apply checks on the landed tree.
+FOCUSED_INPUTS = ('src/quire.mpl/', 'src/quire.mpl.emit/', 'src/quire.mirror/', 'tests/quire.mpl.tests/',
+                  'tests/quire.differential.tests/', 'tests/quire.harness.tests/',
+                  'tests/quire.focused.differential.tests/')
+
+
+def is_input(path, phase):
+    """Whether a change to `path` can change the verdict of a gate run of the focused profile, or with `phase` of the
+    phase profile too (which builds and tests every project): default-deny, only PROSE_PATHS and, for focused runs,
+    other projects' src/ and tests/ are not."""
+    if path in PROSE_PATHS:
+        return False
+    lower = path.lower()
+    if not phase and lower.startswith(('src/', 'tests/')):
+        return lower.startswith(FOCUSED_INPUTS)
+    return True
+
+
+def blob(commit, path, repo=ROOT):
+    """The blob id of `path` at `commit`, or None when it has none."""
+    listed = git('ls-tree', commit, '--', path, cwd=repo).split()
+    return listed[2] if listed[:2] and listed[1] == 'blob' else None
+
+
+def branch_tip(name):
+    """The commit a local branch points at, by its full ref, since a bare name could resolve to RECORD_REF + name
+    first; any other name (a commit) as git resolves it, unless that is a record; '' when it names nothing."""
+    tip = git('rev-parse', '--verify', '-q', f'refs/heads/{name}^{{commit}}', check=False)
+    if tip or git('rev-parse', '--symbolic-full-name', name, check=False).startswith(RECORD_REF):
+        return tip
+    return git('rev-parse', '--verify', '-q', f'{name}^{{commit}}', check=False)
+
+
+def landed_lint(commit, repo=ROOT):
+    """The source lint's findings, as a baseline records them, on `commit`'s tree: the lint reads every src/ file and
+    the agent test files, so a change outside the focused projects can still change them."""
+    import integrity
+    paths = [p for p in ('src', integrity.TESTS, 'docs/mirror/lint-allowed.txt')
+             if git('ls-tree', '--name-only', commit, '--', p, cwd=repo)]
+    with tempfile.TemporaryDirectory() as scratch:
+        archive = subprocess.run(['git', 'archive', '--format=tar', commit, '--', *paths], cwd=repo, check=True,
+                                 capture_output=True).stdout
+        with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
+            tar.extractall(scratch, filter='data')
+        (Path(scratch) / 'src').mkdir(exist_ok=True)
+        return sorted(f"{f['file']} | {f['rule']} | {f['text']}" for f in integrity.lint(scratch))
+
+
+class ReplayConflict(ValueError):
+    """A path is a file on one side of the replay and a directory on the other."""
+
+
+def tool_blobs(commit, repo=ROOT):
+    return {path: blob(commit, path, repo) for path in GATE_TOOLS}
+
+
+def stale_reasons(record, main, repo=ROOT):
+    """Why a passed run of the record's branch, validated on its base V, may not land on `main` (M) without validating
+    again; empty when the tree that lands has the same validator inputs as the one validated. M must contain V; every
+    path V..M changes must be outside the branch's changes (both sides of a rename), unprotected, and not an input of
+    the profiles that ran; main's focused baseline, and its phase baseline when the phase ran, must be V's, byte for
+    byte. A run that changed protected paths or used a maintainer override lands only on V itself."""
+    base, phase = record['base'], bool((record.get('phase') or {}).get('dotnet'))
+    if base == main:
+        return []
+    if subprocess.run(['git', 'merge-base', '--is-ancestor', base, main], cwd=repo, capture_output=True).returncode:
+        return [f'{main[:12]} does not contain the validated base {base[:12]}']
+    reasons = []
+    if record.get('protected_changed') or record.get('stub_deletions'):
+        reasons.append('the branch changes protected paths')
+    if record.get('allow_protected') or record.get('allow_unvalidated'):
+        reasons.append('the run used a maintainer override')
+    if git('rev-list', '--min-parents=2', f"{base}..{record['tip']}", cwd=repo):
+        reasons.append('the branch has merge commits')
+    rules = patterns(git('show', f'{base}:tools/validation/protected.txt', cwd=repo)
+                     + '\n' + git('show', f'{main}:tools/validation/protected.txt', cwd=repo))
+    ours = set(record['changed'])
+    for path in sorted({p for p in git('diff', '-z', '--no-renames', '--name-only', base, main, cwd=repo).split('\0')
+                        if p}):
+        if path in ours:
+            reasons.append(f'{path}: changed on main and by the branch')
+        elif path == BASELINE or path == PHASE_BASELINE and phase:
+            reasons.append(f'{path}: main has a different one')
+        elif path == PHASE_BASELINE:
+            continue  # pinned to main's (baseline_commit)
+        elif is_protected(path, rules):
+            reasons.append(f'{path}: protected path changed on main')
+        elif is_input(path, phase):
+            reasons.append(f"{path}: main changed an input of the {'phase' if phase else 'focused'} run")
+    return reasons
+
+
+def write_record(branch, record, files, repo=ROOT):
+    """Store a passed run's record (gate.json plus `files`, name -> bytes) at RECORD_REF + branch."""
+    def run(*command, data=None):
+        return subprocess.run(['git', *command], cwd=repo, check=True, capture_output=True,
+                              input=data).stdout.decode().strip()
+    entries = []
+    for name, data in {'gate.json': (json.dumps(record, indent=2) + '\n').encode(), **files}.items():
+        entries.append(f"100644 blob {run('hash-object', '-w', '--stdin', data=data)}\t{name}\n")
+    tree = run('mktree', data=''.join(entries).encode())
+    commit = run('-c', 'user.name=merge gate', '-c', 'user.email=merge-gate@localhost', 'commit-tree', tree,
+                 '-m', f'Merge gate record for {branch}')
+    run('update-ref', RECORD_REF + branch, commit)
+
+
+def read_record(branch, repo=ROOT):
+    """(gate.json, name -> bytes of the other files) of the branch's record, or None when it has none."""
+    ref = RECORD_REF + branch
+    if subprocess.run(['git', 'rev-parse', '-q', '--verify', f'{ref}^{{commit}}'], cwd=repo,
+                      capture_output=True).returncode:
+        return None
+    files = {}
+    for name in git('ls-tree', '--name-only', ref, cwd=repo).splitlines():
+        files[name] = subprocess.run(['git', 'cat-file', 'blob', f'{ref}:{name}'], cwd=repo, check=True,
+                                     capture_output=True).stdout
+    return json.loads(files.pop('gate.json')), files
+
+
+def delete_record(branch, repo=ROOT):
+    subprocess.run(['git', 'update-ref', '-d', RECORD_REF + branch], cwd=repo, capture_output=True)
+
+
+def replay(base, tip, main, repo=ROOT):
+    """The branch's commits V..tip replayed onto `main`, built from objects: each commit's own tree (its file modes,
+    additions and deletions) with main's versions of the paths V..main changed, which stale_reasons has shown the
+    branch does not touch. Authors and messages are kept."""
+    theirs = [p for p in git('diff', '-z', '--no-renames', '--name-only', base, main, cwd=repo).split('\0') if p]
+    entries = {}
+    for path in theirs:
+        listed = git('ls-tree', main, '--', path, cwd=repo).split(None, 3)
+        entries[path] = f'{listed[0]},{listed[2]},{path}' if listed else None
+    parent = main
+    with tempfile.TemporaryDirectory() as scratch:
+        env = dict(os.environ, GIT_INDEX_FILE=str(Path(scratch) / 'index'))
+        def run(*command, extra=None):
+            return subprocess.run(['git', '-c', 'core.hooksPath=/dev/null', *command], cwd=repo, check=True,
+                                  capture_output=True, env=dict(env, **(extra or {}))).stdout.decode().strip()
+        for commit in git('rev-list', '--reverse', f'{base}..{tip}', cwd=repo).split():
+            run('read-tree', commit)
+            # Removals first, so a file main replaced by a directory (or the reverse) makes way for it.
+            for path, entry in sorted(entries.items(), key=lambda item: item[1] is not None):
+                try:
+                    run(*(['update-index', '--force-remove', path] if entry is None
+                          else ['update-index', '--add', '--cacheinfo', entry]))
+                except subprocess.CalledProcessError as error:
+                    raise ReplayConflict(f'cannot replay {commit[:12]} onto {main[:12]}: {path} is a file on one side '
+                                         f'and a directory on the other ({error.stderr.decode().strip()})') from error
+            name, email, date, message = run('show', '-s', '--format=%an%x00%ae%x00%ad%x00%B', commit).split('\0', 3)
+            parent = run('commit-tree', run('write-tree'), '-p', parent, '-m', message, extra={
+                'GIT_AUTHOR_NAME': name, 'GIT_AUTHOR_EMAIL': email, 'GIT_AUTHOR_DATE': date})
+    return parent
+
+
+def gate_details(args, base, tip):
+    """gate.json fields every mode records: the branch's commits (one per reviewed member in a batch), the gate tools'
+    blobs at the base, and the maintainer overrides used."""
+    return {'commits': git('log', '--reverse', '--format=%h %s', f'{base}..{tip}').splitlines(),
+            'tools': tool_blobs(base, ROOT), 'allow_protected': args.allow_protected,
+            'allow_unvalidated': args.allow_unvalidated}
+
+
+def apply_validated(args):
+    """--apply-validated: land a run --validate-only passed, under the merge lock, without validating again when
+    nothing main gained since can change its verdict (stale_reasons); otherwise exit STALE. The record is self-reported:
+    it is bound to the branch tip and the gate tools' blobs, and the changes are recomputed from git, but anyone who can
+    write refs could forge one, as they could run `git merge`."""
+    if git('rev-parse', '--abbrev-ref', 'HEAD') != args.base:
+        print(f'BLOCKED: --apply-validated must run from the checkout that has {args.base} checked out')
+        return 1
+    try:
+        found = read_record(args.branch, ROOT)
+        record, files = found if found else (None, None)
+        if record is not None and not isinstance(record, dict):
+            raise ValueError('gate.json is not an object')
+    except (ValueError, subprocess.CalledProcessError, RuntimeError) as error:
+        print(f'BLOCKED: the record of {args.branch} is unreadable: {error}')
+        return 1
+    if record is None:
+        print(f'BLOCKED: {args.branch} has no record of a passed --validate-only run; run that first.')
+        return 1
+    main, tip = branch_tip(args.base), branch_tip(args.branch)
+    base = str(record.get('base', ''))
+    if record.get('branch') != args.branch or record.get('reasons') or record.get('validation_mode') not in (
+            'runtime', 'prose') or (record['validation_mode'] == 'runtime' and 'baseline.json' not in files):
+        print(f'BLOCKED: the record of {args.branch} is not a passed run of it.')
+        return 1
+    # A record from another version of the gate (or not from the gate at all); main changing them is stale_reasons'.
+    if not tip or record.get('tools') != tool_blobs(base, ROOT):
+        print(f'BLOCKED: the record of {args.branch} names other gate tools than its base {base[:12]} has.')
+        return 1
+    if record.get('tip') != tip:
+        reasons = [f"{args.branch} moved from the validated {str(record.get('tip'))[:12]} to {tip[:12]}"]
+    else:
+        # What the branch changes comes from git, not from the record.
+        changed = changed_paths(base, tip)
+        rules = patterns(git('show', f'{base}:tools/validation/protected.txt'))
+        owned = protected(changed, rules)
+        stubs = {p: m for p in owned if (m := stub_deletions(base, tip, p, ROOT)) is not None}
+        touched = [p for p in owned if p not in stubs]
+        phase_ran = bool((record.get('phase') or {}).get('dotnet'))
+        if touched and not record.get('allow_protected'):
+            print(f'BLOCKED: {args.branch} changes protected paths, but its record is not of an --allow-protected run.')
+            return 1
+        if unvalidated_paths(changed) and not (phase_ran or record.get('allow_unvalidated')):
+            print(f'BLOCKED: {args.branch} changes paths only the phase profile validates, but its record has no phase run.')
+            return 1
+        record = dict(record, changed=changed, protected_changed=touched, stub_deletions=stubs)
+        reasons = stale_reasons(record, main, ROOT)
+    if not reasons and record['validation_mode'] == 'runtime':
+        reasons = [f'against {args.base}: {r}' for r in baseline_regressions(main, files['baseline.json'], ROOT)]
+        if files.get('phase-baseline.json') is not None:
+            reasons += [f'phase against {args.base}: {r}' for r in baseline_regressions(
+                main, files['phase-baseline.json'], ROOT, PHASE_BASELINE)]
+    landed = None
+    if not reasons:
+        try:
+            landed = tip if base == main else replay(base, tip, main, ROOT)
+        except ReplayConflict as error:
+            print(f'BLOCKED: {error}')
+            return 1
+        if collisions := case_collisions(git('ls-tree', '-r', '--name-only', landed).splitlines()):
+            print('BLOCKED: on the landed tree, paths differ only in case:\n  ' + '\n  '.join(collisions))
+            return 1
+        if record['validation_mode'] == 'runtime':
+            landed = baseline_commit(landed, files['baseline.json'], args.branch, record['results'], ROOT,
+                                     files.get('phase-baseline.json'), main)
+        # main may have moved outside the gate (a maintainer commit): the source lint must still be the one recorded.
+        # Findings read from the test assembly come from focused inputs, which stale_reasons has shown unchanged.
+        expected = json.loads(files['baseline.json'] if record['validation_mode'] == 'runtime'
+                              else git('show', f'{main}:{BASELINE}')).get('lint', [])
+        if landed_lint(landed, ROOT) != sorted(f for f in expected if f.split(' | ')[1:2] != ['test assembly type']):
+            reasons = ['the source lint on the landed tree differs from the validated baseline\'s']
+    if reasons:
+        delete_record(args.branch, ROOT)
+        durations = record.get('durations') or {}
+        held = (f", about {sum(durations.values()) / 60:.0f} min going by this run "
+                f"({', '.join(f'{k} {v / 60:.0f} min' for k, v in durations.items())})") if durations else ''
+        print(f'STALE: {args.branch} must be validated again:\n  ' + '\n  '.join(reasons)
+              + '\nRe-run --validate-only (no lock). After two stale results in a row, fall back to --apply under the '
+              f'lock: it holds the lock for the whole validation{held}.')
+        return STALE
+    git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', landed)
+    delete_record(args.branch, ROOT)
+    print(f"MERGED: {args.base} -> {landed[:12]} ({args.branch} {'replayed onto' if base != main else 'on'} "
+          f'{main[:12]}, validated on {base[:12]})')
+    return 0
+
+
+def run_validator(command, tree, results):
+    """(exit code, summary, blocking reasons, seconds) of one validator run in `tree` writing into `results`."""
+    print('Validating:', ' '.join(command), flush=True)
+    started = time.monotonic()
+    code = subprocess.run(command, cwd=tree).returncode
+    seconds = round(time.monotonic() - started)
+    summary_path = results / 'summary.json'
+    summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {'error': 'no summary written'}
+    reasons = verdict(summary)
+    # 0: complete; 3: gate passed with known gaps. Anything else (crash, kill) blocks whatever the summary says.
+    if code not in (0, 3):
+        reasons.insert(0, f'validator exited {code}')
+    return code, summary, reasons, seconds
+
+
+def nightly(args):
+    """--nightly: mutate every compared method of the base branch's tip in a separate clone and report survivors and
+    failures in nightly.json; merges nothing and writes no record."""
+    tip = branch_tip(args.base)
+    outputs = (args.results or Path(tempfile.mkdtemp(prefix='quire-nightly-'))).resolve()
+    if outputs.exists() and any(outputs.iterdir()):
+        print('BLOCKED: --results must name a new directory')
+        return 1
+    outputs.mkdir(parents=True, exist_ok=True)
+    tree, results = Path(tempfile.mkdtemp(prefix='quire-gate-')), outputs / 'run'
+    try:
+        clone(tip, tree, ROOT)
+        command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--results', str(results),
+                   '--mutate-all', '--no-mutant-cache', '--timeout', str(args.timeout), '--jobs', str(args.jobs)]
+        code, summary, reasons, seconds = run_validator(command, tree, results)
+        mutation = summary.get('mutation') or {}
+        report = {'base': args.base, 'tip': tip, 'results': str(results), 'validator_exit': code,
+                  'minutes': round(seconds / 60, 1), 'mutants': mutation.get('total'),
+                  'killed': mutation.get('killed'), 'survivors': mutation.get('survivors') or [],
+                  'stale_accepted': summary.get('stale_accepted') or [], 'reasons': reasons}
+        (outputs / 'nightly.json').write_text(json.dumps(report, indent=2) + '\n')
+        print(('NIGHTLY FAILED: ' + '\n  '.join(['', *reasons]) if reasons else
+               f"NIGHTLY PASSED: {tip[:12]}; {mutation.get('killed')}/{mutation.get('total')} mutants killed")
+              + f'\nResults: {outputs}')
+        return 1 if reasons else 0
+    finally:
+        shutil.rmtree(tree, ignore_errors=True)
+        remove_scratch(results)
+
+
 def clone(tip, tree, repo=ROOT):
     """A separate clone at `tip`, not a worktree: code under test never sees this repository's .git, hooks or config,
     nor, without the origin remote and the reflogs (`clone: from <path>`), its path."""
@@ -313,7 +628,7 @@ def verdict(summary):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('branch')
+    parser.add_argument('branch', nargs='?')
     parser.add_argument('--base', default='main')
     parser.add_argument('--apply', action='store_true',
                         help='fast-forward the base branch; update the baseline after runtime validation')
@@ -329,10 +644,32 @@ def main():
     parser.add_argument('--mutate-all', action='store_true', help='maintainer audits: mutate every compared method')
     parser.add_argument('--full-validation', action='store_true',
                         help='run runtime validation even for allowlisted prose edits')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--validate-only', action='store_true',
+                       help='validate without the merge lock and record a passed run for --apply-validated')
+    modes.add_argument('--apply-validated', action='store_true',
+                       help='under the merge lock: land the recorded --validate-only run, or exit 4 to validate again')
+    modes.add_argument('--nightly', action='store_true',
+                       help='mutate every compared method of the base branch; report survivors, merge nothing')
     args = parser.parse_args()
+    if args.apply and (args.validate_only or args.apply_validated or args.nightly):
+        parser.error('--apply is the one-shot mode; it cannot be combined with another mode')
+    if args.nightly:
+        if args.branch:
+            parser.error('--nightly takes no branch: it audits the base branch')
+        return nightly(args)
+    if not args.branch:
+        parser.error('a branch is required')
+    if args.apply_validated:
+        return apply_validated(args)
+    if args.validate_only:
+        delete_record(args.branch, ROOT)  # a record of an earlier run must never be applied to this one's outcome
     if args.apply and git('rev-parse', '--abbrev-ref', 'HEAD') != args.base:
         parser.error(f'--apply must run from the checkout that has {args.base} checked out')
-    base, tip = git('rev-parse', args.base), git('rev-parse', args.branch)
+    base, tip = branch_tip(args.base), branch_tip(args.branch)
+    if not tip:
+        print(f'BLOCKED: {args.branch} names no commit.')
+        return 1
     if not on_branch(tip):
         print(f'BLOCKED: {args.branch} ({tip[:12]}) is not on a local branch; the validation clone copies only those.')
         return 1
@@ -385,13 +722,21 @@ def main():
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed,
                   'protected_changed': touched, 'stub_deletions': stubs, 'validation_mode': 'prose',
                   'baseline_reused_from': base, 'results': None, 'validator_exit': None, 'reasons': []}
+        record.update(gate_details(args, base, tip))
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
         print(f'PASSED: {args.branch} ({tip[:12]}); allowlisted prose edits only; '
               f'runtime validation skipped, baseline unchanged. Results: {outputs}')
         if args.apply:
             git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', tip)
             print(f'MERGED: {args.base} -> {tip[:12]}')
+        if args.validate_only:
+            write_record(args.branch, record, {}, ROOT)
+            print(f'RECORDED: {RECORD_REF}{args.branch}; land it under the merge lock with --apply-validated')
         return 0
+    if args.apply:
+        print(f'One-shot --apply: the merge lock stays held until this validation ends'
+              f"{' (focused, then the phase profile: much longer)' if phase else ''}.", flush=True)
+    durations = {}
     tree = Path(tempfile.mkdtemp(prefix='quire-gate-'))
     results = outputs / 'run'
     restore = []
@@ -407,15 +752,8 @@ def main():
         else:
             command = validation_command(tree, results, base, outputs / 'baseline.json', args.timeout,
                                          args.mutate_types_wide, args.mutate_all, args.jobs)
-            print('Validating:', ' '.join(command), flush=True)
-            code = subprocess.run(command, cwd=tree).returncode
-            summary_path = results / 'summary.json'
-            summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {'error': 'no summary written'}
+            code, summary, reasons, durations['focused'] = run_validator(command, tree, results)
             mutation = summary.get('mutation') or {}
-            reasons = verdict(summary)
-            # 0: complete; 3: gate passed with known gaps. Anything else (crash, kill) blocks whatever the summary says.
-            if code not in (0, 3):
-                reasons.insert(0, f'validator exited {code}')
             if not reasons:
                 # Checked and committed from these bytes: a lingering process may rewrite the file in between.
                 try:
@@ -429,8 +767,10 @@ def main():
             if reasons:
                 phase_record = {'skipped': 'the focused validation blocked'}
             else:
+                started = time.monotonic()
                 phase_code, phase_reasons, phase_results, phase_baseline = phase_validation(
                     tip, base, restore, phase, args.timeout, temp, ROOT)
+                durations['phase'] = round(time.monotonic() - started)
                 reasons = phase_reasons
                 phase_record = {'dotnet': phase, 'results': str(phase_results), 'validator_exit': phase_code,
                                 'reasons': phase_reasons}
@@ -444,12 +784,17 @@ def main():
                   'stub_deletions': stubs,
                   # The phase profile's run, for a branch changing projects the focused profile does not validate.
                   'phase': phase_record,
-                  'results': str(results), 'validator_exit': code, 'reasons': reasons}
+                  'results': str(results), 'validator_exit': code, 'reasons': reasons,
+                  **gate_details(args, base, tip), 'durations': durations}
         (outputs / 'gate.json').write_text(json.dumps(record, indent=2) + '\n')
         if reasons:
             print('BLOCKED:\n  ' + '\n  '.join(reasons) + f'\nResults: {results}')
             return 1
         print(f'PASSED: {args.branch} ({tip[:12]}); results {results}')
+        if args.validate_only:
+            write_record(args.branch, record, {'baseline.json': baseline, **(
+                {'phase-baseline.json': phase_baseline} if phase_baseline is not None else {})}, ROOT)
+            print(f'RECORDED: {RECORD_REF}{args.branch}; land it under the merge lock with --apply-validated')
         if args.apply:
             merged = baseline_commit(tip, baseline, args.branch, results, ROOT, phase_baseline, base)
             git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', merged)

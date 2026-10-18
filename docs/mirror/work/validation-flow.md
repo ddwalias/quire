@@ -79,3 +79,53 @@ branch can change either baseline, even with `--allow-protected`/`--allow-unvali
 phase run is blocked before any run while `main` has no phase baseline (a maintainer bootstraps it on `main`;
 see validation.md) or the Windows temporary directory is unusable. The gate keeps the 3 newest phase run
 directories.
+
+## Merge gate throughput
+
+The lock now covers only landing. A lane validates without it and lands under it. Run this in the lane's worktree
+as `sh lane-merge.sh <branch>`, replacing `PUSH` with the current push step; it exits with the gate's code:
+
+```sh
+#!/bin/sh
+B="$1"
+MAIN=/mnt/c/Projects/Quire
+GATE="python3 $MAIN/tools/validation/merge_gate.py"
+LOCK=/tmp/quire-merge.lock
+PULL="git fetch -q origin && git merge -q --ff-only origin/main"
+stale=0
+while :; do
+  git rebase -q main || { echo "rebase conflict: resolve and review, then rerun"; exit 1; }
+  (cd "$MAIN" && $GATE "$B" --validate-only --jobs 6) || exit $?          # BLOCKED: fix the branch
+  flock "$LOCK" sh -c "cd '$MAIN' && $PULL && $GATE '$B' --apply-validated && PUSH"
+  code=$?
+  [ $code -eq 0 ] && exit 0                                              # merged and pushed
+  [ $code -ne 4 ] && exit $code                                          # blocked, or the push failed
+  stale=$((stale + 1))
+  [ $stale -lt 2 ] && continue                                           # stale: validate again
+  # Two stale results in a row: the one-shot gate, holding the lock for the whole validation.
+  flock "$LOCK" sh -c "cd '$MAIN' && $PULL && git -C '$PWD' rebase -q main && $GATE '$B' --apply && PUSH"
+  exit $?
+done
+```
+
+Between `--validate-only` and `--apply-validated` do not rebase: the record is bound to the tip, and apply itself
+replays the branch onto a moved `main` or exits 4. Inside `sh -c` everything is chained with `&&`, so the push
+runs only after a merge and the gate's exit code (1 blocked, 4 stale) comes back out of `flock`.
+
+Exit 4 from `--apply-validated` means `main` gained something that can change the verdict: rebase if needed and
+validate again. After two stale results in a row, use the one-shot `--apply` under the lock; it cannot go stale but
+holds the lock for the whole validation, and the stale message says for how long. Concurrent `--validate-only`
+runs share the CPU, so give each a smaller `--jobs`. Rules: validation.md, "Validating outside the merge lock".
+
+- **Batch members.** Every gate run pays about 3 minutes before any mutant runs (build, the differential suite
+  twice, the audit), so gate reviewed members together: at least one type, or about 5 members, per branch, one
+  commit per member, and up to roughly 300 expected mutants (about 10 minutes). Ten one-method branches cost about
+  30 minutes of gate time, one batch of them about 5.
+- **Phase branches.** A run that includes the phase profile goes stale on any concurrent code merge and takes much
+  longer, so batch Windows-project work more aggressively, and expect the one-shot fallback more often.
+- **Mutation scope** is unchanged: changed methods, comparing tests, direct callers and field readers. A broad
+  rewrite such as an idiom cleanup changes IL in hundreds of methods and is legitimately long (gate37: 1,326
+  mutants, 68 minutes); with the lock covering only landing, it no longer blocks other lanes. The nightly
+  `merge_gate.py --nightly` covers the residual risk of the narrow selection.
+- **The differential suite runs twice** on purpose: coverage instrumentation changes the assembly hash and method
+  tokens that the case records need (measured; see validation.md).

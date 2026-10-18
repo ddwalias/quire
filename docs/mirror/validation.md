@@ -441,6 +441,20 @@ order passes it, which the direct comparisons must catch.
     changed test helper).
   - Keep helpers that several test classes use in maintainer-owned files; a helper in an agent test file widens every
     change to that file to all its users, and maintainer-owned files must not name agent test classes.
+  - **Why unchanged methods keep their old kills.** The gate's baseline comes only from gate runs that tested exactly
+    the tree they merged, and every one of them killed (or accepted) every mutant it selected. A later merge leaves
+    a method unselected only when its IL, the tests that compare it, its direct callees and the fields it reads are
+    unchanged. Its mutants then run the same mutated IL under the same tests, against the same Mathcad
+    originals, so each kill repeats unless changed code those tests execute now masks it. Masking one step away is
+    selected (rules 4 and 5); masking further away is the residual risk above. Test edits are rule 2: a changed test
+    class, or a helper it uses, reselects every method it compares, now or in the baseline's map, so a weakened
+    assertion cannot keep an old kill it no longer earns. The nightly run below bounds the residual risk to a day.
+  - **Nightly audit:** `python3 tools/validation/merge_gate.py --nightly --results <new dir> [--jobs N]` clones the
+    tip of `main` (or `--base`) and runs `validate.py --mutate-all --no-mutant-cache` there. It writes no baseline
+    and no record, takes no lock and merges nothing. `nightly.json` in the results lists the tip, the mutant count,
+    `survivors`, `stale_accepted` and every blocking reason (failed tests, ratchet, executed unreachable lines);
+    the command exits 1 when any is present. Schedule it on a host where it does not compete with gates for CPU;
+    a survivor is fixed or proposed for acceptance like any other.
 - **Status:** a `Verified` method that this run does not show as compared (or declaration-only) counts as
   `verified_unsupported`. A `Deviation` status skips the structure check only when the `deviations.md` index lists
   its id with `accepted-temporary` or `accepted-permanent` and names the method as `Quire.Type::Member` in the scope
@@ -597,6 +611,88 @@ tampering of this kind is out of scope for the gate; review agent diffs for it.
 This enforces attributable, case-limited direct validation. It cannot automatically prove equivalence
 for every possible input, or determine whether a case and its observers fully express the contract.
 Review test quality and retain the analysis and independent-review requirements of PLAN.
+
+### Validating outside the merge lock
+
+The lock that serialises merges is a process rule (lane and maintainer scripts), not part of the gate. To hold it
+only for seconds, a gate run splits in two:
+
+```sh
+python3 tools/validation/merge_gate.py <branch> --validate-only         # no lock; records a passed run
+flock /tmp/quire-merge.lock python3 tools/validation/merge_gate.py <branch> --apply-validated
+```
+
+- **`--validate-only`** runs exactly what the one-shot gate runs, on the branch based on current `main` (V), and
+  merges nothing. When the run passes, the gate process, after the validator has exited, writes its record as a
+  commit object at `refs/quire-gate/<branch>` in the repository: `gate.json` (base V, tip, changed paths,
+  `commits`, `durations`, the maintainer overrides, and `tools`, the blobs of `merge_gate.py` and `validate.py`
+  at V), the new baseline and, when the phase ran, the new phase baseline. Code under test runs in a clone that
+  has neither this repository's path nor a remote, so it cannot reach the record by accident. The results
+  directory is for people; nothing in it is read when applying. A new `--validate-only` run first deletes the
+  branch's record, so a failed run never leaves an older pass to apply. The record is self-reported: apply binds it
+  only to the branch tip and the gate tools' blobs, and recomputes what the branch changes from git, so it rules out
+  accidents, not forgery. Anyone who can write refs could forge a record, just as they could run `git merge`.
+- **`--apply-validated`**, from the checkout that has `main` checked out, after the usual pull-first, under the
+  lock: blocks (exit 1) without a readable record, or when the record is not a passed run of this branch, or its
+  `tools` differ from the blobs at V, or the branch (resolved as `refs/heads/<branch>`) changes protected paths
+  without a record of an `--allow-protected` run, or paths only the phase profile validates without a phase run (or
+  `--allow-unvalidated`) in the record. The branch's changed, protected and stub-deleted paths are recomputed from
+  V..tip, never read from the record. It also blocks when a path is a file on one side of the replay and a
+  directory on the other, or when the landed tree has paths that differ only in case. Otherwise it lands the run
+  (exit 0) or reports it stale (exit 4) and deletes the record in both cases. It is stale when:
+  - the branch no longer points at the validated tip;
+  - current `main` (M) does not contain V;
+  - V ≠ M and the branch changes protected paths (stub deletions included), the run used `--allow-protected` or
+    `--allow-unvalidated`, or the branch has merge commits;
+  - a path changed on V..M is also changed by the branch (renames count by both paths), is protected under V's or
+    M's rules, or is an input of the profiles that ran. Inputs are default-deny: everything except the prose
+    allowlist and, for a focused-only run, `src/` and `tests/` of projects outside the focused closure
+    (`src/Quire.Mpl`, `src/Quire.Mpl.Emit`, `src/Quire.Mirror`, `tests/Quire.Mpl.Tests`,
+    `tests/Quire.Differential.Tests`, `tests/Quire.Harness.Tests`, `tests/Quire.Focused.Differential.Tests`). A test
+    follows the focused test projects' `ProjectReference`, `Compile` and `Import` items, through imported `.props`
+    and `.targets` files and resolved as MSBuild does, and fails on any path outside this list or any MSBuild
+    property it cannot resolve; items an SDK adds implicitly and root files (`Directory.Build.*`, `global.json`),
+    which are inputs anyway, are not followed. For a run that
+    included the phase profile, everything except the prose allowlist is an input, so any concurrent code merge
+    makes it stale;
+  - M's `validation-baseline.json` differs from V's in any byte, or, for a run that included the phase profile,
+    M's phase baseline does; or the recorded baseline no longer holds the ratchet against M's;
+  - the source lint, run on the landed tree, finds other findings than the recorded baseline's `lint` (for a prose
+    record, M's): the lint reads every `src/` file, not only the focused projects', and `main` can move by a
+    maintainer commit that never passed the gate. Findings read from the test assembly are left out of this
+    comparison, since they come from focused inputs.
+- **Baselines.** The branch's baselines are never combined with entries `main` gained meanwhile: a different
+  focused baseline on `main` means focused code changed, and the combined tree was never tested, so the run is
+  stale. When the run lands, its baseline replaces M's (equal to V's, against which it was checked); without a
+  phase run, M's phase baseline is kept, as in the one-shot gate.
+- **Landing.** With V = M, as the one-shot gate does. Otherwise each commit of V..tip is replayed onto M from
+  objects: its own tree (file modes, additions and deletions as the branch has them) with M's versions of the paths
+  V..M changed, keeping author and message; then the baseline commit, then a fast-forward.
+- **Why it is never weaker than the serial gate.** A gate run's verdict is a function of what the validator reads:
+  the focused projects and their test projects, the tools, the maintainer files under `docs/`, root build files,
+  the baselines, and the source lint over all of `src/`. Under these rules the tree that lands and the tree that
+  was validated agree byte for byte on all of these except other projects' sources, whose only effect on a focused
+  run, the lint, is recomputed on the landed tree and compared. With equal baselines, the one-shot gate on M would
+  run the same profiles and reach the same verdict, up to test flakiness, which the serial gate has as well. The
+  focused closure is pinned by the test above, not derived at run time: a new reference from the focused projects
+  must be added to it.
+- **Fallback.** On exit 4, validate again without the lock. After two stale results in a row, run the one-shot
+  `--apply` under the lock, which cannot go stale; the stale message says how long that holds the lock, going by
+  the run just discarded, and `--apply` prints that the lock stays held for the whole validation.
+- `--apply` alone keeps working exactly as before, and `gate.json` of every mode now also lists `commits`, `tools`
+  and the overrides; a runtime run lists `durations` (seconds per profile).
+
+**Batching.** One branch may carry several reviewed members, one commit each; the gate validates them as one tree,
+and `gate.json` `commits` lists them. See [validation-flow](work/validation-flow.md#merge-gate-throughput) for the
+size guideline.
+
+**Why the differential suite runs twice.** The plain run records the method cases; coverage needs instrumented
+assemblies. Microsoft.CodeCoverage instruments `Quire.Mpl` statically here, and the recorded cases carry the
+assembly's SHA-256 and the compared method's metadata token. Measured on one focused suite (2026-10-18): all
+348 tests passed under both runs, but every one of the 20,632 case records carried another `Quire.Mpl` hash, and
+every case matched across the runs recorded another method token; apart from those two fields, only 23 records
+differed, in values that differ between any two runs (string hash codes, temporary paths). Those records attribute comparisons to methods, so they must come from the uninstrumented build;
+the run with coverage only measures lines and branches (plain 109 s, coverage 114 s).
 
 ## Windows and phase closure
 

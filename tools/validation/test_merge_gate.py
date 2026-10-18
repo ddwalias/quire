@@ -2,10 +2,12 @@ import contextlib
 import io
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
 import tempfile
+import textwrap
 import unittest
 from unittest import mock
 import ratchet
@@ -612,6 +614,469 @@ class PhaseGateTests(unittest.TestCase):
         self.assertEqual(command[2:], ['-B', '/w/tree/tools/validation/validate.py', '--profile', 'phase', '--results',
                                        '/w/run', '--baseline', f'/w/tree/{merge_gate.PHASE_BASELINE}',
                                        '--write-baseline', '/w/b.json', '--timeout', '900', '--dotnet', 'dotnet.exe'])
+
+
+class OptimisticGateTests(unittest.TestCase):
+    """--validate-only outside the merge lock, then --apply-validated under it: a passed run lands without validating
+    again only when nothing main gained since can change its verdict; otherwise exit 4 (STALE) and validate again.
+    PhaseGateTests' scratch repository, with a focused branch `mpl` beside its phase branch `engine`."""
+    BASELINE, PHASE = PhaseGateTests.BASELINE, PhaseGateTests.PHASE
+    git, main, runs, gate, branch = (RepositoryTests.git, RepositoryTests.main, PhaseGateTests.runs,
+                                     PhaseGateTests.gate, PhaseGateTests.branch)
+
+    def setUp(self):
+        PhaseGateTests.setUp(self)
+        (self.repo / 'src/Quire.Mpl').mkdir(parents=True)
+        (self.repo / 'src/Quire.Mpl/Other.cs').write_text('class Other {}\n')
+        (self.repo / 'src/Quire.Mpl/M.cs').write_text('class M {}\n')
+        self.git('add', '-A'); self.git('commit', '-qm', 'mpl sources')
+        self.git('rebase', '-q', 'main', 'engine'); self.git('checkout', '-q', 'main')
+        self.branch('mpl', {'src/Quire.Mpl/M.cs': 'class M { int F() => 1; }\n'})
+
+    def validate(self, branch='mpl', extra=()):
+        shutil.rmtree(self.repo.parent / 'results', ignore_errors=True)
+        with self.runs() as commands:
+            code, gate, out = self.gate(branch, ['--validate-only', *extra])
+        return code, gate, out, commands
+
+    def apply(self, branch='mpl'):
+        code, _, out = self.gate(branch, ['--apply-validated'])
+        return code, out
+
+    def on_main(self, files, message='main moves'):
+        for path, text in files.items():
+            if text is None:
+                self.git('rm', '-q', path)
+            else:
+                (self.repo / path).parent.mkdir(parents=True, exist_ok=True)
+                (self.repo / path).write_text(text)
+        self.git('add', '-A'); self.git('commit', '-qm', message)
+
+    def record(self, branch='mpl'):
+        return merge_gate.read_record(branch, self.repo)
+
+    def assert_stale(self, reason, branch='mpl', setup=None):
+        if self.git('merge-base', 'main', branch) != self.git('rev-parse', 'main'):  # after an earlier subtest
+            self.git('rebase', '-q', 'main', branch); self.git('checkout', '-q', 'main')
+        code, gate, out, _ = self.validate(branch)
+        self.assertEqual(code, 0, out)
+        main = self.git('rev-parse', 'main')
+        (setup or (lambda: None))()
+        moved = self.git('rev-parse', 'main')
+        code, out = self.apply(branch)
+        self.assertEqual(code, merge_gate.STALE, out)
+        self.assertIn(reason, out)
+        self.assertIn('fall back to --apply under the lock', out)
+        self.assertIsNone(self.record(branch))  # deleted: the next attempt must validate again
+        self.assertEqual(self.git('rev-parse', 'main'), moved)
+        return main
+
+    def test_a_passed_run_records_and_lands_on_an_unchanged_main(self):
+        code, gate, out, commands = self.validate()
+        self.assertEqual(code, 0, out)
+        self.assertEqual(len(commands), 1)
+        self.assertIn('RECORDED: refs/quire-gate/mpl', out)
+        record, files = self.record()
+        self.assertEqual((record['base'], record['tip']), (self.git('rev-parse', 'main'), self.git('rev-parse', 'mpl')))
+        self.assertEqual(record['commits'], [f"{self.git('rev-parse', '--short', 'mpl')} mpl"])
+        self.assertEqual(record['tools'], merge_gate.tool_blobs(record['base'], self.repo))
+        self.assertIn('focused', record['durations'])
+        self.assertEqual(set(files), {'baseline.json'})
+        self.assertEqual(self.git('rev-parse', 'main'), record['base'])  # validating merges nothing
+        code, out = self.apply()
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.git('rev-parse', 'main'), self.git('rev-parse', 'mpl'))
+        self.assertIsNone(self.record())
+
+    def test_a_blocked_run_records_nothing_and_clears_an_older_record(self):
+        self.assertEqual(self.validate()[0], 0)
+        with self.runs(focused=dict(PASSED, gate_passed=False)):
+            shutil.rmtree(self.repo.parent / 'results')
+            code, _, _ = self.gate('mpl', ['--validate-only'])
+        self.assertEqual(code, 1)
+        self.assertIsNone(self.record())
+        code, out = self.apply()
+        self.assertEqual(code, 1)
+        self.assertIn('no record of a passed --validate-only run', out)
+
+    def test_prose_moves_on_main_replay_the_branch_onto_it(self):
+        self.validate()
+        self.on_main({'docs/mirror/WORK.md': 'Receipt\n'})
+        main = self.git('rev-parse', 'main')
+        code, out = self.apply()
+        self.assertEqual(code, 0, out)
+        self.assertIn('replayed onto', out)
+        self.assertEqual(self.git('rev-parse', 'main^'), main)
+        self.assertEqual(self.git('show', 'main:docs/mirror/WORK.md'), 'Receipt')
+        self.assertEqual(self.git('show', 'main:src/Quire.Mpl/M.cs'), 'class M { int F() => 1; }')
+        self.assertEqual(self.git('log', '-1', '--format=%s%x00%an', 'main'), 'mpl\x00t')
+
+    def test_a_prose_only_branch_records_and_replays_without_a_baseline(self):
+        self.branch('receipt', {'docs/mirror/WORK.md': 'Receipt\n'})
+        code, gate, out, commands = self.validate('receipt')
+        self.assertEqual((code, commands), (0, []), out)
+        self.assertIn('RECORDED', out)
+        self.assertEqual(self.record('receipt')[0]['validation_mode'], 'prose')
+        self.on_main({'README.md': 'New overview\n'})
+        code, out = self.apply('receipt')
+        self.assertEqual(code, 0, out)
+        self.assertEqual((self.git('show', 'main:docs/mirror/WORK.md'), self.git('show', 'main:README.md')),
+                         ('Receipt', 'New overview'))
+
+    def test_a_phase_only_merge_on_main_does_not_stale_a_focused_run(self):
+        self.validate()
+        self.on_main({'src/Quire.Engine/A.cs': 'class A { }\n',
+                      merge_gate.PHASE_BASELINE: json.dumps(dict(self.PHASE, methods={'E::M()': 'compared'}))})
+        main = self.git('rev-parse', 'main')
+        code, out = self.apply()
+        self.assertEqual(code, 0, out)
+        # The phase baseline is main's: a focused run cannot change it.
+        self.assertEqual(self.git('rev-parse', f'main:{merge_gate.PHASE_BASELINE}'),
+                         self.git('rev-parse', f'{main}:{merge_gate.PHASE_BASELINE}'))
+
+    def test_replay_keeps_the_branchs_modes_and_deletions(self):
+        self.git('checkout', '-qb', 'modes', 'main')
+        (self.repo / 'src/Quire.Mpl/run.sh').write_text('#!/bin/sh\n')
+        (self.repo / 'src/Quire.Mpl/run.sh').chmod(0o755)
+        self.git('rm', '-q', 'src/Quire.Mpl/Other.cs')
+        self.git('add', '-A'); self.git('commit', '-qm', 'modes')
+        self.git('checkout', '-q', 'main')
+        self.validate('modes')
+        self.on_main({'README.md': 'New overview\n'})
+        code, out = self.apply('modes')
+        self.assertEqual(code, 0, out)
+        self.assertTrue(self.git('ls-tree', 'main', '--', 'src/Quire.Mpl/run.sh').startswith('100755 '))
+        self.assertEqual(self.git('ls-tree', 'main', '--', 'src/Quire.Mpl/Other.cs'), '')
+        self.assertEqual(self.git('show', 'main:README.md'), 'New overview')
+
+    def test_main_changing_an_input_of_the_focused_run_is_stale(self):
+        for path in ['src/Quire.Mpl/Other.cs', 'tests/Quire.Differential.Tests/T.cs', 'global.json',
+                     'Directory.Build.props', 'docs/mirror/type-map.csv', 'docs/mirror/manifest/Quire.Mpl.txt']:
+            with self.subTest(path):
+                self.assert_stale(f'{path}: main changed an input of the focused run',
+                                  setup=lambda: self.on_main({path: 'changed\n'}))
+
+    def test_overlapping_changes_are_stale(self):
+        self.assert_stale('src/Quire.Mpl/M.cs: changed on main and by the branch',
+                          setup=lambda: self.on_main({'src/Quire.Mpl/M.cs': 'class M { }\n'}))
+
+    def test_a_rename_on_main_touching_the_branchs_paths_is_stale(self):
+        def rename():
+            self.git('mv', 'src/Quire.Mpl/M.cs', 'src/Quire.Mpl/N.cs'); self.git('commit', '-qm', 'rename')
+        self.assert_stale('src/Quire.Mpl/M.cs: changed on main and by the branch', setup=rename)
+
+    def test_a_different_baseline_on_main_is_stale(self):
+        self.assert_stale(f'{merge_gate.BASELINE}: main has a different one',
+                          setup=lambda: self.on_main({merge_gate.BASELINE: json.dumps(self.BASELINE, indent=1)}))
+
+    def test_a_protected_change_on_main_is_stale(self):
+        self.assert_stale('tools/validation/protected.txt: protected path changed on main', setup=lambda: self.on_main(
+            {'tools/validation/protected.txt': 'tools/*\ndocs/mirror/validation-baseline.json\ndocs/x.md\n'}))
+
+    def test_a_moved_branch_is_stale(self):
+        self.assert_stale('mpl moved from the validated', setup=lambda: self.branch_commit('mpl'))
+
+    def branch_commit(self, branch):
+        self.git('checkout', '-q', branch)
+        (self.repo / 'src/Quire.Mpl/M.cs').write_text('class M { int F() => 2; }\n')
+        self.git('commit', '-qam', 'more'); self.git('checkout', '-q', 'main')
+
+    def test_a_branch_with_merge_commits_lands_only_on_its_base(self):
+        self.git('checkout', '-qb', 'merged', 'main')
+        self.git('checkout', '-qb', 'side', 'main')
+        (self.repo / 'src/Quire.Mpl/S.cs').write_text('class S {}\n')
+        self.git('add', '-A'); self.git('commit', '-qm', 'side')
+        self.git('checkout', '-q', 'merged')
+        self.git('merge', '-q', '--no-ff', '-m', 'merge side', 'side')
+        self.git('checkout', '-q', 'main')
+        self.assert_stale('the branch has merge commits', 'merged',
+                          setup=lambda: self.on_main({'docs/mirror/WORK.md': 'Receipt\n'}))
+
+    def test_maintainer_overrides_land_only_on_their_base(self):
+        code, _, out, _ = self.validate('engine', ['--allow-unvalidated'])
+        self.assertEqual(code, 0, out)
+        self.on_main({'docs/mirror/WORK.md': 'Receipt\n'})
+        code, out = self.apply('engine')
+        self.assertEqual(code, merge_gate.STALE, out)
+        self.assertIn('the run used a maintainer override', out)
+
+    def test_a_phase_run_is_stale_for_any_code_change_on_main(self):
+        self.assert_stale('src/Quire.Mpl/Other.cs: main changed an input of the phase run', 'engine',
+                          setup=lambda: self.on_main({'src/Quire.Mpl/Other.cs': 'class Other { }\n'}))
+        self.assert_stale(f'{merge_gate.PHASE_BASELINE}: main has a different one', 'engine', setup=lambda: self.on_main(
+            {merge_gate.PHASE_BASELINE: json.dumps(self.PHASE, indent=1)}))
+
+    def test_a_phase_run_lands_with_its_phase_baseline_over_prose_moves(self):
+        code, _, out, commands = self.validate('engine')
+        self.assertEqual((code, len(commands)), (0, 2), out)
+        self.assertIn('phase', self.record('engine')[0]['durations'])
+        self.on_main({'docs/mirror/WORK.md': 'Receipt\n'})
+        code, out = self.apply('engine')
+        self.assertEqual(code, 0, out)
+        self.assertEqual(json.loads(self.git('show', f'main:{merge_gate.PHASE_BASELINE}')),
+                         dict(self.PHASE, methods={'E::M()': 'compared'}))
+
+    def test_stale_reports_how_long_the_one_shot_fallback_holds_the_lock(self):
+        self.validate()
+        record, files = self.record()
+        merge_gate.write_record('mpl', dict(record, durations={'focused': 240, 'phase': 3000}), files, self.repo)
+        self.on_main({'src/Quire.Mpl/Other.cs': 'class Other { }\n'})
+        code, out = self.apply()
+        self.assertEqual(code, merge_gate.STALE)
+        self.assertIn('holds the lock for the whole validation, about 54 min going by this run (focused 4 min, '
+                      'phase 50 min)', out)
+
+    def test_main_not_containing_the_base_is_stale(self):
+        self.validate()
+        record, _ = self.record()
+        other = self.git('commit-tree', f"{self.base}^{{tree}}", '-m', 'unrelated')
+        self.assertEqual(merge_gate.stale_reasons(record, other, self.repo),
+                         [f'{other[:12]} does not contain the validated base {record["base"][:12]}'])
+
+    def test_records_that_are_not_passed_runs_of_this_gate_are_refused(self):
+        self.validate()
+        record, files = self.record()
+        for name, forged, extra in [('failed', dict(record, reasons=['x']), files),
+                                    ('other tools', dict(record, tools={'tools/validation/merge_gate.py': '0' * 40}), files),
+                                    ('other branch', dict(record, branch='engine'), files),
+                                    ('no baseline', record, {})]:
+            with self.subTest(name):
+                merge_gate.write_record('mpl', forged, extra, self.repo)
+                code, out = self.apply()
+                self.assertEqual(code, 1, out)
+                self.assertEqual(self.git('rev-parse', 'main'), record['base'])
+
+    def test_a_baseline_regression_against_main_is_stale(self):
+        self.validate()
+        record, files = self.record()
+        merge_gate.write_record('mpl', record, {'baseline.json': json.dumps(dict(self.BASELINE, types={})).encode()},
+                                self.repo)
+        code, out = self.apply()
+        self.assertEqual(code, merge_gate.STALE, out)
+        self.assertIn('T: type disappeared', out)
+
+    def test_modes_do_not_combine(self):
+        for extra in (['--apply', '--validate-only'], ['--apply', '--apply-validated'],
+                      ['--validate-only', '--apply-validated']):
+            with self.subTest(extra), self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
+                self.main('mpl', extra=extra)
+
+    def test_is_input(self):
+        for path, focused, phase in [('docs/mirror/WORK.md', False, False), ('README.md', False, False),
+                                     ('src/Quire.Engine/A.cs', False, True), ('tests/Quire.Engine.Tests/T.cs', False, True),
+                                     ('src/Quire.Mpl.Emit/E.cs', True, True), ('src/Quire.Mirror/A.cs', True, True), ('src/Quire.Mpl/M.cs', True, True),
+                                     ('tests/Quire.Harness.Tests/H.cs', True, True), ('tools/x.py', True, True),
+                                     ('docs/mirror/accepted-mutants.txt', True, True), ('.editorconfig', True, True),
+                                     ('docs/mirror/work/notes.md', True, True)]:
+            with self.subTest(path):
+                self.assertEqual((merge_gate.is_input(path, False), merge_gate.is_input(path, True)), (focused, phase))
+
+    def test_focused_inputs_cover_the_focused_projects_csproj_closure(self):
+        # ProjectReference, Compile and Import items, followed through every project and imported .props/.targets. As
+        # MSBuild resolves them, an Import is relative to the file that has it, an item to the project importing it.
+        root = Path(__file__).resolve().parents[2]
+        pending = [(root / 'tests' / p / f'{p}.csproj',) * 2 for p in (
+            'Quire.Mpl.Tests', 'Quire.Focused.Differential.Tests', 'Quire.Harness.Tests')]
+        seen = set()
+        while pending:
+            file, project = pending.pop()
+            if file in seen:
+                continue
+            seen.add(file)
+            for kind, include in re.findall(r'<(ProjectReference|Compile|Import)\s+(?:Include|Project)="([^"]+)"',
+                                            file.read_text()):
+                self.assertNotIn('$(', include, f'{file}: unresolved MSBuild property; extend this test')
+                path = ((file if kind == 'Import' else project).parent / include.replace('\\', '/')).resolve()
+                relative = path.relative_to(root).as_posix() if path.is_relative_to(root) else None
+                self.assertIsNotNone(relative, include)
+                self.assertTrue(not relative.lower().startswith(('src/', 'tests/'))
+                                or relative.lower().startswith(merge_gate.FOCUSED_INPUTS), relative)
+                if kind != 'Compile':
+                    self.assertTrue(path.is_file(), f'{file}: {include} resolves to no file')
+                    pending.append((path, path if kind == 'ProjectReference' else project))
+        for project in ('src/Quire.Mpl/Quire.Mpl.csproj', 'src/Quire.Mpl/Generated/Mirror.props',
+                        'src/Quire.Mpl.Emit/Quire.Mpl.Emit.csproj', 'src/Quire.Mirror/Quire.Mirror.csproj'):
+            self.assertIn(root / project, seen)
+
+    def test_main_changing_a_project_quire_mpl_references_is_stale(self):
+        for path in ('src/Quire.Mpl.Emit/Stand.cs', 'src/Quire.Mirror/M.cs'):
+            with self.subTest(path):
+                self.assert_stale(f'{path}: main changed an input of the focused run',
+                                  setup=lambda: self.on_main({path: 'namespace Q { public class S {} }\n'}))
+
+    def test_a_lint_change_on_main_outside_the_focused_projects_is_stale(self):
+        # Another project's source is no focused input, but the lint, whose findings the baseline records, reads it.
+        self.assert_stale("the source lint on the landed tree differs from the validated baseline's", setup=lambda:
+                          self.on_main({'src/Quire.Engine/Dec.cs': 'class D { void F() { goto IL_0001; IL_0001: ; } }\n'}))
+        self.assertNotEqual(merge_gate.landed_lint('main', self.repo), [])
+
+    def test_the_branchs_changes_come_from_git_not_the_record(self):
+        self.validate()
+        record, files = self.record()
+        merge_gate.write_record('mpl', dict(record, changed=[]), files, self.repo)
+        self.on_main({'src/Quire.Mpl/M.cs': 'class M { }\n'})
+        code, out = self.apply()
+        self.assertEqual(code, merge_gate.STALE, out)
+        self.assertIn('src/Quire.Mpl/M.cs: changed on main and by the branch', out)
+
+    def test_a_record_cannot_land_unvalidated_or_protected_changes(self):
+        self.validate()
+        record, files = self.record()
+        for name, paths, reason in [
+                ('engine-only', {'src/Quire.Engine/B.cs': 'class B {}\n'}, 'record has no phase run'),
+                ('tools-edit', {'tools/x.py': 'x\n'}, 'not of an --allow-protected run')]:
+            with self.subTest(name):
+                self.branch(name, paths)
+                tip = self.git('rev-parse', name)
+                merge_gate.write_record(name, dict(record, branch=name, tip=tip, changed=[]), files, self.repo)
+                code, out = self.apply(name)
+                self.assertEqual(code, 1, out)
+                self.assertIn(reason, out)
+
+    def test_a_corrupt_record_is_blocked(self):
+        self.validate()
+        _, files = self.record()
+        for name, data in [('not json', b'{'), ('not an object', b'[]')]:
+            with self.subTest(name):
+                tree = subprocess.run(['git', 'mktree'], cwd=self.repo, capture_output=True, check=True, input=(
+                    '100644 blob ' + subprocess.run(['git', 'hash-object', '-w', '--stdin'], cwd=self.repo, input=data,
+                                                    capture_output=True, check=True).stdout.decode().strip()
+                    + '\tgate.json\n').encode()).stdout.decode().strip()
+                commit = self.git('commit-tree', tree, '-m', 'corrupt')
+                self.git('update-ref', 'refs/quire-gate/mpl', commit)
+                code, out = self.apply()
+                self.assertEqual(code, 1, out)
+                self.assertIn('unreadable', out)
+
+    def test_a_file_directory_conflict_in_the_replay_is_blocked(self):
+        self.branch('file', {'docs/notes': 'a file\n'})
+        self.on_main({'docs/notes/a.md': 'in a directory\n'})
+        base = self.git('rev-parse', 'main^')
+        with self.assertRaises(merge_gate.ReplayConflict) as raised:
+            merge_gate.replay(base, self.git('rev-parse', 'file'), self.git('rev-parse', 'main'), self.repo)
+        self.assertIn('is a file on one side and a directory on the other', str(raised.exception))
+        with mock.patch.object(merge_gate, 'stale_reasons', return_value=[]), \
+                mock.patch.object(merge_gate, 'read_record', return_value=(
+                    {'branch': 'file', 'base': base, 'tip': self.git('rev-parse', 'file'), 'validation_mode': 'prose',
+                     'reasons': [], 'tools': merge_gate.tool_blobs(base, self.repo)}, {})):
+            code, out = self.apply('file')
+        self.assertEqual(code, 1, out)
+        self.assertIn('BLOCKED: cannot replay', out)
+
+    def test_case_collisions_on_the_landed_tree_are_blocked(self):
+        self.validate()
+        self.on_main({'docs/mirror/work/lane-a.md': 'a\n', 'docs/mirror/work/LANE-A.md': 'b\n'})
+        with mock.patch.object(merge_gate, 'stale_reasons', return_value=[]):
+            code, out = self.apply()
+        self.assertEqual(code, 1, out)
+        self.assertIn('paths differ only in case', out)
+
+    def test_a_branch_named_like_a_record_resolves_to_the_branch(self):
+        self.validate()  # refs/quire-gate/mpl
+        self.branch('quire-gate/mpl', {'src/Quire.Mpl/Q.cs': 'class Q {}\n'})
+        real, root = merge_gate.git, merge_gate.ROOT
+        with mock.patch.object(merge_gate, 'git', lambda *a, cwd=None, check=True: real(
+                *a, cwd=self.repo if cwd in (None, root) else cwd, check=check)):
+            self.assertEqual(merge_gate.branch_tip('quire-gate/mpl'), self.git('rev-parse', 'refs/heads/quire-gate/mpl'))
+            self.assertEqual(merge_gate.branch_tip('mpl'), self.git('rev-parse', 'refs/heads/mpl'))
+        code, gate, out, _ = self.validate('quire-gate/mpl')
+        self.assertEqual(code, 0, out)
+        self.assertEqual(gate['tip'], self.git('rev-parse', 'refs/heads/quire-gate/mpl'))
+
+
+class NightlyTests(unittest.TestCase):
+    """--nightly mutates every compared method of main's tip in a clone and merges nothing."""
+    git, main = RepositoryTests.git, RepositoryTests.main
+    BASELINE = RepositoryTests.BASELINE
+    setUp = RepositoryTests.setUp
+
+    def nightly(self, summary):
+        real, commands = subprocess.run, []
+        def run(command, *args, **kwargs):
+            if '--mutate-all' not in command:
+                return real(command, *args, **kwargs)
+            commands.append(command)
+            results = Path(command[command.index('--results') + 1])
+            results.mkdir(parents=True)
+            (results / 'summary.json').write_text(json.dumps(summary))
+            return subprocess.CompletedProcess(command, 0 if not summary.get('mutation', {}).get('survivors') else 1)
+        results, git, root = self.repo.parent / 'nightly', merge_gate.git, merge_gate.ROOT
+        with mock.patch.object(merge_gate.subprocess, 'run', side_effect=run), \
+                mock.patch.object(merge_gate, 'ROOT', self.repo), \
+                mock.patch.object(merge_gate, 'git', lambda *a, cwd=None, check=True: git(
+                    *a, cwd=self.repo if cwd in (None, root) else cwd, check=check)), \
+                mock.patch('sys.argv', ['merge_gate.py', '--nightly', '--results', str(results)]), \
+                contextlib.redirect_stdout(io.StringIO()):
+            code = merge_gate.main()
+        return code, commands, json.loads((results / 'nightly.json').read_text())
+
+    def test_nightly_mutates_everything_and_merges_nothing(self):
+        main = self.git('rev-parse', 'main')
+        code, commands, report = self.nightly(dict(PASSED, mutation={'total': 9, 'killed': 9, 'survivors': []}))
+        self.assertEqual(code, 0, report)
+        self.assertEqual(len(commands), 1)
+        self.assertIn('--no-mutant-cache', commands[0])
+        self.assertNotIn('--write-baseline', commands[0])
+        self.assertEqual((report['tip'], report['mutants'], report['reasons']), (main, 9, []))
+        self.assertEqual(self.git('rev-parse', 'main'), main)
+        self.assertEqual(self.git('for-each-ref', 'refs/quire-gate'), '')
+
+    def test_nightly_reports_survivors(self):
+        code, _, report = self.nightly(dict(PASSED, gate_passed=False, mutation={
+            'total': 9, 'killed': 8, 'survivors': ['T::A() m3']}))
+        self.assertEqual(code, 1)
+        self.assertEqual(report['survivors'], ['T::A() m3'])
+        self.assertIn('surviving mutant: T::A() m3', report['reasons'])
+
+
+class LaneSnippetTests(unittest.TestCase):
+    """The lane merge script in validation-flow.md, run with a stub gate: the push follows only a merge, the gate's
+    exit codes come back out, and two stale results fall back to the one-shot gate."""
+    GATE = textwrap.dedent('''
+        import os, sys
+        mode = next(a for a in sys.argv if a in ('--validate-only', '--apply-validated', '--apply'))
+        path = os.path.join(os.environ['T'], 'codes' + mode)
+        codes = open(path).read().split() if os.path.exists(path) else ['0']
+        open(path, 'w').write(' '.join(codes[1:] or codes))
+        open(os.path.join(os.environ['T'], 'log'), 'a').write(f'{mode} {codes[0]}\\n')
+        sys.exit(int(codes[0]))
+    ''')
+
+    def run_script(self, **codes):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / 'main/tools/validation').mkdir(parents=True)
+            (t / 'main/tools/validation/merge_gate.py').write_text(self.GATE)
+            for mode, sequence in codes.items():
+                (t / f"codes--{mode.replace('_', '-')}").write_text(sequence)
+            flow = (Path(__file__).parents[2] / 'docs/mirror/work/validation-flow.md').read_text()
+            script = re.search(r'```sh\n(#!/bin/sh\n.*?)```', flow, re.S)[1]
+            script = (script.replace('MAIN=/mnt/c/Projects/Quire', f'MAIN={t}/main')
+                      .replace('LOCK=/tmp/quire-merge.lock', f'LOCK={t}/lock')
+                      .replace('PULL="git fetch -q origin && git merge -q --ff-only origin/main"', 'PULL=true')
+                      .replace('PUSH', f'echo PUSHED >> {t}/log'))
+            (t / 'run.sh').write_text(script)
+            lane = t / 'lane'
+            lane.mkdir()
+            for command in (['init', '-q', '-b', 'main'], ['-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q',
+                            '--allow-empty', '-m', 'base'], ['checkout', '-qb', 'b']):
+                subprocess.run(['git', *command], cwd=lane, check=True)
+            code = subprocess.run(['sh', str(t / 'run.sh'), 'b'], cwd=lane, env=dict(os.environ, T=str(t)),
+                                  capture_output=True).returncode
+            return code, (t / 'log').read_text().split('\n')[:-1]
+
+    @unittest.skipUnless(shutil.which('flock') and shutil.which('sh'), 'needs sh and flock')
+    def test_the_lane_script(self):
+        v, a, one = '--validate-only 0', '--apply-validated', '--apply'
+        for codes, expected in [
+                ({'apply_validated': '0'}, (0, [v, f'{a} 0', 'PUSHED'])),
+                ({'apply_validated': '1'}, (1, [v, f'{a} 1'])),
+                ({'validate_only': '1'}, (1, ['--validate-only 1'])),
+                ({'apply_validated': '4 0'}, (0, [v, f'{a} 4', v, f'{a} 0', 'PUSHED'])),
+                ({'apply_validated': '4 4', 'apply': '0'}, (0, [v, f'{a} 4', v, f'{a} 4', f'{one} 0', 'PUSHED'])),
+                ({'apply_validated': '4 4', 'apply': '1'}, (1, [v, f'{a} 4', v, f'{a} 4', f'{one} 1']))]:
+            with self.subTest(codes):
+                self.assertEqual(self.run_script(**codes), expected)
 
 
 class StubDeletionTests(unittest.TestCase):
