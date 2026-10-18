@@ -62,7 +62,10 @@ public class DimDifferentialTests
         var scratch = (int[])Get(dim, "s_vec")!;
         var identity = Get(dim, "identity")!;
         var identityCoordinates = (int[])Get(identity, "Coordinates")!;
-        var state = $"rank={rank};map={map.Count};scratch={string.Join(",", scratch)};identity={string.Join(",", identityCoordinates)};registered={ReferenceEquals(map[identityCoordinates], identity)}";
+        var entries = map.Cast<System.Collections.DictionaryEntry>()
+            .Select(entry => $"{string.Join(",", (int[])entry.Key)}->{string.Join(",", (int[])Get(entry.Value, "Coordinates")!)}:{ReferenceEquals(entry.Value, identity)}")
+            .OrderBy(entry => entry, StringComparer.Ordinal);
+        var state = $"rank={rank};map={map.Count}[{string.Join(";", entries)}];scratch={string.Join(",", scratch)};identity={string.Join(",", identityCoordinates)};registered={ReferenceEquals(map[identityCoordinates], identity)}";
         for (int i = 0; i < Markers.Length; i++)
         {
             var coordinates = (int[])Get(Get(dim, Markers[i])!, "Coordinates")!;
@@ -265,10 +268,9 @@ public class DimDifferentialTests
         MethodComparison.Compare("ctor(int[]): fresh vector", Contract, qCtorArr, null, [vFresh.Clone()], mCtorArr, null, [vFresh.Clone()], qs, ms);
         var qOwnedVector = new[] { 999992, 1, 2, 3, 4, 5, 6, 7 };
         var mOwnedVector = (int[])qOwnedVector.Clone();
-        object qOwnedDim = qCtorArr.Invoke([qOwnedVector])!;
-        object mOwnedDim = mCtorArr.Invoke([mOwnedVector])!;
-        Assert.Same(qOwnedVector, Get(qOwnedDim, "Coordinates"));
-        Assert.Same(mOwnedVector, Get(mOwnedDim, "Coordinates"));
+        MethodComparison.Compare("ctor(int[]): preserves vector identity", Contract, qCtorArr, null, [qOwnedVector], mCtorArr, null, [mOwnedVector],
+            o => o is Q.Dim ? $"{qs(o)};same={ReferenceEquals(qOwnedVector, Get(o, "Coordinates"))}" : qs(o),
+            o => o is not null && o.GetType().Name == "Dim" ? $"{ms(o)};same={ReferenceEquals(mOwnedVector, Get(o, "Coordinates"))}" : ms(o));
         var vDup = new int[8];
         MethodComparison.Compare("ctor(int[]): duplicate key throws", Contract, qCtorArr, null, [vDup.Clone()], mCtorArr, null, [vDup.Clone()], qs, ms);
         MethodComparison.Compare("ctor(): parameterless marker", Contract, qCtor0, null, [], mCtor0, null, [], qs, ms);
@@ -283,8 +285,8 @@ public class DimDifferentialTests
         }
 
         // static constructor (.cctor)
-        MethodComparison.Compare("cctor: type initializer", Contract, qCc, null, [], mCc, null, [], qs, ms);
-        Assert.Equal(InitializationState(M), InitializationState(typeof(Q.Dim)));
+        MethodComparison.Compare("cctor: type initializer", Contract, qCc, null, [], mCc, null, [],
+            _ => InitializationState(typeof(Q.Dim)), _ => InitializationState(M));
 
         // private interning
         var qScratchBeforeIntern = Get(typeof(Q.Dim), "s_vec");

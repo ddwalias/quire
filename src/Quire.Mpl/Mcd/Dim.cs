@@ -35,16 +35,16 @@ public sealed partial class Dim
     [MirrorVerified("DimDifferentialTests")]
     public static readonly Dim mixed_matrix_dim;
 
-    [MirrorTested("Mcd.Dim")]
+    [MirrorVerified("DimDifferentialTests")]
     private static readonly int s_rank;
-    [MirrorTested("Mcd.Dim")]
+    [MirrorVerified("DimDifferentialTests")]
     private static readonly IDictionary s_map;
 
     [ThreadStatic]
     [MirrorVerified("DimDifferentialTests")]
     public static int[] s_vec;
 
-    [MirrorTested("Mcd.Dim")]
+    [MirrorVerified("DimDifferentialTests")]
     private int[] m_vec;
 
     /// <summary>The rank comes from the initialising thread's unit system.</summary>
