@@ -7,7 +7,7 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | `mirror/a-tuple-shapes` is aligning `TupleType(Type[])` and `tuple_length(object)` with their reference IL. The in-progress `MplForeignMacro` batch remains owned; `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`. | [Lane A](work/lane-a.md) |
+| A | `mirror/a-rts-resolve-assembly` is aligning `Rts.OnResolveAssembly` with its reference IL. The in-progress `MplForeignMacro` batch remains owned; `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop

@@ -3,7 +3,7 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-tuple-shapes` batch is correcting two `Tuple` methods to match reference IL.
+separate `mirror/a-rts-resolve-assembly` batch is correcting `Rts.OnResolveAssembly` to match reference IL.
 `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
@@ -125,7 +125,25 @@ batch receipts below are history, not a task queue.
   'FullyQualifiedName~MplRunHelpersTests.Tuple_representations'` — 1 passed;
   `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~MplRunHelpersDifferentialTests.Tuple_members'` — 1 passed, 0 failed or skipped.
-  No proposals; branch gate pending.
+  No proposals. Gate: `lane_merge.py mirror/a-tuple-shapes --jobs 14` passed and merged tip
+  `4f7b37b55f643ba9cc1220dcb960489828c581ca` to `main`; `origin/main` is now `92b565d5`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-1js55o5b\gate.json`; no reasons or protected paths. Harness 97, Mpl 188,
+  Differential 392 passed, no failures or skips; coverage 1,399 compared, 1,534 exact and 89 structure-only; lint 0,
+  integrity complete, ratchet OK. Mutation 19/19 killed, no survivors, timeouts or crashes. Existing inventory gaps:
+  298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported.
+
+## Rts.OnResolveAssembly IL shape correction (`mirror/a-rts-resolve-assembly`)
+
+- Scope: make `OnResolveAssembly(object, ResolveEventArgs)` (token `0x060003c4`) call the
+  `String.Split(char, StringSplitOptions)` overload used by `mplrun`. Tier A inventory classifies it as a structure
+  mismatch. No Rts source diff exists on the prior `a-rts-cctor` refs and no active Lane A worktree owns this method.
+- Reference: `python tools\reference\reference.py Mpl.Run.Rts --il`; artifact identity is recorded in
+  [Mpl.Run.Rts](../evidence/Mpl.Run.Rts.md). Existing `RtsDifferentialTests` resolves found, missing and malformed
+  assembly names and covers non-domain senders.
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~RtsTests'`
+  — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~RtsDifferentialTests.Resolves_assemblies_from_the_search_path'` — 1 passed, 0 failed or
+  skipped. No proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 

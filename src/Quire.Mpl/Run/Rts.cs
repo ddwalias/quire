@@ -158,7 +158,7 @@ public static partial class Rts
         if ((AppDomain)s != AppDomain.CurrentDomain) return null;
         foreach (string dir in s_paths)
         {
-            string path = Path.Combine(dir, a.Name.Split(',')[0]) + ".dll";
+            string path = Path.Combine(dir, a.Name.Split(',', StringSplitOptions.None)[0]) + ".dll";
             if (File.Exists(path)) return Assembly.LoadFile(path);
         }
         return null;
