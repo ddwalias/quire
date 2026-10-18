@@ -12,9 +12,9 @@ public abstract partial class MatDim
     public readonly int m_col;
     [MirrorTested("Mcd.MatDim")]
     protected MatDim(int r, int c) { m_row = r; m_col = c; }
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public int Rows => m_row;
-    [MirrorTested("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public int Cols => m_col;
     [MirrorVerified("MatDimBaseGettersDifferentialTests")]
     public virtual Dim UniformDim => null;

@@ -7,27 +7,27 @@ namespace Quire.Mcd;
 public abstract partial class MatDim
 {
 
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static bool Eq_b(MatDim d1, MatDim d2) => d1.eq_b(d2);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static bool Eq_b(MatDim d1, Dim d2) => d1.eq2_b(d2);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static void Eq(MatDim d1, MatDim d2, uint param)
     {
         if (!d1.eq_b(d2)) PickLoser(d1, d2, param);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static void Eq(MatDim d1, Dim d2, uint param)
     {
         if (!d1.eq2_b(d2)) OnError(d2, param);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static MatDim MMult(MatDim m1, MatDim m2) => m1.mmult1(m2);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static Dim DMult(MatDim m1, MatDim m2) => m1.dmult1(m2);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static MatDim Transpose(MatDim m1) => m1.transpose();
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static Dim Det(MatDim m, int n) => m.det(n);
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim Pwr(MatDim m, int n)
@@ -41,44 +41,44 @@ public abstract partial class MatDim
         return m.pwr(2) == null ? null : MMult(m, m.invert());
     }
 
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim mmult1(MatDim m2) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim mmult2(uniform_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim mmult2(r_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim mmult2(c_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim mmult2(rc_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual Dim dmult1(MatDim m2) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual Dim dmult2(uniform_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual Dim dmult2(r_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual Dim dmult2(c_dim m1) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual Dim dmult2(rc_dim m1) => null;
     protected abstract bool eq_b(MatDim m2);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual bool eq2_b(Dim d2) => false;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual bool eq2_b(r_dim m1) => false;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual bool eq2_b(c_dim m1) => false;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual bool eq2_b(rc_dim m1) => false;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual bool eq2_b(crazy_dim m1) => false;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim transpose() => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim invert() => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual Dim det(int n) => null;
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimOperationsDifferentialTests")]
     protected virtual MatDim pwr(uint n) => null;
 
     [MirrorAnalyzed("Mcd.MatDim")]
