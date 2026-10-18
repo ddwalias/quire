@@ -45,6 +45,7 @@ public abstract partial class MplEnv
 
     public abstract BindingInfo lookup(Sym s);
 
+    [MirrorTested("Mpl.Run.MplEnv")]
     public MplMacro LoadMacro(Sym s)
     {
         if (s is Keyword) return null;
@@ -59,11 +60,13 @@ public abstract partial class MplEnv
         return null;
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public static void CanNotResolve(string sig)
     {
         throw new AppException("Can not resolve signature");
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public static void MayNotModify()
     {
         throw new AppException("May not modify import environment");
@@ -79,19 +82,23 @@ public partial class BindingInfo
     private uint m_handle;
     private int m_zone;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public virtual MplMacro macro => null;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public BindingInfo()
         : this(0u, 0)
     {
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public BindingInfo(uint handle, int zone)
     {
         m_handle = handle;
         m_zone = zone;
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public BindingInfo(uint handle)
         : this(handle, 0)
     {
@@ -105,8 +112,10 @@ public partial class MacroBindingInfo : BindingInfo
 {
     private MplMacro m_macro;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override MplMacro macro => m_macro;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public MacroBindingInfo(uint handle, MplMacro m)
         : base(handle, 1)
     {
@@ -123,8 +132,10 @@ public partial class LocalEnv : MplEnv
     private MplEnv m_parent;
     private SortedDictionary<string, BindingInfo> m_table;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override int Level => m_level;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public LocalEnv(MplEnv parent)
     {
         m_level = parent.Level + 1;
@@ -132,6 +143,7 @@ public partial class LocalEnv : MplEnv
         m_table = new SortedDictionary<string, BindingInfo>();
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public LocalEnv()
     {
         m_level = 0;
@@ -139,12 +151,14 @@ public partial class LocalEnv : MplEnv
         m_table = new SortedDictionary<string, BindingInfo>();
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public BindingInfo lookup_local(Sym s)
     {
         m_table.TryGetValue(s.name, out var value);
         return value;
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override BindingInfo lookup(Sym s)
     {
         BindingInfo bindingInfo = lookup_local(s);
@@ -152,20 +166,24 @@ public partial class LocalEnv : MplEnv
         return m_parent.lookup(s);
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override MplMacro LoadForeignMacro(string sig) => m_parent.LoadForeignMacro(sig);
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override MplEnv AddLocal(Sym s, uint handle)
     {
         m_table.Add(s.name, new BindingInfo(handle));
         return this;
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override MplEnv AddLocalEquation(Sym s, uint handle)
     {
         m_table[s.name] = new BindingInfo(handle);
         return this;
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override BindingInfo AddSymbolMacro(Sym s, uint handle, Sexpr e)
     {
         BindingInfo bindingInfo = new MacroBindingInfo(handle, new MplSymbolMacro(s, e));
@@ -196,21 +214,25 @@ public abstract partial class MplMacro
         return IllegalMacroCall(form);
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public Sexpr IllegalMacroCall(Sexpr form)
     {
         throw new AppException("illegal macro call", 0u, form.handle);
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public Sexpr IllegalMacroRef(Tok form)
     {
         throw new AppException("illegal macro reference", 0u, form.handle);
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public static void NotAtTopLevel(Sym s, uint handle)
     {
         throw new AppException("function macro definition not at top level", 0u, handle);
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public static void CanNotExpand(uint handle)
     {
         throw new AppException("Can not expand this macro in the current compilation unit.", 0u, handle);
@@ -227,20 +249,24 @@ public partial class MplSymbolMacro : MplMacro
 {
     private Sexpr m_replacement;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public MplSymbolMacro(Sym s, Sexpr rep)
         : base(s)
     {
         m_replacement = rep;
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override Sexpr ExpandRef(MplEnv e, Tok s) => m_replacement;
 
+    [MirrorVerified("EnvDifferentialTests")]
     public override Sexpr ExpandCall(MplEnv e, Sexpr f)
     {
         SCons sCons = f as SCons;
         return new SCons(m_replacement, sCons.tail);
     }
 
+    [MirrorVerified("EnvDifferentialTests")]
     public static MplMacro make(Atom s, int n) => new MplSymbolMacro(s as Sym, int_constant.NewTok(n, 0u));
 
     [MirrorVerified("EnvDifferentialTests")]

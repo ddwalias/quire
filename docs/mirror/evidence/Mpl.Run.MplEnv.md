@@ -17,7 +17,7 @@ Base environment contract for symbol binding and macro lookup. The base class re
 | `AddFunctionMacro(Sym, uint, MplEnv, Sexpr)` | 0x0600010d | `09fba597` | Calls `MayNotModify()`, returns null. | High | Tested |
 | `AddForeignMacro(Sym, uint, string)` | 0x0600010e | `d1808769` | Calls `MayNotModify()`, returns null. | High | Tested |
 | `lookup(Sym)` | 0x0600010f | — | Abstract: looks up symbol binding info. | High | Verified |
-| `LoadMacro(Sym)` | 0x06000110 | `4a4cc9a3` | If `s is Keyword`, returns null; otherwise returns `lookup(s)?.macro`. | High | Verified |
+| `LoadMacro(Sym)` | 0x06000110 | `4a4cc9a3` | If `s is Keyword`, returns null; otherwise returns `lookup(s)?.macro`. | High | Tested |
 | `LoadForeignMacro(string)` | 0x06000111 | `655a98a0` | Calls `CanNotResolve(foreign_id)`, returns null. | High | Tested |
 | `CanNotResolve(string)` | 0x06000112 | `96800dec` | Throws `AppException("Can not resolve signature")`. | High | Verified |
 | `MayNotModify()` | 0x06000113 | `2fe00d11` | Throws `AppException("May not modify import environment")`. | High | Verified |
@@ -27,3 +27,5 @@ Base environment contract for symbol binding and macro lookup. The base class re
 
 - **Observed** (`EnvDifferentialTests`): Direct comparisons for static exception helpers `CanNotResolve` and `MayNotModify`, and `LoadMacro` across Keyword, bound symbol macro, local binding, and unbound symbol lookup.
 - **Inferred** (`EnvTests`): Base `MplEnv` virtual methods (`Level`, `AddLocal`, `AddLocalEquation`, `AddSymbolMacro`, `AddFunctionMacro`, `AddForeignMacro`, `LoadForeignMacro`) tested via a test subclass to verify default 0 level and modification rejection exceptions.
+
+`LoadMacro` remains Tested because the existing root `LocalEnv` throws on an unbound lookup, so its non-keyword/no-binding null return has not been exercised. Its direct comparisons cover the Keyword, unbound-root exception, local-value and symbol-macro cases.
