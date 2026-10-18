@@ -8,8 +8,11 @@
 |---|---|---|---|---|
 | `GetArgs()` | 0x060000b6 | MemberGen: `_singleton` | Mechanical; Release IL equals Mathcad's | Verified |
 | `.ctor()` | 0x060000b7 | MemberGen: `: base("SynchronizationStatus") { }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.cctor()` | 0x060000b8 | Initializes `_singleton` with a new `SyncStatusChangedEventArgs` | Directly compared; Release IL equals Mathcad's | Verified |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreSyncStatusChangedEventArgsMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+**Observed** (`PtcCalculationCoreSingletonCctorsDifferentialTests`): directly invokes `.cctor()` on both artifacts and compares whether the singleton field is null, its runtime type, and its inherited `PropertyName`. The constructor's Release IL is an exact match.

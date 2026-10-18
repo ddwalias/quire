@@ -8,6 +8,9 @@ public partial class CalculatingStatusChangedEventArgs
     [MirrorVerified("PtcCalculationCoreCalculatingStatusChangedEventArgsMechanicalDifferentialTests")]
     private static CalculatingStatusChangedEventArgs _singleton;
 
+    [MirrorVerified("PtcCalculationCoreSingletonCctorsDifferentialTests")]
+    static CalculatingStatusChangedEventArgs() => _singleton = new CalculatingStatusChangedEventArgs();
+
     [MirrorVerified("PtcCalculationCoreCalculatingStatusChangedEventArgsMechanicalDifferentialTests")]
     public static CalculatingStatusChangedEventArgs GetArgs() => _singleton;
 
