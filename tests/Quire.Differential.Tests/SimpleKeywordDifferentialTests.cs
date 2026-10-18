@@ -57,6 +57,7 @@ public class SimpleKeywordDifferentialTests
     [SkippableFact]
     public void Singleton_constructors_and_tokens()
     {
+        CompareKeyword(nameof(let_keyword), typeof(let_keyword), 7);
         CompareKeyword(nameof(List_keyword), typeof(List_keyword), 13);
         CompareKeyword(nameof(Tuple_keyword), typeof(Tuple_keyword), 14);
     }

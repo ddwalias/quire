@@ -6,6 +6,23 @@ The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do
 separate unowned Lane A batch. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it
 parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
 
+## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
+
+- Scope: implement `let_keyword.singleton`, its type initializer and `NewTok(uint)`; retain the generated stubs for
+  `ExpandDefs`, `ExpandLet` and `walk_expression_as` because the expansion path is dependency-blocked.
+- Original: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`,
+  MVID `17a0933b-4988-4c18-963d-563998321cc8`; reference IL confirms the initializer stores `new let_keyword()` and
+  `NewTok` constructs `Tok(singleton, handle)`. Contracts: [Mpl.Run.let_keyword](../evidence/Mpl.Run.let_keyword.md).
+- `SimpleKeywordDifferentialTests` directly compared the initializer, constructor, singleton and `NewTok` at handles
+  0, 1, 37 and `uint.MaxValue` with Mathcad: 1/1 passed. Behavior `Keyword_and_block_keyword_behaviours` passed 1/1.
+- Remaining: `ExpandDefs` needs `define_keyword.MakeDefine` and `lambda_keyword.MakeLambda`; `ExpandLet` uses
+  `ExpandDefs` and `locally_keyword.MakeLocally`; `walk_expression_as` calls `ExpandLet`. Recheck these dependencies
+  after they merge, and check ownership before the next independent Lane A batch.
+- Gate blocker: `lane_merge.py mirror/a-let-keyword-tokens --jobs 14` rebased onto `8ac06847`, then failed twice
+  before validation with `WinError 206` preparing the validation clone. The gate expands 4,847 protected paths into a
+  363,561-character `git checkout` command, beyond Windows' command-line limit; shorter `TEMP` roots did not change
+  the failure. The branch is pushed; retry after the Windows gate restores paths in bounded chunks.
+
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
 Branch `mirror/a-dimval`, rebased onto `c022010`: one work commit, then the maintainer's acceptance commit on top.
