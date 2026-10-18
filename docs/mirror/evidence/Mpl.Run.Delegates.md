@@ -32,18 +32,18 @@ Delegates provides reflection caches, delegate factories, currying, and projecti
 | Exact member (REA decoded signature) | Token | Normalized IL prefix | Status |
 |---|---|---|---|
 | `Mpl.Run.Delegates..cctor()` | 0x06000319 | 290077c082ce36bd | Analyzed |
-| `Mpl.Run.Delegates.clo_params(System.Type[])` | 0x0600031a | 36c46086f40c398e | Analyzed |
-| `Mpl.Run.Delegates.fparams(System.Type, System.Type[])` | 0x0600031b | 84648a5567f5fcc3 | Analyzed |
-| `Mpl.Run.Delegates.fparams(System.Reflection.MethodInfo)` | 0x0600031c | c54f23b5b6d4713d | Analyzed |
-| `Mpl.Run.Delegates.fparams(System.Delegate)` | 0x0600031d | a792102a9a2f7b34 | Analyzed |
-| `Mpl.Run.Delegates.Invoke1(Mpl.Run.F<!!0, !!1>, object)` | 0x0600031e | e02982f795346a97 | Analyzed |
-| `Mpl.Run.Delegates.Invoke2(Mpl.Run.F<!!0, !!1, !!2>, object, object)` | 0x0600031f | 75632cc3aa6d5015 | Analyzed |
-| `Mpl.Run.Delegates.Invoke3(Mpl.Run.F<!!0, !!1, !!2, !!3>, object, object, object)` | 0x06000320 | 3fd486ff9f205d86 | Analyzed |
-| `Mpl.Run.Delegates.Invoke4(Mpl.Run.F<!!0, !!1, !!2, !!3, !!4>, object, object, object, object)` | 0x06000321 | 51873d154e67d66c | Analyzed |
-| `Mpl.Run.Delegates.Premium_1(Mpl.Run.F<!!0, !!1>)` | 0x06000322 | 2f44a88c304e31a2 | Analyzed |
-| `Mpl.Run.Delegates.Premium_2(Mpl.Run.F<!!0, !!1, !!2>)` | 0x06000323 | 2afc83a930a96bba | Analyzed |
-| `Mpl.Run.Delegates.Premium_3(Mpl.Run.F<!!0, !!1, !!2, !!3>)` | 0x06000324 | 1a750c321a171519 | Analyzed |
-| `Mpl.Run.Delegates.Premium_4(Mpl.Run.F<!!0, !!1, !!2, !!3, !!4>)` | 0x06000325 | 42993fdf5587f41a | Analyzed |
+| `Mpl.Run.Delegates.clo_params(System.Type[])` | 0x0600031a | 36c46086f40c398e | Verified |
+| `Mpl.Run.Delegates.fparams(System.Type, System.Type[])` | 0x0600031b | 84648a5567f5fcc3 | Verified |
+| `Mpl.Run.Delegates.fparams(System.Reflection.MethodInfo)` | 0x0600031c | c54f23b5b6d4713d | Verified |
+| `Mpl.Run.Delegates.fparams(System.Delegate)` | 0x0600031d | a792102a9a2f7b34 | Verified |
+| `Mpl.Run.Delegates.Invoke1(Mpl.Run.F<!!0, !!1>, object)` | 0x0600031e | e02982f795346a97 | Verified |
+| `Mpl.Run.Delegates.Invoke2(Mpl.Run.F<!!0, !!1, !!2>, object, object)` | 0x0600031f | 75632cc3aa6d5015 | Verified |
+| `Mpl.Run.Delegates.Invoke3(Mpl.Run.F<!!0, !!1, !!2, !!3>, object, object, object)` | 0x06000320 | 3fd486ff9f205d86 | Verified |
+| `Mpl.Run.Delegates.Invoke4(Mpl.Run.F<!!0, !!1, !!2, !!3, !!4>, object, object, object, object)` | 0x06000321 | 51873d154e67d66c | Verified |
+| `Mpl.Run.Delegates.Premium_1(Mpl.Run.F<!!0, !!1>)` | 0x06000322 | 2f44a88c304e31a2 | Verified |
+| `Mpl.Run.Delegates.Premium_2(Mpl.Run.F<!!0, !!1, !!2>)` | 0x06000323 | 2afc83a930a96bba | Verified |
+| `Mpl.Run.Delegates.Premium_3(Mpl.Run.F<!!0, !!1, !!2, !!3>)` | 0x06000324 | 1a750c321a171519 | Verified |
+| `Mpl.Run.Delegates.Premium_4(Mpl.Run.F<!!0, !!1, !!2, !!3, !!4>)` | 0x06000325 | 42993fdf5587f41a | Verified |
 | `Mpl.Run.Delegates.Closure_1(Mpl.Run.F<!!0, !!1, !!2>, !!1)` | 0x06000326 | 2c4d42c6bdee7f14 | Analyzed |
 | `Mpl.Run.Delegates.Closure_2(Mpl.Run.F<!!0, !!1, !!2, !!3>, !!1)` | 0x06000327 | f6123a16a5f579b5 | Analyzed |
 | `Mpl.Run.Delegates.Closure_3(Mpl.Run.F<!!0, !!1, !!2, !!3, !!4>, !!1)` | 0x06000328 | ee1bf3c8c508a689 | Analyzed |
@@ -58,21 +58,21 @@ Delegates provides reflection caches, delegate factories, currying, and projecti
 | `Mpl.Run.Delegates.FunctionClosure_4(System.Delegate, !!0)` | 0x06000331 | e4170e249b856b52 | Analyzed |
 | `Mpl.Run.Delegates.DelegateClosure(System.Delegate, !!0, int)` | 0x06000332 | 3a461b9e69ad8a8b | Analyzed |
 | `Mpl.Run.Delegates.toFDelegate(System.Type, System.Delegate)` | 0x06000333 | e13474987f3975aa | Analyzed |
-| `Mpl.Run.Delegates.FType(System.Type[])` | 0x06000334 | d19cff4d39aa1c8a | Analyzed |
-| `Mpl.Run.Delegates.VType(System.Type[])` | 0x06000335 | 510d352d79f8ebca | Analyzed |
-| `Mpl.Run.Delegates.MethodToDelegate(System.Reflection.MethodInfo)` | 0x06000336 | e91e93052449e07d | Analyzed |
-| `Mpl.Run.Delegates.MethodToDelegateType(System.Reflection.MethodInfo)` | 0x06000337 | 13d79c922d51a5df | Analyzed |
-| `Mpl.Run.Delegates.MethodToDelegateCtor(System.Reflection.MethodInfo)` | 0x06000338 | ea7cbbb097b816dc | Analyzed |
-| `Mpl.Run.Delegates.ParameterTypesToDelegateType(System.Type, System.Type[])` | 0x06000339 | ad3e210d7864fe56 | Analyzed |
-| `Mpl.Run.Delegates.ParameterTypesToDelegateCtor(System.Type, System.Type[])` | 0x0600033a | 3834242e412d13b9 | Analyzed |
-| `Mpl.Run.Delegates.Wrap1(Mpl.Run.F<!!0, !!1>)` | 0x0600033b | bea96280494991b1 | Analyzed |
-| `Mpl.Run.Delegates.Wrap2(Mpl.Run.F<!!0, !!1, !!2>)` | 0x0600033c | 3761ca81c7f817a8 | Analyzed |
-| `Mpl.Run.Delegates.Wrap3(Mpl.Run.F<!!0, !!1, !!2, !!3>)` | 0x0600033d | 39f933799b638a74 | Analyzed |
-| `Mpl.Run.Delegates.project21()` | 0x0600033e | 15d96cab27096a76 | Analyzed |
-| `Mpl.Run.Delegates.project22()` | 0x0600033f | 58293e0f346cb70d | Analyzed |
-| `Mpl.Run.Delegates.pi_21()` | 0x06000340 | 95db1e3d063f5648 | Analyzed |
-| `Mpl.Run.Delegates.pi_22()` | 0x06000341 | 8cd1005d0a7a7e0f | Analyzed |
-| `Mpl.Run.Delegates..ctor()` | 0x06000342 | 5e4aeaf3c57ac765 | Analyzed |
+| `Mpl.Run.Delegates.FType(System.Type[])` | 0x06000334 | d19cff4d39aa1c8a | Verified |
+| `Mpl.Run.Delegates.VType(System.Type[])` | 0x06000335 | 510d352d79f8ebca | Verified |
+| `Mpl.Run.Delegates.MethodToDelegate(System.Reflection.MethodInfo)` | 0x06000336 | e91e93052449e07d | Verified |
+| `Mpl.Run.Delegates.MethodToDelegateType(System.Reflection.MethodInfo)` | 0x06000337 | 13d79c922d51a5df | Verified |
+| `Mpl.Run.Delegates.MethodToDelegateCtor(System.Reflection.MethodInfo)` | 0x06000338 | ea7cbbb097b816dc | Verified |
+| `Mpl.Run.Delegates.ParameterTypesToDelegateType(System.Type, System.Type[])` | 0x06000339 | ad3e210d7864fe56 | Verified |
+| `Mpl.Run.Delegates.ParameterTypesToDelegateCtor(System.Type, System.Type[])` | 0x0600033a | 3834242e412d13b9 | Verified |
+| `Mpl.Run.Delegates.Wrap1(Mpl.Run.F<!!0, !!1>)` | 0x0600033b | bea96280494991b1 | Verified |
+| `Mpl.Run.Delegates.Wrap2(Mpl.Run.F<!!0, !!1, !!2>)` | 0x0600033c | 3761ca81c7f817a8 | Verified |
+| `Mpl.Run.Delegates.Wrap3(Mpl.Run.F<!!0, !!1, !!2, !!3>)` | 0x0600033d | 39f933799b638a74 | Verified |
+| `Mpl.Run.Delegates.project21()` | 0x0600033e | 15d96cab27096a76 | Verified |
+| `Mpl.Run.Delegates.project22()` | 0x0600033f | 58293e0f346cb70d | Verified |
+| `Mpl.Run.Delegates.pi_21()` | 0x06000340 | 95db1e3d063f5648 | Verified |
+| `Mpl.Run.Delegates.pi_22()` | 0x06000341 | 8cd1005d0a7a7e0f | Verified |
+| `Mpl.Run.Delegates..ctor()` | 0x06000342 | 5e4aeaf3c57ac765 | Verified |
 
 Fields (Analyzed):
 - `Mpl.Run.Delegates.gtypes`, token `0x04000092`: System.Type[].

@@ -54,10 +54,10 @@ public partial class Delegates
         ];
     }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public Delegates() { }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type[] clo_params(Type[] ftys)
     {
         Type[] array = new Type[ftys.Length - 1];
@@ -66,7 +66,7 @@ public partial class Delegates
         return array;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type[] fparams(Type r, Type[] args)
     {
         Type[] array = new Type[1 + args.Length];
@@ -75,7 +75,7 @@ public partial class Delegates
         return array;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type[] fparams(MethodInfo m)
     {
         ParameterInfo[] parameters = m.GetParameters();
@@ -89,43 +89,43 @@ public partial class Delegates
         return array;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type[] fparams(Delegate d) => fparams(d.GetType().GetMethod("Invoke"));
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static object Invoke1<R, A>(F<R, A> f, object x) => f((A)x);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static object Invoke2<R, A, B>(F<R, A, B> f, object x, object y) => f((A)x, (B)y);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static object Invoke3<R, A, B, C>(F<R, A, B, C> f, object x, object y, object z) => f((A)x, (B)y, (C)z);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static object Invoke4<R, A, B, C, D>(F<R, A, B, C, D> f, object x, object y, object z, object w) => f((A)x, (B)y, (C)z, (D)w);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<R, A> Premium_1<R, A>(F<R, A> f) => (A a) =>
     {
         Function.CheckPremium();
         return f(a);
     };
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<R, A, B> Premium_2<R, A, B>(F<R, A, B> f) => (A a, B b) =>
     {
         Function.CheckPremium();
         return f(a, b);
     };
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<R, A, B, C> Premium_3<R, A, B, C>(F<R, A, B, C> f) => (A a, B b, C c) =>
     {
         Function.CheckPremium();
         return f(a, b, c);
     };
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<R, A, B, C, D> Premium_4<R, A, B, C, D>(F<R, A, B, C, D> f) => (A a, B b, C c, D d) =>
     {
         Function.CheckPremium();
@@ -248,10 +248,10 @@ public partial class Delegates
         return null;
     }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type FType(Type[] tys) => gtypes[tys.Length].MakeGenericType(tys);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type VType(Type[] tys)
     {
         Type type = vtypes[tys.Length];
@@ -259,39 +259,39 @@ public partial class Delegates
         return type.MakeGenericType(tys);
     }
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Delegate MethodToDelegate(MethodInfo mi) => Delegate.CreateDelegate(FType(fparams(mi)), mi);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type MethodToDelegateType(MethodInfo mi) => FType(fparams(mi));
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static ConstructorInfo MethodToDelegateCtor(MethodInfo mi) => MethodToDelegateType(mi).GetConstructor([typeof(object), typeof(uint)]);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Type ParameterTypesToDelegateType(Type r, Type[] args) => r == typeof(void) ? VType(args) : FType(fparams(r, args));
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static ConstructorInfo ParameterTypesToDelegateCtor(Type r, Type[] args) => ParameterTypesToDelegateType(r, args).GetConstructor([typeof(object), typeof(nint)]);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<object, object> Wrap1<A, B>(F<A, B> f) => (object x) => f((B)x);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<object, object, object> Wrap2<A, B, C>(F<A, B, C> f) => (object x, object y) => f((B)x, (C)y);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<object, object, object, object> Wrap3<A, B, C, D>(F<A, B, C, D> f) => (object x, object y, object z) => f((B)x, (C)y, (D)z);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<A, A, B> project21<A, B>() => (A a, B b) => a;
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static F<B, A, B> project22<A, B>() => (A a, B b) => b;
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Function pi_21<A, B>() => DelegateFunction.make(project21<A, B>(), 2);
 
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    [MirrorVerified("DelegatesDifferentialTests")]
     public static Function pi_22<A, B>() => DelegateFunction.make(project22<A, B>(), 2);
 }
