@@ -12,7 +12,7 @@ dimension coordinates ("global", one int per base dimension, 60000 per unit powe
 ("local", doubles), default units keyed by dimension direction, and the set of unit symbols seen. Coordinates are
 indexed by the basis's dimension names in sorted order. The nested private `Default` splits a dimension into a
 direction and a scalar. Nothing is locked. Public members are differential-verified for the cases in "Test
-cases"; the private ones are covered through them.
+cases"; `GetDimensionIndex`, `GetDimensions(string)`, `Inverse`, `IsSmall` and both `Count` overloads are also directly compared there. The nested `Default` methods also have direct comparisons; other private members are covered through public callers.
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
@@ -42,12 +42,12 @@ cases"; the private ones are covered through them.
 | `ChangeBasis(int[])` | 0x060005d8 | `c41daabf` | Coordinates to local exponents through the inverse matrix. Reads exactly rank entries: shorter arrays throw `IndexOutOfRangeException`, extra entries are ignored. | High | Verified |
 | `ChangeBasis(double[])` | 0x060005d9 | `824c5707` | Local exponents to coordinates through the forward matrix, each product term truncated to int before it is added. | High | Verified |
 | `IsUnitSymbol(string)` | 0x060005da | `21e6973f` | Whether a basis or default unit set since construction or the last `Reset` had this symbol; setting new units never forgets old symbols. Null throws `ArgumentNullException`. | High | Verified |
-| `GetDimensionIndex(Type)` | 0x060005db | `54b0899a` | Binary search of the sorted dimensions (name order of `Named.CompareTo`); a miss throws `ArgumentException` "bad dimension" naming the dimension. | High | Tested |
-| `GetDimensions(string)` | 0x060005dc | `4fe25c2e` | Private static: the parsed signature's dimension product. | High | Tested |
-| `Inverse(double[,])` | 0x060005dd | `5307792d` | Gauss–Jordan inversion by columns on a copy. A pivot within 1e-12 of zero first adds in the first later column whose entry in the pivot row isn't small; if the pivot is still small, throws `ArgumentException` "singular matrix". | High | Tested |
-| `IsSmall(double)` | 0x060005de | `d39e96df` | Strictly between −1e-12 and 1e-12 (NaN is not small). | High | Tested |
-| `Count(int[])` | 0x060005df | `5f37b750` | The number of nonzero entries. | High | Tested |
-| `Count(double[])` | 0x060005e0 | `4f20f9f4` | The number of nonzero entries (NaN counts). | High | Tested |
+| `GetDimensionIndex(Type)` | 0x060005db | `54b0899a` | Binary search of the sorted dimensions (name order of `Named.CompareTo`); a miss throws `ArgumentException` "bad dimension" naming the dimension. | High | Verified |
+| `GetDimensions(string)` | 0x060005dc | `4fe25c2e` | Private static: the parsed signature's dimension product. | High | Verified |
+| `Inverse(double[,])` | 0x060005dd | `5307792d` | Gauss–Jordan inversion by columns on a copy. A pivot within 1e-12 of zero first adds in the first later column whose entry in the pivot row isn't small; if the pivot is still small, throws `ArgumentException` "singular matrix". | High | Verified |
+| `IsSmall(double)` | 0x060005de | `d39e96df` | Strictly between −1e-12 and 1e-12 (NaN is not small). | High | Verified |
+| `Count(int[])` | 0x060005df | `5f37b750` | The number of nonzero entries. | High | Verified |
+| `Count(double[])` | 0x060005e0 | `4f20f9f4` | The number of nonzero entries (NaN counts). | High | Verified |
 | `Default.ctor(int[], Unit)` | 0x06000792 | `b5df5311` | As the one-argument constructor, then keeps the unit. | High | Tested |
 | `Default.ctor(int[])` | 0x06000793 | `14e2df4d` | Copies the coordinates. The scalar is the GCD of the nonzero ones, negated when the first nonzero one is negative; order is its magnitude. The copy is divided by the scalar unless the scalar is 0 or +1, so the direction's first nonzero coordinate is positive. | High | Tested |
 | `Default.GetHashCode()` | 0x06000794 | `97519dce` | Over the direction: rotate the hash left by 4 bits and xor in each coordinate's signed remainder mod 16. | High | Tested |
@@ -59,9 +59,7 @@ positive power, and among negative powers the one nearest zero; once a positive 
 never replaces it. Groups are sorted by descending order, so ties go to the unit with the larger GCD. The
 `NOSIMPLIFY` check is on the winner only: a direction whose best unit is `NOSIMPLIFY` always normalizes.
 
-**Private members.** `GetDimensionIndex`, `GetDimensions(string)`, `Inverse`, `IsSmall`, both `Count`s and all of
-`Default` are not called by the differential test; they are compared through the public members that use them
-(construction, `Basis`, `Defaults`, `Simplify`, `Normalize`, `GetCoordinates`, `GetUnits`, `GetDimensions`).
+**Private members.** `GetDimensionIndex`, `GetDimensions(string)`, `Inverse`, `IsSmall` and both `Count`s are directly compared. `Default` constructors, hash, equality and ordering are directly compared in `UnitSystemDifferentialTests`; other private members are exercised through the public members that use them (construction, `Basis`, `Defaults`, `Simplify`, `Normalize`, `GetCoordinates`, `GetUnits`, `GetDimensions`).
 
 Fields: all `UnitSystem` fields and `Default`'s are private state, Tested through the members that use them.
 
@@ -83,6 +81,7 @@ text or exception type and message):
 - a setter script: replacing the defaults, `IsUnitSymbol` afterwards, simplifying a force, a US basis, a singular
   basis and the rank, basis and dimensions it leaves behind, `Reset` (returning the same object) and the basis,
   defaults and symbols after it, `RO_number`, and null basis and defaults.
+- Direct private-helper cases: `GetDimensionIndex` for every known dimension and unknown dimensions; `GetDimensions(string)` for a dimensional and plain signature; 16 `Inverse` matrices covering ordinary, pivoting and singular inputs; `IsSmall` at zero, around both strict thresholds and NaN; both `Count` overloads on zero and nonzero vectors, including NaN for doubles. Separate direct cases compare `Default` constructors, hash, equality and ordering.
 - `Simplify(int[])` on the SI basis with two defaults of the time direction whose scalars differ in sign or size
   (per-square-second with second, per-square-second with hertz, square-second with hertz) and with a dimensionless
   default beside second, for time exponents -6..6 (zero included): the chosen power changing sign, moving towards

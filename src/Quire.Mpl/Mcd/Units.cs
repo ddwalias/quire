@@ -391,7 +391,7 @@ public partial class UnitSystem : MarshalByRefObject
     [MirrorVerified("UnitSystemDifferentialTests")]
     public bool IsUnitSymbol(string sym) => m_unit_syms.ContainsKey(sym);
 
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private int GetDimensionIndex(Type dimension)
     {
         int i = Array.BinarySearch(m_dims, dimension);
@@ -399,14 +399,14 @@ public partial class UnitSystem : MarshalByRefObject
         throw new ArgumentException("bad dimension", dimension.ToString());
     }
 
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private static Type.Product GetDimensions(string signature) => Type.Parse(signature).GetDimensionTypeProduct();
 
     /// <summary>
     /// Gauss–Jordan inversion by columns. A pivot within 1e-12 of zero first borrows the first later column whose
     /// entry in the pivot row isn't small; a pivot still small throws "singular matrix".
     /// </summary>
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private static double[,] Inverse(double[,] matrix)
     {
         int n = matrix.GetUpperBound(0) + 1;
@@ -450,10 +450,10 @@ public partial class UnitSystem : MarshalByRefObject
         return inverse;
     }
 
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private static bool IsSmall(double d) => -1E-12 < d && d < 1E-12;
 
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private static int Count(int[] array)
     {
         int n = 0;
@@ -461,7 +461,7 @@ public partial class UnitSystem : MarshalByRefObject
         return n;
     }
 
-    [MirrorTested("Mcd.UnitSystem")]
+    [MirrorVerified("UnitSystemDifferentialTests")]
     private static int Count(double[] array)
     {
         int n = 0;
