@@ -40,8 +40,15 @@ public class RtsDifferentialTests
         ResolveEventArgs r => $"ResolveEventArgs({Text(r.Name)})",
         AppDomain => "AppDomain",
         CancellationTokenSource cts => $"CancellationTokenSource(cancelled={cts.IsCancellationRequested})",
+        string[] paths => $"[{string.Join(";", paths.Select(Text))}]",
         _ => Text(o),
     };
+
+    private static string InitializationState(System.Type rts) =>
+        string.Join(";", rts.GetFields(DeclaredStaticNonPublic | BindingFlags.Public)
+            .Where(field => field.DeclaringType == rts)
+            .OrderBy(field => field.Name)
+            .Select(field => field.Name + "=" + Member(field.GetValue(null))));
 
     [SkippableFact]
     public void Handles_and_settings()
@@ -60,6 +67,7 @@ public class RtsDifferentialTests
         var mCctor = MRts.TypeInitializer ?? MRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
         MethodComparison.Compare(".cctor() initialization", Contract,
             qCctor, null, [], mCctor, null, [], qs, ms);
+        Assert.Equal(InitializationState(MRts), InitializationState(QRts));
 
         // What the .cctor set: the stack budget a reset restores, and an empty search path that resolves nothing.
         var (qResetStackDepth, mResetStackDepth) = Method("ResetStackDepth", DeclaredStaticPublic);

@@ -7,6 +7,12 @@
 - **Quire:** `src/Quire.Mpl/Run/Rts.cs`, `src/Quire.Mpl/Run/True.cs`, `src/Quire.Mpl/Generated/Mirror/Mpl.Run.Rts.g.cs`
   (stub); tests: `Quire.Mpl.Tests.Run.RtsTests`, `Quire.Differential.Tests.RtsDifferentialTests`
 
+`RtsDifferentialTests` compares every declared static field's rendered value immediately after directly invoking the
+type initializer on both artifacts. This establishes the recorded field state for that test thread; it does not
+observe the AppDomain event's internal delegate list. The initializer remains Tested because the event subscription
+itself is not observable in that direct comparison. The private `ms_thread_cancellation_token` field is also
+observed through its null and cancelled-source transitions in the later cases.
+
 Covers `Mpl.Run.Rts` and `Mpl.Run.True`. `Rts` is a static class of runtime services for compiled Mpl code: a
 per-thread stack budget (thread-static, lazily set to the public static `m_max_stack`, 250), a per-thread
 cancellation source, reflection handles that the code generator emits calls to, and a semicolon-separated assembly
@@ -43,7 +49,7 @@ below is differential-verified for the cases in "Test cases", except the type in
 the process's current directory. The handler is registered for the lifetime of the process once `Rts` initialises,
 in Quire as in Mathcad.
 
-Fields: `m_max_stack`, `m_worker_stack_size` and `True.singleton` are Verified (read directly by `RtsDifferentialTests`); the private handles, paths, stack and cancellation state are Tested.
+Fields: `m_max_stack`, `m_worker_stack_size` and `True.singleton` are Verified (read directly by `RtsDifferentialTests`). The ten private static fields of `Rts` are Verified for the directly compared initializer state and the additional transitions recorded above.
 
 ## Test cases
 

@@ -11,13 +11,13 @@ namespace Quire.Mpl.Run;
 /// </summary>
 public static partial class Rts
 {
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static ConstructorInfo m_tag_ctor;
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static ConstructorInfo m_exception_ctor;
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static ConstructorInfo m_rethrow_ctor;
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static System.Type m_fcn_type;
     [MirrorVerified("RtsDifferentialTests")]
     public static int m_max_stack;
@@ -25,23 +25,23 @@ public static partial class Rts
     public static int m_worker_stack_size;
 
     [ThreadStatic]
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static int m_stack_depth__;
 
     [ThreadStatic]
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static int m_stack_depth_init__;
 
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static FieldInfo m_stack_depth_field_info;
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static string[] s_paths;
 
     [ThreadStatic]
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static CancellationTokenSource ms_thread_cancellation_token;
 
-    [MirrorTested("Mpl.Run.Rts")]
+    [MirrorVerified("RtsDifferentialTests")]
     private static readonly CancellationTokenSource ms_dummy_cancellation_token;
 
     /// <summary>A stack budget of 250, no search paths, and assembly resolution through <see cref="AssemblyPath"/>.</summary>
