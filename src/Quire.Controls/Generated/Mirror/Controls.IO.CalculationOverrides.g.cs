@@ -29,6 +29,4 @@ internal partial class CalculationOverrides
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> GetInputCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Support.ISimpleCalculatable> GetOutputCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationOverrides() { }
 }

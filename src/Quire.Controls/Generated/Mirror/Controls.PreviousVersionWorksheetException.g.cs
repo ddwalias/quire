@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.PreviousVersionWorksheetException, Ptc.Controls")]
 public partial class PreviousVersionWorksheetException : global::System.ApplicationException
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal PreviousVersionWorksheetException() { }
 }

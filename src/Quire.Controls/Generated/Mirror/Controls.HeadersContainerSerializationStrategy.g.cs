@@ -20,7 +20,5 @@ internal partial class HeadersContainerSerializationStrategy : global::Quire.Con
     [global::Quire.Mirror.MirrorStub]
     public HeadersContainerSerializationStrategy(global::Quire.Controls.WorksheetSectionSerializationStrategy headerStrategy, global::Quire.Controls.WorksheetSectionSerializationStrategy firstPageHeaderStrategy, global::Quire.PersistentData.headersContainerRegionCollectionSerializer containerSerializer) { }
     [global::Quire.Mirror.MirrorStub]
-    public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

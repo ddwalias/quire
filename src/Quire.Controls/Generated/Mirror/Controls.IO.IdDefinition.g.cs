@@ -14,18 +14,6 @@ internal partial class IdDefinition : global::Quire.Controls.IO.ShadowCalculatab
     [global::Quire.Mirror.MirrorStub]
     internal const string DefinitionSexpFormat = "(:= {0} {1})";
     [global::Quire.Mirror.MirrorStub]
-    private string _rl;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Rl { get => base.Rl; set => base.Rl = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public string IdSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ScalingSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal IdDefinition(string idSExpression, double value, string scalingSExpression) { }
     [global::Quire.Mirror.MirrorStub]
     internal static string ConstructValueSExpression(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

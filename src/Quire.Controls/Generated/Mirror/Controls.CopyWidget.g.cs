@@ -12,29 +12,7 @@ namespace Quire.Controls;
 public partial class CopyWidget : global::Quire.Controls.Core.CopyWidgetBase, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.CopyWidgetViewModel _viewModel;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Border _childBorder;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public int TotalPages { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.DateTime> DisplaySavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayDocumentName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int PageNumber { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double ParentWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override double IncludeWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Windows.Controls.Border ChildBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CopyWidget() { }
     [global::Quire.Mirror.MirrorStub]

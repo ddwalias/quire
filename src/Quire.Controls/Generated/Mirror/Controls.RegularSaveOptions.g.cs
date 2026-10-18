@@ -17,14 +17,4 @@ public partial class RegularSaveOptions : global::Quire.Controls.Core.IDocumentS
     public static readonly global::Quire.Controls.RegularSaveOptions NonPrimeFormatForApi;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.RegularSaveOptions WithStatesGeneration;
-    [global::Quire.Mirror.MirrorStub]
-    public bool TryGeneratingInputOutputStates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDetachedCopy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsHandlingException { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool WaitForCalculationForSaveAsApi { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private RegularSaveOptions() { }
 }

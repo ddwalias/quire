@@ -12,14 +12,6 @@ namespace Quire.Controls.IO;
 internal abstract partial class ShadowCalculatable : global::Quire.Calculation.Core.Support.SimpleCalculatable, global::Quire.Calculation.Core.ICalcWithPriority, global::Quire.Calculation.Core.ICalculatable
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Threading.DispatcherPriority ShadowResultsProcessingPriority_Send;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Threading.DispatcherPriority> ResultsProcessingPriority { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected internal static string ConvertSExpressionToRl(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected ShadowCalculatable() { }
-    [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }

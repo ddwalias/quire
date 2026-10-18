@@ -14,11 +14,7 @@ public partial class Resources
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Resources.ResourceManager resourceMan;
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Globalization.CultureInfo resourceCulture;
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Resources.ResourceManager ResourceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Globalization.CultureInfo Culture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string Command_ActivateRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -33,6 +29,4 @@ public partial class Resources
     public static string Command_RecalculateWorksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string OpenFile_Filter_Images { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal Resources() { }
 }

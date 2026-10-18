@@ -32,13 +32,9 @@ public partial class HelpManager : global::System.ComponentModel.INotifyProperty
     [global::Quire.Mirror.MirrorStub]
     private string _helpServerPath;
     [global::Quire.Mirror.MirrorStub]
-    public string ActiveToolTipUid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string EngNbLocalHelpEnvironmentVariableName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string HelpServerPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public HelpManager(global::Quire.Services.ApplicationVariant.ApplicationType applicationType, global::Quire.Core.IHelpSettings helpSettings, string rootHelpPath) { }
     [global::Quire.Mirror.MirrorStub]

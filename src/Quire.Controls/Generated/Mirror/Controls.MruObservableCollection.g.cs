@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.MruObservableCollection, Ptc.Controls")]
 public partial class MruObservableCollection : global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.MruFileItem>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public MruObservableCollection() { }
 }

@@ -12,11 +12,7 @@ namespace Quire.Controls.IO;
 public partial class ShadowCalculationNotifier : global::Quire.Controls.Core.IORegions.IShadowCalculationNotifier, global::System.Collections.Specialized.INotifyCollectionChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged;
-    [global::Quire.Mirror.MirrorStub]
     public void Add(global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable> item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Remove(global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable> item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ShadowCalculationNotifier() { }
 }

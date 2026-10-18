@@ -14,13 +14,7 @@ internal static partial class CalculationOverridesHandler
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty CalculationOverridesProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.IO.ICalculationOverrideContainer GetCalculationOverrides(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetCalculationOverrides(global::System.Windows.DependencyObject region, global::Quire.Controls.IO.ICalculationOverrideContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearCalculationOverrides(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Calculation.Core.Support.ISimpleCalculatable SetCalculationOverrideForSExpr(global::System.Windows.DependencyObject region, string sExprKey, global::Quire.Controls.IO.CalculationOverridesTypes type, global::Quire.Calculation.Core.Support.ISimpleCalculatable newOverride) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

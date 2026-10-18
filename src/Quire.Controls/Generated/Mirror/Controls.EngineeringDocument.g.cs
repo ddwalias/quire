@@ -18,8 +18,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.ResourceDictionary _errorWarningMessageResourceDictionary;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.ITextStylesManager _textStylesManager;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty LastSavedDateProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty FileIsSavedProperty;
@@ -32,11 +30,7 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Threading.ManualResetEvent _waitForSaveXps;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Threading.ManualResetEvent _waitForLoad;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.List<global::Quire.Wpf.Printing.PrintJob> _runningPrintJobs;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _isDocumentFromPtcPlaces;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetControl _worksheet;
     [global::Quire.Mirror.MirrorStub]
@@ -58,10 +52,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.PageSize, global::System.Printing.PageMediaSizeName> _pageSizeTranslation;
     [global::Quire.Mirror.MirrorStub]
-    private bool _isNew;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isNetworkDriveDisconnected;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.IO.FileStream _fileStream;
     [global::Quire.Mirror.MirrorStub]
     private bool _showEngineChangesBanner;
@@ -78,17 +68,11 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Worksheet.WorksheetControl WorksheetControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IWorksheetControl Worksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool NeedsDictionaryRefresh { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.Controls.Core.IWorksheetProperties global::Quire.Controls.Core.IEngineeringDocument.Worksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsPrinting { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string UnitSystemHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Zoom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.Serialization.IMetadataModel MetadataModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -102,8 +86,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     public string CustomizedClosePrompt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string CustomizedFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DisplayFilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -113,8 +95,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public string CustomizedFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DisplayFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public long MaxUpdateLayoutTimeMsec { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.DateTime> CustomizedSavedDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -129,8 +109,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public string CustomizedWindowTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string DisplayWindowTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.IWorksheetPersistentData WorksheetData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.UnitSystems DefaultUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -152,19 +130,11 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     public bool IsDirty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsNetworkDriveDisconnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.ISerializationHelper DocumentSerializationHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDocumentFromPTCPlaces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsDocumentATemplate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IORegions.IIOItemCollection Inputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IORegions.IIOItemCollection Outputs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.ITextStylesManager TextStylesManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsCalculationsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -175,8 +145,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public bool FileIsSaved { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string FileExtension { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsNew { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int PageCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -203,20 +171,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> ActiveSectionRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ShowEngineChangesBanner { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.EngineeringDocument> OnPrepareSnapshotStart;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.EngineeringDocument> OnPrepareSnapshotEnd;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument> IsDirtyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.EngineeringDocument> OnDispose;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<string> CwdUpdated;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument> FilePathChanged;
     [global::Quire.Mirror.MirrorStub]
     private static void OnLastSavedDateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -292,17 +246,11 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorStub]
     public void Recalculate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CloseOpenedComboBoxEditingMode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Exception PreSave(global::Quire.Controls.Core.IDocumentSaveOptions saveOptions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetEngineVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WaitForSave(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WaitForLoad(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculationOptionUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void FireSystemVariableUpdated(string name, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -319,8 +267,6 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     public bool Find(string text, global::System.Windows.Documents.LogicalDirection direction, bool startFromCaret, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ThrowNotSupported(string message, params object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void TraceWarning(string format, params object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ExceptionOccured(string action, params object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -478,9 +424,5 @@ public partial class EngineeringDocument : global::System.Windows.Controls.Conte
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EngineeringDocument+RootDecorator, Ptc.Controls")]
     private partial class RootDecorator : global::System.Windows.Documents.AdornerDecorator, global::Quire.Wpf.IAlignedRoot
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Media.Visual Visual { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public RootDecorator() { }
     }
 }

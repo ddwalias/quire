@@ -18,10 +18,6 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorStub]
     private readonly string _fileName;
     [global::Quire.Mirror.MirrorStub]
-    private readonly string _filePath;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Serialization.ISerializationHelper _helper;
-    [global::Quire.Mirror.MirrorStub]
     private const string P = "p";
     [global::Quire.Mirror.MirrorStub]
     private const string Fig = "fig";
@@ -32,23 +28,7 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     [global::Quire.Mirror.MirrorStub]
     public const string PubsBody = "pubsBody";
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private string DirectoryName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private string CurrentIdString { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.ISerializationHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNamespaceManager NameSpaceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlDocument XmlContentDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteId(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public DitaWriter(string fileName, global::Quire.Serialization.ISerializationHelper documentHelper) : base(default(global::System.IO.TextWriter)) { }
     [global::Quire.Mirror.MirrorStub]
@@ -73,30 +53,14 @@ public partial class DitaWriter : global::System.Xml.XmlTextWriter, global::Quir
     public void WriteRegionML(global::System.Windows.UIElement region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteImageControlML(global::Quire.Controls.Core.ImageControl imageControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteEndElement() => base.WriteEndElement();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackImage(global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackExternalObject(string sourceFileName, string targetPackagePartName, global::Quire.Serialization.ExternalObjectType objectType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackIncludedWorksheet(string fullFilePath, global::System.DateTime lastSavedDate, string uniqueId, global::System.Func<global::System.IO.Packaging.Package, string, global::System.IO.Packaging.PackagePart> writePackagePart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument, string regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackProtectedPart(global::System.IO.Stream content, string uniqueId, string regionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Element, Ptc.Controls")]
     public partial class Element : global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Xml.XmlWriter _writer;
-        [global::Quire.Mirror.MirrorStub]
         public Element(global::System.Xml.XmlWriter writer, string localName) { }
         [global::Quire.Mirror.MirrorStub]
         public Element(global::System.Xml.XmlWriter writer, string localName, string nameSpace) { }
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Dispose() { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.DitaWriter+Worksheet, Ptc.Controls")]

@@ -43,6 +43,4 @@ public partial class CopyWidgetViewModel : global::Quire.Controls.Core.ViewModel
     public double ParentWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public double IncludeWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CopyWidgetViewModel() { }
 }

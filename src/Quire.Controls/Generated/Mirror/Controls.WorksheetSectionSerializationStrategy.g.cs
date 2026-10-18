@@ -18,7 +18,5 @@ internal partial class WorksheetSectionSerializationStrategy : global::Quire.Con
     [global::Quire.Mirror.MirrorStub]
     public WorksheetSectionSerializationStrategy(global::Quire.PersistentData.IWorksheetSectionPersistentData sectionData, global::Quire.DelegateFunction0<global::Quire.PersistentDataObjects.IRegionType> worksheetSectionRegionDataCreator) { }
     [global::Quire.Mirror.MirrorStub]
-    public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

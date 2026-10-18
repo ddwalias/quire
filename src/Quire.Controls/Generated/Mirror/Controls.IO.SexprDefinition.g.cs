@@ -12,25 +12,11 @@ namespace Quire.Controls.IO;
 internal partial class SexprDefinition : global::Quire.Controls.IO.ShadowCalculatable, global::Quire.Controls.IO.IShadowIdDefinition, global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
-    private string _rl;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Rl { get => base.Rl; set => base.Rl = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public string IdSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ValueSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ScalingSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal SexprDefinition(string idSexpr, string valueSexpr, string scalingSexpr = default) { }
     [global::Quire.Mirror.MirrorStub]
     private string ConstructRl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsErrorOnScalingUnits() => base.IsErrorOnScalingUnits();
     [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

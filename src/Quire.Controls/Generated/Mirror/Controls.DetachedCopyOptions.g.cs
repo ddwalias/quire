@@ -15,14 +15,4 @@ public partial class DetachedCopyOptions : global::Quire.Controls.Core.IDocument
     public static readonly global::Quire.Controls.DetachedCopyOptions Empty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Controls.DetachedCopyOptions HandlingException;
-    [global::Quire.Mirror.MirrorStub]
-    public bool TryGeneratingInputOutputStates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDetachedCopy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsHandlingException { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool WaitForCalculationForSaveAsApi { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private DetachedCopyOptions() { }
 }

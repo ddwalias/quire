@@ -12,13 +12,9 @@ namespace Quire.Controls.IO;
 internal partial class UnitMonomialBuilder
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> _descriptors;
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.IO.UnitMonomialBuilder _instance;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Controls.IO.UnitMonomialBuilder Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private UnitMonomialBuilder() { }
     [global::Quire.Mirror.MirrorStub]
     internal string ConstructUnitMonomial(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

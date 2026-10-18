@@ -14,19 +14,11 @@ internal partial class IOItemCollection : global::Quire.Wpf.ObservableRangeColle
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _isInp;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IORegions.IOItemsAliasManager _aliasManager;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action AliasChanged;
-    [global::Quire.Mirror.MirrorStub]
     private void FireAliasChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal IOItemCollection(bool isInp) { }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IORegions.IIOItem GetItem(string alias, bool compareAliasCaseInsensitively) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ResetAlias(global::Quire.Controls.Core.IORegions.IIOItem item, string oldAlias, string newAlias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void HandleTaggedRegionAdded(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void HandleTaggedRegionRemoved(global::System.Windows.DependencyObject region) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -32,14 +32,6 @@ public partial class MruFileItem : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool HasAccessKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.MruFileTypes MruFileType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate2<global::Quire.Controls.MruFileItem, bool> onPinChangedEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public MruFileItem() { }
-    [global::Quire.Mirror.MirrorStub]
     public MruFileItem(string fullPathAndName) { }
     [global::Quire.Mirror.MirrorStub]
     public MruFileItem(string fullPathAndName, bool isPinned) { }

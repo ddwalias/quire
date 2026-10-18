@@ -20,7 +20,5 @@ internal partial class FootersContainerSerializationStrategy : global::Quire.Con
     [global::Quire.Mirror.MirrorStub]
     public FootersContainerSerializationStrategy(global::Quire.Controls.WorksheetSectionSerializationStrategy footerStrategy, global::Quire.Controls.WorksheetSectionSerializationStrategy firstPageFooterStrategy, global::Quire.PersistentData.footersContainerRegionCollectionSerializer containerSerializer) { }
     [global::Quire.Mirror.MirrorStub]
-    public void SerializeRegionsEpilog(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.PersistentDataObjects.IRegionType> GetRegions(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

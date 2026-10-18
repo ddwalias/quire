@@ -12,8 +12,6 @@ namespace Quire.Controls;
 public partial class McdxPageModel : global::Quire.Controls.Core.Serialization.XElementSerializable
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, object> AttributeNameToDefaultValueDictionary { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public McdxPageModel(global::Quire.PersistentData.IWorksheetPersistentData worksheetData, global::System.Xml.Linq.XName name) : base(default(global::System.Xml.Linq.XName), default(object[])) { }
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.Serialization.PropertySerializableToXmlAttribute GetPlotBackgroundSerializableAttribute(global::Quire.PersistentData.IWorksheetPersistentData worksheetData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

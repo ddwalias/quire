@@ -14,17 +14,11 @@ internal partial class WorksheetSectionDeserializationStrategy : global::Quire.C
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.PersistentData.IWorksheetSectionPersistentData _worksheetSectionData;
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IList<global::System.Windows.UIElement> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Controls.Core.IRegionFactory RegionFactory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public WorksheetSectionDeserializationStrategy(global::Quire.PersistentData.IWorksheetSectionPersistentData sectionData, global::Quire.Controls.Core.IMathFormat mathFormat, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> labeledIdFormat) { }
     [global::Quire.Mirror.MirrorStub]
     public override void DeserializeRegionProlog(global::System.Windows.UIElement region) => base.DeserializeRegionProlog(region);
-    [global::Quire.Mirror.MirrorStub]
-    public override void AddRegion(global::System.Windows.UIElement element, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void DeleteRegion(global::System.Windows.UIElement control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void AddRegion(global::Quire.Serialization.IRegionPersistentData regionPersistentData) => base.AddRegion(regionPersistentData);
     [global::Quire.Mirror.MirrorStub]

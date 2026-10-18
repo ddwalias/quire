@@ -11,6 +11,4 @@ namespace Quire.Controls;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.DimensionCell, Ptc.Controls")]
 public partial class DimensionCell : global::System.Windows.Controls.Control
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DimensionCell() { }
 }

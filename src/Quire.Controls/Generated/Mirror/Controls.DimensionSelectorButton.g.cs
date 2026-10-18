@@ -26,10 +26,6 @@ public partial class DimensionSelectorButton : global::Fluent.DropDownButton, gl
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TitleProperty;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.UniformGrid _child;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string Title { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string TitleFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -43,12 +39,6 @@ public partial class DimensionSelectorButton : global::Fluent.DropDownButton, gl
     public int TotalRows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int TotalColumns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Content { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Controls.MouseOverCellHandler MouseOverCell;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate0 Commit;
     [global::Quire.Mirror.MirrorStub]
     private static void UpdateTitle(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -11,8 +11,4 @@ namespace Quire.Controls.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.IO.GeneralIssue, Ptc.Controls")]
 public partial class GeneralIssue
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Issue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public GeneralIssue() { }
 }
