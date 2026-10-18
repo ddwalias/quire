@@ -45,7 +45,7 @@ public abstract partial class Type
     }
 
     /// <summary>The slice <c>[start, start + count)</c>; the array itself when the slice is all of it.</summary>
-    [MirrorTested("Mcd.Type")]
+    [MirrorVerified("TypeDifferentialTests")]
     private static Product.Power[] Take(Product.Power[] array, int start, int count)
     {
         if (start == 0 && count == array.Length) return array;

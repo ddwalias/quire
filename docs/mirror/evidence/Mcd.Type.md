@@ -16,7 +16,7 @@ no term is interned or copied. `Visitor` is the double-dispatch base; `Factory` 
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
-| `Take(Power[], int, int)` | 0x060005ac | `1ba8817d` | The slice of `count` powers from `start`; returns the array itself, not a copy, when the slice is the whole array. | High | Tested |
+| `Take(Power[], int, int)` | 0x060005ac | `1ba8817d` | The slice of `count` powers from `start`; returns the array itself, not a copy, when the slice is the whole array. | High; directly compared for whole, prefix, empty, suffix, and an out-of-range count, with result identity and contents observed. Other indices/counts are not established by these cases. | Verified |
 | `Accept(Visitor)` | 0x060005ad | abstract | Declared only. | High | Abstract |
 | `Name` | 0x060005ae | abstract | Declared only. | High | Abstract |
 | `Root` | 0x060005af | `3325310d` | The first character of `Name`; so `Constant`/`Variable` give their initial, applications their operator's initial, products `{`. An empty name throws `IndexOutOfRangeException`. | High | Verified |
