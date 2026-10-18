@@ -14,11 +14,5 @@ public partial class StringListResultNode : global::Quire.Calculation.Core.Trace
     [global::Quire.Mirror.MirrorStub]
     private const string _neutralValue = null;
     [global::Quire.Mirror.MirrorStub]
-    public override string NeutralValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public StringListResultNode(global::System.Collections.Generic.IList<string> data) : base(default(global::System.Collections.Generic.IList<string>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public StringListResultNode(global::System.Collections.Generic.IList<string> data, string paddingValue, int minLength) : base(default(global::System.Collections.Generic.IList<string>)) { }
-    [global::Quire.Mirror.MirrorStub]
     public override bool IsMeaningfulValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

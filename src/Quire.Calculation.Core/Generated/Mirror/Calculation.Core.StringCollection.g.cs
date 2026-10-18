@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.StringCollection, Ptc.Calculation.Core")]
 public partial class StringCollection : global::System.Collections.Generic.List<string>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public StringCollection() { }
-    [global::Quire.Mirror.MirrorStub]
-    public StringCollection(global::System.Collections.Generic.IEnumerable<string> collection) { }
 }

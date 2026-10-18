@@ -14,8 +14,6 @@ public partial class VectorsLazyMatrixConverter : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Calculation.Core.ILazyMatrixResultNode _node;
     [global::Quire.Mirror.MirrorStub]
-    private readonly bool _readAsColumns;
-    [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper _plainDataAccessor;
     [global::Quire.Mirror.MirrorStub]
     private readonly int _vectorsNum;
@@ -25,8 +23,6 @@ public partial class VectorsLazyMatrixConverter : global::Quire.Calculation.Core
     private global::System.Func<int, int, global::System.Collections.Generic.IList<global::System.Collections.IList>> _getPlainDataValues;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.ResultValueType _commonValueType;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ReadAsColumns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private VectorsLazyMatrixConverter(global::Quire.Calculation.Core.ILazyMatrixResultNode node, bool readAsColumns) { }
     [global::Quire.Mirror.MirrorStub]

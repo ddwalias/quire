@@ -14,19 +14,11 @@ public partial class ResultManager : global::Quire.Calculation.Core.IResultManag
     [global::Quire.Mirror.MirrorStub]
     private const int ResultRefIdMinusOne = -1;
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Calculation.Core.IResultManager _instance;
-    [global::Quire.Mirror.MirrorStub]
     private int _resultKey;
     [global::Quire.Mirror.MirrorStub]
     private int _oldResultKey;
     [global::Quire.Mirror.MirrorStub]
     private int forceAddIndex;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>> _results;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.IResultManager Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>>> Results { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private ResultManager() { }
     [global::Quire.Mirror.MirrorStub]
@@ -59,8 +51,6 @@ public partial class ResultManager : global::Quire.Calculation.Core.IResultManag
     public int CreateResultRefId(global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CreateResultRef(global::System.Xml.XmlElement xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int CreateOldResultRefId(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetResultByRefId(int resultId, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable, bool isForceAdd = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

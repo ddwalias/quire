@@ -12,57 +12,11 @@ namespace Quire.Calculation.Core.Support;
 public partial class SimpleCalculatable : global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.SynchronizationStatus _syncStatus;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.CalculatingStatus _calculatingStatus;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode _evaluationResult;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.EngineError _error;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Calculation.Core.RealSimpleResultNode _systemOrigin;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> _warnings;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Calculation.Core.IResultNode Result { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> EngineWarnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.RealSimpleResultNode SystemOrigin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> Synchronized;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
-    [global::Quire.Mirror.MirrorStub]
     public virtual void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SetError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual bool IsErrorOnScalingUnits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

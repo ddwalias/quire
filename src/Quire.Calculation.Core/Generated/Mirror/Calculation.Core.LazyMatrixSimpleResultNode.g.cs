@@ -22,19 +22,7 @@ public partial class LazyMatrixSimpleResultNode : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IMatrixValueProxyWrapper MatrixProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> TransformValueToResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public LazyMatrixSimpleResultNode(global::Quire.Calculation.Core.IMatrixValueProxyWrapper matrix, global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> transformValueToResult) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]

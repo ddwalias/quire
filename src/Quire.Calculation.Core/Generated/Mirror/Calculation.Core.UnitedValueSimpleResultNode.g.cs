@@ -12,11 +12,7 @@ namespace Quire.Calculation.Core;
 public partial class UnitedValueSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IUnitedValueResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SimpleResultNode Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IUnitedValueResultNode.Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public UnitedValueSimpleResultNode() { }
     [global::Quire.Mirror.MirrorStub]
@@ -25,8 +21,6 @@ public partial class UnitedValueSimpleResultNode : global::Quire.Calculation.Cor
     public override bool Equals(object obj) => base.Equals(obj);
     [global::Quire.Mirror.MirrorStub]
     public void AddUnit(string canonicalName, int powerNumerator, int powerDenominator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     double global::Quire.Calculation.Core.IUnitedValueResultNode.DisplayValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

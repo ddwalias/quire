@@ -14,13 +14,5 @@ public partial class DoubleListResultNode : global::Quire.Calculation.Core.Trace
     [global::Quire.Mirror.MirrorStub]
     private const double _neutralValue = double.NaN;
     [global::Quire.Mirror.MirrorStub]
-    public override double NeutralValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public DoubleListResultNode(double paddingValue, int length) : base(default(global::System.Collections.Generic.IList<double>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public DoubleListResultNode(global::System.Collections.Generic.IList<double> doubleValues) : base(default(global::System.Collections.Generic.IList<double>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public DoubleListResultNode(global::System.Collections.Generic.IList<double> doubleValues, double paddingValue, int minLength) : base(default(global::System.Collections.Generic.IList<double>)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsMeaningfulValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

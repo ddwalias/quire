@@ -12,11 +12,5 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class TraceAxisInfo : global::Quire.Calculation.Core.ITraceAxisInfo
 {
     [global::Quire.Mirror.MirrorStub]
-    public double Max { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Min { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public TraceAxisInfo(double min, double max, global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.Unit> units) { }
 }

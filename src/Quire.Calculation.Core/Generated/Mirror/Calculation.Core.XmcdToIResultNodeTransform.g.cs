@@ -12,13 +12,9 @@ namespace Quire.Calculation.Core;
 public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core.IStringToIResultNodeTransform
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.IResultNodeFactory _resultNodeFactory;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Xml.Xsl.XslCompiledTransform _resultVectorUnescapingXslt;
     [global::Quire.Mirror.MirrorStub]
     private const string ErrorAttributeConversionToEnum = "Format error: The attribute '{0}' value:{1} in node '{2}' failed conversion.";
-    [global::Quire.Mirror.MirrorStub]
-    public XmcdToIResultNodeTransform(global::Quire.Calculation.Core.IResultNodeFactory resultNodeFactory) { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.IResultNode Transform(string xmcdResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -53,10 +49,6 @@ public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core
     private global::Quire.Calculation.Core.IUnitedValueResultNode BuildUnitedValue(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ReadUnitMonomial(global::Quire.Calculation.Core.IUnitedValueResultNode uvResult, global::System.Xml.XmlNode unitMonomial) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int GetUnitPowerDenominator(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int GetUnitPowerNumerator(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static int GetIntegerFromAttribute(global::System.Xml.XmlNode node, string attributeName, int defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

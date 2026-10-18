@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.UnitDescriptorTable, Ptc.Calculation.Core")]
 public partial class UnitDescriptorTable : global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public UnitDescriptorTable() { }
 }

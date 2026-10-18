@@ -68,8 +68,6 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     public const string UnitNamespaceUri = "http://schemas.mathsoft.com/units10";
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlWriter Writer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ResultNodeToXmcdTransform(global::System.Xml.XmlWriter writer) { }
     [global::Quire.Mirror.MirrorStub]
     public static void Transform(global::Quire.Calculation.Core.IResultNode resultNode, global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -86,8 +84,6 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     private void WriteDisplayMatrixXml(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IEmptyResultNode empty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IRealResultNode real) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IImaginaryResultNode imag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -101,10 +97,6 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     public void Visit(global::Quire.Calculation.Core.IUnitedValueResultNode unitedValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Visit(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Calculation.Core.IEagerMatrixResultNode eagerMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.ILazyMatrixResultNode lazyMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

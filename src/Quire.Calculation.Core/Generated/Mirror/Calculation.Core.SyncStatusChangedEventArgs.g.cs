@@ -11,10 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.SyncStatusChangedEventArgs, Ptc.Calculation.Core")]
 public partial class SyncStatusChangedEventArgs : global::System.ComponentModel.PropertyChangedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.SyncStatusChangedEventArgs _singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.SyncStatusChangedEventArgs GetArgs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SyncStatusChangedEventArgs() : base(default(string)) { }
 }

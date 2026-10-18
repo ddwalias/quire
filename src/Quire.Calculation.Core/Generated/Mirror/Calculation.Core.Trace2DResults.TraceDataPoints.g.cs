@@ -12,13 +12,7 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class TraceDataPoints : global::Quire.Calculation.Core.ITraceDataPoints
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IVectorListResultNode RangePoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IVectorListResultNode ResultPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TraceDataPoints(global::Quire.Calculation.Core.IVectorListResultNode rangeVectors, global::Quire.Calculation.Core.IVectorListResultNode resultVectors) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TraceDataPoints() { }
 }

@@ -14,7 +14,5 @@ public abstract partial class SimpleResultNode : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     public abstract void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor);
     [global::Quire.Mirror.MirrorStub]
-    protected SimpleResultNode() { }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

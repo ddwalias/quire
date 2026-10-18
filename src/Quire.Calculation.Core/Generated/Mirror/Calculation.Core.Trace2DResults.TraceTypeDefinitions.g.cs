@@ -24,7 +24,5 @@ public static partial class TraceTypeDefinitions
     [global::Quire.Mirror.MirrorStub]
     public static int GetMaxResultColumns(global::Quire.Calculation.Core.Trace2DResults.TraceType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int GetMinRangeColumns(global::Quire.Calculation.Core.Trace2DResults.TraceType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static int GetMaxRangeColumns(global::Quire.Calculation.Core.Trace2DResults.TraceType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

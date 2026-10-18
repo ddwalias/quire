@@ -18,21 +18,11 @@ public partial class DisplayMatrixSimpleResultNode : global::Quire.Calculation.C
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TableCoordinate ViewportOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IEagerMatrixResultNode Viewport { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.SimpleResultNode this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public DisplayMatrixSimpleResultNode(int rowCount, int colCount, global::Quire.TableCoordinate viewportOffset, global::Quire.TableSize viewportSize) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int global::Quire.Calculation.Core.IMatrixResultNode.Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

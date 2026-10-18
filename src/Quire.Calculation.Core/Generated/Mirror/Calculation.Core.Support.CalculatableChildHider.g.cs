@@ -14,19 +14,11 @@ public partial class CalculatableChildHider
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<object> _containerChildren;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Calculation.Core.ICalculatable> _fireCalculatableAdded;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Calculation.Core.ICalculatable> _fireCalculatableRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Action<global::Quire.Calculation.Core.ICalculatable> _fireCalculatableMoved;
-    [global::Quire.Mirror.MirrorStub]
     private bool _adoptCalculatableContainerChildren;
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CalculatableChildHider(global::System.Collections.Generic.IEnumerable<object> getChildren, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableAdded, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableRemoved, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableMoved, bool adoptCalculatableContainerChildren) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected CalculatableChildHider() { }
     [global::Quire.Mirror.MirrorStub]
     protected void Initialize(global::System.Collections.Generic.IEnumerable<object> getChildren, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableAdded, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableRemoved, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableMoved, bool adoptCalculatableContainerChildren) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -49,12 +41,4 @@ public partial class CalculatableChildHider
     protected virtual void HandleCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleCalculatableAddedToChildContainer(global::Quire.Calculation.Core.ICalculatableContainer container, global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleCalculatableRemovedFromChildContainer(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleCalculatableMovedInChildContainer(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetContainerChildren(global::Quire.Calculation.Core.ICalculatableContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

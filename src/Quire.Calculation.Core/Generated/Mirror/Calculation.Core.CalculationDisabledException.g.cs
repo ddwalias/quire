@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.CalculationDisabledException, Ptc.Calculation.Core")]
 public partial class CalculationDisabledException : global::System.TimeoutException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public CalculationDisabledException(string message) { }
 }

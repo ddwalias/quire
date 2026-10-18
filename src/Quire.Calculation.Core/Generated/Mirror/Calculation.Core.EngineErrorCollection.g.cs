@@ -12,7 +12,5 @@ namespace Quire.Calculation.Core;
 public partial class EngineErrorCollection : global::System.Collections.Generic.List<global::Quire.Calculation.Core.EngineError>
 {
     [global::Quire.Mirror.MirrorStub]
-    public EngineErrorCollection() { }
-    [global::Quire.Mirror.MirrorStub]
     public EngineErrorCollection(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineError> errors, global::Quire.Calculation.Core.EngineError error) { }
 }

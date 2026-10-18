@@ -12,17 +12,9 @@ namespace Quire.Calculation.Core;
 public partial class ComplexSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IComplexResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public double RValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double IValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ComplexSimpleResultNode() { }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

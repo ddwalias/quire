@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.WhitespacePreservingStringCollection, Ptc.Calculation.Core")]
 public partial class WhitespacePreservingStringCollection : global::System.Collections.Generic.List<string>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public WhitespacePreservingStringCollection() { }
 }

@@ -12,7 +12,5 @@ namespace Quire.Calculation.Core;
 public partial class RequestShowErrorEventArgs : global::System.EventArgs
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public RequestShowErrorEventArgs(global::Quire.Calculation.Core.EngineError error) { }
 }

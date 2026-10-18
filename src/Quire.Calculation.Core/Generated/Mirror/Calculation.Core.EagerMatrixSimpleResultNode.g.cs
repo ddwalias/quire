@@ -12,13 +12,7 @@ namespace Quire.Calculation.Core;
 public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IEagerMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IList<global::Quire.Calculation.Core.SimpleResultNode> _children;
-    [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -33,8 +27,6 @@ public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Cor
     public void SetElementAt(int r, int c, global::Quire.Calculation.Core.IResultNode element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Calculation.Core.IEagerMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode matrixNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

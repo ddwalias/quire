@@ -1,3 +1,5 @@
+using Quire.Mirror;
+
 namespace Quire.Calculation.Core;
 
 public partial interface IEngineError
@@ -18,6 +20,39 @@ public sealed partial class EngineError : IEngineError
 
     public string Message { get; }
     public string? Symbol { get; }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public EngineError() { }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    private string _code;
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public string ErrorCode => _code;
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    private StringCollection _arguments;
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public StringCollection ErrorMessageArguments => _arguments;
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public uint NodeHandle { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public uint Argument { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public string ResourceString { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public EngineError OriginalError { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public bool IsRuntime { get; set; }
+
+    [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
+    public ICalculatable ErrorSource { get; set; }
 }
 
 /// <summary>A unit factor in a displayed result, e.g. ("m", 1), ("s", -2).</summary>

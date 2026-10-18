@@ -14,39 +14,13 @@ public partial class DefaultUnitDescriptorTable : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Calculation.Core.DefaultUnitDescriptorTable Instance;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptorTable _siBase;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptorTable _siDerived;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptorTable _usBase;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptorTable _usDerived;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptorTable _cgsBase;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.UnitDescriptorTable _cgsDerived;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptorTable SystemSIBase { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptorTable SystemSIDerived { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptorTable SystemUSBase { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptorTable SystemUSDerived { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptorTable SystemCGSBase { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.UnitDescriptorTable SystemCGSDerived { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public DefaultUnitDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]
     private void InitializeUnitSystems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

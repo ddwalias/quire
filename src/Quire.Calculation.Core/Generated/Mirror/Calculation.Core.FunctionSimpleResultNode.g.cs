@@ -12,13 +12,7 @@ namespace Quire.Calculation.Core;
 public partial class FunctionSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IFunctionResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public string Description { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FunctionSimpleResultNode() { }
     [global::Quire.Mirror.MirrorStub]
     string global::Quire.Calculation.Core.IFunctionResultNode.Signature { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

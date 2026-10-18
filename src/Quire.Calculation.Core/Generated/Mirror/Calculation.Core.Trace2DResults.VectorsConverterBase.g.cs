@@ -15,6 +15,4 @@ public partial class VectorsConverterBase
     public static global::Quire.Calculation.Core.ResultValueType GetVectorsValueType(global::Quire.Calculation.Core.PlainDataTypes vectorType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsOfExactPlainType(global::Quire.Calculation.Core.PlainDataTypes vectorTypes, global::Quire.Calculation.Core.PlainDataTypes singleType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public VectorsConverterBase() { }
 }

@@ -14,8 +14,6 @@ internal partial class VectorsLegacyConverter : global::Quire.Calculation.Core.T
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Calculation.Core.IMatrixResultNode _node;
     [global::Quire.Mirror.MirrorStub]
-    private readonly bool _readAsColumns;
-    [global::Quire.Mirror.MirrorStub]
     private bool _hasCache;
     [global::Quire.Mirror.MirrorStub]
     private readonly int _vectorsNum;
@@ -27,8 +25,6 @@ internal partial class VectorsLegacyConverter : global::Quire.Calculation.Core.T
     private global::System.Collections.Generic.List<global::Quire.Calculation.Core.IListResultNode> _vectorsRes;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.ResultValueType _commonValueType;
-    [global::Quire.Mirror.MirrorStub]
-    public bool ReadAsColumns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter Create(global::Quire.Calculation.Core.IMatrixResultNode node, bool readAsColumns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

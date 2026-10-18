@@ -22,15 +22,7 @@ public partial class CalculatableWrapper : global::Quire.Calculation.Core.ICalcW
     [global::Quire.Mirror.MirrorStub]
     public virtual bool ContainsSymbolicEvaluation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
-    [global::Quire.Mirror.MirrorStub]
     public CalculatableWrapper(global::Quire.Calculation.Core.ICalculatable wrappedCalculatable) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void HandleRequestEvaluation(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.Calculation.Core.IResultNode HandleGetValueOfIdentifier(global::Quire.Calculation.Core.ICalculatable calc, string idRl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

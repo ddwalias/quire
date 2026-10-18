@@ -12,8 +12,6 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public abstract partial class Trace2DResultConverterHelperBase : global::Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner ResultsOwner { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract bool DiscreteValuesAllowed { get; }
     [global::Quire.Mirror.MirrorStub]
     public abstract bool RangeUnitsAllowed { get; }

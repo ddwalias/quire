@@ -12,12 +12,6 @@ namespace Quire.Calculation.Core;
 public partial class UnitDescriptor : global::System.IComparable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> _derivedUnitSystems;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> _baseUnitSystems;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> _excludeUnitSystems;
-    [global::Quire.Mirror.MirrorStub]
     private string _rl;
     [global::Quire.Mirror.MirrorStub]
     private string _key;
@@ -30,17 +24,7 @@ public partial class UnitDescriptor : global::System.IComparable
     [global::Quire.Mirror.MirrorStub]
     public const string RL_prefix = "mc_";
     [global::Quire.Mirror.MirrorStub]
-    public string CanonicalName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string SymbolResultNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Quantity { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Category { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string DisplayName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -64,21 +48,9 @@ public partial class UnitDescriptor : global::System.IComparable
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.UnitSystems ExcludeUnitSystem1 { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> BaseDimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> DerivedDimensions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> ExcludeUnitSystems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFunction { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSymbolResultNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private void SetUnitSystem(ref global::System.Collections.Generic.List<global::Quire.Calculation.Core.UnitSystems> unitSystems, global::Quire.Calculation.Core.UnitSystems value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public int CompareTo(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public UnitDescriptor() { }
 }

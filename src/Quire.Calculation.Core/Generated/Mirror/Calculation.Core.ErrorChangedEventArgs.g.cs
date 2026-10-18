@@ -11,10 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ErrorChangedEventArgs, Ptc.Calculation.Core")]
 public partial class ErrorChangedEventArgs : global::System.ComponentModel.PropertyChangedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.ErrorChangedEventArgs _singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.ErrorChangedEventArgs GetArgs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ErrorChangedEventArgs() : base(default(string)) { }
 }
