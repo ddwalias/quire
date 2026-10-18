@@ -50,6 +50,9 @@
   and removed on 2026-10-14), which stays in history; no history rewrite. Like D12, this is a risk acceptance,
   not a legal confirmation. New decompiled IL or C# is still never committed, and `.gitignore` now blocks
   `*.il`, `*.dll` and `*.pdb`.
+- **D16 (2026-10-18):** The user removed user approval for accepted mutants and unreachable lines: the lane's
+  proof and the maintainer adding the entries are the whole path. Supersedes the approval steps in D14 and earlier
+  text.
 
 ### Still open (none of these block Phase 0)
 

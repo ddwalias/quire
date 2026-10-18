@@ -259,9 +259,9 @@ order passes it, which the direct comparisons must catch.
   exemption is mutated like any other, but mutants on an exempt line can never be killed: each needs a matching
   `accepted-mutants.txt` entry with the same reason. Removing an exemption that moves a method back to `uncovered` is
   a ratchet regression. An agent proposes entries in a scratch file, same format, passes `--proposed-unreachable PATH`
-  to local runs, and pastes the same lines into its lane file for review. Proposed lines are exempted the same way
-  but listed under `proposed_exempt_lines`. They follow the same path as proposed mutants: independent review of the
-  reason, the user's approval, then the maintainer adds them to `unreachable-lines.txt` and merges with
+  to local runs, and pastes the same lines into its lane file. Proposed lines are exempted the same way
+  but listed under `proposed_exempt_lines`. They follow the same path as proposed mutants: the lane's proof of the
+  reason, then the maintainer adds them to `unreachable-lines.txt` and merges with
   `--allow-protected`. Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the merge gate
   blocks any summary that used it.
 - **Mutation** (`--mutate` with `--method-type`, or `--mutate-since REV`): MethodAudit lists same-size, verifiable
@@ -309,8 +309,8 @@ order passes it, which the direct comparisons must catch.
   scratch file, either form (with or without `body=`), passes `--proposed-mutants PATH` to local runs, and pastes the
   same lines into its lane file: those survivors are listed apart under `proposed_survivors` (with reasons), and
   `stale_proposed` lists proposals that matched no surviving mutant (killed, already accepted, not run, or hashed for
-  another body). The maintainer adds accepted entries with `body=`. An independent reviewer verifies
-  each proof, the user approves, and the maintainer adds the entries on the branch and merges it with
+  another body). The maintainer adds accepted entries with `body=`. With no reviewer and no user
+  approval ([D16](decisions.md)), the maintainer adds the entries on the branch and merges it with
   `--allow-protected`, checking that `gate.json` `protected_changed` lists only `accepted-mutants.txt` and
   `unreachable-lines.txt` ([PLAN](PLAN.md) step 4). Gate runs (`--mutate-since`, `--write-baseline`) refuse the flag, and the
   merge gate blocks any summary that used it. Both `validate.py` and `merge_gate.py` accept `--jobs` to set parallel
@@ -328,7 +328,7 @@ order passes it, which the direct comparisons must catch.
   |---|---|---|---|
   | `LOCAL CHECKS: pass · GATE: would pass` | 0 | complete | queue the gate |
   | `LOCAL CHECKS: pass · GATE: would pass with gaps (<gaps>)` | 3 | gate requirements hold; methods remain `missing`/`uncovered`/… | queue, or close the gaps first |
-  | `LOCAL CHECKS: pass · GATE: would block (N proposed mutants pending approval; …)` | 1 | only proposals block: the expected review state | hand off proposals for review ([PLAN](PLAN.md) step 4) |
+  | `LOCAL CHECKS: pass · GATE: would block (N proposed mutants pending approval; …)` | 1 | only proposals block (`pending_approval`: pending the maintainer's addition) | hand the proposals to the maintainer ([PLAN](PLAN.md) step 4) |
   | `LOCAL CHECKS: fail · GATE: would block (<failures>)` | 1/2 | failing or skipped tests, error, ratchet regression, surviving mutant, executed "unreachable" line | fix them |
 
   `LOCAL CHECKS: fail` names only failures of this run; pending proposals are not failures. A `--method-type` run

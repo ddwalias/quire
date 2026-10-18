@@ -9,11 +9,30 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 
 ## Execute: load → mirror → checkpoint → merge
 
+**Pipeline** (user decision, 2026-10-18; it supersedes conflicting text in the steps below):
+- **Where:** Linux-only work happens in worktrees of the native ext4 clone `/root/src/quire-main`, at
+  `/root/src/worktrees/<lane>-<unit>`, never under `/mnt/c`; remove the worktree
+  (`git -C /root/src/quire-main worktree remove --force <path>`) once its branch has merged. Mathcad stays at its
+  read-only `/mnt/c` path. Work on the Windows projects (`net10.0-windows`, built with Windows' `dotnet.exe`) stays
+  under `/mnt/c`, where Windows processes can reach it.
+- **Batch:** a whole class or a functional cluster of about 15–30 methods (the remaining Function methods; whole
+  MatVal or MatDim operations).
+- **Local checks:** `dotnet test` of the affected differential tests, then
+  `validate.py --profile focused --method-type <Type> --jobs 14` **without** `--mutate`: exact Release IL and
+  passing comparisons. Run local `--mutate` only to prepare proposals or to chase a gate survivor.
+- **One mutation pass:** the gate's, in its own clone with `--no-mutant-cache`. There is no reviewer ([D14](decisions.md)).
+- **Jobs:** `--jobs 14` for `validate.py` and `merge_gate.py` (16 cores, 31 GiB).
+- **Scratch:** before a new unit, remove stale `/tmp` folders (older than 12 hours, so never a running gate's):
+  `find /tmp -maxdepth 1 \( -name 'quire-validation-*' -o -name 'quire-coverage-*' -o -name 'quire-audit-*' -o -name 'quire-gate-*' \) -mmin +720 -exec rm -rf {} +`.
+- **Merge:** `lane-merge.sh` ([validation-flow](work/validation-flow.md#merge-gate-throughput)): `--validate-only`
+  outside the merge lock, then `--apply-validated` and the push of `main` under it; not the one-shot `--apply`.
+  The per-batch command template is there too.
+
 1. **Load:** Read PLAN + [WORK.md](WORK.md). Take WORK's next batch; extract only its source,
    manifest/status rows, evidence, dependencies/callers, and tests. Confirm artifact identity; reuse valid
    contracts. Fetch missing original evidence only. Record exact overloads before implementation.
-2. **Mirror:** Apply rules below. Keep a batch to the smallest coherent group of related types within the
-   assembly; split unrelated type groups into separate checkpoints. Analyze shared dependencies once, then
+2. **Mirror:** Apply rules below. A batch is a whole class or a functional cluster of about 15–30 methods within
+   the assembly; split unrelated type groups into separate checkpoints. Analyze shared dependencies once, then
    implement the batch. During iteration and before handoff, run the affected behavior tests and direct
    differential tests, for example on Linux:
 
@@ -44,16 +63,16 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      to `origin`, for backup, and use `--force-with-lease` only on those; never push or force-push `main` (the
      maintainer pushes it when the user asks). Review the complete diff; squash once before queueing the gate.
      Rebase only when `main` has moved past the branch's base. `merge_gate.py` blocks a branch not based on current
-     `main`; the maintainer, merging under `flock /tmp/quire-merge.lock`, rebases a queued branch that `main` has
-     moved past and the gate then validates the rebased tip. So after a clean rebase do not re-validate locally;
+     `main`; `lane-merge.sh` pulls `main`, rebases the branch onto it and the gate then validates the rebased
+     tip. So after a clean rebase do not re-validate locally;
      rerun affected tests and review the resolved hunks when the rebase had conflicts in `src/` or `tests/`.
-   - **Pull first:** other checkouts also merge into `origin/main`. Before every gate merge, under the lock, whoever
-     merges runs `git fetch origin` and `git merge --ff-only origin/main` on `main`, then rebases the queued
-     branch onto that new base and gates it there. If the fast-forward fails because local `main` has merges not
-     yet on `origin`, stop: replay those commits onto `origin/main` in an integration branch, leaving out the
-     generated "Update validation baseline after merging ..." commits (the gate rewrites the baseline), and gate
-     it. The lock covers only this checkout; another checkout can still push in between, and the push is then
-     rejected as non-fast-forward, so pull and integrate again. Never force-push `main`.
+   - **Pull first:** other checkouts also merge into `origin/main`. `lane-merge.sh` fast-forwards local `main` to
+     `origin/main` under `flock /tmp/quire-merge.lock` before rebasing the branch and again before applying the
+     gate's record. If the fast-forward fails because local `main` has merges not yet on `origin`, stop: replay
+     those commits onto `origin/main` in an integration branch, leaving out the generated "Update validation
+     baseline after merging ..." commits (the gate rewrites the baseline), and gate it. The lock covers only this
+     clone: another checkout can push in between, and the push is then rejected as non-fast-forward, so integrate
+     the same way. Never force-push `main`.
    - **Pushing `main`** (user decision, 2026-10-16; it replaces "never push `main`" above): whoever merges a branch
      through the gate, lane agent or maintainer, pushes `main` to `origin` right after the merge (with the gate's baseline commit), still
      under the lock, so the other checkouts pull it. Only a gate-applied fast-forward is pushed; never force-push `main`.
@@ -82,14 +101,15 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      1. the lane agent runs scoped local mutation, writes each exact key or entry with its proof in a scratch file,
         passes it to local runs
         (`--proposed-mutants` / `--proposed-unreachable`), and pastes the same lines into the lane file;
-     2. the user approves;
-     3. the maintainer (the Claude maintainer session, acting on that approval) adds them to `accepted-mutants.txt` /
+     2. the lane hands them to the maintainer; there is no reviewer and no user approval ([D16](decisions.md));
+     3. the maintainer (the Claude maintainer session) adds them to `accepted-mutants.txt` /
         `unreachable-lines.txt` on the branch and merges it through the gate with `--allow-protected`, checking that
         `gate.json` `protected_changed` lists only those two files.
 
      A run whose only blockers are pending proposals (`LOCAL CHECKS: pass · GATE: would block (N proposed … pending
-     approval)`) is the expected approval state, not a failure: record the run in the lane file, hand the proposals
-     to the user, and continue with other independent work on a new branch from `main`.
+     approval)`, meaning pending the maintainer's addition) is the expected state, not a failure: record the run in
+     the lane file, hand the proposals to the maintainer, and continue with other independent work on a new branch
+     from `main`.
    - **Review:** there is no independent review step ([D14](decisions.md)); the merge gate is the check before
      `main`. The author reads its complete diff before merging. `src/` changes in types another lane owns still
      need that lane owner's OK; protected-file changes need the maintainer. D14 supersedes the review requirements

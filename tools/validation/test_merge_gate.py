@@ -1058,11 +1058,15 @@ class NightlyTests(unittest.TestCase):
 
 
 class LaneSnippetTests(unittest.TestCase):
-    """The lane merge script in validation-flow.md, run with a stub gate: the push follows only a merge, the gate's
-    exit codes come back out, and two stale results fall back to the one-shot gate."""
+    """The lane merge script in validation-flow.md, run with a stub gate: MAIN defaults to the worktree that has
+    `main` checked out, the push follows only a merge, the gate's exit codes come back out, and two stale results
+    fall back to the one-shot gate."""
     GATE = textwrap.dedent('''
         import os, sys
         mode = next(a for a in sys.argv if a in ('--validate-only', '--apply-validated', '--apply'))
+        jobs = sys.argv[sys.argv.index('--jobs') + 1] if '--jobs' in sys.argv else None
+        if os.getcwd() != os.path.join(os.environ['T'], 'main') or jobs != (None if mode == '--apply-validated' else '14'):
+            sys.exit(99)  # the gate runs in the clone that has main checked out; validating runs use 14 jobs
         path = os.path.join(os.environ['T'], 'codes' + mode)
         codes = open(path).read().split() if os.path.exists(path) else ['0']
         open(path, 'w').write(' '.join(codes[1:] or codes))
@@ -1070,30 +1074,35 @@ class LaneSnippetTests(unittest.TestCase):
         sys.exit(int(codes[0]))
     ''')
 
-    def run_script(self, branch='b', **codes):
+    def run_script(self, branch='b', main_checked_out=True, **codes):
         with tempfile.TemporaryDirectory() as t:
-            t = Path(t)
-            (t / 'main/tools/validation').mkdir(parents=True)
-            (t / 'main/tools/validation/merge_gate.py').write_text(self.GATE)
-            for mode, sequence in codes.items():
-                (t / f"codes--{mode.replace('_', '-')}").write_text(sequence)
+            t = Path(t).resolve()
+            main, lane = t / 'main', t / 'lane'
             flow = (Path(__file__).parents[2] / 'docs/mirror/work/validation-flow.md').read_text()
             script = re.search(r'```sh\n(#!/bin/sh\n.*?)```', flow, re.S)[1]
-            script = (script.replace('MAIN=/mnt/c/Projects/Quire', f'MAIN={t}/main')
-                      .replace('LOCK=/tmp/quire-merge.lock', f'LOCK={t}/lock')
+            script = (script.replace('LOCK=/tmp/quire-merge.lock', f'LOCK={t}/lock')
                       .replace('PULL="git fetch -q origin && git merge -q --ff-only origin/main"',
                                f'PULL="echo PULL >> {t}/log"')
-                      .replace('PUSH', f'echo PUSHED >> {t}/log'))
+                      .replace('PUSH="git push -q origin main"', f'PUSH="echo PUSHED >> {t}/log"'))
             (t / 'run.sh').write_text(script)
-            lane = t / 'lane'
-            lane.mkdir()
-            # The lane's checkout is on main, and main has moved past b's base: the script rebases b itself.
+            # As on the host, main is checked out in a linked worktree (not the clone's own checkout), main has moved
+            # past b's base, and b is checked out in a lane worktree: the script rebases b there.
+            clone = t / 'clone'
+            clone.mkdir()
             commit = ['-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q', '--allow-empty', '-m']
-            for command in (['init', '-q', '-b', 'main'], [*commit, 'base'], ['branch', 'b'], [*commit, 'moved']):
-                subprocess.run(['git', *command], cwd=lane, check=True)
-            run = subprocess.run(['sh', str(t / 'run.sh'), branch], cwd=lane, env=dict(os.environ, T=str(t)),
+            for command in (['init', '-q', '-b', 'main'], [*commit, 'base'], ['branch', 'b'], [*commit, 'moved'],
+                            ['checkout', '-q', '-b', 'other'], ['worktree', 'add', '-q', str(main), 'main'],
+                            ['worktree', 'add', '-q', str(lane), 'b'],
+                            *([] if main_checked_out else [['-C', str(main), 'checkout', '-q', '--detach']])):
+                subprocess.run(['git', *command], cwd=clone, check=True)
+            (main / 'tools/validation').mkdir(parents=True)
+            (main / 'tools/validation/merge_gate.py').write_text(self.GATE)
+            for mode, sequence in codes.items():
+                (t / f"codes--{mode.replace('_', '-')}").write_text(sequence)
+            env = {k: v for k, v in os.environ.items() if k != 'MAIN'}
+            run = subprocess.run(['sh', str(t / 'run.sh'), branch], cwd=lane, env=dict(env, T=str(t)),
                                  capture_output=True, text=True)
-            if branch != 'b':
+            if branch != 'b' or not main_checked_out:
                 return run.returncode, run.stderr
             git = lambda *a: subprocess.run(['git', *a], cwd=lane, capture_output=True, text=True).stdout.strip()
             self.assertEqual(git('merge-base', 'main', 'b'), git('rev-parse', 'main'))
@@ -1119,6 +1128,9 @@ class LaneSnippetTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn('git rebase main no-such-branch failed: ', stderr)
         self.assertIn('no-such-branch', stderr.split('failed: ', 1)[1])
+        # Without a worktree that has main checked out, and no MAIN, nothing runs.
+        self.assertEqual(self.run_script(main_checked_out=False),
+                         (1, 'no worktree has main checked out; set MAIN\n'))
 
 
 class StubDeletionTests(unittest.TestCase):
