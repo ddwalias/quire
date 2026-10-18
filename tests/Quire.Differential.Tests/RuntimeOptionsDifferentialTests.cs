@@ -28,13 +28,14 @@ public class RuntimeOptionsDifferentialTests
 
     private static string GroupState(object g)
     {
-        string name = (string)Get(g, "Name")!;
+        string name = (string)Get(g, "m_name")!;
+        int initId = (int)Get(g, "init_id")!;
         var list = (System.Collections.IDictionary)Get(g, "m_unitsys_list")!;
         var members = new List<string>();
         foreach (System.Collections.DictionaryEntry entry in list)
             members.Add($"{entry.Key}={SystemText(entry.Value)}");
         members.Sort();
-        return $"Group({name}, [{string.Join(", ", members)}])";
+        return $"Group({name}, init={initId}, [{string.Join(", ", members)}])";
     }
 
     private static string OptionsState(object o)

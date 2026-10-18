@@ -9,11 +9,11 @@ namespace Quire.Mcd;
 /// </summary>
 public partial class UnitSystemGroup : MarshalByRefObject
 {
-    [MirrorTested("Mcd.RuntimeOptions")]
+    [MirrorVerified("RuntimeOptionsDifferentialTests")]
     private Dictionary<int, UnitSystem> m_unitsys_list;
-    [MirrorTested("Mcd.RuntimeOptions")]
+    [MirrorVerified("RuntimeOptionsDifferentialTests")]
     private readonly int init_id;
-    [MirrorTested("Mcd.RuntimeOptions")]
+    [MirrorVerified("RuntimeOptionsDifferentialTests")]
     private string m_name;
 
     [MirrorVerified("RuntimeOptionsDifferentialTests")]

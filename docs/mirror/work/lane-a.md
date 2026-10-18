@@ -2,9 +2,10 @@
 
 ## Active handoff
 
-The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. Select a
-separate unowned Lane A batch. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it
-parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
+The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
+separate `mirror/a-runtime-group-state` batch is verifying `UnitSystemGroup` field state. `MplDestructuringBind.ExpandCall`
+depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
+batch receipts below are history, not a task queue.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
@@ -18,10 +19,26 @@ parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipt
 - Remaining: `ExpandDefs` needs `define_keyword.MakeDefine` and `lambda_keyword.MakeLambda`; `ExpandLet` uses
   `ExpandDefs` and `locally_keyword.MakeLocally`; `walk_expression_as` calls `ExpandLet`. Recheck these dependencies
   after they merge, and check ownership before the next independent Lane A batch.
-- Gate blocker: `lane_merge.py mirror/a-let-keyword-tokens --jobs 14` rebased onto `8ac06847`, then failed twice
-  before validation with `WinError 206` preparing the validation clone. The gate expands 4,847 protected paths into a
-  363,561-character `git checkout` command, beyond Windows' command-line limit; shorter `TEMP` roots did not change
-  the failure. The branch is pushed; retry after the Windows gate restores paths in bounded chunks.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-let-keyword-tokens --jobs 14` passed
+  and merged the validated tip `62c08c66941a2f6a250068be7fa1d533507589f6` to `main`; `origin/main` is now
+  `87a24f3b`. The report at `%LOCALAPPDATA%\Temp\quire-gate-results-qhvbo0x1\gate.json` has no reasons and no
+  protected changes. Focused validation: Harness 97, Mpl 188, Differential 392 passed, no failures or skips; lint 0,
+  integrity complete, ratchet OK. Mutation: 3/3 killed, no survivors, timeouts or crashes. Existing inventory gaps:
+  298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported. The previous `WinError 206`
+  blocker is resolved by the Windows protected-path restore fix on main.
+
+## UnitSystemGroup private field-state verification (`mirror/a-runtime-group-state`)
+
+- Scope: upgrade the `UnitSystemGroup` fields `m_unitsys_list`, `init_id` and `m_name` from Tested to Verified in
+  `src/Quire.Mpl/Mcd/RuntimeOptions.cs`. Extend `RuntimeOptionsDifferentialTests.GroupState` to read and compare all
+  three private fields directly on Mathcad and Quire after each existing group operation.
+- Evidence: [Mcd.RuntimeOptions](../evidence/Mcd.RuntimeOptions.md). The existing group differential script invokes
+  the constructor and all eight methods over initial, missing, duplicate, changed, reset, copied and removed members;
+  the state renderer now includes the exact map entries, the stored name and key 0 (`init_id`).
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~RuntimeOptionsTests'`
+  — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~RuntimeOptionsDifferentialTests'` — 3 passed, 0 failed or skipped.
+- Remaining: `RuntimeOptions.s_init` remains Tested. No source behavior changes or proposals. Branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
