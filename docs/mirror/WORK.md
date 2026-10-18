@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The active chain has 10 exact Core and 2 exact Calculation cctors across nine batches. Focused validation now passes after the protected-path restore fix on `main`; the phase gate remains blocked by 464 existing differential failures and generated test-output files. Continue independent Calculation work and retry after the phase blocker is resolved. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. Ten Core and two Calculation cctors are exact across the active chain. On `main` `84a4d567`, the 35-member Core MemberGen batch has 36/36 direct comparisons, but its gate stops on 21 maintainer-owned `Generated/Mirror` files; the cctor-only gate passed focused checks and remains blocked by 464 phase Differential failures. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
