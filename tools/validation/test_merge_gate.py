@@ -949,6 +949,16 @@ class OptimisticGateTests(unittest.TestCase):
                 self.assertEqual(code, 1, out)
                 self.assertIn(reason, out)
 
+    def test_a_runtime_record_relabelled_as_prose_is_blocked(self):
+        # Prose records carry no baseline; whether a branch is prose comes from git, not from the record.
+        self.validate()
+        record, _ = self.record()
+        merge_gate.write_record('mpl', dict(record, validation_mode='prose'), {}, self.repo)
+        code, out = self.apply()
+        self.assertEqual(code, 1, out)
+        self.assertIn('changes more than allowlisted prose', out)
+        self.assertEqual(self.git('rev-parse', 'main'), record['base'])
+
     def test_a_corrupt_record_is_blocked(self):
         self.validate()
         _, files = self.record()
@@ -974,8 +984,9 @@ class OptimisticGateTests(unittest.TestCase):
         self.assertIn('rebase the branch onto main, resolve it, and run --validate-only again', str(raised.exception))
         with mock.patch.object(merge_gate, 'stale_reasons', return_value=[]), \
                 mock.patch.object(merge_gate, 'read_record', return_value=(
-                    {'branch': 'file', 'base': base, 'tip': self.git('rev-parse', 'file'), 'validation_mode': 'prose',
-                     'reasons': [], 'tools': merge_gate.tool_blobs(base, self.repo)}, {})):
+                    {'branch': 'file', 'base': base, 'tip': self.git('rev-parse', 'file'), 'validation_mode': 'runtime',
+                     'results': 'r', 'reasons': [], 'tools': merge_gate.tool_blobs(base, self.repo)},
+                    {'baseline.json': self.git('show', f'main:{merge_gate.BASELINE}').encode()})):
             code, out = self.apply('file')
         self.assertEqual(code, 1, out)
         self.assertIn('BLOCKED: cannot replay', out)
@@ -1059,7 +1070,7 @@ class LaneSnippetTests(unittest.TestCase):
         sys.exit(int(codes[0]))
     ''')
 
-    def run_script(self, **codes):
+    def run_script(self, branch='b', **codes):
         with tempfile.TemporaryDirectory() as t:
             t = Path(t)
             (t / 'main/tools/validation').mkdir(parents=True)
@@ -1080,11 +1091,13 @@ class LaneSnippetTests(unittest.TestCase):
             commit = ['-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q', '--allow-empty', '-m']
             for command in (['init', '-q', '-b', 'main'], [*commit, 'base'], ['branch', 'b'], [*commit, 'moved']):
                 subprocess.run(['git', *command], cwd=lane, check=True)
-            code = subprocess.run(['sh', str(t / 'run.sh'), 'b'], cwd=lane, env=dict(os.environ, T=str(t)),
-                                  capture_output=True).returncode
+            run = subprocess.run(['sh', str(t / 'run.sh'), branch], cwd=lane, env=dict(os.environ, T=str(t)),
+                                 capture_output=True, text=True)
+            if branch != 'b':
+                return run.returncode, run.stderr
             git = lambda *a: subprocess.run(['git', *a], cwd=lane, capture_output=True, text=True).stdout.strip()
             self.assertEqual(git('merge-base', 'main', 'b'), git('rev-parse', 'main'))
-            return code, (t / 'log').read_text().split('\n')[:-1]
+            return run.returncode, (t / 'log').read_text().split('\n')[:-1]
 
     @unittest.skipUnless(shutil.which('flock') and shutil.which('sh'), 'needs sh and flock')
     def test_the_lane_script(self):
@@ -1101,6 +1114,11 @@ class LaneSnippetTests(unittest.TestCase):
                  (1, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4', pull, f'{one} 1']))]:
             with self.subTest(codes):
                 self.assertEqual(self.run_script(**codes), expected)
+        # A failed rebase reports git's own error and stops before any validation.
+        code, stderr = self.run_script('no-such-branch')
+        self.assertEqual(code, 1)
+        self.assertIn('git rebase main no-such-branch failed: ', stderr)
+        self.assertIn('no-such-branch', stderr.split('failed: ', 1)[1])
 
 
 class StubDeletionTests(unittest.TestCase):

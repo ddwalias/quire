@@ -637,7 +637,8 @@ flock /tmp/quire-merge.lock python3 tools/validation/merge_gate.py <branch> --ap
   `tools` differ from the blobs at V, or the branch (resolved as `refs/heads/<branch>`) changes protected paths
   without a record of an `--allow-protected` run, or paths only the phase profile validates without a phase run (or
   `--allow-unvalidated`) in the record. The branch's changed, protected and stub-deleted paths are recomputed from
-  V..tip, never read from the record. It also blocks when a path is a file on one side of the replay and a
+  V..tip, never read from the record, and a record of a prose run must be of a branch that git shows changes only
+  allowlisted prose. It also blocks when a path is a file on one side of the replay and a
   directory on the other, or when the landed tree has paths that differ only in case. Otherwise it lands the run
   (exit 0) or reports it stale (exit 4) and deletes the record in both cases. It is stale when:
   - the branch no longer points at the validated tip;

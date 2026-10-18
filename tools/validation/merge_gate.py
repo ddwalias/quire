@@ -506,6 +506,10 @@ def apply_validated(args):
         if unvalidated_paths(changed) and not (phase_ran or record.get('allow_unvalidated')):
             print(f'BLOCKED: {args.branch} changes paths only the phase profile validates, but its record has no phase run.')
             return 1
+        if record['validation_mode'] == 'prose' and not prose_only(base, tip, changed):
+            print(f'BLOCKED: the record of {args.branch} is of a prose run, but the branch changes more than '
+                  'allowlisted prose.')
+            return 1
         record = dict(record, changed=changed, protected_changed=touched, stub_deletions=stubs)
         reasons = stale_reasons(record, main, ROOT)
     if not reasons and record['validation_mode'] == 'runtime':

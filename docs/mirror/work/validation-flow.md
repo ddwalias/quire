@@ -83,11 +83,12 @@ directories.
 ## Merge gate throughput
 
 The lock now covers only landing. A lane validates without it and lands under it. Run this in the lane's worktree
-as `sh lane-merge.sh <branch>`, replacing `PUSH` with the current push step; it exits with the gate's code:
+as `sh lane-merge.sh <branch>`, replacing `PUSH` with the current push step; it exits with the gate's code. Run it
+in the worktree that has the branch checked out (it rebases there):
 
 ```sh
 #!/bin/sh
-B="$1"
+B="$1"                                    # run in the worktree that has $B checked out
 MAIN=/mnt/c/Projects/Quire
 GATE="python3 $MAIN/tools/validation/merge_gate.py"
 LOCK=/tmp/quire-merge.lock
@@ -95,7 +96,7 @@ PULL="git fetch -q origin && git merge -q --ff-only origin/main"
 stale=0
 while :; do
   flock "$LOCK" sh -c "cd '$MAIN' && $PULL" || exit $?                    # fresh main, briefly under the lock
-  git rebase -q main "$B" || { echo "rebase conflict: resolve and review, then rerun"; exit 1; }
+  out=$(git rebase -q main "$B" 2>&1) || { echo "git rebase main $B failed: $out" >&2; exit 1; }
   (cd "$MAIN" && $GATE "$B" --validate-only --jobs 6) || exit $?          # BLOCKED: fix the branch
   flock "$LOCK" sh -c "cd '$MAIN' && $PULL && $GATE '$B' --apply-validated && PUSH"
   code=$?
