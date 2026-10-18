@@ -532,17 +532,17 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         protected StringBuilder m_out;
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public Printer(StringBuilder builder) { m_out = builder; }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Constant t) => m_out.Append(t.Name);
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Variable t) => m_out.Append(t.Name);
 
         /// <summary><c>(a, b)</c> for tuples, <c>a->b</c> for functions, <c>(F a b)</c> otherwise.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Application t)
         {
             switch (t.Root)
@@ -577,7 +577,7 @@ public abstract partial class Type
         }
 
         /// <summary><c>{base exponent ...}</c>, leaving out exponents of 1.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Product t)
         {
             bool first = true;
@@ -608,7 +608,7 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         private Factory m_fac;
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public Formatter(StringBuilder builder, UnitSystem system) : base(builder)
         {
             m_sys = system;
@@ -616,7 +616,7 @@ public abstract partial class Type
         }
 
         /// <summary><c>a</c>…<c>z</c> are any1…any26, <c>t</c>N is any(N + 26); other names print as they are.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Variable t)
         {
             if (t.Name.Length == 1)
@@ -636,7 +636,7 @@ public abstract partial class Type
             }
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Application t)
         {
             switch (t.Root)
@@ -667,7 +667,7 @@ public abstract partial class Type
 
         /// <summary>Collects the curried domains of <paramref name="t"/> (<paramref name="n"/> so far), then writes
         /// them as one argument list followed by the final range.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private void OnFunction(Type t, int n)
         {
             if (t.Root == '>')
@@ -690,7 +690,7 @@ public abstract partial class Type
 
         /// <summary><c>Unitless</c>, or the variable powers then the simplified units' quantities, joined by
         /// <c> · </c> with <c>^exponent</c> where it isn't 1.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Product t)
         {
             if (t.IsDimensionless)
