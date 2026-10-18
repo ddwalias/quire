@@ -4,7 +4,7 @@ using static Quire.Differential.Tests.Reflect;
 
 namespace Quire.Differential.Tests;
 
-public class EngineFactoryDifferentialTests
+public class EngineFactoryMechanicalDifferentialTests
 {
     private const string Contract = "Engine.Factory";
     private static System.Type QFactory => typeof(global::Quire.Engine.Factory);
