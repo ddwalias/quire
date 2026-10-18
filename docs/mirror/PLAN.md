@@ -3,18 +3,15 @@
 Mirror each in-scope type/member's name, kind, inheritance, visibility, signature, and behavior;
 only rename under [mapping.md](mapping.md). Applies to all phases and existing hand-written code.
 
-**Original:** `C:\Program Files\PTC\Mathcad Prime 12.0.1.0`
-(WSL: `/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0`); `MATHCAD_DIR` overrides defaults.
+**Original:** `C:\Program Files\PTC\Mathcad Prime 12.0.1.0`; `MATHCAD_DIR` overrides defaults.
 Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; invalidate on artifact changes.
 
 ## Execute: load → mirror → checkpoint → merge
 
 **Pipeline** (user decision, 2026-10-18; it supersedes conflicting text in the steps below):
-- **Where:** lanes run as native Windows sessions in worktrees of the NTFS clone `C:\Projects\Quire`, at
-  `C:\Projects\Quire-wt\<branch>`; remove the worktree (`git -C C:\Projects\Quire worktree remove --force <path>`)
-  once its branch has merged. Mathcad stays read-only at its install path. (Linux/WSL: use the ext4 repository
-  `/root/src/Quire`, with `main` checked out at `/root/src/quire-main`; create new worktrees at
-  `/root/src/worktrees/<branch>`, never under `/mnt/c`. Windows-project work from WSL stays under `/mnt/c`.)
+- **Where:** lanes run as native Windows sessions in separate worktrees of the shared clone `C:\Projects\Quire`,
+  at `C:\Projects\Quire-wt\<branch>`. Remove a worktree after its branch merges. Mathcad stays read-only at its
+  install path.
 - **Batch:** a whole class or a functional cluster of about 15–30 methods (the remaining Function methods; whole
   MatVal or MatDim operations).
 - **Local checks:** run only the affected behavior and differential test classes. Do not run the focused validator or
@@ -25,10 +22,10 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 - **Jobs:** `--jobs 14` for `validate.py` and `merge_gate.py` (16 cores, 31 GiB).
 - **Scratch:** before a new unit, `python tools\validation\sweep.py` removes stale validation, coverage, audit and
   gate folders from the temporary directory (unchanged for 12 hours, so never a running gate's).
-- **Merge:** `python tools\validation\lane_merge.py <branch>`
+- **Merge:** `python C:\Projects\Quire\tools\validation\lane_merge.py <branch>`
   ([validation-flow](work/validation-flow.md#merge-gate-throughput)): `--validate-only` outside the merge lock,
   then `--apply-validated` and the push of `main` under it; not the one-shot `--apply`. The per-batch command
-  template is there too. (Linux/WSL: `python3 tools/validation/sweep.py` and `python3 tools/validation/lane_merge.py`.)
+  template is there too.
 
 1. **Load:** Read PLAN + [WORK.md](WORK.md). Take WORK's next batch; extract only its source,
    manifest/status rows, evidence, dependencies/callers, and tests. Confirm artifact identity; reuse valid
@@ -36,15 +33,15 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 2. **Mirror:** Apply rules below. A batch is a whole class or a functional cluster of about 15–30 methods within
    the assembly; split unrelated type groups into separate checkpoints. Analyze shared dependencies once, then
    implement the batch. During iteration and before handoff, run the affected behavior tests and direct
-   differential tests, for example on Linux:
+   differential tests, for example in PowerShell:
 
-   ```sh
-   QUIRE_REQUIRE_MATHCAD=1 dotnet test \
-     tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj \
+   ```powershell
+   $env:QUIRE_REQUIRE_MATHCAD = '1'
+   dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj `
      --filter 'FullyQualifiedName~<related test class>'
    ```
 
-   Set `QUIRE_REQUIRE_MATHCAD=1` in the environment on Windows too. Keep local checks scoped to the change;
+   Keep local checks scoped to the change;
    the final runtime merge gate owns the full regression, shape, method audit, coverage, ratchet and mutation
    pass. Run scoped `validate.py --method-type <type> --diff-filter <filter>` locally when diagnosing those
    checks, rather than as a mandatory second gate. Local mutation is optional unless the batch needs survivor
@@ -73,7 +70,7 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      gate's record. If the fast-forward fails because local `main` has merges not yet on `origin`, stop: replay
      those commits onto `origin/main` in an integration branch, leaving out the generated "Update validation
      baseline after merging ..." commits (the gate rewrites the baseline), and gate it. The lock covers only this
-     machine's sessions of one OS: another machine, or WSL beside Windows, can push in between, and the push is
+     machine's sessions: another machine can push in between, and the push is
      then rejected as non-fast-forward, so integrate the same way. Never force-push `main`.
    - **Pushing `main`** (user decision, 2026-10-16; it replaces "never push `main`" above): whoever merges a branch
      through the gate, lane agent or maintainer, pushes `main` to `origin` right after the merge (with the gate's baseline commit), still

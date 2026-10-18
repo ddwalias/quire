@@ -1,156 +1,56 @@
-# Historical validation workflow checkpoint
+# Windows batch validation and handoff
 
-Branch: `mirror/workflow-trim`, based on `main` `fff8ec0`.
+## Workspace
 
-## Scope
+All new agent sessions use native Windows Git in the shared clone `C:\Projects\Quire`. Create one branch and
+worktree per agent under `C:\Projects\Quire-wt\<unit>`. Never share a checkout between agents. The repository
+remote is `ddwalias/quire`; GCM is configured to prefer the `ddwalias` account.
 
-- Normal handoff uses targeted behavior/direct differential tests; the runtime gate owns full validation.
-- Seven explicitly named prose files can reuse the base's validation only for edits to existing UTF-8 regular
-  non-executable files. Evidence, configuration, tooling, new files and mixed changes use the runtime gate.
-- Phase closure builds the solution, then runs the strict phase validator; the extra solution test invocation
-  is removed. The phase runner checks that its selection includes every solution test project.
-- Squash once before queueing, rebase only when needed, and keep batch results once in the lane checkpoint.
+The existing `MplForeignMacro` batch is owned and has uncommitted changes. Do not edit or duplicate it. Select
+another unowned batch from [WORK.md](../WORK.md).
 
-Changed code: `tools/validation/merge_gate.py`, `validate.py`, and their Python unit tests. Workflow documentation:
-PLAN, validation.md and the short WORK index. Mutation selection and runtime acceptance rules remained unchanged at
-that checkpoint. D14 later removed independent review; D16 removed user approval for accepted mutants and unreachable
-lines. Current handoff instructions are in [PLAN.md](../PLAN.md), [WORK.md](../WORK.md) and [validation.md](../validation.md).
+## Batch loop
 
-## Validation and next action
-
-`python3 -m unittest discover -s tools/validation -p 'test_*.py'`: 156 passed, no failures or skips. This includes
-prose check/apply routing, unchanged baseline bytes, protected/mixed/non-text changes, explicit audit overrides,
-stale branches and phase project selection. CLI help and `git diff --check` passed.
-
-The original tooling change passed its gate. A real CLI check/apply smoke run in a scratch repository completed
-the prose route without invoking .NET and preserved the baseline bytes (0.08 s on this workstation; not a full
-workflow benchmark).
-
-This tooling branch passed the full protected runtime gate and was merged as `c011f35`; receipt:
-`/tmp/quire-workflow-trim-runtime-gate/gate.json`. The branch and main were pushed. Resume the implementation
-lanes linked from WORK. This change does
-not establish Windows phase completion.
-
-## Two-batch integration amendment
-
-The user requested following PLAN and improving wasteful execution steps. Two queued batches may share one final
-merge gate, with at most two batches per integration candidate. Each retains its own coherent scope, squashed
-commit, owner and checkpoint. Each author reads their own diff; the integrator reads the combined diff and resolves
-conflicts before validation. Audit triggers use the union of both batches and count
-logical batches so frequency is retained. No gate implementation, test/mutation selection, acceptance rule or
-evidence requirement changes. Only the final candidate is validated, and the entire candidate fails together.
-
-Motivation: the pending runtime test work shares the same build, regression, coverage and audit stages; an
-accepted-mutant change also requires a full mutation audit (the current inventory contains 2,112 mutants).
-Serial gates for two such queued batches would repeat that complete pass. This amendment permits one final
-pass after both are ready, without using an interrupted/failed run as evidence. It does not claim a measured
-end-to-end speedup. Protected changes are only PLAN and validation.md. Independent review passed for `8ab21a1`; the existing
-protected runtime gate passed Harness 36, Mpl 159 and Differential 79, with no failures/skips, lint 0 and ratchet
-ok. No methods were selected for mutation. The gate merged the amendment as `7c5d9aa`, and main was pushed.
-Receipt: `/tmp/quire-gate-batching-runtime-gate/gate.json`; protected paths match exactly those two policy files.
-
-The earlier `02ecce1` full audit at `/tmp/quire-matval-final-runtime-gate` was interrupted after
-1,180/2,112 mutants when unmerged DimVal comparison fixes and their pending approvals were identified.
-Its gate receipt is blocked (validator exit 241, no sealed summary); it is not a passing audit or merge
-authorization. The corrected candidate still requires a fresh complete full audit.
-
-## Phase profile from WSL and Windows-project gating
-
-`validate.py --profile phase` now runs from WSL through Windows' `dotnet.exe`: `--dotnet`, else
-`QUIRE_WINDOWS_DOTNET`, else `/mnt/c/Program Files/dotnet/dotnet.exe`. The checkout, results and `QUIRE_WINDOWS_TEMP`
-must be on `/mnt/<drive>`; paths are converted with `wslpath -w`, test variables are forwarded through `WSLENV`, and
-the build's PDB/coverage paths are read back through `/mnt`. MethodAudit also runs under `dotnet.exe`. Phase runs
-ratchet against `docs/mirror/validation-baseline-phase.json`. For a branch whose `src/`/`tests/` changes the focused
-profile does not cover, the merge gate runs the phase profile after the focused run where that CLI is available, and
-passes only when both pass; `--apply` commits both baselines. Without the CLI it blocks as before. See
-[validation.md](../validation.md#phase-profile-from-wsl).
-
-First phase run of main from WSL: all nine phase test projects passed, 0 skipped
-(Calculation 8, Controls 16, Core 7, Differential 272 plus its coverage run, Engine 94, EquationEditor 88, Mirror 32,
-Mpl 188, Harness 86). Harness needed this commit's fix to `OptimizedBuildTests`: on Windows an assembly loaded by
-path stays locked, so the test's cleanup failed; it now loads from bytes. The method audit then failed for reasons that are independent of
-WSL. MethodAudit crashes on `Quire.Engine.Native` (`Program.cs:135`, two Mathcad methods match one key), and
-several projects report `MirrorOf` and type-map inspection errors (Efi 396, Mpl.Modules 82, Mcd 9, Quire 2, and a
-shared `Quire.ProductInfo.Constants` error that appears once in each of 17 more projects). So there is no phase
-baseline yet, and until a maintainer fixes these, the gate's phase run blocks every Windows-project branch with
-these specific reasons. Phase mutation is not implemented.
-
-Review follow-up: the gate commits `main`'s phase baseline unchanged on every merge without a phase run, so no
-branch can change either baseline, even with `--allow-protected`/`--allow-unvalidated`. A branch needing the
-phase run is blocked before any run while `main` has no phase baseline (a maintainer bootstraps it on `main`;
-see validation.md) or the Windows temporary directory is unusable. The gate keeps the 3 newest phase run
-directories.
-
-## Merge gate throughput
-
-Lanes follow PLAN's pipeline: native Windows agents use separate worktrees and branches in the shared NTFS clone
-`C:\Projects\Quire`; Linux/WSL agents use separate worktrees in the ext4 clone `/root/src/Quire`, whose main
-worktree is `/root/src/quire-main`. Keep those clones separate because worktree registrations and merge locks are OS-specific. Batches are a whole class or
-functional cluster; local checks run only affected tests, and the gate owns the mutation pass. A batch goes through
-this template (PowerShell; the Linux/WSL form is in the footnote below):
+Use one coherent class or functional cluster of about 15–30 methods. Run only the affected behavior and differential
+tests locally; the runtime gate performs full validation and mutation.
 
 ```powershell
-$U = 'b-<unit>'; $B = "mirror/$U"; $W = "C:\Projects\Quire-wt\$U"
-python C:\Projects\Quire\tools\validation\sweep.py                # stale scratch only, never a running gate's
+$U = '<lane>-<unit>'; $B = "mirror/$U"; $W = "C:\Projects\Quire-wt\$U"
+python C:\Projects\Quire\tools\validation\sweep.py
 git -C C:\Projects\Quire fetch -q origin
 git -C C:\Projects\Quire worktree add $W -b $B origin/main
-cd $W
-# implement the batch, then the fast local checks (no --mutate):
+Set-Location $W
 $env:QUIRE_REQUIRE_MATHCAD = '1'
 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~<TestClass>'
-git add <paths>; git commit -m '<summary>' -m 'Co-Authored-By: <model> <noreply@anthropic.com>'
-python C:\Projects\Quire\tools\validation\lane_merge.py $B       # validate, then land and push
-cd C:\Projects; git -C C:\Projects\Quire worktree remove --force $W
+git add <paths>
+git commit -m '<batch summary>'
+git push -u origin $B
+python C:\Projects\Quire\tools\validation\lane_merge.py $B --jobs 14
+Set-Location C:\Projects
+git -C C:\Projects\Quire worktree remove $W
 ```
 
-When a method is not exact, `python3 tools/validation/il_diff.py <Type | Type::Name | Type::signature> ...` prints its
-first Release-IL instruction that differs from Mathcad's, with context on both sides and the Quire source line (stdout only).
+Read the full diff and update the lane checkpoint with scope, evidence, commands, results, remaining work and blockers.
+Do not commit directly to `main`; `lane_merge.py` rebases, runs the gate, and pushes `main` only after a passing
+gate. If `main` advances during validation, the wrapper retries against the new base. Do not edit a branch while its
+gate is running.
 
-`lane_merge.py` validates without the merge lock and lands under it; run main's copy, in the worktree that has the
-branch checked out (it rebases there). It fast-forwards `main` to `origin/main` under the lock, rebases the branch,
-runs the gate with `--validate-only --jobs 14`, then under the lock pulls again, runs `--apply-validated` and pushes
-`main` (only after a merge). It exits with the gate's code. The gate runs in `--main`, by default the worktree that
-has `main` checked out (`git worktree list --porcelain`). Between `--validate-only` and `--apply-validated` do not
-rebase: the record is bound to the tip, and apply itself replays the branch onto a moved `main` or exits 4. Exit 4
-means `main` gained something that can change the verdict; the script validates again, and after two stale results
-in a row falls back to the one-shot `--apply`, which cannot go stale but holds the lock for the whole validation
-(the stale message says for how long). Rules: validation.md, "Validating outside the merge lock".
+Agents may continue on a fresh worktree during a gate only when changes do not overlap the gated batch's files or
+shared helpers. The maintainer may combine at most two ready batches into one final gate; keep their checkpoints
+separate.
 
-The Python validation-harness unit suite is separate from a lane's local checks. Agents do not run it for ordinary
-batches. A maintainer runs it when changing `tools/validation`; on Windows the standard
-`python -m unittest discover -s tools\validation -p "test_*.py"` suite took about 17 minutes for 263 tests in this
-checkout. It is not part of the lane loop.
+Do not run the full Python harness suite for ordinary batches. It is a maintainer check for changes to
+`tools/validation` and took about 17 minutes for 263 tests on this machine.
 
-The merge lock (`merge_lock.py`) is `msvcrt.locking` on `%TEMP%\quire-merge.lock` on Windows, shared by every
-session of the user on the machine, and `fcntl.flock` on `/tmp/quire-merge.lock` on Linux, the lock
-`flock /tmp/quire-merge.lock` takes too. A WSL session and a Windows session do not share it, so do not land from
-both at once; a push that loses the race is rejected as non-fast-forward, never forced, and the lane integrates
-and retries. `QUIRE_MERGE_LOCK` names another lock file.
+## Windows phase gate
 
-`sweep.py` removes `quire-validation-*`, `quire-coverage-*`, `quire-audit-*` and `quire-gate-*` directories in the
-temporary directory in which nothing beneath them changed for 12 hours; `--dry-run` lists them.
+Phase closure is still open; check [WORK.md](../WORK.md) for its current status. Changes outside the focused
+`Quire.Mpl` profile may also need the Windows phase profile. Check project routing before choosing a batch. If the
+gate encounters the documented phase-baseline or method-audit blocker, record it and continue only with independent
+work that can still be merged.
 
-Linux/WSL: the same steps with `python3`, the ext4 repository `/root/src/Quire` (with `main` checked out at
-`/root/src/quire-main`) and new worktrees at `/root/src/worktrees/<branch>` (never under `/mnt/c`). Run
-`python3 /root/src/Quire/tools/validation/sweep.py`, then
-`python3 /root/src/Quire/tools/validation/lane_merge.py "$B"`. Windows-project work from WSL stays under
-`/mnt/c` ([Phase profile from WSL](#phase-profile-from-wsl-and-windows-project-gating)).
+## Mutation results
 
-- **Batch members.** Every gate run pays about 3 minutes before any mutant runs (build, the differential suite
-  twice, the audit), and local checks no longer mutate, so a batch is a whole class or a functional cluster of
-  about 15–30 methods (the remaining Function methods; whole MatVal or MatDim operations), one commit per batch.
-  Its single mutation pass is the gate's.
-  Pick it with `python3 tools/validation/batch_picker.py <method-coverage.json> --type-prefix Quire.Mpl. --type-prefix
-  Quire.Mcd.` (or `--method-type <Type>`): remaining Tier A members ranked by gain, members with exact IL that only
-  need a comparison first, then leaf callees first, plus totals per type.
-- **Phase branches.** A run that includes the phase profile goes stale on any concurrent code merge and takes much
-  longer, so batch Windows-project work more aggressively, and expect the one-shot fallback more often.
-- **Mutation scope** is unchanged: changed methods, comparing tests, direct callers and field readers. A broad
-  rewrite such as an idiom cleanup changes IL in hundreds of methods and is legitimately long (gate37: 1,326
-  mutants, 68 minutes); with the lock covering only landing, it no longer blocks other lanes. The nightly
-  `merge_gate.py --nightly` covers the residual risk of the narrow selection.
-- **Survivors, all at once.** A gate run (or local `--mutate`) lists every surviving mutant with its `file:line` and
-  source line, just before the verdict line, in the gate's reasons, and in `summary.json`
-  (`mutation.survivor_details`), so fix them all before gating again.
-- **The differential suite runs twice** on purpose: coverage instrumentation changes the assembly hash and method
-  tokens that the case records need (measured; see validation.md).
+The gate owns the mutation pass. Fix all live survivors it reports before retrying. A provably equivalent survivor or
+unreachable line needs a written proof in the checkpoint; the maintainer records accepted entries and runs the
+protected gate.

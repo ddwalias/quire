@@ -2,19 +2,18 @@
 
 Phase 1 remains open. The Windows phase closure audit has not completed; see [validation workflow](work/validation-flow.md)
 for its current blocker. Read the execution rules in [PLAN.md](PLAN.md#execute-load--mirror--checkpoint--merge); use the
-lane checkpoints below only for the active batch and its dependencies. Older receipts are historical.
+selected lane checkpoint's **Active handoff** section only, plus the entries needed to verify its active batch and
+dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | Continue the in-progress `MplForeignMacro` batch on `mirror/a-mpl-foreign-macro` at `/mnt/c/Projects/Quire-wt/a-mpl-foreign-macro`; it has uncommitted source, test and evidence changes in the WSL checkout. Do not duplicate or open it with Windows Git. `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`; skip it. | [Lane A](work/lane-a.md) |
-| B | `FnCompose` is already merged to current WSL `main` at `bf985ce`. The old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| A | The in-progress `MplForeignMacro` batch is already owned and has uncommitted source, test and evidence changes in its worktree. Do not duplicate or edit it. Select a separate unowned Lane A batch after checking ownership. `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`; skip it. | [Lane A](work/lane-a.md) |
+| B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop
 
-1. Use one branch and worktree per agent from the shared clone for that OS: Windows agents share `C:\Projects\Quire`;
-   WSL agents use the repository at `/root/src/Quire` and its main worktree `/root/src/quire-main`. Create new WSL
-   worktrees under `/root/src/worktrees/`. Do not share one checkout or worktree registration between Windows Git and
-   WSL Git.
+1. Use native Windows Git. The shared clone is `C:\Projects\Quire`; create a separate branch and worktree per agent
+   under `C:\Projects\Quire-wt\<branch>`. Never share a checkout or worktree between agents.
 2. Fetch `origin`, then take one coherent class or functional batch (about 15–30 methods). Check ownership and
    dependencies before editing.
 3. Run only the affected behavior and differential test classes. The full focused validator, `quick_check.py`, local

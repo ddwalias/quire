@@ -2,11 +2,9 @@
 
 ## Active handoff
 
-Continue with independent `MplForeignMacro` members. `MplDestructuringBind.ExpandCall` depends on
-`define_keyword.MakeDefine`; leave that member parked and select independent work. Before resuming, check whether the
-existing WSL branch/worktree is active; do not try to open a WSL-registered worktree with Windows Git. Use the current
-instructions in [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). All dated batch receipts below are history, not a
-current task queue.
+The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. Select a
+separate unowned Lane A batch. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it
+parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 

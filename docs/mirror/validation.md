@@ -5,15 +5,15 @@ cases; it does not establish method-wide equivalence or authorize status changes
 
 ## Runtime batch: one repeatable command
 
-During iteration and before handoff, use the affected behavior and direct differential tests. For example on Linux:
+During iteration and before handoff, use the affected behavior and direct differential tests. For example in PowerShell:
 
-```sh
-QUIRE_REQUIRE_MATHCAD=1 dotnet test \
-  tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj \
+```powershell
+$env:QUIRE_REQUIRE_MATHCAD = '1'
+dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj `
   --filter 'FullyQualifiedName~FunctionMatrixDifferentialTests'
 ```
 
-Set `QUIRE_REQUIRE_MATHCAD=1` in the environment on Windows too. This executes the selected comparisons without
+This executes the selected comparisons without
 the full shape, coverage, audit and ratchet pass. Those checks run at the final runtime merge gate, so coverage
 or audit gaps can surface there. Local test success alone does not establish audit or mutation readiness.
 
@@ -236,8 +236,7 @@ order passes it, which the direct comparisons must catch.
   compiled is the file hashed. Two things this relies on: the source lint's `line directive` rule, which forbids
   `#line` and `#pragma checksum` (either would let a file's sequence points or recorded checksum name another file);
   and the validator and `dotnet` sharing one path namespace, so that PDB paths are paths the validator can relate to
-  the repository. (A phase run from WSL reads a Windows build's PDB and coverage paths back through their
-  `/mnt/<drive>` paths first; see [Phase profile from WSL](#phase-profile-from-wsl).) `python3 tools/validation/method_coverage.py unreachable-entry
+  the repository. `python tools/validation/method_coverage.py unreachable-entry
   <method-coverage.json> <key> <path>:<line> "<reason>"` prints a correctly hashed entry from a run's report.
   Malformed or duplicate entries fail the run. A PDB document matches
   the entry only when its path relative to the repository (the clone, in the gate) equals the entry's path,
@@ -347,7 +346,7 @@ order passes it, which the direct comparisons must catch.
   the output in the same directory byte-identical (built assemblies embed their absolute path).
 - **Timed-out mutants are retried in parallel:** each worker limit is calibrated from its unmutated test control
   (`max(MUTANT_FLOOR, MUTANT_MARGIN × measured seconds)`, capped by the run timeout). Worker count is capped to the
-  CPUs available to the process, including Linux CPU affinity. After the first pass finishes, fresh controls for
+  CPUs available to the process. After the first pass finishes, fresh controls for
   timed-out test sets run in parallel at that worker count. When a test set has several timed-out mutants, controls
   are sampled up to the retry worker count and the slowest measurement sets its budget. The timed-out mutants then
   retry in parallel on separate copies with those calibrated budgets. A second timeout counts as `killed (timeout)`;
@@ -571,9 +570,8 @@ profile also checks every line of the maintainer-owned `docs/mirror/manifest/Qui
 stay, since a constant has nothing to implement and the shape omits its value. The clone keeps those files as the
 branch has them, and `gate.json` lists the deleted members under `stub_deletions`. Headers, `MirrorOf`, type declarations, stubs under another
 attribute, edits, additions, regeneration, deleting the file, or a change that deletes nothing stay maintainer-only. The focused profile builds and audits only `Quire.Mpl` and runs
-only its test projects. For `src/` and `tests/` changes outside them, the gate also runs the phase profile where a
-Windows .NET CLI is available (natively on Windows, or Windows' `dotnet.exe` from WSL; see
-[Phase profile from WSL](#phase-profile-from-wsl)). The branch then merges only if both runs pass. Where that CLI is not
+only its test projects. For `src/` and `tests/` changes outside them, the gate also runs the phase profile when the
+Windows .NET CLI is available. The branch then merges only if both runs pass. Where that CLI is not
 available, the gate blocks those changes as before unless a maintainer passes `--allow-unvalidated` after a separate
 Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
 protected file** (with `--allow-protected`, the branch's, except the two baselines,
@@ -716,92 +714,33 @@ without a differential filter, and rejects any solution test project its project
 solution build covers compilation of projects that tests may not reference. A second solution test run is
 unnecessary; the phase runner already executes those tests and validates their reports.
 Engine and UI tests require their own appropriate runtime environment. Never retarget WPF projects
-or omit engine tests to claim phase closure. Linux focused tests do not substitute for those checks.
+or omit engine tests to claim phase closure. Focused tests do not substitute for those checks.
 
-### Phase profile from WSL
+### Windows phase profile
 
-`validate.py --profile phase` also runs from WSL. There Windows' `dotnet.exe` does all the building, testing and
-auditing, so the run's projects, method gate, coverage, ratchet and integrity rules are the same as a native Windows
-run:
+Run the phase profile natively on Windows with .NET 10 and the Windows Desktop runtime:
 
-```sh
-QUIRE_WINDOWS_TEMP=/mnt/c/Projects/quire-temp python3 tools/validation/validate.py --profile phase
-```
+~~~powershell
+python tools/validation/validate.py --profile phase
+~~~
 
-- **CLI.** `--dotnet` names the CLI when it is given, and it must be a Windows `.exe`. Otherwise
-  `QUIRE_WINDOWS_DOTNET` names it when set. Otherwise `/mnt/c/Program Files/dotnet/dotnet.exe` is used when it
-  exists. Without one of these, phase still refuses to run off Windows.
-- **Paths.** The checkout, `--results` and the temporary directory must be on a Windows drive (`/mnt/<drive>`);
-  anything else is refused before any build. The temporary directory is `QUIRE_WINDOWS_TEMP`, created if missing,
-  or by default `.quire-windows-temp` beside the checkout. It holds every temporary directory of the run: each
-  `dotnet` command's working directory, the MethodAudit, MirrorGen and Release outputs, coverage results, and the
-  default results directory. Every path given to `dotnet.exe` is converted with `wslpath -w`: projects, `-o`
-  directories, assemblies, result and coverage directories, the adapter path, the case-record directory and all
-  MethodAudit arguments. Paths that the Windows build reports (MSBuild's `TargetPath` and collector directory, PDB
-  documents in the inventory, cobertura file names) are read back through their `/mnt` paths. Repository paths
-  match case-insensitively, as on Windows.
-- **Environment.** A Windows process sees only the variables `WSLENV` names, so test runs add
-  `QUIRE_REQUIRE_MATHCAD`, `QUIRE_METHOD_CASES` (already converted), `QUIRE_VALIDATION_RUN` and `MATHCAD_DIR/p`
-  to it. Otherwise the Windows user's own environment applies, as in a native run.
-- **MethodAudit.** It runs under `dotnet.exe` too, with `--repo` as the Windows path. Body hashes replace the
-  checkout path compiled into string literals (`[CallerFilePath]`) by `<repo>`. A Windows build records
-  `C:\...` there, so a Linux `dotnet` given the `/mnt` path would leave the checkout path in every stub's hash.
-- **Baseline.** Phase runs ratchet against their own `docs/mirror/validation-baseline-phase.json` (protected; a
-  baseline holds a single profile). A local run writes one with `--write-baseline`, and the gate writes it after a phase run.
-  Its keys carry the project, because one type name can be compiled into several projects (shared source, shared
-  native headers, compiler helpers). Methods are `Project|Type::signature` and types `Project|Type`, for example
-  `Quire.Calculation|Quire.ProductInfo.Constants::.ctor`0()->[System.Runtime]System.Void|False`. The ratchet
-  compares entries by these keys. The focused baseline, accepted mutants, unreachable lines and changed-method
-  selection keep `Type::signature`. Phase runs never mutate, so the phase baseline omits `tests`, `bodies` and
-  `writes` (`ratchet.MUTATION_ONLY`), which only mutation selection reads; it holds what the ratchet compares.
-- **Builds.** A checkout's `bin/` and `obj/` belong to the CLI that last built it. Do not alternate Linux and
-  Windows builds in one checkout; use a separate copy, or delete them first. The gate always uses fresh clones.
-- **Not covered.** A timeout stops the WSL side of the process. A Windows process it started can outlive it.
+It builds the solution, runs all solution test projects with strict reports, and rejects any test project omitted by
+its selection. A second solution-wide test run is unnecessary. Set QUIRE_REQUIRE_MATHCAD=1 when a test requires the
+original Mathcad installation. Keep the checkout, results and temporary files on a Windows drive.
 
-**Merge gate.** When a branch changes `src/` or `tests/` paths that the focused profile does not cover, and a phase
-CLI is available (on Windows, or from WSL as above), the gate first runs the unchanged focused validation. If that
-passes, it runs the phase profile on a second clone of the tip in the Windows temporary directory, with the same
-restored protected paths. The phase baseline comes from `main`. There are no proposals and no mutation (the phase
-profile has no mutation stage). The branch passes only when both runs pass and both new baselines hold the
-ratchet against `main`'s. `--apply` then commits both baselines in one baseline commit, built from objects as before.
-Every other merge commits `main`'s phase baseline exactly as it is (or none, if `main` has none), even when the branch
-changed it and a maintainer passed `--allow-protected`, `--allow-unvalidated` or both: only a phase run's own output can
-change it, so neither baseline can come from a branch. `gate.json` records the phase run under `phase` (CLI,
-results directory, validator exit, reasons), or `{"skipped": ...}` when the focused run already blocked. The phase
-clone is removed, and removal failures (files a Windows process still holds open) are printed. Its results stay in
-the Windows temporary directory, where the gate keeps the 3 newest `quire-gate-phase-*` run directories (about 300 MB
-each) and removes older ones before each phase run. Without a phase CLI, and with `--allow-unvalidated`, the gate
-behaves as before. The lock, pull-first and push rules are unchanged.
-Before any run, the gate blocks a branch that needs the phase run when `main` has no phase baseline ("a maintainer must
-create the phase baseline first"), and when the Windows temporary directory is unusable (`phase: ...`, for example a
-`QUIRE_WINDOWS_TEMP` off a Windows drive).
-Because focused-only merges do not refresh the phase baseline, the next phase run compares against an older one.
-The ratchet accepts progress, so that is still sound, but a regression in an unaffected Windows project would
-surface only at that run.
+Phase runs ratchet against the protected docs/mirror/validation-baseline-phase.json. Its keys include the project
+because shared source can compile into multiple projects. Phase validation does not run mutation testing. A checkout's
+bin/ and obj/ belong to the build that last used them; the gate avoids stale outputs by using fresh clones.
 
-**Bootstrapping the phase baseline.** The gate never creates the first phase baseline. A maintainer runs phase on an
-up-to-date `main` from WSL (or Windows) and commits the baseline it writes directly on `main`, as a maintainer commit:
+When a branch changes src/ or tests/ paths that the focused profile does not cover, the merge gate runs focused
+validation and then the phase profile. Both must pass, and both baselines must hold the ratchet against main.
+Without a usable Windows .NET CLI, the gate blocks those changes unless a maintainer passes --allow-unvalidated
+after a separate Windows phase run.
 
-```sh
-git checkout main && git pull --ff-only
-QUIRE_WINDOWS_TEMP=/mnt/c/Projects/quire-temp python3 tools/validation/validate.py --profile phase \
-    --write-baseline docs/mirror/validation-baseline-phase.json
-git add docs/mirror/validation-baseline-phase.json
-git commit -m "Bootstrap the phase validation baseline"
-```
-
-That run exits 1, since its ratchet has no baseline to compare against, but writes the baseline anyway. Commit it
-only when `summary.json` shows every test project passing and the missing baseline as the only regression. Until
-then, every branch that needs the phase run is blocked before validation.
-
-The status gate checks that references resolve; it does **not** prove that a differential class
-covers each attributed member or that its comparisons ran. The shape gate checks missing expected
-manifest lines, not behavioral fidelity. Neither gate alone validates coverage-excluded interfaces,
-enums, delegates, artifact-bound evidence, or an accepted deviation's tested behavior. Inspect the
-selected records, refresh/review shape/status inventories when required, and check planned stub reduction.
-Run `Quire.exe --render` screenshot validation when a visual change needs it. Do not auto-accept manifest
-removals or rewrite statuses to make a gate green.
-
+The gate does not create the first phase baseline. A maintainer bootstraps it from an up-to-date main, and commits
+it only when every test project passes and the missing baseline is the only reported regression. Until a phase
+baseline exists, branches requiring the phase run are blocked before validation. Phase closure remains open; see
+WORK.md for the current blocker.
 ## Audit in this sandbox (2026-10-14)
 
 Base checkout: `18bec37`, isolated from the implementation agent. The shared `.git` is read-only,
@@ -809,8 +748,8 @@ so the worktree was created from a local clone at `/tmp/quire-harness-repo`, wit
 `/tmp/quire-harness-validation`. No production implementation was changed.
 
 Single-process builds of Mpl behavior, focused differential and harness projects succeeded.
-VSTest cannot create its communication socket in this sandbox; Windows CLI interop also cannot
-create its WSL socket. The strict command was exercised and correctly returned failure with an
+VSTest cannot create its communication socket in this sandbox; the strict Windows CLI check also could not
+create its test socket. The strict command was exercised and correctly returned failure with an
 incomplete JSON report for that aborted run. Ordinary test execution and Windows phase gates
 remain to be run in an environment permitting those operations. Direct fact invocation was used
 only as a supplementary smoke check, not as a substitute VSTest result or a phase closure claim.

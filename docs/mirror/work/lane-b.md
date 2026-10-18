@@ -2,7 +2,7 @@
 
 ## Active handoff
 
-`FnCompose` is already merged and verified on current WSL `main` at `bf985ce`; the old `mirror/b-fncompose` row
+`FnCompose` is already merged and verified on `main` at `bf985ce`; the old `mirror/b-fncompose` row
 below is historical. Select the next unowned Engine interface/factory batch after checking the tier inventory,
 current ownership and whether Windows-only execution is required. Follow [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md).
 
