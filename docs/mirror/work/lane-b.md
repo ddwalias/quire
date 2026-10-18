@@ -25,7 +25,7 @@
   - [Engine.IEngine](../evidence/Engine.IEngine.md)
 - **Validation:**
   - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (97/97 passed)
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryDifferentialTests'` (2/2 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryMechanicalDifferentialTests'` (2/2 passed)
 - **Gate status:**
   - Standard lane merge gate blocks because `protected.txt` and `merge_gate.py` only exempt stub deletions in `src/Quire.Mpl/Generated/Mirror/*.g.cs`. Non-Mpl generated files (`src/Quire.Engine/Generated/Mirror/*.g.cs`) require maintainer gate execution with `--allow-protected`.
 
