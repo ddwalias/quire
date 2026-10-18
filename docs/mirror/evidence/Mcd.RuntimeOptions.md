@@ -42,7 +42,7 @@ below. The method gate's direct case invokes both type initializers, which the r
 the statics they left (every unit of the default system in full). Because the initializer increments the counter
 after building the first instance, instances created later have options number 2.
 
-Fields: every public instance and thread-static option field, `s_restricted_mode`, `s_ro_counter` and `s_default_unit_system` are Verified (read directly by `RuntimeOptionsDifferentialTests`). The `UnitSystemGroup` private fields are Verified: its state renderer directly reads `m_name`, `init_id` and `m_unitsys_list` on both artifacts; `s_init` remains Tested.
+Fields: every public instance and thread-static option field, `s_restricted_mode`, `s_ro_counter`, `s_default_unit_system`, and `s_init` are Verified (read directly by `RuntimeOptionsDifferentialTests`). The `UnitSystemGroup` private fields are Verified: its state renderer directly reads `m_name`, `init_id` and `m_unitsys_list` on both artifacts.
 
 ## Test cases
 

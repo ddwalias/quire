@@ -202,7 +202,7 @@ public partial class RuntimeOptions
     ]);
 
     // Declared last: initialising it runs a constructor that reads the fields above.
-    [MirrorTested("Mcd.RuntimeOptions")]
+    [MirrorVerified("RuntimeOptionsDifferentialTests")]
     private static object s_init = new RuntimeOptionsInitializer();
 
     [MirrorVerified("RuntimeOptionsDifferentialTests")]

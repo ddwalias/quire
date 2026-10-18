@@ -268,7 +268,7 @@ public class RuntimeOptionsDifferentialTests
             $"s_restricted_mode={Get(t, "s_restricted_mode")}",
             $"s_ro_counter={Get(t, "s_ro_counter")}",
             $"s_default_unit_system={DefaultSystemText(Get(t, "s_default_unit_system")!)}",
-            $"s_init={Get(t, "s_init")?.GetType().Name ?? "null"}",
+            $"s_init={Unmap(Get(t, "s_init")?.GetType().FullName ?? "null")}",
         };
         parts.AddRange(Flags.Select(f => $"{f}={Get(t, f)}"));
         parts.Add($"mangled_identifiers={Get(t, "mangled_identifiers")}");
@@ -293,6 +293,8 @@ public class RuntimeOptionsDifferentialTests
         Func<object?, string> options = o => o == null ? "null" : $"{OptionsState(o)}, system={DefaultSystemText(Get(o, "m_unit_system")!)}";
         MethodComparison.Compare("RuntimeOptions.ctor() first in this test", Contract, qOptsCtor, null, [], mOptsCtor, null, [], options, options);
         Runtime.Sync();
+        Assert.NotNull(Get(typeof(Q.RuntimeOptions), "s_init"));
+        Assert.NotNull(Get(M, "s_init"));
         var qCctor = typeof(Q.RuntimeOptions).TypeInitializer!;
         var mCctor = M.TypeInitializer!;
         // The runtime runs a type initializer once, so invoking it again leaves the statics it set up; the outcome is

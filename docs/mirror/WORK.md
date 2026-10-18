@@ -7,7 +7,7 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | `mirror/a-runtime-group-state` is verifying `UnitSystemGroup` private field state in `Mcd.RuntimeOptions`. The in-progress `MplForeignMacro` batch remains owned; `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`. | [Lane A](work/lane-a.md) |
+| A | `mirror/a-runtime-options-init-field` is verifying `RuntimeOptions.s_init`. The in-progress `MplForeignMacro` batch remains owned; `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop

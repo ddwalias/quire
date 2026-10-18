@@ -3,7 +3,7 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-runtime-group-state` batch is verifying `UnitSystemGroup` field state. `MplDestructuringBind.ExpandCall`
+separate `mirror/a-runtime-options-init-field` batch is verifying `RuntimeOptions.s_init`. `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
 
@@ -38,7 +38,28 @@ batch receipts below are history, not a task queue.
 - Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~RuntimeOptionsTests'`
   — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~RuntimeOptionsDifferentialTests'` — 3 passed, 0 failed or skipped.
-- Remaining: `RuntimeOptions.s_init` remains Tested. No source behavior changes or proposals. Branch gate pending.
+- Gate: `merge_gate.py --apply-validated` landed the validated tip `b0c722733f04f22b96eb51ace816f9634fa8312a` on
+  `main` and it was pushed to `origin/main`. The initial `lane_merge.py` invocation ran from the main worktree; its
+  rebase checked out the candidate there, so apply reported `--apply-validated must run from the checkout that has
+  main checked out`. No revalidation was needed: the recorded run passed, then was applied and pushed under the
+  merge lock from the main checkout. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-za67m7ji\gate.json`;
+  no reasons or protected paths. Harness 97, Mpl 188, Differential 392 passed, no failures or skips; lint 0,
+  integrity complete, ratchet OK. Mutation 77/79 killed, 2 accepted survivors, no live survivors, timeouts or crashes.
+  Existing inventory gaps: 298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported.
+
+## RuntimeOptions.s_init field-state verification (`mirror/a-runtime-options-init-field`)
+
+- Scope: promote the private static `RuntimeOptions.s_init` field from Tested to Verified. The existing direct
+  type-initializer differential comparison includes this field's full nested type identity in the static-state
+  renderer and asserts the field is non-null in both artifacts.
+- Evidence: [Mcd.RuntimeOptions](../evidence/Mcd.RuntimeOptions.md). The field is the final static initializer and
+  holds a `RuntimeOptionsInitializer`; the existing initializer comparison also covers its effects on defaults,
+  the counter, thread options and `Dim.s_vec`.
+- Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~RuntimeOptionsTests'`
+  — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter 'FullyQualifiedName~RuntimeOptionsDifferentialTests'` — 3 passed, 0 failed or skipped. The direct
+  initializer comparison now renders `s_init`'s full nested type identity and asserts it is non-null on both sides.
+  No runtime body change or proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
