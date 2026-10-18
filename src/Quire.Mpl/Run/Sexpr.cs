@@ -572,7 +572,7 @@ public partial class Bq : Sexpr
     [MirrorVerified("SexprDifferentialTests")]
     public override string ToString() => "`" + Field1.ToString();
 
-    [MirrorAnalyzed("Mpl.Run.Bq")]
+    [MirrorVerified("BqDifferentialTests")]
     public override Sexpr walk_expression(MplEnv env) =>
         MplBackquoteMacro.singleton.ExpandCall(env, this).walk_expression(env);
 }

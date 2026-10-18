@@ -13,12 +13,13 @@ A backquoted expression, printed `` `x ``.
 | `Field1` | 0x04000016 | — | Public mutable. | High | Verified |
 | `.ctor(object), .ctor(Sexpr)` | 0x06000058, 0x06000059 | `a3648f2c` | Tag 4; the object overload converts with `as Sexpr`. | High | Verified |
 | `ToString()` | 0x0600005a | `920cadee` | `` "`" + Field1 ``. | High | Verified |
-| `walk_expression(MplEnv)` | 0x0600005b | `d086f52e` | `MplBackquoteMacro.singleton.ExpandCall(env, this)`, walked as an expression. | High; `MplBackquoteMacro` is a stub in Quire (macros batch) | Analyzed |
+| `walk_expression(MplEnv)` | 0x0600005b | `d086f52e` | `MplBackquoteMacro.singleton.ExpandCall(env, this)`, walked as an expression. The Quire body retains Mathcad's exact 19-byte IL. | High for dispatch; successful foreign expansion requires the host macro integration | Verified |
 
 ## Test cases
 
-As in Mpl.Run.Sexpr.md.
+- **Observed** (`BqDifferentialTests`): Direct `MethodComparison.Compare` cases cover the object constructor with an expression and unrelated object, the `Sexpr` constructor with an expression and null, `ToString()` on an expression, and `walk_expression(null)` with the macro singleton caches empty. The walk reaches the macro entry point and both original and Quire throw `NullReferenceException` when the environment is dereferenced.
+- **Limit:** The installed `mplrun.dll` base `MplEnv.LoadForeignMacro` throws `AppException("Can not resolve signature")`, so successful backquote expansion is unavailable without the external host integration. The walk comparison covers the observable hostless failure path, not successful expansion.
 
 ## Open
 
-- `walk_expression` waits for `MplBackquoteMacro`.
+- Direct successful expansion through the external `MplMacro.backquote` host integration remains unobserved.
