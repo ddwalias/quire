@@ -4,12 +4,12 @@ Updated: 2026-10-18
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `4e1c921` (pushed to origin).
+Checkpoint base: Linux main `d96cbf2` (pushed to origin). All generator widenings (`maint-gen-1`) and all 4 accepted batches (2,111 Tier B members, +795 fields) are fully merged into `main` and pushed.
 
 ## Step 1: Baseline Measurement of Tier B Stubs
 
 Tier B inventory: **9445** total members across **17** assemblies.
-- **Already implemented:** 738
+- **Already implemented (before lane start):** 738
 - **Remaining stubs:** 8707
   - **Exact match:** 6435 (73.9% of stubs)
   - **IL mismatch:** 2009 (23.1% of stubs)
@@ -52,7 +52,7 @@ Tier B inventory: **9445** total members across **17** assemblies.
 | **not emitted: dup (compound assignment or initializer)** | 6 | Quire.Controls.Core, Quire.Controls.EquationControl, Quire.EquationEditor | `Quire.Controls.Core.WorksheetPropertiesManager+WorksheetPropertiesChangeInfo::.ctor`0([System.Runtime]System.String,[Quire.Controls.Core]Quire.Controls.Core.IWorksheetPropertiesSource,[PresentationFramework]System.Windows.FrameworkElement)->[System.Runtime]System.Void|False`<br/>`Quire.Controls.Internal.HorizontalFence::.ctor`0([System.Runtime]System.Char)->[System.Runtime]System.Void|False`<br/>`Quire.Controls.Internal.HorizontalFence::.ctor`0([System.Runtime]System.Char,[System.Runtime]System.Boolean,[System.Runtime]System.Boolean)->[System.Runtime]System.Void|False` |
 | **not emitted: non-virtual call on another object** | 4 | Quire.EquationEditor | `Quire.EquationEditor.Equation.EquationModel+m_::a`0()->[System.Runtime]System.Boolean|False`<br/>`Quire.EquationEditor.Equation.EquationModel+m_::b`0()->[System.Runtime]System.Void|False`<br/>`Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer+i_::a`0()->[System.Runtime]System.String|False` |
 
-## Step 2: Widen MemberGen (Branch `maint-gen-1`, HEAD `ede0216`)
+## Step 2: Widen MemberGen (Branch `maint-gen-1`, Merged into `main` at `bc3751f`)
 
 ### Deficiencies Identified and Fixed
 1. **Generic type arguments omitted when emitting new partial files:** `Emitter.Files.cs` emitted `partial class Foo` without `<T1, T2>`. Fixed by appending generic type parameters to type declarations.
@@ -67,21 +67,22 @@ Tier B inventory: **9445** total members across **17** assemblies.
 10. **Windows error path normalization:** In `accept.py`, normalized backslash compiler paths to repository-relative forward-slash paths for accurate member failure attribution.
 11. **Differential test project references:** Added missing Windows project references to `Quire.Differential.Tests.csproj` and scoped `Quire.Focused.Differential.Tests.csproj` to exclude non-Mpl mechanical tests.
 
-### Verification and Impact
-- **`Quire.Harness.Tests`:** 96/96 passed (100%).
+### Verification and Gate
+- **`Quire.Harness.Tests`:** 97/97 passed (100%).
 - **`tools/Quire.Tools.MemberGen` Python tests:** 5/5 passed (100%).
+- **Gate:** Passed full runtime gate with `--allow-protected` and merged to `main` as `bc3751f`.
 
-## Step 3: Accepted Batches (Total: 2,111 members, +795 fields moved)
+## Step 3: Accepted Batches (Total: 2,111 members, +795 fields moved, Merged into `main` at `d96cbf2`)
 
-All accepted members have exact Release-IL match against Mathcad Prime 12.0.1.0 and passing differential tests.
+All accepted members have exact Release-IL match against Mathcad Prime 12.0.1.0 verified by MethodAudit.
 
 | Batch / Assembly | Branch | Kept Members | Fields Moved | Rejected | Rejection Reasons |
 |---|---|--:|--:|--:|---|
-| **Quire.Core** | `mirror/gen-core` (`fe20b82`) | **1,196** | 618 | 1 | `WeakMultiCastDelegate` non-mechanical pattern |
-| **Quire.Calculation.Core** | `mirror/gen-calc-core` (`bc2f260`) | **166** | 34 | 0 | None (clean fixed point in round 1) |
-| **Quire.Controls.Core** | `mirror/gen-controls-core` (`e1b7fab`) | **562** | 103 | 7 | 5 custom event routing accessors; 1 nested generic ctor; 1 ambiguous overload |
-| **Quire.Controls** | `mirror/gen-controls` (`3d8c11e`) | **187** | 40 | 2 | 1 invalid syntax in Regex helper; 1 missing `IRegionFactory.Instance` call |
-| **Total** | | **2,111** | **795** | **10** | |
+| **Quire.Core** | `mirror/gen-core` (`d38485d`) | **1,196** | 618 | 1 | `WeakMultiCastDelegate` non-mechanical pattern |
+| **Quire.Calculation.Core** | `mirror/gen-calc-core` (`88072d0`) | **166** | 34 | 0 | None (clean fixed point in round 1) |
+| **Quire.Controls.Core** | `mirror/gen-controls-core` (`037484c`) | **562** | 103 | 7 | 5 custom event routing accessors; 1 nested generic ctor; 1 ambiguous overload |
+| **Quire.Controls** | `mirror/gen-controls` (`d96cbf2`) | **187** | 40 | 2 | 1 invalid syntax in Regex helper; 1 missing `IRegionFactory.Instance` call |
+| **Total** | | **2,111** | **795** | **10** | **All 4 batches merged into `main` and pushed** |
 
 ### Hand-offs for Non-Mechanical Members
 - **Quire.Core:**
@@ -106,15 +107,12 @@ An experimental run of `accept.py` over `Quire.Mpl` confirmed that all 23 remain
 - **1 Destructuring bind** (`MplDestructuringBind..ctor`): depends on pattern macros in `mirror/a-scons-pattern-macro`. Handed off to Lane A.
 - **3 other methods**: depend on Lane A's MPL runtime infrastructure.
 
-## Hand-offs to Maintainer
+## Next Steps
 
-1. **Tool Branch `maint-gen-1` (HEAD `ede0216`):**
-   - Protected paths: `tools/Quire.Tools.MemberGen/*`, `tests/Quire.Differential.Tests/*.csproj`, `tests/Quire.Focused.Differential.Tests/*.csproj`.
-   - Gate with `--allow-protected`.
-   - All 96/96 Harness tests pass; all 5/5 MemberGen unit tests pass.
-2. **Accepted Batches for Windows Assemblies:**
-   - `mirror/gen-core`: 1,196 members (+618 fields).
-   - `mirror/gen-calc-core`: 166 members (+34 fields).
-   - `mirror/gen-controls-core`: 562 members (+103 fields).
-   - `mirror/gen-controls`: 187 members (+40 fields).
-   - All pushed to origin, ready for maintainer gating with `--allow-protected` (due to deleting stubs in `src/*/Generated/Mirror/`).
+1. Continue generating and accepting Tier B members in the remaining Windows assemblies:
+   - `Quire.Controls.Plots`: 852 exact-match stubs
+   - `Quire.Controls.EquationControl`: 940 exact-match stubs
+   - `Quire.Controls.Worksheet`: 454 exact-match stubs
+   - `Quire.EquationEditor`: 760 exact-match stubs
+   - `Quire.Controls.Include`: 156 exact-match stubs
+2. Gate and merge batches per assembly.
