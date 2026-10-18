@@ -1,11 +1,27 @@
 #nullable disable
+using System.IO;
 using System.Xml;
+using System.Xml.Xsl;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
 public partial class XmcdToIResultNodeTransform
 {
+    [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformCctorDifferentialTests")]
+    static XmcdToIResultNodeTransform()
+    {
+        const string template = "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\r\n                                     <xsl:output method=\"text\" omit-xml-declaration=\"yes\"/>\r\n                                     <xsl:template match=\"{0}\">\r\n                                       <xsl:value-of select=\"node()\"/>\r\n                                     </xsl:template>\r\n                                     </xsl:stylesheet>";
+        string stylesheet = string.Format(template, "DataVectors");
+        var transform = new XslCompiledTransform();
+        using (var textReader = new StringReader(stylesheet))
+        using (var xmlReader = XmlReader.Create(textReader))
+        {
+            transform.Load(xmlReader);
+        }
+        _resultVectorUnescapingXslt = transform;
+    }
+
     [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
     private readonly IResultNodeFactory _resultNodeFactory;
 
