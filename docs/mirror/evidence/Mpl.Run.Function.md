@@ -104,12 +104,29 @@ The protected state fields `m_purity`, `m_n`, `m_no_vectorize`, `m_minargs`, `m_
 | `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000248 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
 | `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000249 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
 | `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x0600024a | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.get_InverseFunction()` | 0x06000157 | Returns inverse function or raises no inverse declared. | Direct comparison of unset and set states. Exact IL match. | Verified |
+| `Mpl.Run.Function.set_InverseFunction(Function)` | 0x06000158 | Sets inverse function reference. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.IgnoreVectorization()` | 0x06000154 | Sets m_no_vectorize to true and returns this. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.asFunction(string, uint)` | 0x0600015b | Returns this function instance. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.IsFunctionN(int)` | 0x0600015c | Returns this if fully applied else null. | Direct comparison of matching and non-matching counts. Structure match. | Verified |
+| `Mpl.Run.Function.asFunctionN(int, uint)` | 0x0600015d | Asserts full application then returns this. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.CheckPremium()` | 0x0600015e | Asserts premium license when restricted mode is active. | Direct comparison in normal runtime mode. Exact IL match. | Verified |
+| `Mpl.Run.Function.Premium()` | 0x0600015f | Wraps this function in PremiumFunction preserving vectorization setting. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.Call_0<R>()` | 0x06000182 | Asserts full application for 0 args and delegates to inv. | Direct comparison with zero-arity closure. Exact IL match. | Verified |
+| `Mpl.Run.Function.AssertFullApp(int, uint)` | 0x060001a8 | Verifies arity bounds reporting error position on failure. | Direct comparison of success, under-arity and over-arity cases. Structure match. | Verified |
+| `Mpl.Run.Function.DynApply(object[])` | 0x060001d1 | Dispatches array of arguments to DynCall overloads. | Direct comparison across 1 and 2 arguments. Structure match. | Verified |
+| `Mpl.Run.Function.CurryMatVal()` | 0x060001d5 | Wraps function in Fn_CurryTuple with index 1 and dim 1. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.UnCurryMatVal()` | 0x060001d6 | Wraps function in Fn_CurryTuple with index 1 and dim 0. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.ConstantFunction(object)` | 0x060001d7 | Factory creating FnConstant wrapping value. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.Fixpoint(Function)` | 0x060001e5 | Factory creating recursive fixpoint closure. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.Compose(Function, Function)` | 0x060001e6 | Factory creating FnCompose wrapping f and g. | Direct comparison. Exact IL match. | Verified |
 
 ## Test cases
 
 `Function_formatting_identity_and_inverse_links` compares formatting, canonical names, the actual `DelegateFunction.get_Name` override and both of its branches, string conversion, and inverse linking. `Function_application_optional_padding_and_delegate_projection` compares arity accessors, `get_IsFunction`, `OptFunc`, application, `InvokeVec`, and delegate projections.
 `DelegateFunctionDifferentialTests` compares all 31 remaining methods of `DelegateFunction`: 17 generic `inv` overloads (both direct `F<...>` and fallback `DynamicInvoke` paths, matching Release IL opcodes), `invVec`, `app0` (purity 0 and 1), `clo`, `remove_module_suffix`, `.ctor(Delegate, int)`, 5 `make`/`makeF` factory methods, and 4 `AsF` delegate projections (both match and fallback paths). All 32 methods of `DelegateFunction` are verified.
 `DelegateSubclassesDifferentialTests` compares all 39 methods of `UnaryDelegateFunction`, `BinaryDelegateFunction`, `TernaryDelegateFunction`, `QuartnaryDelegateFunction`, and `PremiumFunction`: constructors, `inv`, `app`, `DynCall`, `Premium`, `get_Name`, `invVec`, and all 16 `DynCall` overloads. All 39 methods are verified.
+`FunctionHelpersDifferentialTests` compares the 16 remaining Function helpers and factories: get_InverseFunction, set_InverseFunction, IgnoreVectorization, asFunction, IsFunctionN, asFunctionN, CheckPremium, Premium, Call_0, AssertFullApp, DynApply, CurryMatVal, UnCurryMatVal, ConstantFunction, Fixpoint, and Compose. All 16 methods are verified.
 
 ## Current focused audit
 
