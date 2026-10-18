@@ -145,6 +145,9 @@ a row falls back to the one-shot `--apply`, which cannot go stale but holds the 
   twice, the audit), and local checks no longer mutate, so a batch is a whole class or a functional cluster of
   about 15–30 methods (the remaining Function methods; whole MatVal or MatDim operations), one commit per batch.
   Its single mutation pass is the gate's.
+  Pick it with `python3 tools/validation/batch_picker.py <method-coverage.json> --type-prefix Quire.Mpl. --type-prefix
+  Quire.Mcd.` (or `--method-type <Type>`): remaining Tier A members ranked by gain, members with exact IL that only
+  need a comparison first, then leaf callees first, plus totals per type.
 - **Phase branches.** A run that includes the phase profile goes stale on any concurrent code merge and takes much
   longer, so batch Windows-project work more aggressively, and expect the one-shot fallback more often.
 - **Mutation scope** is unchanged: changed methods, comparing tests, direct callers and field readers. A broad
