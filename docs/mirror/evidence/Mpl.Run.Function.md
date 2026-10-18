@@ -65,11 +65,51 @@ The protected state fields `m_purity`, `m_n`, `m_no_vectorize`, `m_minargs`, `m_
 | `VecApply(object[])` | 0x060001d0 | Applies vectorization or bypasses it when vectorization is ignored. | Current focused run directly compared vectorized and ignored-vectorization paths. | Verified |
 | `AsDelegate_1()` | 0x060001dd | Returns the one-argument delegate projection. | Current focused run directly compared success and too-few-arguments failure. | Verified |
 | `AsDelegate_2()` | 0x060001de | Returns the two-argument delegate projection. | Current focused run directly compared success and too-few-arguments failure. | Verified |
+| `Mpl.Run.UnaryDelegateFunction..ctor(F<object, object>)` | 0x0600020f | Initializes UnaryDelegateFunction with delegate and purity 1. | Direct comparison of constructor invocation. Exact IL match. | Verified |
+| `Mpl.Run.UnaryDelegateFunction.inv<R, A>(out R, A)` | 0x06000210 | Invokes m_F with aa and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.UnaryDelegateFunction.app<R, A>(out R, A)` | 0x06000211 | Invokes m_F with aa and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.UnaryDelegateFunction.DynCall(object)` | 0x06000212 | Invokes m_F with aa. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.UnaryDelegateFunction.Premium()` | 0x06000213 | Wraps m_F with Delegates.Premium_1 and preserves MinArgs and m_no_vectorize. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.BinaryDelegateFunction..ctor(F<object, object, object>)` | 0x06000214 | Initializes BinaryDelegateFunction with delegate and purity 2. | Direct comparison of constructor invocation. Exact IL match. | Verified |
+| `Mpl.Run.BinaryDelegateFunction.inv<R, A, B>(out R, A, B)` | 0x06000215 | Invokes m_F with aa, bb and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.BinaryDelegateFunction.app<R, A, B>(out R, A, B)` | 0x06000216 | Invokes m_F with aa, bb and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.BinaryDelegateFunction.DynCall(object, object)` | 0x06000217 | Invokes m_F with aa, bb. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.BinaryDelegateFunction.Premium()` | 0x06000218 | Wraps m_F with Delegates.Premium_2 and preserves MinArgs and m_no_vectorize. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.TernaryDelegateFunction..ctor(F<object, object, object, object>)` | 0x06000219 | Initializes TernaryDelegateFunction with delegate and purity 3. | Direct comparison of constructor invocation. Exact IL match. | Verified |
+| `Mpl.Run.TernaryDelegateFunction.inv<R, A, B, C>(out R, A, B, C)` | 0x0600021a | Invokes m_F with aa, bb, cc and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.TernaryDelegateFunction.app<R, A, B, C>(out R, A, B, C)` | 0x0600021b | Invokes m_F with aa, bb, cc and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.TernaryDelegateFunction.DynCall(object, object, object)` | 0x0600021c | Invokes m_F with aa, bb, cc. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.TernaryDelegateFunction.Premium()` | 0x0600021d | Wraps m_F with Delegates.Premium_3 and preserves MinArgs and m_no_vectorize. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.QuartnaryDelegateFunction..ctor(F<object, object, object, object, object>)` | 0x0600021e | Initializes QuartnaryDelegateFunction with delegate and purity 4. | Direct comparison of constructor invocation. Exact IL match. | Verified |
+| `Mpl.Run.QuartnaryDelegateFunction.inv<R, A, B, C, D>(out R, A, B, C, D)` | 0x0600021f | Invokes m_F with aa, bb, cc, dd and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.QuartnaryDelegateFunction.app<R, A, B, C, D>(out R, A, B, C, D)` | 0x06000220 | Invokes m_F with aa, bb, cc, dd and casts to R. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.QuartnaryDelegateFunction.DynCall(object, object, object, object)` | 0x06000221 | Invokes m_F with aa, bb, cc, dd. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.QuartnaryDelegateFunction.Premium()` | 0x06000222 | Wraps m_F with Delegates.Premium_4 and preserves MinArgs and m_no_vectorize. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction..ctor(Function)` | 0x06000238 | Initializes PremiumFunction wrapping inner function. | Direct comparison of constructor invocation. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.get_Name()` | 0x06000239 | Forwards to m_func.Name. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.invVec<R>(out R, object[])` | 0x0600023a | Checks premium then forwards to m_func.invVec. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object)` | 0x0600023b | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object)` | 0x0600023c | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object)` | 0x0600023d | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object)` | 0x0600023e | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object)` | 0x0600023f | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object)` | 0x06000240 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object)` | 0x06000241 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object)` | 0x06000242 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object)` | 0x06000243 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object)` | 0x06000244 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object)` | 0x06000245 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000246 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000247 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000248 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000249 | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.PremiumFunction.DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x0600024a | Checks premium then forwards to m_func.DynCall. | Direct comparison. Exact IL match. | Verified |
 
 ## Test cases
 
 `Function_formatting_identity_and_inverse_links` compares formatting, canonical names, the actual `DelegateFunction.get_Name` override and both of its branches, string conversion, and inverse linking. `Function_application_optional_padding_and_delegate_projection` compares arity accessors, `get_IsFunction`, `OptFunc`, application, `InvokeVec`, and delegate projections.
 `DelegateFunctionDifferentialTests` compares all 31 remaining methods of `DelegateFunction`: 17 generic `inv` overloads (both direct `F<...>` and fallback `DynamicInvoke` paths, matching Release IL opcodes), `invVec`, `app0` (purity 0 and 1), `clo`, `remove_module_suffix`, `.ctor(Delegate, int)`, 5 `make`/`makeF` factory methods, and 4 `AsF` delegate projections (both match and fallback paths). All 32 methods of `DelegateFunction` are verified.
+`DelegateSubclassesDifferentialTests` compares all 39 methods of `UnaryDelegateFunction`, `BinaryDelegateFunction`, `TernaryDelegateFunction`, `QuartnaryDelegateFunction`, and `PremiumFunction`: constructors, `inv`, `app`, `DynCall`, `Premium`, `get_Name`, `invVec`, and all 16 `DynCall` overloads. All 39 methods are verified.
 
 ## Current focused audit
 
