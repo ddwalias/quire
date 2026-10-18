@@ -7,6 +7,12 @@ namespace Quire.Mpl.Run;
 
 internal partial class Instruction
 {
+    [MirrorVerified("InstructionEmitCodeDifferentialTests")]
+    public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator il)
+    {
+        il.Emit(m_op);
+    }
+
     [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
     protected OpCode m_op;
 
@@ -33,6 +39,12 @@ internal partial class Instruction
 
     partial class InstructionArgType
     {
+        [MirrorVerified("InstructionEmitCodeDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator il)
+        {
+            il.Emit(m_op, m_type);
+        }
+
         [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
         private Type m_type;
 
@@ -45,6 +57,12 @@ internal partial class Instruction
 
     partial class InstructionArgInt
     {
+        [MirrorVerified("InstructionEmitCodeDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator il)
+        {
+            il.Emit(m_op, m_int);
+        }
+
         [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
         protected int m_int;
 
@@ -57,6 +75,12 @@ internal partial class Instruction
 
     partial class InstructionArgField
     {
+        [MirrorVerified("InstructionEmitCodeDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator il)
+        {
+            il.Emit(m_op, m_field);
+        }
+
         [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
         private FieldInfo m_field;
 
@@ -69,6 +93,12 @@ internal partial class Instruction
 
     partial class InstructionArgCtor
     {
+        [MirrorVerified("InstructionEmitCodeDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator il)
+        {
+            il.Emit(m_op, m_ctor);
+        }
+
         [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
         private ConstructorInfo m_ctor;
 

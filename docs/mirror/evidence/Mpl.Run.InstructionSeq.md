@@ -7,8 +7,12 @@
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
 | `.ctor(Instruction[])` | 0x06000350 | MemberGen: `m_ops = ops;` | Mechanical; Release IL equals Mathcad's | Verified |
+| `EmitCode(ILGenerator)` | 0x06000351 | Indexed loop dispatches each `m_ops[i].EmitCode(il)` | Directly compared using recording generators; exact Release IL | Verified |
 
 ## Test cases
 
-**Observed** (`MplRunInstructionSeqMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
-parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+**Observed** (`MplRunInstructionSeqMechanicalDifferentialTests`): the constructor on generated inputs (Mechanical: zero,
+null and distinct values per parameter and field), comparing the result and target fields.
+
+**Observed** (`InstructionEmitCodeDifferentialTests`): compares a five-instruction sequence containing each operand
+form using test recording subclasses of Quire and Mathcad `ILGenerator`, including emitted order and argument state.

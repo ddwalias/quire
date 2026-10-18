@@ -833,6 +833,14 @@ Original `mplrun.dll` inspected with ilspycmd on 2026-10-17; identity is the one
 - Independent full-diff review returned MERGE at `73ee62059078`. Runtime gate passed on base `50c84d8` / tip `73ee62059078` and merged to main at `a6121c2`; main was pushed. Receipt `/tmp/quire-gate-results-cm403w81/gate.json`, run `27d55cfc-db75-4a75-8039-b8a2e7e3d409`; summary `/tmp/quire-gate-results-cm403w81/run/summary.json`. Harness 94, Mpl 188 and Differential 365 passed with no failures/skips; 1,217 methods compared, 1,530 exact, 91 structure-only, 500 missing, 103 structure mismatches, 13 uncovered and 43 verified unsupported; lint 0, integrity complete and ratchet OK. All 5/5 selected mutants were killed; one timed out in parallel and was killed on serial retry, with no survivors or crashes. No baseline-exact method regressed; no proposals.
 - Next: continue with the independent `MplForeignMacro` work and then another unowned Lane A member.
 
+## Instruction IL emission batch (`mirror/a-instruction-emit`) — maintainer blocker
+
+- Scope: six bodies: `Instruction.EmitCode`, the `InstructionArgType`, `InstructionArgInt`, `InstructionArgField` and `InstructionArgCtor` overrides, and `InstructionSeq.EmitCode`.
+- Original reference: `mplrun.dll` SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`; tokens 0x06000353, 0x06000734, 0x06000736, 0x06000738, 0x0600073a and 0x06000351. Each instruction body forwards the exact stored opcode and operand to the matching `ILGenerator.Emit` overload; `InstructionSeq` uses an indexed loop and dispatches each stored instruction.
+- Direct tests: `InstructionEmitCodeDifferentialTests` uses recording subclasses for both artifacts, compares the opcode and operand for each form, and compares a sequence containing all forms in order. Targeted Windows test run passed 2/2. Scoped focused validation passed Harness 94, Mpl 188 and Differential 13; 9 compared, 9 exact, no missing/uncovered/unsupported, ratchet ok. However, `integrity.json` reports 21 `forbidden test API` lint hits for `System.Reflection.Emit` and its recorder calls in the differential test. The gate cannot accept this branch until the maintainer provides a protected, policy-approved way to test these `EmitCode` bodies with an observable generator. The implementation and tests remain on the batch branch; no exception was made to the lint rule.
+- Exact Release IL before/after: all six changed methods match Mathcad exactly. The nine methods compared in the scoped audit are exact; no method structure mismatch. No mutation pass was run because integrity blocks the batch.
+- Next: continue to another independent Lane A member while the maintainer resolves the test API policy.
+
 ## Historical batch results
 
 These are results recorded at the named historical merges, not current completion claims. The old
