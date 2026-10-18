@@ -79,7 +79,7 @@ no term is interned or copied. `Visitor` is the double-dispatch base; `Factory` 
 | `Parser.Parse()` | 0x06000780 | `6e0e8e29` | An application, then, if an arrow follows, a function to the recursively parsed rest (right-associative). | High | Tested |
 | `Parser.ParseApplication()` | 0x06000781 | `ac3cce0b` | An atomic head, then atomic operands while the lookahead is a name, `{`, `[` or `(`; the head alone when there are none. | High | Tested |
 | `Parser.ParseAtomic()` | 0x06000782 | `2d32776e` | Constant, variable, list `[t]`, product `{…}` (variable powers first, then constant powers, each with an optional exponent) or tuple `(…)`. Closing brackets are consumed without checking what they are. Anything else throws "ParseAtomic: syntax error". | High | Tested |
-| `Parser.ParseExponent()` | 0x06000783 | `5cbeeb15` | An optional `-` then optional digits; 1 by default, a lone `-` is −1. Digits past int range throw `OverflowException`. | High | Tested |
+| `Parser.ParseExponent()` | 0x06000783 | `5cbeeb15` | An optional `-` then optional digits; 1 by default, a lone `-` is −1. Digits past int range throw `OverflowException`. | High; directly compared for `-12`, `5`, empty, `0`, an overflowing integer, and `junk`; other sign/digit strings are not established by these cases. | Verified |
 | `Parser.IsNextToken(string)` | 0x06000784 | `3054af1f` | Fills the lookahead if empty and reports whether its kind is in the set, without consuming it. | High | Tested |
 | `Parser.GetNextToken()` | 0x06000785 | `ff43174d` | Consumes the lookahead if there is one, else reads a token. | High | Tested |
 | `Parser.GetNextTokenIf(string)` | 0x06000786 | `a4812021` | Consumes the lookahead only when its kind is in the set. | High | Tested |

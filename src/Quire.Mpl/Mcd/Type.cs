@@ -486,7 +486,7 @@ public abstract partial class Type
         }
 
         /// <summary>An optional <c>-</c> and optional digits, 1 by default (a lone <c>-</c> is −1).</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private int ParseExponent()
         {
             int exponent = 1;
