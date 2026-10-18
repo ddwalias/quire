@@ -339,6 +339,24 @@ class StaleAcceptedTests(unittest.TestCase):
                          'no such method')
 
 
+class SurvivorDetailsTests(unittest.TestCase):
+    def test_each_survivor_with_its_repository_line_and_text(self):
+        from validate import survivor_details
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root).resolve()
+            (root / 'src').mkdir()
+            (root / 'src/T.cs').write_text('class T {\n    int M(int a) => a + 1;\n}\n')
+            mutation = {'survivors': ['T::M@IL_0002 add -> sub', 'T::N@IL_0000 nop', 'T::O@IL_0000 nop'], 'mutants': [
+                {'key': 'T::M@IL_0002 add -> sub', 'line': f'{root}/src/T.cs:2'},
+                {'key': 'T::K@IL_0000 nop', 'line': f'{root}/src/T.cs:1'},  # killed or accepted: not listed
+                {'key': 'T::N@IL_0000 nop', 'line': None},
+                {'key': 'T::O@IL_0000 nop', 'line': '/elsewhere/T.cs:2'}]}
+            self.assertEqual(survivor_details(mutation, root), [
+                {'key': 'T::M@IL_0002 add -> sub', 'location': 'src/T.cs:2', 'source': 'int M(int a) => a + 1;'},
+                {'key': 'T::N@IL_0000 nop', 'location': None, 'source': None},
+                {'key': 'T::O@IL_0000 nop', 'location': None, 'source': None}])
+
+
 class VerdictTests(unittest.TestCase):
     BASE = dict(projects=[dict(project='P', exit_code=0, passed=3, failed=0, skipped=0)], ratchet=dict(ok=True, regressions=[]),
                 mutation=dict(survivors=[], proposed_survivors=[]), executed_unreachable=[],

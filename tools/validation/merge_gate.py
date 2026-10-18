@@ -626,7 +626,10 @@ def verdict(summary):
         reasons.append('validation used --proposed-unreachable; only unreachable-lines.txt may exempt a line')
     reasons += [f'listed unreachable line executed: {e}' for e in summary.get('executed_unreachable', [])]
     if summary.get('mutation', {}).get('survivors'):
-        reasons += [f'surviving mutant: {s}' for s in summary['mutation']['survivors']]
+        where = {d['key']: d for d in summary['mutation'].get('survivor_details') or []}
+        reasons += [f'surviving mutant: {s}' + (f" at {where[s]['location']}" if where.get(s, {}).get('location') else '')
+                    + (f": {where[s]['source']}" if where.get(s, {}).get('source') else '')
+                    for s in summary['mutation']['survivors']]
     if not reasons and not summary.get('gate_passed'):
         reasons.append('validator did not report gate_passed')
     return reasons

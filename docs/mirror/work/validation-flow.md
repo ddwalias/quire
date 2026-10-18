@@ -157,5 +157,8 @@ a row falls back to the one-shot `--apply`, which cannot go stale but holds the 
   rewrite such as an idiom cleanup changes IL in hundreds of methods and is legitimately long (gate37: 1,326
   mutants, 68 minutes); with the lock covering only landing, it no longer blocks other lanes. The nightly
   `merge_gate.py --nightly` covers the residual risk of the narrow selection.
+- **Survivors, all at once.** A gate run (or local `--mutate`) lists every surviving mutant with its `file:line` and
+  source line, just before the verdict line, in the gate's reasons, and in `summary.json`
+  (`mutation.survivor_details`), so fix them all before gating again.
 - **The differential suite runs twice** on purpose: coverage instrumentation changes the assembly hash and method
   tokens that the case records need (measured; see validation.md).

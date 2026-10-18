@@ -166,6 +166,14 @@ class MergeGateTests(unittest.TestCase):
             with self.subTest(reason=reason):
                 self.assertTrue(any(reason in r for r in verdict(summary)), verdict(summary))
 
+    def test_surviving_mutants_name_their_source_line(self):
+        survivors = ['T::M()@IL_0004 add -> sub', 'T::N()@IL_0002 nop']
+        details = [dict(key=survivors[0], location='src/T.cs:9', source='return a + b;'),
+                   dict(key=survivors[1], location=None, source=None)]
+        self.assertEqual(verdict(dict(PASSED, mutation={'survivors': survivors, 'survivor_details': details})),
+                         ['surviving mutant: T::M()@IL_0004 add -> sub at src/T.cs:9: return a + b;',
+                          'surviving mutant: T::N()@IL_0002 nop'])
+
 
 class RepositoryTests(unittest.TestCase):
     """Against a scratch repository: `main` holds a baseline and the protected rules; `work` adds a document."""

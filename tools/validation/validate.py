@@ -459,6 +459,30 @@ def changed_methods(coverage, name_status, baseline, sources=None, test_types=No
     return reasons, notes
 
 
+def survivor_details(mutation, root=ROOT):
+    """Each surviving mutant (neither accepted nor proposed) with where it is: `file:line` relative to the repository,
+    from the sequence point MethodAudit found for its instruction in the Debug build (the mutant's `line`), and that
+    line's text; None for either when unknown. A lane fixes them all before the next gate run."""
+    from method_coverage import relative
+    survivors = set(mutation.get("survivors") or [])
+    details = []
+    for result in mutation.get("mutants") or []:
+        if result["key"] not in survivors:
+            continue
+        location = source = None
+        file, _, number = (result.get("line") or "").rpartition(":")
+        path = relative(file, root) if file else None
+        if path and number.isdigit():
+            location = f"{path}:{number}"
+            try:
+                lines = (Path(root) / path).read_text(encoding="utf-8-sig").splitlines()
+                source = lines[int(number) - 1].strip() if 0 < int(number) <= len(lines) else None
+            except (OSError, UnicodeError):
+                pass
+        details.append({"key": result["key"], "location": location, "source": source})
+    return details
+
+
 def verdict(report):
     """The one-line answer a run gives: whether its own checks held (tests, ratchet, mutation, unreachable lines),
     and what the merge gate would make of the same results. `gate` follows the exit status: `would pass` (0,
@@ -873,6 +897,7 @@ def main():
             report["mutation"]["jobs"] = mutation["jobs"]
             report["mutation"]["requested_jobs"] = args.jobs
             report["mutation"]["complete"] = mutation["complete"]
+            report["mutation"]["survivor_details"] = survivor_details(mutation)
             # Proposed survivors keep the run incomplete, but only accepted-mutants.txt is gate-relevant; the merge
             # gate never passes proposals anyway.
             mutation_ok = not mutation["survivors"]
@@ -920,6 +945,12 @@ def main():
                                  "local_checks": "fail", "gate": "would block", "reasons": [repr(error)],
                                  "pending_approval": []}
         (output / "summary.json").write_text(json.dumps(report, indent=2) + "\n")
+        survivors = (report.get("mutation") or {}).get("survivor_details") or []
+        if survivors:
+            print(f"Surviving mutants ({len(survivors)}):", flush=True)
+            for survivor in survivors:
+                print(f"  {survivor['location'] or '(no source line)'}  {survivor['key']}"
+                      + (f"\n      {survivor['source']}" if survivor["source"] else ""), flush=True)
         print(f"Report: {output / 'summary.json'}", flush=True)
         print(report["verdict"]["line"], flush=True)
 

@@ -462,7 +462,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         return {'key': key(method, mutant), 'outcome': outcome,
                 'accepted': listed(accepted_keys, method, mutant, 'accepted'),
                 'proposed': listed(proposed, method, mutant, 'proposed'), 'timeout_seconds': round(seconds),
-                'cached': cached}
+                'cached': cached, 'line': mutant.get('line')}
 
     # Each worker owns one copy and takes the next mutant from a shared queue, so a slow mutant idles nobody else.
     pending = queue.Queue()

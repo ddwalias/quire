@@ -292,7 +292,7 @@ foreach (var (artifact, raw, type, method, status, exclusion, original, counterp
         mutants = raw.BodyRva == 0 || exclusion != null && Owner(raw.Owner, raw.Name) == null ? []
             : Mutants.Find(artifact.Pe, artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)))
                 .Select(m => new { il_offset = m.IlOffset, file_offset = m.FileOffset, original = m.Original,
-                    replacement = m.Replacement, description = m.Description }).ToList()
+                    replacement = m.Replacement, description = m.Description, line = artifact.Line(raw.Token, m.IlOffset) }).ToList()
     });
 }
 // Top-level types compiled into the differential test assembly, with the source files their methods come from, so

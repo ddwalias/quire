@@ -171,6 +171,12 @@ class MutationTests(unittest.TestCase):
         survivor = key(self.method, self.method['mutants'][1])
         self.assertTrue(self.mutate({survivor: (BODY, 'dead branch')})['complete'])
 
+    def test_results_carry_the_mutant_source_line(self):
+        self.method['mutants'][1]['line'] = '/repo/src/T.cs:9'
+        lines = {r['key']: r['line'] for r in self.mutate(use_cache=False)['mutants']}
+        self.assertEqual(lines[key(self.method, self.method['mutants'][1])], '/repo/src/T.cs:9')
+        self.assertIsNone(lines[key(self.method, self.method['mutants'][0])])
+
     def test_proposed_survivors_reported_apart(self):
         survivor = key(self.method, self.method['mutants'][1])
         killed = key(self.method, self.method['mutants'][0])
