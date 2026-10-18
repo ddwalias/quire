@@ -73,17 +73,17 @@ no term is interned or copied. `Visitor` is the double-dispatch base; `Factory` 
 | `Factory.NewList(Type)` | 0x0600077a | `646676f0` | `[]` applied to the element. | High | Verified |
 | `Factory.NewProduct(int, int)` | 0x0600077b | `654c8f11` | Pops `v + c` (exponent, base) pairs into a product, last pair last, with `v` variable powers. A term where an exponent is expected throws `InvalidCastException`. | High | Verified |
 | `Factory.ctor()` | 0x0600077c | `c061bc4a` | An empty stack of capacity 32. | High | Verified |
-| `Lexer.ctor(string)` | 0x0600077d | `4cee5f4c` | Appends a `$` sentinel to the input and starts at offset 0. A null input becomes just the sentinel. | High | Tested |
-| `Lexer.GetToken(out string)` | 0x0600077e | `91aa9ddf` | Skips white space, then returns a token kind and its lexeme: `C` for a letter-or-digit run starting with an upper-case letter, `a` for one starting with any other letter, `i` for a digit run, `>` for `->`, the character itself otherwise (a lone `-` included). At the sentinel it returns `$` and does not advance, so an embedded `$` reads as end of input. | High | Tested |
-| `Parser.ctor(string)` | 0x0600077f | `ec5df1eb` | A new factory and lexer, no lookahead. | High | Tested |
+| `Lexer.ctor(string)` | 0x0600077d | `4cee5f4c` | Appends a `$` sentinel to the input and starts at offset 0. A null input becomes just the sentinel. | High; directly compared with `V{Length}`. Other constructor inputs are not established. | Verified |
+| `Lexer.GetToken(out string)` | 0x0600077e | `91aa9ddf` | Skips white space, then returns a token kind and its lexeme: `C` for a letter-or-digit run starting with an upper-case letter, `a` for one starting with any other letter, `i` for a digit run, `>` for `->`, the character itself otherwise (a lone `-` included). At the sentinel it returns `$` and does not advance, so an embedded `$` reads as end of input. | High; directly compared for 20 token reads across `V{Length 60000}` and `-> , -12 abc123   spaces   () [] {} $`; other source strings are not established. | Verified |
+| `Parser.ctor(string)` | 0x0600077f | `ec5df1eb` | A new factory and lexer, no lookahead. | High; directly compared with `V{Length 60000}`. Other constructor inputs are not established. | Verified |
 | `Parser.Parse()` | 0x06000780 | `6e0e8e29` | An application, then, if an arrow follows, a function to the recursively parsed rest (right-associative). | High; directly compared for function, product, tuple, list, application, vector dimension, and product with variable/constant exponents. Other signatures are not established by these cases. | Verified |
-| `Parser.ParseApplication()` | 0x06000781 | `ac3cce0b` | An atomic head, then atomic operands while the lookahead is a name, `{`, `[` or `(`; the head alone when there are none. | High | Tested |
-| `Parser.ParseAtomic()` | 0x06000782 | `2d32776e` | Constant, variable, list `[t]`, product `{…}` (variable powers first, then constant powers, each with an optional exponent) or tuple `(…)`. Closing brackets are consumed without checking what they are. Anything else throws "ParseAtomic: syntax error". | High | Tested |
+| `Parser.ParseApplication()` | 0x06000781 | `ac3cce0b` | An atomic head, then atomic operands while the lookahead is a name, `{`, `[` or `(`; the head alone when there are none. | High; directly compared for `F a b`, `a->b`, `a->b->c`, `a`, and `(a, b)`; other applications are not established. | Verified |
+| `Parser.ParseAtomic()` | 0x06000782 | `2d32776e` | Constant, variable, list `[t]`, product `{…}` (variable powers first, then constant powers, each with an optional exponent) or tuple `(…)`. Closing brackets are consumed without checking what they are. Anything else throws "ParseAtomic: syntax error". | High; directly compared for 12 constant, variable, list, tuple, product, empty, grouped and nested forms listed in `TypeDifferentialTests`; other atomic forms are not established. | Verified |
 | `Parser.ParseExponent()` | 0x06000783 | `5cbeeb15` | An optional `-` then optional digits; 1 by default, a lone `-` is −1. Digits past int range throw `OverflowException`. | High; directly compared for `-12`, `5`, empty, `0`, an overflowing integer, and `junk`; other sign/digit strings are not established by these cases. | Verified |
-| `Parser.IsNextToken(string)` | 0x06000784 | `3054af1f` | Fills the lookahead if empty and reports whether its kind is in the set, without consuming it. | High | Tested |
-| `Parser.GetNextToken()` | 0x06000785 | `ff43174d` | Consumes the lookahead if there is one, else reads a token. | High | Tested |
-| `Parser.GetNextTokenIf(string)` | 0x06000786 | `a4812021` | Consumes the lookahead only when its kind is in the set. | High | Tested |
-| `Parser.SkipToken(char)` | 0x06000787 | `39812059` | Consumes one token, ignoring the expected kind. | High | Tested |
+| `Parser.IsNextToken(string)` | 0x06000784 | `3054af1f` | Fills the lookahead if empty and reports whether its kind is in the set, without consuming it. | High; directly compared once on source `V{Length 60000}` with token set `V`; the uppercase token is categorized as `C`, so this case does not match. Other token sets/lookahead states are not established. | Verified |
+| `Parser.GetNextToken()` | 0x06000785 | `ff43174d` | Consumes the lookahead if there is one, else reads a token. | High; directly compared once with a pending lookahead token after `IsNextToken`; other token states are not established. | Verified |
+| `Parser.GetNextTokenIf(string)` | 0x06000786 | `a4812021` | Consumes the lookahead only when its kind is in the set. | High; directly compared once on source `V{Length 60000}` with token set `V` and pending token kind `C`; this case does not match. Matching token cases are not established. | Verified |
+| `Parser.SkipToken(char)` | 0x06000787 | `39812059` | Consumes one token, ignoring the expected kind. | High; directly compared once with expected `{` and the next token from `V{Length 60000}` (`{`); other token states are not established. | Verified |
 | `Printer.ctor(StringBuilder)` | 0x06000788 | `0b274f70` | Keeps the builder. | High | Tested |
 | `Printer.Visit(Constant)` | 0x06000789 | `61825178` | Appends the name. | High | Tested |
 | `Printer.Visit(Variable)` | 0x0600078a | `61825178` | Appends the name. | High | Tested |
@@ -95,12 +95,12 @@ no term is interned or copied. `Visitor` is the double-dispatch base; `Factory` 
 | `Formatter.OnFunction(Type, int)` | 0x06000790 | `b2e19e7c` | Pushes each curried domain while the term is a function, then prints `ƒ(d1, d2, …) → ` and the final range. | High | Tested |
 | `Formatter.Visit(Product)` | 0x06000791 | `f73dc225` | `Unitless` for no powers; otherwise the variable powers, then the quantities of the system's simplified units, joined by ` · `, each with `^exponent` unless 1. Dimensions the system doesn't know throw `ArgumentException` "bad dimension". | High | Tested |
 
-**Private helpers.** `Take`, `Lexer`, `Parser`, `Printer` and `Formatter` are private in both assemblies. The
-differential test doesn't call them; it reaches them through `Parse`, `ToString` and the three `Format` overloads
-over every signature listed below, so their behaviour is compared through those entry points, and their status
-stays Tested. The same holds for the four `Accept` overrides and the `Visitor` base, which `ToString` and `Format`
-dispatch through. The indexer is compared directly by the differential test but carries `[MirrorTested]` in the
-source.
+**Private helpers.** `Take` is a private method; `Lexer`, `Parser`, `Printer` and `Formatter` are private nested
+types in both assemblies. `TypeDifferentialTests` invokes many of their members directly through reflection and also exercises
+these helpers through `Parse`, `ToString` and the three `Format` overloads. Each status remains case-limited to its
+recorded direct comparisons; indirect calls alone do not establish a member's Verified status. The four `Accept`
+overrides and `Visitor.Traverse` are also directly compared. The indexer is directly compared but carries
+`[MirrorTested]` in the source.
 
 **Token order.** The four `Visitor.Visit` overloads share one body, and so do the two `Printer.Visit` overloads for
 names; their rows follow declaration order (Constant, Variable, Application, Product). The three

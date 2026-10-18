@@ -367,14 +367,14 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         private int m_off;
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public Lexer(string signature)
         {
             m_src = signature + "$";
             m_off = 0;
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public char GetToken(out string lexeme)
         {
             char c = m_src[m_off];
@@ -426,7 +426,7 @@ public abstract partial class Type
         [MirrorTested("Mcd.Type")]
         private string m_val;
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public Parser(string signature)
         {
             m_fac = new Factory();
@@ -444,7 +444,7 @@ public abstract partial class Type
         }
 
         /// <summary>An atomic term followed by atomic operands while the next token can start one.</summary>
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private Type ParseApplication()
         {
             var head = ParseAtomic();
@@ -453,7 +453,7 @@ public abstract partial class Type
             return operands == 0 ? head : m_fac.NewApplication(head, operands);
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private Type ParseAtomic()
         {
             switch (GetNextToken())
@@ -495,14 +495,14 @@ public abstract partial class Type
             return exponent;
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private bool IsNextToken(string tokens)
         {
             if (m_tok == '$') m_tok = m_lex.GetToken(out m_val);
             return tokens.IndexOf(m_tok) != -1;
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private char GetNextToken()
         {
             if (m_tok != '$')
@@ -514,7 +514,7 @@ public abstract partial class Type
             return m_lex.GetToken(out m_val);
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private bool GetNextTokenIf(string tokens)
         {
             if (!IsNextToken(tokens)) return false;
@@ -522,7 +522,7 @@ public abstract partial class Type
             return true;
         }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         private void SkipToken(char token) => GetNextToken();
     }
 
