@@ -118,6 +118,23 @@
 | `AsF<R, A, B>(uint)` | 0x060001da | Returns typed 2-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
 | `AsF<R, A, B, C>(uint)` | 0x060001db | Returns typed 3-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
 | `AsF<R, A, B, C, D>(uint)` | 0x060001dc | Returns typed 4-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `app<R>(out R)` | 0x060001aa | Dispatches 0-argument application; raises null_application. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A>(out R, A)` | 0x060001ab | Dispatches 1-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B>(out R, A, B)` | 0x060001ac | Dispatches 2-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C>(out R, A, B, C)` | 0x060001ad | Dispatches 3-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D>(out R, A, B, C, D)` | 0x060001ae | Dispatches 4-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E>(out R, A, B, C, D, E)` | 0x060001af | Dispatches 5-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F>(out R, A, B, C, D, E, F)` | 0x060001b0 | Dispatches 6-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G>(out R, A, B, C, D, E, F, G)` | 0x060001b1 | Dispatches 7-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H>(out R, A, B, C, D, E, F, G, H)` | 0x060001b2 | Dispatches 8-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I>(out R, A, B, C, D, E, F, G, H, I)` | 0x060001b3 | Dispatches 9-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J>(out R, A, B, C, D, E, F, G, H, I, J)` | 0x060001b4 | Dispatches 10-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J, K>(out R, A, B, C, D, E, F, G, H, I, J, K)` | 0x060001b5 | Dispatches 11-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R, A, B, C, D, E, F, G, H, I, J, K, L)` | 0x060001b6 | Dispatches 12-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M)` | 0x060001b7 | Dispatches 13-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N)` | 0x060001b8 | Dispatches 14-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O)` | 0x060001b9 | Dispatches 15-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
+| `app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P)` | 0x060001ba | Dispatches 16-argument application or returns partial application closure. | Current focused run directly compared app dispatch. Exact IL match. | Verified |
 
 ## Test cases
 
@@ -126,6 +143,7 @@
 `FunctionInvApplyDifferentialTests` directly compares all 17 generic `inv` overloads (0x060001bc–0x060001cc) and all 16 `apply` overloads (0x06000193–0x060001a2) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 2 test facts, verifying exact parameter dispatch, `out R result` assignment, and return value consistency. All 33 methods have exact IL match in Release builds.
 `FunctionDynCallCallDifferentialTests` directly compares all 16 `Call` overloads (0x06000172–0x06000181) and all 16 `DynCall` overloads (0x06000161–0x06000170) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 2 test facts, verifying arity-checked full application and invocation dispatch. All 32 methods have exact IL match in Release builds.
 `FunctionCallTypedDifferentialTests` directly compares 16 typed generic `Call_k` overloads (0x06000183–0x06000192), `Call_vec<R>` (0x060001d2), 3 `Apply1` overloads (0x060001e7–0x060001e9), 6 `AsDelegate` projections (0x060001df–0x060001e4), and 4 `AsF` projections (0x060001d9–0x060001dc) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 3 test facts. All 30 methods have exact IL match in Release builds.
+`FunctionAppDifferentialTests` directly compares all 17 generic `app` overloads (0x060001aa–0x060001ba) against Mathcad Prime 12.0.1.0 `mplrun.dll` across full varargs dispatch, partial application closures, and null application handling. All 17 methods have exact IL match in Release builds.
 
 Current focused run passed Harness, Mpl, and the differential tests, with lint 0, ratchet ok and exact IL matches for all 33 methods.
 

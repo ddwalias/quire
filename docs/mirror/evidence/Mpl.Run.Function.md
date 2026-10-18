@@ -14,7 +14,7 @@ The protected state fields `m_purity`, `m_n`, `m_no_vectorize`, `m_minargs`, `m_
 | `get_MinArgs()` | 0x0600014a | Returns the minimum accepted arity. | Direct comparison before optional arity is lowered. | Verified |
 | `get_Varargs()` | 0x0600014b | Returns whether the function accepts arbitrary arity. | Direct comparison on a fixed-arity delegate fixture. | Verified |
 | `get_IsFunction()` | 0x0600015a | Returns this function instance. | Direct comparison on a concrete delegate function. | Verified |
-| `get_Name()` | 0x0600014c | Returns the stored name or the virtual subclass name. | Base implementation is not directly invoked here because concrete Function subclasses override this getter. | Analyzed |
+| `get_Name()` | 0x0600014c | Returns the stored name or "<anonymous>" if unset. | Directly compared on Fn_tuple instance for both unset and custom name cases. Exact IL match. | Verified |
 | `set_Name(string)` | 0x0600014d | Stores the supplied name. | Current focused run directly compared the setter and rendered target state. | Verified |
 | `ToString()` | 0x0600014e | Returns `Function: ` followed by `Name`. | Current focused run directly compared the result. IL differs in string construction; recorded below. | Verified |
 | `format_vector(object[])` | 0x0600014f | Returns `[]` for null or empty input; a singleton is interpolated; multiple values call `ToString()` on the first value and interpolate subsequent values between brackets with commas. | Current focused run directly compared null, empty, singleton, multiple values, first-element null exception and later null interpolation. IL differs in string construction; recorded below. | Verified |
@@ -120,6 +120,8 @@ The protected state fields `m_purity`, `m_n`, `m_no_vectorize`, `m_minargs`, `m_
 | `Mpl.Run.Function.ConstantFunction(object)` | 0x060001d7 | Factory creating FnConstant wrapping value. | Direct comparison. Exact IL match. | Verified |
 | `Mpl.Run.Function.Fixpoint(Function)` | 0x060001e5 | Factory creating recursive fixpoint closure. | Direct comparison. Exact IL match. | Verified |
 | `Mpl.Run.Function.Compose(Function, Function)` | 0x060001e6 | Factory creating FnCompose wrapping f and g. | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.Call()` | 0x06000171 | Zero-argument Call; raises "Not Implemented". | Direct comparison. Exact IL match. | Verified |
+| `Mpl.Run.Function.DynCall()` | 0x06000160 | Zero-argument DynCall; raises "Not Implemented". | Direct comparison. Exact IL match. | Verified |
 
 ## Test cases
 
@@ -127,6 +129,7 @@ The protected state fields `m_purity`, `m_n`, `m_no_vectorize`, `m_minargs`, `m_
 `DelegateFunctionDifferentialTests` compares all 31 remaining methods of `DelegateFunction`: 17 generic `inv` overloads (both direct `F<...>` and fallback `DynamicInvoke` paths, matching Release IL opcodes), `invVec`, `app0` (purity 0 and 1), `clo`, `remove_module_suffix`, `.ctor(Delegate, int)`, 5 `make`/`makeF` factory methods, and 4 `AsF` delegate projections (both match and fallback paths). All 32 methods of `DelegateFunction` are verified.
 `DelegateSubclassesDifferentialTests` compares all 39 methods of `UnaryDelegateFunction`, `BinaryDelegateFunction`, `TernaryDelegateFunction`, `QuartnaryDelegateFunction`, and `PremiumFunction`: constructors, `inv`, `app`, `DynCall`, `Premium`, `get_Name`, `invVec`, and all 16 `DynCall` overloads. All 39 methods are verified.
 `FunctionHelpersDifferentialTests` compares the 16 remaining Function helpers and factories: get_InverseFunction, set_InverseFunction, IgnoreVectorization, asFunction, IsFunctionN, asFunctionN, CheckPremium, Premium, Call_0, AssertFullApp, DynApply, CurryMatVal, UnCurryMatVal, ConstantFunction, Fixpoint, and Compose. All 16 methods are verified.
+`FunctionAppDifferentialTests` compares all 17 generic `app` overloads (0x060001aa–0x060001ba), `get_Name()` (0x0600014c), `Call()` (0x06000171), and `DynCall()` (0x06000160) directly against Mathcad Prime 12.0.1.0 `mplrun.dll`. All methods have exact IL match in Release builds.
 
 ## Current focused audit
 
