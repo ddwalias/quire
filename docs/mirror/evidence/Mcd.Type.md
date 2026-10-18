@@ -36,17 +36,17 @@ no term is interned or copied. `Visitor` is the double-dispatch base; `Factory` 
 | `Named.Name` | 0x06000755 | `a8e56ddb` | The `m_nam` field. | High | Verified |
 | `Named.ctor()` | 0x06000756 | `e6b9c09b` | Protected; leaves the name null. | High | Tested |
 | `Constant.ctor(string)` | 0x06000757 | `f79c28d6` | Stores the name, null included. Same body as `Variable.ctor`. | High | Verified |
-| `Constant.Accept(Visitor)` | 0x06000758 | `70c9ba18` | Calls the visitor's `Constant` overload. | High | Tested |
+| `Constant.Accept(Visitor)` | 0x06000758 | `70c9ba18` | Calls the visitor's `Constant` overload. | High; directly compared with a `Printer`, including its appended output for the recorded name. | Verified |
 | `Constant.IsImplicitArgument` | 0x06000759 | `d92fc96a` | True for the one-letter names C, O, P, T, U and W. | High | Verified |
 | `Variable.ctor(string)` | 0x0600075a | `f79c28d6` | Stores the name. | High | Verified |
-| `Variable.Accept(Visitor)` | 0x0600075b | `7034a4e1` | Calls the visitor's `Variable` overload. | High | Tested |
+| `Variable.Accept(Visitor)` | 0x0600075b | `7034a4e1` | Calls the visitor's `Variable` overload. | High; directly compared with a `Printer`, including its appended output for the recorded name. | Verified |
 | `Application.ctor(Type, Type[])` | 0x0600075c | `de3c6b2d` | Stores the operator and the operand array as given (no copy, nulls accepted). | High | Verified |
-| `Application.Accept(Visitor)` | 0x0600075d | `7f534216` | Calls the visitor's `Application` overload. | High | Tested |
+| `Application.Accept(Visitor)` | 0x0600075d | `7f534216` | Calls the visitor's `Application` overload. | High; directly compared with a `Printer`, including its appended output for the recorded application. | Verified |
 | `Application.IsImplicitArgument` | 0x0600075e | `26d741f6` | True when the operator's name is `I`. | High | Verified |
 | `Application.Name` | 0x0600075f | `a1b2dbde` | The operator's name. | High | Verified |
 | `Application.Arity` | 0x06000760 | `10f9b18e` | The operand count; a null operand array throws `NullReferenceException`. | High | Verified |
 | `Product.ctor(Power[], int)` | 0x06000761 | `22a66c0e` | Stores the array and the variable count `v`; the constant count is the rest. A null array throws `NullReferenceException`; `v` is not range-checked. | High | Verified |
-| `Product.Accept(Visitor)` | 0x06000762 | `fc7f20f3` | Calls the visitor's `Product` overload. | High | Tested |
+| `Product.Accept(Visitor)` | 0x06000762 | `fc7f20f3` | Calls the visitor's `Product` overload. | High; directly compared with a `Printer`, including its appended output for the recorded product. | Verified |
 | `Product.Name` | 0x06000763 | `4288c2da` | `{}`. | High | Verified |
 | `Product.IsMonomorphic` | 0x06000764 | `d1552a46` | No variable powers. | High | Verified |
 | `Product.IsPolymorphic` | 0x06000765 | `d45f4854` | Some variable powers (any nonzero count, negative included). | High | Verified |
@@ -123,6 +123,7 @@ or exception type and message):
 - `Constant` and `Variable` constructors on 10 names (empty, null, Greek, `COPTUW` among them), `Equals` and
   `CompareTo` across all pairs and across kinds, `Equals(null)`, `Equals(product)` and `GetHashCode`;
 - `Application` with empty and null operands, `Product` with a null array and with variable counts −1 to 3;
+- the four concrete `Accept` overrides with `Printer` visitors: `Constant("X")`, `Variable("y")`, an `F(a, b)` application and a two-power product; after each direct comparison the visitor output buffer is compared between artifacts;
 - the indexer, read and written, at operands −1 to 4 on six terms (applications, a function, a tuple, a variable
   and a product);
 - one script of `Factory` calls: every `New*` method, `Push` of terms and powers, `Pop` and `Pop(n)` including an

@@ -383,9 +383,13 @@ public class TypeDifferentialTests
         var mVariable = New(MNested("Variable"), "y");
 
         MethodComparison.Compare("Constant.Accept", Contract, qConstAccept, qConstant, [qVisitor], mConstAccept, mConstant, [mVisitor], Show, Show, State, State);
+        Assert.Equal(State(mVisitor), State(qVisitor));
         MethodComparison.Compare("Variable.Accept", Contract, qVarAccept, qVariable, [qVisitor], mVarAccept, mVariable, [mVisitor], Show, Show, State, State);
+        Assert.Equal(State(mVisitor), State(qVisitor));
         MethodComparison.Compare("Application.Accept", Contract, qAppAccept, qApp, [qVisitor], mAppAccept, mApp, [mVisitor], Show, Show, State, State);
+        Assert.Equal(State(mVisitor), State(qVisitor));
         MethodComparison.Compare("Product.Accept", Contract, qProdAccept, new QType.Product(qPowers, 1), [qVisitor], mProdAccept, New(MNested("Product"), mPowers, 1), [mVisitor], Show, Show, State, State);
+        Assert.Equal(State(mVisitor), State(qVisitor));
     }
 
     [SkippableFact]

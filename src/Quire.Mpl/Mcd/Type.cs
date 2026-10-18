@@ -159,7 +159,7 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         public override bool IsImplicitArgument => m_nam.Length == 1 && "COPTUW".IndexOf(m_nam) != -1;
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Accept(Visitor v) => v.Visit(this);
     }
 
@@ -169,7 +169,7 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         public Variable(string n) { m_nam = n; }
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Accept(Visitor v) => v.Visit(this);
     }
 
@@ -198,7 +198,7 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         public int Arity => Operands.Length;
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Accept(Visitor v) => v.Visit(this);
     }
 
@@ -239,7 +239,7 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         public Power[] Constants => Take(Powers, m_var, m_con);
 
-        [MirrorTested("Mcd.Type")]
+        [MirrorVerified("TypeDifferentialTests")]
         public override void Accept(Visitor v) => v.Visit(this);
 
         [Serializable]
