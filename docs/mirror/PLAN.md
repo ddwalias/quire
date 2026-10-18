@@ -82,19 +82,18 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      1. the lane agent runs scoped local mutation, writes each exact key or entry with its proof in a scratch file,
         passes it to local runs
         (`--proposed-mutants` / `--proposed-unreachable`), and pastes the same lines into the lane file;
-     2. an independent reviewer verifies each proof;
-     3. the user approves;
-     4. the maintainer (the Claude maintainer session, acting on that approval) adds them to `accepted-mutants.txt` /
+     2. the user approves;
+     3. the maintainer (the Claude maintainer session, acting on that approval) adds them to `accepted-mutants.txt` /
         `unreachable-lines.txt` on the branch and merges it through the gate with `--allow-protected`, checking that
         `gate.json` `protected_changed` lists only those two files.
 
      A run whose only blockers are pending proposals (`LOCAL CHECKS: pass · GATE: would block (N proposed … pending
-     approval)`) is the expected review state, not a failure: record the run in the lane file, hand the branch off
-     for review, and continue with other independent work on a new branch from `main`.
-   - **Review:** every merge needs one independent review of the whole diff (code, tests including adjacent and
-     diagnostic ones, docs, lane notes) by an agent other than the author. `src/` changes in types another lane owns
-     also need that lane owner's OK; protected-file changes need the maintainer. Reviewers do not run full mutation:
-     the merge gate is the mutation authority.
+     approval)`) is the expected approval state, not a failure: record the run in the lane file, hand the proposals
+     to the user, and continue with other independent work on a new branch from `main`.
+   - **Review:** there is no independent review step ([D14](decisions.md)); the merge gate is the check before
+     `main`. The author reads its complete diff before merging. `src/` changes in types another lane owns still
+     need that lane owner's OK; protected-file changes need the maintainer. D14 supersedes the review requirements
+     that remain in the prose-shortcut and two-batch sections.
    - **Two-batch integration:** the maintainer may combine at most two already-reviewed queued batches on a
      `mirror/integration-<unit>` branch from current `main`, preserving each batch's squashed commit. Each batch
      keeps its own branch, owner, coherent scope and checkpoint. Record the original and integrated commit ids,

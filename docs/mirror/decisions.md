@@ -36,6 +36,14 @@
   acceptance, not a legal confirmation. Generated source still follows PLAN §3c rule 3 (no decompiler
   artifacts), and no Mathcad IL is committed.
 
+- **D13 (2026-10-18):** The user accepts the licensing risk of copying the minimal set of Mathcad Prime files
+  that the nightly audit loads to the private repository, on the orphan branch `ci/mathcad-bin`, so GitHub-hosted
+  runners can run it. This is a risk acceptance, not a legal confirmation. The branch is never merged into `main`,
+  and Mathcad IL is still never committed.
+- **D14 (2026-10-18):** The user removed the independent-review step from the workflow. The merge gate is the
+  check before `main`; accepted mutants and unreachable lines need the lane's proof and the user's approval, with
+  no reviewer proof. This supersedes every earlier requirement for an independent review or reviewer verdict.
+
 ### Still open (none of these block Phase 0)
 
 - **D6: substitutes for commercial components** (§1.2). Fluent.Ribbon + AvalonDock for DevComponents, IPOPT or
