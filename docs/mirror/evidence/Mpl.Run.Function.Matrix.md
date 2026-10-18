@@ -2,7 +2,7 @@
 
 - **Original:** mplrun.dll 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
 - **Reference:** ilspycmd 11.1.0.9782 member index and C# view from `tools/reference/reference.py`.
-- **Quire:** [Function.cs](../../../src/Quire.Mpl/Run/Function.cs), [Function.Matrix.cs](../../../src/Quire.Mpl/Run/Function.Matrix.cs); tests: `FunctionMatrixDifferentialTests`, `FunctionAppVecDirectDifferentialTests`, `FunctionInvApplyDifferentialTests`, `FunctionDynCallCallDifferentialTests`.
+- **Quire:** [Function.cs](../../../src/Quire.Mpl/Run/Function.cs), [Function.Matrix.cs](../../../src/Quire.Mpl/Run/Function.Matrix.cs); tests: `FunctionMatrixDifferentialTests`, `FunctionAppVecDirectDifferentialTests`, `FunctionInvApplyDifferentialTests`, `FunctionDynCallCallDifferentialTests`, `FunctionCallTypedDifferentialTests`.
 
 `Function`'s matrix-call bridge routes `VecCall` through `MatVal.vectorize` when at least one argument is a matrix and vectorization is enabled. Scalar arguments use the matching dynamic call. `VecApply` vectorizes its argument vector unless `IgnoreVectorization(true)` has disabled that path. `IsFullyApplied` and `AssertFullApp` enforce the stored arity range; `OptFunc` changes its lower bound. The delegate projections validate their requested arity and return typed invocation delegates.
 
@@ -88,6 +88,36 @@
 | `DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x0600016e | Asserts full application and invokes function with 14 arguments via `app`. | Current focused run directly compared `DynCall` dispatch. Exact IL match. | Verified |
 | `DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x0600016f | Asserts full application and invokes function with 15 arguments via `app`. | Current focused run directly compared `DynCall` dispatch. Exact IL match. | Verified |
 | `DynCall(object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object)` | 0x06000170 | Asserts full application and invokes function with 16 arguments via `app`. | Current focused run directly compared `DynCall` dispatch. Exact IL match. | Verified |
+| `Call_1<R, A>(A)` | 0x06000183 | Invokes function with 1 argument via `app`. | Current focused run directly compared `Call_1` dispatch. Exact IL match. | Verified |
+| `Call_2<R, A, B>(A, B)` | 0x06000184 | Invokes function with 2 arguments via `app`. | Current focused run directly compared `Call_2` dispatch. Exact IL match. | Verified |
+| `Call_3<R, A, B, C>(A, B, C)` | 0x06000185 | Invokes function with 3 arguments via `app`. | Current focused run directly compared `Call_3` dispatch. Exact IL match. | Verified |
+| `Call_4<R, A, B, C, D>(A, B, C, D)` | 0x06000186 | Invokes function with 4 arguments via `app`. | Current focused run directly compared `Call_4` dispatch. Exact IL match. | Verified |
+| `Call_5<R, A, B, C, D, E>(A, B, C, D, E)` | 0x06000187 | Invokes function with 5 arguments via `app`. | Current focused run directly compared `Call_5` dispatch. Exact IL match. | Verified |
+| `Call_6<R, A, B, C, D, E, F>(A, B, C, D, E, F)` | 0x06000188 | Invokes function with 6 arguments via `app`. | Current focused run directly compared `Call_6` dispatch. Exact IL match. | Verified |
+| `Call_7<R, A, B, C, D, E, F, G>(A, B, C, D, E, F, G)` | 0x06000189 | Invokes function with 7 arguments via `app`. | Current focused run directly compared `Call_7` dispatch. Exact IL match. | Verified |
+| `Call_8<R, A, B, C, D, E, F, G, H>(A, B, C, D, E, F, G, H)` | 0x0600018a | Invokes function with 8 arguments via `app`. | Current focused run directly compared `Call_8` dispatch. Exact IL match. | Verified |
+| `Call_9<R, A, B, C, D, E, F, G, H, I>(A, B, C, D, E, F, G, H, I)` | 0x0600018b | Invokes function with 9 arguments via `app`. | Current focused run directly compared `Call_9` dispatch. Exact IL match. | Verified |
+| `Call_10<R, A, B, C, D, E, F, G, H, I, J>(A, B, C, D, E, F, G, H, I, J)` | 0x0600018c | Invokes function with 10 arguments via `app`. | Current focused run directly compared `Call_10` dispatch. Exact IL match. | Verified |
+| `Call_11<R, A, B, C, D, E, F, G, H, I, J, K>(A, B, C, D, E, F, G, H, I, J, K)` | 0x0600018d | Invokes function with 11 arguments via `app`. | Current focused run directly compared `Call_11` dispatch. Exact IL match. | Verified |
+| `Call_12<R, A, B, C, D, E, F, G, H, I, J, K, L>(A, B, C, D, E, F, G, H, I, J, K, L)` | 0x0600018e | Invokes function with 12 arguments via `app`. | Current focused run directly compared `Call_12` dispatch. Exact IL match. | Verified |
+| `Call_13<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(A, B, C, D, E, F, G, H, I, J, K, L, M)` | 0x0600018f | Invokes function with 13 arguments via `app`. | Current focused run directly compared `Call_13` dispatch. Exact IL match. | Verified |
+| `Call_14<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(A, B, C, D, E, F, G, H, I, J, K, L, M, N)` | 0x06000190 | Invokes function with 14 arguments via `app`. | Current focused run directly compared `Call_14` dispatch. Exact IL match. | Verified |
+| `Call_15<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O)` | 0x06000191 | Invokes function with 15 arguments via `app`. | Current focused run directly compared `Call_15` dispatch. Exact IL match. | Verified |
+| `Call_16<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P)` | 0x06000192 | Invokes function with 16 arguments via `app`. | Current focused run directly compared `Call_16` dispatch. Exact IL match. | Verified |
+| `Call_vec<R>(object[])` | 0x060001d2 | Invokes function with argument array via `appVec`. | Current focused run directly compared `Call_vec` dispatch. Exact IL match. | Verified |
+| `Apply1(object)` | 0x060001e7 | Dispatches single object argument via `Call_1`. | Current focused run directly compared `Apply1` dispatch. Exact IL match. | Verified |
+| `Apply1(int)` | 0x060001e8 | Dispatches single int argument via `Call_1`. | Current focused run directly compared `Apply1` dispatch. Exact IL match. | Verified |
+| `Apply1(double)` | 0x060001e9 | Dispatches single double argument via `Call_1`. | Current focused run directly compared `Apply1` dispatch. Exact IL match. | Verified |
+| `AsDelegate_1(uint)` | 0x060001e1 | Returns typed delegate projection with line number checking. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsDelegate_2(uint)` | 0x060001e2 | Returns typed delegate projection with line number checking. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsDelegate_3()` | 0x060001df | Returns 3-argument typed delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsDelegate_3(uint)` | 0x060001e3 | Returns 3-argument typed delegate projection with line number checking. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsDelegate_4()` | 0x060001e0 | Returns 4-argument typed delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsDelegate_4(uint)` | 0x060001e4 | Returns 4-argument typed delegate projection with line number checking. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsF<R, A>(uint)` | 0x060001d9 | Returns typed 1-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsF<R, A, B>(uint)` | 0x060001da | Returns typed 2-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsF<R, A, B, C>(uint)` | 0x060001db | Returns typed 3-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
+| `AsF<R, A, B, C, D>(uint)` | 0x060001dc | Returns typed 4-argument delegate projection. | Current focused run directly compared projection. Exact IL match. | Verified |
 
 ## Test cases
 
@@ -95,6 +125,7 @@
 `FunctionAppVecDirectDifferentialTests` directly compares `Function.clo<CLO>`, `Function.clovec<CLO>`, and `Function.appVec<R>` across 11 test facts covering counts 0..18, boundary arities 16 and 17, varargs precedence, overapplication remainder preservation, optional argument padding, below-minimum closure creation, null arguments, and delegate exception preservation.
 `FunctionInvApplyDifferentialTests` directly compares all 17 generic `inv` overloads (0x060001bc–0x060001cc) and all 16 `apply` overloads (0x06000193–0x060001a2) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 2 test facts, verifying exact parameter dispatch, `out R result` assignment, and return value consistency. All 33 methods have exact IL match in Release builds.
 `FunctionDynCallCallDifferentialTests` directly compares all 16 `Call` overloads (0x06000172–0x06000181) and all 16 `DynCall` overloads (0x06000161–0x06000170) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 2 test facts, verifying arity-checked full application and invocation dispatch. All 32 methods have exact IL match in Release builds.
+`FunctionCallTypedDifferentialTests` directly compares 16 typed generic `Call_k` overloads (0x06000183–0x06000192), `Call_vec<R>` (0x060001d2), 3 `Apply1` overloads (0x060001e7–0x060001e9), 6 `AsDelegate` projections (0x060001df–0x060001e4), and 4 `AsF` projections (0x060001d9–0x060001dc) against Mathcad Prime 12.0.1.0 `mplrun.dll` across 3 test facts. All 30 methods have exact IL match in Release builds.
 
 Current focused run passed Harness, Mpl, and the differential tests, with lint 0, ratchet ok and exact IL matches for all 33 methods.
 
