@@ -118,6 +118,11 @@ sealed class World
     };
 
     /// <summary>Whether a Mathcad type is an enum, as far as the install tells.</summary>
-    public TypeModel? Enum(TypeSig sig) =>
-        sig is NamedSig n && MathcadType(n.Assembly, n.Name) is { Kind: TypeKind.Enum } e ? e : null;
+    public TypeModel? Enum(TypeSig sig)
+    {
+        if (sig is not NamedSig n) return null;
+        if (MathcadType(n.Assembly, n.Name) is { Kind: TypeKind.Enum } me) return me;
+        if (ToQuire(sig) is NamedSig qn && QuireTypes.GetValueOrDefault(qn.Name) is { Kind: TypeKind.Enum } qe) return qe;
+        return null;
+    }
 }

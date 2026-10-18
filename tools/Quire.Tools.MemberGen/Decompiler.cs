@@ -8,12 +8,17 @@ using Quire.Tools.MirrorGen;
 /// <summary>A body this tool does not reconstruct; <see cref="Exception.Message"/> is the survey's category.</summary>
 sealed class NotMechanical(string category) : Exception(category);
 
-sealed record FieldRef(TypeSig Owner, string Name, TypeSig Type, bool Static);
+sealed record FieldRef(TypeSig Owner, string Name, TypeSig Type, bool Static)
+{
+    public TypeSig FieldType => (Owner as NamedSig)?.Args.Length > 0 ? Decompiler.Substitute(Type, ((NamedSig)Owner).Args) : Type;
+}
 /// <summary>A called method; <paramref name="Virtual"/> is false only for a definition known to be non-virtual (a
 /// method of another assembly may be virtual).</summary>
 sealed record MethodRef(TypeSig Owner, string Name, MethodSignature<TypeSig> Sig, ImmutableArray<TypeSig> TypeArgs, bool Virtual)
 {
     public bool Instance => Sig.Header.IsInstance;
+    public TypeSig ReturnType => Decompiler.Substitute(Sig.ReturnType, (Owner as NamedSig)?.Args ?? [], TypeArgs);
+    public TypeSig ParameterType(int i) => Decompiler.Substitute(Sig.ParameterTypes[i], (Owner as NamedSig)?.Args ?? [], TypeArgs);
 }
 
 abstract record Expr
@@ -23,8 +28,8 @@ abstract record Expr
 sealed record This(TypeSig Owner) : Expr { public override TypeSig? Type => Owner; }
 sealed record Arg(int Index, TypeSig ArgType) : Expr { public override TypeSig? Type => ArgType; }
 sealed record Const(object? Value, TypeSig? ConstType) : Expr { public override TypeSig? Type => ConstType; }
-sealed record Field(Expr? Target, FieldRef F) : Expr { public override TypeSig? Type => F.Type; }
-sealed record Call(Expr? Target, MethodRef M, Expr[] Args, bool Base) : Expr { public override TypeSig? Type => M.Sig.ReturnType; }
+sealed record Field(Expr? Target, FieldRef F) : Expr { public override TypeSig? Type => F.FieldType; }
+sealed record Call(Expr? Target, MethodRef M, Expr[] Args, bool Base) : Expr { public override TypeSig? Type => M.ReturnType; }
 sealed record New(MethodRef Ctor, Expr[] Args) : Expr { public override TypeSig? Type => Ctor.Owner; }
 sealed record NewArray(TypeSig Element, Expr Size) : Expr { public override TypeSig? Type => new ArraySig(Element, 0); }
 sealed record Element(Expr Array, Expr Index) : Expr { public override TypeSig? Type => (Array.Type as ArraySig)?.Element; }
@@ -359,4 +364,15 @@ static class Decompiler
             });
         return sb.Append('"').ToString();
     }
+
+    public static TypeSig Substitute(TypeSig sig, ImmutableArray<TypeSig> typeArgs, ImmutableArray<TypeSig> methodArgs = default) => sig switch
+    {
+        GenericParamSig { OfMethod: false } g when g.Index < typeArgs.Length => typeArgs[g.Index],
+        GenericParamSig { OfMethod: true } g when !methodArgs.IsDefault && g.Index < methodArgs.Length => methodArgs[g.Index],
+        NamedSig n when n.Args.Length > 0 => n with { Args = [.. n.Args.Select(a => Substitute(a, typeArgs, methodArgs))] },
+        ArraySig a => a with { Element = Substitute(a.Element, typeArgs, methodArgs) },
+        PointerSig p => p with { Element = Substitute(p.Element, typeArgs, methodArgs) },
+        ByRefSig r => r with { Element = Substitute(r.Element, typeArgs, methodArgs) },
+        _ => sig,
+    };
 }

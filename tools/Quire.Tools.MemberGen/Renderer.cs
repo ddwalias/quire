@@ -25,8 +25,15 @@ sealed class Renderer(World world, Names names, TypeModel self, string[] paramet
                 case Assign x: lines.Add($"{Expression(x.Target, null)} = {Expression(x.Value, x.Target.Type)};"); break;
                 case Do { Value: Call { M.Name: var n } c } when Accessor(c) is { } property:
                     string verb = n.StartsWith("set_") ? "=" : n.StartsWith("add_") ? "+=" : "-=";
-                    lines.Add($"{property} {verb} {Expression(c.Args[^1], c.M.Sig.ParameterTypes[^1])};");
+                    lines.Add($"{property} {verb} {Expression(c.Args[^1], c.M.ParameterType(c.Args.Length - 1))};");
                     break;
+                case Do { Value: Call { M.Name: "set_Item" } c } when c.Args.Length >= 2:
+                {
+                    string indexArgs = string.Join(", ", c.Args[..^1].Select((a, i) => Expression(a, c.M.ParameterType(i))));
+                    string val = Expression(c.Args[^1], c.M.ParameterType(c.Args.Length - 1));
+                    lines.Add($"{Indexed(c)}[{indexArgs}] = {val};");
+                    break;
+                }
                 case Do d: lines.Add(Expression(d.Value, null) + ";"); break;
             }
         // A single return, or a single statement of a non-constructor, makes an expression body.
@@ -87,7 +94,7 @@ sealed class Renderer(World world, Names names, TypeModel self, string[] paramet
     };
 
     private string Arguments(MethodRef m, Expr[] args) =>
-        string.Join(", ", args.Select((a, i) => Expression(a, m.Sig.ParameterTypes[i])));
+        string.Join(", ", args.Select((a, i) => Expression(a, m.ParameterType(i))));
 
     private static readonly Dictionary<string, int> Precedence = new()
     {
@@ -137,10 +144,10 @@ sealed class Renderer(World world, Names names, TypeModel self, string[] paramet
             }
             case Call c when OperatorMethods.TryGetValue(c.M.Name, out var op) && c.Target == null && c.Args.Length == 2:
                 return Write(new Binary(op, c.Args[0], c.Args[1]), expected);
-            case Call { M.Name: "op_Explicit" } c when c.Target == null: return ($"({QuireType(c.M.Sig.ReturnType)}){Expression(c.Args[0], null, 15)}", 15);
+            case Call { M.Name: "op_Explicit" } c when c.Target == null: return ($"({QuireType(c.M.ReturnType)}){Expression(c.Args[0], null, 15)}", 15);
             case Call { M: { Name: "Concat", Owner: NamedSig { Name: "System.String" } } } c
-                when c.Args.Length is >= 2 and <= 4 && c.M.Sig.ParameterTypes.All(p => p is NamedSig { Name: "System.String" }):
-                return (string.Join(" + ", c.Args.Select((a, i) => Expression(a, c.M.Sig.ParameterTypes[i], i == 0 ? 12 : 13))), 12);
+                when c.Args.Length is >= 2 and <= 4 && c.Args.Select((_, i) => c.M.ParameterType(i)).All(p => p is NamedSig { Name: "System.String" }):
+                return (string.Join(" + ", c.Args.Select((a, i) => Expression(a, c.M.ParameterType(i), i == 0 ? 12 : 13))), 12);
             case Call c:
             {
                 string name = c.M.Name;

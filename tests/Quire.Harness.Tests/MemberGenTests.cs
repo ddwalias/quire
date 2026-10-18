@@ -210,4 +210,34 @@ public class MemberGenTests : IDisposable
         Assert.Equal("@class", Names.Identifier("class"));
         Assert.Equal("value", Names.Identifier("value"));
     }
+
+    [Fact]
+    public void Generic_type_and_method_parameters_are_substituted()
+    {
+        var sig = new NamedSig("System.Collections.Generic", "Dictionary`2", [new GenericParamSig(0, false), new GenericParamSig(1, false)]);
+        var sub = Decompiler.Substitute(sig, [Decompiler.Int32, new NamedSig("System.Runtime", "System.String")]);
+        Assert.Equal("Dictionary`2<System.Int32,System.String>", sub.ToString());
+
+        var methodSig = new GenericParamSig(0, true);
+        var methodSub = Decompiler.Substitute(methodSig, [], [Decompiler.Int32]);
+        Assert.Equal("System.Int32", methodSub.ToString());
+    }
+
+    [Fact]
+    public void Indexer_setter_is_rendered_as_indexer_assignment()
+    {
+        var stringType = new NamedSig("System.Runtime", "System.String");
+        var dictType = new NamedSig("System.Collections.Generic", "Dictionary`2", [Decompiler.Int32, stringType]);
+        var mref = new MethodRef(dictType, "set_Item",
+            new MethodSignature<TypeSig>(default, new NamedSig("System.Runtime", "System.Void"), 0, 0, [Decompiler.Int32, stringType]),
+            [], false);
+        var selfModel = _world.QuireTypes["Fx.T"];
+        var selfSig = new NamedSig("Fx", "Fx.T");
+        var renderer = new Renderer(_world, new Names("Fx", _world), selfModel, ["this", "key", "val"]);
+        var target = new Field(new This(selfSig), new FieldRef(selfSig, "_x", dictType, false));
+        var body = new Body([new Do(new Call(target, mref, [new Arg(1, Decompiler.Int32), new Arg(2, stringType)], false))],
+            selfSig, new NamedSig("System.Runtime", "System.Void"), [Decompiler.Int32, stringType], false);
+        var text = renderer.Render(body, constructor: false);
+        Assert.Equal("_x[key] = val;", text.Statements.Single());
+    }
 }

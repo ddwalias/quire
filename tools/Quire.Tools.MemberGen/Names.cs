@@ -8,8 +8,8 @@ using Quire.Tools.MirrorGen;
 sealed class Names(string ns, World world)
 {
     // The SDK's implicit global usings for a console or library project (ImplicitUsings in Directory.Build.props).
-    private static readonly HashSet<string> Implicit = ["System", "System.Collections.Generic", "System.IO", "System.Linq",
-        "System.Net.Http", "System.Threading", "System.Threading.Tasks"];
+    private static readonly HashSet<string> Implicit = ["System", "System.Collections.Generic", "System.Linq",
+        "System.Threading", "System.Threading.Tasks"];
     private static readonly Dictionary<string, string> Keywords = new()
     {
         ["System.Object"] = "object", ["System.String"] = "string", ["System.Boolean"] = "bool", ["System.Char"] = "char",
@@ -67,6 +67,8 @@ sealed class Names(string ns, World world)
     /// <summary>Whether the outermost type can go by its simple name here, importing its namespace if needed.</summary>
     private bool Simple(string typeNs, string name, string full)
     {
+        while (typeNs.Length > 0 && world.KnownTypes.Contains(typeNs))
+            typeNs = typeNs.Contains('.') ? typeNs[..typeNs.LastIndexOf('.')] : "";
         // A nearer namespace's type of the same name would win over an enclosing or imported one.
         for (string scope = ns; scope.Length > 0; scope = scope.Contains('.') ? scope[..scope.LastIndexOf('.')] : "")
         {

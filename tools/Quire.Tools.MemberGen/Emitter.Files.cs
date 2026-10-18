@@ -86,8 +86,9 @@ sealed partial class Emitter
             if (File.Exists(file)) file = Path.Combine(directory, top + ".Members.cs");
             Directory.CreateDirectory(directory);
             string modifiers = Access(type.Access) + (type.IsStatic ? " static" : "");
+            string typeArgs = type.GenericParams.Length == 0 ? "" : "<" + string.Join(", ", type.GenericParams.Select(g => g.Name)) + ">";
             lines = ["#nullable disable", .. usings.Select(u => $"using {u};"), "", $"namespace {type.Namespace};", "",
-                $"{modifiers} partial {Keyword(type.Kind)} {top}", "{", "}", ""];
+                $"{modifiers} partial {Keyword(type.Kind)} {top}{typeArgs}", "{", "}", ""];
             insert = lines.Count - 2;
         }
         else
@@ -171,7 +172,7 @@ sealed partial class Emitter
             .FirstOrDefault(f => File.ReadAllText(f) is var s && declaration.IsMatch(s) && NamespaceLine().Match(s).Groups[1].Value == type.Namespace);
     }
 
-    private static Regex Declaration(string top) => new($@"^(?:(?:public|internal|static|abstract|sealed|unsafe|readonly)\s+)*partial\s+(?:class|struct|interface|record)\s+{Regex.Escape(top)}\b", RegexOptions.Multiline);
+    private static Regex Declaration(string top) => new($@"^(?:(?:public|internal|static|abstract|sealed|unsafe|readonly)\s+)*partial\s+(?:class|struct|interface|record)\s+{Regex.Escape(top)}(?:<[^>]+>)?\b", RegexOptions.Multiline);
 
     private static string Access(Access a) => a switch { Quire.Tools.MirrorGen.Access.Public => "public", _ => "internal" };
     private static string Keyword(TypeKind k) => k switch { TypeKind.Struct => "struct", TypeKind.Interface => "interface", _ => "class" };
