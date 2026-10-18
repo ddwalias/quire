@@ -57,7 +57,7 @@ public class RtsDifferentialTests
         var qs = Member;
         var ms = Member;
 
-        // The first call into Rts runs its .cctor; a .cctor that throws fails every call with the same exception.
+        // FcnType() is the first call here; if no earlier test touched Rts it runs the .cctor, and a .cctor that throws fails the call with the same exception.
         var (qFcnType, mFcnType) = Method("FcnType", DeclaredStaticPublic);
         MethodComparison.Compare("FcnType() first call", Contract,
             qFcnType, null, [], mFcnType, null, [], qs, ms);
@@ -173,7 +173,7 @@ public class RtsDifferentialTests
         MethodComparison.Compare("IsCancellationRequested() unregistered", Contract,
             qIsCancellationRequested, null, [], mIsCancellationRequested, null, [], qs, ms);
 
-        // 2. Initial stack depth read: branch m_stack_depth_init__ == 0 -> initializes to m_max_stack
+        // 2. Stack depth read before any set: branch m_stack_depth_init__ == 0 -> initializes to m_max_stack, else returns the stored depth
         MethodComparison.Compare("get_m_stack_depth() uninitialized", Contract,
             qGetStackDepthProp, null, [], mGetStackDepthProp, null, [], qs, ms);
 
