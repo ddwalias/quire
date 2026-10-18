@@ -17,7 +17,7 @@ interning. Every member below except the type initializer is differential-verifi
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
-| `.cctor` | 0x060005ea | `8a9aa295` | Takes the rank from the initialising thread's unit system, creates the interning table, gives that thread a scratch vector, interns the all-zero `identity`, then creates the four markers. | High; needs a synced initialising thread | Tested |
+| `.cctor` | 0x060005ea | `8a9aa295` | Takes the rank from the initialising thread's unit system, creates the interning table, gives that thread a scratch vector, interns the all-zero `identity`, then creates the four markers. | High for the synced test thread; directly compared with rank, map count, scratch/marker coordinates, marker-array identity relationships and `identity` registration observed after invocation. | Verified |
 | `ThreadInit()` | 0x060005eb | `6ac66288` | Gives the calling thread a rank-length scratch vector if it has none; a second call keeps the existing one. | High | Verified |
 | `.ctor(int[])` | 0x060005ec | `3839c7fb` | Private: keeps the array (no copy) and registers itself in the table under it; an equal key already present throws `ArgumentException`. | High | Verified |
 | `.ctor()` | 0x060005ed | `8704077c` | Private: a marker with a fresh zero vector, not registered. | High | Verified |
@@ -81,6 +81,7 @@ coordinates plus whether they are the interned object, exceptions as type and me
   four-argument `OnError` and `Equals`; and the three-argument `OnError` on each operand with argument 4 and with a
   tagged message `12>m@3` and argument `uint.MaxValue`;
 - `Parse` and `New` of each of the 98 signatures of `TypeDifferentialTests`, and `New(null)`;
+- the type initializer, directly invoked on both artifacts after thread sync; afterward rank, interning map count, scratch and marker coordinates, marker-array identity relationships and `identity` registration are compared;
 - the private constructors: a fresh vector's resulting dimension keeps the exact supplied array; an equal zero vector
   throws `ArgumentException`; the parameterless marker has fresh zero coordinates and is not interned;
 - the private interning: a new vector is kept, an equal vector finds the first, interning the scratch vector keeps

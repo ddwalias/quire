@@ -23,6 +23,8 @@ public class DimDifferentialTests
     private static System.Type QHash => typeof(Q.Dim).GetNestedType("Hash", BindingFlags.NonPublic | BindingFlags.DeclaredOnly)!;
 
     private static readonly string[] Markers = ["identity", "mcd_zero", "string_dim", "function_dim", "mixed_matrix_dim"];
+    private static readonly int[] qInternInput = [0, 0, 0, 0, 0, 0, 0, 77];
+    private static readonly int[] mInternInput = [0, 0, 0, 0, 0, 0, 0, 77];
 
     private static readonly string[] Signatures =
     [
@@ -49,6 +51,27 @@ public class DimDifferentialTests
         bool interned = ReferenceEquals(d, Call(dim, "intern", coordinates.Clone()));
         return $"[{string.Join(",", coordinates)}]{(interned ? "" : " uninterned")}";
     };
+
+    private static Func<object?, string> ShowInternResult(System.Type dim, object scratch) => d =>
+        Show(dim)(d) + $";scratch-preserved={ReferenceEquals(scratch, Get(dim, "s_vec"))}";
+
+    private static string InitializationState(System.Type dim)
+    {
+        int rank = (int)Get(dim, "s_rank")!;
+        var map = (System.Collections.IDictionary)Get(dim, "s_map")!;
+        var scratch = (int[])Get(dim, "s_vec")!;
+        var identity = Get(dim, "identity")!;
+        var identityCoordinates = (int[])Get(identity, "Coordinates")!;
+        var state = $"rank={rank};map={map.Count};scratch={string.Join(",", scratch)};identity={string.Join(",", identityCoordinates)};registered={ReferenceEquals(map[identityCoordinates], identity)}";
+        for (int i = 0; i < Markers.Length; i++)
+        {
+            var coordinates = (int[])Get(Get(dim, Markers[i])!, "Coordinates")!;
+            state += $";{Markers[i]}={string.Join(",", coordinates)}";
+            for (int j = 0; j < i; j++)
+                state += $";{Markers[i]}=same-{Markers[j]}:{ReferenceEquals(coordinates, Get(Get(dim, Markers[j])!, "Coordinates"))}";
+        }
+        return state;
+    }
 
     [SkippableFact]
     public void Unary_members()
@@ -261,11 +284,16 @@ public class DimDifferentialTests
 
         // static constructor (.cctor)
         MethodComparison.Compare("cctor: type initializer", Contract, qCc, null, [], mCc, null, [], qs, ms);
+        Assert.Equal(InitializationState(M), InitializationState(typeof(Q.Dim)));
 
         // private interning
-        var vIntern = new[] { 0, 0, 0, 0, 0, 0, 0, 77 };
-        MethodComparison.Compare("intern(new)", Contract, qInternArr, null, [vIntern.Clone()], mInternArr, null, [vIntern.Clone()], qs, ms);
-        MethodComparison.Compare("intern(equal)", Contract, qInternArr, null, [vIntern.Clone()], mInternArr, null, [vIntern.Clone()], qs, ms);
+        var qScratchBeforeIntern = Get(typeof(Q.Dim), "s_vec");
+        var mScratchBeforeIntern = Get(M, "s_vec");
+        MethodComparison.Compare("intern(new)", Contract, qInternArr, null, [qInternInput], mInternArr, null, [mInternInput],
+            ShowInternResult(typeof(Q.Dim), qScratchBeforeIntern), ShowInternResult(M, mScratchBeforeIntern));
+        Assert.Same(qScratchBeforeIntern, Get(typeof(Q.Dim), "s_vec"));
+        Assert.Same(mScratchBeforeIntern, Get(M, "s_vec"));
+        MethodComparison.Compare("intern(equal)", Contract, qInternArr, null, [qInternInput.Clone()], mInternArr, null, [mInternInput.Clone()], qs, ms);
         MethodComparison.Compare("intern(longer)", Contract, qInternArr, null, [new[] { 0, 0, 0, 0, 0, 0, 0, 0, 5 }], mInternArr, null, [new[] { 0, 0, 0, 0, 0, 0, 0, 0, 5 }], qs, ms);
         MethodComparison.Compare("intern(shorter)", Contract, qInternArr, null, [new[] { 1, 2 }], mInternArr, null, [new[] { 1, 2 }], qs, ms);
 

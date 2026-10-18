@@ -48,7 +48,7 @@ public sealed partial class Dim
     private int[] m_vec;
 
     /// <summary>The rank comes from the initialising thread's unit system.</summary>
-    [MirrorTested("Mcd.Dim")]
+    [MirrorVerified("DimDifferentialTests")]
     static Dim()
     {
         s_rank = RuntimeOptions.the_unit_system.Rank;
