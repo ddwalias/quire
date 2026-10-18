@@ -463,12 +463,13 @@ class DotnetTests(unittest.TestCase):
         from validate import resolve_dotnet
         with tempfile.TemporaryDirectory() as repo, tempfile.TemporaryDirectory() as tools:
             for directory in (repo, tools):
-                cli = Path(directory) / 'dotnet'
+                cli = Path(directory) / ('dotnet.exe' if os.name == 'nt' else 'dotnet')
                 cli.write_text('#!/bin/sh\n')
                 cli.chmod(cli.stat().st_mode | stat.S_IEXEC)
-            self.assertEqual(resolve_dotnet(str(Path(tools) / 'dotnet'), repo), str((Path(tools) / 'dotnet').resolve()))
+            found = os.path.normcase(str((Path(tools) / cli.name).resolve()))
+            self.assertEqual(os.path.normcase(resolve_dotnet(str(Path(tools) / 'dotnet'), repo)), found)
             with unittest.mock.patch.dict(os.environ, PATH=tools):
-                self.assertEqual(resolve_dotnet('dotnet', repo), str((Path(tools) / 'dotnet').resolve()))
+                self.assertEqual(os.path.normcase(resolve_dotnet('dotnet', repo)), found)
             with unittest.mock.patch.dict(os.environ, PATH=os.pathsep.join([repo, tools])), \
                     self.assertRaisesRegex(ValueError, 'inside the repository'):
                 resolve_dotnet('dotnet', repo)

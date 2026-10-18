@@ -10,11 +10,11 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
 ## Execute: load → mirror → checkpoint → merge
 
 **Pipeline** (user decision, 2026-10-18; it supersedes conflicting text in the steps below):
-- **Where:** Linux-only work happens in worktrees of the native ext4 clone `/root/src/quire-main`, at
-  `/root/src/worktrees/<lane>-<unit>`, never under `/mnt/c`; remove the worktree
-  (`git -C /root/src/quire-main worktree remove --force <path>`) once its branch has merged. Mathcad stays at its
-  read-only `/mnt/c` path. Work on the Windows projects (`net10.0-windows`, built with Windows' `dotnet.exe`) stays
-  under `/mnt/c`, where Windows processes can reach it.
+- **Where:** lanes run as native Windows sessions in worktrees of the NTFS clone `C:\Projects\Quire`, at
+  `C:\Projects\Quire-wt\<branch>`; remove the worktree (`git -C C:\Projects\Quire worktree remove --force <path>`)
+  once its branch has merged. Mathcad stays read-only at its install path. (Linux/WSL: worktrees of the ext4 clone
+  `/root/src/quire-main` at `/root/src/worktrees/<branch>`, never under `/mnt/c`; Windows-project work from WSL
+  stays under `/mnt/c`.)
 - **Batch:** a whole class or a functional cluster of about 15–30 methods (the remaining Function methods; whole
   MatVal or MatDim operations).
 - **Local checks:** `dotnet test` of the affected differential tests, then
@@ -22,11 +22,12 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
   passing comparisons. Run local `--mutate` only to prepare proposals or to chase a gate survivor.
 - **One mutation pass:** the gate's, in its own clone with `--no-mutant-cache`. There is no reviewer ([D14](decisions.md)).
 - **Jobs:** `--jobs 14` for `validate.py` and `merge_gate.py` (16 cores, 31 GiB).
-- **Scratch:** before a new unit, remove stale `/tmp` folders (older than 12 hours, so never a running gate's):
-  `find /tmp -maxdepth 1 \( -name 'quire-validation-*' -o -name 'quire-coverage-*' -o -name 'quire-audit-*' -o -name 'quire-gate-*' \) -mmin +720 -exec rm -rf {} +`.
-- **Merge:** `lane-merge.sh` ([validation-flow](work/validation-flow.md#merge-gate-throughput)): `--validate-only`
-  outside the merge lock, then `--apply-validated` and the push of `main` under it; not the one-shot `--apply`.
-  The per-batch command template is there too.
+- **Scratch:** before a new unit, `python tools\validation\sweep.py` removes stale validation, coverage, audit and
+  gate folders from the temporary directory (unchanged for 12 hours, so never a running gate's).
+- **Merge:** `python tools\validation\lane_merge.py <branch>`
+  ([validation-flow](work/validation-flow.md#merge-gate-throughput)): `--validate-only` outside the merge lock,
+  then `--apply-validated` and the push of `main` under it; not the one-shot `--apply`. The per-batch command
+  template is there too. (Linux/WSL: `python3 tools/validation/sweep.py` and `python3 tools/validation/lane_merge.py`.)
 
 1. **Load:** Read PLAN + [WORK.md](WORK.md). Take WORK's next batch; extract only its source,
    manifest/status rows, evidence, dependencies/callers, and tests. Confirm artifact identity; reuse valid
@@ -63,16 +64,16 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
      to `origin`, for backup, and use `--force-with-lease` only on those; never push or force-push `main` (the
      maintainer pushes it when the user asks). Review the complete diff; squash once before queueing the gate.
      Rebase only when `main` has moved past the branch's base. `merge_gate.py` blocks a branch not based on current
-     `main`; `lane-merge.sh` pulls `main`, rebases the branch onto it and the gate then validates the rebased
+     `main`; `lane_merge.py` pulls `main`, rebases the branch onto it and the gate then validates the rebased
      tip. So after a clean rebase do not re-validate locally;
      rerun affected tests and review the resolved hunks when the rebase had conflicts in `src/` or `tests/`.
-   - **Pull first:** other checkouts also merge into `origin/main`. `lane-merge.sh` fast-forwards local `main` to
-     `origin/main` under `flock /tmp/quire-merge.lock` before rebasing the branch and again before applying the
+   - **Pull first:** other checkouts also merge into `origin/main`. `lane_merge.py` fast-forwards local `main` to
+     `origin/main` under the merge lock (`merge_lock.py`) before rebasing the branch and again before applying the
      gate's record. If the fast-forward fails because local `main` has merges not yet on `origin`, stop: replay
      those commits onto `origin/main` in an integration branch, leaving out the generated "Update validation
      baseline after merging ..." commits (the gate rewrites the baseline), and gate it. The lock covers only this
-     clone: another checkout can push in between, and the push is then rejected as non-fast-forward, so integrate
-     the same way. Never force-push `main`.
+     machine's sessions of one OS: another machine, or WSL beside Windows, can push in between, and the push is
+     then rejected as non-fast-forward, so integrate the same way. Never force-push `main`.
    - **Pushing `main`** (user decision, 2026-10-16; it replaces "never push `main`" above): whoever merges a branch
      through the gate, lane agent or maintainer, pushes `main` to `origin` right after the merge (with the gate's baseline commit), still
      under the lock, so the other checkouts pull it. Only a gate-applied fast-forward is pushed; never force-push `main`.

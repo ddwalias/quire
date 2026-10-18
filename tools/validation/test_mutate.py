@@ -111,6 +111,9 @@ class MutationTests(unittest.TestCase):
         self.dotnet = root / 'dotnet'
         self.dotnet.write_text(FAKE_DOTNET.format(python=sys.executable))
         self.dotnet.chmod(self.dotnet.stat().st_mode | stat.S_IEXEC)
+        if os.name == 'nt':  # no shebangs: a batch file runs the script with this Python
+            self.dotnet = root / 'dotnet.cmd'
+            self.dotnet.write_text(f'@"{sys.executable}" "%~dp0dotnet" %*\r\n')
         killed = dict(il_offset=1, file_offset=4, original='58', replacement='59', description='add -> sub')
         survived = dict(il_offset=5, file_offset=8, original='2C', replacement='2D', description='brfalse.s -> brtrue.s')
         caller = dict(il_offset=3, file_offset=6, original='5A', replacement='5B', description='mul -> div')
@@ -356,10 +359,14 @@ class MutationTests(unittest.TestCase):
             path.mkdir() if name != 'quire-mutant-file' else path.write_text('x')
             if name != 'quire-mutant-new':
                 os.utime(path, (old, old))
-        (tmp / 'quire-mutant-link').symlink_to(tmp / 'other-old')
-        os.utime(tmp / 'quire-mutant-link', (old, old), follow_symlinks=False)
-        with mock.patch('mutate.os.getuid', return_value=os.getuid() + 1):
-            self.assertEqual(sweep_stale(tmp), [])  # someone else's
+        try:
+            (tmp / 'quire-mutant-link').symlink_to(tmp / 'other-old')
+            os.utime(tmp / 'quire-mutant-link', (old, old), follow_symlinks=False)
+        except OSError:  # Windows without the symlink privilege: nothing to leave alone
+            (tmp / 'quire-mutant-link').write_text('x')
+        if hasattr(os, 'getuid'):
+            with mock.patch('mutate.os.getuid', return_value=os.getuid() + 1):
+                self.assertEqual(sweep_stale(tmp), [])  # someone else's
         self.assertEqual(sorted(p.name for p in sweep_stale(tmp)), ['quire-mutant-old', 'quire-mutant-run-old'])
         self.assertEqual(sorted(p.name for p in tmp.iterdir()),
                          ['other-old', 'quire-mutant-busy', 'quire-mutant-file', 'quire-mutant-link', 'quire-mutant-new'])

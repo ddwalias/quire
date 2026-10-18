@@ -747,7 +747,8 @@ class OptimisticGateTests(unittest.TestCase):
         (self.repo / 'src/Quire.Mpl/run.sh').write_text('#!/bin/sh\n')
         (self.repo / 'src/Quire.Mpl/run.sh').chmod(0o755)
         self.git('rm', '-q', 'src/Quire.Mpl/Other.cs')
-        self.git('add', '-A'); self.git('commit', '-qm', 'modes')
+        self.git('add', '-A'); self.git('update-index', '--chmod=+x', 'src/Quire.Mpl/run.sh')
+        self.git('commit', '-qm', 'modes')
         self.git('checkout', '-q', 'main')
         self.validate('modes')
         self.on_main({'README.md': 'New overview\n'})
@@ -1065,16 +1066,19 @@ class NightlyTests(unittest.TestCase):
         self.assertIn('surviving mutant: T::A() m3', report['reasons'])
 
 
-class LaneSnippetTests(unittest.TestCase):
-    """The lane merge script in validation-flow.md, run with a stub gate: MAIN defaults to the worktree that has
-    `main` checked out, the push follows only a merge, the gate's exit codes come back out, and two stale results
-    fall back to the one-shot gate."""
+class LaneMergeTests(unittest.TestCase):
+    """lane_merge.py with real git, the real merge lock (on a private file) and a stub gate: it defaults to the
+    worktree that has `main` checked out, pulls and lands only under the lock and validates outside it, pushes only
+    after a merge, passes the gate's exit codes back out, and falls back to the one-shot gate after two stale results."""
     GATE = textwrap.dedent('''
         import os, sys
+        sys.path.insert(0, os.environ['TOOLS'])
+        from merge_lock import is_held
         mode = next(a for a in sys.argv if a in ('--validate-only', '--apply-validated', '--apply'))
         jobs = sys.argv[sys.argv.index('--jobs') + 1] if '--jobs' in sys.argv else None
-        if os.getcwd() != os.path.join(os.environ['T'], 'main') or jobs != (None if mode == '--apply-validated' else '14'):
-            sys.exit(99)  # the gate runs in the clone that has main checked out; validating runs use 14 jobs
+        if os.path.realpath(os.getcwd()) != os.path.realpath(os.path.join(os.environ['T'], 'main')) \\
+                or jobs != (None if mode == '--apply-validated' else '14') or is_held() != (mode != '--validate-only'):
+            sys.exit(99)  # in the worktree that has main, 14 validating workers, landing under the lock only
         path = os.path.join(os.environ['T'], 'codes' + mode)
         codes = open(path).read().split() if os.path.exists(path) else ['0']
         open(path, 'w').write(' '.join(codes[1:] or codes))
@@ -1083,16 +1087,10 @@ class LaneSnippetTests(unittest.TestCase):
     ''')
 
     def run_script(self, branch='b', main_checked_out=True, **codes):
+        import lane_merge, merge_lock
         with tempfile.TemporaryDirectory() as t:
             t = Path(t).resolve()
-            main, lane = t / 'main', t / 'lane'
-            flow = (Path(__file__).parents[2] / 'docs/mirror/work/validation-flow.md').read_text()
-            script = re.search(r'```sh\n(#!/bin/sh\n.*?)```', flow, re.S)[1]
-            script = (script.replace('LOCK=/tmp/quire-merge.lock', f'LOCK={t}/lock')
-                      .replace('PULL="git fetch -q origin && git merge -q --ff-only origin/main"',
-                               f'PULL="echo PULL >> {t}/log"')
-                      .replace('PUSH="git push -q origin main"', f'PUSH="echo PUSHED >> {t}/log"'))
-            (t / 'run.sh').write_text(script)
+            main, lane, log = t / 'main', t / 'lane', t / 'log'
             # As on the host, main is checked out in a linked worktree (not the clone's own checkout), main has moved
             # past b's base, and b is checked out in a lane worktree: the script rebases b there.
             clone = t / 'clone'
@@ -1102,21 +1100,36 @@ class LaneSnippetTests(unittest.TestCase):
                             ['checkout', '-q', '-b', 'other'], ['worktree', 'add', '-q', str(main), 'main'],
                             ['worktree', 'add', '-q', str(lane), 'b'],
                             *([] if main_checked_out else [['-C', str(main), 'checkout', '-q', '--detach']])):
-                subprocess.run(['git', *command], cwd=clone, check=True)
+                subprocess.run(['git', *command], cwd=clone, check=True, capture_output=True)
             (main / 'tools/validation').mkdir(parents=True)
             (main / 'tools/validation/merge_gate.py').write_text(self.GATE)
             for mode, sequence in codes.items():
                 (t / f"codes--{mode.replace('_', '-')}").write_text(sequence)
-            env = {k: v for k, v in os.environ.items() if k != 'MAIN'}
-            run = subprocess.run(['sh', str(t / 'run.sh'), branch], cwd=lane, env=dict(env, T=str(t)),
-                                 capture_output=True, text=True)
+            def logged(word):
+                def step(where):
+                    self.assertEqual(Path(where).resolve(), main)
+                    self.assertTrue(merge_lock.is_held(), f'{word} outside the lock')
+                    with log.open('a') as f:
+                        f.write(word + '\n')
+                    return 0
+                return step
+            stderr, cwd = io.StringIO(), os.getcwd()
+            os.chdir(lane)
+            try:
+                with mock.patch.dict(os.environ, T=str(t), TOOLS=str(Path(__file__).parent),
+                                     QUIRE_MERGE_LOCK=str(t / 'lock')), \
+                        mock.patch.object(lane_merge, 'pull', logged('PULL')), \
+                        mock.patch.object(lane_merge, 'push', logged('PUSHED')), \
+                        contextlib.redirect_stderr(stderr):
+                    code = lane_merge.main([branch])
+            finally:
+                os.chdir(cwd)
             if branch != 'b' or not main_checked_out:
-                return run.returncode, run.stderr
+                return code, stderr.getvalue()
             git = lambda *a: subprocess.run(['git', *a], cwd=lane, capture_output=True, text=True).stdout.strip()
             self.assertEqual(git('merge-base', 'main', 'b'), git('rev-parse', 'main'))
-            return run.returncode, (t / 'log').read_text().split('\n')[:-1]
+            return code, log.read_text().split('\n')[:-1]
 
-    @unittest.skipUnless(shutil.which('flock') and shutil.which('sh'), 'needs sh and flock')
     def test_the_lane_script(self):
         # Each validation starts from a fresh main (PULL), and each landing pulls first under the lock.
         v, a, one, pull = '--validate-only 0', '--apply-validated', '--apply', 'PULL'
@@ -1136,9 +1149,9 @@ class LaneSnippetTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn('git rebase main no-such-branch failed: ', stderr)
         self.assertIn('no-such-branch', stderr.split('failed: ', 1)[1])
-        # Without a worktree that has main checked out, and no MAIN, nothing runs.
+        # Without a worktree that has main checked out, and no --main, nothing runs.
         self.assertEqual(self.run_script(main_checked_out=False),
-                         (1, 'no worktree has main checked out; set MAIN\n'))
+                         (1, 'no worktree has main checked out; pass --main\n'))
 
 
 class StubDeletionTests(unittest.TestCase):

@@ -82,67 +82,53 @@ directories.
 
 ## Merge gate throughput
 
-Lanes follow PLAN's pipeline: worktrees of the ext4 clone `/root/src/quire-main`, batches of a whole class or
-functional cluster, local checks without mutation, and one mutation pass in the gate. A batch goes through this
-template (Windows-project work stays under `/mnt/c` instead):
+Lanes follow PLAN's pipeline: native Windows sessions in worktrees of the NTFS clone `C:\Projects\Quire`, batches of
+a whole class or functional cluster, local checks without mutation, and one mutation pass in the gate. A batch goes
+through this template (PowerShell; the Linux/WSL form is in the footnote below):
 
-```sh
-U=b-<unit>; B=mirror/$U; W=/root/src/worktrees/$U
-find /tmp -maxdepth 1 \( -name 'quire-validation-*' -o -name 'quire-coverage-*' -o -name 'quire-audit-*' \
-  -o -name 'quire-gate-*' \) -mmin +720 -exec rm -rf {} +             # stale scratch only, never a running gate's
-git -C /root/src/quire-main fetch -q origin
-git -C /root/src/quire-main worktree add "$W" -b "$B" origin/main
-cd "$W"
+```powershell
+$U = 'b-<unit>'; $B = "mirror/$U"; $W = "C:\Projects\Quire-wt\$U"
+python C:\Projects\Quire\tools\validation\sweep.py                # stale scratch only, never a running gate's
+git -C C:\Projects\Quire fetch -q origin
+git -C C:\Projects\Quire worktree add $W -b $B origin/main
+cd $W
 # implement the batch, then the fast local checks (no --mutate):
-QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj \
-  --filter 'FullyQualifiedName~<TestClass>'
-python3 tools/validation/validate.py --profile focused --method-type <Type> --jobs 14
+$env:QUIRE_REQUIRE_MATHCAD = '1'
+dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj --filter 'FullyQualifiedName~<TestClass>'
+python tools\validation\validate.py --profile focused --method-type <Type> --jobs 14
 # fast, advisory check of only the changed methods in this worktree; also accepts --method-type or --method:
-python3 tools/validation/quick_check.py
-git add <paths> && git commit -m '<summary>' -m 'Co-Authored-By: <model> <noreply@anthropic.com>'
-sh /root/src/lane-merge.sh "$B"                                       # validate, then land and push
-cd /root/src && git -C /root/src/quire-main worktree remove --force "$W"
+python tools\validation\quick_check.py
+git add <paths>; git commit -m '<summary>' -m 'Co-Authored-By: <model> <noreply@anthropic.com>'
+python C:\Projects\Quire\tools\validation\lane_merge.py $B       # validate, then land and push
+cd C:\Projects; git -C C:\Projects\Quire worktree remove --force $W
 ```
 
 When a method is not exact, `python3 tools/validation/il_diff.py <Type | Type::Name | Type::signature> ...` prints its
 first Release-IL instruction that differs from Mathcad's, with context on both sides and the Quire source line (stdout only).
 
-`lane-merge.sh` (keep a copy at `/root/src/lane-merge.sh`) validates without the merge lock and lands under it.
-Run it in the worktree that has the branch checked out (it rebases there); it exits with the gate's code. `MAIN`
-defaults to the worktree that has `main` checked out, where the gate must run:
-
-```sh
-#!/bin/sh
-B="$1"                                    # run in the worktree that has $B checked out
-MAIN=${MAIN:-$(git worktree list --porcelain | awk '/^worktree /{w=substr($0,10)} /^branch refs\/heads\/main$/{print w}')}
-[ -n "$MAIN" ] || { echo "no worktree has main checked out; set MAIN" >&2; exit 1; }
-GATE="python3 $MAIN/tools/validation/merge_gate.py"
-LOCK=/tmp/quire-merge.lock
-PULL="git fetch -q origin && git merge -q --ff-only origin/main"
-PUSH="git push -q origin main"
-stale=0
-while :; do
-  flock "$LOCK" sh -c "cd '$MAIN' && $PULL" || exit $?                    # fresh main, briefly under the lock
-  out=$(git rebase -q main "$B" 2>&1) || { echo "git rebase main $B failed: $out" >&2; exit 1; }
-  (cd "$MAIN" && $GATE "$B" --validate-only --jobs 14) || exit $?         # BLOCKED: fix the branch
-  flock "$LOCK" sh -c "cd '$MAIN' && $PULL && $GATE '$B' --apply-validated && $PUSH"
-  code=$?
-  [ $code -eq 0 ] && exit 0                                              # merged and pushed
-  [ $code -ne 4 ] && exit $code                                          # blocked, or the push failed
-  stale=$((stale + 1))
-  [ $stale -lt 2 ] && continue                                           # stale: validate again
-  # Two stale results in a row: the one-shot gate, holding the lock for the whole validation.
-  flock "$LOCK" sh -c "cd '$MAIN' && $PULL && git -C '$PWD' rebase -q main '$B' && $GATE '$B' --apply --jobs 14 && $PUSH"
-  exit $?
-done
-```
-
-Between `--validate-only` and `--apply-validated` do not rebase: the record is bound to the tip, and apply itself
-replays the branch onto a moved `main` or exits 4. Inside `sh -c` everything is chained with `&&`, so the push
-runs only after a merge and the gate's exit code (1 blocked, 4 stale) comes back out of `flock`. Exit 4 means
-`main` gained something that can change the verdict; the script validates again, and after two stale results in
-a row falls back to the one-shot `--apply`, which cannot go stale but holds the lock for the whole validation
+`lane_merge.py` validates without the merge lock and lands under it; run main's copy, in the worktree that has the
+branch checked out (it rebases there). It fast-forwards `main` to `origin/main` under the lock, rebases the branch,
+runs the gate with `--validate-only --jobs 14`, then under the lock pulls again, runs `--apply-validated` and pushes
+`main` (only after a merge). It exits with the gate's code. The gate runs in `--main`, by default the worktree that
+has `main` checked out (`git worktree list --porcelain`). Between `--validate-only` and `--apply-validated` do not
+rebase: the record is bound to the tip, and apply itself replays the branch onto a moved `main` or exits 4. Exit 4
+means `main` gained something that can change the verdict; the script validates again, and after two stale results
+in a row falls back to the one-shot `--apply`, which cannot go stale but holds the lock for the whole validation
 (the stale message says for how long). Rules: validation.md, "Validating outside the merge lock".
+
+The merge lock (`merge_lock.py`) is `msvcrt.locking` on `%TEMP%\quire-merge.lock` on Windows, shared by every
+session of the user on the machine, and `fcntl.flock` on `/tmp/quire-merge.lock` on Linux, the lock
+`flock /tmp/quire-merge.lock` takes too. A WSL session and a Windows session do not share it, so do not land from
+both at once; a push that loses the race is rejected as non-fast-forward, never forced, and the lane integrates
+and retries. `QUIRE_MERGE_LOCK` names another lock file.
+
+`sweep.py` removes `quire-validation-*`, `quire-coverage-*`, `quire-audit-*` and `quire-gate-*` directories in the
+temporary directory in which nothing beneath them changed for 12 hours; `--dry-run` lists them.
+
+Linux/WSL: the same steps with `python3`, the ext4 clone `/root/src/quire-main` and worktrees at
+`/root/src/worktrees/<branch>` (never under `/mnt/c`): `python3 tools/validation/sweep.py`, then
+`python3 /root/src/quire-main/tools/validation/lane_merge.py "$B"`. Windows-project work from WSL stays under
+`/mnt/c` ([Phase profile from WSL](#phase-profile-from-wsl-and-windows-project-gating)).
 
 - **Batch members.** Every gate run pays about 3 minutes before any mutant runs (build, the differential suite
   twice, the audit), and local checks no longer mutate, so a batch is a whole class or a functional cluster of

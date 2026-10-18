@@ -217,16 +217,14 @@ def newest_change(path, limit=None):
 
 
 def sweep_stale(directory=None, age=STALE_SECONDS):
-    """Remove `quire-mutant-*` directories (not files or links) that this user owns in `directory` (the system
+    """Remove `quire-mutant-*` directories (not files or links) that this user owns (on POSIX) in `directory` (the system
     temporary directory) and in which nothing changed for `age` seconds: copies of test output and scratch
     directories left by runs that were killed before cleaning up. Returns the removed paths."""
-    if not hasattr(os, 'getuid'):
-        return []
     cutoff, removed = time.time() - age, []
     for path in Path(directory or tempfile.gettempdir()).glob('quire-mutant-*'):
         try:
             info = path.lstat()
-            if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid():
+            if not stat.S_ISDIR(info.st_mode) or hasattr(os, 'getuid') and info.st_uid != os.getuid():
                 continue
             newest = newest_change(path)
         except OSError:
