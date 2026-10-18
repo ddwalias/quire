@@ -3,7 +3,7 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-rts-resolve-assembly` batch is correcting `Rts.OnResolveAssembly` to match reference IL.
+separate `mirror/a-rts-resolve-assembly-shape` batch is completing the `Rts.OnResolveAssembly` IL match.
 `MplDestructuringBind.ExpandCall`
 depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
 batch receipts below are history, not a task queue.
@@ -143,7 +143,24 @@ batch receipts below are history, not a task queue.
 - Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~RtsTests'`
   — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
   --filter 'FullyQualifiedName~RtsDifferentialTests.Resolves_assemblies_from_the_search_path'` — 1 passed, 0 failed or
-  skipped. No proposals; branch gate pending.
+  skipped. Gate: `lane_merge.py mirror/a-rts-resolve-assembly --jobs 14` passed and merged tip
+  `760e2a99b87761f16f8f3ab48a8dd9a5f1dce6ae` to `main`; `origin/main` is `760e2a99`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-nnh_lw9a\gate.json`; no reasons or protected paths. Harness 97, Mpl 188,
+  Differential 392 passed, no failures or skips; lint 0, integrity complete, ratchet OK. Mutation selection was empty.
+  The method inventory still reports `OnResolveAssembly` as `structure_matches: true`, `exact_match: false`; the source
+  overload change produced no Release IL change. The batch therefore needs this follow-up to match the remaining body
+  shape.
+
+## Rts.OnResolveAssembly local-shape follow-up (`mirror/a-rts-resolve-assembly-shape`)
+
+- Scope: keep the parsed simple name, combined path and `.dll` suffix in separate assignments, matching the reference
+  IL's `stloc` sequence after `String.Split`, `Path.Combine` and `String.Concat`.
+- Reference: `python tools\reference\reference.py Mpl.Run.Rts --il`; same `mplrun.dll` identity and evidence record.
+- Scoped checks after this local-shape edit: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter
+  'FullyQualifiedName~RtsTests'` — 4 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test
+  tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj --filter
+  'FullyQualifiedName~RtsDifferentialTests.Resolves_assemblies_from_the_search_path'` — 1 passed, 0 failed or skipped.
+  No proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
