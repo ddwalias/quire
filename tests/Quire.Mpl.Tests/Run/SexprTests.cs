@@ -963,6 +963,14 @@ public class SexprTests
         Assert.NotSame(formExprChange, resChanged);
         Assert.Equal("(#T36 testkw #T35 99)", resChanged.ToString());
 
+        // let_keyword singleton and token factory
+        Assert.NotNull(let_keyword.singleton);
+        Assert.Equal("let", let_keyword.singleton.name);
+        Assert.Equal(7, let_keyword.singleton.KeyNum);
+        var letTok = let_keyword.NewTok(41u);
+        Assert.Same(let_keyword.singleton, letTok.atom);
+        Assert.Equal(41u, letTok.handle);
+
         // block_keyword
         Assert.NotNull(block_keyword.singleton);
         Assert.Equal("block", block_keyword.singleton.name);
