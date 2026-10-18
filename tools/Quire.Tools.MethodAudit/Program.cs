@@ -22,8 +22,13 @@ if (args is ["members", var assemblyPath, var typeName])
 var options = new Dictionary<string, List<string>>();
 for (int i = 0; i < args.Length; i += 2)
 {
-    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--structure-assemblies" or "--install" or "--output" or "--project"))
-        throw new ArgumentException("MethodAudit --repo DIR --assemblies DIR [--structure-assemblies DIR] --install DIR --output FILE [--project NAME ...]");
+    if (args[i] == "--inventory-only")
+    {
+        options[args[i]] = ["true"];
+        continue;
+    }
+    if (i + 1 >= args.Length || args[i] is not ("--repo" or "--assemblies" or "--structure-assemblies" or "--install" or "--output" or "--project" or "--type"))
+        throw new ArgumentException("MethodAudit --repo DIR --assemblies DIR [--structure-assemblies DIR] --install DIR --output FILE [--project NAME ...] [--type TYPE ...] [--inventory-only]");
     if (!options.TryGetValue(args[i], out var list)) options[args[i]] = list = [];
     list.Add(args[i + 1]);
 }
@@ -34,6 +39,8 @@ string repo = One("--repo"), assemblies = One("--assemblies"), install = One("--
 string? structureAssemblies = options.ContainsKey("--structure-assemblies") ? One("--structure-assemblies") : null;
 var projects = options.GetValueOrDefault("--project") ?? Directory.GetFiles(Path.Combine(repo, "docs/mirror/manifest"), "*.txt")
     .Select(Path.GetFileNameWithoutExtension).OfType<string>().ToList();
+var selectedTypes = options.GetValueOrDefault("--type")?.ToHashSet(StringComparer.Ordinal) ?? [];
+var inventoryOnly = options.ContainsKey("--inventory-only");
 var rows = new List<object>();
 var errors = new List<string>();
 // Quire type -> every (Mathcad type, Mathcad assembly) the type map binds it to: one Quire name stands for one type per
@@ -222,12 +229,13 @@ StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, ou
 var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), name => name, _ => null, exact: true, root: repo));
 foreach (var (artifact, raw, type, method, status, exclusion, original, counterpart) in matched)
 {
+    if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
     var body = raw.BodyRva == 0 ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
     bool isVirtual = (artifact.Metadata.GetMethodDefinition(MetadataTokens.MethodDefinitionHandle(raw.Token)).Attributes
         & MethodAttributes.Virtual) != 0;
     List<string>? differences = null;
     bool exact = false;
-    if (exclusion == null && counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
+    if (!inventoryOnly && exclusion == null && counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
     {
         try
         {

@@ -97,6 +97,8 @@ cd "$W"
 QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj \
   --filter 'FullyQualifiedName~<TestClass>'
 python3 tools/validation/validate.py --profile focused --method-type <Type> --jobs 14
+# fast, advisory check of only the changed methods in this worktree; also accepts --method-type or --method:
+python3 tools/validation/quick_check.py
 git add <paths> && git commit -m '<summary>' -m 'Co-Authored-By: <model> <noreply@anthropic.com>'
 sh /root/src/lane-merge.sh "$B"                                       # validate, then land and push
 cd /root/src && git -C /root/src/quire-main worktree remove --force "$W"
