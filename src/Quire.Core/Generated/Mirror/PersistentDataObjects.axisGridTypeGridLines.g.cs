@@ -12,13 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class axisGridTypeGridLines
 {
     [global::Quire.Mirror.MirrorStub]
-    private string colorField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool displayField;
-    [global::Quire.Mirror.MirrorStub]
-    public string color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public axisGridTypeGridLines() { }
 }

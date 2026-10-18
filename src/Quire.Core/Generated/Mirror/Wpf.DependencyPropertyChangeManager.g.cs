@@ -36,8 +36,6 @@ public static partial class DependencyPropertyChangeManager
         [global::Quire.Mirror.MirrorStub]
         public static readonly global::System.Windows.DependencyProperty ValueProperty;
         [global::Quire.Mirror.MirrorStub]
-        public event global::System.Windows.DependencyPropertyChangedEventHandler SourcePropertyChanged;
-        [global::Quire.Mirror.MirrorStub]
         public DependencyPropertyChangeNotifier(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject sourceObject) { }
         [global::Quire.Mirror.MirrorStub]
         private static void HandleValueChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

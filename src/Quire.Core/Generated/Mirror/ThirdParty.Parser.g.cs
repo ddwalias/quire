@@ -36,8 +36,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public static bool ParseArguments(string[] arguments, object destination, global::Quire.ThirdParty.ErrorReporter reporter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void NullErrorReporter(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool ParseHelp(string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string ArgumentsUsage(global::System.Type argumentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -82,8 +80,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     private static string ShortName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string ValidValues(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static string HelpText(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool HasHelpText(global::Quire.ThirdParty.ArgumentAttribute attribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -96,8 +92,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.ThirdParty.ArgumentType Flags(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool IsCollectionType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool IsValidElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+HelpArgument, Ptc.Core")]
@@ -105,8 +99,6 @@ public sealed partial class Parser
     {
         [global::Quire.Mirror.MirrorStub]
         public bool help;
-        [global::Quire.Mirror.MirrorStub]
-        public HelpArgument() { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+COORD, Ptc.Core")]
@@ -149,33 +141,11 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+ArgumentHelpStrings, Ptc.Core")]
     private partial struct ArgumentHelpStrings
     {
-        [global::Quire.Mirror.MirrorStub]
-        public string syntax;
-        [global::Quire.Mirror.MirrorStub]
-        public string help;
-        [global::Quire.Mirror.MirrorStub]
-        public ArgumentHelpStrings(string syntax, string help) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+Argument, Ptc.Core")]
     private partial class Argument
     {
-        [global::Quire.Mirror.MirrorStub]
-        private string longName;
-        [global::Quire.Mirror.MirrorStub]
-        private string shortName;
-        [global::Quire.Mirror.MirrorStub]
-        private string helpText;
-        [global::Quire.Mirror.MirrorStub]
-        private bool hasHelpText;
-        [global::Quire.Mirror.MirrorStub]
-        private bool explicitShortName;
-        [global::Quire.Mirror.MirrorStub]
-        private object defaultValue;
-        [global::Quire.Mirror.MirrorStub]
-        private bool seenValue;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Reflection.FieldInfo fieldInfo;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Type elementType;
         [global::Quire.Mirror.MirrorStub]
@@ -185,25 +155,9 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         private global::Quire.ThirdParty.ErrorReporter reporter;
         [global::Quire.Mirror.MirrorStub]
-        private bool isDefault;
-        [global::Quire.Mirror.MirrorStub]
-        private string validValues;
-        [global::Quire.Mirror.MirrorStub]
         public global::System.Type ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public string LongName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool ExplicitShortName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string ShortName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public bool HasShortName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool HasHelpText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string HelpText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public object DefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public bool HasDefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
@@ -213,19 +167,11 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         public bool IsRequired { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public bool SeenValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public bool AllowMultiple { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public bool Unique { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public global::System.Type Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public bool IsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool IsDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string ValidValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public Argument(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo, global::Quire.ThirdParty.ErrorReporter reporter) { }
         [global::Quire.Mirror.MirrorStub]

@@ -12,13 +12,9 @@ namespace Quire.Undo;
 public partial class CommandBuffer
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Undo.CommandBuffer _currentInstance;
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.CommandBuffer _defaultBuffer;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<object, global::Quire.Undo.CommandBuffer> _instances;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Stack<global::Quire.Undo.IUndoableCommand> _undoStack;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Stack<global::Quire.Undo.IUndoableCommand> _redoStack;
     [global::Quire.Mirror.MirrorStub]
@@ -26,17 +22,9 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     public static bool CanUndo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Undo.CommandBuffer CurrentInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.IUndoableCommand NextUndoCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.IUndoableCommand NextRedoCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static int UndoStackDepth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.Undo.CommandEventArgs> BeforeCommand;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.Undo.CommandEventArgs> AfterCommand;
     [global::Quire.Mirror.MirrorStub]
     public static void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -80,13 +68,7 @@ public partial class CommandBuffer
     private partial class MasterCommand : global::Quire.Undo.CompoundCommand
     {
         [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Undo.IUndoableCommand _top;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Undo.IUndoableCommand Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public MasterCommand(global::Quire.Undo.IUndoableCommand top) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => base.Do();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => base.Undo();
         [global::Quire.Mirror.MirrorStub]

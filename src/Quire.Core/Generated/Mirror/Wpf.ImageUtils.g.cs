@@ -34,8 +34,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Size GetArchitectureIndependentSize(global::System.Windows.Media.Imaging.BitmapSource bitmapSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, global::System.Windows.Rect box, global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, global::System.Windows.Rect box, global::System.Windows.Media.Visual visual, bool coerceBoxPoints, global::System.Windows.Media.GeneralTransform transformToRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.VisualBrush CreateVisualBrush(global::System.Windows.Media.Visual visual, global::System.Windows.Rect box, bool stretch = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,8 +49,6 @@ public partial class ImageUtils
     public static void CopyImageToTempBitmap(global::System.Windows.Controls.Image image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool CopyImageToStream(global::System.Uri sourceUri, global::System.IO.Stream stream, byte[] originalStreamHash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void EncodePngImage(global::System.Windows.Media.Imaging.BitmapSource source, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void EncodeImage(global::System.Windows.Media.Imaging.BitmapSource source, string imageType, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -91,8 +87,6 @@ public partial class ImageUtils
     public static global::System.Windows.Media.ImageSource GetImageSourceFromIcon(global::System.Drawing.Icon icon, int imageSize = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Drawing.Icon MessageBoxImageToIcon(global::System.Windows.MessageBoxImage image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ImageUtils() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils+BitmapFormats, Ptc.Core")]
     public static partial class BitmapFormats

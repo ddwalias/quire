@@ -12,13 +12,7 @@ namespace Quire.Services;
 public partial class ApplicationBehaviorOptions : global::Quire.Services.IApplicationBehaviorOptions, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
-    private int _collectInputOutputStatesTimeout;
-    [global::Quire.Mirror.MirrorStub]
     private int _delayRecalculationInMsecAfterCloseExcel;
-    [global::Quire.Mirror.MirrorStub]
-    public int CollectInputOutputStatesTimeout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int DelayRecalculationInMsecAfterCloseExcel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

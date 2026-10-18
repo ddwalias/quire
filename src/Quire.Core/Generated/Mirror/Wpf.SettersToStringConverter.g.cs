@@ -17,8 +17,4 @@ public partial class SettersToStringConverter : global::System.Windows.Data.IVal
     public static readonly string EmbedFontDelimiter;
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SettersToStringConverter() { }
 }

@@ -12,29 +12,11 @@ namespace Quire.PersistentDataObjects;
 public partial class calculation
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.calculationBuiltInVariables builtInVariablesField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.calculationCalculationBehavior calculationBehaviorField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.calculationUnits unitsField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool cacheworksheetField;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     public const string RootAttributeName = "calculation";
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.calculationBuiltInVariables builtInVariables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.calculationCalculationBehavior calculationBehavior { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.calculationUnits units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool cacheworksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public calculation() { }
 }

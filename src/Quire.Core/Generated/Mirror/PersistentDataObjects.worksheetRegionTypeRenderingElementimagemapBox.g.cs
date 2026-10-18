@@ -11,34 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.worksheetRegionTypeRenderingElementimagemapBox, Ptc.Core")]
 public partial class worksheetRegionTypeRenderingElementimagemapBox
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string expridrefField;
-    [global::Quire.Mirror.MirrorStub]
-    private double topField;
-    [global::Quire.Mirror.MirrorStub]
-    private double leftField;
-    [global::Quire.Mirror.MirrorStub]
-    private double heightField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool heightFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double widthField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool widthFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    public string expridref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double left { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool heightSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool widthSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public worksheetRegionTypeRenderingElementimagemapBox() { }
 }

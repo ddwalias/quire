@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.regionInTextBase, Ptc.Core")]
 public abstract partial class regionInTextBase : global::Quire.PersistentDataObjects.regionBase, global::Quire.PersistentDataObjects.IRegionInTextType, global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string textcaretpositionField;
-    [global::Quire.Mirror.MirrorStub]
-    public string textcaretposition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected regionInTextBase() { }
 }

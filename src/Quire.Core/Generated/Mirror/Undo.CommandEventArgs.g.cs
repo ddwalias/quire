@@ -12,15 +12,7 @@ namespace Quire.Undo;
 public partial class CommandEventArgs : global::System.EventArgs
 {
     [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.WeakReference _commandReference;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Undo.CommandEventArgs.ActionTypeEnum _actionType;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCommandAlive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Undo.IUndoableCommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Undo.CommandEventArgs.ActionTypeEnum ActionType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CommandEventArgs(global::Quire.Undo.IUndoableCommand command, global::Quire.Undo.CommandEventArgs.ActionTypeEnum actionType) { }
 

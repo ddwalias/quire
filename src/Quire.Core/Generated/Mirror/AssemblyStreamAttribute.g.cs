@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.AssemblyStreamAttribute, Ptc.Core")]
 public partial class AssemblyStreamAttribute : global::System.Attribute
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly string Stream;
-    [global::Quire.Mirror.MirrorStub]
-    public AssemblyStreamAttribute(string stream) { }
 }

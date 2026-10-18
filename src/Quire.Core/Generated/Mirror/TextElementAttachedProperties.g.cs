@@ -18,11 +18,7 @@ public static partial class TextElementAttachedProperties
     [global::Quire.Mirror.MirrorStub]
     private const double FONT_SIZE_TOLERANCE = 0.0001d;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty StyleKeyProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static void HandleTextStyleDataChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ClearTextStyleData(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetStyleKey(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

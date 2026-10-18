@@ -11,14 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.schemaPropertiesType, Ptc.Core")]
 public partial class schemaPropertiesType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string nameField;
-    [global::Quire.Mirror.MirrorStub]
-    private string versionField;
-    [global::Quire.Mirror.MirrorStub]
-    public string name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string version { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public schemaPropertiesType() { }
 }

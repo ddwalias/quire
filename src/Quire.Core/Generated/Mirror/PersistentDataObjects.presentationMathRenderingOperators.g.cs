@@ -12,37 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationMathRenderingOperators
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsMultiplication multiplicationField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsDerivative derivativeField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsLiteralsubscript literalsubscriptField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsDefinition definitionField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsGlobaldefinition globaldefinitionField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsLocaldefinition localdefinitionField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsEquality equalityField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsSymbolicevaluation symbolicevaluationField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsMultiplication multiplication { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsDerivative derivative { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsLiteralsubscript literalsubscript { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsDefinition definition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsGlobaldefinition globaldefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsLocaldefinition localdefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsEquality equality { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsSymbolicevaluation symbolicevaluation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public presentationMathRenderingOperators() { }
 }

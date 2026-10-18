@@ -11,6 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.FileFormatBlockedByFreemiumException, Ptc.Core")]
 public partial class FileFormatBlockedByFreemiumException : global::System.ApplicationException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FileFormatBlockedByFreemiumException() { }
 }

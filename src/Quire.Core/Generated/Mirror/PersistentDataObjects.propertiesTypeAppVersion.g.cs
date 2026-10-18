@@ -11,14 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.propertiesTypeAppVersion, Ptc.Core")]
 public partial class propertiesTypeAppVersion
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string releaseField;
-    [global::Quire.Mirror.MirrorStub]
-    private string valueField;
-    [global::Quire.Mirror.MirrorStub]
-    public string release { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public propertiesTypeAppVersion() { }
 }

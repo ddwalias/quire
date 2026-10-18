@@ -11,8 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.CustomRoutedEventArgs`1, Ptc.Core")]
 public partial class CustomRoutedEventArgs<T> : global::System.Windows.RoutedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly T Parameter;
-    [global::Quire.Mirror.MirrorStub]
-    public CustomRoutedEventArgs(global::System.Windows.RoutedEvent routedEvent, T param) { }
 }

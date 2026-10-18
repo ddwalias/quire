@@ -12,37 +12,13 @@ namespace Quire.ThirdParty;
 public partial class ArgumentAttribute : global::System.Attribute
 {
     [global::Quire.Mirror.MirrorStub]
-    private string shortName;
-    [global::Quire.Mirror.MirrorStub]
-    private string longName;
-    [global::Quire.Mirror.MirrorStub]
-    private string helpText;
-    [global::Quire.Mirror.MirrorStub]
-    private object defaultValue;
-    [global::Quire.Mirror.MirrorStub]
-    private string validValues;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.ThirdParty.ArgumentType type;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ThirdParty.ArgumentType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool DefaultShortName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public string ShortName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool DefaultLongName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string LongName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object DefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasDefaultValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool HasHelpText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string HelpText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ValidValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ArgumentAttribute(global::Quire.ThirdParty.ArgumentType type) { }
 }

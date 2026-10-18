@@ -11,14 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.worksheetRegionTypeRendering, Ptc.Core")]
 public partial class worksheetRegionTypeRendering
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.worksheetRegionTypeRenderingElementimagemap elementimagemapField;
-    [global::Quire.Mirror.MirrorStub]
-    private string itemidrefField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.worksheetRegionTypeRenderingElementimagemap elementimagemap { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string itemidref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public worksheetRegionTypeRendering() { }
 }

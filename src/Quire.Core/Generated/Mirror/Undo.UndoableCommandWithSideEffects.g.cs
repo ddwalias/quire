@@ -11,8 +11,4 @@ namespace Quire.Undo;
 [global::Quire.Mirror.MirrorOf("Ptc.Undo.UndoableCommandWithSideEffects, Ptc.Core")]
 public partial class UndoableCommandWithSideEffects : global::Quire.Undo.UndoableCommand, global::Quire.Undo.IUndoableCommandWithSideEffects, global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    public UndoableCommandWithSideEffects(string name, global::Quire.DelegateFunction0<bool> doMethod, global::Quire.Delegate0 undoMethod) : base(default(string), default(global::Quire.DelegateFunction0<bool>), default(global::Quire.Delegate0)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public UndoableCommandWithSideEffects(string name, global::Quire.DelegateFunction0<bool> doMethod, global::Quire.Delegate0 undoMethod, global::Quire.Delegate0 redoMethod) : base(default(string), default(global::Quire.DelegateFunction0<bool>), default(global::Quire.Delegate0)) { }
 }

@@ -17,6 +17,4 @@ public partial class xmlStandardElement
     public const string AttValPreserve = "preserve";
     [global::Quire.Mirror.MirrorStub]
     public const string AttValTrue = "true";
-    [global::Quire.Mirror.MirrorStub]
-    public xmlStandardElement() { }
 }

@@ -12,13 +12,5 @@ namespace Quire;
 public partial class TextStyle : global::Quire.TextStyleBase
 {
     [global::Quire.Mirror.MirrorStub]
-    public TextStyle(global::Quire.TextStyleData data, bool basedOnValues = true) : base(default(global::System.Windows.Style)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyle(global::System.Windows.Style style) : base(default(global::System.Windows.Style)) { }
-    [global::Quire.Mirror.MirrorStub]
     public TextStyle(string key, global::Quire.Core.TextFormat textFormat, bool reset = false) : base(default(global::System.Windows.Style)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyle(string name) : base(default(global::System.Windows.Style)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyle(string name, string key) : base(default(global::System.Windows.Style)) { }
 }

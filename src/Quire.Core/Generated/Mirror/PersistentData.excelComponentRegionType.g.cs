@@ -11,14 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.excelComponentRegionType, Ptc.Core")]
 public partial class excelComponentRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private object itemField;
-    [global::Quire.Mirror.MirrorStub]
-    private string[] mc14conversionlossannotationsField;
-    [global::Quire.Mirror.MirrorStub]
-    public override object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string[] mc14conversionlossannotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public excelComponentRegionType() { }
 }

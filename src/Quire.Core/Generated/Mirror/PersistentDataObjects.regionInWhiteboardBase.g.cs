@@ -12,19 +12,7 @@ namespace Quire.PersistentDataObjects;
 public abstract partial class regionInWhiteboardBase : global::Quire.PersistentDataObjects.regionBase, global::Quire.PersistentDataObjects.IRegionInWhiteboardType, global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
     [global::Quire.Mirror.MirrorStub]
-    private double topField;
-    [global::Quire.Mirror.MirrorStub]
-    private double leftField;
-    [global::Quire.Mirror.MirrorStub]
-    public double top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double left { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point Location { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double MC15TopOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public double MC15Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected regionInWhiteboardBase() { }
 }

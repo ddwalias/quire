@@ -13,6 +13,4 @@ public partial class ActionItem : global::Quire.Undo.CommandEventArgs
 {
     [global::Quire.Mirror.MirrorStub]
     public ActionItem(global::Quire.Undo.CommandEventArgs commandEventArgs) : base(default(global::Quire.Undo.IUndoableCommand), default(global::Quire.Undo.CommandEventArgs.ActionTypeEnum)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ActionItem(global::Quire.Undo.IUndoableCommand command, global::Quire.Undo.CommandEventArgs.ActionTypeEnum actionType) : base(default(global::Quire.Undo.IUndoableCommand), default(global::Quire.Undo.CommandEventArgs.ActionTypeEnum)) { }
 }

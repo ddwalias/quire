@@ -12,12 +12,6 @@ namespace Quire.PersistentDataObjects;
 public partial class axes3Type
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.xAxis xAxisField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.yAxis yAxisField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.zAxis zAxisField;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     private const string _rootAttributeName = "axes";
@@ -30,13 +24,5 @@ public partial class axes3Type
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.xAxis xAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.yAxis yAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.zAxis zAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public axes3Type() { }
 }

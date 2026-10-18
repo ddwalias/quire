@@ -12,17 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class unitMonomialUnitReference
 {
     [global::Quire.Mirror.MirrorStub]
-    private string unitField;
-    [global::Quire.Mirror.MirrorStub]
-    private string powernumeratorField;
-    [global::Quire.Mirror.MirrorStub]
-    private string powerdenominatorField;
-    [global::Quire.Mirror.MirrorStub]
-    public string unit { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string powernumerator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string powerdenominator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public unitMonomialUnitReference() { }
 }

@@ -12,7 +12,5 @@ namespace Quire.Wpf;
 public partial class Subscript : global::System.Windows.Documents.Span
 {
     [global::Quire.Mirror.MirrorStub]
-    public Subscript() { }
-    [global::Quire.Mirror.MirrorStub]
     public Subscript(global::System.Windows.Documents.Inline inline) { }
 }

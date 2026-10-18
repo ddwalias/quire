@@ -11,26 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.resultFormatType, Ptc.Core")]
 public partial class resultFormatType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private object itemField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.matrixFormatType matrixField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.resultFormatTypeUnit unitField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.resultFormatTypeTable tableField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool numericonlyField;
-    [global::Quire.Mirror.MirrorStub]
-    public object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.matrixFormatType matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.resultFormatTypeUnit unit { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.resultFormatTypeTable table { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool numericonly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public resultFormatType() { }
 }

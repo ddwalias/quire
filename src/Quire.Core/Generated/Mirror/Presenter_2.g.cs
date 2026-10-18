@@ -12,15 +12,5 @@ namespace Quire;
 public partial class Presenter<ModelType, ViewType> : global::System.MarshalByRefObject
 {
     [global::Quire.Mirror.MirrorStub]
-    private ViewType _view;
-    [global::Quire.Mirror.MirrorStub]
-    private ModelType _model;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual ViewType View { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual ModelType Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Presenter() { }
-    [global::Quire.Mirror.MirrorStub]
     public Presenter(ModelType model, ViewType view) { }
 }

@@ -12,33 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class resultFormatFractionType
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.radixType radixField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool radixFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private bool usemixednumbersField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.resultFormatGeneralTypeImaginaryvalue imaginaryvalueField;
-    [global::Quire.Mirror.MirrorStub]
-    private string precisionField;
-    [global::Quire.Mirror.MirrorStub]
-    private string complexthresholdField;
-    [global::Quire.Mirror.MirrorStub]
-    private string zerothresholdField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.radixType radix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool radixSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool usemixednumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.resultFormatGeneralTypeImaginaryvalue imaginaryvalue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string precision { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string complexthreshold { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string zerothreshold { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public resultFormatFractionType() { }
 }

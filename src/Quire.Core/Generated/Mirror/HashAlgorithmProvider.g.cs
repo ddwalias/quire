@@ -16,17 +16,11 @@ public partial class HashAlgorithmProvider : global::Quire.IHashAlgorithmProvide
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Security.Cryptography.HashAlgorithm Sha256Service { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Security.Cryptography.HashAlgorithm CreateHash() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public byte[] ComputeHash(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public byte[] ComputeHash(byte[] sourceBytes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Security.Cryptography.HashAlgorithm GetDisposableHash() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    public HashAlgorithmProvider() { }
 }

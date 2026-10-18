@@ -12,13 +12,7 @@ namespace Quire;
 public partial class TextStyleChangedHandler : global::Quire.ITextStyleChangedHandler
 {
     [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::System.Collections.Generic.ICollection<global::Quire.TextStyleData>> StyleChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.Core.TextFormat> StyleCreateRequest;
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateStyle(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CreateNewStyle(global::Quire.Core.TextFormat textFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyleChangedHandler() { }
 }

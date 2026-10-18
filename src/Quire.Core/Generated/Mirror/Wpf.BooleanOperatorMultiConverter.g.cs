@@ -18,9 +18,5 @@ public partial class BooleanOperatorMultiConverter : global::System.Windows.Data
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Wpf.BooleanOperatorMultiConverter Instance;
     [global::Quire.Mirror.MirrorStub]
-    private BooleanOperatorMultiConverter() { }
-    [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

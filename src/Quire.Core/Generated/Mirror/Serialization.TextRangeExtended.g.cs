@@ -14,8 +14,6 @@ public partial class TextRangeExtended : global::System.Windows.Documents.TextRa
     [global::Quire.Mirror.MirrorStub]
     private const string StylePattern = " style=\"(?<style>[^.\"]+)\"";
     [global::Quire.Mirror.MirrorStub]
-    public TextRangeExtended(global::System.Windows.Documents.TextPointer tpStart, global::System.Windows.Documents.TextPointer tpEnd) : base(default(global::System.Windows.Documents.TextPointer), default(global::System.Windows.Documents.TextPointer)) { }
-    [global::Quire.Mirror.MirrorStub]
     public void Save(global::System.IO.Stream st, string format, bool preserveTextElements, bool isConversion = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void LoadInternal(global::System.IO.Stream st) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

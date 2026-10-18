@@ -24,8 +24,6 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static void EachWithIndex<T>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Action<int, T> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<TRetType> Collect<T, TRetType>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Func<T, TRetType> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<TRetType> CollectAsList<T, TRetType>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Func<T, TRetType> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int IndexOf<T>(this global::System.Collections.Generic.IEnumerable<T> items, T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

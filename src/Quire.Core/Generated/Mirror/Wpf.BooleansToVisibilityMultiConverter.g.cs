@@ -12,11 +12,5 @@ namespace Quire.Wpf;
 public partial class BooleansToVisibilityMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool Collapse { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] ConvertBack(object value, global::System.Type[] targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public BooleansToVisibilityMultiConverter() { }
 }

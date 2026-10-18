@@ -18,8 +18,6 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::Quire.IO.IFileOperationsProvider _fileOperationsProvider;
     [global::Quire.Mirror.MirrorStub]
-    protected string _applicationLogFilePath;
-    [global::Quire.Mirror.MirrorStub]
     private const string DatePattern = "yyyyMMdd_HHmmss";
     [global::Quire.Mirror.MirrorStub]
     private const string UnknownBuildId = "Unknown";
@@ -36,15 +34,11 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     [global::Quire.Mirror.MirrorStub]
     public string LogFolder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual string GetMiscInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetSystemInfoIfAvailable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetApplicationMemoryUsage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetLastApplicationLogPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetApplicationStartTime() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

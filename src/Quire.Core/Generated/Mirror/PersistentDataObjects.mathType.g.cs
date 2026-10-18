@@ -12,62 +12,6 @@ namespace Quire.PersistentDataObjects;
 public partial class mathType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.resultFormatType resultFormatField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.mathFormattingType formattingOverrideField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool optimizeField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool disablecalcField;
-    [global::Quire.Mirror.MirrorStub]
-    private string errorField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool pushdownField;
-    [global::Quire.Mirror.MirrorStub]
-    private int resultRefField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool resultRefFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private bool showLhsOfDefinitionField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.LhsOfDefinitionVisibility visibilityLhsOfDefinitionField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool symbolicEvalKeywordsVisibilityStateField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.resultFormatType resultFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.mathFormattingType formattingOverride { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool optimize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool disablecalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool pushdown { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int resultRef { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool resultRefSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool showLhsOfDefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.LhsOfDefinitionVisibility visibilityLhsOfDefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool symbolicEvalKeywordsVisibilityState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode[] InnerXml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode[] InnerXmlForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string[] EquationSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculationDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public mathType() { }
     [global::Quire.Mirror.MirrorStub]
     public void SetXmlNodeOrSExpression(global::System.Action<global::System.Xml.XmlNode> setXmlNode, global::System.Action<string> setSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

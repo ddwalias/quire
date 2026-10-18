@@ -12,11 +12,5 @@ namespace Quire.Undo;
 public partial class SetReadOnlyPropertyCommand : global::Quire.Undo.SetPropertyCommand
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.DependencyPropertyKey _dependencyPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    protected override object Value { get => base.Value; set => base.Value = value; }
-    [global::Quire.Mirror.MirrorStub]
     public SetReadOnlyPropertyCommand(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyKey dependencyPropertyKey, object newValue) : base(default(global::System.Windows.DependencyObject), default(global::System.Windows.DependencyProperty), default(object)) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ClearValue() => base.ClearValue();
 }

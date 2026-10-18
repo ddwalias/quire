@@ -12,13 +12,9 @@ namespace Quire.Wpf.Printing;
 public partial struct PageIndexRange
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.PageRange PageNumRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public int FirstIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int LastIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PageIndexRange(global::System.Windows.Controls.PageRange pageNumRange) { }
     [global::Quire.Mirror.MirrorStub]
     public PageIndexRange(int firstIndex, global::System.Nullable<int> lastIndex = default) { }
     [global::Quire.Mirror.MirrorStub]

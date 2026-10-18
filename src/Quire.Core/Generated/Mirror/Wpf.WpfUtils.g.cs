@@ -90,8 +90,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static T FindVisualDescendant<T>(global::System.Windows.DependencyObject parent) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void QueueBackgroundTask(global::System.Windows.Forms.MethodInvoker work) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void ExecuteTask(global::System.Windows.Forms.MethodInvoker work, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double InchesToDips(double inches) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -134,8 +132,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool IsAncestorOf(global::System.Windows.DependencyObject possibleAncestor, global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void Stall(int milliseconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void Stall(int milliseconds, global::System.Windows.Threading.DispatcherPriority priorityOfEventsToProcess) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetPropertyAndNotify<T>(ref T property, T value, global::System.ComponentModel.INotifyPropertyChanged propertyOwner, global::System.ComponentModel.PropertyChangedEventHandler propertyChanged, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -163,8 +159,6 @@ public static partial class WpfUtils
     public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.DependencyObject GetParentDependencyObject(global::System.Windows.DependencyObject d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyObject GetVisualParent(this global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T GetParent<T>(global::System.Windows.DependencyObject d) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

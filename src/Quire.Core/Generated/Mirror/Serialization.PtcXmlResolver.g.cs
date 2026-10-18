@@ -12,12 +12,6 @@ namespace Quire.Serialization;
 public abstract partial class PtcXmlResolver : global::System.Xml.XmlResolver
 {
     [global::Quire.Mirror.MirrorStub]
-    protected string _fullSchemaNameFormat;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Net.ICredentials Credentials { set => base.Credentials = value; }
-    [global::Quire.Mirror.MirrorStub]
-    protected PtcXmlResolver(string fullSchemaNameFormat) { }
-    [global::Quire.Mirror.MirrorStub]
     public override object GetEntity(global::System.Uri absoluteUri, string role, global::System.Type ofObjectToReturn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Stream GetStream(string schemaName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -11,14 +11,6 @@ namespace Quire.VCard;
 [global::Quire.Mirror.MirrorOf("Ptc.VCard.Telephone, Ptc.Core")]
 public partial struct Telephone
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Number { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.VCard.Telephone.Types Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsFax { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsVoice { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
     [global::Quire.Mirror.MirrorOf("Ptc.VCard.Telephone+Types, Ptc.Core")]
     public enum Types

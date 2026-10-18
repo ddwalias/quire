@@ -34,8 +34,6 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _publiclyVisible;
     [global::Quire.Mirror.MirrorStub]
-    public static int ChunkSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override bool CanRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool CanSeek { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -48,21 +46,11 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     [global::Quire.Mirror.MirrorStub]
     public override long Position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public ChunkedMemoryStream() { }
-    [global::Quire.Mirror.MirrorStub]
     public ChunkedMemoryStream(int capacity) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ChunkedMemoryStream(byte[] buffer) { }
     [global::Quire.Mirror.MirrorStub]
     public ChunkedMemoryStream(byte[] buffer, bool writable) { }
     [global::Quire.Mirror.MirrorStub]
-    public ChunkedMemoryStream(byte[] buffer, int index, int count) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ChunkedMemoryStream(byte[] buffer, int index, int count, bool writable) { }
-    [global::Quire.Mirror.MirrorStub]
     public ChunkedMemoryStream(byte[] buffer, int index, int count, bool writable, bool publiclyVisible) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Flush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public byte[] GetBuffer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

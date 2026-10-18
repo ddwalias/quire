@@ -14,10 +14,6 @@ public partial class ObservableRangeCollection<T> : global::System.Collections.O
     [global::Quire.Mirror.MirrorStub]
     private bool _fireRangeChangesAllowed;
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged;
-    [global::Quire.Mirror.MirrorStub]
     public ObservableRangeCollection() { }
     [global::Quire.Mirror.MirrorStub]
     public ObservableRangeCollection(global::System.Collections.Generic.IEnumerable<T> collection) { }

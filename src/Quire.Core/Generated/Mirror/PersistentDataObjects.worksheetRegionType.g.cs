@@ -12,16 +12,6 @@ namespace Quire.PersistentDataObjects;
 public partial class worksheetRegionType : global::Quire.PersistentDataObjects.regionInWhiteboardBase, global::Quire.PersistentDataObjects.IRegionInWhiteboardType, global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
     [global::Quire.Mirror.MirrorStub]
-    private object itemField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.userValueType[] metadataField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.worksheetRegionTypeIndexes indexesField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.worksheetRegionTypeRendering renderingField;
-    [global::Quire.Mirror.MirrorStub]
-    private string[] mc14conversionlossannotationsField;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
@@ -30,19 +20,7 @@ public partial class worksheetRegionType : global::Quire.PersistentDataObjects.r
     [global::Quire.Mirror.MirrorStub]
     public const string RootAttributeName = "region";
     [global::Quire.Mirror.MirrorStub]
-    public override object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.userValueType[] metadata { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.worksheetRegionTypeIndexes indexes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.worksheetRegionTypeRendering rendering { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string[] mc14conversionlossannotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.InputControlMemberType InputControlMemberType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer CreateDefaultSerializer(global::System.Type typeOfRoot, string rootNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -55,6 +33,4 @@ public partial class worksheetRegionType : global::Quire.PersistentDataObjects.r
     public global::System.Xml.XmlElement Serialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.PersistentDataObjects.worksheetRegionType Deserialize(global::System.Xml.XmlElement xmlRoot, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public worksheetRegionType() { }
 }

@@ -17,6 +17,4 @@ public partial class ServiceRegistry : global::System.ComponentModel.Design.Serv
     public void RemoveService<T>(bool shouldDisconnect = true) where T : class, global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public T GetService<T>() where T : global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ServiceRegistry() { }
 }

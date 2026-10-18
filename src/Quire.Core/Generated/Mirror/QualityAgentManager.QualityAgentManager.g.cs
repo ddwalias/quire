@@ -30,8 +30,6 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     [global::Quire.Mirror.MirrorStub]
     private const string Dummy = "1234567890123456789012345678901234567890123456789012345678901234";
     [global::Quire.Mirror.MirrorStub]
-    public bool IsReportSendingEnabled { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public QualityAgentManager(string mathcadPrimeInstallationPath) { }
     [global::Quire.Mirror.MirrorStub]
     public bool SendReport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,8 +49,6 @@ public partial class QualityAgentManager : global::Quire.QualityAgentManager.IQu
     private static string GetMathcadPrimeVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetMathcadPrimeBitness() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetMathcadPrimeInstallationDate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string GetMathcadPrimeChecksum() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

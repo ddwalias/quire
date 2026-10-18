@@ -22,9 +22,5 @@ public partial struct ImagePackagingInformation
     [global::Quire.Mirror.MirrorStub]
     public string ImageExtension;
     [global::Quire.Mirror.MirrorStub]
-    public string ImageNameFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ImageId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string ImageName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

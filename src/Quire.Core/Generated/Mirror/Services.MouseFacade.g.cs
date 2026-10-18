@@ -12,17 +12,7 @@ namespace Quire.Services;
 public partial class MouseFacade : global::Quire.Services.IMouseFacade, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.Cursor ShowWaitCursor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void ClearOverrideCursor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.Cursor GetOverrideCursor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Input.Cursor SetOverrideCursor(global::System.Windows.Input.Cursor cursor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool SetCursor(global::System.Windows.Input.Cursor cursor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MouseFacade() { }
 }

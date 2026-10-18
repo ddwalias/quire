@@ -11,12 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.mathBoardType, Ptc.Core")]
 public abstract partial class mathBoardType : global::Quire.PersistentData.RegionCollectionPreSerializer, global::Quire.PersistentDataObjects.IHasPreSerialize, global::Quire.PersistentDataObjects.ICalculationHideable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool disablecalcField;
-    [global::Quire.Mirror.MirrorStub]
-    public bool disablecalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculationDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected mathBoardType() { }
 }

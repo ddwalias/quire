@@ -15,6 +15,4 @@ public partial class ApplicationBehaviorConstant
     public const int DefaultTimeToWaitForResultInSec = 60;
     [global::Quire.Mirror.MirrorStub]
     public const int WaitIndefinitely = -1;
-    [global::Quire.Mirror.MirrorStub]
-    public ApplicationBehaviorConstant() { }
 }

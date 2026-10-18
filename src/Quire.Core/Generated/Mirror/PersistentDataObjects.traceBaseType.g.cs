@@ -11,22 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.traceBaseType, Ptc.Core")]
 public partial class traceBaseType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.traceStyleType traceStyleField;
-    [global::Quire.Mirror.MirrorStub]
-    private string numofpointsField;
-    [global::Quire.Mirror.MirrorStub]
-    private int resultRefField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool resultRefFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.traceStyleType traceStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string numofpoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int resultRef { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool resultRefSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public traceBaseType() { }
 }

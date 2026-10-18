@@ -12,11 +12,7 @@ namespace Quire.Wpf;
 public partial class RoutedUICommandWithFunctionalityParameterKey : global::Quire.Wpf.RoutedUICommandWithFunctionalityKey, global::Quire.Wpf.IHasFunctionalityKeyAccordingToParameter
 {
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey> PrimaryParameterToFunctionalityKeyDictionary { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey>> ParameterToFunctionalityKeyDictionaryList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RoutedUICommandWithFunctionalityParameterKey() { }
     [global::Quire.Mirror.MirrorStub]
     public RoutedUICommandWithFunctionalityParameterKey(string text, string name, global::System.Type ownerType, global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey> parametersToFunctionalityDictionary) { }
     [global::Quire.Mirror.MirrorStub]

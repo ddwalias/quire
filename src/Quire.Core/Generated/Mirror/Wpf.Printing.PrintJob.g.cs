@@ -16,14 +16,6 @@ public partial class PrintJob
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Xps.XpsDocumentWriter _docWriter;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Documents.IDocumentPaginatorSource PrintableDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRunning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::System.Windows.Documents.Serialization.WritingProgressChangedEventArgs> JobStarted;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::System.Windows.Documents.Serialization.WritingCompletedEventArgs> JobCompleted;
-    [global::Quire.Mirror.MirrorStub]
     public void Print(global::System.Printing.PrintQueue queue, global::System.Printing.PrintTicket ticket, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PrintToFile(string filePath, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -51,6 +43,4 @@ public partial class PrintJob
     private void FireJobStarted() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void FireJobCompleted(global::System.Windows.Documents.Serialization.WritingCompletedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PrintJob() { }
 }

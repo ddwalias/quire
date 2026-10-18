@@ -16,7 +16,5 @@ public partial class ResourceProvider<TDictionary> where TDictionary : global::S
     [global::Quire.Mirror.MirrorStub]
     public static TDictionary Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private ResourceProvider() { }
-    [global::Quire.Mirror.MirrorStub]
     public static void VerifyResources(global::System.Windows.ResourceDictionary dictionary, params global::System.Type[] keysOwnerTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

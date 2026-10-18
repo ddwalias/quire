@@ -12,29 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class calculationBuiltInVariables
 {
     [global::Quire.Mirror.MirrorStub]
-    private string arrayoriginField;
-    [global::Quire.Mirror.MirrorStub]
-    private double convergencetoleranceField;
-    [global::Quire.Mirror.MirrorStub]
-    private double constrainttoleranceField;
-    [global::Quire.Mirror.MirrorStub]
-    private string randomseedField;
-    [global::Quire.Mirror.MirrorStub]
-    private string prnprecisionField;
-    [global::Quire.Mirror.MirrorStub]
-    private string prncolwidthField;
-    [global::Quire.Mirror.MirrorStub]
-    public string arrayorigin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double convergencetolerance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double constrainttolerance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string randomseed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string prnprecision { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string prncolwidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public calculationBuiltInVariables() { }
 }

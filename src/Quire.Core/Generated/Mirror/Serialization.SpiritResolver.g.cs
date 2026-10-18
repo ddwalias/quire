@@ -16,8 +16,6 @@ public partial class SpiritResolver : global::Quire.Serialization.PtcXmlResolver
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Serialization.SpiritResolver Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private SpiritResolver() : base(default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
     public static void InitializeDocument(global::System.Xml.XmlDocument xmlDoc, string schemaName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string SimpleXpathCreator(string prefix, string ns, params string[] parameters) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

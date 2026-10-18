@@ -22,8 +22,6 @@ public partial class PreemptiveCommandBinding
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Input.ExecutedRoutedEventHandler _executedWrapper;
     [global::Quire.Mirror.MirrorStub]
-    private static void EmptyEventHandler(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal PreemptiveCommandBinding(global::System.Windows.UIElement element, global::System.Windows.Input.ICommand command, global::System.Windows.Input.ExecutedRoutedEventHandler previewExecuted, global::System.Windows.Input.CanExecuteRoutedEventHandler previewCanExecute, bool bindingMarksEventAsHandled) { }
     [global::Quire.Mirror.MirrorStub]
     public void Add() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

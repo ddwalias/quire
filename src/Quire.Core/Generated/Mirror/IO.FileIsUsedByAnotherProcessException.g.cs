@@ -11,6 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.FileIsUsedByAnotherProcessException, Ptc.Core")]
 public partial class FileIsUsedByAnotherProcessException : global::System.IO.IOException
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FileIsUsedByAnotherProcessException(global::System.IO.IOException innerException) { }
 }

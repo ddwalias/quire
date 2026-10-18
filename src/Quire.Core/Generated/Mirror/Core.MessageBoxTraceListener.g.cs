@@ -18,13 +18,5 @@ public sealed partial class MessageBoxTraceListener : global::System.Diagnostics
     [global::Quire.Mirror.MirrorStub]
     private static readonly object _padlock;
     [global::Quire.Mirror.MirrorStub]
-    public override void Fail(string message) => base.Fail(message);
-    [global::Quire.Mirror.MirrorStub]
     public override void Fail(string message, string detailMessage) => base.Fail(message, detailMessage);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Write(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteLine(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MessageBoxTraceListener() { }
 }

@@ -40,16 +40,6 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.IO.IPackageOperationsProvider Instance;
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Uri _worksheet;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Uri _header;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Uri _footer;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Uri _headersContainer;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Uri _footersContainer;
-    [global::Quire.Mirror.MirrorStub]
     public const string OleMimeType = "application/vnd.openxmlformats-officedocument.oleObject";
     [global::Quire.Mirror.MirrorStub]
     public const string ProtectedMimeType = "application/octet-stream";
@@ -68,29 +58,9 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     private readonly string[] _compressedTypes;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.CompressionOption CompressionLevel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private PackageOperationsProvider() { }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.Package GetPackageForWrite(string packageName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.Package GetPackageForWrite(global::System.IO.FileStream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.Package GetPackageForRead(string packageName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetMainPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetHeaderPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetFooterPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetHeadersContainerPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetFootersContainerPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.IO.Packaging.PackagePart GetPartIfExists(global::System.IO.Packaging.Package package, global::System.Uri partName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetCoreMetadataPartFromPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.PackagePart sourcePart, string relationshipType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -108,23 +78,11 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     private global::System.IO.Packaging.PackagePart CreatePackagePart(global::System.IO.Packaging.Package package, global::System.Uri uri, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart AddMainPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart AddHeaderPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart AddFooterPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart AddHeadersContainerPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart AddFootersContainerPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart AddCoreMetadataPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart AddPartToPackage(global::System.IO.Packaging.Package package, string uriString, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void DeletePartFromPackage(global::System.IO.Packaging.Package package, string uriString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.IO.FileStream OpenFileStreamForReadWithFullShare(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.IO.Packaging.PackagePart CreateNewImagePart(global::System.IO.Packaging.PackagePart referencingPackagePart, global::System.Windows.Media.Imaging.BitmapSource image, string imageExtension, byte[] originalStreamHash, string uniqueImageName, global::System.Uri imageSourceUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

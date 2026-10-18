@@ -16,13 +16,5 @@ public partial class StyleNameToCategoryConverter : global::System.Windows.Data.
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.StyleNameToCategoryConverter Instance;
     [global::Quire.Mirror.MirrorStub]
-    public string CategoryLegacy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CategoryStandard { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public object Convert(object values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object ConvertBack(object value, global::System.Type targetTypes, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public StyleNameToCategoryConverter() { }
 }

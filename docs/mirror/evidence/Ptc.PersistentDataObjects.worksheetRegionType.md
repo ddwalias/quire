@@ -1,0 +1,26 @@
+# Ptc.PersistentDataObjects.worksheetRegionType
+
+- **Original:** `Ptc.Core.dll` 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`
+- **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
+- **Quire:** `src/Quire.Core`; tests: `Quire.Differential.Tests.PtcPersistentDataObjectsworksheetRegionTypeMechanicalDifferentialTests`
+
+| Member | Token | Contract | Confidence / limits | Status |
+|---|---|---|---|---|
+| `.ctor()` | 0x06000a37 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Item get` | 0x06000a24 | MemberGen: `itemField; set => itemField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Item set` | 0x06000a25 | MemberGen: `itemField; set => itemField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `metadata get` | 0x06000a26 | MemberGen: `metadataField; set => metadataField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `metadata set` | 0x06000a27 | MemberGen: `metadataField; set => metadataField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `indexes get` | 0x06000a28 | MemberGen: `indexesField; set => indexesField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `indexes set` | 0x06000a29 | MemberGen: `indexesField; set => indexesField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `rendering get` | 0x06000a2a | MemberGen: `renderingField; set => renderingField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `rendering set` | 0x06000a2b | MemberGen: `renderingField; set => renderingField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `mc14conversionlossannotations get` | 0x06000a2c | MemberGen: `mc14conversionlossannotationsField; set => mc14conversionlossannotationsField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `mc14conversionlossannotations set` | 0x06000a2d | MemberGen: `mc14conversionlossannotationsField; set => mc14conversionlossannotationsField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `InputControlMemberType get` | 0x06000a35 | MemberGen: `public InputControlMemberType InputControlMemberType { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `InputControlMemberType set` | 0x06000a36 | MemberGen: `public InputControlMemberType InputControlMemberType { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+
+## Test cases
+
+**Observed** (`PtcPersistentDataObjectsworksheetRegionTypeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
+parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.

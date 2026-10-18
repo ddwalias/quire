@@ -12,13 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationLanguage
 {
     [global::Quire.Mirror.MirrorStub]
-    private string mathField;
-    [global::Quire.Mirror.MirrorStub]
-    private string uiField;
-    [global::Quire.Mirror.MirrorStub]
-    public string math { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string UI { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public presentationLanguage() { }
 }

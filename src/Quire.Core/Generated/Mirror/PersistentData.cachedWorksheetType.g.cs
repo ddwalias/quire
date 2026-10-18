@@ -12,17 +12,7 @@ namespace Quire.PersistentData;
 public partial class cachedWorksheetType : global::Quire.PersistentData.IRegionCollectionType
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.cachedWorksheetRegionType[] regionsField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.calculation calculationField;
-    [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "cachedWorksheet";
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.cachedWorksheetRegionType[] regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.calculation calculation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public cachedWorksheetType() { }
 }

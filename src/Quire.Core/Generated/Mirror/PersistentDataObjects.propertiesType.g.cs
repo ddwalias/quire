@@ -12,39 +12,9 @@ namespace Quire.PersistentDataObjects;
 public partial class propertiesType
 {
     [global::Quire.Mirror.MirrorStub]
-    private string applicationField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.propertiesTypeAppVersion appVersionField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.propertiesTypeSerializationVersion serializationVersionField;
-    [global::Quire.Mirror.MirrorStub]
-    private string engineVersionField;
-    [global::Quire.Mirror.MirrorStub]
-    private string buildField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.schemaPropertiesType[] schemaPropertiesListField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.propertiesTypeNewData newDataField;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
-    public string application { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.propertiesTypeAppVersion appVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.propertiesTypeSerializationVersion serializationVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string engineVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string build { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.schemaPropertiesType[] schemaPropertiesList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.propertiesTypeNewData NewData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public propertiesType() { }
 }

@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.calculationUnitsCurrentUnitSystem, Ptc.Core")]
 public partial class calculationUnitsCurrentUnitSystem
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.unitSystemType nameField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.unitSystemType name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public calculationUnitsCurrentUnitSystem() { }
 }

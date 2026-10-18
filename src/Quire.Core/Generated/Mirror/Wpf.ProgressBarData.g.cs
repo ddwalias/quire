@@ -12,9 +12,5 @@ namespace Quire.Wpf;
 public partial class ProgressBarData
 {
     [global::Quire.Mirror.MirrorStub]
-    public string MessageFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.INotifyProgress ProgressNotifier { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ProgressBarData(string messageFormat, global::Quire.Wpf.INotifyProgress progressNotifier) { }
 }

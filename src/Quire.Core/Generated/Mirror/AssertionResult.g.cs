@@ -16,15 +16,9 @@ public partial class AssertionResult
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.AssertionResult FailedResult;
     [global::Quire.Mirror.MirrorStub]
-    private readonly bool _passed;
-    [global::Quire.Mirror.MirrorStub]
-    public bool Passed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool Failed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.AssertionResult Get(bool passed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private AssertionResult(bool passed) { }
     [global::Quire.Mirror.MirrorStub]
     public static implicit operator global::Quire.AssertionE(global::Quire.AssertionResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

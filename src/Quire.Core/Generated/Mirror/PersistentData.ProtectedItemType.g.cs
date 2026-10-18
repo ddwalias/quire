@@ -14,19 +14,9 @@ public partial class ProtectedItemType : global::Quire.Serialization.IS11NConsum
     [global::Quire.Mirror.MirrorStub]
     private string dataidrefField;
     [global::Quire.Mirror.MirrorStub]
-    private string itemtypeField;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentData.IProtectableDataType _dataToProtect;
-    [global::Quire.Mirror.MirrorStub]
-    public string itemtype { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.IProtectableDataType DataToProtect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.IS11NProvider S11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.IDeS11NProvider DeS11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string dataidref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ProtectedItemType() { }
 }

@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.trace3DType, Ptc.Core")]
 public partial class trace3DType : global::Quire.PersistentDataObjects.traceBaseType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string surfaceFillField;
-    [global::Quire.Mirror.MirrorStub]
-    public string SurfaceFill { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public trace3DType() { }
 }

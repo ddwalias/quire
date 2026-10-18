@@ -12,13 +12,7 @@ namespace Quire;
 public partial class Encryptor : global::Quire.IEncryptor, global::Quire.Services.IService
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Security.Cryptography.ICryptoTransform _cryptoTransformer;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.SortedDictionary<global::System.Version, global::System.Security.Cryptography.ICryptoTransform> _legacyDecryptorsDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] Encrypt(string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static byte[] Encrypt(global::System.Security.Cryptography.ICryptoTransform encryptor, string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

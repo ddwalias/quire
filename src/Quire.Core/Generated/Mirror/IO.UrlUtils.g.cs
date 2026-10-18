@@ -62,20 +62,10 @@ public static partial class UrlUtils
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+UriProtocols, Ptc.Core")]
     private static partial class UriProtocols
     {
-        [global::Quire.Mirror.MirrorStub]
-        private static readonly global::System.Collections.Generic.HashSet<string> Protocols;
-        [global::Quire.Mirror.MirrorStub]
-        public static bool Contains(string element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+UriProtocolCreationData, Ptc.Core")]
     private partial struct UriProtocolCreationData
     {
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Text.RegularExpressions.Regex MatchPattern { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public string SchemeWithDelimiter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public UriProtocolCreationData(string schemeWithDelimiter, global::System.Text.RegularExpressions.Regex matchPattern) { }
     }
 }

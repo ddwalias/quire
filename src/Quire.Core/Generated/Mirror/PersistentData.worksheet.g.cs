@@ -12,29 +12,9 @@ namespace Quire.PersistentData;
 public partial class worksheet : global::Quire.PersistentData.IRegionCollectionType
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.worksheetRegionType[] regionsField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.applicationVersionType convertedfromField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool convertedfromFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.worksheetMessageIdType msgIdField;
-    [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "worksheet";
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.worksheetRegionType[] regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.applicationVersionType convertedfrom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.worksheetMessageIdType msgId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool convertedfromSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool WorksheetConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.worksheetMessageIdType MsgId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public worksheet() { }
 }

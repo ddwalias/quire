@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.worksheetRegionTypePageBreak, Ptc.Core")]
 public partial class worksheetRegionTypePageBreak
 {
-    [global::Quire.Mirror.MirrorStub]
-    public worksheetRegionTypePageBreak() { }
 }

@@ -38,7 +38,5 @@ public static partial class DoubleExtension
     [global::Quire.Mirror.MirrorStub]
     public static int IntCeiling(this double num, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static double Round(this double num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static int IntRound(this double num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

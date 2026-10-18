@@ -12,8 +12,6 @@ namespace Quire;
 public abstract partial class ApplicationSettingsSafe : global::System.Configuration.ApplicationSettingsBase
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, object> FallbackValues { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override object this[string propertyName] { get => base[propertyName]; set => base[propertyName] = value; }
     [global::Quire.Mirror.MirrorStub]
     public override void Save() => base.Save();
@@ -23,6 +21,4 @@ public abstract partial class ApplicationSettingsSafe : global::System.Configura
     public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Reload() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected ApplicationSettingsSafe() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.Serialization.IncompatibleFormatWorksheetException, Ptc.Core")]
 public partial class IncompatibleFormatWorksheetException : global::System.ApplicationException
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal IncompatibleFormatWorksheetException() { }
 }

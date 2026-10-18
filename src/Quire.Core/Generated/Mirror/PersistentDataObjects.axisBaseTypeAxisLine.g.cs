@@ -12,25 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class axisBaseTypeAxisLine
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.axisBaseTypeAxisLinePosition positionField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool displayField;
-    [global::Quire.Mirror.MirrorStub]
-    private string positionticmarkField;
-    [global::Quire.Mirror.MirrorStub]
-    private double legendWidthField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool legendWidthFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axisBaseTypeAxisLinePosition position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string positionticmark { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double legendWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool legendWidthSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public axisBaseTypeAxisLine() { }
 }

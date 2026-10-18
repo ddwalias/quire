@@ -26,10 +26,6 @@ public partial class FileUtils
     [global::Quire.Mirror.MirrorStub]
     public static string GetNextNumberedFileName(string folder, string baseFileName, bool numberIsLastExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string GetLocalConfigFolderPath(bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetCommonConfigFolderPath(bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string EvaluateRelativePath(string mainDirPath, string absoluteFilePath, bool stripSingleLeadingDot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetAppDataPathWithBase(string appDataPathBase, bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -45,6 +41,4 @@ public partial class FileUtils
     public static string GetAssemblyFolder(global::System.Reflection.Assembly asm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLocalIpAddress(string host) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public FileUtils() { }
 }

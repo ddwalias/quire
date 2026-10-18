@@ -12,35 +12,11 @@ namespace Quire.PersistentDataObjects;
 public partial class axisBaseTypeMarker : global::Quire.PersistentDataObjects.valueType
 {
     [global::Quire.Mirror.MirrorStub]
-    private bool displayField;
-    [global::Quire.Mirror.MirrorStub]
-    private string colorField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.traceLineStyle linestyleField;
-    [global::Quire.Mirror.MirrorStub]
-    private double lineweightField;
-    [global::Quire.Mirror.MirrorStub]
-    private double valueField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool valueFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     private const string _rootAttributeName = "marker";
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.traceLineStyle linestyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double lineweight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool valueSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

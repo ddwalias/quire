@@ -11,18 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.MatrixOfDoubles, Ptc.Core")]
 public partial class MatrixOfDoubles
 {
-    [global::Quire.Mirror.MirrorStub]
-    private double[] cellsField;
-    [global::Quire.Mirror.MirrorStub]
-    private string rowsField;
-    [global::Quire.Mirror.MirrorStub]
-    private string columnsField;
-    [global::Quire.Mirror.MirrorStub]
-    public double[] Cells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixOfDoubles() { }
 }

@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.AssemblyBuildIdAttribute, Ptc.Core")]
 public partial class AssemblyBuildIdAttribute : global::System.Attribute
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly string BuildId;
-    [global::Quire.Mirror.MirrorStub]
-    public AssemblyBuildIdAttribute(string buildId) { }
 }

@@ -139,8 +139,6 @@ public partial class UnsafeNativeMethods
     public static bool ImmSetCompositionWindow(nint hIMC, ref global::Quire.Wpf.UnsafeNativeMethods.COMPOSITIONFORM lpCompForm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool ImmGetOpenStatus(nint hIMC) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public UnsafeNativeMethods() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+PopFlags, Ptc.Core")]
     [global::System.Flags]

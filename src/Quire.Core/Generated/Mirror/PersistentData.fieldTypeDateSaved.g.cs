@@ -11,14 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.fieldTypeDateSaved, Ptc.Core")]
 public partial class fieldTypeDateSaved
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.dateSavedTemplate templateField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool templateFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.dateSavedTemplate template { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool templateSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public fieldTypeDateSaved() { }
 }

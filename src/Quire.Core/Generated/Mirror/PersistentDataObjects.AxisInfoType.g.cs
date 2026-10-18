@@ -11,18 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.AxisInfoType, Ptc.Core")]
 public partial class AxisInfoType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.unitMonomial unitMonomialField;
-    [global::Quire.Mirror.MirrorStub]
-    private double maxField;
-    [global::Quire.Mirror.MirrorStub]
-    private double minField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.unitMonomial unitMonomial { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Max { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Min { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AxisInfoType() { }
 }

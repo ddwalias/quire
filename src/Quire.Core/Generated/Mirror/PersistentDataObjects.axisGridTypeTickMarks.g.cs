@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.axisGridTypeTickMarks, Ptc.Core")]
 public partial class axisGridTypeTickMarks
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool displayField;
-    [global::Quire.Mirror.MirrorStub]
-    public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public axisGridTypeTickMarks() { }
 }

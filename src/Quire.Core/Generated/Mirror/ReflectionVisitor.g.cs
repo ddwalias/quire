@@ -17,6 +17,4 @@ public abstract partial class ReflectionVisitor : global::Quire.IReflectionVisit
     private object _lastVisitable;
     [global::Quire.Mirror.MirrorStub]
     public void Visit(object visitable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected ReflectionVisitor() { }
 }

@@ -12,29 +12,7 @@ namespace Quire.Xml;
 public static partial class SchemasManager
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Collections.Generic.Dictionary<global::Quire.Xml.SchemasManager.SchemaNameEnum, global::Quire.Xml.SchemasManager.SchemaData> ConstantSchemaDatas;
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<global::Quire.Xml.SchemasManager.SchemaData> RuntimeSchemaDatas;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData App { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Worksheet50 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Math50 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Presentation10 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Calculation10 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Integration10 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Provenance10 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Units10 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData Result10 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData SimpleTypes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Xml.SchemasManager.SchemaData GetSchemaData(global::System.Func<global::Quire.Xml.SchemasManager.SchemaData, bool> compareFunc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -60,8 +38,6 @@ public static partial class SchemasManager
         private global::System.Xml.Schema.XmlSchema _schema;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Xml.Schema.XmlSchemaSet _schemaSet;
-        [global::Quire.Mirror.MirrorStub]
-        public string SchemaName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public global::System.Xml.Schema.XmlSchema Schema { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]

@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.trace2DType, Ptc.Core")]
 public partial class trace2DType : global::Quire.PersistentDataObjects.traceBaseType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string traceLabelField;
-    [global::Quire.Mirror.MirrorStub]
-    public string traceLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public trace2DType() { }
 }

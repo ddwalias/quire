@@ -11,14 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.customUnitType, Ptc.Core")]
 public partial class customUnitType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string unitnameField;
-    [global::Quire.Mirror.MirrorStub]
-    private string quantitynameField;
-    [global::Quire.Mirror.MirrorStub]
-    public string unitname { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string quantityname { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public customUnitType() { }
 }

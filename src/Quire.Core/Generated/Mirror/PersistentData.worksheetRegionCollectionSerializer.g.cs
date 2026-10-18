@@ -14,13 +14,9 @@ public partial class worksheetRegionCollectionSerializer : global::Quire.Persist
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentData.worksheet _worksheet;
     [global::Quire.Mirror.MirrorStub]
-    public override string RootNodeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.worksheet RegionCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.worksheetMessageIdType MsgId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public worksheetRegionCollectionSerializer() { }
 }

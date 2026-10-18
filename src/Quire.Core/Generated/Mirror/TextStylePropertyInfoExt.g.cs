@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextStylePropertyInfoExt, Ptc.Core")]
 public partial struct TextStylePropertyInfoExt
 {
-    [global::Quire.Mirror.MirrorStub]
-    public object Value;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInherited;
-    [global::Quire.Mirror.MirrorStub]
-    public TextStylePropertyInfoExt(bool isInherited, object value) { }
 }

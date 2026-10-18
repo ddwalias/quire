@@ -11,26 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.plotBaseType, Ptc.Core")]
 public partial class plotBaseType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private object titleField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.plotBaseTypeLegend legendField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.trace2DType[] tracesField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.SizeType graphsizeField;
-    [global::Quire.Mirror.MirrorStub]
-    public object title { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.plotBaseTypeLegend legend { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.trace2DType[] traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.SizeType graphsize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public plotBaseType() { }
 }

@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DevAssertionException, Ptc.Core")]
 public partial class DevAssertionException : global::System.Exception
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DevAssertionException(string message) { }
-    [global::Quire.Mirror.MirrorStub]
-    public DevAssertionException(string message, global::System.Exception innerException) { }
 }

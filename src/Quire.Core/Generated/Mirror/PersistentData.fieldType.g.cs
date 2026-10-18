@@ -11,18 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.fieldType, Ptc.Core")]
 public partial class fieldType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private object textField;
-    [global::Quire.Mirror.MirrorStub]
-    private object itemField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.ItemChoiceType1 itemElementNameField;
-    [global::Quire.Mirror.MirrorStub]
-    public object text { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.ItemChoiceType1 ItemElementName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public fieldType() { }
 }

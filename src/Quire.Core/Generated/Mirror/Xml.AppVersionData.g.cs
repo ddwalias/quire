@@ -11,12 +11,4 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.AppVersionData, Ptc.Core")]
 public partial class AppVersionData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string CurrentAppVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CurrentFormatVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CurrentEngNbVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AppVersionData() { }
 }

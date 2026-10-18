@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.axisBaseTypeAxisLabel, Ptc.Core")]
 public partial class axisBaseTypeAxisLabel
 {
-    [global::Quire.Mirror.MirrorStub]
-    public axisBaseTypeAxisLabel() { }
 }

@@ -16,8 +16,6 @@ public static partial class TextRangeExtension
     [global::Quire.Mirror.MirrorStub]
     public static bool IsNotEmpty(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.Hyperlink> EnumerateHyperlinksInRange(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.Run> EnumerateRunsInRange(this global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> EnumerateInlinesInRange<T>(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) where T : global::System.Windows.Documents.Inline => throw global::Quire.Mirror.MirrorStub.NotImplemented();

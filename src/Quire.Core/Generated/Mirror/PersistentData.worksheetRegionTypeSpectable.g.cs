@@ -11,20 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.worksheetRegionTypeSpectable, Ptc.Core")]
 public partial class worksheetRegionTypeSpectable : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.mathType[] mathField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool disablecalcField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculationDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.mathType[] math { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool disablecalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public worksheetRegionTypeSpectable() { }
 }

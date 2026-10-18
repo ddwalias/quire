@@ -12,9 +12,5 @@ namespace Quire.Wpf;
 public partial class RoutedUICommandWithFunctionalityKey : global::System.Windows.Input.RoutedUICommand, global::Quire.Wpf.IHasFunctionalityKey
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey FunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RoutedUICommandWithFunctionalityKey() { }
-    [global::Quire.Mirror.MirrorStub]
     public RoutedUICommandWithFunctionalityKey(string text, string name, global::System.Type ownerType, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey key) { }
 }

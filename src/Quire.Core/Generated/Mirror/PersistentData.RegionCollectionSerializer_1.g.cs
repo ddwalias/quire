@@ -31,6 +31,4 @@ public abstract partial class RegionCollectionSerializer<TCollection> : global::
     public void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected RegionCollectionSerializer() { }
 }

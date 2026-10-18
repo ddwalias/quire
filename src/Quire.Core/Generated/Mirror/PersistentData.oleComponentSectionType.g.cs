@@ -11,18 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.oleComponentSectionType, Ptc.Core")]
 public partial class oleComponentSectionType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentData.OleComponentSectionVisibility visibilityField;
-    [global::Quire.Mirror.MirrorStub]
-    private double heightField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool heightFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.OleComponentSectionVisibility Visibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HeightSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public oleComponentSectionType() { }
 }

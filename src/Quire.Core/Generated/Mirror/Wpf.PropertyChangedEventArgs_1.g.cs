@@ -12,10 +12,6 @@ namespace Quire.Wpf;
 public sealed partial class PropertyChangedEventArgs<TProperty> : global::System.ComponentModel.PropertyChangedEventArgs, global::Quire.Wpf.IPropertyChangedEventArgsExtended
 {
     [global::Quire.Mirror.MirrorStub]
-    public TProperty OldValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TProperty NewValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     object global::Quire.Wpf.IPropertyChangedEventArgsExtended.OldValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     object global::Quire.Wpf.IPropertyChangedEventArgsExtended.NewValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

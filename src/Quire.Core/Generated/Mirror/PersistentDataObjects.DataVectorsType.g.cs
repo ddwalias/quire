@@ -11,26 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.DataVectorsType, Ptc.Core")]
 public partial class DataVectorsType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string countField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.ValuesTypeEnum valuesTypeField;
-    [global::Quire.Mirror.MirrorStub]
-    private string vectorLengthField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.VectorsTypeEnum vectorsTypeField;
-    [global::Quire.Mirror.MirrorStub]
-    private string valueField;
-    [global::Quire.Mirror.MirrorStub]
-    public string Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.ValuesTypeEnum ValuesType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string VectorLength { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.VectorsTypeEnum VectorsType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DataVectorsType() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.FrameworkTextElementExtensions, Ptc.Core")]
 public static partial class FrameworkTextElementExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetTextElementParentOrSelf<T>(this global::System.Windows.Documents.TextElement element) where T : global::System.Windows.Documents.TextElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

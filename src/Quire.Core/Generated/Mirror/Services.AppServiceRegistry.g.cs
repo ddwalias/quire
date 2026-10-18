@@ -11,12 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.AppServiceRegistry, Ptc.Core")]
 public static partial class AppServiceRegistry
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Services.ServiceRegistry _serviceProvider;
-    [global::Quire.Mirror.MirrorStub]
-    public static void AddService<T>(global::Quire.Services.IService service, bool shouldConnect = true) where T : class, global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void RemoveService<T>(bool shouldDisconnect = true) where T : class, global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetService<T>() where T : class, global::Quire.Services.IService => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

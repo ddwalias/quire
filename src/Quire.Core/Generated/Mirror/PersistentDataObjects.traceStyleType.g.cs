@@ -12,37 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class traceStyleType
 {
     [global::Quire.Mirror.MirrorStub]
-    private string colorField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.traceSymbolType symbolField;
-    [global::Quire.Mirror.MirrorStub]
-    private double symbolweightField;
-    [global::Quire.Mirror.MirrorStub]
-    private uint symbolfrequencyField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.traceLineStyle linestyleField;
-    [global::Quire.Mirror.MirrorStub]
-    private double lineweightField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool automaticStyleField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.traceStyleEnumCommonType valueField;
-    [global::Quire.Mirror.MirrorStub]
-    public string color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.traceSymbolType symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double symbolweight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public uint symbolfrequency { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.traceLineStyle linestyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double lineweight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool automaticStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.traceStyleEnumCommonType Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public traceStyleType() { }
 }

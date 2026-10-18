@@ -26,15 +26,9 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     private static bool _useAssemblyVersionInConfigPath;
     [global::Quire.Mirror.MirrorStub]
-    public static string ConfigFolderName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsConfigCopiedForMOR { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static string LocalConfigFolderName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static string CommonConfigFolderName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ApplicationName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool UseAssemblyVersionInConfigPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -50,11 +44,7 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     private bool HasSettingScope(global::System.Configuration.SettingsProperty prop, global::System.Type attributeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Configuration.SettingsPropertyValue GetPreviousVersion(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Reset(global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Upgrade(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection properties) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetSectionName(string sectionGroupName, global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -65,8 +55,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     private void ObtainConfigFiles(global::System.Configuration.ExeConfigurationFileMap FileMap, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyPrevUserConfig(global::System.Version version) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public UserSettingsProvider() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.UserSettingsProvider+GetSectionStatusEnum, Ptc.Core")]
     public enum GetSectionStatusEnum

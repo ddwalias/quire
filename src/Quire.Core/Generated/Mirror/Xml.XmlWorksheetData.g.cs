@@ -100,11 +100,5 @@ public static partial class XmlWorksheetData
     [global::Quire.Mirror.MirrorStub]
     public static void AddMcdxMLNamespaces(global::System.Xml.XmlNamespaceManager nmsmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlElement CreateMathcad14MLElement(global::System.Xml.XmlDocument document, string localName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlElement CreateMLElement(global::System.Xml.XmlDocument document, string localName, string namespaceURI) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlElement CreateMcdxMLElement(global::System.Xml.XmlDocument document, string localName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode XmlElementFromString(string xml) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

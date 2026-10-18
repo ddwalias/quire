@@ -11,18 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.str, Ptc.Core")]
 public partial class str
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string expridField;
-    [global::Quire.Mirror.MirrorStub]
-    private string spaceField;
-    [global::Quire.Mirror.MirrorStub]
-    private string valueField;
-    [global::Quire.Mirror.MirrorStub]
-    public string exprid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string space { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public str() { }
 }

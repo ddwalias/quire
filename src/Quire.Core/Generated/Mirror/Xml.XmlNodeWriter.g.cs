@@ -14,23 +14,11 @@ public partial class XmlNodeWriter : global::System.Xml.XmlWriter
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Xml.XmlNode _xmlNode;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.WriteState _writeState;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlNode _currentNode;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Xml.XmlDocument _xmlDocument;
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Xml.WriteState WriteState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public XmlNodeWriter(global::System.Xml.XmlNode node) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteStartDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteStartDocument(bool standalone) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteEndDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteDocType(string name, string pubid, string sysid, string subset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void WriteStartElement(string prefix, string localName, string ns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -42,33 +30,11 @@ public partial class XmlNodeWriter : global::System.Xml.XmlWriter
     [global::Quire.Mirror.MirrorStub]
     public override void WriteEndAttribute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void WriteCData(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteComment(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteProcessingInstruction(string name, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteEntityRef(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteCharEntity(char ch) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteWhitespace(string ws) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void WriteString(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteSurrogateCharEntity(char lowChar, char highChar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteChars(char[] buffer, int index, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteRaw(char[] buffer, int index, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void WriteRaw(string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void WriteBase64(byte[] buffer, int index, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override void Close() => base.Close();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Flush() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string LookupPrefix(string ns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,22 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.Trace2dResultType, Ptc.Core")]
 public partial class Trace2dResultType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.AxisInfoType rangeInfoField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.AxisInfoType resultInfoField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.Trace2dResultTypeData dataField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.TraceResultTypeEnum traceTypeField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.AxisInfoType RangeInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.AxisInfoType ResultInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.Trace2dResultTypeData Data { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.TraceResultTypeEnum TraceType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Trace2dResultType() { }
 }

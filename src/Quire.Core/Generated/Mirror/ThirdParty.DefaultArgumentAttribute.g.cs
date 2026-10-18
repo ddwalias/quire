@@ -11,6 +11,4 @@ namespace Quire.ThirdParty;
 [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.DefaultArgumentAttribute, Ptc.Core")]
 public partial class DefaultArgumentAttribute : global::Quire.ThirdParty.ArgumentAttribute
 {
-    [global::Quire.Mirror.MirrorStub]
-    public DefaultArgumentAttribute(global::Quire.ThirdParty.ArgumentType type) : base(default(global::Quire.ThirdParty.ArgumentType)) { }
 }

@@ -11,16 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.polarPlotType, Ptc.Core")]
 public partial class polarPlotType : global::Quire.PersistentDataObjects.plotBaseType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.plotTitleType plotTitleField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.polarPlotTypeAxes axesField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.plotTitleType plotTitle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.polarPlotTypeAxes axes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode[] InnerXml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public polarPlotType() { }
 }

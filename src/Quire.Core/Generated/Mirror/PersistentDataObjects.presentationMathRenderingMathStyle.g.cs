@@ -12,53 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class presentationMathRenderingMathStyle
 {
     [global::Quire.Mirror.MirrorStub]
-    private string nameField;
-    [global::Quire.Mirror.MirrorStub]
-    private string fontfamilyField;
-    [global::Quire.Mirror.MirrorStub]
-    private float fontsizeField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontweight fontweightField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontstyle fontstyleField;
-    [global::Quire.Mirror.MirrorStub]
-    private string colorField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontstretch fontstretchField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleVariants variantsField;
-    [global::Quire.Mirror.MirrorStub]
-    private string underlineField;
-    [global::Quire.Mirror.MirrorStub]
-    private string overlineField;
-    [global::Quire.Mirror.MirrorStub]
-    private string strikethroughField;
-    [global::Quire.Mirror.MirrorStub]
-    private string baselineField;
-    [global::Quire.Mirror.MirrorStub]
-    public string name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string fontfamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public float fontsize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontweight fontweight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontstyle fontstyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleFontstretch fontstretch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRenderingMathStyleVariants variants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string underline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string overline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string strikethrough { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string baseline { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public presentationMathRenderingMathStyle() { }
 }

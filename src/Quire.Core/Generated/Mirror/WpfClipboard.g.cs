@@ -16,23 +16,11 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.IClipboard _current;
     [global::Quire.Mirror.MirrorStub]
-    private static readonly string _xmlSpreadsheetDataType;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string _primeXamlStreamCompressed;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string _mathNodeSExpression;
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly string _richTextEmbeddedItemsInfo;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly string _canPasteIntoTextRegion;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.IClipboard Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.IDisposable Override(global::Quire.IClipboard clipboard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetText(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -40,15 +28,9 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     public static void SetDataObjectToClipboard(global::System.Windows.IDataObject dataObject, bool copy = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool CopySExpressionToDataObject(global::System.Windows.IDataObject dataObject, string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool CopyPrimeXamlToDataObject(global::System.Windows.IDataObject dataObject, object item, int itemsCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool CopyRtfStringToDataObject(global::System.Windows.DataObject dataObject, string rtfString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool CopyItemAsImageToDataObject(global::System.Windows.DataObject dataObject, object whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void CreateBitmapFromDib(global::System.IO.Stream dib, global::System.IO.Stream outStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -62,36 +44,18 @@ public partial class WpfClipboard : global::Quire.IClipboard
     [global::Quire.Mirror.MirrorStub]
     public object GetPrimeObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool HasImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPrimeObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasXMLSpreadsheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlDocument GetXMLSpreadsheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetFormattedText(out string dataFormat, out bool isPlainText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetSExpression(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool HasSExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string GetSExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool HasTextWithEmbeddedItemsInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool CanPasteIntoTextRegion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WpfClipboard() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.WpfClipboard+ClipboardOverride, Ptc.Core")]
     private partial class ClipboardOverride : global::System.IDisposable
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.IClipboard _oldClipboard;
-        [global::Quire.Mirror.MirrorStub]
-        public ClipboardOverride(global::Quire.IClipboard oldClipboard) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void Dispose() { }
     }
 }

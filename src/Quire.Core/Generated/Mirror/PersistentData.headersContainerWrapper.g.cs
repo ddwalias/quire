@@ -14,10 +14,6 @@ public partial class headersContainerWrapper : global::Quire.PersistentData.IReg
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "headers";
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.PersistentData.cachedWorksheetRegionType.headersContainer _container;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.cachedWorksheetRegionType.headersContainer Container { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.header Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.header FirstPageHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -14,35 +14,11 @@ public partial class TextStyleData : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty StyleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty StyleNameProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Style _oldStyle;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Style OldStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string StyleName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string StyleKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string BaseOnKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Style Style { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static event global::Quire.Delegate1<global::Quire.TextStyleData> StyleChanged;
-    [global::Quire.Mirror.MirrorStub]
     public void UpdateStyle(string name, global::System.Windows.Style style, string basedOnKey, global::System.Windows.Style basedOnOldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Windows.Style GetStyle(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static void SetStyle(global::System.Windows.DependencyObject element, global::System.Windows.Style value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static string GetStyleName(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static void SetStyleName(global::System.Windows.DependencyObject element, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public TextStyleData(string name, string key, global::System.Windows.Style style, string baseOnKey = default) { }
     [global::Quire.Mirror.MirrorStub]

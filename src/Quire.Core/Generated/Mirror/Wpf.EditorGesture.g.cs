@@ -12,18 +12,6 @@ namespace Quire.Wpf;
 public partial class EditorGesture
 {
     [global::Quire.Mirror.MirrorStub]
-    public readonly string CharsPressed;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Windows.Input.Key KeyPressed;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::System.Windows.Input.KeyGesture KeyGesture;
-    [global::Quire.Mirror.MirrorStub]
-    public EditorGesture(string charsPressed) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EditorGesture(global::System.Windows.Input.Key keyPressed) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EditorGesture(global::System.Windows.Input.KeyGesture keyGesture) { }
-    [global::Quire.Mirror.MirrorStub]
     public bool Matches(global::System.Windows.Input.KeyEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Matches(string charsPressed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -35,8 +23,6 @@ public partial class EditorGesture
     public bool Equals(global::Quire.Wpf.EditorGesture other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator ==(global::Quire.Wpf.EditorGesture left, global::Quire.Wpf.EditorGesture right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool operator !=(global::Quire.Wpf.EditorGesture left, global::Quire.Wpf.EditorGesture right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

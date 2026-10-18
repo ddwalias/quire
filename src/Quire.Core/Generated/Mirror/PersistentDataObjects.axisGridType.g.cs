@@ -11,22 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.axisGridType, Ptc.Core")]
 public partial class axisGridType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.axisGridTypeGridFrequency gridFrequencyField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.axisGridTypeGridLabels gridLabelsField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.axisGridTypeGridLines gridLinesField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.axisGridTypeTickMarks tickMarksField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axisGridTypeGridFrequency gridFrequency { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axisGridTypeGridLabels gridLabels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axisGridTypeGridLines gridLines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axisGridTypeTickMarks tickMarks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public axisGridType() { }
 }

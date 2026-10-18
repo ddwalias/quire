@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.matrixFormatTypeNestedMatrixFormat, Ptc.Core")]
 public partial class matrixFormatTypeNestedMatrixFormat : global::Quire.PersistentDataObjects.matrixFormatType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string positionField;
-    [global::Quire.Mirror.MirrorStub]
-    public string position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public matrixFormatTypeNestedMatrixFormat() { }
 }

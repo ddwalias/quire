@@ -12,24 +12,6 @@ namespace Quire;
 public partial class ProtectionData : global::System.ComponentModel.INotifyPropertyChanged
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly byte[] _EncryptedPassowrd;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Nullable<global::System.DateTime> _timestamp;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.ProtectionLevel _protectionLevel;
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasPassword { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.DateTime> Timestamp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowTimestamp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ProtectionLevel ProtectionLevel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] EncryptedPassword { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
     public ProtectionData(string password, global::System.Nullable<global::System.DateTime> timestamp, bool showTimestamp, global::Quire.ProtectionLevel protectionLevel) { }
     [global::Quire.Mirror.MirrorStub]
     public ProtectionData(global::Quire.PersistentData.ProtectionDataType persistentData) { }

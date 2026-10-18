@@ -15,6 +15,4 @@ public abstract partial class RegionCollectionPreSerializer
     public abstract global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get; set; }
     [global::Quire.Mirror.MirrorStub]
     public void PreSerialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected RegionCollectionPreSerializer() { }
 }

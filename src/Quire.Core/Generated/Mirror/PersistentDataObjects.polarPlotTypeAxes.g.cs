@@ -11,14 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.polarPlotTypeAxes, Ptc.Core")]
 public partial class polarPlotTypeAxes
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.polarPlotTypeAxesAngularAxis angularAxisField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.polarPlotTypeAxesRadialAxis radialAxisField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.polarPlotTypeAxesAngularAxis angularAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.polarPlotTypeAxesRadialAxis radialAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public polarPlotTypeAxes() { }
 }

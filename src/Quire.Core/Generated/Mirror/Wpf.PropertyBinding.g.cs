@@ -11,14 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.PropertyBinding, Ptc.Core")]
 public partial class PropertyBinding
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.DependencyProperty TargetProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Data.Binding Binding;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Data.BindingExpressionBase Set(global::System.Windows.DependencyObject targetObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Clear(global::System.Windows.DependencyObject targetObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyBinding() { }
 }

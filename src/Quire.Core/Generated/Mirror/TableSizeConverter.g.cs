@@ -13,6 +13,4 @@ public partial class TableSizeConverter : global::Quire.Discrete2DCoordinateConv
 {
     [global::Quire.Mirror.MirrorStub]
     public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
-    [global::Quire.Mirror.MirrorStub]
-    public TableSizeConverter() { }
 }

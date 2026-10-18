@@ -12,57 +12,11 @@ namespace Quire.PersistentDataObjects;
 public partial class plotType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
     [global::Quire.Mirror.MirrorStub]
-    private object itemField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool disablecalcField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.BackgroundType backgroundtypeField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool originpositioningField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool showaxisexpressionsField;
-    [global::Quire.Mirror.MirrorStub]
-    private double widthField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool widthFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double heightField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool heightFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.textType titleField;
-    [global::Quire.Mirror.MirrorStub]
-    public object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.textType title { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool disablecalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.BackgroundType backgroundtype { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool originpositioning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool showaxisexpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool widthSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool heightSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculationDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public plotType() { }
     [global::Quire.Mirror.MirrorStub]
     public static void GetOverrides(global::System.Xml.Serialization.XmlAttributeOverrides overrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OverridePropertySerializationToRawXmlNode(global::System.Xml.Serialization.XmlAttributeOverrides overiddes, global::System.Type propertyOwnerType, string oldPropertyName, string newPropertyName, string elementName, int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OverridePropertySerializationToRawXmlNode(global::System.Xml.Serialization.XmlAttributeOverrides overiddes, global::System.Type propertyOwnerType, string oldPropertyName, string newPropertyName, string elementName, string namespaceUri, int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

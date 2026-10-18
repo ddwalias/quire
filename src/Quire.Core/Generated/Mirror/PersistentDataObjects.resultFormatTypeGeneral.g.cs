@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.resultFormatTypeGeneral, Ptc.Core")]
 public partial class resultFormatTypeGeneral : global::Quire.PersistentDataObjects.resultFormatGeneralType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public resultFormatTypeGeneral() { }
 }

@@ -14,11 +14,7 @@ public partial class DoubleComparer : global::System.Collections.Generic.ICompar
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.DoubleComparer DefaultDoubleComparer;
     [global::Quire.Mirror.MirrorStub]
-    public double Epsilon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public DoubleComparer(double epsilon) { }
-    [global::Quire.Mirror.MirrorStub]
-    private DoubleComparer() { }
     [global::Quire.Mirror.MirrorStub]
     public int Compare(double x, double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

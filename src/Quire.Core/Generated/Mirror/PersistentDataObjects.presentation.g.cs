@@ -12,29 +12,11 @@ namespace Quire.PersistentDataObjects;
 public partial class presentation
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationPageModel pageModelField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationMathRendering mathRenderingField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationTextRendering textRenderingField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.presentationLanguage languageField;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Type _typeOfThis;
     [global::Quire.Mirror.MirrorStub]
     private const string _rootAttributeName = "presentation";
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationPageModel pageModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationMathRendering mathRendering { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationTextRendering textRendering { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.presentationLanguage language { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public presentation() { }
 }

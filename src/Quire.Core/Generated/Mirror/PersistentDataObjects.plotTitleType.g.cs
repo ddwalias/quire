@@ -12,25 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class plotTitleType
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.textType titleField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool displayField;
-    [global::Quire.Mirror.MirrorStub]
-    private string titlepositionField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool showborderField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool isverticalField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.textType title { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string titleposition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool showborder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool isvertical { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public plotTitleType() { }
 }

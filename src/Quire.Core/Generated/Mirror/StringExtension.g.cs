@@ -12,15 +12,7 @@ namespace Quire;
 public static partial class StringExtension
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Text.RegularExpressions.Regex _invalidXmlChars;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Text.RegularExpressions.Regex _validXmlString;
-    [global::Quire.Mirror.MirrorStub]
     private static int AsciiEndCode;
-    [global::Quire.Mirror.MirrorStub]
-    public static string StripInvalidXmlChars(this string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidXmlString(this string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool ContainsUnicodeCharOrSlash(this string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -14,10 +14,6 @@ public partial class PrintDialog : global::System.Windows.Controls.PrintDialog, 
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Wpf.Printing.Win32PrintRange PrintRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool PrintToFile { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string FileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Wpf.Printing.PageIndexRange PageRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public PrintDialog(global::Quire.Wpf.Printing.PrintDialog.RangeSelectionOptions rangeSelectionOptions) { }

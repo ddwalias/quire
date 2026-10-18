@@ -12,18 +12,6 @@ namespace Quire.PersistentDataObjects;
 public partial class pictureType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.basePictureType itemField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.ItemChoiceType itemElementNameField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.basePictureType Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.ItemChoiceType ItemElementName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Uri PictureSourceUri { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -34,21 +22,7 @@ public partial class pictureType : global::Quire.Serialization.IS11NConsumer, gl
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlDocument XmlContentDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.IS11NProvider S11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode[] InnerXml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public pictureType() { }
-    [global::Quire.Mirror.MirrorStub]
     public pictureType(global::System.Uri sourceUri) { }
     [global::Quire.Mirror.MirrorStub]
     public string PackImage(global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackExternalObject(string sourceFileName, string uniqueId, global::Quire.Serialization.ExternalObjectType objectType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackIncludedWorksheet(string fullFilePath, global::System.DateTime lastSavedDate, string uniqueId, global::System.Func<global::System.IO.Packaging.Package, string, global::System.IO.Packaging.PackagePart> writePackagePart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument, string regionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackProtectedPart(global::System.IO.Stream content, string uniqueId, string regionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

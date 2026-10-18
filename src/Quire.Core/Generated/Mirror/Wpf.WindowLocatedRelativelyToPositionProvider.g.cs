@@ -12,8 +12,6 @@ namespace Quire.Wpf;
 public partial class WindowLocatedRelativelyToPositionProvider : global::System.Windows.Window
 {
     [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.IPositionProvider PositionProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
     [global::Quire.Mirror.MirrorStub]
     private void SetWindowLocation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -29,18 +27,10 @@ public partial class WindowLocatedRelativelyToPositionProvider : global::System.
     private bool IsPopUpWindowWillFullyShowOnScreen(global::System.Windows.Point popupLocationPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Wpf.WindowLocatedRelativelyToPositionProvider.DpiFactors GetDpiFactor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WindowLocatedRelativelyToPositionProvider() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider+DpiFactors, Ptc.Core")]
     private partial struct DpiFactors
     {
-        [global::Quire.Mirror.MirrorStub]
-        public readonly double DpiFactorX;
-        [global::Quire.Mirror.MirrorStub]
-        public readonly double DpiFactorY;
-        [global::Quire.Mirror.MirrorStub]
-        public DpiFactors(double dpiFactorX, double dpiFactorY) { }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.WindowLocatedRelativelyToPositionProvider+ItemQuarterLocationInOwnerWindow, Ptc.Core")]

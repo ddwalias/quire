@@ -12,33 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class Plot3DType
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.trace3DType[] tracesField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.SizeType graphsizeField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.axes3Type axesField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.plotEquation[] plotEquationsField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.MatrixOfDoubles cameraTransformMatrixField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.Plot3DTypeCameraType cameraTypeField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool equalscaleField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.trace3DType[] traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.SizeType graphsize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.axes3Type axes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.plotEquation[] plotEquations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.MatrixOfDoubles CameraTransformMatrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.Plot3DTypeCameraType CameraType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool equalscale { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public Plot3DType() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.xyDomainType, Ptc.Core")]
 public partial class xyDomainType : global::Quire.PersistentDataObjects.domainBaseType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public xyDomainType() { }
 }

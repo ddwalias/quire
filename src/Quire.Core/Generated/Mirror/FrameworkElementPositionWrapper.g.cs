@@ -11,18 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.FrameworkElementPositionWrapper, Ptc.Core")]
 public partial class FrameworkElementPositionWrapper : global::Quire.IPositionProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement _element;
-    [global::Quire.Mirror.MirrorStub]
-    public double ActualHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double ActualWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FrameworkElementPositionWrapper(global::System.Windows.FrameworkElement element) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point TranslatePoint(global::System.Windows.Point point, global::System.Windows.UIElement relativeTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point PointToScreen(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

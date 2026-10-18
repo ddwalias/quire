@@ -16,10 +16,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     public const int FontSizeRoundingDecimal = 3;
     [global::Quire.Mirror.MirrorStub]
-    protected string _baseOnKey;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.FontFamily _fontFamily;
-    [global::Quire.Mirror.MirrorStub]
     protected global::System.Nullable<global::System.Windows.FontWeight> _fontWeight;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Nullable<global::System.Windows.FontStyle> _fontStyle;
@@ -27,14 +23,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     protected global::System.Windows.FontStretch _fontStretch;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Nullable<global::System.Windows.Thickness> _margin;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Brush _background;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Brush _foreground;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.TextEffectCollection _textEffectCollection;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.TextDecorationCollection _textDecorationCollection;
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.BaselineAlignment _baselineAlignment;
     [global::Quire.Mirror.MirrorStub]
@@ -54,19 +42,9 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Hashtable _htOldPropertyToIndex;
     [global::Quire.Mirror.MirrorStub]
-    public double Weight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<double> TextIndent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.FontStyle> FontStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string StyleKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Style Style { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string BasedOnKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.FontWeight> FontWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -74,37 +52,15 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Thickness> Margin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public double Stretch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.FontFamily FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Bold { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Italic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Normal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Oblique { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Foreground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.TextMarkerStyle> MarkerStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextDecorationCollection TextDecorations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.FontVariants> FontVariants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.TextEffectCollection TextEffects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.BaselineAlignment> BaselineAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::Quire.Core.TextAlignmentExt> TextAlignmentExt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.TextAlignment> TextAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Condenst { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.TextStyleData textStyleData, bool basedOnValues = true) { }
     [global::Quire.Mirror.MirrorStub]

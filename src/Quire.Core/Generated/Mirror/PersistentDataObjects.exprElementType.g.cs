@@ -11,10 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.exprElementType, Ptc.Core")]
 public partial class exprElementType
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string expridField;
-    [global::Quire.Mirror.MirrorStub]
-    public string exprid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public exprElementType() { }
 }

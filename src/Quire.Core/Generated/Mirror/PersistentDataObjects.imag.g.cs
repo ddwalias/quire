@@ -12,25 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class imag
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.baseType baseField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.imagSymbol symbolField;
-    [global::Quire.Mirror.MirrorStub]
-    private byte fontField;
-    [global::Quire.Mirror.MirrorStub]
-    private string expridField;
-    [global::Quire.Mirror.MirrorStub]
-    private string valueField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.baseType @base { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.imagSymbol symbol { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public byte font { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string exprid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public imag() { }
 }

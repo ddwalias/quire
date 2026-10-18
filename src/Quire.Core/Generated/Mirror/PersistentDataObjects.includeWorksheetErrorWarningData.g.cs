@@ -11,18 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.includeWorksheetErrorWarningData, Ptc.Core")]
 public partial class includeWorksheetErrorWarningData
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string codeField;
-    [global::Quire.Mirror.MirrorStub]
-    private string fileNameField;
-    [global::Quire.Mirror.MirrorStub]
-    private string indexesField;
-    [global::Quire.Mirror.MirrorStub]
-    public string code { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string fileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string indexes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public includeWorksheetErrorWarningData() { }
 }

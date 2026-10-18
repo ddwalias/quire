@@ -12,39 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class includeWorksheetType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.includeWorksheetErrorWarningData[] errorField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.includeWorksheetErrorWarningData[] warningField;
-    [global::Quire.Mirror.MirrorStub]
-    private string hrefField;
-    [global::Quire.Mirror.MirrorStub]
-    private string lastsaveddateField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool usedcacheField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool disablecalcField;
-    [global::Quire.Mirror.MirrorStub]
-    private string itemidrefField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.includeWorksheetErrorWarningData[] error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.includeWorksheetErrorWarningData[] warning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string href { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string lastsaveddate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool usedcache { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool disablecalc { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string itemidref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculationDisabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public includeWorksheetType() { }
 }

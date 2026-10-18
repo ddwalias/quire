@@ -12,83 +12,9 @@ namespace Quire.PersistentDataObjects;
 public abstract partial class regionBase : global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
     [global::Quire.Mirror.MirrorStub]
-    private string regionidField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool mc14conversionlossField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.applicationVersionType convertedfromField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool convertedfromFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double heightField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool heightFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double widthField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool widthFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double actualWidthField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool actualWidthFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double actualHeightField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool actualHeightFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double alignxField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool alignxFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private double alignyField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool alignyFieldSpecified;
-    [global::Quire.Mirror.MirrorStub]
-    private string tagField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool showBorderField;
-    [global::Quire.Mirror.MirrorStub]
     public const float PageUnitsConvertionFactor = 1.3333334f;
     [global::Quire.Mirror.MirrorStub]
-    public string regionid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Tag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool mc14conversionloss { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.applicationVersionType convertedfrom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool convertedfromSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool heightSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool widthSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double actualWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool actualWidthSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double actualHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool actualHeightSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double alignx { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool alignxSpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double aligny { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool alignySpecified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract object Item { get; set; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public abstract string[] mc14conversionlossannotations { get; set; }
     [global::Quire.Mirror.MirrorStub]
@@ -103,10 +29,6 @@ public abstract partial class regionBase : global::Quire.PersistentDataObjects.I
     public global::Quire.Serialization.ISerializationHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNamespaceManager NameSpaceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.IS11NProvider S11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.SolveBlockMemberType SolveBlockMemberType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public regionBase() { }
     [global::Quire.Mirror.MirrorStub]

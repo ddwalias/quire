@@ -22,8 +22,6 @@ public partial struct TextRange
     [global::Quire.Mirror.MirrorStub]
     public int SelectionLength { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public TextRange(int caretPosition) { }
-    [global::Quire.Mirror.MirrorStub]
     public TextRange(int startPosition, int endPosition) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.TextRange CreateRange(int caretPosition, int offsetFromCaret) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

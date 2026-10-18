@@ -12,25 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class plotBaseTypeLegend
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.textType[] legendlabelitemsField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool displayField;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.PersistentDataObjects.plotBaseTypeLegendPosition positionField;
-    [global::Quire.Mirror.MirrorStub]
-    private bool showborderField;
-    [global::Quire.Mirror.MirrorStub]
-    private double legendWidthField;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.textType[] legendlabelitems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool display { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.plotBaseTypeLegendPosition position { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool showborder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double legendWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public plotBaseTypeLegend() { }
 }
