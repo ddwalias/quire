@@ -240,9 +240,24 @@ public class DimDifferentialTests
         // private constructors
         var vFresh = new[] { 999991, 1, 2, 3, 4, 5, 6, 7 };
         MethodComparison.Compare("ctor(int[]): fresh vector", Contract, qCtorArr, null, [vFresh.Clone()], mCtorArr, null, [vFresh.Clone()], qs, ms);
+        var qOwnedVector = new[] { 999992, 1, 2, 3, 4, 5, 6, 7 };
+        var mOwnedVector = (int[])qOwnedVector.Clone();
+        object qOwnedDim = qCtorArr.Invoke([qOwnedVector])!;
+        object mOwnedDim = mCtorArr.Invoke([mOwnedVector])!;
+        Assert.Same(qOwnedVector, Get(qOwnedDim, "Coordinates"));
+        Assert.Same(mOwnedVector, Get(mOwnedDim, "Coordinates"));
         var vDup = new int[8];
         MethodComparison.Compare("ctor(int[]): duplicate key throws", Contract, qCtorArr, null, [vDup.Clone()], mCtorArr, null, [vDup.Clone()], qs, ms);
         MethodComparison.Compare("ctor(): parameterless marker", Contract, qCtor0, null, [], mCtor0, null, [], qs, ms);
+        object qMarker = qCtor0.Invoke([])!;
+        object mMarker = mCtor0.Invoke([])!;
+        object qCoordinates = Get(qMarker, "Coordinates")!;
+        object mCoordinates = Get(mMarker, "Coordinates")!;
+        foreach (string marker in Markers)
+        {
+            Assert.NotSame(qCoordinates, Get(Get(typeof(Q.Dim), marker)!, "Coordinates"));
+            Assert.NotSame(mCoordinates, Get(Get(M, marker)!, "Coordinates"));
+        }
 
         // static constructor (.cctor)
         MethodComparison.Compare("cctor: type initializer", Contract, qCc, null, [], mCc, null, [], qs, ms);

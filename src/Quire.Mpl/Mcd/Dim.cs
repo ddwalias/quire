@@ -69,14 +69,14 @@ public sealed partial class Dim
     }
 
     /// <summary>An interned dimension; registers itself under <paramref name="v"/>.</summary>
-    [MirrorTested("Mcd.Dim")]
+    [MirrorVerified("DimDifferentialTests")]
     private Dim(int[] v)
     {
         s_map.Add(m_vec = v, this);
     }
 
     /// <summary>A marker: zero coordinates, not interned.</summary>
-    [MirrorTested("Mcd.Dim")]
+    [MirrorVerified("DimDifferentialTests")]
     private Dim() { m_vec = new int[s_rank]; }
 
     /// <summary>The dimension with coordinates <paramref name="v"/>, which a new one keeps (so when that is the

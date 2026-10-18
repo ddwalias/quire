@@ -13,15 +13,14 @@ private `Hash` comparer, so equal coordinates give the same object and most oper
 `null` is the polymorphic dimension. `identity` is the interned all-zero dimension; `mcd_zero` (a zero that adapts to
 any dimension), `string_dim`, `function_dim` and `mixed_matrix_dim` are markers: distinct, uninterned objects with
 all-zero coordinates. The thread-static `s_vec` is the scratch vector that `Mult`, `Div` and `Pwr` fill before
-interning. Every member below except the private constructors and the type initializer is differential-verified for
-the cases in "Test cases".
+interning. Every member below except the type initializer is differential-verified for the cases in "Test cases".
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
 | `.cctor` | 0x060005ea | `8a9aa295` | Takes the rank from the initialising thread's unit system, creates the interning table, gives that thread a scratch vector, interns the all-zero `identity`, then creates the four markers. | High; needs a synced initialising thread | Tested |
 | `ThreadInit()` | 0x060005eb | `6ac66288` | Gives the calling thread a rank-length scratch vector if it has none; a second call keeps the existing one. | High | Verified |
-| `.ctor(int[])` | 0x060005ec | `3839c7fb` | Private: keeps the array (no copy) and registers itself in the table under it; an equal key already present throws `ArgumentException`. | High | Tested |
-| `.ctor()` | 0x060005ed | `8704077c` | Private: a marker with a fresh zero vector, not registered. | High | Tested |
+| `.ctor(int[])` | 0x060005ec | `3839c7fb` | Private: keeps the array (no copy) and registers itself in the table under it; an equal key already present throws `ArgumentException`. | High | Verified |
+| `.ctor()` | 0x060005ed | `8704077c` | Private: a marker with a fresh zero vector, not registered. | High | Verified |
 | `intern(int[])` | 0x060005ee | `c0163159` | The registered dimension for these coordinates, or a new one that keeps this very array. When the array is the thread's scratch vector, the thread first gets a fresh one. Arrays are compared over the rank only, so longer arrays match on their prefix and shorter ones throw `IndexOutOfRangeException`. | High | Verified |
 | `intern()` | 0x060005ef | `074cafb8` | Interns the thread's scratch vector. | High | Verified |
 | `Product` | 0x060005f0 | `bf88e0db` | The coordinates as a monomorphic product in the calling thread's unit system (markers and identity give an empty one). | High | Verified |
@@ -82,6 +81,8 @@ coordinates plus whether they are the interned object, exceptions as type and me
   four-argument `OnError` and `Equals`; and the three-argument `OnError` on each operand with argument 4 and with a
   tagged message `12>m@3` and argument `uint.MaxValue`;
 - `Parse` and `New` of each of the 98 signatures of `TypeDifferentialTests`, and `New(null)`;
+- the private constructors: a fresh vector's resulting dimension keeps the exact supplied array; an equal zero vector
+  throws `ArgumentException`; the parameterless marker has fresh zero coordinates and is not interned;
 - the private interning: a new vector is kept, an equal vector finds the first, interning the scratch vector keeps
   it and hands the thread a fresh zeroed one, and vectors longer and shorter than the rank;
 - `Hash` on 404 vectors (empty, ranks 7 to 9, and 400 seeded random ones mixing zero, whole unit powers, mid-range
@@ -108,5 +109,4 @@ tab-separated mismatch errors, polymorphic and null products, and other threads 
   threads is not thread-safe and was not tested.
 - The rank is taken once, from whichever thread initialises the type; initialising under a unit system whose rank
   isn't 8 was not exercised.
-- The private constructors and the type initializer stay Tested: they are reached only through interning and the
-  markers.
+- The type initializer remains Tested; constructor cases cover the recorded fresh, duplicate and marker scenarios only.
