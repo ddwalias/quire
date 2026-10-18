@@ -116,7 +116,7 @@ Signatures retain REA's exact decoded metadata types (`class:<coded-index>`); to
 
 ## Existing differential cases
 
-The suite contains four scenarios, pending the focused rerun in this session:
+The suite contains four scenarios:
 
 - `Construction`: 22 explicit initial/increment/endpoint tuples across increasing and decreasing ranges, fractional/integer steps, same endpoint, contradictory direction, zero step, NaNs, infinities and excessively large counts. Exercises default/custom errors, two/four-argument Range, endpoint and explicit-count IncrRange with counts 0, 1, 5 and -3. Queries index -1, first, second, last and one-past-last, sizes, integral flag, dimension, hash, copy and asRange identity.
 - `Range_operators`: 11 typed values (unitless, units, polymorphic/zero dimensions, complex and string), all pairs for mkVec2/mkRange2 and each pair with four endpoint choices for mkVec3/mkRange3. Captures values and error identities/argument positions.
