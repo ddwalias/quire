@@ -200,11 +200,12 @@ batch receipts below are history, not a task queue.
 ## SCons walk_expressions mutation follow-up (`mirror/a-scons-il-shape`)
 
 - Scope: preserve the two reference-equality branches with nested `if` checks so the compiled IL cannot collapse the
-  comparisons to the mutation-sensitive `ceq` condition.
+  comparisons to the mutation-sensitive `ceq` condition; add direct identity assertions for unchanged Mathcad and
+  Quire input lists to make the reference-reuse behavior mutation-sensitive.
 - Scoped checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter 'FullyQualifiedName~SexprTests'`
   — 36 passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
-  --filter 'FullyQualifiedName~SexprDifferentialTests.SCons_members'` — 1 passed, 0 failed or skipped. No proposals;
-  branch gate pending.
+  --filter 'FullyQualifiedName~SexprDifferentialTests.SCons_members'` — 1 passed, 0 failed or skipped with the new
+  identity assertions. No proposals; branch gate pending.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 

@@ -1155,6 +1155,8 @@ public class SexprDifferentialTests
             quireShow: res => ReferenceEquals(res, patSymQ) ? "reused" : Describe(res),
             originalShow: res => ReferenceEquals(res, patSymM) ? "reused" : Describe(res),
             quireState: o => Describe(o), originalState: o => Describe(o));
+        Assert.Same(patSymQ, SCons.walk_expressions(qEnv, patSymQ));
+        Assert.Same(patSymM, mWalkExprs.Invoke(null, [mEnv, patSymM]));
 
         var nestedApplyQ = L(L(I(1), I(2)));
         var nestedApplyM = ToMathcad(nestedApplyQ)!;
