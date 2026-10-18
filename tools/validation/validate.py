@@ -663,7 +663,7 @@ def main():
     report = {"run": run, "method_types": args.method_type, "revision": git_output("rev-parse", "HEAD"), "working_tree": git_output("status", "--porcelain"), "profile": args.profile, "diff_filter": args.diff_filter,
               "mutation_requested": bool(args.mutate or args.mutate_since or args.mutate_all),
               "complete": False, "gate_passed": False, "projects": [], "limitations":
-              "Passing comparisons establish equivalence only for executed cases. Phase also requires render, coverage-excluded checks and independent review."}
+              "Passing comparisons establish equivalence only for executed cases. Phase also requires render and coverage-excluded checks."}
     install = mathcad_install()
     artifact = install / "mplrun.dll"
     report["original"] = {"path": str(artifact), "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() else None}

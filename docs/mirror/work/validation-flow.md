@@ -1,4 +1,4 @@
-# Validation workflow checkpoint
+# Historical validation workflow checkpoint
 
 Branch: `mirror/workflow-trim`, based on `main` `fff8ec0`.
 
@@ -12,8 +12,9 @@ Branch: `mirror/workflow-trim`, based on `main` `fff8ec0`.
 - Squash once before queueing, rebase only when needed, and keep batch results once in the lane checkpoint.
 
 Changed code: `tools/validation/merge_gate.py`, `validate.py`, and their Python unit tests. Workflow documentation:
-PLAN, validation.md and the short WORK index. Mutation selection and runtime acceptance rules remain unchanged.
-D14 removed independent review; D16 removed user approval for accepted mutants and unreachable lines.
+PLAN, validation.md and the short WORK index. Mutation selection and runtime acceptance rules remained unchanged at
+that checkpoint. D14 later removed independent review; D16 removed user approval for accepted mutants and unreachable
+lines. Current handoff instructions are in [PLAN.md](../PLAN.md), [WORK.md](../WORK.md) and [validation.md](../validation.md).
 
 ## Validation and next action
 

@@ -304,9 +304,9 @@ public class MemberGenEmitTests : IDisposable
                 public event EventHandler E;
             }
 
-            """, File.ReadAllText(Source("Both.cs")));
+            """.ReplaceLineEndings("\n"), File.ReadAllText(Source("Both.cs")).ReplaceLineEndings("\n"));
         // Whole stub line pairs only, CRLF kept; the unlisted member stays a stub.
-        Assert.Equal(string.Join("\r\n", GeneratedT.Split('\n').Where((_, i) => i is < 5 or > 12)),
+        Assert.Equal(string.Join("\r\n", GeneratedT.ReplaceLineEndings("\n").Split('\n').Where((_, i) => i is < 5 or > 12)),
             File.ReadAllText(Source("Generated/Mirror/M.T.g.cs")));
         Assert.Equal(4, report.GetProperty("members").GetArrayLength());
     }
