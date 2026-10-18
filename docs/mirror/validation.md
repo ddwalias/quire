@@ -746,7 +746,8 @@ QUIRE_WINDOWS_TEMP=/mnt/c/Projects/quire-temp python3 tools/validation/validate.
   native headers, compiler helpers). Methods are `Project|Type::signature` and types `Project|Type`, for example
   `Quire.Calculation|Quire.ProductInfo.Constants::.ctor`0()->[System.Runtime]System.Void|False`. The ratchet
   compares entries by these keys. The focused baseline, accepted mutants, unreachable lines and changed-method
-  selection keep `Type::signature`.
+  selection keep `Type::signature`. Phase runs never mutate, so the phase baseline omits `tests`, `bodies` and
+  `writes` (`ratchet.MUTATION_ONLY`), which only mutation selection reads; it holds what the ratchet compares.
 - **Builds.** A checkout's `bin/` and `obj/` belong to the CLI that last built it. Do not alternate Linux and
   Windows builds in one checkout; use a separate copy, or delete them first. The gate always uses fresh clones.
 - **Not covered.** A timeout stops the WSL side of the process. A Windows process it started can outlive it.

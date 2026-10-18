@@ -2,7 +2,7 @@ import json
 import tempfile
 from pathlib import Path
 import unittest
-from ratchet import SCHEMA, check, compare
+from ratchet import MUTATION_ONLY, SCHEMA, check, compare
 
 ZERO = dict.fromkeys(('total', 'compared', 'declaration_only', 'excluded', 'missing', 'structure_mismatch', 'uncovered', 'verified_unsupported'), 0)
 METHODS = {'Quire.T::A()': 'compared', 'Quire.T::B()': 'missing'}
@@ -202,7 +202,10 @@ class PhaseKeyTests(unittest.TestCase):
                 'Quire.Controls|Quire.ProductInfo.Constants::.ctor`0()->Void|False']
         self.assertEqual(sorted(snapshot['methods']), keys)
         self.assertEqual(snapshot['exact'], keys)
-        self.assertEqual(sorted(snapshot['bodies'].values()), ['Quire.Calculation', 'Quire.Controls'])
+        # The phase profile never mutates: none of the fields only mutation selection reads, unlike a focused run.
+        self.assertEqual(set(MUTATION_ONLY) & set(snapshot), set())
+        focused = check(self.coverage(), {'lint': []}, False, 'focused', baseline=None)['snapshot']
+        self.assertLessEqual(set(MUTATION_ONLY), set(focused))
         self.assertEqual(sorted(snapshot['types']), ['Quire.Calculation|Quire.ProductInfo.Constants',
                                                      'Quire.Controls|Quire.ProductInfo.Constants'])
         self.assertEqual(snapshot['types']['Quire.Controls|Quire.ProductInfo.Constants']['compared'], 1)

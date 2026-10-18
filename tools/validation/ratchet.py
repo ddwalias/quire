@@ -15,6 +15,8 @@ SCHEMA = 4
 # MethodAudit's exact_match) is optional: a baseline without it holds no exact matches, and a validator that does not
 # know it ignores it, so adding it needs no new schema.
 READABLE = (3, 4)
+# Snapshot fields compare() never reads; only mutation selection does (validate.changed_types, changed_methods).
+MUTATION_ONLY = ('tests', 'bodies', 'writes')
 # States in which a method's IL is not compared with Mathcad's at all.
 UNCOMPARED = ('no_counterpart', 'excluded', 'declaration_only')
 GOOD = ('compared', 'total')  # total (hand-written): deleting methods, even stubs, must not shrink 'missing'
@@ -37,10 +39,11 @@ def owner(method, profile):
 
 def snapshot(coverage, integrity, profile):
     """Identities, not just counts, so fixing one finding cannot pay for a new one. Methods are keyed
-    `Type::signature`, or `Project|Type::signature` in the phase profile (see owner)."""
+    `Type::signature`, or `Project|Type::signature` in the phase profile (see owner). The phase profile never mutates,
+    so its snapshot leaves out MUTATION_ONLY."""
     from method_coverage import by_type
     methods = [dict(m, type=owner(m, profile)) for m in coverage['methods']]
-    return {'schema': SCHEMA, 'profile': profile,
+    snap = {'schema': SCHEMA, 'profile': profile,
             'types': by_type(methods) if profile == 'phase' else coverage['by_type'],
             'methods': {f"{m['type']}::{m['signature']}": stage(m) for m in methods},
             'tests': {f"{m['type']}::{m['signature']}": sorted({test_class(c['test']) for c in m['cases']})
@@ -51,6 +54,7 @@ def snapshot(coverage, integrity, profile):
             'writes': {f"{m['type']}::{m['signature']}": sorted({*m.get('field_writes', []), *m.get('reference_reads', [])})
                        for m in methods if m.get('field_writes') or m.get('reference_reads')},
             'exact': sorted(f"{m['type']}::{m['signature']}" for m in methods if m.get('exact_match'))}
+    return {k: v for k, v in snap.items() if k not in MUTATION_ONLY} if profile == 'phase' else snap
 
 
 def stage(method):
