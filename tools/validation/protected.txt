@@ -33,6 +33,8 @@ src/*/obj/*
 *.gitignore
 *.editorconfig
 *.globalconfig
+# CI workflows: the nightly audit runs with the Mathcad files and a token that can write issues.
+.github/*
 
 # Maintainer-owned records.
 docs/mirror/PLAN.md
