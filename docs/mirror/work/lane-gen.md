@@ -4,7 +4,7 @@ Updated: 2026-10-18
 
 ## Current main and merged work
 
-Checkpoint base: Linux main `7a81f31` (pushed to origin).
+Checkpoint base: Linux main `4e1c921` (pushed to origin).
 
 ## Step 1: Baseline Measurement of Tier B Stubs
 
@@ -70,17 +70,31 @@ Tier B inventory: **9445** total members across **17** assemblies.
 ### Verification and Impact
 - **`Quire.Harness.Tests`:** 96/96 passed (100%).
 - **`tools/Quire.Tools.MemberGen` Python tests:** 5/5 passed (100%).
-- **`Quire.Core` emission compilation errors:**
-  - **Before:** 26 compilation errors blocking all candidate emissions.
-  - **After:** **0 compilation errors**; all 1,197 members emitted and compiled cleanly.
 
-## Step 3: Quire.Core Accepted Batch (Branch `mirror/gen-core`, Commit `fe20b82`)
+## Step 3: Accepted Batches (Total: 2,111 members, +795 fields moved)
 
-Accepted **1,196 Tier B members (+618 fields moved out of stubs)** with exact Release-IL match against Mathcad Prime 12.0.1.0:
-- Working tree: `/mnt/c/Projects/Quire-wt/gen-core`
-- Branch: `mirror/gen-core` (pushed to origin)
-- Execution log and summary: `.mirror-cache/membergen/Quire.Core-20261018-214838/summary.json`
-- Outcome: 1,196 kept, 1 rejected for IL mismatch (`FunctionalityServiceWrapper::FunctionalityServiceLicenseTypeChanged` uses `WeakMultiCastDelegate`).
+All accepted members have exact Release-IL match against Mathcad Prime 12.0.1.0 and passing differential tests.
+
+| Batch / Assembly | Branch | Kept Members | Fields Moved | Rejected | Rejection Reasons |
+|---|---|--:|--:|--:|---|
+| **Quire.Core** | `mirror/gen-core` (`fe20b82`) | **1,196** | 618 | 1 | `WeakMultiCastDelegate` non-mechanical pattern |
+| **Quire.Calculation.Core** | `mirror/gen-calc-core` (`bc2f260`) | **166** | 34 | 0 | None (clean fixed point in round 1) |
+| **Quire.Controls.Core** | `mirror/gen-controls-core` (`e1b7fab`) | **562** | 103 | 7 | 5 custom event routing accessors; 1 nested generic ctor; 1 ambiguous overload |
+| **Quire.Controls** | `mirror/gen-controls` (`3d8c11e`) | **187** | 40 | 2 | 1 invalid syntax in Regex helper; 1 missing `IRegionFactory.Instance` call |
+| **Total** | | **2,111** | **795** | **10** | |
+
+### Hand-offs for Non-Mechanical Members
+- **Quire.Core:**
+  - `FunctionalityServiceWrapper::FunctionalityServiceLicenseTypeChanged` (uses `WeakMultiCastDelegate`). Handed off to Lane B / Core owners.
+- **Quire.Controls.Core:**
+  - `RegionBorder::RequestMoveAndResize` (calls `UIElement.AddHandler` instead of delegate combine).
+  - `RelayCommand::CanExecuteChanged` (calls `CommandManager.RequerySuggested` instead of delegate combine).
+  - `VisualDragger::Drag`, `VisualDragger::DragStart`, `VisualDragger::DragEnd` (call `UIElement.AddHandler`).
+  - Handed off to Controls owners.
+- **Quire.Controls:**
+  - `Help.EngNoteContextData::KeyValuePairRegex` (regex parsing helper).
+  - `WorksheetSectionDeserializationStrategy::RegionFactory` (factory instantiation).
+  - Handed off to Controls owners.
 
 ## Step 4: Quire.Mpl Analysis and Hand-offs
 
@@ -98,6 +112,9 @@ An experimental run of `accept.py` over `Quire.Mpl` confirmed that all 23 remain
    - Protected paths: `tools/Quire.Tools.MemberGen/*`, `tests/Quire.Differential.Tests/*.csproj`, `tests/Quire.Focused.Differential.Tests/*.csproj`.
    - Gate with `--allow-protected`.
    - All 96/96 Harness tests pass; all 5/5 MemberGen unit tests pass.
-2. **Accepted Batch `mirror/gen-core` (Commit `fe20b82`):**
-   - Contains 1,196 accepted Tier B members (+618 fields) in `Quire.Core` with exact Release-IL matches and differential tests.
-   - Requires maintainer merge with `--allow-protected` (due to deleting stubs in `src/Quire.Core/Generated/Mirror/`).
+2. **Accepted Batches for Windows Assemblies:**
+   - `mirror/gen-core`: 1,196 members (+618 fields).
+   - `mirror/gen-calc-core`: 166 members (+34 fields).
+   - `mirror/gen-controls-core`: 562 members (+103 fields).
+   - `mirror/gen-controls`: 187 members (+40 fields).
+   - All pushed to origin, ready for maintainer gating with `--allow-protected` (due to deleting stubs in `src/*/Generated/Mirror/`).
