@@ -66,8 +66,7 @@ public class RtsDifferentialTests
         var qCctor = QRts.TypeInitializer ?? QRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
         var mCctor = MRts.TypeInitializer ?? MRts.GetConstructors(BindingFlags.Static | BindingFlags.NonPublic)[0];
         MethodComparison.Compare(".cctor() initialization", Contract,
-            qCctor, null, [], mCctor, null, [], qs, ms);
-        Assert.Equal(InitializationState(MRts), InitializationState(QRts));
+            qCctor, null, [], mCctor, null, [], _ => InitializationState(QRts), _ => InitializationState(MRts));
 
         // What the .cctor set: the stack budget a reset restores, and an empty search path that resolves nothing.
         var (qResetStackDepth, mResetStackDepth) = Method("ResetStackDepth", DeclaredStaticPublic);
