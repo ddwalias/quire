@@ -3,7 +3,7 @@
 ## Active handoff
 
 SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational and RngVal have current ratchet or mutation blockers; Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal has stale unreachable-line entries, coverage ratchet regressions and a surviving mutant.
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational and RngVal have current gate blockers; Rational most recently hit a coverage test-host crash. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal has stale unreachable-line entries, coverage ratchet regressions and a surviving mutant.
 
 
 
@@ -1390,7 +1390,7 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 
 - `Rational(double,double)`, `Equals(object)` and `GCD(int,int)` were aligned to reference Release IL; evidence is in [Mcd.Rational](../evidence/Mcd.Rational.md). Required Release `RationalDifferentialTests` passed 3/3 with Mathcad.
 - Gate on rebased revision `8c76fea7` and base `97694a2dffb95e0946098830c816d7b77677b570` passed Harness 97, Mpl 188, Debug Differential 392 and Release Differential 392; audit compared 1,399 methods (1,545 exact, 78 structure-only), coverage 298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported; integrity complete and ratchet OK.
-- Mutation stopped after 120/128 mutants with exact validator error `[Errno 13] Permission denied: 'C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-mutant-scratch-n2jriqcd\\quire-mutant-e9ldh8qb\\Quire.Mpl.dll'`. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-9bobu2ew\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-9bobu2ew\run\summary.json`. The batch remains unmerged and requires a full gate retry.
+- Mutation stopped after 120/128 mutants with exact validator error `[Errno 13] Permission denied: 'C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-mutant-scratch-n2jriqcd\\quire-mutant-e9ldh8qb\\Quire.Mpl.dll'`. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-9bobu2ew\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-9bobu2ew\run\summary.json`. The batch remains unmerged. A retry on base `3ed37be1b3f4920c5d7bdb66da39d73b194f44e4` passed Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393, but failed during coverage. The validator reported `Quire.Focused.Differential.Tests: coverage run exited 1; inspect its log`. Exact coverage log: `%LOCALAPPDATA%\Temp\quire-gate-results-dpponzy9\run\Quire.Focused.Differential.Tests.coverage.log`; the test host crashed after 350 passed, 0 failed and 0 skipped. TRX: `%LOCALAPPDATA%\Temp\quire-coverage-qx13c6g4\Quire.Focused.Differential.Tests.coverage.trx`. Method audit, ratchet and mutation did not run. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-dpponzy9\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-dpponzy9\run\summary.json`. Maintainer follow-up is required before another retry.
 ## NumVal exact Release shapes (`mirror/a-numval-il-shape`)
 
 - `IsPureReal`, `IsPureImag` and `isInt(int*)` match Mathcad Release IL exactly; `LoadNaN` remains structure-only. Evidence is in [Mcd.NumVal](../evidence/Mcd.NumVal.md). Required Release `NumValDifferentialTests` passed 6/6 with Mathcad.
