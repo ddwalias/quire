@@ -14,7 +14,7 @@
 - **Evidence:**
   - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
 - **Validation:**
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified 15 direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
 - **Gate status:**
   - Ready for merge gate landing on updated `main` (commit `a2b91391`).
