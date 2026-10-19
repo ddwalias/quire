@@ -905,7 +905,8 @@ def main():
             inventory = json.loads(inventory_path.read_text())
             return wsl_inventory(inventory, windows_root) if windows else inventory
         coverage = audit(read_inventory(), records,
-                         passed_tests([Path(p["trx"]) for p in report["projects"]]), run, types=args.method_type,
+                         passed_tests([Path(p["trx"]) for p in report["projects"]],
+                                      allow_skips=phase_scoped_skips), run, types=args.method_type,
                          lines=read_cobertura(cobertura, from_dotnet), deviations=deviations, unreachable=unreachable,
                          proposed_unreachable=proposed_unreachable, sources=unreachable_sources)
         (output / "method-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")

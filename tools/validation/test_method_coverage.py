@@ -4,11 +4,25 @@ import tempfile
 from pathlib import Path
 import unittest
 import method_coverage
-from method_coverage import audit, unreachable_lines
+from method_coverage import audit, passed_tests as passed_tests_from_trx, unreachable_lines
 from mutate import select
 
 
 class CoverageTests(unittest.TestCase):
+    def test_phase_scoped_skips_are_not_counted_as_passing_comparisons(self):
+        trx = Path(self.directory.name) / 'phase.trx'
+        trx.write_text('''<?xml version="1.0"?>
+<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestDefinitions><UnitTest id="pass"><TestMethod className="Ns.Tests.Compare" name="Passed" /></UnitTest>
+    <UnitTest id="skip"><TestMethod className="Ns.Tests.Compare" name="Skipped" /></UnitTest></TestDefinitions>
+  <Results><UnitTestResult testId="pass" outcome="Passed" /><UnitTestResult testId="skip" outcome="NotExecuted" /></Results>
+  <ResultSummary outcome="Completed" />
+</TestRun>''')
+
+        with self.assertRaisesRegex(ValueError, 'unsuccessful test results'):
+            passed_tests_from_trx([trx])
+        self.assertEqual(passed_tests_from_trx([trx], allow_skips=True), {'Ns.Tests.Compare.Passed'})
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)

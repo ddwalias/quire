@@ -12,10 +12,10 @@ from validate import NS, ROOT, read_trx
 UNREACHABLE = ROOT / 'docs/mirror/unreachable-lines.txt'
 
 
-def passed_tests(paths):
+def passed_tests(paths, allow_skips=False):
     passed = set()
     for path in paths:
-        read_trx(path)
+        read_trx(path, allow_skips=allow_skips)
         root = ET.parse(path).getroot()
         definitions = {}
         for test in root.findall('t:TestDefinitions/t:UnitTest', NS):
