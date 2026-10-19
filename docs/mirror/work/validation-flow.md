@@ -32,8 +32,8 @@ git -C C:\Projects\Quire worktree remove $W
 
 Read the full diff and update the lane checkpoint with scope, evidence, commands, results, remaining work and blockers.
 Do not commit directly to `main`; `lane_merge.py` rebases, runs the gate, and pushes `main` only after a passing
-gate. If `main` advances during validation, the wrapper retries against the new base. Do not edit a branch while its
-gate is running.
+gate. If `main` advances during validation, the wrapper retries against the new base without holding the merge lock
+during validation. Do not edit a branch while its gate is running.
 
 `lane_merge.py` automatically allows a branch to update only `docs/mirror/unreachable-lines.txt` when that is its sole
 protected path change. The merge gate still checks each entry against the current source and coverage, including its

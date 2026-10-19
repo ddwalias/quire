@@ -693,9 +693,9 @@ flock /tmp/quire-merge.lock python3 tools/validation/merge_gate.py <branch> --ap
   run the same profiles and reach the same verdict, up to test flakiness, which the serial gate has as well. The
   focused closure is pinned by the test above, not derived at run time: a new reference from the focused projects
   must be added to it.
-- **Fallback.** On exit 4, validate again without the lock. After two stale results in a row, run the one-shot
-  `--apply` under the lock, which cannot go stale; the stale message says how long that holds the lock, going by
-  the run just discarded, and `--apply` prints that the lock stays held for the whole validation.
+- **Stale retries.** On exit 4, `lane_merge.py` pulls and rebases again, then reruns `--validate-only` outside the lock.
+  It keeps retrying until the validated receipt applies or a pull, rebase, validation, or push fails. It never falls
+  back to the one-shot `--apply`, so a long validation cannot block other lanes from landing.
 - `--apply` alone keeps working exactly as before, and `gate.json` of every mode now also lists `commits`, `tools`
   and the overrides; a runtime run lists `durations` (seconds per profile).
 

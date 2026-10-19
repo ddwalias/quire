@@ -587,12 +587,8 @@ def apply_validated(args):
                 reasons = ['the source lint on the landed tree differs from the validated baseline\'s']
     if reasons:
         delete_record(args.branch, ROOT)
-        durations = record.get('durations') or {}
-        held = (f", about {sum(durations.values()) / 60:.0f} min going by this run "
-                f"({', '.join(f'{k} {v / 60:.0f} min' for k, v in durations.items())})") if durations else ''
         print(f'STALE: {args.branch} must be validated again:\n  ' + '\n  '.join(reasons)
-              + '\nRe-run --validate-only (no lock). After two stale results in a row, fall back to --apply under the '
-              f'lock: it holds the lock for the whole validation{held}.')
+              + '\nRe-run --validate-only without the merge lock before retrying --apply-validated.')
         return STALE
     git('-c', 'core.hooksPath=/dev/null', 'merge', '-q', '--ff-only', landed)
     delete_record(args.branch, ROOT)

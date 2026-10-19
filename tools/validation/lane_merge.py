@@ -5,7 +5,7 @@
 Run it in the worktree that has <branch> checked out. It fast-forwards main to origin/main briefly under the merge
 lock (merge_lock.py), rebases the branch onto it here, validates without the lock (--validate-only), then under the
 lock pulls again, applies the gate's record (--apply-validated) and pushes main. A stale record (exit 4) is
-validated again; after two stale results in a row, the one-shot --apply holds the lock for the whole validation.
+validated again without holding the merge lock. The lock is never held during validation.
 Exits with the gate's code: 0 merged and pushed, 1 blocked (or a failed rebase), otherwise the failing step's.
 The gate runs in --main, by default the worktree that has main checked out. The push follows only a merge."""
 import argparse
@@ -94,7 +94,7 @@ def main(argv=None):
     def run(*extra):
         return subprocess.run([*gate, *extra], cwd=main_dir).returncode
     jobs = ['--jobs', str(args.jobs)]
-    for attempt in range(2):
+    while True:
         with held():
             code = pull(main_dir)                                       # fresh main, briefly under the lock
         if code or rebase(args.branch):
@@ -106,18 +106,11 @@ def main(argv=None):
         if code:
             return code
         with held():
-            code = pull(main_dir) or run('--apply-validated') or push(main_dir)
+            code = pull(main_dir) or run('--apply-validated')
+            if code == 0:
+                code = push(main_dir)
         if code != 4:
             return code                                                 # merged and pushed, blocked, or push failed
-    # Two stale results in a row: the one-shot gate, holding the lock for the whole validation.
-    with held():
-        code = pull(main_dir) or rebase(args.branch)
-        if code:
-            return code
-        gate_options = ['--allow-protected'] if allow_unreachable_update(args.branch, main_dir) else []
-        if gate_options:
-            print('Allowing only docs/mirror/unreachable-lines.txt through maintainer protection; validating entries.')
-        return run('--apply', *gate_options, *jobs) or push(main_dir)
 
 
 if __name__ == '__main__':

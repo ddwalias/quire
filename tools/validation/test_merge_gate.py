@@ -737,7 +737,7 @@ class OptimisticGateTests(unittest.TestCase):
         code, out = self.apply(branch)
         self.assertEqual(code, merge_gate.STALE, out)
         self.assertIn(reason, out)
-        self.assertIn('fall back to --apply under the lock', out)
+        self.assertIn('Re-run --validate-only without the merge lock', out)
         self.assertIsNone(self.record(branch))  # deleted: the next attempt must validate again
         self.assertEqual(self.git('rev-parse', 'main'), moved)
         return main
@@ -1138,7 +1138,7 @@ class NightlyTests(unittest.TestCase):
 class LaneMergeTests(unittest.TestCase):
     """lane_merge.py with real git, the real merge lock (on a private file) and a stub gate: it defaults to the
     worktree that has `main` checked out, pulls and lands only under the lock and validates outside it, pushes only
-    after a merge, passes the gate's exit codes back out, and falls back to the one-shot gate after two stale results."""
+    after a merge, retries stale receipts outside the lock indefinitely, and passes gate exit codes back out."""
     GATE = textwrap.dedent('''
         import os, sys
         sys.path.insert(0, os.environ['TOOLS'])
@@ -1206,16 +1206,15 @@ class LaneMergeTests(unittest.TestCase):
 
     def test_the_lane_script(self):
         # Each validation starts from a fresh main (PULL), and each landing pulls first under the lock.
-        v, a, one, pull = '--validate-only 0', '--apply-validated', '--apply', 'PULL'
+        v, a, pull = '--validate-only 0', '--apply-validated', 'PULL'
         for codes, expected in [
                 ({'apply_validated': '0'}, (0, [pull, v, pull, f'{a} 0', 'PUSHED'])),
                 ({'apply_validated': '1'}, (1, [pull, v, pull, f'{a} 1'])),
                 ({'validate_only': '1'}, (1, [pull, '--validate-only 1'])),
                 ({'apply_validated': '4 0'}, (0, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 0', 'PUSHED'])),
-                ({'apply_validated': '4 4', 'apply': '0'},
-                 (0, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4', pull, f'{one} 0', 'PUSHED'])),
-                ({'apply_validated': '4 4', 'apply': '1'},
-                 (1, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4', pull, f'{one} 1']))]:
+                ({'apply_validated': '4 4 4 0'},
+                 (0, [pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4', pull, v, pull, f'{a} 4',
+                      pull, v, pull, f'{a} 0', 'PUSHED']))]:
             with self.subTest(codes):
                 self.assertEqual(self.run_script(**codes), expected)
         # A failed rebase reports git's own error and stops before any validation.
