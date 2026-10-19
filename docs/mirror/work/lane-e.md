@@ -1,0 +1,11 @@
+# Lane E — Lane 5 Tier A
+
+## Active handoff
+
+- **Active batch:** `Ptc.ArrayExtension.Fill<T>` (`0x06000284`), the type's only Tier A member. `ToStringFormatted(Array)` is Tier C and was not changed.
+- **Ownership check:** fetched `origin`; branch base is `f863245e`. No source partial, evidence, direct test, Lane E branch, or active worktree owned `Fill<T>`. Inventory: one Tier A member, zero Tier B members; Lane D's `Ptc.PersistentData*` scope is excluded.
+- **Reference:** Ptc.Core 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`; ilspycmd 11.1.0.9782. Exact signature, IL contract and cases are in [evidence](../evidence/Ptc.ArrayExtension.md).
+- **Validation:** `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj -c Release --no-restore --filter 'FullyQualifiedName~PtcArrayExtensionTierAMechanicalDifferentialTests'` — passed, 1 test, 0 skipped. Direct comparisons cover seven integer ranges and a generic string-array case; the test checks Ptc.Core hash, MVID and token. Release Quire `Fill<T>` opcode sequence matches the recorded Mathcad IL.
+- **Prior Lane E candidate:** `mirror/e-embedded-resource-copier` implements and tests `Ptc.IO.EmbeddedResourceCopier.Copy`; its gate passed Debug suites but stopped before Release differential and ratchet because the focused Release assembly path is mismatched in maintainer-owned `tools/validation/validate.py`. See the pushed checkpoint on that branch. `Ptc.IO.FileUtils` is deferred because an A member depends on still-stubbed `ApplicationVariant` accessors; `Ptc.IO.StreamUtils` is deferred because `GetStreamHash` depends on still-stubbed service-registry/hash-provider methods.
+- **Remaining Lane 5 scope:** recheck origin ownership after each passing merge; continue unowned Tier A members in `Ptc.Core.dll` outside `Ptc.PersistentData*`, excluding Tier B generated-member coverage.
+- **Blockers:** the Release assembly-path validator issue also prevents this batch from passing `lane_merge.py`; rerun after the maintainer fixes the path calculation. No changes to protected validation or test-project files are included.

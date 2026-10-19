@@ -13,6 +13,4 @@ public static partial class ArrayExtension
 {
     [global::Quire.Mirror.MirrorStub]
     public static string ToStringFormatted(this global::System.Array array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Fill<T>(this T[] array, T value, int startIndex = 0, int endIndex = -1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
