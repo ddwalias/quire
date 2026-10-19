@@ -13,6 +13,4 @@ public static partial class ResultNodeUtils
 {
     [global::Quire.Mirror.MirrorStub]
     public static double ParsePlottableValue(global::Quire.Calculation.Core.IResultNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool TryParsePlottableValue(global::Quire.Calculation.Core.IResultNode node, out double result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
