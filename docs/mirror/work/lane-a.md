@@ -2,18 +2,18 @@
 
 ## Active handoff
 
-SCons and SList are merged into current `origin/main`; their entries below are historical receipts. The unmerged
-Tok, MplSignature, Rational, NumVal, RngVal, Type, Dim and DimVal branches are pending the main-branch Release-validator assembly-path
-fix. Their gates pass the 392 focused differential tests, then fail because they search for
-`Quire.Focused.Differential.Tests.dll` while the Release output is `Quire.Differential.Tests.dll`; no method audit or
-ratchet runs. Tok owns `src/Quire.Mpl/Run/Sexpr.cs`, MplSignature owns `src/Quire.Mpl/MplSignature.cs`, Rational owns
-`src/Quire.Mpl/Mcd/Rational.cs`, NumVal owns `src/Quire.Mpl/Mcd/NumVal.cs`, RngVal owns
-`src/Quire.Mpl/Mcd/RngVal.cs`, Type owns `src/Quire.Mpl/Mcd/Type.cs`, and Dim owns `src/Quire.Mpl/Mcd/Dim.cs`. Leave
-these files unchanged. `mirror/a-utilities-getunits` is the active independent batch. `mirror/a-rts-resolve-assembly-shape` and
-`mirror/a-unit-system-field-state` remain owned by their existing branches. `MplForeignMacro`, remaining `AppException`,
-`DynamicType` and `InstructionSeq` scopes are owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall`
-depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
-batch receipts below are history, not a task queue.
+SCons and SList are merged into current `origin/main`; their entries below are historical receipts. The unmerged Tok,
+MplSignature, Rational, NumVal, RngVal, Type, Dim, DimVal and Utilities branches are pending the same
+Release-validator assembly-path fix. Each gate passed the 392 focused differential tests and then stopped because it
+searched for `Quire.Focused.Differential.Tests.dll` while the Release output is `Quire.Differential.Tests.dll`; no
+method audit or ratchet ran. These branches own their respective source files; leave those files unchanged.
+
+No unowned Lane A Tier A file scope remains in the current inventory. The remaining method gaps are in live Lane A
+files (`Rts`, `UnitSystem`), Lane B scopes (`Function`, `MatDim` and `MatVal`), or files claimed by outstanding Lane A
+branches such as `DynamicType`, `AppException`, `InstructionSeq`, Tuple, keyword and macro batches. The current branch
+reports and source ownership are summarized below. Resume when the validator is fixed or a claimed scope is released.
+`MplDestructuringBind.ExpandCall` remains dependency-blocked on `define_keyword.MakeDefine`. Use [WORK.md](../WORK.md)
+and [PLAN.md](../PLAN.md); dated batch receipts below are history, not a task queue.
 
 ## Rational Release IL shape (`mirror/a-rational-il-shape`)
 
@@ -121,7 +121,13 @@ batch receipts below are history, not a task queue.
   `17a0933b-4988-4c18-963d-563998321cc8`, token `0x0600070b`; see [Mcd.Utilities evidence](../evidence/Mcd.Utilities.md).
 - Release `il_diff.py` reports exact. Required Release `UtilitiesDifferentialTests` passed 3/3 with Mathcad; direct
   cases cover dimensionless, polymorphic, ordinary and unknown products and null, using the default SI unit system.
-- Gate result will be recorded after `lane_merge.py` completes.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-utilities-getunits --jobs 14` blocked
+  at revision `050529b125eef9c732329d727384ba1bc2606885` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-w8yjatgl\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-w8yjatgl\run\summary.json`. Harness 97, Mpl 188 and focused differential
+  392 passed with no failures or skips. The Release validator then failed with
+  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-6y7lo281\Quire.Focused.Differential.Tests.dll)`;
+  the Release build emits `Quire.Differential.Tests.dll`. Validator exited 1, so method audit/ratchet did not run.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
