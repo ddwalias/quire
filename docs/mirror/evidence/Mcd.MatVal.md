@@ -77,6 +77,39 @@
 | CanonicalizePtrs() | 0x06000441 | — | Normalize `string_dim` to identity, seed the common dimension from `m_dim` only when logical cells include non-pointer data, then classify only PtrNan-marked table entries. Merge compatible NumVal dimensions, accept `mcd_zero`, flag other live values/dimensions, and pass live/zero counts plus the common dimension to `TidyPtrs`; may mutate matrix and pointer state through reinsertion. | Same-artifact IL; 18 direct comparisons | Verified |
 | ReinsertPtrs() | 0x06000443 | — | Save the original pointer table/backing and view geometry; if Shared, pack storage and reset offset/stride/Shared; then detach the table, skip stale entries, remap live indices when packed, and reinsert each original object through `set`. | Same-artifact IL; 11 direct comparisons | Verified |
 | ReinsertPtrs1() | 0x06000444 | — | Perform the same shared repack and live-entry remapping as `ReinsertPtrs`, but first mutate each live `NumVal` with `mcd_zero` dimension to `identity` before reinsertion. | Same-artifact IL; 12 direct comparisons | Verified |
+| DynCall(object) | 0x060004b5 | — | Single-index dynamic call converts argument to uint via asInt(1u) and delegates to mcd_get_1. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| DynCall(object, object) | 0x060004b6 | — | Two-index dynamic call converts arguments to uint via asInt(1u) and asInt(2u) and delegates to mcd_get_2. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_get_1(object, object) | 0x060004b7 | — | Static single-index accessor; requires MatVal on arg 1 and NumVal on arg 2, delegates to mcd_get_1((uint)asInt("must be integer", 2u)). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| matrix_get_1(i4) | 0x060004b8 | — | Single-index matrix getter cast to uint delegating to mcd_get_1. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| sym_matrix_get_1(i4) | 0x060004b9 | — | Single-index symbolic matrix getter cast to uint delegating to mcd_sym_get_1. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| matrix_get_2(i4, i4) | 0x060004ba | — | Two-index matrix getter cast to uint delegating to mcd_get_2. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| sym_matrix_get_2(i4, i4) | 0x060004bb | — | Two-index symbolic matrix getter cast to uint delegating to mcd_sym_get_2. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| iterator_get(i4) | 0x060004bd | — | Maps flat iterator index n to (n % Rows, n / Rows) and calls mcd_get_2, returning DimVal. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_getm_1(object, i4) | 0x060004be | — | Static single-index getter requiring MatVal on arg 1, delegating to mcd_get_1((uint)i). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_get_1(u4) | 0x060004bf | — | Checked vector getter; requires Cols == 1 (arg 1) and i < Rows (arg 2), returns get_1((int)i). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_sym_get_1(u4) | 0x060004c0 | — | Symbolic vector getter; requires Cols == 1 and i < Rows without arg positions, returns get_1((int)i). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_getm_2(object, i4, i4) | 0x060004c1 | — | Static two-index getter requiring MatVal on arg 1, delegating to mcd_get_2((uint)i, (uint)j). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_get_2(u4, u4) | 0x060004c2 | — | Checked matrix getter; requires i < Rows and j < Cols (arg 2), returns get_2((int)i, (int)j). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_sym_get_2(u4, u4) | 0x060004c3 | — | Symbolic matrix getter; requires i < Rows and j < Cols without arg positions, returns get_2((int)i, (int)j). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_get_1(i4) | 0x060004c6 | — | Casts i to uint and delegates to mcd_get_1(uint). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_sym_get_1(i4) | 0x060004c7 | — | Casts i to uint and delegates to mcd_sym_get_1(uint). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_get_2(i4, i4) | 0x060004c8 | — | Casts i and j to uint and delegates to mcd_get_2(uint, uint). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| mcd_sym_get_2(i4, i4) | 0x060004c9 | — | Casts i and j to uint and delegates to mcd_sym_get_2(uint, uint). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| aref_1(i4) | 0x060004ca | — | Array reference single-index getter delegating to mcd_get_1((uint)i). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| aref_2(i4, i4) | 0x060004cb | — | Array reference two-index getter delegating to mcd_get_2((uint)i, (uint)j). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| get_type_2(i4, i4, r8) | 0x060004db | — | Classifies element at Index(i, j) with complex threshold into ElementType. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| offsets(valuetype:516, i4) | 0x060004dc | — | Enumerates row or column index offsets across matrix axes. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Analyzed |
+| get_type(i4, r8) | 0x060004dd | — | Helper classifying element at raw offset into ElementType. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Analyzed |
+| element_types(valuetype:516, i4, r8) | 0x060004de | — | Enumerates ElementTypes along specified axis and index. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| get_ptrs(valuetype:516, i4) | 0x060004df | — | Enumerates raw pointer objects along specified axis and index. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| get_double(i4, r8, r8) | 0x060004e0 | — | Returns scaled real component if imaginary part is within complex threshold; otherwise NaN. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Analyzed |
+| get_doubles(valuetype:516, i4, r8, r8) | 0x060004e1 | — | Enumerates scaled real doubles along specified axis within complex threshold. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| get_data(i4, r8, r8) | 0x060004e2 | — | Returns pointer object or scaled double at raw offset. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Analyzed |
+| get_data(valuetype:516, i4, r8, r8) | 0x060004e3 | — | Enumerates pointer objects or scaled doubles along specified axis. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| PackObjects(i4) | 0x06000538 | — | Allocates object array of rows*cols + offset, fills column-major elements starting at offset. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| PackObjects() | 0x06000539 | — | Delegates to PackObjects(0). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| op_Division(class:532, r8) | 0x06000556 | — | Divides matrix by scalar; mutates if Packed and mutable, otherwise copies first. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
+| Scale(r8) | 0x06000557 | — | Scales real, imaginary, and pointer values in-place by scalar divisor. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Analyzed |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 
