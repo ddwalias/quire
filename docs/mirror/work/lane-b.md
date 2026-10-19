@@ -20,8 +20,18 @@
 - **Validation:**
   - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimArrayDimDirectDifferentialTests'` (3/3 passed: 0 failed, 0 skipped against Mathcad Prime in Release mode)
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed)
-- **Gate status:**
-  - Ready for merge gate landing on updated `main`.
+- **Gate status & maintainer handoff:**
+  - Merge gate verified: Harness 97/97, Mpl 188/188, Differential 396/396 (Debug & Release against Mathcad Prime 12.0.1.0), 0 lint findings, Ratchet OK.
+  - 144/147 mutants killed. The 3 surviving mutants in `MatDim.makeArrayDim(MatVal)` are strictly provably equivalent mutants under exact Release IL:
+  - **Proof of Equivalence:**
+    In method `MatDim.makeArrayDim(MatVal m)`:
+    1. Line 150 (`for (int i = 1; i < m.Cols; i++)`): Mutant `ldc.i4.1 -> ldc.i4.0` starts the loop at index `i = 0`. At `i = 0`, `Uniform(m.ColDimArray(0))` is evaluated. Preceding guard line 148 (`if (Uniform(col0_dims) != null)`) already guaranteed that column 0 is uniform (non-null). Therefore `Uniform(m.ColDimArray(0)) == null` evaluates to `false` unconditionally. No state is modified, and the loop advances to `i = 1`, executing identically to the unmutated loop.
+    2. Line 161 (`for (int j = 1; j < m.Rows; j++)`): Mutant `ldc.i4.1 -> ldc.i4.0` starts the loop at index `j = 0`. At `j = 0`, `Uniform(m.RowDimArray(0))` is evaluated. Preceding guard line 159 (`if (Uniform(row0_dims) != null)`) already guaranteed that row 0 is uniform (non-null). Therefore `Uniform(m.RowDimArray(0)) == null` evaluates to `false` unconditionally. No state is modified, and the loop advances to `j = 1`, executing identically to the unmutated loop.
+    3. Line 176 (`for (int k = 1; k < m.Cols; k++)`): Mutant `ldc.i4.1 -> ldc.i4.0` starts the loop at index `k = 0`. At `k = 0`, `IsScalarMultiple(col0_dims, m.ColDimArray(0))` is evaluated. Comparing `col0_dims` to itself divides each element by itself, yielding `Dim.identity` for all elements. The method returns `Dim.identity`, which is assigned to `col_multipliers[0]`. Line 175 already initialized `col_multipliers[0] = Dim.identity`. Rewriting the exact same value causes zero state difference, and the loop advances to `k = 1`, executing identically to the unmutated loop.
+  - **Proposed equivalent mutants for maintainer `accepted-mutants.txt`:**
+    - `Quire.Mcd.MatDim::makeArrayDim`0([Quire.Mpl]Quire.Mcd.MatVal)->[Quire.Mpl]Quire.Mcd.MatDim|True@IL_001f ldc.i4.1 -> ldc.i4.0 body=f08610f1ffbd2d71d3adf11dd1f525f02b34d1fa4f6183e6ebf3c1995b533b68 # ColDimArray(0) already verified non-null by Uniform(col0_dims) != null guard at line 148; Uniform(m.ColDimArray(0)) == null is unconditionally false`
+    - `Quire.Mcd.MatDim::makeArrayDim`0([Quire.Mpl]Quire.Mcd.MatVal)->[Quire.Mpl]Quire.Mcd.MatDim|True@IL_0080 ldc.i4.1 -> ldc.i4.0 body=f08610f1ffbd2d71d3adf11dd1f525f02b34d1fa4f6183e6ebf3c1995b533b68 # RowDimArray(0) already verified non-null by Uniform(row0_dims) != null guard at line 159; Uniform(m.RowDimArray(0)) == null is unconditionally false`
+    - `Quire.Mcd.MatDim::makeArrayDim`0([Quire.Mpl]Quire.Mcd.MatVal)->[Quire.Mpl]Quire.Mcd.MatDim|True@IL_0100 ldc.i4.1 -> ldc.i4.0 body=f08610f1ffbd2d71d3adf11dd1f525f02b34d1fa4f6183e6ebf3c1995b533b68 # IsScalarMultiple(col0_dims, col0_dims) evaluates to Dim.identity, rewriting col_multipliers[0] with the same Dim.identity value initialized on line 175`
 
 Everything below this summary is historical context and receipts, not a queue of unfinished work.
 
