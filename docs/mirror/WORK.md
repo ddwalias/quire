@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| D | MC14 annotation extensions is active with 2 direct comparisons passing; its conversion-array overload depends on Lane 5's `EnumerableExtensions.IsNullOrEmpty`. AreaType, OleUtils, header/footer, and ProtectionDataType timestamp batches have prior Lane D evidence. | [Lane D](work/lane-d.md) |
+| D | MC14 annotation extensions is active with 2 direct comparisons passing; its conversion-array overload depends on Lane 5's `EnumerableExtensions.IsNullOrEmpty`. Prior Lane D gates remain blocked by the focused Release assembly lookup. | [Lane D](work/lane-d.md) |
 
 ## Fast lane loop
 
