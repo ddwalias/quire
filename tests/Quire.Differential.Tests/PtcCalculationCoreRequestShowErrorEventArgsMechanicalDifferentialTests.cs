@@ -3,17 +3,62 @@ using System.Runtime.CompilerServices;
 
 namespace Quire.Differential.Tests;
 
-/// <summary>
-/// Direct comparisons of the <c>Ptc.Calculation.Core.RequestShowErrorEventArgs</c> members that MemberGen reconstructed mechanically
-/// (docs/mirror/evidence/Ptc.Calculation.Core.RequestShowErrorEventArgs.md): each compares one member on generated inputs (Mechanical).
-/// </summary>
+/// <summary>Direct reference and state comparisons for the Error getter and setter.</summary>
 public class PtcCalculationCoreRequestShowErrorEventArgsMechanicalDifferentialTests
 {
-    [SkippableFact]
-    public void Error_get_060000c6() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.RequestShowErrorEventArgs), 0x060000c6);
+    private const string Contract = "Ptc.Calculation.Core.RequestShowErrorEventArgs";
+    private static Type QType() => typeof(global::Quire.Calculation.Core.RequestShowErrorEventArgs);
+    private static Type MType() => Mathcad.Type("Ptc.Calculation.Core", Contract);
+    private static Type QErrorType() => typeof(global::Quire.Calculation.Core.EngineError);
+    private static Type MErrorType() => Mathcad.Type("Ptc.Calculation.Core", "Ptc.Calculation.Core.EngineError");
+    private static object Error(Type type) => RuntimeHelpers.GetUninitializedObject(type);
+    private static void SetError(Type type, object target, object? value) =>
+        type.GetProperty("Error")!.GetSetMethod(true)!.Invoke(target, [value]);
+    private static string Show(object? value, object? expected) =>
+        value == null ? "null" : ReferenceEquals(value, expected) ? "EngineError:expected" : value.GetType().Name;
 
     [SkippableFact]
-    public void Error_set_060000c7() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.RequestShowErrorEventArgs), 0x060000c7);
+    public void Error_get_060000c6()
+    {
+        object qError = Error(QErrorType());
+        object mError = Error(MErrorType());
+        object qTarget = Error(QType());
+        object mTarget = Error(MType());
+        SetError(QType(), qTarget, qError);
+        SetError(MType(), mTarget, mError);
+        string QState(object target) => Show(QType().GetProperty("Error")!.GetValue(target), qError);
+        string MState(object target) => Show(MType().GetProperty("Error")!.GetValue(target), mError);
+        MethodComparison.Compare("getter returns the stored EngineError reference", Contract,
+            QType().GetProperty("Error")!.GetMethod!, qTarget, [],
+            MType().GetProperty("Error")!.GetMethod!, mTarget, [],
+            value => Show(value, qError), value => Show(value, mError), QState, MState);
+        SetError(QType(), qTarget, null);
+        SetError(MType(), mTarget, null);
+        MethodComparison.Compare("getter returns null", Contract,
+            QType().GetProperty("Error")!.GetMethod!, qTarget, [],
+            MType().GetProperty("Error")!.GetMethod!, mTarget, [],
+            value => Show(value, qError), value => Show(value, mError), QState, MState);
+    }
+
+    [SkippableFact]
+    public void Error_set_060000c7()
+    {
+        object qError = Error(QErrorType());
+        object mError = Error(MErrorType());
+        object qTarget = Error(QType());
+        object mTarget = Error(MType());
+        MethodInfo qSetter = QType().GetProperty("Error")!.GetSetMethod(true)!;
+        MethodInfo mSetter = MType().GetProperty("Error")!.GetSetMethod(true)!;
+        string QState(object target) => Show(QType().GetProperty("Error")!.GetValue(target), qError);
+        string MState(object target) => Show(MType().GetProperty("Error")!.GetValue(target), mError);
+
+        MethodComparison.Compare("setter stores the exact EngineError reference", Contract,
+            qSetter, qTarget, [qError], mSetter, mTarget, [mError],
+            value => Show(value, qError), value => Show(value, mError), QState, MState);
+        MethodComparison.Compare("setter stores null", Contract,
+            qSetter, qTarget, [null], mSetter, mTarget, [null],
+            value => Show(value, qError), value => Show(value, mError), QState, MState);
+    }
 }
 
 public class PtcCalculationCoreRequestShowErrorEventArgsConstructorTests
