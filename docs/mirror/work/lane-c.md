@@ -38,6 +38,8 @@ The `mirror/c-calc-trace-result-analyzer-methods` gate passed generated-path che
 
 The `mirror/c-calc-result-node-utils` gate passed generated-path checks, Harness 97/97, Mpl 188/188, and focused Differential 392/392, then stopped before MethodAudit/ratchet on the same Release assembly-name lookup. Report: `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-5f4gvh46\run\summary.json`; missing path: `C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-lj84oav5\Quire.Focused.Differential.Tests.dll`.
 
+The `mirror/c-calc-engine-error-placeholder` gate passed generated-path checks, Harness 97/97, Mpl 188/188, and focused Differential 392/392, then stopped before MethodAudit/ratchet on the same Release assembly-name lookup. Report: `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-600gvm8k\run\summary.json`; missing path: `C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-yh4a3xo_\Quire.Focused.Differential.Tests.dll`.
+
 ### EngineErrorExtensions placeholder classifier (`mirror/c-calc-engine-error-placeholder`)
 
 Implemented Tier A `IsPlaceholderError(EngineError)` with the original null check and `ErrorCode == "bad%_placeholder"` comparison. Direct cases use uninitialized fixture objects with only the private code field set and normalize the renderer to that code, avoiding unrelated EngineError fields. The Tier B `ErrorCode` getter is unchanged and remains independently Release-verified.
