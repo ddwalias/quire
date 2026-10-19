@@ -12,17 +12,7 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public abstract partial class ListResultNode<T> : global::Quire.Calculation.Core.IListResultNode<T>, global::Quire.Calculation.Core.IListResultNode
 {
     [global::Quire.Mirror.MirrorStub]
-    private int _meaningfulValuesCount;
-    [global::Quire.Mirror.MirrorStub]
     public abstract T NeutralValue { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public int MeaningfulValuesCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected ListResultNode(global::System.Collections.Generic.IList<T> data, int meaningfulValuesCount = -1) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected ListResultNode(global::System.Collections.Generic.IList<T> data, T paddingValue, int minLength) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<T> ExtendList(global::System.Collections.Generic.IList<T> data, int minLength, T paddingValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public abstract bool IsMeaningfulValue(T valueIndex);
 }
