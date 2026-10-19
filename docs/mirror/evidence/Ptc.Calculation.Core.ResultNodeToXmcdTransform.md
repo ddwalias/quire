@@ -27,6 +27,6 @@
 **Observed** (`PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
-MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests`; private matrix writers are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests`.
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests`; private matrix writers are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests`.
 
-**Observed** (`PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests`): direct private-method calls compare writer state for an empty 0x1 matrix and the null-display/null-viewport failure paths. A populated matrix reaches the explicit `IMatrixResultNode.Item` Tier B stub. The display writer's non-null branches remain pending the out-of-scope TableSize implementation.
+**Observed** (`PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests`): direct private-method calls compare writer state for an empty 0x1 matrix and the null-display/null-viewport failure paths. A populated matrix reaches the explicit `IMatrixResultNode.Item` Tier B stub. The display writer's non-null branches remain pending the out-of-scope TableSize implementation.

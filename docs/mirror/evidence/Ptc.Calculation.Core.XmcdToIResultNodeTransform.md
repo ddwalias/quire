@@ -2,7 +2,7 @@
 
 - **Original:** `Ptc.Calculation.Core.dll` 12.0.1.0, SHA-256 `f5a48d158835f91485948d42fc85e4fd27ddc5e2a17b4d886eb6722a753d4a09`, MVID `402d6e7b-941e-48f3-b17b-e1cd1a92b615`
 - **Reference:** MemberGen for the existing methods; `python tools\reference\reference.py --assembly Ptc.Calculation.Core Ptc.Calculation.Core.XmcdToIResultNodeTransform --il` for the `.cctor()` and `GetIntegerFromAttribute` IL (output remains in ignored `.mirror-cache`)
-- **Quire:** `src/Quire.Calculation.Core`; tests: `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests`, `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformCctorMechanicalDifferentialTests`, `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttributeDifferentialTests`
+- **Quire:** `src/Quire.Calculation.Core`; tests: `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests`, `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformCctorMechanicalDifferentialTests`, `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttribute_MechanicalDifferentialTests`
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
@@ -22,4 +22,4 @@ parameter and field), comparing the result, the arguments and the target's field
 
 MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests`.
 
-**Observed** (`PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttributeDifferentialTests`): calls the private helper directly with signed and whitespace-padded integers, missing and malformed attributes, overflow, and a null node.
+**Observed** (`PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttribute_MechanicalDifferentialTests`): calls the private helper directly with signed and whitespace-padded integers, missing and malformed attributes, overflow, and a null node.

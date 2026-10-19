@@ -21,7 +21,7 @@ public partial class ResultNodeToXmcdTransform
     [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests")]
     private void WritePlaceholderXml() => Writer.WriteElementString("ml", "placeholder", "http://schemas.mathsoft.com/math50", string.Empty);
 
-    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests")]
     private void WriteMatrixXml(IMatrixResultNode matrix)
     {
         Writer.WriteStartElement("ml", "matrix", "http://schemas.mathsoft.com/math50");
@@ -42,7 +42,7 @@ public partial class ResultNodeToXmcdTransform
         Writer.WriteEndElement();
     }
 
-    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests")]
     private void WriteDisplayMatrixXml(IDisplayMatrixResultNode displayMatrix)
     {
         if (displayMatrix.Viewport.Size.Equals(displayMatrix.Size))
