@@ -12,23 +12,11 @@ namespace Quire.Calculation;
 internal partial class MatrixValueDataAccessorWrapper : global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMatrixValueDataAccessor AccessorProxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public MatrixValueDataAccessorWrapper(global::Quire.Automation.IMatrixValueDataAccessor accessor) { }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.PlainDataTypes GetEntireMatrixDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.PlainDataTypes> GetColumnsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.List<global::Quire.Calculation.Core.PlainDataTypes> ConvertPlainDataTypeList(global::System.Collections.Generic.IList<global::Quire.Automation.PlainDataTypes> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::System.Collections.IList> GetColumnsPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetFirstNonPlainDataColumnIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetFirstNonPlainDataRowIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.PlainDataTypes> GetRowsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::System.Collections.IList> GetRowsPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
