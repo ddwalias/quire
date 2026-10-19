@@ -229,6 +229,15 @@ public class MatValCollectionDifferentialTests
             [typeof(global::Quire.Mpl.Run.Function), typeof(object[])],
             [qFn2, new object[] { qMat1, qMat3 }], [mFn2, new object[] { mMat1, mMat3 }]);
 
+        // Case C2: unequal matrix columns (2x2 vs 2x3) -> throws "unequal matrix dimensions"
+        var qMatCols = New(QMat, 2, 3, true);
+        var mMatCols = New(MMat, 2, 3, true);
+        Call(qMatCols, "Fill", "qC2", 0, 1, 6);
+        Call(mMatCols, "Fill", "qC2", 0, 1, 6);
+        CompareStatic("vectorize unequal columns raises", "vectorize",
+            [typeof(global::Quire.Mpl.Run.Function), typeof(object[])],
+            [qFn2, new object[] { qMat1, qMatCols }], [mFn2, new object[] { mMat1, mMatCols }]);
+
         // Case D: matrix and scalar mixed
         CompareStatic("vectorize matrix and scalar", "vectorize",
             [typeof(global::Quire.Mpl.Run.Function), typeof(object[])],
@@ -267,5 +276,17 @@ public class MatValCollectionDifferentialTests
         CompareStatic("vectorize empty 0x0 matrix", "vectorize",
             [typeof(global::Quire.Mpl.Run.Function), typeof(object[])],
             [qFnStr, new object[] { qEmpty }], [mFnStr, new object[] { mEmpty }]);
+
+        // Case I: polymorphic result with non-null dimension, covering result.m_dim != null branch
+        Func<object, object> mixedDim = x =>
+        {
+            double val = Convert.ToDouble(x);
+            Side side = x.GetType().Assembly.GetName().Name?.StartsWith("mplrun", StringComparison.OrdinalIgnoreCase) == true ? Side.Mathcad : Side.Quire;
+            return val == 1.0 ? side.Num(1.0, 0, "L") : side.Num(2.0, 0, "T");
+        };
+        var (qFnDim, mFnDim) = FunctionPair(mixedDim, 1);
+        CompareStatic("vectorize polymorphic with existing dimension", "vectorize",
+            [typeof(global::Quire.Mpl.Run.Function), typeof(object[])],
+            [qFnDim, new object[] { qReal }], [mFnDim, new object[] { mReal }]);
     }
 }

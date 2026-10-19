@@ -6,7 +6,7 @@
 - **Branch:** `mirror/b-matval-collections`
 - **Status:** Complete implementation and differential verification.
 - **Scope:**
-  - `MatVal.vectorize(Function, object[])` (0x06000522): Remediated from Tier A structure mismatch to exact IL match (`quick_check` exact IL) and 100% verified across 8 differential test cases (scalar application, 2x2 element-wise matching, unequal dimension exception, mixed matrix/scalar, arity assertion exception, non-polymorphic to polymorphic result identity dimension promotion, non-polymorphic to non-polymorphic result, and 0x0 empty matrix loop bypass).
+  - `MatVal.vectorize(Function, object[])` (0x06000522): Remediated from Tier A structure mismatch to exact IL match (`quick_check` exact IL) and 100% verified across 10 differential test cases (scalar application, 2x2 element-wise matching, unequal row dimension exception, unequal column dimension exception, mixed matrix/scalar, arity assertion exception, non-polymorphic to polymorphic result identity dimension promotion, polymorphic results with pre-existing dimension, non-polymorphic to non-polymorphic result, and 0x0 empty matrix loop bypass).
   - `MatVal.MakeVector0(object[])` (0x060004a0), `MatVal.PushVectorArg(object)` (0x060004ae), `MatVal.map(F<object, object>, DimVal)` (0x06000485), `MatVal.FillThis(object, int, int, int)` (0x06000525), `MatVal.FillThisPtrs(object, int, int, int)` (0x06000527), `MatVal.FillArr(double[], double, int, int, int)` (0x06000532): All verified exact IL matches.
   - Direct differential comparisons added in `tests/Quire.Differential.Tests/MatValCollectionDifferentialTests.cs`:
     - `Collection_factories_push_and_shape`: `reserve(int, int)` (2x3), `Singleton` (string & NumVal), `Pair` (strings & NumVals), `Triple` (strings), `Push(object)` (strings & NumVal), `PushRaw1(object)`, `PushRaw(object)` (string), `PushRaw(int)` (42), `PushVectorArg(object)` (valid Cons list and non-Cons invalid argument error path), `SetShape()` and `SetShape1()`.
@@ -17,6 +17,7 @@
   - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValCollectionDifferentialTests'` (3/3 passed: 0 failed, 0 skipped against Mathcad Prime in Release mode)
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed)
   - `python tools/validation/quick_check.py --method-type Quire.Mcd.MatVal` (Advisory result: PASS, 0 uncovered, 0 missing in verified scope)
+  - `integrity.lint('.')` (0 findings)
 - **Gate status:**
   - Ready for merge gate landing on updated `main`.
 
