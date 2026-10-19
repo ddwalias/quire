@@ -133,7 +133,7 @@ def main():
         output.mkdir(parents=True, exist_ok=False)
     output.mkdir(parents=True, exist_ok=True)
     tool_dir = Path(tempfile.mkdtemp(prefix="quire-quick-audit-tool-"))
-    assembly_dir = TEST_PROJECT.parent / "bin" / "Debug" / "net10.0"
+    assembly_dir = TEST_PROJECT.parent / "bin" / "Release" / "net10.0"
     structure_dir = STRUCTURE_PROJECT.parent / "bin" / "Release" / "net10.0"
     atexit.register(shutil.rmtree, tool_dir, ignore_errors=True)
     test_assembly = assembly_dir / "Quire.Differential.Tests.dll"
@@ -144,7 +144,7 @@ def main():
 
     global_json = (ROOT / "global.json").read_bytes() if (ROOT / "global.json").is_file() else b"{}\n"
     with validate.sdk_directory(global_json) as sdk:
-        for project, config, out in ((METHOD_AUDIT, "Release", tool_dir), (TEST_PROJECT, None, None),
+        for project, config, out in ((METHOD_AUDIT, "Release", tool_dir), (TEST_PROJECT, "Release", None),
                                      (STRUCTURE_PROJECT, "Release", None)):
             command = [dotnet, "build", str(project), *(["-c", config] if config else []), *BUILD_FLAGS]
             if out is not None:

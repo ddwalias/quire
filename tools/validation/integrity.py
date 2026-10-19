@@ -43,8 +43,9 @@ SRC_RULES = [
         r'\b(?:ModuleInitializer|Xunit|MethodComparison|GetMethodBody|GetILAsByteArray|GetAssemblies|'
         r'(?:Get|Expand)EnvironmentVariables?|EnvironmentVariables)\b|QUIRE_(?!MIRROR_)|Quire\.Differential')),
 ]
-# Structure is compared on a Release build, tests, coverage and mutation on Debug: both must compile the same code.
-# MethodAudit refuses [Conditional] code and Debug and Contract calls from the build itself.
+# Structure and runtime Mathcad comparisons are checked against Release. The recorded comparison, coverage and
+# mutation passes use Debug so their method tokens and PDB line mappings share one build. MethodAudit refuses
+# [Conditional] code and Debug and Contract calls from the build itself.
 CONFIGURATION_RULES = [('configuration-dependent code', re.compile(r'^\s*#\s*(?:if|elif)\b.*\b(?:DEBUG|RELEASE)\b'))]
 TESTS = 'tests/Quire.Differential.Tests'
 # C# ends a line comment at any of its line terminators, so code after one cannot hide as comment.

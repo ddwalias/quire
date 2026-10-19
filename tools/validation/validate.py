@@ -779,6 +779,43 @@ def main():
             item.update(read_trx(trx, differential and args.allow_differential_skips))
             print(f"{project}: {item['passed']} passed / {item['failed']} failed / {item['skipped']} skipped", flush=True)
             if differential:
+                # The recorded run below uses the Debug assembly because its PDB and method bodies drive coverage
+                # and mutation. Also run every Mathcad comparison against the optimized Quire assembly: Mathcad's
+                # runtime behavior and the IL audit both use Release. Do not record cases from this pass; its tokens
+                # belong to a different build and are not used by the Debug coverage inventory.
+                if args.profile == "focused":
+                    release_dir = structure_dir
+                    release_assembly = release_dir / (project + ".dll")
+                    if not release_assembly.is_file():
+                        raise ValueError(f"{project}: Release differential assembly not found ({release_assembly})")
+                    release_results = output / "release-results"
+                    release_results.mkdir(exist_ok=True)
+                    release_trx = release_results / f"{project}.trx"
+                    release_env = dict(env)
+                    release_env.pop("QUIRE_METHOD_CASES", None)
+                    release_env.pop("QUIRE_VALIDATION_RUN", None)
+                    release_command = [args.dotnet, to_dotnet(release_assembly), "--logger",
+                                       f"trx;LogFileName={release_trx.name}", "--results-directory",
+                                       to_dotnet(release_results)]
+                    if args.diff_filter:
+                        release_command += ["--filter", args.diff_filter]
+                    release_item = {"project": project, "configuration": "Release",
+                                    "command": release_command, "trx": str(release_trx)}
+                    report["release_differential"] = release_item
+                    print(f"Running {project} against Mathcad with Release Quire; log: "
+                          f"{output / (project + '.release.log')}", flush=True)
+                    with (output / f"{project}.release.log").open("w") as log, sdk_directory(global_json) as sdk:
+                        release_result = subprocess.run(release_command, cwd=sdk, env=release_env,
+                                                        stdout=log, stderr=subprocess.STDOUT,
+                                                        timeout=args.timeout)
+                    release_item["exit_code"] = release_result.returncode
+                    seal.verify(f"{project} Release differential run")
+                    if release_result.returncode:
+                        raise ValueError(f"{project}: Release differential tests exited "
+                                         f"{release_result.returncode}; inspect its Release log")
+                    release_item.update(read_trx(release_trx, args.allow_differential_skips))
+                    print(f"{project} Release: {release_item['passed']} passed / "
+                          f"{release_item['failed']} failed / {release_item['skipped']} skipped", flush=True)
                 # Coverage instrumentation rewrites the module, so recorded method tokens would be wrong:
                 # the same tests run again, unrecorded, only to measure lines and branches.
                 env.pop("QUIRE_METHOD_CASES", None)
@@ -798,7 +835,8 @@ def main():
                 if result.returncode:
                     raise ValueError(f"{project}: coverage run exited {result.returncode}; inspect its log")
                 read_trx(coverage_dir / coverage_trx.name, args.allow_differential_skips)
-        if any(p["skipped"] for p in report["projects"]):
+        if (any(p["skipped"] for p in report["projects"])
+                or report.get("release_differential", {}).get("skipped", 0)):
             return 2
         from method_coverage import audit, passed_tests
         if digest_outputs(tool_dir, structure_dir) != sealed_digest:

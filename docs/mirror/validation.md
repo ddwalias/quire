@@ -178,8 +178,10 @@ The same run also checks each reconstruction against the original IL:
   `castclass`, `box`, `newarr`, `ldtoken`), constants (sorted; `0`/`1` ignored), exception regions and catch types,
   conditional-branch and switch-target counts, `throw`/`rethrow` counts. Quire types/methods are named after their
   Mathcad binding; locals, nops, stack shuffling, branch encoding and compiler-generated names are ignored, and the
-  structure is read from an optimized (Release) build, like the original; coverage, mutation and body hashes use the
-  Debug build. A difference makes the method `structure_mismatch` with the first differing item. Only a
+  structure is read from an optimized (Release) build, like the original; the gate also runs the differential test
+  suite against Mathcad with the Release Quire build. The recorded comparison, coverage, mutation and body hashes use
+  the Debug build so test records, method tokens and PDB lines refer to the same assembly. A difference makes the
+  method `structure_mismatch` with the first differing item. Only a
   `Deviation` status whose accepted ledger row names the member may differ (see Status below). A matching structure
   never substitutes for a direct comparison.
 - **Lint** (`integrity.json`): hand-written `src/` code (any `.cs` file, whatever its case) and agent-writable
