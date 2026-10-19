@@ -659,8 +659,8 @@ def main():
             parser.error(str(error))
     if args.profile == "phase" and args.method_type:
         parser.error("phase validation must audit every method; omit --method-type")
-    if args.profile == "phase" and args.allow_differential_skips:
-        parser.error("phase validation requires differential execution; omit --allow-differential-skips")
+    if args.profile == "phase" and args.allow_differential_skips and not args.diff_filter:
+        parser.error("phase validation permits differential skips only with a candidate --diff-filter")
     if args.allow_phase_differential_failures and args.profile != "phase":
         parser.error("--allow-phase-differential-failures requires --profile phase")
     # dotnet runs from a new directory each time (see sdk_directory), so every path it is given must be absolute.
