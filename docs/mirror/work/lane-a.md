@@ -2,10 +2,11 @@
 
 ## Active handoff
 
-SCons, SList, Utilities and Tok are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged MplSignature, Rational, NumVal, RngVal, Type, Dim and DimVal branches each had an incomplete gate
-run before the Release assembly lookup was fixed at `a2b91391`. Those runs stopped before method audit and ratchet;
-treat them as unvalidated and rerun the full gate before merge. Each branch owns its source files.
+SCons, SList, Utilities, Tok and MplSignature are merged into current `origin/main`; their entries below are historical receipts. The
+remaining unmerged Rational, NumVal, RngVal, Type, Dim and DimVal branches each had an incomplete gate run before the
+Release assembly lookup was fixed at `a2b91391`. Those runs stopped before method audit and ratchet; treat them as
+unvalidated and rerun the full gate before merge. Each branch owns its source files.
+
 
 
 No unowned Lane A Tier A file scope remains in the current inventory. The remaining method gaps are in live Lane A
@@ -1378,3 +1379,7 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 - `Tok.walk_pattern(MplEnv)` and `Tok.walk_expression(MplEnv)` were matched to Mathcad Release IL in `Sexpr.cs`; the existing direct `SexprDifferentialTests` cover both methods. The rebase onto `57c3bc67` changed no source hunks.
 - Required Release differential command: `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~SexprDifferentialTests'` — 10 passed, 0 failed, 0 skipped.
 - Full gate passed and merged to `origin/main` at `decf112dc9b862631f8e12a1fbea587df2216fa0`, validated on base `57c3bc67b03df808bbeaa733d616977dcd230415`. Report: `%LOCALAPPDATA%\Temp\quire-gate-results-3n8wjpi4\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-3n8wjpi4\run\summary.json`. Harness 97, Mpl 188, Debug Differential 392 and Release Differential 392 passed. Audit compared 1,399 methods (1,543 exact, 80 structure-only); coverage: 298 missing, 103 structure mismatches, 34 uncovered, 41 verified unsupported. Lint 0, integrity complete, ratchet passed. Mutation killed 26/26; no survivors.
+## MplSignature.GetHashCode Release IL shape (`mirror/a-mpl-signature-gethashcode`)
+
+- Split the parameter-count contribution into the same multiply and add sequence used by Mathcad. Original evidence and method token are recorded in [Mpl.Run.MplSignature](../evidence/Mpl.Run.MplSignature.md); required Release `MplRunHelpersDifferentialTests` passed 6/6 with Mathcad.
+- Full gate passed and merged to `origin/main` at `5b54504d8055`, validated on base `148b9ec6387de53442e45c292a2abc76b117289d`. Command: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-mpl-signature-gethashcode --jobs 14`. Report: `%LOCALAPPDATA%\Temp\quire-gate-results-ameahoj0\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-ameahoj0\run\summary.json`. Harness 97, Mpl 188, Debug Differential 392 and Release Differential 392 passed. Audit compared 1,399 methods (1,543 exact, 80 structure-only); coverage: 298 missing, 103 structure mismatches, 34 uncovered, 41 verified unsupported. Lint 0, integrity complete, ratchet passed. Mutation killed 25/25; two timeout retries completed, no survivors.
