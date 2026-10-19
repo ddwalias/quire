@@ -1153,12 +1153,17 @@ class LaneMergeTests(unittest.TestCase):
             clone = t / 'clone'
             clone.mkdir()
             commit = ['-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q', '--allow-empty', '-m']
-            for command in (['init', '-q', '-b', 'main'], [*commit, 'base'], ['branch', 'b'], [*commit, 'moved'],
+            subprocess.run(['git', 'init', '-q', '-b', 'main'], cwd=clone, check=True, capture_output=True)
+            (clone / 'tools/validation').mkdir(parents=True)
+            (clone / 'tools/validation/protected.txt').write_text('docs/mirror/unreachable-lines.txt\n')
+            subprocess.run(['git', 'add', 'tools/validation/protected.txt'], cwd=clone, check=True, capture_output=True)
+            subprocess.run(['git', *commit, 'base'], cwd=clone, check=True, capture_output=True)
+            for command in (['branch', 'b'], [*commit, 'moved'],
                             ['checkout', '-q', '-b', 'other'], ['worktree', 'add', '-q', str(main), 'main'],
                             ['worktree', 'add', '-q', str(lane), 'b'],
                             *([] if main_checked_out else [['-C', str(main), 'checkout', '-q', '--detach']])):
                 subprocess.run(['git', *command], cwd=clone, check=True, capture_output=True)
-            (main / 'tools/validation').mkdir(parents=True)
+            (main / 'tools/validation').mkdir(parents=True, exist_ok=True)
             (main / 'tools/validation/merge_gate.py').write_text(self.GATE)
             for mode, sequence in codes.items():
                 (t / f"codes--{mode.replace('_', '-')}").write_text(sequence)
