@@ -36,6 +36,11 @@ public sealed class MatDimOperationsDifferentialTests
     private const int Eq2BCDimToken = 0x0600063e;
     private const int Eq2BRcDimToken = 0x0600063f;
     private const int Eq2BCrazyDimToken = 0x06000640;
+    private const int OnErrorStringDimUIntToken = 0x06000641;
+    private const int OnErrorDimUIntToken = 0x06000642;
+    private const int OnErrorStringDimIntIntUIntToken = 0x06000643;
+    private const int OnErrorStringDimIntUIntToken = 0x06000644;
+    private const int PickLoserToken = 0x06000645;
     private const int TransposeVirtualToken = 0x06000646;
     private const int InvertVirtualToken = 0x06000647;
     private const int DetVirtualToken = 0x06000648;
@@ -618,6 +623,159 @@ public sealed class MatDimOperationsDifferentialTests
         MethodComparison.Compare("MatDim.Push.empty", Contract,
             qPush, null, [Side.Quire.D("L"), qDimArr0],
             mPush, null, [Side.Mathcad.D("L"), mDimArr0],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+    }
+
+    [SkippableFact]
+    public void Error_paths_and_pick_loser_match_mathcad()
+    {
+        Runtime.Sync();
+
+        var qMatDim = MatDim(Side.Quire);
+        var mMatDim = MatDim(Side.Mathcad);
+
+        var qOnErrorStringDimUInt = qMatDim.GetMethod("OnError", DeclaredStatic, null, [typeof(string), Side.Quire.Dim, typeof(uint)], null)!;
+        var mOnErrorStringDimUInt = mMatDim.GetMethod("OnError", DeclaredStatic, null, [typeof(string), Side.Mathcad.Dim, typeof(uint)], null)!;
+        Assert.Equal(OnErrorStringDimUIntToken, mOnErrorStringDimUInt.MetadataToken);
+        Assert.Equal(MathcadMvid, mOnErrorStringDimUInt.Module.ModuleVersionId);
+
+        var qOnErrorDimUInt = qMatDim.GetMethod("OnError", DeclaredStatic, null, [Side.Quire.Dim, typeof(uint)], null)!;
+        var mOnErrorDimUInt = mMatDim.GetMethod("OnError", DeclaredStatic, null, [Side.Mathcad.Dim, typeof(uint)], null)!;
+        Assert.Equal(OnErrorDimUIntToken, mOnErrorDimUInt.MetadataToken);
+        Assert.Equal(MathcadMvid, mOnErrorDimUInt.Module.ModuleVersionId);
+
+        var qOnErrorStringDimIntIntUInt = qMatDim.GetMethod("OnError", DeclaredStatic, null, [typeof(string), Side.Quire.Dim, typeof(int), typeof(int), typeof(uint)], null)!;
+        var mOnErrorStringDimIntIntUInt = mMatDim.GetMethod("OnError", DeclaredStatic, null, [typeof(string), Side.Mathcad.Dim, typeof(int), typeof(int), typeof(uint)], null)!;
+        Assert.Equal(OnErrorStringDimIntIntUIntToken, mOnErrorStringDimIntIntUInt.MetadataToken);
+        Assert.Equal(MathcadMvid, mOnErrorStringDimIntIntUInt.Module.ModuleVersionId);
+
+        var qOnErrorStringDimIntUInt = qMatDim.GetMethod("OnError", DeclaredStatic, null, [typeof(string), Side.Quire.Dim, typeof(int), typeof(uint)], null)!;
+        var mOnErrorStringDimIntUInt = mMatDim.GetMethod("OnError", DeclaredStatic, null, [typeof(string), Side.Mathcad.Dim, typeof(int), typeof(uint)], null)!;
+        Assert.Equal(OnErrorStringDimIntUIntToken, mOnErrorStringDimIntUInt.MetadataToken);
+        Assert.Equal(MathcadMvid, mOnErrorStringDimIntUInt.Module.ModuleVersionId);
+
+        var qPickLoser = qMatDim.GetMethod("PickLoser", DeclaredStatic, null, [qMatDim, qMatDim, typeof(uint)], null)!;
+        var mPickLoser = mMatDim.GetMethod("PickLoser", DeclaredStatic, null, [mMatDim, mMatDim, typeof(uint)], null)!;
+        Assert.Equal(PickLoserToken, mPickLoser.MetadataToken);
+        Assert.Equal(MathcadMvid, mPickLoser.Module.ModuleVersionId);
+
+        var qEqMatDim = qMatDim.GetMethod("Eq", DeclaredStatic, null, [qMatDim, qMatDim, typeof(uint)], null)!;
+        var mEqMatDim = mMatDim.GetMethod("Eq", DeclaredStatic, null, [mMatDim, mMatDim, typeof(uint)], null)!;
+
+        // 1. OnError overloads direct comparison
+        MethodComparison.Compare("MatDim.OnError.string_dim", Contract,
+            qOnErrorStringDimUInt, null, ["custom error", Side.Quire.D("L"), 3u],
+            mOnErrorStringDimUInt, null, ["custom error", Side.Mathcad.D("L"), 3u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("MatDim.OnError.dim", Contract,
+            qOnErrorDimUInt, null, [Side.Quire.D("T"), 5u],
+            mOnErrorDimUInt, null, [Side.Mathcad.D("T"), 5u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("MatDim.OnError.string_dim_i", Contract,
+            qOnErrorStringDimIntUInt, null, ["bad vector element dimension", Side.Quire.D("N"), 2, 7u],
+            mOnErrorStringDimIntUInt, null, ["bad vector element dimension", Side.Mathcad.D("N"), 2, 7u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("MatDim.OnError.string_dim_i_j", Contract,
+            qOnErrorStringDimIntIntUInt, null, ["bad matrix element dimension", Side.Quire.D("v"), 1, 2, 9u],
+            mOnErrorStringDimIntIntUInt, null, ["bad matrix element dimension", Side.Mathcad.D("v"), 1, 2, 9u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 2. Vector dimension mismatches (PickLoser directly and through Eq)
+        // Vector mismatch at index 0
+        object qVec0Loser = MakeRDim(Side.Quire, ["T", "L"], 1);
+        object mVec0Loser = MakeRDim(Side.Mathcad, ["T", "L"], 1);
+        object qVec0Winner = MakeRDim(Side.Quire, ["L", "L"], 1);
+        object mVec0Winner = MakeRDim(Side.Mathcad, ["L", "L"], 1);
+
+        MethodComparison.Compare("MatDim.PickLoser.vector.idx0", Contract,
+            qPickLoser, null, [qVec0Loser, qVec0Winner, 11u],
+            mPickLoser, null, [mVec0Loser, mVec0Winner, 11u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("MatDim.Eq.vector.idx0", Contract,
+            qEqMatDim, null, [qVec0Loser, qVec0Winner, 11u],
+            mEqMatDim, null, [mVec0Loser, mVec0Winner, 11u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // Vector mismatch at index 1
+        object qVec1Loser = MakeRDim(Side.Quire, ["L", "T", "N"], 1);
+        object mVec1Loser = MakeRDim(Side.Mathcad, ["L", "T", "N"], 1);
+        object qVec1Winner = MakeRDim(Side.Quire, ["L", "L", "N"], 1);
+        object mVec1Winner = MakeRDim(Side.Mathcad, ["L", "L", "N"], 1);
+
+        MethodComparison.Compare("MatDim.PickLoser.vector.idx1", Contract,
+            qPickLoser, null, [qVec1Loser, qVec1Winner, 12u],
+            mPickLoser, null, [mVec1Loser, mVec1Winner, 12u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // Vector mismatch at index 2
+        object qVec2Loser = MakeRDim(Side.Quire, ["L", "L", "T"], 1);
+        object mVec2Loser = MakeRDim(Side.Mathcad, ["L", "L", "T"], 1);
+        object qVec2Winner = MakeRDim(Side.Quire, ["L", "L", "L"], 1);
+        object mVec2Winner = MakeRDim(Side.Mathcad, ["L", "L", "L"], 1);
+
+        MethodComparison.Compare("MatDim.PickLoser.vector.idx2", Contract,
+            qPickLoser, null, [qVec2Loser, qVec2Winner, 13u],
+            mPickLoser, null, [mVec2Loser, mVec2Winner, 13u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 3. Matrix dimension mismatches (PickLoser directly and through Eq)
+        // Matrix mismatch at (0, 1)
+        object qMat01Loser = MakeCDim(Side.Quire, ["L", "T"], 2);
+        object mMat01Loser = MakeCDim(Side.Mathcad, ["L", "T"], 2);
+        object qMat01Winner = MakeCDim(Side.Quire, ["L", "L"], 2);
+        object mMat01Winner = MakeCDim(Side.Mathcad, ["L", "L"], 2);
+
+        MethodComparison.Compare("MatDim.PickLoser.matrix.r0c1", Contract,
+            qPickLoser, null, [qMat01Loser, qMat01Winner, 21u],
+            mPickLoser, null, [mMat01Loser, mMat01Winner, 21u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("MatDim.Eq.matrix.r0c1", Contract,
+            qEqMatDim, null, [qMat01Loser, qMat01Winner, 21u],
+            mEqMatDim, null, [mMat01Loser, mMat01Winner, 21u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // Matrix mismatch at (1, 0)
+        object qMat10Loser = MakeRDim(Side.Quire, ["L", "T"], 2);
+        object mMat10Loser = MakeRDim(Side.Mathcad, ["L", "T"], 2);
+        object qMat10Winner = MakeRDim(Side.Quire, ["L", "L"], 2);
+        object mMat10Winner = MakeRDim(Side.Mathcad, ["L", "L"], 2);
+
+        MethodComparison.Compare("MatDim.PickLoser.matrix.r1c0", Contract,
+            qPickLoser, null, [qMat10Loser, qMat10Winner, 22u],
+            mPickLoser, null, [mMat10Loser, mMat10Winner, 22u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 4. Final mismatch path ("array unit mismatch")
+        // Matrix where element dimensions match but eq_b returns false (r_dim vs c_dim both with uniform "L" entries)
+        object qMatFallthroughLoser = MakeRDim(Side.Quire, ["L", "L"], 2);
+        object mMatFallthroughLoser = MakeRDim(Side.Mathcad, ["L", "L"], 2);
+        object qMatFallthroughWinner = MakeCDim(Side.Quire, ["L", "L"], 2);
+        object mMatFallthroughWinner = MakeCDim(Side.Mathcad, ["L", "L"], 2);
+
+        MethodComparison.Compare("MatDim.PickLoser.matrix.fallthrough", Contract,
+            qPickLoser, null, [qMatFallthroughLoser, qMatFallthroughWinner, 31u],
+            mPickLoser, null, [mMatFallthroughLoser, mMatFallthroughWinner, 31u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("MatDim.Eq.matrix.fallthrough", Contract,
+            qEqMatDim, null, [qMatFallthroughLoser, qMatFallthroughWinner, 31u],
+            mEqMatDim, null, [mMatFallthroughLoser, mMatFallthroughWinner, 31u],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // Vector where element dimensions match but eq_b returns false (r_dim(2,1) vs uniform_dim(2,1))
+        object qVecFallthroughLoser = MakeRDim(Side.Quire, ["L", "L"], 1);
+        object mVecFallthroughLoser = MakeRDim(Side.Mathcad, ["L", "L"], 1);
+        object qVecFallthroughWinner = MakeUniform(Side.Quire, "L", 2, 1);
+        object mVecFallthroughWinner = MakeUniform(Side.Mathcad, "L", 2, 1);
+
+        MethodComparison.Compare("MatDim.PickLoser.vector.fallthrough", Contract,
+            qPickLoser, null, [qVecFallthroughLoser, qVecFallthroughWinner, 32u],
+            mPickLoser, null, [mVecFallthroughLoser, mVecFallthroughWinner, 32u],
             v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
     }
 }
