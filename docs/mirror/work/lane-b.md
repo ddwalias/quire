@@ -2,24 +2,23 @@
 
 ## Active handoff
 
-### Active batch: MatDim error paths and PickLoser
-- **Branch:** `mirror/b-matdim-error-paths`
+### Active batch: Function closure cluster
+- **Branch:** `mirror/b-function-closure`
 - **Scope:**
-  - `Mcd.MatDim.PickLoser(MatDim, MatDim, uint)`: token 0x06000645. Aligned IL structure with Mathcad Release IL (two-branch scan: column vector scanning rows with `OnError(..., i, a)`, matrix scanning rows and columns with `OnError(..., j, k, a)`, and terminal `AppException.Raise("array unit mismatch", param)` fallthrough path).
-  - `Mcd.MatDim.OnError(string, Dim, uint)`: token 0x06000641.
-  - `Mcd.MatDim.OnError(Dim, uint)`: token 0x06000642.
-  - `Mcd.MatDim.OnError(string, Dim, int, int, uint)`: token 0x06000643.
-  - `Mcd.MatDim.OnError(string, Dim, int, uint)`: token 0x06000644.
-  - `Mcd.MatDim.Eq(MatDim, MatDim, uint)`: token 0x06000617 (mismatch dispatches to `PickLoser`).
+  - `Mpl.Run.Fn_papp` (tokens 0x0600025e, 0x0600025f, 0x06000260; fields 0x04000083, 0x04000084).
+  - `Mpl.Run.MethFunction` (tokens 0x06000271, 0x06000272, 0x06000273, 0x06000274; fields 0x04000088, 0x04000089, 0x0400008a).
+  - `Mpl.Run.CloDblFunction` (field `m_clo` 0x04000082, .ctor 0x0600025d).
+  - `Mpl.Run.CloIntFunction` (field `m_clo` 0x04000081, .ctor 0x0600025c).
+  - `Mpl.Run.CloObjFunction` (field `m_clo` 0x04000080, .ctor 0x0600025b).
 - **Evidence:**
-  - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
+  - [Mpl.Run.Fn_papp](../evidence/Mpl.Run.Fn_papp.md)
+  - [Mpl.Run.MethFunction](../evidence/Mpl.Run.MethFunction.md)
+  - [Mpl.Run.CloDblFunction](../evidence/Mpl.Run.CloDblFunction.md)
+  - [Mpl.Run.CloIntFunction](../evidence/Mpl.Run.CloIntFunction.md)
+  - [Mpl.Run.CloObjFunction](../evidence/Mpl.Run.CloObjFunction.md)
 - **Validation:**
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
-  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
-- **Gate status:**
-  - Ready for merge gate landing on updated `main` (commit `a2b91391`).
-
-
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj` (188/188 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~FnPappDifferentialTests|FullyQualifiedName~MethFunctionDifferentialTests'` (4/4 passed)
 
 ### Maintainer-gated handoff: Engine factory and interfaces batch
 - **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
@@ -95,6 +94,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | Function core dispatch | Merged to main at `f29abb6` (`9549041`). `Function.clo<CLO>(CLO)`, `Function.clovec<CLO>(CLO[])`, `Function.appVec<R>(out R, object[])`; exact IL; 28 direct comparisons. |
 | Fn_clo partial closure | Merged to main at `aaa1a47` (`edc808f`). `Fn_clo<CLO>` 21 methods (`.ctor` x2, `Fixpoint`, `Name`, `invVec`, `inv` x16); exact IL; 21 direct comparisons. |
 | FnCompose function composition | Merged to main at `bf985ce`. Seven methods; exact IL; seven direct comparisons. |
+| MatDim error paths and PickLoser | Merged to main at `69327dc` (`2bec90c`). Aligned PickLoser IL structure; 10 direct differential comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).

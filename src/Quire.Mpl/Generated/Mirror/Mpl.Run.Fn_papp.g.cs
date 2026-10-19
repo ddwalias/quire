@@ -11,14 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Fn_papp, mplrun")]
 public partial class Fn_papp : global::Quire.Mpl.Run.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    private object[] m_args;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Mpl.Run.Function m_f;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => base.Name; }
-    [global::Quire.Mirror.MirrorStub]
-    public Fn_papp(global::Quire.Mpl.Run.Function f, object[] args) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
