@@ -63,10 +63,10 @@
   Quire.Engine.Factory M public .ctor`0() -> System.Void
   Quire.Engine.Factory M public AppendPath`0(System.String) -> System.Void
   Quire.Engine.Factory M public NewFactory`0() -> Quire.Engine.IFactory
-  Quire.Engine.IBuiltin M public virtual GetBuiltins`0() -> System.Collections.IList
-  Quire.Engine.IBuiltin M public virtual GetVariable`0(System.String) -> System.Object
-  Quire.Engine.IBuiltin M public virtual SetVariable`0(System.String,System.Object) -> System.Void
-  Quire.Engine.IBuiltin M public virtual UnsetVariable`0(System.String) -> System.Void
+  Quire.Engine.IBuiltin M public abstract GetBuiltins`0() -> System.Collections.IList
+  Quire.Engine.IBuiltin M public abstract GetVariable`0(System.String) -> System.Object
+  Quire.Engine.IBuiltin M public abstract SetVariable`0(System.String,System.Object) -> System.Void
+  Quire.Engine.IBuiltin M public abstract UnsetVariable`0(System.String) -> System.Void
   Quire.Engine.IEngine E public abstract Quire.Engine.BooleanCallback OnBusy
   Quire.Engine.IEngine E public abstract Quire.Engine.BooleanCallback OnUpToDate
   Quire.Engine.IEngine M public abstract AddAfter`0(System.Int32,System.String,System.Int32,System.Int32) -> System.Int32
@@ -127,7 +127,7 @@
   Quire.Engine.IEngine M public virtual PeekValue`0(System.Int32,System.Int32,System.Boolean) -> System.Collections.IDictionary
   Quire.Engine.IEngine M public virtual PermitEventCallbacks`0(System.Int32,System.Boolean) -> System.Void
   Quire.Engine.IEngine M public virtual ProtectRegionValue`0(System.Int32) -> System.Void
-  Quire.Engine.IEngine M public virtual RecalculateAll`0() -> System.Void
+  Quire.Engine.IEngine M public abstract RecalculateAll`0() -> System.Void
   Quire.Engine.IEngine M public virtual RegisterComponent`0(Quire.Engine.IMathcadComponent) -> System.Int32
   Quire.Engine.IEngine M public virtual RegisterComponent`0(Quire.Engine.IMathcadComponent,System.Int32) -> System.Int32
   Quire.Engine.IEngine M public virtual SetNumThreads`0(System.Int32) -> System.Void
@@ -142,19 +142,19 @@
   Quire.Engine.IEngine M public virtual WaitUpToDateWithTimeout`0(System.Int32) -> System.Void
   Quire.Engine.IEngine M public virtual WaitUpToDate`0() -> System.Void
   Quire.Engine.IEngine P IsBusy : System.Boolean abstract get:public
-  Quire.Engine.IEngine P IsUpToDate : System.Boolean virtual get:public
-  Quire.Engine.IEnginePriv M public virtual Initialize`0(System.String) -> System.Void
-  Quire.Engine.IEngineUnstable M public virtual GetNodeType`0(System.Int32) -> System.Int32
+  Quire.Engine.IEngine P IsUpToDate : System.Boolean abstract get:public
+  Quire.Engine.IEnginePriv M public abstract Initialize`0(System.String) -> System.Void
+  Quire.Engine.IEngineUnstable M public abstract GetNodeType`0(System.Int32) -> System.Int32
   Quire.Engine.IFactory M public abstract GetEngines`0() -> System.Collections.ICollection
   Quire.Engine.IFactory M public abstract NewEngine`0() -> Quire.Engine.IEngine
-  Quire.Engine.IFactory M public virtual Initialize`0(System.String) -> System.Void
-  Quire.Engine.IFactory M public virtual VerifyIntegrity`0() -> System.Boolean
+  Quire.Engine.IFactory M public abstract Initialize`0(System.String) -> System.Void
+  Quire.Engine.IFactory M public abstract VerifyIntegrity`0() -> System.Boolean
   Quire.Engine.IFactory P WorkerStackSize : System.Int32 abstract get:public set:public
   Quire.Engine.IFactoryFactory M public abstract NewFactory`0() -> Quire.Engine.IFactory
-  Quire.Engine.IFactoryFactory M public virtual AppendPath`0(System.String) -> System.Void
-  Quire.Engine.IMCEngine M public virtual AddNotify`0(System.IntPtr) -> System.Void
-  Quire.Engine.IMCEngine M public virtual RemoveNotify`0(System.IntPtr) -> System.Void
-  Quire.Engine.IMCEngine M public virtual StartNotify`0() -> System.Void
+  Quire.Engine.IFactoryFactory M public abstract AppendPath`0(System.String) -> System.Void
+  Quire.Engine.IMCEngine M public abstract AddNotify`0(System.IntPtr) -> System.Void
+  Quire.Engine.IMCEngine M public abstract RemoveNotify`0(System.IntPtr) -> System.Void
+  Quire.Engine.IMCEngine M public abstract StartNotify`0() -> System.Void
   Quire.Engine.Logging M public .ctor`0() -> System.Void
   Quire.Engine.Logging M public static LogProperties`0(System.Object,System.String) -> System.Void
   Quire.Engine.NormalizeComponentExceptions F public static System.Object[] s_args
