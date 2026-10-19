@@ -11,6 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.FileOperationsProvider, Ptc.Core")]
 public partial class FileOperationsProvider : global::Quire.IO.IFileOperationsProvider, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Exception CreateDirectory(string directory) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

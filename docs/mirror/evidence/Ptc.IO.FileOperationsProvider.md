@@ -1,11 +1,12 @@
 # Ptc.IO.FileOperationsProvider
 
 - **Original:** `Ptc.Core.dll` 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`
-- **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
+- **Reference:** Tier B bodies from MemberGen (tools/Quire.Tools.MemberGen); Tier A `CreateDirectory` from ilspycmd 11.1.0.9782, `.mirror-cache/Ptc.Core/d60141dbcf757ae6/Ptc.IO.FileOperationsProvider.cs` and `.il`
 - **Quire:** `src/Quire.Core`; tests: `Quire.Differential.Tests.PtcIOFileOperationsProviderMechanicalDifferentialTests`
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
+| `CreateDirectory(string)` | 0x06000f94 | `public Exception CreateDirectory(string directory)`; calls `Directory.CreateDirectory`, returns null on success and the caught `Exception` on failure | Decompiled C# corroborated by IL; direct comparisons cover existing, newly created nested and null paths; Release IL matches Mathcad | Verified |
 | `FileExists(string)` | 0x06000f89 | MemberGen: `File.Exists(fileName)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `DirectoryExists(string)` | 0x06000f8a | MemberGen: `Directory.Exists(path)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `GetFileReader(string)` | 0x06000f8b | MemberGen: `new StreamReader(fileName)` | Mechanical; Release IL equals Mathcad's | Verified |
@@ -25,5 +26,4 @@
 
 ## Test cases
 
-**Observed** (`PtcIOFileOperationsProviderMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
-parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+**Observed** (`PtcIOFileOperationsProviderMechanicalDifferentialTests`): Tier B members are compared on generated inputs (Mechanical). **Observed** (`PtcIOFileOperationsProviderTierAMechanicalDifferentialTests`): `CreateDirectory` is directly compared for existing, created and invalid paths; return values, arguments and target state are compared with Mathcad.

@@ -1,0 +1,11 @@
+# Lane E — Lane 5 Tier A
+
+## Active handoff
+
+- **Active batch:** `Ptc.IO.FileOperationsProvider.CreateDirectory` (`0x06000f94`), the type's only Tier A member. Its 14 Tier B members remain owned by the generated-member batch.
+- **Ownership check:** fetched `origin`; branch base is `f863245e`. The source partial and evidence covered only Tier B members; `CreateDirectory` was still a generated stub with no direct test. Lane D's `Ptc.PersistentData*` scope is excluded.
+- **Reference:** Ptc.Core 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`; ilspycmd 11.1.0.9782. Signature and cases are in [evidence](../evidence/Ptc.IO.FileOperationsProvider.md); Release IL matches Mathcad.
+- **Validation:** `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~PtcIOFileOperationsProviderTierAMechanicalDifferentialTests'` — passed, 1 test, 0 skipped. Direct comparisons cover existing, newly created nested and null paths; the test checks Ptc.Core hash, MVID and token.
+- **Prior Lane E candidates:** `mirror/e-embedded-resource-copier` and `mirror/e-array-extension` each passed their local Release differential test and IL check. Both merge gates passed Debug test suites but stopped before Release differential and ratchet on the maintainer-owned focused Release assembly-path mismatch. `Ptc.IO.FileUtils` is deferred because a Tier A method depends on still-stubbed `ApplicationVariant` accessors. `Ptc.IO.StreamUtils` is deferred because `GetStreamHash` depends on still-stubbed service-registry/hash-provider methods.
+- **Remaining Lane 5 scope:** recheck origin ownership after each passing merge; continue unowned Tier A members in `Ptc.Core.dll` outside `Ptc.PersistentData*`, excluding Tier B generated-member coverage.
+- **Blocker:** the focused project emits `Quire.Differential.Tests.dll` but `validate.py` expects `Quire.Focused.Differential.Tests.dll`; rerun all affected branches after the maintainer fixes the path calculation. No protected validation or test-project files were changed.
