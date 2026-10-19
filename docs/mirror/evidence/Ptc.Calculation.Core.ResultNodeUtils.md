@@ -12,3 +12,5 @@
 ## Test cases
 
 **Observed** (`PtcCalculationCoreResultNodeUtilsMechanicalDifferentialTests`): five direct cases for the private helper; input proxies implement the relevant Mathcad and Quire interfaces and render their semantic kind/value, while `MethodComparison` compares the returned bool and mutated `out` value.
+
+Current Release recheck after fetching origin/main 3ed37be1: the direct Mathcad class passed 1/1 (five inputs). Release MethodAudit reports TryParsePlottableValue token 0x060000d0 exact and structure-matching. ParsePlottableValue remains blocked by out-of-scope DebugTools.DevAssert. The full normal gate is pending.

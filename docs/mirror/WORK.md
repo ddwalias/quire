@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The MemberGen, ResultManager, RequestShowErrorEventArgs, TraceResultAnalyzer, and ResultNodeUtils batches pass generated-path validation, Harness (97/97), Mpl (188/188), and focused Differential (392/392), then stop before audit/ratchet on the Release assembly-name mismatch in lane-c.md. TraceResultAnalyzer has five directly compared exact methods; ResultNodeUtils `TryParsePlottableValue` passed five Release cases and exact Release IL. Next unowned candidate: `EngineErrorExtensions.IsPlaceholderError`, which uses an already Release-verified `EngineError.ErrorCode` getter. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. `ResultNodeUtils.TryParsePlottableValue` passed current-worktree Release Mathcad cases (1/1, five inputs) and its Release IL audit is exact. Normal gate pending on current main `3ed37be1`. `ParsePlottableValue` remains blocked by out-of-scope `DebugTools.DevAssert`. Other C gates remain phase/test-host blocked; see lane-c.md. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
