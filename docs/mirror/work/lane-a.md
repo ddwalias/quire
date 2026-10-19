@@ -3,7 +3,8 @@
 ## Active handoff
 
 SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational and RngVal have current ratchet or mutation blockers; Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions. DimVal still needs full revalidation.
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational and RngVal have current ratchet or mutation blockers; Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal has stale unreachable-line entries, coverage ratchet regressions and a surviving mutant.
+
 
 
 
@@ -1409,3 +1410,9 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 - `intern(Dim)`, `IsDimensioned`, `FixDimension`, `Mult`, `Div` and `Pwr` match reference Release IL; evidence is in [Mcd.Dim](../evidence/Mcd.Dim.md). Required Release `DimDifferentialTests` passed 8/8 with Mathcad.
 - Gate on rebased revision `51cc12ae` and base `10deda913b1b20e07a5b524de47ee737ce46b626` passed Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393. Audit compared 1,397 methods (1,553 exact, 71 structure-only); coverage: 298 missing, 102 structure mismatches, 37 uncovered, 43 verified unsupported; integrity complete. Mutation killed 190/190, no survivors.
 - Gate blocked on five ratchet regressions: `Dim.Eq` and `Dim.Id` became uncovered; compared methods fell 33 to 31; unfinished methods rose 0 to 2; verified-unsupported rose 0 to 2. It also reported stale accepted unreachable entries: `Dim.cs:212` for `Eq` (`problem: not a source line of the method`) and `Dim.cs:193` for `Id` (`problem: not a source line of the method`). Report: `%LOCALAPPDATA%\Temp\quire-gate-results-abrubhiv\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-abrubhiv\run\summary.json`. Batch remains unmerged.
+## DimVal core Release IL shapes (`mirror/a-dimval-core-shapes`)
+
+- `dyn(object,Dim)`, `NearlyEqual(object,object,double)`, `GetUnits(Dim,bool)` and `as_result(object)` match reference Release IL; see [Mcd.DimVal](../evidence/Mcd.DimVal.md). Required Release `DimValDifferentialTests` passed 6/6 with Mathcad.
+- Gate on rebased revision `7c4a2589` and base `f70ade9b6dde24e7f93cb75e5d1936e1ccd54544` passed Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393. Audit compared 1,380 methods (1,551 exact, 73 structure-only); coverage: 298 missing, 102 structure mismatches, 54 uncovered, 60 verified unsupported; integrity complete. It found 41 stale accepted unreachable-line entries in `DimVal.cs`; every entry was reported as `not a source line of the method` after the edits shifted method line positions.
+- Ratchet blocked on 22 regressions: `Apply`, `BadCall`, `DynCall`, `WrongNumberOfArguments`, `asFunctionN`, `asFunction`, `asInt`, `asMatrix`, `asRange`, `asRealMatrix`, `asRealVector`, `asReal`, `asString`, `asTuple`, `asVector`, `matrix_get_1`, `matrix_get_2`, `sym_matrix_get_1` and `sym_matrix_get_2` became uncovered; compared methods fell 123 to 104; unfinished methods rose 1 to 20; verified-unsupported rose 1 to 20.
+- Mutation: 338/344 killed, five accepted survivors, four timed-out mutants retried, and one unaccepted survivor remains: `Quire.Mcd.DimVal::as_result(object)|True@IL_000a cgt.un -> clt.un` at `DimVal.cs:377`. Gate blocked on 22 ratchet regressions and that survivor. Report: `%LOCALAPPDATA%\Temp\quire-gate-results-frbjmm34\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-frbjmm34\run\summary.json`. Batch remains unmerged.
