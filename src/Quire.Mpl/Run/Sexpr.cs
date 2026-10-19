@@ -517,11 +517,18 @@ public partial class Tok : Sexpr
     public override Sexpr walk_pattern(MplEnv env)
     {
         Sym key = Key;
-        if (key == null) return this;
+        if (key == null)
+        {
+            return this;
+        }
         if (key.UpId)
         {
             MplMacro macro = env.LoadMacro(key);
-            return macro == null ? this : macro.ExpandRef(env, this).walk_pattern(env);
+            if (macro == null)
+            {
+                return this;
+            }
+            return macro.ExpandRef(env, this).walk_pattern(env);
         }
         env.AddLocal(key, handle);
         return this;
@@ -531,9 +538,20 @@ public partial class Tok : Sexpr
     public override Sexpr walk_expression(MplEnv env)
     {
         Sym key = Key;
-        if (key == null || !key.LowId) return this;
-        MplMacro macro = env.LoadMacro(key);
-        return macro == null ? this : macro.ExpandRef(env, this).walk_expression(env);
+        if (key == null)
+        {
+            return this;
+        }
+        if (key.LowId)
+        {
+            MplMacro macro = env.LoadMacro(key);
+            if (macro == null)
+            {
+                return this;
+            }
+            return macro.ExpandRef(env, this).walk_expression(env);
+        }
+        return this;
     }
 }
 

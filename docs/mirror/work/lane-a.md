@@ -2,11 +2,11 @@
 
 ## Active handoff
 
-`mirror/a-slist-format-cons` is the active Lane A batch. `mirror/a-scons-il-shape` merged at `b83cc5d`. The
-in-progress `MplForeignMacro` batch and the remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are
-owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave
-it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task
-queue.
+`mirror/a-tok-walk-shape` is the active Lane A batch for `Tok.walk_pattern` and `Tok.walk_expression`. `SCons` merged
+at `b83cc5d`; `SList.FormatCons` merged at `f8b03fe`. The in-progress `MplForeignMacro` batch and the remaining
+`AppException`, `DynamicType` and `InstructionSeq` scopes are owned elsewhere; do not duplicate them.
+`MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and
+[PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
@@ -251,6 +251,29 @@ queue.
   "FullyQualifiedName~SexprDifferentialTests.SAppend_and_SList_members" --jobs 14` compared 4 methods, all exact,
   with no missing, uncovered, structure mismatch or unsupported rows; integrity complete and ratchet OK. Summary:
   `%LOCALAPPDATA%\Temp\quire-validation-281b70_0\summary.json`.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-slist-format-cons --jobs 14` passed and
+  merged/pushed at `f8b03fe`. Receipt: `%LOCALAPPDATA%\Temp\quire-gate-results-wvb8xg6v\gate.json`; summary:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-wvb8xg6v\run\summary.json`. Harness 97, Mpl 188 and Differential 392
+  passed; 1,399 compared, 1,540 exact, 83 structure-only, integrity complete and ratchet OK. Mutation killed 142/143
+  with one existing accepted survivor, no live survivors, timeouts or crashes.
+
+## Tok expression walk IL shape (`mirror/a-tok-walk-shape`)
+
+- Scope: match `Tok.walk_pattern(MplEnv)` (`0x0600006d`) and `Tok.walk_expression(MplEnv)` (`0x0600006e`) Release IL
+  in `src/Quire.Mpl/Run/Sexpr.cs`. The reference has separate null-key, case-test and null-macro branches; Quire's
+  combined condition and conditional return expressions had the right behavior but different IL structure.
+- Original: inspected with `python tools\reference\reference.py Mpl.Run.Tok --il`; installed `mplrun.dll` 12.0.1.0,
+  SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`.
+- Existing direct cases in `SexprDifferentialTests` exercise both methods across non-symbol atoms, null and case
+  variants, bound/unbound symbols, local registration, symbol macro recursion and function-macro exceptions. Unit
+  checks: `SexprTests` — 36 passed. Differential check: `SexprDifferentialTests` — 10 passed, no skips. Those
+  `dotnet test` commands used Debug and establish behavior only.
+- Release check: `python tools\validation\validate.py --profile focused --method-type Quire.Mpl.Run.Tok --diff-filter
+  "FullyQualifiedName~SexprDifferentialTests" --jobs 14`. The build log targeted
+  `%LOCALAPPDATA%\Temp\quire-audit-release-3whflj0d`; both walk methods now report `exact_match: true`. Thirteen Tok
+  methods compared, all exact; no missing, uncovered, structure mismatch or unsupported rows, integrity complete and
+  ratchet OK. Summary: `%LOCALAPPDATA%\Temp\quire-validation-dg0qraf2\summary.json`.
 - Next: run the full lane gate for this batch.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
