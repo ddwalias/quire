@@ -288,7 +288,13 @@ and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task qu
   -c Release --filter 'FullyQualifiedName~MplRunHelpersDifferentialTests'` passed 6/6 with no skips. The existing
   `MplSignature_members` cases compare hashes for ten signatures, including null return/array/elements. Release test
   output was under `bin\Release\net10.0`.
-- Next: run the full lane gate for this batch.
+- Gate on base `f863245e` blocked before coverage, ratchet or mutation. Exact blocker:
+  `Quire.Focused.Differential.Tests: Release differential assembly not found
+  (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-qec5xeew\Quire.Focused.Differential.Tests.dll)`.
+  Harness 97, Mpl 188 and Debug Differential 392 passed before validation exited 1. Gate report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-t7pj8rds\gate.json`; summary:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-t7pj8rds\run\summary.json`. The source is pushed but unmerged; retry
+  after the Release differential assembly blocker is fixed.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
