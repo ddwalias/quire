@@ -787,7 +787,7 @@ def main():
                 env = wslenv(env)
             command = [args.dotnet, "test", to_dotnet(assemblies[project]),
                        "--logger", f"trx;LogFileName={trx.name}", "--results-directory", to_dotnet(output)]
-            if differential and args.diff_filter and args.profile == "focused":
+            if differential and args.diff_filter and args.profile in ("focused", "phase"):
                 command += ["--filter", args.diff_filter]
             print(f"Running {project}; log: {output / (project + '.log')}", flush=True)
             item = {"project": project, "command": command, "trx": str(trx)}
