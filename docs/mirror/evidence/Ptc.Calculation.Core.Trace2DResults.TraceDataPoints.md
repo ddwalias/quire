@@ -17,3 +17,5 @@
 ## Test cases
 
 **Observed** (`PtcCalculationCoreTrace2DResultsTraceDataPointsMechanicalDifferentialTests`): the two-argument constructor is compared with non-null proxy inputs and each null-input branch; the `IsEmpty` getter is compared for all four null/non-null reference combinations. Existing no-argument constructor and property comparisons remain in the same test class.
+
+Release MethodAudit inspected all 7 declarations in this type; each reports structure_matches=true and exact_match=true. Nine ancillary assembly inspection errors are outside this type. The current Release Mathcad test class passed 7/7; the normal gate is pending.
