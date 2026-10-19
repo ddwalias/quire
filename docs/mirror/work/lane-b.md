@@ -16,10 +16,8 @@
 - **Validation:**
   - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified 15 direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
-- **Gate status & external blocker:**
-  - `lane_merge.py` blocked by commit `f863245e` on `main`: in `tools/validation/validate.py:788`, the release differential runner expects `release_dir / (project + ".dll")` (`Quire.Focused.Differential.Tests.dll`), but `tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj` specifies `<AssemblyName>Quire.Differential.Tests</AssemblyName>`, outputting `Quire.Differential.Tests.dll`.
-  - Requires maintainer fix on `main` in `validate.py:788` (e.g. `release_assembly = release_dir / assemblies[project].name` or checking for `Quire.Differential.Tests.dll`).
-  - Branch pushed to `origin/mirror/b-matdim-error-paths`.
+- **Gate status:**
+  - Ready for merge gate landing on updated `main` (commit `a2b91391`).
 
 
 
