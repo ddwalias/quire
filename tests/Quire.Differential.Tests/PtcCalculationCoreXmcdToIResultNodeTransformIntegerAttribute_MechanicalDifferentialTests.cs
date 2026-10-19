@@ -5,7 +5,7 @@ using Quire.Calculation.Core;
 namespace Quire.Differential.Tests;
 
 /// <summary>Direct Mathcad comparisons for the private integer XML-attribute parser.</summary>
-public class PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttributeDifferentialTests
+public class PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttribute_MechanicalDifferentialTests
 {
     private const string Contract = "Ptc.Calculation.Core.XmcdToIResultNodeTransform";
     private static Type Q => typeof(XmcdToIResultNodeTransform);

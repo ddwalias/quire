@@ -7,7 +7,7 @@ using Quire.Calculation.Core;
 namespace Quire.Differential.Tests;
 
 /// <summary>Direct comparisons for the private matrix writers used by ResultNodeToXmcdTransform visitors.</summary>
-public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests
+public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests
 {
     private const string Contract = "Ptc.Calculation.Core.ResultNodeToXmcdTransform";
     private static Type Q => typeof(ResultNodeToXmcdTransform);

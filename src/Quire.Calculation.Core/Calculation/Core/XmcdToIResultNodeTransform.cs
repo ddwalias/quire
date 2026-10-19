@@ -41,7 +41,7 @@ public partial class XmcdToIResultNodeTransform
     [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
     private ISymbolicResultNode BuildSymbolic(XmlNode node) => _resultNodeFactory.CreateSymbolicResultNode(node.InnerXml);
 
-    [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttributeDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttribute_MechanicalDifferentialTests")]
     private static int GetIntegerFromAttribute(XmlNode node, string attributeName, int defaultValue)
     {
         XmlAttribute xmlAttribute = node.Attributes[attributeName];
