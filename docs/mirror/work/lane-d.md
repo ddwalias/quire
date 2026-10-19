@@ -1,0 +1,9 @@
+# Lane D — Ptc.PersistentData* in Ptc.Core
+
+## Active handoff
+
+- **Current batch:** `mirror/d-worksheet-serializer`; created from `f863245e87b35d0e03a9fcf26f6a18949532ccaf` and rebased by the gate through `a2b91391` and `57c3bc67`. Latest `origin/main` is `148b9ec6`.
+- **Scope/evidence:** Tier A `worksheet.Regions` get/set and `WorksheetConvertedFromMC14`; `worksheetRegionCollectionSerializer.RegionCollection`, `ConvertedFromMC14`, and `MsgId`. See the [worksheet contract](../evidence/Ptc.PersistentData.worksheet.md) and [serializer contract](../evidence/Ptc.PersistentData.worksheetRegionCollectionSerializer.md).
+- **Validation:** `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests\Quire.Differential.Tests\Quire.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~PtcPersistentDataWorksheetSerializerTierAMechanicalDifferentialTests'` — 6 passed, 0 failed, 0 skipped.
+- **Gate:** the corrected gate passed build, Harness (97), MPL (188), focused differential (392), Release-versus-Mathcad differential (392), coverage (392), IL audit (1541 exact / 82 structure-only), and lint/ratchet. The Windows phase gate then failed: `Quire.Differential.Tests` has pre-existing unrelated failures (including an abstract `RegionCollectionSerializer<T>` constructor case and Controls/Serialization stubs) and left `bin/Debug/net10.0-windows/s1000001` and `s2000001` files that the validator flags. No merge occurred. The test-lint issues from the first retry were fixed. Main advanced again to `148b9ec6` during validation.
+- **Remaining:** wrappers and serializer classes have additional Tier A members; inspect each after ownership/dependency checks. `ProtectableTypesRegistry` depends on `AreaType.TypeOfThis`; `RegionCollectionPreSerializer.PreSerialize` and MC14 annotation conversion depend on Lane 5 enumerable helpers.

@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList and Utilities.GetUnits are merged. Eight other Lane A batches have incomplete pre-fix gate runs and need revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| D | Worksheet/worksheet serializer Tier A passes 6 direct Release comparisons and focused/Release gate suites; full phase gate is blocked by unrelated Differential.Tests failures and test-generated `bin` files. Other Lane D branches remain to retry. | [Lane D](work/lane-d.md) |
 
 ## Fast lane loop
 
