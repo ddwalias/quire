@@ -3,7 +3,7 @@
 ## Active handoff
 
 SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational most recently hit a coverage test-host crash. The RngVal short-circuit coverage case has been added, but its full gate retry exited before coverage. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal has stale unreachable-line entries, coverage ratchet regressions and a surviving mutant.
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational most recently hit a coverage test-host crash. The RngVal short-circuit coverage case has been added, but the latest full gate retry exited 4294967295 in the Debug differential suite before coverage. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal has stale unreachable-line entries, coverage ratchet regressions and a surviving mutant.
 
 
 
@@ -1420,3 +1420,6 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 
 - Added a `diff_init` pair to `RngValDifferentialTests.Equality`; it exercises the false arm of the first short-circuit comparison in `Equals(object)`. Evidence now lists differing initial values. Required Release differential command passed 5/5 with Mathcad.
 - Full gate candidate `8e3729ece0ca54bdaba481a8010fc613379de538`, based on `80fbd6de50cf7a34bb9b8c5c492f52c9375d0482`, passed Harness 97 and Mpl 188. The Debug `Quire.Focused.Differential.Tests` invocation exited `4294967295` before coverage; ratchet did not run. Its log contains only VSTest 18.3.0 startup, discovery of one test file, then process termination without a test-host diagnostic. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\run\summary.json`; test log: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\run\Quire.Focused.Differential.Tests.log`. The updated batch remains unmerged and needs maintainer investigation of the differential test process exit.
+### RngVal full-gate retry process failure (2026-10-19)
+
+The `diff_init` direct case was included at candidate `8e3729ece0ca54bdaba481a8010fc613379de538`, base `80fbd6de50cf7a34bb9b8c5c492f52c9375d0482`. Release `RngValDifferentialTests` passed 5/5; Harness 97 and Mpl 188 passed. Debug Differential exited with code `4294967295`, before coverage, method audit, ratchet or mutation. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\run\summary.json`; log: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\run\Quire.Focused.Differential.Tests.log`. The log contains VSTest 18.3.0 startup, one test assembly discovered, then termination with no diagnostic; no TRX or matching Windows application crash event was present. The batch remains pending a clean full-gate run.
