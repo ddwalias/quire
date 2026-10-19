@@ -2,51 +2,26 @@
 
 ## Active handoff
 
-### Active batch: MatDim error paths and PickLoser
-- **Branch:** `mirror/b-matdim-error-paths`
+### Active batch: MatDim makeArrayDim and matrix dimension factories
+- **Branch:** `mirror/b-matdim-makearraydim`
 - **Scope:**
-  - `Mcd.MatDim.PickLoser(MatDim, MatDim, uint)`: token 0x06000645. Aligned IL structure with Mathcad Release IL (two-branch scan: column vector scanning rows with `OnError(..., i, a)`, matrix scanning rows and columns with `OnError(..., j, k, a)`, and terminal `AppException.Raise("array unit mismatch", param)` fallthrough path).
-  - `Mcd.MatDim.OnError(string, Dim, uint)`: token 0x06000641.
-  - `Mcd.MatDim.OnError(Dim, uint)`: token 0x06000642.
-  - `Mcd.MatDim.OnError(string, Dim, int, int, uint)`: token 0x06000643.
-  - `Mcd.MatDim.OnError(string, Dim, int, uint)`: token 0x06000644.
-  - `Mcd.MatDim.Eq(MatDim, MatDim, uint)`: token 0x06000617 (mismatch dispatches to `PickLoser`).
+  - `MatDim.makeArrayDim(MatVal)` (0x0600064b): Remediated from Tier A structure mismatch to exact IL match (`quick_check` exact IL) by matching loop conditions and local variable usage against Mathcad Release IL.
+  - `MatDim.makeArrayDim(MatVal, bool)` (0x0600064a): Verified exact IL match (`quick_check` exact IL); verified `linear_algebra_dimensions_only` behavior returning `IsLinear` vs full dimensions.
+  - `MatDim.makeColumnVectorDim(MatVal)` (0x0600064c): Verified exact IL match (`quick_check` exact IL); verified single-column vector dimensions into `r_dim` or fallback to `crazy_dim`.
+  - `MatDim.makeRowVectorDim(MatVal)` (0x0600064d): Verified exact IL match (`quick_check` exact IL); verified single-row vector dimensions into `c_dim` or fallback to `crazy_dim`.
+  - `MatDim.make(MatVal, bool)` (0x06000620): Verified exact IL match (`quick_check` exact IL); verified entry point routing for uniform, single-column, single-row, and general matrix shapes.
+  - `MatDim.make(MatVal)` (0x06000621): Verified exact IL match (`quick_check` exact IL); forwards to `make(m, false)`.
+  - Direct differential comparisons in `tests/Quire.Differential.Tests/MatDimArrayDimDirectDifferentialTests.cs`:
+    - `Direct_makeArrayDim_matches_mathcad`: 8 comparison cases covering uniform columns (`c_dim`), uniform rows (`r_dim`), proportional columns (`rc_dim`), inconsistent columns (`crazy_dim`), partial uniform columns/rows, and null rows/cols guards.
+    - `Direct_makeArrayDim_with_bool_matches_mathcad`: 6 comparison cases comparing `linear_algebra_dimensions_only` true vs false across crazy, proportional, and uniform axes.
+    - `Direct_vector_and_matrix_factories_match_mathcad`: 8 comparison cases testing `makeColumnVectorDim` (valid & crazy), `makeRowVectorDim` (valid & crazy), and `make(MatVal)` / `make(MatVal, bool)` dispatch across shapes.
 - **Evidence:**
   - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
 - **Validation:**
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
-  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimArrayDimDirectDifferentialTests'` (3/3 passed: 0 failed, 0 skipped against Mathcad Prime in Release mode)
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed)
 - **Gate status:**
-  - Ready for merge gate landing on updated `main` (commit `a2b91391`).
-
-
-
-### Maintainer-gated handoff: Engine factory and interfaces batch
-- **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
-- **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.
-- **Scope (23 methods across Engine interfaces and factories):**
-  - `Engine.Factory`: `.ctor` (0x060000bd), `AppendPath` (0x060000be), `NewFactory` (0x060000bf), `CreateFactory` (0x060000c0).
-  - `Engine.IFactoryFactory`: `AppendPath` (0x060000bb), `NewFactory` (0x060000bc).
-  - `Engine.IFactory`: `Initialize` (0x060000b5), `VerifyIntegrity` (0x060000b6).
-  - `Engine.IBuiltin`: `GetVariable` (0x060000a0), `SetVariable` (0x060000a1), `UnsetVariable` (0x060000a2), `GetBuiltins` (0x060000a3).
-  - `Engine.IEnginePriv`: `Initialize` (0x060000a4).
-  - `Engine.IEngineUnstable`: `GetNodeType` (0x0600009c).
-  - `Engine.IMCEngine`: `AddNotify` (0x0600009d), `RemoveNotify` (0x0600009e), `StartNotify` (0x0600009f).
-  - `Engine.IEngine`: `get_IsUpToDate` (0x06000089), `RecalculateAll` (0x0600009a).
-- **Evidence:**
-  - [Engine.Factory](../evidence/Engine.Factory.md)
-  - [Engine.IFactoryFactory](../evidence/Engine.IFactoryFactory.md)
-  - [Engine.IFactory](../evidence/Engine.IFactory.md)
-  - [Engine.IBuiltin](../evidence/Engine.IBuiltin.md)
-  - [Engine.IEnginePriv](../evidence/Engine.IEnginePriv.md)
-  - [Engine.IEngineUnstable](../evidence/Engine.IEngineUnstable.md)
-  - [Engine.IMCEngine](../evidence/Engine.IMCEngine.md)
-  - [Engine.IEngine](../evidence/Engine.IEngine.md)
-- **Validation:**
-  - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (97/97 passed)
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryMechanicalDifferentialTests'` (2/2 passed)
-- **Gate status:**
-  - Standard lane merge gate blocks because `protected.txt` and `merge_gate.py` only exempt stub deletions in `src/Quire.Mpl/Generated/Mirror/*.g.cs`. Non-Mpl generated files (`src/Quire.Engine/Generated/Mirror/*.g.cs`) require maintainer gate execution with `--allow-protected`.
+  - Ready for merge gate landing on updated `main`.
 
 Everything below this summary is historical context and receipts, not a queue of unfinished work.
 

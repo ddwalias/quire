@@ -83,9 +83,9 @@ public abstract partial class MatDim
 
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim make(Dim d) => uniform_dim.make(d, 1, 1);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     public static MatDim make(MatVal m) => make(m, false);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     public static MatDim make(MatVal m, bool linear_algebra_dimensions_only)
     {
         if (m.IsUniform) return uniform_dim.make(m.m_dim, m.Rows, m.Cols);
@@ -117,48 +117,72 @@ public abstract partial class MatDim
         if (common != null) return make(RC.ROW, Mult(common, rows), cols.Length);
         return rc_dim.make_rc(rows, cols);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     private static MatDim makeColumnVectorDim(MatVal m)
     {
         var dims = m.ColDimArray(0);
         return dims == null ? crazy_dim.make(m) : r_dim.make(dims, m.Cols);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     private static MatDim makeRowVectorDim(MatVal m)
     {
         var dims = m.RowDimArray(0);
         return dims == null ? crazy_dim.make(m) : c_dim.make(dims, m.Rows);
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     private static MatDim makeArrayDim(MatVal m, bool linear_algebra_dimensions_only)
     {
-        var result = makeArrayDim(m);
-        return linear_algebra_dimensions_only ? result.IsLinear : result;
+        MatDim matDim = makeArrayDim(m);
+        if (!linear_algebra_dimensions_only)
+        {
+            return matDim;
+        }
+        return matDim.IsLinear;
     }
-    [MirrorAnalyzed("Mcd.MatDim")]
+
+    [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     private static MatDim makeArrayDim(MatVal m)
     {
-        var rows = m.ColDimArray(0);
-        var cols = m.RowDimArray(0);
-        if (Uniform(rows) != null)
+        Dim[] array = m.ColDimArray(0);
+        Dim[] array2 = m.RowDimArray(0);
+        if (Uniform(array) != null)
         {
-            for (int c = 1; c < m.Cols; c++) if (Uniform(m.ColDimArray(c)) == null) return crazy_dim.make(m);
-            return c_dim.make(cols, rows.Length);
+            for (int i = 1; i < m.Cols; i++)
+            {
+                if (Uniform(m.ColDimArray(i)) == null)
+                {
+                    return crazy_dim.make(m);
+                }
+            }
+            return c_dim.make(array2, array.Length);
         }
-        if (Uniform(cols) != null)
+        if (Uniform(array2) != null)
         {
-            for (int r = 1; r < m.Rows; r++) if (Uniform(m.RowDimArray(r)) == null) return crazy_dim.make(m);
-            return r_dim.make(rows, cols.Length);
+            for (int j = 1; j < m.Rows; j++)
+            {
+                if (Uniform(m.RowDimArray(j)) == null)
+                {
+                    return crazy_dim.make(m);
+                }
+            }
+            return r_dim.make(array, array2.Length);
         }
-        if (rows == null || cols == null) return crazy_dim.make(m);
-        var factors = new Dim[m.Cols];
-        factors[0] = Dim.identity;
-        for (int c = 1; c < factors.Length; c++)
+        if (array == null || array2 == null)
         {
-            factors[c] = IsScalarMultiple(rows, m.ColDimArray(c));
-            if (factors[c] == null) return crazy_dim.make(m);
+            return crazy_dim.make(m);
         }
-        return rc_dim.make_rc(rows, factors);
+        Dim[] array3 = new Dim[m.Cols];
+        array3[0] = Dim.identity;
+        for (int k = 1; k < m.Cols; k++)
+        {
+            Dim dim = IsScalarMultiple(array, m.ColDimArray(k));
+            if (dim == null)
+            {
+                return crazy_dim.make(m);
+            }
+            array3[k] = dim;
+        }
+        return rc_dim.make_rc(array, array3);
     }
 
     [MirrorAnalyzed("Mcd.MatDim")]
