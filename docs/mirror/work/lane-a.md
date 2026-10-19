@@ -2,11 +2,34 @@
 
 ## Active handoff
 
-`mirror/a-slist-format-cons` is the active Lane A batch. `mirror/a-scons-il-shape` merged at `b83cc5d`. The
-in-progress `MplForeignMacro` batch and the remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are
-owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave
-it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task
-queue.
+SCons and SList are merged into current `origin/main`; their entries below are historical receipts. The unmerged
+Tok, MplSignature and Rational branches each passed the focused Debug differential suite but their gates stopped
+before audit because the Release validator searched for `Quire.Focused.Differential.Tests.dll`; the actual Release
+output is `Quire.Differential.Tests.dll`. Tok owns
+`src/Quire.Mpl/Run/Sexpr.cs`, MplSignature owns `src/Quire.Mpl/MplSignature.cs`, and Rational owns
+`src/Quire.Mpl/Mcd/Rational.cs`; leave these files unchanged. `mirror/a-numval-il-shape` is the active independent
+batch. `mirror/a-rts-resolve-assembly-shape` and `mirror/a-unit-system-field-state` remain owned by their existing
+branches. `MplForeignMacro`, remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are owned elsewhere;
+do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it parked. Use
+[WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
+
+## NumVal exact Release shapes (`mirror/a-numval-il-shape`)
+
+- Scope: align `NumVal.IsPureReal`, `IsPureImag` and `isInt(int*)` with the original Release instruction sequence;
+  retain the existing `LoadNaN` implementation because its remaining difference is equivalent local/stack codegen.
+- Original inspected with `python tools\reference\reference.py Mcd.NumVal --il`: `mplrun.dll` 12.0.1.0, SHA-256
+  `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`. Tokens: `get_IsPureReal` `0x06000565`, `get_IsPureImag` `0x06000566`,
+  `isInt(int*)` `0x06000582`, `LoadNaN(int)` `0x06000591`. See [Mcd.NumVal evidence](../evidence/Mcd.NumVal.md).
+- Release `il_diff.py` against Mathcad reports the first three methods exact. `LoadNaN` remains structure-matched;
+  its first instruction difference is Quire `stloc 1` versus Mathcad `dup`, followed by the corresponding stack/local
+  arrangement. Direct Mathcad tests verify the payload bits.
+- Required Release differential command:
+  `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~NumValDifferentialTests'`
+  — 6 passed, 0 failed, 0 skipped; output assembly `Quire.Differential.Tests.dll` under `bin\Release\net10.0`.
+- Scoped `validate.py --profile focused --method-type Quire.Mcd.NumVal --diff-filter "FullyQualifiedName~NumValDifferentialTests" --jobs 14`
+  was blocked before the method audit by the same Release differential assembly lookup error recorded above. Gate result
+  will be recorded after `lane_merge.py`; the targeted run supports the existing direct cases only.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
