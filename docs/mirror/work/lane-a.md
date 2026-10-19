@@ -3,7 +3,7 @@
 ## Active handoff
 
 SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational most recently hit a coverage test-host crash. The RngVal short-circuit coverage case has been added, but the latest full gate retry exited 4294967295 in the Debug differential suite before coverage. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal has stale unreachable-line entries, coverage ratchet regressions and a surviving mutant.
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational most recently hit a coverage test-host crash. The RngVal short-circuit coverage case has been added, but the latest full gate retry exited 4294967295 in the Debug differential suite before coverage. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal still has stale unreachable-line and coverage-ratchet blockers; an RngValInterpolate case now distinguishes the as_result override from its fallback, with the full gate pending.
 
 
 
@@ -1423,3 +1423,6 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 ### RngVal full-gate retry process failure (2026-10-19)
 
 The `diff_init` direct case was included at candidate `8e3729ece0ca54bdaba481a8010fc613379de538`, base `80fbd6de50cf7a34bb9b8c5c492f52c9375d0482`. Release `RngValDifferentialTests` passed 5/5; Harness 97 and Mpl 188 passed. Debug Differential exited with code `4294967295`, before coverage, method audit, ratchet or mutation. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\run\summary.json`; log: `%LOCALAPPDATA%\Temp\quire-gate-results-f8qtstph\run\Quire.Focused.Differential.Tests.log`. The log contains VSTest 18.3.0 startup, one test assembly discovered, then termination with no diagnostic; no TRX or matching Windows application crash event was present. The batch remains pending a clean full-gate run.
+### DimVal as_result mutation case
+
+The DimVal branch `901fc553` adds a direct `RngValInterpolate` input to `DimValDifferentialTests.Static_and_dimension_helpers`. The Mathcad `as_result` virtual dispatch returns a plain `RngVal`, so the comparison observes the result subtype and should distinguish the surviving inverted type-check mutant from the original result. `DimValDifferentialTests` passed 6/6 in Release with Mathcad after the change. Full gate is pending; existing stale unreachable-line and coverage-ratchet results remain unresolved. Evidence is in `docs/mirror/evidence/Mcd.DimVal.md` on the candidate branch.
