@@ -17,14 +17,6 @@ public static partial class StringExtension
     public static bool ContainsUnicodeCharOrSlash(this string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsAscii(char c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsWrappedWithQuotes(this string stringToCheck, global::Quire.StringExtension.QuotesType quotesType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsStraightQuoteChar(this char toCheck) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsAnyQuoteChar(this char toCheck) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsOpenCloseUnicodeQuoteChar(this char toCheck) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.StringExtension+QuotesType, Ptc.Core")]
     public enum QuotesType
