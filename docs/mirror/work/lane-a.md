@@ -2,10 +2,11 @@
 
 ## Active handoff
 
-SCons, SList and Utilities are merged into current `origin/main`; their entries below are historical receipts. The
-unmerged Tok, MplSignature, Rational, NumVal, RngVal, Type, Dim and DimVal branches each had an incomplete gate run
-before the Release assembly lookup was fixed at `a2b91391`. Those runs stopped before method audit and ratchet; treat
-them as unvalidated and rerun the full gate before merge. Each branch owns its source files; leave them unchanged.
+SCons, SList, Utilities and Tok are merged into current `origin/main`; their entries below are historical receipts. The
+remaining unmerged MplSignature, Rational, NumVal, RngVal, Type, Dim and DimVal branches each had an incomplete gate
+run before the Release assembly lookup was fixed at `a2b91391`. Those runs stopped before method audit and ratchet;
+treat them as unvalidated and rerun the full gate before merge. Each branch owns its source files.
+
 
 No unowned Lane A Tier A file scope remains in the current inventory. The remaining method gaps are in live Lane A
 files (`Rts`, `UnitSystem`), Lane B scopes (`Function`, `MatDim` and `MatVal`), or files claimed by outstanding Lane A
@@ -1372,3 +1373,8 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 - Runtime gate: passed and merged/pushed at `c1d09ea`; receipt `/tmp/quire-gate-results-iv0dklzx/gate.json`, summary `/tmp/quire-gate-results-iv0dklzx/run/summary.json`. Harness 94, Mpl 188 and Differential 392 passed without failures/skips; 1,397 methods compared, 1,530 exact, 91 structure-only, 299 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported; lint 0, integrity complete, ratchet OK. Mutation run killed 150/151 mutants; one existing accepted survivor, six timeouts retried, one crash; no pending proposals.
 - Exact Release IL before/after: 27 methods remain exact and 6 remain structure-only; no method bodies changed, so no baseline-exact method regressed. No proposals.
 - Next: continue the active `MplForeignMacro` work without touching its owned files, then select another unowned Lane A scope.
+## Tok expression walk IL shape (`mirror/a-tok-walk-shape`)
+
+- `Tok.walk_pattern(MplEnv)` and `Tok.walk_expression(MplEnv)` were matched to Mathcad Release IL in `Sexpr.cs`; the existing direct `SexprDifferentialTests` cover both methods. The rebase onto `57c3bc67` changed no source hunks.
+- Required Release differential command: `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~SexprDifferentialTests'` — 10 passed, 0 failed, 0 skipped.
+- Full gate passed and merged to `origin/main` at `decf112dc9b862631f8e12a1fbea587df2216fa0`, validated on base `57c3bc67b03df808bbeaa733d616977dcd230415`. Report: `%LOCALAPPDATA%\Temp\quire-gate-results-3n8wjpi4\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-3n8wjpi4\run\summary.json`. Harness 97, Mpl 188, Debug Differential 392 and Release Differential 392 passed. Audit compared 1,399 methods (1,543 exact, 80 structure-only); coverage: 298 missing, 103 structure mismatches, 34 uncovered, 41 verified unsupported. Lint 0, integrity complete, ratchet passed. Mutation killed 26/26; no survivors.
