@@ -12,14 +12,6 @@ namespace Quire.PersistentData;
 public static partial class OleUtils
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _excel8Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _excel12Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _excelMacroEnabled12Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _excelBinaryMacroEnabled12Guid;
-    [global::Quire.Mirror.MirrorStub]
     public const string ExcelSheetProgId = "Excel.Sheet";
     [global::Quire.Mirror.MirrorStub]
     public const string ChartProgId = "Quire.ChartAppOLE";
@@ -41,42 +33,4 @@ public static partial class OleUtils
     public const string OrgPlusWOPXDocumentProgId = "OrgPlusWOPX";
     [global::Quire.Mirror.MirrorStub]
     public const string OleAppsSupportZoom = "OrgPlusWOPX,Quire,AcroExch.Document,PDFPlus.Document,MSGraph.Chart,PowerPoint.,Word.Document,Excel.Sheet";
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime5Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime6Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime7Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime8Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime9Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime10Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _chartAppOlePrime11Guid;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Collections.Generic.Dictionary<global::System.Guid, global::System.Guid> ChartAppOleGuidsConversionDict;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _equation1Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _equation2Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Guid _equation3Guid;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsExcel8Installed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static string ProgIDFromCLSID(ref global::System.Guid clsid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsMicrosoftEquationGuid(global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Guid GetExcelSheetGuid(string excelSheetProgId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSupportedExcelGuid(global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CanCreateExcelContainer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsOleAppSupportZoom(string progId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Nullable<bool> IsVersionInstalled(object comObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
