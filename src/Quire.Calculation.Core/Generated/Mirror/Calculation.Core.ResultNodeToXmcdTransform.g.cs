@@ -78,10 +78,6 @@ public partial class ResultNodeToXmcdTransform : global::Quire.Calculation.Core.
     [global::Quire.Mirror.MirrorStub]
     private void WriteImaginaryXml(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void WriteMatrixXml(global::Quire.Calculation.Core.IMatrixResultNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteDisplayMatrixXml(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Visit(global::Quire.Calculation.Core.IUnitedValueResultNode unitedValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Visit(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

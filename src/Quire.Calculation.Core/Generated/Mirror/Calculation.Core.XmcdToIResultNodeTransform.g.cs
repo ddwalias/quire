@@ -47,6 +47,4 @@ public partial class XmcdToIResultNodeTransform : global::Quire.Calculation.Core
     private global::Quire.Calculation.Core.IUnitedValueResultNode BuildUnitedValue(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void ReadUnitMonomial(global::Quire.Calculation.Core.IUnitedValueResultNode uvResult, global::System.Xml.XmlNode unitMonomial) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int GetIntegerFromAttribute(global::System.Xml.XmlNode node, string attributeName, int defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

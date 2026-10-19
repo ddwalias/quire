@@ -9,6 +9,8 @@
 | `Visit(IEmptyResultNode)` | 0x06000173 | MemberGen: `WritePlaceholderXml()` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Visit(IDisplayMatrixResultNode)` | 0x0600017b | MemberGen: `WriteDisplayMatrixXml(displayMatrix)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Visit(IEagerMatrixResultNode)` | 0x0600017c | MemberGen: `WriteMatrixXml(eagerMatrix)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `WriteMatrixXml(IMatrixResultNode)` | 0x06000171 | Writes matrix dimensions, then visits cells column-first and closes the matrix element | Direct Mathcad comparison covers an empty 0x1 matrix. Cell iteration reaches the explicit `IMatrixResultNode.Item` Tier B stub, which remains out of this Lane C Tier A batch | Verified |
+| `WriteDisplayMatrixXml(IDisplayMatrixResultNode)` | 0x06000172 | Uses the full matrix writer when viewport and display sizes match; otherwise writes viewport metadata and visits viewport cells column-first | ILSpy control flow; direct Mathcad cases currently cover null display and null viewport. Non-null size comparison is blocked by `Ptc.TableSize.Equals` and its size accessors in Quire.Core | Blocked |
 | `Writer get` | 0x0600016a | MemberGen: `public XmlWriter Writer { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Writer set` | 0x0600016b | MemberGen: `public XmlWriter Writer { get; private set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `WritePlaceholderXml()` | 0x0600016e | MemberGen: `Writer.WriteElementString("ml", "placeholder", "http://schemas.mathsoft.com/math50", string.Empty)` | Mechanical; Release IL equals Mathcad's | Verified |
@@ -25,4 +27,6 @@
 **Observed** (`PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
-MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests`.
+MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests`; private matrix writers are compared by `Quire.Differential.Tests.PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests`.
+
+**Observed** (`PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests`): direct private-method calls compare writer state for an empty 0x1 matrix and the null-display/null-viewport failure paths. A populated matrix reaches the explicit `IMatrixResultNode.Item` Tier B stub. The display writer's non-null branches remain pending the out-of-scope TableSize implementation.
