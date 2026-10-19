@@ -1,4 +1,5 @@
 #nullable disable
+using System.Linq;
 using System.Xml.Serialization;
 using Quire.Mirror;
 using Quire.PersistentDataObjects;
@@ -8,6 +9,46 @@ namespace Quire.PersistentData;
 public partial class AreaType
 {
     public static readonly Type TypeOfThis;
+
+    public bool Protect
+    {
+        get
+        {
+            if (ProtectionDataWrapper != null)
+            {
+                return ProtectionDataWrapper.HasPassword;
+            }
+            return false;
+        }
+    }
+
+    public override IEnumerable<IRegionType> Regions
+    {
+        get
+        {
+            return regions;
+        }
+        set
+        {
+            regions = value.Cast<worksheetRegionType>().ToArray();
+        }
+    }
+
+    public ProtectionData ProtectionDataWrapper
+    {
+        get
+        {
+            if (ProtectionData != null)
+            {
+                return new ProtectionData(ProtectionData);
+            }
+            return null;
+        }
+        set
+        {
+            ProtectionData = value?.GetProtectionPersistentData();
+        }
+    }
 
     static AreaType()
     {

@@ -31,5 +31,10 @@ parameter and field), comparing the result, the arguments and the target's field
 | Member | Token | Signature | Evidence/status |
 |---|---:|---|---|
 | `.cctor` | `0x06000885` | `private static void()` | Direct comparison of the initializer and its `TypeOfThis` field value. Verified for the initialized state. |
+| `get_Protect` | `0x0600087d` | `public bool()` | Directly compared for null ProtectionData; returns false. Non-null state depends on the Lane 5 ProtectionData wrapper. |
+| `get_Regions` | `0x06000881` | `public IEnumerable<IRegionType>()` | Directly compared for null and populated `worksheetRegionType[]` backing data. Verified for those cases. |
+| `set_Regions` | `0x06000882` | `public void(IEnumerable<IRegionType>)` | Directly compared for null and populated `worksheetRegionType[]` input, including resulting backing state. Verified for those cases. |
+| `get_ProtectionDataWrapper` | `0x06000883` | `public ProtectionData()` | Directly compared for null persistent data. Non-null state depends on the Lane 5 ProtectionData wrapper. |
+| `set_ProtectionDataWrapper` | `0x06000884` | `public void(ProtectionData)` | Directly compared with null, which clears persistent data. Non-null state depends on Lane 5's `GetProtectionPersistentData`. |
 
-The comparison ran with `QUIRE_REQUIRE_MATHCAD=1` against Release Quire: 1 passed, 0 failed, 0 skipped. This initializer supplies the static type dependency used by `ProtectableTypesRegistry`. The remaining AreaType Tier A members are `GetXmlSerializerStatic`, `get_Protect`, `get_ProtectionDataWrapper`, `set_ProtectionDataWrapper`, `get_Regions`, and `set_Regions`; the serializer path also depends on unimplemented `worksheetRegionType` serializer factories.
+The comparisons ran with `QUIRE_REQUIRE_MATHCAD=1` against Release Quire: 2 tests passed, 0 failed, 0 skipped. The initializer supplies the static type dependency used by `ProtectableTypesRegistry`. `GetXmlSerializerStatic` remains Tier A and depends on the unimplemented `worksheetRegionType` serializer factories.
