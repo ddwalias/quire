@@ -85,7 +85,7 @@ public sealed partial class MatVal
     public MatVal PushVectorArg(object o)
     {
         Cons cons = o as Cons;
-        while (true)
+        for (;;)
         {
             if (cons == null) AppException.Raise("must be vector", 1u);
             setspec(Data.m_rows++, cons.Field1);
