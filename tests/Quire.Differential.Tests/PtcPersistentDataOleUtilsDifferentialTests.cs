@@ -1,3 +1,4 @@
+#if WINDOWS
 using System.Reflection;
 using Quire.PersistentData;
 
@@ -110,3 +111,4 @@ public class PtcPersistentDataOleUtilsDifferentialTests
             targetMethod?.Name == "GetClassID" ? ClassId : throw new NotSupportedException(targetMethod?.Name);
     }
 }
+#endif
