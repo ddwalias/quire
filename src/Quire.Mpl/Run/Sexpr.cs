@@ -669,7 +669,11 @@ public partial class SList : Sexpr
     }
 
     [MirrorVerified("SexprDifferentialTests")]
-    private static string FormatCons(Cons c) => c == null ? "" : " " + c.Field1.ToString() + FormatCons(c.Field2 as Cons);
+    private static string FormatCons(Cons c)
+    {
+        if (c == null) return "";
+        return " " + c.Field1.ToString() + FormatCons(c.Field2 as Cons);
+    }
 
     /// <summary>
     /// <c>(SLIST  a b)</c> when the tail is <see cref="Nul.singleton"/> itself (two spaces: one after the word, one

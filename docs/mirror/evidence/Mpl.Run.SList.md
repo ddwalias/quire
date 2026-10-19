@@ -18,4 +18,6 @@ A runtime `Cons` list in front of an S-expression tail.
 
 ## Test cases
 
-As in Mpl.Run.Sexpr.md.
+`SexprDifferentialTests.SAppend_and_SList_members` directly compares `FormatCons` on null, a proper two-cell `Cons`
+chain, and a `Cons` with a non-list tail. `SexprTests.Appends_and_spliced_lists_print_their_parts` checks proper lists,
+the empty list, and that formatting stops at an improper tail.

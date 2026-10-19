@@ -48,6 +48,7 @@ public class SexprTests
         // Only the shared empty list counts as the end.
         Assert.Equal("(SLIST#  p 5 Nul)", new SList(items, new Nul()).ToString());
         Assert.Equal("(SLIST )", new SList(null!, Nul.singleton).ToString());
+        Assert.Equal("(SLIST  p)", new SList(new Cons(S("p"), "tail"), Nul.singleton).ToString());
     }
 
     [Fact]
