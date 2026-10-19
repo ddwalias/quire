@@ -41,8 +41,8 @@ public class PtcCalculationCoreTrace2DResultsTraceDataPointsMechanicalDifferenti
     private static object Target(Type type, object? range, object? result)
     {
         object target = RuntimeHelpers.GetUninitializedObject(type);
-        type.GetField("<RangePoints>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(target, range);
-        type.GetField("<ResultPoints>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(target, result);
+        type.GetProperty("RangePoints")!.SetValue(target, range);
+        type.GetProperty("ResultPoints")!.SetValue(target, result);
         return target;
     }
 
