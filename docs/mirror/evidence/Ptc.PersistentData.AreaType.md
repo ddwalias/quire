@@ -22,3 +22,14 @@
 
 **Observed** (`PtcPersistentDataAreaTypeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+## Tier A static initializer
+
+- **Artifact-bound reference:** `.mirror-cache/Ptc.Core/d60141dbcf757ae6/Ptc.PersistentData.AreaType.cs` and `.il`, generated with ilspycmd 11.1.0.9782. Original `Ptc.Core` identity above.
+- **Direct test:** `PtcPersistentDataAreaTypeCctorDifferentialTests.TypeOfThis_initializer_matches_PtcCore`.
+
+| Member | Token | Signature | Evidence/status |
+|---|---:|---|---|
+| `.cctor` | `0x06000885` | `private static void()` | Direct comparison of the initializer and its `TypeOfThis` field value. Verified for the initialized state. |
+
+The comparison ran with `QUIRE_REQUIRE_MATHCAD=1` against Release Quire: 1 passed, 0 failed, 0 skipped. This initializer supplies the static type dependency used by `ProtectableTypesRegistry`. The remaining AreaType Tier A members are `GetXmlSerializerStatic`, `get_Protect`, `get_ProtectionDataWrapper`, `set_ProtectionDataWrapper`, `get_Regions`, and `set_Regions`; the serializer path also depends on unimplemented `worksheetRegionType` serializer factories.

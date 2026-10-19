@@ -12,8 +12,6 @@ namespace Quire.PersistentData;
 public partial class AreaType : global::Quire.PersistentData.mathBoardType, global::Quire.PersistentData.IRegionCollectionType, global::Quire.PersistentData.IAreaType, global::Quire.PersistentData.IProtectableDataType
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Type TypeOfThis;
-    [global::Quire.Mirror.MirrorStub]
     public const string XmlRootElementName = "Area";
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;

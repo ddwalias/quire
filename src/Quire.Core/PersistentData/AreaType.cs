@@ -7,6 +7,13 @@ namespace Quire.PersistentData;
 
 public partial class AreaType
 {
+    public static readonly Type TypeOfThis;
+
+    static AreaType()
+    {
+        TypeOfThis = typeof(AreaType);
+    }
+
     [MirrorVerified("PtcPersistentDataAreaTypeMechanicalDifferentialTests")]
     public XmlSerializer GetXmlSerializer(bool useOverrides) => GetXmlSerializerStatic(useOverrides);
 
