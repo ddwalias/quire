@@ -7,9 +7,9 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
+| A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches remain pending full gate or maintainer validation: Rational, RngVal, Type, Dim and DimVal. The Rts initializer event verification merged at `2c4d5d33`. No other unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The 35-member Core MemberGen batch and the ResultManager initialization batch pass generated-path validation, Harness (97/97), Mpl (188/188), and focused Differential (392/392); both gates stop before audit/ratchet on the focused Release assembly-name mismatch documented in lane-c.md. ResultManager's affected Release Mathcad tests passed 6/6; its constructor, `Clear`, and `.cctor` match Release IL exactly. The next independent Core candidate is the unowned Tier A `TraceResultAnalyzer` class, pending dependency and evidence review. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The existing Core cctor/ResultManager branch passes its affected Release Mathcad filter 6/6 and is being gated against current main. `ListResultNode<T>` and `MatrixValueDataAccessorWrapper` pass their Release comparisons, but both gates are blocked by a Quire.Engine shape failure outside Lane C. `TraceResultAnalyzer` is already owned by its active Lane C worktree. See the checkpoint for exact gate reports, owners, and remaining work. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
