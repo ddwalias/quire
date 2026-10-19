@@ -404,6 +404,7 @@ public class RngValDifferentialTests
         {
             ("a", MakeRange(0, 1, 5, "L")),
             ("a_copy", MakeRange(0, 1, 5, "L")),
+            ("diff_init", MakeRange(1, 1, 5, "L")),
             ("diff_n", MakeRange(0, 1, 6, "L")),
             ("diff_dim", MakeRange(0, 1, 5, "T")),
             ("zero_dim", MakeRange(0, 1, 5, "mcd_zero")),

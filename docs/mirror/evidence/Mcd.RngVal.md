@@ -30,9 +30,10 @@ Signatures retain exact decoded metadata types in the inspection record (`class:
 `Dim.Eq_b`, compare initial and increment with ordered early exits, then return the count comparison. The reference
 was inspected with `python tools\reference\reference.py Mcd.RngVal --il` (token `0x060006de`); Release
 `python tools\validation\il_diff.py Quire.Mcd.RngVal::Equals` reports an exact instruction match. The existing
-`RngValDifferentialTests.Equality` directly compares range pairs across equal, differing count, differing dimension,
-identity, interpolated and non-range/null inputs. The full focused differential class passed 5/5 against Mathcad on
-Release Quire (`QUIRE_REQUIRE_MATHCAD=1`).
+`RngValDifferentialTests.Equality` directly compares range pairs across equal, differing initial value, count, dimension,
+increment, identity, interpolated and non-range/null inputs. The differing-initial-value case exercises the false arm
+of the first short-circuit comparison in the mirrored body. The full focused differential class passed 5/5 against
+Mathcad on Release Quire (`QUIRE_REQUIRE_MATHCAD=1`).
 | `get_Rsize() -> i4` | 0x060006e0 | 65963bff88719d17 | Return stored count, including zero or negative counts. | Verified (existing annotation); rerun pending |
 | `get_Isize() -> i4` | 0x060006e1 | 65963bff88719d17 | Return stored count, including zero or negative counts. | Verified (existing annotation); rerun pending |
 | `get(i4) -> r8` | 0x060006e2 | 580322101641261f | Return initial value advanced by index times increment. No bounds check. | Verified (existing annotation); rerun pending |
@@ -130,7 +131,7 @@ The suite contains four scenarios:
 
 - `Construction`: 22 explicit initial/increment/endpoint tuples across increasing and decreasing ranges, fractional/integer steps, same endpoint, contradictory direction, zero step, NaNs, infinities and excessively large counts. Exercises default/custom errors, two/four-argument Range, endpoint and explicit-count IncrRange with counts 0, 1, 5 and -3. Queries index -1, first, second, last and one-past-last, sizes, integral flag, dimension, hash, copy and asRange identity.
 - `Range_operators`: 11 typed values (unitless, units, polymorphic/zero dimensions, complex and string), all pairs for mkVec2/mkRange2 and each pair with four endpoint choices for mkVec3/mkRange3. Captures values and error identities/argument positions.
-- `Equality`: plain/interpolating ranges with matching/different dimensions, count and increment; comparison to number/null; polymorphic hash and physical dimension.
+- `Equality`: plain/interpolating ranges with matching/different initial value, dimensions, count and increment; comparison to number/null; polymorphic hash and physical dimension.
 - `Iterators`: every forRange overload, explicit zero count, descending/fractional ranges, units/errors, forValue for range/scalar/string/null and 2x3, 1x3, 3x1 and 0x0 matrices, `GetHashCode` of a range whose hash bits overlap its count, interpolation `get` from a nonzero start, `asRealVector` elements of a range starting at 2, sequence cursors with empty and nonempty children, it_incr past end, and direct RangeIterator first/next past end. Traversal is bounded at 30 values.
 
 The `Iterators` scenario also compares the RngVal matrix conversions (`asVector`, `asMatrix`, `asRealMatrix` on one range; `asRealVector` on two, with elements shown). `RngValConversionsDifferentialTests` directly compares all four conversion methods on ordinary, interpolated and empty ranges, rendering matrix dimensions, stored values and dimensions. `MatrixIteratorDifferentialTests` directly compares the MatrixIterator constructor and methods on a 2x3 matrix: `first()` at each row/column, `next()` through all elements, identity of each returned cursor, row-to-column transitions, and the terminal null. Field annotations report the state observed in these cases; they do not establish all arbitrary reflected mutations.
