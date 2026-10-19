@@ -41,3 +41,10 @@ exception type and message):
 ## Open
 
 - `GetUnits` was compared only under the default SI system.
+
+## Release IL shape follow-up (2026-10-19)
+
+`GetUnits(Type.Product)` (`0x0600070b`) now reports an exact Release instruction match in
+`python tools\validation\il_diff.py` against the Mathcad artifact above. Its existing direct comparison covers
+dimensionless, polymorphic, ordinary and unknown products, plus null; the required Release
+`UtilitiesDifferentialTests` passed 3/3 with Mathcad. The default SI unit system is the only directly compared system.

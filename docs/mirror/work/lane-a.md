@@ -2,11 +2,126 @@
 
 ## Active handoff
 
-`mirror/a-slist-format-cons` is the active Lane A batch. `mirror/a-scons-il-shape` merged at `b83cc5d`. The
-in-progress `MplForeignMacro` batch and the remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are
-owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave
-it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task
-queue.
+SCons and SList are merged into current `origin/main`; their entries below are historical receipts. The unmerged
+Tok, MplSignature, Rational, NumVal, RngVal, Type, Dim and DimVal branches are pending the main-branch Release-validator assembly-path
+fix. Their gates pass the 392 focused differential tests, then fail because they search for
+`Quire.Focused.Differential.Tests.dll` while the Release output is `Quire.Differential.Tests.dll`; no method audit or
+ratchet runs. Tok owns `src/Quire.Mpl/Run/Sexpr.cs`, MplSignature owns `src/Quire.Mpl/MplSignature.cs`, Rational owns
+`src/Quire.Mpl/Mcd/Rational.cs`, NumVal owns `src/Quire.Mpl/Mcd/NumVal.cs`, RngVal owns
+`src/Quire.Mpl/Mcd/RngVal.cs`, Type owns `src/Quire.Mpl/Mcd/Type.cs`, and Dim owns `src/Quire.Mpl/Mcd/Dim.cs`. Leave
+these files unchanged. `mirror/a-utilities-getunits` is the active independent batch. `mirror/a-rts-resolve-assembly-shape` and
+`mirror/a-unit-system-field-state` remain owned by their existing branches. `MplForeignMacro`, remaining `AppException`,
+`DynamicType` and `InstructionSeq` scopes are owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall`
+depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
+batch receipts below are history, not a task queue.
+
+## Rational Release IL shape (`mirror/a-rational-il-shape`)
+
+- `Rational(double,double)`, `Equals(object)` and `GCD(int,int)` were aligned to the reference Release IL. Original
+  evidence and member tokens are recorded in [Mcd.Rational](../evidence/Mcd.Rational.md); required Release
+  `RationalDifferentialTests` passed 3/3 with Mathcad.
+- Gate blocked at `ffbb221198b73c0e22bc06595a8b469db7d03abd` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`.
+  Report `%LOCALAPPDATA%\Temp\quire-gate-results-dq9q55dw\gate.json`. Harness 97, Mpl 188, Diff 392 passed, no
+  failures or skips. Validator error:
+  `Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-9q4wtt00\Quire.Focused.Differential.Tests.dll)`;
+  ratchet did not run. The batch remains pending.
+
+## NumVal exact Release shapes (`mirror/a-numval-il-shape`)
+
+- `IsPureReal`, `IsPureImag` and `isInt(int*)` now match the reference Release IL exactly. `LoadNaN` remains a
+  structure match with an equivalent stack/local difference. See [Mcd.NumVal](../evidence/Mcd.NumVal.md). Required
+  Release `NumValDifferentialTests` passed 6/6 with Mathcad.
+- Gate blocked at `7610f4a4c208624a71630e7c2733953074e9c9e7` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`.
+  Report `%LOCALAPPDATA%\Temp\quire-gate-results-eeyg5eyx\gate.json`. Harness 97, Mpl 188, Diff 392 passed, no
+  failures or skips. Validator error:
+  `Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-z28fe4i5\Quire.Focused.Differential.Tests.dll)`;
+  coverage/method audit and ratchet did not run. The batch remains pending.
+
+## RngVal.Equals Release IL shape (`mirror/a-rngval-equals`)
+
+- Scope: reproduce Mathcad's nested type, dimension, initial, increment and count checks in `RngVal.Equals(object)`.
+- Original inspected via `python tools\reference\reference.py Mcd.RngVal --il`: `mplrun.dll` 12.0.1.0, SHA-256
+  `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`, token `0x060006de`; see [Mcd.RngVal evidence](../evidence/Mcd.RngVal.md).
+- Release `il_diff.py Quire.Mcd.RngVal::Equals` reports exact. Required Release `RngValDifferentialTests` passed 5/5
+  with Mathcad.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-rngval-equals --jobs 14` blocked at
+  revision `85f022fab65717728cfe00440325b52d9df0b183` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-gpi5qtsb\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-gpi5qtsb\run\summary.json`. Harness 97, Mpl 188 and focused differential
+  392 passed with no failures or skips. The Release validator then failed with
+  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-7_wzezfm\Quire.Focused.Differential.Tests.dll)`;
+  the Release build emits `Quire.Differential.Tests.dll`. Validator exited 1, so method audit/ratchet did not run.
+  The branch remains pending the maintainer's validator fix.
+
+## Type parser and formatter Release IL shapes (`mirror/a-type-parser-format`)
+
+- Scope: align `Parser.Parse`, `Parser.GetNextTokenIf(string)`, `Formatter.OnFunction(Type,int)` and
+  `Formatter.Visit(Product)` to the reference Release instruction sequence. The remaining overloads are outside this
+  batch.
+- Original inspected with `python tools\reference\reference.py Mcd.Type --il`: `mplrun.dll` 12.0.1.0, SHA-256
+  `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`. Tokens: `Parser.Parse` `0x06000780`, `Parser.GetNextTokenIf` `0x06000786`,
+  `Formatter.OnFunction` `0x06000790`, `Formatter.Visit(Product)` `0x06000791`; see [Mcd.Type evidence](../evidence/Mcd.Type.md).
+- Release `il_diff.py` reports all four exact. Required Release `TypeDifferentialTests` passed 4/4 with Mathcad; existing
+  direct comparisons cover parser state, curried functions and product rendering. No wider behavior is claimed.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-type-parser-format --jobs 14` blocked at
+  revision `5232d071ae3ff7458b104b3eda11413e184f32c6` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-p1p1nv0s\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-p1p1nv0s\run\summary.json`. Harness 97, Mpl 188 and focused differential
+  392 passed with no failures or skips. The Release validator then failed with
+  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-mzla92at\Quire.Focused.Differential.Tests.dll)`;
+  the Release build emits `Quire.Differential.Tests.dll`. Validator exited 1, so method audit/ratchet did not run.
+  The branch remains pending the maintainer's validator fix.
+
+## Dim operations Release IL shape (`mirror/a-dim-operations`)
+
+- Scope: align `intern(Dim)`, `IsDimensioned`, `FixDimension`, `Mult`, `Div` and `Pwr` with reference Release IL.
+- Original inspected with `python tools\reference\reference.py Mcd.Dim --il`: `mplrun.dll` 12.0.1.0, SHA-256
+  `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`; tokens `0x060005fa`, `0x060005fc`, `0x06000606`–`0x06000609`. See
+  [Mcd.Dim evidence](../evidence/Mcd.Dim.md).
+- Release `il_diff.py` reports all six methods exact. Required Release `DimDifferentialTests` passed 8/8 with Mathcad;
+  existing direct comparisons cover predicates, special dimensions, arithmetic, powers and interning. No wider behavior
+  is claimed.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-dim-operations --jobs 14` blocked at
+  revision `6badc525d61bae1ae9e6aa3d57046bee675f0724` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-7m0o4ztt\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-7m0o4ztt\run\summary.json`. Harness 97, Mpl 188 and focused differential
+  392 passed with no failures or skips. The Release validator then failed with
+  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-unxdit1x\Quire.Focused.Differential.Tests.dll)`;
+  the Release build emits `Quire.Differential.Tests.dll`. Validator exited 1, so method audit/ratchet did not run.
+  The branch remains pending the maintainer's validator fix.
+
+## DimVal core Release IL shapes (`mirror/a-dimval-core-shapes`)
+
+- Scope: align `dyn(object,Dim)`, `NearlyEqual(object,object,double)`, `GetUnits(Dim,bool)` and `as_result(object)` to
+  the reference Release instruction sequences.
+- Original inspected with `python tools\reference\reference.py Mcd.DimVal --il`: `mplrun.dll` 12.0.1.0, SHA-256
+  `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`; tokens `0x06000653`, `0x06000655`, `0x06000658`, `0x060006ae`. See
+  [Mcd.DimVal evidence](../evidence/Mcd.DimVal.md).
+- Release `il_diff.py` reports all four methods exact. Required Release `DimValDifferentialTests` passed 6/6 with
+  Mathcad; direct comparisons cover value mutation, fallback equality, unit selection and result conversion. No wider
+  behavior is claimed.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-dimval-core-shapes --jobs 14` blocked at
+  revision `46b55ef3c2862f9ac07a1f7017fc19134e007ca` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-mhomu0el\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-mhomu0el\run\summary.json`. Harness 97, Mpl 188 and focused differential
+  392 passed with no failures or skips. The Release validator then failed with
+  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-kb7t5cac\Quire.Focused.Differential.Tests.dll)`;
+  the Release build emits `Quire.Differential.Tests.dll`. Validator exited 1, so method audit/ratchet did not run.
+  The branch remains pending the maintainer's validator fix.
+
+## Utilities.GetUnits Release IL shape (`mirror/a-utilities-getunits`)
+
+- Scope: align `Utilities.GetUnits(Type.Product)` with Mathcad's Release instruction sequence.
+- Original inspected with `python tools\reference\reference.py Mcd.Utilities --il`: `mplrun.dll` 12.0.1.0,
+  SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`, token `0x0600070b`; see [Mcd.Utilities evidence](../evidence/Mcd.Utilities.md).
+- Release `il_diff.py` reports exact. Required Release `UtilitiesDifferentialTests` passed 3/3 with Mathcad; direct
+  cases cover dimensionless, polymorphic, ordinary and unknown products and null, using the default SI unit system.
+- Gate result will be recorded after `lane_merge.py` completes.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 

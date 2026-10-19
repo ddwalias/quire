@@ -28,8 +28,14 @@ public sealed partial class Utilities
     /// <summary>Null for a dimensionless or polymorphic product; otherwise its basis units in the calling thread's
     /// unit system.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
-    public static Units GetUnits(Type.Product product) =>
-        product.IsDimensionless || product.IsPolymorphic ? null : RuntimeOptions.the_unit_system.Normalize(product);
+    public static Units GetUnits(Type.Product product)
+    {
+        if (product.IsDimensionless || product.IsPolymorphic)
+        {
+            return null;
+        }
+        return RuntimeOptions.the_unit_system.Normalize(product);
+    }
 
     /// <summary>Neither infinite nor NaN.</summary>
     [MirrorVerified("UtilitiesDifferentialTests")]
