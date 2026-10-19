@@ -37,29 +37,42 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static MatVal MakeVector0(object[] vals)
     {
-        var result = reserve(vals.Length);
-        foreach (object value in vals) result.PushRaw(ReferenceEquals(value, NumVal.Zero) ? NumVal.ZeroId : value);
-        return result;
+        int num = vals.Length;
+        MatVal matVal = reserve(num);
+        for (int i = 0; i < num; i++)
+        {
+            object obj = vals[i];
+            matVal.PushRaw(obj == NumVal.Zero ? NumVal.ZeroId : obj);
+        }
+        return matVal;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static MatVal reserve(int n) { var result = new MatVal(n); result.Data.m_rows = 0; return result; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static MatVal reserve(int r, int c) { var result = new MatVal(r, c); result.Data.m_rows = 0; return result; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static MatVal Singleton(object o) { var result = new MatVal(1); result.set(0, o); return result; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static MatVal Pair(object o1, object o2) { var result = reserve(2); result.PushRaw(o1); result.PushRaw(o2); return result; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static MatVal Triple(object o1, object o2, object o3) { var result = reserve(3); result.PushRaw(o1); result.PushRaw(o2); result.PushRaw(o3); return result; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal Push(object o) => mcd_set_1(Data.m_rows, o);
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal PushRaw1(object o) { set(Data.m_rows++, o); return this; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal PushRaw(object o) { setNaN(Data.m_rows++, o); return this; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public MatVal PushRaw(double re) { set(Data.m_rows++, re, Dim.identity); return this; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal PushRaw(int re) { set(Data.m_rows++, re, Dim.identity); return this; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public MatVal PushReal(double re) { set(Data.m_rows++, re); return this; }
@@ -68,16 +81,24 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public int PushRawIndex(object o) { set(Data.m_rows++, o); return Data.m_rows; }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal PushVectorArg(object o)
     {
-        var node = o as Cons;
+        Cons cons = o as Cons;
         while (true)
         {
-            if (node == null) AppException.Raise("must be vector", 1u);
-            setspec(Data.m_rows++, node.Field1);
-            if (node.Field2 == null) return this;
-            node = node.Field2 as Cons;
+            if (cons == null)
+            {
+                AppException.Raise("must be vector", 1u);
+            }
+            setspec(Data.m_rows++, cons.Field1);
+            if (cons.Field2 == null)
+            {
+                break;
+            }
+            cons = cons.Field2 as Cons;
         }
+        return this;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     private MatVal PromoteDim() { m_dim ??= Dim.identity; return this; }
@@ -88,19 +109,29 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public MatVal Reshape(int r, int c) { Data.m_rows = r; Data.m_anr = r; Data.m_cols = c; return PromoteDim(); }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal SetShape() { Data.m_rows = Data.m_anr; if (m_parr != null) Canonicalize(); return PromoteDim(); }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public MatVal SetShape1() { Data.m_rows = Data.m_anr; return this; }
 
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static MatVal map(F<object, object> f, DimVal collection)
     {
-        int length = collection.Isize;
-        var result = reserve(length);
-        for (int i = 0; i < length; ++i) result.Push(f(collection.iterator_get(i)));
-        return collection is MatVal matrix ? result.Reshape(matrix.Rows, matrix.Cols) : result;
+        int isize = collection.Isize;
+        MatVal matVal = reserve(isize);
+        for (int i = 0; i < isize; i++)
+        {
+            matVal.Push(f(collection.iterator_get(i)));
+        }
+        if (collection is MatVal matVal2)
+        {
+            matVal = matVal.Reshape(matVal2.Rows, matVal2.Cols);
+        }
+        return matVal;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static MatVal map(Function func, DimVal collection) => map(func.AsDelegate_1(), collection);
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static MatVal map(F<object, object, object> f, DimVal rvals, DimVal cvals)
@@ -115,6 +146,7 @@ public sealed partial class MatVal
         return result.Reshape(rows, cols);
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static MatVal map(Function func, DimVal rvals, DimVal cvals) => map(func.AsDelegate_2(), rvals, cvals);
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static object[] mapv(F<object, object> f, DimVal collection)
@@ -125,6 +157,7 @@ public sealed partial class MatVal
         return result;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static object[] as_object_vector(DimVal collection)
     {
         int length = collection.Isize;
@@ -133,34 +166,66 @@ public sealed partial class MatVal
         return result;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static object mkRange2(object first, object last) => new MatVal(first as DimVal, last as DimVal);
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static object mkRange3(object first, object next, object last) => new MatVal(first as DimVal, next as DimVal, last as DimVal);
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
+    [MirrorVerified("MatValCollectionDifferentialTests")]
     public static object vectorize(Function f, object[] args)
     {
-        f.AssertFullApp(args.Length);
-        arg_desc[] matrices = null;
-        int count = 0, rows = 0, cols = 0;
-        bool allPolymorphic = true;
-        for (int i = 0; i < args.Length; ++i)
+        int num = args.Length;
+        arg_desc[] array = null;
+        int num2 = 0;
+        int num3 = 0;
+        int num4 = 0;
+        bool flag = true;
+        f.AssertFullApp(num);
+        for (int i = 0; i < num; i++)
         {
-            if (args[i] is not MatVal matrix) continue;
-            if (count == 0) { matrices = new arg_desc[args.Length - i]; rows = matrix.Rows; cols = matrix.Cols; }
-            else if (rows != matrix.Rows || cols != matrix.Cols) AppException.Raise("unequal matrix dimensions");
-            matrices[count++] = new arg_desc { m_pos = i, m_mat = matrix };
-            if (!matrix.IsPolymorphic) allPolymorphic = false;
-        }
-        if (count == 0) return f.Apply(args);
-        var result = new MatVal(rows, cols);
-        for (int c = 0; c < cols; ++c)
-            for (int r = 0; r < rows; ++r)
+            if (args[i] is MatVal matVal)
             {
-                for (int i = 0; i < count; ++i) matrices[i].FetchInto(args, r, c);
-                result.set_2(r, c, f.Apply(args));
+                if (num2 == 0)
+                {
+                    array = new arg_desc[num - i];
+                    num3 = matVal.Rows;
+                    num4 = matVal.Cols;
+                }
+                else if (num3 != matVal.Rows || num4 != matVal.Cols)
+                {
+                    AppException.Raise("unequal matrix dimensions");
+                }
+                array[num2].m_mat = matVal;
+                array[num2].m_pos = i;
+                num2++;
+                if (!matVal.IsPolymorphic)
+                {
+                    flag = false;
+                }
             }
-        if (result.IsPolymorphic && result.m_dim == null && !allPolymorphic) result.m_dim = Dim.identity;
-        return result;
+        }
+        if (num2 == 0)
+        {
+            return f.Apply(args);
+        }
+        MatVal matVal2 = new MatVal(num3, num4);
+        for (int j = 0; j < num4; j++)
+        {
+            for (int k = 0; k < num3; k++)
+            {
+                for (int l = 0; l < num2; l++)
+                {
+                    array[l].FetchInto(args, k, j);
+                }
+                matVal2.set_2(k, j, f.Apply(args));
+            }
+        }
+        if (matVal2.IsPolymorphic && matVal2.m_dim == null && !flag)
+        {
+            matVal2.m_dim = Dim.identity;
+        }
+        return matVal2;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public MatVal Fill(object v, int init, int incr, int n)
@@ -171,7 +236,14 @@ public sealed partial class MatVal
         return FillThis(v, init, incr, n);
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
-    private MatVal FillThis(object o, int init, int incr, int n) => o is NumVal number ? FillThis(number, init, incr, n) : FillThisPtrs(o, init, incr, n);
+    private MatVal FillThis(object o, int init, int incr, int n)
+    {
+        if (o is NumVal x)
+        {
+            return FillThis(x, init, incr, n);
+        }
+        return FillThisPtrs(o, init, incr, n);
+    }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     private MatVal FillThis(NumVal x, int init, int incr, int n)
     {
@@ -188,8 +260,12 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     private MatVal FillThisPtrs(object p, int init, int incr, int n)
     {
-        int index = init + m_offset;
-        for (int i = 0; i < n; ++i, index += incr) set_ptrs_at(index, p);
+        int num = init + m_offset;
+        for (int i = 0; i < n; i++)
+        {
+            set_ptrs_at(num, p);
+            num += incr;
+        }
         return this;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
@@ -197,9 +273,18 @@ public sealed partial class MatVal
     {
         if (incr == 1)
         {
-            int end = init + n;
-            for (int i = init; i < end; ++i) arr[i] = v;
+            int num = init + n;
+            for (int i = init; i < num; i++)
+            {
+                arr[i] = v;
+            }
+            return;
         }
-        else for (int i = 0, index = init; i < n; ++i, index += incr) arr[index] = v;
+        int num2 = init;
+        for (int j = 0; j < n; j++)
+        {
+            arr[num2] = v;
+            num2 += incr;
+        }
     }
 }
