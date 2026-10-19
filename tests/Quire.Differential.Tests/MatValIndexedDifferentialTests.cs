@@ -41,11 +41,11 @@ public class MatValIndexedDifferentialTests
     private static string Show(Side side, object? target, object? value)
     {
         if (value == null) return "null";
-        if (target != null && ReferenceEquals(target, value)) return "same-instance";
-        if (side.T("Mcd.MatVal").IsInstanceOfType(value)) return MatValDifferentialTests.Storage(side, value);
-        if (side.Dim.IsInstanceOfType(value)) return (string)Reflect.Call(value, "ToString")!;
-        if (side.T("Mcd.MatDim").IsInstanceOfType(value)) return MatDimDifferentialTests.DescribeDimension(side, value);
-        return side.Show(value);
+        string prefix = target != null && ReferenceEquals(target, value) ? "same-instance: " : "";
+        if (side.T("Mcd.MatVal").IsInstanceOfType(value)) return prefix + MatValDifferentialTests.Storage(side, value);
+        if (side.Dim.IsInstanceOfType(value)) return prefix + (string)Reflect.Call(value, "ToString")!;
+        if (side.T("Mcd.MatDim").IsInstanceOfType(value)) return prefix + MatDimDifferentialTests.DescribeDimension(side, value);
+        return prefix + side.Show(value);
     }
 
     private static string State(Side side, object target) => MatValDifferentialTests.Storage(side, target);
@@ -59,6 +59,15 @@ public class MatValIndexedDifferentialTests
             originalShow: value => Show(Side.Mathcad, mTarget, value),
             quireState: target => State(Side.Quire, target),
             originalState: target => State(Side.Mathcad, target));
+    }
+
+    private static void CompareDivision(string caseId, MethodInfo qMethod, object qMat, double qScalar,
+        MethodInfo mMethod, object mMat, double mScalar, int expectedToken)
+    {
+        Assert.Equal(expectedToken, mMethod.MetadataToken);
+        MethodComparison.Compare(caseId, Contract, qMethod, null, [qMat, qScalar], mMethod, null, [mMat, mScalar],
+            quireShow: value => Show(Side.Quire, qMat, value),
+            originalShow: value => Show(Side.Mathcad, mMat, value));
     }
 
     private static void CompareBoth(string caseId, string methodName, Type[] parameterTypes, int token,
@@ -140,9 +149,15 @@ public class MatValIndexedDifferentialTests
         // 0x060004b5: DynCall(object)
         CompareBoth("DynCall.vector", "DynCall", [typeof(object)], 0x060004b5, s => [s.Num(0, 0, "identity")],
             rows: 2, cols: 1, stride: 2, offset: 0);
+        CompareBoth("DynCall.vector.non_integer", "DynCall", [typeof(object)], 0x060004b5, s => [s.Num(0.5, 0, "identity")],
+            rows: 2, cols: 1, stride: 2, offset: 0);
         // 0x060004b6: DynCall(object, object)
         CompareBoth("DynCall.matrix", "DynCall", [typeof(object), typeof(object)], 0x060004b6,
             s => [s.Num(1, 0, "identity"), s.Num(0, 0, "identity")]);
+        CompareBoth("DynCall.matrix.non_int_first", "DynCall", [typeof(object), typeof(object)], 0x060004b6,
+            s => [s.Num(1.5, 0, "identity"), s.Num(0, 0, "identity")]);
+        CompareBoth("DynCall.matrix.non_int_second", "DynCall", [typeof(object), typeof(object)], 0x060004b6,
+            s => [s.Num(1, 0, "identity"), s.Num(0.5, 0, "identity")]);
 
         // 0x060004b7: mcd_get_1(object, object) (static)
         {
@@ -190,6 +205,22 @@ public class MatValIndexedDifferentialTests
         // 0x060004db: get_type_2(int, int, double)
         CompareBoth("get_type_2.finite", "get_type_2", [typeof(int), typeof(int), typeof(double)], 0x060004db, [0, 0, 1e-6]);
         CompareBoth("get_type_2.nan_thresh", "get_type_2", [typeof(int), typeof(int), typeof(double)], 0x060004db, [1, 1, double.NaN]);
+        CompareBoth("get_type_2.cell_1_1_nan", "get_type_2", [typeof(int), typeof(int), typeof(double)], 0x060004db,
+            [1, 1, 1e-6],
+            setup: (side, mat) =>
+            {
+                var rarr = (double[])Get(mat, "m_rarr")!;
+                rarr[5] = double.NaN;
+            },
+            rows: 2, cols: 2, stride: 3, offset: 1);
+        CompareBoth("get_type_2.col2_nan", "get_type_2", [typeof(int), typeof(int), typeof(double)], 0x060004db,
+            [0, 2, 1e-6],
+            setup: (side, mat) =>
+            {
+                var rarr = (double[])Get(mat, "m_rarr")!;
+                rarr[4] = double.NaN;
+            },
+            rows: 2, cols: 3, stride: 2, offset: 0);
 
         // 0x060004de: element_types(MatAxis, int, double)
         {
@@ -236,11 +267,22 @@ public class MatValIndexedDifferentialTests
 
         // 0x06000556: op_Division(MatVal, double)
         {
-            var qMat = Matrix(Side.Quire);
-            var mMat = Matrix(Side.Mathcad);
             var qDiv = StaticMethod(Side.Quire, "op_Division", Side.Quire.T("Mcd.MatVal"), typeof(double));
             var mDiv = StaticMethod(Side.Mathcad, "op_Division", Side.Mathcad.T("Mcd.MatVal"), typeof(double));
-            Compare("op_Division.scalar2", qDiv, null, [qMat, 2.0], mDiv, null, [mMat, 2.0], 0x06000556);
+
+            var qMatUnpacked = Matrix(Side.Quire);
+            var mMatUnpacked = Matrix(Side.Mathcad);
+            CompareDivision("op_Division.unpacked", qDiv, qMatUnpacked, 2.0, mDiv, mMatUnpacked, 2.0, 0x06000556);
+
+            var qMatPacked = Matrix(Side.Quire, rows: 2, cols: 2, stride: 2, offset: 0);
+            var mMatPacked = Matrix(Side.Mathcad, rows: 2, cols: 2, stride: 2, offset: 0);
+            CompareDivision("op_Division.packed_mutable", qDiv, qMatPacked, 2.0, mDiv, mMatPacked, 2.0, 0x06000556);
+
+            var qMatImmutable = Matrix(Side.Quire, rows: 2, cols: 2, stride: 2, offset: 0);
+            var mMatImmutable = Matrix(Side.Mathcad, rows: 2, cols: 2, stride: 2, offset: 0);
+            Set(qMatImmutable, "Immutable", true);
+            Set(mMatImmutable, "Immutable", true);
+            CompareDivision("op_Division.packed_immutable", qDiv, qMatImmutable, 2.0, mDiv, mMatImmutable, 2.0, 0x06000556);
         }
     }
 }
