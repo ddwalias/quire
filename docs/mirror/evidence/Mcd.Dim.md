@@ -114,3 +114,13 @@ tab-separated mismatch errors, polymorphic and null products, and other threads 
 - The rank is taken once, from whichever thread initialises the type; initialising under a unit system whose rank
   isn't 8 was not exercised.
 - The type initializer remains Tested; constructor cases cover the recorded fresh, duplicate and marker scenarios only.
+
+## Release IL shape follow-up (2026-10-19)
+
+The public `intern(Dim)` (`0x060005fa`), `IsDimensioned(Dim)` (`0x060005fc`), `FixDimension(Dim)` (`0x06000606`),
+`Mult(Dim,Dim)` (`0x06000607`), `Div(Dim,Dim)` (`0x06000608`) and `Pwr(Dim,double)` (`0x06000609`) now report exact
+Release IL matches in `python tools\validation\il_diff.py` against the original artifact above. The `Div` null path
+returns the original null argument, preserving its IL sequence; the other changes align null and marker branches and
+use the reference's `i != rank` loop condition. Existing `DimDifferentialTests` directly compare these operations;
+the required Release class passed 8/8 with Mathcad. Other constructors, private interners and cases remain as described
+in the test cases and Open sections.

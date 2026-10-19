@@ -146,7 +146,14 @@ public sealed partial class Dim
 
     /// <summary><see cref="mcd_zero"/> becomes <see cref="identity"/>; anything else is returned as is.</summary>
     [MirrorVerified("DimDifferentialTests")]
-    public static Dim intern(Dim d) => d == mcd_zero ? identity : d;
+    public static Dim intern(Dim d)
+    {
+        if (d == mcd_zero)
+        {
+            return identity;
+        }
+        return d;
+    }
 
     [MirrorVerified("DimDifferentialTests")]
     public static Dim ValDim(Dim x) => x == mcd_zero ? identity : x;
@@ -156,7 +163,7 @@ public sealed partial class Dim
     public static bool IsDimensioned(Dim x)
     {
         if (x == null) return false;
-        for (int i = 0, n = s_rank; i < n; i++)
+        for (int i = 0, n = s_rank; i != n; i++)
             if (x.m_vec[i] != 0) return true;
         return false;
     }
@@ -213,7 +220,14 @@ public sealed partial class Dim
     }
 
     [MirrorVerified("DimDifferentialTests")]
-    public static Dim FixDimension(Dim d) => d ?? identity;
+    public static Dim FixDimension(Dim d)
+    {
+        if (d != null)
+        {
+            return d;
+        }
+        return identity;
+    }
 
     /// <summary>
     /// The product. An identity or polymorphic operand gives the other one (polymorphic winning, with
@@ -222,9 +236,23 @@ public sealed partial class Dim
     [MirrorVerified("DimDifferentialTests")]
     public static Dim Mult(Dim x, Dim y)
     {
-        if (x == identity || y == null) return y == mcd_zero ? identity : y;
-        if (y == identity || x == null) return x == mcd_zero ? identity : x;
-        for (int i = 0, n = s_rank; i < n; i++)
+        if (x == identity || y == null)
+        {
+            if (y != mcd_zero)
+            {
+                return y;
+            }
+            return identity;
+        }
+        if (y == identity || x == null)
+        {
+            if (x != mcd_zero)
+            {
+                return x;
+            }
+            return identity;
+        }
+        for (int i = 0, n = s_rank; i != n; i++)
             s_vec[i] = x.m_vec[i] + y.m_vec[i];
         return intern();
     }
@@ -237,9 +265,9 @@ public sealed partial class Dim
     public static Dim Div(Dim x, Dim y)
     {
         if (y == identity || x == null) return x;
-        if (y == null) return null;
+        if (y == null) return y;
         if (x == y) return identity;
-        for (int i = 0, n = s_rank; i < n; i++)
+        for (int i = 0, n = s_rank; i != n; i++)
             s_vec[i] = x.m_vec[i] - y.m_vec[i];
         return intern();
     }
@@ -254,7 +282,7 @@ public sealed partial class Dim
     {
         if (x == identity || x == null || e == 1.0) return x;
         if (e == 0.0) return identity;
-        for (int i = 0, n = s_rank; i < n; i++)
+        for (int i = 0, n = s_rank; i != n; i++)
             s_vec[i] = (int)Math.Round(x.m_vec[i] * e, 0);
         return intern();
     }
