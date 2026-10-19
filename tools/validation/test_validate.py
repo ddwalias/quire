@@ -62,6 +62,56 @@ class PhaseProjectsTests(unittest.TestCase):
             self.assertEqual(phase_projects(root), ['New.Tests'])
 
 
+class ProfileRatchetTests(unittest.TestCase):
+    def test_filtered_phase_carries_untouched_methods_and_ratchets_changed_source(self):
+        from validate import profile_ratchet
+        from validate import ROOT
+        counts = {'total': 1, 'compared': 1, 'declaration_only': 0, 'excluded': 0, 'missing': 0,
+                  'structure_mismatch': 0, 'uncovered': 0, 'verified_unsupported': 0}
+        baseline = {'schema': 4, 'profile': 'phase', 'types': {'P|A': counts.copy(), 'P|B': counts.copy()},
+                    'methods': {'P|A::Changed`0()->System.Void|False': 'compared',
+                                'P|B::Untouched`0()->System.Void|False': 'compared'},
+                    'tests': {'P|A::Changed`0()->System.Void|False': ['changedtests'],
+                              'P|B::Untouched`0()->System.Void|False': ['untouchedtests']},
+                    'exact': ['P|A::Changed`0()->System.Void|False',
+                              'P|B::Untouched`0()->System.Void|False']}
+        current = {'schema': 4, 'profile': 'phase', 'types': {'P|A': counts.copy(), 'P|B': counts.copy()},
+                   'methods': {'P|A::Changed`0()->System.Void|False': 'uncovered',
+                               'P|B::Untouched`0()->System.Void|False': 'uncovered',
+                               'P|A::Added`0()->System.Void|False': 'uncovered',
+                               'P|C::Preexisting`0()->System.Void|False': 'no_counterpart'},
+                   'tests': {'P|A::Changed`0()->System.Void|False': ['changedtests']}, 'exact': [],
+                   'lint': [], 'bodies': {}, 'writes': {}}
+        coverage = {'methods': [
+            {'project': 'P', 'type': 'A', 'signature': 'Changed`0()->System.Void|False',
+             'source': [{'file': str(ROOT / 'src/Quire.Core/A.cs')}], 'cases': []},
+            {'project': 'P', 'type': 'B', 'signature': 'Untouched`0()->System.Void|False',
+             'source': [{'file': str(ROOT / 'src/Quire.Core/B.cs')}], 'cases': []},
+            {'project': 'P', 'type': 'C', 'signature': 'Preexisting`0()->System.Void|False',
+             'source': [{'file': str(ROOT / 'src/Quire.Core/C.cs')}], 'cases': []},
+            {'project': 'P', 'type': 'A', 'signature': 'Added`0()->System.Void|False',
+             'source': [{'file': str(ROOT / 'src/Quire.Core/A.cs')}], 'cases': []}]}
+        with unittest.mock.patch('ratchet.snapshot', return_value=current):
+            result = profile_ratchet(coverage, {'lint': []}, False, 'phase', Path('baseline.json'), baseline,
+                                     diff_filter='FullyQualifiedName~ChangedTests',
+                                     changed_sources=['src/Quire.Core/A.cs'])
+        self.assertFalse(result['ok'])
+        self.assertEqual(result['scope'], 'phase-filtered methods')
+        self.assertEqual(result['snapshot']['methods']['P|B::Untouched`0()->System.Void|False'], 'compared')
+        self.assertEqual(result['snapshot']['methods']['P|A::Changed`0()->System.Void|False'], 'uncovered')
+        self.assertNotIn('P|C::Preexisting`0()->System.Void|False', result['snapshot']['methods'])
+        self.assertTrue(any('P|A::Added`0()->System.Void|False: new method is uncovered' in row
+                            for row in result['regressions']))
+        self.assertEqual(result['snapshot']['types'], baseline['types'])
+
+    def test_filtered_phase_still_requires_its_phase_baseline(self):
+        from validate import profile_ratchet
+        result = profile_ratchet({}, {}, False, 'phase', Path('missing.json'), None,
+                                 diff_filter='FullyQualifiedName~ChangedTests')
+        self.assertFalse(result['ok'])
+        self.assertIn('No baseline', result['regressions'][0])
+
+
 class ResultTests(unittest.TestCase):
     def check(self, outcomes, summary="Completed", allow=False):
         with tempfile.TemporaryDirectory() as directory:

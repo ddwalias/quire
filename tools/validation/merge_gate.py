@@ -232,6 +232,7 @@ def phase_diff_filter(changed):
     """Narrow the phase differential run to classes changed by the candidate.
 
     A shared comparison helper change can affect every mechanical class, so retain the full suite for those.
+    Filtered phase coverage is ratcheted per changed-source and selected-test methods.
     """
     prefix = 'tests/Quire.Differential.Tests/'
     paths = [p for p in changed if p.lower().startswith(prefix.lower()) and p.lower().endswith('.cs')]
@@ -240,10 +241,11 @@ def phase_diff_filter(changed):
     return '|'.join(f'FullyQualifiedName~{Path(p).stem}' for p in sorted(paths))
 
 
-def phase_command(tree, results, baseline, timeout, dotnet, diff_filter=None):
+def phase_command(tree, results, baseline, timeout, dotnet, diff_filter=None, changed_sources=()):
     """The clone's validator with the phase profile: every solution test project, every manifest project's methods,
     the phase baseline restored from the base, and no proposals. Differential tests may be scoped to the candidate's
-    changed classes; the standalone phase closure audit remains unfiltered. The phase profile runs no mutation."""
+    changed classes; the closure audit still inventories every method, while the coverage ratchet scopes filtered
+    results to changed source files and selected test classes. The phase profile runs no mutation."""
     command = [sys.executable, '-I', '-B', str(tree / 'tools/validation/validate.py'), '--profile', 'phase',
             '--results', str(results), '--baseline', str(tree / PHASE_BASELINE), '--write-baseline', str(baseline),
             '--timeout', str(timeout), '--dotnet', dotnet, '--allow-phase-differential-failures']
@@ -252,6 +254,8 @@ def phase_command(tree, results, baseline, timeout, dotnet, diff_filter=None):
         # class. Record that as a gap while enforcing every executed comparison; an unfiltered phase run still rejects
         # skips.
         command += ['--diff-filter', diff_filter, '--allow-differential-skips']
+        for path in changed_sources:
+            command += ['--phase-changed-source', path]
     return command
 
 
@@ -292,7 +296,8 @@ def prune_phase_runs(temp, keep=PHASE_RUNS_KEPT):
         remove_tree(directory)
 
 
-def phase_validation(tip, base, restore, dotnet, timeout, temp, repo=ROOT, diff_filter=None):
+def phase_validation(tip, base, restore, dotnet, timeout, temp, repo=ROOT, diff_filter=None,
+                     changed_sources=()):
     """(validator exit, reasons, results, new phase baseline bytes) of the phase profile on `tip`, for a branch that
     changes projects the focused profile does not validate. Like the focused run it validates a separate clone with
     the same restored paths, but in `temp` (phase_temp), where Windows' dotnet.exe can build and test it from WSL.
@@ -307,7 +312,7 @@ def phase_validation(tip, base, restore, dotnet, timeout, temp, repo=ROOT, diff_
                 checkout_paths(base, restore, cwd=tree)
         except (RuntimeError, OSError) as error:
             return None, [f'phase: cannot prepare the validation clone: {error}'], results, None
-        command = phase_command(tree, results, baseline, timeout, dotnet, diff_filter)
+        command = phase_command(tree, results, baseline, timeout, dotnet, diff_filter, changed_sources)
         print('Validating (phase):', ' '.join(command), flush=True)
         code = subprocess.run(command, cwd=tree, env=dict(os.environ, QUIRE_WINDOWS_TEMP=str(temp))).returncode
         summary_path = results / 'summary.json'
@@ -817,15 +822,17 @@ def main():
                     reasons = baseline_regressions(base, baseline)
         phase_record = phase_baseline = None
         if phase:
+            phase_filter = phase_diff_filter(changed)
+            phase_sources = [p for p in changed if p.lower().startswith('src/') and p.lower().endswith('.cs')]
             if reasons:
                 phase_record = {'skipped': 'the focused validation blocked'}
             else:
                 started = time.monotonic()
                 phase_code, phase_reasons, phase_results, phase_baseline = phase_validation(
-                    tip, base, restore, phase, args.timeout, temp, ROOT, phase_diff_filter(changed))
+                    tip, base, restore, phase, args.timeout, temp, ROOT, phase_filter, phase_sources)
                 durations['phase'] = round(time.monotonic() - started)
                 reasons = phase_reasons
-                phase_record = {'dotnet': phase, 'diff_filter': phase_diff_filter(changed),
+                phase_record = {'dotnet': phase, 'diff_filter': phase_filter, 'changed_sources': phase_sources,
                                 'results': str(phase_results), 'validator_exit': phase_code,
                                 'reasons': phase_reasons}
         record = {'branch': args.branch, 'base': base, 'tip': tip, 'changed': changed, 'protected_changed': touched,

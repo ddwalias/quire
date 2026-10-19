@@ -53,6 +53,11 @@ Phase closure is still open; check [WORK.md](../WORK.md) for its current status.
 gate encounters the documented phase-baseline or method-audit blocker, record it and continue only with independent
 work that can still be merged.
 
+When a candidate changes differential test classes, the phase gate filters comparisons to those classes and ratchets
+their results plus methods from changed C# source files. It retains the committed phase coverage for unrelated methods
+that the filtered run did not execute, while still detecting changed method regressions, additions and removals.
+Changes to shared comparison helpers keep the full phase differential suite and full phase coverage ratchet.
+
 ## Mutation results
 
 The gate owns the mutation pass. Fix all live survivors it reports before retrying. A provably equivalent survivor or

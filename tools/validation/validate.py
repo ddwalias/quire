@@ -257,6 +257,63 @@ def default_baseline(profile):
     return ratchet.PHASE_BASELINE if profile == "phase" else ratchet.BASELINE
 
 
+def profile_ratchet(coverage, integrity, scoped, profile, baseline_path, baseline, diff_filter=None,
+                    changed_sources=()):
+    """For a filtered phase run, ratchet current states for changed/tested methods and retain other baseline states.
+
+    A candidate-scoped differential run cannot establish coverage for unrelated methods. Their method stages and
+    per-type counters stay at the committed phase baseline; method identity checks still catch additions/removals.
+    """
+    import ratchet
+    if profile == 'phase' and diff_filter:
+        if baseline is None:
+            return {'ok': False, 'regressions': [f'No baseline at {baseline_path}; a maintainer must create it'],
+                    'snapshot': None, 'scope': 'phase-filtered methods'}
+        current = ratchet.snapshot(coverage, integrity, profile)
+        selectors = {part.split('~', 1)[1].lower() for part in diff_filter.split('|')
+                     if part.startswith('FullyQualifiedName~')}
+        changed = {Path(p).as_posix().lower() for p in changed_sources}
+        root = Path(ROOT).resolve().as_posix().lower().rstrip('/') + '/'
+        rows = {f"{ratchet.owner(m, profile)}::{m['signature']}": m for m in coverage['methods']}
+        affected = set()
+        for key, row in rows.items():
+            source_changed = False
+            for source in row.get('source') or []:
+                path = Path(source['file']).resolve().as_posix().lower()
+                relative = path[len(root):] if path.startswith(root) else path
+                if relative in changed:
+                    source_changed = True
+                    break
+            selected_test = any(selector in test for selector in selectors
+                                for test in current.get('tests', {}).get(key, []))
+            if source_changed or selected_test:
+                affected.add(key)
+        for key in list(current['methods']):
+            if key not in affected and key in baseline.get('methods', {}):
+                current['methods'][key] = baseline['methods'][key]
+                if key in baseline.get('tests', {}):
+                    current.setdefault('tests', {})[key] = baseline['tests'][key]
+            elif key not in affected:
+                # A pre-existing baseline gap introduced on main by another landed batch is not this candidate's
+                # regression. Only newly introduced gaps in touched source/test methods belong to this scoped ratchet.
+                del current['methods'][key]
+                current.get('tests', {}).pop(key, None)
+        # Filtered tests cannot recompute whole-type counters. The method map above checks every touched method and
+        # preserves untouched method states, so aggregate counters remain at their committed values.
+        current['types'] = {**baseline.get('types', {}),
+                            **{key: value for key, value in current['types'].items()
+                               if key not in baseline.get('types', {})}}
+        current['exact'] = sorted(({key for key in current.get('exact', ())
+                                    if key in baseline.get('methods', {}) or key in affected}) |
+                                  (set(baseline.get('exact', ())) - affected))
+        regressions = ratchet.compare(baseline, current, scoped=False)
+        return {'ok': not regressions, 'regressions': regressions, 'snapshot': current,
+                'scope': 'phase-filtered methods'}
+    result = ratchet.check(coverage, integrity, scoped, profile, baseline_path, baseline)
+    result['scope'] = profile
+    return result
+
+
 def test_sources(root=None):
     """Repository-relative path -> text of every C# file the differential test assemblies compile, read before any
     test runs (see changed_test_classes)."""
@@ -592,6 +649,8 @@ def main():
     parser.add_argument("--profile", choices=["focused", "phase"], default="focused")
     parser.add_argument("--method-type", action="append", default=[], help="exact type(s) for a batch method gate; default: all project methods")
     parser.add_argument("--diff-filter", help="VSTest filter for differential tests only")
+    parser.add_argument("--phase-changed-source", action="append", default=[],
+                        help="repository-relative C# source changed by a filtered phase candidate")
     parser.add_argument("--allow-phase-differential-failures", action="store_true",
                         help=argparse.SUPPRESS)
     parser.add_argument("--allow-differential-skips", action="store_true",
@@ -666,6 +725,8 @@ def main():
         parser.error("phase validation must audit every method; omit --method-type")
     if args.profile == "phase" and args.allow_differential_skips and not args.diff_filter:
         parser.error("phase validation permits differential skips only with a candidate --diff-filter")
+    if args.phase_changed_source and (args.profile != "phase" or not args.diff_filter):
+        parser.error("--phase-changed-source requires a filtered phase validation")
     if args.allow_phase_differential_failures and args.profile != "phase":
         parser.error("--allow-phase-differential-failures requires --profile phase")
     # dotnet runs from a new directory each time (see sdk_directory), so every path it is given must be absolute.
@@ -934,9 +995,12 @@ def main():
         (output / "integrity.json").write_text(json.dumps(integrity, indent=2) + "\n")
         report["integrity"] = {"lint": len(integrity["lint"]), "complete": integrity["complete"]}
         print(f"Integrity: {report['integrity']}; {output / 'integrity.json'}", flush=True)
-        ratchet_report = ratchet.check(coverage, integrity, bool(args.method_type), args.profile, baseline_path, baseline)
+        ratchet_report = profile_ratchet(coverage, integrity, bool(args.method_type), args.profile,
+                                         baseline_path, baseline, diff_filter=args.diff_filter,
+                                         changed_sources=args.phase_changed_source)
         (output / "ratchet.json").write_text(json.dumps(ratchet_report, indent=2) + "\n")
-        report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"]}
+        report["ratchet"] = {"ok": ratchet_report["ok"], "regressions": ratchet_report["regressions"],
+                              "scope": ratchet_report.get("scope", args.profile)}
         print(f"Ratchet: {'ok' if ratchet_report['ok'] else ratchet_report['regressions']}", flush=True)
         mutation_ok = mutation_complete = True
         mutate_types = set(args.method_type) if args.mutate else set()

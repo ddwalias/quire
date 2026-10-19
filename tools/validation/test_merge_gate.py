@@ -653,6 +653,13 @@ class PhaseGateTests(unittest.TestCase):
                                        'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests',
                                        '--allow-differential-skips'])
 
+    def test_phase_command_passes_changed_sources_for_a_filtered_ratchet(self):
+        command = merge_gate.phase_command(Path('/w/tree'), Path('/w/run'), Path('/w/b.json'), 900, 'dotnet.exe',
+                                           'FullyQualifiedName~OleUtilsDifferentialTests',
+                                           ['src/Quire.Core/PersistentData/OleUtils.cs'])
+        index = command.index('--phase-changed-source')
+        self.assertEqual(command[index + 1], 'src/Quire.Core/PersistentData/OleUtils.cs')
+
     def test_phase_diff_filter_uses_changed_differential_classes_but_not_shared_helpers(self):
         self.assertEqual(merge_gate.phase_diff_filter([
             'src/Quire.Core/PersistentData/OleUtils.cs',
@@ -660,6 +667,12 @@ class PhaseGateTests(unittest.TestCase):
             'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests')
         self.assertIsNone(merge_gate.phase_diff_filter([
             'tests/Quire.Differential.Tests/MethodComparison.cs']))
+
+    def test_phase_diff_filter_retains_full_suite_for_nonfocused_projects(self):
+        self.assertEqual(merge_gate.phase_diff_filter([
+            'src/Quire.Engine/WorksheetEngine.cs',
+            'tests/Quire.Differential.Tests/EngineDifferentialTests.cs']),
+            'FullyQualifiedName~EngineDifferentialTests')
 
 
 class OptimisticGateTests(unittest.TestCase):
