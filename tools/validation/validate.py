@@ -528,6 +528,10 @@ def verdict(report):
             gaps.append("mutation incomplete")
         if report.get("phase_differential_failures"):
             gaps.append(f"{report['phase_differential_failures']} existing phase differential failures; method ratchet applies")
+        if report.get("phase_differential_skips"):
+            gaps.append(f"{report['phase_differential_skips']} phase differential cases skipped")
+        if report.get("phase_coverage_skips"):
+            gaps.append(f"{report['phase_coverage_skips']} phase coverage cases skipped")
     if report.get("complete"):
         gate, reasons = "would pass", []
     elif report.get("gate_passed"):
@@ -865,14 +869,18 @@ def main():
                 coverage_counts = read_trx(coverage_dir / coverage_trx.name,
                                            args.allow_differential_skips,
                                            allow_failures=allow_phase_failures)
+                if (args.profile == "phase" and args.diff_filter and args.allow_differential_skips
+                        and coverage_counts["skipped"]):
+                    report["phase_coverage_skips"] = coverage_counts["skipped"]
                 if result.returncode and (not allow_phase_failures or not coverage_counts["failed"]):
                     raise ValueError(f"{project}: coverage run exited {result.returncode}; inspect its log")
                 if coverage_counts["failed"] and allow_phase_failures:
                     report["phase_coverage_failures"] = coverage_counts["failed"]
                     print(f"{project} coverage: {coverage_counts['failed']} existing phase failures tolerated",
                           flush=True)
-        if (any(p["skipped"] for p in report["projects"])
-                or report.get("release_differential", {}).get("skipped", 0)):
+        phase_scoped_skips = (args.profile == "phase" and args.diff_filter and args.allow_differential_skips)
+        if ((any(p["skipped"] for p in report["projects"])
+                or report.get("release_differential", {}).get("skipped", 0)) and not phase_scoped_skips):
             return 2
         from method_coverage import audit, passed_tests
         if digest_outputs(*output_dirs) != sealed_digest:
@@ -997,7 +1005,12 @@ def main():
             print(f"Gate requirements {'hold' if gate_ok else 'fail'} with the proposals accepted", flush=True)
         phase_failures = sum(p.get("tolerated_phase_failures", 0) for p in report["projects"])
         report["phase_differential_failures"] = phase_failures
-        report["complete"] = (not phase_failures and not report.get("phase_coverage_failures")
+        phase_skips = (sum(p.get("skipped", 0) for p in report["projects"])
+                       + report.get("release_differential", {}).get("skipped", 0)
+                       if args.profile == "phase" else 0)
+        report["phase_differential_skips"] = phase_skips
+        report["complete"] = (not phase_failures and not phase_skips and not report.get("phase_coverage_skips")
+                              and not report.get("phase_coverage_failures")
                               and coverage["complete"] and integrity["complete"] and mutation_ok and mutation_complete
                               and not proposals and not report["stale_accepted"])
         report["gate_passed"] = gate_ok and not proposals

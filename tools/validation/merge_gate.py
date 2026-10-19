@@ -248,7 +248,10 @@ def phase_command(tree, results, baseline, timeout, dotnet, diff_filter=None):
             '--results', str(results), '--baseline', str(tree / PHASE_BASELINE), '--write-baseline', str(baseline),
             '--timeout', str(timeout), '--dotnet', dotnet, '--allow-phase-differential-failures']
     if diff_filter:
-        command += ['--diff-filter', diff_filter]
+        # A candidate-scoped phase run may include an explicitly skipped, still-blocked method in the same test
+        # class. Record that as a gap while enforcing every executed comparison; an unfiltered phase run still rejects
+        # skips.
+        command += ['--diff-filter', diff_filter, '--allow-differential-skips']
     return command
 
 

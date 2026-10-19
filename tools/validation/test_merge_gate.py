@@ -650,7 +650,8 @@ class PhaseGateTests(unittest.TestCase):
                                        str(Path('/w/tree') / merge_gate.PHASE_BASELINE), '--write-baseline',
                                        str(Path('/w/b.json')), '--timeout', '900', '--dotnet', 'dotnet.exe',
                                        '--allow-phase-differential-failures', '--diff-filter',
-                                       'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests'])
+                                       'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests',
+                                       '--allow-differential-skips'])
 
     def test_phase_diff_filter_uses_changed_differential_classes_but_not_shared_helpers(self):
         self.assertEqual(merge_gate.phase_diff_filter([

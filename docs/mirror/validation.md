@@ -57,8 +57,12 @@ any failure or skip fails validation. No Mathcad install is a failure in this mo
 mplrun SHA-256 or loaded MVID fails the differential harness; revalidate contracts before changing
 the pinned identity in `Mathcad.cs`.
 
-`--allow-differential-skips` permits some skips for exploratory work, records them, and exits 2
-for an incomplete run. An all-skipped suite still fails. Such results cannot support Verified.
+`--allow-differential-skips` permits some skips for exploratory work, records them, and exits 2 for an incomplete run.
+A merge gate's
+candidate-filtered phase run passes this flag only for its affected differential classes: executed comparisons must
+pass, and skipped cases are recorded as phase gaps, so a still-blocked method does not prevent unrelated verified
+members in the same class from landing. An unfiltered phase run continues to reject skips.
+An all-skipped suite still fails. Such results cannot support Verified.
 Unwrapped `dotnet test` without `QUIRE_REQUIRE_MATHCAD=1` retains the original optional-install
 skip behavior; a green console result alone is therefore insufficient.
 
