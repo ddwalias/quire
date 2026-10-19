@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. Ten Core and two Calculation cctors are exact across the active chain. On `main` `84a4d567`, the 35-member Core MemberGen batch has 36/36 direct comparisons, but its gate stops on 21 maintainer-owned `Generated/Mirror` files; the cctor-only gate passed focused checks and remains blocked by 464 phase Differential failures. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The 35-member Core MemberGen batch's generated stub deletions pass current path validation; its gate is blocked before audit/ratchet by the focused Release assembly-name lookup mismatch documented in lane-c.md. The active `mirror/c-calc-core-cctors` branch adds the Tier A ResultManager constructor, `Clear`, and singleton initialization: Release Mathcad tests passed 6/6 and all three Release IL bodies are exact. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 

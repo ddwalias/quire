@@ -14,4 +14,10 @@ public class PtcCalculationCoreResultManagerMechanicalDifferentialTests
 
     [SkippableFact]
     public void Results_get_06000164() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.ResultManager), 0x06000164);
+
+    [SkippableFact]
+    public void ctor_0600014e() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.ResultManager), 0x0600014e);
+
+    [SkippableFact]
+    public void Clear_0600014f() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.ResultManager), 0x0600014f);
 }

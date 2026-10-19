@@ -20,10 +20,6 @@ public partial class ResultManager : global::Quire.Calculation.Core.IResultManag
     [global::Quire.Mirror.MirrorStub]
     private int forceAddIndex;
     [global::Quire.Mirror.MirrorStub]
-    private ResultManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AddResult(int key, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner> value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int AddResult(global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -18,5 +18,24 @@ public partial class ResultManager
     private Dictionary<int, Pair<EngineResult, ICalculatableResultOwner>> _results;
 
     [MirrorVerified("PtcCalculationCoreResultManagerMechanicalDifferentialTests")]
+    private ResultManager()
+    {
+        Clear();
+    }
+
+    [MirrorVerified("PtcCalculationCoreResultManagerMechanicalDifferentialTests")]
+    public void Clear()
+    {
+        _resultKey = (_oldResultKey = -1);
+        _results = new Dictionary<int, Pair<EngineResult, ICalculatableResultOwner>>();
+    }
+
+    [MirrorVerified("PtcCalculationCoreResultManagerCctorMechanicalDifferentialTests")]
+    static ResultManager()
+    {
+        _instance = new ResultManager();
+    }
+
+    [MirrorVerified("PtcCalculationCoreResultManagerMechanicalDifferentialTests")]
     public IEnumerable<KeyValuePair<int, Pair<EngineResult, ICalculatableResultOwner>>> Results => _results;
 }
