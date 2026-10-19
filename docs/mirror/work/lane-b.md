@@ -2,24 +2,23 @@
 
 ## Active handoff
 
-### Active Batch: MatVal collections, ranges, and vectorize
-- **Branch:** `mirror/b-matval-collections`
+### Active Batch: MatVal indexed access, axis enumeration and scaling batch
+- **Branch:** `mirror/b-matval-indexed`
 - **Status:** Complete implementation and differential verification.
-- **Scope:**
-  - `MatVal.vectorize(Function, object[])` (0x06000522): Remediated from Tier A structure mismatch to exact IL match (`quick_check` exact IL) and 100% verified across 10 differential test cases (scalar application, 2x2 element-wise matching, unequal row dimension exception, unequal column dimension exception, mixed matrix/scalar, arity assertion exception, non-polymorphic to polymorphic result identity dimension promotion, polymorphic results with pre-existing dimension, non-polymorphic to non-polymorphic result, and 0x0 empty matrix loop bypass).
-  - `MatVal.MakeVector0(object[])` (0x060004a0), `MatVal.PushVectorArg(object)` (0x060004ae), `MatVal.map(F<object, object>, DimVal)` (0x06000485), `MatVal.FillThis(object, int, int, int)` (0x06000525), `MatVal.FillThisPtrs(object, int, int, int)` (0x06000527), `MatVal.FillArr(double[], double, int, int, int)` (0x06000532): All verified exact IL matches.
-  - Direct differential comparisons added in `tests/Quire.Differential.Tests/MatValCollectionDifferentialTests.cs`:
-    - `Collection_factories_push_and_shape`: `reserve(int, int)` (2x3), `Singleton` (string & NumVal), `Pair` (strings & NumVals), `Triple` (strings), `Push(object)` (strings & NumVal), `PushRaw1(object)`, `PushRaw(object)` (string), `PushRaw(int)` (42), `PushVectorArg(object)` (valid Cons list and non-Cons invalid argument error path), `SetShape()` and `SetShape1()`.
-    - `Ranges_map_and_vectorize`: `mkRange2` (scalars and dimensioned), `mkRange3` (scalar stepped), `as_object_vector` (vector to object array), `map(Function, DimVal)` (unary mapping), `map(Function, DimVal, DimVal)` (binary mapping), and comprehensive `vectorize(Function, object[])` suite.
-- **Evidence:**
-  - [Mcd.MatVal.Collections](../evidence/Mcd.MatVal.Collections.md)
+- **Scope (33 methods in `src/Quire.Mpl/Mcd/MatVal.Indexed.cs`):**
+  - Dynamic calls: `DynCall(object)` (0x060004b5), `DynCall(object, object)` (0x060004b6).
+  - Checked vector getters: `mcd_get_1(object, object)` (0x060004b7), `mcd_getm_1(object, int)` (0x060004be), `mcd_get_1(uint)` (0x060004bf), `mcd_sym_get_1(uint)` (0x060004c0), `mcd_get_1(int)` (0x060004c6), `mcd_sym_get_1(int)` (0x060004c7), `matrix_get_1(int)` (0x060004b8), `sym_matrix_get_1(int)` (0x060004b9), `aref_1(int)` (0x060004ca).
+  - Checked matrix getters: `mcd_getm_2(object, int, int)` (0x060004c1), `mcd_get_2(uint, uint)` (0x060004c2), `mcd_sym_get_2(uint, uint)` (0x060004c3), `mcd_get_2(int, int)` (0x060004c8), `mcd_sym_get_2(int, int)` (0x060004c9), `matrix_get_2(int, int)` (0x060004ba), `sym_matrix_get_2(int, int)` (0x060004bb), `aref_2(int, int)` (0x060004cb).
+  - Iterator getter: `iterator_get(int)` (0x060004bd).
+  - Axis offsets and enumeration: `offsets(MatAxis, int)` (0x060004dc), `get_type_2(int, int, double)` (0x060004db), `get_type(int, double)` (0x060004dd), `element_types(MatAxis, int, double)` (0x060004de), `get_ptrs(MatAxis, int)` (0x060004df), `get_double(int, double, double)` (0x060004e0), `get_doubles(MatAxis, int, double, double)` (0x060004e1), `get_data(int, double, double)` (0x060004e2), `get_data(MatAxis, int, double, double)` (0x060004e3).
+  - Object packing: `PackObjects()` (0x06000539), `PackObjects(int)` (0x06000538).
+  - Matrix division and scaling: `op_Division(MatVal, double)` (0x06000556), `Scale(double)` (0x06000557).
+- **IL Match:** 100% exact Release IL structure match against Mathcad Prime 12.0.1.0 `mplrun.dll` across all 33 methods (confirmed via `quick_check.py` and `il_diff.py`).
 - **Validation:**
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValCollectionDifferentialTests'` (3/3 passed: 0 failed, 0 skipped against Mathcad Prime in Release mode)
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed)
-  - `python tools/validation/quick_check.py --method-type Quire.Mcd.MatVal` (Advisory result: PASS, 0 uncovered, 0 missing in verified scope)
-  - `integrity.lint('.')` (0 findings)
-- **Gate status:**
-  - Ready for merge gate landing on updated `main`.
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValDifferentialTests'` (8/8 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValIndexedDifferentialTests'` (3/3 passed)
+- **Evidence:** Updated in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md).
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
 - **Branch:** `mirror/b-matdim-makearraydim` (at `0d400cb5`)
@@ -81,6 +80,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | Fn_clo partial closure | Merged to main at `aaa1a47` (`edc808f`). `Fn_clo<CLO>` 21 methods (`.ctor` x2, `Fixpoint`, `Name`, `invVec`, `inv` x16); exact IL; 21 direct comparisons. |
 | FnCompose function composition | Merged to main at `bf985ce`. Seven methods; exact IL; seven direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
+| MatVal collections, ranges, and vectorize | Merged to main at 2082723 (31ee559). 7 methods exact IL, 10 vectorize differential test cases, 100% mutation kill rate (597/601, 0 survivors). |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
 
@@ -249,6 +249,16 @@ Branch `mirror/b-matdim-crazy-dim-coordinates` (`58659d6`), based on clean main 
 
 Branch `mirror/b-delegatefunction-inv` (`e7f720a`), based on clean main `f7afb21` (merged to main at `53036b0`). The batch adds direct differential tests in `DelegateFunctionDifferentialTests.cs`, verified status annotations on all 31 remaining methods of `DelegateFunction` in `src/Quire.Mpl/Run/DelegateFunction.cs`, and updated contracts in [Mpl.Run.Function evidence](../evidence/Mpl.Run.Function.md).
 Exact original signatures, tokens, and hashes are in that table. All 17 generic `inv` overloads (`0x060001fa` - `0x0600020a`), `invVec` (`0x060001f9`), and 4 `AsF` projections (`0x0600020b` - `0x0600020e`) match Mathcad IL exactly in Release builds. 67 direct MethodComparison cases across 7 facts; 100% mutation kill rate (201/201 mutants killed, 0 survivors). Merged via `merge_gate.py --apply`.
+
+### MatVal collections, ranges, and vectorize (merged to main at 2082723)
+
+Branch `mirror/b-matval-collections` (`31ee559`).
+Exact tokens: `MatVal.vectorize(Function, object[])` (0x06000522), `MatVal.MakeVector0(object[])` (0x060004a0), `MatVal.PushVectorArg(object)` (0x060004ae), `MatVal.map(F<object, object>, DimVal)` (0x06000485), `MatVal.FillThis(object, int, int, int)` (0x06000525), `MatVal.FillThisPtrs(object, int, int, int)` (0x06000527), `MatVal.FillArr(double[], double, int, int, int)` (0x06000532).
+All 7 methods match Mathcad Prime 12.0.1.0 Release IL exactly.
+Direct differential comparisons added in `tests/Quire.Differential.Tests/MatValCollectionDifferentialTests.cs`:
+- `Collection_factories_push_and_shape`: `reserve(int, int)` (2x3), `Singleton` (string & NumVal), `Pair` (strings & NumVals), `Triple` (strings), `Push(object)` (strings & NumVal), `PushRaw1(object)`, `PushRaw(object)` (string), `PushRaw(int)` (42), `PushVectorArg(object)` (valid Cons list and non-Cons invalid argument error path), `SetShape()` and `SetShape1()`.
+- `Ranges_map_and_vectorize`: `mkRange2` (scalars and dimensioned), `mkRange3` (scalar stepped), `as_object_vector` (vector to object array), `map(Function, DimVal)` (unary mapping), `map(Function, DimVal, DimVal)` (binary mapping), and comprehensive `vectorize(Function, object[])` suite (10 distinct branches/cases).
+100% mutation kill rate on compared methods (597/601 mutants killed, 0 survivors). Merged via `merge_gate.py --apply`.
 
 ## Function closure dispatch — active checkpoint
 
