@@ -246,20 +246,20 @@ public sealed partial class MatVal
         {
             return ElementType.NaN;
         }
-        bool flag2;
+        bool isReal;
         if (m_iarr == null)
         {
-            flag2 = true;
+            isReal = true;
         }
         else if (double.IsNaN(complex_thresh))
         {
-            flag2 = (m_iarr[offset] == 0.0);
+            isReal = (m_iarr[offset] == 0.0);
         }
         else
         {
-            flag2 = (Math.Abs(m_iarr[offset]) < complex_thresh);
+            isReal = (Math.Abs(m_iarr[offset]) < complex_thresh);
         }
-        if (!flag2)
+        if (!isReal)
         {
             return ElementType.Complex;
         }
