@@ -1,14 +1,13 @@
 # Ptc.PersistentData.header
 
-- **Original:** `Ptc.Core.dll` 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`
-- **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
-- **Quire:** `src/Quire.Core`; tests: `Quire.Differential.Tests.PtcPersistentDataheaderMechanicalDifferentialTests`
+- **Original:** `Ptc.Core` 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`.
+- **Quire:** `src/Quire.Core`; direct test: `PtcPersistentDataHeaderFooterDifferentialTests.Header_Regions_and_conversion_flag_match_PtcCore`.
+- **Reference:** `.mirror-cache/Ptc.Core/d60141dbcf757ae6/Ptc.PersistentData.header.cs` and `.il`, generated with ilspycmd 11.1.0.9782. Cache artifacts are local and ignored.
 
-| Member | Token | Contract | Confidence / limits | Status |
-|---|---|---|---|---|
-| `.ctor()` | 0x06000977 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| Member | Token | Signature | Evidence/status |
+|---|---:|---|---|
+| `get_Regions` | `0x06000974` | `public IEnumerable<IRegionType>()` | Directly compared for null and populated backing arrays. Verified for those cases. |
+| `set_Regions` | `0x06000975` | `public void(IEnumerable<IRegionType>)` | Directly compared for null and matching arrays, including values and resulting base fields. Other `IRegionType` input directly throws `InvalidCastException` on both sides; exception messages contain the mapped type names (`Quire`/`Ptc`), so that case compares exception type and unchanged state. |
+| `get_HeaderConvertedFromMC14` | `0x06000976` | `public bool()` | Directly compared with `convertedfromSpecified` false and true, using `Mathcad14`. Verified for both states. |
 
-## Test cases
-
-**Observed** (`PtcPersistentDataheaderMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
-parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+Validation ran against Mathcad with Release Quire: 2 tests passed, 0 failed, 0 skipped. No COM or installed-application assumptions apply.
