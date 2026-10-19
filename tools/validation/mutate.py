@@ -250,6 +250,20 @@ def execute(command, env, timeout, cwd=None):
         return None
 
 
+def write_bytes_retry(path, data, attempts=8):
+    """Retry transient Windows sharing/AV locks while replacing a worker's private mutant DLL."""
+    path = Path(path)
+    for attempt in range(attempts):
+        try:
+            path.write_bytes(data)
+            return
+        except PermissionError:
+            if attempt + 1 == attempts:
+                raise
+            # Windows security scanners and testhost teardown can briefly hold a just-used assembly open.
+            time.sleep(min(0.05 * (2 ** attempt), 0.8))
+
+
 def test_filter(tests):
     return '|'.join(f'FullyQualifiedName={t}' for t in sorted(tests))
 
@@ -438,11 +452,11 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
             raise ValueError(f"{key(method, mutant)}: bytes at offset {offset} differ from the inventory; rebuild and re-audit")
         patched = bytearray(image)
         patched[offset:offset + len(original)] = replacement
-        target.write_bytes(patched)
+        write_bytes_retry(target, patched)
         try:
             code, directory = test_run(copy, tests, seconds)
         finally:
-            target.write_bytes(image)
+            write_bytes_retry(target, image)
         unchanged(copy)
         # Killed only when a comparison against Mathcad mismatched in a test that failed. The first mismatch ends its
         # test, so it may be recorded for a caller compared earlier; failures with no such mismatch prove nothing.

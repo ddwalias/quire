@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 import unittest
 from unittest import mock
-from mutate import annotate, cache_directory, key, reasons, run, select, stale_entries
+from mutate import annotate, cache_directory, key, reasons, run, select, stale_entries, write_bytes_retry
 
 BODY = 'ab' * 32
 
@@ -88,6 +88,23 @@ finish(image[8] == 0x2D)
 
 
 class MutationTests(unittest.TestCase):
+    def test_write_bytes_retry_recovers_from_transient_permission_error(self):
+        path = Path(self.directory.name) / 'retry.dll'
+        write = Path.write_bytes
+        attempts = []
+
+        def flaky_write(target, data):
+            attempts.append(target)
+            if len(attempts) < 3:
+                raise PermissionError('temporary sharing violation')
+            return write(target, data)
+
+        with mock.patch('mutate.time.sleep'), mock.patch.object(Path, 'write_bytes', flaky_write):
+            write_bytes_retry(path, b'assembly')
+
+        self.assertEqual(len(attempts), 3)
+        self.assertEqual(path.read_bytes(), b'assembly')
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
