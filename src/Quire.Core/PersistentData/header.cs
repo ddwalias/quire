@@ -7,6 +7,7 @@ namespace Quire.PersistentData;
 
 public partial class header
 {
+    [MirrorVerified("PtcPersistentDataHeaderFooterMechanicalDifferentialTests")]
     public IEnumerable<IRegionType> Regions
     {
         get
@@ -19,6 +20,7 @@ public partial class header
         }
     }
 
+    [MirrorVerified("PtcPersistentDataHeaderFooterMechanicalDifferentialTests")]
     public bool HeaderConvertedFromMC14
     {
         get

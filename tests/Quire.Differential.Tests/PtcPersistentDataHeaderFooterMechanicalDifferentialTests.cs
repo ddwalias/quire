@@ -5,7 +5,7 @@ using Quire.PersistentDataObjects;
 
 namespace Quire.Differential.Tests;
 
-public class PtcPersistentDataHeaderFooterDifferentialTests
+public class PtcPersistentDataHeaderFooterMechanicalDifferentialTests
 {
     private const BindingFlags AllInstance = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 

@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok and MplSignature are merged. Six Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| D | `mirror/d-persistentdata-header-footer` passes local Release differential tests; AreaType and OleUtils are pushed and await the shared Release differential gate fix. | [Lane D](work/lane-d.md) |
+| D | Worksheet and header/footer batches pass focused and Release differential suites, but phase validation reports unrelated Differential.Tests failures and generated `bin` files. AreaType, OleUtils, timestamp, and MC14 branches await gates/retries. | [Lane D](work/lane-d.md) |
 
 ## Fast lane loop
 

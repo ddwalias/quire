@@ -1,7 +1,7 @@
 # Ptc.PersistentData.footer
 
 - **Original:** `Ptc.Core` 12.0.1.0, SHA-256 `d60141dbcf757ae64e7b636416c3421412d6f54e2584b318de58d5d6a6f96d56`, MVID `fc0806aa-db73-489f-8ae4-4729770faca6`.
-- **Quire:** `src/Quire.Core`; direct test: `PtcPersistentDataHeaderFooterDifferentialTests.Footer_Regions_and_conversion_flag_match_PtcCore`.
+- **Quire:** `src/Quire.Core`; direct test: `PtcPersistentDataHeaderFooterMechanicalDifferentialTests.Footer_Regions_and_conversion_flag_match_PtcCore`.
 - **Reference:** `.mirror-cache/Ptc.Core/d60141dbcf757ae6/Ptc.PersistentData.footer.cs` and `.il`, generated with ilspycmd 11.1.0.9782. Cache artifacts are local and ignored.
 
 | Member | Token | Signature | Evidence/status |

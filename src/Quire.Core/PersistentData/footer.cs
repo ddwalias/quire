@@ -7,6 +7,7 @@ namespace Quire.PersistentData;
 
 public partial class footer
 {
+    [MirrorVerified("PtcPersistentDataHeaderFooterMechanicalDifferentialTests")]
     public IEnumerable<IRegionType> Regions
     {
         get
@@ -19,6 +20,7 @@ public partial class footer
         }
     }
 
+    [MirrorVerified("PtcPersistentDataHeaderFooterMechanicalDifferentialTests")]
     public bool FooterConvertedFromMC14
     {
         get
