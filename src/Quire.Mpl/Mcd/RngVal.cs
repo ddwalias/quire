@@ -68,8 +68,22 @@ public partial class RngVal : DimVal
     public override DimVal asResult() => new RngVal(this);
 
     [MirrorVerified("RngValDifferentialTests")]
-    public override bool Equals(object obj) =>
-        obj is RngVal r && Dim.Eq_b(m_dim, r.m_dim) && m_init == r.m_init && m_incr == r.m_incr && m_n == r.m_n;
+    public override bool Equals(object obj)
+    {
+        if (!(obj is RngVal range))
+        {
+            return false;
+        }
+        if (Dim.Eq_b(m_dim, range.m_dim))
+        {
+            if (m_init == range.m_init && m_incr == range.m_incr)
+            {
+                return m_n == range.m_n;
+            }
+            return false;
+        }
+        return false;
+    }
 
     /// <summary>Throws <see cref="NullReferenceException"/> for a polymorphic range.</summary>
     [MirrorVerified("RngValDifferentialTests")]

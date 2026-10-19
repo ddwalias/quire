@@ -21,8 +21,18 @@ Signatures retain exact decoded metadata types in the inspection record (`class:
 | `asResult() -> class:584` | 0x060006db | 57b5b50622666d54 | Return a new plain RngVal copied from this instance; interpolation subclass is not retained. | Verified (existing annotation); rerun pending |
 | `get_Integral() -> bool` | 0x060006dc | 7870d0ce49e40a9f | Read stored integral flag. | Verified (existing annotation); rerun pending |
 | `get_PhysicalDimension() -> class:568` | 0x060006dd | 2d540f09d3ac3eaf | Return identity when polymorphic, otherwise stored dimension. | Verified (existing annotation); rerun pending |
-| `Equals(object) -> bool` | 0x060006de | 4ab4b980a845ee1a | Require other object to be a range with Dim.Eq_b-compatible dimensions and exactly equal initial value, increment and count. NaN comparisons remain false. | Verified (existing annotation); rerun pending |
+| `Equals(object) -> bool` | 0x060006de | 4ab4b980a845ee1a | Require other object to be a range with Dim.Eq_b-compatible dimensions and exactly equal initial value, increment and count. NaN comparisons remain false. | Verified; Release IL exact, direct suite 5/5 (2026-10-19) |
 | `GetHashCode() -> i4` | 0x060006df | 9414bec899dfe5e6 | Combine initial/increment double hashes with stored dimension hash plus count by XOR. Null dimension naturally throws. | Verified (existing annotation); rerun pending |
+
+## Release IL shape follow-up (2026-10-19)
+
+`Equals(object)` now follows the original nested checks: reject non-`RngVal` arguments, compare dimensions through
+`Dim.Eq_b`, compare initial and increment with ordered early exits, then return the count comparison. The reference
+was inspected with `python tools\reference\reference.py Mcd.RngVal --il` (token `0x060006de`); Release
+`python tools\validation\il_diff.py Quire.Mcd.RngVal::Equals` reports an exact instruction match. The existing
+`RngValDifferentialTests.Equality` directly compares range pairs across equal, differing count, differing dimension,
+identity, interpolated and non-range/null inputs. The full focused differential class passed 5/5 against Mathcad on
+Release Quire (`QUIRE_REQUIRE_MATHCAD=1`).
 | `get_Rsize() -> i4` | 0x060006e0 | 65963bff88719d17 | Return stored count, including zero or negative counts. | Verified (existing annotation); rerun pending |
 | `get_Isize() -> i4` | 0x060006e1 | 65963bff88719d17 | Return stored count, including zero or negative counts. | Verified (existing annotation); rerun pending |
 | `get(i4) -> r8` | 0x060006e2 | 580322101641261f | Return initial value advanced by index times increment. No bounds check. | Verified (existing annotation); rerun pending |
