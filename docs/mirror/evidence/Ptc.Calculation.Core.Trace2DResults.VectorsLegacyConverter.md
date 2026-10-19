@@ -13,3 +13,5 @@
 ## Test cases
 
 **Observed** (`PtcCalculationCoreTrace2DResultsVectorsLegacyConverterMechanicalDifferentialTests`): `ReadDoubleOrNone` and `ReadString` are compared directly against Mathcad with interface proxies. Both return values and mutated `out` values match across the listed cases. `ReadAsColumns` is compared on uninitialized targets with matching `_readAsColumns` fields.
+
+Release MethodAudit inspected 13 declarations in this type and reports exact IL for ReadAsColumns, ReadDoubleOrNone, and ReadString. Nine ancillary assembly inspection errors are outside this type. The current Release Mathcad class run passed 3/3; the normal gate is pending.
