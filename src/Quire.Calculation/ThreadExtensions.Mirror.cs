@@ -17,9 +17,9 @@ public static partial class ThreadExtensions
                 appCulture = Thread.CurrentThread.CurrentCulture;
                 appCultureUI = Thread.CurrentThread.CurrentUICulture;
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException invalidOperationException)
             {
-                DebugTools.FailAssertion(ex);
+                DebugTools.FailAssertion(invalidOperationException);
             }
         }
     }
@@ -35,17 +35,17 @@ public static partial class ThreadExtensions
             thread.CurrentCulture = appCulture;
             thread.CurrentUICulture = appCultureUI;
         }
-        catch (ArgumentNullException ex)
+        catch (ArgumentNullException argumentNullException)
         {
-            DebugTools.FailAssertion(ex);
+            DebugTools.FailAssertion(argumentNullException);
         }
-        catch (InvalidOperationException ex2)
+        catch (InvalidOperationException invalidOperationException)
         {
-            DebugTools.FailAssertion(ex2);
+            DebugTools.FailAssertion(invalidOperationException);
         }
-        catch (Exception ex3)
+        catch (Exception exception)
         {
-            DebugTools.FailAssertion(ex3);
+            DebugTools.FailAssertion(exception);
         }
     }
 }
