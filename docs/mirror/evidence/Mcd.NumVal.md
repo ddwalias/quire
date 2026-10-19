@@ -95,3 +95,18 @@ The Phase 1 checkpoint in `docs/mirror/work/lane-b.md` reported a manifest-shape
 This reported blocker is not present in the current manifest or original artifact, so it is out of scope for
 implementation and has no direct-comparison test. The previous checkpoint note is corrected in
 `docs/mirror/work/lane-b.md`. Checkpoint and validation scope: [Lane A](../work/lane-a.md#numvalcompare-scope-correction).
+
+## Release IL shape follow-up (2026-10-19)
+
+Using `python tools\validation\il_diff.py` against the Release Quire assembly and the Mathcad artifact, the bodies for
+`get_IsPureReal` (token `0x06000565`), `get_IsPureImag` (`0x06000566`) and `isInt(int*)` (`0x06000582`) now report
+exact instruction matches. The two purity getters compare the relevant part with zero and return `True.singleton`
+only for zero; `isInt` writes the low word using an unsigned pointer read, matching Mathcad's `ldind.u4`.
+
+`LoadNaN(int)` (token `0x06000591`) remains a structure match with an instruction difference at the initialization
+sequence: Quire stores the address in its pointer local, while Mathcad duplicates it on the evaluation stack before
+the store. The remaining instructions construct the same quiet NaN and payload bits. Existing direct Mathcad tests
+cover the returned bits; no behavior difference is known. `NumValDifferentialTests` passed 6/6 on the Release
+assembly with `QUIRE_REQUIRE_MATHCAD=1`. The scoped validator stopped before method audit because it looked for
+`Quire.Focused.Differential.Tests.dll` in its Release audit directory, while the actual assembly is
+`Quire.Differential.Tests.dll`; the exact gate error is recorded in [Lane A](../work/lane-a.md).

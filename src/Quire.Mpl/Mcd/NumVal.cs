@@ -142,10 +142,10 @@ public sealed partial class NumVal : DimVal
 
     /// <summary><see cref="True.singleton"/> when the imaginary part is zero, else null.</summary>
     [MirrorVerified("NumValDifferentialTests")]
-    public object IsPureReal => Data.ip != 0.0 ? null : True.singleton;
+    public object IsPureReal => Data.ip == 0.0 ? True.singleton : null;
 
     [MirrorVerified("NumValDifferentialTests")]
-    public object IsPureImag => Data.rp != 0.0 ? null : True.singleton;
+    public object IsPureImag => Data.rp == 0.0 ? True.singleton : null;
 
     [MirrorVerified("NumValDifferentialTests")]
     public double Real
@@ -392,7 +392,7 @@ public sealed partial class NumVal : DimVal
             double normalized = Data.rp + normalize_exponent;
             if (Data.rp == *(uint*)&normalized)
             {
-                *res = *(int*)&normalized;
+                *(uint*)res = *(uint*)&normalized;
                 return true;
             }
             return isNearInt(res, Data.rp);
