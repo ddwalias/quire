@@ -785,7 +785,9 @@ def main():
                 # belong to a different build and are not used by the Debug coverage inventory.
                 if args.profile == "focused":
                     release_dir = structure_dir
-                    release_assembly = release_dir / (project + ".dll")
+                    # The focused project name is Quire.Focused.Differential.Tests, but its AssemblyName is
+                    # Quire.Differential.Tests (shared with the full differential project).
+                    release_assembly = release_dir / assemblies[project].name
                     if not release_assembly.is_file():
                         raise ValueError(f"{project}: Release differential assembly not found ({release_assembly})")
                     release_results = output / "release-results"
@@ -794,7 +796,7 @@ def main():
                     release_env = dict(env)
                     release_env.pop("QUIRE_METHOD_CASES", None)
                     release_env.pop("QUIRE_VALIDATION_RUN", None)
-                    release_command = [args.dotnet, to_dotnet(release_assembly), "--logger",
+                    release_command = [args.dotnet, "test", to_dotnet(release_assembly), "--logger",
                                        f"trx;LogFileName={release_trx.name}", "--results-directory",
                                        to_dotnet(release_results)]
                     if args.diff_filter:
