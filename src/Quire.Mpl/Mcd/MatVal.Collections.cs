@@ -87,10 +87,7 @@ public sealed partial class MatVal
         Cons cons = o as Cons;
         while (true)
         {
-            if (cons == null)
-            {
-                AppException.Raise("must be vector", 1u);
-            }
+            if (cons == null) AppException.Raise("must be vector", 1u);
             setspec(Data.m_rows++, cons.Field1);
             if (cons.Field2 == null)
             {
@@ -175,57 +172,54 @@ public sealed partial class MatVal
     [MirrorVerified("MatValCollectionDifferentialTests")]
     public static object vectorize(Function f, object[] args)
     {
-        int num = args.Length;
-        arg_desc[] array = null;
-        int num2 = 0;
-        int num3 = 0;
-        int num4 = 0;
-        bool flag = true;
-        f.AssertFullApp(num);
-        for (int i = 0; i < num; i++)
+        int argc = args.Length;
+        arg_desc[] descriptors = null;
+        int mat_count = 0;
+        int mat_rows = 0;
+        int mat_cols = 0;
+        bool all_polymorphic = true;
+        f.AssertFullApp(argc);
+        for (int i = 0; i < argc; i++)
         {
             if (args[i] is MatVal matVal)
             {
-                if (num2 == 0)
+                if (mat_count == 0)
                 {
-                    array = new arg_desc[num - i];
-                    num3 = matVal.Rows;
-                    num4 = matVal.Cols;
+                    descriptors = new arg_desc[argc - i];
+                    mat_rows = matVal.Rows;
+                    mat_cols = matVal.Cols;
                 }
-                else if (num3 != matVal.Rows || num4 != matVal.Cols)
-                {
-                    AppException.Raise("unequal matrix dimensions");
-                }
-                array[num2].m_mat = matVal;
-                array[num2].m_pos = i;
-                num2++;
+                else if (mat_rows != matVal.Rows || mat_cols != matVal.Cols) AppException.Raise("unequal matrix dimensions");
+                descriptors[mat_count].m_mat = matVal;
+                descriptors[mat_count].m_pos = i;
+                mat_count++;
                 if (!matVal.IsPolymorphic)
                 {
-                    flag = false;
+                    all_polymorphic = false;
                 }
             }
         }
-        if (num2 == 0)
+        if (mat_count == 0)
         {
             return f.Apply(args);
         }
-        MatVal matVal2 = new MatVal(num3, num4);
-        for (int j = 0; j < num4; j++)
+        MatVal result = new MatVal(mat_rows, mat_cols);
+        for (int j = 0; j < mat_cols; j++)
         {
-            for (int k = 0; k < num3; k++)
+            for (int k = 0; k < mat_rows; k++)
             {
-                for (int l = 0; l < num2; l++)
+                for (int l = 0; l < mat_count; l++)
                 {
-                    array[l].FetchInto(args, k, j);
+                    descriptors[l].FetchInto(args, k, j);
                 }
-                matVal2.set_2(k, j, f.Apply(args));
+                result.set_2(k, j, f.Apply(args));
             }
         }
-        if (matVal2.IsPolymorphic && matVal2.m_dim == null && !flag)
+        if (result.IsPolymorphic && result.m_dim == null && !all_polymorphic)
         {
-            matVal2.m_dim = Dim.identity;
+            result.m_dim = Dim.identity;
         }
-        return matVal2;
+        return result;
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public MatVal Fill(object v, int init, int incr, int n)
@@ -273,18 +267,18 @@ public sealed partial class MatVal
     {
         if (incr == 1)
         {
-            int num = init + n;
-            for (int i = init; i < num; i++)
+            int end = init + n;
+            for (int i = init; i < end; i++)
             {
                 arr[i] = v;
             }
             return;
         }
-        int num2 = init;
+        int idx = init;
         for (int j = 0; j < n; j++)
         {
-            arr[num2] = v;
-            num2 += incr;
+            arr[idx] = v;
+            idx += incr;
         }
     }
 }
