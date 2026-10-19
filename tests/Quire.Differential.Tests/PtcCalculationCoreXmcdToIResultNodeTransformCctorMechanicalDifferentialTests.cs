@@ -5,7 +5,7 @@ using System.Xml.Xsl;
 
 namespace Quire.Differential.Tests;
 
-public class PtcCalculationCoreXmcdToIResultNodeTransformCctorDifferentialTests
+public class PtcCalculationCoreXmcdToIResultNodeTransformCctorMechanicalDifferentialTests
 {
     [SkippableFact]
     public void XmcdToIResultNodeTransform_cctor()

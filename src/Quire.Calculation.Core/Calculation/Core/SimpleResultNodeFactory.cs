@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core;
 
 public partial class SimpleResultNodeFactory
 {
-    [MirrorVerified("PtcCalculationCoreSimpleResultNodeFactoryCctorDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSimpleResultNodeFactoryCctorMechanicalDifferentialTests")]
     static SimpleResultNodeFactory() => Default = new SimpleResultNodeFactory();
 
     [MirrorVerified("PtcCalculationCoreSimpleResultNodeFactoryMechanicalDifferentialTests")]

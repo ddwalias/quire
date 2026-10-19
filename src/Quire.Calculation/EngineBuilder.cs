@@ -4,7 +4,7 @@ namespace Quire.Calculation;
 
 public partial class EngineBuilder
 {
-    [MirrorVerified("PtcCalculationEngineBuilderCctorDifferentialTests")]
+    [MirrorVerified("PtcCalculationEngineBuilderCctorMechanicalDifferentialTests")]
     static EngineBuilder()
     {
         ImportRequestFormat = "(import ( \"McdTranslator\" \"\" \"false\" \"false\")         ( \"McdDynamicEfi\" \"MC_mc\" \"false\" \"false\"  )         ( \"McdUnitSystem{0}\" \"MC_unit\" \"false\" \"false\" ))";

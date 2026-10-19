@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core.Trace2DResults;
 
 public static partial class TraceTypeDefinitions
 {
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsTraceTypeDefinitionsCctorDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsTraceTypeDefinitionsCctorMechanicalDifferentialTests")]
     static TraceTypeDefinitions()
     {
         _traceColumnsRanges = new Dictionary<TraceType, TraceTypeRange>();

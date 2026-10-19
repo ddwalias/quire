@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
-public class PtcCalculationMatrixValueProxyWrapperCctorDifferentialTests
+public class PtcCalculationMatrixValueProxyWrapperCctorMechanicalDifferentialTests
 {
     [SkippableFact]
     public void MatrixValueProxyWrapper_cctor()

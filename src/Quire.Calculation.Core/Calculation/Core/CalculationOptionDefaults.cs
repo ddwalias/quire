@@ -4,6 +4,6 @@ namespace Quire.Calculation.Core;
 
 public static partial class CalculationOptionDefaults
 {
-    [MirrorVerified("PtcCalculationCoreStaticConstantsCctorsDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreStaticConstantsCctorsMechanicalDifferentialTests")]
     static CalculationOptionDefaults() => SymbolicResultMaximumSize = 600;
 }

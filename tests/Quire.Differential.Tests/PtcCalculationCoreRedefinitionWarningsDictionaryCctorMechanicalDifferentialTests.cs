@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
-public class PtcCalculationCoreRedefinitionWarningsDictionaryCctorDifferentialTests
+public class PtcCalculationCoreRedefinitionWarningsDictionaryCctorMechanicalDifferentialTests
 {
     [SkippableFact]
     public void RedefinitionWarningsDictionary_cctor()
