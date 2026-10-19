@@ -80,8 +80,8 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
         object qDisplay = RuntimeHelpers.GetUninitializedObject(typeof(DisplayMatrixSimpleResultNode));
         Type mDisplayType = Mathcad.Type("Ptc.Calculation.Core", "Ptc.Calculation.Core.DisplayMatrixSimpleResultNode");
         object mDisplay = RuntimeHelpers.GetUninitializedObject(mDisplayType);
-        SetField(qDisplay, "<Viewport>k__BackingField", null);
-        SetField(mDisplay, "<Viewport>k__BackingField", null);
+        SetProperty(qDisplay, "Viewport", null);
+        SetProperty(mDisplay, "Viewport", null);
         q = Transform(Q);
         m = Transform(M);
         MethodComparison.Compare("WriteDisplayMatrixXml null viewport", Contract, qMethod, q.Target, [qDisplay],
@@ -98,7 +98,7 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
             ConformanceLevel = ConformanceLevel.Fragment,
         });
         object target = RuntimeHelpers.GetUninitializedObject(type);
-        SetField(target, "<Writer>k__BackingField", writer);
+        SetProperty(target, "Writer", writer);
         return (target, output);
     }
 
@@ -108,13 +108,13 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
         Type elementType = type.GetField("_children", BindingFlags.Instance | BindingFlags.NonPublic)!.FieldType.GetGenericArguments()[0];
         object children = Activator.CreateInstance(typeof(List<>).MakeGenericType(elementType))!;
         SetField(matrix, "_children", children);
-        SetField(matrix, "<Columns>k__BackingField", 1);
+        SetProperty(matrix, "Columns", 1);
         return matrix;
     }
 
     private static string WriterState(object target, StringBuilder output)
     {
-        ((XmlWriter)Field(target, "<Writer>k__BackingField")!).Flush();
+        ((XmlWriter)Read(target, "Writer")!).Flush();
         return output.ToString();
     }
 
@@ -125,17 +125,6 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
 
     private static object? Read(object target, string name) =>
         target.GetType().GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.GetValue(target);
-
-    private static object? Field(object target, string name)
-    {
-        for (Type? type = target.GetType(); type != null; type = type.BaseType)
-        {
-            FieldInfo? field = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-            if (field != null) return field.GetValue(target);
-        }
-
-        throw new MissingFieldException(target.GetType().FullName, name);
-    }
 
     private static void SetField(object target, string name, object? value)
     {
@@ -149,6 +138,10 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
 
         throw new MissingFieldException(target.GetType().FullName, name);
     }
+
+    private static void SetProperty(object target, string name, object? value) =>
+        target.GetType().GetProperty(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+            .SetValue(target, value);
 
     private static object MatrixProxy(Type matrixInterface, Type realNodeType, double value)
     {
