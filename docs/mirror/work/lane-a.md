@@ -3,7 +3,7 @@
 ## Active handoff
 
 SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational most recently hit a coverage test-host crash. The RngVal short-circuit coverage case has been added, but the latest full gate retry exited 4294967295 in the Debug differential suite before coverage. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal still has stale unreachable-line and coverage-ratchet blockers; an RngValInterpolate case now distinguishes the as_result override from its fallback, with the full gate pending.
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational most recently hit a coverage test-host crash. The RngVal short-circuit coverage case cleared the coverage ratchet; the latest gate passed suites and audit, then hit a mutation scratch permission error at 370/376. Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions; DimVal still has stale unreachable-line and coverage-ratchet blockers; an RngValInterpolate case now distinguishes the as_result override from its fallback, with the full gate pending.
 
 
 
@@ -1426,3 +1426,8 @@ The `diff_init` direct case was included at candidate `8e3729ece0ca54bdaba481a80
 ### DimVal as_result mutation case
 
 The DimVal branch `901fc553` adds a direct `RngValInterpolate` input to `DimValDifferentialTests.Static_and_dimension_helpers`. The Mathcad `as_result` virtual dispatch returns a plain `RngVal`, so the comparison observes the result subtype and should distinguish the surviving inverted type-check mutant from the original result. `DimValDifferentialTests` passed 6/6 in Release with Mathcad after the change. Full gate is pending; existing stale unreachable-line and coverage-ratchet results remain unresolved. Evidence is in `docs/mirror/evidence/Mcd.DimVal.md` on the candidate branch.
+### RngVal gate retry: mutation scratch permission error
+
+- Candidate `0a83ce1b9e50884b01b5a8731df2e0808c3c8e54` on base `c7107a270775239962a91e22952faee2d0bf63fb` includes the `diff_init` equality case. Release `RngValDifferentialTests` passed 5/5; Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393 passed.
+- Audit compared 1,399 methods (1,548 exact, 76 structure-only); coverage remained at the ratcheted baseline (298 missing, 102 structure mismatches, 35 uncovered, 41 verified unsupported), integrity complete, ratchet OK. This confirms `RngVal.Equals` is covered after the added initial-value-difference case.
+- Mutation began on 376 selected mutants and reached 370 before exact validator error `[Errno 13] Permission denied: 'C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-mutant-scratch-4972ukhj\\quire-mutant-w2fdtwjd\\Quire.Mpl.dll'`. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-9nf9o9ie\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-9nf9o9ie\run\summary.json`. Batch remains unmerged pending a clean mutation pass.
