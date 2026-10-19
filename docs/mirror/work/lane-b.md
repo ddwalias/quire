@@ -2,23 +2,18 @@
 
 ## Active handoff
 
-### Active Batch: MatVal indexed access, axis enumeration and scaling batch
-- **Branch:** `mirror/b-matval-indexed`
-- **Status:** Complete implementation and differential verification.
-- **Scope (33 methods in `src/Quire.Mpl/Mcd/MatVal.Indexed.cs`):**
-  - Dynamic calls: `DynCall(object)` (0x060004b5), `DynCall(object, object)` (0x060004b6).
-  - Checked vector getters: `mcd_get_1(object, object)` (0x060004b7), `mcd_getm_1(object, int)` (0x060004be), `mcd_get_1(uint)` (0x060004bf), `mcd_sym_get_1(uint)` (0x060004c0), `mcd_get_1(int)` (0x060004c6), `mcd_sym_get_1(int)` (0x060004c7), `matrix_get_1(int)` (0x060004b8), `sym_matrix_get_1(int)` (0x060004b9), `aref_1(int)` (0x060004ca).
-  - Checked matrix getters: `mcd_getm_2(object, int, int)` (0x060004c1), `mcd_get_2(uint, uint)` (0x060004c2), `mcd_sym_get_2(uint, uint)` (0x060004c3), `mcd_get_2(int, int)` (0x060004c8), `mcd_sym_get_2(int, int)` (0x060004c9), `matrix_get_2(int, int)` (0x060004ba), `sym_matrix_get_2(int, int)` (0x060004bb), `aref_2(int, int)` (0x060004cb).
-  - Iterator getter: `iterator_get(int)` (0x060004bd).
-  - Axis offsets and enumeration: `offsets(MatAxis, int)` (0x060004dc), `get_type_2(int, int, double)` (0x060004db), `get_type(int, double)` (0x060004dd), `element_types(MatAxis, int, double)` (0x060004de), `get_ptrs(MatAxis, int)` (0x060004df), `get_double(int, double, double)` (0x060004e0), `get_doubles(MatAxis, int, double, double)` (0x060004e1), `get_data(int, double, double)` (0x060004e2), `get_data(MatAxis, int, double, double)` (0x060004e3).
-  - Object packing: `PackObjects()` (0x06000539), `PackObjects(int)` (0x06000538).
-  - Matrix division and scaling: `op_Division(MatVal, double)` (0x06000556), `Scale(double)` (0x06000557).
-- **IL Match:** 100% exact Release IL structure match against Mathcad Prime 12.0.1.0 `mplrun.dll` across all 33 methods (confirmed via `quick_check.py` and `il_diff.py`).
-- **Validation:**
-  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed)
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValDifferentialTests'` (8/8 passed)
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValIndexedDifferentialTests'` (3/3 passed)
-- **Evidence:** Updated in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md).
+### Active Batch: MatVal memory growth, resize, and row/column mutations batch
+- **Branch:** `mirror/b-matval-growth`
+- **Status:** Active implementation, IL alignment, and differential verification.
+- **Scope (methods in `src/Quire.Mpl/Mcd/MatVal.Growth.cs`):**
+  - Reallocation: `realloc(object, int, int)`, `ReAlloc(object, int)`, `ReAlloc(object, int, int)`, `ReAllocate(int)`, `ReAllocate(int, int)`.
+  - Array resize & zero tidying: `Resize(double[], int)`, `CopyResize(double[], int, int)`, `Resize(double[], int, int)`, `TidyZeros(int, int, int, int)`.
+  - Stretch operations: `Stretch(int)`, `Stretch(int, int)`, `StretchWithColumnFill(int, int, DimVal)`.
+  - Extension operations: `extend_1(int)`, `extend_2(int, int)`.
+  - Mutation setters: `mcd_setm_1`, `mcd_setm_2`, `mcd_set_1`, `mcd_set_2`, `mcd_upd_1`, `mcd_upd_2`.
+  - Column and row mutations: `mcd_setcolumn`, `setcolumn`, `setcol`, `mcd_setrow`, `setrow`, `setblock`, `setmatrix`, `setmatrix_ptrs`.
+  - Pointer transformation: `AssignMatrixPtrs`, `ResizeMatrixPtrs`, `AssignPtrs`, `ResizePtrs`.
+- **Goal:** Exact Release IL matching against Mathcad Prime 12.0.1.0 `mplrun.dll`, 0 lint, 100% mutation kill rate, and clean merge gate landing on `main`.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
 - **Branch:** `mirror/b-matdim-makearraydim` (at `0d400cb5`)
@@ -81,6 +76,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | FnCompose function composition | Merged to main at `bf985ce`. Seven methods; exact IL; seven direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 | MatVal collections, ranges, and vectorize | Merged to main at 2082723 (31ee559). 7 methods exact IL, 10 vectorize differential test cases, 100% mutation kill rate (597/601, 0 survivors). |
+| MatVal indexed access, axis enumeration and scaling | Merged to main at d0436ed (2fc429a). 33 methods; 31 exact Release IL matches, 2 structure-only; 100% mutation kill rate (710/718, 0 survivors). |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
 
@@ -259,6 +255,25 @@ Direct differential comparisons added in `tests/Quire.Differential.Tests/MatValC
 - `Collection_factories_push_and_shape`: `reserve(int, int)` (2x3), `Singleton` (string & NumVal), `Pair` (strings & NumVals), `Triple` (strings), `Push(object)` (strings & NumVal), `PushRaw1(object)`, `PushRaw(object)` (string), `PushRaw(int)` (42), `PushVectorArg(object)` (valid Cons list and non-Cons invalid argument error path), `SetShape()` and `SetShape1()`.
 - `Ranges_map_and_vectorize`: `mkRange2` (scalars and dimensioned), `mkRange3` (scalar stepped), `as_object_vector` (vector to object array), `map(Function, DimVal)` (unary mapping), `map(Function, DimVal, DimVal)` (binary mapping), and comprehensive `vectorize(Function, object[])` suite (10 distinct branches/cases).
 100% mutation kill rate on compared methods (597/601 mutants killed, 0 survivors). Merged via `merge_gate.py --apply`.
+
+### MatVal indexed access, axis enumeration and scaling (merged to main at d0436ed)
+
+Branch `mirror/b-matval-indexed` (`2fc429a`).
+Exact tokens (33 methods in `src/Quire.Mpl/Mcd/MatVal.Indexed.cs`):
+- Dynamic calls: `DynCall(object)` (0x060004b5), `DynCall(object, object)` (0x060004b6).
+- Checked vector getters: `mcd_get_1(object, object)` (0x060004b7), `mcd_getm_1(object, int)` (0x060004be), `mcd_get_1(uint)` (0x060004bf), `mcd_sym_get_1(uint)` (0x060004c0), `mcd_get_1(int)` (0x060004c6), `mcd_sym_get_1(int)` (0x060004c7), `matrix_get_1(int)` (0x060004b8), `sym_matrix_get_1(int)` (0x060004b9), `aref_1(int)` (0x060004ca).
+- Checked matrix getters: `mcd_getm_2(object, int, int)` (0x060004c1), `mcd_get_2(uint, uint)` (0x060004c2), `mcd_sym_get_2(uint, uint)` (0x060004c3), `mcd_get_2(int, int)` (0x060004c8), `mcd_sym_get_2(int, int)` (0x060004c9), `matrix_get_2(int, int)` (0x060004ba), `sym_matrix_get_2(int, int)` (0x060004bb), `aref_2(int, int)` (0x060004cb).
+- Iterator getter: `iterator_get(int)` (0x060004bd).
+- Axis offsets and enumeration: `offsets(MatAxis, int)` (0x060004dc), `get_type_2(int, int, double)` (0x060004db), `get_type(int, double)` (0x060004dd), `element_types(MatAxis, int, double)` (0x060004de), `get_ptrs(MatAxis, int)` (0x060004df), `get_double(int, double, double)` (0x060004e0), `get_doubles(MatAxis, int, double, double)` (0x060004e1), `get_data(int, double, double)` (0x060004e2), `get_data(MatAxis, int, double, double)` (0x060004e3).
+- Object packing: `PackObjects()` (0x06000539), `PackObjects(int)` (0x06000538).
+- Matrix division and scaling: `op_Division(MatVal, double)` (0x06000556), `Scale(double)` (0x06000557).
+
+100% exact Release IL opcode structure match against Mathcad Prime 12.0.1.0 `mplrun.dll` across methods (31 exact matches, 2 structure-only).
+Direct differential comparisons added in `tests/Quire.Differential.Tests/MatValIndexedDifferentialTests.cs`:
+- `Checked_and_symbolic_index_getters_match_mathcad`: `mcd_get_1(uint)` (0, 1, oob, matrix_fails), `mcd_sym_get_1(uint)` (0, oob, matrix_fails), `mcd_get_2(uint, uint)` (0_0, 1_1, row_oob, col_oob), `mcd_sym_get_2(uint, uint)` (0_0, row_oob, col_oob), `mcd_get_1(int)`, `mcd_sym_get_1(int)`, `mcd_get_2(int, int)`, `mcd_sym_get_2(int, int)`, `matrix_get_1(int)`, `sym_matrix_get_1(int)`, `matrix_get_2(int, int)`, `sym_matrix_get_2(int, int)`, `aref_1(int)`, `aref_2(int, int)`, `iterator_get(int)` (0, 1, 2, 3).
+- `Dynamic_and_static_call_dispatch_matches_mathcad`: `DynCall(object)` (valid vector and non-integer exception path), `DynCall(object, object)` (valid matrix and non-integer exception paths for both coordinates), `mcd_get_1(object, object)` (static valid, non_vector, non_integer), `mcd_getm_1(object, int)` (static valid, non_vector), `mcd_getm_2(object, int, int)` (static valid, non_matrix).
+- `Axis_enumeration_and_classification_match_mathcad`: `get_type_2(int, int, double)` (finite, nan_thresh, cell_1_1_nan, col2_nan), `element_types(MatAxis, int, double)` (row0, col1), `get_ptrs(MatAxis, int)` (row0, col0), `get_doubles(MatAxis, int, double, double)` (row0), `get_data(MatAxis, int, double, double)` (row0), `PackObjects()` (default and offset2), `op_Division(MatVal, double)` (unpacked, packed_mutable in-place, and packed_immutable copy).
+100% mutation kill rate on compared methods (710/718 mutants killed, 0 survivors). Merged via `lane_merge.py` at commit `d0436ed`.
 
 ## Function closure dispatch — active checkpoint
 
