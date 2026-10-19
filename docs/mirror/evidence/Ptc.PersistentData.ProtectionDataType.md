@@ -22,3 +22,15 @@
 
 **Observed** (`PtcPersistentDataProtectionDataTypeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+## Tier A timestamp wrapper
+
+- **Artifact-bound reference:** `.mirror-cache/Ptc.Core/d60141dbcf757ae6/Ptc.PersistentData.ProtectionDataType.cs` and `.il`, generated with ilspycmd 11.1.0.9782. Original identity is recorded above.
+- **Direct test:** `PtcPersistentDataProtectionDataTypeTimestampDifferentialTests.TimestampWrapper_getter_and_setter_match_PtcCore`.
+
+| Member | Token | Signature | Evidence/status |
+|---|---:|---|---|
+| `get_TimestampWrapper` | `0x06000891` | `public DateTime?()` | Direct comparisons with `TimestampSpecified` false/true and Unspecified/UTC/Local timestamp kinds. Verified for those cases. |
+| `set_TimestampWrapper` | `0x06000892` | `public void(DateTime?)` | Direct comparisons for null and all three timestamp kinds; target state verifies Unspecified kind on stored values and preserves Timestamp when clearing. Verified for those cases. |
+
+The strict Release Mathcad differential test passed: 1 passed, 0 failed, 0 skipped. `ProtectionLevelWrapper` methods remain open; they call `Ptc.EnumHelper`, which belongs to Lane 5.

@@ -5,6 +5,30 @@ namespace Quire.PersistentData;
 
 public partial class ProtectionDataType
 {
+    public DateTime? TimestampWrapper
+    {
+        get
+        {
+            if (!TimestampSpecified)
+            {
+                return null;
+            }
+            return Timestamp;
+        }
+        set
+        {
+            if (value.HasValue)
+            {
+                Timestamp = DateTime.SpecifyKind(value.Value, DateTimeKind.Unspecified);
+                TimestampSpecified = true;
+            }
+            else
+            {
+                TimestampSpecified = false;
+            }
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataProtectionDataTypeMechanicalDifferentialTests")]
     private bool showTimestampField;
 

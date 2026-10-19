@@ -12,7 +12,5 @@ namespace Quire.PersistentData;
 public partial class ProtectionDataType
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.DateTime> TimestampWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.ProtectionLevel ProtectionLevelWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
