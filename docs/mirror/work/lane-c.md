@@ -34,6 +34,8 @@ Implemented Tier A `.ctor()` and `Clear()` from the helper-generated original IL
 
 ## Validation and blockers
 
+The `mirror/c-calc-trace-result-analyzer-methods` gate passed generated-path checks, Harness 97/97, Mpl 188/188, and focused Differential 392/392. It then stopped before MethodAudit/ratchet because the Release pass looked for `Quire.Focused.Differential.Tests.dll` instead of the project's `Quire.Differential.Tests.dll`. Exact report: `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-d9gezyo1\run\summary.json`; missing path: `C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-hsgvwc3w\Quire.Focused.Differential.Tests.dll`.
+
 ### TraceResultAnalyzer unblocked methods (`mirror/c-calc-trace-result-analyzer-methods`)
 
 Implemented private `AddOneDataSegment(points, xCoordinate, yData, ensureTrailingNaN)`, `StringVectorToIndices`, `ToDoubleDataList`, `BuildPointsForBoxes`, and `BuildTuplesOfPoints`. All are Tier A methods from the helper-generated IL; the direct tests exercise NaN separators, offsets, meaningful strings, mixed string/double vectors, null rows, and x offsets. `GetLabels`, public `AddOneDataSegment`, and `BuildPointsForWaterfall` remain `[MirrorStub]` methods because their paths depend on out-of-scope `Quire.DebugTools.DevAssert` or `Quire.Wpf.PointExtension.IsNaN` stubs. The valid-input `ToDoubleDataList` case covers its double/string branches; the unsupported-vector assertion path remains blocked by `DebugTools.FailAssertion`.
