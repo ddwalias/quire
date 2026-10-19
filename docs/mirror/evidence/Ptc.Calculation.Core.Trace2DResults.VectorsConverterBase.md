@@ -7,8 +7,9 @@
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
 | `.ctor()` | 0x06000272 | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `GetVectorsValueType(PlainDataTypes)` | 0x06000270 | Classify uninitialized, NaN-only, numeric, uniformly united numeric, string, mixed supported values, and unknown flag combinations | Original IL returns `Numeric=1`, `Mixed=3`, and `NaNs=4`, but Quire's local `ResultValueType` has conflicting names at those values and lacks these categories. Keep this method blocked until the enum mapping is resolved; raw numeric casts would conceal the name/semantic mismatch. | Blocked |
+| `IsOfExactPlainType(PlainDataTypes, PlainDataTypes)` | 0x06000271 | True only when the requested flag is present and no other flags are set | Direct Release Mathcad comparisons for exact zero/NaN, overlapping, and absent-flag combinations | Verified |
 
 ## Test cases
 
-**Observed** (`PtcCalculationCoreTrace2DResultsVectorsConverterBaseMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
-parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+**Observed** (`PtcCalculationCoreTrace2DResultsVectorsConverterBaseMechanicalDifferentialTests`): the constructor remains directly compared by `Mechanical`; `IsOfExactPlainType` is invoked directly through `MethodComparison` against the installed Mathcad artifact. Cases cover exact zero/NaN, absent bits, and multi-bit inputs. `GetVectorsValueType` remains blocked because Quire's current `ResultValueType` labels do not match the numeric categories emitted by Mathcad's original IL.
