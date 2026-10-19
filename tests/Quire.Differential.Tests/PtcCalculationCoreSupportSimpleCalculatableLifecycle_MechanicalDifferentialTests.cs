@@ -7,7 +7,7 @@ using Quire.Calculation.Core.Support;
 namespace Quire.Differential.Tests;
 
 /// <summary>Direct Mathcad comparisons for SimpleCalculatable's remaining Tier A lifecycle members.</summary>
-public class PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests
+public class PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests
 {
     private const string Contract = "Ptc.Calculation.Core.Support.SimpleCalculatable";
     private static Type Original => Mathcad.Type("Ptc.Calculation.Core", Contract);

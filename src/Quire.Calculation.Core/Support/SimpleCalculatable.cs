@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core.Support;
 
 public partial class SimpleCalculatable
 {
-    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests")]
     public SimpleCalculatable() { }
 
     [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableMechanicalDifferentialTests")]
@@ -26,7 +26,7 @@ public partial class SimpleCalculatable
     [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableMechanicalDifferentialTests")]
     public virtual void SetError(EngineError error) => _error = error;
 
-    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests")]
     public virtual void Commit()
     {
         _error = null;
@@ -37,7 +37,7 @@ public partial class SimpleCalculatable
         }
     }
 
-    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests")]
     public void SetStatusSynchronized()
     {
         if (TreatAsUpToDate != null)
@@ -46,7 +46,7 @@ public partial class SimpleCalculatable
         }
     }
 
-    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests")]
     public virtual void SetSynchronizationStatus(SynchronizationStatus syncStatus)
     {
         _syncStatus = syncStatus;
@@ -107,7 +107,7 @@ public partial class SimpleCalculatable
     [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableMechanicalDifferentialTests")]
     public event Action<ICalculatable> TreatAsUpToDate;
 
-    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests")]
     public static bool IsEngineWarningsEquals(IList<EngineRedefInfo> cacheWarningsOrOther, IList<EngineRedefInfo> newWarnings)
     {
         if (cacheWarningsOrOther == null && newWarnings == null)
@@ -143,7 +143,7 @@ public partial class SimpleCalculatable
         return true;
     }
 
-    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreSupportSimpleCalculatableLifecycle_MechanicalDifferentialTests")]
     public IResultNode FireGetValueOfIdentifierBefore(string idRl)
     {
         if (GetValueOfIdentifierBefore != null)
