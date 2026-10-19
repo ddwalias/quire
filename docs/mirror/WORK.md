@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The 35-member Core MemberGen batch, ResultManager initialization, and RequestShowErrorEventArgs constructor pass generated-path validation, Harness (97/97), Mpl (188/188), and focused Differential (392/392), then block before audit/ratchet on the Release assembly-name mismatch documented in lane-c.md. The active `TraceResultAnalyzer` batch directly verifies five Tier A methods with Release Mathcad tests (5/5) and exact Release IL; three methods remain blocked on out-of-scope Quire.Core stubs. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
