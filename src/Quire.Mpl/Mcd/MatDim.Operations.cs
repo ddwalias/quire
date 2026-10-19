@@ -143,9 +143,9 @@ public abstract partial class MatDim
     [MirrorVerified("MatDimArrayDimDirectDifferentialTests")]
     private static MatDim makeArrayDim(MatVal m)
     {
-        Dim[] array = m.ColDimArray(0);
-        Dim[] array2 = m.RowDimArray(0);
-        if (Uniform(array) != null)
+        Dim[] col0_dims = m.ColDimArray(0);
+        Dim[] row0_dims = m.RowDimArray(0);
+        if (Uniform(col0_dims) != null)
         {
             for (int i = 1; i < m.Cols; i++)
             {
@@ -154,9 +154,9 @@ public abstract partial class MatDim
                     return crazy_dim.make(m);
                 }
             }
-            return c_dim.make(array2, array.Length);
+            return c_dim.make(row0_dims, col0_dims.Length);
         }
-        if (Uniform(array2) != null)
+        if (Uniform(row0_dims) != null)
         {
             for (int j = 1; j < m.Rows; j++)
             {
@@ -165,24 +165,24 @@ public abstract partial class MatDim
                     return crazy_dim.make(m);
                 }
             }
-            return r_dim.make(array, array2.Length);
+            return r_dim.make(col0_dims, row0_dims.Length);
         }
-        if (array == null || array2 == null)
+        if (col0_dims == null || row0_dims == null)
         {
             return crazy_dim.make(m);
         }
-        Dim[] array3 = new Dim[m.Cols];
-        array3[0] = Dim.identity;
+        Dim[] col_multipliers = new Dim[m.Cols];
+        col_multipliers[0] = Dim.identity;
         for (int k = 1; k < m.Cols; k++)
         {
-            Dim dim = IsScalarMultiple(array, m.ColDimArray(k));
+            Dim dim = IsScalarMultiple(col0_dims, m.ColDimArray(k));
             if (dim == null)
             {
                 return crazy_dim.make(m);
             }
-            array3[k] = dim;
+            col_multipliers[k] = dim;
         }
-        return rc_dim.make_rc(array, array3);
+        return rc_dim.make_rc(col0_dims, col_multipliers);
     }
 
     [MirrorAnalyzed("Mcd.MatDim")]

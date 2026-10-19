@@ -14,7 +14,7 @@
   - Direct differential comparisons in `tests/Quire.Differential.Tests/MatDimArrayDimDirectDifferentialTests.cs`:
     - `Direct_makeArrayDim_matches_mathcad`: 8 comparison cases covering uniform columns (`c_dim`), uniform rows (`r_dim`), proportional columns (`rc_dim`), inconsistent columns (`crazy_dim`), partial uniform columns/rows, and null rows/cols guards.
     - `Direct_makeArrayDim_with_bool_matches_mathcad`: 6 comparison cases comparing `linear_algebra_dimensions_only` true vs false across crazy, proportional, and uniform axes.
-    - `Direct_vector_and_matrix_factories_match_mathcad`: 8 comparison cases testing `makeColumnVectorDim` (valid & crazy), `makeRowVectorDim` (valid & crazy), and `make(MatVal)` / `make(MatVal, bool)` dispatch across shapes.
+    - `Direct_vector_and_matrix_factories_match_mathcad`: 18 comparison cases testing `makeColumnVectorDim` (valid & crazy), `makeRowVectorDim` (valid & crazy), uniform 2x2 matrix routing, and `make(MatVal)` / `make(MatVal, bool)` dispatch across vector, matrix, and crazy shapes killing all dispatch mutants.
 - **Evidence:**
   - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
 - **Validation:**

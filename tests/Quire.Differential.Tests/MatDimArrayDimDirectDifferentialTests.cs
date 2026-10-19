@@ -149,7 +149,7 @@ public class MatDimArrayDimDirectDifferentialTests
         Pointer(Side.Quire, q, 0, 0, Number(Side.Quire, "L")); Pointer(Side.Mathcad, m, 0, 0, Number(Side.Mathcad, "L"));
         Pointer(Side.Quire, q, 1, 0, Number(Side.Quire, "T")); Pointer(Side.Mathcad, m, 1, 0, Number(Side.Mathcad, "T"));
         Pointer(Side.Quire, q, 0, 1, Number(Side.Quire, "L")); Pointer(Side.Mathcad, m, 0, 1, Number(Side.Mathcad, "L"));
-        Pointer(Side.Quire, q, 1, 1, Number(Side.Quire, "T")); Pointer(Side.Mathcad, m, 1, 1, Number(Side.Mathcad, "T"));
+        Pointer(Side.Quire, q, 1, 1, Number(Side.Quire, "L")); Pointer(Side.Mathcad, m, 1, 1, Number(Side.Mathcad, "L"));
         return (q, m);
     }
 
@@ -317,25 +317,69 @@ public class MatDimArrayDimDirectDifferentialTests
             v => ShowValue(Side.Quire, v, qRowVecCrazy), v => ShowValue(Side.Mathcad, v, mRowVecCrazy));
 
         // 3. MatDim.make(MatVal) and MatDim.make(MatVal, bool) entry points
+        var (qProp, mProp) = NonuniformScalarFactorPair();
+        var (qCrazy, mCrazy) = NonuniformNonScalarFactorPair();
+        var qUniform = Matrix(Side.Quire, 2, 2); var mUniform = Matrix(Side.Mathcad, 2, 2);
+
+        // Uniform 2x2 matrix routes to uniform_dim via make(MatVal, bool)
+        MethodComparison.Compare("MatDim.make(MatVal, false) uniform matrix", Contract,
+            qMakeMatValBool, null, [qUniform, false], mMakeMatValBool, null, [mUniform, false],
+            v => ShowValue(Side.Quire, v, qUniform), v => ShowValue(Side.Mathcad, v, mUniform));
+
+        MethodComparison.Compare("MatDim.make(MatVal, true) uniform matrix", Contract,
+            qMakeMatValBool, null, [qUniform, true], mMakeMatValBool, null, [mUniform, true],
+            v => ShowValue(Side.Quire, v, qUniform), v => ShowValue(Side.Mathcad, v, mUniform));
+
         // Single column routes to makeColumnVectorDim
         MethodComparison.Compare("MatDim.make(MatVal) col vector", Contract,
             qMakeMatVal, null, [qColVec], mMakeMatVal, null, [mColVec],
             v => ShowValue(Side.Quire, v, qColVec), v => ShowValue(Side.Mathcad, v, mColVec));
+
+        MethodComparison.Compare("MatDim.make(MatVal, false) col vector", Contract,
+            qMakeMatValBool, null, [qColVec, false], mMakeMatValBool, null, [mColVec, false],
+            v => ShowValue(Side.Quire, v, qColVec), v => ShowValue(Side.Mathcad, v, mColVec));
+
+        MethodComparison.Compare("MatDim.make(MatVal, true) col vector crazy kills mutant", Contract,
+            qMakeMatValBool, null, [qColVecCrazy, true], mMakeMatValBool, null, [mColVecCrazy, true],
+            v => ShowValue(Side.Quire, v, qColVecCrazy), v => ShowValue(Side.Mathcad, v, mColVecCrazy));
 
         // Single row routes to makeRowVectorDim
         MethodComparison.Compare("MatDim.make(MatVal) row vector", Contract,
             qMakeMatVal, null, [qRowVec], mMakeMatVal, null, [mRowVec],
             v => ShowValue(Side.Quire, v, qRowVec), v => ShowValue(Side.Mathcad, v, mRowVec));
 
-        // 2x2 matrix routes to makeArrayDim
-        var (qProp, mProp) = NonuniformScalarFactorPair();
+        MethodComparison.Compare("MatDim.make(MatVal, false) row vector", Contract,
+            qMakeMatValBool, null, [qRowVec, false], mMakeMatValBool, null, [mRowVec, false],
+            v => ShowValue(Side.Quire, v, qRowVec), v => ShowValue(Side.Mathcad, v, mRowVec));
+
+        MethodComparison.Compare("MatDim.make(MatVal, true) row vector crazy kills mutant", Contract,
+            qMakeMatValBool, null, [qRowVecCrazy, true], mMakeMatValBool, null, [mRowVecCrazy, true],
+            v => ShowValue(Side.Quire, v, qRowVecCrazy), v => ShowValue(Side.Mathcad, v, mRowVecCrazy));
+
+        // General matrix routes to makeArrayDim
         MethodComparison.Compare("MatDim.make(MatVal) 2x2 matrix", Contract,
             qMakeMatVal, null, [qProp], mMakeMatVal, null, [mProp],
             v => ShowValue(Side.Quire, v, qProp), v => ShowValue(Side.Mathcad, v, mProp));
 
-        MethodComparison.Compare("MatDim.make(MatVal, true) linear only", Contract,
+        MethodComparison.Compare("MatDim.make(MatVal) crazy returns crazy_dim kills mutant", Contract,
+            qMakeMatVal, null, [qCrazy], mMakeMatVal, null, [mCrazy],
+            v => ShowValue(Side.Quire, v, qCrazy), v => ShowValue(Side.Mathcad, v, mCrazy));
+
+        MethodComparison.Compare("MatDim.make(MatVal, false) proportional", Contract,
+            qMakeMatValBool, null, [qProp, false], mMakeMatValBool, null, [mProp, false],
+            v => ShowValue(Side.Quire, v, qProp), v => ShowValue(Side.Mathcad, v, mProp));
+
+        MethodComparison.Compare("MatDim.make(MatVal, true) proportional", Contract,
             qMakeMatValBool, null, [qProp, true], mMakeMatValBool, null, [mProp, true],
             v => ShowValue(Side.Quire, v, qProp), v => ShowValue(Side.Mathcad, v, mProp));
+
+        MethodComparison.Compare("MatDim.make(MatVal, false) crazy returns crazy_dim", Contract,
+            qMakeMatValBool, null, [qCrazy, false], mMakeMatValBool, null, [mCrazy, false],
+            v => ShowValue(Side.Quire, v, qCrazy), v => ShowValue(Side.Mathcad, v, mCrazy));
+
+        MethodComparison.Compare("MatDim.make(MatVal, true) crazy returns null", Contract,
+            qMakeMatValBool, null, [qCrazy, true], mMakeMatValBool, null, [mCrazy, true],
+            v => ShowValue(Side.Quire, v, qCrazy), v => ShowValue(Side.Mathcad, v, mCrazy));
     }
 
     private static System.Type sideT(string name, Side side) => side.T(name);
