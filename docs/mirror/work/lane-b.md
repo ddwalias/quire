@@ -2,6 +2,22 @@
 
 ## Active handoff
 
+### MatVal linear dimensions and MatCreateDim batch
+- **Branch:** `mirror/b-matval-linear-dim`
+- **Status:** Complete implementation and differential verification. All methods in `src/Quire.Mpl/Mcd/MatVal.Dimensions.cs` achieved 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll`.
+- **Scope (18 methods in `MatVal.Dimensions.cs`):**
+  - `MatVal.ApplyLinearDimension(MatDim)` (token 0x0600044a): Remediated structure mismatch to exact IL (separate real vs complex loops, `get_real_raw`/`get_imag_raw`).
+  - `MatVal.MatCreateDim(object, object, object)` (token 0x06000456): Remediated structure mismatch to exact IL (aligned branch equality emitting `bne.un.s`).
+  - `MatVal.DivideByDimension(Dim)` (token 0x0600043d): Remediated to exact IL.
+  - All remaining methods in `MatVal.Dimensions.cs` verified exact IL: `DivideByDefaultDimension` (0x0600043c), `StripDimension` (0x06000446), `AsUniform` (0x06000447), `AsDimless` (0x06000448), `AsPolymorphic` (0x06000449), `ApplyDimension` (0x0600044b), `ApplyCrazyDimension` (0x0600044c), `ApplyRowDimensions(Dim[])` (0x0600044d), `ApplyRowDimensions(Dim, Dim)` (0x0600044e), `ApplyColDimensions(Dim[])` (0x0600044f), `ApplyColDimensions(Dim, Dim)` (0x06000450), `SetDim` (0x06000451), `MDimCast` (0x06000455), `.ctor(MatVal, Dim)` (0x0600048f), `CastPtrs(MatVal, Dim)` (0x06000490).
+- **Evidence:**
+  - [Mcd.MatVal.Dimensions evidence](../evidence/Mcd.MatVal.Dimensions.md) updated to Verified with direct differential test references.
+- **Validation:**
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValDimensionDifferentialTests'` (4/4 passed).
+  - Direct differential tests in `tests/Quire.Differential.Tests/MatValDimensionDifferentialTests.cs` (`Direct_linear_dimensions_and_create_dim_match_mathcad`) exercising `ApplyLinearDimension` and `MatCreateDim` edge cases against Mathcad Prime 12.0.1.0 in Release mode.
+  - `quick_check.py --method-type Quire.Mcd.MatVal` confirms all 18 methods are exact IL.
+
 ### Maintainer-gated handoff: Engine factory and interfaces batch
 - **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
 - **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.

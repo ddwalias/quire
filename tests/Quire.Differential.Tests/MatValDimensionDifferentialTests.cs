@@ -1,3 +1,5 @@
+using System.Reflection;
+using Xunit;
 using static Quire.Differential.Tests.Reflect;
 
 namespace Quire.Differential.Tests;
@@ -113,4 +115,152 @@ public class MatValDimensionDifferentialTests
         }
         log.Log(side, "nonmatrix order", () => Call(type, "MatCreateDim", "other", side.Num(1, 0, "T"), "value"));
     });
+
+    private const string Contract = "Mcd.MatVal";
+    private static readonly Guid MathcadMvid = new("17a0933b-4988-4c18-963d-563998321cc8");
+    private const int ApplyLinearDimensionToken = 0x0600044a;
+    private const int MatCreateDimToken = 0x06000456;
+
+    private static string ShowValue(Side side, object? value)
+    {
+        if (value == null) return "null";
+        if (value.GetType().FullName?.EndsWith(".MatVal", StringComparison.Ordinal) == true)
+            return MatValDifferentialTests.Storage(side, value);
+        if (value.GetType() == side.Dim) return $"Dim({side.DimText(value)})";
+        if (side.T("Mcd.MatDim").IsInstanceOfType(value))
+        {
+            string text = $"{value.GetType().Name}:{Get(value, "Rows")}x{Get(value, "Cols")}" +
+                $" unit={side.DimText(Call(value, "get_UniformDim"))}";
+            int rows = (int)Get(value, "Rows")!, cols = (int)Get(value, "Cols")!;
+            for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++) text += $" ({r},{c})={side.DimText(Call(value, "dim", r, c))}";
+            return text;
+        }
+        return Text(value);
+    }
+
+    [SkippableFact]
+    public void Direct_linear_dimensions_and_create_dim_match_mathcad()
+    {
+        Runtime.Sync();
+
+        var qType = sideT("Mcd.MatVal", Side.Quire);
+        var mType = sideT("Mcd.MatVal", Side.Mathcad);
+        var qMatDim = sideT("Mcd.MatDim", Side.Quire);
+        var mMatDim = sideT("Mcd.MatDim", Side.Mathcad);
+
+        var qApplyLinear = qType.GetMethod("ApplyLinearDimension", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
+            binder: null, [qMatDim], modifiers: null)!;
+        var mApplyLinear = mType.GetMethod("ApplyLinearDimension", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
+            binder: null, [mMatDim], modifiers: null)!;
+
+        Assert.Equal(ApplyLinearDimensionToken, mApplyLinear.MetadataToken);
+        Assert.Equal(MathcadMvid, mApplyLinear.Module.ModuleVersionId);
+
+        var qMatCreateDim = qType.GetMethod("MatCreateDim", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly,
+            binder: null, [typeof(object), typeof(object), typeof(object)], modifiers: null)!;
+        var mMatCreateDim = mType.GetMethod("MatCreateDim", BindingFlags.Static | BindingFlags.Public | BindingFlags.DeclaredOnly,
+            binder: null, [typeof(object), typeof(object), typeof(object)], modifiers: null)!;
+
+        Assert.Equal(MatCreateDimToken, mMatCreateDim.MetadataToken);
+        Assert.Equal(MathcadMvid, mMatCreateDim.Module.ModuleVersionId);
+
+        // 1. ApplyLinearDimension
+        // Uniform dimension
+        var qMatUniform = Matrix(Side.Quire, "L", 0);
+        var mMatUniform = Matrix(Side.Mathcad, "L", 0);
+        var qDimUniform = Call(qMatDim, "make", Side.Quire.D("T"))!;
+        var mDimUniform = Call(mMatDim, "make", Side.Mathcad.D("T"))!;
+
+        MethodComparison.Compare("ApplyLinearDimension.uniform", Contract,
+            qApplyLinear, qMatUniform, [qDimUniform],
+            mApplyLinear, mMatUniform, [mDimUniform],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v),
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // Non-uniform row dimension on real matrix (m_iarr == null)
+        var qMatReal = New(qType, [new double[] { 1, 2, 3, 4 }, null, 2, 2]);
+        var mMatReal = New(mType, [new double[] { 1, 2, 3, 4 }, null, 2, 2]);
+        var qRowUnits = Units(Side.Quire, "L", "T");
+        var mRowUnits = Units(Side.Mathcad, "L", "T");
+        var qAxis = Enum.Parse(Nested(qMatDim, "RC"), "ROW");
+        var mAxis = Enum.Parse(Nested(mMatDim, "RC"), "ROW");
+        var qRowDim = Call(qMatDim, "make", qAxis, qRowUnits, 2)!;
+        var mRowDim = Call(mMatDim, "make", mAxis, mRowUnits, 2)!;
+
+        MethodComparison.Compare("ApplyLinearDimension.real_row_dim", Contract,
+            qApplyLinear, qMatReal, [qRowDim],
+            mApplyLinear, mMatReal, [mRowDim],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v),
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // Non-uniform row dimension on complex matrix (m_iarr != null)
+        var qMatComplex = Matrix(Side.Quire, "L", 1);
+        var mMatComplex = Matrix(Side.Mathcad, "L", 1);
+
+        MethodComparison.Compare("ApplyLinearDimension.complex_row_dim", Contract,
+            qApplyLinear, qMatComplex, [qRowDim],
+            mApplyLinear, mMatComplex, [mRowDim],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v),
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // 2. MatCreateDim
+        // Null point unit
+        MethodComparison.Compare("MatCreateDim.null_point", Contract,
+            qMatCreateDim, null, [qMatReal, null, qMatReal],
+            mMatCreateDim, null, [mMatReal, null, mMatReal],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // Nonmatrix order
+        MethodComparison.Compare("MatCreateDim.nonmatrix_order", Contract,
+            qMatCreateDim, null, ["nonmatrix", Side.Quire.Num(1, 0, "T"), qMatReal],
+            mMatCreateDim, null, ["nonmatrix", Side.Mathcad.Num(1, 0, "T"), mMatReal],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // Dimensionless value matrix
+        var qDimlessVal = New(qType, new double[] { 2, 3, 4 });
+        var mDimlessVal = New(mType, new double[] { 2, 3, 4 });
+        var qOrderMat = New(qType, new double[] { 0, 0, 0 });
+        var mOrderMat = New(mType, new double[] { 0, 0, 0 });
+
+        MethodComparison.Compare("MatCreateDim.dimless_value", Contract,
+            qMatCreateDim, null, [qOrderMat, Side.Quire.Num(1, 0, "T"), qDimlessVal],
+            mMatCreateDim, null, [mOrderMat, Side.Mathcad.Num(1, 0, "T"), mDimlessVal],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // Dimensioned value with power expansion (orders { 0, 0, 0 })
+        var qValPower = New(qType, new double[] { 2, 3, 4 });
+        var mValPower = New(mType, new double[] { 2, 3, 4 });
+        Set(qValPower, "m_dim", Side.Quire.D("L"));
+        Set(mValPower, "m_dim", Side.Mathcad.D("L"));
+        for (int i = 1; i < 3; i++)
+        {
+            CallSig(qValPower, "set_1", ["Int32", "Object"], i, Side.Quire.Num(i + 2, 0, "L"));
+            CallSig(mValPower, "set_1", ["Int32", "Object"], i, Side.Mathcad.Num(i + 2, 0, "L"));
+        }
+
+        MethodComparison.Compare("MatCreateDim.power_expansion", Contract,
+            qMatCreateDim, null, [qOrderMat, Side.Quire.Num(1, 0, "T"), qValPower],
+            mMatCreateDim, null, [mOrderMat, Side.Mathcad.Num(1, 0, "T"), mValPower],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+
+        // Incompatible repeated order (early return reset)
+        var qOrderIncompat = New(qType, new double[] { 0, 1, 0 });
+        var mOrderIncompat = New(mType, new double[] { 0, 1, 0 });
+        var qValIncompat = New(qType, new double[] { 2, 3, 4 });
+        var mValIncompat = New(mType, new double[] { 2, 3, 4 });
+        Set(qValIncompat, "m_dim", Side.Quire.D("L"));
+        Set(mValIncompat, "m_dim", Side.Mathcad.D("L"));
+        CallSig(qValIncompat, "set_1", ["Int32", "Object"], 1, Side.Quire.Num(3, 0, "T"));
+        CallSig(mValIncompat, "set_1", ["Int32", "Object"], 1, Side.Mathcad.Num(3, 0, "T"));
+        CallSig(qValIncompat, "set_1", ["Int32", "Object"], 2, Side.Quire.Num(4, 0, "L"));
+        CallSig(mValIncompat, "set_1", ["Int32", "Object"], 2, Side.Mathcad.Num(4, 0, "L"));
+
+        MethodComparison.Compare("MatCreateDim.incompatible_reset", Contract,
+            qMatCreateDim, null, [qOrderIncompat, Side.Quire.Num(1, 0, "T"), qValIncompat],
+            mMatCreateDim, null, [mOrderIncompat, Side.Mathcad.Num(1, 0, "T"), mValIncompat],
+            v => ShowValue(Side.Quire, v), v => ShowValue(Side.Mathcad, v));
+    }
+
+    private static System.Type sideT(string name, Side side) => side.T(name);
 }
