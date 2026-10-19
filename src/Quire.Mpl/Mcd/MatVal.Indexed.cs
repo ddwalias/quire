@@ -1,4 +1,7 @@
 #nullable disable
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Quire.Mirror;
 using Quire.Mpl.Run;
 
@@ -7,163 +10,389 @@ namespace Quire.Mcd;
 public sealed partial class MatVal
 {
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override object DynCall(object b) => mcd_get_1((uint)(b as DimVal).asInt(1));
+    public override object DynCall(object b)
+    {
+        return mcd_get_1((uint)(b as DimVal).asInt(1u));
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override object DynCall(object b, object c) => mcd_get_2((uint)(b as DimVal).asInt(1), (uint)(c as DimVal).asInt(2));
+    public override object DynCall(object b, object c)
+    {
+        return mcd_get_2((uint)(b as DimVal).asInt(1u), (uint)(c as DimVal).asInt(2u));
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public static object mcd_get_1(object m, object i)
     {
-        var matrix = m as MatVal;
-        var index = i as NumVal;
-        if (matrix == null) AppException.Raise("must be vector", 1u);
-        if (index == null) AppException.Raise("must be integer", 2u);
-        return matrix.mcd_get_1((uint)index.asInt("must be integer", 2));
+        MatVal obj = m as MatVal;
+        NumVal numVal = i as NumVal;
+        if (obj == null)
+        {
+            AppException.Raise("must be vector", 1u);
+        }
+        if (numVal == null)
+        {
+            AppException.Raise("must be integer", 2u);
+        }
+        return obj.mcd_get_1((uint)numVal.asInt("must be integer", 2u));
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override object matrix_get_1(int i) => mcd_get_1((uint)i);
+    public override object matrix_get_1(int i)
+    {
+        return mcd_get_1((uint)i);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override object matrix_get_2(int i, int j) => mcd_get_2((uint)i, (uint)j);
+    public override object sym_matrix_get_1(int i)
+    {
+        return mcd_sym_get_1((uint)i);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override object sym_matrix_get_1(int i) => mcd_sym_get_1((uint)i);
+    public override object matrix_get_2(int i, int j)
+    {
+        return mcd_get_2((uint)i, (uint)j);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override object sym_matrix_get_2(int i, int j) => mcd_sym_get_2((uint)i, (uint)j);
+    public override object sym_matrix_get_2(int i, int j)
+    {
+        return mcd_sym_get_2((uint)i, (uint)j);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public override DimVal iterator_get(int n) => (DimVal)mcd_get_2((uint)(n % Rows), (uint)(n / Rows));
+    public override DimVal iterator_get(int n)
+    {
+        return (DimVal)mcd_get_2((uint)(n % Rows), (uint)(n / Rows));
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public static object mcd_getm_1(object m, int i)
     {
-        var matrix = m as MatVal;
-        if (matrix == null) AppException.Raise("must be vector", 1u);
-        return matrix.mcd_get_1((uint)i);
+        MatVal obj = m as MatVal;
+        if (obj == null)
+        {
+            AppException.Raise("must be vector", 1u);
+        }
+        return obj.mcd_get_1((uint)i);
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
-    public static object mcd_getm_2(object m, int i, int j)
-    {
-        var matrix = m as MatVal;
-        if (matrix == null) AppException.Raise("must be matrix", 1u);
-        return matrix.mcd_get_2((uint)i, (uint)j);
-    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public object mcd_get_1(uint i)
     {
-        if (Cols != 1) AppException.Raise("must be vector", 1u);
-        if (i >= Rows) AppException.Raise("index out of bounds", 2u);
+        if (Data.m_cols != 1)
+        {
+            AppException.Raise("must be vector", 1u);
+        }
+        if (i >= Data.m_rows)
+        {
+            AppException.Raise("index out of bounds", 2u);
+        }
         return get_1((int)i);
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public object mcd_sym_get_1(uint i)
     {
-        if (Cols != 1) AppException.Raise("must be vector");
-        if (i >= Rows) AppException.Raise("index out of bounds");
+        if (Data.m_cols != 1)
+        {
+            AppException.Raise("must be vector");
+        }
+        if (i >= Data.m_rows)
+        {
+            AppException.Raise("index out of bounds");
+        }
         return get_1((int)i);
     }
+
+    [MirrorAnalyzed("Mcd.MatVal")]
+    public static object mcd_getm_2(object m, int i, int j)
+    {
+        MatVal obj = m as MatVal;
+        if (obj == null)
+        {
+            AppException.Raise("must be matrix", 1u);
+        }
+        return obj.mcd_get_2((uint)i, (uint)j);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public object mcd_get_2(uint i, uint j)
     {
-        if (i >= Rows || j >= Cols) AppException.Raise("index out of bounds", 2u);
-        return get_2((int)i, (int)j);
+        if (i >= Data.m_rows)
+        {
+            AppException.Raise("index out of bounds", 2u);
+        }
+        if (j >= Data.m_cols)
+        {
+            AppException.Raise("index out of bounds", 2u);
+        }
+        return get((int)i + m_offset + (int)j * Data.m_anr);
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public object mcd_sym_get_2(uint i, uint j)
     {
-        if (i >= Rows || j >= Cols) AppException.Raise("index out of bounds");
-        return get_2((int)i, (int)j);
+        if (i >= Data.m_rows)
+        {
+            AppException.Raise("index out of bounds");
+        }
+        if (j >= Data.m_cols)
+        {
+            AppException.Raise("index out of bounds");
+        }
+        return get((int)i + m_offset + (int)j * Data.m_anr);
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object mcd_get_1(int i) => mcd_get_1((uint)i);
+    public object mcd_get_1(int i)
+    {
+        return mcd_get_1((uint)i);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object mcd_get_2(int i, int j) => mcd_get_2((uint)i, (uint)j);
+    public object mcd_sym_get_1(int i)
+    {
+        return mcd_sym_get_1((uint)i);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object mcd_sym_get_1(int i) => mcd_sym_get_1((uint)i);
+    public object mcd_get_2(int i, int j)
+    {
+        return mcd_get_2((uint)i, (uint)j);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object mcd_sym_get_2(int i, int j) => mcd_sym_get_2((uint)i, (uint)j);
+    public object mcd_sym_get_2(int i, int j)
+    {
+        return mcd_sym_get_2((uint)i, (uint)j);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object aref_1(int i) => mcd_get_1((uint)i);
+    public object aref_1(int i)
+    {
+        return mcd_get_1((uint)i);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object aref_2(int i, int j) => mcd_get_2((uint)i, (uint)j);
+    public object aref_2(int i, int j)
+    {
+        return mcd_get_2((uint)i, (uint)j);
+    }
 
     [MirrorAnalyzed("Mcd.MatVal")]
     private IEnumerable<int> offsets(MatAxis a, int n)
     {
         if (a == MatAxis.Row)
-            for (int col = 0; col < Cols; col++) yield return Index(n, col);
-        else for (int row = 0; row < Rows; row++) yield return Index(row, n);
+        {
+            for (int j = 0; j < Data.m_cols; j++)
+            {
+                yield return n + m_offset + j * Data.m_anr;
+            }
+        }
+        else
+        {
+            for (int j = 0; j < Data.m_rows; j++)
+            {
+                yield return j + m_offset + n * Data.m_anr;
+            }
+        }
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public ElementType get_type_2(int i, int j, double complex_thresh) => get_type(Index(i, j), complex_thresh);
+    public ElementType get_type_2(int i, int j, double complex_thresh)
+    {
+        return get_type(i + m_offset + j * Data.m_anr, complex_thresh);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     private ElementType get_type(int offset, double complex_thresh)
     {
-        double real = m_rarr[offset];
-        if (IsPtrNan(ref real))
+        double r = m_rarr[offset];
+        if (IsPtrNan(ref r))
         {
             if (m_parr != null)
             {
-                var pointer = m_parr[offset];
-                if (pointer is StrVal) return ElementType.String;
-                if (pointer is not NumVal number) return ElementType.Other;
-                if (double.IsNaN(number.Real) || double.IsNaN(number.Imag)) return ElementType.NaN;
-                bool realNumber = double.IsNaN(complex_thresh) ? number.Imag == 0 : Math.Abs(number.Imag) < complex_thresh;
-                if (!realNumber) return ElementType.Complex;
-                return Dim.Id_b(number.m_dim) ? ElementType.Double : ElementType.UnitedDouble;
+                object obj = m_parr[offset];
+                if (obj is StrVal)
+                {
+                    return ElementType.String;
+                }
+                NumVal numVal = obj as NumVal;
+                if (numVal == null)
+                {
+                    return ElementType.Other;
+                }
+                if (double.IsNaN(numVal.Data.rp) || double.IsNaN(numVal.Data.ip))
+                {
+                    return ElementType.NaN;
+                }
+                bool flag = double.IsNaN(complex_thresh) ? (numVal.Data.ip == 0.0) : (Math.Abs(numVal.Data.ip) < complex_thresh);
+                if (!flag)
+                {
+                    return ElementType.Complex;
+                }
+                if (!Dim.Id_b(numVal.m_dim))
+                {
+                    return ElementType.UnitedDouble;
+                }
+                return ElementType.Double;
             }
-            m_rarr[offset] = double.NaN;
+            m_rarr[offset] = (r = double.NaN);
             return ElementType.NaN;
         }
-        if (double.IsNaN(real)) return ElementType.NaN;
-        if (m_iarr != null)
+        if (double.IsNaN(r))
         {
-            bool realNumber = double.IsNaN(complex_thresh) ? m_iarr[offset] == 0 : Math.Abs(m_iarr[offset]) < complex_thresh;
-            if (!realNumber) return ElementType.Complex;
+            return ElementType.NaN;
         }
-        return Dim.Id_b(m_dim) ? ElementType.Double : ElementType.UnitedDouble;
+        bool flag2;
+        if (m_iarr == null)
+        {
+            flag2 = true;
+        }
+        else if (double.IsNaN(complex_thresh))
+        {
+            flag2 = (m_iarr[offset] == 0.0);
+        }
+        else
+        {
+            flag2 = (Math.Abs(m_iarr[offset]) < complex_thresh);
+        }
+        if (!flag2)
+        {
+            return ElementType.Complex;
+        }
+        if (!Dim.Id_b(m_dim))
+        {
+            return ElementType.UnitedDouble;
+        }
+        return ElementType.Double;
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public IEnumerable<ElementType> element_types(MatAxis a, int n, double complex_thresh) => offsets(a, n).Select(i => get_type(i, complex_thresh));
+    public IEnumerable<ElementType> element_types(MatAxis a, int n, double complex_thresh)
+    {
+        return from offset in offsets(a, n)
+            select get_type(offset, complex_thresh);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public IEnumerable<object> get_ptrs(MatAxis a, int n) => offsets(a, n).Select(get_ptr);
+    public IEnumerable<object> get_ptrs(MatAxis a, int n)
+    {
+        return offsets(a, n).Select(get_ptr);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     private double get_double(int offset, double complex_thresh, double scale)
     {
-        if (m_iarr == null || double.IsNaN(complex_thresh) && m_iarr[offset] == 0 || Math.Abs(m_iarr[offset]) < complex_thresh)
+        if (m_iarr == null)
+        {
             return m_rarr[offset] / scale;
+        }
+        if (double.IsNaN(complex_thresh) && m_iarr[offset] == 0.0)
+        {
+            return m_rarr[offset] / scale;
+        }
+        if (Math.Abs(m_iarr[offset]) < complex_thresh)
+        {
+            return m_rarr[offset] / scale;
+        }
         return double.NaN;
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public IEnumerable<double> get_doubles(MatAxis a, int n, double complex_thresh, double scale) => offsets(a, n).Select(i => get_double(i, complex_thresh, scale));
+    public IEnumerable<double> get_doubles(MatAxis a, int n, double complex_thresh, double scale)
+    {
+        return from offset in offsets(a, n)
+            select get_double(offset, complex_thresh, scale);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     private object get_data(int offset, double complex_thresh, double scale)
     {
-        if (!IsPtrNan(ref m_rarr[offset])) return get_double(offset, complex_thresh, scale);
-        return m_parr != null ? m_parr[offset] : m_rarr[offset] = double.NaN;
+        double r = m_rarr[offset];
+        if (IsPtrNan(ref r))
+        {
+            if (m_parr != null)
+            {
+                return m_parr[offset];
+            }
+            double nan = m_rarr[offset] = double.NaN;
+            return nan;
+        }
+        return get_double(offset, complex_thresh, scale);
     }
-    [MirrorAnalyzed("Mcd.MatVal")]
-    public IEnumerable<object> get_data(MatAxis a, int n, double complex_thresh, double scale) => offsets(a, n).Select(i => get_data(i, complex_thresh, scale));
 
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object[] PackObjects() => PackObjects(0);
+    public IEnumerable<object> get_data(MatAxis a, int n, double complex_thresh, double scale)
+    {
+        return from offset in offsets(a, n)
+            select get_data(offset, complex_thresh, scale);
+    }
+
+    [MirrorAnalyzed("Mcd.MatVal")]
+    public object[] PackObjects()
+    {
+        return PackObjects(0);
+    }
+
     [MirrorAnalyzed("Mcd.MatVal")]
     public object[] PackObjects(int offset)
     {
-        var result = new object[Rows * Cols + offset];
-        int index = offset;
-        for (int c = 0; c < Cols; c++) for (int r = 0; r < Rows; r++) result[index++] = get_2(r, c);
-        return result;
+        int rows = Rows;
+        int cols = Cols;
+        object[] array = new object[rows * cols + offset];
+        int num = offset;
+        for (int i = 0; i < cols; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                array[num++] = get_2(j, i);
+            }
+        }
+        return array;
     }
+
     [MirrorAnalyzed("Mcd.MatVal")]
-    public static MatVal operator /(MatVal matrix, double scalar) => (matrix.Packed && !matrix.Immutable ? matrix : new MatVal(matrix)).Scale(scalar);
-    [MirrorAnalyzed("Mcd.MatVal")]
-    private MatVal Scale(double scalar)
+    public static MatVal operator /(MatVal matrix, double scalar)
     {
-        if (IsUniformScalar) Utilities.ScaleVector(m_rarr, scalar);
+        if (matrix.Packed && !matrix.Immutable)
+        {
+            return matrix.Scale(scalar);
+        }
+        return new MatVal(matrix).Scale(scalar);
+    }
+
+    [MirrorAnalyzed("Mcd.MatVal")]
+    private unsafe MatVal Scale(double scalar)
+    {
+        if (!IsUniformScalar)
+        {
+            fixed (double* ptr = &m_rarr[0])
+            {
+                int num = m_rarr.Length;
+                while (--num >= 0)
+                {
+                    if (IsPtrNan(ref ptr[num]))
+                    {
+                        m_parr[num] = Utilities.Divide(m_parr[num], scalar);
+                    }
+                    else
+                    {
+                        ptr[num] /= scalar;
+                    }
+                }
+            }
+        }
         else
         {
-            _ = m_rarr[0];
-            for (int i = m_rarr.Length - 1; i >= 0; i--)
-                if (IsPtrNan(ref m_rarr[i])) m_parr[i] = Utilities.Divide(m_parr[i], scalar);
-                else m_rarr[i] /= scalar;
+            Utilities.ScaleVector(m_rarr, scalar);
         }
-        if (m_iarr != null) Utilities.ScaleVector(m_iarr, scalar);
+        if (m_iarr != null)
+        {
+            Utilities.ScaleVector(m_iarr, scalar);
+        }
         return this;
     }
 }
