@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core;
 
 public partial class RequestShowErrorEventArgs
 {
-    [MirrorVerified("PtcCalculationCoreRequestShowErrorEventArgsConstructorTests")]
+    [MirrorVerified("PtcCalculationCoreRequestShowErrorEventArgsMechanicalDifferentialTests")]
     public RequestShowErrorEventArgs(EngineError error)
     {
         Error = error;

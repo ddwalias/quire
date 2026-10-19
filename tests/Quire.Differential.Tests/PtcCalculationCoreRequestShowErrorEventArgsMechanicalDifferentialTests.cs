@@ -59,10 +59,7 @@ public class PtcCalculationCoreRequestShowErrorEventArgsMechanicalDifferentialTe
             qSetter, qTarget, [null], mSetter, mTarget, [null],
             value => Show(value, qError), value => Show(value, mError), QState, MState);
     }
-}
 
-public class PtcCalculationCoreRequestShowErrorEventArgsConstructorTests
-{
     [SkippableFact]
     public void ctor_060000c5()
     {

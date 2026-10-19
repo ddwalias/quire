@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. `RequestShowErrorEventArgs` is being re-gated on current main `3ed37be1`; the affected Release Mathcad class passes 3/3 and all three declarations audit exact. Its getter/setter tests now compare stored reference state directly, avoiding unrelated EngineError representation differences. Earlier EngineErrorExtensions, TraceDataPoints and vectors-legacy gates passed focused Release checks but remain phase/test-host blocked; reports in lane-c.md. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. `RequestShowErrorEventArgs` direct Release tests pass 3/3 and all three members audit exact. Its first current-main gate found a test-file shape lint issue (two top-level test types); the constructor test is now in the single expected class and the MirrorVerified name is updated. Re-gate pending on main `3ed37be1`. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
