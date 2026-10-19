@@ -16,8 +16,11 @@
 | `SynchronizationStatus set` | 0x0600005f | MemberGen: `public SynchronizationStatus SynchronizationStatus { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `SerializationTag get` | 0x06000062 | MemberGen: `public string SerializationTag { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `SerializationTag set` | 0x06000063 | MemberGen: `public string SerializationTag { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor(EngineResult, SynchronizationStatus)` | 0x06000051 | Default the struct; copy result node (or an empty node), errors, warnings and serialization tag; set requested status | Direct Release Mathcad comparison; Quire token 0x0600005a is exact | Verified (null node case) |
+| `.ctor(EngineResult, IResultNode)` | 0x06000052 | Default the struct; use supplied node or an empty node, clear errors, copy serialization tag and status | Direct Release Mathcad comparison; Quire token 0x0600005b is exact | Verified (null node case) |
+| `.ctor(EngineResult, IEnumerable<EngineRedefInfo>)` | 0x06000056 | Default the struct; copy node/errors/tag/status and materialize non-null warnings | Direct Release Mathcad comparison; Quire token 0x0600005c is exact | Verified (empty warnings case) |
+| `.ctor(IResultNode, EngineErrorCollection, SynchronizationStatus)` | 0x06000054 | Reject a non-empty result node with a non-empty error collection; otherwise copy the node, errors and status | Direct Release comparisons cover null pair, empty collection and invalid pair; Quire token `0x0600005d` exactly matches Mathcad | Verified (three cases) |
 
 ## Test cases
 
-**Observed** (`PtcCalculationCoreEngineResultMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
-parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+**Observed** (`PtcCalculationCoreEngineResultMechanicalDifferentialTests`): all 14 members in this class are compared directly with Mathcad in Release. Ten accessors are invoked on default structs; setters receive null, an empty warning array, synchronization enum value 1, or a non-null serialization tag. Four constructors cover copy/fallback behavior and result/error validation. All 14 comparisons passed. The custom renderer normalizes enum values numerically and records every EngineResult property after invocation; it avoids the enum-name mismatch in Mathcad's metadata without changing shared test helpers.
