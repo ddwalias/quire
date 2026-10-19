@@ -4,7 +4,7 @@ using Quire.PersistentDataObjects;
 
 namespace Quire.Differential.Tests;
 
-public class PtcPersistentDataObjectsWorksheetRegionTypeSerializerDifferentialTests
+public class PtcPersistentDataObjectsWorksheetRegionTypeSerializerMechanicalDifferentialTests
 {
     private const string Contract = "Ptc.PersistentDataObjects.worksheetRegionType";
 

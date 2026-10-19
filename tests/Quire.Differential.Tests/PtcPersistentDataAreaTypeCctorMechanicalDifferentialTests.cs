@@ -5,7 +5,7 @@ using Quire.PersistentDataObjects;
 
 namespace Quire.Differential.Tests;
 
-public class PtcPersistentDataAreaTypeCctorDifferentialTests
+public class PtcPersistentDataAreaTypeCctorMechanicalDifferentialTests
 {
     private const string Contract = "Ptc.PersistentData.AreaType";
 
