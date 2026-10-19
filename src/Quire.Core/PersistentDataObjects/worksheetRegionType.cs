@@ -7,7 +7,7 @@ namespace Quire.PersistentDataObjects;
 
 public partial class worksheetRegionType
 {
-    [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerDifferentialTests")]
+    [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerMechanicalDifferentialTests")]
     public static XmlSerializer CreateDefaultSerializer(Type typeOfRoot, string rootNodeName)
     {
         using (new XmlSerializerCreationWrapper())
