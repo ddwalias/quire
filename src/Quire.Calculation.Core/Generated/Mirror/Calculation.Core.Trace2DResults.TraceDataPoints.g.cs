@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.TraceDataPoints, Ptc.Calculation.Core")]
 public partial class TraceDataPoints : global::Quire.Calculation.Core.ITraceDataPoints
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TraceDataPoints(global::Quire.Calculation.Core.IVectorListResultNode rangeVectors, global::Quire.Calculation.Core.IVectorListResultNode resultVectors) { }
 }

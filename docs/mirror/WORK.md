@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. EngineErrorExtensions and VectorsLegacyConverter reader batches pass direct Release Mathcad cases with exact Release IL but their normal gates stop at the focused Release assembly-name lookup. TraceDataPoints constructor and `IsEmpty` pass 7 Release Mathcad tests and match Release IL exactly; its gate is next. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
