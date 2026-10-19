@@ -1158,7 +1158,7 @@ public class SexprDifferentialTests
         Assert.Same(patSymQ, SCons.walk_expressions(qEnv, patSymQ));
         Assert.Same(patSymM, mWalkExprs.Invoke(null, [mEnv, patSymM]));
 
-        var stableListQ = L(I(1), I(2));
+        var stableListQ = L(I(1), I(2), I(3));
         var stableListM = ToMathcad(stableListQ)!;
         MethodComparison.Compare("SCons.walk_expressions(constants) reused", "Mpl.Run.SCons",
             qWalkExprs, null, [qEnv, stableListQ],

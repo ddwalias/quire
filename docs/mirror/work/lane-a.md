@@ -3,11 +3,11 @@
 ## Active handoff
 
 The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-scons-il-shape` batch is blocked by a surviving `walk_expressions` mutation after three gate
-attempts. No independent Tier A batch is currently clear: the inventory's next result is `SList.FormatCons` in the
-same `Sexpr.cs` file as this pending change. `MplDestructuringBind.ExpandCall`
-depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated
-batch receipts below are history, not a task queue.
+separate `mirror/a-scons-il-shape` batch has a local mutation-ready follow-up and is queued for a gate retry. The
+latest Tier A inventory starts with `Mcd.Dim`, but existing Lane A branches own its constructor, initializer and
+private-state scopes; check their status before taking any Dim work. `SList.FormatCons` shares `Sexpr.cs` with the
+pending SCons branch. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it parked. Use
+[WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
@@ -214,6 +214,21 @@ batch receipts below are history, not a task queue.
   `Quire.Mpl.Run.SCons::walk_expressions(MplEnv,SCons)->Sexpr|True@IL_0042 ceq -> cgt.un` at
   `src/Quire.Mpl/Run/Sexpr.cs:410`, `if (t == exps.Field2) return exps;`; the explicit Mathcad and Quire identity
   assertions did not kill it. Validator exited 1, so this batch did not merge.
+
+## SCons mutation probe depth (`mirror/a-scons-il-shape`)
+
+- The two-cell constant list was not a sufficient probe for `IL_0042 ceq -> cgt.un`: the recursive tail cell is
+  rebuilt, then the outer unsigned address comparison can select the original head, so the top-level identity still
+  matches. A three-cell constant list exposes the altered result. The differential case now compares that shape and
+  asserts identity against both Quire and Mathcad.
+- Scoped command: `python tools\validation\validate.py --profile focused --method-type Quire.Mpl.Run.SCons --mutate
+  --no-mutant-cache --jobs 14`. Harness 97, Mpl 188 and Differential 392 passed; 27 methods compared, 29 exact,
+  2 existing uncovered points, integrity complete and ratchet OK. Mutation killed 24/24 with no survivors,
+  timeouts or crashes. Summary: `%LOCALAPPDATA%\Temp\quire-validation-za_j5xx7\summary.json`. Local verdict:
+  `LOCAL CHECKS: pass · GATE: would pass with gaps (2 uncovered)` (scoped to SCons).
+- Next: retry the full runtime gate on this branch; the earlier three gate failures are superseded only if the retry
+  passes. No independent Lane A batch is ready until current ownership is checked against the Dim branches and the
+  in-progress `MplForeignMacro` owner.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 

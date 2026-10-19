@@ -7,7 +7,7 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | `mirror/a-scons-il-shape` is blocked by a surviving `walk_expressions` reference-equality mutant after three gate attempts; the independent Tier A picker returned only `SList.FormatCons`, which shares `Sexpr.cs` with this pending branch. The in-progress `MplForeignMacro` batch remains owned; `MplDestructuringBind.ExpandCall` remains blocked by `define_keyword.MakeDefine`. | [Lane A](work/lane-a.md) |
+| A | `mirror/a-scons-il-shape` has a three-cell `walk_expressions` mutation probe that kills the prior survivor in scoped validation; retry its full gate. The in-progress `MplForeignMacro` batch remains owned; check ownership of the newly ranked `Mcd.Dim` scopes before claiming them. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop
