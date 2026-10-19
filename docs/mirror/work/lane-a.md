@@ -2,10 +2,11 @@
 
 ## Active handoff
 
-SCons, SList, Utilities, Tok and MplSignature are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, NumVal, RngVal, Type, Dim and DimVal branches each had an incomplete gate run before the
-Release assembly lookup was fixed at `a2b91391`. Those runs stopped before method audit and ratchet; treat them as
-unvalidated and rerun the full gate before merge. Each branch owns its source files.
+SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches each had an incomplete gate run before the Release
+assembly lookup was fixed at `a2b91391`. Those runs stopped before full validation; Rational's latest run is recorded
+below and awaits a full gate retry. The remaining branches own their source files.
+
 
 
 
@@ -1388,3 +1389,7 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 - `Rational(double,double)`, `Equals(object)` and `GCD(int,int)` were aligned to reference Release IL; evidence is in [Mcd.Rational](../evidence/Mcd.Rational.md). Required Release `RationalDifferentialTests` passed 3/3 with Mathcad.
 - Gate on rebased revision `8c76fea7` and base `97694a2dffb95e0946098830c816d7b77677b570` passed Harness 97, Mpl 188, Debug Differential 392 and Release Differential 392; audit compared 1,399 methods (1,545 exact, 78 structure-only), coverage 298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported; integrity complete and ratchet OK.
 - Mutation stopped after 120/128 mutants with exact validator error `[Errno 13] Permission denied: 'C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-mutant-scratch-n2jriqcd\\quire-mutant-e9ldh8qb\\Quire.Mpl.dll'`. Gate report: `%LOCALAPPDATA%\Temp\quire-gate-results-9bobu2ew\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-9bobu2ew\run\summary.json`. The batch remains unmerged and requires a full gate retry.
+## NumVal exact Release shapes (`mirror/a-numval-il-shape`)
+
+- `IsPureReal`, `IsPureImag` and `isInt(int*)` match Mathcad Release IL exactly; `LoadNaN` remains structure-only. Evidence is in [Mcd.NumVal](../evidence/Mcd.NumVal.md). Required Release `NumValDifferentialTests` passed 6/6 with Mathcad.
+- Full gate passed and merged to `origin/main` at `4df38aaeaa41`, validated on base `e9a9bec441f804b49baed8dc47e8c1c04f3cd3b2`. Report: `%LOCALAPPDATA%\Temp\quire-gate-results-av4aavtx\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-av4aavtx\run\summary.json`. Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393 passed. Audit compared 1,399 methods (1,547 exact, 77 structure-only); coverage: 298 missing, 102 structure mismatches, 35 uncovered, 41 verified unsupported. Lint 0, integrity complete, ratchet passed. Mutation killed 163/168; one timeout retry completed and there were no live survivors.
