@@ -45,8 +45,4 @@ internal partial class VectorsLegacyConverter : global::Quire.Calculation.Core.T
     private global::System.Collections.Generic.IList<double> ReadDoubleValues(int iVector, int startValueIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::Quire.Calculation.Core.ResultValueType> GetFirstMeaningfulValueType(int iVector, out int firstMeaningfullValueIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ReadDoubleOrNone(global::Quire.Calculation.Core.IResultNode element, out double doubleValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ReadString(global::Quire.Calculation.Core.IResultNode element, out string stringValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

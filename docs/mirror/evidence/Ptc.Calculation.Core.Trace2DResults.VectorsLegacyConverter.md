@@ -6,9 +6,10 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `ReadAsColumns get` | 0x06000265 | MemberGen: `_readAsColumns` | Mechanical; Release IL equals Mathcad's | Verified |
+| `ReadAsColumns get` | 0x06000265 | MemberGen: `_readAsColumns` | Directly compared on an uninitialized target with `_readAsColumns = true` | Verified |
+| `ReadDoubleOrNone(IResultNode, out double)` | 0x0600026c | Initializes the out value to NaN; complex/imaginary and real nodes return true, with real values copied; other nodes return false | Direct Mathcad cases cover null, finite and NaN real, complex, imaginary and string nodes; Release IL exact | Verified |
+| `ReadString(IResultNode, out string)` | 0x0600026d | Initializes the out value to null; strings return true and their value; complex/imaginary or NaN-real return true with null; other nodes return false | Direct Mathcad cases cover null, string, finite and NaN real, complex and imaginary nodes; Release IL exact | Verified |
 
 ## Test cases
 
-**Observed** (`PtcCalculationCoreTrace2DResultsVectorsLegacyConverterMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
-parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+**Observed** (`PtcCalculationCoreTrace2DResultsVectorsLegacyConverterMechanicalDifferentialTests`): `ReadDoubleOrNone` and `ReadString` are compared directly against Mathcad with interface proxies. Both return values and mutated `out` values match across the listed cases. `ReadAsColumns` is compared on uninitialized targets with matching `_readAsColumns` fields.

@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok and MplSignature are merged. Six Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The MemberGen, ResultManager, RequestShowErrorEventArgs, TraceResultAnalyzer, ResultNodeUtils, and EngineErrorExtensions batches pass generated-path validation, Harness (97/97), Mpl (188/188), and focused Differential (392/392), then stop before audit/ratchet on the Release assembly-name mismatch in lane-c.md. TraceResultAnalyzer has five directly compared exact methods; ResultNodeUtils `TryParsePlottableValue` and EngineErrorExtensions `IsPlaceholderError` passed direct Release cases and match Release IL exactly. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The EngineErrorExtensions and VectorsLegacyConverter value-reader batches have direct Release Mathcad cases and exact Release IL; their normal gates are blocked before audit/ratchet by the focused Release assembly-name lookup in lane-c.md. Existing Calculation.Core initializer batches are owned in live Lane C worktrees. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
