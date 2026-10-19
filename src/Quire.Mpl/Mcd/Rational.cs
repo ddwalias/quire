@@ -45,32 +45,35 @@ public partial struct Rational
     [MirrorVerified("RationalDifferentialTests")]
     public Rational(double xx, double err)
     {
-        double abs = Math.Abs(xx);
-        double whole = Math.Floor(abs);
-        double frac = abs - whole;
-        double rest = frac;
-        double pPrev = 1.0;
-        double qPrev = 0.0;
-        double p = 0.0;
-        double q = 1.0;
-        while (Math.Abs(p / q - frac) > err && rest > 9.313225746154785E-10)
+        double magnitude = Math.Abs(xx);
+        double whole = Math.Floor(magnitude);
+        double fraction = magnitude - whole;
+        double remainder = fraction;
+        double previousNumerator = 1.0;
+        double previousDenominator = 0.0;
+        double numerator = 0.0;
+        double denominator = 1.0;
+        while (Math.Abs(numerator / denominator - fraction) > err && remainder > 9.313225746154785E-10)
         {
-            rest = 1.0 / rest;
-            double a = Math.Floor(rest);
-            rest -= a;
-            double pNext = a * p + pPrev;
-            double qNext = a * q + qPrev;
-            if (Math.Max(p + whole * qNext, qNext) > int.MaxValue) break;
-            pPrev = p;
-            qPrev = q;
-            p = pNext;
-            q = qNext;
+            remainder = 1.0 / remainder;
+            double partial = Math.Floor(remainder);
+            remainder -= partial;
+            double nextNumerator = partial * numerator + previousNumerator;
+            double nextDenominator = partial * denominator + previousDenominator;
+            if (Math.Max(numerator + whole * nextDenominator, nextDenominator) > 2147483647.0)
+            {
+                break;
+            }
+            previousNumerator = numerator;
+            previousDenominator = denominator;
+            numerator = nextNumerator;
+            denominator = nextDenominator;
         }
-        Numerator = (int)(p + whole * q);
-        Denominator = (int)q;
+        Numerator = (int)(numerator + whole * denominator);
+        Denominator = (int)denominator;
         if (xx < 0.0)
         {
-            Numerator = ~(Numerator + -1);
+            Numerator *= -1;
         }
     }
 
@@ -127,7 +130,14 @@ public partial struct Rational
         new(unchecked(a.Numerator * b.Denominator), unchecked(a.Denominator * b.Numerator));
 
     [MirrorVerified("RationalDifferentialTests")]
-    public override bool Equals(object? o) => o is Rational r && this == r;
+    public override bool Equals(object? o)
+    {
+        if (o is Rational)
+        {
+            return this == (Rational)o;
+        }
+        return false;
+    }
 
     /// <summary>The truncated value, so it throws for a zero denominator, <c>default</c> included.</summary>
     [MirrorVerified("RationalDifferentialTests")]
@@ -145,7 +155,13 @@ public partial struct Rational
     [MirrorVerified("RationalDifferentialTests")]
     public static int GCD(int m, int n)
     {
-        while (n != 0) (m, n) = (n, m % n);
+        while (n != 0)
+        {
+            int previousM = m;
+            m = n;
+            n = previousM;
+            n %= m;
+        }
         return Math.Abs(m);
     }
 }
