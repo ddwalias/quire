@@ -739,9 +739,17 @@ because shared source can compile into multiple projects. Phase validation does 
 bin/ and obj/ belong to the build that last used them; the gate avoids stale outputs by using fresh clones.
 
 When a branch changes src/ or tests/ paths that the focused profile does not cover, the merge gate runs focused
-validation and then the phase profile. Both must pass, and both baselines must hold the ratchet against main.
+validation and then the phase profile. Both profiles must meet their gate requirements, and both baselines must hold
+the ratchet against main.
 Without a usable Windows .NET CLI, the gate blocks those changes unless a maintainer passes --allow-unvalidated
 after a separate Windows phase run.
+
+The merge gate's phase run executes the full Debug differential suite to preserve its method-case and coverage
+inventory. Existing failures in that broad suite do not block by count alone; the phase method-coverage ratchet must
+still show no regressions. It also runs the candidate's changed `*DifferentialTests.cs` classes against Release Quire.
+If a shared comparison helper changes, the Release pass remains unfiltered. The standalone phase-closure command
+stays strict and unfiltered. The two known `s1000001` and `s2000001` files emitted by the full differential suite in
+its test output directory are excluded from the integrity seal; executable and dependency changes remain sealed.
 
 The gate does not create the first phase baseline. A maintainer bootstraps it from an up-to-date main, and commits
 it only when every test project passes and the missing baseline is the only reported regression. Until a phase

@@ -643,11 +643,22 @@ class PhaseGateTests(unittest.TestCase):
             self.assertEqual(merge_gate.phase_dotnet({'WSL_DISTRO_NAME': 'x', 'QUIRE_WINDOWS_DOTNET': str(cli)}), str(cli))
 
     def test_phase_command(self):
-        command = merge_gate.phase_command(Path('/w/tree'), Path('/w/run'), Path('/w/b.json'), 900, 'dotnet.exe')
+        command = merge_gate.phase_command(Path('/w/tree'), Path('/w/run'), Path('/w/b.json'), 900, 'dotnet.exe',
+                                           'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests')
         self.assertEqual(command[2:], ['-B', str(Path('/w/tree/tools/validation/validate.py')), '--profile', 'phase',
                                        '--results', str(Path('/w/run')), '--baseline',
                                        str(Path('/w/tree') / merge_gate.PHASE_BASELINE), '--write-baseline',
-                                       str(Path('/w/b.json')), '--timeout', '900', '--dotnet', 'dotnet.exe'])
+                                       str(Path('/w/b.json')), '--timeout', '900', '--dotnet', 'dotnet.exe',
+                                       '--allow-phase-differential-failures', '--diff-filter',
+                                       'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests'])
+
+    def test_phase_diff_filter_uses_changed_differential_classes_but_not_shared_helpers(self):
+        self.assertEqual(merge_gate.phase_diff_filter([
+            'src/Quire.Core/PersistentData/OleUtils.cs',
+            'tests/Quire.Differential.Tests/PtcPersistentDataOleUtilsDifferentialTests.cs']),
+            'FullyQualifiedName~PtcPersistentDataOleUtilsDifferentialTests')
+        self.assertIsNone(merge_gate.phase_diff_filter([
+            'tests/Quire.Differential.Tests/MethodComparison.cs']))
 
 
 class OptimisticGateTests(unittest.TestCase):

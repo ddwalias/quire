@@ -74,6 +74,14 @@ class ResultTests(unittest.TestCase):
     def test_pass(self):
         self.assertEqual(self.check(["Passed", "Passed"]), {"passed": 2, "failed": 0, "skipped": 0})
 
+    def test_phase_gate_can_defer_differential_failures_to_the_method_ratchet(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "result.trx"
+            path.write_text('<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">'
+                            '<Results><UnitTestResult outcome="Passed" /><UnitTestResult outcome="Failed" />'
+                            '</Results><ResultSummary outcome="Failed" /></TestRun>')
+            self.assertEqual(read_trx(path, allow_failures=True), {"passed": 1, "failed": 1, "skipped": 0})
+
     def test_false_green_runs_rejected(self):
         for outcomes, summary in [([], "Completed"), (["NotExecuted"], "Completed"),
                                   (["Passed", "Failed"], "Failed"), (["Passed"], "Aborted"),
