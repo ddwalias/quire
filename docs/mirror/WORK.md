@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches remain pending full gate or maintainer validation: Rational, RngVal, Type, Dim and DimVal. The Rts initializer event verification merged at `2c4d5d33`. No other unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The existing Core cctor/ResultManager branch passes its affected Release Mathcad filter 6/6 and its normal gate is in the Phase profile. The independent `ValueToIResultNodeTransform` behavior subset passes 7/7 targeted Release comparisons. `ListResultNode<T>` and `MatrixValueDataAccessorWrapper` pass their Release comparisons, but both gates are blocked by a Quire.Engine shape failure outside Lane C. `TraceResultAnalyzer` is already owned by its active Lane C worktree. Two transform members remain dependency-blocked on an owned MatrixValueProxyWrapper constructor and Tier B ValueProxyWrapper accessors. See the checkpoint for exact gate reports, owners, and remaining work. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 

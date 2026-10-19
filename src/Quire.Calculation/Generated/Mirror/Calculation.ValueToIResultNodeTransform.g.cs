@@ -14,25 +14,7 @@ public partial class ValueToIResultNodeTransform : global::Quire.Calculation.IVa
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Calculation.Core.IResultNodeFactory _resultNodeFactory;
     [global::Quire.Mirror.MirrorStub]
-    public bool SimplifyUnits { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ValueToIResultNodeTransform(global::Quire.Calculation.Core.IResultNodeFactory resultNodeFactory) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IResultNode Transform(global::Quire.Automation.IAutomationValue v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode MakeResultNode(global::Quire.Automation.IAutomationValue v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode MakeResultNode(global::Quire.Calculation.Core.IValueProxyWrapper vproxyWrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode MakeResultNode(global::Quire.Automation.IValueProxy vproxy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string CleanLineBreake(string unclean, string replacement = "") => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode BuildScalar(global::Quire.Automation.IScalarValueProxy scalar) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IResultNode BuildLazyMatrix(global::Quire.Automation.IMatrixValueProxy matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode MakeUnitedValue(global::Quire.Calculation.Core.IResultNode result, global::Quire.Automation.UnitPower[] units) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool HasUnits(global::Quire.Automation.IValueProxy valueProxy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
