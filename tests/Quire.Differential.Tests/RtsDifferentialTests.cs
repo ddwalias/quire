@@ -299,24 +299,15 @@ public class RtsDifferentialTests
                     qOnResolve, null, qArgsNonDomain, mOnResolve, null, mArgsNonDomain, qs, ms);
 
                 // Exercise each .cctor-installed AppDomain handler independently. Only the designated side has
-                // a matching file in its Rts.AssemblyPath; the other handler must decline the request.
-                string qEventName = "ProbeQ" + Guid.NewGuid().ToString("N");
-                string mEventName = "ProbeM" + Guid.NewGuid().ToString("N");
-                string qEventDir = Path.Combine(dir, "quire-event");
-                string mEventDir = Path.Combine(dir, "mathcad-event");
-                Directory.CreateDirectory(qEventDir);
-                Directory.CreateDirectory(mEventDir);
-                File.Copy(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.Location, Path.Combine(qEventDir, qEventName + ".dll"));
-                File.Copy(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.Location, Path.Combine(mEventDir, mEventName + ".dll"));
-
-                qSetAssemblyPath.Invoke(null, [qEventDir]);
-                mSetAssemblyPath.Invoke(null, [Path.Combine(dir, "no-mathcad-event-probe")]);
-                var qResolved = Assembly.Load(new AssemblyName(qEventName));
+                // a matching Probe.dll in its Rts.AssemblyPath; the other handler must decline the request.
+                qSetAssemblyPath.Invoke(null, [dir]);
+                mSetAssemblyPath.Invoke(null, [""]);
+                var qResolved = Assembly.Load(new AssemblyName("Probe, Version=0.0.0.1"));
                 Assert.Equal(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.GetName().Name, qResolved.GetName().Name);
 
-                qSetAssemblyPath.Invoke(null, [Path.Combine(dir, "no-quire-event-probe")]);
-                mSetAssemblyPath.Invoke(null, [mEventDir]);
-                var mResolved = Assembly.Load(new AssemblyName(mEventName));
+                qSetAssemblyPath.Invoke(null, [""]);
+                mSetAssemblyPath.Invoke(null, [dir]);
+                var mResolved = Assembly.Load(new AssemblyName("Probe, Version=0.0.0.2"));
                 Assert.Equal(typeof(Quire.Mirror.MirrorOfAttribute).Assembly.GetName().Name, mResolved.GetName().Name);
                 Assert.Equal(qResolved.GetName().Name, mResolved.GetName().Name);
             }

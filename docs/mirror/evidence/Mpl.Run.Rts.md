@@ -9,7 +9,7 @@
 
 `RtsDifferentialTests` compares every declared static field's rendered value immediately after directly invoking the
 type initializer on both artifacts. Its search-path test then makes the initializer's `AssemblyResolve` subscription
-observable: a unique probe assembly resolves for Quire when only Quire's path contains it, and for Mathcad when only
+observable: versioned `Probe` requests resolve for Quire when only Quire's path contains the fixture, and for Mathcad when only
 Mathcad's path contains it. Together, the direct state comparison and side-specific resolution prove the initializer's
 recorded fields and event subscription. The private `ms_thread_cancellation_token` field is also observed through its
 null and cancelled-source transitions in later cases.
@@ -65,8 +65,8 @@ type, name, parameter or field type and staticness):
 - the budget a new thread starts with after `m_max_stack` is changed to 12;
 - `OnResolveAssembly` with the search path `<missing dir>;<dir holding Probe.dll>` for `Probe`, a full display name,
   an absent name and the empty name, each with the current domain and a null sender, and with a string sender;
-- actual `Assembly.Load` requests for unique Quire and Mathcad probes while only that side's `AssemblyPath` contains
-  its file, proving that each `.cctor` registered its own `AssemblyResolve` handler.
+- actual versioned `Assembly.Load` requests while only the designated side's `AssemblyPath` contains `Probe.dll`,
+  proving that each `.cctor` registered its own `AssemblyResolve` handler.
 
 **Inferred** (`RtsTests`): each thread starting with the full budget, cancellation reported once, the handles for
 generated code, and unresolved assemblies found on the search path through the real `AssemblyResolve` event.
