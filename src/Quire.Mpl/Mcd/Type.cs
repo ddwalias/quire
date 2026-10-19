@@ -440,7 +440,11 @@ public abstract partial class Type
         public Type Parse()
         {
             var domain = ParseApplication();
-            return GetNextTokenIf(">") ? m_fac.NewFunction(domain, Parse()) : domain;
+            if (GetNextTokenIf(">"))
+            {
+                return m_fac.NewFunction(domain, Parse());
+            }
+            return domain;
         }
 
         /// <summary>An atomic term followed by atomic operands while the next token can start one.</summary>
@@ -517,9 +521,12 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         private bool GetNextTokenIf(string tokens)
         {
-            if (!IsNextToken(tokens)) return false;
-            m_tok = '$';
-            return true;
+            if (IsNextToken(tokens))
+            {
+                m_tok = '$';
+                return true;
+            }
+            return false;
         }
 
         [MirrorVerified("TypeDifferentialTests")]
@@ -677,12 +684,20 @@ public abstract partial class Type
                 OnFunction(app.Operands[1], n + 1);
                 return;
             }
+            bool first = true;
             m_out.Append("ƒ(");
             var domains = m_fac.Pop(n);
-            for (int i = 0; i < domains.Length; i++)
+            foreach (var domain in domains)
             {
-                if (i > 0) m_out.Append(", ");
-                Traverse(domains[i]);
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    m_out.Append(", ");
+                }
+                Traverse(domain);
             }
             m_out.Append(") → ");
             Traverse(t);
@@ -701,8 +716,14 @@ public abstract partial class Type
             bool first = true;
             foreach (var power in t.Variables)
             {
-                if (!first) m_out.Append(" · ");
-                first = false;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    m_out.Append(" · ");
+                }
                 Traverse(power.Base);
                 if (power.Exponent != 1)
                 {
@@ -712,8 +733,14 @@ public abstract partial class Type
             }
             foreach (var power in m_sys.Simplify(t).Powers)
             {
-                if (!first) m_out.Append(" · ");
-                first = false;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    m_out.Append(" · ");
+                }
                 m_out.Append(power.Base.Quantity);
                 if (power.Exponent != 1)
                 {

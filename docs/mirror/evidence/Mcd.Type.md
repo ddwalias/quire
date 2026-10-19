@@ -148,3 +148,13 @@ the factory's stack discipline.
 - `Formatter.Visit(Variable)` on single characters outside `a`–`z` and `Formatter` on a system other than the
   default SI were not compared.
 - `Parse` of `null` was not compared.
+
+## Release IL shape follow-up (2026-10-19)
+
+`Parser.Parse` (`0x06000780`), `Parser.GetNextTokenIf(string)` (`0x06000786`), `Formatter.OnFunction(Type,int)`
+(`0x06000790`) and `Formatter.Visit(Product)` (`0x06000791`) now report exact Release instruction matches in
+`python tools\validation\il_diff.py` against the Mathcad artifact above. The edits preserve the original conditional
+branch direction, `GetNextTokenIf`'s successful-token branch, the formatter's first-item flag and rational exponent
+string conversion. Existing `TypeDifferentialTests` directly compare the relevant parser states, curried function
+formatting and product forms; the required Release class passed 4/4 with Mathcad. Other overloads and cases remain
+limited as listed above.
