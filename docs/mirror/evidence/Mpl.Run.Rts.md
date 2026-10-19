@@ -8,17 +8,18 @@
   (stub); tests: `Quire.Mpl.Tests.Run.RtsTests`, `Quire.Differential.Tests.RtsDifferentialTests`
 
 `RtsDifferentialTests` compares every declared static field's rendered value immediately after directly invoking the
-type initializer on both artifacts. This establishes the recorded field state for that test thread; it does not
-observe the AppDomain event's internal delegate list. The initializer remains Tested because the event subscription
-itself is not observable in that direct comparison. The private `ms_thread_cancellation_token` field is also
-observed through its null and cancelled-source transitions in the later cases.
+type initializer on both artifacts. Its search-path test then makes the initializer's `AssemblyResolve` subscription
+observable: a unique probe assembly resolves for Quire when only Quire's path contains it, and for Mathcad when only
+Mathcad's path contains it. Together, the direct state comparison and side-specific resolution prove the initializer's
+recorded fields and event subscription. The private `ms_thread_cancellation_token` field is also observed through its
+null and cancelled-source transitions in later cases.
 
 Covers `Mpl.Run.Rts` and `Mpl.Run.True`. `Rts` is a static class of runtime services for compiled Mpl code: a
 per-thread stack budget (thread-static, lazily set to the public static `m_max_stack`, 250), a per-thread
 cancellation source, reflection handles that the code generator emits calls to, and a semicolon-separated assembly
 search path consulted from the current domain's `AssemblyResolve` event. `m_worker_stack_size` is a public static
 int that nothing here reads. `True` is Mpl's boolean true: a class with a public static `singleton`. Every member
-below is differential-verified for the cases in "Test cases", except the type initializer and the stub.
+below is differential-verified for the cases in "Test cases", except the stub.
 
 | Member | Token | Normalized IL | Contract | Confidence / limits | Status |
 |---|---|---|---|---|---|
@@ -26,7 +27,7 @@ below is differential-verified for the cases in "Test cases", except the type in
 | `m_stack_depth` (set) | 0x060003b3 | `1e26019b` | Sets the thread's budget without marking it initialised, so a set before any read is overwritten by the first read. | High | Verified |
 | `RegisterThreadForCancellationChecking(CancellationTokenSource)` | 0x060003b4 | `d556c89f` | Makes the calling thread's cancellation checks follow the source; null unregisters. | High | Verified |
 | `IsCancellationRequested()` | 0x060003b5 | `a382b514` | False with no source or with the internal never-cancelled one. When the thread's source is cancelled, switches the thread to the never-cancelled source and returns true, so cancellation is reported once until a source is registered again. A disposed source's state is read through its token, which throws `ObjectDisposedException`. | High | Verified |
-| `.cctor` | 0x060003b6 | `c604bfee` | Sets `m_max_stack` to 250 and the search path to empty, creates the never-cancelled source, looks up the handles returned below, sets the function type to `object`, and subscribes to the current domain's `AssemblyResolve`. | High | Tested |
+| `.cctor` | 0x060003b6 | `c604bfee` | Sets `m_max_stack` to 250 and the search path to empty, creates the never-cancelled source, looks up the handles returned below, sets the function type to `object`, and subscribes to the current domain's `AssemblyResolve`. | High | Verified |
 | `ResetStackDepth()` | 0x060003b7 | `24121b53` | Sets the thread's budget to `m_max_stack`. | High | Verified |
 | `ExceptionCtor()` | 0x060003b8 | `b0024145` | The `AppException(string)` constructor. | High | Verified |
 | `RethrowCtor()` | 0x060003b9 | `b16b3028` | The `AppException(Exception, uint)` constructor. | High | Verified |
@@ -63,7 +64,9 @@ type, name, parameter or field type and staticness):
   cancelled source, a null source, and a disposed source;
 - the budget a new thread starts with after `m_max_stack` is changed to 12;
 - `OnResolveAssembly` with the search path `<missing dir>;<dir holding Probe.dll>` for `Probe`, a full display name,
-  an absent name and the empty name, each with the current domain and a null sender, and with a string sender.
+  an absent name and the empty name, each with the current domain and a null sender, and with a string sender;
+- actual `Assembly.Load` requests for unique Quire and Mathcad probes while only that side's `AssemblyPath` contains
+  its file, proving that each `.cctor` registered its own `AssemblyResolve` handler.
 
 **Inferred** (`RtsTests`): each thread starting with the full budget, cancellation reported once, the handles for
 generated code, and unresolved assemblies found on the search path through the real `AssemblyResolve` event.
@@ -73,5 +76,5 @@ generated code, and unresolved assemblies found on the search path through the r
 - `GetTypeInitializer` stays a generated stub: it hands back an initializer from the Mpl code generator
   (`Quire.Mpl.Emit`), which isn't mirrored yet.
 - `m_worker_stack_size` is carried but nothing reads it.
-- The differential test calls `OnResolveAssembly` directly; the event subscription itself is covered by the
-  behaviour test alone.
+- The differential test directly compares `OnResolveAssembly`; the additional side-specific loads verify the
+  initializer-installed event subscriptions in both artifacts.
