@@ -166,3 +166,11 @@ coverage reports the tails as unexecuted because no input reaches them.
 
 The original public static method (`0x060006b0`) is artifact-bound to the Prime 12.0.1.0 assembly identified above. Its IL loads `mv`, calls virtual `DimVal.asMatrix(uint)` (`0x06000685`) with `2u`, stores the returned `MatVal`, calls virtual `MatVal.PackObjects()` (`0x06000539`), then calls virtual `fv.Apply(object[])` and returns that result. The overload delegates to `DimVal.asMatrix(string,uint)` (`0x06000686`), whose base implementation raises at argument position 2; the `MatVal` override (`0x0600046b`) returns itself. `PackObjects()` traverses columns outer and rows inner, calling `MatVal.get_2(int,int)` (`0x060004d1`); a live pointer is returned as an object, while a stale pointer marker with no table entry can be replaced by NaN in real storage. The result, conversion exception and source-matrix effects are directly compared in `DimValApplyMatValDifferentialTests`.
 
+## Release IL shape follow-up (2026-10-19)
+
+`dyn(object,Dim)` (`0x06000653`), `NearlyEqual(object,object,double)` (`0x06000655`), `GetUnits(Dim,bool)` (`0x06000658`)
+and `as_result(object)` (`0x060006ae`) now report exact Release instruction matches in `python tools\validation\il_diff.py`
+against the Mathcad artifact above. The changes preserve the original branch direction, cast locals, fallback return and
+null-dimension selection. Existing `DimValDifferentialTests` directly compare these paths; the required Release class
+passed 6/6 with Mathcad. Other methods and untested cases remain as documented above.
+

@@ -72,8 +72,12 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static object dyn(object o, Dim d)
     {
-        if (o is DimVal v) v.m_dim = d;
-        return o;
+        if (!(o is DimVal value))
+        {
+            return o;
+        }
+        value.m_dim = d;
+        return value;
     }
 
     [MirrorVerified("DimValDifferentialTests")]
@@ -86,8 +90,16 @@ public abstract partial class DimVal
     /// <summary><see cref="nearly_equal"/> when both are values, else <see cref="object.Equals(object)"/> on
     /// <paramref name="x1"/>.</summary>
     [MirrorVerified("DimValDifferentialTests")]
-    public static bool NearlyEqual(object x1, object x2, double fuzz) =>
-        x1 is DimVal a && x2 is DimVal b ? a.nearly_equal(b, fuzz) : x1.Equals(x2);
+    public static bool NearlyEqual(object x1, object x2, double fuzz)
+    {
+        DimVal first = x1 as DimVal;
+        DimVal second = x2 as DimVal;
+        if (first == null || second == null)
+        {
+            return x1.Equals(x2);
+        }
+        return first.nearly_equal(second, fuzz);
+    }
 
     [MirrorVerified("DimValDifferentialTests")]
     public virtual bool nearly_equal(DimVal obj, double fuzz) => Equals(obj);
@@ -100,7 +112,7 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static Units GetUnits(Dim d, bool simplify)
     {
-        int[] coordinates = d != null ? d.Coordinates : Dim.identity.Coordinates;
+        int[] coordinates = d == null ? Dim.identity.Coordinates : d.Coordinates;
         if (!simplify) return RuntimeOptions.the_unit_system.Normalize(coordinates);
         return RuntimeOptions.the_unit_system.Simplify(coordinates);
     }
@@ -360,7 +372,14 @@ public abstract partial class DimVal
     public virtual DimVal asResult() => this;
 
     [MirrorVerified("DimValDifferentialTests")]
-    public static object as_result(object o) => o is DimVal v ? v.asResult() : o;
+    public static object as_result(object o)
+    {
+        if (o is DimVal value)
+        {
+            return value.asResult();
+        }
+        return o;
+    }
 
     /// <summary>Raises "bad_function\t<c>this</c>" (argument 0).</summary>
     [MirrorVerified("DimValDifferentialTests")]
