@@ -12,7 +12,7 @@ remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their sou
 
 
 
-No unowned Lane A Tier A file scope remains in the current inventory. The remaining method gaps are in live Lane A
+The SCons walk coverage handoff below is the only newly identified Lane A method gap; no other unowned Tier A file scope was found. The remaining method gaps are in live Lane A
 files (`Rts`, `UnitSystem`), Lane B scopes (`Function`, `MatDim` and `MatVal`), or files claimed by outstanding Lane A
 branches such as `DynamicType`, `AppException`, `InstructionSeq`, Tuple, keyword and macro batches. The current branch
 reports and source ownership are summarized below. Resume when an owner releases files or a new unowned Lane A scope
@@ -1505,3 +1505,18 @@ Quire.Mcd.Dim::Id`0([Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.UInt32)->[Qu
 - Candidate `ed1be9c33fa261eb1e119fbdc431f765e67dc23b`, rebased on `d326dd451e2fdedeb2e34a28c24e8e722849f02f`. Ran the current `lane_merge.py` from the main worktree with the Rational branch worktree as the current directory.
 - Harness 97/97, Mpl 188/188, Debug differential 393/393, Release differential 393/393. Audit compared 1,399 methods (1,549 exact, 75 structure-only); coverage 298 missing, 102 structure mismatches, 35 uncovered, 41 verified unsupported. Integrity complete, lint 0, ratchet OK. The previous coverage-host crash did not reproduce.
 - Mutation selected 128 and reached 120/128, then stopped with exact error: `[Errno 13] Permission denied: 'C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-mutant-scratch-1wg3pc7m\\quire-mutant-abey678r\\Quire.Mpl.dll'`. Summary: `C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-gate-results-5um2ulgl\\run\\summary.json`. No merge occurred. The scratch `Quire.Mpl.dll` permission failure now reproduced on Rational as well as RngVal and Type; maintainer investigation is needed before retrying these mutation gates.
+
+## SCons walk coverage and maintainer handoff (2026-10-19)
+
+- Rechecked ownership before touching `Sexpr.cs`: `mirror/a-tok-walk-shape` is clean and has no branch-local diff to `Sexpr.cs` or `SexprDifferentialTests.cs`; its Tok batch is historical and merged. `mirror/a-scons-il-shape` is also clean with no branch-local diff to those files. No active owner has changes in the target files.
+- Inspected original `Mpl.Run.SCons` using `python tools\reference\reference.py Mpl.Run.SCons --il` and `Mpl.Run.Sexpr` using `python tools\reference\reference.py Mpl.Run.Sexpr --il`. Artifact: `mplrun.dll` 12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`. Tokens: `SCons.walk_expression` `0x0600004b`, `SCons.walk_pattern` `0x06000049`, `SCons.get_Key` `0x0600003a`. `SCons.get_Key` calls virtual `head.get_sym()`; `walk_expression` then checks whether `head` is null. `walk_pattern` calls `BadPattern(this)` for a multi-item lowercase pattern without a macro, then has a default continuation sequence point after that throwing helper.
+- `SexprDifferentialTests.SCons_members` already directly compares the reachable `walk_expression` cases (symbol, non-symbol, null-head exception, improper tail, macros) and `walk_pattern` cases (symbol/non-symbol kinds, lowercase arity, macros and exceptions). No IL mismatch was found.
+- The required Release `SexprDifferentialTests` command passed 10/10 with Mathcad during a probe for the reentrant `get_sym` case. The probe used `System.Reflection.Emit` to create a Mathcad `Sexpr` subclass whose virtual `get_sym()` clears its owning `SCons.head`, reaching the `BadApplication` guard. Integrity rejected the probe with 14 `forbidden test API` lint findings for `Reflection.Emit`; the probe was reverted and is not in this branch.
+- Current proposal validation on the unchanged tests passed Harness 97/97, Mpl 188/188, Debug and Release differential 393/393; integrity complete, lint 0, ratchet OK. Audit: 1,400 compared, 1,547 exact, 77 structure-only. The `walk_pattern` method is counted as compared when its proposal is applied locally. `walk_expression` remains uncovered: `Sexpr.cs:427-429` are unexecuted and line 426 has a partial branch (1/2). The original virtual `get_sym()` permits a user subclass to mutate the owner before this guard, so these lines cannot be proposed as unreachable solely from ordinary built-in cases. A maintainer-supported direct probe mechanism or explicit coverage policy is needed.
+- Exact generated proposal for the post-`BadPattern` fallback, validated with `method_coverage.py unreachable-entry` and `--proposed-unreachable`:
+
+```text
+Quire.Mpl.Run.SCons::walk_pattern`0([Quire.Mpl]Quire.Mpl.Run.MplEnv)->[Quire.Mpl]Quire.Mpl.Run.Sexpr|False src/Quire.Mpl/Run/Sexpr.cs:395 sha256=558a0cca937ef6236752bfee9267e01491adcae2a1af88c300bb625981f23120 # after BadPattern(this), which throws for a lowercase symbol pattern with multiple elements and no macro; the original has the same throwing call before its default continuation, so the sequence point cannot execute there either
+```
+
+- Proposal validation result: `LOCAL CHECKS: pass · GATE: would block (1 proposed unreachable line pending approval)`; mutation deferred to the gate. Summary: `C:\Users\DuyDang\AppData\Local\Temp\scons-walk-proposal-validation\summary.json`. The protected `unreachable-lines.txt` remains maintainer-owned.
