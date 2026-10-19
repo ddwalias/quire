@@ -8,7 +8,7 @@ The initial ownership audit found no Calculation-named active branch or worktree
 
 ## Active handoff
 
-**Next:** The current `mirror/c-calc-engine-error-placeholder` batch implements the unowned Tier A `EngineErrorExtensions.IsPlaceholderError`; its Release direct comparison covers null, placeholder, and nonmatching codes. The dependency `EngineError.ErrorCode` is Tier B and already has exact Release IL evidence; this batch does not change it. ResultNodeUtils' private `TryParsePlottableValue` and five TraceResultAnalyzer methods are directly verified with exact Release IL; their other methods remain blocked on out-of-scope DebugTools/PointExtension helpers. The cctor list is reconciled: `DefaultUnitDescriptorTable` is Tier B and excluded; `EngineErrorMessages` is already touched by the gated MemberGen batch; `CalculationController` is owned by its separate worktree; `ResultManager::.cctor()` is implemented and Release-verified. Do not hand-write Tier B members.
+**Current:** Current fetched `origin/main` is `10deda91`. The owned `c-calc-engine-error-placeholder` candidate remains independent: its Release Mathcad class passed 1/1 on the refreshed worktree and Release MethodAudit confirms exact IL at Quire token `0x0600004a` against Mathcad `0x06000040`. The old focused Release assembly-name blocker was fixed on main at a2b91391; rebase and run its normal gate now. Other candidates currently blocked by phase/test-host issues are documented below. Check live worktrees and remaining Tier A scope again after this gate.
 
 The mapped Tier A methods already present in `tier-a.txt` and their evidence are not presumed complete without verifying status, direct comparison coverage, and exact Release IL for each type selected. Check dependencies and existing tests before each batch.
 
@@ -32,13 +32,21 @@ Implemented Tier A `.ctor()` and `Clear()` from the helper-generated original IL
 - Release MethodAudit: 991 Core declarations, 0 inspection errors; constructor token `0x0600009e`, `Clear` token `0x0600009f`, and `.cctor` token `0x060000a0` are exact. Original constructor and `Clear` tokens are `0x0600014e` and `0x0600014f`. Artifact-bound IL and cases are in `Ptc.Calculation.Core.ResultManager.md`.
 - The full existing ResultManager class filter has one pre-existing failure, `CreateOldResultRefId_0600015f`, because it calls the Tier B `AddOldResult` mirror stub. It is outside this batch and remains unimplemented.
 
+
+### Current-main gate status after Release lookup fix
+
+Commit a2b91391 fixed the Release focused assembly-name lookup. The earlier EngineErrorExtensions report that stopped at that path is historical; this branch has now passed the affected Release Mathcad class (1/1) and exact Release MethodAudit for IsPlaceholderError. New normal gate pending.
+
+The c-calc-trace-data-points candidate ac0694d2 on gate base 750f984b passed focused suites (Harness 97/97, Mpl 188/188, Differential 393/393 Debug and Release), Release audit/coverage, integrity lint 0 and ratchet. Phase validation failed: Calculation 8/8, Controls 16/16, Core 7/7, Differential 3092 passed and 468 failed of 3560. All seven TraceDataPoints tests passed in phase; validator flagged the shared Debug output writes s1000001 and s2000001. Reports: C:\Users\DuyDang\AppData\Local\Temp\quire-gate-phase-2tu1y7ab\run\summary.json and C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-ojxy9n1u\run\summary.json.
+
+The corrected c-calc-vectors-legacy-readhelpers gate on ce26a431 against e9a9bec4 passed focused Differential 393/393 but its Release test host crashed after 320 passes before its test class ran. Its amended Release Mathcad class then passed 3/3. Reports: C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-lydvszwd\run\summary.json and its Release log/TRX. Retry after concurrent gate/test-host load eases.
 ## Validation and blockers
 
 The `mirror/c-calc-trace-result-analyzer-methods` gate passed generated-path checks, Harness 97/97, Mpl 188/188, and focused Differential 392/392. It then stopped before MethodAudit/ratchet because the Release pass looked for `Quire.Focused.Differential.Tests.dll` instead of the project's `Quire.Differential.Tests.dll`. Exact report: `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-d9gezyo1\run\summary.json`; missing path: `C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-hsgvwc3w\Quire.Focused.Differential.Tests.dll`.
 
 The `mirror/c-calc-result-node-utils` gate passed generated-path checks, Harness 97/97, Mpl 188/188, and focused Differential 392/392, then stopped before MethodAudit/ratchet on the same Release assembly-name lookup. Report: `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-5f4gvh46\run\summary.json`; missing path: `C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-lj84oav5\Quire.Focused.Differential.Tests.dll`.
 
-The `mirror/c-calc-engine-error-placeholder` gate passed generated-path checks, Harness 97/97, Mpl 188/188, and focused Differential 392/392, then stopped before MethodAudit/ratchet on the same Release assembly-name lookup. Report: `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-600gvm8k\run\summary.json`; missing path: `C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-yh4a3xo_\Quire.Focused.Differential.Tests.dll`.
+The mirror/c-calc-engine-error-placeholder gate originally stopped at the Release assembly-name lookup, fixed by main a2b91391; that report is historical and the branch is being gated again.
 
 ### EngineErrorExtensions placeholder classifier (`mirror/c-calc-engine-error-placeholder`)
 
