@@ -383,6 +383,16 @@ class VerdictTests(unittest.TestCase):
         blocked = self.verdict(complete=False, gate_passed=False, mutation=dict(survivors=['k'], proposed_survivors=[]))
         self.assertEqual(blocked['line'], 'LOCAL CHECKS: fail · GATE: would block (1 surviving mutants)')
 
+    def test_filtered_phase_skips_are_recorded_as_gaps(self):
+        project = dict(project='Quire.Differential.Tests', exit_code=0, passed=3, failed=0, skipped=1)
+        result = self.verdict(profile='phase', diff_filter='FullyQualifiedName~CandidateTests',
+                              phase_differential_skips=1, projects=[project], complete=False)
+        self.assertEqual(result['line'], 'LOCAL CHECKS: pass · GATE: would pass with gaps '
+                                         '(1 phase differential cases skipped)')
+        unfiltered = self.verdict(profile='phase', phase_differential_skips=1, projects=[project],
+                                  complete=False, gate_passed=False)
+        self.assertIn('tests did not all pass', unfiltered['line'])
+
     def test_pending_proposals_block_the_gate_but_pass_locally(self):
         result = self.verdict(complete=False, gate_passed=False, proposed_exempt_lines=1, proposed_mutants='/p',
                               mutation=dict(survivors=[], proposed_survivors=[dict(key='k', reason='r')] * 2))

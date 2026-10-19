@@ -497,9 +497,14 @@ def verdict(report):
     failures, pending, gaps = [], [], []
     if report.get("error"):
         failures.append(f"validation error: {report['error'][:200]}")
+    phase_skips_allowed = (report.get("profile") == "phase" and report.get("diff_filter")
+                           and report.get("phase_differential_skips", 0))
     for project in report.get("projects", []):
         unaccepted_failures = project.get("failed", 0) - project.get("tolerated_phase_failures", 0)
-        if project.get("exit_code") or unaccepted_failures or project.get("skipped"):
+        skipped = project.get("skipped", 0)
+        if (project.get("project") == "Quire.Differential.Tests" and phase_skips_allowed):
+            skipped = 0
+        if project.get("exit_code") or unaccepted_failures or skipped:
             failures.append(f"{project['project']}: tests did not all pass")
     ratchet_report = report.get("ratchet")
     if ratchet_report and not ratchet_report["ok"]:
