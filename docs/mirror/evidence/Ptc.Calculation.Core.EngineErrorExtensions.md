@@ -12,4 +12,4 @@
 
 **Observed** (`PtcCalculationCoreEngineErrorExtensionsMechanicalDifferentialTests`): null input, a private `_code` value equal to the placeholder string, and a different value. The renderer compares the relevant error code rather than unrelated Tier B EngineError state.
 
-Current Release recheck after fetching origin/main 10deda91: the Mathcad Differential class passed 1/1. Release MethodAudit artifact C:\Users\DuyDang\AppData\Local\Temp\quire-calc-engine-error-placeholder-release-audit-current reports token 0x0600004a structure_matches=true and exact_match=true against original 0x06000040. The normal gate is pending.
+Current Release recheck after fetching origin/main 10deda91: the Mathcad Differential class passed 1/1. Release MethodAudit artifact C:\Users\DuyDang\AppData\Local\Temp\quire-calc-engine-error-placeholder-release-audit-current reports token 0x0600004a structure_matches=true and exact_match=true against original 0x06000040. The focused gate and exact Release audit passed. Phase validation is blocked by the unrelated full Differential failures documented in docs/mirror/work/lane-c.md.
