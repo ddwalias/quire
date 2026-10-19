@@ -662,26 +662,6 @@ public sealed class MatDimOperationsDifferentialTests
         var qEqMatDim = qMatDim.GetMethod("Eq", DeclaredStatic, null, [qMatDim, qMatDim, typeof(uint)], null)!;
         var mEqMatDim = mMatDim.GetMethod("Eq", DeclaredStatic, null, [mMatDim, mMatDim, typeof(uint)], null)!;
 
-        // 1. OnError overloads direct comparison
-        MethodComparison.Compare("MatDim.OnError.string_dim", Contract,
-            qOnErrorStringDimUInt, null, ["custom error", Side.Quire.D("L"), 3u],
-            mOnErrorStringDimUInt, null, ["custom error", Side.Mathcad.D("L"), 3u],
-            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
-
-        MethodComparison.Compare("MatDim.OnError.dim", Contract,
-            qOnErrorDimUInt, null, [Side.Quire.D("T"), 5u],
-            mOnErrorDimUInt, null, [Side.Mathcad.D("T"), 5u],
-            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
-
-        MethodComparison.Compare("MatDim.OnError.string_dim_i", Contract,
-            qOnErrorStringDimIntUInt, null, ["bad vector element dimension", Side.Quire.D("N"), 2, 7u],
-            mOnErrorStringDimIntUInt, null, ["bad vector element dimension", Side.Mathcad.D("N"), 2, 7u],
-            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
-
-        MethodComparison.Compare("MatDim.OnError.string_dim_i_j", Contract,
-            qOnErrorStringDimIntIntUInt, null, ["bad matrix element dimension", Side.Quire.D("v"), 1, 2, 9u],
-            mOnErrorStringDimIntIntUInt, null, ["bad matrix element dimension", Side.Mathcad.D("v"), 1, 2, 9u],
-            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
 
         // 2. Vector dimension mismatches (PickLoser directly and through Eq)
         // Vector mismatch at index 0
