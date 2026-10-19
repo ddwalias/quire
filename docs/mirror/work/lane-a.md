@@ -2,16 +2,16 @@
 
 ## Active handoff
 
-SCons and SList are merged into current `origin/main`; their entries below are historical receipts. The unmerged Tok,
-MplSignature, Rational, NumVal, RngVal, Type, Dim, DimVal and Utilities branches are pending the same
-Release-validator assembly-path fix. Each gate passed the 392 focused differential tests and then stopped because it
-searched for `Quire.Focused.Differential.Tests.dll` while the Release output is `Quire.Differential.Tests.dll`; no
-method audit or ratchet ran. These branches own their respective source files; leave those files unchanged.
+SCons, SList and Utilities are merged into current `origin/main`; their entries below are historical receipts. The
+unmerged Tok, MplSignature, Rational, NumVal, RngVal, Type, Dim and DimVal branches each had an incomplete gate run
+before the Release assembly lookup was fixed at `a2b91391`. Those runs stopped before method audit and ratchet; treat
+them as unvalidated and rerun the full gate before merge. Each branch owns its source files; leave them unchanged.
 
 No unowned Lane A Tier A file scope remains in the current inventory. The remaining method gaps are in live Lane A
 files (`Rts`, `UnitSystem`), Lane B scopes (`Function`, `MatDim` and `MatVal`), or files claimed by outstanding Lane A
 branches such as `DynamicType`, `AppException`, `InstructionSeq`, Tuple, keyword and macro batches. The current branch
-reports and source ownership are summarized below. Resume when the validator is fixed or a claimed scope is released.
+reports and source ownership are summarized below. Resume when an owner releases files or a new unowned Lane A scope
+appears in the current inventory.
 `MplDestructuringBind.ExpandCall` remains dependency-blocked on `define_keyword.MakeDefine`. Use [WORK.md](../WORK.md)
 and [PLAN.md](../PLAN.md); dated batch receipts below are history, not a task queue.
 
@@ -121,13 +121,15 @@ and [PLAN.md](../PLAN.md); dated batch receipts below are history, not a task qu
   `17a0933b-4988-4c18-963d-563998321cc8`, token `0x0600070b`; see [Mcd.Utilities evidence](../evidence/Mcd.Utilities.md).
 - Release `il_diff.py` reports exact. Required Release `UtilitiesDifferentialTests` passed 3/3 with Mathcad; direct
   cases cover dimensionless, polymorphic, ordinary and unknown products and null, using the default SI unit system.
-- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-utilities-getunits --jobs 14` blocked
-  at revision `050529b125eef9c732329d727384ba1bc2606885` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
-  `%LOCALAPPDATA%\Temp\quire-gate-results-w8yjatgl\gate.json`; summary
-  `%LOCALAPPDATA%\Temp\quire-gate-results-w8yjatgl\run\summary.json`. Harness 97, Mpl 188 and focused differential
-  392 passed with no failures or skips. The Release validator then failed with
-  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-6y7lo281\Quire.Focused.Differential.Tests.dll)`;
-  the Release build emits `Quire.Differential.Tests.dll`. Validator exited 1, so method audit/ratchet did not run.
+- Gate passed after rebasing onto `a2b91391380f354fa9904d83323ed9dc505a91a0`. Validated revision
+  `4c5823a8aee141f135ec3944516a0a99171397aa` merged to `origin/main` at `8ce0144ece3b887d65ccb95d044d9afc80fa57d4`.
+  Command: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-utilities-getunits --jobs 14`.
+  Report `%LOCALAPPDATA%\Temp\quire-gate-results-kamebvvt\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-kamebvvt\run\summary.json`. Harness 97, Mpl 188, focused Differential
+  392 and Release Differential 392 passed with no failures or skips. Method audit compared 1,399 methods: 1,541 exact,
+  82 structure-only; coverage 298 missing, 103 structure mismatches, 34 uncovered and 41 verified unsupported; lint
+  0, integrity complete, ratchet passed. Mutation killed 15/16; the remaining survivor is already accepted, with no
+  live survivors, timeouts or crashes. No protected paths changed.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 

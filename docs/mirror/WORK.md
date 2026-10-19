@@ -7,7 +7,7 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | SCons and SList are merged. Nine Lane A batches are pending the Release-validator assembly-path fix; no unowned Lane A Tier A file scope remains in the current inventory. See validation receipts and remaining ownership in the checkpoint. | [Lane A](work/lane-a.md) |
+| A | SCons, SList and Utilities.GetUnits are merged. Eight other Lane A batches have incomplete pre-fix gate runs and need revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop
