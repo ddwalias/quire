@@ -42,6 +42,9 @@ public class MatValIndexedDifferentialTests
     {
         if (value == null) return "null";
         string prefix = target != null && ReferenceEquals(target, value) ? "same-instance: " : "";
+        if (value is Enum e) return prefix + e.ToString();
+        if (value is System.Collections.IEnumerable seq && value is not string && value is not Array)
+            return prefix + "[" + string.Join(", ", seq.Cast<object?>().Select(v => Show(side, null, v))) + "]";
         if (side.T("Mcd.MatVal").IsInstanceOfType(value)) return prefix + MatValDifferentialTests.Storage(side, value);
         if (side.Dim.IsInstanceOfType(value)) return prefix + (string)Reflect.Call(value, "ToString")!;
         if (side.T("Mcd.MatDim").IsInstanceOfType(value)) return prefix + MatDimDifferentialTests.DescribeDimension(side, value);
