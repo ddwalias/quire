@@ -10,7 +10,8 @@ namespace Quire.Differential.Tests;
 public class PtcCalculationMatrixValueDataAccessorWrapper_MechanicalDifferentialTests
 {
     private const string Contract = "Ptc.Calculation.MatrixValueDataAccessorWrapper";
-    private static Type Q => typeof(IValueToIResultNodeTransform).Assembly.GetType("Quire.Calculation.MatrixValueDataAccessorWrapper", true)!;
+    private const string QuireTypeName = "Quire.Calculation.MatrixValueDataAccessorWrapper";
+    private static Type Q => typeof(EngineBuilder).Assembly.GetType(QuireTypeName, true)!;
     private static Type M => Mathcad.Type("Ptc.Calculation", Contract);
     private static Type QAccessor => typeof(IMatrixValueDataAccessor);
     private static Type MAccessor => Mathcad.Type("automationmgd", "Mathcad.Automation.IMatrixValueDataAccessor");
