@@ -23,8 +23,15 @@ public class PtcCalculationCoreTrace2DResultsVectorsLegacyConverterMechanicalDif
     private static Type QType() => typeof(global::Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter);
     private static Type MType() => Mathcad.Type("Ptc.Calculation.Core", Contract);
 
-    private static Type QInterface(string name) => typeof(global::Quire.Calculation.Core.IResultNode).Assembly
-        .GetType("Quire.Calculation.Core." + name)!;
+    private static Type QInterface(string name) => name switch
+    {
+        "IResultNode" => typeof(global::Quire.Calculation.Core.IResultNode),
+        "IComplexResultNode" => typeof(global::Quire.Calculation.Core.IComplexResultNode),
+        "IImaginaryResultNode" => typeof(global::Quire.Calculation.Core.IImaginaryResultNode),
+        "IRealResultNode" => typeof(global::Quire.Calculation.Core.IRealResultNode),
+        "IStringResultNode" => typeof(global::Quire.Calculation.Core.IStringResultNode),
+        _ => throw new ArgumentOutOfRangeException(nameof(name), name, null),
+    };
     private static Type MInterface(string name) => Mathcad.Type("Ptc.Calculation.Core", "Ptc.Calculation.Core." + name);
 
     private static object Proxy(Type interfaceType, object? value = null)
