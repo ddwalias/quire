@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList and Utilities.GetUnits are merged. Eight other Lane A batches have incomplete pre-fix gate runs and need revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. `c-calc-simple-result-factory-cctor` passed focused Release validation but its full phase Differential gate is blocked by unrelated pre-existing failures (report recorded in Lane C checkpoint). `EngineErrorCollection(IEnumerable<EngineError>, EngineError)` is the current independent batch; direct Release Mathcad cases pass. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
