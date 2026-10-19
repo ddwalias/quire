@@ -21,6 +21,8 @@
 
 `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests\Quire.Differential.Tests\Quire.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~PtcCalculationValueToIResultNodeTransform_MechanicalDifferentialTests'` — 7 passed, 0 failed, 0 skipped. Every selected member is invoked through `MethodComparison.Compare` against Mathcad; dispatch and result-factory interfaces use test-only `DispatchProxy` implementations. The function dispatch cases include wrapped, plain, prefix-only, and suffix-only `ToString()` forms to cover both `StartsWith` and `EndsWith` branches.
 
+Release MethodAudit compared the 10 selected implementations against the artifact above with 0 inspection errors: base `origin/main` was 0/10 exact and 0/10 structurally matched; this candidate is 8/10 exact and 9/10 structurally matched. `BuildScalar` and `MakeUnitedValue` remain the two nonexact bodies. `BuildScalar`'s first opcode mismatch is equivalent branch layout around its real/imaginary zero tests; `MakeUnitedValue` has a structurally matching loop but different array-local and index initialization order. The direct cases above pass; exact IL alignment remains open for those two members.
+
 ## Open
 
 - `MakeResultNode(IValueProxyWrapper)` (`0x06000088`) remains a generated stub because Mathcad calls `ValueProxyWrapper.get_Proxy`, a Tier B generated property accessor. The accessor is not hand-written here.

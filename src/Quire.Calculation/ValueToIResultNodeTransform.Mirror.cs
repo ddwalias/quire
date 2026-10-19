@@ -77,9 +77,11 @@ public partial class ValueToIResultNodeTransform
     private IResultNode BuildScalar(IScalarValueProxy scalar)
     {
         double real = scalar.RealPart;
+        bool realIsNonzero = real != 0.0;
         double imaginary = scalar.ImagPart;
+        bool imaginaryIsNonzero = imaginary != 0.0;
         IResultNode result;
-        if (real != 0.0 && imaginary != 0.0)
+        if (realIsNonzero & imaginaryIsNonzero)
             result = _resultNodeFactory.CreateComplexResultNode(real, imaginary);
         else if (imaginary != 0.0)
             result = _resultNodeFactory.CreateImaginaryResultNode(imaginary);
