@@ -250,7 +250,7 @@ def execute(command, env, timeout, cwd=None):
         return None
 
 
-def write_bytes_retry(path, data, attempts=8):
+def write_bytes_retry(path, data, attempts=12):
     """Retry transient Windows sharing/AV locks while replacing a worker's private mutant DLL."""
     path = Path(path)
     for attempt in range(attempts):
