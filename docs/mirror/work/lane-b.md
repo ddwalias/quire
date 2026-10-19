@@ -2,6 +2,22 @@
 
 ## Active handoff
 
+### Active batch: MatDim error paths and PickLoser
+- **Branch:** `mirror/b-matdim-error-paths`
+- **Scope:**
+  - `Mcd.MatDim.PickLoser(MatDim, MatDim, uint)`: token 0x06000645. Aligned IL structure with Mathcad Release IL (two-branch scan: column vector scanning rows with `OnError(..., i, a)`, matrix scanning rows and columns with `OnError(..., j, k, a)`, and terminal `AppException.Raise("array unit mismatch", param)` fallthrough path).
+  - `Mcd.MatDim.OnError(string, Dim, uint)`: token 0x06000641.
+  - `Mcd.MatDim.OnError(Dim, uint)`: token 0x06000642.
+  - `Mcd.MatDim.OnError(string, Dim, int, int, uint)`: token 0x06000643.
+  - `Mcd.MatDim.OnError(string, Dim, int, uint)`: token 0x06000644.
+  - `Mcd.MatDim.Eq(MatDim, MatDim, uint)`: token 0x06000617 (mismatch dispatches to `PickLoser`).
+- **Evidence:**
+  - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
+- **Validation:**
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified 15 direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
+
+
 ### Maintainer-gated handoff: Engine factory and interfaces batch
 - **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
 - **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.

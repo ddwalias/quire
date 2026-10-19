@@ -172,12 +172,29 @@ public abstract partial class MatDim
     [MirrorAnalyzed("Mcd.MatDim")]
     private static void PickLoser(MatDim loser, MatDim winner, uint param)
     {
-        for (int r = 0; r < loser.Rows; r++)
-        for (int c = 0; c < loser.Cols; c++)
+        int rows = loser.Rows;
+        int cols = loser.Cols;
+        if (cols == 1)
         {
-            if (Dim.Eq_b(loser.dim(r, c), winner.dim(r, c))) continue;
-            if (loser.Cols == 1) OnError("bad vector element dimension", winner.dim(r, c), r, param);
-            else OnError("bad matrix element dimension", winner.dim(r, c), r, c, param);
+            for (int i = 0; i < rows; i++)
+            {
+                if (!Dim.Eq_b(loser.dim(i, 0), winner.dim(i, 0)))
+                {
+                    OnError("bad vector element dimension", winner.dim(i, 0), i, param);
+                }
+            }
+            AppException.Raise("array unit mismatch", param);
+            return;
+        }
+        for (int j = 0; j < rows; j++)
+        {
+            for (int k = 0; k < cols; k++)
+            {
+                if (!Dim.Eq_b(loser.dim(j, k), winner.dim(j, k)))
+                {
+                    OnError("bad matrix element dimension", winner.dim(j, k), j, k, param);
+                }
+            }
         }
         AppException.Raise("array unit mismatch", param);
     }
