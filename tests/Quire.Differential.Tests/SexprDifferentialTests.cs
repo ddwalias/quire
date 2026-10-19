@@ -966,6 +966,9 @@ public class SexprDifferentialTests
 
         Compare("SList.FormatCons(null)", "Mpl.Run.SList", qListFormatCons, null, [null], mListFormatCons, null, [null]);
         Compare("SList.FormatCons(cons)", "Mpl.Run.SList", qListFormatCons, null, [cons], mListFormatCons, null, [mCons]);
+        var consWithImproperTail = new Cons(tok, "tail");
+        Compare("SList.FormatCons(improper tail)", "Mpl.Run.SList", qListFormatCons, null, [consWithImproperTail],
+            mListFormatCons, null, [ToMathcad(consWithImproperTail)]);
 
         var qListSingleton = new SList(cons, Nul.singleton);
         var mListSingleton = ToMathcad(qListSingleton)!;

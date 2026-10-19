@@ -2,12 +2,11 @@
 
 ## Active handoff
 
-The in-progress `MplForeignMacro` batch is owned and has uncommitted changes; do not duplicate or edit it. The
-separate `mirror/a-scons-il-shape` batch has a local mutation-ready follow-up and is queued for a gate retry. The
-latest Tier A inventory starts with `Mcd.Dim`, but existing Lane A branches own its constructor, initializer and
-private-state scopes; check their status before taking any Dim work. `SList.FormatCons` shares `Sexpr.cs` with the
-pending SCons branch. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it parked. Use
-[WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
+`mirror/a-slist-format-cons` is the active Lane A batch. `mirror/a-scons-il-shape` merged at `b83cc5d`. The
+in-progress `MplForeignMacro` batch and the remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are
+owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave
+it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task
+queue.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
@@ -226,9 +225,33 @@ pending SCons branch. `MplDestructuringBind.ExpandCall` depends on `define_keywo
   2 existing uncovered points, integrity complete and ratchet OK. Mutation killed 24/24 with no survivors,
   timeouts or crashes. Summary: `%LOCALAPPDATA%\Temp\quire-validation-za_j5xx7\summary.json`. Local verdict:
   `LOCAL CHECKS: pass · GATE: would pass with gaps (2 uncovered)` (scoped to SCons).
-- Next: retry the full runtime gate on this branch; the earlier three gate failures are superseded only if the retry
-  passes. No independent Lane A batch is ready until current ownership is checked against the Dim branches and the
-  in-progress `MplForeignMacro` owner.
+- Result: the full runtime gate retry passed and merged the branch. Receipt and final validation details follow.
+
+- Gate retry: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-scons-il-shape --jobs 14` passed
+  and merged/pushed at `b83cc5d`. Receipt: `%LOCALAPPDATA%\Temp\quire-gate-results-3gew1t07\gate.json`; summary:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-3gew1t07\run\summary.json`. Harness 97, Mpl 188 and Differential 392
+  passed; 1,399 methods compared, 1,539 exact, 84 structure-only, integrity complete and ratchet OK. Mutation killed
+  154/155 with 1 existing accepted survivor and no live survivors, timeouts or crashes.
+
+## SList.FormatCons (`mirror/a-slist-format-cons`)
+
+- Scope: match `SList.FormatCons(Cons)` (`0x06000075`) exactly in `src/Quire.Mpl/Run/Sexpr.cs`; retain its private
+  recursive walk, stop when a tail is not a `Cons`, and add an improper-tail case.
+- Original: inspected with `python tools\reference\reference.py Mpl.Run.SList --il`; installed `mplrun.dll` 12.0.1.0,
+  SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`. The original body is 47 bytes: null returns `""`; otherwise it concatenates
+  `" "`, `Field1.ToString()` and the recursive call on `Field2 as Cons`. The previous expression-bodied implementation
+  had a structure mismatch; the block form now matches its Release IL exactly (`d6b9fbb1`).
+- Direct differential cases compare null, a proper two-cell list and a non-list tail. Unit coverage also checks that
+  the improper tail stops formatting after the first item.
+- Checks: `dotnet test tests\Quire.Mpl.Tests\Quire.Mpl.Tests.csproj --filter "FullyQualifiedName~SexprTests"` — 36
+  passed; `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  --filter "FullyQualifiedName~SexprDifferentialTests.SAppend_and_SList_members"` — 1 passed. Scoped validation with
+  `python tools\validation\validate.py --profile focused --method-type Quire.Mpl.Run.SList --diff-filter
+  "FullyQualifiedName~SexprDifferentialTests.SAppend_and_SList_members" --jobs 14` compared 4 methods, all exact,
+  with no missing, uncovered, structure mismatch or unsupported rows; integrity complete and ratchet OK. Summary:
+  `%LOCALAPPDATA%\Temp\quire-validation-281b70_0\summary.json`.
+- Next: run the full lane gate for this batch.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
