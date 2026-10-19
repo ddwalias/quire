@@ -22,6 +22,10 @@
   - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimDifferentialTests'` (3/3 passed).
   - Direct differential tests in `tests/Quire.Differential.Tests/MatDimDifferentialTests.cs` (`Direct_static_array_operations_and_pwr_match_mathcad`) exercising all 8 methods with edge cases against Mathcad Prime 12.0.1.0 in Release mode.
   - `quick_check.py --method-type Quire.Mcd.MatDim` confirms all 8 methods are exact IL.
+- **Gate status:**
+  - Ran `lane_merge.py mirror/b-matdim-static-ops --jobs 14`.
+  - All test suites passed cleanly: 97 passed in `Quire.Harness.Tests`, 188 passed in `Quire.Mpl.Tests`, 393 passed in `Quire.Focused.Differential.Tests` (total 678 tests passed, 0 failures).
+  - Blocked by maintainer gate issue on `main` at commit `f863245e`: `tools/validation/validate.py:788` expects `release_assembly = release_dir / (project + ".dll")`, looking for `Quire.Focused.Differential.Tests.dll`, whereas `Quire.Focused.Differential.Tests.csproj` outputs `Quire.Differential.Tests.dll`. Requires maintainer fix on `main`.
 
 ### Maintainer-gated handoff: Engine factory and interfaces batch
 - **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
