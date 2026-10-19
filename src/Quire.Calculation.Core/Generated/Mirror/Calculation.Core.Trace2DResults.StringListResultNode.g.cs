@@ -13,6 +13,4 @@ public partial class StringListResultNode : global::Quire.Calculation.Core.Trace
 {
     [global::Quire.Mirror.MirrorStub]
     private const string _neutralValue = null;
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsMeaningfulValue(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| C | Lane C owns Tier A for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. Current `origin/main` is `572eb622`. The 35-member batch and RequestShowErrorEventArgs pass focused Release checks but Phase Differential writes `s1000001`; TraceResultAnalyzer passes focused checks but its phase runner cannot find `Quire.Mpl.Tests`. StringList’s normal gate stopped before focused checks because the focused test project build was interrupted (`build.log` ends during dependency builds). No candidate merged. Continue with StringList retry after the concurrent build clears, then gate the prepared EngineResult constructors. See [Lane C](work/lane-c.md). | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
@@ -22,7 +23,7 @@ dependencies. Do not load dated historical receipts as agent context.
    complete diff yourself. The merge gate is the pre-merge check; no separate reviewer or user approval is required.
 5. Queue at most two ready batches for one final gate. While a gate runs, continue on a fresh branch/worktree only for
    work that does not touch the active batch's files or shared helpers. Never edit the candidate being validated.
-6. A gate merges and pushes `main` only after the complete required validation passes. If main moves first, rebase via
+6. A gate merges and pushes `main` only after the complete required validation passes. If main advances first, rebase via
    `lane_merge.py`; rerun affected tests only if the rebase changed source/test hunks.
 
 The lane proves any proposed equivalent mutants or unreachable lines; the maintainer updates the protected acceptance

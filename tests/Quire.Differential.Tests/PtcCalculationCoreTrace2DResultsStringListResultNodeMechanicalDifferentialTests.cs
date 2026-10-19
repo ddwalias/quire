@@ -14,4 +14,7 @@ public class PtcCalculationCoreTrace2DResultsStringListResultNodeMechanicalDiffe
 
     [SkippableFact]
     public void NeutralValue_get_06000260() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.StringListResultNode), 0x06000260);
+
+    [SkippableFact]
+    public void IsMeaningfulValue_0600025f() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.Trace2DResults.StringListResultNode), 0x0600025f);
 }
