@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. `c-calc-vectors-legacy-readhelpers` is in the normal gate after its current-main Release Mathcad tests (3/3) and exact IL audit. `TraceDataPoints` is the next prepared batch; Release Mathcad tests pass 7/7 and all 7 declarations audit exact. Earlier focused Release gates remain blocked at phase Differential; reports are in lane-c.md. | [Lane C](work/lane-c.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. `TraceDataPoints` is the current gate candidate after Release Mathcad 7/7 and exact Release MethodAudit for all seven members; it will rebase onto current main `8ac3f3bd`. `c-calc-vectors-legacy-readhelpers` is held for a normal retry after its Release host crashed after 320 passes, before its class ran; exact evidence in lane-c.md. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
