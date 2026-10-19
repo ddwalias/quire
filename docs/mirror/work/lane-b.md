@@ -2,7 +2,7 @@
 
 ## Active handoff
 
-### Active batch: Generic Function.app differential coverage
+### Maintainer-gated handoff: Generic Function.app differential coverage and equivalent mutants
 - **Branch:** `mirror/b-function-app-coverage`
 - **Scope (17 methods):**
   - `Mpl.Run.Function.app<R>(out R)`: token 0x060001aa.
@@ -27,8 +27,37 @@
 - **Validation:**
   - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~FunctionAppDifferentialTests'` (10/10 passed; verified direct comparisons for exact purity application, in-out ref parameter overwrite and failure retention, curried over-application, minargs boundary currying, invalid over-application cast failure, delegate exception propagation, OptArg padding, partial application closures, and zero-arity null application handling).
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
-- **Gate status:**
-  - Ready for merge gate landing on updated `main`.
+- **Gate status & maintainer handoff:**
+  - Standard lane merge gate blocks on 14 provably equivalent mutants across arities 2..16 (`ldc.i4.N -> ldc.i4.N+1` at `else if (m_purity < N || m_minargs > N)`).
+  - **Proof of Equivalence:**
+    In method `app<R, A, ...>` of arity $N$:
+    ```csharp
+    if (m_purity == N || m_varargs) inv(...);
+    else if (m_purity < N || m_minargs > N) ...;
+    ```
+    Execution reaches the `else if` branch only if `m_purity != N` and `m_varargs == false`.
+    Since `m_purity` is an integer:
+    For all integers $P \in \mathbb{Z} \setminus \{N\}$:
+    - If $P < N$, then $P \le N - 1$, so $P < N$ is true and $P < N + 1$ is true. Both branches evaluate to identical truth values.
+    - If $P > N$, then $P \ge N + 1$, so $P < N$ is false and $P < N + 1$ is false. Both branches evaluate to identical truth values.
+    - The value $P = N$ is strictly unreachable in the `else if` block due to the preceding guard.
+    Therefore, $(m\_purity < N) \equiv (m\_purity < N + 1)$ for all reachable program states.
+    The mutant is strictly semantically equivalent and unkillable by runtime observation.
+  - **Proposed equivalent mutants for maintainer `accepted-mutants.txt`:**
+    - `Quire.Mpl.Run.Function::app`3(!!0&,!!1,!!2)->[System.Runtime]System.Void|False@IL_0029 ldc.i4.2 -> ldc.i4.3` # m_purity < 2 vs < 3 equivalent under guard m_purity != 2
+    - `Quire.Mpl.Run.Function::app`4(!!0&,!!1,!!2,!!3)->[System.Runtime]System.Void|False@IL_002b ldc.i4.3 -> ldc.i4.4` # m_purity < 3 vs < 4 equivalent under guard m_purity != 3
+    - `Quire.Mpl.Run.Function::app`5(!!0&,!!1,!!2,!!3,!!4)->[System.Runtime]System.Void|False@IL_002d ldc.i4.4 -> ldc.i4.5` # m_purity < 4 vs < 5 equivalent under guard m_purity != 4
+    - `Quire.Mpl.Run.Function::app`6(!!0&,!!1,!!2,!!3,!!4,!!5)->[System.Runtime]System.Void|False@IL_002f ldc.i4.5 -> ldc.i4.6` # m_purity < 5 vs < 6 equivalent under guard m_purity != 5
+    - `Quire.Mpl.Run.Function::app`7(!!0&,!!1,!!2,!!3,!!4,!!5,!!6)->[System.Runtime]System.Void|False@IL_0031 ldc.i4.6 -> ldc.i4.7` # m_purity < 6 vs < 7 equivalent under guard m_purity != 6
+    - `Quire.Mpl.Run.Function::app`8(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7)->[System.Runtime]System.Void|False@IL_0033 ldc.i4.7 -> ldc.i4.8` # m_purity < 7 vs < 8 equivalent under guard m_purity != 7
+    - `Quire.Mpl.Run.Function::app`10(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9)->[System.Runtime]System.Void|False@IL_0038 ldc.i4.s 9 -> 10` # m_purity < 9 vs < 10 equivalent under guard m_purity != 9
+    - `Quire.Mpl.Run.Function::app`11(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10)->[System.Runtime]System.Void|False@IL_003a ldc.i4.s 10 -> 11` # m_purity < 10 vs < 11 equivalent under guard m_purity != 10
+    - `Quire.Mpl.Run.Function::app`12(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11)->[System.Runtime]System.Void|False@IL_003c ldc.i4.s 11 -> 12` # m_purity < 11 vs < 12 equivalent under guard m_purity != 11
+    - `Quire.Mpl.Run.Function::app`13(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12)->[System.Runtime]System.Void|False@IL_003e ldc.i4.s 12 -> 13` # m_purity < 12 vs < 13 equivalent under guard m_purity != 12
+    - `Quire.Mpl.Run.Function::app`14(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13)->[System.Runtime]System.Void|False@IL_0040 ldc.i4.s 13 -> 14` # m_purity < 13 vs < 14 equivalent under guard m_purity != 13
+    - `Quire.Mpl.Run.Function::app`15(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14)->[System.Runtime]System.Void|False@IL_0042 ldc.i4.s 14 -> 15` # m_purity < 14 vs < 15 equivalent under guard m_purity != 14
+    - `Quire.Mpl.Run.Function::app`16(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15)->[System.Runtime]System.Void|False@IL_0044 ldc.i4.s 15 -> 16` # m_purity < 15 vs < 16 equivalent under guard m_purity != 15
+    - `Quire.Mpl.Run.Function::app`17(!!0&,!!1,!!2,!!3,!!4,!!5,!!6,!!7,!!8,!!9,!!10,!!11,!!12,!!13,!!14,!!15,!!16)->[System.Runtime]System.Void|False@IL_0046 ldc.i4.s 16 -> 17` # m_purity < 16 vs < 17 equivalent under guard m_purity != 16
 
 
 ### Maintainer-gated handoff: Engine factory and interfaces batch
