@@ -1,3 +1,5 @@
+using System.Reflection;
+using Xunit;
 using static Quire.Differential.Tests.Reflect;
 
 namespace Quire.Differential.Tests;
@@ -104,4 +106,182 @@ public class MatDimDifferentialTests
         foreach(var cols in new[]{new[]{"L","T"},new[]{"T","T"}})
             log.Add("two factors "+DescribeDimension(s,Call(t,"make",Dims(s,rows),Dims(s,cols))));
     });
+
+    private const string Contract = "Mcd.MatDim";
+    private static readonly Guid MathcadMvid = new("17a0933b-4988-4c18-963d-563998321cc8");
+
+    private static string Show(Side side, object? value)
+    {
+        if (value == null) return "null";
+        if (value is Array arr)
+        {
+            var items = new List<string>();
+            foreach (var item in arr) items.Add(Show(side, item));
+            return "[" + string.Join(", ", items) + "]";
+        }
+        if (side.Dim.IsInstanceOfType(value)) return side.DimText(value);
+        if (side.T("Mcd.MatDim").IsInstanceOfType(value)) return DescribeDimension(side, value);
+        return Reflect.Text(value);
+    }
+
+    [SkippableFact]
+    public void Direct_static_array_operations_and_pwr_match_mathcad()
+    {
+        Runtime.Sync();
+
+        var qMatDim = sideT("Mcd.MatDim", Side.Quire);
+        var mMatDim = sideT("Mcd.MatDim", Side.Mathcad);
+        var qDim = Side.Quire.Dim;
+        var mDim = Side.Mathcad.Dim;
+        var qDimArr = qDim.MakeArrayType();
+        var mDimArr = mDim.MakeArrayType();
+
+        // 1. Uniform
+        var qUniform = qMatDim.GetMethod("Uniform", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDimArr], null)!;
+        var mUniform = mMatDim.GetMethod("Uniform", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDimArr], null)!;
+        Assert.Equal(0x06000629, mUniform.MetadataToken);
+        Assert.Equal(MathcadMvid, mUniform.Module.ModuleVersionId);
+
+        MethodComparison.Compare("Uniform.singleton", Contract,
+            qUniform, null, [Dims(Side.Quire, "L")],
+            mUniform, null, [Dims(Side.Mathcad, "L")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Uniform.equal", Contract,
+            qUniform, null, [Dims(Side.Quire, "L", "L")],
+            mUniform, null, [Dims(Side.Mathcad, "L", "L")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Uniform.distinct", Contract,
+            qUniform, null, [Dims(Side.Quire, "L", "T")],
+            mUniform, null, [Dims(Side.Mathcad, "L", "T")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Uniform.null", Contract,
+            qUniform, null, [null],
+            mUniform, null, [null],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 2. IsScalarMultiple
+        var qIsScalar = qMatDim.GetMethod("IsScalarMultiple", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDimArr, qDimArr], null)!;
+        var mIsScalar = mMatDim.GetMethod("IsScalarMultiple", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDimArr, mDimArr], null)!;
+        Assert.Equal(0x0600062b, mIsScalar.MetadataToken);
+        Assert.Equal(MathcadMvid, mIsScalar.Module.ModuleVersionId);
+
+        MethodComparison.Compare("IsScalarMultiple.same", Contract,
+            qIsScalar, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "L", "T")],
+            mIsScalar, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "L", "T")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("IsScalarMultiple.multiple", Contract,
+            qIsScalar, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "L2", "v")],
+            mIsScalar, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "L2", "v")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("IsScalarMultiple.nonmultiple", Contract,
+            qIsScalar, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "L", "L")],
+            mIsScalar, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "L", "L")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 3. Mult(Dim[], Dim[])
+        var qMultArr = qMatDim.GetMethod("Mult", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDimArr, qDimArr], null)!;
+        var mMultArr = mMatDim.GetMethod("Mult", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDimArr, mDimArr], null)!;
+        Assert.Equal(0x0600062c, mMultArr.MetadataToken);
+        Assert.Equal(MathcadMvid, mMultArr.Module.ModuleVersionId);
+
+        MethodComparison.Compare("Mult.arrays_constant", Contract,
+            qMultArr, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "T", "L")],
+            mMultArr, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "T", "L")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Mult.arrays_varying", Contract,
+            qMultArr, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "L", "T")],
+            mMultArr, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "L", "T")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 4. Mult(Dim, Dim[])
+        var qMultScalar = qMatDim.GetMethod("Mult", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDim, qDimArr], null)!;
+        var mMultScalar = mMatDim.GetMethod("Mult", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDim, mDimArr], null)!;
+        Assert.Equal(0x0600062d, mMultScalar.MetadataToken);
+        Assert.Equal(MathcadMvid, mMultScalar.Module.ModuleVersionId);
+
+        MethodComparison.Compare("Mult.scalar", Contract,
+            qMultScalar, null, [Side.Quire.D("L"), Dims(Side.Quire, "L", "T")],
+            mMultScalar, null, [Side.Mathcad.D("L"), Dims(Side.Mathcad, "L", "T")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 5. Invert(Dim[])
+        var qInvert = qMatDim.GetMethod("Invert", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDimArr], null)!;
+        var mInvert = mMatDim.GetMethod("Invert", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDimArr], null)!;
+        Assert.Equal(0x0600062e, mInvert.MetadataToken);
+        Assert.Equal(MathcadMvid, mInvert.Module.ModuleVersionId);
+
+        MethodComparison.Compare("Invert.vector", Contract,
+            qInvert, null, [Dims(Side.Quire, "L", "T")],
+            mInvert, null, [Dims(Side.Mathcad, "L", "T")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 6. Product(Dim, Dim[])
+        var qProduct = qMatDim.GetMethod("Product", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDim, qDimArr], null)!;
+        var mProduct = mMatDim.GetMethod("Product", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDim, mDimArr], null)!;
+        Assert.Equal(0x0600062f, mProduct.MetadataToken);
+        Assert.Equal(MathcadMvid, mProduct.Module.ModuleVersionId);
+
+        MethodComparison.Compare("Product.vector", Contract,
+            qProduct, null, [Side.Quire.D("T"), Dims(Side.Quire, "L", "L")],
+            mProduct, null, [Side.Mathcad.D("T"), Dims(Side.Mathcad, "L", "L")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 7. Pwr(MatDim, int)
+        var qPwr = qMatDim.GetMethod("Pwr", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qMatDim, typeof(int)], null)!;
+        var mPwr = mMatDim.GetMethod("Pwr", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mMatDim, typeof(int)], null)!;
+        Assert.Equal(0x0600061f, mPwr.MetadataToken);
+        Assert.Equal(MathcadMvid, mPwr.Module.ModuleVersionId);
+
+        var qUniform2x2 = Call(qMatDim, "make", Side.Quire.D("L"))!;
+        var mUniform2x2 = Call(mMatDim, "make", Side.Mathcad.D("L"))!;
+
+        MethodComparison.Compare("Pwr.positive", Contract,
+            qPwr, null, [qUniform2x2, 2],
+            mPwr, null, [mUniform2x2, 2],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Pwr.zero", Contract,
+            qPwr, null, [qUniform2x2, 0],
+            mPwr, null, [mUniform2x2, 0],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Pwr.minus_one", Contract,
+            qPwr, null, [qUniform2x2, -1],
+            mPwr, null, [mUniform2x2, -1],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("Pwr.minus_two", Contract,
+            qPwr, null, [qUniform2x2, -2],
+            mPwr, null, [mUniform2x2, -2],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        // 8. make(Dim[], Dim[])
+        var qMakeTwo = qMatDim.GetMethod("make", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [qDimArr, qDimArr], null)!;
+        var mMakeTwo = mMatDim.GetMethod("make", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly, null, [mDimArr, mDimArr], null)!;
+        Assert.Equal(0x06000627, mMakeTwo.MetadataToken);
+        Assert.Equal(MathcadMvid, mMakeTwo.Module.ModuleVersionId);
+
+        MethodComparison.Compare("make.uniform_rows", Contract,
+            qMakeTwo, null, [Dims(Side.Quire, "L", "L"), Dims(Side.Quire, "T", "T")],
+            mMakeTwo, null, [Dims(Side.Mathcad, "L", "L"), Dims(Side.Mathcad, "T", "T")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("make.uniform_cols", Contract,
+            qMakeTwo, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "v", "v")],
+            mMakeTwo, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "v", "v")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+
+        MethodComparison.Compare("make.nonuniform_both", Contract,
+            qMakeTwo, null, [Dims(Side.Quire, "L", "T"), Dims(Side.Quire, "v", "N")],
+            mMakeTwo, null, [Dims(Side.Mathcad, "L", "T"), Dims(Side.Mathcad, "v", "N")],
+            v => Show(Side.Quire, v), v => Show(Side.Mathcad, v));
+    }
+
+    private static System.Type sideT(string name, Side side) => side.T(name);
 }

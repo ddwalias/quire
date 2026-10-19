@@ -2,6 +2,27 @@
 
 ## Active handoff
 
+### MatDim static array operations and Pwr batch
+- **Branch:** `mirror/b-matdim-static-ops`
+- **Status:** Complete implementation and direct differential verification. All 8 methods in `MatDim` static array operations and `Pwr` achieved 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll`.
+- **Scope (8 methods):**
+  - `MatDim.Uniform(Dim[])` (token 0x06000629): Remediated to exact IL (loop comparison aligned to `beq.s`/`bne.un.s`).
+  - `MatDim.Eq_b(Dim[], Dim[])` (token 0x0600062a): Remediated to exact IL (cached length in `num`).
+  - `MatDim.IsScalarMultiple(Dim[], Dim[])` (token 0x0600062b): Remediated to exact IL (cached length in `num`, direct reference inequality `!=` emitting `beq.s`).
+  - `MatDim.Mult(Dim[], Dim[])` (token 0x0600062c): Remediated to exact IL (cached length in `num`, direct reference inequality `!=`).
+  - `MatDim.Mult(Dim, Dim[])` (token 0x0600062d): Remediated to exact IL (cached length in `num`).
+  - `MatDim.Invert(Dim[])` (token 0x0600062e): Remediated to exact IL (cached length in `num`).
+  - `MatDim.Product(Dim, Dim[])` (token 0x0600062f): Remediated to exact IL (indexed loop with cached length matching Mathcad IL).
+  - `MatDim.Pwr(MatDim, int)` (token 0x0600061f): Remediated to exact IL (matching negative power invert branching and power 0 square check).
+  - `MatDim.make(Dim[], Dim[])` (token 0x06000627): Remediated to exact IL (separate `dim` and `dim2` local variables matching Mathcad IL).
+- **Evidence:**
+  - [Mcd.MatDim evidence](../evidence/Mcd.MatDim.md) updated with exact Normalized IL SHA-256 hashes and test references.
+- **Validation:**
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimDifferentialTests'` (3/3 passed).
+  - Direct differential tests in `tests/Quire.Differential.Tests/MatDimDifferentialTests.cs` (`Direct_static_array_operations_and_pwr_match_mathcad`) exercising all 8 methods with edge cases against Mathcad Prime 12.0.1.0 in Release mode.
+  - `quick_check.py --method-type Quire.Mcd.MatDim` confirms all 8 methods are exact IL.
+
 ### Maintainer-gated handoff: Engine factory and interfaces batch
 - **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
 - **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.

@@ -29,16 +29,27 @@ public abstract partial class MatDim
     public static MatDim Transpose(MatDim m1) => m1.transpose();
     [MirrorVerified("MatDimOperationsDifferentialTests")]
     public static Dim Det(MatDim m, int n) => m.det(n);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimDifferentialTests")]
     public static MatDim Pwr(MatDim m, int n)
     {
-        if (n > 0) return m.pwr((uint)n);
+        if (n > 0)
+        {
+            return m.pwr((uint)n);
+        }
         if (n < 0)
         {
-            var inverse = m.invert();
-            return n == -1 || inverse == null ? inverse : inverse.pwr(unchecked((uint)-n));
+            MatDim matDim = m.invert();
+            if (n != -1 && matDim != null)
+            {
+                return matDim.pwr((uint)(-n));
+            }
+            return matDim;
         }
-        return m.pwr(2) == null ? null : MMult(m, m.invert());
+        if (m.pwr(2u) == null)
+        {
+            return null;
+        }
+        return MMult(m, m.invert());
     }
 
     [MirrorVerified("MatDimOperationsDifferentialTests")]
@@ -108,13 +119,19 @@ public abstract partial class MatDim
     public static MatDim makeColDimension(Dim d1, Dim d2, int r) => make(RC.COL, [d1, d2], r);
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim makeColDimension(Dim d1, Dim[] d2, int r) => make(RC.COL, Push(d1, d2), r);
-    [MirrorAnalyzed("Mcd.MatDim")]
+    [MirrorVerified("MatDimDifferentialTests")]
     public static MatDim make(Dim[] rows, Dim[] cols)
     {
-        Dim common = Uniform(rows);
-        if (common != null) return make(RC.COL, Mult(common, cols), rows.Length);
-        common = Uniform(cols);
-        if (common != null) return make(RC.ROW, Mult(common, rows), cols.Length);
+        Dim dim = Uniform(rows);
+        if (dim != null)
+        {
+            return make(RC.COL, Mult(dim, cols), rows.Length);
+        }
+        Dim dim2 = Uniform(cols);
+        if (dim2 != null)
+        {
+            return make(RC.ROW, Mult(dim2, rows), cols.Length);
+        }
         return rc_dim.make_rc(rows, cols);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
