@@ -1,11 +1,8 @@
 #nullable disable
-using System.IO;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 using System.Xml.Xsl;
-using System.Xml;
-using System.Xml.Xsl;
-using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
@@ -43,4 +40,16 @@ public partial class XmcdToIResultNodeTransform
 
     [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformMechanicalDifferentialTests")]
     private ISymbolicResultNode BuildSymbolic(XmlNode node) => _resultNodeFactory.CreateSymbolicResultNode(node.InnerXml);
+
+    [MirrorVerified("PtcCalculationCoreXmcdToIResultNodeTransformIntegerAttributeDifferentialTests")]
+    private static int GetIntegerFromAttribute(XmlNode node, string attributeName, int defaultValue)
+    {
+        XmlAttribute xmlAttribute = node.Attributes[attributeName];
+        if (xmlAttribute == null || !int.TryParse(xmlAttribute.Value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out int result))
+        {
+            return defaultValue;
+        }
+
+        return result;
+    }
 }

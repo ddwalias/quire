@@ -1,7 +1,5 @@
 #nullable disable
 using System.Xml;
-using System.Xml;
-using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
@@ -22,6 +20,62 @@ public partial class ResultNodeToXmcdTransform
 
     [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests")]
     private void WritePlaceholderXml() => Writer.WriteElementString("ml", "placeholder", "http://schemas.mathsoft.com/math50", string.Empty);
+
+    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests")]
+    private void WriteMatrixXml(IMatrixResultNode matrix)
+    {
+        Writer.WriteStartElement("ml", "matrix", "http://schemas.mathsoft.com/math50");
+        Writer.WriteStartAttribute("rows");
+        Writer.WriteValue(matrix.Rows);
+        Writer.WriteEndAttribute();
+        Writer.WriteStartAttribute("cols");
+        Writer.WriteValue(matrix.Columns);
+        Writer.WriteEndAttribute();
+        for (int i = 0; i < matrix.Columns; i++)
+        {
+            for (int j = 0; j < matrix.Rows; j++)
+            {
+                matrix[j, i].Accept(this);
+            }
+        }
+
+        Writer.WriteEndElement();
+    }
+
+    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriterDifferentialTests")]
+    private void WriteDisplayMatrixXml(IDisplayMatrixResultNode displayMatrix)
+    {
+        if (displayMatrix.Viewport.Size.Equals(displayMatrix.Size))
+        {
+            WriteMatrixXml(displayMatrix);
+            return;
+        }
+
+        Writer.WriteStartElement("ml", "matrix", "http://schemas.mathsoft.com/math50");
+        Writer.WriteStartAttribute("rows");
+        Writer.WriteValue(displayMatrix.Rows);
+        Writer.WriteEndAttribute();
+        Writer.WriteStartAttribute("cols");
+        Writer.WriteValue(displayMatrix.Columns);
+        Writer.WriteEndAttribute();
+        Writer.WriteStartElement("ml", "display", "http://schemas.mathsoft.com/math50");
+        Writer.WriteStartAttribute("offset");
+        Writer.WriteValue(displayMatrix.ViewportOffset.ToString());
+        Writer.WriteEndAttribute();
+        Writer.WriteStartAttribute("size");
+        Writer.WriteValue(displayMatrix.Viewport.Size.ToString());
+        Writer.WriteEndAttribute();
+        Writer.WriteEndElement();
+        for (int i = 0; i < displayMatrix.Viewport.Columns; i++)
+        {
+            for (int j = 0; j < displayMatrix.Viewport.Rows; j++)
+            {
+                displayMatrix.Viewport[j, i].Accept(this);
+            }
+        }
+
+        Writer.WriteEndElement();
+    }
 
     [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests")]
     public void Visit(IRealResultNode real) => WriteRealXml(real.Value);
