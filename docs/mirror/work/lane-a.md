@@ -28,8 +28,15 @@ do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyw
   `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~NumValDifferentialTests'`
   — 6 passed, 0 failed, 0 skipped; output assembly `Quire.Differential.Tests.dll` under `bin\Release\net10.0`.
 - Scoped `validate.py --profile focused --method-type Quire.Mcd.NumVal --diff-filter "FullyQualifiedName~NumValDifferentialTests" --jobs 14`
-  was blocked before the method audit by the same Release differential assembly lookup error recorded above. Gate result
-  will be recorded after `lane_merge.py`; the targeted run supports the existing direct cases only.
+  was blocked before the method audit by the same Release differential assembly lookup error recorded above.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-numval-il-shape --jobs 14` blocked at
+  revision `7610f4a4c208624a71630e7c2733953074e9c9e7` on base `f863245e87b35d0e03a9fcf26f6a18949532ccaf`. Report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-eeyg5eyx\gate.json`; summary
+  `%LOCALAPPDATA%\Temp\quire-gate-results-eeyg5eyx\run\summary.json`. Harness 97, Mpl 188 and focused differential
+  392 passed with no failures or skips. The Release validator then failed with
+  `Quire.Focused.Differential.Tests: Release differential assembly not found (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-z28fe4i5\Quire.Focused.Differential.Tests.dll)`;
+  the Release test build emits `Quire.Differential.Tests.dll`. Validator exited 1, so coverage/method audit and ratchet
+  did not run. The branch remains pending the maintainer's validator fix; its source file stays owned until then.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
