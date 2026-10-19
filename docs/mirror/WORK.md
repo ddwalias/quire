@@ -7,7 +7,7 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Six Lane A batches remain pending full gate or maintainer validation: Rational, RngVal, Type, Dim, DimVal and the Rts initializer event test. No other unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
+| A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches remain pending full gate or maintainer validation: Rational, RngVal, Type, Dim and DimVal. The Rts initializer event verification merged at `2c4d5d33`. No other unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop
