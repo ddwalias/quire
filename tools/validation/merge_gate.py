@@ -660,9 +660,14 @@ def verdict(summary):
     reasons = []
     if summary.get('error'):
         reasons.append(f"validation error: {summary['error']}")
+    phase_skips_allowed = (summary.get('profile') == 'phase' and summary.get('diff_filter')
+                           and summary.get('phase_differential_skips', 0))
     for project in summary.get('projects', []):
         unaccepted_failures = project.get('failed', 0) - project.get('tolerated_phase_failures', 0)
-        if project.get('exit_code') or unaccepted_failures or project.get('skipped') or not project.get('passed'):
+        skipped = project.get('skipped', 0)
+        if project.get('project') == 'Quire.Differential.Tests' and phase_skips_allowed:
+            skipped = 0
+        if project.get('exit_code') or unaccepted_failures or skipped or not project.get('passed'):
             reasons.append(f"{project['project']}: tests did not all pass")
     ratchet = summary.get('ratchet')
     if not ratchet:

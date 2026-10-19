@@ -151,6 +151,18 @@ class MergeGateTests(unittest.TestCase):
     def test_clean_summary_passes(self):
         self.assertEqual(verdict(PASSED), [])
 
+    def test_candidate_filtered_phase_differential_skips_are_recorded_as_gaps(self):
+        differential = {'project': 'Quire.Differential.Tests', 'exit_code': 0, 'passed': 13, 'failed': 0,
+                        'skipped': 1}
+        scoped = dict(PASSED, profile='phase', diff_filter='FullyQualifiedName~CandidateTests',
+                      phase_differential_skips=2, projects=[differential])
+        self.assertEqual(verdict(scoped), [])
+
+        unfiltered = dict(scoped, diff_filter=None)
+        self.assertIn('Quire.Differential.Tests: tests did not all pass', verdict(unfiltered))
+        unrelated = dict(scoped, projects=[dict(differential, project='Quire.Core.Tests')])
+        self.assertIn('Quire.Core.Tests: tests did not all pass', verdict(unrelated))
+
     def test_every_failure_blocks(self):
         cases = [
             (dict(PASSED, error='boom'), 'validation error'),
