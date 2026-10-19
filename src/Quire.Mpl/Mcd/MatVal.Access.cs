@@ -123,78 +123,117 @@ public sealed partial class MatVal
         return Dim.Eq_b(m_dim, d);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object get_1(int i) => get(Index(i));
+    public object get_1(int i) => get(i + m_offset);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object get_2(int i, int j) => get(Index(i, j));
+    public object get_2(int i, int j) => get(i + m_offset + j * Data.m_anr);
     [MirrorAnalyzed("Mcd.MatVal")]
     private object get(int offset)
     {
-        double real = m_rarr[offset];
-        if (IsPtrNan(ref real))
+        double r = m_rarr[offset];
+        if (IsPtrNan(ref r))
         {
-            var pointer = m_parr?[offset];
-            if (pointer != null) return pointer;
-            real = m_rarr[offset] = double.NaN;
+            if (m_parr != null)
+            {
+                object obj = m_parr[offset];
+                if (obj != null)
+                {
+                    return obj;
+                }
+            }
+            r = (m_rarr[offset] = double.NaN);
         }
-        return new NumVal(real, m_iarr == null ? 0 : m_iarr[offset], m_dim);
+        return new NumVal(r, m_iarr == null ? 0.0 : m_iarr[offset], m_dim);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public Dim get_1_dim(int i) => get_dim(Index(i));
+    public Dim get_1_dim(int i) => get_dim(i + m_offset);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public Dim get_2_dim(int i, int j) => get_dim(Index(i, j));
+    public Dim get_2_dim(int i, int j) => get_dim(i + m_offset + j * Data.m_anr);
     [MirrorAnalyzed("Mcd.MatVal")]
-    private Dim get_dim(int offset) => IsPtrNan(ref m_rarr[offset]) ? DimVal.DimOf(m_parr[offset]) : m_dim;
+    private Dim get_dim(int offset)
+    {
+        if (!IsPtrNan(ref m_rarr[offset]))
+        {
+            return m_dim;
+        }
+        return DimVal.DimOf(m_parr[offset]);
+    }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public MatDim get_1_matdim(int i) => get_matdim(Index(i));
+    public MatDim get_1_matdim(int i) => get_matdim(i + m_offset);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public MatDim get_2_matdim(int i, int j) => get_matdim(Index(i, j));
+    public MatDim get_2_matdim(int i, int j) => get_matdim(i + m_offset + j * Data.m_anr);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public MatDim get_matdim(int offset) => IsPtrNan(ref m_rarr[offset]) ? DimVal.MatDimOf(m_parr[offset]) : MatDim.make(m_dim);
+    public MatDim get_matdim(int offset)
+    {
+        if (!IsPtrNan(ref m_rarr[offset]))
+        {
+            return MatDim.make(m_dim);
+        }
+        return DimVal.MatDimOf(m_parr[offset]);
+    }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object get_1_ptr(int i) => get_ptr(Index(i));
+    public object get_1_ptr(int i) => get_ptr(i + m_offset);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object get_2_ptr(int i, int j) => get_ptr(Index(i, j));
+    public object get_2_ptr(int i, int j) => get_ptr(i + m_offset + j * Data.m_anr);
     [MirrorAnalyzed("Mcd.MatVal")]
-    private object get_ptr(int offset) => IsPtrNan(ref m_rarr[offset]) && m_parr != null ? m_parr[offset] : null;
+    private object get_ptr(int offset)
+    {
+        double r = m_rarr[offset];
+        if (!IsPtrNan(ref r) || m_parr == null)
+        {
+            return null;
+        }
+        return m_parr[offset];
+    }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object get_1_na(NumVal n, int i) => get_na(n, Index(i));
+    public object get_1_na(NumVal n, int i) => get_na(n, i + m_offset);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public object get_2_na(NumVal n, int i, int j) => get_na(n, Index(i, j));
+    public object get_2_na(NumVal n, int i, int j) => get_na(n, i + m_offset + j * Data.m_anr);
     [MirrorAnalyzed("Mcd.MatVal")]
     private object get_na(NumVal n, int idx)
     {
-        if (IsPtrNan(ref m_rarr[idx])) return m_parr[idx];
-        n.Data.rp = m_rarr[idx];
-        n.Data.ip = m_iarr == null ? 0 : m_iarr[idx];
+        double r = m_rarr[idx];
+        if (IsPtrNan(ref r))
+        {
+            return m_parr[idx];
+        }
+        n.Data.rp = r;
+        n.Data.ip = m_iarr == null ? 0.0 : m_iarr[idx];
         return n.dv(m_dim);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_real(int i) => m_rarr[Index(i)];
+    public double get_real(int i) => m_rarr[i + m_offset];
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_real(int i, int j) => m_rarr[Index(i, j)];
+    public double get_real(int i, int j) => m_rarr[i + m_offset + j * Data.m_anr];
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_imag(int i) => m_iarr[Index(i)];
+    public double get_imag(int i) => m_iarr[i + m_offset];
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_imag(int i, int j) => m_iarr[Index(i, j)];
+    public double get_imag(int i, int j) => m_iarr[i + m_offset + j * Data.m_anr];
     [MirrorAnalyzed("Mcd.MatVal")]
     public double get_real_raw(int idx) => m_rarr[idx];
     [MirrorAnalyzed("Mcd.MatVal")]
     public double get_imag_raw(int idx) => m_iarr[idx];
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_real_mixed(int i) => get_real_mixed_raw(Index(i), 0);
+    public double get_real_mixed(int i) => get_real_mixed_raw(i + m_offset, 0u);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_real_mixed(int i, int j) => get_real_mixed_raw(Index(i, j), 0);
+    public double get_real_mixed(int i, int j) => get_real_mixed_raw(Index(i, j), 0u);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public double get_real_mixed_handle(int i, uint handle) => get_real_mixed_raw(Index(i), handle);
+    public double get_real_mixed_handle(int i, uint handle) => get_real_mixed_raw(i + m_offset, handle);
     [MirrorAnalyzed("Mcd.MatVal")]
     public double get_real_mixed_handle(int i, int j, uint handle) => get_real_mixed_raw(Index(i, j), handle);
     [MirrorAnalyzed("Mcd.MatVal")]
     public double get_real_mixed_raw(int i, uint handle)
     {
-        if (!IsPtrNan(ref m_rarr[i])) return m_rarr[i];
-        var number = m_parr[i] as NumVal;
-        if (number == null) AppException.Raise("non number value found in real argument", 0u, handle);
-        return number.Real;
+        double r = m_rarr[i];
+        if (IsPtrNan(ref r))
+        {
+            NumVal obj = m_parr[i] as NumVal;
+            if (obj == null)
+            {
+                AppException.Raise("non number value found in real argument", 0u, handle);
+            }
+            return obj.Data.rp;
+        }
+        return r;
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     public Dim[] ColDimArray(int c)
@@ -242,37 +281,80 @@ public sealed partial class MatVal
         return result;
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public void set_1(int i, object x) => set(Index(i), x);
+    public void set_1(int i, object x) => set(i + m_offset, x);
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_2(int i, int j, object x) => set(Index(i, j), x);
     [MirrorAnalyzed("Mcd.MatVal")]
     private void set(int offset, object x)
     {
-        if (x is NumVal n) set(offset, n); else set_ptrs(offset, x);
+        if (x is NumVal x2)
+        {
+            set(offset, x2);
+        }
+        else
+        {
+            set_ptrs(offset, x);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void setNaN(int offset, object x)
     {
-        if (x is NumVal n && n.m_dim == Dim.mcd_zero && double.IsNaN(n.Real)) set(offset, n.Real, n.m_dim);
-        else set(offset, x);
+        if (x is NumVal numVal)
+        {
+            if (numVal.m_dim == Dim.mcd_zero && double.IsNaN(numVal.Data.rp))
+            {
+                set(offset, numVal.Data.rp, numVal.m_dim);
+            }
+            else
+            {
+                set(offset, numVal);
+            }
+        }
+        else
+        {
+            set_ptrs(offset, x);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void setspec(int offset, object x)
     {
-        if (x is not NumVal n || n.m_dim == null) { set_ptrs(offset, x); return; }
-        if (n.m_dim != m_dim)
+        NumVal numVal = x as NumVal;
+        if (numVal != null && numVal.m_dim != null)
         {
-            if (m_dim != null) { set_ptrs_at(offset, n); return; }
-            m_dim = n.m_dim;
+            if (numVal.m_dim != m_dim)
+            {
+                if (m_dim == null)
+                {
+                    m_dim = numVal.m_dim;
+                }
+                else
+                {
+                    set_ptrs_at(offset, numVal);
+                    return;
+                }
+            }
+            if (m_iarr == null)
+            {
+                if (numVal.Data.ip == 0.0)
+                {
+                    set_at(offset, numVal.Data.rp);
+                    return;
+                }
+                AllocImaginary();
+            }
+            set_at(offset, numVal.Data.rp, numVal.Data.ip);
         }
-        set(offset, n.Real, n.Imag);
+        else
+        {
+            set_ptrs(offset, x);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public void set_1(int i, double re, Dim d) => set(Index(i), re, d);
+    public void set_1(int i, double re, Dim d) => set(i + m_offset, re, d);
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_2(int i, int j, double re, Dim d) => set(Index(i, j), re, d);
     [MirrorAnalyzed("Mcd.MatVal")]
-    public void set_1(int i, double re, double im, Dim d) => set(Index(i), re, im, d);
+    public void set_1(int i, double re, double im, Dim d) => set(i + m_offset, re, im, d);
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_2(int i, int j, double re, double im, Dim d) => set(Index(i, j), re, im, d);
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -280,50 +362,114 @@ public sealed partial class MatVal
     {
         if (d != m_dim && !Dim.IsSpecial(d))
         {
-            if (m_dim == null) m_dim = d;
-            else if (d != null) { set_ptrs_at(offset, new NumVal(re, 0, d)); return; }
+            if (m_dim == null)
+            {
+                m_dim = d;
+            }
+            else if (d != null)
+            {
+                set_ptrs_at(offset, new NumVal(re, 0.0, d));
+                return;
+            }
         }
-        if (d == Dim.mcd_zero && (re == 0 || double.IsNaN(re)))
+        if (d == Dim.mcd_zero && (re == 0.0 || double.IsNaN(re)))
         {
-            if (m_parr == null || IsUniformPtrsNoChange()) set_ptrs_at(offset, new NumVal(re, 0, d));
-            else if (m_dim == Dim.identity) set(offset, re);
-            else set_ptrs_at(offset, new NumVal(re, 0, Dim.identity));
+            if (m_parr != null && !IsUniformPtrsNoChange())
+            {
+                if (m_dim == Dim.identity)
+                {
+                    set(offset, re);
+                }
+                else
+                {
+                    set_ptrs_at(offset, new NumVal(re, 0.0, Dim.identity));
+                }
+            }
+            else
+            {
+                set_ptrs_at(offset, new NumVal(re, 0.0, d));
+            }
         }
-        else set(offset, re);
+        else
+        {
+            set(offset, re);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void set(int offset, double re)
     {
-        if (m_iarr == null) set_at(offset, re); else set_at(offset, re, 0);
+        if (m_iarr == null)
+        {
+            set_at(offset, re);
+        }
+        else
+        {
+            set_at(offset, re, 0.0);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void set(int offset, double re, double im, Dim d)
     {
         if (d != m_dim && !Dim.IsSpecial(d))
         {
-            if (m_dim == null) m_dim = d;
-            else if (d != null) { set_ptrs_at(offset, new NumVal(re, im, d)); return; }
+            if (m_dim == null)
+            {
+                m_dim = d;
+            }
+            else if (d != null)
+            {
+                set_ptrs_at(offset, new NumVal(re, im, d));
+                return;
+            }
         }
         set(offset, re, im);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void set(int offset, double re, double im)
     {
-        if (m_iarr == null && im != 0) AllocImaginary();
-        if (m_iarr == null) set_at(offset, re); else set_at(offset, re, im);
+        if (m_iarr == null)
+        {
+            if (im == 0.0)
+            {
+                set_at(offset, re);
+                return;
+            }
+            AllocImaginary();
+            set_at(offset, re, im);
+        }
+        else
+        {
+            set_at(offset, re, im);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void set(int offset, NumVal x)
     {
         if (x.m_dim != m_dim && !Dim.IsSpecial(x.m_dim))
         {
-            if (m_dim != null) { set_ptrs_at(offset, x); return; }
-            m_dim = x.m_dim;
+            if (m_dim == null)
+            {
+                m_dim = x.m_dim;
+            }
+            else
+            {
+                set_ptrs_at(offset, x);
+                return;
+            }
         }
-        set(offset, x.Real, x.Imag);
+        if (m_iarr == null)
+        {
+            if (x.Data.ip == 0.0)
+            {
+                set_at(offset, x.Data.rp);
+                return;
+            }
+            AllocImaginary();
+        }
+        set_at(offset, x.Data.rp, x.Data.ip);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public void set_ptrs_1(int i, object p) => set_ptrs(Index(i), p);
+    public void set_ptrs_1(int i, object p) => set_ptrs(i + m_offset, p);
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_ptrs_2(int i, int j, object p) => set_ptrs(Index(i, j), p);
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -332,7 +478,7 @@ public sealed partial class MatVal
         if (p is string text) p = new StrVal(text);
         if (p is MatVal matrix)
         {
-            if (ReferenceEquals(matrix, this) || matrix.contains(this)) p = matrix = new MatVal(matrix);
+            if (matrix == this || matrix.contains(this)) p = matrix = new MatVal(matrix);
             matrix.Immutable = true;
         }
         set_ptrs_at(offset, p);
@@ -346,7 +492,12 @@ public sealed partial class MatVal
         return false;
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    private void set_ptrs_raw(int off, object p) => set_ptrs_at(off, NumVal.NotNoValue(p));
+    private void set_ptrs_raw(int off, object p)
+    {
+        if (m_parr == null) m_parr = new Hashtable();
+        m_parr[off] = NumVal.NotNoValue(p);
+        m_rarr[off] = PtrNan;
+    }
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_2i(int i, int j, double imag)
     {
@@ -354,7 +505,7 @@ public sealed partial class MatVal
         m_iarr[Index(i, j)] = imag;
     }
     [MirrorAnalyzed("Mcd.MatVal")]
-    public void set_1(int i, double r) => set_at(Index(i), r);
+    public void set_1(int i, double r) => set_at(i + m_offset, r);
     [MirrorAnalyzed("Mcd.MatVal")]
     public void set_2(int i, int j, double r) => set_at(Index(i, j), r);
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -364,7 +515,8 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     private void set_ptrs_at(int off, object p)
     {
-        (m_parr ??= new Hashtable())[off] = p;
+        if (m_parr == null) m_parr = new Hashtable();
+        m_parr[off] = p;
         m_rarr[off] = PtrNan;
     }
     [MirrorAnalyzed("Mcd.MatVal")]

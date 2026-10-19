@@ -2,6 +2,20 @@
 
 ## Active handoff
 
+### MatVal element accessors and mutators batch
+- **Branch:** `mirror/b-matval-access`
+- **Status:** Complete implementation and differential verification.
+- **Scope (50 methods in `src/Quire.Mpl/Mcd/MatVal.Access.cs`):**
+  - Direct getters: `get_1(int)` (0x060004d0), `get_2(int, int)` (0x060004d1), `get(int)` (0x060004da), `get_1_dim(int)` (0x060004d2), `get_2_dim(int, int)` (0x060004d3), `get_dim(int)` (0x060004e4), `get_1_matdim(int)` (0x060004d4), `get_2_matdim(int, int)` (0x060004d5), `get_matdim(int)` (0x060004e5), `get_1_ptr(int)` (0x060004d6), `get_2_ptr(int, int)` (0x060004d7), `get_ptr(int)` (0x060004e7), `get_1_na(NumVal, int)` (0x060004d8), `get_2_na(NumVal, int, int)` (0x060004d9), `get_na(NumVal, int)` (0x060004e6).
+  - Real, imaginary, and mixed-real getters: `get_real(int)` (0x060004e8), `get_real(int, int)` (0x060004e9), `get_real_raw(int)` (0x060004ec), `get_imag(int)` (0x060004ea), `get_imag(int, int)` (0x060004eb), `get_imag_raw(int)` (0x060004ed), `get_real_mixed(int)` (0x060004ee), `get_real_mixed(int, int)` (0x060004ef), `get_real_mixed_handle(int, uint)` (0x060004f0), `get_real_mixed_handle(int, int, uint)` (0x060004f1), `get_real_mixed_raw(int, uint)` (0x060004f2).
+  - Setters and mutators: `set_1(int, object)` (0x06000509), `set_2(int, int, object)` (0x0600050a), `set(int, object)` (0x06000511), `setNaN(int, object)` (0x06000510), `setspec(int, object)` (0x06000512), `set_1(int, double, Dim)` (0x0600050e), `set_2(int, int, double, Dim)` (0x0600050f), `set(int, double, Dim)` (0x06000517), `set_1(int, double, double, Dim)` (0x06000510), `set_2(int, int, double, double, Dim)` (0x06000511), `set(int, double, double, Dim)` (0x06000519), `set(int, double)` (0x06000518), `set(int, double, double)` (0x0600051b), `set(int, NumVal)` (0x0600051c), `set_ptrs_1(int, object)` (0x06000517), `set_ptrs_2(int, int, object)` (0x06000518), `set_ptrs(int, object)` (0x06000519), `set_ptrs_raw(int, object)` (0x0600051b), `set_ptrs_at(int, object)` (0x06000521), `set_2i(int, int, double)` (0x0600051c), `set_1(int, double)` (0x0600051d), `set_2(int, int, double)` (0x0600051e), `set_at(int, double)` (0x0600051f), `set_at(int, double, double)` (0x06000520).
+- **IL Match:** 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll` across all 50 methods (confirmed via `quick_check.py`).
+- **Validation:**
+  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValDifferentialTests'` (8/8 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatValAccessDifferentialTests'` (3/3 passed)
+- **Evidence:** Updated in [Mcd.MatVal evidence](../evidence/Mcd.MatVal.md).
+
 ### Maintainer-gated handoff: Engine factory and interfaces batch
 - **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
 - **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.
