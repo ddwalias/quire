@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches still need full gate revalidation; no unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| D | `mirror/d-persistentdata-oleutils` Release Mathcad differential and portable focused build pass with the Windows-only test guarded; full gate retry pending. | [Lane D](work/lane-d.md) |
+| D | OleUtils Release Mathcad differential and audits pass; gate remains blocked by unrelated phase differential failures and generated `bin` files. | [Lane D](work/lane-d.md) |
 
 ## Fast lane loop
 
