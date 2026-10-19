@@ -41,9 +41,9 @@ Implemented the Tier A two-argument constructor and `IsEmpty` getter from the IL
 - Release MethodAudit: 7 declarations; Quire constructor `0x06000343` exactly matches Mathcad `0x060002b0`, and Quire getter `0x06000344` exactly matches Mathcad `0x060002b6`. Both `structure_matches=true`, `exact_match=true`; the targeted inventory reports 9 unavailable ancillary assemblies outside this type.
 - Original IL was extracted with `python tools\reference\reference.py Ptc.Calculation.Core.Trace2DResults.TraceDataPoints --assembly Ptc.Calculation.Core --il`. The evidence table now covers all seven original declarations.
 
-### TraceErrorCodes overlap (not gated)
+### TraceErrorCodes overlap (superseded candidate)
 
-The formatter was already implemented and documented in the active `mirror/c-calc-simple-result-factory-cctor` branch at checkpoint commit `c37e8b3b`. This branch (`mirror/c-calc-trace-error-codes`, code commit `b2d0b87f`) duplicates that member and adds direct comparisons for 18 cases across three cultures; local Release tests passed 1/1 and Release MethodAudit was exact. The branch was not run through the merge gate and must not be queued. The active owner remains `c-calc-simple-result-factory-cctor`.
+The formatter was already implemented and documented in the active `mirror/c-calc-simple-result-factory-cctor` branch at checkpoint commit `c37e8b3b`. This branch (`mirror/c-calc-trace-error-codes`, code commit `b2d0b87f`) duplicates that member and adds direct comparisons for 18 cases across three cultures; local Release tests passed 1/1 and Release MethodAudit was exact. A normal gate was invoked for `b2d0b87f`; during validation, documentation commit `bd208971` changed the candidate tip, so the report does not validate the current branch. The gate stopped before audit/ratchet on the unrelated Release assembly-name lookup (report `C:\Users\DuyDang\AppData\Local\Temp\quire-gate-results-f1m33fk0\run\summary.json`). This superseded branch will not be applied or queued. The active owner remains `c-calc-simple-result-factory-cctor`.
 
 ### TraceErrorCodes point-limit message (`mirror/c-calc-trace-error-codes`)
 
