@@ -4,6 +4,6 @@ namespace Quire.Calculation.Core;
 
 public partial class RedefinitionWarningsDictionary
 {
-    [MirrorVerified("PtcCalculationCoreRedefinitionWarningsDictionaryCctorDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreRedefinitionWarningsDictionaryCctorMechanicalDifferentialTests")]
     static RedefinitionWarningsDictionary() => KeysOwnerTypes = [typeof(RedefinitionWarningMsgCodes)];
 }

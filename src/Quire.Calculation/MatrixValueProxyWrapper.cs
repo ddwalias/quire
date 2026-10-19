@@ -5,7 +5,7 @@ namespace Quire.Calculation;
 
 internal partial class MatrixValueProxyWrapper
 {
-    [MirrorVerified("PtcCalculationMatrixValueProxyWrapperCctorDifferentialTests")]
+    [MirrorVerified("PtcCalculationMatrixValueProxyWrapperCctorMechanicalDifferentialTests")]
     static MatrixValueProxyWrapper()
     {
         var options = new PlainDataConversionOptions { ImaginaryThreshold = double.NaN };

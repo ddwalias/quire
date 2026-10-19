@@ -2,7 +2,7 @@
 
 - **Original:** `Ptc.Calculation.Core.dll` 12.0.1.0, SHA-256 `f5a48d158835f91485948d42fc85e4fd27ddc5e2a17b4d886eb6722a753d4a09`, MVID `402d6e7b-941e-48f3-b17b-e1cd1a92b615`
 - **Reference:** MemberGen for the instance members; `tools/reference/reference.py Ptc.Calculation.Core.SimpleResultNodeFactory --assembly Ptc.Calculation.Core --il` for `.cctor()` (IL output remains in ignored `.mirror-cache`)
-- **Quire:** `src/Quire.Calculation.Core`; tests: `Quire.Differential.Tests.PtcCalculationCoreSimpleResultNodeFactoryMechanicalDifferentialTests`, `Quire.Differential.Tests.PtcCalculationCoreSimpleResultNodeFactoryCctorDifferentialTests`
+- **Quire:** `src/Quire.Calculation.Core`; tests: `Quire.Differential.Tests.PtcCalculationCoreSimpleResultNodeFactoryMechanicalDifferentialTests`, `Quire.Differential.Tests.PtcCalculationCoreSimpleResultNodeFactoryCctorMechanicalDifferentialTests`
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
@@ -23,4 +23,4 @@
 **Observed** (`PtcCalculationCoreSimpleResultNodeFactoryMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
-**Observed** (`PtcCalculationCoreSimpleResultNodeFactoryCctorDifferentialTests`): invokes `.cctor()` on both artifacts and compares the initialized `Default` field's runtime type.
+**Observed** (`PtcCalculationCoreSimpleResultNodeFactoryCctorMechanicalDifferentialTests`): invokes `.cctor()` on both artifacts and compares the initialized `Default` field's runtime type.

@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
-public class PtcCalculationCoreTrace2DResultsTraceTypeDefinitionsCctorDifferentialTests
+public class PtcCalculationCoreTrace2DResultsTraceTypeDefinitionsCctorMechanicalDifferentialTests
 {
     [SkippableFact]
     public void TraceTypeDefinitions_cctor()

@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
-public class PtcCalculationCoreSimpleResultNodeFactoryCctorDifferentialTests
+public class PtcCalculationCoreSimpleResultNodeFactoryCctorMechanicalDifferentialTests
 {
     [SkippableFact]
     public void SimpleResultNodeFactory_cctor()

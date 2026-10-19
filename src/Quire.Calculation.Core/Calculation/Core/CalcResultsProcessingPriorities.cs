@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core;
 
 public static partial class CalcResultsProcessingPriorities
 {
-    [MirrorVerified("PtcCalculationCoreStaticConstantsCctorsDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreStaticConstantsCctorsMechanicalDifferentialTests")]
     static CalcResultsProcessingPriorities()
     {
         DefaultResultDispatchPriority_Background = DispatcherPriority.Background;
