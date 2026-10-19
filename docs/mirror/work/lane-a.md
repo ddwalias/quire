@@ -3,7 +3,8 @@
 ## Active handoff
 
 SCons, SList, Utilities, Tok, MplSignature and NumVal are merged into current `origin/main`; their entries below are historical receipts. The
-remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational and RngVal have current runtime-gate blockers; Type's audit passed but its mutation run hit a scratch-file permission error. Dim and DimVal still need full revalidation.
+remaining unmerged Rational, RngVal, Type, Dim and DimVal branches own their source files. Rational and RngVal have current ratchet or mutation blockers; Type hit a mutation scratch permission error; Dim has stale unreachable-line entries and ratchet regressions. DimVal still needs full revalidation.
+
 
 
 
@@ -1403,3 +1404,8 @@ count as killed mutants and must never be proposed for equivalence acceptance.
 - `Parser.Parse`, `Parser.GetNextTokenIf(string)`, `Formatter.OnFunction(Type,int)` and `Formatter.Visit(Product)` match Mathcad Release IL exactly; see [Mcd.Type](../evidence/Mcd.Type.md). Required Release `TypeDifferentialTests` passed 4/4 with Mathcad.
 - Gate on the rebased Type candidate passed Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393. Audit compared 1,399 methods (1,551 exact, 73 structure-only); coverage: 298 missing, 102 structure mismatches, 35 uncovered, 41 verified unsupported. Lint 0, integrity complete, ratchet OK.
 - Mutation stopped at 280/287 with exact validator error `[Errno 13] Permission denied: 'C:\\Users\\DuyDang\\AppData\\Local\\Temp\\quire-mutant-scratch-wnhkdkox\\quire-mutant-hzpz7lrq\\Quire.Mpl.dll'`. Report: `%LOCALAPPDATA%\Temp\quire-gate-results-m6ob49w_\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-m6ob49w_\run\summary.json`. Batch remains unmerged.
+## Dim operations Release IL shape (`mirror/a-dim-operations`)
+
+- `intern(Dim)`, `IsDimensioned`, `FixDimension`, `Mult`, `Div` and `Pwr` match reference Release IL; evidence is in [Mcd.Dim](../evidence/Mcd.Dim.md). Required Release `DimDifferentialTests` passed 8/8 with Mathcad.
+- Gate on rebased revision `51cc12ae` and base `10deda913b1b20e07a5b524de47ee737ce46b626` passed Harness 97, Mpl 188, Debug Differential 393 and Release Differential 393. Audit compared 1,397 methods (1,553 exact, 71 structure-only); coverage: 298 missing, 102 structure mismatches, 37 uncovered, 43 verified unsupported; integrity complete. Mutation killed 190/190, no survivors.
+- Gate blocked on five ratchet regressions: `Dim.Eq` and `Dim.Id` became uncovered; compared methods fell 33 to 31; unfinished methods rose 0 to 2; verified-unsupported rose 0 to 2. It also reported stale accepted unreachable entries: `Dim.cs:212` for `Eq` (`problem: not a source line of the method`) and `Dim.cs:193` for `Id` (`problem: not a source line of the method`). Report: `%LOCALAPPDATA%\Temp\quire-gate-results-abrubhiv\gate.json`; summary: `%LOCALAPPDATA%\Temp\quire-gate-results-abrubhiv\run\summary.json`. Batch remains unmerged.
