@@ -12,12 +12,4 @@ namespace Quire.Engine;
 [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
 public partial struct ComponentHelpers
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static int Lock(global::Quire.Engine.IMathcadComponent2 c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int Unlock(global::Quire.Engine.IMathcadComponent2 c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int SetValue(global::Quire.Engine.IMathcadComponent2 c, uint tag1, uint tag2, string place, object v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object GetValue(global::Quire.Engine.IMathcadComponent2 c, string place) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,18 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.AlgoInfo, iengine")]
 public sealed partial class AlgoInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string m_name;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_tag;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_region;
-    [global::Quire.Mirror.MirrorStub]
-    public int Region { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Tag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AlgoInfo() { }
 }

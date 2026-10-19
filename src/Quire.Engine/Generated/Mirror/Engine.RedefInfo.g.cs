@@ -11,22 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.RedefInfo, iengine")]
 public sealed partial class RedefInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string m_name;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_oldtype;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_oldlocation;
-    [global::Quire.Mirror.MirrorStub]
-    private string m_newtype;
-    [global::Quire.Mirror.MirrorStub]
-    public string NewType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string OldLocation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string OldType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RedefInfo() { }
 }

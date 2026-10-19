@@ -11,16 +11,4 @@ namespace Quire.Engine;
 [global::Quire.Mirror.MirrorOf("Engine.Entry, iengine")]
 internal partial struct Entry
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int h;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Engine.NodeStatus s;
-    [global::Quire.Mirror.MirrorStub]
-    public int client_cookie;
-    [global::Quire.Mirror.MirrorStub]
-    public int trigger_handle;
-    [global::Quire.Mirror.MirrorStub]
-    public int trigger_cookie;
-    [global::Quire.Mirror.MirrorStub]
-    public Entry(int _h, global::Quire.Engine.NodeStatus _s, int _cc, int _th, int _tc) { }
 }

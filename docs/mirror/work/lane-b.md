@@ -2,51 +2,24 @@
 
 ## Active handoff
 
-### Active batch: MatDim error paths and PickLoser
-- **Branch:** `mirror/b-matdim-error-paths`
-- **Scope:**
-  - `Mcd.MatDim.PickLoser(MatDim, MatDim, uint)`: token 0x06000645. Aligned IL structure with Mathcad Release IL (two-branch scan: column vector scanning rows with `OnError(..., i, a)`, matrix scanning rows and columns with `OnError(..., j, k, a)`, and terminal `AppException.Raise("array unit mismatch", param)` fallthrough path).
-  - `Mcd.MatDim.OnError(string, Dim, uint)`: token 0x06000641.
-  - `Mcd.MatDim.OnError(Dim, uint)`: token 0x06000642.
-  - `Mcd.MatDim.OnError(string, Dim, int, int, uint)`: token 0x06000643.
-  - `Mcd.MatDim.OnError(string, Dim, int, uint)`: token 0x06000644.
-  - `Mcd.MatDim.Eq(MatDim, MatDim, uint)`: token 0x06000617 (mismatch dispatches to `PickLoser`).
+### Active batch: Engine data and component helpers batch
+- **Branch:** `mirror/b-engine-mailbox`
+- **Scope (27 members across independent Tier A/B Engine types):**
+  - `Engine.ComponentHelpers`: `Lock` (0x060000ca), `Unlock` (0x060000cb), `SetValue` (0x060000cc), `GetValue` (0x060000cd).
+  - `Engine.AlgoInfo`: `.ctor` (0x060000b4), `get_Name` (0x060000ae), `set_Name` (0x060000af), `get_Tag` (0x060000b0), `set_Tag` (0x060000b1), `get_Region` (0x060000b2), `set_Region` (0x060000b3).
+  - `Engine.RedefInfo`: `.ctor` (0x060000ad), `get_Name` (0x060000a5), `set_Name` (0x060000a6), `get_OldType` (0x060000a7), `set_OldType` (0x060000a8), `get_OldLocation` (0x060000a9), `set_OldLocation` (0x060000aa), `get_NewType` (0x060000ab), `set_NewType` (0x060000ac).
+  - `Engine.Entry`: `.ctor` (0x060000c1) and fields `h`, `s`, `client_cookie`, `trigger_handle`, `trigger_cookie`.
 - **Evidence:**
-  - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
+  - [Engine.ComponentHelpers](../evidence/Engine.ComponentHelpers.md)
+  - [Engine.AlgoInfo](../evidence/Engine.AlgoInfo.md)
+  - [Engine.RedefInfo](../evidence/Engine.RedefInfo.md)
+  - [Engine.Entry](../evidence/Engine.Entry.md)
 - **Validation:**
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
-  - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
-- **Gate status:**
-  - Ready for merge gate landing on updated `main` (commit `a2b91391`).
+  - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (103/103 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineDataDifferentialTests'` (19/19 passed)
+- **Status:** Complete implementation and differential verification. Ready for normal gate landing on updated `main`.
 
 
-
-### Maintainer-gated handoff: Engine factory and interfaces batch
-- **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
-- **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.
-- **Scope (23 methods across Engine interfaces and factories):**
-  - `Engine.Factory`: `.ctor` (0x060000bd), `AppendPath` (0x060000be), `NewFactory` (0x060000bf), `CreateFactory` (0x060000c0).
-  - `Engine.IFactoryFactory`: `AppendPath` (0x060000bb), `NewFactory` (0x060000bc).
-  - `Engine.IFactory`: `Initialize` (0x060000b5), `VerifyIntegrity` (0x060000b6).
-  - `Engine.IBuiltin`: `GetVariable` (0x060000a0), `SetVariable` (0x060000a1), `UnsetVariable` (0x060000a2), `GetBuiltins` (0x060000a3).
-  - `Engine.IEnginePriv`: `Initialize` (0x060000a4).
-  - `Engine.IEngineUnstable`: `GetNodeType` (0x0600009c).
-  - `Engine.IMCEngine`: `AddNotify` (0x0600009d), `RemoveNotify` (0x0600009e), `StartNotify` (0x0600009f).
-  - `Engine.IEngine`: `get_IsUpToDate` (0x06000089), `RecalculateAll` (0x0600009a).
-- **Evidence:**
-  - [Engine.Factory](../evidence/Engine.Factory.md)
-  - [Engine.IFactoryFactory](../evidence/Engine.IFactoryFactory.md)
-  - [Engine.IFactory](../evidence/Engine.IFactory.md)
-  - [Engine.IBuiltin](../evidence/Engine.IBuiltin.md)
-  - [Engine.IEnginePriv](../evidence/Engine.IEnginePriv.md)
-  - [Engine.IEngineUnstable](../evidence/Engine.IEngineUnstable.md)
-  - [Engine.IMCEngine](../evidence/Engine.IMCEngine.md)
-  - [Engine.IEngine](../evidence/Engine.IEngine.md)
-- **Validation:**
-  - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (97/97 passed)
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryMechanicalDifferentialTests'` (2/2 passed)
-- **Gate status:**
-  - Standard lane merge gate blocks because `protected.txt` and `merge_gate.py` only exempt stub deletions in `src/Quire.Mpl/Generated/Mirror/*.g.cs`. Non-Mpl generated files (`src/Quire.Engine/Generated/Mirror/*.g.cs`) require maintainer gate execution with `--allow-protected`.
 
 Everything below this summary is historical context and receipts, not a queue of unfinished work.
 
@@ -95,6 +68,8 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | Function core dispatch | Merged to main at `f29abb6` (`9549041`). `Function.clo<CLO>(CLO)`, `Function.clovec<CLO>(CLO[])`, `Function.appVec<R>(out R, object[])`; exact IL; 28 direct comparisons. |
 | Fn_clo partial closure | Merged to main at `aaa1a47` (`edc808f`). `Fn_clo<CLO>` 21 methods (`.ctor` x2, `Fixpoint`, `Name`, `invVec`, `inv` x16); exact IL; 21 direct comparisons. |
 | FnCompose function composition | Merged to main at `bf985ce`. Seven methods; exact IL; seven direct comparisons. |
+| Engine factory and interfaces | Merged to main at `3cdb80d2`. Factory and interface dispatch; 23 methods. |
+| MatDim error paths and PickLoser | Merged to main at `69327dc5` (`2bec90c9`). PickLoser two-branch scan and OnError overloads; 15 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
