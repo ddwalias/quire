@@ -72,9 +72,9 @@ def protected(paths, rules):
 
 
 STUB = b'[global::Quire.Mirror.MirrorStub]'
-# Quire.Mpl only: the focused profile validates nothing else, and other projects' stubs come in shapes (attributes
-# above the stub, trailing comments) that line matching cannot judge.
-GENERATED = 'src/quire.mpl/generated/mirror/*.g.cs'
+# Whole [MirrorStub] member removals are the lane implementation workflow for every mirrored project. Keep the
+# exception narrow to existing generated mirror source files; stub_units rejects other attributes and edits.
+GENERATED = 'src/*/generated/mirror/*.g.cs'
 TYPE = re.compile(rb'\b(class|struct|interface|enum|record|delegate|event)\b')
 # A constant has nothing to implement, and the shape omits its value.
 CONST = re.compile(rb'\bconst\b')

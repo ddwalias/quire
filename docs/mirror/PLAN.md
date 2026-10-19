@@ -49,9 +49,11 @@ Bind contracts to assembly/version/SHA-256/MVID and exact signature/token; inval
    supports only its executed cases; it does not establish audit readiness, project-wide or phase completion.
    Refresh coverage/status locally after member changes if needed (`MirrorGen manifest`; `coverage.md` and
    `status/*.txt` are generated and gitignored, see [status/README.md](status/README.md)). Implement a stub by deleting its whole `[MirrorStub]` line
-   pair from `Generated/Mirror` (the gate allows only that there; constant stubs stay) and declaring the member with the same shape; never
-   commit `docs/mirror/manifest/*` (maintainer-owned: `git checkout main -- docs/mirror/manifest`). Regeneration and
-   shape changes are maintainer work; never auto-accept removals. Broaden/repeat checks only for changes or unresolved failures.
+   pair from `Generated/Mirror` and declaring the member with the same shape; constant stubs stay. The merge gate
+   automatically accepts only whole stub-pair deletions in existing generated mirror files, and checks the matching
+   manifest against the build. Never commit `docs/mirror/manifest/*` (maintainer-owned: `git checkout main --
+   docs/mirror/manifest`). Regeneration, manifest updates and other generated-source changes remain maintainer work.
+   Broaden/repeat checks only for changes or unresolved failures.
 3. **Checkpoint:** Update member contracts/status in their evidence records. Keep remaining exact members, next
    action, changed/evidence paths, blockers and validation commands/counts/case limits once in the lane checkpoint.
    WORK is a short index linking active lane checkpoints; update it only when that index or next action changes.

@@ -560,18 +560,22 @@ The gate blocks a branch that is not based on current `main`, has no changes, or
 case. It also blocks any added, changed, deleted or renamed path matching `tools/validation/protected.txt` (all of
 `tools/`, the harness and comparison helper files, test subdirectories, generated sources, every project, props,
 targets, SDK/NuGet/runner configuration at any depth, and the maintainer-owned records), unless a maintainer passes
-`--allow-protected`. One exception lets a branch implement members: it may delete whole stub members from an
-existing Quire.Mpl generated mirror file (`src/Quire.Mpl/Generated/Mirror/*.g.cs`), each a `[MirrorStub]` line and
-the one-line member under it, compared byte for byte (apart from a trailing CR; only `\n` ends a line), and nothing
-else. A deleted method, property or constructor that is not re-implemented disappears from the method inventory,
-which the ratchet rejects. The inventory keys neither fields nor modifiers, so before any test runs the focused
-profile also checks every line of the maintainer-owned `docs/mirror/manifest/Quire.Mpl.txt` against the build
-(`MirrorGen shape`): a deleted stub must come back with the same kind, access, modifiers and signature. Constant stubs
-stay, since a constant has nothing to implement and the shape omits its value. The clone keeps those files as the
-branch has them, and `gate.json` lists the deleted members under `stub_deletions`. Headers, `MirrorOf`, type declarations, stubs under another
-attribute, edits, additions, regeneration, deleting the file, or a change that deletes nothing stay maintainer-only. The focused profile builds and audits only `Quire.Mpl` and runs
-only its test projects. For `src/` and `tests/` changes outside them, the gate also runs the phase profile when the
-Windows .NET CLI is available. The branch then merges only if both runs pass. Where that CLI is not
+`--allow-protected`. One exception lets any lane implement members: it may delete whole stub members from an
+existing generated mirror file matching `src/<Project>/Generated/Mirror/*.g.cs`, each a standalone
+`[MirrorStub]` line and the one-line member under it, compared byte for byte (apart from a trailing CR; only `\n`
+ends a line), and nothing else. The deletion is automatically recognized only when every changed line in that file
+is part of such a deleted stub. A deleted method, property or constructor that is not re-implemented disappears
+from the method inventory, which the ratchet rejects. The inventory keys neither fields nor modifiers, so the
+gate also checks the matching maintainer-owned `docs/mirror/manifest/<Project>.txt` against the built assembly
+(`MirrorGen shape`): a deleted stub must come back with the same kind, access, modifiers and signature. The focused
+profile checks `Quire.Mpl`; the phase profile's `MirrorShapeTests` checks every project manifest, including each changed
+project. Constant stubs stay,
+since a constant has nothing to implement and the shape omits its value. The clone keeps qualifying files as the
+branch has them, and `gate.json` lists the deleted members under `stub_deletions`. Headers, `MirrorOf`, type
+declarations, stubs with additional attributes, edits, additions, regeneration, deleting the file, or a change that
+deletes nothing remain maintainer-only. The focused profile builds and audits only `Quire.Mpl` and runs only its
+test projects. For `src/` and `tests/` changes outside them, the gate also runs the phase profile when the Windows
+.NET CLI is available. The branch then merges only if both runs pass. Where that CLI is not
 available, the gate blocks those changes as before unless a maintainer passes `--allow-unvalidated` after a separate
 Windows phase run. Otherwise it validates a separate clone of the branch tip **with `main`'s copies of every
 protected file** (with `--allow-protected`, the branch's, except the two baselines,
