@@ -36,7 +36,9 @@ public partial class MplSignature
             System.Type paramType = parameter_types[i];
             hash += paramType.GetHashCode();
         }
-        return hash * 64 + parameter_types.Length;
+        hash *= 64;
+        hash += parameter_types.Length;
+        return hash;
     }
 
     /// <summary>

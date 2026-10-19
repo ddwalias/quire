@@ -7,7 +7,7 @@ dependencies. Do not load dated historical receipts as agent context.
 
 | Lane | Current batch | Checkpoint |
 |---|---|---|
-| A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
+| A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` merged at `f8b03fe`. `mirror/a-tok-walk-shape` is blocked by the Release differential assembly lookup and still owns `Sexpr.cs`; `mirror/a-mpl-signature-gethashcode` is active on a separate file. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
 
 ## Fast lane loop

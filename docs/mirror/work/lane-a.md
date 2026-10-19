@@ -2,11 +2,12 @@
 
 ## Active handoff
 
-`mirror/a-slist-format-cons` is the active Lane A batch. `mirror/a-scons-il-shape` merged at `b83cc5d`. The
-in-progress `MplForeignMacro` batch and the remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are
-owned elsewhere; do not duplicate them. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave
-it parked. Use [WORK.md](../WORK.md) and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task
-queue.
+`mirror/a-mpl-signature-gethashcode` is the active Lane A batch. `mirror/a-scons-il-shape` merged at `b83cc5d` and
+`mirror/a-slist-format-cons` merged at `f8b03fe`. `mirror/a-tok-walk-shape` is blocked because the Release
+differential assembly could not be found and still owns `Sexpr.cs`; do not edit that file. The in-progress
+`MplForeignMacro` batch and the remaining `AppException`, `DynamicType` and `InstructionSeq` scopes are owned
+elsewhere. `MplDestructuringBind.ExpandCall` depends on `define_keyword.MakeDefine`; leave it parked. Use [WORK.md](../WORK.md)
+and [PLAN.md](../PLAN.md). Dated batch receipts below are history, not a task queue.
 
 ## let_keyword singleton and token factory (`mirror/a-let-keyword-tokens`)
 
@@ -251,6 +252,42 @@ queue.
   "FullyQualifiedName~SexprDifferentialTests.SAppend_and_SList_members" --jobs 14` compared 4 methods, all exact,
   with no missing, uncovered, structure mismatch or unsupported rows; integrity complete and ratchet OK. Summary:
   `%LOCALAPPDATA%\Temp\quire-validation-281b70_0\summary.json`.
+- Gate: `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/a-slist-format-cons --jobs 14` passed and
+  merged/pushed at `f8b03fe`. Receipt: `%LOCALAPPDATA%\Temp\quire-gate-results-wvb8xg6v\gate.json`; summary:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-wvb8xg6v\run\summary.json`. Harness 97, Mpl 188 and Differential 392
+  passed; 1,399 compared, 1,540 exact, 83 structure-only, integrity complete and ratchet OK. Mutation killed 142/143
+  with one existing accepted survivor, no live survivors, timeouts or crashes.
+
+## Tok expression walk IL shape (`mirror/a-tok-walk-shape`)
+
+- Scope: match `Tok.walk_pattern(MplEnv)` (`0x0600006d`) and `Tok.walk_expression(MplEnv)` (`0x0600006e`) Release IL
+  in `src/Quire.Mpl/Run/Sexpr.cs`. Original reference has separate null-key, case-test and null-macro branches; the
+  earlier combined condition and conditional returns had the right behavior but different IL structure.
+- Original: `python tools\reference\reference.py Mpl.Run.Tok --il`; installed `mplrun.dll` 12.0.1.0, SHA-256
+  `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`.
+- Release audit before gate: both methods report `exact_match: true`; 13 Tok methods compared, all exact. The
+  `SexprDifferentialTests` Debug behavior and Mathcad run passed 10/10.
+- Gate retry on base `f863245e` did not reach mutation or ratchet. Exact blocker:
+  `Quire.Focused.Differential.Tests: Release differential assembly not found
+  (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-qmaprmm1\Quire.Focused.Differential.Tests.dll)`.
+  Harness 97, Mpl 188 and Debug Differential 392 passed before validation exited 1. Gate report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-uq_ieezp\gate.json`; summary:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-uq_ieezp\run\summary.json`. This branch remains unmerged and owns
+  `Sexpr.cs`; retry after the Release differential assembly blocker is fixed.
+
+## MplSignature.GetHashCode Release shape (`mirror/a-mpl-signature-gethashcode`)
+
+- Scope: match `MplSignature.GetHashCode()` (`0x06000003`) in `src/Quire.Mpl/MplSignature.cs`; preserve its wrapping
+  hash formula and mirror the original's explicit multiply-by-64, add-parameter-count, then return sequence.
+- Original: inspected with `python tools\reference\reference.py Mpl.MplSignature --il`; installed `mplrun.dll`
+  12.0.1.0, SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID
+  `17a0933b-4988-4c18-963d-563998321cc8`. Reference body is 65 bytes and directly accumulates the return and
+  parameter type hashes before scaling and adding the argument count.
+- `QUIRE_REQUIRE_MATHCAD=1 dotnet test tests\Quire.Focused.Differential.Tests\Quire.Focused.Differential.Tests.csproj
+  -c Release --filter 'FullyQualifiedName~MplRunHelpersDifferentialTests'` passed 6/6 with no skips. The existing
+  `MplSignature_members` cases compare hashes for ten signatures, including null return/array/elements. Release test
+  output was under `bin\Release\net10.0`.
 - Next: run the full lane gate for this batch.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
