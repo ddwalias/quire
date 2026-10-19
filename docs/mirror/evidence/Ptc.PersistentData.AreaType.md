@@ -6,7 +6,7 @@
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
-| `GetXmlSerializer(bool)` | 0x0600087f | MemberGen: `GetXmlSerializerStatic(useOverrides)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `GetXmlSerializer(bool)` | 0x0600087f | MemberGen: `GetXmlSerializerStatic(useOverrides)` | Serializer dependency graph still differs; see blocked scope below | Blocked |
 | `regions get` | 0x06000873 | MemberGen: `regionsField; set => regionsField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `regions set` | 0x06000874 | MemberGen: `regionsField; set => regionsField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `ProtectionData get` | 0x06000875 | MemberGen: `protectionDataField; set => protectionDataField = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
@@ -37,4 +37,6 @@ parameter and field), comparing the result, the arguments and the target's field
 | `get_ProtectionDataWrapper` | `0x06000883` | `public ProtectionData()` | Directly compared for null persistent data. Non-null state depends on the Lane 5 ProtectionData wrapper. |
 | `set_ProtectionDataWrapper` | `0x06000884` | `public void(ProtectionData)` | Directly compared with null, which clears persistent data. Non-null state depends on Lane 5's `GetProtectionPersistentData`. |
 
-The comparisons ran with `QUIRE_REQUIRE_MATHCAD=1` against Release Quire: 2 tests passed, 0 failed, 0 skipped. The initializer supplies the static type dependency used by `ProtectableTypesRegistry`. `GetXmlSerializerStatic` remains Tier A and depends on the unimplemented `worksheetRegionType` serializer factories.
+The cctor and accessor comparisons ran with `QUIRE_REQUIRE_MATHCAD=1` against Release Quire: 2 cctor tests passed, then the expanded accessor run passed 11 tests with the serializer case skipped. The initializer supplies the static type dependency used by `ProtectableTypesRegistry`.
+
+`GetXmlSerializer(bool)` remains blocked. A direct call shows Mathcad returns a serializer, while Quire's type graph fails reflection because mirrored `worksheetRegionType` reaches `XmlNamespaceManager` without the Mathcad XML attributes. The `worksheetRegionType.CreateDefaultSerializer` helper is now implemented and directly compared for string and integer roots; this does not yet settle the AreaType graph. The test is explicitly skipped pending the remaining serializer metadata and dependent types.

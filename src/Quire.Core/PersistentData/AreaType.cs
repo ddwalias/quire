@@ -9,7 +9,6 @@ namespace Quire.PersistentData;
 public partial class AreaType
 {
     public static readonly Type TypeOfThis;
-
     public bool Protect
     {
         get
@@ -22,6 +21,7 @@ public partial class AreaType
         }
     }
 
+    [XmlIgnore]
     public override IEnumerable<IRegionType> Regions
     {
         get
@@ -34,6 +34,7 @@ public partial class AreaType
         }
     }
 
+    [XmlIgnore]
     public ProtectionData ProtectionDataWrapper
     {
         get

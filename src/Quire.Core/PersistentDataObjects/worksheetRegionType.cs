@@ -1,10 +1,24 @@
 #nullable disable
+using System.Xml.Serialization;
 using Quire.Mirror;
+using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
 
 public partial class worksheetRegionType
 {
+    [MirrorVerified("PtcPersistentDataObjectsWorksheetRegionTypeSerializerDifferentialTests")]
+    public static XmlSerializer CreateDefaultSerializer(Type typeOfRoot, string rootNodeName)
+    {
+        using (new XmlSerializerCreationWrapper())
+        {
+            return new XmlSerializer(typeOfRoot, new XmlRootAttribute(rootNodeName)
+            {
+                Namespace = "http://schemas.mathsoft.com/worksheet50"
+            });
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsworksheetRegionTypeMechanicalDifferentialTests")]
     public worksheetRegionType() { }
 
