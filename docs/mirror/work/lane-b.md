@@ -16,7 +16,7 @@
   - [Engine.Entry](../evidence/Engine.Entry.md)
 - **Validation:**
   - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (103/103 passed)
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineDataDifferentialTests'` (19/19 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineDataMechanicalDifferentialTests'` (19/19 passed)
 - **Status:** Complete implementation and differential verification. Ready for normal gate landing on updated `main`.
 
 

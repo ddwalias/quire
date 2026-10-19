@@ -2,7 +2,7 @@
 
 - **Original:** `iengine.dll` 1.1.0.0, SHA-256 `e34c1c468b07e2016dcd98c4397a139ca6c3a30cd2a14d95563db52e3419947b`, MVID `eefa0fd5-7185-4381-9183-8ef64202914c`
 - **Reference:** ilspycmd 11.1.0.9782 and Release IL comparison from `iengine.dll`.
-- **Quire:** `src/Quire.Engine/AlgoInfo.cs`; tests: `Quire.Differential.Tests.EngineDataDifferentialTests`.
+- **Quire:** `src/Quire.Engine/AlgoInfo.cs`; tests: `Quire.Differential.Tests.EngineDataMechanicalDifferentialTests`.
 
 `AlgoInfo` is a serializable data transfer object storing metadata about an engine algorithm instance: its Name, Tag, and Region.
 

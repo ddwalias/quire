@@ -6,7 +6,7 @@ using static Quire.Differential.Tests.Reflect;
 
 namespace Quire.Differential.Tests;
 
-public class EngineDataDifferentialTests
+public class EngineDataMechanicalDifferentialTests
 {
     // AlgoInfo
     [SkippableFact]

@@ -2,7 +2,7 @@
 
 - **Original:** `iengine.dll` 1.1.0.0, SHA-256 `e34c1c468b07e2016dcd98c4397a139ca6c3a30cd2a14d95563db52e3419947b`, MVID `eefa0fd5-7185-4381-9183-8ef64202914c`
 - **Reference:** ilspycmd 11.1.0.9782 and Release IL comparison from `iengine.dll`.
-- **Quire:** `src/Quire.Engine/RedefInfo.cs`; tests: `Quire.Differential.Tests.EngineDataDifferentialTests`.
+- **Quire:** `src/Quire.Engine/RedefInfo.cs`; tests: `Quire.Differential.Tests.EngineDataMechanicalDifferentialTests`.
 
 `RedefInfo` is a serializable data transfer object storing redefinition warning details: Name, OldType, OldLocation, and NewType.
 
@@ -20,7 +20,7 @@
 
 ## Test cases
 
-`EngineDataDifferentialTests` directly compares all members of `RedefInfo` against Mathcad Prime 12.0.1.0 `iengine.dll`:
+`EngineDataMechanicalDifferentialTests` directly compares all members of `RedefInfo` against Mathcad Prime 12.0.1.0 `iengine.dll`:
 - `.ctor()`, `get_Name`, `set_Name`, `get_OldType`, `set_OldType`, `get_OldLocation`, `set_OldLocation`, `get_NewType`, `set_NewType`: verified across generated distinct inputs comparing target field states and return values.
 
 ## Open
