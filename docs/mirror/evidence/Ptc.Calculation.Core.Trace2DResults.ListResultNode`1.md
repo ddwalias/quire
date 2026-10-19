@@ -2,7 +2,7 @@
 
 - **Original:** `Ptc.Calculation.Core.dll` 12.0.1.0, SHA-256 `f5a48d158835f91485948d42fc85e4fd27ddc5e2a17b4d886eb6722a753d4a09`, MVID `402d6e7b-941e-48f3-b17b-e1cd1a92b615`
 - **Reference:** ILSpy C# and IL from `python tools\reference\reference.py --assembly Ptc.Calculation.Core 'Ptc.Calculation.Core.Trace2DResults.ListResultNode`1' --il`
-- **Quire:** `src/Quire.Calculation.Core`; tests: `Quire.Differential.Tests.PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests`
+- **Quire:** `src/Quire.Calculation.Core`; tests: `Quire.Differential.Tests.PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests`
 
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|

@@ -7,7 +7,7 @@ using Quire.Calculation.Core.Trace2DResults;
 namespace Quire.Differential.Tests;
 
 /// <summary>Direct comparisons for ListResultNode's initialization, padding and lazy meaningful-value count.</summary>
-public class PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests
+public class PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests
 {
     private const string Contract = "Ptc.Calculation.Core.Trace2DResults.ListResultNode`1";
     private const string DoubleListContract = "Ptc.Calculation.Core.Trace2DResults.DoubleListResultNode";

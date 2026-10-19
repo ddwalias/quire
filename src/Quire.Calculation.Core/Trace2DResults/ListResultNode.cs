@@ -6,13 +6,13 @@ namespace Quire.Calculation.Core.Trace2DResults;
 
 public partial class ListResultNode<T>
 {
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     private int _meaningfulValuesCount = -1;
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1MechanicalDifferentialTests")]
     private readonly IList<T> _data;
 
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     public int MeaningfulValuesCount
     {
         get
@@ -35,20 +35,20 @@ public partial class ListResultNode<T>
     [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1MechanicalDifferentialTests")]
     public IList<T> List => _data;
 
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     protected ListResultNode(IList<T> data, int meaningfulValuesCount = -1)
     {
         _data = data;
         _meaningfulValuesCount = meaningfulValuesCount;
     }
 
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     protected ListResultNode(IList<T> data, T paddingValue, int minLength)
     {
         _data = ExtendList(data, minLength, paddingValue);
     }
 
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1LifecycleDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     public static IList<T> ExtendList(IList<T> data, int minLength, T paddingValue)
     {
         int count = data.Count();
