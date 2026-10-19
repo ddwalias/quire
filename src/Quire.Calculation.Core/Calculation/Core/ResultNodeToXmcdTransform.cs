@@ -1,4 +1,5 @@
 #nullable disable
+using System.Globalization;
 using System.Xml;
 using Quire.Mirror;
 
@@ -20,6 +21,22 @@ public partial class ResultNodeToXmcdTransform
 
     [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMechanicalDifferentialTests")]
     private void WritePlaceholderXml() => Writer.WriteElementString("ml", "placeholder", "http://schemas.mathsoft.com/math50", string.Empty);
+
+    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests")]
+    private void WriteRealXml(double value)
+    {
+        Writer.WriteStartElement("ml", "real", "http://schemas.mathsoft.com/math50");
+        Writer.WriteValue(value.ToString("R", NumberFormatInfo.InvariantInfo));
+        Writer.WriteEndElement();
+    }
+
+    [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests")]
+    private void WriteImaginaryXml(double value)
+    {
+        Writer.WriteStartElement("ml", "imag", "http://schemas.mathsoft.com/math50");
+        Writer.WriteValue(value.ToString("R", NumberFormatInfo.InvariantInfo));
+        Writer.WriteEndElement();
+    }
 
     [MirrorVerified("PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalDifferentialTests")]
     private void WriteMatrixXml(IMatrixResultNode matrix)

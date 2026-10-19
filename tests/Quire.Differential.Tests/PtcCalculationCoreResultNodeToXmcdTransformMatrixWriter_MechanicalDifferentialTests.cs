@@ -14,6 +14,32 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
     private static Type M => Mathcad.Type("Ptc.Calculation.Core", Contract);
 
     [SkippableFact]
+    public void WriteRealXml_0600016f()
+    {
+        Mathcad.Require();
+        MethodInfo qMethod = Q.GetMethod("WriteRealXml", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        MethodInfo mMethod = M.GetMethod("WriteRealXml", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        var q = Transform(Q);
+        var m = Transform(M);
+        MethodComparison.Compare("WriteRealXml round-trip real", Contract, qMethod, q.Target, [2.5],
+            mMethod, m.Target, [2.5], state => Reflect.Text(state), state => Reflect.Text(state),
+            target => WriterState(target, q.Output), target => WriterState(target, m.Output));
+    }
+
+    [SkippableFact]
+    public void WriteImaginaryXml_06000170()
+    {
+        Mathcad.Require();
+        MethodInfo qMethod = Q.GetMethod("WriteImaginaryXml", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        MethodInfo mMethod = M.GetMethod("WriteImaginaryXml", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        var q = Transform(Q);
+        var m = Transform(M);
+        MethodComparison.Compare("WriteImaginaryXml round-trip imaginary", Contract, qMethod, q.Target, [-4.25],
+            mMethod, m.Target, [-4.25], state => Reflect.Text(state), state => Reflect.Text(state),
+            target => WriterState(target, q.Output), target => WriterState(target, m.Output));
+    }
+
+    [SkippableFact]
     public void WriteMatrixXml_06000171()
     {
         Mathcad.Require();
@@ -24,7 +50,17 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
         object qMatrix = EmptyMatrix(typeof(EagerMatrixSimpleResultNode));
         Type mMatrixType = Mathcad.Type("Ptc.Calculation.Core", "Ptc.Calculation.Core.EagerMatrixSimpleResultNode");
         object mMatrix = EmptyMatrix(mMatrixType);
-        MethodComparison.Compare("WriteMatrixXml empty 0x0 matrix", Contract, qMethod, q.Target, [qMatrix],
+        MethodComparison.Compare("WriteMatrixXml empty 0x1 matrix", Contract, qMethod, q.Target, [qMatrix],
+            mMethod, m.Target, [mMatrix], ShowMatrix, ShowMatrix,
+            target => WriterState(target, q.Output), target => WriterState(target, m.Output));
+
+        q = Transform(Q);
+        m = Transform(M);
+        Type mMatrixInterface = Mathcad.Type("Ptc.Calculation.Core", "Ptc.Calculation.Core.IMatrixResultNode");
+        Type mRealType = Mathcad.Type("Ptc.Calculation.Core", "Ptc.Calculation.Core.RealSimpleResultNode");
+        qMatrix = MatrixProxy(typeof(IMatrixResultNode), typeof(RealSimpleResultNode), 2.5);
+        mMatrix = MatrixProxy(mMatrixInterface, mRealType, 2.5);
+        MethodComparison.Compare("WriteMatrixXml one real value", Contract, qMethod, q.Target, [qMatrix],
             mMethod, m.Target, [mMatrix], ShowMatrix, ShowMatrix,
             target => WriterState(target, q.Output), target => WriterState(target, m.Output));
     }
@@ -83,7 +119,7 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
     }
 
     private static string ShowMatrix(object? value) => value is null ? "null"
-        : $"{value.GetType().Name}: {Read(value, "Rows")}x{Read(value, "Columns")}";
+        : $"matrix {Read(value, "Rows")}x{Read(value, "Columns")}";
 
     private static string ShowDisplayMatrix(object? value) => value?.GetType().Name ?? "null";
 
@@ -112,5 +148,30 @@ public class PtcCalculationCoreResultNodeToXmcdTransformMatrixWriter_MechanicalD
         }
 
         throw new MissingFieldException(target.GetType().FullName, name);
+    }
+
+    private static object MatrixProxy(Type matrixInterface, Type realNodeType, double value)
+    {
+        MethodInfo create = typeof(DispatchProxy).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Single(method => method.Name == "Create" && method.IsGenericMethodDefinition
+                && method.GetGenericArguments().Length == 2 && method.GetParameters().Length == 0)
+            .MakeGenericMethod(matrixInterface, typeof(MatrixNodeDispatchProxy));
+        var proxy = (MatrixNodeDispatchProxy)create.Invoke(null, null)!;
+        object realNode = Activator.CreateInstance(realNodeType)!;
+        realNodeType.GetProperty("Value")!.SetValue(realNode, value);
+        proxy.Handler = method => method.Name switch
+        {
+            "get_Rows" or "get_Columns" => 1,
+            "get_Item" => realNode,
+            _ => method.ReturnType.IsValueType ? Activator.CreateInstance(method.ReturnType) : null,
+        };
+        return proxy;
+    }
+
+    public class MatrixNodeDispatchProxy : DispatchProxy
+    {
+        public Func<MethodInfo, object?>? Handler { get; set; }
+
+        protected override object? Invoke(MethodInfo? targetMethod, object?[]? args) => Handler!(targetMethod!);
     }
 }
