@@ -35,6 +35,10 @@ Do not commit directly to `main`; `lane_merge.py` rebases, runs the gate, and pu
 gate. If `main` advances during validation, the wrapper retries against the new base. Do not edit a branch while its
 gate is running.
 
+`lane_merge.py` automatically allows a branch to update only `docs/mirror/unreachable-lines.txt` when that is its sole
+protected path change. The merge gate still checks each entry against the current source and coverage, including its
+method hash, line freshness and whether the line executed. Any other protected path change remains maintainer-owned.
+
 Agents may continue on a fresh worktree during a gate only when changes do not overlap the gated batch's files or
 shared helpers. The maintainer may combine at most two ready batches into one final gate; keep their checkpoints
 separate.
