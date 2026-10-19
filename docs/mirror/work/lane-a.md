@@ -274,7 +274,13 @@ at `b83cc5d`; `SList.FormatCons` merged at `f8b03fe`. The in-progress `MplForeig
   `%LOCALAPPDATA%\Temp\quire-audit-release-3whflj0d`; both walk methods now report `exact_match: true`. Thirteen Tok
   methods compared, all exact; no missing, uncovered, structure mismatch or unsupported rows, integrity complete and
   ratchet OK. Summary: `%LOCALAPPDATA%\Temp\quire-validation-dg0qraf2\summary.json`.
-- Next: run the full lane gate for this batch.
+- Gate retry on base `f863245e` did not reach mutation or ratchet. Exact blocker:
+  `Quire.Focused.Differential.Tests: Release differential assembly not found
+  (C:\Users\DuyDang\AppData\Local\Temp\quire-audit-release-qmaprmm1\Quire.Focused.Differential.Tests.dll)`.
+  Harness 97, Mpl 188 and Debug Differential 392 passed before validation exited 1. Gate report:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-uq_ieezp\gate.json`; run summary:
+  `%LOCALAPPDATA%\Temp\quire-gate-results-uq_ieezp\run\summary.json`. The branch remains unmerged and owns
+  `Sexpr.cs`; retry after the Release differential assembly blocker is resolved.
 
 ## Historical: DimVal, Dim, NumVal and Iterator comparisons (`mirror/a-dimval`)
 
