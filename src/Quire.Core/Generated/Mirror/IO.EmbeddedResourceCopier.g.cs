@@ -11,6 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.EmbeddedResourceCopier, Ptc.Core")]
 public static partial class EmbeddedResourceCopier
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void Copy(global::System.Reflection.Assembly assemblyContainingResource, string resourceName, string destinationFilePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

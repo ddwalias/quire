@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| E | `Ptc.IO.EmbeddedResourceCopier.Copy` is active on `mirror/e-embedded-resource-copier`; requested serialization class was already implemented and verified by the generated-member batch. Continue with the next unowned Lane 5 Tier A type after merge. | [Lane E](work/lane-e.md) |
 
 ## Fast lane loop
 
