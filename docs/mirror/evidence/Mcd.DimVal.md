@@ -173,6 +173,6 @@ and `as_result(object)` (`0x060006ae`) now report exact Release instruction matc
 against the Mathcad artifact above. The changes preserve the original branch direction, cast locals, fallback return and
 null-dimension selection. `DimValDifferentialTests` directly compare these paths. For `as_result`, a new
 `RngValInterpolate` case observes that virtual dispatch returns a plain `RngVal`, distinguishing it from the unchanged
-fallback object path. The required Release class passed 6/6 before this case was added and must be rerun. Other methods
-and untested cases remain as documented above.
+fallback object path. The required Release class passed 6/6 with this case and Mathcad. Other methods and untested cases
+remain as documented above.
 
