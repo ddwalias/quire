@@ -9,6 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
+| C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. EngineErrorExtensions, VectorsLegacyConverter readers, and TraceDataPoints have direct Release Mathcad cases with exact Release IL; their normal gates stop at the focused Release assembly-name lookup. TraceErrorCodes formatter passes 18 Release Mathcad comparisons across three cultures and matches Release IL exactly; its gate is next. | [Lane C](work/lane-c.md) |
 
 ## Fast lane loop
 
