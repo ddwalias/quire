@@ -583,6 +583,11 @@ public class DimValDifferentialTests
         MethodComparison.Compare("as_result(NotAVal)", Contract,
             qAsResultStatic, null, [Side.Quire.NotAVal()], mAsResultStatic, null, [Side.Mathcad.NotAVal()], qs, ms);
 
+        var qInterp = New(Side.Quire.T("Mcd.RngValInterpolate"), 0.0, 10.0, 5, Side.Quire.D("L"));
+        var mInterp = New(Side.Mathcad.T("Mcd.RngValInterpolate"), 0.0, 10.0, 5, Side.Mathcad.D("L"));
+        MethodComparison.Compare("as_result(RngValInterpolate)", Contract,
+            qAsResultStatic, null, [qInterp], mAsResultStatic, null, [mInterp], qs, ms);
+
         // NearlyEqual
         object?[] xsQ = [Side.Quire.NotAVal(), "a", 1.0, null];
         object?[] xsM = [Side.Mathcad.NotAVal(), "a", 1.0, null];

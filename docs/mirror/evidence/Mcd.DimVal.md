@@ -171,6 +171,8 @@ The original public static method (`0x060006b0`) is artifact-bound to the Prime 
 `dyn(object,Dim)` (`0x06000653`), `NearlyEqual(object,object,double)` (`0x06000655`), `GetUnits(Dim,bool)` (`0x06000658`)
 and `as_result(object)` (`0x060006ae`) now report exact Release instruction matches in `python tools\validation\il_diff.py`
 against the Mathcad artifact above. The changes preserve the original branch direction, cast locals, fallback return and
-null-dimension selection. Existing `DimValDifferentialTests` directly compare these paths; the required Release class
-passed 6/6 with Mathcad. Other methods and untested cases remain as documented above.
+null-dimension selection. `DimValDifferentialTests` directly compare these paths. For `as_result`, a new
+`RngValInterpolate` case observes that virtual dispatch returns a plain `RngVal`, distinguishing it from the unchanged
+fallback object path. The required Release class passed 6/6 before this case was added and must be rerun. Other methods
+and untested cases remain as documented above.
 
