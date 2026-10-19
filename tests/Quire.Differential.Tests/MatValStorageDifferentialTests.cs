@@ -1,0 +1,152 @@
+using System.Collections;
+using System.Reflection;
+using static Quire.Differential.Tests.Reflect;
+
+namespace Quire.Differential.Tests;
+
+public class MatValStorageDifferentialTests
+{
+    private const string Contract = "Mcd.MatVal";
+    private const BindingFlags DeclaredInstance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+    private static MethodInfo Method(Side side, string name, params Type[] parameterTypes) =>
+        side.T("Mcd.MatVal").GetMethod(name, DeclaredInstance, null, parameterTypes, null)
+        ?? throw new HarnessException($"Missing {side.Name} MatVal.{name}({string.Join(", ", parameterTypes.Select(t => t.Name))})");
+
+    private static ConstructorInfo Ctor(Side side, params Type[] parameterTypes) =>
+        side.T("Mcd.MatVal").GetConstructor(DeclaredInstance, null, parameterTypes, null)
+        ?? throw new HarnessException($"Missing {side.Name} MatVal.ctor({string.Join(", ", parameterTypes.Select(t => t.Name))})");
+
+    private static object Matrix(Side side, int rows = 2, int cols = 2, int stride = 3, int offset = 1, bool imaginary = false)
+    {
+        int length = offset + stride * cols;
+        var real = new double[length];
+        for (int col = 0; col < cols; col++)
+        for (int row = 0; row < rows; row++)
+            real[offset + row + stride * col] = (row + 1) * 10 + (col + 1);
+        double[]? imag = imaginary ? new double[length] : null;
+        if (imag != null)
+        {
+            for (int col = 0; col < cols; col++)
+            for (int row = 0; row < rows; row++)
+                imag[offset + row + stride * col] = (row + 1) * 100 + (col + 1);
+        }
+        var matrix = New(side.T("Mcd.MatVal"), real, imag, rows, cols, stride,
+            new Hashtable(), Enum.ToObject(side.T("Mcd.Flags"), 2146697216), offset);
+        Set(matrix, "m_dim", side.D("L"));
+        return matrix;
+    }
+
+    private static string Show(Side side, object? target, object? value)
+    {
+        if (value == null) return "null";
+        if (target != null && ReferenceEquals(target, value)) return "same-instance";
+        if (side.T("Mcd.MatVal").IsInstanceOfType(value)) return MatValDifferentialTests.Storage(side, value);
+        if (side.Dim.IsInstanceOfType(value)) return (string)Reflect.Call(value, "ToString")!;
+        if (side.T("Mcd.MatDim").IsInstanceOfType(value)) return MatDimDifferentialTests.DescribeDimension(side, value);
+        return side.Show(value);
+    }
+
+    private static string State(Side side, object target) => MatValDifferentialTests.Storage(side, target);
+
+    private static void Compare(string caseId, MethodBase qMethod, object? qTarget, object?[] qArgs,
+        MethodBase mMethod, object? mTarget, object?[] mArgs, int expectedToken)
+    {
+        Assert.Equal(expectedToken, mMethod.MetadataToken);
+        MethodComparison.Compare(caseId, Contract, qMethod, qTarget, qArgs, mMethod, mTarget, mArgs,
+            quireShow: value => Show(Side.Quire, qTarget, value),
+            originalShow: value => Show(Side.Mathcad, mTarget, value),
+            quireState: target => State(Side.Quire, target),
+            originalState: target => State(Side.Mathcad, target));
+    }
+
+    private static void CompareBoth(string caseId, string methodName, Type[] parameterTypes, int token,
+        object?[] args, Action<Side, object>? setup = null, int rows = 2, int cols = 2, int stride = 3, int offset = 1, bool imaginary = false)
+    {
+        var qTarget = Matrix(Side.Quire, rows, cols, stride, offset, imaginary);
+        var mTarget = Matrix(Side.Mathcad, rows, cols, stride, offset, imaginary);
+        setup?.Invoke(Side.Quire, qTarget);
+        setup?.Invoke(Side.Mathcad, mTarget);
+        var qMethod = Method(Side.Quire, methodName, parameterTypes);
+        var mMethod = Method(Side.Mathcad, methodName, parameterTypes);
+        Compare(caseId, qMethod, qTarget, args, mMethod, mTarget, args, token);
+    }
+
+    [SkippableFact]
+    public void Storage_pack_and_zero_helpers_match_mathcad()
+    {
+        // 0x06000542: PackReal()
+        CompareBoth("PackReal.unpacked", "PackReal", [], 0x06000542, [], rows: 2, cols: 2, stride: 3, offset: 1);
+        CompareBoth("PackReal.packed", "PackReal", [], 0x06000542, [], rows: 2, cols: 2, stride: 2, offset: 0);
+
+        // 0x06000543: PackReal(int)
+        CompareBoth("PackReal.col0", "PackReal", [typeof(int)], 0x06000543, [0], rows: 2, cols: 2, stride: 3, offset: 1);
+        CompareBoth("PackReal.col1", "PackReal", [typeof(int)], 0x06000543, [1], rows: 2, cols: 2, stride: 3, offset: 1);
+
+        // 0x06000544: PackReal(int, int, int, int)
+        CompareBoth("PackReal.sub_0_1_0_1", "PackReal", [typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x06000544, [0, 1, 0, 1], rows: 2, cols: 2, stride: 3, offset: 1);
+
+        // 0x06000545: PackImag()
+        CompareBoth("PackImag.none", "PackImag", [], 0x06000545, [], imaginary: false);
+        CompareBoth("PackImag.present", "PackImag", [], 0x06000545, [], imaginary: true);
+
+        // 0x06000546: PackImag(int)
+        CompareBoth("PackImag.col0", "PackImag", [typeof(int)], 0x06000546, [0], imaginary: true);
+
+        // 0x06000547: PackImag(int, int, int, int)
+        CompareBoth("PackImag.sub", "PackImag", [typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x06000547, [0, 2, 0, 1], imaginary: true);
+
+        // 0x06000541: PackZero(double[])
+        CompareBoth("PackZero.all_zero", "PackZero", [typeof(double[])], 0x06000541, [new double[] { 0, 0, 0 }]);
+        CompareBoth("PackZero.nonzero", "PackZero", [typeof(double[])], 0x06000541, [new double[] { 0, 1.5, 0 }]);
+
+        // 0x06000535: Pack(double[])
+        CompareBoth("Pack.arr", "Pack", [typeof(double[])], 0x06000535, [new double[] { 1, 2, 3, 4, 5, 6, 7 }]);
+        // 0x06000537: Pack(double[], int)
+        CompareBoth("Pack.arr_col", "Pack", [typeof(double[]), typeof(int)], 0x06000537, [new double[] { 1, 2, 3, 4, 5, 6, 7 }, 1]);
+        // 0x06000536: Pack(double[], int, int, int, int)
+        CompareBoth("Pack.arr_sub", "Pack", [typeof(double[]), typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x06000536, [new double[] { 1, 2, 3, 4, 5, 6, 7 }, 0, 1, 0, 1]);
+    }
+
+    [SkippableFact]
+    public void Storage_pointer_packing_and_copy_ctor_match_mathcad()
+    {
+        // 0x0600054a: PackPtrs(int)
+        CompareBoth("PackPtrs.none", "PackPtrs", [typeof(int)], 0x0600054a, [0]);
+        CompareBoth("PackPtrs.present", "PackPtrs", [typeof(int)], 0x0600054a, [0],
+            setup: (s, m) => Call(m, "set_ptrs_2", 0, 0, s.Str("ptr")));
+
+        // 0x0600054b: PackPtrs(int, int, int, int)
+        CompareBoth("PackPtrs.sub_present", "PackPtrs", [typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x0600054b, [0, 1, 0, 1], setup: (s, m) => Call(m, "set_ptrs_2", 0, 0, s.Str("ptr")));
+
+        // 0x0600048d: .ctor(MatVal) copy constructor
+        {
+            var qSource = Matrix(Side.Quire, rows: 2, cols: 2, stride: 3, offset: 1, imaginary: true);
+            var mSource = Matrix(Side.Mathcad, rows: 2, cols: 2, stride: 3, offset: 1, imaginary: true);
+            Call(qSource, "set_ptrs_2", 0, 1, Side.Quire.Num(5, 6, "T"));
+            Call(mSource, "set_ptrs_2", 0, 1, Side.Mathcad.Num(5, 6, "T"));
+
+            var qCtor = Ctor(Side.Quire, Side.Quire.T("Mcd.MatVal"));
+            var mCtor = Ctor(Side.Mathcad, Side.Mathcad.T("Mcd.MatVal"));
+            Compare("ctor.copy", qCtor, null, [qSource], mCtor, null, [mSource], 0x0600048d);
+        }
+
+        // 0x06000555: CopyPtrs(MatVal)
+        {
+            var qTarget = Matrix(Side.Quire);
+            var mTarget = Matrix(Side.Mathcad);
+            var qSrc = Matrix(Side.Quire);
+            var mSrc = Matrix(Side.Mathcad);
+            Call(qSrc, "set_ptrs_2", 0, 0, Side.Quire.Str("copied"));
+            Call(mSrc, "set_ptrs_2", 0, 0, Side.Mathcad.Str("copied"));
+
+            var qMethod = Method(Side.Quire, "CopyPtrs", Side.Quire.T("Mcd.MatVal"));
+            var mMethod = Method(Side.Mathcad, "CopyPtrs", Side.Mathcad.T("Mcd.MatVal"));
+            Compare("CopyPtrs.present", qMethod, qTarget, [qSrc], mMethod, mTarget, [mSrc], 0x06000555);
+        }
+    }
+}

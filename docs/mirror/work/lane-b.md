@@ -4,11 +4,14 @@
 
 ### Active Batch: MatVal storage, packing and copy constructors
 - **Branch:** `mirror/b-matval-storage`
-- **Scope (20 methods in `src/Quire.Mpl/Mcd/MatVal.Storage.cs` and `MatVal.cs`):**
-  - Array copy and packing: `Copy(double[], int, double[], int, int)` (0x06000534), `Pack(double[])` (0x06000535), `Pack(double[], int)` (0x06000537), `Pack(double[], int, int, int, int)` (0x06000536), `PackZero(double[])` (0x06000541).
-  - Real and imaginary packing: `PackReal()` (0x06000542), `PackReal(int)` (0x06000543), `PackReal(int, int, int, int)` (0x06000544), `PackImag()` (0x06000545), `PackImag(int)` (0x06000546), `PackImag(int, int, int, int)` (0x06000547).
-  - Pointer packing, initialization and copying: `PackPtrs(int)` (0x0600054a), `PackPtrs(int, int, int, int)` (0x0600054b), `InitPtrs(MatVal)` (0x0600048e), `IteratePtrs(PtrDelegate)` (0x0600054c), `TransformPtrs(MatVal, PtrDelegate)` (0x0600054d), `CopyPtrs(MatVal)` (0x06000555).
-  - Constructors: `MatVal(MatVal)` (0x0600048d), `MatVal(MatVal, Dim)` (0x0600048f), `MatVal(MatVal, int, int)` (0x06000491).
+- **Scope (18 methods in `src/Quire.Mpl/Mcd/MatVal.Storage.cs`):**
+  - Array copy helper: `Copy(double[], int, double[], int, int)` (0x06000534).
+  - Array packing: `Pack(double[])` (0x06000535), `Pack(double[], int, int, int, int)` (0x06000536), `Pack(double[], int)` (0x06000537), `PackZero(double[])` (0x06000541).
+  - Real packing: `PackReal()` (0x06000542), `PackReal(int)` (0x06000543), `PackReal(int, int, int, int)` (0x06000544).
+  - Imaginary packing: `PackImag()` (0x06000545), `PackImag(int)` (0x06000546), `PackImag(int, int, int, int)` (0x06000547).
+  - Pointer table packing: `PackPtrs(int)` (0x0600054a), `PackPtrs(int, int, int, int)` (0x0600054b).
+  - Copy constructor and pointer init: `.ctor(MatVal)` (0x0600048d), `InitPtrs(MatVal)` (0x0600048e).
+  - Pointer enumeration and mutation: `IteratePtrs(PtrDelegate)` (0x0600054c), `TransformPtrs(MatVal, PtrDelegate)` (0x0600054d), `CopyPtrs(MatVal)` (0x06000555).
 - **Goal:** Resolve remaining IL structure differences against Mathcad Prime 12.0.1.0 `mplrun.dll`, achieve 100% exact Release IL matching across all methods, 0 lint findings, 0 ratchet regressions, and 100% mutation kill rate.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
@@ -22,6 +25,22 @@
 ### Maintainer-gated handoff: Engine mailbox and interfaces batch
 - **Branch:** `mirror/b-engine-mailbox` (at `83f96c4a`)
 - **Status:** Complete implementation and verification. Pushed to origin. Renamed differential tests to `EngineDataMechanicalDifferentialTests.cs` to prevent non-Mpl compilation in focused profile.
+
+### Maintainer-gated handoff: Engine factory and interfaces batch
+- **Branch:** `mirror/b-engine-factory` (at `ea26fb70`)
+- **Status:** Complete implementation and differential verification. Pending maintainer gate because this Engine batch changes protected generated mirror files under `src/Quire.Engine/Generated/Mirror/`.
+- **Scope (23 methods across Engine interfaces and factories):**
+  - `Engine.Factory`: `.ctor` (0x060000bd), `AppendPath` (0x060000be), `NewFactory` (0x060000bf), `CreateFactory` (0x060000c0).
+  - `Engine.IFactoryFactory`: `AppendPath` (0x060000bb), `NewFactory` (0x060000bc).
+  - `Engine.IFactory`: `Initialize` (0x060000b5), `VerifyIntegrity` (0x060000b6).
+  - `Engine.IBuiltin`: `GetVariable` (0x060000a0), `SetVariable` (0x060000a1), `UnsetVariable` (0x060000a2), `GetBuiltins` (0x060000a3).
+  - `Engine.IEnginePriv`: `Initialize` (0x060000a4).
+  - `Engine.IEngineUnstable`: `GetNodeType` (0x0600009c).
+  - `Engine.IMCEngine`: `AddNotify` (0x0600009d), `RemoveNotify` (0x0600009e), `StartNotify` (0x0600009f).
+  - `Engine.IEngine`: `get_IsUpToDate` (0x06000089), `RecalculateAll` (0x0600009a).
+- **Validation:**
+  - `dotnet test tests/Quire.Engine.Tests/Quire.Engine.Tests.csproj` (97/97 passed)
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Differential.Tests/Quire.Differential.Tests.csproj --filter 'FullyQualifiedName~EngineFactoryMechanicalDifferentialTests'` (2/2 passed)
 
 Everything below this summary is historical context and receipts, not a queue of unfinished work.
 
