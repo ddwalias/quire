@@ -2,23 +2,33 @@
 
 ## Active handoff
 
-### Active batch: MatDim error paths and PickLoser
-- **Branch:** `mirror/b-matdim-error-paths`
-- **Scope:**
-  - `Mcd.MatDim.PickLoser(MatDim, MatDim, uint)`: token 0x06000645. Aligned IL structure with Mathcad Release IL (two-branch scan: column vector scanning rows with `OnError(..., i, a)`, matrix scanning rows and columns with `OnError(..., j, k, a)`, and terminal `AppException.Raise("array unit mismatch", param)` fallthrough path).
-  - `Mcd.MatDim.OnError(string, Dim, uint)`: token 0x06000641.
-  - `Mcd.MatDim.OnError(Dim, uint)`: token 0x06000642.
-  - `Mcd.MatDim.OnError(string, Dim, int, int, uint)`: token 0x06000643.
-  - `Mcd.MatDim.OnError(string, Dim, int, uint)`: token 0x06000644.
-  - `Mcd.MatDim.Eq(MatDim, MatDim, uint)`: token 0x06000617 (mismatch dispatches to `PickLoser`).
+### Active batch: Generic Function.app differential coverage
+- **Branch:** `mirror/b-function-app-coverage`
+- **Scope (17 methods):**
+  - `Mpl.Run.Function.app<R>(out R)`: token 0x060001aa.
+  - `Mpl.Run.Function.app<R, A>(out R, A)`: token 0x060001ab.
+  - `Mpl.Run.Function.app<R, A, B>(out R, A, B)`: token 0x060001ac.
+  - `Mpl.Run.Function.app<R, A, B, C>(out R, A, B, C)`: token 0x060001ad.
+  - `Mpl.Run.Function.app<R, A, B, C, D>(out R, A, B, C, D)`: token 0x060001ae.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E>(out R, A, B, C, D, E)`: token 0x060001af.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F>(out R, A, B, C, D, E, F)`: token 0x060001b0.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G>(out R, A, B, C, D, E, F, G)`: token 0x060001b1.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H>(out R, A, B, C, D, E, F, G, H)`: token 0x060001b2.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I>(out R, A, B, C, D, E, F, G, H, I)`: token 0x060001b3.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J>(out R, A, B, C, D, E, F, G, H, I, J)`: token 0x060001b4.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J, K>(out R, A, B, C, D, E, F, G, H, I, J, K)`: token 0x060001b5.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J, K, L>(out R, A, B, C, D, E, F, G, H, I, J, K, L)`: token 0x060001b6.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J, K, L, M>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M)`: token 0x060001b7.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N)`: token 0x060001b8.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O)`: token 0x060001b9.
+  - `Mpl.Run.Function.app<R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(out R, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P)`: token 0x060001ba.
 - **Evidence:**
-  - [Mcd.MatDim](../evidence/Mcd.MatDim.md)
+  - [Mpl.Run.Function.Matrix](../evidence/Mpl.Run.Function.Matrix.md)
 - **Validation:**
-  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~MatDimOperationsDifferentialTests'` (4/4 passed; verified direct comparisons covering vector/matrix mismatch coordinates, exception messages, parameter passing, and the terminal array unit mismatch path).
+  - `$env:QUIRE_REQUIRE_MATHCAD = '1'; dotnet test tests/Quire.Focused.Differential.Tests/Quire.Focused.Differential.Tests.csproj -c Release --filter 'FullyQualifiedName~FunctionAppDifferentialTests'` (10/10 passed; verified direct comparisons for exact purity application, in-out ref parameter overwrite and failure retention, curried over-application, minargs boundary currying, invalid over-application cast failure, delegate exception propagation, OptArg padding, partial application closures, and zero-arity null application handling).
   - `dotnet test tests/Quire.Mpl.Tests/Quire.Mpl.Tests.csproj -c Release` (188/188 passed).
 - **Gate status:**
-  - Ready for merge gate landing on updated `main` (commit `a2b91391`).
-
+  - Ready for merge gate landing on updated `main`.
 
 
 ### Maintainer-gated handoff: Engine factory and interfaces batch
@@ -95,6 +105,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | Function core dispatch | Merged to main at `f29abb6` (`9549041`). `Function.clo<CLO>(CLO)`, `Function.clovec<CLO>(CLO[])`, `Function.appVec<R>(out R, object[])`; exact IL; 28 direct comparisons. |
 | Fn_clo partial closure | Merged to main at `aaa1a47` (`edc808f`). `Fn_clo<CLO>` 21 methods (`.ctor` x2, `Fixpoint`, `Name`, `invVec`, `inv` x16); exact IL; 21 direct comparisons. |
 | FnCompose function composition | Merged to main at `bf985ce`. Seven methods; exact IL; seven direct comparisons. |
+| MatDim error paths and PickLoser | Merged to main at `69327dc5` (`2bec90c`). PickLoser exact IL; 15 direct comparisons. |
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
@@ -264,6 +275,11 @@ Branch `mirror/b-matdim-crazy-dim-coordinates` (`58659d6`), based on clean main 
 
 Branch `mirror/b-delegatefunction-inv` (`e7f720a`), based on clean main `f7afb21` (merged to main at `53036b0`). The batch adds direct differential tests in `DelegateFunctionDifferentialTests.cs`, verified status annotations on all 31 remaining methods of `DelegateFunction` in `src/Quire.Mpl/Run/DelegateFunction.cs`, and updated contracts in [Mpl.Run.Function evidence](../evidence/Mpl.Run.Function.md).
 Exact original signatures, tokens, and hashes are in that table. All 17 generic `inv` overloads (`0x060001fa` - `0x0600020a`), `invVec` (`0x060001f9`), and 4 `AsF` projections (`0x0600020b` - `0x0600020e`) match Mathcad IL exactly in Release builds. 67 direct MethodComparison cases across 7 facts; 100% mutation kill rate (201/201 mutants killed, 0 survivors). Merged via `merge_gate.py --apply`.
+
+### MatDim error paths and PickLoser (merged to main at 69327dc5)
+
+Branch `mirror/b-matdim-error-paths` (`2bec90c9edf2`), based on clean main `a2b91391`. The batch aligns `MatDim.PickLoser(MatDim, MatDim, uint)` (token `0x06000645`) to 100% exact Release IL against Mathcad Prime 12.0.1.0 `mplrun.dll` (two-branch scan: column vector scanning rows with `OnError(..., i, a)`, matrix scanning rows and columns with `OnError(..., j, k, a)`, and terminal `AppException.Raise("array unit mismatch", param)` fallthrough path).
+Direct differential tests in `MatDimOperationsDifferentialTests.cs` cover vector mismatches (indices 0, 1, 2), matrix mismatches ((0, 1), (1, 0)), parameter passing, and the terminal array unit mismatch path via `PickLoser` and `Eq` (15 direct comparisons). 100% mutation kill rate (16/16 mutants killed, 0 survivors). Merged via `lane_merge.py`.
 
 ## Function closure dispatch — active checkpoint
 

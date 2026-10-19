@@ -339,5 +339,394 @@ public class FunctionAppDifferentialTests
             t => RenderSnapshot(Side.Quire, t),
             t => RenderSnapshot(Side.Mathcad, t));
     }
+
+    [SkippableFact]
+    public void Function_app_exact_purity_dispatch()
+    {
+        Runtime.Sync();
+
+        Func<object[], object> del = arr =>
+            $"exact:{arr.Length}:" + string.Join(",", arr.Select(x => x?.ToString() ?? "null"));
+
+        for (int k = 1; k <= 16; k++)
+        {
+            object qTarget = MakeFnCloTarget(Side.Quire, del, purity: k, minArgs: k);
+            object mTarget = MakeFnCloTarget(Side.Mathcad, del, purity: k, minArgs: k);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[k + 1];
+            typeArgs[0] = typeof(string);
+            for (int i = 1; i <= k; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[k + 1];
+            object?[] mArgs = new object?[k + 1];
+            for (int i = 1; i <= k; i++)
+            {
+                qArgs[i] = i * 10;
+                mArgs[i] = i * 10;
+            }
+
+            MethodComparison.Compare($"Function.app_exact_{k}", ContractMatrix,
+                qApp, qTarget, qArgs,
+                mApp, mTarget, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+    }
+
+    [SkippableFact]
+    public void Function_app_ref_inout_behavior()
+    {
+        Runtime.Sync();
+
+        Func<object[], object> del = arr =>
+            $"out:{arr.Length}:" + string.Join(",", arr.Select(x => x?.ToString() ?? "null"));
+
+        // Case A: Pre-existing out value is overwritten on success across all k = 1..16
+        for (int k = 1; k <= 16; k++)
+        {
+            object qTarget = MakeFnCloTarget(Side.Quire, del, purity: k, minArgs: k);
+            object mTarget = MakeFnCloTarget(Side.Mathcad, del, purity: k, minArgs: k);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[k + 1];
+            typeArgs[0] = typeof(string);
+            for (int i = 1; i <= k; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[k + 1];
+            object?[] mArgs = new object?[k + 1];
+            qArgs[0] = "initial_sentinel";
+            mArgs[0] = "initial_sentinel";
+            for (int i = 1; i <= k; i++)
+            {
+                qArgs[i] = i * 5;
+                mArgs[i] = i * 5;
+            }
+
+            MethodComparison.Compare($"Function.app_ref_overwrite_{k}", ContractMatrix,
+                qApp, qTarget, qArgs,
+                mApp, mTarget, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+
+        // Case B: In-place retain value on failure (k = 0 null application)
+        object qFailTarget = MakeFnCloTarget(Side.Quire, del, purity: 2, minArgs: 2);
+        object mFailTarget = MakeFnCloTarget(Side.Mathcad, del, purity: 2, minArgs: 2);
+        var qApp0 = FunctionType(Side.Quire).GetMethods(Instance)
+            .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                && m.GetGenericArguments().Length == 1
+                && m.GetParameters().Length == 1
+                && m.GetParameters()[0].IsOut)
+            .MakeGenericMethod(typeof(string));
+        var mApp0 = FunctionType(Side.Mathcad).GetMethods(Instance)
+            .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                && m.GetGenericArguments().Length == 1
+                && m.GetParameters().Length == 1
+                && m.GetParameters()[0].IsOut)
+            .MakeGenericMethod(typeof(string));
+
+        MethodComparison.Compare("Function.app_ref_retain_on_fail", ContractMatrix,
+            qApp0, qFailTarget, ["retain_value"],
+            mApp0, mFailTarget, ["retain_value"],
+            Show, Show,
+            t => RenderSnapshot(Side.Quire, t),
+            t => RenderSnapshot(Side.Mathcad, t));
+    }
+
+    [SkippableFact]
+    public void Function_app_overapplication_curried()
+    {
+        Runtime.Sync();
+
+        for (int k = 2; k <= 16; k++)
+        {
+            int currentK = k;
+            object qTarget = MakeFnCloTarget(Side.Quire, arr =>
+            {
+                return MakeFnCloTarget(Side.Quire, innerArr =>
+                    $"curried:{arr.Length}+{innerArr.Length}:" + string.Join(",", arr.Concat(innerArr).Select(x => x?.ToString() ?? "null")),
+                    purity: 1, minArgs: 1);
+            }, purity: currentK - 1, minArgs: currentK - 1);
+
+            object mTarget = MakeFnCloTarget(Side.Mathcad, arr =>
+            {
+                return MakeFnCloTarget(Side.Mathcad, innerArr =>
+                    $"curried:{arr.Length}+{innerArr.Length}:" + string.Join(",", arr.Concat(innerArr).Select(x => x?.ToString() ?? "null")),
+                    purity: 1, minArgs: 1);
+            }, purity: currentK - 1, minArgs: currentK - 1);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[k + 1];
+            typeArgs[0] = typeof(string);
+            for (int i = 1; i <= k; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[k + 1];
+            object?[] mArgs = new object?[k + 1];
+            for (int i = 1; i <= k; i++)
+            {
+                qArgs[i] = i * 7;
+                mArgs[i] = i * 7;
+            }
+
+            MethodComparison.Compare($"Function.app_overapp_curried_{k}", ContractMatrix,
+                qApp, qTarget, qArgs,
+                mApp, mTarget, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+    }
+
+    [SkippableFact]
+    public void Function_app_minargs_boundary_currying()
+    {
+        Runtime.Sync();
+
+        Func<object[], object> del = arr =>
+            $"inv:{arr.Length}:" + string.Join(",", arr.Select(x => x?.ToString() ?? "null"));
+
+        for (int k = 1; k <= 16; k++)
+        {
+            object qTarget = MakeFnCloTarget(Side.Quire, del, purity: k + 1, minArgs: k + 1);
+            object mTarget = MakeFnCloTarget(Side.Mathcad, del, purity: k + 1, minArgs: k + 1);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[k + 1];
+            typeArgs[0] = typeof(object);
+            for (int i = 1; i <= k; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[k + 1];
+            object?[] mArgs = new object?[k + 1];
+            for (int i = 1; i <= k; i++)
+            {
+                qArgs[i] = i * 11;
+                mArgs[i] = i * 11;
+            }
+
+            MethodComparison.Compare($"Function.app_minargs_boundary_{k}", ContractMatrix,
+                qApp, qTarget, qArgs,
+                mApp, mTarget, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+    }
+
+    [SkippableFact]
+    public void Function_app_overapplication_invalid_cast()
+    {
+        Runtime.Sync();
+
+        Func<object[], object> del = arr => "not_a_function_string";
+
+        for (int k = 2; k <= 16; k++)
+        {
+            object qTarget = MakeFnCloTarget(Side.Quire, del, purity: 1, minArgs: 1);
+            object mTarget = MakeFnCloTarget(Side.Mathcad, del, purity: 1, minArgs: 1);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[k + 1];
+            typeArgs[0] = typeof(string);
+            for (int i = 1; i <= k; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[k + 1];
+            object?[] mArgs = new object?[k + 1];
+            for (int i = 1; i <= k; i++)
+            {
+                qArgs[i] = i * 3;
+                mArgs[i] = i * 3;
+            }
+
+            MethodComparison.Compare($"Function.app_invalid_cast_{k}", ContractMatrix,
+                qApp, qTarget, qArgs,
+                mApp, mTarget, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+    }
+
+    [SkippableFact]
+    public void Function_app_failure_and_edge_paths()
+    {
+        Runtime.Sync();
+
+        // 1. Delegate throwing AppException
+        for (int k = 1; k <= 16; k++)
+        {
+            Func<object[], object> throwingDel = arr => throw new AppException($"app_fail_{arr.Length}@1", 1u);
+            object qTarget = MakeFnCloTarget(Side.Quire, throwingDel, purity: k, minArgs: k);
+            object mTarget = MakeFnCloTarget(Side.Mathcad, throwingDel, purity: k, minArgs: k);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == k + 1
+                    && m.GetParameters().Length == k + 1
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[k + 1];
+            typeArgs[0] = typeof(string);
+            for (int i = 1; i <= k; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[k + 1];
+            object?[] mArgs = new object?[k + 1];
+            for (int i = 1; i <= k; i++)
+            {
+                qArgs[i] = i;
+                mArgs[i] = i;
+            }
+
+            MethodComparison.Compare($"Function.app_delegate_throw_{k}", ContractMatrix,
+                qApp, qTarget, qArgs,
+                mApp, mTarget, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+
+        // 2. Arity 16 default path (purity: 17, minArgs: 16 -> result = default)
+        {
+            Func<object[], object> del = arr => "should_not_reach";
+            object qTarget16 = MakeFnCloTarget(Side.Quire, del, purity: 17, minArgs: 16);
+            object mTarget16 = MakeFnCloTarget(Side.Mathcad, del, purity: 17, minArgs: 16);
+
+            var qAppDef = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == 17
+                    && m.GetParameters().Length == 17
+                    && m.GetParameters()[0].IsOut);
+            var mAppDef = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == 17
+                    && m.GetParameters().Length == 17
+                    && m.GetParameters()[0].IsOut);
+
+            Type[] typeArgs = new Type[17];
+            typeArgs[0] = typeof(string);
+            for (int i = 1; i <= 16; i++) typeArgs[i] = typeof(int);
+
+            var qApp = qAppDef.MakeGenericMethod(typeArgs);
+            var mApp = mAppDef.MakeGenericMethod(typeArgs);
+
+            object?[] qArgs = new object?[17];
+            object?[] mArgs = new object?[17];
+            for (int i = 1; i <= 16; i++)
+            {
+                qArgs[i] = i * 2;
+                mArgs[i] = i * 2;
+            }
+
+            MethodComparison.Compare("Function.app_16_default", ContractMatrix,
+                qApp, qTarget16, qArgs,
+                mApp, mTarget16, mArgs,
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+
+        // 3. Arity 0 exact purity (purity: 0, minArgs: 0 -> inv then null_application)
+        {
+            Func<object[], object> del = arr => "zero_res";
+            object qTarget0 = MakeFnCloTarget(Side.Quire, del, purity: 0, minArgs: 0);
+            object mTarget0 = MakeFnCloTarget(Side.Mathcad, del, purity: 0, minArgs: 0);
+
+            var qApp0 = FunctionType(Side.Quire).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == 1
+                    && m.GetParameters().Length == 1
+                    && m.GetParameters()[0].IsOut)
+                .MakeGenericMethod(typeof(string));
+            var mApp0 = FunctionType(Side.Mathcad).GetMethods(Instance)
+                .Single(m => m.Name == "app" && m.IsGenericMethodDefinition
+                    && m.GetGenericArguments().Length == 1
+                    && m.GetParameters().Length == 1
+                    && m.GetParameters()[0].IsOut)
+                .MakeGenericMethod(typeof(string));
+
+            MethodComparison.Compare("Function.app_0_purity_0", ContractMatrix,
+                qApp0, qTarget0, [null],
+                mApp0, mTarget0, [null],
+                Show, Show,
+                t => RenderSnapshot(Side.Quire, t),
+                t => RenderSnapshot(Side.Mathcad, t));
+        }
+    }
 }
+
 
