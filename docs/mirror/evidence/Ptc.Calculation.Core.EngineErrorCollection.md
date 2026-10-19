@@ -7,7 +7,7 @@
 | Member | Token | Contract | Confidence / limits | Status |
 |---|---|---|---|---|
 | `.ctor()` | 0x0600004f | MemberGen: `{ }` | Mechanical; Release IL equals Mathcad's | Verified |
-| `.ctor(IEnumerable<EngineError>, EngineError)` | 0x06000050 | Calls List<EngineError>(errors), then List<EngineError>.Add(error) | Direct Release Mathcad cases; Release IL exact | Verified; normal gate pending |
+| `.ctor(IEnumerable<EngineError>, EngineError)` | 0x06000050 | Calls List<EngineError>(errors), then List<EngineError>.Add(error) | Direct Release Mathcad cases; Release IL exact | Verified; focused Release and audit pass, phase gate blocked |
 
 ## Test cases
 
