@@ -9,7 +9,7 @@ dependencies. Do not load dated historical receipts as agent context.
 |---|---|---|
 | A | `mirror/a-scons-il-shape` merged at `b83cc5d`; `mirror/a-slist-format-cons` is active on the next unowned Tier A member. `MplForeignMacro` and the remaining AppException, DynamicType and InstructionSeq scopes have other owners. | [Lane A](work/lane-a.md) |
 | B | `FnCompose` is already merged to `main` at `bf985ce`; the old `mirror/b-fncompose` note is stale. Select the next unowned Engine interface/factory batch after checking the tier inventory and ownership. | [Lane B](work/lane-b.md) |
-| D | `mirror/d-persistentdata-protection-timestamp` passes local Release differential tests; three earlier Lane D candidates await the shared Release differential gate fix. | [Lane D](work/lane-d.md) |
+| D | ProtectionDataType timestamp wrappers pass local Release tests; OleUtils, AreaType, header/footer, and timestamp branches all stop at the same Release assembly lookup in the gate. | [Lane D](work/lane-d.md) |
 
 ## Fast lane loop
 
