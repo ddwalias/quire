@@ -12,9 +12,5 @@ namespace Quire.PersistentDataObjects;
 public static partial class IMC14AnnotationProviderExtensions
 {
     [global::Quire.Mirror.MirrorStub]
-    public static void AddMC14ConversionLossAnnotations(this global::Quire.PersistentDataObjects.IMC14AnnotationProvider annotationsProvider, global::Quire.PersistentDataObjects.MC14ConversionAnnotationType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void AddMC14ConversionLossAnnotations(this global::Quire.PersistentDataObjects.IMC14AnnotationProvider annotationsProvider, global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType> types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string[] ConvertMC14ConversionLossAnnotationsToStringArray(global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.MC14ConversionAnnotationType> annotationsList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
