@@ -11,6 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.StreamUtils, Ptc.Core")]
 public static partial class StreamUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void CopyStream(global::System.IO.Stream source, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
