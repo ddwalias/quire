@@ -11,14 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.TeapotTriangleRangeConverter, Ptc.Media3D")]
 public partial class TeapotTriangleRangeConverter : global::System.ComponentModel.TypeConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Type sourceType) => base.CanConvertFrom(context, sourceType);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Type destinationType) => base.CanConvertTo(context, destinationType);
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);
-    [global::Quire.Mirror.MirrorStub]
-    public TeapotTriangleRangeConverter() { }
 }
