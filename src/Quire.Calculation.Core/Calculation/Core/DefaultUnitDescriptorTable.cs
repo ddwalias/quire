@@ -46,7 +46,7 @@ public partial class DefaultUnitDescriptorTable
     }
 
     [MirrorVerified("PtcCalculationCoreDefaultUnitDescriptorTableInitializationMechanicalDifferentialTests")]
-    void System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => _contentLoaded = true;
+    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => _contentLoaded = true;
 
     [MirrorVerified("PtcCalculationCoreDefaultUnitDescriptorTableMechanicalDifferentialTests")]
     internal Delegate _CreateDelegate(Type delegateType, string handler) => Delegate.CreateDelegate(delegateType, this, handler);
