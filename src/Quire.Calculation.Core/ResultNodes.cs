@@ -18,7 +18,7 @@ public sealed partial class EngineError : IEngineError
         Symbol = symbol;
     }
 
-    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests")]
     public string Message => _message;
     public string? Symbol { get; }
 

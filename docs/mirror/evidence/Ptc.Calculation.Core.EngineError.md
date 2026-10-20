@@ -33,7 +33,7 @@
 **Observed** (`PtcCalculationCoreEngineErrorMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
-**Observed** (`PtcCalculationCoreEngineErrorRelationsDifferentialTests`, Release with Mathcad required): direct paired `MethodComparison.Compare`
+**Observed** (`PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests`, Release with Mathcad required): direct paired `MethodComparison.Compare`
 cases for the four Verified members above. `get_Message` covers empty, ordinary, and tab-containing values. Relation tests cover matching and
 different relation fields and chains, including same/different error-source references. These are targeted cases, not exhaustive state-space
 coverage. The generated Quire-only `EngineError(string, string?)` constructor is not used to initialize Mathcad targets.

@@ -5,7 +5,7 @@ namespace Quire.Calculation.Core;
 
 public sealed partial class EngineError
 {
-    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests")]
     public bool IsEquivalentTo(EngineError error, bool checkNodeHandle = true)
     {
         if (error == null)
@@ -25,7 +25,7 @@ public sealed partial class EngineError
         return false;
     }
 
-    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests")]
     public EngineError FindNextError(EngineError error)
     {
         if (error == null)
@@ -40,7 +40,7 @@ public sealed partial class EngineError
         return engineError;
     }
 
-    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsDifferentialTests")]
+    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests")]
     public bool IsAncestorOf(EngineError error)
     {
         if (error == null)
