@@ -15,6 +15,4 @@ public partial class PrintToFileException : global::System.ApplicationException
     public readonly global::Quire.IO.PrintFileErrorCode ErrorCode;
     [global::Quire.Mirror.MirrorStub]
     public readonly object[] MessageArgs;
-    [global::Quire.Mirror.MirrorStub]
-    public PrintToFileException(string message, global::System.Exception innerException, global::Quire.IO.PrintFileErrorCode errorCode, params object[] messageMessageArgs) { }
 }

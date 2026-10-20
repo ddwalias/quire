@@ -6,6 +6,16 @@ namespace Quire;
 public partial struct Interval
 {
     [MirrorVerified("Release IL")]
+    public bool Contains(double value)
+    {
+        if (Lower <= value)
+        {
+            return value <= Upper;
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
     public double Lower;
 
     [MirrorVerified("Release IL")]

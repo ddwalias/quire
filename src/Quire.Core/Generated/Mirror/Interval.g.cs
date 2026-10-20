@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Interval, Ptc.Core")]
 public partial struct Interval
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool Contains(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
