@@ -2,17 +2,13 @@
 
 ## Active handoff
 
-### Active Batch: MatVal memory growth, resize, and row/column mutations batch
-- **Branch:** `mirror/b-matval-growth`
-- **Status:** Active implementation, IL alignment, and differential verification.
-- **Scope (methods in `src/Quire.Mpl/Mcd/MatVal.Growth.cs`):**
-  - Reallocation: `realloc(object, int, int)`, `ReAlloc(object, int)`, `ReAlloc(object, int, int)`, `ReAllocate(int)`, `ReAllocate(int, int)`.
-  - Array resize & zero tidying: `Resize(double[], int)`, `CopyResize(double[], int, int)`, `Resize(double[], int, int)`, `TidyZeros(int, int, int, int)`.
-  - Stretch operations: `Stretch(int)`, `Stretch(int, int)`, `StretchWithColumnFill(int, int, DimVal)`.
-  - Extension operations: `extend_1(int)`, `extend_2(int, int)`.
-  - Mutation setters: `mcd_setm_1`, `mcd_setm_2`, `mcd_set_1`, `mcd_set_2`, `mcd_upd_1`, `mcd_upd_2`.
-  - Column and row mutations: `mcd_setcolumn`, `setcolumn`, `setcol`, `mcd_setrow`, `setrow`, `setblock`, `setmatrix`, `setmatrix_ptrs`.
-  - Pointer transformation: `AssignMatrixPtrs`, `ResizeMatrixPtrs`, `AssignPtrs`, `ResizePtrs`.
+### Active Batch: MatVal element accessors and mutators batch
+- **Branch:** `mirror/b-matval-access`
+- **Status:** Active rebase and gate landing.
+- **Scope (50 methods in `src/Quire.Mpl/Mcd/MatVal.Access.cs`):**
+  - Direct getters: `get_1(int)` (0x060004d0), `get_2(int, int)` (0x060004d1), `get(int)` (0x060004da), `get_1_dim(int)` (0x060004d2), `get_2_dim(int, int)` (0x060004d3), `get_dim(int)` (0x060004e4), `get_1_matdim(int)` (0x060004d4), `get_2_matdim(int, int)` (0x060004d5), `get_matdim(int)` (0x060004e5), `get_1_ptr(int)` (0x060004d6), `get_2_ptr(int, int)` (0x060004d7), `get_ptr(int)` (0x060004e7), `get_1_na(NumVal, int)` (0x060004d8), `get_2_na(NumVal, int, int)` (0x060004d9), `get_na(NumVal, int)` (0x060004e6).
+  - Real, imaginary, and mixed-real getters: `get_real(int)` (0x060004e8), `get_real(int, int)` (0x060004e9), `get_real_raw(int)` (0x060004ec), `get_imag(int)` (0x060004ea), `get_imag(int, int)` (0x060004eb), `get_imag_raw(int)` (0x060004ed), `get_real_mixed(int)` (0x060004ee), `get_real_mixed(int, int)` (0x060004ef), `get_real_mixed_handle(int, uint)` (0x060004f0), `get_real_mixed_handle(int, int, uint)` (0x060004f1), `get_real_mixed_raw(int, uint)` (0x060004f2).
+  - Setters and mutators: `set_1(int, object)` (0x06000509), `set_2(int, int, object)` (0x0600050a), `set(int, object)` (0x06000511), `setNaN(int, object)` (0x06000510), `setspec(int, object)` (0x06000512), `set_1(int, double, Dim)` (0x0600050e), `set_2(int, int, double, Dim)` (0x0600050f), `set(int, double, Dim)` (0x06000517), `set_1(int, double, double, Dim)` (0x06000510), `set_2(int, int, double, double, Dim)` (0x06000511), `set(int, double, double, Dim)` (0x06000519), `set(int, double)` (0x06000518), `set(int, double, double)` (0x0600051b), `set(int, NumVal)` (0x0600051c), `set_ptrs_1(int, object)` (0x06000517), `set_ptrs_2(int, int, object)` (0x06000518), `set_ptrs(int, object)` (0x06000519), `set_ptrs_raw(int, object)` (0x0600051b), `set_ptrs_at(int, object)` (0x06000521), `set_2i(int, int, double)` (0x0600051c), `set_1(int, double)` (0x0600051d), `set_2(int, int, double)` (0x0600051e), `set_at(int, double)` (0x0600051f), `set_at(int, double, double)` (0x06000520).
 - **Goal:** Exact Release IL matching against Mathcad Prime 12.0.1.0 `mplrun.dll`, 0 lint, 100% mutation kill rate, and clean merge gate landing on `main`.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
@@ -77,6 +73,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatDim/MatVal dimension/index | Implementations are present on main; direct tests and evidence recorded across merged batches. |
 | MatVal collections, ranges, and vectorize | Merged to main at 2082723 (31ee559). 7 methods exact IL, 10 vectorize differential test cases, 100% mutation kill rate (597/601, 0 survivors). |
 | MatVal indexed access, axis enumeration and scaling | Merged to main at d0436ed (2fc429a). 33 methods; 31 exact Release IL matches, 2 structure-only; 100% mutation kill rate (710/718, 0 survivors). |
+| MatVal memory growth, resize, and row/column mutations | Merged to main at b52edf9 (54d2299). 37 methods; 37 exact Release IL matches; 100% mutation kill rate (662/666, 0 survivors). |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
 
@@ -274,6 +271,26 @@ Direct differential comparisons added in `tests/Quire.Differential.Tests/MatValI
 - `Dynamic_and_static_call_dispatch_matches_mathcad`: `DynCall(object)` (valid vector and non-integer exception path), `DynCall(object, object)` (valid matrix and non-integer exception paths for both coordinates), `mcd_get_1(object, object)` (static valid, non_vector, non_integer), `mcd_getm_1(object, int)` (static valid, non_vector), `mcd_getm_2(object, int, int)` (static valid, non_matrix).
 - `Axis_enumeration_and_classification_match_mathcad`: `get_type_2(int, int, double)` (finite, nan_thresh, cell_1_1_nan, col2_nan), `element_types(MatAxis, int, double)` (row0, col1), `get_ptrs(MatAxis, int)` (row0, col0), `get_doubles(MatAxis, int, double, double)` (row0), `get_data(MatAxis, int, double, double)` (row0), `PackObjects()` (default and offset2), `op_Division(MatVal, double)` (unpacked, packed_mutable in-place, and packed_immutable copy).
 100% mutation kill rate on compared methods (710/718 mutants killed, 0 survivors). Merged via `lane_merge.py` at commit `d0436ed`.
+### MatVal memory growth, resize, and row/column mutations (merged to main at b52edf9)
+
+Base: `d37614481356e59da6db689b58723fabde11e0b9`; branch `mirror/b-matval-growth` (`54d2299545d0`).
+Original identity: mplrun Prime 12.0.1.0 SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Scope: 37 methods in `src/Quire.Mpl/Mcd/MatVal.Growth.cs`.
+- Exact tokens:
+  - Reallocation: `realloc(object, int, int)` (0x06000492), `ReAlloc(object, int)` (0x06000505), `ReAlloc(object, int, int)` (0x06000506), `ReAllocate(int)` (0x06000507), `ReAllocate(int, int)` (0x06000508).
+  - Array resize & zero tidying: `Resize(double[], int)` (0x0600053e), `CopyResize(double[], int, int)` (0x0600053f), `Resize(double[], int, int)` (0x06000540), `TidyZeros(int, int, int, int)` (0x0600053b).
+  - Stretch operations: `Stretch(int)` (0x0600053a), `Stretch(int, int)` (0x0600053c), `StretchWithColumnFill(int, int, DimVal)` (0x0600053d).
+  - Extension operations: `extend_1(int)` (0x060004f3), `extend_2(int, int)` (0x060004f9).
+  - Mutation setters: `mcd_setm_1` (0x060004f4), `mcd_setm_2` (0x060004f8), `mcd_set_1` (0x060004f5), `mcd_set_2` (0x060004fa), `mcd_upd_1` (0x060004f6, 0x060004f7), `mcd_upd_2` (0x060004fb, 0x060004fc).
+  - Column and row mutations: `mcd_setcolumn` (0x060004fd), `setcolumn` (0x060004fe), `setcol` (0x060004ff), `mcd_setrow` (0x06000500), `setrow` (0x06000501), `setblock` (0x06000502), `setmatrix` (0x06000503), `setmatrix_ptrs` (0x06000504).
+  - Pointer transformation: `AssignMatrixPtrs` (0x0600073e, 0x0600073f), `ResizeMatrixPtrs` (0x06000740, 0x06000741), `AssignPtrs` (0x0600054f), `ResizePtrs` (0x06000550), `MatVal(MatVal, int, int)` (0x06000491).
+- 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll` across all 37 methods.
+- All prior structural differences resolved.
+- Full test suites passed: Quire.Harness.Tests (97/97), Quire.Mpl.Tests (188/188), Quire.Focused.Differential.Tests (396/396 Debug, 396/396 Release).
+- Reconstruction integrity: 0 lint findings.
+- Mutation coverage: 662/666 killed (0 cached); 0 survivors.
+- Merged cleanly to `main` via `lane_merge.py` at commit `b52edf9`.
+
 
 ## Function closure dispatch — active checkpoint
 
