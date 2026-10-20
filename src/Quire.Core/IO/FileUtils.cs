@@ -10,6 +10,49 @@ namespace Quire.IO;
 public partial class FileUtils
 {
     [MirrorVerified("Release IL")]
+    public static string EvaluateRelativePath(string mainDirPath, string absoluteFilePath, bool stripSingleLeadingDot)
+    {
+        string[] array = mainDirPath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
+        string[] array2 = absoluteFilePath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
+        int i = 0;
+        goto LoopTest;
+    LoopBody:
+        if (!array[i].ToLower().Equals(array2[i].ToLower()))
+        {
+            goto LoopDone;
+        }
+        i++;
+    LoopTest:
+        if (i < Math.Min(array.Length, array2.Length))
+        {
+            goto LoopBody;
+        }
+    LoopDone:
+        if (i == 0)
+        {
+            return absoluteFilePath;
+        }
+        string text = i < array.Length ? ".." : ".";
+        for (int j = i + 1; j < array.Length; j++)
+        {
+            text = text + Path.DirectorySeparatorChar + "..";
+        }
+        for (int k = i; k < array2.Length; k++)
+        {
+            text = text + Path.DirectorySeparatorChar + array2[k];
+        }
+        if (stripSingleLeadingDot)
+        {
+            string text2 = "." + Path.DirectorySeparatorChar;
+            if (text.StartsWith(text2))
+            {
+                text = text.Substring(text2.Length);
+            }
+        }
+        return text;
+    }
+
+    [MirrorVerified("Release IL")]
     public static string GetFileNameWithNumber(string baseFileName, int number, bool numberIsLastExtension)
     {
         DebugTools.DevAssert(number >= 0, null);
