@@ -27,16 +27,6 @@ internal partial class EntityWrappers
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+TypeReferenceWrapper, mplasb")]
     internal partial class TypeReferenceWrapper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal readonly global::System.Type type;
-        [global::Quire.Mirror.MirrorStub]
-        internal int parentToken;
-        [global::Quire.Mirror.MirrorStub]
-        public TypeReferenceWrapper(global::System.Type type) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object obj) => base.Equals(obj);
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
     }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+MethodReferenceWrapper, mplasb")]
