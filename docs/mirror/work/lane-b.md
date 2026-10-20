@@ -2,16 +2,13 @@
 
 ## Active handoff
 
-### Active Batch: MatVal views and export batch
-- **Branch:** `mirror/b-matval-views`
-- **Scope (28 methods in `src/Quire.Mpl/Mcd/MatVal.Views.cs`):**
-  - View constructors and trimming: `MatVal(MatVal, int)` (0x06000493), `TrimPtrs(Hashtable)` (0x06000494), `MatVal(MatVal, int, int, int, int)` (0x0600049c), `SubMatrix(uint, uint, uint, uint)` (0x0600049d), `SubMatrixPtrs(MatVal, int, int, int, int)` (0x0600054e).
-  - Column and row slicing: `Column(int)` (0x06000497), `real_column(int)` (0x06000498), `mcd_sym_column(object, int)` (0x06000495), `mcd_column(object, int)` (0x06000496), `mcd_sym_row(object, int)` (0x06000499), `mcd_row(object, int)` (0x0600049a), `Row(int)` (0x0600049b).
-  - Transposition operations: `TransposeArr(double[])` (0x06000533), `TransposeReal()` (0x06000548), `TransposeImag()` (0x06000549), `Transpose()` (0x06000523), `set_ptrs_2_transpose` (0x06000551), `TransposePtrs` (0x06000552), `set_ptrs_2_reverse` (0x06000553), `ReversePtrs` (0x06000554).
-  - Tuples and elements: `asTuple(uint, uint, uint)` (0x0600046d), `get_elements(uint, uint)` (0x060004c4), `get_elements()` (0x060004c5).
-  - Comparison and string conversion: `Equals(object)` (0x06000472), `nearly_equal(DimVal, double)` (0x06000473), `ToString()` (0x06000471).
-  - Immutability and export: `asImmutable()` (0x06000528), `Fix()` (0x06000529), `Fix(object)` (0x0600052a), `asResult()` (0x0600052b), `FixForExport(object)` (0x0600052c).
-  - Nested pointer trimming context: `TrimSubMatrixPtrs` constructor (0x0600073c), `set_submatrix_ptrs` (0x0600073d).
+### Active Batch: MatVal storage, packing and copy constructors
+- **Branch:** `mirror/b-matval-storage`
+- **Scope (20 methods in `src/Quire.Mpl/Mcd/MatVal.Storage.cs` and `MatVal.cs`):**
+  - Array copy and packing: `Copy(double[], int, double[], int, int)` (0x06000534), `Pack(double[])` (0x06000535), `Pack(double[], int)` (0x06000537), `Pack(double[], int, int, int, int)` (0x06000536), `PackZero(double[])` (0x06000541).
+  - Real and imaginary packing: `PackReal()` (0x06000542), `PackReal(int)` (0x06000543), `PackReal(int, int, int, int)` (0x06000544), `PackImag()` (0x06000545), `PackImag(int)` (0x06000546), `PackImag(int, int, int, int)` (0x06000547).
+  - Pointer packing, initialization and copying: `PackPtrs(int)` (0x0600054a), `PackPtrs(int, int, int, int)` (0x0600054b), `InitPtrs(MatVal)` (0x0600048e), `IteratePtrs(PtrDelegate)` (0x0600054c), `TransformPtrs(MatVal, PtrDelegate)` (0x0600054d), `CopyPtrs(MatVal)` (0x06000555).
+  - Constructors: `MatVal(MatVal)` (0x0600048d), `MatVal(MatVal, Dim)` (0x0600048f), `MatVal(MatVal, int, int)` (0x06000491).
 - **Goal:** Resolve remaining IL structure differences against Mathcad Prime 12.0.1.0 `mplrun.dll`, achieve 100% exact Release IL matching across all methods, 0 lint findings, 0 ratchet regressions, and 100% mutation kill rate.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
@@ -78,6 +75,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatVal indexed access, axis enumeration and scaling | Merged to main at d0436ed (2fc429a). 33 methods; 31 exact Release IL matches, 2 structure-only; 100% mutation kill rate (710/718, 0 survivors). |
 | MatVal memory growth, resize, and row/column mutations | Merged to main at b52edf9 (54d2299). 37 methods; 37 exact Release IL matches; 100% mutation kill rate (662/666, 0 survivors). |
 | MatVal element accessors and mutators | Merged to main at e7c190b (5f4a591). 50 methods; 50 exact Release IL matches; 100% mutation kill rate (793/797, 0 survivors). |
+| MatVal views and export members | Merged to main at f951966 (76b6393). 31 methods; 31 exact Release IL matches (100%); 100% mutation kill rate (767/772, 0 survivors). |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
 
@@ -309,6 +307,26 @@ Scope: 50 element accessor and mutator methods in `src/Quire.Mpl/Mcd/MatVal.Acce
 - Reconstruction integrity: 0 lint findings.
 - Mutation coverage: 793/797 killed (0 cached); 0 survivors.
 - Merged cleanly to `main` via `lane_merge.py` at commit `e7c190b`.
+
+### MatVal views and export members (merged to main at f951966)
+
+Base: `5a2675634d3d4df14731733a4cd6539b0e0b170f`; branch `mirror/b-matval-views` (`76b6393766c5`).
+Original identity: mplrun Prime 12.0.1.0 SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Scope: 31 methods across `Mcd.MatVal.Views` and nested `MatVal+TrimSubMatrixPtrs` in `src/Quire.Mpl/Mcd/MatVal.Views.cs`.
+- Exact tokens:
+  - View constructors and trimming: `.ctor(MatVal, int)` (0x06000493), `TrimPtrs(Hashtable)` (0x06000494), `.ctor(MatVal, int, int, int, int)` (0x0600049c), `SubMatrix(uint, uint, uint, uint)` (0x0600049d), `SubMatrixPtrs(MatVal, int, int, int, int)` (0x0600054e).
+  - Column and row slicing: `Column(int)` (0x06000497), `real_column(int)` (0x06000498), `mcd_sym_column(object, int)` (0x06000495), `mcd_column(object, int)` (0x06000496), `mcd_sym_row(object, int)` (0x06000499), `mcd_row(object, int)` (0x0600049a), `Row(int)` (0x0600049b).
+  - Transposition operations: `TransposeArr(double[])` (0x06000533), `TransposeReal()` (0x06000548), `TransposeImag()` (0x06000549), `Transpose()` (0x06000523), `set_ptrs_2_transpose` (0x06000551), `TransposePtrs` (0x06000552), `set_ptrs_2_reverse` (0x06000553), `ReversePtrs` (0x06000554).
+  - Tuples and elements: `asTuple(uint, uint, uint)` (0x0600046d), `get_elements(uint, uint)` (0x060004c4), `get_elements()` (0x060004c5).
+  - Comparison and string conversion: `Equals(object)` (0x06000472), `nearly_equal(DimVal, double)` (0x06000473), `ToString()` (0x06000471).
+  - Immutability and export: `asImmutable()` (0x06000528), `Fix()` (0x06000529), `Fix(object)` (0x0600052a), `asResult()` (0x0600052b), `FixForExport(object)` (0x0600052c).
+  - Nested pointer trimming context: `TrimSubMatrixPtrs..ctor` (0x0600073c), `TrimSubMatrixPtrs.set_submatrix_ptrs` (0x0600073d).
+- 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll` across all 31 methods.
+- Full test suites passed: Quire.Harness.Tests (97/97), Quire.Mpl.Tests (188/188), Quire.Focused.Differential.Tests (399/399 Debug, 399/399 Release).
+- Reconstruction integrity: 0 lint findings.
+- Mutation coverage: 767/772 killed (0 cached); 0 survivors.
+- Merged cleanly to `main` via `lane_merge.py` at commit `f9519665`.
+
 
 
 ## Function closure dispatch — active checkpoint
