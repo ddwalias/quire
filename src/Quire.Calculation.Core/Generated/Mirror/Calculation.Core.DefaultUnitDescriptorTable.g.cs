@@ -18,9 +18,5 @@ public partial class DefaultUnitDescriptorTable : global::Quire.Calculation.Core
     [global::Quire.Mirror.MirrorStub]
     public DefaultUnitDescriptorTable() { }
     [global::Quire.Mirror.MirrorStub]
-    private void InitializeUnitSystems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

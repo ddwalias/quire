@@ -5,6 +5,49 @@ namespace Quire.Calculation.Core;
 
 public partial class DefaultUnitDescriptorTable
 {
+    [MirrorVerified("PtcCalculationCoreDefaultUnitDescriptorTableInitializationMechanicalDifferentialTests")]
+    private void InitializeUnitSystems()
+    {
+        using Dictionary<string, UnitDescriptor>.Enumerator enumerator = GetEnumerator();
+        while (enumerator.MoveNext())
+        {
+            KeyValuePair<string, UnitDescriptor> current = enumerator.Current;
+            if (current.Value.BaseDimensions != null)
+            {
+                if (current.Value.BaseDimensions.Contains(UnitSystems.SI))
+                {
+                    _siBase[current.Key] = current.Value;
+                }
+                if (current.Value.BaseDimensions.Contains(UnitSystems.US))
+                {
+                    _usBase[current.Key] = current.Value;
+                }
+                if (current.Value.BaseDimensions.Contains(UnitSystems.CGS))
+                {
+                    _cgsBase[current.Key] = current.Value;
+                }
+            }
+            if (current.Value.DerivedDimensions != null)
+            {
+                if (current.Value.DerivedDimensions.Contains(UnitSystems.SI))
+                {
+                    _siDerived[current.Key] = current.Value;
+                }
+                if (current.Value.DerivedDimensions.Contains(UnitSystems.US))
+                {
+                    _usDerived[current.Key] = current.Value;
+                }
+                if (current.Value.DerivedDimensions.Contains(UnitSystems.CGS))
+                {
+                    _cgsDerived[current.Key] = current.Value;
+                }
+            }
+        }
+    }
+
+    [MirrorVerified("PtcCalculationCoreDefaultUnitDescriptorTableInitializationMechanicalDifferentialTests")]
+    void System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => _contentLoaded = true;
+
     [MirrorVerified("PtcCalculationCoreDefaultUnitDescriptorTableMechanicalDifferentialTests")]
     internal Delegate _CreateDelegate(Type delegateType, string handler) => Delegate.CreateDelegate(delegateType, this, handler);
 
