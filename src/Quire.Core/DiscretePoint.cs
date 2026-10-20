@@ -22,4 +22,21 @@ public partial struct DiscretePoint
         X = x;
         Y = y;
     }
+
+    [MirrorVerified("Release IL")]
+    public int X
+    {
+        get => _coordinate.First;
+        set => _coordinate.First = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public int Y
+    {
+        get => _coordinate.Second;
+        set => _coordinate.Second = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public override string ToString() => _coordinate.ToString();
 }
