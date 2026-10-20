@@ -11,48 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.ApplicationObsolete, Ptc.MathcadPrime.Automation")]
 public partial class ApplicationObsolete : global::Quire.Automation.IMathcadPrimeApplication, global::Quire.Automation.IMathcadPrimeApplication2
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Automation.ProxyComClassManager<global::Quire.Automation.IMathcadPrimeApplication> _comProxyManagerInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Automation.IProxyComClassManagerAgent<global::Quire.Automation.IMathcadPrimeApplication> _proxyComClassManagerAgent;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMathcadPrimeApplication2 _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMathcadPrimeWorksheets _worksheets;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMathcadPrimeApplication2 RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Visible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IMathcadPrimeWorksheet ActiveWorksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IMathcadPrimeWorksheets Worksheets { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ApplicationObsolete() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal ApplicationObsolete(global::Quire.Automation.IMathcadPrimeApplication2 mathcadPrimeApplication) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~ApplicationObsolete() { } // stub finalizers must not throw: they also run for objects whose constructor threw
-    [global::Quire.Mirror.MirrorStub]
-    private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Release() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReleaseRealSubject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnRefineConnections() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReleaseAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Quit(global::Quire.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IMathcadPrimeWorksheet Open(string documentPathArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int InitializeEvents(global::Quire.Automation.IMathcadPrimeEvents eventsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CloseAll(global::Quire.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

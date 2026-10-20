@@ -11,32 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.IMathcadPrimeApplication3, Ptc.MathcadPrime.Automation")]
 public partial interface IMathcadPrimeApplication3
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool Visible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Automation.IMathcadPrimeWorksheet ActiveWorksheet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Automation.IMathcadPrimeWorksheets Worksheets { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Quit(global::Quire.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Automation.IMathcadPrimeWorksheet Open(string documentPathArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int InitializeEvents(global::Quire.Automation.IMathcadPrimeEvents eventsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void CloseAll(global::Quire.Automation.SaveOption saveOptionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int InitializeEvents2(global::Quire.Automation.IMathcadPrimeEvents2 eventsArg, bool subscribeAllArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int SubscribeEvent(global::Quire.Automation.MathcadPrimeEvents primeEventArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int UnsubscribeEvent(global::Quire.Automation.MathcadPrimeEvents primeEventArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions CreateWorksheetReadonlyOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Automation.IMathcadPrimeWorksheet3 OpenEx(string documentPathArg, global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions optionsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
