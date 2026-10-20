@@ -4,6 +4,43 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal sealed partial class TypeNameBuilder
 {
+    private void AddArray(int rank)
+    {
+        if (rank == 1)
+        {
+            Append("[*]");
+            return;
+        }
+        if (rank > 64)
+        {
+            _str.Append('[').Append(rank).Append(']');
+            return;
+        }
+        Append('[');
+        for (int i = 1; i < rank; i++)
+        {
+            Append(',');
+        }
+        Append(']');
+    }
+
+    private void AddAssemblySpec(string assemblySpec)
+    {
+        if (assemblySpec != null && !assemblySpec.Equals(""))
+        {
+            Append(", ");
+            if (_instNesting > 0)
+            {
+                EscapeEmbeddedAssemblyName(assemblySpec);
+            }
+            else
+            {
+                EscapeAssemblyName(assemblySpec);
+            }
+            _hasAssemblySpec = true;
+        }
+    }
+
     private void AddName(string name)
     {
         if (_nestedName)
