@@ -20,14 +20,6 @@ public partial class CustomAttributeBuilder
     [global::Quire.Mirror.MirrorStub]
     private bool ValidateType(global::System.Type t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.ConstructorInfo Constructor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CustomAttributeBuilder(global::System.Reflection.ConstructorInfo con, object[] constructorArgs) { }
-    [global::Quire.Mirror.MirrorStub]
-    public CustomAttributeBuilder(global::System.Reflection.ConstructorInfo con, object[] constructorArgs, global::System.Reflection.PropertyInfo[] namedProperties, object[] propertyValues) { }
-    [global::Quire.Mirror.MirrorStub]
-    public CustomAttributeBuilder(global::System.Reflection.ConstructorInfo con, object[] constructorArgs, global::System.Reflection.FieldInfo[] namedFields, object[] fieldValues) { }
-    [global::Quire.Mirror.MirrorStub]
     public CustomAttributeBuilder(global::System.Reflection.ConstructorInfo con, object[] constructorArgs, global::System.Reflection.PropertyInfo[] namedProperties, object[] propertyValues, global::System.Reflection.FieldInfo[] namedFields, object[] fieldValues) { }
     [global::Quire.Mirror.MirrorStub]
     private static void EmitType(global::System.IO.BinaryWriter writer, global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
