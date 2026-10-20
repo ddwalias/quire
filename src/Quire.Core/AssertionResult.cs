@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire;
 
@@ -16,4 +17,13 @@ public partial class AssertionResult
 
     [MirrorVerified("PtcAssertionResultMechanicalDifferentialTests")]
     public bool Passed => _passed;
+
+    [MirrorVerified("Release IL")]
+    public static bool operator !=(AssertionResult lhs, AssertionResult rhs) => !(lhs == rhs);
+
+    [MirrorVerified("Release IL")]
+    public override bool Equals(object obj) => this == (AssertionResult)obj;
+
+    [MirrorVerified("Release IL")]
+    public bool Failed => !_passed;
 }

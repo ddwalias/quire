@@ -18,9 +18,5 @@ public partial class StringToDoubleCollectionConverter : global::System.Windows.
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<double> Convert(string strValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string ConvertBack(global::System.Collections.Generic.IEnumerable<double> arrDoubles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object ConvertBack(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

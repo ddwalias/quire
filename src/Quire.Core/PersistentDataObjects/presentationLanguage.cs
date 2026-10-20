@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -16,4 +17,11 @@ public partial class presentationLanguage
 
     [MirrorVerified("PtcPersistentDataObjectspresentationLanguageMechanicalDifferentialTests")]
     public string UI { get => uiField; set => uiField = value; }
+
+    [MirrorVerified("Release IL")]
+    public presentationLanguage()
+    {
+        mathField = "en";
+        uiField = "en";
+    }
 }

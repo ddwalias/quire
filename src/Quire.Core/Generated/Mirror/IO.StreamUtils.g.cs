@@ -13,6 +13,4 @@ public static partial class StreamUtils
 {
     [global::Quire.Mirror.MirrorStub]
     public static void CopyStream(global::System.IO.Stream source, global::System.IO.Stream target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static byte[] GetStreamHash(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

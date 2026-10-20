@@ -32,12 +32,6 @@ public partial class FileUtils
     [global::Quire.Mirror.MirrorStub]
     private static string GetProductNamePerVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string GetApplicationDataPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetLocalApplicationDataPath(bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetCommonApplicationDataPath(bool useAssemblyVersionInConfigPath = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string GetAssemblyFolder(global::System.Reflection.Assembly asm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLocalIpAddress(string host) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

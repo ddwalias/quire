@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -76,4 +77,20 @@ public partial class presentationMathRenderingMathStyle
 
     [MirrorVerified("PtcPersistentDataObjectspresentationMathRenderingMathStyleMechanicalDifferentialTests")]
     public string baseline { get => baselineField; set => baselineField = value; }
+
+    [MirrorVerified("Release IL")]
+    public presentationMathRenderingMathStyle()
+    {
+        fontfamilyField = "Tahoma";
+        fontsizeField = 11f;
+        fontweightField = presentationMathRenderingMathStyleFontweight.Normal;
+        fontstyleField = presentationMathRenderingMathStyleFontstyle.Normal;
+        colorField = "#FF000000";
+        fontstretchField = presentationMathRenderingMathStyleFontstretch.Normal;
+        variantsField = presentationMathRenderingMathStyleVariants.Normal;
+        underlineField = "false";
+        overlineField = "false";
+        strikethroughField = "false";
+        baselineField = "false";
+    }
 }

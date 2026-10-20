@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.traceStyleType, Ptc.Core")]
 public partial class traceStyleType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public traceStyleType() { }
 }

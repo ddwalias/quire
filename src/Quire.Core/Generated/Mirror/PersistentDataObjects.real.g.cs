@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.real, Ptc.Core")]
 public partial class real
 {
-    [global::Quire.Mirror.MirrorStub]
-    public real() { }
 }

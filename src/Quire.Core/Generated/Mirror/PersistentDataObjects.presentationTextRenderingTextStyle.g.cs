@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationTextRenderingTextStyle, Ptc.Core")]
 public partial class presentationTextRenderingTextStyle
 {
-    [global::Quire.Mirror.MirrorStub]
-    public presentationTextRenderingTextStyle() { }
 }

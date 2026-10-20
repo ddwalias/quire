@@ -14,7 +14,5 @@ public partial class footer : global::Quire.PersistentData.headerFooterRegions, 
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "footer";
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool FooterConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

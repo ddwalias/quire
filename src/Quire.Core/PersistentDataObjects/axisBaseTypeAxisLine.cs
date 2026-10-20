@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -34,4 +35,12 @@ public partial class axisBaseTypeAxisLine
 
     [MirrorVerified("PtcPersistentDataObjectsaxisBaseTypeAxisLineMechanicalDifferentialTests")]
     public bool legendWidthSpecified { get => legendWidthFieldSpecified; set => legendWidthFieldSpecified = value; }
+
+    [MirrorVerified("Release IL")]
+    public axisBaseTypeAxisLine()
+    {
+        positionField = axisBaseTypeAxisLinePosition.origin;
+        displayField = true;
+        positionticmarkField = "0";
+    }
 }

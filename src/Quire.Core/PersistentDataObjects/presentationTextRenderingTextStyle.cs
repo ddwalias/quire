@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -124,4 +125,25 @@ public partial class presentationTextRenderingTextStyle
 
     [MirrorVerified("PtcPersistentDataObjectspresentationTextRenderingTextStyleMechanicalDifferentialTests")]
     public string textAlignment { get => textAlignmentField; set => textAlignmentField = value; }
+
+    [MirrorVerified("Release IL")]
+    public presentationTextRenderingTextStyle()
+    {
+        fontfamilyField = "Tahoma";
+        fontsizeField = 11f;
+        fontweightField = presentationMathRenderingMathStyleFontweight.Normal;
+        fontstyleField = presentationMathRenderingMathStyleFontstyle.Normal;
+        colorField = "#FF000000";
+        fontstretchField = presentationMathRenderingMathStyleFontstretch.Normal;
+        variantsField = presentationMathRenderingMathStyleVariants.Normal;
+        underlineField = "false";
+        overlineField = "false";
+        strikethroughField = "false";
+        baselineField = "false";
+        backgroundField = "Transparent";
+        foregroundField = "Black";
+        markerStyleField = "None";
+        textIndentField = "0";
+        textAlignmentField = "Left";
+    }
 }

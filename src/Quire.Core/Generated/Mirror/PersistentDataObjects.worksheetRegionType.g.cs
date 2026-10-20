@@ -20,8 +20,6 @@ public partial class worksheetRegionType : global::Quire.PersistentDataObjects.r
     [global::Quire.Mirror.MirrorStub]
     public const string RootAttributeName = "region";
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer CreateSerializerWithOverrides(global::System.Type typeOfRoot, string rootNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

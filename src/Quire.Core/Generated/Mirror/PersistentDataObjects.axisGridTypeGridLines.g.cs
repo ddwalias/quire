@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.axisGridTypeGridLines, Ptc.Core")]
 public partial class axisGridTypeGridLines
 {
-    [global::Quire.Mirror.MirrorStub]
-    public axisGridTypeGridLines() { }
 }

@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -34,4 +35,12 @@ public partial class imag
 
     [MirrorVerified("PtcPersistentDataObjectsimagMechanicalDifferentialTests")]
     public string Value { get => valueField; set => valueField = value; }
+
+    [MirrorVerified("Release IL")]
+    public imag()
+    {
+        baseField = baseType.Item10;
+        symbolField = imagSymbol.i;
+        fontField = 1;
+    }
 }

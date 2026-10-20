@@ -14,8 +14,6 @@ public partial class Discrete2DCoordinateConverter : global::System.ComponentMod
     [global::Quire.Mirror.MirrorStub]
     public override bool CanConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Type sourceType) => base.CanConvertFrom(context, sourceType);
     [global::Quire.Mirror.MirrorStub]
-    public override bool CanConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Type destinationType) => base.CanConvertTo(context, destinationType);
-    [global::Quire.Mirror.MirrorStub]
     public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
     [global::Quire.Mirror.MirrorStub]
     public override object ConvertTo(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value, global::System.Type destinationType) => base.ConvertTo(context, culture, value, destinationType);

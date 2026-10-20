@@ -13,6 +13,4 @@ public partial class chartContainerType : global::Quire.PersistentData.oleBaseCo
 {
     [global::Quire.Mirror.MirrorStub]
     global::System.Windows.Size global::Quire.PersistentData.IOleSizeData.OleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public chartContainerType(global::Quire.PersistentData.IOleSizeData sizeData) { }
 }

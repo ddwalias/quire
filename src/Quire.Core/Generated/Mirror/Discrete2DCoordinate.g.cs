@@ -13,10 +13,4 @@ public partial struct Discrete2DCoordinate
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Discrete2DCoordinate Origin;
-    [global::Quire.Mirror.MirrorStub]
-    public int First;
-    [global::Quire.Mirror.MirrorStub]
-    public int Second;
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

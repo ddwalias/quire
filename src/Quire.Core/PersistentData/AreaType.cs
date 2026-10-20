@@ -1,7 +1,11 @@
 #nullable disable
 using System.Linq;
+using System.Linq;
+using System.Xml.Serialization;
 using System.Xml.Serialization;
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.PersistentDataObjects;
 using Quire.PersistentDataObjects;
 
 namespace Quire.PersistentData;
@@ -88,4 +92,12 @@ public partial class AreaType
 
     [MirrorVerified("PtcPersistentDataAreaTypeMechanicalDifferentialTests")]
     public double AreaHeight { get => areaHeightField; set => areaHeightField = value; }
+
+    [MirrorVerified("Release IL")]
+    public AreaType()
+    {
+        isCollapsedField = false;
+        isBorderVisibleField = true;
+        areaHeightField = 0.0;
+    }
 }

@@ -12,19 +12,5 @@ namespace Quire.Undo;
 public partial class SetPropertyCommand : global::Quire.Undo.IUndoableCommand
 {
     [global::Quire.Mirror.MirrorStub]
-    private bool _hasLocalValue;
-    [global::Quire.Mirror.MirrorStub]
-    private object _oldValue;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected SetPropertyCommand(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyProperty dependencyProperty, object newValue) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Execute(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyProperty dependencyProperty, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Toggle(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

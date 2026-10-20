@@ -1,9 +1,15 @@
 #nullable disable
 using System.IO;
 using System.IO.Packaging;
+using System.IO;
+using System.IO.Packaging;
+using System.Windows.Documents;
 using System.Windows.Documents;
 using System.Xml;
+using System.Xml;
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.Serialization;
 using Quire.Serialization;
 
 namespace Quire.PersistentDataObjects;
@@ -48,4 +54,25 @@ public partial class pictureType
 
     [MirrorVerified("PtcPersistentDataObjectspictureTypeMechanicalDifferentialTests")]
     public XmlNode[] InnerXml { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public pictureType(Uri sourceUri)
+    {
+        PictureSourceUri = sourceUri;
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool UseOverrides => S11NProvider.UseOverrides;
+
+    [MirrorVerified("Release IL")]
+    public PackagePart PackagePart => S11NProvider.PackagePart;
+
+    [MirrorVerified("Release IL")]
+    public ISerializationHelper Helper => S11NProvider.Helper;
+
+    [MirrorVerified("Release IL")]
+    public XmlNamespaceManager NameSpaceManager => S11NProvider.NameSpaceManager;
+
+    [MirrorVerified("Release IL")]
+    public XmlDocument XmlContentDocument => S11NProvider.XmlContentDocument;
 }

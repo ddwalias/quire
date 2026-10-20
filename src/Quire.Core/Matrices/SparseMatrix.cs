@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Matrices;
 
@@ -21,5 +22,22 @@ public partial class SparseMatrix<TItem>
     {
         [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
         public TableCoordinate Position { get; set; }
+    }
+
+    partial class SparseMatrixItemChangedEventArgs
+    {
+        [MirrorVerified("Release IL")]
+        public TItem OldItem;
+
+        [MirrorVerified("Release IL")]
+        public TItem NewItem;
+
+        [MirrorVerified("Release IL")]
+        public SparseMatrixItemChangedEventArgs(TableCoordinate position, TItem oldItem, TItem newItem)
+        {
+            Position = position;
+            OldItem = oldItem;
+            NewItem = newItem;
+        }
     }
 }

@@ -40,11 +40,5 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
     [global::Quire.Mirror.MirrorOf("Ptc.Matrices.SparseMatrix`1+SparseMatrixItemChangedEventArgs, Ptc.Core")]
     public partial class SparseMatrixItemChangedEventArgs : global::System.EventArgs
     {
-        [global::Quire.Mirror.MirrorStub]
-        public TItem OldItem;
-        [global::Quire.Mirror.MirrorStub]
-        public TItem NewItem;
-        [global::Quire.Mirror.MirrorStub]
-        public SparseMatrixItemChangedEventArgs(global::Quire.TableCoordinate position, TItem oldItem, TItem newItem) { }
     }
 }

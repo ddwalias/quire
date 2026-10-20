@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -34,4 +35,11 @@ public partial class matrixFormatType
 
     [MirrorVerified("PtcPersistentDataObjectsmatrixFormatTypeMechanicalDifferentialTests")]
     public bool showindices { get => showindicesField; set => showindicesField = value; }
+
+    [MirrorVerified("Release IL")]
+    public matrixFormatType()
+    {
+        expandnestedarraysField = false;
+        showindicesField = false;
+    }
 }

@@ -12,9 +12,5 @@ namespace Quire;
 public partial struct Pair<TFirst, TSecond>
 {
     [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
     public static bool operator ==(global::Quire.Pair<TFirst, TSecond> lhs, global::Quire.Pair<TFirst, TSecond> rhs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator !=(global::Quire.Pair<TFirst, TSecond> lhs, global::Quire.Pair<TFirst, TSecond> rhs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

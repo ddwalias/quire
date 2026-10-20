@@ -11,6 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.excelComponentType, Ptc.Core")]
 public partial class excelComponentType : global::Quire.PersistentData.mathBoardType, global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentData.IRegionCollectionType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

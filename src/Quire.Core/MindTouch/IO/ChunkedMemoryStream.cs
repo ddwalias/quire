@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.MindTouch.IO;
 
@@ -22,4 +23,13 @@ public partial class ChunkedMemoryStream
 
     [MirrorVerified("MindTouchIOChunkedMemoryStreamMechanicalDifferentialTests")]
     public static int ChunkSize { get; set; }
+
+    [MirrorVerified("Release IL")]
+    private bool _closed;
+
+    [MirrorVerified("Release IL")]
+    public override bool CanRead => !_closed;
+
+    [MirrorVerified("Release IL")]
+    public override bool CanSeek => !_closed;
 }

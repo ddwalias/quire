@@ -26,10 +26,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     private static bool _useAssemblyVersionInConfigPath;
     [global::Quire.Mirror.MirrorStub]
-    public static string LocalConfigFolderName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string CommonConfigFolderName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static bool UseAssemblyVersionInConfigPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override void Initialize(string name, global::System.Collections.Specialized.NameValueCollection values) => base.Initialize(name, values);
@@ -38,17 +34,11 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Configuration.SettingsPropertyValueCollection GetPropertyValues(global::System.Configuration.SettingsContext context, global::System.Configuration.SettingsPropertyCollection props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool IsApplicationScoped(global::System.Configuration.SettingsProperty prop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsUserScoped(global::System.Configuration.SettingsProperty prop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool HasSettingScope(global::System.Configuration.SettingsProperty prop, global::System.Type attributeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Reset(global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetSectionName(string sectionGroupName, global::System.Configuration.SettingsContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static string ConfigFilenameFromApplicationConfigPath(string applicationConfigPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.UserSettingsProvider.GetSectionStatusEnum GetSection(global::System.Configuration.SettingsContext context, out global::System.Configuration.ClientSettingsSection section, out global::System.Configuration.Configuration origConfig, out global::System.Configuration.Configuration modifiedConfig) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -1,5 +1,7 @@
 #nullable disable
 using System.Diagnostics;
+using System.Diagnostics;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire;
@@ -35,4 +37,13 @@ public static partial class DebugTools
 
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]
     public static bool DebugVerificationsAllowed { get; private set; }
+
+    [MirrorVerified("Release IL")]
+    private static void FailAssertion(int framesToSkip, DebugTools.AssertionModifiers modifiers, string message = default, params object[] messageArgs) => DevAssert(false, framesToSkip + 1, modifiers, message, messageArgs);
+
+    [MirrorVerified("Release IL")]
+    public static AssertionResult AssertNotNull(object objectToCheck, string message = default, params object[] messageArgs) => DevAssert(objectToCheck != null, 1, AssertionModifiers.None, message, messageArgs);
+
+    [MirrorVerified("Release IL")]
+    public static AssertionResult AssertNotNullDoNotThrow(object objectToCheck, string message = default, params object[] messageArgs) => DevAssert(objectToCheck != null, 1, AssertionModifiers.DoNotThrow, message, messageArgs);
 }

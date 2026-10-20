@@ -12,19 +12,9 @@ namespace Quire.FunctionalitiesLimitation;
 public abstract partial class BaseFunctionalityCommandWrapper : global::System.Windows.Input.ICommand
 {
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Input.RoutedUICommand NestedCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey FunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey { get; }
     [global::Quire.Mirror.MirrorStub]
     public virtual event global::System.EventHandler CanExecuteChanged;
     [global::Quire.Mirror.MirrorStub]
     protected BaseFunctionalityCommandWrapper(global::System.Windows.Input.RoutedUICommand nestedCommand) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected BaseFunctionalityCommandWrapper(global::Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper previousBaseFunctionalityCommandWrapper) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Execute(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool CanExecute(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

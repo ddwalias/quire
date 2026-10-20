@@ -1,6 +1,9 @@
 #nullable disable
 using System.Windows;
 using System.Windows.Media;
+using System.Windows;
+using System.Windows.Media;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire;
@@ -72,4 +75,72 @@ public partial class TextStyleBase
 
     [MirrorVerified("PtcTextStyleBaseMechanicalDifferentialTests")]
     public bool Condenst { get; }
+
+    [MirrorVerified("Release IL")]
+    protected TextStyleBase(string name) : this(new TextStyleData(name, TextStyleUniqueKeyGenerator(name), new Style(), null), true) { }
+
+    [MirrorVerified("Release IL")]
+    protected TextStyleBase(string name, string key) : this(new TextStyleData(name, key, new Style(), null), true) { }
+
+    [MirrorVerified("Release IL")]
+    protected void Update(string propertyName, object value)
+    {
+        Style = CloneStyleAndSetters(Style);
+        SetSetterValue(propertyName, value);
+        UpdateMemberValue(propertyName, GetSetterValue(propertyName, true));
+    }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<double> _textIndent;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<double> TextIndent { get => _textIndent; set => Update("TextIndent", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<FontStyle> _fontStyle;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<FontStyle> FontStyle { get => _fontStyle; set => Update("FontStyle", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<FontWeight> _fontWeight;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<FontWeight> FontWeight { get => _fontWeight; set => Update("FontWeight", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<double> _fontSize;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<double> FontSize { get => _fontSize; set => Update("FontSize", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<Thickness> _margin;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<Thickness> Margin { get => _margin; set => Update("Margin", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<TextMarkerStyle> _markerStyle;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<TextMarkerStyle> MarkerStyle { get => _markerStyle; set => Update("MarkerStyle", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<FontVariants> _fontVariants;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<FontVariants> FontVariants { get => _fontVariants; set => Update("Variants", value); }
+
+    [MirrorVerified("Release IL")]
+    protected BaselineAlignment _baselineAlignment;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<BaselineAlignment> BaselineAlignment { get => new BaselineAlignment?(_baselineAlignment); set => Update("BaselineAlignment", value); }
+
+    [MirrorVerified("Release IL")]
+    protected Nullable<TextAlignment> _textAlignment;
+
+    [MirrorVerified("Release IL")]
+    public Nullable<TextAlignment> TextAlignment { get => _textAlignment; set => Update("TextAlignment", value); }
 }

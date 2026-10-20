@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.contourPlotTypeContour, Ptc.Core")]
 public partial class contourPlotTypeContour
 {
-    [global::Quire.Mirror.MirrorStub]
-    public contourPlotTypeContour() { }
 }

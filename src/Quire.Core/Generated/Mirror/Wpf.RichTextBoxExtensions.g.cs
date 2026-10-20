@@ -12,10 +12,6 @@ namespace Quire.Wpf;
 public static partial class RichTextBoxExtensions
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.TextDecorationCollection _textDecorations;
-    [global::Quire.Mirror.MirrorStub]
-    public static void ApplyTextFormatValues(this global::System.Windows.Documents.FlowDocument doc, global::Quire.Core.TextFormat textFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void ClearTextFormatPropsRecursively(this global::System.Windows.Documents.Block block, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition, params global::System.Windows.DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ClearTextFormatPropsRecursively(this global::System.Windows.Documents.TextElement textElement, global::Quire.DelegateFunction1<bool, global::System.Windows.Documents.TextElement> condition, params global::System.Windows.DependencyProperty[] props) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

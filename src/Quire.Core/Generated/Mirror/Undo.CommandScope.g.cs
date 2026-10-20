@@ -20,8 +20,6 @@ public partial class CommandScope : global::System.IDisposable
     [global::Quire.Mirror.MirrorStub]
     private bool _canUndoTreeOperations;
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Undo.CompoundCommand _targetCommand;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.Stack<global::Quire.Undo.CommandScope> _scopeStack;
     [global::Quire.Mirror.MirrorStub]
     public static bool RequireTreeOperationsInUndoScope;
@@ -29,8 +27,6 @@ public partial class CommandScope : global::System.IDisposable
     public static bool CanUndoTreeOperations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public CommandScope(string name, bool canUndoTreeOperations) { }
-    [global::Quire.Mirror.MirrorStub]
-    public CommandScope(global::Quire.Undo.CompoundCommand targetCommand, bool canUndoTreeOperations) { }
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }

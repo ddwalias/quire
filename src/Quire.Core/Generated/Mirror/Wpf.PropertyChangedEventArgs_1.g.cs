@@ -15,6 +15,4 @@ public sealed partial class PropertyChangedEventArgs<TProperty> : global::System
     object global::Quire.Wpf.IPropertyChangedEventArgsExtended.OldValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     object global::Quire.Wpf.IPropertyChangedEventArgsExtended.NewValue { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PropertyChangedEventArgs(string propertyName, TProperty oldValue, TProperty newValue) : base(default(string)) { }
 }

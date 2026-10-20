@@ -17,6 +17,4 @@ public partial class presentationPageModel
     private static readonly global::System.Windows.ThicknessConverter _thicknessConverter;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Nullable<global::System.Windows.Thickness> PageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public presentationPageModel() { }
 }

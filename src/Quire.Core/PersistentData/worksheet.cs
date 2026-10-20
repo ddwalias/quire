@@ -1,5 +1,7 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.PersistentDataObjects;
 using Quire.PersistentDataObjects;
 
 namespace Quire.PersistentData;
@@ -35,4 +37,7 @@ public partial class worksheet
 
     [MirrorVerified("PtcPersistentDataworksheetMechanicalDifferentialTests")]
     public worksheetMessageIdType MsgId => msgId;
+
+    [MirrorVerified("Release IL")]
+    public IEnumerable<IRegionType> Regions { get => regions; set => regions = Enumerable.ToArray<worksheetRegionType>(Enumerable.Cast<worksheetRegionType>(value)); }
 }

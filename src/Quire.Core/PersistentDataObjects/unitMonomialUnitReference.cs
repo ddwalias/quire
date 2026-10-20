@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -22,4 +23,11 @@ public partial class unitMonomialUnitReference
 
     [MirrorVerified("PtcPersistentDataObjectsunitMonomialUnitReferenceMechanicalDifferentialTests")]
     public string powerdenominator { get => powerdenominatorField; set => powerdenominatorField = value; }
+
+    [MirrorVerified("Release IL")]
+    public unitMonomialUnitReference()
+    {
+        powernumeratorField = "1";
+        powerdenominatorField = "1";
+    }
 }

@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Undo;
 
@@ -33,5 +34,52 @@ public partial class CommandBuffer
 
         [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
         public IUndoableCommand Top => _top;
+    }
+
+    [MirrorVerified("Release IL")]
+    private readonly Stack<IUndoableCommand> _redoStack;
+
+    [MirrorVerified("Release IL")]
+    public static void Clear()
+    {
+        _currentInstance._redoStack.Clear();
+        _currentInstance._undoStack.Clear();
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod), null);
+
+    [MirrorVerified("Release IL")]
+    public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod, Delegate0 redoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod, redoMethod), null);
+
+    [MirrorVerified("Release IL")]
+    public void PushCommand(IUndoableCommand command)
+    {
+        _currentInstance._redoStack.Clear();
+        _currentInstance._undoStack.Push(command);
+    }
+
+    partial class MasterCommand
+    {
+        [MirrorVerified("Release IL")]
+        public MasterCommand(IUndoableCommand top)
+        {
+            Name = top.Name;
+            _top = top;
+        }
+
+        [MirrorVerified("Release IL")]
+        public override void Undo()
+        {
+            base.UndoSideEffects();
+            _top.Undo();
+        }
+
+        [MirrorVerified("Release IL")]
+        public override void Redo()
+        {
+            _top.Redo();
+            base.RedoSideEffects();
+        }
     }
 }

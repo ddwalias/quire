@@ -1,5 +1,7 @@
 #nullable disable
 using System.Xml;
+using System.Xml;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
@@ -89,4 +91,15 @@ public partial class mathType
 
     [MirrorVerified("PtcPersistentDataObjectsmathTypeMechanicalDifferentialTests")]
     public bool IsCalculationDisabled => disablecalc;
+
+    [MirrorVerified("Release IL")]
+    public mathType()
+    {
+        optimizeField = false;
+        disablecalcField = false;
+        pushdownField = false;
+        showLhsOfDefinitionField = true;
+        visibilityLhsOfDefinitionField = LhsOfDefinitionVisibility.Visible;
+        symbolicEvalKeywordsVisibilityStateField = true;
+    }
 }

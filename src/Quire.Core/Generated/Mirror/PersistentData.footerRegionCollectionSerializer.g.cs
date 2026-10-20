@@ -15,6 +15,4 @@ public partial class footerRegionCollectionSerializer : global::Quire.Persistent
     private global::Quire.PersistentData.footer _footer;
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentData.footer RegionCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

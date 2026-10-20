@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Xml;
 
@@ -42,5 +43,14 @@ public static partial class SchemasManager
     {
         [MirrorVerified("PtcXmlSchemasManagerMechanicalDifferentialTests")]
         public string SchemaName { get; private set; }
+    }
+
+    partial class SchemaData
+    {
+        [MirrorVerified("Release IL")]
+        public SchemaData(string name)
+        {
+            SchemaName = name;
+        }
     }
 }

@@ -12,21 +12,5 @@ namespace Quire;
 public partial struct Interval
 {
     [global::Quire.Mirror.MirrorStub]
-    public double Lower;
-    [global::Quire.Mirror.MirrorStub]
-    public double Upper;
-    [global::Quire.Mirror.MirrorStub]
-    public double Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Norm { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Center { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public double Normalize(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public double GetValueByNormalizedPosition(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool Contains(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -82,4 +83,7 @@ public partial class axisBaseType
 
     [MirrorVerified("PtcPersistentDataObjectsaxisBaseTypeMechanicalDifferentialTests")]
     public bool enable { get => enableField; set => enableField = value; }
+
+    [MirrorVerified("Release IL")]
+    public bool ShouldSerializemarkers() => markers != null;
 }

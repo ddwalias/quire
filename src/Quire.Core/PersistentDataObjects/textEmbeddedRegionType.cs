@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -19,4 +20,7 @@ public partial class textEmbeddedRegionType
 
     [MirrorVerified("PtcPersistentDataObjectstextEmbeddedRegionTypeMechanicalDifferentialTests")]
     public override string[] mc14conversionlossannotations { get => mc14conversionlossannotationsField; set => mc14conversionlossannotationsField = value; }
+
+    [MirrorVerified("Release IL")]
+    public override object Item { get => math; set => math = (mathType)value; }
 }

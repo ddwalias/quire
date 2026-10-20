@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Undo;
 
@@ -16,4 +17,11 @@ public partial class CommandEventArgs
 
     [MirrorVerified("PtcUndoCommandEventArgsMechanicalDifferentialTests")]
     public ActionTypeEnum ActionType => _actionType;
+
+    [MirrorVerified("Release IL")]
+    public CommandEventArgs(IUndoableCommand command, CommandEventArgs.ActionTypeEnum actionType)
+    {
+        _commandReference = new WeakReference(command);
+        _actionType = actionType;
+    }
 }

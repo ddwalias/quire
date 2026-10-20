@@ -14,8 +14,6 @@ public partial class plotType : global::Quire.PersistentDataObjects.IMC14Annotat
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public plotType() { }
-    [global::Quire.Mirror.MirrorStub]
     public static void GetOverrides(global::System.Xml.Serialization.XmlAttributeOverrides overrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OverridePropertySerializationToRawXmlNode(global::System.Xml.Serialization.XmlAttributeOverrides overiddes, global::System.Type propertyOwnerType, string oldPropertyName, string newPropertyName, string elementName, string namespaceUri, int order) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

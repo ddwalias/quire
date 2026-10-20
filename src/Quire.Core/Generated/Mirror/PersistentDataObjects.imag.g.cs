@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.imag, Ptc.Core")]
 public partial class imag
 {
-    [global::Quire.Mirror.MirrorStub]
-    public imag() { }
 }

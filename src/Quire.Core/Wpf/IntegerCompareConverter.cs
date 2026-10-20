@@ -1,5 +1,7 @@
 #nullable disable
 using System.Globalization;
+using System.Globalization;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Wpf;
@@ -11,4 +13,10 @@ public partial class IntegerCompareConverter
 
     [MirrorVerified("PtcWpfIntegerCompareConverterMechanicalDifferentialTests")]
     private CompareOperators CompareOperator { get; set; }
+
+    [MirrorVerified("Release IL")]
+    private IntegerCompareConverter(IntegerCompareConverter.CompareOperators compareOperator)
+    {
+        CompareOperator = compareOperator;
+    }
 }

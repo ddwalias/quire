@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -52,4 +53,15 @@ public partial class traceStyleType
 
     [MirrorVerified("PtcPersistentDataObjectstraceStyleTypeMechanicalDifferentialTests")]
     public traceStyleEnumCommonType Value { get => valueField; set => valueField = value; }
+
+    [MirrorVerified("Release IL")]
+    public traceStyleType()
+    {
+        symbolField = traceSymbolType.none;
+        symbolweightField = 1.0;
+        symbolfrequencyField = 1u;
+        linestyleField = traceLineStyle.Solid;
+        lineweightField = 1.0;
+        automaticStyleField = false;
+    }
 }

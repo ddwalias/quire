@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Presenter`2, Ptc.Core")]
 public partial class Presenter<ModelType, ViewType> : global::System.MarshalByRefObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    public Presenter(ModelType model, ViewType view) { }
 }

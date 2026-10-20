@@ -1,5 +1,7 @@
 #nullable disable
 using System.Windows.Input;
+using System.Windows.Input;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Services;
@@ -20,4 +22,7 @@ public partial class MouseFacade
 
     [MirrorVerified("PtcServicesMouseFacadeMechanicalDifferentialTests")]
     public bool IsConnected { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public Cursor ShowWaitCursor() => SetOverrideCursor(Cursors.Wait);
 }

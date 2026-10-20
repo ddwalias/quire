@@ -1,6 +1,12 @@
 #nullable disable
+using System.Xml;
+using System.Xml.Schema;
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.PersistentDataObjects;
 using Quire.Serialization;
+using Quire.Serialization;
+using Quire.Xml;
 using Quire.Xml;
 
 namespace Quire.Core.Serialization;
@@ -24,4 +30,10 @@ public partial class ApplicationPropertiesXmlSerializable
 
     [MirrorVerified("PtcCoreSerializationApplicationPropertiesXmlSerializableMechanicalDifferentialTests")]
     public bool ShouldValidateOnRead => true;
+
+    [MirrorVerified("Release IL")]
+    public XmlSchema GetSchema() => SchemasManager.App.Schema;
+
+    [MirrorVerified("Release IL")]
+    private static propertiesType DeserializeAppProperties(XmlReader reader) => (propertiesType)propertiesType.XmlSerializer.Deserialize(reader);
 }

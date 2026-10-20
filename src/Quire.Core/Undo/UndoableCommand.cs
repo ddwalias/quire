@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Undo;
 
@@ -28,4 +29,13 @@ public partial class UndoableCommand
 
     [MirrorVerified("PtcUndoUndoableCommandMechanicalDifferentialTests")]
     public string Name => _name;
+
+    [MirrorVerified("Release IL")]
+    public UndoableCommand(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod, Delegate0 redoMethod)
+    {
+        _name = name;
+        _do = doMethod;
+        _undo = undoMethod;
+        _redo = redoMethod;
+    }
 }

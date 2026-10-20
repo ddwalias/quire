@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ProgressBarData, Ptc.Core")]
 public partial class ProgressBarData
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ProgressBarData(string messageFormat, global::Quire.Wpf.INotifyProgress progressNotifier) { }
 }

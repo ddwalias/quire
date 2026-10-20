@@ -1,5 +1,7 @@
 #nullable disable
 using System.Xml;
+using System.Xml;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Xml;
@@ -14,4 +16,20 @@ public static partial class XmlWorksheetData
 
     [MirrorVerified("PtcXmlXmlWorksheetDataMechanicalDifferentialTests")]
     public static XmlElement CreateMcdxMLElement(XmlDocument document, string localName) => CreateMLElement(document, localName, "http://schemas.mathsoft.com/math50");
+
+    [MirrorVerified("Release IL")]
+    public static void AddMathcad14MLNamespaces(XmlNamespaceManager nmsmgr)
+    {
+        nmsmgr.AddNamespace("ml", "http://schemas.mathsoft.com/math30");
+        nmsmgr.AddNamespace("u", "http://schemas.mathsoft.com/units10");
+        nmsmgr.AddNamespace("p", "http://schemas.mathsoft.com/provenance10");
+    }
+
+    [MirrorVerified("Release IL")]
+    public static void AddMcdxMLNamespaces(XmlNamespaceManager nmsmgr)
+    {
+        nmsmgr.AddNamespace("ml", "http://schemas.mathsoft.com/math50");
+        nmsmgr.AddNamespace("u", "http://schemas.mathsoft.com/units10");
+        nmsmgr.AddNamespace("p", "http://schemas.mathsoft.com/provenance10");
+    }
 }

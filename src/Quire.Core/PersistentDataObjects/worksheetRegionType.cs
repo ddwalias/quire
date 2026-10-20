@@ -1,6 +1,9 @@
 #nullable disable
 using System.Xml.Serialization;
+using System.Xml.Serialization;
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.Xml;
 using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
@@ -54,4 +57,7 @@ public partial class worksheetRegionType
 
     [MirrorVerified("PtcPersistentDataObjectsworksheetRegionTypeMechanicalDifferentialTests")]
     public InputControlMemberType InputControlMemberType { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public XmlSerializer XmlSerializer => GetXmlSerializer(base.UseOverrides);
 }

@@ -13,8 +13,6 @@ public partial class CommandEventArgs : global::System.EventArgs
 {
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Undo.IUndoableCommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public CommandEventArgs(global::Quire.Undo.IUndoableCommand command, global::Quire.Undo.CommandEventArgs.ActionTypeEnum actionType) { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandEventArgs+ActionTypeEnum, Ptc.Core")]
     public enum ActionTypeEnum

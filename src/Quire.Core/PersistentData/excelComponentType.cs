@@ -1,5 +1,7 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.PersistentDataObjects;
 
 namespace Quire.PersistentData;
 
@@ -46,4 +48,7 @@ public partial class excelComponentType
 
     [MirrorVerified("PtcPersistentDataexcelComponentTypeMechanicalDifferentialTests")]
     public List<string> MC14ConversionLossAnnotationsLocal { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public override IEnumerable<IRegionType> Regions { get => regions; set => regions = Enumerable.ToArray<excelComponentRegionType>(Enumerable.Cast<excelComponentRegionType>(value)); }
 }

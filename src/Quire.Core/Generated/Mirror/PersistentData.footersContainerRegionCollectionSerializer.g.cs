@@ -20,8 +20,6 @@ public partial class footersContainerRegionCollectionSerializer : global::Quire.
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.footersContainerWrapper ContainerWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -28,4 +29,11 @@ public partial class real
 
     [MirrorVerified("PtcPersistentDataObjectsrealMechanicalDifferentialTests")]
     public string Value { get => valueField; set => valueField = value; }
+
+    [MirrorVerified("Release IL")]
+    public real()
+    {
+        fontField = 1;
+        baseField = baseType.Item10;
+    }
 }

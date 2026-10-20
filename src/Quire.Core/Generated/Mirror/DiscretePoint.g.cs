@@ -16,7 +16,5 @@ public partial struct DiscretePoint
     [global::Quire.Mirror.MirrorStub]
     public int Y { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public DiscretePoint(int x, int y) { }
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
 }

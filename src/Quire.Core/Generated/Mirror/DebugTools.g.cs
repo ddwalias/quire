@@ -34,8 +34,6 @@ public static partial class DebugTools
     [global::Quire.Mirror.MirrorStub]
     public static void FailAssertionDoNotThrow(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void FailAssertion(int framesToSkip, global::Quire.DebugTools.AssertionModifiers modifiers, string message = default, params object[] messageArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.AssertionResult DevAssert(bool condition, int framesToSkip, global::Quire.DebugTools.AssertionModifiers modifiers, string message = default, params object[] messageArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool NotCalledFromApplicationLogger(global::System.Diagnostics.StackTrace stackTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -43,10 +41,6 @@ public static partial class DebugTools
     public static global::Quire.AssertionResult LogAssert(bool value, string message = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void AttemptEnablingDebugVerifications(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.AssertionResult AssertNotNull(object objectToCheck, string message = default, params object[] messageArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.AssertionResult AssertNotNullDoNotThrow(object objectToCheck, string message = default, params object[] messageArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.DebugTools+AssertionOutput, Ptc.Core")]
     private enum AssertionOutput

@@ -26,17 +26,11 @@ public partial class ChunkedMemoryStream : global::System.IO.Stream
     [global::Quire.Mirror.MirrorStub]
     private byte[][] _chunks;
     [global::Quire.Mirror.MirrorStub]
-    private bool _closed;
-    [global::Quire.Mirror.MirrorStub]
     private readonly bool _fixed;
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _readonly;
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _publiclyVisible;
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanRead { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanSeek { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool CanWrite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

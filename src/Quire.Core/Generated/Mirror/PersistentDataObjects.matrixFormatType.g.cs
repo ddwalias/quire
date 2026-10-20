@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.matrixFormatType, Ptc.Core")]
 public partial class matrixFormatType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public matrixFormatType() { }
 }

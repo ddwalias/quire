@@ -19,6 +19,4 @@ public partial class axisBaseTypeMarker : global::Quire.PersistentDataObjects.va
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public axisBaseTypeMarker() { }
 }

@@ -28,8 +28,6 @@ public static partial class XmlHelper
     [global::Quire.Mirror.MirrorStub]
     public static void UpdateNameSpace(global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> elements, string newNameSpaceName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.IO.StreamWriter CreateStreamWriterForXamlCopy(global::System.IO.Stream stream, bool leaveOpen) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static object CreateXamlCopy(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlElement GetXmlElementIfLocalNameIsSuitable(global::System.Xml.XmlNode element, string expectedLocalName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

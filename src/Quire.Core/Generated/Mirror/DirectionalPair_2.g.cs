@@ -13,12 +13,4 @@ public partial struct DirectionalPair<TLeft, TRight>
 {
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Pair<TLeft, TRight> _pair;
-    [global::Quire.Mirror.MirrorStub]
-    public TLeft Left;
-    [global::Quire.Mirror.MirrorStub]
-    public TRight Right;
-    [global::Quire.Mirror.MirrorStub]
-    public DirectionalPair(TLeft left, TRight right) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

@@ -28,34 +28,14 @@ public partial class ObservableRangeCollection<T> : global::System.Collections.O
     [global::Quire.Mirror.MirrorStub]
     int global::Quire.Wpf.INotifyCollectionRangeChanged.Count() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void AddRange(global::System.Collections.Generic.IEnumerable<T> itemsToAdd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int RemoveRange(global::System.Collections.Generic.IEnumerable<T> itemsToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void InsertItem(int index, T item) => base.InsertItem(index, item);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void MoveItem(int oldIndex, int newIndex) => base.MoveItem(oldIndex, newIndex);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void RemoveItem(int index) => base.RemoveItem(index);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetItem(int index, T item) => base.SetItem(index, item);
-    [global::Quire.Mirror.MirrorStub]
     protected override void ClearItems() => base.ClearItems();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => base.OnCollectionChanged(args);
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ObservableRangeCollection`1+RangeChangeLock, Ptc.Core")]
     private partial class RangeChangeLock : global::System.IDisposable
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly bool _oldAllowed;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Wpf.ObservableRangeCollection<T> _collecton;
-        [global::Quire.Mirror.MirrorStub]
-        public RangeChangeLock(global::Quire.Wpf.ObservableRangeCollection<T> collection) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void Dispose() { }
     }
 }

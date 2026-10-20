@@ -1,5 +1,9 @@
 #nullable disable
+using System.IO.Packaging;
+using System.Xml;
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.Serialization;
 using Quire.Serialization;
 
 namespace Quire.PersistentDataObjects;
@@ -122,4 +126,40 @@ public partial class regionBase
 
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     public SolveBlockMemberType SolveBlockMemberType { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public regionBase()
+    {
+        mc14conversionlossField = false;
+        showBorderField = false;
+    }
+
+    [MirrorVerified("Release IL")]
+    public void SetHeight(double newHeight)
+    {
+        height = newHeight;
+        heightSpecified = true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public void SetWidth(double newWidth)
+    {
+        width = newWidth;
+        widthSpecified = true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool UseOverrides => S11NProvider.UseOverrides;
+
+    [MirrorVerified("Release IL")]
+    public XmlDocument XmlContentDocument => S11NProvider.XmlContentDocument;
+
+    [MirrorVerified("Release IL")]
+    public PackagePart PackagePart => S11NProvider.PackagePart;
+
+    [MirrorVerified("Release IL")]
+    public ISerializationHelper Helper => S11NProvider.Helper;
+
+    [MirrorVerified("Release IL")]
+    public XmlNamespaceManager NameSpaceManager => S11NProvider.NameSpaceManager;
 }

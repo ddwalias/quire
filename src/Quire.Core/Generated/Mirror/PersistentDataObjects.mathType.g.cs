@@ -12,7 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class mathType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
     [global::Quire.Mirror.MirrorStub]
-    public mathType() { }
-    [global::Quire.Mirror.MirrorStub]
     public void SetXmlNodeOrSExpression(global::System.Action<global::System.Xml.XmlNode> setXmlNode, global::System.Action<string> setSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

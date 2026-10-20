@@ -50,15 +50,9 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.PreemptiveCommandBinding AddPreemptiveCommandBinding(global::System.Windows.UIElement element, global::System.Windows.Input.ICommand command, global::System.Windows.Input.ExecutedRoutedEventHandler executed, global::System.Windows.Input.CanExecuteRoutedEventHandler canExecute, bool bindingMarksEventAsHandled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string DumpLogicalTree(object root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> DumpLogicalTreeLines(object root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.IInputElement GetFocusedElementInSameScope(this global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsLogicalFocusWithin(this global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T GetFocusedAncestorOfTypeElement<T>(global::System.Windows.UIElement subElement, bool includeLogical = false) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteCommandIfFocusedElementIsDescendantOf<T>(T ancestorElement, global::System.Windows.Input.RoutedCommand command) where T : global::System.Windows.UIElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -68,15 +62,9 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static T TryFindAncestorIncludingSelfUntilGivenAncestorIsReached<T>(this global::System.Windows.DependencyObject child, global::System.Windows.DependencyObject topParent, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static T TryFindVisualAncestorUntilGivenAncestorIsReached<T>(this global::System.Windows.DependencyObject child, global::System.Windows.DependencyObject topParent, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T1 TryFindAncestorIncludingSelfLimited<T1, T2>(this global::System.Windows.DependencyObject child, bool includeLogical = false) where T1 : class where T2 : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static T1 TryFindVisualAncestorLimited<T1, T2>(this global::System.Windows.DependencyObject child, bool includeLogical = false) where T1 : class where T2 : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T TryFindAncestorIncludingSelf<T>(this global::System.Windows.DependencyObject child, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static T TryFindVisualAncestor<T>(this global::System.Windows.DependencyObject child, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyObject TryFindVisualAncestorByString(string ObjectName, global::System.Windows.DependencyObject child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -84,29 +72,11 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static T FindLogicalAncestorIncludingSelf<T>(global::System.Windows.DependencyObject currentObject) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static T FindLogicalAncestor<T>(global::System.Windows.DependencyObject child) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T FindVisualDescendantIncludingSelf<T>(global::System.Windows.DependencyObject currentObject) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T FindVisualDescendant<T>(global::System.Windows.DependencyObject parent) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteTask(global::System.Windows.Forms.MethodInvoker work, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double InchesToDips(double inches) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double DipsToInches(double dips) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double CmToDips(double cm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double DipsToCm(double dips) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int DipsToHimetric(double dips) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double HimetricToDips(int himetric) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double PointsToDips(double points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double DipsToPoints(double dips) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double DistancePointToPoint(global::System.Windows.Point pt1, global::System.Windows.Point pt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -116,10 +86,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Color GdiToWpf(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color WpfColorFromName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Brush CreateSolidWpfBrush(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static uint WpfColorToRgb(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Brush ChangeBrushColor(global::System.Windows.Media.Brush oldBrush, global::System.Drawing.Color newColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -128,23 +94,15 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static void Blink(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> elements, int period) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void Blink(global::System.Windows.UIElement element, int period) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsAncestorOf(global::System.Windows.DependencyObject possibleAncestor, global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Stall(int milliseconds, global::System.Windows.Threading.DispatcherPriority priorityOfEventsToProcess) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetPropertyAndNotify<T>(ref T property, T value, global::System.ComponentModel.INotifyPropertyChanged propertyOwner, global::System.ComponentModel.PropertyChangedEventHandler propertyChanged, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void DoEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void DoEvents(global::System.Windows.Threading.Dispatcher dispatcher, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool WaitForIdle(global::System.Threading.Thread thread) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool WaitForIdle(global::System.Threading.Thread thread, global::System.TimeSpan timeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ForceRendering(global::System.Windows.UIElement pageVisual, global::System.Windows.Size sz) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -163,8 +121,6 @@ public static partial class WpfUtils
     public static T GetParent<T>(global::System.Windows.DependencyObject d) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyObject FindParentInGroup(global::System.Windows.DependencyObject element, global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object GetDefaultValueFromAttribute(object component, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -203,6 +159,4 @@ public static partial class WpfUtils
     public static void CreateVisualTreeForPrinting(global::System.Windows.Controls.Primitives.Popup popup, long maxUpdateLayoutTimeMsec) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsWaitingForPrintoutReady(global::System.Diagnostics.Stopwatch stopwatch, ref long maxUpdateLayoutTimeMsec, ref bool isTreeLoaded, ref int attemptNumber, ref int nLoadingAttempts, ref int totalLoadingAttempts, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.MessageBoxResult DisplayQuestionMessage(string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -20,35 +20,7 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public const string DefaultTextFormatFontFamiliy = "Tahoma";
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontFamilyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontSizeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontWeightProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FontStyleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextDecorationsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty VariantsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BackgroundProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ForegroundProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MarginProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextAlignmentProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextAlignmentExtProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StyleKeyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty NameProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MarkerStyleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextIndentProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Core.TextFormat DefaultTextFormat;
     [global::Quire.Mirror.MirrorStub]
@@ -56,53 +28,11 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TextFormatProperty;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextMarkerStyle MarkerStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextAlignment TextAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextAlignmentExt TextAlignmentExt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.FontFamily FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public double FontSizeInPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Thickness> Margin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FontWeight FontWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string StyleKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FontStyle FontStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.TextDecorationCollection TextDecorations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.FontVariants Variants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double TextIndent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Foreground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool MixedFontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TextFormat() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetDefaults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public TextFormat(string styleKey) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextFormat(global::Quire.TextStyleData textStyleData) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextFormat(global::Quire.Core.TextFormat tf) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextFormat(global::Quire.Core.TextFormat parenTextFormat, global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) { }
-    [global::Quire.Mirror.MirrorStub]
-    public TextFormat(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) { }
     [global::Quire.Mirror.MirrorStub]
     public TextFormat(global::System.Windows.Documents.FlowDocument document) { }
     [global::Quire.Mirror.MirrorStub]
@@ -111,8 +41,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     public TextFormat(global::Quire.Core.TextFormat tf, global::Quire.Core.TextFormat agreesWith) { }
     [global::Quire.Mirror.MirrorStub]
     private void Initialize(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateTextStyleData(global::Quire.TextStyleData textStyleData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTextFormat(global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -137,12 +65,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     public static void SetTextFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.FlowDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void CopyTextFormat(global::System.Windows.Documents.FlowDocument from, global::System.Windows.Documents.FlowDocument to) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.TextRange TextRange(global::System.Windows.Controls.RichTextBox text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ApplyTextFormat(global::System.Windows.Documents.TextRange textRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool AreColorsEqual(global::System.Windows.Media.Brush first, global::System.Windows.Media.Brush second, bool assertOnNull = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

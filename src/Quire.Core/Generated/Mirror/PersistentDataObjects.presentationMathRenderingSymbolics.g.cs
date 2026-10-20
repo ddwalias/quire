@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationMathRenderingSymbolics, Ptc.Core")]
 public partial class presentationMathRenderingSymbolics
 {
-    [global::Quire.Mirror.MirrorStub]
-    public presentationMathRenderingSymbolics() { }
 }

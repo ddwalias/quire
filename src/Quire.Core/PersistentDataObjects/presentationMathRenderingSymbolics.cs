@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -22,4 +23,12 @@ public partial class presentationMathRenderingSymbolics
 
     [MirrorVerified("PtcPersistentDataObjectspresentationMathRenderingSymbolicsMechanicalDifferentialTests")]
     public bool evaluateinplace { get => evaluateinplaceField; set => evaluateinplaceField = value; }
+
+    [MirrorVerified("Release IL")]
+    public presentationMathRenderingSymbolics()
+    {
+        derivationstepsstyleField = presentationMathRenderingSymbolicsDerivationstepsstyle.verticalinsert;
+        showcommentsField = false;
+        evaluateinplaceField = false;
+    }
 }

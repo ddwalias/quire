@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -40,4 +41,15 @@ public partial class calculationBuiltInVariables
 
     [MirrorVerified("PtcPersistentDataObjectscalculationBuiltInVariablesMechanicalDifferentialTests")]
     public string prncolwidth { get => prncolwidthField; set => prncolwidthField = value; }
+
+    [MirrorVerified("Release IL")]
+    public calculationBuiltInVariables()
+    {
+        arrayoriginField = "0";
+        convergencetoleranceField = 0.001;
+        constrainttoleranceField = 0.001;
+        randomseedField = "1";
+        prnprecisionField = "4";
+        prncolwidthField = "8";
+    }
 }

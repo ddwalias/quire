@@ -14,15 +14,7 @@ public partial class DoubleComparer : global::System.Collections.Generic.ICompar
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.DoubleComparer DefaultDoubleComparer;
     [global::Quire.Mirror.MirrorStub]
-    public DoubleComparer(double epsilon) { }
-    [global::Quire.Mirror.MirrorStub]
     public int Compare(double x, double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(global::System.Windows.Point pt1, global::System.Windows.Point pt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(global::System.Windows.Media.Media3D.Point3D pt1, global::System.Windows.Media.Media3D.Point3D pt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int Compare(global::System.Windows.Rect rect1, global::System.Windows.Rect rect2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int Compare(global::System.Collections.Generic.IEnumerable<double> seq1, global::System.Collections.Generic.IEnumerable<double> seq2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

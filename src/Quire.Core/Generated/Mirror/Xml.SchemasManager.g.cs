@@ -43,8 +43,6 @@ public static partial class SchemasManager
         [global::Quire.Mirror.MirrorStub]
         public global::System.Xml.Schema.XmlSchemaSet CompiledSchemaSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public SchemaData(string name) { }
-        [global::Quire.Mirror.MirrorStub]
         public static implicit operator string(global::Quire.Xml.SchemasManager.SchemaData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

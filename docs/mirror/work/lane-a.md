@@ -1,12 +1,13 @@
 # Lane A — Quire.Core
 
 - Scope: all managed members in `src/Quire.Core`, including former C/D tier members (D18).
-- Status: awaiting a user-started Codex/AGY/Claude thread; no active worker.
-- Create worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Create unique branch from current `main`: `mirror/a-core-<unique>`.
+- Status: active; passing batches are being landed.
+- Owner: Lane A.
+- Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
 - Original: Use the assembly map for all original assemblies consolidated into Quire.Core.
-- Selected members: unclaimed; choose a coherent unfinished group from the Release inventory.
-- Release IL report: none from this lane yet; assembly completion remains unconfirmed.
+- Selected members: first mechanical batch, 346 accepted methods (+63 fields), plus `DirectionalPair` constructor reconstruction; 12 mechanical candidates rejected by MemberGen.
+- Release IL report: `.mirror-cache/release-il-04c635452f84/release-il.json` — PASS, 2,272 checked, 0 mismatches.
+- Remaining mismatches: 1,848 unfinished methods in the full Quire.Core inventory; assembly completion unconfirmed.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
 All former reservations are released. Preserve previously exact methods, land passing

@@ -14,11 +14,7 @@ public partial class RoutedUICommandWithFunctionalityParameterKey : global::Quir
     [global::Quire.Mirror.MirrorStub]
     public virtual global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey>> ParameterToFunctionalityKeyDictionaryList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public RoutedUICommandWithFunctionalityParameterKey(string text, string name, global::System.Type ownerType, global::System.Collections.Generic.Dictionary<object, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey> parametersToFunctionalityDictionary) { }
-    [global::Quire.Mirror.MirrorStub]
     public RoutedUICommandWithFunctionalityParameterKey(string text, string name, global::System.Type ownerType, global::System.Collections.Generic.IEqualityComparer<object> comparer = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SetFunctionalityKeyAccordingParameter(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ContainsParameter(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

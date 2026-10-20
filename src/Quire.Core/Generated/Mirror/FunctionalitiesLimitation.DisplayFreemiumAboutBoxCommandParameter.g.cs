@@ -11,12 +11,4 @@ namespace Quire.FunctionalitiesLimitation;
 [global::Quire.Mirror.MirrorOf("Ptc.FunctionalitiesLimitation.DisplayFreemiumAboutBoxCommandParameter, Ptc.Core")]
 public partial struct DisplayFreemiumAboutBoxCommandParameter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.IPositionProvider LockedItem;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey FunctionalityKey;
-    [global::Quire.Mirror.MirrorStub]
-    public DisplayFreemiumAboutBoxCommandParameter(global::Quire.IPositionProvider lockedItem, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionalityKey) { }
-    [global::Quire.Mirror.MirrorStub]
-    public DisplayFreemiumAboutBoxCommandParameter(global::System.Windows.FrameworkElement lockedItem, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionalityKey) { }
 }

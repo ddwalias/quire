@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.textEmbeddedRegionType, Ptc.Core")]
 public partial class textEmbeddedRegionType : global::Quire.PersistentDataObjects.regionInTextBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object Item { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

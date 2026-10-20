@@ -96,9 +96,5 @@ public static partial class XmlWorksheetData
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNamespaceManager createMathcad14NamespaceManager(global::System.Xml.XmlDocument xmlDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void AddMathcad14MLNamespaces(global::System.Xml.XmlNamespaceManager nmsmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void AddMcdxMLNamespaces(global::System.Xml.XmlNamespaceManager nmsmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode XmlElementFromString(string xml) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

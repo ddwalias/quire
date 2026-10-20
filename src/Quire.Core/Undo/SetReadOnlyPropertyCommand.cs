@@ -1,5 +1,7 @@
 #nullable disable
 using System.Windows;
+using System.Windows;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Undo;
@@ -14,4 +16,10 @@ public partial class SetReadOnlyPropertyCommand
 
     [MirrorVerified("PtcUndoSetReadOnlyPropertyCommandMechanicalDifferentialTests")]
     protected override object Value { get => base.Value; set => _dependencyObject.SetValue(_dependencyPropertyKey, value); }
+
+    [MirrorVerified("Release IL")]
+    public SetReadOnlyPropertyCommand(DependencyObject dependencyObject, DependencyPropertyKey dependencyPropertyKey, object newValue) : base(dependencyObject, dependencyPropertyKey.DependencyProperty, newValue)
+    {
+        _dependencyPropertyKey = dependencyPropertyKey;
+    }
 }

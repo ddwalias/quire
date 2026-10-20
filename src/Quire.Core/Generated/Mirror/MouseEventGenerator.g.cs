@@ -28,14 +28,6 @@ public partial class MouseEventGenerator
     [global::Quire.Mirror.MirrorStub]
     public static void GenerateMouseMove(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void GenerateMouseClick(double screenX, double screenY, int repeatCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void GenerateMouseClick(double screenX, double screenY) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void GenerateMouseDrag(global::System.Windows.Point startScreenPoint, global::System.Windows.Point endScreenPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void MouseClickFromNormalizedCoordinates(int x, int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void SendMouseInput(int x, int y, global::Quire.Win32.SendMouseInputFlags flags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void NormalizeCoordinates(global::System.Windows.Point rawPoint, out int x, out int y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

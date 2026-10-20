@@ -1,5 +1,7 @@
 #nullable disable
 using System.Windows.Input;
+using System.Windows.Input;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Wpf;
@@ -35,4 +37,7 @@ public partial class EditorGesture
 
     [MirrorVerified("PtcWpfEditorGestureMechanicalDifferentialTests")]
     public static bool operator ==(EditorGesture left, EditorGesture right) => object.Equals(left, right);
+
+    [MirrorVerified("Release IL")]
+    public static bool operator !=(EditorGesture left, EditorGesture right) => !(left == right);
 }

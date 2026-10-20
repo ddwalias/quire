@@ -1,4 +1,6 @@
 #nullable disable
+using System.Diagnostics;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Services;
@@ -13,4 +15,7 @@ public partial class ApplicationLogger
 
     [MirrorVerified("PtcServicesApplicationLoggerMechanicalDifferentialTests")]
     public bool IsConnected { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public string GetApplicationMemoryUsage() => string.Format("Memory in use : {0:0.##} MB total, {1:0.##} MB managed", (double)Process.GetCurrentProcess().PrivateMemorySize64 / Math.Pow(2.0, 20.0), (double)GC.GetTotalMemory(false) / Math.Pow(2.0, 20.0));
 }

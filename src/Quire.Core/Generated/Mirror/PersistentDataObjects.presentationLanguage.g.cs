@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationLanguage, Ptc.Core")]
 public partial class presentationLanguage
 {
-    [global::Quire.Mirror.MirrorStub]
-    public presentationLanguage() { }
 }

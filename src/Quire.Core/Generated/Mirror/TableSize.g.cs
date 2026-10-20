@@ -12,19 +12,13 @@ namespace Quire;
 public partial struct TableSize
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Discrete2DCoordinate _coordinate;
-    [global::Quire.Mirror.MirrorStub]
     public int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public TableSize(int rows, int columns) { }
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public static bool operator ==(global::Quire.TableSize a, global::Quire.TableSize b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator !=(global::Quire.TableSize a, global::Quire.TableSize b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Equals(global::Quire.TableSize obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

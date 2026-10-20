@@ -1,5 +1,7 @@
 #nullable disable
 using System.Xml;
+using System.Xml;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Xml;
@@ -56,4 +58,34 @@ public partial class XmlNodeWriter
 
     [MirrorVerified("PtcXmlXmlNodeWriterMechanicalDifferentialTests")]
     public override WriteState WriteState => _writeState;
+
+    [MirrorVerified("Release IL")]
+    private XmlNode _currentNode;
+
+    [MirrorVerified("Release IL")]
+    public override void WriteEndElement() => _currentNode = _currentNode.ParentNode;
+
+    [MirrorVerified("Release IL")]
+    public override void WriteFullEndElement() => _currentNode = _currentNode.ParentNode;
+
+    [MirrorVerified("Release IL")]
+    private readonly XmlDocument _xmlDocument;
+
+    [MirrorVerified("Release IL")]
+    public override void WriteStartAttribute(string prefix, string localName, string ns) => _currentNode = _currentNode.Attributes.Append(_xmlDocument.CreateAttribute(prefix, localName, ns));
+
+    [MirrorVerified("Release IL")]
+    public override void WriteEndAttribute() => _currentNode = ((XmlAttribute)_currentNode).OwnerElement;
+
+    [MirrorVerified("Release IL")]
+    public override void WriteString(string text) => _currentNode.AppendChild(_xmlDocument.CreateTextNode(text));
+
+    [MirrorVerified("Release IL")]
+    public override void WriteRaw(string data) => _currentNode.AppendChild(_xmlDocument.CreateTextNode(data));
+
+    [MirrorVerified("Release IL")]
+    public override void WriteBase64(byte[] buffer, int index, int count) => _currentNode.AppendChild(_xmlDocument.CreateTextNode(Convert.ToBase64String(buffer, index, count, (Base64FormattingOptions)0)));
+
+    [MirrorVerified("Release IL")]
+    public override void Close() => _currentNode = null;
 }

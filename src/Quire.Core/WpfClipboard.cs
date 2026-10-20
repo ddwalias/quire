@@ -1,5 +1,7 @@
 #nullable disable
 using System.Windows;
+using System.Windows;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire;
@@ -73,4 +75,7 @@ public partial class WpfClipboard
         [MirrorVerified("PtcWpfClipboardMechanicalDifferentialTests")]
         public void Dispose() => _current = _oldClipboard;
     }
+
+    [MirrorVerified("Release IL")]
+    public string GetSExpression() => Clipboard.GetData(_mathNodeSExpression) as string;
 }

@@ -12,12 +12,6 @@ namespace Quire.FunctionalitiesLimitation;
 public partial class InputBindingFunctionalityCommandWrapper : global::Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper
 {
     [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InputBindingFunctionalityCommandWrapper(global::System.Windows.Input.RoutedUICommand nestedCommand) : base(default(global::System.Windows.Input.RoutedUICommand)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Execute(object parameter) => base.Execute(parameter);
-    [global::Quire.Mirror.MirrorStub]
     public bool CanExecute(object parameter, global::System.Windows.IInputElement commandTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool CanExecute(object parameter) => base.CanExecute(parameter);

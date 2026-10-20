@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.calculationBuiltInVariables, Ptc.Core")]
 public partial class calculationBuiltInVariables
 {
-    [global::Quire.Mirror.MirrorStub]
-    public calculationBuiltInVariables() { }
 }

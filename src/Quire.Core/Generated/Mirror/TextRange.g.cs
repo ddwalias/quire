@@ -12,21 +12,7 @@ namespace Quire;
 public partial struct TextRange
 {
     [global::Quire.Mirror.MirrorStub]
-    public readonly int CaretPosition;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly int SelectionStart;
-    [global::Quire.Mirror.MirrorStub]
-    public readonly int SelectionEnd;
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasSelection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int SelectionLength { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public TextRange(int startPosition, int endPosition) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.TextRange CreateRange(int caretPosition, int offsetFromCaret) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     public bool IsEquivalentTo(global::Quire.TextRange another) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -18,9 +18,5 @@ public partial class HashAlgorithmProvider : global::Quire.IHashAlgorithmProvide
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Security.Cryptography.HashAlgorithm CreateHash() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public byte[] ComputeHash(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public byte[] ComputeHash(byte[] sourceBytes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
 }

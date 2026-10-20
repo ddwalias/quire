@@ -20,10 +20,6 @@ public partial class MatrixHelper
     [global::Quire.Mirror.MirrorStub]
     public static int IndexOf(int row, int column, int numOfColumns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int RowOf(int index, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int ColumnOf(int index, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T[] AddRow<T>(int rowToAdd, int rows, int cols, T[] elements, global::Quire.DelegateFunction0<T> createDefaultElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T[] AddColumn<T>(int colToAdd, int rows, int cols, T[] elements, global::Quire.DelegateFunction0<T> createDefaultElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -31,8 +27,6 @@ public partial class MatrixHelper
     public static T[] DeleteRow<T>(int rowToDelete, int rows, int cols, T[] elements) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T[] DeleteColumn<T>(int colToDelete, int rows, int cols, T[] elements) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<int> SubMatrixIndices(int corner1, int corner2, int columnCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

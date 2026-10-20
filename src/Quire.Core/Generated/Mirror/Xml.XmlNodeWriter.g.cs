@@ -14,27 +14,7 @@ public partial class XmlNodeWriter : global::System.Xml.XmlWriter
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Xml.XmlNode _xmlNode;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.XmlNode _currentNode;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Xml.XmlDocument _xmlDocument;
-    [global::Quire.Mirror.MirrorStub]
     public XmlNodeWriter(global::System.Xml.XmlNode node) { }
     [global::Quire.Mirror.MirrorStub]
     public override void WriteStartElement(string prefix, string localName, string ns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteEndElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteFullEndElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteStartAttribute(string prefix, string localName, string ns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteEndAttribute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteString(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteRaw(string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void WriteBase64(byte[] buffer, int index, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Close() => base.Close();
 }

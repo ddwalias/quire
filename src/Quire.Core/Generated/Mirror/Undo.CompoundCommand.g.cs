@@ -21,6 +21,4 @@ public partial class CompoundCommand : global::System.Collections.Generic.List<g
     public virtual void RedoSideEffects() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public virtual void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

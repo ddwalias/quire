@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -64,4 +65,19 @@ public partial class calculationCalculationBehavior
 
     [MirrorVerified("PtcPersistentDataObjectscalculationCalculationBehaviorMechanicalDifferentialTests")]
     public SymbolicEngineType symbolicengine { get => symbolicengineField; set => symbolicengineField = value; }
+
+    [MirrorVerified("Release IL")]
+    public calculationCalculationBehavior()
+    {
+        stringsuseoriginField = false;
+        automaticrecalculationField = true;
+        matrixstrictsingularitycheckField = false;
+        optimizeexpressionsField = false;
+        exactbooleanField = false;
+        unitsinsymbolicsField = false;
+        constantsinsymbolicsField = false;
+        binocthexmodeField = false;
+        zerooverzeroField = calculationCalculationBehaviorZerooverzero.error;
+        symbolicengineField = SymbolicEngineType.unset;
+    }
 }

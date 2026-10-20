@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -34,4 +35,12 @@ public partial class plotTitleType
 
     [MirrorVerified("PtcPersistentDataObjectsplotTitleTypeMechanicalDifferentialTests")]
     public bool isvertical { get => isverticalField; set => isverticalField = value; }
+
+    [MirrorVerified("Release IL")]
+    public plotTitleType()
+    {
+        displayField = false;
+        titlepositionField = "PlotBoundaryTop";
+        isverticalField = false;
+    }
 }

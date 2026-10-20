@@ -32,8 +32,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromElement(global::System.Windows.FrameworkElement element, double dpiX, double dpiY, global::System.Windows.Documents.AdornerDecorator decoratorAncestor, global::System.Windows.Media.Visual rootVisual, global::System.Nullable<global::System.Windows.Rect> bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Size GetArchitectureIndependentSize(global::System.Windows.Media.Imaging.BitmapSource bitmapSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, global::System.Windows.Rect box, global::System.Windows.Media.Visual visual, bool coerceBoxPoints, global::System.Windows.Media.GeneralTransform transformToRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.VisualBrush CreateVisualBrush(global::System.Windows.Media.Visual visual, global::System.Windows.Rect box, bool stretch = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -41,8 +39,6 @@ public partial class ImageUtils
     private static global::System.Uri CopyStreamToTempFile(global::System.IO.Stream source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CopyImageToTempBitmap(global::System.Uri sourceUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Uri CopyImageToTempBitmap(global::System.IO.Stream sourceStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CopyImageToTempBitmap(global::System.Windows.Media.ImageSource imageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -61,8 +57,6 @@ public partial class ImageUtils
     private static bool SafeCopyImageFromPackage(global::System.Uri sourceUri, byte[] originalStreamHash, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool CopyImage(global::System.Uri sourceUri, byte[] originalStreamHash, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int BytesNeeded(int bits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void CopyPixelsToStream(global::System.Windows.Media.Imaging.BitmapSource source, global::System.IO.Stream target, global::System.Nullable<int> maxBufferSize = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

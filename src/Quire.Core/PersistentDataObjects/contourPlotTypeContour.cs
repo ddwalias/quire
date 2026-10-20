@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -70,4 +71,17 @@ public partial class contourPlotTypeContour
 
     [MirrorVerified("PtcPersistentDataObjectscontourPlotTypeContourMechanicalDifferentialTests")]
     public bool resultRefSpecified { get => resultRefFieldSpecified; set => resultRefFieldSpecified = value; }
+
+    [MirrorVerified("Release IL")]
+    public contourPlotTypeContour()
+    {
+        symbolField = traceSymbolType.none;
+        symbolweightField = 1.0;
+        symbolfrequencyField = 1u;
+        linestyleField = traceLineStyle.Solid;
+        lineweightField = 1.0;
+        automaticStyleField = false;
+        colorschemeField = colorSchemeType.rainbow;
+        showlablesField = true;
+    }
 }

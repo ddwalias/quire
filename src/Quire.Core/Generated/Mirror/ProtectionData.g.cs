@@ -14,9 +14,5 @@ public partial class ProtectionData : global::System.ComponentModel.INotifyPrope
     [global::Quire.Mirror.MirrorStub]
     public ProtectionData(string password, global::System.Nullable<global::System.DateTime> timestamp, bool showTimestamp, global::Quire.ProtectionLevel protectionLevel) { }
     [global::Quire.Mirror.MirrorStub]
-    public ProtectionData(global::Quire.PersistentData.ProtectionDataType persistentData) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ProtectionData(global::Quire.ProtectionData protectionData, global::System.Version formatVersion) { }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.ProtectionDataType GetProtectionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

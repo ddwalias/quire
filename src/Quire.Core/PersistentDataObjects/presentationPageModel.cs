@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -142,4 +143,30 @@ public partial class presentationPageModel
 
     [MirrorVerified("PtcPersistentDataObjectspresentationPageModelMechanicalDifferentialTests")]
     public bool isfirstpageheaderfooterdifferent { get => isfirstpageheaderfooterdifferentField; set => isfirstpageheaderfooterdifferentField = value; }
+
+    [MirrorVerified("Release IL")]
+    public presentationPageModel()
+    {
+        showpageframeField = false;
+        showheaderframeField = false;
+        showfooterframeField = false;
+        pagewidthField = 0f;
+        pageheightField = 0f;
+        papercodeField = presentationPageModelPapercode.Letter;
+        gridsizeField = presentationPageModelGridsize.Standard;
+        orientationField = presentationPageModelOrientation.Portrait;
+        margintypeField = presentationPageModelMargintype.Standard;
+        showgridField = true;
+        showhfgridField = false;
+        useMajorGridLinesField = false;
+        useHFMajorGridLinesField = false;
+        printsinglepagewidthField = false;
+        plotbackgroundtypeField = BackgroundType.paper;
+        showinputoutputtagField = true;
+        oleobjectpreserveaspectratioField = true;
+        spellcheckenabledField = true;
+        startingpagenumberField = "1";
+        totalpagesoffsetField = "0";
+        isfirstpageheaderfooterdifferentField = false;
+    }
 }

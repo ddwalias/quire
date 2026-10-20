@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.Matrices;
 
@@ -7,4 +8,13 @@ public partial class MatrixHelper
 {
     [MirrorVerified("PtcMatricesMatrixHelperMechanicalDifferentialTests")]
     public MatrixHelper() { }
+
+    [MirrorVerified("Release IL")]
+    public static int RowOf(int index, int columns) => index / columns;
+
+    [MirrorVerified("Release IL")]
+    public static int ColumnOf(int index, int columns) => index % columns;
+
+    [MirrorVerified("Release IL")]
+    public static DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => new DiscreteRect(RowOf(corner1, columns), ColumnOf(corner1, columns), RowOf(corner2, columns), ColumnOf(corner2, columns));
 }

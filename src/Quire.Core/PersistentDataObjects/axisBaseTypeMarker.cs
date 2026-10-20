@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -40,4 +41,12 @@ public partial class axisBaseTypeMarker
 
     [MirrorVerified("PtcPersistentDataObjectsaxisBaseTypeMarkerMechanicalDifferentialTests")]
     public bool valueSpecified { get => valueFieldSpecified; set => valueFieldSpecified = value; }
+
+    [MirrorVerified("Release IL")]
+    public axisBaseTypeMarker()
+    {
+        displayField = false;
+        linestyleField = traceLineStyle.Solid;
+        lineweightField = 1.0;
+    }
 }

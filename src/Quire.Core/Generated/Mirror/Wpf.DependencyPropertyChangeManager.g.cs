@@ -34,16 +34,10 @@ public static partial class DependencyPropertyChangeManager
         [global::Quire.Mirror.MirrorStub]
         private readonly global::System.Windows.DependencyProperty _sourceProperty;
         [global::Quire.Mirror.MirrorStub]
-        public static readonly global::System.Windows.DependencyProperty ValueProperty;
-        [global::Quire.Mirror.MirrorStub]
         public DependencyPropertyChangeNotifier(global::System.Windows.DependencyProperty property, global::System.Windows.DependencyObject sourceObject) { }
         [global::Quire.Mirror.MirrorStub]
         private static void HandleValueChanged(global::System.Windows.DependencyObject dObj, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        public bool HasSourcePropertyChangedHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void FireSourcePropertyChanged(object oldValue, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void Dispose() { }
     }
 }

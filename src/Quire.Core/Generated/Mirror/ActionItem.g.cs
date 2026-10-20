@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ActionItem, Ptc.Core")]
 public partial class ActionItem : global::Quire.Undo.CommandEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ActionItem(global::Quire.Undo.CommandEventArgs commandEventArgs) : base(default(global::Quire.Undo.IUndoableCommand), default(global::Quire.Undo.CommandEventArgs.ActionTypeEnum)) { }
 }

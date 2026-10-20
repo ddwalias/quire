@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationMathRenderingOperators, Ptc.Core")]
 public partial class presentationMathRenderingOperators
 {
-    [global::Quire.Mirror.MirrorStub]
-    public presentationMathRenderingOperators() { }
 }

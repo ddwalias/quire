@@ -20,11 +20,5 @@ public static partial class AppVersionProvider
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Xml.AppVersionData VersionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Version CurrentAppVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Version CurrentFormatVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Version CurrentEngNbVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Xml.AppVersionData LoadVersionData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

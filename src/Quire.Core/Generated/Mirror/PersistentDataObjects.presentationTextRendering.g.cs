@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationTextRendering, Ptc.Core")]
 public partial class presentationTextRendering
 {
-    [global::Quire.Mirror.MirrorStub]
-    public presentationTextRendering(global::Quire.PersistentDataObjects.presentationTextRenderingTextStyle[] mathcad1XStyles) { }
 }

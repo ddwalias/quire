@@ -23,6 +23,4 @@ public static partial class ColorUtilities
     public static global::System.Collections.Generic.List<global::System.Windows.Media.Color> GetShadesList(global::System.Collections.Generic.List<global::System.Windows.Media.Color> hueColors, global::System.Windows.Media.Color shadeColor, float weightG = 0.5f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<global::System.Windows.Media.Color> DistributeColors(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::System.Windows.Media.Color>> colorsTable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<global::System.Windows.Media.Color> BuildDistributedDistinctColorsTable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

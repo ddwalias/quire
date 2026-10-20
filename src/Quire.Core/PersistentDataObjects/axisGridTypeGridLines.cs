@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -16,4 +17,11 @@ public partial class axisGridTypeGridLines
 
     [MirrorVerified("PtcPersistentDataObjectsaxisGridTypeGridLinesMechanicalDifferentialTests")]
     public bool display { get => displayField; set => displayField = value; }
+
+    [MirrorVerified("Release IL")]
+    public axisGridTypeGridLines()
+    {
+        colorField = "#FFA1A3A6";
+        displayField = false;
+    }
 }

@@ -22,7 +22,5 @@ public static partial class TextRegionSerializationHelper
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNamespaceManager CreateNamespaceManagerForTextRegions(global::System.Xml.XmlNode root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Serialization.TextRangeExtended GetTextRangeFromStartToEnd(global::System.Windows.Documents.FlowDocument flowDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void CopyImagesFromPackageIntoFlowDocument(global::System.Xml.XmlNode flowDocumentXaml, global::Quire.Serialization.IDeS11NProvider d11NProvider, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

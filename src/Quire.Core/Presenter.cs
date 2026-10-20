@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire;
 
@@ -19,4 +20,11 @@ public partial class Presenter<ModelType, ViewType>
 
     [MirrorVerified("PtcPresenter2MechanicalDifferentialTests")]
     public virtual ModelType Model { get => _model; set => _model = value; }
+
+    [MirrorVerified("Release IL")]
+    public Presenter(ModelType model, ViewType view)
+    {
+        _view = view;
+        _model = model;
+    }
 }

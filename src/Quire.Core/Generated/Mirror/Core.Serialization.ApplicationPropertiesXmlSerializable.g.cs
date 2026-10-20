@@ -12,13 +12,9 @@ namespace Quire.Core.Serialization;
 public partial class ApplicationPropertiesXmlSerializable : global::System.Xml.Serialization.IXmlSerializable, global::Quire.Serialization.IShouldValidate
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.Schema.XmlSchema GetSchema() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.PersistentDataObjects.propertiesType DeserializeAppProperties(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool TryGetFormatVersionFromFile(string filePath, out global::System.Version formatVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

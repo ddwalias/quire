@@ -1,5 +1,10 @@
 #nullable disable
+using System.Windows;
+using System.Windows.Documents;
 using System.Xml;
+using System.Xml;
+using Quire.Core;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
@@ -59,4 +64,13 @@ public partial class textType
 
     [MirrorVerified("PtcPersistentDataObjectstextTypeMechanicalDifferentialTests")]
     public List<string> MC14ConversionLossAnnotationsLocal { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public void ApplyTextFormatPropertyValueToControl(DependencyProperty property, object value, Block block = default) => TextFormat.SetTextFormat(property, value, DocumentWithTextFormat);
+
+    [MirrorVerified("Release IL")]
+    public static TextPointer GetPositionAtOffset(FlowDocument document, int offset) => document.ContentStart.GetPositionAtOffset(offset);
+
+    [MirrorVerified("Release IL")]
+    public static int GetOffsetToPosition(FlowDocument document, TextPointer position) => document.ContentStart.GetOffsetToPosition(position);
 }

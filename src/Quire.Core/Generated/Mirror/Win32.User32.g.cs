@@ -173,12 +173,6 @@ public static partial class User32
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Win32.User32.HWND Cast(nint hwnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        public static bool operator ==(global::Quire.Win32.User32.HWND lhs, global::Quire.Win32.User32.HWND rhs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public static bool operator !=(global::Quire.Win32.User32.HWND lhs, global::Quire.Win32.User32.HWND rhs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public override bool Equals(object oCompare) => base.Equals(oCompare);
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
     }
 }

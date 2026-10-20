@@ -23,6 +23,4 @@ public partial class EditorGesture
     public bool Equals(global::Quire.Wpf.EditorGesture other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator !=(global::Quire.Wpf.EditorGesture left, global::Quire.Wpf.EditorGesture right) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

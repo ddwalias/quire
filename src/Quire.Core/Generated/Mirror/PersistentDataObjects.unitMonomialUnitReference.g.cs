@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.unitMonomialUnitReference, Ptc.Core")]
 public partial class unitMonomialUnitReference
 {
-    [global::Quire.Mirror.MirrorStub]
-    public unitMonomialUnitReference() { }
 }

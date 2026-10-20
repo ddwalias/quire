@@ -11,12 +11,4 @@ namespace Quire.FunctionalitiesLimitation;
 [global::Quire.Mirror.MirrorOf("Ptc.FunctionalitiesLimitation.FunctionalityItem, Ptc.Core")]
 public partial class FunctionalityItem
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey FunctionalityKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.FunctionalitiesLimitation.FunctionalityItem Parent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.FunctionalitiesLimitation.EnumFunctionalityRelationType FunctionalityRelationType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FunctionalityItem() { }
 }

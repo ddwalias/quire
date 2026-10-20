@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -22,4 +23,12 @@ public partial class resultFormatTypeUnit
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatTypeUnitMechanicalDifferentialTests")]
     public bool fractionalunitexponent { get => fractionalunitexponentField; set => fractionalunitexponentField = value; }
+
+    [MirrorVerified("Release IL")]
+    public resultFormatTypeUnit()
+    {
+        formatunitsField = true;
+        simplifyunitsField = true;
+        fractionalunitexponentField = false;
+    }
 }

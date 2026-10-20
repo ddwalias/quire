@@ -11,6 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.MaybeHasPointThatSnapsToPixelExtensions, Ptc.Core")]
 public static partial class MaybeHasPointThatSnapsToPixelExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasPointThatSnapsToPixel(this global::Quire.Core.IMaybeHasPointThatSnapsToPixel item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

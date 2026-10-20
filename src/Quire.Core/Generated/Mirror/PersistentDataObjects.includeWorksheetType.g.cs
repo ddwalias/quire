@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.includeWorksheetType, Ptc.Core")]
 public partial class includeWorksheetType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public includeWorksheetType() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.calculationCalculationBehavior, Ptc.Core")]
 public partial class calculationCalculationBehavior
 {
-    [global::Quire.Mirror.MirrorStub]
-    public calculationCalculationBehavior() { }
 }

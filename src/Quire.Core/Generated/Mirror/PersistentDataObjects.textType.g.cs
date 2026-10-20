@@ -41,10 +41,4 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     private global::System.Windows.Documents.FlowDocument LoadFlowDocumentFromInnerXml() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemovePageGapContainers(global::System.Xml.XmlNode xmlNode, global::System.Xml.XmlNamespaceManager nsManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ApplyTextFormatPropertyValueToControl(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.Block block = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.TextPointer GetPositionAtOffset(global::System.Windows.Documents.FlowDocument document, int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetOffsetToPosition(global::System.Windows.Documents.FlowDocument document, global::System.Windows.Documents.TextPointer position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

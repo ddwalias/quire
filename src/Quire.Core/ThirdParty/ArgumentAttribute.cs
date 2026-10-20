@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.ThirdParty;
 
@@ -40,4 +41,16 @@ public partial class ArgumentAttribute
 
     [MirrorVerified("PtcThirdPartyArgumentAttributeMechanicalDifferentialTests")]
     public string ValidValues { get => validValues; set => validValues = value; }
+
+    [MirrorVerified("Release IL")]
+    public bool DefaultShortName => shortName == null;
+
+    [MirrorVerified("Release IL")]
+    public bool DefaultLongName => longName == null;
+
+    [MirrorVerified("Release IL")]
+    public bool HasDefaultValue => defaultValue != null;
+
+    [MirrorVerified("Release IL")]
+    public bool HasHelpText => helpText != null;
 }

@@ -15,6 +15,4 @@ internal partial class Constants
     public const string ConverterProductName = "WorksheetConverter";
     [global::Quire.Mirror.MirrorStub]
     public const string ConverterExe = "WorksheetConverter.exe";
-    [global::Quire.Mirror.MirrorStub]
-    public Constants() { }
 }

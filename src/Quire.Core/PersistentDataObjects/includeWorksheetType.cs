@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -55,4 +56,11 @@ public partial class includeWorksheetType
 
     [MirrorVerified("PtcPersistentDataObjectsincludeWorksheetTypeMechanicalDifferentialTests")]
     public bool IsCalculationDisabled => disablecalc;
+
+    [MirrorVerified("Release IL")]
+    public includeWorksheetType()
+    {
+        usedcacheField = true;
+        disablecalcField = false;
+    }
 }

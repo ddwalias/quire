@@ -1,5 +1,7 @@
 #nullable disable
 using System.Windows;
+using System.Windows;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire;
@@ -41,4 +43,18 @@ public partial class TextStyleData
 
     [MirrorVerified("PtcTextStyleDataMechanicalDifferentialTests")]
     public static event Delegate1<TextStyleData> StyleChanged;
+
+    [MirrorVerified("Release IL")]
+    internal static Style GetStyle(DependencyObject element) => element.GetValue(StyleProperty) as Style;
+
+    [MirrorVerified("Release IL")]
+    internal static string GetStyleName(DependencyObject element) => element.GetValue(StyleNameProperty) as string;
+
+    [MirrorVerified("Release IL")]
+    public TextStyleData()
+    {
+        StyleKey = string.Empty;
+        StyleName = string.Empty;
+        BaseOnKey = string.Empty;
+    }
 }

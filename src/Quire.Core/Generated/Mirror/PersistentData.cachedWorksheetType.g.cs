@@ -13,6 +13,4 @@ public partial class cachedWorksheetType : global::Quire.PersistentData.IRegionC
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "cachedWorksheet";
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

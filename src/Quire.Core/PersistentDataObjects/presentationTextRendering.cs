@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -22,4 +23,10 @@ public partial class presentationTextRendering
 
     [MirrorVerified("PtcPersistentDataObjectspresentationTextRenderingMechanicalDifferentialTests")]
     public string ProofingLanguage { get => proofingLanguageField; set => proofingLanguageField = value; }
+
+    [MirrorVerified("Release IL")]
+    public presentationTextRendering(presentationTextRenderingTextStyle[] mathcad1XStyles)
+    {
+        textStyles = mathcad1XStyles;
+    }
 }

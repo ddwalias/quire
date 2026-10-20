@@ -26,15 +26,9 @@ public static partial class BoundsHelper
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Point End;
         [global::Quire.Mirror.MirrorStub]
-        public double Slope;
-        [global::Quire.Mirror.MirrorStub]
-        public double YItercept;
-        [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Wpf.BoundsHelper.Line CalculateLine(global::System.Windows.Point a, global::System.Windows.Point b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private static double CalculateSlope(global::System.Windows.Point start, global::System.Windows.Point end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private double CalculateY(double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private double Length() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]

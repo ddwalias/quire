@@ -24,8 +24,6 @@ public partial class IntegerCompareConverter : global::System.Windows.Data.IValu
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Wpf.IntegerCompareConverter NotEqualsToInstance;
     [global::Quire.Mirror.MirrorStub]
-    private IntegerCompareConverter(global::Quire.Wpf.IntegerCompareConverter.CompareOperators compareOperator) { }
-    [global::Quire.Mirror.MirrorStub]
     private static bool ToInt(object value, out int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

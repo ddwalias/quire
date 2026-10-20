@@ -12,17 +12,5 @@ namespace Quire.PersistentDataObjects;
 public partial class pictureType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.ISerializationHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNamespaceManager NameSpaceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlDocument XmlContentDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public pictureType(global::System.Uri sourceUri) { }
-    [global::Quire.Mirror.MirrorStub]
     public string PackImage(global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

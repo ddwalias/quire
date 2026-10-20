@@ -1,5 +1,7 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
+using Quire.PersistentDataObjects;
 
 namespace Quire.PersistentData;
 
@@ -31,4 +33,7 @@ public partial class chartComponentType
 
     [MirrorVerified("PtcPersistentDatachartComponentTypeMechanicalDifferentialTests")]
     public bool resultRefSpecified { get => resultRefFieldSpecified; set => resultRefFieldSpecified = value; }
+
+    [MirrorVerified("Release IL")]
+    public override IEnumerable<IRegionType> Regions { get => regions; set => regions = Enumerable.ToArray<chartComponentRegionType>(Enumerable.Cast<chartComponentRegionType>(value)); }
 }

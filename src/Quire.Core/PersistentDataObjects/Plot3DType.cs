@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -46,4 +47,11 @@ public partial class Plot3DType
 
     [MirrorVerified("PtcPersistentDataObjectsPlot3DTypeMechanicalDifferentialTests")]
     public bool equalscale { get => equalscaleField; set => equalscaleField = value; }
+
+    [MirrorVerified("Release IL")]
+    public Plot3DType()
+    {
+        cameraTypeField = Plot3DTypeCameraType.Perspective;
+        equalscaleField = false;
+    }
 }

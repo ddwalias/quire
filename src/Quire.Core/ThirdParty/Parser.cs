@@ -1,5 +1,7 @@
 #nullable disable
 using System.Reflection;
+using System.Reflection;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.ThirdParty;
@@ -98,5 +100,44 @@ public partial class Parser
 
         [MirrorVerified("PtcThirdPartyParserMechanicalDifferentialTests")]
         public string ValidValues { get => validValues; set => validValues = value; }
+    }
+
+    [MirrorVerified("Release IL")]
+    private void ReportUnrecognizedArgument(string argument) => ReportError(string.Format("Unrecognized command line argument '{0}'", argument));
+
+    [MirrorVerified("Release IL")]
+    private static ArgumentHelpStrings GetHelpStrings(Argument arg) => new ArgumentHelpStrings(arg.SyntaxHelp, arg.FullHelpText);
+
+    [MirrorVerified("Release IL")]
+    private Argument defaultArgument;
+
+    [MirrorVerified("Release IL")]
+    public bool HasDefaultArgument => defaultArgument != null;
+
+    partial class Argument
+    {
+        [MirrorVerified("Release IL")]
+        private ErrorReporter reporter;
+
+        [MirrorVerified("Release IL")]
+        private void ReportDuplicateArgumentValue(string value) => reporter.Invoke(string.Format("Duplicate '{0}' argument '{1}'", LongName, value));
+
+        [MirrorVerified("Release IL")]
+        private void ReportBadArgumentValue(string value) => reporter.Invoke(string.Format("'{0}' is not a valid value for the '{1}' command line option", value, LongName));
+
+        [MirrorVerified("Release IL")]
+        private void ReportInvalidValue(string value) => reporter.Invoke(string.Format("'{0}' is not a valid value for the '{1}' command line option. Acceptable values are {2}", value, LongName, ValidValues.Replace("|", ", ")));
+
+        [MirrorVerified("Release IL")]
+        public void ClearShortName() => shortName = null;
+
+        [MirrorVerified("Release IL")]
+        public bool HasShortName => shortName != null;
+
+        [MirrorVerified("Release IL")]
+        public bool HasDefaultValue => defaultValue != null;
+
+        [MirrorVerified("Release IL")]
+        public bool IsCollection => IsCollectionType(Type);
     }
 }

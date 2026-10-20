@@ -16,15 +16,9 @@ public partial class TextStyleData : global::System.Windows.DependencyObject
     [global::Quire.Mirror.MirrorStub]
     public void UpdateStyle(string name, global::System.Windows.Style style, string basedOnKey, global::System.Windows.Style basedOnOldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Windows.Style GetStyle(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static string GetStyleName(global::System.Windows.DependencyObject element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public TextStyleData(string name, string key, global::System.Windows.Style style, string baseOnKey = default) { }
     [global::Quire.Mirror.MirrorStub]
     private void BasedOnStyleChanged(global::Quire.TextStyleData basedOn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyleData() { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> GetSettersInternal(global::System.Windows.Style textStyle, global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> setterCollection, bool isInherited = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

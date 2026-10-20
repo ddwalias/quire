@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
 
@@ -34,4 +35,12 @@ public partial class plotBaseTypeLegend
 
     [MirrorVerified("PtcPersistentDataObjectsplotBaseTypeLegendMechanicalDifferentialTests")]
     public double legendWidth { get => legendWidthField; set => legendWidthField = value; }
+
+    [MirrorVerified("Release IL")]
+    public plotBaseTypeLegend()
+    {
+        displayField = false;
+        positionField = plotBaseTypeLegendPosition.below;
+        showborderField = false;
+    }
 }

@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.axisBaseType, Ptc.Core")]
 public partial class axisBaseType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShouldSerializemarkers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

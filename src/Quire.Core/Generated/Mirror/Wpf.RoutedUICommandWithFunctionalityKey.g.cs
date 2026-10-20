@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.RoutedUICommandWithFunctionalityKey, Ptc.Core")]
 public partial class RoutedUICommandWithFunctionalityKey : global::System.Windows.Input.RoutedUICommand, global::Quire.Wpf.IHasFunctionalityKey
 {
-    [global::Quire.Mirror.MirrorStub]
-    public RoutedUICommandWithFunctionalityKey(string text, string name, global::System.Type ownerType, global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey key) { }
 }

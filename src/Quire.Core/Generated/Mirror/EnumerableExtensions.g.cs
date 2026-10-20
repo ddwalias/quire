@@ -14,8 +14,6 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static bool IsNullOrEmpty<T>(this global::System.Collections.Generic.IEnumerable<T> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsNotEmpty<T>(this global::System.Collections.Generic.IEnumerable<T> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsNotEmpty<T>(this global::System.Collections.Generic.IEnumerable<T> items, out global::System.Collections.Generic.IList<T> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> EmptyIfNull<T>(this global::System.Collections.Generic.IEnumerable<T> source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -23,8 +21,6 @@ public static partial class EnumerableExtensions
     public static void Each<T>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Action<T> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void EachWithIndex<T>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Action<int, T> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<TRetType> CollectAsList<T, TRetType>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Func<T, TRetType> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int IndexOf<T>(this global::System.Collections.Generic.IEnumerable<T> items, T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -36,19 +32,13 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<int> Range(this int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void Times(this int i, global::System.Action<int> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void Times(this int count, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void UpTo(this int start, int end, global::System.Action<int> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void DownTo(this int start, int end, global::System.Action<int> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static TSource MaxBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static TSource MaxBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector, global::System.Collections.Generic.IComparer<TKey> comparer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static TSource MinBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static TSource MinBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector, global::System.Collections.Generic.IComparer<TKey> comparer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

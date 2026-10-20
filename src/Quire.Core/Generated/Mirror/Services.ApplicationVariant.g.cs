@@ -12,8 +12,6 @@ namespace Quire.Services;
 public sealed partial class ApplicationVariant
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Services.ApplicationVariant Instance;
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<bool> _isEngNbPlus;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<bool> _isEngNb;
@@ -21,8 +19,6 @@ public sealed partial class ApplicationVariant
     public static global::System.Nullable<bool> IsEngNbPlus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Nullable<bool> IsEngNb { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static void CreateInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ApplyIsEngNbVariants() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

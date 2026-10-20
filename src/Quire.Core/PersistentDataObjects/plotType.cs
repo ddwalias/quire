@@ -1,5 +1,7 @@
 #nullable disable
 using System.Xml.Serialization;
+using System.Xml.Serialization;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.PersistentDataObjects;
@@ -74,4 +76,13 @@ public partial class plotType
 
     [MirrorVerified("PtcPersistentDataObjectsplotTypeMechanicalDifferentialTests")]
     public bool IsCalculationDisabled => disablecalc;
+
+    [MirrorVerified("Release IL")]
+    public plotType()
+    {
+        disablecalcField = false;
+        backgroundtypeField = BackgroundType.paper;
+        originpositioningField = false;
+        showaxisexpressionsField = true;
+    }
 }

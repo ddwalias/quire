@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.plotBaseTypeLegend, Ptc.Core")]
 public partial class plotBaseTypeLegend
 {
-    [global::Quire.Mirror.MirrorStub]
-    public plotBaseTypeLegend() { }
 }

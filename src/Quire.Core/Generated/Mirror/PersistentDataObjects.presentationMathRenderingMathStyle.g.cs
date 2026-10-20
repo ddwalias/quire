@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.presentationMathRenderingMathStyle, Ptc.Core")]
 public partial class presentationMathRenderingMathStyle
 {
-    [global::Quire.Mirror.MirrorStub]
-    public presentationMathRenderingMathStyle() { }
 }

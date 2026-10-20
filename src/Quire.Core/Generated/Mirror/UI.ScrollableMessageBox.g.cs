@@ -12,15 +12,9 @@ namespace Quire.UI;
 public partial class ScrollableMessageBox : global::System.Windows.Window, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox MessageContainer;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button okButton;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public ScrollableMessageBox() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ScrollableMessageBox(string message, string caption) { }
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

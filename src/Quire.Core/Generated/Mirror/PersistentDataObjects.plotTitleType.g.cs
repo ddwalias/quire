@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.plotTitleType, Ptc.Core")]
 public partial class plotTitleType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public plotTitleType() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.Plot3DType, Ptc.Core")]
 public partial class Plot3DType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public Plot3DType() { }
 }

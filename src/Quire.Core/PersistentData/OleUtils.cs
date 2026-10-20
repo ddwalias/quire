@@ -1,0 +1,16 @@
+#nullable disable
+using Quire.Mirror;
+
+namespace Quire.PersistentData;
+
+public static partial class OleUtils
+{
+    [MirrorVerified("Release IL")]
+    public static bool CanCreateExcelContainer() => IsSupportedExcelGuid(GetExcelSheetGuid("Excel.Sheet"));
+
+    [MirrorVerified("Release IL")]
+    private static readonly Guid _excel8Guid;
+
+    [MirrorVerified("Release IL")]
+    public static bool IsExcel8Installed => GetExcelSheetGuid("Excel.Sheet") == _excel8Guid;
+}
