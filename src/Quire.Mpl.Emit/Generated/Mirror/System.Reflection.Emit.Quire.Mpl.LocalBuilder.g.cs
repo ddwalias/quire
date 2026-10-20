@@ -11,32 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.LocalBuilder, mplasb")]
 public partial class LocalBuilder : global::System.Reflection.LocalVariableInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int m_localIndex;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Type m_localType;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Reflection.MethodBase m_methodBuilder;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool m_isPinned;
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsPinned { get => base.IsPinned; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type LocalType { get => base.LocalType; }
-    [global::Quire.Mirror.MirrorStub]
-    public override int LocalIndex { get => base.LocalIndex; }
-    [global::Quire.Mirror.MirrorStub]
-    internal LocalBuilder(int localIndex, global::System.Type localType, global::System.Reflection.MethodBase methodBuilder) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal LocalBuilder(int localIndex, global::System.Type localType, global::System.Reflection.MethodBase methodBuilder, bool isPinned) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal int GetLocalIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Reflection.Emit.Quire.Mpl.MethodBuilder GetMethodBuilder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder GetConstructorBuilder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool IsConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool IsMethod() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
