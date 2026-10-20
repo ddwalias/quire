@@ -8,6 +8,14 @@ namespace Quire.Services;
 
 public partial class MouseFacade
 {
+    [MirrorVerified("Release IL")]
+    public Cursor SetOverrideCursor(Cursor cursor)
+    {
+        Cursor overrideCursor = Mouse.OverrideCursor;
+        Mouse.OverrideCursor = cursor;
+        return overrideCursor;
+    }
+
     [MirrorVerified("PtcServicesMouseFacadeMechanicalDifferentialTests")]
     public void ClearOverrideCursor() => SetOverrideCursor(null);
 

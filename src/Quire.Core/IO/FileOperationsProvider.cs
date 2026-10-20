@@ -6,6 +6,20 @@ namespace Quire.IO;
 
 public partial class FileOperationsProvider
 {
+    [MirrorVerified("Release IL")]
+    public Exception CreateDirectory(string directory)
+    {
+        try
+        {
+            Directory.CreateDirectory(directory);
+        }
+        catch (Exception result)
+        {
+            return result;
+        }
+        return null;
+    }
+
     [MirrorVerified("PtcIOFileOperationsProviderMechanicalDifferentialTests")]
     public bool FileExists(string fileName) => File.Exists(fileName);
 

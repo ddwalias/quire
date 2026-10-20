@@ -11,6 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.MouseFacade, Ptc.Core")]
 public partial class MouseFacade : global::Quire.Services.IMouseFacade, global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.Cursor SetOverrideCursor(global::System.Windows.Input.Cursor cursor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
