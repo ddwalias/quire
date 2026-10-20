@@ -2,6 +2,6 @@
 
 - Owner: Lane B (Codex).
 - Branch: `mirror/b-mpl-emit-20261021-a7`.
-- Selected members: `StackBehaviourExtensions`, `StackDepthCalculator`, `TypeSignatureEncoderExtensions.FromType`, `FieldHandleResolver`, and `TypeHandleResolver`.
-- Release IL report: PASS, `.mirror-cache/release-il-f9147a632fe7/release-il.json` (24 checked).
-- Remaining mismatches: 591 unfinished members in the full `Quire.Mpl.Emit` inventory.
+- Selected members: `StackBehaviourExtensions`, `StackDepthCalculator`, `TypeSignatureEncoderExtensions.FromType`, `FieldHandleResolver`, `TypeHandleResolver`, `LoggerAssistant.GetFullName`, `LoggerAssistant.GetFullFieldName`.
+- Release IL report: PASS, `.mirror-cache/release-il-b60263e1cf24/release-il.json` (26 checked).
+- Remaining mismatches: 589 unfinished members; `SignatureHelper` has unresolved generated `<>c` counterparts and `LoggerAssistant.GetFullNameWithAssembly` differs in interpolated-string handler local slots.

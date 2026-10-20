@@ -12,13 +12,9 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public static partial class LoggerAssistant
 {
     [global::Quire.Mirror.MirrorStub]
-    public static string GetFullName(global::System.Reflection.MemberInfo member) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string GetFullMethodName(global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetFullConstructorName(global::System.Reflection.ConstructorInfo ctor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetFullFieldName(global::System.Reflection.FieldInfo field) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetFullNameWithAssembly(global::System.Reflection.MemberInfo member) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
