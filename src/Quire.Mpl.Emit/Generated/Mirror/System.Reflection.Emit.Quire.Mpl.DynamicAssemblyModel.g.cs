@@ -11,8 +11,7 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel, mplasb")]
 internal partial class DynamicAssemblyModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Emit.Quire.Mpl.DynamicAssemblyModel.TypeIndexInfo> _typeIndexes;
+    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Emit.Quire.Mpl.DynamicAssemblyModel.TypeIndexInfo> _typeIndexes = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Emit.Quire.Mpl.DynamicAssemblyModel.TypeIndexInfo>();
     [global::Quire.Mirror.MirrorStub]
     private int _typeIndex;
     [global::Quire.Mirror.MirrorStub]
@@ -27,8 +26,6 @@ internal partial class DynamicAssemblyModel
     private global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
-    [global::Quire.Mirror.MirrorStub]
-    public DynamicAssemblyModel(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder moduleBuilder, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referenceTracker, global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> typesList) { }
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel+TypeIndexInfo, mplasb")]
     internal partial class TypeIndexInfo
     {
