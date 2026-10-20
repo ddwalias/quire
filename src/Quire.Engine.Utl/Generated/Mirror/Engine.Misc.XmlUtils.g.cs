@@ -416,20 +416,248 @@ public partial class XmlUtils
         }
         return false;
     }
-    [global::Quire.Mirror.MirrorStub]
-    private static bool FindCandidateXmlnsAttr(string str, ref int scan_pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string StripXmlnsAttrs(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool EquivalentXml(string xml1, string xml2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string TightenXmlWhitespace(string rawstr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FindXmlnsAttrs(string str, ref int scanPos, out global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>> skipAttrs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool SkipWhitespace(string str, ref int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int BackOverWhitespace(string str, int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool FindCandidateXmlnsAttr(string str, ref int scan_pos)
+    {
+        int num = scan_pos;
+        while (true)
+        {
+            int num2 = str.IndexOf(s_xmlns, num);
+            int num3 = num2;
+            if (num3 < 0)
+            {
+                return false;
+            }
+            while (num3 > num)
+            {
+                num3--;
+                if (str[num3].Equals(s_CloseAngle))
+                {
+                    break;
+                }
+                if (str[num3].Equals(s_OpenAngle))
+                {
+                    scan_pos = num3;
+                    return true;
+                }
+            }
+            num = num2 + s_xmlns.Length;
+        }
+    }
+    public static string StripXmlnsAttrs(string str)
+    {
+        if (str.IndexOf("xmlns") < 0)
+        {
+            return str;
+        }
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>> skipAttrs;
+        int num = 0;
+        int num2 = num;
+        while (FindCandidateXmlnsAttr(str, ref num2))
+        {
+            stringBuilder.Append(str.Substring(num, num2 - num));
+            num = num2;
+            if (!FindXmlnsAttrs(str, ref num2, out skipAttrs))
+            {
+                return str;
+            }
+            foreach (global::Quire.Engine.Misc.Triple<int, int, int> item in skipAttrs)
+            {
+                int first = item.First;
+                _ = item.Second;
+                int third = item.Third;
+                stringBuilder.Append(str.Substring(num, first - num));
+                num = third;
+            }
+            num2 = num;
+        }
+        stringBuilder.Append(str.Substring(num2));
+        return stringBuilder.ToString();
+    }
+    public static bool EquivalentXml(string xml1, string xml2)
+    {
+        string text = TightenXmlWhitespace(xml1);
+        string value = TightenXmlWhitespace(xml2);
+        return text.Equals(value);
+    }
+    public static string TightenXmlWhitespace(string rawstr)
+    {
+        string text = (s_TightenXmlnsAttributes ? StripXmlnsAttrs(rawstr) : rawstr);
+        int i = 0;
+        int length = text.Length;
+        bool flag = false;
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        for (; i < length; i++)
+        {
+            char value = text[i];
+            int num = i;
+            int scanPos = i;
+            if (value.Equals(s_OpenAngle))
+            {
+                flag = false;
+                if (LookingAtText(text, i, "<!") && SkipBracketedSGML(text, ref scanPos))
+                {
+                    stringBuilder.Append(text, i, scanPos - i);
+                    i = scanPos - 1;
+                    continue;
+                }
+                num = i + 1;
+                scanPos = text.IndexOf(s_CloseAngle, num + 1);
+                if (scanPos < 0)
+                {
+                    return text;
+                }
+                if (text.IndexOf("xml:space=\"preserve\"", num, scanPos - num) >= 0 || text.IndexOf("xml:space='preserve'", num, scanPos - num) >= 0)
+                {
+                    num = i;
+                    if (!ScanElement(text, ref num, out scanPos))
+                    {
+                        return text;
+                    }
+                    stringBuilder.Append(text, i, scanPos - i);
+                    i = scanPos - 1;
+                }
+                else
+                {
+                    stringBuilder.Append(value);
+                }
+            }
+            else if (value.Equals(s_CloseAngle))
+            {
+                flag = false;
+                stringBuilder.Append(value);
+                i++;
+                SkipWhitespace(text, ref i);
+                i--;
+            }
+            else if (s_WhitepaceChars.IndexOf(value) >= 0)
+            {
+                flag = true;
+                i++;
+                SkipWhitespace(text, ref i);
+                i--;
+            }
+            else
+            {
+                if (flag)
+                {
+                    stringBuilder.Append(' ');
+                }
+                flag = false;
+                stringBuilder.Append(value);
+            }
+        }
+        return stringBuilder.ToString();
+    }
+    public static bool FindXmlnsAttrs(string str, ref int scanPos, out global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>> skipAttrs)
+    {
+        int num = scanPos;
+        int i;
+        int num2 = -1;
+        int num3 = 0;
+        string text;
+        skipAttrs = new global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Triple<int, int, int>>();
+        if (num == str.Length || !str[num].Equals(s_OpenAngle))
+        {
+            BadSyntax(str, scanPos, "Tag must start with '<'");
+        }
+        num++;
+        if (num == str.Length)
+        {
+            BadSyntax(str, scanPos, "Premature end of stream while reading tag.");
+        }
+        if (str[num].Equals(s_Slash))
+        {
+            num++;
+        }
+        else if (str[num].Equals(s_Excl))
+        {
+            return false;
+        }
+        if (!ScanTagName(str, ref num, out i))
+        {
+            BadSyntax(str, scanPos, "Missing tag name.");
+        }
+        text = str.Substring(num, i - num);
+        for (; i < str.Length; i++)
+        {
+            char value = str[i];
+            if (value.Equals(s_Slash))
+            {
+                num2 = -1;
+                continue;
+            }
+            if (s_WhitepaceChars.IndexOf(value) >= 0)
+            {
+                num2 = -1;
+                continue;
+            }
+            if (value.Equals(s_EqualSign))
+            {
+                num3 = i;
+                continue;
+            }
+            if (value.Equals(s_CloseAngle))
+            {
+                num2 = -1;
+                if (text == null)
+                {
+                    BadSyntax(str, scanPos, "Missing tag name.");
+                }
+                scanPos = i + 1;
+                return true;
+            }
+            if (value.Equals(s_SingleQuote) || value.Equals(s_DoubleQuote))
+            {
+                if (!ScanAttributeString(str, ref i))
+                {
+                    BadSyntax(str, i, "Bad string literal.");
+                }
+                if (num2 >= 0)
+                {
+                    string text2 = str.Substring(num2, num3 - num2);
+                    if (text2.Equals("xmlns") || text2.StartsWith("xmlns:"))
+                    {
+                        skipAttrs.Enqueue(new global::Quire.Engine.Misc.Triple<int, int, int>(BackOverWhitespace(str, num2), num2, i));
+                    }
+                }
+                i--;
+            }
+            else if (num2 < 0)
+            {
+                num2 = i;
+            }
+        }
+        BadSyntax(str, scanPos, "Missing '>' in tag.");
+        return false;
+    }
+    private static bool SkipWhitespace(string str, ref int pos)
+    {
+        int length = str.Length;
+        while (pos < length)
+        {
+            char value = str[pos];
+            if (s_WhitepaceChars.IndexOf(value) < 0)
+            {
+                break;
+            }
+            pos++;
+        }
+        return true;
+    }
+    private static int BackOverWhitespace(string str, int pos)
+    {
+        int num = pos;
+        while (num > 0)
+        {
+            if (s_WhitepaceChars.IndexOf(str[num - 1]) < 0)
+            {
+                return num;
+            }
+            num--;
+        }
+        return num;
+    }
     public static bool SkipCDATA(string str, ref int scanPos)
     {
         int i = scanPos;
@@ -467,12 +695,92 @@ public partial class XmlUtils
         Dbg("CDATA failing @ {0}, not updating scan pointer", i);
         return false;
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool UnorderedEqual(string actual, string expected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool UnorderedEqual(string xml1, string xml2, bool exact) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string OrderedArbitrarily(string xml) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool UnorderedEqual(string actual, string expected)
+    {
+        return UnorderedEqual(actual, expected, false);
+    }
+    public static bool UnorderedEqual(string xml1, string xml2, bool exact)
+    {
+        if (xml1.Equals(xml2))
+        {
+            return true;
+        }
+        int startPos = 0;
+        int startPos2 = 0;
+        int endPos;
+        int endPos2;
+        string elementName;
+        string elementName2;
+        bool isEmpty;
+        bool isEmpty2;
+        bool isClosing;
+        bool isClosing2;
+        if (!ScanTag(xml1, ref startPos, out endPos, out elementName, out isEmpty, out isClosing))
+        {
+            return false;
+        }
+        if (!ScanTag(xml2, ref startPos2, out endPos2, out elementName2, out isEmpty2, out isClosing2))
+        {
+            return false;
+        }
+        if (isClosing || isClosing2)
+        {
+            return false;
+        }
+        if (elementName != elementName2)
+        {
+            return false;
+        }
+        string text = OrderedArbitrarily(xml1);
+        string text2 = OrderedArbitrarily(xml2);
+        if (exact)
+        {
+            return text == text2;
+        }
+        return EquivalentXml(text, text2);
+    }
+    public static string OrderedArbitrarily(string xml)
+    {
+        int startPos = 0;
+        int endPos;
+        string elementName;
+        bool isEmpty;
+        bool isClosing;
+        if (!ScanTag(xml, ref startPos, out endPos, out elementName, out isEmpty, out isClosing))
+        {
+            BadSyntax(xml, startPos, "Element opening tag is ill-formed.");
+        }
+        if (isEmpty)
+        {
+            return string.Format("{0}></{1}>", xml.Substring(startPos, endPos - 2));
+        }
+        if (isClosing)
+        {
+            BadSyntax(xml, startPos, "Element starts with close tag?");
+        }
+        int num = xml.LastIndexOf('<');
+        if (num < endPos)
+        {
+            BadSyntax(xml, startPos, "Element in unexpected format.");
+        }
+        global::System.Collections.SortedList sortedList = new global::System.Collections.SortedList();
+        int startPos2 = endPos;
+        int endPos2;
+        while (startPos2 < num && ScanElement(xml, ref startPos2, out endPos2))
+        {
+            string text = xml.Substring(startPos2, endPos2 - startPos2);
+            sortedList.Add(text, text);
+            startPos2 = endPos2;
+        }
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        stringBuilder.Append(xml, 0, endPos);
+        foreach (string value in sortedList.GetValueList())
+        {
+            stringBuilder.Append(value);
+        }
+        stringBuilder.Append(xml, num, xml.Length - num);
+        return stringBuilder.ToString();
+    }
     public static void TestInit()
     {
         s_TestsDone = 0;
