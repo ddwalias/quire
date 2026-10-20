@@ -11,6 +11,4 @@ namespace Quire.ThirdParty;
 [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.ArgumentAttribute, Ptc.Core")]
 public partial class ArgumentAttribute : global::System.Attribute
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ArgumentAttribute(global::Quire.ThirdParty.ArgumentType type) { }
 }

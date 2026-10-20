@@ -37,7 +37,7 @@ public partial class ArgumentAttribute
     public string HelpText { get => helpText; set => helpText = value; }
 
     [MirrorVerified("PtcThirdPartyArgumentAttributeMechanicalDifferentialTests")]
-    private string validValues;
+    private string validValues = "";
 
     [MirrorVerified("PtcThirdPartyArgumentAttributeMechanicalDifferentialTests")]
     public string ValidValues { get => validValues; set => validValues = value; }
@@ -53,4 +53,10 @@ public partial class ArgumentAttribute
 
     [MirrorVerified("Release IL")]
     public bool HasHelpText => helpText != null;
+
+    [MirrorVerified("Release IL")]
+    public ArgumentAttribute(ArgumentType type)
+    {
+        this.type = type;
+    }
 }
