@@ -157,6 +157,16 @@ public class MatValDimensionDifferentialTests
         Compare("ApplyLinearDimension(real matrix, non-uniform)", "ApplyLinearDimension", ["MatDim"], false,
             qReal, [qdReal], mReal, [mdReal]);
 
+        foreach (int kind in Enumerable.Range(0, 4))
+        {
+            var qUniform = Matrix(Side.Quire, "L", kind);
+            var mUniform = Matrix(Side.Mathcad, "L", kind);
+            var qdUniform = Reflect.Call(Side.Quire.T("Mcd.MatDim"), "make", Side.Quire.D("T"));
+            var mdUniform = Reflect.Call(Side.Mathcad.T("Mcd.MatDim"), "make", Side.Mathcad.D("T"));
+            Compare($"ApplyLinearDimension(uniform MatDim, kind {kind})", "ApplyLinearDimension", ["MatDim"], false,
+                qUniform, [qdUniform], mUniform, [mdUniform]);
+        }
+
         Compare("MatCreateDim(order matrix, numeric point and value)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
             [Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 0, 0, 2 }), Side.Quire.Num(1, 0, "T"), Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 2, 3, 4 })], null,
             [Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 0, 0, 2 }), Side.Mathcad.Num(1, 0, "T"), Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 2, 3, 4 })]);
@@ -194,6 +204,42 @@ public class MatValDimensionDifferentialTests
         Compare("MatCreateDim(incompatible reset)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
             [qOrderIncompat, Side.Quire.Num(1, 0, "T"), qValIncompat], null,
             [mOrderIncompat, Side.Mathcad.Num(1, 0, "T"), mValIncompat]);
+
+        var qOrderDimNull = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 0, 0, 2 });
+        var mOrderDimNull = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 0, 0, 2 });
+        var qValDimNull = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 2, 3, 4 });
+        var mValDimNull = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 2, 3, 4 });
+        Compare("MatCreateDim(polymorphic point)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
+            [qOrderDimNull, Side.Quire.Num(1, 0, "poly"), qValDimNull], null,
+            [mOrderDimNull, Side.Mathcad.Num(1, 0, "poly"), mValDimNull]);
+
+        var qValNullDim2 = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 1, 2, 3 });
+        var mValNullDim2 = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 1, 2, 3 });
+        Reflect.Call(qValNullDim2, "set_ptrs_2", 0, 0, Side.Quire.Num(1, 0, "poly"));
+        Reflect.Call(mValNullDim2, "set_ptrs_2", 0, 0, Side.Mathcad.Num(1, 0, "poly"));
+        Reflect.Call(qValNullDim2, "set_ptrs_2", 1, 0, Side.Quire.Num(2, 0, "T"));
+        Reflect.Call(mValNullDim2, "set_ptrs_2", 1, 0, Side.Mathcad.Num(2, 0, "T"));
+        Reflect.Call(qValNullDim2, "set_ptrs_2", 2, 0, Side.Quire.Num(3, 0, "L"));
+        Reflect.Call(mValNullDim2, "set_ptrs_2", 2, 0, Side.Mathcad.Num(3, 0, "L"));
+        var qOrderNullDim2 = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 0, 0, 2 });
+        var mOrderNullDim2 = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 0, 0, 2 });
+        Compare("MatCreateDim(null first column dim)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
+            [qOrderNullDim2, Side.Quire.Num(1, 0, "T"), qValNullDim2], null,
+            [mOrderNullDim2, Side.Mathcad.Num(1, 0, "T"), mValNullDim2]);
+
+        var qValMismatch = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 2, 3, 4 });
+        var mValMismatch = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 2, 3, 4 });
+        Reflect.Set(qValMismatch, "m_dim", Side.Quire.D("L"));
+        Reflect.Set(mValMismatch, "m_dim", Side.Mathcad.D("L"));
+        Reflect.CallSig(qValMismatch, "set_1", ["Int32", "Object"], 1, Side.Quire.Num(3, 0, "T"));
+        Reflect.CallSig(mValMismatch, "set_1", ["Int32", "Object"], 1, Side.Mathcad.Num(3, 0, "T"));
+        Reflect.CallSig(qValMismatch, "set_1", ["Int32", "Object"], 2, Side.Quire.Num(4, 0, "L"));
+        Reflect.CallSig(mValMismatch, "set_1", ["Int32", "Object"], 2, Side.Mathcad.Num(4, 0, "L"));
+        var qOrderMismatch = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 0, 0, 1 });
+        var mOrderMismatch = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 0, 0, 1 });
+        Compare("MatCreateDim(mismatched row units)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
+            [qOrderMismatch, Side.Quire.Num(1, 0, "T"), qValMismatch], null,
+            [mOrderMismatch, Side.Mathcad.Num(1, 0, "T"), mValMismatch]);
 
         foreach (int kind in Enumerable.Range(0, 4))
         {
