@@ -65,4 +65,34 @@ public class PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests
 
     [SkippableFact]
     public void FullName_get_0600020d() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x0600020d);
+
+    [SkippableFact]
+    public void SetUnitSystem_06000210() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000210);
+
+    [SkippableFact]
+    public void DerivedUnitSystem_set_06000211() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000211);
+
+    [SkippableFact]
+    public void DerivedUnitSystem1_set_06000212() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000212);
+
+    [SkippableFact]
+    public void DerivedUnitSystem2_set_06000213() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000213);
+
+    [SkippableFact]
+    public void BaseUnitSystem_set_06000214() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000214);
+
+    [SkippableFact]
+    public void BaseUnitSystem1_set_06000215() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000215);
+
+    [SkippableFact]
+    public void BaseUnitSystem2_set_06000216() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000216);
+
+    [SkippableFact]
+    public void ExcludeUnitSystem_set_06000217() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000217);
+
+    [SkippableFact]
+    public void ExcludeUnitSystem1_set_06000218() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x06000218);
+
+    [SkippableFact]
+    public void ToString_0600021c() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.UnitDescriptor), 0x0600021c);
 }

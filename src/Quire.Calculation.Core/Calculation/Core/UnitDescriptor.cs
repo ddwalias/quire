@@ -53,4 +53,44 @@ public partial class UnitDescriptor
 
     [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
     public string FullName => DisplayName + " (" + Symbol + ")";
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    private void SetUnitSystem(ref List<UnitSystems> unitSystems, UnitSystems value)
+    {
+        if (unitSystems == null)
+        {
+            unitSystems = new List<UnitSystems> { value };
+        }
+        else
+        {
+            unitSystems.Add(value);
+        }
+    }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems DerivedUnitSystem { set => SetUnitSystem(ref _derivedUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems DerivedUnitSystem1 { set => SetUnitSystem(ref _derivedUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems DerivedUnitSystem2 { set => SetUnitSystem(ref _derivedUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems BaseUnitSystem { set => SetUnitSystem(ref _baseUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems BaseUnitSystem1 { set => SetUnitSystem(ref _baseUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems BaseUnitSystem2 { set => SetUnitSystem(ref _baseUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems ExcludeUnitSystem { set => SetUnitSystem(ref _excludeUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public UnitSystems ExcludeUnitSystem1 { set => SetUnitSystem(ref _excludeUnitSystems, value); }
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public override string ToString() => Category + " - " + DisplayName + " (" + Symbol + ")";
 }
