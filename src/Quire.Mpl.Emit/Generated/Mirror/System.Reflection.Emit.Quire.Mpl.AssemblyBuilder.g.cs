@@ -29,9 +29,5 @@ public partial class AssemblyBuilder : global::System.Reflection.Assembly
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.Emit.AssemblyBuilder DefineDynamicAssembly(global::System.Reflection.AssemblyName name, global::System.Reflection.Emit.AssemblyBuilderAccess access, global::System.Collections.Generic.IEnumerable<global::System.Reflection.Emit.CustomAttributeBuilder> assemblyAttributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder DefineDynamicModule(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder GetDynamicModule(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void WritePEImage(global::System.IO.Stream peStream, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadataBuilder, global::System.Reflection.Metadata.BlobBuilder ilBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

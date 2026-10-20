@@ -30,4 +30,44 @@ public partial class AssemblyBuilder
     {
         return _assemblyName;
     }
+
+    public ModuleBuilder DefineDynamicModule(string name)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException("name");
+        }
+        if (name.Length == 0)
+        {
+            throw new ArgumentException("name");
+        }
+        if (_module != null)
+        {
+            throw new InvalidOperationException("Multi-module assemblies are not supported");
+        }
+        ModuleBuilder moduleBuilder = new ModuleBuilder(name, this);
+        _module = moduleBuilder;
+        return moduleBuilder;
+    }
+
+    public ModuleBuilder? GetDynamicModule(string name)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException("name");
+        }
+        if (name.Length == 0)
+        {
+            throw new ArgumentException("name cannot have zero characters.");
+        }
+        if (_module == null)
+        {
+            return null;
+        }
+        if (_module.Name.Equals(name))
+        {
+            return _module;
+        }
+        return null;
+    }
 }
