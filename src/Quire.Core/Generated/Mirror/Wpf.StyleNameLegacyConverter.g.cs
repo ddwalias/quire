@@ -13,6 +13,4 @@ public partial class StyleNameLegacyConverter : global::System.Windows.Data.IVal
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.StyleNameLegacyConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
