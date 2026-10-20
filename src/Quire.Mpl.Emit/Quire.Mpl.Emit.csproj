@@ -3,4 +3,8 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <Import Project="Generated\Mirror.props" />
+  <ItemGroup>
+    <MirrorWholeType Include="Generated\Mirror\System.Reflection.Emit.Quire.Mpl.ILInstruction.g.cs" />
+    <MirrorWholeType Include="Generated\Mirror\System.Reflection.Emit.Quire.Mpl.ILCallsEncoding.g.cs" />
+  </ItemGroup>
 </Project>
