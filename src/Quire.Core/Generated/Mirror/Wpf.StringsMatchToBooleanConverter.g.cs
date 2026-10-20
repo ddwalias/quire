@@ -13,6 +13,4 @@ public partial class StringsMatchToBooleanConverter : global::System.Windows.Dat
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.StringsMatchToBooleanConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
