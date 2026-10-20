@@ -11,14 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.JPEGFormatter, utilsmgd")]
 public partial class JPEGFormatter : global::Quire.Utils.ImageFormatter, global::Quire.Utils.IJPEGFormatter
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected long m_quality;
-    [global::Quire.Mirror.MirrorStub]
-    internal override string MimeType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal override global::System.Drawing.Imaging.EncoderParameters EncoderParams { get => base.EncoderParams; }
-    [global::Quire.Mirror.MirrorStub]
-    public long Quality { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public JPEGFormatter() { }
 }

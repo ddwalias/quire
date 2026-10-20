@@ -11,18 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.ImageFormatter, utilsmgd")]
 public abstract partial class ImageFormatter
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Drawing.Imaging.ImageCodecInfo m_encoder;
-    [global::Quire.Mirror.MirrorStub]
-    internal abstract string MimeType { get; }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Drawing.Imaging.ImageCodecInfo Encoder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Drawing.Imaging.ImageFormat Format { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal virtual global::System.Drawing.Imaging.EncoderParameters EncoderParams { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Drawing.Imaging.ImageCodecInfo GetEncoderInfo(string mimeType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected ImageFormatter() { }
 }
