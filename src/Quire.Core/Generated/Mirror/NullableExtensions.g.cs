@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.NullableExtensions, Ptc.Core")]
 public static partial class NullableExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool GetValueOrDefault<T>(this global::System.Nullable<T> t, out T result) where T : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

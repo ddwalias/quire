@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ThicknessExtension, Ptc.Core")]
 public static partial class ThicknessExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsEqualTo(this global::System.Windows.Thickness thickness1, global::System.Windows.Thickness thickness2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Pair`2, Ptc.Core")]
 public partial struct Pair<TFirst, TSecond>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator ==(global::Quire.Pair<TFirst, TSecond> lhs, global::Quire.Pair<TFirst, TSecond> rhs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
