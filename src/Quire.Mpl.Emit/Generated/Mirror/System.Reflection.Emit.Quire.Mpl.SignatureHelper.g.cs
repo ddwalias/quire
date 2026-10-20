@@ -13,8 +13,4 @@ internal static partial class SignatureHelper
 {
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Reflection.Metadata.BlobBuilder MethodSignatureEnconder(global::System.Reflection.ParameterInfo[] parameters, global::System.Reflection.ParameterInfo returnType, bool isInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.BlobBuilder MethodSignatureEnconder(global::System.Type[] parameters, global::System.Type returnType, bool isInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.BlobBuilder FieldSignatureEncoder(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Metadata.TypeDefinitionHandle typeHandle, global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
