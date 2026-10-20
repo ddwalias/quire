@@ -12,29 +12,7 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class MetadataReferenceTracker
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _module;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.AssemblyNameReferenceWrapper, global::System.Reflection.Metadata.AssemblyReferenceHandle> _assemblyRefs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Module, global::System.Reflection.Metadata.ModuleReferenceHandle> _moduleRefs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeReferenceHandle> _typeRefs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeSpecificationHandle> _typeSpecs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MemberReferenceHandle> _methodRefs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MethodSpecificationHandle> _methodSpecs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.ConstructorReferenceWrapper, global::System.Reflection.Metadata.MemberReferenceHandle> _constructorRefs;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.FieldReferenceWrapper, global::System.Reflection.Metadata.MemberReferenceHandle> _fieldRefs;
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _instance;
-    [global::Quire.Mirror.MirrorStub]
-    public MetadataReferenceTracker(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder moduleBuilder) { }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Metadata.AssemblyReferenceHandle GetOrAddAssemblyReference(global::System.Reflection.AssemblyName assemblyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
