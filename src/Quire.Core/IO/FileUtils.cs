@@ -71,6 +71,17 @@ public partial class FileUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static string GetAssemblyFolder(Assembly asm)
+    {
+        if (asm == null)
+        {
+            return null;
+        }
+        Uri uri = new Uri(asm.CodeBase);
+        return Path.GetDirectoryName(uri.LocalPath);
+    }
+
+    [MirrorVerified("Release IL")]
     public static string GetFileNameWithNumber(string baseFileName, int number, bool numberIsLastExtension)
     {
         DebugTools.DevAssert(number >= 0, null);
