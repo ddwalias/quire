@@ -13,7 +13,6 @@ public abstract partial class FunctionBase : global::Quire.utl_mgd.Function
 {
     [global::Quire.Mirror.MirrorStub]
     public FunctionBase() { }
-    [global::Quire.Mirror.MirrorStub]
     public abstract object Invoke(object[] args);
     [global::Quire.Mirror.MirrorStub]
     public virtual object Invoke0() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

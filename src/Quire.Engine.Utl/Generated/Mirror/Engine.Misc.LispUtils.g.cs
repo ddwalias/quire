@@ -83,35 +83,82 @@ public partial class LispUtils
     public static void IndentTo(int n, global::System.IO.TextWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string SelfTest(string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public LispUtils() { }
 
     [global::Quire.Mirror.MirrorOf("Engine.Misc.LispUtils+LinePartition, mcmisc")]
     public partial class LinePartition
     {
-        [global::Quire.Mirror.MirrorStub]
         private string m_Line;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Pair<int, int>> m_Locs;
-        [global::Quire.Mirror.MirrorStub]
-        public string Line { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public LinePartition(string line) { }
-        [global::Quire.Mirror.MirrorStub]
-        public void PutSegment(int startPos, int endPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public string PeekSegment() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public string TakeSegment() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.Queue<string> Segments() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.Queue<string> SegmentsFrom(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public string JoinedText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public string JoinedTextFrom(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Pair<int, int>> m_Locs = new global::System.Collections.Generic.Queue<global::Quire.Engine.Misc.Pair<int, int>>();
+        public string Line => m_Line;
+        public int Count => m_Locs.Count;
+        public LinePartition(string line)
+        {
+            m_Line = line;
+        }
+        public void PutSegment(int startPos, int endPos)
+        {
+            m_Locs.Enqueue(new global::Quire.Engine.Misc.Pair<int, int>(startPos, endPos));
+        }
+        public string PeekSegment()
+        {
+            global::Quire.Engine.Misc.Pair<int, int> pair = m_Locs.Peek();
+            int first = pair.First;
+            int second = pair.Second;
+            return m_Line.Substring(first, second - first);
+        }
+        public string TakeSegment()
+        {
+            global::Quire.Engine.Misc.Pair<int, int> pair = m_Locs.Dequeue();
+            int first = pair.First;
+            int second = pair.Second;
+            return m_Line.Substring(first, second - first);
+        }
+        public global::System.Collections.Generic.Queue<string> Segments()
+        {
+            return SegmentsFrom(0);
+        }
+        public global::System.Collections.Generic.Queue<string> SegmentsFrom(int n)
+        {
+            global::System.Collections.Generic.Queue<string> queue = new global::System.Collections.Generic.Queue<string>();
+            int num = 0;
+            foreach (global::Quire.Engine.Misc.Pair<int, int> loc in m_Locs)
+            {
+                if (num >= n)
+                {
+                    int first = loc.First;
+                    int second = loc.Second;
+                    queue.Enqueue(m_Line.Substring(first, second - first));
+                }
+            }
+            return queue;
+        }
+        public string JoinedText()
+        {
+            return JoinedTextFrom(0);
+        }
+        public string JoinedTextFrom(int n)
+        {
+            int num = m_Line.Length;
+            int num2 = m_Line.Length;
+            if (n >= m_Locs.Count)
+            {
+                return "";
+            }
+            if (n < 0)
+            {
+                n = 0;
+            }
+            int num3 = -1;
+            foreach (global::Quire.Engine.Misc.Pair<int, int> loc in m_Locs)
+            {
+                if (++num3 == n)
+                {
+                    num = loc.First;
+                }
+                num2 = loc.Second;
+            }
+            return m_Line.Substring(num, num2 - num);
+        }
     }
 }
