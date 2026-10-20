@@ -2,14 +2,17 @@
 
 ## Active handoff
 
-### Active Batch: MatVal element accessors and mutators batch
-- **Branch:** `mirror/b-matval-access`
-- **Status:** Active rebase and gate landing.
-- **Scope (50 methods in `src/Quire.Mpl/Mcd/MatVal.Access.cs`):**
-  - Direct getters: `get_1(int)` (0x060004d0), `get_2(int, int)` (0x060004d1), `get(int)` (0x060004da), `get_1_dim(int)` (0x060004d2), `get_2_dim(int, int)` (0x060004d3), `get_dim(int)` (0x060004e4), `get_1_matdim(int)` (0x060004d4), `get_2_matdim(int, int)` (0x060004d5), `get_matdim(int)` (0x060004e5), `get_1_ptr(int)` (0x060004d6), `get_2_ptr(int, int)` (0x060004d7), `get_ptr(int)` (0x060004e7), `get_1_na(NumVal, int)` (0x060004d8), `get_2_na(NumVal, int, int)` (0x060004d9), `get_na(NumVal, int)` (0x060004e6).
-  - Real, imaginary, and mixed-real getters: `get_real(int)` (0x060004e8), `get_real(int, int)` (0x060004e9), `get_real_raw(int)` (0x060004ec), `get_imag(int)` (0x060004ea), `get_imag(int, int)` (0x060004eb), `get_imag_raw(int)` (0x060004ed), `get_real_mixed(int)` (0x060004ee), `get_real_mixed(int, int)` (0x060004ef), `get_real_mixed_handle(int, uint)` (0x060004f0), `get_real_mixed_handle(int, int, uint)` (0x060004f1), `get_real_mixed_raw(int, uint)` (0x060004f2).
-  - Setters and mutators: `set_1(int, object)` (0x06000509), `set_2(int, int, object)` (0x0600050a), `set(int, object)` (0x06000511), `setNaN(int, object)` (0x06000510), `setspec(int, object)` (0x06000512), `set_1(int, double, Dim)` (0x0600050e), `set_2(int, int, double, Dim)` (0x0600050f), `set(int, double, Dim)` (0x06000517), `set_1(int, double, double, Dim)` (0x06000510), `set_2(int, int, double, double, Dim)` (0x06000511), `set(int, double, double, Dim)` (0x06000519), `set(int, double)` (0x06000518), `set(int, double, double)` (0x0600051b), `set(int, NumVal)` (0x0600051c), `set_ptrs_1(int, object)` (0x06000517), `set_ptrs_2(int, int, object)` (0x06000518), `set_ptrs(int, object)` (0x06000519), `set_ptrs_raw(int, object)` (0x0600051b), `set_ptrs_at(int, object)` (0x06000521), `set_2i(int, int, double)` (0x0600051c), `set_1(int, double)` (0x0600051d), `set_2(int, int, double)` (0x0600051e), `set_at(int, double)` (0x0600051f), `set_at(int, double, double)` (0x06000520).
-- **Goal:** Exact Release IL matching against Mathcad Prime 12.0.1.0 `mplrun.dll`, 0 lint, 100% mutation kill rate, and clean merge gate landing on `main`.
+### Active Batch: MatVal views and export batch
+- **Branch:** `mirror/b-matval-views`
+- **Scope (28 methods in `src/Quire.Mpl/Mcd/MatVal.Views.cs`):**
+  - View constructors and trimming: `MatVal(MatVal, int)` (0x06000493), `TrimPtrs(Hashtable)` (0x06000494), `MatVal(MatVal, int, int, int, int)` (0x0600049c), `SubMatrix(uint, uint, uint, uint)` (0x0600049d), `SubMatrixPtrs(MatVal, int, int, int, int)` (0x0600054e).
+  - Column and row slicing: `Column(int)` (0x06000497), `real_column(int)` (0x06000498), `mcd_sym_column(object, int)` (0x06000495), `mcd_column(object, int)` (0x06000496), `mcd_sym_row(object, int)` (0x06000499), `mcd_row(object, int)` (0x0600049a), `Row(int)` (0x0600049b).
+  - Transposition operations: `TransposeArr(double[])` (0x06000533), `TransposeReal()` (0x06000548), `TransposeImag()` (0x06000549), `Transpose()` (0x06000523), `set_ptrs_2_transpose` (0x06000551), `TransposePtrs` (0x06000552), `set_ptrs_2_reverse` (0x06000553), `ReversePtrs` (0x06000554).
+  - Tuples and elements: `asTuple(uint, uint, uint)` (0x0600046d), `get_elements(uint, uint)` (0x060004c4), `get_elements()` (0x060004c5).
+  - Comparison and string conversion: `Equals(object)` (0x06000472), `nearly_equal(DimVal, double)` (0x06000473), `ToString()` (0x06000471).
+  - Immutability and export: `asImmutable()` (0x06000528), `Fix()` (0x06000529), `Fix(object)` (0x0600052a), `asResult()` (0x0600052b), `FixForExport(object)` (0x0600052c).
+  - Nested pointer trimming context: `TrimSubMatrixPtrs` constructor (0x0600073c), `set_submatrix_ptrs` (0x0600073d).
+- **Goal:** Resolve remaining IL structure differences against Mathcad Prime 12.0.1.0 `mplrun.dll`, achieve 100% exact Release IL matching across all methods, 0 lint findings, 0 ratchet regressions, and 100% mutation kill rate.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
 - **Branch:** `mirror/b-matdim-makearraydim` (at `0d400cb5`)
@@ -74,6 +77,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatVal collections, ranges, and vectorize | Merged to main at 2082723 (31ee559). 7 methods exact IL, 10 vectorize differential test cases, 100% mutation kill rate (597/601, 0 survivors). |
 | MatVal indexed access, axis enumeration and scaling | Merged to main at d0436ed (2fc429a). 33 methods; 31 exact Release IL matches, 2 structure-only; 100% mutation kill rate (710/718, 0 survivors). |
 | MatVal memory growth, resize, and row/column mutations | Merged to main at b52edf9 (54d2299). 37 methods; 37 exact Release IL matches; 100% mutation kill rate (662/666, 0 survivors). |
+| MatVal element accessors and mutators | Merged to main at e7c190b (5f4a591). 50 methods; 50 exact Release IL matches; 100% mutation kill rate (793/797, 0 survivors). |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
 
@@ -290,6 +294,21 @@ Scope: 37 methods in `src/Quire.Mpl/Mcd/MatVal.Growth.cs`.
 - Reconstruction integrity: 0 lint findings.
 - Mutation coverage: 662/666 killed (0 cached); 0 survivors.
 - Merged cleanly to `main` via `lane_merge.py` at commit `b52edf9`.
+
+### MatVal element accessors and mutators (merged to main at e7c190b)
+
+Base: `e2a03812223dde76b20a0208ea3b3c9fa9eba285`; branch `mirror/b-matval-access` (`5f4a591c8e7a`).
+Original identity: mplrun Prime 12.0.1.0 SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Scope: 50 element accessor and mutator methods in `src/Quire.Mpl/Mcd/MatVal.Access.cs`.
+- Exact tokens:
+  - Direct element getters: `get_1(int)` (0x060004d0), `get_2(int, int)` (0x060004d1), `get(int)` (0x060004da), `get_1_dim(int)` (0x060004d2), `get_2_dim(int, int)` (0x060004d3), `get_dim(int)` (0x060004e4), `get_1_matdim(int)` (0x060004d4), `get_2_matdim(int, int)` (0x060004d5), `get_matdim(int)` (0x060004e5), `get_1_ptr(int)` (0x060004d6), `get_2_ptr(int, int)` (0x060004d7), `get_ptr(int)` (0x060004e7), `get_1_na(NumVal, int)` (0x060004d8), `get_2_na(NumVal, int, int)` (0x060004d9), `get_na(NumVal, int)` (0x060004e6).
+  - Real, imaginary, and mixed-real getters: `get_real(int)` (0x060004e8), `get_real(int, int)` (0x060004e9), `get_real_raw(int)` (0x060004ec), `get_imag(int)` (0x060004ea), `get_imag(int, int)` (0x060004eb), `get_imag_raw(int)` (0x060004ed), `get_real_mixed(int)` (0x060004ee), `get_real_mixed(int, int)` (0x060004ef), `get_real_mixed_handle(int, uint)` (0x060004f0), `get_real_mixed_handle(int, int, uint)` (0x060004f1), `get_real_mixed_raw(int, uint)` (0x060004f2).
+  - Direct setters: `set_1(int, object)` (0x06000509), `set_2(int, int, object)` (0x0600050a), `set(int, object)` (0x0600050c), `setNaN(int, object)` (0x0600050b), `setspec(int, object)` (0x0600050d), `set_1(int, double, Dim)` (0x0600050e), `set_2(int, int, double, Dim)` (0x0600050f), `set(int, double, Dim)` (0x06000512), `set_1(int, double, double, Dim)` (0x06000510), `set_2(int, int, double, double, Dim)` (0x06000511), `set(int, double, double, Dim)` (0x06000514), `set(int, double)` (0x06000513), `set(int, double, double)` (0x06000515), `set(int, NumVal)` (0x06000516), `set_ptrs_1(int, object)` (0x06000517), `set_ptrs_2(int, int, object)` (0x06000518), `set_ptrs(int, object)` (0x06000519), `set_ptrs_raw(int, object)` (0x0600051b), `set_ptrs_at(int, object)` (0x06000521), `set_2i(int, int, double)` (0x0600051c), `set_1(int, double)` (0x0600051d), `set_2(int, int, double)` (0x0600051e), `set_at(int, double)` (0x0600051f), `set_at(int, double, double)` (0x06000520), `AllocImaginary(double[])` (0x06000531), `DimActual()` (0x06000440), `dvm(Dim)` (0x06000445).
+- 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll` across all target methods.
+- Full test suites passed: Quire.Harness.Tests (97/97), Quire.Mpl.Tests (188/188), Quire.Focused.Differential.Tests (399/399 Debug, 399/399 Release).
+- Reconstruction integrity: 0 lint findings.
+- Mutation coverage: 793/797 killed (0 cached); 0 survivors.
+- Merged cleanly to `main` via `lane_merge.py` at commit `e7c190b`.
 
 
 ## Function closure dispatch — active checkpoint
