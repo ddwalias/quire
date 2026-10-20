@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-calc-core-20261021-c3.
+- Branch: mirror/c-calc-core-20261021-c4.
 - UTC start time: 2026-10-20T18:12:36Z.
 - Eight-hour deadline: 2026-10-21T02:12:36Z.
 - Current assembly: Quire.Calculation.Core (in progress).
@@ -26,11 +26,12 @@
     - Batch 1: All interface declarations cleaned of default stub bodies (ICalculatable, ICalculatableContainer, ICalculatableContext, IResultManager, IResultNode, IEngineError, etc.).
     - Batch 2: SimpleResultNode implementations (RealSimpleResultNode, ComplexSimpleResultNode, ImaginarySimpleResultNode, UnitedValueSimpleResultNode, DisplayMatrixSimpleResultNode, LazyMatrixSimpleResultNode, EagerMatrixSimpleResultNode).
     - Batch 3: UnitDescriptor, DefaultUnitDescriptorTable, RequestShowErrorEventArgs, EngineErrorExtensions, EngineErrorCollection, DoubleListResultNode, TraceDataPoints implementations.
+    - Batch 4: ResultNodeUtils (ParsePlottableValue, TryParsePlottableValue), IResultManagerHelper (SetResultIfRefIdSpecified, IsResultRefIdSpecified), TraceTypeDefinitions (.cctor, GetMinRangeColumns, GetMaxRangeColumns, GetMinResultColumns, GetMaxResultColumns), SimpleResultNodeFactory (CreateRealResultNode, CreateImaginaryResultNode, CreateComplexResultNode, CreateStringResultNode, CreateFunctionResultNode, CreateSymbolicResultNode).
 - Release IL report:
   - Quire.Automation: PASS; 275 checked; 231 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebook.Automation: PASS; 409 checked; 215 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebookPlus.Automation: PASS; 407 checked; 214 exact bodies/declarations; 2 unfinished remaining; 0 failures.
-  - Quire.Calculation.Core: PASS; 355 checked; 0 failures; exact bodies rose from 341 to 355 (+14 exact bodies); unfinished reduced from 438 to 425 (-13 unfinished).
+  - Quire.Calculation.Core: PASS; 367 checked; 0 failures; exact bodies rose to 367 (+12 exact bodies); unfinished reduced to 413 (-12 unfinished).
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
@@ -41,6 +42,8 @@
   - Quire.EngNotebookPlus.Automation:
     1. `EngNotebookPlus.Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
     2. `EngNotebookPlus.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
+  - Quire.Calculation.Core:
+    1. `Calculation.Core.RedefinitionWarningsDictionary.g.cs`: explicit interface method `global::System.Windows.Markup.IComponentConnector.Connect` blocked by shared tool MirrorGen stub emission prefix `global::` creating mismatch against Mathcad's `System.Windows.Markup.IComponentConnector.Connect` (`method removed` if clean, `no Mathcad counterpart` if prefixed).
 - Next assembly: `Quire.Calculation.Core` (`Ptc.Calculation.Core.dll`).
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).

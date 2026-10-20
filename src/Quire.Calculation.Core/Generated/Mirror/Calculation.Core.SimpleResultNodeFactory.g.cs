@@ -13,16 +13,4 @@ public partial class SimpleResultNodeFactory : global::Quire.Calculation.Core.IR
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Calculation.Core.IResultNodeFactory Default;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IRealResultNode CreateRealResultNode(double rvalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IImaginaryResultNode CreateImaginaryResultNode(double ivalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IComplexResultNode CreateComplexResultNode(double rvalue, double ivalue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IStringResultNode CreateStringResultNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IFunctionResultNode CreateFunctionResultNode(string descriptionOfFunction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ISymbolicResultNode CreateSymbolicResultNode(string xmcd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

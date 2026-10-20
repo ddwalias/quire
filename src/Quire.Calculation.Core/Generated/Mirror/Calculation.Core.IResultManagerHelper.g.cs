@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IResultManagerHelper, Ptc.Calculation.Core")]
 public static partial class IResultManagerHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const int ResultRefIdMinusOne = -1;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool SetResultIfRefIdSpecified(this global::Quire.Calculation.Core.IResultManager resultManager, int resultRefId, bool resultRefIdSpecified, global::Quire.Calculation.Core.ICalculatableResultOwner calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,18 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.TraceTypeDefinitions, Ptc.Calculation.Core")]
 public static partial class TraceTypeDefinitions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.Dictionary<global::Quire.Calculation.Core.Trace2DResults.TraceType, global::Quire.Calculation.Core.Trace2DResults.TraceTypeRange> _traceColumnsRanges;
-    [global::Quire.Mirror.MirrorStub]
-    public const global::Quire.Calculation.Core.Trace2DResults.TraceType AutoTypeForMultipleColumns = (global::Quire.Calculation.Core.Trace2DResults.TraceType)(7);
-    [global::Quire.Mirror.MirrorStub]
-    public const global::Quire.Calculation.Core.Trace2DResults.TraceType AutoTypeForSingleColumn = (global::Quire.Calculation.Core.Trace2DResults.TraceType)(0);
-    [global::Quire.Mirror.MirrorStub]
-    public const global::Quire.Calculation.Core.Trace2DResults.TraceType ReadAsRowsType = (global::Quire.Calculation.Core.Trace2DResults.TraceType)(3);
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetMinResultColumns(global::Quire.Calculation.Core.Trace2DResults.TraceType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetMaxResultColumns(global::Quire.Calculation.Core.Trace2DResults.TraceType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetMaxRangeColumns(global::Quire.Calculation.Core.Trace2DResults.TraceType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
