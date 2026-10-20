@@ -381,7 +381,7 @@
     "Quire.Mcd.MatVal::.ctor`0()->[System.Runtime]System.Void|False": "102231df09aac29f273624673349fb920715fdf883f41cbfcb92ed4d9f764d29",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False": "a1eecbb8202b08659e7af13aea1fb879c0d10c526662ce21f0ba8bae9dfee795",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False": "a1abfab1348eb4c576cbd6434484629a677ee07a385413f7a20db6bb451bfa30",
-    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "b7a177f4efce1fb82474960ab661ccfdd2f5371414f5450327367f5063c08e91",
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "8e2bb0fa3d6a6ef4213841f318ed153924d485bb104a248047a620fd91f877b9",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "f4b618f12fe9c0c50415048082b6278d9b956c73bb5edf629885ec09b6013187",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "a6e613423589f5b2e6f9c81c6286d3d4f01960fa1ff74fd1cd724d2826546e05",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "fbe3fb79181935c7995f3e9ec1d1909841193ddc5c7d2ec1edd74a3598df864e",
@@ -418,9 +418,9 @@
     "Quire.Mcd.MatVal::ColDimArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": "58cd8650cb49d0fc0fefcd5f9258783784b877c216b7ea398fd9fd779197a181",
     "Quire.Mcd.MatVal::ColOf`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "6e178f06fc1f10ef1e55468d58e0b102b0d6c8c40a3226350f5eddcce73d29ff",
     "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "6784ebaf3e94482efcf2b0aaab2344ae836dd710a3837c9cfce76da06e99cb12",
-    "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "c96bc9eabef67591c2565e8ff5a0dc4e2fba92cbc0d81a33a3885a18b98782f1",
+    "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "82c6241281d633556c127da9d48a46551686535ea078c3fcd6b1bdba214f8bad",
     "Quire.Mcd.MatVal::CopyResize`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "3974f964f840e8283cbe52db4ce2cbb6ce9cb75b299a27fb911d1749927ba086",
-    "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "291732ee34845a91a971cebc2543ac9f8b2b443b76d5e2cb8f8dec237b169608",
+    "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "1d83fca564c96adf3f36116651daa6542d26a039822c2230b808ced95197058f",
     "Quire.Mcd.MatVal::DimActual`0()->[System.Runtime]System.Boolean|False": "6f728091b8422436ceff253d5332badde06b069c3db2f54297c00d886c1dc02f",
     "Quire.Mcd.MatVal::DivideByDefaultDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False": "530bc8bb76c82ee22fb155e50012047a231885ce4592eca70f10b7d0e26465ad",
     "Quire.Mcd.MatVal::DivideByDimension`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.Dim|False": "65af78f1bcdd11af20743d882eaea7e4747d182002cda478cff3ace4c39ccb5b",
@@ -438,32 +438,32 @@
     "Quire.Mcd.MatVal::GetHashCode`0()->[System.Runtime]System.Int32|False": "0a6ac955fb5c1c6beaf4b0027bc9df4d3816ab74ee912ba9e757fdbe62f2346d",
     "Quire.Mcd.MatVal::Index`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "72ac6ddba79e1f9d3990ccb6d38bd7b251953f7336f267a01471b5827ab03404",
     "Quire.Mcd.MatVal::Index`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "cca4d19735a71ff544b7c19635f183d94ae8d40ff8469501060bfa4c9b720f9c",
-    "Quire.Mcd.MatVal::InitPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "e652805029d6bae5dbfdbd4484a78c769d1c425e51cbbff0dba87c4044bcd7d2",
+    "Quire.Mcd.MatVal::InitPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "a60a18f38de2ef3ef8f5932b7c2943e8646896a668ccc78d427d402635672855",
     "Quire.Mcd.MatVal::IsPtrNan`0([System.Runtime]System.Double&)->[System.Runtime]System.Boolean|True": "8bbaafc234501a32d79fce41a8bff57e21b79a678d2c60af31703366473842e7",
     "Quire.Mcd.MatVal::IsPtrNan`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Boolean|False": "123ffbb882480eb9e07ce15b1cc2129a6120f5d4d302796ebe5856ea467cc799",
     "Quire.Mcd.MatVal::IsUniformDimOf`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": "73ca524d74b13ca35ec8c957782c3823381984be775c54b5dc48a346200e8c0d",
     "Quire.Mcd.MatVal::IsUniformPtrsNoChange`0()->[System.Runtime]System.Boolean|False": "84710655ae04be0b020bb4fd230be1a44b10cadaa6fdc0b087103785624b26aa",
     "Quire.Mcd.MatVal::IsUniformPtrs`0()->[System.Runtime]System.Boolean|False": "166381b0e16a8265b7195d136734bfc4e4afe8565cb1e29d0c9855230c56d0aa",
     "Quire.Mcd.MatVal::IsUniformScalarPtrs`0()->[System.Runtime]System.Boolean|False": "5776ab47b483fa1c3c22cf4b218f01bcf55c0939f9a97a53784ebc991341035e",
-    "Quire.Mcd.MatVal::IteratePtrs`0([Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "e539654fdd83230fd5478f70878dd0e48edc6521ab56358031b21ceacce1618f",
+    "Quire.Mcd.MatVal::IteratePtrs`0([Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "ccd9a615d822b49582d2a17380442ae28fba66603f87b12ab639315c01a18dc6",
     "Quire.Mcd.MatVal::MDimCast`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Object|True": "6bf9fb959de1634ededefcfd3f16e2a8b7352f9d9bf1e19b6602a91cb50253aa",
     "Quire.Mcd.MatVal::MakeVector0`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": "a06b57286d771bcba4030442b864ca35b463298b2f02f7b12c1c1d9362abb0f7",
     "Quire.Mcd.MatVal::MakeVector`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": "4d64f12927ada2da31783953e264be080f871699569e5ed2cb83d855ea629163",
     "Quire.Mcd.MatVal::MatCreateDim`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "0df327d524710aba024f78dc5ed1def29122a8ffef53f1a8ea231401eca76bd5",
-    "Quire.Mcd.MatVal::PackImag`0()->[System.Runtime]System.Double[]|False": "2f8b3e784e5ae077902bfb854fd538e2ef4eb5ee7a079138320c3a05944c4aab",
-    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "4facf46e2f1897c6493e94b8423bea21f5d3d788cd7ee3b4fd772272513dbfa1",
-    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "e968f297e3b1a65cc0485ad133ca0625e0e7bbc1ce485c30bac41d07ee965c9f",
+    "Quire.Mcd.MatVal::PackImag`0()->[System.Runtime]System.Double[]|False": "0f2f5d566120948cc9726a8af11cd959869c00c479a4685226d3a35d6a41d0af",
+    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "7f01ed085ee52ef352760c5c5bb0c00cbfcad1196313ae36fff152c21f6b7bfe",
+    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "c29193d3f92aaee5f79bf8904114cd12cf8bc21ac31a6167a5b627aeb53a11bf",
     "Quire.Mcd.MatVal::PackObjects`0()->[System.Runtime]System.Object[]|False": "dcf0d1e33382892454d64432f2db036bf5365ad2d801a86831257137dc1a4a34",
     "Quire.Mcd.MatVal::PackObjects`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|False": "79e26071479d3489fdd15e1aa92b8dbb0d7556741d89ec2e87ab8336c052e481",
-    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "b5461efee4998e60199c48e855402b24ab1fafad10b2dfd92d1ff42a6c0b2d28",
-    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "5e3395550537aff749fd26d459ffe1eacd348d3c1400b5e46b6b36abbc507c7e",
-    "Quire.Mcd.MatVal::PackReal`0()->[System.Runtime]System.Double[]|False": "fbc859dbde0766c936f69f355451426c7beb986d997f937dd8f9c2a39dbb40dd",
-    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "4c4c2622c85279f0706d0b0d9b42c23d09680ffc70c2b55b95e66a369d2f0847",
-    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "5ec0308868a0486efeb0f30ff978f798b77b3258ec0c86fc9c1d42341b0ca12d",
-    "Quire.Mcd.MatVal::PackZero`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "1c1111838a76bf4db3cb316b728c31b27fe8b84fc3c92fade3aa0d43b583df0e",
-    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "b81d8f83e285cb6ab3e6edefb4665d748542c186609ca99ea44fc84071ade071",
-    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "c0e33123df7a51dbc3f53d7413ed745ce401eba412802725588dc5cb2f4cdbac",
-    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "f64650931775636d16c7ba09115684b08bfc105bf500f38fdd17c8ead658066c",
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "681844e5c3c6dea0cac15324917c18009a45a685298e4a0dda7d550f5d37c5d7",
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "8c4f8e229eb2583739602e68ca0883fe6214062d07855f0c433b5e9ba38810df",
+    "Quire.Mcd.MatVal::PackReal`0()->[System.Runtime]System.Double[]|False": "9fba258f3bca964c9ea7807da193af45135a5d65a3504b852ae3f29ef5a3baaf",
+    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "30b32ec1015dc58767e0c26ca711e0efa8fa70f51aa25e32618e6b42d4bbc1c4",
+    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "ccd85fbf8e5b6ae3f93b0077105ec04cbb46b0198c18428ff99b47f772c1da58",
+    "Quire.Mcd.MatVal::PackZero`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "b18cc982ca6fdf3925e1b6139345fe1090a37534e2da6a39e49c07dcd53b9d29",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "5e0184e450a9101ff837cfd7a6344f6f782c229184f9290f3c8e1f4a099e442f",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "edfff25d8720f71116d7f1e8cbec994a9dc8f3d16ffba99513370850096678ef",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "f602f345383cab8fcbe5d0a2376faad29749459a2f71746cf9a64307ad734b52",
     "Quire.Mcd.MatVal::Pair`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "51dae98057c4e486d1f3b528dc7c933014b93ec130b72cf63e036c58bdd832b5",
     "Quire.Mcd.MatVal::PromoteDim`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "9372f053966a9784f2310dbf7b9751d6a64879b72fa58a5fdc866079f7f3bf12",
     "Quire.Mcd.MatVal::PromoteDim`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.MatVal|False": "bb608bc46605f998c071eb1953e2bb8d99f4abd29949bed9b3fb9fac25c4b3c4",
@@ -506,7 +506,7 @@
     "Quire.Mcd.MatVal::TidyPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.Boolean)->[System.Runtime]System.Boolean|False": "c036ac615ba28823be799a1950182e4438bfe726fe22ffb117bde1360caf0956",
     "Quire.Mcd.MatVal::TidyZeros`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "ea9346c697d1c82cd2fde3fcc3a5aa698d4d8fd4a5aa7139645e9baa360616a7",
     "Quire.Mcd.MatVal::ToString`0()->[System.Runtime]System.String|False": "19bef76c62ca6aa1319e4b5f92d6338c1e3a9ef4d61dcdc3fd982ccd38aeb572",
-    "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "7d8cc724d15caf345c7c5f3f4ef83362f46bcb12c1adf2493315bc4c5b9bdada",
+    "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "de8d43795a3d4818fb73bdda7dd1e560fc5b5ac22f4c68e2aef200c147ddf8fa",
     "Quire.Mcd.MatVal::TransposeArr`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "1592b5b6d73d5af22dcc725f84a06fe63f56ce7187670a2f4a7b33857f819be0",
     "Quire.Mcd.MatVal::TransposeImag`0()->[System.Runtime]System.Double[]|False": "834387324138389e89e7289026efa2a4d3520b3207099c530cc6615b6ccd5e64",
     "Quire.Mcd.MatVal::TransposePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "fc7ed1962e1c992d830bab5c836540e2746417458d8647ee5b6f2a370177c541",
@@ -2242,6 +2242,7 @@
     "Quire.Mcd.MatVal::.ctor`0()->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False",
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
@@ -2267,6 +2268,7 @@
     "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False",
     "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::CopyResize`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False",
+    "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True",
     "Quire.Mcd.MatVal::DivideByDefaultDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False",
     "Quire.Mcd.MatVal::DynCall`0([System.Runtime]System.Object)->[System.Runtime]System.Object|False",
     "Quire.Mcd.MatVal::DynCall`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|False",
@@ -2281,6 +2283,7 @@
     "Quire.Mcd.MatVal::Fix`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True",
     "Quire.Mcd.MatVal::InitPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::IsPtrNan`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Boolean|False",
+    "Quire.Mcd.MatVal::IteratePtrs`0([Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::MDimCast`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Object|True",
     "Quire.Mcd.MatVal::MakeVector0`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True",
     "Quire.Mcd.MatVal::MakeVector`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True",
@@ -2290,10 +2293,14 @@
     "Quire.Mcd.MatVal::PackObjects`0()->[System.Runtime]System.Object[]|False",
     "Quire.Mcd.MatVal::PackObjects`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|False",
     "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False",
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False",
     "Quire.Mcd.MatVal::PackReal`0()->[System.Runtime]System.Double[]|False",
     "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False",
     "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False",
     "Quire.Mcd.MatVal::PackZero`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False",
     "Quire.Mcd.MatVal::Pair`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True",
     "Quire.Mcd.MatVal::PromoteDim`0()->[Quire.Mpl]Quire.Mcd.MatVal|False",
     "Quire.Mcd.MatVal::PromoteDim`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.MatVal|False",
@@ -2333,6 +2340,7 @@
     "Quire.Mcd.MatVal::TidyPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.Boolean)->[System.Runtime]System.Boolean|False",
     "Quire.Mcd.MatVal::TidyZeros`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::ToString`0()->[System.Runtime]System.String|False",
+    "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False",
     "Quire.Mcd.MatVal::TransposeArr`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False",
     "Quire.Mcd.MatVal::TransposeImag`0()->[System.Runtime]System.Double[]|False",
     "Quire.Mcd.MatVal::TransposePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False",
@@ -3951,7 +3959,7 @@
     "Quire.Mcd.MatVal::.ctor`0()->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal,[Quire.Mpl]Quire.Mcd.DimVal)->[System.Runtime]System.Void|False": "untested",
-    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "structure_mismatch",
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
@@ -3988,9 +3996,9 @@
     "Quire.Mcd.MatVal::ColDimArray`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.Dim[]|False": "compared",
     "Quire.Mcd.MatVal::ColOf`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "untested",
     "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": "compared",
-    "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::CopyResize`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "untested",
+    "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": "compared",
     "Quire.Mcd.MatVal::DimActual`0()->[System.Runtime]System.Boolean|False": "structure_mismatch",
     "Quire.Mcd.MatVal::DivideByDefaultDimension`0()->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
     "Quire.Mcd.MatVal::DivideByDimension`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.Dim|False": "untested",
@@ -4008,32 +4016,32 @@
     "Quire.Mcd.MatVal::GetHashCode`0()->[System.Runtime]System.Int32|False": "structure_mismatch",
     "Quire.Mcd.MatVal::Index`0([System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "untested",
     "Quire.Mcd.MatVal::Index`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Int32|False": "untested",
-    "Quire.Mcd.MatVal::InitPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::InitPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::IsPtrNan`0([System.Runtime]System.Double&)->[System.Runtime]System.Boolean|True": "structure_mismatch",
     "Quire.Mcd.MatVal::IsPtrNan`0([System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Boolean|False": "untested",
     "Quire.Mcd.MatVal::IsUniformDimOf`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::IsUniformPtrsNoChange`0()->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::IsUniformPtrs`0()->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::IsUniformScalarPtrs`0()->[System.Runtime]System.Boolean|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::IteratePtrs`0([Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::IteratePtrs`0([Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::MDimCast`0([System.Runtime]System.Object,[Quire.Mpl]Quire.Mcd.MatDim)->[System.Runtime]System.Object|True": "untested",
     "Quire.Mcd.MatVal::MakeVector0`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": "compared",
     "Quire.Mcd.MatVal::MakeVector`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": "compared",
     "Quire.Mcd.MatVal::MatCreateDim`0([System.Runtime]System.Object,[System.Runtime]System.Object,[System.Runtime]System.Object)->[System.Runtime]System.Object|True": "structure_mismatch",
-    "Quire.Mcd.MatVal::PackImag`0()->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
+    "Quire.Mcd.MatVal::PackImag`0()->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
     "Quire.Mcd.MatVal::PackObjects`0()->[System.Runtime]System.Object[]|False": "compared",
     "Quire.Mcd.MatVal::PackObjects`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|False": "compared",
-    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "untested",
-    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::PackReal`0()->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::PackZero`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "untested",
-    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "structure_mismatch",
-    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "structure_mismatch",
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "compared",
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": "compared",
+    "Quire.Mcd.MatVal::PackReal`0()->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::PackZero`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": "compared",
     "Quire.Mcd.MatVal::Pair`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": "compared",
     "Quire.Mcd.MatVal::PromoteDim`0()->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
     "Quire.Mcd.MatVal::PromoteDim`0([Quire.Mpl]Quire.Mcd.Dim)->[Quire.Mpl]Quire.Mcd.MatVal|False": "untested",
@@ -4076,7 +4084,7 @@
     "Quire.Mcd.MatVal::TidyPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[Quire.Mpl]Quire.Mcd.Dim,[System.Runtime]System.Boolean)->[System.Runtime]System.Boolean|False": "compared",
     "Quire.Mcd.MatVal::TidyZeros`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": "untested",
     "Quire.Mcd.MatVal::ToString`0()->[System.Runtime]System.String|False": "uncovered",
-    "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "untested",
+    "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": "compared",
     "Quire.Mcd.MatVal::TransposeArr`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": "compared",
     "Quire.Mcd.MatVal::TransposeImag`0()->[System.Runtime]System.Double[]|False": "compared",
     "Quire.Mcd.MatVal::TransposePtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": "compared",
@@ -6553,6 +6561,9 @@
     "Quire.Mcd.MatVal+TrimSubMatrixPtrs::set_submatrix_ptrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Object)->[System.Runtime]System.Void|False": [
       "matvalviewdifferentialtests"
     ],
+    "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": [
+      "matvalstoragedifferentialtests"
+    ],
     "Quire.Mcd.MatVal::.ctor`0([Quire.Mpl]Quire.Mcd.MatVal,[System.Runtime]System.Int32)->[System.Runtime]System.Void|False": [
       "matvalviewdifferentialtests"
     ],
@@ -6570,6 +6581,12 @@
     ],
     "Quire.Mcd.MatVal::Column`0([System.Runtime]System.Int32)->[Quire.Mpl]Quire.Mcd.MatVal|False": [
       "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::CopyPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Copy`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Void|True": [
+      "matvalstoragedifferentialtests"
     ],
     "Quire.Mcd.MatVal::DynCall`0([System.Runtime]System.Object)->[System.Runtime]System.Object|False": [
       "matvalindexeddifferentialtests"
@@ -6592,6 +6609,9 @@
     "Quire.Mcd.MatVal::Fix`0([System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalviewdifferentialtests"
     ],
+    "Quire.Mcd.MatVal::InitPtrs`0([Quire.Mpl]Quire.Mcd.MatVal)->[System.Runtime]System.Void|False": [
+      "matvalstoragedifferentialtests"
+    ],
     "Quire.Mcd.MatVal::IsUniformDimOf`0([Quire.Mpl]Quire.Mcd.Dim)->[System.Runtime]System.Boolean|False": [
       "matvaldimensionpropertiesdifferentialtests"
     ],
@@ -6604,17 +6624,56 @@
     "Quire.Mcd.MatVal::IsUniformScalarPtrs`0()->[System.Runtime]System.Boolean|False": [
       "matvalpointerpropertiesdifferentialtests"
     ],
+    "Quire.Mcd.MatVal::IteratePtrs`0([Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": [
+      "matvalstoragedifferentialtests"
+    ],
     "Quire.Mcd.MatVal::MakeVector0`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalcollectiondifferentialtests"
     ],
     "Quire.Mcd.MatVal::MakeVector`0([System.Runtime]System.Object[])->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalcollectiondifferentialtests"
     ],
+    "Quire.Mcd.MatVal::PackImag`0()->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackImag`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
     "Quire.Mcd.MatVal::PackObjects`0()->[System.Runtime]System.Object[]|False": [
       "matvalindexeddifferentialtests"
     ],
     "Quire.Mcd.MatVal::PackObjects`0([System.Runtime]System.Int32)->[System.Runtime]System.Object[]|False": [
       "matvalindexeddifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackPtrs`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Collections.Hashtable|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackReal`0()->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackReal`0([System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::PackZero`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::Pack`0([System.Runtime]System.Double[],[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32,[System.Runtime]System.Int32)->[System.Runtime]System.Double[]|False": [
+      "matvalstoragedifferentialtests"
     ],
     "Quire.Mcd.MatVal::Pair`0([System.Runtime]System.Object,[System.Runtime]System.Object)->[Quire.Mpl]Quire.Mcd.MatVal|True": [
       "matvalcollectiondifferentialtests"
@@ -6690,6 +6749,9 @@
     ],
     "Quire.Mcd.MatVal::ToString`0()->[System.Runtime]System.String|False": [
       "matvalviewdifferentialtests"
+    ],
+    "Quire.Mcd.MatVal::TransformPtrs`0([Quire.Mpl]Quire.Mcd.MatVal,[Quire.Mpl]Quire.Mcd.PtrDelegate)->[System.Runtime]System.Void|False": [
+      "matvalstoragedifferentialtests"
     ],
     "Quire.Mcd.MatVal::TransposeArr`0([System.Runtime]System.Double[])->[System.Runtime]System.Double[]|False": [
       "matvalviewdifferentialtests"
@@ -10466,11 +10528,11 @@
       "verified_unsupported": 0
     },
     "Quire.Mcd.MatVal": {
-      "compared": 138,
+      "compared": 156,
       "declaration_only": 0,
       "excluded": 0,
-      "missing": 111,
-      "structure_mismatch": 29,
+      "missing": 98,
+      "structure_mismatch": 24,
       "total": 297,
       "uncovered": 19,
       "verified_unsupported": 32
