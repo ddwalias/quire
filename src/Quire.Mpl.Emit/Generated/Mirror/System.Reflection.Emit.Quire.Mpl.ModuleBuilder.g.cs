@@ -32,39 +32,5 @@ public partial class ModuleBuilder : global::System.Reflection.Module
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CreateGlobalFunctions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.EnumBuilder DefineEnum(string name, global::System.Reflection.TypeAttributes visibility, global::System.Type underlyingType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.MethodBuilder DefineGlobalMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.MethodBuilder DefineGlobalMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] requiredReturnTypeCustomModifiers, global::System.Type[] optionalReturnTypeCustomModifiers, global::System.Type[] parameterTypes, global::System.Type[][] requiredParameterTypeCustomModifiers, global::System.Type[][] optionalParameterTypeCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.MethodBuilder DefineGlobalMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.FieldBuilder DefineInitializedData(string name, byte[] data, global::System.Reflection.FieldAttributes attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.MethodBuilder DefinePInvokeMethod(string name, string dllName, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes, global::System.Runtime.InteropServices.CallingConvention nativeCallConv, global::System.Runtime.InteropServices.CharSet nativeCharSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.MethodBuilder DefinePInvokeMethod(string name, string dllName, string entryName, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes, global::System.Runtime.InteropServices.CallingConvention nativeCallConv, global::System.Runtime.InteropServices.CharSet nativeCharSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.TypeBuilder DefineType(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr, global::System.Type parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr, global::System.Type parent, int typesize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr, global::System.Type parent, global::System.Reflection.Emit.PackingSize packsize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr, global::System.Type parent, global::System.Reflection.Emit.PackingSize packingSize, int typesize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr, global::System.Type parent, global::System.Type[] interfaces) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.FieldBuilder DefineUninitializedData(string name, int size, global::System.Reflection.FieldAttributes attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.MethodInfo GetArrayMethod(global::System.Type arrayClass, string methodName, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCustomAttribute(global::System.Reflection.ConstructorInfo con, byte[] binaryAttribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCustomAttribute(global::System.Reflection.Emit.CustomAttributeBuilder customBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
