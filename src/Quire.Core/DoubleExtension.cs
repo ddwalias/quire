@@ -55,6 +55,46 @@ public static partial class DoubleExtension
     }
 
     [MirrorVerified("Release IL")]
+    public static bool IsLessThanOrEqual(this double value1, double value2, double eps = double.NaN)
+    {
+        if (!value1.IsLessThan(value2, eps))
+        {
+            return value1.IsEqualTo(value2, eps);
+        }
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool IsGreaterThanOrEqual(this double value1, double value2, double eps = double.NaN)
+    {
+        if (!value1.IsGreaterThan(value2, eps))
+        {
+            return value1.IsEqualTo(value2, eps);
+        }
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static double Floor(this double num, double eps = double.NaN)
+    {
+        if (!num.IsEqualTo(Math.Round(num), eps))
+        {
+            return Math.Floor(num);
+        }
+        return Math.Round(num);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static double Ceiling(this double num, double eps = double.NaN)
+    {
+        if (!num.IsEqualTo(Math.Round(num), eps))
+        {
+            return Math.Ceiling(num);
+        }
+        return Math.Round(num);
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IntFloor(this double num, double eps = double.NaN) => (int)Floor(num, eps);
 
     [MirrorVerified("Release IL")]

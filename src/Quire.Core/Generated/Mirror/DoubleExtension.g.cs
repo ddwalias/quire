@@ -12,13 +12,5 @@ namespace Quire;
 public static partial class DoubleExtension
 {
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsLessThanOrEqual(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsGreaterThanOrEqual(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsBetween(this double num, double lowerBound, double upperBound, bool isInclusive = true, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double Floor(this double num, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static double Ceiling(this double num, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
