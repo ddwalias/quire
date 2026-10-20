@@ -12,23 +12,5 @@ namespace Quire.EngNotebookPlus.Automation;
 public partial class Matrix : global::Quire.EngNotebookPlus.Automation.IProxyComRealSubject<global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix>, global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     double[][] global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix.Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private Matrix() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal Matrix(global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix mathcadPrimeMatrix) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~Matrix() { } // stub finalizers must not throw: they also run for objects whose constructor threw
-    [global::Quire.Mirror.MirrorStub]
-    public int SetMatrixElement(int rowIndexArg, int columnIndexArg, double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetMatrixElement(int rowIndexArg, int columnIndexArg, out double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

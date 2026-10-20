@@ -11,6 +11,4 @@ namespace Quire.EngNotebookPlus.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebookPlus.Automation.IMathcadPrimeWorksheetReadonlyOptions, Ptc.EngNotebookPlus.Automation")]
 public partial interface IMathcadPrimeWorksheetReadonlyOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    int SetOptionValue(global::Quire.EngNotebookPlus.Automation.WorksheetReadonlyOptionNames optionNameArg, object optionValueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

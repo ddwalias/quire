@@ -11,8 +11,4 @@ namespace Quire.EngNotebookPlus.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebookPlus.Automation.IMathcadPrimeWorksheets, Ptc.EngNotebookPlus.Automation")]
 public partial interface IMathcadPrimeWorksheets
 {
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EngNotebookPlus.Automation.IMathcadPrimeWorksheet2 Item(int indexArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

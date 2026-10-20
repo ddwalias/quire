@@ -11,20 +11,4 @@ namespace Quire.EngNotebookPlus.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebookPlus.Automation.OutputResult, Ptc.EngNotebookPlus.Automation")]
 public partial class OutputResult : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeOutputResult
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EngNotebookPlus.Automation.IMathcadPrimeOutputResult _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EngNotebookPlus.Automation.IMathcadPrimeOutputResult RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double RealResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private OutputResult() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal OutputResult(global::Quire.EngNotebookPlus.Automation.IMathcadPrimeOutputResult mathcadPrimeOutputResult) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~OutputResult() { } // stub finalizers must not throw: they also run for objects whose constructor threw
 }
