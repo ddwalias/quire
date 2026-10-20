@@ -15,6 +15,4 @@ public static partial class LoggerAssistant
     public static string GetFullMethodName(global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetFullConstructorName(global::System.Reflection.ConstructorInfo ctor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetFullNameWithAssembly(global::System.Reflection.MemberInfo member) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
