@@ -11,14 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.PolyhedronMeshBase, Ptc.Media3D")]
 public abstract partial class PolyhedronMeshBase : global::Quire.Media3D.FlatSurfaceMeshBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TextureCoordinatesProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.PointCollection TextureCoordinates { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected abstract global::System.Windows.Media.Media3D.Point3D[,] Faces { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public PolyhedronMeshBase() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Triangulate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection vertices, global::System.Windows.Media.Media3D.Vector3DCollection normals, global::System.Windows.Media.Int32Collection indices, global::System.Windows.Media.PointCollection textures) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,14 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.IcosahedronMesh, Ptc.Media3D")]
 public partial class IcosahedronMesh : global::Quire.Media3D.PolyhedronMeshBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly double G;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Media.Media3D.Point3D[,] faces;
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Media3D.Point3D[,] Faces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public IcosahedronMesh() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
