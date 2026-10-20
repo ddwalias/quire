@@ -11,14 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.PathSegment3D, Ptc.Media3D")]
 public abstract partial class PathSegment3D : global::System.Windows.Media.Animation.Animatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsStrokedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsSmoothJoinProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsStroked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSmoothJoin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected PathSegment3D() { }
 }

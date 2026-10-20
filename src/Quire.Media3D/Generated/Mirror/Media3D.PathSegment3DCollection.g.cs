@@ -11,10 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.PathSegment3DCollection, Ptc.Media3D")]
 public partial class PathSegment3DCollection : global::System.Windows.FreezableCollection<global::Quire.Media3D.PathSegment3D>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => base.CreateInstanceCore();
-    [global::Quire.Mirror.MirrorStub]
-    public PathSegment3DCollection() { }
 }

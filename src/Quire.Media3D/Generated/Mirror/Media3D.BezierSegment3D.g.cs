@@ -11,22 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.BezierSegment3D, Ptc.Media3D")]
 public partial class BezierSegment3D : global::Quire.Media3D.PathSegment3D
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty Point1Property;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty Point2Property;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty Point3Property;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point3 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public BezierSegment3D() { }
 }

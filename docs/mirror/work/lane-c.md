@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-media3d-20261021-m1.
+- Branch: mirror/c-media3d-20261021-m2.
 - UTC start time: 2026-10-20T18:12:36Z.
 - Eight-hour deadline: 2026-10-21T02:12:36Z.
 - Current assembly: Quire.Media3D (in progress).
@@ -31,12 +31,13 @@
     - Batch 6: Trace2DResultConverterHelperBase (ctor, CurrentType, IsTypeDefault, AssertValuesTypeMatchTraceType, ValidateColumnsAndUnits, ValidateNumberOfPointsLimit, ValidateEnoughResultColumnsForTraceType).
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
+    - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
 - Release IL report:
   - Quire.Automation: PASS; 275 checked; 231 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebook.Automation: PASS; 409 checked; 215 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebookPlus.Automation: PASS; 407 checked; 214 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.Calculation.Core: PASS; 383 checked; 0 failures; exact bodies rose to 383 (+7 exact bodies); unfinished reduced to 397 (-7 unfinished).
-  - Quire.Media3D: PASS; 32 checked; 0 failures; exact bodies rose from 24 to 32 (+8 exact bodies); unfinished reduced from 544 to 536 (-8 unfinished).
+  - Quire.Media3D: PASS; 65 checked; 0 failures; exact bodies rose from 32 to 65 (+33 exact bodies); unfinished reduced from 536 to 508 (-28 unfinished).
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
