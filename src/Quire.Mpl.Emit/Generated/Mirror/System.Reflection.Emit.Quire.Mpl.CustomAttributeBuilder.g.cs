@@ -22,8 +22,6 @@ public partial class CustomAttributeBuilder
     [global::Quire.Mirror.MirrorStub]
     public CustomAttributeBuilder(global::System.Reflection.ConstructorInfo con, object[] constructorArgs, global::System.Reflection.PropertyInfo[] namedProperties, object[] propertyValues, global::System.Reflection.FieldInfo[] namedFields, object[] fieldValues) { }
     [global::Quire.Mirror.MirrorStub]
-    private static void EmitType(global::System.IO.BinaryWriter writer, global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void EmitValue(global::System.IO.BinaryWriter writer, global::System.Type type, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.CustomAttributeBuilder+CustomAttributeEncoding, mplasb")]
