@@ -52,17 +52,5 @@ internal partial class EntityWrappers
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+LocalBuilderReferenceWrapper, mplasb")]
     internal partial class LocalBuilderReferenceWrapper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal readonly global::System.Reflection.Emit.Quire.Mpl.LocalBuilder localBuilder;
-        [global::Quire.Mirror.MirrorStub]
-        internal int parentToken;
-        [global::Quire.Mirror.MirrorStub]
-        private int hashCode;
-        [global::Quire.Mirror.MirrorStub]
-        public LocalBuilderReferenceWrapper(global::System.Reflection.Emit.Quire.Mpl.LocalBuilder LocalBuilder) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object obj) => base.Equals(obj);
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
     }
 }
