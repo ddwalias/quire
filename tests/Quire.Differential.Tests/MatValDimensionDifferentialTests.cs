@@ -1,116 +1,167 @@
-using static Quire.Differential.Tests.Reflect;
+using System.Collections;
+using System.Reflection;
 
 namespace Quire.Differential.Tests;
 
 public class MatValDimensionDifferentialTests
 {
-    private static Array Units(Side side, params string[] names)
+    private const string Contract = "Mcd.MatVal.Dimensions";
+    private const BindingFlags Instance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+    private const BindingFlags Static = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+    private static MethodInfo Method(Side side, bool isStatic, string name, params string[] parameters)
     {
-        var units = Array.CreateInstance(side.Dim, names.Length);
-        for (int i = 0; i < names.Length; i++) units.SetValue(side.D(names[i]), i);
-        return units;
+        var type = side.T("Mcd.MatVal");
+        return (isStatic ? type.GetMethods(Static) : type.GetMethods(Instance))
+            .Single(m => m.Name == name && m.GetParameters().Select(p => p.ParameterType.Name).SequenceEqual(parameters));
     }
+
     private static object Matrix(Side side, string dimension, int kind)
     {
-        var matrix = New(side.T("Mcd.MatVal"), new double[] { 99, 1, 2, 99, 3, 4, 99 }, new double[7], 2, 2, 3, null, Enum.ToObject(side.T("Mcd.Flags"), 2146697216), 1);
-        Set(matrix, "m_dim", side.D(dimension));
-        if (kind > 0) CallSig(matrix, "set_2", ["Int32", "Int32", "Object"], 1, 1, side.Num(5, 6, "T"));
-        if (kind > 1) Call(matrix, "set_ptrs_2", 0, 1, New(side.T("Mcd.MatVal"), new double[] { 3 }));
-        if (kind > 2) Call(matrix, "set_ptrs_2", 1, 0, "text");
+        var matrix = Reflect.New(side.T("Mcd.MatVal"), new double[] { 99, 1, 2, 99, 3, 4, 99 }, new double[7], 2, 2, 3, null,
+            Enum.ToObject(side.T("Mcd.Flags"), 2146697216), 1);
+        Reflect.Set(matrix, "m_dim", side.D(dimension));
+        if (kind > 0) Reflect.CallSig(matrix, "set_2", ["Int32", "Int32", "Object"], 1, 1, side.Num(5, 6, "T"));
+        if (kind > 1) Reflect.Call(matrix, "set_ptrs_2", 0, 1, Reflect.New(side.T("Mcd.MatVal"), new double[] { 3 }));
+        if (kind > 2) Reflect.Call(matrix, "set_ptrs_2", 1, 0, "text");
         return matrix;
     }
-    private static void State(Side side, List<string> log, string label, object matrix) => log.Add(label + " " + MatValDifferentialTests.Storage(side, matrix));
 
-    [SkippableFact]
-    public void Casts_aliases_and_pointer_conversions() => Scenario.Compare((side, log) =>
+    private static object MatrixWithStalePointerEntry(Side side)
     {
-        var type = side.T("Mcd.MatVal");
-        foreach (var dimension in Side.DimNames)
-        foreach (int kind in Enumerable.Range(0, 4))
-        foreach (var operation in new[] { "StripDimension", "AsUniform", "AsDimless", "AsPolymorphic", "SetDim" })
-        {
-            var input = Matrix(side, dimension, kind);
-            log.Add(dimension + " kind " + kind + " " + operation);
-            object? result = null;
-            log.Log(side, "cast", () => result = operation == "SetDim" ? Call(input, operation, side.D("L")) : Call(type, operation, input));
-            if (result != null)
-            {
-                State(side, log, "output", result);
-                log.Add("same " + ReferenceEquals(input, result));
-                log.Add("arrays alias " + ReferenceEquals(Get(input, "m_rarr"), Get(result, "m_rarr")));
-            }
-            State(side, log, "input", input);
-        }
-    });
+        var matrix = Matrix(side, "L", 1);
+        ((Hashtable)Reflect.Get(matrix, "m_parr")!)[0] = "stale";
+        return matrix;
+    }
 
-    [SkippableFact]
-    public void Dimension_application_and_division_mutations() => Scenario.Compare((side, log) =>
+    private static object RectangularMatrix(Side side, string dimension, int rows, int cols)
     {
-        var type = side.T("Mcd.MatVal");
+        var matrix = Reflect.New(side.T("Mcd.MatVal"), new double[rows * cols], new double[rows * cols], rows, cols, rows,
+            new Hashtable(), Enum.ToObject(side.T("Mcd.Flags"), 2146697216), 0);
+        Reflect.Set(matrix, "m_dim", side.D(dimension));
+        return matrix;
+    }
+
+    private static string Show(Side side, object? value)
+    {
+        if (value == null) return "null";
+        if (value.GetType().FullName!.EndsWith("Mcd.MatVal", StringComparison.Ordinal))
+            return MatValDifferentialTests.Storage(side, value);
+        if (value.GetType().FullName!.EndsWith("Mcd.MatDim", StringComparison.Ordinal))
+            return MatDimDifferentialTests.DescribeDimension(side, value);
+        return side.Show(value);
+    }
+
+    private static string State(Side side, object value) => MatValDifferentialTests.Storage(side, value);
+
+    private static void Compare(string label, string name, string[] signature, bool isStatic,
+        object? qTarget, object?[] qArgs, object? mTarget, object?[] mArgs)
+    {
+        Func<object?, string> qs = v => Show(Side.Quire, v);
+        Func<object?, string> ms = v => Show(Side.Mathcad, v);
+        MethodComparison.Compare(label, Contract, Method(Side.Quire, isStatic, name, signature), qTarget, qArgs,
+            Method(Side.Mathcad, isStatic, name, signature), mTarget, mArgs,
+            qs, ms,
+            isStatic ? null : v => State(Side.Quire, v),
+            isStatic ? null : v => State(Side.Mathcad, v));
+    }
+
+    private static object Descriptor(Side side, string axis, string[] dimensions, int size)
+    {
         var descriptor = side.T("Mcd.MatDim");
+        var array = Array.CreateInstance(side.Dim, dimensions.Length);
+        for (int i = 0; i < dimensions.Length; i++) array.SetValue(side.D(dimensions[i]), i);
+        var axisValue = Enum.Parse(Reflect.Nested(descriptor, "RC"), axis);
+        return Reflect.Call(descriptor, "make", axisValue, array, size)!;
+    }
+
+    [SkippableFact]
+    public void Dimension_casts_and_mutations()
+    {
+        Runtime.Sync();
+        foreach (var dimension in Side.DimNames)
         foreach (int kind in Enumerable.Range(0, 4))
-        foreach (var operation in new[] { "ApplyLinearDimension", "ApplyDimension", "ApplyCrazyDimension", "ApplyRowDimensions", "ApplyColDimensions", "MDimCast" })
+        foreach (string name in new[] { "StripDimension", "AsUniform", "AsDimless", "AsPolymorphic" })
+        {
+            var q = Matrix(Side.Quire, dimension, kind); var m = Matrix(Side.Mathcad, dimension, kind);
+            Compare($"{name}({dimension}, kind {kind})", name, ["MatVal"], true, null, [q], null, [m]);
+        }
+
+        foreach (var dimension in Side.DimNames)
+        foreach (int kind in Enumerable.Range(0, 4))
+        {
+            var q = Matrix(Side.Quire, dimension, kind); var m = Matrix(Side.Mathcad, dimension, kind);
+            Compare($"SetDim({dimension}, kind {kind})", "SetDim", ["Dim"], false, q, [Side.Quire.D("L")], m, [Side.Mathcad.D("L")]);
+        }
+
+        foreach (int kind in Enumerable.Range(0, 4))
         foreach (bool uniform in new[] { false, true })
+        foreach (var operation in new[] { "ApplyLinearDimension", "ApplyDimension", "ApplyCrazyDimension" })
         {
-            var matrix = Matrix(side, "L", kind);
-            var units = Units(side, "identity", uniform ? "identity" : "T");
-            var axis = Enum.Parse(Nested(descriptor, "RC"), "ROW");
-            var dim = Call(descriptor, "make", axis, units, 2);
-            log.Add($"kind {kind} {operation} uniform {uniform}");
-            object? output = null;
-            log.Log(side, "apply", () => output = operation switch
-            {
-                "MDimCast" => Call(type, operation, matrix, dim),
-                "ApplyRowDimensions" or "ApplyColDimensions" => Call(matrix, operation, units),
-                _ => Call(matrix, operation, dim),
-            });
-            if (output != null) State(side, log, "output", output);
-            State(side, log, "input", matrix);
+            var q = Matrix(Side.Quire, "L", kind); var m = Matrix(Side.Mathcad, "L", kind);
+            var qd = Descriptor(Side.Quire, "ROW", ["identity", uniform ? "identity" : "T"], 2);
+            var md = Descriptor(Side.Mathcad, "ROW", ["identity", uniform ? "identity" : "T"], 2);
+            Compare($"{operation}(kind {kind}, uniform {uniform})", operation, ["MatDim"], false, q, [qd], m, [md]);
         }
-        foreach (var operation in new[] { "ApplyRowDimensions", "ApplyColDimensions" })
+
+        foreach (string operation in new[] { "ApplyRowDimensions", "ApplyColDimensions" })
+        foreach (int kind in new[] { 0, 2 })
         {
-            var matrix = Matrix(side, "L", 0);
-            log.Log(side, operation + " pair", () => Call(matrix, operation, side.D("L"), side.D("T")));
-            State(side, log, "paired", matrix);
+            var q = Matrix(Side.Quire, "L", kind); var m = Matrix(Side.Mathcad, "L", kind);
+            Array qd = Array.CreateInstance(Side.Quire.Dim, 2); qd.SetValue(Side.Quire.D("L"), 0); qd.SetValue(Side.Quire.D("T"), 1);
+            Array md = Array.CreateInstance(Side.Mathcad.Dim, 2); md.SetValue(Side.Mathcad.D("L"), 0); md.SetValue(Side.Mathcad.D("T"), 1);
+            Compare($"{operation}(array, kind {kind})", operation, ["Dim[]"], false, q, [qd], m, [md]);
+            Compare($"{operation}(pair, kind {kind})", operation, ["Dim", "Dim"], false, q, [Side.Quire.D("L"), Side.Quire.D("T")],
+                m, [Side.Mathcad.D("L"), Side.Mathcad.D("T")]);
         }
+
+        Compare("ApplyRowDimensions(pair, 3-row matrix)", "ApplyRowDimensions", ["Dim", "Dim"], false,
+            RectangularMatrix(Side.Quire, "L", 3, 2), [Side.Quire.D("L"), Side.Quire.D("T")],
+            RectangularMatrix(Side.Mathcad, "L", 3, 2), [Side.Mathcad.D("L"), Side.Mathcad.D("T")]);
+        Compare("ApplyColDimensions(pair, 3-column matrix)", "ApplyColDimensions", ["Dim", "Dim"], false,
+            RectangularMatrix(Side.Quire, "L", 2, 3), [Side.Quire.D("L"), Side.Quire.D("T")],
+            RectangularMatrix(Side.Mathcad, "L", 2, 3), [Side.Mathcad.D("L"), Side.Mathcad.D("T")]);
+
+        Compare("DivideByDimension skips stale pointer-table entries", "DivideByDimension", ["Dim"], false,
+            MatrixWithStalePointerEntry(Side.Quire), [Side.Quire.D("T")],
+            MatrixWithStalePointerEntry(Side.Mathcad), [Side.Mathcad.D("T")]);
+
         foreach (int kind in Enumerable.Range(0, 4))
         foreach (var dimension in Side.DimNames)
         {
-            var matrix = Matrix(side, "L", kind);
-            log.Log(side, "divide " + dimension + " kind " + kind, () => Call(matrix, "DivideByDimension", side.D(dimension)));
-            State(side, log, "divided", matrix);
-            matrix = Matrix(side, dimension, kind);
-            log.Log(side, "default divide", () => Call(matrix, "DivideByDefaultDimension"));
-            State(side, log, "default divided", matrix);
+            var q = Matrix(Side.Quire, "L", kind); var m = Matrix(Side.Mathcad, "L", kind);
+            Compare($"DivideByDimension({dimension}, kind {kind})", "DivideByDimension", ["Dim"], false,
+                q, [Side.Quire.D(dimension)], m, [Side.Mathcad.D(dimension)]);
+            q = Matrix(Side.Quire, dimension, kind); m = Matrix(Side.Mathcad, dimension, kind);
+            Compare($"DivideByDefaultDimension({dimension}, kind {kind})", "DivideByDefaultDimension", [], false, q, [], m, []);
         }
-        foreach (object? value in new object?[] { null, "text", side.Num(1, 0, "poly") })
-            log.Log(side, "nonmatrix cast", () => Call(type, "MDimCast", value, Call(descriptor, "make", side.D("T"))));
-        var input = Matrix(side, "L", 1);
-        log.Log(side, "null descriptor", () => ReferenceEquals(input, Call(type, "MDimCast", input, null)));
-    });
 
-    [SkippableFact]
-    public void Initial_condition_order_dimension_rules() => Scenario.Compare((side, log) =>
-    {
-        var type = side.T("Mcd.MatVal");
-        foreach (var order in new[] { new double[] { 0, 0, 0 }, new double[] { 0, 0, 2 }, new double[] { 0, 1, 2 }, new double[] { 0, -1, 0 } })
-        foreach (var valueUnits in new[] { new[] { "L", "L", "L" }, new[] { "L", "T", "L" }, new[] { "identity", "identity", "identity" }, new[] { "poly", "poly", "poly" } })
-        foreach (var pointUnit in new[] { "poly", "identity", "T" })
+        foreach (object? value in new object?[] { null, "text", Side.Quire.Num(1, 0, "poly"), Matrix(Side.Quire, "L", 1) })
         {
-            var orderMatrix = New(type, order);
-            var value = New(type, new double[] { 2, 3, 4 });
-            Set(value, "m_dim", side.D(valueUnits[0]));
-            for (int i = 1; i < 3; i++) CallSig(value, "set_1", ["Int32", "Object"], i, side.Num(i + 2, 0, valueUnits[i]));
-            log.Add("order " + side.Show(order) + " units " + string.Join(",", valueUnits) + " point " + pointUnit);
-            object? result = null;
-            log.Log(side, "create", () => result = Call(type, "MatCreateDim", orderMatrix, side.Num(1, 0, pointUnit), value));
-            if (result != null)
-            {
-                State(side, log, "output", result);
-                log.Add("same " + ReferenceEquals(value, result));
-            }
-            State(side, log, "input", value);
+            object? mathValue = value == null ? null : value is string ? "text" : value.GetType().Name == "MatVal"
+                ? Matrix(Side.Mathcad, "L", 1) : Side.Mathcad.Num(1, 0, "poly");
+            var qd = Descriptor(Side.Quire, "ROW", ["L", "T"], 2);
+            var md = Descriptor(Side.Mathcad, "ROW", ["L", "T"], 2);
+            Compare("MDimCast(value, descriptor)", "MDimCast", ["Object", "MatDim"], true, null, [value, qd], null, [mathValue, md]);
         }
-        log.Log(side, "nonmatrix order", () => Call(type, "MatCreateDim", "other", side.Num(1, 0, "T"), "value"));
-    });
+        var qMatrix = Matrix(Side.Quire, "L", 1); var mMatrix = Matrix(Side.Mathcad, "L", 1);
+        Compare("MDimCast(matrix, null)", "MDimCast", ["Object", "MatDim"], true, null, [qMatrix, null], null, [mMatrix, null]);
+
+        Compare("MatCreateDim(order matrix, numeric point and value)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
+            [Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 0, 0, 2 }), Side.Quire.Num(1, 0, "T"), Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 2, 3, 4 })], null,
+            [Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 0, 0, 2 }), Side.Mathcad.Num(1, 0, "T"), Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 2, 3, 4 })]);
+        Compare("MatCreateDim(nonmatrix order)", "MatCreateDim", ["Object", "Object", "Object"], true, null,
+            ["other", Side.Quire.Num(1, 0, "T"), "value"], null, ["other", Side.Mathcad.Num(1, 0, "T"), "value"]);
+
+        foreach (int kind in Enumerable.Range(0, 4))
+        {
+            var qSource = Matrix(Side.Quire, "L", kind);
+            var mSource = Matrix(Side.Mathcad, "L", kind);
+            var qTarget = Matrix(Side.Quire, "identity", 0);
+            var mTarget = Matrix(Side.Mathcad, "identity", 0);
+            Compare($"CastPtrs(source kind {kind}, T)", "CastPtrs", ["MatVal", "Dim"], false,
+                qTarget, [qSource, Side.Quire.D("T")],
+                mTarget, [mSource, Side.Mathcad.D("T")]);
+        }
+    }
 }
