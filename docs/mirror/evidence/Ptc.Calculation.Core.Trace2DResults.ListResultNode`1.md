@@ -10,6 +10,10 @@
 | `.ctor(IList<T>, T, int)` | 0x06000250 | Initializes the count field to -1, then stores `ExtendList(data, minLength, paddingValue)` in `_data` | Direct Mathcad comparisons cover padding, no-padding and null data through concrete derived constructors. | Verified |
 | `ExtendList(IList<T>, int, T)` | 0x06000251 | Reads `data.Count()`; returns `data` when it already meets the minimum; otherwise copies it to a `List<T>` with `minLength` capacity and appends padding values until the minimum | Direct Mathcad cases cover passthrough, empty/short padding, zero minimum and null input. | Verified |
 | `MeaningfulValuesCount get` | 0x06000253 | If the cached count is -1, counts items for which the virtual `IsMeaningfulValue` is true, stores the count, and returns it | Direct Mathcad comparison verifies lazy computation and cached read for an empty double list. Nonempty double counting calls `Quire.DoubleExtension.IsValid`, Tier C in `Ptc.Core.dll`, and is blocked outside Lane C. | Blocked |
+| `Count get` | 0x06000254 | Returns `_data.Count` | Direct Release comparison on `ListResultNode<double>` | Verified |
+| `Item get(int)` | 0x06000255 | Returns `_data[index]` | Direct Release comparison covers indexed read | Verified |
+| `Item set(int, T)` | 0x06000256 | Assigns `_data[index] = value` | Direct Release comparison covers indexed write and backing list state | Verified |
+| `List get` | 0x06000257 | Returns `_data` | Direct Release comparison checks the backing list | Verified |
 
 The list accessors are already implemented and are directly compared by `PtcCalculationCoreTrace2DResultsListResultNode1MechanicalDifferentialTests` on closed `double` methods and concrete `DoubleListResultNode` targets. The abstract `NeutralValue` and `IsMeaningfulValue` members are declarations, not bodies.
 
