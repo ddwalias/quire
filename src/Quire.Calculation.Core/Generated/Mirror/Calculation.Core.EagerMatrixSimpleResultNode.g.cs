@@ -12,15 +12,9 @@ namespace Quire.Calculation.Core;
 public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IEagerMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private EagerMatrixSimpleResultNode(global::Quire.Calculation.Core.IMatrixResultNode node) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.IEagerMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode matrixNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
     [global::Quire.Mirror.MirrorStub]
     private bool IsChildrenEquals(global::Quire.Calculation.Core.EagerMatrixSimpleResultNode obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

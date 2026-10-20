@@ -1,5 +1,5 @@
 #nullable disable
-using Quire.Mirror;
+using System.Collections.Generic;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
@@ -16,7 +16,20 @@ public partial class EagerMatrixSimpleResultNode
     public int Count => _children.Count;
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    public TableSize Size => new TableSize
+    {
+        Rows = Rows,
+        Columns = Columns
+    };
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public int Columns { get; private set; }
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    public int Rows => Count / Columns;
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    public SimpleResultNode this[int r, int c] { get => _children[r * Columns + c]; set => _children[r * Columns + c] = value; }
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public EagerMatrixSimpleResultNode(int rowCount, int colCount)
@@ -36,8 +49,22 @@ public partial class EagerMatrixSimpleResultNode
     public override string ToString() => string.Format("Matrix: ({0},{1})", Rows, Columns);
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
-    public int Rows => Count / Columns;
+    public static IEagerMatrixResultNode ConvertToEagerMatrix(IMatrixResultNode matrixNode)
+    {
+        if (matrixNode is IEagerMatrixResultNode result)
+        {
+            return result;
+        }
+        return new EagerMatrixSimpleResultNode(matrixNode);
+    }
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
-    public SimpleResultNode this[int r, int c] { get => _children[r * Columns + c]; set => _children[r * Columns + c] = value; }
+    public override bool Equals(object obj)
+    {
+        if (obj is EagerMatrixSimpleResultNode obj2)
+        {
+            return IsChildrenEquals(obj2);
+        }
+        return false;
+    }
 }

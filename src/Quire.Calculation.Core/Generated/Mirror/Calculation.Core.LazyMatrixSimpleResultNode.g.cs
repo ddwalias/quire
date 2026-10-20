@@ -12,15 +12,7 @@ namespace Quire.Calculation.Core;
 public partial class LazyMatrixSimpleResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.ILazyMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SimpleResultNode this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public LazyMatrixSimpleResultNode(global::Quire.Calculation.Core.IMatrixValueProxyWrapper matrix, global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> transformValueToResult) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EagerMatrixSimpleResultNode GetSubMatrix(int topRow, int leftCol, int height, int width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     int global::Quire.Calculation.Core.IMatrixResultNode.Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

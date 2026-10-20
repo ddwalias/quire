@@ -24,7 +24,7 @@ public partial class ComplexSimpleResultNode
     [MirrorVerified("PtcCalculationCoreComplexSimpleResultNodeMechanicalDifferentialTests")]
     public override bool Equals(object obj)
     {
-        if (obj is ComplexSimpleResultNode { RValue: var rValue } other && rValue.Equals(RValue))
+        if (obj is ComplexSimpleResultNode other && other.RValue.Equals(RValue))
         {
             return other.IValue.Equals(IValue);
         }

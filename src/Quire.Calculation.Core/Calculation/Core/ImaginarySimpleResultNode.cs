@@ -21,9 +21,9 @@ public partial class ImaginarySimpleResultNode
     [MirrorVerified("PtcCalculationCoreImaginarySimpleResultNodeMechanicalDifferentialTests")]
     public override bool Equals(object obj)
     {
-        if (obj is ImaginarySimpleResultNode { Value: var value })
+        if (obj is ImaginarySimpleResultNode other)
         {
-            return value.Equals(Value);
+            return other.Value.Equals(Value);
         }
         return false;
     }
