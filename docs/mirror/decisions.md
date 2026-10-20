@@ -19,6 +19,8 @@ versions remain in Git history; they are not instructions for current agents.
 The user retired every old lane and assigned A to `Quire.Core`, B to `Quire.Mpl.Emit`,
 C to `Quire.Utils`, and D to `Quire.Engine.Utl`. These are the only active assignments;
 all earlier file reservations are released. Preserve old branch work locally for recovery.
+The user starts each worker in a separate Codex/AGY/Claude thread; agents must not spawn
+workers or create threads. Each creates its own worktree from current `main`.
 Each assignment covers every managed member of its assembly, superseding D11's historical
 C/D deferrals there. Native/unreadable bodies still cannot establish managed IL parity.
 Use D17's five steps, preserve previously exact methods, land passing batches and continue.

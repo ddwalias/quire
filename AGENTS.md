@@ -4,11 +4,15 @@ The goal is exact **Release IL** parity with Mathcad Prime 12.0.1.0. Read
 [the plan](docs/mirror/PLAN.md) and use [WORK](docs/mirror/WORK.md) for ownership.
 The [assembly map](docs/mirror/assembly-map.md) shows dependency order and what each completed assembly unlocks.
 
-Only four lanes are active: A owns `Quire.Core`, B `Quire.Mpl.Emit`, C `Quire.Utils`,
+Only four lane assignments exist: A owns `Quire.Core`, B `Quire.Mpl.Emit`, C `Quire.Utils`,
 and D `Quire.Engine.Utl`. All former lane reservations are released. These assignments
 authorize every managed member in those assemblies regardless of historical tier (D18).
 Use the assigned worktrees and edit only your own assembly and checkpoint; the maintainer
 handles shared tools and integration. Continue through passing batches autonomously.
+
+The user starts each agent in a separate Codex/AGY/Claude thread. Do not spawn agents
+or create agent threads. Each user-started agent creates its own worktree from current
+`main`; `C:/Projects/Quire` is the shared main checkout and must stay on `main`.
 
 1. Claim unowned members in a separate branch/worktree.
 2. Read their original Mathcad IL (`python tools/reference/reference.py <type> --il`).

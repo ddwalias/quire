@@ -3,20 +3,25 @@
 Use the [five-step Release IL workflow](PLAN.md). Exact Mathcad Release IL is the only
 acceptance rule. Never inspect Debug IL.
 
-## Active lanes
+## Lane assignments — awaiting user launch
 
 | Lane | Exclusive assembly ownership | Branch | Worktree |
 |---|---|---|---|
-| [A](work/lane-a.md) | `Quire.Core` | `mirror/a-core` | `C:/Projects/Quire-wt/lane-a-core` |
-| [B](work/lane-b.md) | `Quire.Mpl.Emit` | `mirror/b-mpl-emit` | `C:/Projects/Quire-wt/lane-b-mpl-emit` |
-| [C](work/lane-c.md) | `Quire.Utils` | `mirror/c-utils` | `C:/Projects/Quire-wt/lane-c-utils` |
-| [D](work/lane-d.md) | `Quire.Engine.Utl` | `mirror/d-engine-utl` | `C:/Projects/Quire-wt/lane-d-engine-utl` |
+| [A](work/lane-a.md) | `Quire.Core` | `mirror/a-core-<unique>` | `C:/Projects/Quire-wt/lane-a-core` |
+| [B](work/lane-b.md) | `Quire.Mpl.Emit` | `mirror/b-mpl-emit-<unique>` | `C:/Projects/Quire-wt/lane-b-mpl-emit` |
+| [C](work/lane-c.md) | `Quire.Utils` | `mirror/c-utils-<unique>` | `C:/Projects/Quire-wt/lane-c-utils` |
+| [D](work/lane-d.md) | `Quire.Engine.Utl` | `mirror/d-engine-utl-<unique>` | `C:/Projects/Quire-wt/lane-d-engine-utl` |
 
-These are the only active lanes. All former A–E and Generator assignments and file
-reservations are released. Old conversations are archived; old branches and worktree
-contents are preserved locally for recovery, without retaining ownership. Do not resume
-their validation rules or merge their old receipts. Recovered implementations must pass
-the current Release IL comparison before landing.
+The user launches these agents in separate Codex/AGY/Claude threads using the
+[copyable prompts](work/agent-prompts.md). No worker is currently running. Worktree paths
+above are reserved locations to create on launch, not pre-existing checkouts. Create a
+uniquely named branch from current `main`; use `C:/Projects/Quire` as the main checkout.
+Do not spawn additional agents or threads.
+
+All former A–E and Generator assignments and file reservations are released. Old
+conversations are archived. Retained branches and local backups grant no ownership.
+Do not resume their validation rules or merge their old receipts. Recovered implementations
+must pass the current Release IL comparison before landing.
 
 Each lane owns all managed members of its assembly, including members formerly deferred
 by tier classification ([D18](decisions.md)). Unreadable/native bodies remain incomplete;
