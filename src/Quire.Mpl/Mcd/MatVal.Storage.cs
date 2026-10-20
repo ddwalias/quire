@@ -8,7 +8,7 @@ namespace Quire.Mcd;
 
 public sealed partial class MatVal
 {
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private unsafe static void Copy(double[] src, int src_offset, double[] dst, int dst_offset, int n)
     {
         if (n > 0)
@@ -20,7 +20,7 @@ public sealed partial class MatVal
         }
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private double[] Pack(double[] arr)
     {
         int rows = Rows;
@@ -42,24 +42,24 @@ public sealed partial class MatVal
         return array;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private double[] Pack(double[] arr, int r1, int r2, int c1, int c2)
     {
         _ = Rows;
         _ = Cols;
         int anr = Anr;
-        int num = Offset + r1;
-        int num2 = r2 - r1;
-        int num3 = c2 - c1;
-        double[] array = new double[num2 * num3];
-        for (int i = 0; i < num3; i++)
+        int subOffset = Offset + r1;
+        int subRows = r2 - r1;
+        int subCols = c2 - c1;
+        double[] array = new double[subRows * subCols];
+        for (int i = 0; i < subCols; i++)
         {
-            Copy(arr, num + anr * i, array, num2 * i, num2);
+            Copy(arr, subOffset + anr * i, array, subRows * i, subRows);
         }
         return array;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private double[] Pack(double[] arr, int c)
     {
         int rows = Rows;
@@ -68,7 +68,7 @@ public sealed partial class MatVal
         return array;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackZero(double[] arr)
     {
         double[] array = arr;
@@ -82,25 +82,25 @@ public sealed partial class MatVal
         return null;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackReal()
     {
         return Pack(m_rarr);
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackReal(int c)
     {
         return Pack(m_rarr, c);
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackReal(int r1, int r2, int c1, int c2)
     {
         return Pack(m_rarr, r1, r2, c1, c2);
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackImag()
     {
         if (m_iarr != null)
@@ -110,7 +110,7 @@ public sealed partial class MatVal
         return null;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackImag(int c)
     {
         if (m_iarr != null)
@@ -120,7 +120,7 @@ public sealed partial class MatVal
         return null;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public double[] PackImag(int r1, int r2, int c1, int c2)
     {
         if (m_iarr != null)
@@ -130,18 +130,18 @@ public sealed partial class MatVal
         return null;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private Hashtable PackPtrs(int c)
     {
         return PackPtrs(0, Rows, c, c + 1);
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private Hashtable PackPtrs(int r1, int r2, int c1, int c2)
     {
         if (m_parr != null)
         {
-            int num = r2 - r1;
+            int subRows = r2 - r1;
             bool flag = false;
             Hashtable hashtable = new Hashtable();
             for (int i = c1; i < c2; i++)
@@ -150,7 +150,7 @@ public sealed partial class MatVal
                 {
                     if (IsPtrNan(j, i))
                     {
-                        hashtable[j - r1 + (i - c1) * num] = m_parr[Index(j, i)];
+                        hashtable[j - r1 + (i - c1) * subRows] = m_parr[Index(j, i)];
                         flag = true;
                     }
                 }
@@ -164,7 +164,7 @@ public sealed partial class MatVal
         return null;
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public MatVal(MatVal m)
         : this(m.PackReal(), m.PackImag(), m.Rows, m.Cols, m.Rows, null, Flags.ComplexSnan, 0)
     {
@@ -175,7 +175,7 @@ public sealed partial class MatVal
         }
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     private void InitPtrs(MatVal m)
     {
         if (m.Packed && (Cols == 1 || Anr == m.Anr))
@@ -187,25 +187,25 @@ public sealed partial class MatVal
         CopyPtrs(m);
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public void IteratePtrs(PtrDelegate ProcessPtr)
     {
         if (m_parr != null)
         {
             foreach (DictionaryEntry item in m_parr)
             {
-                int num = (int)item.Key;
-                if (IsPtrNan(ref m_rarr[num]))
+                int index = (int)item.Key;
+                if (IsPtrNan(ref m_rarr[index]))
                 {
-                    int r = RowOf(num);
-                    int c = ColOf(num);
+                    int r = RowOf(index);
+                    int c = ColOf(index);
                     ProcessPtr(r, c, item.Value);
                 }
             }
         }
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public void TransformPtrs(MatVal m, PtrDelegate op)
     {
         if (m.RepHasPtrs)
@@ -222,7 +222,7 @@ public sealed partial class MatVal
         }
     }
 
-    [MirrorAnalyzed("Mcd.MatVal")]
+    [MirrorAnalyzed("Mcd.MatVal.Storage")]
     public void CopyPtrs(MatVal m)
     {
         TransformPtrs(m, set_ptrs_2);
