@@ -11,20 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.LabelManager, mplasb")]
 internal partial class LabelManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Label, global::System.Reflection.Metadata.Ecma335.LabelHandle> _labels;
-    [global::Quire.Mirror.MirrorStub]
-    private int _id;
-    [global::Quire.Mirror.MirrorStub]
-    public LabelManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Label DefineLabel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddLabelHandle(global::System.Reflection.Emit.Label label, global::System.Reflection.Metadata.Ecma335.LabelHandle labelHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.Ecma335.LabelHandle GetLabelHandle(global::System.Reflection.Emit.Label label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetLabelId(global::System.Reflection.Emit.Label label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
