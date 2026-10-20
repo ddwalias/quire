@@ -11,8 +11,7 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeNameBuilder, mplasb")]
 internal sealed partial class TypeNameBuilder
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Text.StringBuilder _str;
+    private global::System.Text.StringBuilder _str = new global::System.Text.StringBuilder();
     [global::Quire.Mirror.MirrorStub]
     private int _instNesting;
     [global::Quire.Mirror.MirrorStub]
@@ -23,14 +22,11 @@ internal sealed partial class TypeNameBuilder
     private bool _hasAssemblySpec;
     [global::Quire.Mirror.MirrorStub]
     private bool _useAngleBracketsForGenerics;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<int> _stack;
+    private global::System.Collections.Generic.List<int> _stack = new global::System.Collections.Generic.List<int>();
     [global::Quire.Mirror.MirrorStub]
     private int _stackIdx;
-    [global::Quire.Mirror.MirrorStub]
     private TypeNameBuilder() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
+    public override string ToString() => _str.ToString();
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeNameBuilder+Format, mplasb")]
     internal enum Format
