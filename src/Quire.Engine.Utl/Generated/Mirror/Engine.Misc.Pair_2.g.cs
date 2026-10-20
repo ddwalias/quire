@@ -11,14 +11,24 @@ namespace Quire.Engine.Misc;
 [global::Quire.Mirror.MirrorOf("Engine.Misc.Pair`2, mcmisc")]
 public partial class Pair<T1, T2>
 {
-    [global::Quire.Mirror.MirrorStub]
     private T1 m_Datum1;
-    [global::Quire.Mirror.MirrorStub]
     private T2 m_Datum2;
-    [global::Quire.Mirror.MirrorStub]
-    public T1 First { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public T2 Second { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Pair(T1 f, T2 s) { }
+
+    public T1 First
+    {
+        get => m_Datum1;
+        set => m_Datum1 = value;
+    }
+
+    public T2 Second
+    {
+        get => m_Datum2;
+        set => m_Datum2 = value;
+    }
+
+    public Pair(T1 f, T2 s)
+    {
+        m_Datum1 = f;
+        m_Datum2 = s;
+    }
 }

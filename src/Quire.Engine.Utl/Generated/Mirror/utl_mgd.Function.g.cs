@@ -11,22 +11,13 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.Function, utl-mgd")]
 public partial interface Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke(object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke0() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke1(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke2(object A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke3(object A_0, object A_1, object A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke4(object A_0, object A_1, object A_2, object A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke5(object A_0, object A_1, object A_2, object A_3, object A_4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke6(object A_0, object A_1, object A_2, object A_3, object A_4, object A_5) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object Invoke7(object A_0, object A_1, object A_2, object A_3, object A_4, object A_5, object A_6) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    object Invoke(object[] args);
+    object Invoke0();
+    object Invoke1(object A_0);
+    object Invoke2(object A_0, object A_1);
+    object Invoke3(object A_0, object A_1, object A_2);
+    object Invoke4(object A_0, object A_1, object A_2, object A_3);
+    object Invoke5(object A_0, object A_1, object A_2, object A_3, object A_4);
+    object Invoke6(object A_0, object A_1, object A_2, object A_3, object A_4, object A_5);
+    object Invoke7(object A_0, object A_1, object A_2, object A_3, object A_4, object A_5, object A_6);
 }

@@ -6,13 +6,13 @@
 #nullable disable
 #pragma warning disable
 
+using System.Linq;
+
 namespace Quire.Engine.Misc;
 
 [global::Quire.Mirror.MirrorOf("Engine.Misc.HashSetUtils, mcmisc")]
 public partial class HashSetUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static T[] HashSetToArray<T>(ref global::System.Collections.Generic.HashSet<T> hash) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
+    public static T[] HashSetToArray<T>(ref global::System.Collections.Generic.HashSet<T> hash) => hash.ToArray();
     public HashSetUtils() { }
 }
