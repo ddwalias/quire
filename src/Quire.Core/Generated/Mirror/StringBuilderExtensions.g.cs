@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.StringBuilderExtensions, Ptc.Core")]
 public static partial class StringBuilderExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void AppendReverse(this global::System.Text.StringBuilder stringBuilder, string text, int startIndex, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string ToStringReverse(this global::System.Text.StringBuilder stringBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
