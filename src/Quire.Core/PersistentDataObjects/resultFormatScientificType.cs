@@ -42,14 +42,22 @@ public partial class resultFormatScientificType
     public string precision { get => precisionField; set => precisionField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatScientificTypeMechanicalDifferentialTests")]
-    private string complexthresholdField;
+    private string complexthresholdField = "10";
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatScientificTypeMechanicalDifferentialTests")]
     public string complexthreshold { get => complexthresholdField; set => complexthresholdField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatScientificTypeMechanicalDifferentialTests")]
-    private string zerothresholdField;
+    private string zerothresholdField = "15";
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatScientificTypeMechanicalDifferentialTests")]
     public string zerothreshold { get => zerothresholdField; set => zerothresholdField = value; }
+
+    [MirrorVerified("Release IL")]
+    public resultFormatScientificType()
+    {
+        radixField = (radixType)0;
+        showtrailingzerosField = false;
+        useenotationField = false;
+    }
 }

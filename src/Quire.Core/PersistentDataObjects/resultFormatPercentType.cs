@@ -36,14 +36,21 @@ public partial class resultFormatPercentType
     public string precision { get => precisionField; set => precisionField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatPercentTypeMechanicalDifferentialTests")]
-    private string complexthresholdField;
+    private string complexthresholdField = "10";
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatPercentTypeMechanicalDifferentialTests")]
     public string complexthreshold { get => complexthresholdField; set => complexthresholdField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatPercentTypeMechanicalDifferentialTests")]
-    private string zerothresholdField;
+    private string zerothresholdField = "15";
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatPercentTypeMechanicalDifferentialTests")]
     public string zerothreshold { get => zerothresholdField; set => zerothresholdField = value; }
+
+    [MirrorVerified("Release IL")]
+    public resultFormatPercentType()
+    {
+        radixField = (radixType)0;
+        showtrailingzerosField = false;
+    }
 }

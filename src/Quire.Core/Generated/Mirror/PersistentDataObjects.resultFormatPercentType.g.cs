@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.resultFormatPercentType, Ptc.Core")]
 public partial class resultFormatPercentType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public resultFormatPercentType() { }
 }

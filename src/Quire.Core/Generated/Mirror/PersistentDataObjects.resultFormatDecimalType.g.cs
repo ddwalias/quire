@@ -11,6 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.resultFormatDecimalType, Ptc.Core")]
 public partial class resultFormatDecimalType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public resultFormatDecimalType() { }
 }

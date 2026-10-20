@@ -30,14 +30,21 @@ public partial class resultFormatDecimalType
     public string precision { get => precisionField; set => precisionField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatDecimalTypeMechanicalDifferentialTests")]
-    private string complexthresholdField;
+    private string complexthresholdField = "10";
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatDecimalTypeMechanicalDifferentialTests")]
     public string complexthreshold { get => complexthresholdField; set => complexthresholdField = value; }
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatDecimalTypeMechanicalDifferentialTests")]
-    private string zerothresholdField;
+    private string zerothresholdField = "15";
 
     [MirrorVerified("PtcPersistentDataObjectsresultFormatDecimalTypeMechanicalDifferentialTests")]
     public string zerothreshold { get => zerothresholdField; set => zerothresholdField = value; }
+
+    [MirrorVerified("Release IL")]
+    public resultFormatDecimalType()
+    {
+        radixField = (radixType)0;
+        showtrailingzerosField = false;
+    }
 }
