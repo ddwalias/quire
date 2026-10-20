@@ -36,8 +36,6 @@ public partial class MetadataReferenceTracker
     [global::Quire.Mirror.MirrorStub]
     public MetadataReferenceTracker(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder moduleBuilder) { }
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker GetInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Metadata.AssemblyReferenceHandle GetOrAddAssemblyReference(global::System.Reflection.AssemblyName assemblyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Metadata.ModuleReferenceHandle GetOrAddModuleReference(global::System.Reflection.Module module) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
