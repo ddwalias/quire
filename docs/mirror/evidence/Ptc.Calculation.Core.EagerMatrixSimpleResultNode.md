@@ -15,10 +15,20 @@
 | `Rows get` | 0x060001ca | MemberGen: `Count / Columns` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Item get` | 0x060001cb | MemberGen: `_children[r * Columns + c]; set => _children[r * Columns + c] = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Item set` | 0x060001cc | MemberGen: `_children[r * Columns + c]; set => _children[r * Columns + c] = value; }` | Mechanical; Release IL equals Mathcad's | Verified |
+| `.ctor(int, int)` | 0x060001c4 | Set `Columns`, allocate `rowCount * colCount` capacity, and append that many null children | Direct Mathcad comparison on bounded dimensions and a negative-capacity case; Release IL equals Mathcad's | Verified |
+| `Size get` | 0x060001c7 | Return a `TableSize` populated from `Rows` and `Columns` | Blocked by the out-of-Lane `Quire.TableSize.Rows` and `Columns` setter stubs | Blocked |
+| `.ctor(IMatrixResultNode)` | 0x060001c5 | Copy dimensions and cells, converting nested matrices and matrix-valued units | Blocked by Tier B `IMatrixResultNode.Item` and `UnitedValueSimpleResultNode.Value` dependencies | Blocked |
+| `ConvertToEagerMatrix(IMatrixResultNode)` | 0x060001d1 | Return an existing eager matrix; otherwise copy through `.ctor(IMatrixResultNode)` | Blocked while the copy constructor's Tier B dependencies are stubs | Blocked |
+| `Equals(object)` | 0x060001d2 | Same type only; compare dimensions and child values via `IsChildrenEquals` | Blocked while `IsChildrenEquals` and child result-node equality dependencies are incomplete | Blocked |
+| `IsChildrenEquals(EagerMatrixSimpleResultNode)` | 0x060001d3 | Compare dimensions and corresponding child values | Blocked on child result-node `Equals` implementations, including the active simple-result equality batch | Blocked |
 
 ## Test cases
 
 **Observed** (`PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
 
+The constructor comparison uses explicit small row/column pairs because generated integer inputs can request an enormous list capacity. It compares the `Columns` field, child count, null children and exception outcomes directly with Mathcad. `Size` was directly checked, but remains blocked because Quire's `TableSize` setters throw `NotImplementedException`. The remaining Tier A constructor/conversion and equality members stay blocked on the dependencies listed above; explicit `IMatrixResultNode` members remain Tier B.
+
 MemberGen members are compared by `Quire.Differential.Tests.PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests`.
+
+The explicit `IMatrixResultNode.Item` and other remaining interface members are Tier B and remain generated stubs; no Tier B members were implemented here.

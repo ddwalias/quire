@@ -16,8 +16,6 @@ public partial class EagerMatrixSimpleResultNode : global::Quire.Calculation.Cor
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public EagerMatrixSimpleResultNode(int rowCount, int colCount) { }
-    [global::Quire.Mirror.MirrorStub]
     private EagerMatrixSimpleResultNode(global::Quire.Calculation.Core.IMatrixResultNode node) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Calculation.Core.IEagerMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode matrixNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

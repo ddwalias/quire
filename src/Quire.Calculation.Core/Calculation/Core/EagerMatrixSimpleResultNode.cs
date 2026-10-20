@@ -19,6 +19,17 @@ public partial class EagerMatrixSimpleResultNode
     public int Columns { get; private set; }
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    public EagerMatrixSimpleResultNode(int rowCount, int colCount)
+    {
+        Columns = colCount;
+        _children = new List<SimpleResultNode>(rowCount * colCount);
+        for (int i = 0; i < rowCount * colCount; i++)
+        {
+            _children.Add(null);
+        }
+    }
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public void SetElementAt(int r, int c, IResultNode element) => this[r, c] = (SimpleResultNode)element;
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
