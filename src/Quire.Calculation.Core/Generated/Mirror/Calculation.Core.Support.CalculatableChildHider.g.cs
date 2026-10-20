@@ -34,10 +34,6 @@ public partial class CalculatableChildHider
     [global::Quire.Mirror.MirrorStub]
     private void UnsubscribeFromPropertyChangedEvents(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool SubscribeToCalculatableContainerEvents(global::Quire.Calculation.Core.ICalculatableContainer cntr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool UnsubscribeFromCalculatableContainerEvents(global::Quire.Calculation.Core.ICalculatableContainer cntr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void HandleCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void HiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
