@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
+using System.Reflection.PortableExecutable;
 
 namespace System.Reflection.Emit.Quire.Mpl;
 
@@ -115,6 +116,14 @@ public partial class AssemblyBuilder
     public static System.Reflection.Emit.AssemblyBuilder DefineDynamicAssembly(AssemblyName name, AssemblyBuilderAccess access, IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>? assemblyAttributes)
     {
         throw new NotImplementedException();
+    }
+
+    private static void WritePEImage(Stream peStream, MetadataBuilder metadataBuilder, BlobBuilder ilBuilder)
+    {
+        ManagedPEBuilder managedPEBuilder = new ManagedPEBuilder(new PEHeaderBuilder(Machine.Unknown, 8192, 512, 4194304uL, 48, 0, 4, 0, 0, 0, 4, 0, Subsystem.WindowsCui, DllCharacteristics.DynamicBase | DllCharacteristics.NxCompatible | DllCharacteristics.NoSeh | DllCharacteristics.TerminalServerAware, Characteristics.ExecutableImage | Characteristics.Dll, 1048576uL, 4096uL, 1048576uL, 4096uL), new MetadataRootBuilder(metadataBuilder), ilBuilder, null, null, null, null, 128, default, CorFlags.ILOnly | CorFlags.StrongNameSigned);
+        BlobBuilder blobBuilder = new BlobBuilder();
+        managedPEBuilder.Serialize(blobBuilder);
+        blobBuilder.WriteContentTo(peStream);
     }
 
 }

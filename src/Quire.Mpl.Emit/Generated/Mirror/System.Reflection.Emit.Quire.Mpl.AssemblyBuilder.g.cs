@@ -22,6 +22,4 @@ public partial class AssemblyBuilder : global::System.Reflection.Assembly
     public byte[] EmitAssembly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void LoadAssembly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void WritePEImage(global::System.IO.Stream peStream, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadataBuilder, global::System.Reflection.Metadata.BlobBuilder ilBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
