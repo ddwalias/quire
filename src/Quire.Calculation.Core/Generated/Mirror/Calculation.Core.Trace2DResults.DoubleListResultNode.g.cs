@@ -13,6 +13,4 @@ public partial class DoubleListResultNode : global::Quire.Calculation.Core.Trace
 {
     [global::Quire.Mirror.MirrorStub]
     private const double _neutralValue = double.NaN;
-    [global::Quire.Mirror.MirrorStub]
-    public DoubleListResultNode(double paddingValue, int length) : base(default(global::System.Collections.Generic.IList<double>)) { }
 }

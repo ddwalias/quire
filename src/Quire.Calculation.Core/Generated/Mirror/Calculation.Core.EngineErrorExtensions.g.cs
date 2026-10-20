@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.EngineErrorExtensions, Ptc.Calculation.Core")]
 public static partial class EngineErrorExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string _pholderErrorCode = "bad%_placeholder";
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsPlaceholderError(this global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

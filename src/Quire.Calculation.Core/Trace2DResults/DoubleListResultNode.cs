@@ -1,10 +1,21 @@
 #nullable disable
+using System.Collections.Generic;
+using Quire;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core.Trace2DResults;
 
 public partial class DoubleListResultNode
 {
+    public DoubleListResultNode(double paddingValue, int length)
+        : base((IList<double>)new List<double>(length), paddingValue.IsValid() ? length : 0)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            List.Add(paddingValue);
+        }
+    }
+
     [MirrorVerified("PtcCalculationCoreTrace2DResultsDoubleListResultNodeMechanicalDifferentialTests")]
     public DoubleListResultNode(IList<double> doubleValues) : base(doubleValues, -1) { }
 

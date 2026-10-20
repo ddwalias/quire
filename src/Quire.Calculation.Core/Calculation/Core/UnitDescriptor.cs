@@ -1,11 +1,15 @@
 #nullable disable
-using Quire.Mirror;
+using System.Text.RegularExpressions;
+using Quire;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
 public partial class UnitDescriptor
 {
+    private string _rl;
+    private string _key;
+
     [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
     public UnitDescriptor() { }
 
@@ -47,6 +51,50 @@ public partial class UnitDescriptor
 
     [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
     public bool IsSymbolResultNode { get; set; }
+
+    public string SymbolResultNode
+    {
+        get
+        {
+            if (IsSymbolResultNode)
+            {
+                return RL;
+            }
+            return Symbol;
+        }
+    }
+
+    public string Key
+    {
+        get
+        {
+            if (_key.IsNullOrEmpty())
+            {
+                return CanonicalName;
+            }
+            return _key;
+        }
+        set
+        {
+            _key = value;
+        }
+    }
+
+    public string RL
+    {
+        get
+        {
+            if (_rl.IsNullOrEmpty())
+            {
+                return Symbol;
+            }
+            return _rl;
+        }
+        set
+        {
+            _rl = Regex.Unescape(value);
+        }
+    }
 
     [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
     public int CompareTo(object obj) => ToString().CompareTo(obj.ToString());

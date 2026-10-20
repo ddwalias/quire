@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.RequestShowErrorEventArgs, Ptc.Calculation.Core")]
 public partial class RequestShowErrorEventArgs : global::System.EventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public RequestShowErrorEventArgs(global::Quire.Calculation.Core.EngineError error) { }
 }

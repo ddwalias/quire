@@ -11,12 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.DefaultUnitDescriptorTable, Ptc.Calculation.Core")]
 public partial class DefaultUnitDescriptorTable : global::Quire.Calculation.Core.UnitDescriptorTable, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Calculation.Core.DefaultUnitDescriptorTable Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public DefaultUnitDescriptorTable() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

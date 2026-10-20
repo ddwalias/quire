@@ -7,4 +7,9 @@ public partial class RequestShowErrorEventArgs
 {
     [MirrorVerified("PtcCalculationCoreRequestShowErrorEventArgsMechanicalDifferentialTests")]
     public EngineError Error { get; private set; }
+
+    public RequestShowErrorEventArgs(EngineError error)
+    {
+        Error = error;
+    }
 }

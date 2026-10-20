@@ -12,10 +12,6 @@ namespace Quire.Calculation.Core;
 public partial class UnitDescriptor : global::System.IComparable
 {
     [global::Quire.Mirror.MirrorStub]
-    private string _rl;
-    [global::Quire.Mirror.MirrorStub]
-    private string _key;
-    [global::Quire.Mirror.MirrorStub]
     public const string KeyPropertyName = "Key";
     [global::Quire.Mirror.MirrorStub]
     public const string QuantityPropertyName = "Quantity";
@@ -23,10 +19,4 @@ public partial class UnitDescriptor : global::System.IComparable
     public const string CGS_Keys = ",oersted,gauss,";
     [global::Quire.Mirror.MirrorStub]
     public const string RL_prefix = "mc_";
-    [global::Quire.Mirror.MirrorStub]
-    public string SymbolResultNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Key { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string RL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
