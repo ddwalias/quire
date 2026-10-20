@@ -15,6 +15,4 @@ public partial class StyleNameToCategoryConverter : global::System.Windows.Data.
     public const string StyleKeyPrefixLegacy = "Legacy";
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.StyleNameToCategoryConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
