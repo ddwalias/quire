@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Quire.Calculation.Core;
 
 namespace Quire.Differential.Tests;
 
@@ -8,11 +9,10 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
     private const string Contract = "Ptc.Calculation.Core.EngineError";
     private const BindingFlags InstancePrivate = BindingFlags.Instance | BindingFlags.NonPublic;
     private static readonly System.Type Original = Mathcad.Type("Ptc.Calculation.Core", Contract);
-    private static readonly System.Type? QuireType = System.Type.GetType("Quire.Calculation.Core.EngineError, Quire.Calculation.Core");
-    private static System.Type Q => QuireType ?? throw new InvalidOperationException("Quire.Calculation.Core is not loaded.");
-    private static readonly FieldInfo? QuireCode = QuireType?.GetField("_code", InstancePrivate);
+    private static readonly System.Type QuireType = typeof(EngineError);
+    private static readonly FieldInfo QuireCode = QuireType.GetField("_code", InstancePrivate)!;
     private static readonly FieldInfo OriginalCode = Original.GetField("_code", InstancePrivate)!;
-    private static readonly FieldInfo? QuireMessage = QuireType?.GetField("_message", InstancePrivate);
+    private static readonly FieldInfo QuireMessage = QuireType.GetField("_message", InstancePrivate)!;
     private static readonly FieldInfo OriginalMessage = Original.GetField("_message", InstancePrivate)!;
 
     [SkippableFact]
@@ -20,12 +20,12 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
     {
         foreach (string message in new[] { "", "plain message", "code\targument" })
         {
-            object qError = Activator.CreateInstance(Q)!;
+            var qError = new EngineError();
             object mError = Activator.CreateInstance(Original)!;
-            QuireMessage!.SetValue(qError, message);
+            QuireMessage.SetValue(qError, message);
             OriginalMessage.SetValue(mError, message);
             MethodComparison.Compare($"Message getter: {message}", Contract,
-                Method(Q, "get_Message"), qError, [],
+                Method(QuireType, "get_Message"), qError, [],
                 Method(Original, "get_Message"), mError, [],
                 Reflect.Text, Reflect.Text, RenderError, RenderError);
         }
@@ -59,8 +59,7 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
         var mDifferentNested = NewOriginalError("outer", 7, 11);
         SetOriginal(qDifferentNested, mDifferentNested, NewError("different", 2, 3), NewOriginalError("different", 2, 3));
         Compare("nested error differs", "IsEquivalentTo", qTarget, mTarget, [qDifferentNested, true], [mDifferentNested, true]);
-        var qSourceType = Q.GetProperty("ErrorSource")!.PropertyType;
-        var qSharedSource = CreateCalculatableProxy(qSourceType);
+        var qSharedSource = CreateCalculatableProxy(typeof(ICalculatable));
         var mSourceType = Original.GetProperty("ErrorSource")!.PropertyType;
         var mSharedSource = CreateCalculatableProxy(mSourceType);
         var qSameSource = NewError("source", 1, 2);
@@ -72,7 +71,7 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
         Compare("same error source", "IsEquivalentTo", qSameSource, mSameSource,
             [qSameSourceArgument, true], [mSameSourceArgument, true]);
 
-        var qOtherSource = CreateCalculatableProxy(qSourceType);
+        var qOtherSource = CreateCalculatableProxy(typeof(ICalculatable));
         var mOtherSource = CreateCalculatableProxy(mSourceType);
         var qDifferentSource = NewError("source", 1, 2);
         var mDifferentSource = NewOriginalError("source", 1, 2);
@@ -122,12 +121,10 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
         Compare("null is not an ancestor", "IsAncestorOf", qRoot, mRoot, [null], [null]);
     }
 
-    private static object NewError(string code, uint nodeHandle, uint argument)
+    private static EngineError NewError(string code, uint nodeHandle, uint argument)
     {
-        object error = Activator.CreateInstance(Q)!;
-        Q.GetProperty("NodeHandle")!.SetValue(error, nodeHandle);
-        Q.GetProperty("Argument")!.SetValue(error, argument);
-        QuireCode!.SetValue(error, code);
+        var error = new EngineError { NodeHandle = nodeHandle, Argument = argument };
+        QuireCode.SetValue(error, code);
         return error;
     }
 
@@ -140,15 +137,15 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
         return error;
     }
 
-    private static void SetOriginal(object qError, object mError, object? qOriginal, object? mOriginal)
+    private static void SetOriginal(EngineError qError, object mError, EngineError? qOriginal, object? mOriginal)
     {
-        Q.GetProperty("OriginalError")!.SetValue(qError, qOriginal);
+        qError.OriginalError = qOriginal!;
         Original.GetProperty("OriginalError")!.SetValue(mError, mOriginal);
     }
 
-    private static void SetErrorSource(object qError, object mError, object qSource, object mSource)
+    private static void SetErrorSource(EngineError qError, object mError, object qSource, object mSource)
     {
-        Q.GetProperty("ErrorSource")!.SetValue(qError, qSource);
+        qError.ErrorSource = (ICalculatable)qSource;
         Original.GetProperty("ErrorSource")!.SetValue(mError, mSource);
     }
 
@@ -175,16 +172,16 @@ public class PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests
     private static void Compare(string caseId, string methodName, object qTarget, object mTarget,
         object?[] qArgs, object?[] mArgs)
     {
-        System.Type[] qParameters = qArgs.Length == 2 ? [Q, typeof(bool)] : [Q];
+        System.Type[] qParameters = qArgs.Length == 2 ? [QuireType, typeof(bool)] : [QuireType];
         System.Type[] mParameters = mArgs.Length == 2 ? [Original, typeof(bool)] : [Original];
-        MethodInfo qMethod = Method(Q, methodName, qParameters);
+        MethodInfo qMethod = Method(QuireType, methodName, qParameters);
         MethodInfo mMethod = Method(Original, methodName, mParameters);
         Compare(caseId, qMethod, qTarget, mMethod, mTarget, qArgs, mArgs);
     }
 
     private static void Compare(string caseId, object qTarget, object mTarget, object?[] qArgs, object?[] mArgs)
     {
-        MethodInfo qMethod = Method(Q, "IsEquivalentTo", Q, typeof(bool));
+        MethodInfo qMethod = Method(QuireType, "IsEquivalentTo", QuireType, typeof(bool));
         MethodInfo mMethod = Method(Original, "IsEquivalentTo", Original, typeof(bool));
         Compare(caseId, qMethod, qTarget, mMethod, mTarget, qArgs, mArgs);
     }
