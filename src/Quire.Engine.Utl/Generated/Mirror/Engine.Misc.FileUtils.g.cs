@@ -319,28 +319,159 @@ public partial class FileUtils
         }
         while (text != null && !text.StartsWith(seek));
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static string ContractUnicode(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string ContractUnicode(string str)
+    {
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        for (int i = 0; i < str.Length; i++)
+        {
+            char c = str[i];
+            uint num = c;
+            char ascii = '\0';
+            string charName = null;
+            if (num < 128)
+            {
+                stringBuilder.Append(c);
+            }
+            else if (UnicodeToAscii(c, ref ascii))
+            {
+                stringBuilder.AppendFormat("\\{0}", ascii);
+            }
+            else if (UnicodeToGreekShortcutKey(c, ref ascii))
+            {
+                stringBuilder.AppendFormat("\\g{0}", ascii);
+            }
+            else if (LongUnicodeToShortcutKey(str, ref i, ref ascii))
+            {
+                stringBuilder.AppendFormat("\\{0}", ascii);
+            }
+            else if (UnicodeToCharName(c, ref charName))
+            {
+                stringBuilder.AppendFormat("\\&{0};", charName);
+            }
+            else
+            {
+                stringBuilder.AppendFormat("\\u{0:x4}", num);
+            }
+        }
+        return stringBuilder.ToString();
+    }
     [global::Quire.Mirror.MirrorStub]
     public static string ExpandUnicode(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void InitCharMappings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool UnicodeToAscii(char unicode, ref char ascii) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool AsciiToUnicode(char ascii, ref char unicode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool UnicodeToAscii(char unicode, ref char ascii)
+    {
+        if (s_UnicodeToAsciiTable.Count == 0)
+        {
+            InitCharMappings();
+        }
+        if (s_UnicodeToAsciiTable.ContainsKey(unicode))
+        {
+            ascii = s_UnicodeToAsciiTable[unicode];
+            return true;
+        }
+        return false;
+    }
+    public static bool AsciiToUnicode(char ascii, ref char unicode)
+    {
+        if (s_AsciiToUnicodeTable.Count == 0)
+        {
+            InitCharMappings();
+        }
+        if (s_AsciiToUnicodeTable.ContainsKey(ascii))
+        {
+            unicode = s_AsciiToUnicodeTable[ascii];
+            return true;
+        }
+        return false;
+    }
     [global::Quire.Mirror.MirrorStub]
     private static void InitNamedCharMap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CharNameToUnicodeString(string name, ref string unicode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool UnicodeToCharName(char unicode, ref string charName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool GreekShortcutKeyToUnicode(char greekShortcut, ref char unicode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool LongUnicodeToShortcutKey(string str, ref int pos, ref char shortcutKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool UnicodeToGreekShortcutKey(char unicode, ref char greekShortcut) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool CharNameToUnicodeString(string name, ref string unicode)
+    {
+        if (!s_bNamedCharMapInitialized)
+        {
+            InitNamedCharMap();
+        }
+        if (s_CharNameToUnicodeStringTable.ContainsKey(name))
+        {
+            unicode = s_CharNameToUnicodeStringTable[name];
+            return true;
+        }
+        return false;
+    }
+    public static bool UnicodeToCharName(char unicode, ref string charName)
+    {
+        if (!s_bNamedCharMapInitialized)
+        {
+            InitNamedCharMap();
+        }
+        if (s_UnicodeToCharNameTable.ContainsKey(unicode))
+        {
+            charName = s_UnicodeToCharNameTable[unicode];
+            return true;
+        }
+        return false;
+    }
+    public static bool GreekShortcutKeyToUnicode(char greekShortcut, ref char unicode)
+    {
+        if (!s_bNamedCharMapInitialized)
+        {
+            InitNamedCharMap();
+        }
+        if (s_GreekShortcutKeyToUnicodeTable.ContainsKey(greekShortcut))
+        {
+            unicode = s_GreekShortcutKeyToUnicodeTable[greekShortcut];
+            return true;
+        }
+        return false;
+    }
+    public static bool LongUnicodeToShortcutKey(string str, ref int pos, ref char shortcutKey)
+    {
+        if (!s_bNamedCharMapInitialized)
+        {
+            InitNamedCharMap();
+        }
+        bool flag = false;
+        foreach (global::Quire.Engine.Misc.Pair<string, char> item in s_LongUnicodeToShortcutKeyTable)
+        {
+            string first = item.First;
+            char second = item.Second;
+            if (str.Length >= pos + first.Length)
+            {
+                bool flag2 = false;
+                for (int i = 0; i < first.Length; i++)
+                {
+                    if (str[pos + i] != first[i])
+                    {
+                        flag2 = true;
+                        break;
+                    }
+                }
+                if (!flag2)
+                {
+                    shortcutKey = second;
+                    pos += first.Length - 1;
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+    public static bool UnicodeToGreekShortcutKey(char unicode, ref char greekShortcut)
+    {
+        if (!s_bNamedCharMapInitialized)
+        {
+            InitNamedCharMap();
+        }
+        if (s_UnicodeToGreekShortcutKeyTable.ContainsKey(unicode))
+        {
+            greekShortcut = s_UnicodeToGreekShortcutKeyTable[unicode];
+            return true;
+        }
+        return false;
+    }
     public static int ComputeLineNumber(string str, int pos)
     {
         string nearby_text;
