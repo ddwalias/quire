@@ -37,31 +37,11 @@ internal partial class EntityWrappers
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+ConstructorReferenceWrapper, mplasb")]
     internal partial class ConstructorReferenceWrapper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal readonly global::System.Reflection.ConstructorInfo method;
-        [global::Quire.Mirror.MirrorStub]
-        internal int parentToken;
-        [global::Quire.Mirror.MirrorStub]
-        public ConstructorReferenceWrapper(global::System.Reflection.ConstructorInfo method) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object obj) => base.Equals(obj);
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
     }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+FieldReferenceWrapper, mplasb")]
     internal partial class FieldReferenceWrapper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal readonly global::System.Reflection.FieldInfo field;
-        [global::Quire.Mirror.MirrorStub]
-        internal int parentToken;
-        [global::Quire.Mirror.MirrorStub]
-        public FieldReferenceWrapper(global::System.Reflection.FieldInfo field) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object obj) => base.Equals(obj);
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
     }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+CustomAttributeWrapper, mplasb")]
