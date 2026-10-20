@@ -10,6 +10,29 @@ namespace Quire.IO;
 public partial class FileUtils
 {
     [MirrorVerified("Release IL")]
+    public static string GetFileNameWithNumber(string baseFileName, int number, bool numberIsLastExtension)
+    {
+        DebugTools.DevAssert(number >= 0, null);
+        if (number == 0)
+        {
+            return baseFileName;
+        }
+        IFileOperationsProvider fileOperationsProvider = new FileOperationsProvider();
+        string text = numberIsLastExtension ? string.Empty : fileOperationsProvider.GetExtension(baseFileName);
+        string text2 = "." + number + text;
+        return baseFileName.Remove(baseFileName.Length - text.Length) + text2;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static string GetNextNumberedFileName(string folder, string baseFileName, bool numberIsLastExtension)
+    {
+        string foundFileName;
+        int number = 1 + FindHighestNumberedFileName(folder, baseFileName, numberIsLastExtension, out foundFileName);
+        string fileNameWithNumber = GetFileNameWithNumber(baseFileName, number, numberIsLastExtension);
+        return Path.Combine(folder, fileNameWithNumber);
+    }
+
+    [MirrorVerified("Release IL")]
     private static string GetAppDataPathWithBase(string appDataPathBase, bool useAssemblyVersionInConfigPath = false)
     {
         Assembly element = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();

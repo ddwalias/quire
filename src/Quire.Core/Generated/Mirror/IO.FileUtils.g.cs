@@ -22,10 +22,6 @@ public partial class FileUtils
     [global::Quire.Mirror.MirrorStub]
     public static int FindHighestNumberedFileName(string folder, string baseFileName, bool numberIsLastExtension, out string foundFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string GetFileNameWithNumber(string baseFileName, int number, bool numberIsLastExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetNextNumberedFileName(string folder, string baseFileName, bool numberIsLastExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string EvaluateRelativePath(string mainDirPath, string absoluteFilePath, bool stripSingleLeadingDot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static string GetProductNamePerVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
