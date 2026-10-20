@@ -5,6 +5,45 @@ namespace Quire.Calculation.Core.Support;
 
 public partial class CalculatableChildHider
 {
+    [MirrorVerified("PtcCalculationCoreSupportCalculatableChildHiderChildrenMechanicalDifferentialTests")]
+    public static bool IsHiddenFromCalculation(object child)
+    {
+        if (child is ICalculationHideableChild calculationHideableChild)
+        {
+            return calculationHideableChild.HideFromCalculationContext;
+        }
+        return false;
+    }
+
+    [MirrorVerified("PtcCalculationCoreSupportCalculatableChildHiderChildrenMechanicalDifferentialTests")]
+    public virtual IEnumerable<ICalculatable> CalculatableChildren
+    {
+        get
+        {
+            foreach (object child in _containerChildren)
+            {
+                if (IsHiddenFromCalculation(child))
+                {
+                    continue;
+                }
+                ICalculatable calculatable = child as ICalculatable;
+                ICalculatableContainer container = child as ICalculatableContainer;
+                if (calculatable != null)
+                {
+                    yield return calculatable;
+                }
+                if (container == null || child is ICalculatableAggregate)
+                {
+                    continue;
+                }
+                foreach (ICalculatable containerChild in GetContainerChildren(container))
+                {
+                    yield return containerChild;
+                }
+            }
+        }
+    }
+
     [MirrorVerified("PtcCalculationCoreSupportCalculatableChildHiderMechanicalDifferentialTests")]
     protected CalculatableChildHider() { }
 

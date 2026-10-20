@@ -11,6 +11,8 @@
 | `HandleCalculatableRemovedFromChildContainer(ICalculatable)` | 0x060002d7 | MemberGen: `_fireCalculatableRemoved.Invoke(calc)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `HandleCalculatableMovedInChildContainer(ICalculatable)` | 0x060002d8 | MemberGen: `_fireCalculatableMoved.Invoke(calc)` | Mechanical; Release IL equals Mathcad's | Verified |
 | `GetContainerChildren(ICalculatableContainer)` | 0x060002d9 | MemberGen: `container.CalculatableChildren` | Mechanical; Release IL equals Mathcad's | Verified |
+| `IsHiddenFromCalculation(object)` | 0x060002cb | Return `HideFromCalculationContext` for `ICalculationHideableChild`; otherwise false | Direct cases cover null, ordinary object, and both hideable values | Verified |
+| `CalculatableChildren get` | 0x060002cc | Lazily skip hidden children, yield direct calculatables, and flatten non-aggregate child containers | Direct cases cover non-calculatables, null, hideable children, direct calculatables, and an ordinary container; aggregate containers are not directly exercised | Verified |
 | `SubscribeToCalculatableContainerEvents(ICalculatableContainer)` | 0x060002d2 | Return false when adoption is disabled or the container is an aggregate; otherwise add this hider's added/removed/moved handlers and return true | Direct cases cover disabled adoption, aggregate, ordinary and null containers | Verified |
 | `UnsubscribeFromCalculatableContainerEvents(ICalculatableContainer)` | 0x060002d3 | Return false when adoption is disabled or the container is an aggregate; otherwise remove this hider's added/removed/moved handlers and return true | Direct cases cover disabled adoption, aggregate, ordinary and null containers; the null case compares the original exception | Verified |
 
@@ -18,6 +20,10 @@
 
 **Observed** (`PtcCalculationCoreSupportCalculatableChildHiderMechanicalDifferentialTests`): each member on generated inputs (Mechanical: zero, null and distinct values per
 parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
+
+**Observed** (`PtcCalculationCoreSupportCalculatableChildHiderChildrenMechanicalDifferentialTests`, Release with Mathcad required): direct paired comparisons
+exercise the hideability helper for null, ordinary and true/false hideable inputs, then enumerate the getter for non-calculatable/null children,
+direct calculatables, hidden and visible hideable children, and an ordinary container's nested calculatable child.
 
 **Observed** (`PtcCalculationCoreSupportCalculatableChildHiderEventSubscriptionMechanicalDifferentialTests`, Release with Mathcad required): direct
 paired comparisons exercise both helpers with adoption disabled, aggregate containers, ordinary containers, and null containers after adoption is enabled.
