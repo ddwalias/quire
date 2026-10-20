@@ -8,7 +8,7 @@ dependencies. Do not load dated historical receipts as agent context.
 | Lane | Current batch | Checkpoint |
 |---|---|---|
 | A | SCons, SList, Utilities.GetUnits, Tok, MplSignature and NumVal are merged. Five Lane A batches remain pending full gate or maintainer validation: Rational, RngVal, Type, Dim and DimVal. The Rts initializer event verification merged at `2c4d5d33`. No other unowned Lane A Tier A file scope remains in the current inventory. See receipts and ownership in the checkpoint. | [Lane A](work/lane-a.md) |
-| B | MatVal storage, packing and copy constructors merged at `7bc22fe3`. Active batch: `mirror/b-matval-indexed` (MatVal indexed access and symbol extraction). | [Lane B](work/lane-b.md) |
+| B | MatVal core constructors and lifecycle merged at `133b9c7d`. Active batch: `mirror/b-matval-dimensions` (MatVal dimension operations and conversions). | [Lane B](work/lane-b.md) |
 | C | Lane C owns Tier A mirroring for `Ptc.Calculation.dll` and `Ptc.Calculation.Core.dll`. The accumulated Core MemberGen/initializer candidate landed at `25c7bb8e`; its Phase Release Mathcad differential passed 156/156. Current batch `mirror/c-calc-child-hider-children` is rebased onto `25c7bb8e` and its combined direct Release filter passes 8/8; run its normal gate. The pushed DefaultUnitDescriptorTable batch follows. See the active handoff in [Lane C](work/lane-c.md). | [Lane C](work/lane-c.md) |
 | D | AreaType and its serializer helper merged at `aaca91d1`. The next batch is `ProtectableTypesRegistry`, now unblocked by `AreaType.TypeOfThis`; recheck ownership and follow [Lane D](work/lane-d.md). | [Lane D](work/lane-d.md) |
 

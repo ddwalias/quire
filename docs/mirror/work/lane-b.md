@@ -2,14 +2,14 @@
 
 ## Active handoff
 
-### Active Batch: MatVal indexed access and symbol extraction
-- **Branch:** `mirror/b-matval-indexed`
-- **Scope (33 methods in `src/Quire.Mpl/Mcd/MatVal.Indexed.cs`):**
-  - Dynamic index dispatchers: `DynCall(object)` (0x060004ad), `DynCall(object, object)` (0x060004ae).
-  - 1D index helpers and accessors: `mcd_get_1(object, object)` (0x060004b7), `matrix_get_1(int)` (0x060004b8), `sym_matrix_get_1(int)` (0x060004b9), `mcd_get_1(uint)` (0x060004ba), `mcd_sym_get_1(uint)` (0x060004bb), `matrix_get_1_nan(int)` (0x060004bc), `matrix_get_1_complex(int, out double, out double)` (0x060004bd), `matrix_get_1_real(int, out double)` (0x060004be).
-  - 2D index helpers and accessors: `mcd_get_2(object, object, object)` (0x060004bf), `matrix_get_2(int, int)` (0x060004c0), `sym_matrix_get_2(int, int)` (0x060004c1), `mcd_get_2(uint, uint)` (0x060004c2), `mcd_sym_get_2(uint, uint)` (0x060004c3), `matrix_get_2_nan(int, int)` (0x060004c4), `matrix_get_2_complex(int, int, out double, out double)` (0x060004c5), `matrix_get_2_real(int, int, out double)` (0x060004c6).
-  - Mutation and setters: `mcd_set_1(object, object, object)` (0x060004c7), `set_1(int, object)` (0x060004c8), `mcd_set_1(uint, object)` (0x060004c9), `mcd_set_2(object, object, object, object)` (0x060004ca), `set_2(int, int, object)` (0x060004cb), `mcd_set_2(uint, uint, object)` (0x060004cc).
-  - Internal indexing primitives: `Index(int, int)` (0x0600052e), `RowOf(int)` (0x0600052f), `ColOf(int)` (0x06000530), `asRowIndex(uint, uint)` (0x06000531), `asColIndex(uint, uint)` (0x06000532), `asIndex(uint, uint)` (0x06000533), `is_sym(object)` (0x06000538), `Index(int)` (0x06000539), `is_zero(object)` (0x0600053a).
+### Active Batch: MatVal dimension operations and conversions
+- **Branch:** `mirror/b-matval-dimensions`
+- **Scope (`src/Quire.Mpl/Mcd/MatVal.Dimensions.cs`):**
+  - Linear dimension application: `ApplyLinearDimension(MatDim)` (0x0600044a).
+  - Dimension constructor / dimension creation: `MatCreateDim(object, object, object)` (0x06000456).
+  - Dimension division: `DivideByDimension(Dim)` (0x0600043d).
+  - Pointer dimension casting: `CastPtrs(MatVal, Dim)` (0x06000490).
+  - Dimension scaling & auxiliary methods in `MatVal.Dimensions.cs`.
 - **Goal:** Resolve remaining IL structure differences against Mathcad Prime 12.0.1.0 `mplrun.dll`, achieve 100% exact Release IL matching across all methods, 0 lint findings, 0 ratchet regressions, and 100% mutation kill rate.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
@@ -95,6 +95,7 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 | MatVal memory growth, resize, and row/column mutations | Merged to main at b52edf9 (54d2299). 37 methods; 37 exact Release IL matches; 100% mutation kill rate (662/666, 0 survivors). |
 | MatVal element accessors and mutators | Merged to main at e7c190b (5f4a591). 50 methods; 50 exact Release IL matches; 100% mutation kill rate (793/797, 0 survivors). |
 | MatVal views and export members | Merged to main at f951966 (76b6393). 31 methods; 31 exact Release IL matches (100%); 100% mutation kill rate (767/772, 0 survivors). |
+| MatVal core constructors and lifecycle members | Merged to main at `133b9c7d` (`9c2df0d7`). 26 methods; exact IL across core target members; 401 differential tests; 865/869 mutants killed (0 unaccepted survivors, 4 accepted mutants). |
 
 The earlier report about missing `Mcd.NumVal.Compare` is not a blocker: the manifest and original member inventory have no such member. See [NumVal evidence](../evidence/Mcd.NumVal.md).
 
@@ -345,6 +346,21 @@ Scope: 31 methods across `Mcd.MatVal.Views` and nested `MatVal+TrimSubMatrixPtrs
 - Reconstruction integrity: 0 lint findings.
 - Mutation coverage: 767/772 killed (0 cached); 0 survivors.
 - Merged cleanly to `main` via `lane_merge.py` at commit `f9519665`.
+
+### MatVal core constructors and lifecycle members (merged to main at 133b9c7d)
+
+Base: `e64f3aca...`; branch `mirror/b-matval-core` (`9c2df0d7`).
+Original identity: mplrun Prime 12.0.1.0 SHA-256 `15274355cb262d96ada1295d4949f7f30ee750926d31e117019671de6b3efb52`, MVID `17a0933b-4988-4c18-963d-563998321cc8`.
+Scope: 26 constructors, lifecycle, and indexing members in `src/Quire.Mpl/Mcd/MatVal.cs`:
+- Constructors: `.ctor()` (0x06000481), `.ctor(int)` (0x06000477), `.ctor(int, int)` (0x06000478), `.ctor(int, int, bool)` (0x06000479), `.ctor(int, int, bool, int)` (0x06000476), `.ctor(double[], double[], int, int, int, Hashtable, Flags, int)` (0x0600047a), `.ctor(double[], double[], int, int, int, Hashtable)` (0x0600047b), `.ctor(double[], double[], int, int, int)` (0x0600047c), `.ctor(double[], double[], int, int)` (0x0600047d), `.ctor(double[], double[], int)` (0x0600047e), `.ctor(double[], double[])` (0x0600047f), `.ctor(double[])` (0x06000480).
+- Lifecycle properties: `get_Packed` (0x06000433), `get_Immutable` (0x06000460), `set_Immutable(bool)` (0x06000461), `get_Shared` (0x06000462), `set_Shared(bool)` (0x06000463), `GetHashCode()` (0x06000474).
+- NaN pointer helpers & allocation: `ThePtrNan()` (0x0600052e), `IsPtrNan(ref double)` (0x0600052d), `IsPtrNan(int, int)` (0x0600052f), `AllocImaginary()` (0x06000530).
+- Primitive indexing: `Index(int)` (0x060004cc), `Index(int, int)` (0x060004cd), `RowOf(int)` (0x060004ce), `ColOf(int)` (0x060004cf).
+- 100% exact Release IL opcode match against Mathcad Prime 12.0.1.0 `mplrun.dll` across core target members.
+- Validation: Quire.Harness.Tests (97/97), Quire.Mpl.Tests (188/188), Quire.Focused.Differential.Tests (401/401 Debug, 401/401 Release).
+- Integrity: 0 lint findings.
+- Mutation: 865/869 killed (0 unaccepted survivors, 4 accepted mutants).
+- Merged cleanly to `main` via `lane_merge.py` at commit `133b9c7d`.
 
 
 
