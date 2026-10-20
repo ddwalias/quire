@@ -11,10 +11,7 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculationErrorOwner, Ptc.Calculation.Core")]
 public partial interface ICalculationErrorOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.Calculation.Core.EngineError CurrentError { get; }
+    bool ContainsError(global::Quire.Calculation.Core.EngineError error);
+    void ShowError(global::Quire.Calculation.Core.EngineError error);
 }

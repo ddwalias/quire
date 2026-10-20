@@ -11,12 +11,8 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculatableResultOwner, Ptc.Calculation.Core")]
 public partial interface ICalculatableResultOwner : global::Quire.Calculation.Core.ICalculatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.EngineResult EngineResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool InterceptAndUpdateResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool UseICalculatableToRestoreResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.Calculation.Core.EngineResult EngineResult { get; set; }
+    bool InterceptAndUpdateResult { get; }
+    bool UseICalculatableToRestoreResult { get; }
+    void RestoreResult();
 }

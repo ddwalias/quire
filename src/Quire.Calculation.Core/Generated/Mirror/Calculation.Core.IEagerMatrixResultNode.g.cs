@@ -11,6 +11,5 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IEagerMatrixResultNode, Ptc.Calculation.Core")]
 public partial interface IEagerMatrixResultNode : global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    void SetElementAt(int r, int c, global::Quire.Calculation.Core.IResultNode element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void SetElementAt(int r, int c, global::Quire.Calculation.Core.IResultNode element);
 }

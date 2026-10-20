@@ -26,6 +26,28 @@ public partial interface ICalculatable
     void SetSynchronizationStatus(SynchronizationStatus status);
 
     void SetResult(CalculationResult result);
+
+    event global::System.Action<ICalculatable> RequestEvaluation;
+
+    event global::System.Func<ICalculatable, string, IResultNode> GetValueOfIdentifierBefore;
+
+    event global::System.Action<ICalculatable> TreatAsUpToDate;
+
+    void Commit();
+
+    void SetStatusSynchronized();
+
+    void SetCalculatingStatus(CalculatingStatus computingStatus);
+
+    void SetResult(IResultNode result);
+
+    void SetError(EngineError error);
+
+    void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<ResolvedId, string[]> idLabelMap);
+
+    void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap);
+
+    void SetRedefinitionWarnings(global::System.Collections.Generic.IList<EngineRedefInfo> warnings);
 }
 
 public sealed class CalculatableEventArgs(ICalculatable calculatable, ICalculatable? previous) : EventArgs

@@ -11,10 +11,7 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalcWithCache, Ptc.Calculation.Core")]
 public partial interface ICalcWithCache
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IResultNode Result { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> EngineWarnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::Quire.Calculation.Core.EngineError Error { get; }
+    global::Quire.Calculation.Core.IResultNode Result { get; }
+    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> EngineWarnings { get; }
 }

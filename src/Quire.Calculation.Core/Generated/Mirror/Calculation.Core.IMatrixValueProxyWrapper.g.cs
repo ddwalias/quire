@@ -11,18 +11,11 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IMatrixValueProxyWrapper, Ptc.Calculation.Core")]
 public partial interface IMatrixValueProxyWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsUniform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    uint Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    uint Cols { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Xml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IValueProxyWrapper Get(uint rowIndex, uint columnIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void WriteXml(global::System.Xml.XmlWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper GetPlainData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsUniform { get; }
+    uint Rows { get; }
+    uint Cols { get; }
+    string Xml { get; }
+    global::Quire.Calculation.Core.IValueProxyWrapper Get(uint rowIndex, uint columnIndex);
+    void WriteXml(global::System.Xml.XmlWriter writer);
+    global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper GetPlainData();
 }

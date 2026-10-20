@@ -11,6 +11,5 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IStringToIResultNodeTransform, Ptc.Calculation.Core")]
 public partial interface IStringToIResultNodeTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IResultNode Transform(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.Calculation.Core.IResultNode Transform(string s);
 }

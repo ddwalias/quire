@@ -11,6 +11,5 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalcWithPriority, Ptc.Calculation.Core")]
 public partial interface ICalcWithPriority : global::Quire.Calculation.Core.ICalculatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.Threading.DispatcherPriority> ResultsProcessingPriority { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::System.Nullable<global::System.Windows.Threading.DispatcherPriority> ResultsProcessingPriority { get; }
 }

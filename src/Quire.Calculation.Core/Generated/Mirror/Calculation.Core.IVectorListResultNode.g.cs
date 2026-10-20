@@ -11,20 +11,12 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IVectorListResultNode, Ptc.Calculation.Core")]
 public partial interface IVectorListResultNode : global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> Vectors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType CommonValuesType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int ElementsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int SingleVectorLength { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.VectorsType VectorsType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IListResultNode this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ResultValueType GetVectorValuesType(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> Vectors { get; }
+    global::Quire.Calculation.Core.ResultValueType CommonValuesType { get; }
+    int Count { get; }
+    int ElementsCount { get; }
+    int SingleVectorLength { get; }
+    global::Quire.Calculation.Core.VectorsType VectorsType { get; }
+    global::Quire.Calculation.Core.IListResultNode this[int index] { get; }
+    global::Quire.Calculation.Core.ResultValueType GetVectorValuesType(int index);
 }

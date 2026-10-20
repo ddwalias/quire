@@ -11,18 +11,11 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IMatrixValueDataAccessorWrapper, Ptc.Calculation.Core")]
 public partial interface IMatrixValueDataAccessorWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.PlainDataTypes> GetColumnsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::System.Collections.IList> GetColumnsPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetFirstNonPlainDataColumnIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetFirstNonPlainDataRowIndex() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.PlainDataTypes> GetRowsPlainDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::System.Collections.IList> GetRowsPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.PlainDataTypes GetEntireMatrixDataTypes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.PlainDataTypes> GetColumnsPlainDataTypes();
+    global::System.Collections.Generic.IList<global::System.Collections.IList> GetColumnsPlainDataValues(int startIndex, int endIndex);
+    int GetFirstNonPlainDataColumnIndex();
+    int GetFirstNonPlainDataRowIndex();
+    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.PlainDataTypes> GetRowsPlainDataTypes();
+    global::System.Collections.Generic.IList<global::System.Collections.IList> GetRowsPlainDataValues(int startIndex, int endIndex);
+    global::Quire.Calculation.Core.PlainDataTypes GetEntireMatrixDataTypes();
 }

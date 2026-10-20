@@ -11,32 +11,18 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculatableContext, Ptc.Calculation.Core")]
 public partial interface ICalculatableContext : global::Quire.Calculation.Core.ICalculatableContainer
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool EvaluatingEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<string> GetEngineVersion { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action StartEvaluating { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action StopEvaluating { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<bool> SimplifyUnitsFlagUpdated { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<string, object> CalculationOptionUpdated { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<string, object> SystemVariableUpdated { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action StartAutoCalc { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action StopAutoCalc { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>> CommitAndNotifyDependentCalculatables { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action ContextUnloaded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<int, global::System.Windows.Threading.DispatcherPriority> WaitForCalculationIdle { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Func<string, object> GetEngineOption { add { } remove { } }
+    bool IsCalculating { get; set; }
+    bool EvaluatingEnabled { get; set; }
+    event global::System.Func<string> GetEngineVersion ;
+    event global::System.Action StartEvaluating ;
+    event global::System.Action StopEvaluating ;
+    event global::System.Action<bool> SimplifyUnitsFlagUpdated ;
+    event global::System.Action<string, object> CalculationOptionUpdated ;
+    event global::System.Action<string, object> SystemVariableUpdated ;
+    event global::System.Action StartAutoCalc ;
+    event global::System.Action StopAutoCalc ;
+    event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>> CommitAndNotifyDependentCalculatables ;
+    event global::System.Action ContextUnloaded ;
+    event global::System.Action<int, global::System.Windows.Threading.DispatcherPriority> WaitForCalculationIdle ;
+    event global::System.Func<string, object> GetEngineOption ;
 }

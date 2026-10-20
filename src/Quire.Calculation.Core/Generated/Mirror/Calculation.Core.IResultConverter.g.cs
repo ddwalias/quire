@@ -11,6 +11,5 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IResultConverter, Ptc.Calculation.Core")]
 public partial interface IResultConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IResultNode Convert(global::Quire.Calculation.Core.IResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.Calculation.Core.IResultNode Convert(global::Quire.Calculation.Core.IResultNode resultNode);
 }

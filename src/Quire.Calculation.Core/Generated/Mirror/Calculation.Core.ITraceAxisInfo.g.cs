@@ -11,10 +11,7 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ITraceAxisInfo, Ptc.Calculation.Core")]
 public partial interface ITraceAxisInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    double Max { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Min { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    double Max { get; }
+    double Min { get; }
+    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get; }
 }

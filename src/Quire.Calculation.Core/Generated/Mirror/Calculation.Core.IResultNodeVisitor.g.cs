@@ -11,30 +11,17 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IResultNodeVisitor, Ptc.Calculation.Core")]
 public partial interface IResultNodeVisitor : global::Quire.IVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IEmptyResultNode empty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IRealResultNode real) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IImaginaryResultNode imag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IComplexResultNode complex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IStringResultNode str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IFunctionResultNode str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IUnitedValueResultNode unitedValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IEagerMatrixResultNode eagerMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.ILazyMatrixResultNode lazyMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.ISymbolicResultNode symbolic) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.IVectorListResultNode vectorList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Visit(global::Quire.Calculation.Core.ITrace2DResultNode traceResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void Visit(global::Quire.Calculation.Core.IEmptyResultNode empty);
+    void Visit(global::Quire.Calculation.Core.IRealResultNode real);
+    void Visit(global::Quire.Calculation.Core.IImaginaryResultNode imag);
+    void Visit(global::Quire.Calculation.Core.IComplexResultNode complex);
+    void Visit(global::Quire.Calculation.Core.IStringResultNode str);
+    void Visit(global::Quire.Calculation.Core.IFunctionResultNode str);
+    void Visit(global::Quire.Calculation.Core.IUnitedValueResultNode unitedValue);
+    void Visit(global::Quire.Calculation.Core.IDisplayMatrixResultNode displayMatrix);
+    void Visit(global::Quire.Calculation.Core.IEagerMatrixResultNode eagerMatrix);
+    void Visit(global::Quire.Calculation.Core.ILazyMatrixResultNode lazyMatrix);
+    void Visit(global::Quire.Calculation.Core.ISymbolicResultNode symbolic);
+    void Visit(global::Quire.Calculation.Core.IVectorListResultNode vectorList);
+    void Visit(global::Quire.Calculation.Core.ITrace2DResultNode traceResult);
 }

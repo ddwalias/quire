@@ -11,8 +11,6 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IListResultNode, Ptc.Calculation.Core")]
 public partial interface IListResultNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int MeaningfulValuesCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    int Count { get; }
+    int MeaningfulValuesCount { get; }
 }

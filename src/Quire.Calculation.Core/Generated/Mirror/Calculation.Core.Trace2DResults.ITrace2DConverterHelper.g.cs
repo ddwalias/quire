@@ -11,20 +11,12 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.ITrace2DConverterHelper, Ptc.Calculation.Core")]
 public partial interface ITrace2DConverterHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsTypeDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.Trace2DResults.TraceType CurrentType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int MaxNumberOf2DPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool RangeUnitsAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool DiscreteValuesAllowed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string AssertValuesTypeMatchTraceType(bool xIsDiscrete, bool yIsDiscrete, global::Quire.Calculation.Core.Trace2DResults.TraceType traceTypePreset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string ValidateColumnsAndUnits(int numberOfPointsInResult, int yResultColumns, global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> rangeUnits, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string ValidateNumberOfPointsLimit(int numberOfPointsInResult, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsTypeDefault { get; }
+    global::Quire.Calculation.Core.Trace2DResults.TraceType CurrentType { get; }
+    int MaxNumberOf2DPoints { get; }
+    bool RangeUnitsAllowed { get; }
+    bool DiscreteValuesAllowed { get; }
+    string AssertValuesTypeMatchTraceType(bool xIsDiscrete, bool yIsDiscrete, global::Quire.Calculation.Core.Trace2DResults.TraceType traceTypePreset);
+    string ValidateColumnsAndUnits(int numberOfPointsInResult, int yResultColumns, global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> rangeUnits, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType);
+    string ValidateNumberOfPointsLimit(int numberOfPointsInResult, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType);
 }

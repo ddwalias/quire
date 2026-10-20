@@ -11,8 +11,6 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculationHideableChild, Ptc.Calculation.Core")]
 public partial interface ICalculationHideableChild : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool CanHideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    bool HideFromCalculationContext { get; set; }
+    bool CanHideFromCalculationContext { get; }
 }

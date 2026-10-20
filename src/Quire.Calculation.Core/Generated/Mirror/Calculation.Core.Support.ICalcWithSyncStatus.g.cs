@@ -11,8 +11,6 @@ namespace Quire.Calculation.Core.Support;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Support.ICalcWithSyncStatus, Ptc.Calculation.Core")]
 public partial interface ICalcWithSyncStatus
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> Synchronized { add { } remove { } }
+    global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get; }
+    event global::System.Action<global::Quire.Calculation.Core.Support.ICalcWithSyncStatus> Synchronized ;
 }

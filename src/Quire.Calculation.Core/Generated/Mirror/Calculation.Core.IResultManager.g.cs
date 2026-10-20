@@ -11,28 +11,16 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IResultManager, Ptc.Calculation.Core")]
 public partial interface IResultManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>>> Results { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ReplaceCalculatableAndResult(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ReplaceCalculatable(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int CreateResultRefId(global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int CreateOldResultRefId(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void CreateResultRef(global::System.Xml.XmlElement xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetResultByRefId(int resultId, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable, bool isForceAdd = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool UpdateResultRef(global::System.Xml.XmlNode xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetEngineResult(int resultId, global::Quire.Calculation.Core.EngineResult engineResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.ICalculatable FindCalculatable(int resultId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void PushResultsToOwners(bool isScriptingRunWorksheetRecalculate = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>>> Results { get; }
+    void Clear();
+    void ReplaceCalculatableAndResult(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable);
+    void ReplaceCalculatable(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable);
+    int CreateResultRefId(global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner);
+    int CreateOldResultRefId(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable);
+    void CreateResultRef(global::System.Xml.XmlElement xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner);
+    void SetResultByRefId(int resultId, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable, bool isForceAdd = false);
+    bool UpdateResultRef(global::System.Xml.XmlNode xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable);
+    void SetEngineResult(int resultId, global::Quire.Calculation.Core.EngineResult engineResult);
+    global::Quire.Calculation.Core.ICalculatable FindCalculatable(int resultId);
+    void PushResultsToOwners(bool isScriptingRunWorksheetRecalculate = false);
 }

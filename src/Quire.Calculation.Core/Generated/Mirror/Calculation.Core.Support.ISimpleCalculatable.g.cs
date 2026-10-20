@@ -11,8 +11,6 @@ namespace Quire.Calculation.Core.Support;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Support.ISimpleCalculatable, Ptc.Calculation.Core")]
 public partial interface ISimpleCalculatable : global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.RealSimpleResultNode SystemOrigin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsErrorOnScalingUnits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.Calculation.Core.RealSimpleResultNode SystemOrigin { get; }
+    bool IsErrorOnScalingUnits();
 }

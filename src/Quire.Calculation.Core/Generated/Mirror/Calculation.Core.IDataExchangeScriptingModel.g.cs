@@ -11,16 +11,10 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IDataExchangeScriptingModel, Ptc.Calculation.Core")]
 public partial interface IDataExchangeScriptingModel : global::Quire.Calculation.Core.IDataExchangeModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IResultNode EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsBlockRunningScript { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void PushResult(global::Quire.Calculation.Core.IResultNode resultNode, bool isRunEvents = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetValue(string id, object scriptingInputs, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetState(global::Quire.Calculation.Core.CalculatableState state, bool isAutoCalc = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object GetValue(string id, bool isRunScriptingOnRecalculate, bool isAutoCalc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.Calculation.Core.IResultNode EngineResultForSerialization { get; }
+    bool IsBlockRunningScript { get; set; }
+    void PushResult(global::Quire.Calculation.Core.IResultNode resultNode, bool isRunEvents = false);
+    void SetValue(string id, object scriptingInputs, bool isAutoCalc);
+    void SetState(global::Quire.Calculation.Core.CalculatableState state, bool isAutoCalc = false);
+    object GetValue(string id, bool isRunScriptingOnRecalculate, bool isAutoCalc);
 }

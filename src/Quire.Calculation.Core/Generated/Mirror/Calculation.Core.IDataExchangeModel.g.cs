@@ -11,18 +11,11 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IDataExchangeModel, Ptc.Calculation.Core")]
 public partial interface IDataExchangeModel
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool ShouldCommitAtLeastOnce { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool ShouldCommitIfDirty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Threading.Dispatcher Dispatcher { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Lock(bool wait) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Unlock() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ShouldSkipUnchangedValueMultiThreaded(string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool ShouldCommitAtLeastOnce { get; }
+    bool ShouldCommitIfDirty { get; }
+    global::System.Windows.Threading.Dispatcher Dispatcher { get; }
+    bool Lock(bool wait);
+    void Unlock();
+    bool ShouldSkipUnchangedValueMultiThreaded(string id);
+    void Commit();
 }

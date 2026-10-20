@@ -11,10 +11,7 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ITraceDataPoints, Ptc.Calculation.Core")]
 public partial interface ITraceDataPoints
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IVectorListResultNode RangePoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Calculation.Core.IVectorListResultNode ResultPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::Quire.Calculation.Core.IVectorListResultNode RangePoints { get; }
+    global::Quire.Calculation.Core.IVectorListResultNode ResultPoints { get; }
+    bool IsEmpty { get; }
 }
