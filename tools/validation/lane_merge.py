@@ -31,6 +31,17 @@ def main_worktree(cwd=None):
     return None
 
 
+def branch_worktree(branch, cwd=None):
+    """The worktree with ``branch`` checked out, or None if it is not checked out."""
+    worktree = None
+    for line in git('worktree', 'list', '--porcelain', cwd=cwd).stdout.splitlines():
+        if line.startswith('worktree '):
+            worktree = line[len('worktree '):]
+        elif line == f'branch refs/heads/{branch}':
+            return worktree
+    return None
+
+
 def pull(main):
     """Fast-forward main to origin/main; the git exit code."""
     return (subprocess.run(['git', 'fetch', '-q', 'origin'], cwd=main).returncode
@@ -73,7 +84,11 @@ def allow_unreachable_update(branch, main):
 
 
 def rebase(branch, cwd=None):
-    result = git('rebase', '-q', 'main', branch, cwd=cwd)
+    # Rebase in the lane's own checkout. Supplying the branch name from the main
+    # worktree fails when Git sees that branch checked out in a linked worktree.
+    lane_dir = branch_worktree(branch, cwd)
+    result = (git('rebase', '-q', 'main', cwd=lane_dir) if lane_dir else
+              git('rebase', '-q', 'main', branch, cwd=cwd))
     if result.returncode:
         print(f'git rebase main {branch} failed: {(result.stdout + result.stderr).strip()}', file=sys.stderr)
         return 1
