@@ -32,10 +32,6 @@ internal sealed partial class TypeNameBuilder
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
-    private void EscapeName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EscapeEmbeddedAssemblyName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AddElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddAssemblyQualifiedName(global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeNameBuilder.Format format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
