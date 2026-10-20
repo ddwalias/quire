@@ -11,8 +11,4 @@ namespace Quire.Calculation;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.ValueProxyWrapper, Ptc.Calculation")]
 internal partial class ValueProxyWrapper : global::Quire.Calculation.Core.IValueProxyWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IValueProxy Proxy { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ValueProxyWrapper(global::Quire.Automation.IValueProxy proxy) { }
 }
