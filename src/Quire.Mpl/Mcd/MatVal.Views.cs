@@ -24,9 +24,9 @@ public sealed partial class MatVal
         int anr = Anr;
         for (int i = 0; i < cols; i++)
         {
-            int num = i * anr + m_offset;
-            int num2 = num + rows;
-            for (int j = num; j < num2; j++)
+            int start = i * anr + m_offset;
+            int limit = start + rows;
+            for (int j = start; j < limit; j++)
             {
                 if (IsPtrNan(ref m_rarr[j]))
                 {
