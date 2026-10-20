@@ -43,7 +43,7 @@
 
 ## Test cases
 
-Direct comparisons in `MatValViewDifferentialTests.Direct_views_and_private_helpers` invoke 34 selected view, transpose, tuple, equality, formatting, export, constructor and pointer-callback members on both artifacts. Constructor cases include the private column-view, private half-open submatrix and nested pointer-trim callback constructors. Instance renderers compare shape, stride, offset, flags, dimension, backing arrays and pointer tables, including target mutation and alias state. Conclusions are limited to the inputs and branches exercised in the current focused validation run.
+Direct comparisons in `MatValViewDifferentialTests.Direct_views_and_private_helpers` invoke 35 selected view, transpose, tuple, equality, formatting, export, constructor and pointer-callback members on both artifacts. Constructor cases include the private column-view, private half-open submatrix and nested pointer-trim callback constructors. Instance renderers compare shape, stride, offset, flags, dimension, backing arrays and pointer tables, including target mutation and alias state. Conclusions are limited to the inputs and branches exercised in the current focused validation run.
 
 ## Structure mismatches observed in the focused run
 
