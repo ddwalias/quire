@@ -30,14 +30,6 @@ internal sealed partial class TypeNameBuilder
     [global::Quire.Mirror.MirrorStub]
     private TypeNameBuilder() { }
     [global::Quire.Mirror.MirrorStub]
-    private void OpenGenericArguments() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CloseGenericArguments() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CloseGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AddName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddArray(int rank) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -53,12 +45,6 @@ internal sealed partial class TypeNameBuilder
     private void EscapeName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void EscapeEmbeddedAssemblyName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PushOpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PopOpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetUseAngleBracketsForGenerics(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
