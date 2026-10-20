@@ -11,9 +11,6 @@ namespace Quire.Undo;
 [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandEventArgs, Ptc.Core")]
 public partial class CommandEventArgs : global::System.EventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Undo.IUndoableCommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Undo.CommandEventArgs+ActionTypeEnum, Ptc.Core")]
     public enum ActionTypeEnum
     {

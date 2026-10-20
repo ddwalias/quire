@@ -24,4 +24,15 @@ public partial class CommandEventArgs
         _commandReference = new WeakReference(command);
         _actionType = actionType;
     }
+
+    [MirrorVerified("Release IL")]
+    public IUndoableCommand Command
+    {
+        get
+        {
+            IUndoableCommand obj = _commandReference.Target as IUndoableCommand;
+            DebugTools.DevAssert(obj != null, null);
+            return obj;
+        }
+    }
 }
