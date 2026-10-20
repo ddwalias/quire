@@ -12,10 +12,6 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal static partial class MetadataHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.AssemblyReferenceHandle AddAssemblyReference(global::System.Reflection.Assembly assembly, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.AssemblyReferenceHandle AddAssemblyReference(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, string name, global::System.Version version, string culture, byte[] publicKey, global::System.Reflection.AssemblyFlags flags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static global::System.Reflection.Metadata.TypeDefinitionHandle AddTypeDef(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referencesTracker, int fieldToken, int methodToken) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Reflection.Metadata.MemberReferenceHandle AddConstructorReference(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.TypeReferenceHandle parent, global::System.Reflection.MethodBase method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
