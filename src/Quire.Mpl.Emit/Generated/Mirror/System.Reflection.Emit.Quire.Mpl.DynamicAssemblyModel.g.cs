@@ -37,12 +37,6 @@ internal partial class DynamicAssemblyModel
     private void AddMethodDefinition(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddMethodBodiesOffsets(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int MethodIndex(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int FieldIndex(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<int> MethodOffset(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel+TypeIndexInfo, mplasb")]
     internal partial class TypeIndexInfo
