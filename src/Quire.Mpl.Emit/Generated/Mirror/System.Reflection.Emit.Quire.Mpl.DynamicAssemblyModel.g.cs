@@ -47,15 +47,5 @@ internal partial class DynamicAssemblyModel
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel+TypeIndexInfo, mplasb")]
     internal partial class TypeIndexInfo
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int typeIndex;
-        [global::Quire.Mirror.MirrorStub]
-        public int fieldIndex;
-        [global::Quire.Mirror.MirrorStub]
-        public int methodIndex;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.List<int> offsets;
-        [global::Quire.Mirror.MirrorStub]
-        public TypeIndexInfo() { }
     }
 }
