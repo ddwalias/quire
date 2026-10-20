@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeSignatureEncoderExtensions, mplasb")]
 public static partial class TypeSignatureEncoderExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void FromType(this global::System.Reflection.Metadata.Ecma335.SignatureTypeEncoder encoder, global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder = default, global::System.Nullable<global::System.Reflection.Metadata.TypeDefinitionHandle> typeHandle = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -2,6 +2,6 @@
 
 - Owner: Lane B (Codex).
 - Branch: `mirror/b-mpl-emit-20261021-a7`.
-- Selected members: `StackBehaviourExtensions` — `GetPushCount`, `GetPopCount`, `IsDelegateInvoke`, `IsDelegateInvocationOpCode`; `StackDepthCalculator` — `_defaultMaxStackDepth`, constructor, `CalculateMaxStackDepth`, `CalculateMaxStackDepthDefault`, `CalculateMaxStackDepthPushOnly`, `CalculateMaxStackDepthOptimistic`.
-- Release IL report: PASS, `.mirror-cache/release-il-0fa4915ee890/release-il.json` (19 checked).
-- Remaining mismatches: 596 unfinished members in the full `Quire.Mpl.Emit` inventory.
+- Selected members: `StackBehaviourExtensions`, `StackDepthCalculator`, and `TypeSignatureEncoderExtensions.FromType`.
+- Release IL report: PASS, `.mirror-cache/release-il-9fc0946efe65/release-il.json` (20 checked).
+- Remaining mismatches: 595 unfinished members in the full `Quire.Mpl.Emit` inventory.
