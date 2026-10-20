@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
@@ -69,5 +70,33 @@ public partial class AssemblyBuilder
             return _module;
         }
         return null;
+    }
+
+    public void Save(string assemblyFileName)
+    {
+        if (_previouslySaved)
+        {
+            throw new InvalidOperationException("Cannot save an assembly multiple times");
+        }
+        if (assemblyFileName == null)
+        {
+            throw new ArgumentNullException("assemblyFileName");
+        }
+        if (_assemblyName == null || _assemblyName.Name == null)
+        {
+            throw new ArgumentNullException("_assemblyName");
+        }
+        if (_module == null)
+        {
+            throw new InvalidOperationException("Assembly needs at least one module defined");
+        }
+        MetadataBuilder metadataBuilder = new MetadataBuilder();
+        BlobBuilder blobBuilder = new BlobBuilder();
+        MethodBodyStreamEncoder methodBodyStreamEncoder = new MethodBodyStreamEncoder(blobBuilder);
+        _assemblyDef = metadataBuilder.AddAssembly(metadataBuilder.GetOrAddString(_assemblyName.Name), _assemblyName.Version ?? new Version(0, 0, 0, 0), (_assemblyName.CultureName == null) ? default(StringHandle) : metadataBuilder.GetOrAddString(_assemblyName.CultureName), _assemblyName.GetPublicKey() is { } publicKey ? metadataBuilder.GetOrAddBlob(publicKey) : default(BlobHandle), AssemblyFlags.PublicKey, AssemblyHashAlgorithm.None);
+        _module.AppendMetadata(metadataBuilder, methodBodyStreamEncoder);
+        using FileStream peStream = new FileStream(assemblyFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        WritePEImage(peStream, metadataBuilder, blobBuilder);
+        _previouslySaved = true;
     }
 }

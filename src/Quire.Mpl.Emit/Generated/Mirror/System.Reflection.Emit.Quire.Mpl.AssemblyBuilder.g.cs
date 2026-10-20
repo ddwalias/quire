@@ -19,8 +19,6 @@ public partial class AssemblyBuilder : global::System.Reflection.Assembly
     private string _culture;
     internal global::System.Reflection.Metadata.AssemblyDefinitionHandle _assemblyDef;
     [global::Quire.Mirror.MirrorStub]
-    public void Save(string assemblyFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public byte[] EmitAssembly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void LoadAssembly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
