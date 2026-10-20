@@ -14,10 +14,6 @@ public partial class MetadataReferenceTracker
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _instance;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.AssemblyReferenceHandle GetOrAddAssemblyReference(global::System.Reflection.AssemblyName assemblyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.ModuleReferenceHandle GetOrAddModuleReference(global::System.Reflection.Module module) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Metadata.TypeReferenceHandle GetOrAddTypeReference(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Metadata.TypeSpecificationHandle GetOrAddTypeSpecification(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
