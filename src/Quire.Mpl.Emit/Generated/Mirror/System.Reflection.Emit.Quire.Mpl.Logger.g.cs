@@ -29,7 +29,5 @@ public static partial class Logger
     [global::Quire.Mirror.MirrorStub]
     private static uint GetCurrentThreadId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void Log(string message, string filePath = "", string memberName = "", int lineNumber = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void ProcessLogQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
