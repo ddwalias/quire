@@ -12,17 +12,5 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class TryCatchBlockInfo
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.Ecma335.LabelHandle labelTryStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.Ecma335.LabelHandle labelTryEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.Ecma335.LabelHandle labelCatchStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.Ecma335.LabelHandle labelCatchEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.Ecma335.LabelHandle endExceptionBlockLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.EntityHandle exceptionToken { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public TryCatchBlockInfo() { }
 }
