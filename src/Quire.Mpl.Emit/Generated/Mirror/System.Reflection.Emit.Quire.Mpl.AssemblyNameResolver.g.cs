@@ -11,14 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.AssemblyNameResolver, mplasb")]
 internal static partial class AssemblyNameResolver
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string[] _systemRuntimeTypes;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.AssemblyName GetResolvedAssemblyName(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.AssemblyName WithPublicKeyToken(this global::System.Reflection.AssemblyName assemblyName, string publicKeyToken) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static byte[] HexStringToByteArray(string hex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsSystemNamespace(string @namespace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
