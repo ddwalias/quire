@@ -11,68 +11,119 @@ namespace Quire.Engine.Misc;
 [global::Quire.Mirror.MirrorOf("Engine.Misc.XmlUtils, mcmisc")]
 public partial class XmlUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static bool s_Debug;
-    [global::Quire.Mirror.MirrorStub]
-    private static string s_WhitepaceChars;
-    [global::Quire.Mirror.MirrorStub]
-    private static string s_TagBreakChars;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_OpenAngle;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_CloseAngle;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_DoubleQuote;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_SingleQuote;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_Slash;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_Excl;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_Hyphen;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_CloseBracket;
-    [global::Quire.Mirror.MirrorStub]
-    private static char s_EqualSign;
-    [global::Quire.Mirror.MirrorStub]
-    private static string s_xmlns;
-    [global::Quire.Mirror.MirrorStub]
-    protected static bool s_TightenXmlnsAttributes;
-    [global::Quire.Mirror.MirrorStub]
-    private static int s_TestsDone;
-    [global::Quire.Mirror.MirrorStub]
-    private static int s_TestsPassed;
-    [global::Quire.Mirror.MirrorStub]
-    private static int s_TestNum;
-    [global::Quire.Mirror.MirrorStub]
-    private static int s_TestPos;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool TightenXmlnsAttributes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static void BadSyntax(string str, int pos, string msg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void BadSyntax(string str, int pos, string fmt, object obj0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1, object obj2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void Dbg(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void Dbg(string fmt, object obj0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void Dbg(string fmt, object obj0, object obj1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void Dbg(string fmt, object obj0, object obj1, object obj2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool LookingAtText(string str, int scanPos, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool RequireText(string str, ref int scanPos, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FindElementStart(string str, ref int startPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FindElementStart(string str, ref int startPos, string whitespace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool s_Debug = false;
+    private static string s_WhitepaceChars = " \t\f\n\r";
+    private static string s_TagBreakChars = " \t\f\n\r\"\'/>";
+    private static char s_OpenAngle = '<';
+    private static char s_CloseAngle = '>';
+    private static char s_DoubleQuote = '"';
+    private static char s_SingleQuote = '\'';
+    private static char s_Slash = '/';
+    private static char s_Excl = '!';
+    private static char s_Hyphen = '-';
+    private static char s_CloseBracket = ']';
+    private static char s_EqualSign = '=';
+    private static string s_xmlns = "xmlns";
+    protected static bool s_TightenXmlnsAttributes = true;
+    private static int s_TestsDone = 0;
+    private static int s_TestsPassed = 0;
+    private static int s_TestNum = 0;
+    private static int s_TestPos = 0;
+    public static bool TightenXmlnsAttributes
+    {
+        get => s_TightenXmlnsAttributes;
+        set => s_TightenXmlnsAttributes = value;
+    }
+    public static void BadSyntax(string str, int pos, string msg)
+    {
+        throw new global::System.Exception(string.Format("bad_syntax\t{0}\tpos={1}\ttext={2}", msg, pos, str));
+    }
+    private static void BadSyntax(string str, int pos, string fmt, object obj0)
+    {
+        BadSyntax(str, pos, string.Format(fmt, obj0));
+    }
+    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1)
+    {
+        BadSyntax(str, pos, string.Format(fmt, obj0, obj1));
+    }
+    private static void BadSyntax(string str, int pos, string fmt, object obj0, object obj1, object obj2)
+    {
+        BadSyntax(str, pos, string.Format(fmt, obj0, obj1, obj2));
+    }
+    private static void Dbg(string str)
+    {
+        if (s_Debug)
+        {
+            global::System.Console.WriteLine(str);
+        }
+    }
+    private static void Dbg(string fmt, object obj0)
+    {
+        Dbg(string.Format(fmt, obj0));
+    }
+    private static void Dbg(string fmt, object obj0, object obj1)
+    {
+        Dbg(string.Format(fmt, obj0, obj1));
+    }
+    private static void Dbg(string fmt, object obj0, object obj1, object obj2)
+    {
+        Dbg(string.Format(fmt, obj0, obj1, obj2));
+    }
+    public static bool LookingAtText(string str, int scanPos, string text)
+    {
+        int num = scanPos;
+        foreach (char obj in text)
+        {
+            if (num >= text.Length)
+            {
+                return false;
+            }
+            if (!str[num].Equals(obj))
+            {
+                return false;
+            }
+            num++;
+        }
+        return true;
+    }
+    public static bool RequireText(string str, ref int scanPos, string text)
+    {
+        if (!LookingAtText(str, scanPos, text))
+        {
+            Dbg("RequireText \"{0}\" failing @ {1} in {2}", text, scanPos, str);
+            return false;
+        }
+        scanPos += text.Length;
+        return true;
+    }
+    public static bool FindElementStart(string str, ref int startPos)
+    {
+        return FindElementStart(str, ref startPos, s_WhitepaceChars);
+    }
+    public static bool FindElementStart(string str, ref int startPos, string whitespace)
+    {
+        for (int i = startPos; i < str.Length; i++)
+        {
+            char value = str[i];
+            int num = whitespace.IndexOf(value);
+            Dbg("ch=" + value + " wspos=" + num);
+            if (num == -1)
+            {
+                num = s_WhitepaceChars.IndexOf(value);
+                if (num == -1)
+                {
+                    startPos = i;
+                    Dbg("findElementStart succeeded @ " + i);
+                    return true;
+                }
+                startPos = i;
+                Dbg("FindElementStart whitespace barrier @ " + i);
+                return false;
+            }
+        }
+        Dbg("FindElementStart failing");
+        return false;
+    }
     [global::Quire.Mirror.MirrorStub]
     public static bool ScanElement(string str, ref int startPos, out int endPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -111,16 +162,34 @@ public partial class XmlUtils
     public static bool UnorderedEqual(string xml1, string xml2, bool exact) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string OrderedArbitrarily(string xml) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void TestInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void TestInit()
+    {
+        s_TestsDone = 0;
+        s_TestsPassed = 0;
+        s_TestNum = 0;
+        s_TestPos = 0;
+    }
     [global::Quire.Mirror.MirrorStub]
     public static void TestCheck(string str, bool result, bool expected_result, int expected_pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void TestCheck(bool b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void BumpTest() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void TestFinalize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void TestCheck(bool b)
+    {
+        if (b)
+        {
+            s_TestsPassed++;
+        }
+        BumpTest();
+    }
+    public static void BumpTest()
+    {
+        s_TestsDone++;
+        s_TestPos = 0;
+        s_TestNum++;
+    }
+    public static void TestFinalize()
+    {
+        string text = (s_TestsPassed == s_TestsDone) ? "Passed." : "Failed.";
+        global::System.Console.WriteLine("{0} {1}/{2} tests succeeded.", text, s_TestsPassed, s_TestsDone);
+    }
     [global::Quire.Mirror.MirrorStub]
     public static void SelfTest(string[] ignored_data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
