@@ -11,24 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.Trace2DResultConverterHelperBase, Ptc.Calculation.Core")]
 public abstract partial class Trace2DResultConverterHelperBase : global::Quire.Calculation.Core.Trace2DResults.ITrace2DConverterHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool DiscreteValuesAllowed { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool RangeUnitsAllowed { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.Trace2DResults.TraceType CurrentType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract int MaxNumberOf2DPoints { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsTypeDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected Trace2DResultConverterHelperBase(global::Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner resultsOwner) { }
-    [global::Quire.Mirror.MirrorStub]
-    public string AssertValuesTypeMatchTraceType(bool xIsDiscrete, bool yIsDiscrete, global::Quire.Calculation.Core.Trace2DResults.TraceType traceTypePreset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string ValidateColumnsAndUnits(int numberOfPointsInResult, int yResultColumns, global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> rangeUnits, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual string ValidateNumberOfPointsLimit(int numberOfPointsInResult, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string ValidateEnoughResultColumnsForTraceType(int numberOfResultColumns, global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
