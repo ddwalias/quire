@@ -11,28 +11,20 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ModuleBuilder, mplasb")]
 public partial class ModuleBuilder : global::System.Reflection.Module
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> _typeDefStore;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeDefinitionHandle> _definedTypes;
+    internal global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> _typeDefStore = new global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder>();
+    internal global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeDefinitionHandle> _definedTypes = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeDefinitionHandle>();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.TypeBuilder _currentType;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Nullable<global::System.Reflection.Metadata.TypeDefinitionHandle> _currentTypeHandle;
-    [global::Quire.Mirror.MirrorStub]
-    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.FieldReferenceWrapper, global::System.Reflection.Metadata.FieldDefinitionHandle> _definedFields;
-    [global::Quire.Mirror.MirrorStub]
-    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle> _definedMethods;
-    [global::Quire.Mirror.MirrorStub]
-    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.ConstructorReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle> _definedConstructors;
+    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.FieldReferenceWrapper, global::System.Reflection.Metadata.FieldDefinitionHandle> _definedFields = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.FieldReferenceWrapper, global::System.Reflection.Metadata.FieldDefinitionHandle>();
+    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle> _definedMethods = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle>();
+    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.ConstructorReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle> _definedConstructors = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.ConstructorReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle>();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager;
+    internal global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager = new global::System.Reflection.Emit.Quire.Mpl.LabelManager();
     public override global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder Assembly { get; }
     public override string ScopeName { get; }
-    [global::Quire.Mirror.MirrorStub]
-    internal ModuleBuilder(string name, global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder assemblyBuilder) { }
     [global::Quire.Mirror.MirrorStub]
     internal void AppendMetadata(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder methodBodyStreamEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
