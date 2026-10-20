@@ -23,6 +23,4 @@ public partial class MetadataReferenceTracker
     public global::System.Reflection.Metadata.Handle GetOrAddMethodHandle(global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Metadata.MemberReferenceHandle GetOrAddConstructorReference(global::System.Reflection.ConstructorInfo ctor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.MemberReferenceHandle GetOrAddFieldReference(global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
