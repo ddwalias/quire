@@ -7664,7 +7664,7 @@
     "Quire.Calculation.Core|Quire.Calculation.Core.CalculationResult::set_Warning`0([System.Runtime]System.String)->[System.Runtime]System.Void|False": "no_counterpart",
     "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::.ctor`0()->[System.Runtime]System.Void|False": "compared",
     "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::Accept`0([Quire.Calculation.Core]Quire.Calculation.Core.IResultNodeVisitor)->[System.Runtime]System.Void|False": "compared",
-    "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "missing",
+    "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::Equals`0([System.Runtime]System.Object)->[System.Runtime]System.Boolean|False": "uncovered",
     "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::ToString`0()->[System.Runtime]System.String|False": "compared",
     "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::get_IValue`0()->[System.Runtime]System.Double|False": "compared",
     "Quire.Calculation.Core|Quire.Calculation.Core.ComplexSimpleResultNode::get_RValue`0()->[System.Runtime]System.Double|False": "compared",
