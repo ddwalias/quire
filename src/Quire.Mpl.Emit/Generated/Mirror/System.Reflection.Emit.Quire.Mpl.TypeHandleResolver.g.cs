@@ -12,9 +12,5 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class TypeHandleResolver
 {
     [global::Quire.Mirror.MirrorStub]
-    public static void ResolveHandleEmit(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Type type, global::System.Action<global::System.Reflection.Metadata.Handle> action, global::System.Action<global::System.Type> actionError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Nullable<global::System.Reflection.Metadata.Handle> ResolveType(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public TypeHandleResolver() { }
 }
