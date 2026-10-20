@@ -25,6 +25,4 @@ public partial class FileUtils
     private static string GetProductNamePerVariant() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string GetAssemblyFolder(global::System.Reflection.Assembly asm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLocalIpAddress(string host) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

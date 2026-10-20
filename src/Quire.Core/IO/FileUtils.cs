@@ -1,6 +1,8 @@
 #nullable disable
 using System;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Reflection;
 using Quire.Mirror;
 using Quire.Services;
@@ -50,6 +52,22 @@ public partial class FileUtils
             }
         }
         return text;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool IsLocalIpAddress(string host)
+    {
+        try
+        {
+            IPAddress[] hostAddresses = Dns.GetHostAddresses(host);
+            IPAddress[] hostAddresses2 = Dns.GetHostAddresses(Dns.GetHostName());
+            return hostAddresses.Any(IPAddress.IsLoopback) || hostAddresses.Intersect(hostAddresses2).IsNotEmpty();
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.Message);
+            return false;
+        }
     }
 
     [MirrorVerified("Release IL")]
