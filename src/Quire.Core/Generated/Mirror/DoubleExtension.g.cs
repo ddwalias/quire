@@ -12,8 +12,6 @@ namespace Quire;
 public static partial class DoubleExtension
 {
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsEqualTo(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsLessThanOrEqual(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsGreaterThanOrEqual(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

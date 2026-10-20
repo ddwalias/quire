@@ -23,6 +23,16 @@ public static partial class DoubleExtension
     }
 
     [MirrorVerified("Release IL")]
+    public static bool IsEqualTo(this double value1, double value2, double eps = double.NaN)
+    {
+        if (eps != 0.0)
+        {
+            return Math.Abs(value1 - value2) < (double.IsNaN(eps) ? Epsilon : eps);
+        }
+        return value1 == value2;
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool IsGreaterThan(this double value1, double value2, double eps = double.NaN)
     {
         return value1 - value2 > (double.IsNaN(eps) ? Epsilon : eps);
