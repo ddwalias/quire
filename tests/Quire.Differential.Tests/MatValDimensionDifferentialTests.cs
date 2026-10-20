@@ -191,6 +191,12 @@ public class MatValDimensionDifferentialTests
             [qOrderPower, Side.Quire.Num(1, 0, "T"), qValPower], null,
             [mOrderPower, Side.Mathcad.Num(1, 0, "T"), mValPower]);
 
+        var qOrderNegative = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { -1, 0, 0 });
+        var mOrderNegative = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { -1, 0, 0 });
+        Compare("MatCreateDim(negative order[0])", "MatCreateDim", ["Object", "Object", "Object"], true, null,
+            [qOrderNegative, Side.Quire.Num(1, 0, "T"), qValPower], null,
+            [mOrderNegative, Side.Mathcad.Num(1, 0, "T"), mValPower]);
+
         var qValIncompat = Reflect.New(Side.Quire.T("Mcd.MatVal"), new double[] { 2, 3, 4 });
         var mValIncompat = Reflect.New(Side.Mathcad.T("Mcd.MatVal"), new double[] { 2, 3, 4 });
         Reflect.Set(qValIncompat, "m_dim", Side.Quire.D("L"));
