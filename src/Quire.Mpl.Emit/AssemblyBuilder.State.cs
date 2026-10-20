@@ -99,4 +99,14 @@ public partial class AssemblyBuilder
         WritePEImage(peStream, metadataBuilder, blobBuilder);
         _previouslySaved = true;
     }
+
+    public static AssemblyBuilder DefineDynamicAssembly(AssemblyName name, AssemblyBuilderAccess access)
+    {
+        if (name == null || name.Name == null)
+        {
+            throw new ArgumentNullException();
+        }
+        return new AssemblyBuilder(name);
+    }
+
 }
