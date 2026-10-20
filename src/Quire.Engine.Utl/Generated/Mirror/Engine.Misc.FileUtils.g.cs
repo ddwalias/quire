@@ -179,16 +179,146 @@ public partial class FileUtils
     private static global::System.Collections.Generic.Dictionary<char, char> s_UnicodeToGreekShortcutKeyTable;
     [global::Quire.Mirror.MirrorStub]
     private static bool s_bNamedCharMapInitialized;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.IO.StreamReader StreamToPath(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ReadExpanded(string path, global::System.IO.TextWriter _out) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string ReadExpanded(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string ProcessInclude(string line, out bool isReference) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SkipPast(global::System.IO.StreamReader r, string seek) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static global::System.IO.StreamReader StreamToPath(string path)
+    {
+        return new global::System.IO.StreamReader(path, global::System.Text.Encoding.UTF8, true);
+    }
+    public static void ReadExpanded(string path, global::System.IO.TextWriter _out)
+    {
+        global::System.Collections.Generic.Stack<global::System.IO.StreamReader> stack = new global::System.Collections.Generic.Stack<global::System.IO.StreamReader>();
+        global::System.Collections.Generic.Stack<string> stack2 = new global::System.Collections.Generic.Stack<string>();
+        global::System.Collections.Generic.Stack<bool> stack3 = new global::System.Collections.Generic.Stack<bool>();
+        try
+        {
+            global::System.IO.StreamReader streamReader = StreamToPath(path);
+            bool flag = false;
+            int num = 0;
+            stack.Push(streamReader);
+            stack2.Push(path);
+            stack3.Push(flag);
+            while (streamReader != null)
+            {
+                string text = streamReader.ReadLine();
+                if (text != null)
+                {
+                    if (text.IndexOf("/*") >= 0 && text.Trim() == "/*")
+                    {
+                        num++;
+                    }
+                    else if (text.IndexOf("*/") >= 0 && text.Trim() == "*/")
+                    {
+                        num--;
+                    }
+                    else
+                    {
+                        if (num != 0)
+                        {
+                            continue;
+                        }
+                        string text2 = ProcessInclude(text, out var isReference);
+                        if (text2 != null)
+                        {
+                            string directoryName = global::System.IO.Path.GetDirectoryName(path);
+                            if (directoryName == null)
+                            {
+                                continue;
+                            }
+                            string text3 = global::System.IO.Path.Combine(directoryName, text2);
+                            if (directoryName != null)
+                            {
+                                streamReader = StreamToPath(text3);
+                                path = text3;
+                                flag = isReference;
+                                stack.Push(streamReader);
+                                stack2.Push(text3);
+                                stack3.Push(flag);
+                                if (flag)
+                                {
+                                    SkipPast(streamReader, "### END PREAMBLE ###");
+                                }
+                            }
+                        }
+                        else if (flag && text.StartsWith("### BEGIN TEST CASE"))
+                        {
+                            SkipPast(streamReader, "### END TEST CASE");
+                        }
+                        else
+                        {
+                            _out.WriteLine(text);
+                        }
+                    }
+                }
+                else
+                {
+                    if (num > 0)
+                    {
+                        throw new global::System.Exception(string.Format("End of file within comment.", default(global::System.ReadOnlySpan<object>)));
+                    }
+                    stack.Pop();
+                    stack2.Pop();
+                    stack3.Pop();
+                    streamReader.Dispose();
+                    if (stack.Count > 0)
+                    {
+                        streamReader = stack.Peek();
+                        path = stack2.Peek();
+                        flag = stack3.Peek();
+                    }
+                    else
+                    {
+                        streamReader = null;
+                        path = null;
+                        flag = false;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            while (stack.Count > 0)
+            {
+                stack.Pop().Dispose();
+            }
+        }
+    }
+    public static string ReadExpanded(string path)
+    {
+        global::System.IO.StringWriter stringWriter = new global::System.IO.StringWriter();
+        ReadExpanded(path, stringWriter);
+        stringWriter.Close();
+        return stringWriter.ToString();
+    }
+    private static string ProcessInclude(string line, out bool isReference)
+    {
+        int length = line.Length;
+        int i;
+        for (i = 0; length > i && (line[i] == ' ' || line[i] == '	'); i++)
+        {
+        }
+        string text = ((i > 0) ? line.Substring(i) : line);
+        if (text.StartsWith("#include") || text.StartsWith("#reference"))
+        {
+            isReference = text.StartsWith("#reference");
+            int num = text.IndexOf('"');
+            int num2 = text.LastIndexOf('"');
+            if (num == -1 || num2 - num < 2)
+            {
+                throw new global::System.Exception("bad #include directive");
+            }
+            return text.Substring(num + 1, num2 - num - 1);
+        }
+        isReference = false;
+        return null;
+    }
+    private static void SkipPast(global::System.IO.StreamReader r, string seek)
+    {
+        string text;
+        do
+        {
+            text = r.ReadLine();
+        }
+        while (text != null && !text.StartsWith(seek));
+    }
     [global::Quire.Mirror.MirrorStub]
     public static string ContractUnicode(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -211,12 +341,64 @@ public partial class FileUtils
     public static bool LongUnicodeToShortcutKey(string str, ref int pos, ref char shortcutKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool UnicodeToGreekShortcutKey(char unicode, ref char greekShortcut) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int ComputeLineNumber(string str, int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int ComputeLineNumber(string str, int pos, out string nearby_text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int ComputeLineNumber(string str, int pos, out string nearby_text, out string pointer_text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
+    public static int ComputeLineNumber(string str, int pos)
+    {
+        string nearby_text;
+        return ComputeLineNumber(str, pos, out nearby_text);
+    }
+    public static int ComputeLineNumber(string str, int pos, out string nearby_text)
+    {
+        string pointer_text;
+        return ComputeLineNumber(str, pos, out nearby_text, out pointer_text);
+    }
+    public static int ComputeLineNumber(string str, int pos, out string nearby_text, out string pointer_text)
+    {
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        global::System.Text.StringBuilder stringBuilder2 = new global::System.Text.StringBuilder();
+        int num = 1;
+        int num2 = 0;
+        int num3 = pos;
+        if (num3 < 0)
+        {
+            num3 = 0;
+        }
+        if (num3 > str.Length)
+        {
+            num3 = str.Length;
+        }
+        while (num2 < num3)
+        {
+            char c = str[num2];
+            if (c == '\n')
+            {
+                num++;
+                stringBuilder.Length = 0;
+                stringBuilder2.Length = 0;
+            }
+            else
+            {
+                stringBuilder2.Append(' ');
+                stringBuilder.Append(c);
+            }
+            num2++;
+        }
+        stringBuilder2.Append("^");
+        if (num2 < str.Length)
+        {
+            while (num2 < str.Length)
+            {
+                char c2 = str[num2];
+                if (c2 == '\n' || c2 == '\r')
+                {
+                    break;
+                }
+                stringBuilder.Append(c2);
+                num2++;
+            }
+        }
+        nearby_text = stringBuilder.ToString();
+        pointer_text = stringBuilder2.ToString();
+        return num;
+    }
     public FileUtils() { }
 }
