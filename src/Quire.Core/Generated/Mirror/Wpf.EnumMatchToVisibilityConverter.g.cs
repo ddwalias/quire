@@ -15,6 +15,4 @@ public partial class EnumMatchToVisibilityConverter : global::System.Windows.Dat
     private static readonly global::Quire.Wpf.EnumMatchToBooleanConverter EnumMatchToBooleanConverterInstance;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.EnumMatchToVisibilityConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,4 +11,11 @@ public partial class EnumMatchToVisibilityConverter
 
     [MirrorVerified("PtcWpfEnumMatchToVisibilityConverterMechanicalDifferentialTests")]
     public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+
+    [MirrorVerified("Release IL")]
+    public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        bool flag = (bool)EnumMatchToBooleanConverterInstance.Convert(value, targetType, parameter, culture);
+        return BooleanToVisibilityConverter.Instance.Convert(flag, targetType, null, culture);
+    }
 }
