@@ -52,8 +52,6 @@ internal sealed partial class TypeNameBuilder
     [global::Quire.Mirror.MirrorStub]
     private void EscapeName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void EscapeAssemblyName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void EscapeEmbeddedAssemblyName(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void PushOpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -61,10 +59,6 @@ internal sealed partial class TypeNameBuilder
     private void PopOpenGenericArgument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetUseAngleBracketsForGenerics(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Append(string pStr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Append(char c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
