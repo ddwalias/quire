@@ -23,11 +23,6 @@ public partial class IntegerCompareConverter : global::System.Windows.Data.IValu
     public static readonly global::Quire.Wpf.IntegerCompareConverter EqualsToInstance;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Wpf.IntegerCompareConverter NotEqualsToInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ToInt(object value, out int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IntegerCompareConverter+CompareOperators, Ptc.Core")]
     private enum CompareOperators
     {
