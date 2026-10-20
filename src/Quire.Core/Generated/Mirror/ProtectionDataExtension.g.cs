@@ -11,14 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ProtectionDataExtension, Ptc.Core")]
 public static partial class ProtectionDataExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.ProtectionLevel ProtectionLevel(this global::Quire.ProtectionData protectionData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsProtected(this global::Quire.ProtectionLevel protectionLevel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsActivationProtected(this global::Quire.ProtectionLevel protectionLevel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSelectionProtected(this global::Quire.ProtectionLevel protectionLevel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsDisplayStateProtected(this global::Quire.ProtectionLevel protectionLevel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
