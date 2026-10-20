@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ProtectionData, Ptc.Core")]
 public partial class ProtectionData : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ProtectionData(string password, global::System.Nullable<global::System.DateTime> timestamp, bool showTimestamp, global::Quire.ProtectionLevel protectionLevel) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.ProtectionDataType GetProtectionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

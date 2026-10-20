@@ -54,4 +54,26 @@ public partial class ProtectionData
         ShowTimestamp = protectionData.ShowTimestamp;
         _protectionLevel = protectionData.ProtectionLevel;
     }
+
+    [MirrorVerified("Release IL")]
+    public ProtectionData(string password, Nullable<DateTime> timestamp, bool showTimestamp, ProtectionLevel protectionLevel)
+    {
+        _EncryptedPassowrd = password.IsNullOrEmpty() ? null : AppServiceRegistry.GetService<IEncryptor>().Encrypt(password);
+        _timestamp = timestamp;
+        ShowTimestamp = showTimestamp;
+        DebugTools.DevAssert(protectionLevel.IsProtected(), null);
+        _protectionLevel = protectionLevel;
+    }
+
+    [MirrorVerified("Release IL")]
+    public ProtectionDataType GetProtectionPersistentData()
+    {
+        return new ProtectionDataType
+        {
+            Password = _EncryptedPassowrd,
+            TimestampWrapper = Timestamp,
+            ShowTimestamp = ShowTimestamp,
+            ProtectionLevelWrapper = ProtectionLevel
+        };
+    }
 }
