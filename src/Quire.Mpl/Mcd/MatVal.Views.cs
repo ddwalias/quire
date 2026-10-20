@@ -12,17 +12,28 @@ public sealed partial class MatVal
         : this(source.m_rarr, source.m_iarr, source.Rows, 1, source.Anr, null, Flags.StringTag, source.Index(0, column))
     {
         m_dim = source.m_dim;
-        source.Shared = Shared = true;
+        source.Shared = true;
+        Shared = true;
         if (source.m_parr != null) TrimPtrs(source.m_parr);
     }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     private void TrimPtrs(Hashtable pointers)
     {
-        for (int col = 0; col < Cols; col++)
-        for (int row = 0; row < Rows; row++)
+        int rows = Rows;
+        int cols = Cols;
+        int anr = Anr;
+        for (int i = 0; i < cols; i++)
         {
-            int index = Index(row, col);
-            if (IsPtrNan(ref m_rarr[index])) (m_parr ??= new Hashtable())[index] = pointers[index];
+            int num = i * anr + m_offset;
+            int num2 = num + rows;
+            for (int j = num; j < num2; j++)
+            {
+                if (IsPtrNan(ref m_rarr[j]))
+                {
+                    if (m_parr == null) m_parr = new Hashtable();
+                    m_parr[j] = pointers[j];
+                }
+            }
         }
     }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
@@ -40,28 +51,32 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public static object mcd_sym_column(object value, int column)
     {
-        if (value is not MatVal matrix) { AppException.Raise("must be array"); return null; }
+        var matrix = value as MatVal;
+        if (matrix == null) AppException.Raise("must be array");
         if (column < 0 || column >= matrix.Cols) AppException.Raise("index out of bounds");
         return matrix.Column(column);
     }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public static object mcd_column(object value, int column)
     {
-        if (value is not MatVal matrix) { AppException.Raise("must be array", 1u); return null; }
+        var matrix = value as MatVal;
+        if (matrix == null) AppException.Raise("must be array", 1u);
         if (column < 0 || column >= matrix.Cols) AppException.Raise("index out of bounds", 2u);
         return matrix.Column(column);
     }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public static object mcd_sym_row(object value, int row)
     {
-        if (value is not MatVal matrix) { AppException.Raise("must be array"); return null; }
+        var matrix = value as MatVal;
+        if (matrix == null) AppException.Raise("must be array");
         if (row < 0 || row >= matrix.Rows) AppException.Raise("index out of bounds");
         return matrix.Row(row);
     }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public static object mcd_row(object value, int row)
     {
-        if (value is not MatVal matrix) { AppException.Raise("must be array", 1u); return null; }
+        var matrix = value as MatVal;
+        if (matrix == null) AppException.Raise("must be array", 1u);
         if (row < 0 || row >= matrix.Rows) AppException.Raise("index out of bounds", 2u);
         return matrix.Row(row);
     }
@@ -78,10 +93,13 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public MatVal SubMatrix(uint rowStart, uint rowEnd, uint colStart, uint colEnd)
     {
-        if (rowStart >= rowEnd || colStart >= colEnd || rowEnd > Rows || colEnd > Cols)
-        { AppException.Raise("index out of bounds", 1u); return null; }
-        Immutable = true;
-        return new MatVal(this, (int)rowStart, (int)rowEnd, (int)colStart, (int)colEnd);
+        if (rowStart < rowEnd && colStart < colEnd && rowEnd <= Rows && colEnd <= Cols)
+        {
+            Immutable = true;
+            return new MatVal(this, (int)rowStart, (int)rowEnd, (int)colStart, (int)colEnd);
+        }
+        AppException.Raise("index out of bounds", 1u);
+        return null;
     }
     private partial class TrimSubMatrixPtrs
     {
@@ -101,7 +119,7 @@ public sealed partial class MatVal
         [MirrorAnalyzed("Mcd.MatVal.Views")]
         public void set_submatrix_ptrs(int row, int col, object value)
         {
-            if (row >= m_r1 && row < m_r2 && col >= m_c1 && col < m_c2)
+            if (m_r1 <= row && row < m_r2 && m_c1 <= col && col < m_c2)
                 m_m.set_ptrs_2(row - m_r1, col - m_c1, value);
         }
     }
@@ -111,9 +129,21 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     private double[] TransposeArr(double[] array)
     {
-        var result = new double[Rows * Cols];
-        for (int col = 0; col < Cols; col++)
-        for (int row = 0; row < Rows; row++) result[col + row * Cols] = array[Index(row, col)];
+        int rows = Rows;
+        int cols = Cols;
+        int anr = Anr;
+        int offset = Offset;
+        var result = new double[rows * cols];
+        for (int col = 0; col < cols; col++)
+        {
+            int dstIndex = col;
+            int srcIndex = offset + col * anr;
+            for (int row = 0; row < rows; row++)
+            {
+                result[dstIndex] = array[srcIndex++];
+                dstIndex += cols;
+            }
+        }
         return result;
     }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
@@ -144,8 +174,8 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public object[] get_elements(uint rows, uint cols)
     {
-        var result = new object[rows * cols];
         int index = 0;
+        var result = new object[rows * cols];
         for (int col = 0; col < cols; col++)
         for (int row = 0; row < rows; row++) result[index++] = get_2(row, col);
         return result;
@@ -155,10 +185,12 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public override bool Equals(object value)
     {
-        if (value == null || value.GetType() != GetType()) return false;
+        if (value == null || GetType() != value.GetType()) return false;
         var matrix = (MatVal)value;
-        int rows = Rows, cols = Cols;
-        if (matrix.Rows != rows || matrix.Cols != cols) return false;
+        int rows = Data.m_rows;
+        if (rows != matrix.Data.m_rows) return false;
+        int cols = Data.m_cols;
+        if (cols != matrix.Data.m_cols) return false;
         var first = new NumVal();
         var second = new NumVal();
         for (int col = 0; col < cols; col++)
@@ -169,9 +201,12 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public override bool nearly_equal(DimVal value, double fuzz)
     {
-        if (value is not MatVal matrix) return false;
-        int rows = Rows, cols = Cols;
-        if (matrix.Rows != rows || matrix.Cols != cols) return false;
+        var matrix = value as MatVal;
+        if (matrix == null) return false;
+        int rows = Data.m_rows;
+        if (rows != matrix.Data.m_rows) return false;
+        int cols = Data.m_cols;
+        if (cols != matrix.Data.m_cols) return false;
         var first = new NumVal();
         var second = new NumVal();
         for (int col = 0; col < cols; col++)
@@ -183,12 +218,26 @@ public sealed partial class MatVal
     public override string ToString()
     {
         string result = "MatVal[" + Rows + "," + Cols + "]";
-        for (int row = 0; row < Math.Min(Rows, 10); row++)
+        int maxRows = Math.Min(Rows, 10);
+        for (int row = 0; row < maxRows; row++)
         {
-            if (Cols == 0) continue;
-            result += "\n{ " + get_2(row, 0);
-            for (int col = 1; col < Math.Min(Cols, 3); col++) result += ", " + get_2(row, col);
-            result += Cols > 3 ? ", ... }" : " }";
+            switch (Cols)
+            {
+                case 0:
+                    break;
+                case 1:
+                    result = string.Concat(result, "\n{ ", get_2(row, 0), " }");
+                    break;
+                case 2:
+                    result = string.Concat(new object[] { result, "\n{ ", get_2(row, 0), ", ", get_2(row, 1), " }" });
+                    break;
+                case 3:
+                    result = string.Concat(new object[] { result, "\n{ ", get_2(row, 0), ", ", get_2(row, 1), ", ", get_2(row, 2), " }" });
+                    break;
+                default:
+                    result = string.Concat(new object[] { result, "\n{ ", get_2(row, 0), ", ", get_2(row, 1), ", ", get_2(row, 2), ", ... }" });
+                    break;
+            }
         }
         return result;
     }
@@ -197,11 +246,17 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public MatVal Fix() { Immutable = true; return this; }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
-    public static MatVal Fix(object value) => (value as MatVal)?.Fix();
+    public static MatVal Fix(object value)
+    {
+        var matVal = value as MatVal;
+        if (matVal != null) return matVal.Fix();
+        return null;
+    }
     [MirrorAnalyzed("Mcd.MatVal.Views")]
     public override DimVal asResult()
     {
-        var result = (Packed ? this : new MatVal(this)).Canonicalize();
+        var result = Packed ? this : new MatVal(this);
+        result = result.Canonicalize();
         if (result.m_dim == null) result.m_dim = Dim.FixDimension(result.m_dim);
         return result.Fix();
     }
@@ -210,6 +265,8 @@ public sealed partial class MatVal
     {
         if (value is not DimVal dimensional) return value is string text ? new StrVal(text) : value;
         if (dimensional.m_dim == null) dimensional.m_dim = Dim.FixDimension(dimensional.m_dim);
-        return value is MatVal matrix ? matrix.Fix() : dimensional.asResult();
+        var matVal = value as MatVal;
+        if (matVal != null) return matVal.Fix();
+        return dimensional.asResult();
     }
 }
