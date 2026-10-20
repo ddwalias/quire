@@ -12,23 +12,13 @@ namespace Quire;
 public static partial class DoubleExtension
 {
     [global::Quire.Mirror.MirrorStub]
-    private static double Epsilon;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool AreSame(this double value1, double value2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsEqualTo(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsGreaterThan(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLessThan(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLessThanOrEqual(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsGreaterThanOrEqual(this double value1, double value2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsBetween(this double num, double lowerBound, double upperBound, bool isInclusive = true, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValid(this double num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static double Floor(this double num, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
