@@ -1,6 +1,17 @@
+#nullable enable
+
 namespace System.Reflection.Emit.Quire.Mpl;
 
-internal partial class CommonMemberData
+internal partial record CommonMemberData(
+    string Name,
+    MethodAttributes attributes,
+    Type[]? parameters,
+    Type? returnType,
+    bool IsStatic,
+    ILGenerator codeStore,
+    LocalVariableManager localVars,
+    LabelManager labelManager,
+    object source)
 {
     public static CommonMemberData FromMethodBuilder(MethodBuilder method)
     {
