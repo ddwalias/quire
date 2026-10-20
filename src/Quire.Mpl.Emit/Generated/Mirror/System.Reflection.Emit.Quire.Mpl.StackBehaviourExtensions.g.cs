@@ -11,12 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.StackBehaviourExtensions, mplasb")]
 public static partial class StackBehaviourExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetPushCount(this global::System.Reflection.Emit.StackBehaviour behaviour, object operand = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetPopCount(this global::System.Reflection.Emit.StackBehaviour behaviour, global::System.Reflection.Emit.OpCode opCode, object operand = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsDelegateInvoke(global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsDelegateInvocationOpCode(global::System.Reflection.Emit.OpCode opCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
