@@ -11,16 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.LocalVariableManager, mplasb")]
 internal partial class LocalVariableManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::System.Type> _locals;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.MethodBase _method;
-    [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.LocalBuilder DeclareLocal(global::System.Type type, bool pinned, string tag = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public LocalVariableManager(global::System.Reflection.MethodBase method) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Metadata.StandaloneSignatureHandle CreateSignature(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Metadata.TypeDefinitionHandle typeHandle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
