@@ -60,38 +60,13 @@ public class StructureTests
         return b - a;
     }
     private static int Throws(int x) => x > 2 ? Left() : throw new ArgumentException("x");
-    /// <summary>Same simple name as the framework type, but defined here, so not a capacity constructor.</summary>
-    private sealed class StringBuilder(int capacity) { public int Capacity => capacity; }
-    private static void Capacities()
-    {
-        // Capacity hints: not mutated.
-        _ = new System.Text.StringBuilder(256);
-        _ = new List<int>(7);
-        _ = new Dictionary<int, int>(9);
-        _ = new System.Collections.ArrayList(1);
-        _ = new System.Collections.Stack(2);
-        _ = new System.Collections.Queue(3);
-        _ = new Stack<int>(4);
-        _ = new Queue<int>(5);
-        _ = new HashSet<int>(6);
-        // Mutated: not on the allowlist, not a single int32, out of range, or not the framework type.
-        _ = new Random(11);
-        _ = new string('x', 13);
-        _ = new System.Collections.Hashtable(10);
-        _ = new System.Collections.Hashtable(64, StringComparer.Ordinal);
-        _ = new List<int>(-1);
-        _ = new System.Collections.ArrayList(2_000_000);
-        _ = new StringBuilder(12);
-    }
-    private static int CapacityRead() => new System.Text.StringBuilder(100).Capacity;
-
     private static readonly PEReader Pe = new(File.OpenRead(typeof(StructureTests).Assembly.Location));
     private static Structure Read(string name, Func<string, string>? typeName = null)
     {
         var md = Pe.GetMetadataReader();
         var handle = md.MethodDefinitions.Single(h => md.GetString(md.GetMethodDefinition(h).Name) == name
             && SigProvider.FullName(md, md.GetMethodDefinition(h).GetDeclaringType()) == typeof(StructureTests).FullName);
-        return new StructureReader(md, Pe, new SigProvider("Quire.Harness.Tests"), typeName ?? (n => n), _ => null).Read(handle);
+        return new StructureReader(md, Pe, new SigProvider("Quire.Harness.Tests"), typeName ?? (n => n), _ => null).Read(handle, true);
     }
 
     /// <summary>il_diff.py's output: the first differing instruction with context, both sides, each Quire instruction
@@ -101,7 +76,7 @@ public class StructureTests
     {
         Assert.Empty(Read("Pick").Diff(Read("PickAgain"), 3, _ => "x"));
         Structure quire = Read("IfElse"), mathcad = Read("Ternary");
-        Assert.Equal(quire.Code.Length - quire.Handlers.Length, quire.Offsets.Length);
+        Assert.Equal(quire.Code.Count(line => !line.StartsWith('.')), quire.Offsets.Length);
         var lines = quire.Diff(mathcad, 1, offset => $"at {offset}");
         int at = Enumerable.Range(0, quire.Code.Length).First(i => quire.Code[i] != mathcad.Code[i]);
         Assert.Equal($"first difference at instruction #{at} (Quire | Mathcad  [Quire source line])", lines[0]);
@@ -137,13 +112,14 @@ public class StructureTests
     public void An_exact_match_keeps_branch_direction_and_block_order()
     {
         Assert.True(Read("Pick").Exact(Read("PickAgain")));
-        Assert.False(Read("Pick").Exact(Read("PickTernary")));
+        // Release optimization gives these two source forms identical IL.
+        Assert.True(Read("Pick").Exact(Read("PickTernary")));
+        Assert.False(Read("IfElse").Exact(Read("Ternary")));
     }
 
-    /// <summary>Encodings fold to one spelling (Read then renumbers locals by first use); argument numbers and branch
-    /// kinds are kept.</summary>
+    /// <summary>Diagnostic opcode expansion preserves operands. Release matching uses the original encodings.</summary>
     [Fact]
-    public void Exact_matching_ignores_encodings_and_local_numbering()
+    public void Diagnostic_opcode_expansion_preserves_operands()
     {
         Assert.Equal("ldc.i4 2", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldc_I4_2, ""));
         Assert.Equal("ldc.i4 2", StructureReader.Folded(System.Reflection.Emit.OpCodes.Ldc_I4_S, "2"));
@@ -168,40 +144,6 @@ public class StructureTests
         var baseline = variant.StartsWith("Catch") ? "CatchArgument" : "Ternary";
         Assert.Contains(Read(variant).Compare(Read(baseline)), d => d.StartsWith(difference));
     }
-
-    [Fact]
-    public void Mutants_point_at_the_instructions_they_change()
-    {
-        var md = Pe.GetMetadataReader();
-        var method = md.GetMethodDefinition(md.MethodDefinitions.Single(h => md.GetString(md.GetMethodDefinition(h).Name) == "Constant"
-            && SigProvider.FullName(md, md.GetMethodDefinition(h).GetDeclaringType()) == typeof(StructureTests).FullName));
-        var mutants = Mutants.Find(Pe, method);
-        var image = File.ReadAllBytes(typeof(StructureTests).Assembly.Location);
-        Assert.Contains(mutants, m => m.Description == "ldc.i4.3 -> ldc.i4.4");
-        Assert.Contains(mutants, m => m.Description.StartsWith("bgt") || m.Description.StartsWith("ble") || m.Description.StartsWith("cgt"));
-        foreach (var m in mutants)
-            Assert.Equal(m.Original, Convert.ToHexString(image, (int)m.FileOffset, m.Original.Length / 2));
-    }
-
-    private static List<string> ConstantMutants(string name)
-    {
-        var md = Pe.GetMetadataReader();
-        var method = md.GetMethodDefinition(md.MethodDefinitions.Single(h => md.GetString(md.GetMethodDefinition(h).Name) == name
-            && SigProvider.FullName(md, md.GetMethodDefinition(h).GetDeclaringType()) == typeof(StructureTests).FullName));
-        return Mutants.Find(Pe, method).Select(m => m.Description).Where(d => d.StartsWith("ldc.")).Order(StringComparer.Ordinal).ToList();
-    }
-
-    /// <summary>A constant fed straight into a framework collection's capacity constructor is not mutated; other constants are.</summary>
-    [Fact]
-    public void Capacity_hints_are_not_mutated() => Assert.Equal(
-        new[] { "ldc.i4 2000000 -> 2000001", "ldc.i4.m1 -> ldc.i4.0", "ldc.i4.s 10 -> 11", "ldc.i4.s 11 -> 12", "ldc.i4.s 12 -> 13",
-                "ldc.i4.s 120 -> 121", "ldc.i4.s 13 -> 14", "ldc.i4.s 64 -> 65" }.Order(StringComparer.Ordinal),
-        ConstantMutants("Capacities"));
-
-    /// <summary>A method that reads capacity can observe the hint, so it keeps the mutant.</summary>
-    [Fact]
-    public void Capacity_hints_are_mutated_where_capacity_is_read() =>
-        Assert.Equal(["ldc.i4.s 100 -> 101"], ConstantMutants("CapacityRead"));
 
     /// <summary>The reader skips a switch's count and all its targets, so the instructions after it still count. The
     /// target is 0x24 bytes on, an unassigned opcode: a reader four bytes short decodes it and fails.</summary>

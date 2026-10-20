@@ -1,14 +1,13 @@
 # Phase roadmap
 
+For assembly-by-assembly dependency order and the next assemblies unlocked by completion,
+use the [assembly map](assembly-map.md). The phase groups below describe areas of the product.
+
 ## 4. Phases: turning stubs into real code
 
-Phases are ordered by dependency, from the engine up to the app. Each phase:
-1. Moves existing Quire code into the mirrored types.
-2. Implements the stubs that the phase's features need.
-3. Adds tests.
-4. Leaves the solution green.
-
-Counts are current Mirror-disposition CSV entries by phase (2026-10-14), not implemented types or method completion. Assembly lists describe routing; native/script estimates are from the original survey. Apply PLAN.md §3c to every phase.
+Phases group assemblies by dependency and help select work. Every managed batch follows
+[the same five-step Release IL workflow](PLAN.md); phases add no validation or closure steps.
+Counts below describe the original type inventory, not current IL completion.
 
 | Phase | Mathcad assemblies | Types | Becomes real |
 |---|---|---:|---|
@@ -23,6 +22,3 @@ Counts are current Mirror-disposition CSV entries by phase (2026-10-14), not imp
 | **9. Components** | `Ptc.Controls.ExcelComponent`, `Ptc.Media3D` | 215 | Excel component (via `DocumentFormat.OpenXml`) and 3D plots. |
 | **10. Native engine libraries** | `efi*`, `mcd*`, `mslisp`, `msgen`, `mcfront12`, `mccore12`, `mpl*`, `utl-mgd`, `engutils-mgd`, others | 1,359 | 57 of these 87 assemblies are IL-only (MPL-compiled engine modules, plus the C# `efiplot_`, `efisixsigma_` and `efiio-csharp`); the other 30 are C++/CLI wrappers whose logic is native and doesn't appear in metadata. Tiers per [D11](decisions.md): MPL-compiled modules are Tier C, the C# libraries Tier B/C, native internals Tier D; engine behaviour is checked from outside under D10. Phase 0 gives them names and signatures. Real behaviour comes function family by function family (Bessel, statistics, signal/FFT, wavelets, ODE solvers, fitting, finance, six-sigma, image I/O), each written from scratch. The symbolic engine (`efisymbolics*` plus Axiom) is by far the largest single item. |
 | **11. Mathcad native and scripts** (Tier D per [D10/D11](decisions.md)) | Exported surfaces of the 10 native Mathcad DLLs, `creo3dfit`'s Mathcad entry point, 64 `MC*` Axiom packages and 2 scripts, the Lisp/Prolog front-end structure (14 files), the user-function C SDK | ≈ 42 classes + ≈ 1,390 exports, 64 packages, 14 files, 1 C API | The symbolic engine on FriCAS with Mathcad-shaped `MC*` packages (the `→` operator, keyword commands such as `simplify` and `solve`); the user-function SDK; the ODE/PDE front end (`ode.prolog`/`pde.prolog`-shaped `odesolve`). |
-
-
-Original session estimates are retired: method-level analysis and verification now determine the work, and type presence does not predict behavioral completion. Phase 1 remains open; prioritize its engine contracts before building dependent calculation features.

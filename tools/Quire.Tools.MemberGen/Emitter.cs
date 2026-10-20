@@ -8,8 +8,8 @@ using Quire.Tools.MirrorGen;
 /// <summary>
 /// Writes the mechanical stubs of one project: each member moves from <c>Generated/Mirror</c> (its whole
 /// <c>[MirrorStub]</c> line pair deleted) into a hand-written partial of its type with the reconstructed body,
-/// together with the stub fields those bodies use; each Mathcad type gets a direct-comparison test class and its
-/// evidence record the members' tokens. Returns a JSON report that maps every written line back to its member.
+    /// together with the stub fields those bodies use. Returns a JSON report with original tokens
+    /// that maps every written line back to its member. accept.py retains only Release IL matches.
 /// Only members whose every method key (<c>Owner::Key</c>) is in <paramref name="allowed"/> are written.
 /// </summary>
 sealed partial class Emitter(string repo, World world, Artifact quire, string project, HashSet<string> skip, HashSet<string> allowed)
@@ -53,8 +53,6 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
         var deletions = new List<Site>();
         var members = new Dictionary<string, List<(string[] Path, string[] Kinds, List<string> Lines, object Report)>>();  // top-level type → members
         var namesByType = new Dictionary<string, Names>();
-        var tests = new Dictionary<string, List<(string Test, int Token, string Member)>>();  // Mathcad outer type → facts
-        var evidence = new Dictionary<string, List<string>>();
         foreach (var plan in plans.Where(p => p.Mechanical && !skip.Contains(p.Stub.Id)
                      && p.Stub.Methods.All(m => allowed.Contains($"{m.Quire.Owner}::{m.Quire.Key}"))))
         {
@@ -67,9 +65,9 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
                 if (Target(top) is { } existing) names.Import(File.ReadAllLines(existing).Where(l => l.StartsWith("using ") && l.EndsWith(';') && !l.Contains('='))
                     .Select(l => l["using ".Length..^1].Trim()));
             }
-            string testClass = TestClass(stub.MathcadType);
+            const string evidence = "Release IL";
             List<string> lines;
-            try { lines = Member(names, plan, site, testClass); }
+            try { lines = Member(names, plan, site, evidence); }
             catch (Exception e) when (e is NotMechanical or NotSupportedException) { continue; }
             // Stub fields the bodies use move with them; the report names the member that moved each one, so a
             // compile error in a moved field rejects that member.
@@ -78,8 +76,8 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
             foreach (var field in stubs.Where(s => s.Kind == "field" && s.Type == stub.Type && used.Contains(s.Name) && sites.ContainsKey(s) && !deletions.Contains(sites[s])))
             {
                 var fs = sites[field];
-                Add(members, top, fs, [$"[MirrorVerified(\"{testClass}\")]", Rewrite(names, fs.Text.Trim())],
-                    new { id = field.Id, owner = stub.Id, kind = "field", type = field.Type.FullName, member = field.Name, test_class = testClass });
+                Add(members, top, fs, [$"[MirrorVerified(\"{evidence}\")]", Rewrite(names, fs.Text.Trim())],
+                    new { id = field.Id, owner = stub.Id, kind = "field", type = field.Type.FullName, member = field.Name });
                 deletions.Add(fs);
                 Moved++;
             }
@@ -87,21 +85,11 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
             {
                 id = stub.Id, kind = stub.Kind, category = plan.Category, type = stub.Type.FullName, member = stub.Name,
                 methods = stub.Methods.Select(p => $"{project}::{stub.Type.FullName}::{p.Quire.Key}").ToArray(),
-                mathcad_tokens = stub.Methods.Select(p => $"0x{p.Mathcad!.Token:x8}").ToArray(),
-                test_class = testClass,
-                tests = stub.Methods.Select(p => TestName(stub, p)).ToArray(),
+                mathcad_tokens = stub.Methods.Select(p => $"0x{p.Mathcad!.Token:x8}").ToArray()
             };
-            Add(members, top, site, [$"[MirrorVerified(\"{testClass}\")]", .. lines], report);
+            Add(members, top, site, [$"[MirrorVerified(\"{evidence}\")]", .. lines], report);
             deletions.Add(site);
             Emitted.Add(report);
-            string outer = stub.MathcadType.Split('+')[0];
-            foreach (var p in stub.Methods)
-            {
-                if (!tests.TryGetValue(outer, out var facts)) tests[outer] = facts = [];
-                facts.Add((TestName(stub, p), p.Mathcad!.Token, stub.Name));
-                if (!evidence.TryGetValue(outer, out var rows)) evidence[outer] = rows = [];
-                rows.Add($"| `{Display(stub, p)}` | 0x{p.Mathcad.Token:x8} | MemberGen: {Contract(lines)} | Mechanical; Release IL equals Mathcad's | Verified |");
-            }
         }
         // Delete the stub pairs, bottom-up within each file.
         foreach (var group in deletions.GroupBy(d => d.File))
@@ -113,8 +101,7 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
         }
         foreach (var (top, list) in members) WriteSource(top, list, namesByType[top]);
         var written = Written();
-        foreach (var (outer, facts) in tests) WriteTests(outer, facts);
-        foreach (var (outer, rows) in evidence) WriteEvidence(outer, rows);
+        // D17: IL acceptance emits no test classes or per-type evidence documents.
         return JsonSerializer.Serialize(new { project, members = Emitted, files = written }, new JsonSerializerOptions { WriteIndented = true });
     }
 

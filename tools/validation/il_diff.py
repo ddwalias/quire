@@ -1,52 +1,45 @@
-"""Where Quire's Release IL first differs from Mathcad's, for the focused profile's methods (Quire.Mpl):
+"""Inspect exact Release IL differences against Mathcad. Never reads a Debug build.
 
-    python3 tools/validation/il_diff.py KEY [KEY ...]
+    python tools/validation/il_diff.py Quire.Mcd.Dim::Div [--project Quire.Mpl]
 
-KEY is a type (`Quire.Mcd.MatDim`), `Type::Name` (every overload) or an inventory key (`Type::signature`). Builds what
-validate.py's method audit reads (MethodAudit, the Release structure build and the Debug test build), then runs
-MethodAudit --diff: per method its verdict and, when the instructions differ, the first mismatching one with three
-instructions either side, Quire's and Mathcad's, each Quire instruction with its source line from the Release PDB.
-Mathcad's instructions go to stdout only; nothing is written to the repository but the usual Debug build output."""
+KEY is a type, Type::Name (all overloads), or Type::signature. Original IL is
+printed to the console only. Use release_il.py for an enforcing pass/fail check.
+"""
 import argparse
-import shutil
+from pathlib import Path
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
-from validate import ROOT, mathcad_install, method_audit, resolve_dotnet, sdk_directory
+
+from release_il import ROOT, mathcad_install, run
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("key", nargs="+", help="type, Type::Name or Type::signature")
-    parser.add_argument("--dotnet", default="dotnet", help="dotnet CLI (default: dotnet on PATH)")
-    parser.add_argument("--timeout", type=int, default=1800, help="seconds per build")
+    parser.add_argument('key', nargs='+')
+    parser.add_argument('--project', action='append', default=[])
+    parser.add_argument('--dotnet', default='dotnet')
+    parser.add_argument('--timeout', type=int, default=1800)
     args = parser.parse_args(argv)
-    dotnet = resolve_dotnet(args.dotnet, ROOT)
-    global_json = (ROOT / "global.json").read_bytes() if (ROOT / "global.json").is_file() else b"{}\n"
-    tool_dir = Path(tempfile.mkdtemp(prefix="quire-audit-tool-"))
-    structure_dir = Path(tempfile.mkdtemp(prefix="quire-audit-release-"))
+    projects = args.project or ['Quire.Mpl']
+    install = str(mathcad_install())
     try:
-        structure_build, scan = method_audit(dotnet, tool_dir, structure_dir, mathcad_install(), None, "focused")
-        at = scan.index("--output")
-        del scan[at:at + 2]
-        host = structure_build[0]
-        for target, extra in [(ROOT / "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj", ["-o", str(tool_dir)]),
-                              structure_build, (host, [])]:
-            with sdk_directory(global_json) as sdk:
-                result = subprocess.run([dotnet, "build", str(target), "-nologo", "-v", "q", *extra], cwd=sdk,
-                                        capture_output=True, text=True, timeout=args.timeout)
-            if result.returncode:
-                sys.stderr.write(result.stdout[-4000:] + result.stderr[-4000:])
-                print(f"build of {target.name} failed", file=sys.stderr)
-                return 2
-        with sdk_directory(global_json) as sdk:
-            return subprocess.run(scan + [a for key in args.key for a in ("--diff", key)], cwd=sdk,
-                                  timeout=args.timeout).returncode
-    finally:
-        shutil.rmtree(tool_dir, ignore_errors=True)
-        shutil.rmtree(structure_dir, ignore_errors=True)
+        with tempfile.TemporaryDirectory(prefix='quire-il-diff-') as temp:
+            work = Path(temp)
+            log = work / 'build.log'
+            run([args.dotnet, 'build', ROOT / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj',
+                 '-c', 'Release', '-o', work / 'tool', '-nologo', '-v:q'], ROOT, log, args.timeout)
+            for project in projects:
+                run([args.dotnet, 'build', ROOT / 'src' / project / f'{project}.csproj',
+                     '-c', 'Release', '--no-incremental', '-o', work / 'assemblies', '-nologo', '-v:q'], ROOT, log, args.timeout)
+            return subprocess.run([args.dotnet, str(work / 'tool/Quire.Tools.MethodAudit.dll'),
+                '--repo', str(ROOT), '--assemblies', str(work / 'assemblies'), '--install', install, '--release-il',
+                *(a for p in projects for a in ('--project', p)),
+                *(a for key in args.key for a in ('--diff', key))], cwd=ROOT, timeout=args.timeout).returncode
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        print(error, file=sys.stderr)
+        return 2
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

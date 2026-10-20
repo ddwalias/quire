@@ -34,9 +34,8 @@ public sealed record GenericParam(string Name, int Variance, bool Class, bool St
 public sealed record ParamModel(string Name, TypeSig Type, bool In, bool Out, bool Params, bool HasDefault, object? Default);
 
 /// <summary>
-/// A mirrored member's state (PLAN.md §3c rule 6), from its attributes. Unclassified means hand-written code that
-/// predates the per-method rule and still has to be analyzed, or marked Quire-only. Abstract is an unattributed
-/// abstract or interface member without a default body: the declaration, which the manifest checks, is its contract.
+/// Source annotation metadata retained for compatibility. Completion is determined by Release IL reports;
+/// annotation values do not impose analysis, test, evidence or status-promotion requirements.
 /// </summary>
 public enum MemberStatus { Unclassified, Stub, Blocked, Analyzed, Documented, Tested, Verified, Deviation, QuireOnly, Abstract }
 

@@ -51,7 +51,7 @@ def main():
     if args.force or not members.is_file():
         audit = ROOT / ".mirror-cache" / ".method-audit"
         run(["dotnet", "build", str(ROOT / "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj"),
-             "-o", str(audit), "-nologo", "-v", "q"])
+             "-c", "Release", "-o", str(audit), "-nologo", "-v", "q"])
         members.write_text(run(["dotnet", str(audit / "Quire.Tools.MethodAudit.dll"), "members", str(dll), args.type]))
     identity = "".join(line for line in members.read_text().splitlines(keepends=True) if line.startswith("#"))
 

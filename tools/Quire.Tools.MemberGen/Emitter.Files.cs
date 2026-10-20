@@ -3,30 +3,6 @@ using Quire.Tools.MirrorGen;
 
 sealed partial class Emitter
 {
-    /// <summary>The direct-comparison test class for a Mathcad type's mechanical members.</summary>
-    public static string TestClass(string mathcadType) =>
-        Regex.Replace(mathcadType.Split('+')[0], @"\W", "") + "MechanicalDifferentialTests";
-
-    private static string TestName(Stub stub, Pair p) =>
-        $"{Regex.Replace(stub.Name, @"\W", "")}{(p.Role is "method" ? "" : "_" + p.Role)}_{p.Mathcad!.Token:x8}";
-
-    private static string Display(Stub stub, Pair p)
-    {
-        string nested = stub.Type.DeclaringType == null ? "" : stub.Type.Name.Split('`')[0] + ": ";
-        static string Short(TypeSig t) => t switch
-        {
-            NamedSig n => Names.Keyword(n.Name).Split('.', '+')[^1].Split('`')[0],
-            ArraySig a => Short(a.Element) + "[]",
-            ByRefSig b => Short(b.Element) + "&",
-            _ => t.ToString(),
-        };
-        return nested + (stub.Kind switch
-        {
-            "property" or "event" => $"{stub.Name} {p.Role}",
-            _ => $"{stub.Name}({string.Join(", ", p.Method.Params.Select(x => Short(x.Type)))})",
-        });
-    }
-
     /// <summary>A member's body for its evidence row: the expression, the statements, a constructor's initializer
     /// with its empty body, <c>{ }</c>, or a declaration without a body (a field, an auto-property, an event).</summary>
     internal static string Contract(List<string> lines)
@@ -203,93 +179,5 @@ sealed partial class Emitter
             }
         }
         throw new InvalidOperationException("unbalanced type declaration");
-    }
-
-    private void WriteTests(string outer, List<(string Test, int Token, string Member)> facts)
-    {
-        string cls = TestClass(outer);
-        string path = Path.Combine(repo, "tests", "Quire.Differential.Tests", cls + ".cs");
-        var type = quire.Model.Types.First(t => t.MirrorOf != null && t.MirrorOf.Split(',')[0].Trim() == outer);
-        string typeArgs = type.GenericParams.Length == 0 ? "" : "<" + new string(',', type.GenericParams.Length - 1) + ">";
-        string typeName = "global::" + type.FullName.Split('`')[0] + typeArgs;
-        var methods = facts.Select(f => $"    [SkippableFact]\n    public void {f.Test}() => Mechanical.Compare(typeof({typeName}), 0x{f.Token:x8});").ToList();
-        if (File.Exists(path))
-        {
-            var text = File.ReadAllText(path).TrimEnd();
-            File.WriteAllText(path, text[..^1].TrimEnd() + "\n\n" + string.Join("\n\n", methods) + "\n}\n");
-            return;
-        }
-        File.WriteAllText(path, $$"""
-            namespace Quire.Differential.Tests;
-
-            /// <summary>
-            /// Direct comparisons of the <c>{{outer}}</c> members that MemberGen reconstructed mechanically
-            /// (docs/mirror/evidence/{{outer}}.md): each compares one member on generated inputs (Mechanical).
-            /// </summary>
-            public class {{cls}}
-            {
-            {{string.Join("\n\n", methods)}}
-            }
-
-            """);
-    }
-
-    /// <summary>A table row's cells, split at unescaped pipes (index 0 is the empty text before the first).</summary>
-    private static string[] Cells(string row) => Regex.Split(row, @"(?<!\\)\|");
-
-    private void WriteEvidence(string outer, List<string> rows)
-    {
-        string path = Path.Combine(repo, "docs", "mirror", "evidence", outer + ".md");
-        string cls = TestClass(outer);
-        var original = world.Mathcad(quire.Model.Types.First(t => t.MirrorOf != null && t.MirrorOf.Split(',')[0].Trim() == outer).MirrorOf!.Split(',')[1].Trim())!;
-        if (!File.Exists(path))
-        {
-            File.WriteAllText(path, $"""
-                # {outer}
-
-                - **Original:** `{original.Name}.dll` {original.Version}, SHA-256 `{original.Hash}`, MVID `{original.Mvid}`
-                - **Reference:** MemberGen (tools/Quire.Tools.MemberGen): straight-line bodies rebuilt from the IL; kept only where the Release IL equals Mathcad's
-                - **Quire:** `src/{project}`; tests: `Quire.Differential.Tests.{cls}`
-
-                | Member | Token | Contract | Confidence / limits | Status |
-                |---|---|---|---|---|
-                {string.Join("\n", rows)}
-
-                ## Test cases
-
-                **Observed** (`{cls}`): each member on generated inputs (Mechanical: zero, null and distinct values per
-                parameter and field), comparing the result, the arguments and the target's fields with Mathcad's.
-
-                """);
-            return;
-        }
-        var lines = File.ReadAllText(path).Split('\n').ToList();
-        int header = lines.FindIndex(l => l.StartsWith("| Member | Token"));
-        if (header < 0)
-        {
-            lines.AddRange(["", "## MemberGen members", "", "| Member | Token | Contract | Confidence / limits | Status |", "|---|---|---|---|---|", .. rows]);
-            header = lines.Count;
-        }
-        else
-        {
-            // Older records carry a normalized-IL column: a new row leaves it empty, a row for the same token is
-            // replaced but keeps its value.
-            bool normalized = lines[header].Count(c => c == '|') == 7;
-            foreach (string row in rows)
-            {
-                string token = Cells(row)[2].Trim();
-                int end = header + 1;
-                while (end < lines.Count && lines[end].StartsWith('|')) end++;
-                int same = lines.FindIndex(header, end - header, l => Cells(l).Skip(2).FirstOrDefault()?.Trim() == token);
-                string il = same >= 0 && normalized ? Cells(lines[same])[3].Trim() : "—";
-                string written = normalized ? row.Insert(row.IndexOf(" | MemberGen", StringComparison.Ordinal), $" | {il}") : row;
-                if (same >= 0) lines[same] = written;
-                else lines.Insert(end, written);
-            }
-        }
-        string note = $"MemberGen members are compared by `Quire.Differential.Tests.{cls}`.";
-        while (lines.Count > 0 && lines[^1].Trim() == "") lines.RemoveAt(lines.Count - 1);
-        if (!lines.Contains(note)) lines.AddRange(["", note]);
-        File.WriteAllText(path, string.Join('\n', lines).TrimEnd() + "\n");
     }
 }

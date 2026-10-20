@@ -1,131 +1,67 @@
-"""Land a lane branch through the merge gate, on Windows or Linux (validation-flow.md, "Merge gate throughput"):
+"""Rebase, check exact Release IL, fast-forward main and push it.
 
-    python tools/validation/lane_merge.py <branch> [--main DIR] [--jobs N]
+    python tools/validation/lane_merge.py mirror/<lane>-<unit> [--main DIR]
 
-Run it in the worktree that has <branch> checked out. It fast-forwards main to origin/main briefly under the merge
-lock (merge_lock.py), rebases the branch onto it here, validates without the lock (--validate-only), then under the
-lock pulls again, applies the gate's record (--apply-validated) and pushes main. A stale record (exit 4) is
-validated again without holding the merge lock. The lock is never held during validation.
-Exits with the gate's code: 0 merged and pushed, 1 blocked (or a failed rebase), otherwise the failing step's.
-The gate runs in --main, by default the worktree that has main checked out. The push follows only a merge."""
+Run in the branch's clean worktree. One merge lock covers refresh, rebase,
+Release IL validation and push, so the validated candidate cannot become stale.
+"""
 import argparse
-import fnmatch
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
+
 from merge_lock import held
+import il_merge
 
 
 def git(*args, cwd=None):
-    return subprocess.run(['git', *args], cwd=cwd, capture_output=True, text=True)
+    return subprocess.run(['git', *args], cwd=cwd, capture_output=True, text=True, check=True).stdout.strip()
 
 
 def main_worktree(cwd=None):
-    """The worktree that has `main` checked out, or None."""
-    worktree = None
-    for line in git('worktree', 'list', '--porcelain', cwd=cwd).stdout.splitlines():
+    directory = None
+    for line in git('worktree', 'list', '--porcelain', cwd=cwd).splitlines():
         if line.startswith('worktree '):
-            worktree = line[len('worktree '):]
+            directory = line[len('worktree '):]
         elif line == 'branch refs/heads/main':
-            return worktree
+            return directory
     return None
-
-
-def branch_worktree(branch, cwd=None):
-    """The worktree with ``branch`` checked out, or None if it is not checked out."""
-    worktree = None
-    for line in git('worktree', 'list', '--porcelain', cwd=cwd).stdout.splitlines():
-        if line.startswith('worktree '):
-            worktree = line[len('worktree '):]
-        elif line == f'branch refs/heads/{branch}':
-            return worktree
-    return None
-
-
-def pull(main):
-    """Fast-forward main to origin/main; the git exit code."""
-    return (subprocess.run(['git', 'fetch', '-q', 'origin'], cwd=main).returncode
-            or subprocess.run(['git', 'merge', '-q', '--ff-only', 'origin/main'], cwd=main).returncode)
-
-
-def push(main):
-    return subprocess.run(['git', 'push', '-q', 'origin', 'main'], cwd=main).returncode
-
-
-def protected_rules(main):
-    result = git('show', 'main:tools/validation/protected.txt', cwd=main)
-    if result.returncode:
-        raise RuntimeError(f"cannot read main's protected-path rules: {result.stderr.strip()}")
-    return [line.strip() for line in result.stdout.splitlines()
-            if line.strip() and not line.lstrip().startswith('#')]
-
-
-def is_protected(path, rules):
-    protected = False
-    for rule in rules:
-        excluded = rule.startswith('!')
-        pattern = rule[1:] if excluded else rule
-        if fnmatch.fnmatchcase(path.casefold(), pattern.casefold()):
-            protected = not excluded
-    return protected
-
-
-def allow_only_unreachable_protected_change(paths, rules):
-    owned = {path for path in paths if is_protected(path, rules)}
-    return owned == {'docs/mirror/unreachable-lines.txt'}
-
-
-def allow_unreachable_update(branch, main):
-    """Allow one lane-owned ledger update; merge_gate still validates its hashes, freshness and coverage."""
-    changed = git('diff', '--name-only', f'main...{branch}', cwd=main)
-    if changed.returncode:
-        raise RuntimeError(f"cannot inspect {branch}'s changes: {changed.stderr.strip()}")
-    return allow_only_unreachable_protected_change(changed.stdout.splitlines(), protected_rules(main))
-
-
-def rebase(branch, cwd=None):
-    # Rebase in the lane's own checkout. Supplying the branch name from the main
-    # worktree fails when Git sees that branch checked out in a linked worktree.
-    lane_dir = branch_worktree(branch, cwd)
-    result = (git('rebase', '-q', 'main', cwd=lane_dir) if lane_dir else
-              git('rebase', '-q', 'main', branch, cwd=cwd))
-    if result.returncode:
-        print(f'git rebase main {branch} failed: {(result.stdout + result.stderr).strip()}', file=sys.stderr)
-        return 1
-    return 0
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('branch')
-    parser.add_argument('--main', help='the worktree that has main checked out, where the gate runs (default: found)')
-    parser.add_argument('--jobs', type=int, default=14, help='validation workers (default 14)')
+    parser.add_argument('--main')
+    parser.add_argument('--project', action='append', default=[])
+    parser.add_argument('--type', action='append', default=[])
+    parser.add_argument('--method', action='append', default=[])
     args = parser.parse_args(argv)
-    main_dir = args.main or main_worktree()
-    if not main_dir:
-        print('no worktree has main checked out; pass --main', file=sys.stderr)
+    try:
+        main_dir = args.main or main_worktree()
+        if not main_dir:
+            raise RuntimeError('no main worktree found; pass --main DIR')
+        if git('branch', '--show-current') != args.branch:
+            raise RuntimeError('run from the candidate branch worktree')
+        if git('status', '--porcelain') or git('status', '--porcelain', cwd=main_dir):
+            raise RuntimeError('commit or stash changes in both worktrees first')
+        if git('branch', '--show-current', cwd=main_dir) != 'main':
+            raise RuntimeError('--main must be the main checkout')
+        with held():
+            git('fetch', '-q', 'origin', cwd=main_dir)
+            git('merge', '-q', '--ff-only', 'origin/main', cwd=main_dir)
+            git('rebase', 'main', args.branch)
+            il_merge.ROOT = Path(main_dir)
+            args.base, args.apply, args.results = 'main', True, None
+            args.dotnet, args.timeout = 'dotnet', 1800
+            code = il_merge.gate(args)
+            if code:
+                return code
+            git('push', 'origin', 'main', cwd=main_dir)
+        return 0
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        detail = getattr(error, 'stderr', None) or str(error)
+        print(f'BLOCKED: {detail}', file=sys.stderr)
         return 1
-    gate = [sys.executable, str(Path(main_dir) / 'tools/validation/merge_gate.py'), args.branch]
-    def run(*extra):
-        return subprocess.run([*gate, *extra], cwd=main_dir).returncode
-    jobs = ['--jobs', str(args.jobs)]
-    while True:
-        with held():
-            code = pull(main_dir)                                       # fresh main, briefly under the lock
-        if code or rebase(args.branch):
-            return code or 1
-        gate_options = ['--allow-protected'] if allow_unreachable_update(args.branch, main_dir) else []
-        if gate_options:
-            print('Allowing only docs/mirror/unreachable-lines.txt through maintainer protection; validating entries.')
-        code = run('--validate-only', *gate_options, *jobs)             # BLOCKED: fix the branch
-        if code:
-            return code
-        with held():
-            code = pull(main_dir) or run('--apply-validated')
-            if code == 0:
-                code = push(main_dir)
-        if code != 4:
-            return code                                                 # merged and pushed, blocked, or push failed
 
 
 if __name__ == '__main__':

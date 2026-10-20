@@ -7,8 +7,8 @@ using Quire.Tools.MirrorGen;
 /// <summary>
 /// The logic-bearing structure of one method body: what it calls, which fields it touches, which types it tests or
 /// creates, its constants, exception regions and branching. Locals, nops, stack shuffling and branch encoding are
-/// ignored. MethodAudit reads it from the optimized (Release) build given by --structure-assemblies, which the
-/// validator always passes, so it compiles like the original. <see cref="Code"/> is the whole instruction sequence,
+/// ignored by the legacy fingerprint. MethodAudit's Release mode preserves them in <see cref="Code"/>,
+/// along with local types, initialization and max stack. <see cref="Code"/> is the whole instruction sequence,
 /// for <see cref="Exact"/>; <see cref="Offsets"/> the IL offset of each of its instructions (the exception regions
 /// that follow them have none).
 /// </summary>
@@ -82,7 +82,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         .Select(f => (OpCode)f.GetValue(null)!)
         .ToDictionary(o => unchecked((ushort)o.Value));
 
-    public Structure Read(MethodDefinitionHandle handle)
+    public Structure Read(MethodDefinitionHandle handle, bool releaseIl = false)
     {
         var body = pe.GetMethodBody(md.GetMethodDefinition(handle).RelativeVirtualAddress);
         var il = body.GetILReader();
@@ -134,8 +134,16 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     operand = $"{value}";
                     break;
                 case OperandType.InlineI8: constants.Add(operand = $"i8 {il.ReadInt64()}"); break;
-                case OperandType.ShortInlineR: constants.Add(operand = $"r8 {(double)il.ReadSingle():R}"); break;
-                case OperandType.InlineR: constants.Add(operand = $"r8 {il.ReadDouble():R}"); break;
+                case OperandType.ShortInlineR:
+                    float single = il.ReadSingle();
+                    constants.Add($"r8 {(double)single:R}");
+                    operand = releaseIl ? $"r4 0x{BitConverter.SingleToInt32Bits(single):x8}" : $"r8 {(double)single:R}";
+                    break;
+                case OperandType.InlineR:
+                    double number = il.ReadDouble();
+                    constants.Add($"r8 {number:R}");
+                    operand = releaseIl ? $"r8 0x{BitConverter.DoubleToInt64Bits(number):x16}" : $"r8 {number:R}";
+                    break;
                 case OperandType.InlineString:
                     constants.Add(operand = "str " + md.GetUserString(MetadataTokens.UserStringHandle(il.ReadInt32())));
                     break;
@@ -143,7 +151,10 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     calls.Add($"{code.Name} {operand = Method(MetadataTokens.EntityHandle(il.ReadInt32()))}");
                     break;
                 case OperandType.InlineField:
-                    fields.Add($"{code.Name} {operand = Field(MetadataTokens.EntityHandle(il.ReadInt32()))}");
+                    var fieldToken = MetadataTokens.EntityHandle(il.ReadInt32());
+                    operand = Field(fieldToken);
+                    if (releaseIl) operand += $" : {Render(FieldType(fieldToken))}{InitialData(fieldToken)}";
+                    fields.Add($"{code.Name} {operand}");
                     break;
                 case OperandType.InlineType:
                 case OperandType.InlineTok:
@@ -164,8 +175,8 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 case OperandType.InlineVar: operand = $"{il.ReadUInt16()}"; break;
                 default: throw new BadImageFormatException($"Unknown operand type {code.OperandType}");
             }
-            string text = Folded(code, operand);
-            if (text.Split(' ') is [("ldloc" or "ldloca" or "stloc") and var family, var slot]) text = $"{family} {Number(locals, slot)}";
+            string text = releaseIl ? code.Name + (operand.Length == 0 ? "" : " " + operand) : Folded(code, operand);
+            if (!releaseIl && text.Split(' ') is [("ldloc" or "ldloca" or "stloc") and var family, var slot]) text = $"{family} {Number(locals, slot)}";
             if (generated.Count > 0) text += " #" + string.Join(",", generated.Select(g => Number(names, g)));
             generated.Clear();
             sequence.Add(text);
@@ -181,6 +192,13 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var regions = body.ExceptionRegions.OrderBy(r => r.TryOffset).ThenByDescending(r => r.TryLength).ToList();
         sequence.AddRange(regions.Select(r => $".try {At(r.TryOffset)}-{At(r.TryOffset + r.TryLength)} " +
             $"{r.Kind} {(r.Kind == ExceptionRegionKind.Filter ? At(r.FilterOffset) + " " : "")}{At(r.HandlerOffset)}-{At(r.HandlerOffset + r.HandlerLength)}"));
+        if (releaseIl)
+        {
+            sequence.Add($".maxstack {body.MaxStack}");
+            sequence.Add($".initlocals {body.LocalVariablesInitialized}");
+            sequence.Add(".locals " + (body.LocalSignature.IsNil ? "" : string.Join(",", md.GetStandaloneSignature(body.LocalSignature)
+                .DecodeLocalSignature(decoder, null).Select(Render))));
+        }
         var handlers = regions
             .Select(r => r.Kind == ExceptionRegionKind.Catch ? "catch " + Type(r.CatchType) : r.Kind.ToString().ToLowerInvariant())
             .ToArray();
@@ -209,9 +227,8 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
     /// A SHA-256 of everything in the body that decides what it does, independent of metadata token numbering: each
     /// instruction with its operand (tokens resolved to the member, type or string they denote; fields with their type,
     /// and for fields with initial data (<c>&lt;PrivateImplementationDetails&gt;</c> arrays and spans) a hash of those
-    /// bytes), the locals' types, exception regions and the method's flags. Unchanged unless the method's IL changed,
-    /// so the validator mutates only methods whose hash differs from the last validated build. Also what selects
-    /// methods affected by another's change: the tokens of this module's methods the body references (calls,
+    /// bytes), the locals' types, exception regions and the method's flags. The Release checker uses this hash to
+    /// identify changed bodies. Additional metadata describes referenced methods (calls,
     /// delegates, ldtoken; every same-named method of a local generic type reached through an instantiation), the
     /// dispatch slots (<see cref="SlotOf"/>) of its virtual calls, and the fields it reads and writes (taking a field's
     /// address counts as both), as <c>DeclaringType::name</c> with generic instantiations reduced to their definition;

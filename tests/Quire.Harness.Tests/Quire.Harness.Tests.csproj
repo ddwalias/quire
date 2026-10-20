@@ -16,7 +16,6 @@
     <Compile Include="../Quire.Differential.Tests/Reflect.cs" Link="Reflect.cs" />
     <Compile Include="../Quire.Differential.Tests/MethodComparison.cs" Link="MethodComparison.cs" />
     <Compile Include="../../tools/Quire.Tools.MethodAudit/Structure.cs" Link="Structure.cs" />
-    <Compile Include="../../tools/Quire.Tools.MethodAudit/Mutants.cs" Link="Mutants.cs" />
     <Compile Include="../../tools/Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
     <Compile Include="../../tools/Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
     <Compile Include="../../tools/Quire.Tools.MethodAudit/Artifact.cs" Link="Artifact.cs" />
@@ -28,10 +27,5 @@
     <Compile Include="../../tools/Quire.Tools.MemberGen/Stubs.cs" Link="MemberGen/Stubs.cs" />
     <Compile Include="../../tools/Quire.Tools.MemberGen/Emitter.cs" Link="MemberGen/Emitter.cs" />
     <Compile Include="../../tools/Quire.Tools.MemberGen/Emitter.Files.cs" Link="MemberGen/Emitter.Files.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- MethodAudit itself, copied beside the tests to run in process (OptimizedBuildTests). -->
-    <ProjectReference Include="../../tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj"
-                      ReferenceOutputAssembly="false" OutputItemType="Content" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

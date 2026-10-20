@@ -1,10 +1,15 @@
-# Lane D — Ptc.PersistentData* in Ptc.Core
+# Lane D — Quire.Engine.Utl
 
-## Active handoff
+- Owner: D; exclusive scope: all managed members in `src/Quire.Engine.Utl`.
+- Branch: `mirror/d-engine-utl`; worktree: `C:/Projects/Quire-wt/lane-d-engine-utl`.
+- Original assembly: utl-mgd; use existing name mappings.
+- Selected members: choose the first coherent unfinished group from a Release inventory.
+- Release IL report: pending the fresh lane's first comparison.
+- Remaining mismatches: assembly unfinished; determine from the current Release inventory.
 
-- **Next batch:** `ProtectableTypesRegistry` (`_map`, `Register`, `GetXmlSerializer`), based on current `origin/main`; create a fresh `mirror/d-persistentdata-protectable-types-registry` worktree. Its `AreaType.TypeOfThis` dependency merged with AreaType at `aaca91d1`.
-- **Implementation:** mirror the three declarations from `src/Quire.Core/Generated/Mirror/PersistentData.ProtectableTypesRegistry.g.cs` in a separate partial. Inspect exact IL and compare the registry behavior with Mathcad, including root-name lookup, `useOverrides`, and missing-name behavior. Add focused behavioral and Release differential cases.
-- **Gate:** use `python C:\Projects\Quire\tools\validation\lane_merge.py mirror/d-persistentdata-protectable-types-registry --jobs 6` from the lane worktree. The Release assembly lookup and linked-worktree rebase issues are fixed in current main; the gate validates outside the shared lock and retries stale receipts.
-- **AreaType completed:** `mirror/d-persistentdata-areatype` merged at `aaca91d1`; see [completed AreaType receipt](lane-d-areatype.md).
-- **Other pushed branches:** annotation extensions, header/footer, OleUtils, protection timestamp, and worksheet serializer remain on origin. Their previous gate receipts predate the validation fixes; check current ownership and diff against main before retrying or taking overlapping scope.
-- **Later dependencies:** non-null protection wrappers depend on Lane 5's `ProtectionData` wrapper; `RegionCollectionPreSerializer.PreSerialize` depends on `EnumerableExtensions.Each`; `ProtectionLevelWrapper` uses `EnumHelper`. Keep these separate until the dependencies land.
+Use only the [five steps](../PLAN.md). All former reservations are released. Former tier
+deferrals do not restrict managed members in this assembly (D18). Optional MemberGen now
+considers all mapped mechanical stubs in this assigned assembly. Preserve previously exact
+methods, land passing batches, and continue autonomously through the assembly. Record native
+or unreadable counterparts as incomplete and continue independent managed members. Do not
+edit another lane's source or shared tooling. Reuse this lane worktree after landing.

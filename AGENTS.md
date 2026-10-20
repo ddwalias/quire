@@ -1,0 +1,27 @@
+# Agent workflow
+
+The goal is exact **Release IL** parity with Mathcad Prime 12.0.1.0. Read
+[the plan](docs/mirror/PLAN.md) and use [WORK](docs/mirror/WORK.md) for ownership.
+The [assembly map](docs/mirror/assembly-map.md) shows dependency order and what each completed assembly unlocks.
+
+Only four lanes are active: A owns `Quire.Core`, B `Quire.Mpl.Emit`, C `Quire.Utils`,
+and D `Quire.Engine.Utl`. All former lane reservations are released. These assignments
+authorize every managed member in those assemblies regardless of historical tier (D18).
+Use the assigned worktrees and edit only your own assembly and checkpoint; the maintainer
+handles shared tools and integration. Continue through passing batches autonomously.
+
+1. Claim unowned members in a separate branch/worktree.
+2. Read their original Mathcad IL (`python tools/reference/reference.py <type> --il`).
+3. Implement the same members using the project's name mappings.
+4. Build Release and compare IL (`python tools/validation/release_il.py --base main --project <project>`).
+5. Commit and land using `python tools/validation/lane_merge.py <branch>`.
+
+Release is the default for every IL operation. Never inspect or compare Debug IL.
+Changed methods must match; previously exact methods in affected projects must remain exact.
+Missing/unreadable counterparts and structure-only matches are incomplete.
+
+Tests, coverage, mutation, status ladders, evidence essays, approval handoffs and phase
+audits are not batch requirements. Keep only a short checkpoint: owner, branch, members,
+Release IL report, remaining mismatches. This is the complete workflow (decision D17).
+
+Keep original binaries/decompiled code/IL in the ignored local cache. Do not commit them.

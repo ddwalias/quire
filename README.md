@@ -44,6 +44,11 @@ used for visual checks.
 The assembly layout mirrors Mathcad Prime 12, and mirrored method bodies are reconstructed from the original
 assemblies' IL (see [docs/mirror](docs/mirror/PLAN.md)).
 
+Agent batches follow five steps: claim members, read Mathcad's IL, implement, compare exact
+Release IL, and land. All IL inspection uses Release builds. See the [agent workflow](AGENTS.md)
+and [Release IL commands](docs/mirror/validation.md).
+The [assembly map](docs/mirror/assembly-map.md) lists Mathcad counterparts, prerequisites, and completion order.
+
 | Quire assembly | Responsibility | Mathcad Prime counterpart |
 |---|---|---|
 | `Quire.Mpl` | Mathcad's runtime types: `Mpl.Run` S-expressions and functions, `Mcd` values (`NumVal`, `MatVal`, `RngVal`, `StrVal`), interned dimensions, units and unit systems | `mplrun` (`Mpl.Run`, `Mcd`) |

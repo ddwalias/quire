@@ -303,7 +303,7 @@ public sealed class MetadataLoader
     private static MemberStatus Bodiless(bool isAbstract, MemberStatus status) =>
         isAbstract && status == MemberStatus.Unclassified ? MemberStatus.Abstract : status;
 
-    /// <summary>The member's §3c status from its Quire.Mirror attributes, with the attribute's text argument.</summary>
+    /// <summary>Existing source annotation metadata and its text argument; not an IL acceptance verdict.</summary>
     private MemberStatus Status(CustomAttributeHandleCollection handles, out string? evidence)
     {
         evidence = null;

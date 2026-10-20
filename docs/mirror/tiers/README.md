@@ -1,5 +1,9 @@
 # Tier lists (D11)
 
+Historical scope classification only. Current ownership comes from [WORK](../WORK.md).
+The A–D assembly assignments supersede tier deferrals within those four assemblies (D18);
+the numbered lanes below are retired. Tier membership never establishes IL completion.
+
 - `tier-a.txt`, `tier-a2.txt`: the Quire method keys of the Tier A and A2 members, sorted, one per line, in the format the validation baseline and MethodAudit use (``Owner::Name`G(params)->ret|IsStatic``). Properties and events are listed as their accessors; fields are never A/A2.
 - `tier-b.txt`: the Quire method keys of the Tier B members, in the same format and mapped the same way: the allowlist of the member generator (tool-member-gen, not yet merged), which by default emits only members in this list; its `--include-tier-a` option widens that to Tier A/A2. It lists methods, constructors and property/event accessors only (7,396 members): MethodAudit keys methods, so the 9,606 Tier B fields are not listed. `tier-b-unmapped.txt` (222) names the B members with no Quire key, as for A.
 - `types.tsv`: per Mathcad type, its Quire type, member counts per tier, the dominant tier (largest count; ties go A, A2, B, C, D, abstract) and the lane that owns it.
@@ -14,11 +18,10 @@
   - The graph misses XAML/BAML wiring, reflection, MPL dynamic loading and native callbacks, so reach is a lower bound.
   - "Mechanical" is a heuristic. The exact-IL generator decides the final Tier B.
   - Members whose Quire shape differs have no key. `tier-a-unmapped.txt` (166) and `tier-a2-unmapped.txt` (81) name them as `assembly<TAB>type::member(params)`; most are `.cctor`s Quire does not declare yet, obfuscated iterator methods Quire names as explicit interface implementations, and overloads Quire lacks. Explicit interface implementations match with the interface named as Mathcad names it. They are still Tier A/A2 work: the lane that owns the type covers them. The one exception is an A2 `.cctor` in `MC14MathConversionValidation`, one of those unassigned A2 types.
-- **Regenerate:** the committed lists were built from the Quire sources at d78a73c; later commits up to 27c06a0 change attributes only, not member signatures.
-  1. Build `tools/Quire.Tools.MethodAudit` and `tests/Quire.Mirror.Tests` (Debug); the test output directory holds every Quire assembly.
-  2. For each project P in `docs/mirror/manifest/`, run MethodAudit and reduce its inventory:
-     `dotnet Quire.Tools.MethodAudit.dll --repo . --assemblies tests/Quire.Mirror.Tests/bin/Debug/net10.0-windows --install "/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0" --output inventory/P.json --project P`, then
-     `python3 tools/scope/tiers.py keys inventory/P.json KEYS/P.tsv`.
-     Quire.Engine.Native currently crashes MethodAudit (`Program.cs:132`); it holds no A/A2 members.
-  3. `python3 tools/scope/tiers.py classify DATA KEYS docs/mirror/tiers`, where DATA is the scanner output.
+- **Regenerate keys from Release only:** build production projects and MethodAudit with `-c Release`.
+  Run MethodAudit against their Release output directories, then run
+  `python tools/scope/tiers.py keys <inventory.json> <keys.tsv>`. Classification uses
+  `python tools/scope/tiers.py classify DATA KEYS docs/mirror/tiers`, where DATA is the
+  original metadata scanner output. A test host is not needed. Tier membership selects scope;
+  completion comes only from the current Release IL report.
 - These files hold member names and counts only: no Mathcad IL, no decompiled code.

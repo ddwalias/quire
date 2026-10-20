@@ -282,25 +282,25 @@ public class MemberGenEmitTests : IDisposable
             {
                 public int Other() => 1;
 
-                [MirrorVerified("MUMechanicalDifferentialTests")]
+                [MirrorVerified("Release IL")]
                 private int m_y;
 
-                [MirrorVerified("MUMechanicalDifferentialTests")]
+                [MirrorVerified("Release IL")]
                 public int GetY() => m_y;
             }
 
             public partial class T
             {
-                [MirrorVerified("MTMechanicalDifferentialTests")]
+                [MirrorVerified("Release IL")]
                 private int m_x;
 
-                [MirrorVerified("MTMechanicalDifferentialTests")]
+                [MirrorVerified("Release IL")]
                 public int GetX() => m_x;
 
-                [MirrorVerified("MTMechanicalDifferentialTests")]
+                [MirrorVerified("Release IL")]
                 public int P { get; set; }
 
-                [MirrorVerified("MTMechanicalDifferentialTests")]
+                [MirrorVerified("Release IL")]
                 public event EventHandler E;
             }
 
@@ -348,26 +348,10 @@ public class MemberGenEmitTests : IDisposable
     }
 
     [Fact]
-    public void Tests_and_evidence_are_written_per_Mathcad_type()
+    public void Generation_writes_only_sources_and_the_member_report()
     {
         Emit();
-        string tests = File.ReadAllText(Path.Combine(Repo, "tests", "Quire.Differential.Tests", "MTMechanicalDifferentialTests.cs"));
-        Assert.Contains("public class MTMechanicalDifferentialTests", tests);
-        Assert.Contains("Mechanical.Compare(typeof(global::Quire.Fx.T), 0x", tests);
-        Assert.Contains("public void E_add_", tests);
-        Assert.DoesNotContain("Unlisted", tests);
-        string evidence = File.ReadAllText(Path.Combine(Repo, "docs", "mirror", "evidence", "M.T.md"));
-        Assert.Contains("| `GetX()` | 0x", evidence);
-        Assert.Contains("| `P get` | 0x", evidence);
-    }
-
-    /// <summary>A row for the same token is replaced, but an older record's normalized IL stays.</summary>
-    [Fact]
-    public void A_replaced_evidence_row_keeps_its_normalized_IL()
-    {
-        Emit();
-        var row = File.ReadAllLines(Path.Combine(Repo, "docs", "mirror", "evidence", "M.U.md")).Single(l => l.StartsWith("| `GetY()`"));
-        Assert.StartsWith($"| `GetY()` | 0x{_getY:x8} | `ldarg.0 ldfld ret` | MemberGen: `m_y` |", row);
-        Assert.EndsWith("| Verified |", row);
+        Assert.Empty(Directory.GetFiles(Path.Combine(Repo, "tests", "Quire.Differential.Tests"), "*.cs"));
+        Assert.False(File.Exists(Path.Combine(Repo, "docs", "mirror", "evidence", "M.T.md")));
     }
 }

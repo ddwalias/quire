@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!--
-    Differential tests (PLAN.md §3c rule 3): call the installed Mathcad Prime assemblies and Quire's mirrored types
+    Optional differential diagnostics: call the installed Mathcad Prime assemblies and Quire's mirrored types
     with the same inputs and compare. Mathcad is never redistributed or copied: its assemblies load from the install
     (MATHCAD_DIR overrides the default path), and every test is skipped when the install is absent.
   -->

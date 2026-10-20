@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 import il_diff
-from validate import mathcad_install
+from release_il import mathcad_install
 
 
 class IlDiffTests(unittest.TestCase):
@@ -12,13 +12,15 @@ class IlDiffTests(unittest.TestCase):
         def run(command, **kwargs):
             calls.append(command)
             return subprocess.CompletedProcess(command, 0, '', '')
-        with mock.patch.object(il_diff.subprocess, 'run', run), \
-                mock.patch.object(il_diff, 'resolve_dotnet', lambda name, root: '/usr/bin/dotnet'):
+        with mock.patch.object(il_diff.subprocess, 'run', run):
             self.assertEqual(il_diff.main(['Quire.Mcd.MatDim', 'Quire.Mcd.Dim::Div']), 0)
         builds, scan = calls[:-1], calls[-1]
         self.assertEqual([Path(c[2]).name for c in builds], ['Quire.Tools.MethodAudit.csproj',
-                         'Quire.Focused.Differential.Tests.csproj', 'Quire.Focused.Differential.Tests.csproj'])
-        self.assertIn('Release', builds[1])
+                         'Quire.Mpl.csproj'])
+        for build in builds:
+            self.assertEqual(build[build.index('-c') + 1], 'Release')
+        self.assertNotIn('Debug', str(calls))
+        self.assertIn('--release-il', scan)
         self.assertNotIn('--output', scan)
         self.assertEqual(scan[-4:], ['--diff', 'Quire.Mcd.MatDim', '--diff', 'Quire.Mcd.Dim::Div'])
         self.assertEqual(scan[scan.index('--project') + 1], 'Quire.Mpl')
@@ -29,7 +31,6 @@ class IlDiffTests(unittest.TestCase):
             calls.append(command)
             return subprocess.CompletedProcess(command, 1, 'error CS0001', '')
         with mock.patch.object(il_diff.subprocess, 'run', run), \
-                mock.patch.object(il_diff, 'resolve_dotnet', lambda name, root: '/usr/bin/dotnet'), \
                 mock.patch('sys.stderr'):
             self.assertEqual(il_diff.main(['Quire.Mcd.MatDim']), 2)
         self.assertEqual(len(calls), 1)

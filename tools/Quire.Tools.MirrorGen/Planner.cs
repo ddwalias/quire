@@ -411,7 +411,7 @@ public sealed class HandWritten
         var hw = new HandWritten();
         foreach (var project in projects)
         {
-            var bin = Path.Combine(repo, "src", project, "bin", "Debug");
+            var bin = Path.Combine(repo, "src", project, "bin", "Release");
             if (!Directory.Exists(bin)) continue;
             var dll = Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
                 .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault();

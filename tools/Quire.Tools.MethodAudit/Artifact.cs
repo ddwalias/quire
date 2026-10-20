@@ -16,6 +16,7 @@ sealed class Artifact
     public string Hash { get; }
     public string Mvid { get; }
     public string Version { get; }
+    public bool OptimizationsDisabled { get; }
     public List<RawMethod> Methods { get; } = [];
     public PEReader Pe { get; }
     private readonly MetadataReader? _debug;
@@ -71,6 +72,19 @@ sealed class Artifact
             _debug = MetadataReaderProvider.FromPortablePdbStream(new MemoryStream(File.ReadAllBytes(pdb))).GetMetadataReader();
         Mvid = md.GetGuid(md.GetModuleDefinition().Mvid).ToString();
         Version = md.GetAssemblyDefinition().Version.ToString();
+        foreach (var handle in md.GetAssemblyDefinition().GetCustomAttributes())
+        {
+            var attribute = md.GetCustomAttribute(handle);
+            if (attribute.Constructor.Kind != HandleKind.MemberReference) continue;
+            var parent = md.GetMemberReference((MemberReferenceHandle)attribute.Constructor).Parent;
+            if (parent.Kind != HandleKind.TypeReference) continue;
+            var name = md.GetTypeReference((TypeReferenceHandle)parent);
+            if (md.GetString(name.Namespace) != "System.Diagnostics" || md.GetString(name.Name) != "DebuggableAttribute") continue;
+            var value = md.GetBlobBytes(attribute.Value);
+            // DebuggingModes enum, or the older (tracking, optimizerDisabled) constructor.
+            OptimizationsDisabled = value.Length >= 8 ? (BitConverter.ToInt32(value, 2) & 0x100) != 0
+                : value.Length == 6 && value[3] != 0;
+        }
         var decoder = new SigProvider(Name);
         foreach (var th in md.TypeDefinitions)
         {

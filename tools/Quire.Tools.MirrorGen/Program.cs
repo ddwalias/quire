@@ -2,7 +2,7 @@ using Quire.Tools.MirrorGen;
 
 if (args.Length < 1)
 {
-    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|classify [--list]|native-inventory|scope-diff|collisions|graph|stats|dump <asm> <type>|types <dll> <filter>|shape <dll>>");
+    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|native-inventory|scope-diff|collisions|graph|assembly-map|stats|dump <asm> <type>|types <dll> <filter>|shape <dll>>");
     return 2;
 }
 
@@ -19,6 +19,9 @@ var rules = args[0] == "types" ? null! : Rules.Load(Path.Combine(repo, "docs", "
 
 switch (args[0])
 {
+    case "assembly-map":
+        AssemblyMap.Write(repo, install, rules);
+        return 0;
     case "stats":
         Stats.Run(Universe.LoadMathcad(install, rules), rules);
         return 0;
@@ -77,11 +80,8 @@ switch (args[0])
         foreach (var t in MetadataLoader.Load(args[1])!.Types.OrderBy(t => t.FullName, StringComparer.Ordinal))
             Console.WriteLine($"{t.FullName}\t{Planner.AllMethods(t).Count(m => m.Access != Access.Private)}\t{Planner.AllMethods(t).Count()}");
         return 0;
-    case "classify":
-        Classify.Run(repo, Universe.LoadMathcad(install, rules), rules, args.Contains("--list"));
-        return 0;
     case "manifest":
-        return Shape.WriteManifestAndCoverage(repo, args.Contains("--accept-removals")) ? 0 : 1;
+        return Shape.WriteManifest(repo, args.Contains("--accept-removals")) ? 0 : 1;
     default:
         Console.Error.WriteLine($"unknown command {args[0]}");
         return 2;
