@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.CalculatableAggregateExtensions, Ptc.Calculation.Core")]
 public static partial class CalculatableAggregateExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<string> GetAggregateRl(this global::Quire.Calculation.Core.ICalculatableAggregate aggregate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
