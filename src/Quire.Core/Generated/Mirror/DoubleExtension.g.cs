@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DoubleExtension, Ptc.Core")]
 public static partial class DoubleExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsBetween(this double num, double lowerBound, double upperBound, bool isInclusive = true, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

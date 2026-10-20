@@ -75,6 +75,24 @@ public static partial class DoubleExtension
     }
 
     [MirrorVerified("Release IL")]
+    public static bool IsBetween(this double num, double lowerBound, double upperBound, bool isInclusive = true, double eps = double.NaN)
+    {
+        if (!isInclusive)
+        {
+            if (num.IsGreaterThan(lowerBound, eps))
+            {
+                return num.IsLessThan(upperBound, eps);
+            }
+            return false;
+        }
+        if (num.IsGreaterThanOrEqual(lowerBound, eps))
+        {
+            return num.IsLessThanOrEqual(upperBound, eps);
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
     public static double Floor(this double num, double eps = double.NaN)
     {
         if (!num.IsEqualTo(Math.Round(num), eps))
