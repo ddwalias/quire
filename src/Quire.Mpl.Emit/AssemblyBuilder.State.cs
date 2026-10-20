@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 
@@ -107,6 +109,12 @@ public partial class AssemblyBuilder
             throw new ArgumentNullException();
         }
         return new AssemblyBuilder(name);
+    }
+
+    [RequiresDynamicCode("Defining a dynamic assembly requires dynamic code.")]
+    public static System.Reflection.Emit.AssemblyBuilder DefineDynamicAssembly(AssemblyName name, AssemblyBuilderAccess access, IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>? assemblyAttributes)
+    {
+        throw new NotImplementedException();
     }
 
 }
