@@ -28,10 +28,6 @@ public static partial class Logger
     [global::Quire.Mirror.MirrorStub]
     private static bool _isRunning;
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static string LogFileName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static uint GetCurrentThreadId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Log(string message, string filePath = "", string memberName = "", int lineNumber = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
