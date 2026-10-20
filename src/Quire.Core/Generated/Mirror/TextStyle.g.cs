@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextStyle, Ptc.Core")]
 public partial class TextStyle : global::Quire.TextStyleBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TextStyle(string key, global::Quire.Core.TextFormat textFormat, bool reset = false) : base(default(global::System.Windows.Style)) { }
 }

@@ -17,4 +17,10 @@ public partial class TextStyle
 
     [MirrorVerified("PtcTextStyleMechanicalDifferentialTests")]
     public TextStyle(string name, string key) : base(name, key) { }
+
+    [MirrorVerified("Release IL")]
+    public TextStyle(string key, Quire.Core.TextFormat textFormat, bool reset = false) : base(textFormat, reset)
+    {
+        StyleKey = key ?? StyleKey;
+    }
 }
