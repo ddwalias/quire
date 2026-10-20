@@ -38,4 +38,50 @@ public partial struct DiscreteRect
 
     [MirrorVerified("Release IL")]
     public int Width => Math.Abs(Right - Left);
+
+    [MirrorVerified("Release IL")]
+    public int Top
+    {
+        get => _topLeft.Y;
+        set => _topLeft.Y = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public int Left
+    {
+        get => _topLeft.X;
+        set => _topLeft.X = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public int Bottom
+    {
+        get => _bottomRight.Y;
+        set => _bottomRight.Y = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public int Right
+    {
+        get => _bottomRight.X;
+        set => _bottomRight.X = value;
+    }
+
+    [MirrorVerified("Release IL")]
+    public void Normalize()
+    {
+        int top;
+        if (Top > Bottom)
+        {
+            top = Top;
+            Top = Bottom;
+            Bottom = top;
+        }
+        if (Left > Right)
+        {
+            top = Left;
+            Left = Right;
+            Right = top;
+        }
+    }
 }
