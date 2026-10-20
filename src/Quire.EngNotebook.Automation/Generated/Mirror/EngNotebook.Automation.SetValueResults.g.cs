@@ -11,20 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.SetValueResults, Ptc.EngNotebook.Automation")]
 public partial class SetValueResults : global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private SetValueResults() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal SetValueResults(global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults mathcadPrimeSetValueResults) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~SetValueResults() { } // stub finalizers must not throw: they also run for objects whose constructor threw
-    [global::Quire.Mirror.MirrorStub]
-    public int GetResultByIndex(int indexArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetResultByAlias(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

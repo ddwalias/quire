@@ -11,10 +11,4 @@ namespace Quire.ProductInfo;
 [global::Quire.Mirror.MirrorOf("ProductInfo.Constants, Ptc.EngNotebook.Automation")]
 internal partial class Constants
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ConverterProductName = "WorksheetConverter";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ConverterExe = "WorksheetConverter.exe";
-    [global::Quire.Mirror.MirrorStub]
-    public Constants() { }
 }

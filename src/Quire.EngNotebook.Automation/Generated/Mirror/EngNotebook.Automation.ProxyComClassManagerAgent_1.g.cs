@@ -11,14 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.ProxyComClassManagerAgent`1, Ptc.EngNotebook.Automation")]
 internal partial class ProxyComClassManagerAgent<T> : global::Quire.EngNotebook.Automation.IProxyComClassManagerAgent<T> where T : class
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EngNotebook.Automation.ProxyComClassManager<T> _comProxyManagerInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRegistered { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsReleased { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal ProxyComClassManagerAgent(global::Quire.EngNotebook.Automation.ProxyComClassManager<T> comProxyManagerInstance) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Release() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

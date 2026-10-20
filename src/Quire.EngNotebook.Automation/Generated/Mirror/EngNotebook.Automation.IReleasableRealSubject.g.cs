@@ -11,6 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IReleasableRealSubject, Ptc.EngNotebook.Automation")]
 internal partial interface IReleasableRealSubject
 {
-    [global::Quire.Mirror.MirrorStub]
-    void ReleaseComEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

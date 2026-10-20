@@ -11,14 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IMathcadPrimeMatrix, Ptc.EngNotebook.Automation")]
 public partial interface IMathcadPrimeMatrix
 {
-    [global::Quire.Mirror.MirrorStub]
-    double[][] Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int SetMatrixElement(int rowIndexArg, int columnIndexArg, double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetMatrixElement(int rowIndexArg, int columnIndexArg, out double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

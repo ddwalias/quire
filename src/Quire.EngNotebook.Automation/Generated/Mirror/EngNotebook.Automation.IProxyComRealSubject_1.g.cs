@@ -11,6 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IProxyComRealSubject`1, Ptc.EngNotebook.Automation")]
 internal partial interface IProxyComRealSubject<out T>
 {
-    [global::Quire.Mirror.MirrorStub]
-    T RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

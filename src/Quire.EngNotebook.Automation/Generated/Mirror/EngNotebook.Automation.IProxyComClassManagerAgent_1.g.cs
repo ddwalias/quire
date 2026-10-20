@@ -11,10 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IProxyComClassManagerAgent`1, Ptc.EngNotebook.Automation")]
 internal partial interface IProxyComClassManagerAgent<T> where T : class
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsRegistered { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsReleased { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Release() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

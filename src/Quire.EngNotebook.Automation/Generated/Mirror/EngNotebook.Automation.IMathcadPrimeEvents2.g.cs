@@ -11,24 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IMathcadPrimeEvents2, Ptc.EngNotebook.Automation")]
 public partial interface IMathcadPrimeEvents2
 {
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetSaved(string documentFullNameArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetClosed(string documentFullNameArg, string documentNameArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetModified(string documentFullNameArg, string documentNameArg, bool isModifiedArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetRenamed(string previousFullNameArg, string currentFullNameArg, string previousDocNameArg, string currentDocNameArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetInputsOutputsSelected(string documentFullNameArg, string documentNameArg, global::Quire.EngNotebook.Automation.IMathcadPrimeInputs inputsArg, global::Quire.EngNotebook.Automation.IMathcadPrimeOutputs outputsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnExit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetStatesGenerated(string documentFullNameArg, string documentNameArg, global::Quire.EngNotebook.Automation.WorksheetOperations operationsArg, global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates itemsStatesArg, global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts conflictsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetStatesGenerating(string documentFullNameArg, string documentNameArg, global::Quire.EngNotebook.Automation.WorksheetOperations operationsArg, global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsStates itemsStatesArg, global::Quire.EngNotebook.Automation.IMathcadPrimeInputsOutputsConflicts conflictsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnWorksheetRequestToUpdateInputs(string documentFullNameArg, string documentNameArg, global::Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter setterArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Ping() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

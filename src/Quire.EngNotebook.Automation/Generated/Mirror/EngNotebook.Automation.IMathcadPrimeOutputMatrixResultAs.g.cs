@@ -11,8 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IMathcadPrimeOutputMatrixResultAs, Ptc.EngNotebook.Automation")]
 public partial interface IMathcadPrimeOutputMatrixResultAs
 {
-    [global::Quire.Mirror.MirrorStub]
-    int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EngNotebook.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

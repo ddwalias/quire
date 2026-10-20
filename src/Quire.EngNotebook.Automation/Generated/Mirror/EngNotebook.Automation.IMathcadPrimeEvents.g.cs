@@ -11,10 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.IMathcadPrimeEvents, Ptc.EngNotebook.Automation")]
 public partial interface IMathcadPrimeEvents
 {
-    [global::Quire.Mirror.MirrorStub]
-    void OnSelect(global::Quire.EngNotebook.Automation.IMathcadPrimeInputs inputsOnSelectArg, global::Quire.EngNotebook.Automation.IMathcadPrimeOutputs outputsOnSelectArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnSave(string documentNameArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void OnExit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

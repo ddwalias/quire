@@ -11,26 +11,4 @@ namespace Quire.EngNotebook.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.EngNotebook.Automation.GetValueResult, Ptc.EngNotebook.Automation")]
 public partial class GetValueResult : global::Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EngNotebook.Automation.ValueResultTypes ResultType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double RealResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string StringResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EngNotebook.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private GetValueResult() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal GetValueResult(global::Quire.EngNotebook.Automation.IMathcadPrimeGetValueResult mathcadPrimeGetValueResult) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~GetValueResult() { } // stub finalizers must not throw: they also run for objects whose constructor threw
 }
