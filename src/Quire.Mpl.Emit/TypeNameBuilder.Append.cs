@@ -4,6 +4,50 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal sealed partial class TypeNameBuilder
 {
+    private void AddAssemblyQualifiedName(Type type, Format format)
+    {
+        Type type2 = type;
+        while (type2.HasElementType)
+        {
+            type2 = type2.GetElementType();
+        }
+        List<Type> list = new List<Type>();
+        Type type3 = type2;
+        while (type3 != null)
+        {
+            list.Add(type3);
+            type3 = type3.IsGenericParameter ? null : type3.DeclaringType;
+        }
+        for (int num = list.Count - 1; num >= 0; num--)
+        {
+            Type type4 = list[num];
+            string text = type4.Name;
+            if (num == list.Count - 1 && type4.Namespace != null && type4.Namespace.Length != 0)
+            {
+                text = type4.Namespace + "." + text;
+            }
+            AddName(text);
+        }
+        if (type2.IsGenericType && (!type2.IsGenericTypeDefinition || format == Format.ToString))
+        {
+            Type[] genericArguments = type2.GetGenericArguments();
+            OpenGenericArguments();
+            for (int i = 0; i < genericArguments.Length; i++)
+            {
+                Format format2 = (format == Format.FullName) ? Format.AssemblyQualifiedName : format;
+                OpenGenericArgument();
+                AddAssemblyQualifiedName(genericArguments[i], format2);
+                CloseGenericArgument();
+            }
+            CloseGenericArguments();
+        }
+        AddElementType(type);
+        if (format == Format.AssemblyQualifiedName)
+        {
+            AddAssemblySpec(type.Module.Assembly.FullName);
+        }
+    }
+
     private void AddElementType(Type type)
     {
         if (!type.HasElementType)

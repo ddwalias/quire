@@ -31,8 +31,6 @@ internal sealed partial class TypeNameBuilder
     private TypeNameBuilder() { }
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddAssemblyQualifiedName(global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeNameBuilder.Format format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.TypeNameBuilder+Format, mplasb")]
     internal enum Format
