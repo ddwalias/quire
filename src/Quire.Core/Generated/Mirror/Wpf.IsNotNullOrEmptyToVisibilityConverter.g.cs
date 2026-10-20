@@ -15,6 +15,4 @@ public partial class IsNotNullOrEmptyToVisibilityConverter : global::System.Wind
     public static global::Quire.Wpf.IsNotNullOrEmptyToVisibilityConverter InstanceUsingHidden;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.IsNotNullOrEmptyToVisibilityConverter InstanceUsingCollapsed;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
