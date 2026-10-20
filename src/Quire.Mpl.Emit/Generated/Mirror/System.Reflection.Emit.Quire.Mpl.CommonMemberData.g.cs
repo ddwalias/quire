@@ -34,10 +34,6 @@ internal partial class CommonMemberData : global::System.IEquatable<global::Syst
     [global::Quire.Mirror.MirrorStub]
     public CommonMemberData(string Name, global::System.Reflection.MethodAttributes attributes, global::System.Type[] parameters, global::System.Type returnType, bool IsStatic, global::System.Reflection.Emit.Quire.Mpl.ILGenerator codeStore, global::System.Reflection.Emit.Quire.Mpl.LocalVariableManager localVars, global::System.Reflection.Emit.Quire.Mpl.LabelManager labelManager, object source) { }
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.CommonMemberData FromMethodBuilder(global::System.Reflection.Emit.Quire.Mpl.MethodBuilder method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.CommonMemberData FromConstructorBuilder(global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder ctor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool PrintMembers(global::System.Text.StringBuilder builder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
