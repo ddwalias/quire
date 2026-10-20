@@ -4,6 +4,31 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal sealed partial class TypeNameBuilder
 {
+    private void AddElementType(Type type)
+    {
+        if (!type.HasElementType)
+        {
+            return;
+        }
+        AddElementType(type.GetElementType());
+        if (type.IsPointer)
+        {
+            Append('*');
+        }
+        else if (type.IsByRef)
+        {
+            Append('&');
+        }
+        else if (type.IsSZArray)
+        {
+            Append("[]");
+        }
+        else if (type.IsArray)
+        {
+            AddArray(type.GetArrayRank());
+        }
+    }
+
     private void EscapeName(string name)
     {
         if (ContainsReservedChar(name))
