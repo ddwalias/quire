@@ -22,14 +22,6 @@ internal partial class EntityWrappers
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+AssemblyNameReferenceWrapper, mplasb")]
     internal partial class AssemblyNameReferenceWrapper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal readonly global::System.Reflection.AssemblyName assemblyName;
-        [global::Quire.Mirror.MirrorStub]
-        public AssemblyNameReferenceWrapper(global::System.Reflection.AssemblyName assemblyName) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Equals(object obj) => base.Equals(obj);
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
     }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+TypeReferenceWrapper, mplasb")]
