@@ -29,8 +29,4 @@ public partial class ModuleBuilder : global::System.Reflection.Module
     internal void AppendMetadata(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder methodBodyStreamEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddTargetFrameworkAttribute(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.AssemblyDefinitionHandle assemblyHandle, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker metadataReferenceTracker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineType(string name, global::System.Reflection.TypeAttributes attr, global::System.Type parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
