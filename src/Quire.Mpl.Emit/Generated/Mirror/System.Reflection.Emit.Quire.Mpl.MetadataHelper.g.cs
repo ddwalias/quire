@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.MetadataHelper, mplasb")]
 internal static partial class MetadataHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static int AddMethodDefintionBody(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referenceTracker, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Metadata.TypeDefinitionHandle typeHandle, global::System.Reflection.Emit.Quire.Mpl.MethodBuilder methodBuilder, global::System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder methodBodyStreamEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
