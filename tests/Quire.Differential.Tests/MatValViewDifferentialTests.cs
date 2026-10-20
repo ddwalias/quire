@@ -115,12 +115,20 @@ public class MatValViewDifferentialTests
 
         var qTrim = Matrix(Side.Quire, 1);
         var mTrim = Matrix(Side.Mathcad, 1);
+        var qPointers = new Hashtable((Hashtable)Get(qTrim, "m_parr")!) { [99] = "dead" };
+        var mPointers = new Hashtable((Hashtable)Get(mTrim, "m_parr")!) { [99] = "dead" };
+        Set(qTrim, "m_parr", null);
+        Set(mTrim, "m_parr", null);
         CompareInstance("TrimPtrs copies only live pointer NaNs", "TrimPtrs", [typeof(Hashtable)], qTrim, mTrim,
-            [new Hashtable((Hashtable)Get(qTrim, "m_parr")!)], [new Hashtable((Hashtable)Get(mTrim, "m_parr")!)]);
+            [qPointers], [mPointers]);
         var qTrim2 = Matrix(Side.Quire, 3);
         var mTrim2 = Matrix(Side.Mathcad, 3);
+        var qPointers2 = new Hashtable((Hashtable)Get(qTrim2, "m_parr")!);
+        var mPointers2 = new Hashtable((Hashtable)Get(mTrim2, "m_parr")!);
+        Set(qTrim2, "m_parr", null);
+        Set(mTrim2, "m_parr", null);
         CompareInstance("TrimPtrs copies live pointer NaNs across multiple columns", "TrimPtrs", [typeof(Hashtable)], qTrim2, mTrim2,
-            [new Hashtable((Hashtable)Get(qTrim2, "m_parr")!)], [new Hashtable((Hashtable)Get(mTrim2, "m_parr")!)]);
+            [qPointers2], [mPointers2]);
 
         var qColumn = Matrix(Side.Quire, 1);
         var mColumn = Matrix(Side.Mathcad, 1);
