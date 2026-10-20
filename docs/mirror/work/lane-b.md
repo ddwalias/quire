@@ -2,16 +2,14 @@
 
 ## Active handoff
 
-### Active Batch: MatVal storage, packing and copy constructors
-- **Branch:** `mirror/b-matval-storage`
-- **Scope (18 methods in `src/Quire.Mpl/Mcd/MatVal.Storage.cs`):**
-  - Array copy helper: `Copy(double[], int, double[], int, int)` (0x06000534).
-  - Array packing: `Pack(double[])` (0x06000535), `Pack(double[], int, int, int, int)` (0x06000536), `Pack(double[], int)` (0x06000537), `PackZero(double[])` (0x06000541).
-  - Real packing: `PackReal()` (0x06000542), `PackReal(int)` (0x06000543), `PackReal(int, int, int, int)` (0x06000544).
-  - Imaginary packing: `PackImag()` (0x06000545), `PackImag(int)` (0x06000546), `PackImag(int, int, int, int)` (0x06000547).
-  - Pointer table packing: `PackPtrs(int)` (0x0600054a), `PackPtrs(int, int, int, int)` (0x0600054b).
-  - Copy constructor and pointer init: `.ctor(MatVal)` (0x0600048d), `InitPtrs(MatVal)` (0x0600048e).
-  - Pointer enumeration and mutation: `IteratePtrs(PtrDelegate)` (0x0600054c), `TransformPtrs(MatVal, PtrDelegate)` (0x0600054d), `CopyPtrs(MatVal)` (0x06000555).
+### Active Batch: MatVal indexed access and symbol extraction
+- **Branch:** `mirror/b-matval-indexed`
+- **Scope (33 methods in `src/Quire.Mpl/Mcd/MatVal.Indexed.cs`):**
+  - Dynamic index dispatchers: `DynCall(object)` (0x060004ad), `DynCall(object, object)` (0x060004ae).
+  - 1D index helpers and accessors: `mcd_get_1(object, object)` (0x060004b7), `matrix_get_1(int)` (0x060004b8), `sym_matrix_get_1(int)` (0x060004b9), `mcd_get_1(uint)` (0x060004ba), `mcd_sym_get_1(uint)` (0x060004bb), `matrix_get_1_nan(int)` (0x060004bc), `matrix_get_1_complex(int, out double, out double)` (0x060004bd), `matrix_get_1_real(int, out double)` (0x060004be).
+  - 2D index helpers and accessors: `mcd_get_2(object, object, object)` (0x060004bf), `matrix_get_2(int, int)` (0x060004c0), `sym_matrix_get_2(int, int)` (0x060004c1), `mcd_get_2(uint, uint)` (0x060004c2), `mcd_sym_get_2(uint, uint)` (0x060004c3), `matrix_get_2_nan(int, int)` (0x060004c4), `matrix_get_2_complex(int, int, out double, out double)` (0x060004c5), `matrix_get_2_real(int, int, out double)` (0x060004c6).
+  - Mutation and setters: `mcd_set_1(object, object, object)` (0x060004c7), `set_1(int, object)` (0x060004c8), `mcd_set_1(uint, object)` (0x060004c9), `mcd_set_2(object, object, object, object)` (0x060004ca), `set_2(int, int, object)` (0x060004cb), `mcd_set_2(uint, uint, object)` (0x060004cc).
+  - Internal indexing primitives: `Index(int, int)` (0x0600052e), `RowOf(int)` (0x0600052f), `ColOf(int)` (0x06000530), `asRowIndex(uint, uint)` (0x06000531), `asColIndex(uint, uint)` (0x06000532), `asIndex(uint, uint)` (0x06000533), `is_sym(object)` (0x06000538), `Index(int)` (0x06000539), `is_zero(object)` (0x0600053a).
 - **Goal:** Resolve remaining IL structure differences against Mathcad Prime 12.0.1.0 `mplrun.dll`, achieve 100% exact Release IL matching across all methods, 0 lint findings, 0 ratchet regressions, and 100% mutation kill rate.
 
 ### Maintainer-gated handoff: MatDim makeArrayDim and matrix dimension factories
@@ -50,6 +48,8 @@ Checkpoint base: Linux main `28bee7883ed054238e55e8efb8b2fc63b2f21ae8`. Lane B h
 
 | Batch | Main status |
 |---|---|
+| MatVal storage, packing and copy constructors | Merged to main at `7bc22fe3` (`6b9f65a2`). 18 methods; exact IL; 35 direct comparisons; 507/512 mutants killed (0 survivors). |
+| MatVal views and export members | Merged to main at `f9519665` (`c984b79d`). 31 methods; exact IL; 36 direct comparisons; 767/772 mutants killed (0 survivors). |
 | Function / FunctionUtilities, function matrix bridge and follow-up | Merged after passing runtime gates; Function evidence refresh recorded at `26e402e`, follow-up at `8da5693`. |
 | Engine interfaces | Merged; focused gate passed. |
 | MatVal collection/growth and views/export | Merged after passing runtime gates at `e2532e3` and `459eb23`. Evidence records nine view/export structure differences. |
