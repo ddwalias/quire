@@ -18,10 +18,6 @@ internal static partial class MetadataHelper
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Reflection.Metadata.TypeDefinitionHandle AddTypeDef(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referencesTracker, int fieldToken, int methodToken) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.TypeReferenceHandle AddTypeReference(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Type type, global::System.Reflection.Metadata.AssemblyReferenceHandle parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.TypeReferenceHandle AddTypeReference(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.AssemblyReferenceHandle parent, string name, string nameSpace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static global::System.Reflection.Metadata.MemberReferenceHandle AddConstructorReference(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.TypeReferenceHandle parent, global::System.Reflection.MethodBase method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Reflection.Metadata.FieldDefinitionHandle AddFieldDefintion(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Metadata.TypeDefinitionHandle typeHandle, global::System.Reflection.Emit.Quire.Mpl.FieldBuilder fieldBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
