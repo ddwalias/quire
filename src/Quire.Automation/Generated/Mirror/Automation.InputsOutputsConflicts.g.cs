@@ -11,22 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.InputsOutputsConflicts, Ptc.MathcadPrime.Automation")]
 public partial class InputsOutputsConflicts : global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private InputsOutputsConflicts() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal InputsOutputsConflicts(global::Quire.Automation.IMathcadPrimeInputsOutputsConflicts mathcadPrimeInputsOutputsConflicts) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~InputsOutputsConflicts() { } // stub finalizers must not throw: they also run for objects whose constructor threw
-    [global::Quire.Mirror.MirrorStub]
-    public void AddGeneralWarning(string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddGeneralError(string errorArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemWarning(string aliasArg, string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddItemError(string aliasArg, string errorArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,12 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.IMathcadPrimeInputsOutputsConflicts, Ptc.MathcadPrime.Automation")]
 public partial interface IMathcadPrimeInputsOutputsConflicts
 {
-    [global::Quire.Mirror.MirrorStub]
-    void AddGeneralWarning(string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddGeneralError(string errorArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddItemWarning(string aliasArg, string warningArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddItemError(string aliasArg, string errorArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

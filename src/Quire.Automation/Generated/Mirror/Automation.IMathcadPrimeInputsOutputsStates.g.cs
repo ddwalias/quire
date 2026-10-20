@@ -11,16 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.IMathcadPrimeInputsOutputsStates, Ptc.MathcadPrime.Automation")]
 public partial interface IMathcadPrimeInputsOutputsStates
 {
-    [global::Quire.Mirror.MirrorStub]
-    int ScalarInputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int ScalarOutputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int GetInputScalarStateByIndex(int indexArg, out string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetOutputScalarStateByIndex(int indexArg, out string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetInputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetOutputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

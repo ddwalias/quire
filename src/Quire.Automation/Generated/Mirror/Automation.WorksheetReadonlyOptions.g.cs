@@ -11,16 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.WorksheetReadonlyOptions, Ptc.MathcadPrime.Automation")]
 public partial class WorksheetReadonlyOptions : global::Quire.Automation.IProxyComRealSubject<global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions>, global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private WorksheetReadonlyOptions() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal WorksheetReadonlyOptions(global::Quire.Automation.IMathcadPrimeWorksheetReadonlyOptions mathcadPrimeWorksheetReadonlyOptions) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~WorksheetReadonlyOptions() { } // stub finalizers must not throw: they also run for objects whose constructor threw
-    [global::Quire.Mirror.MirrorStub]
-    public int SetOptionValue(global::Quire.Automation.WorksheetReadonlyOptionNames optionNameArg, object optionValueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

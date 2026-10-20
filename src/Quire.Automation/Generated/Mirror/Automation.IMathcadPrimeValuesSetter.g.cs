@@ -11,14 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.IMathcadPrimeValuesSetter, Ptc.MathcadPrime.Automation")]
 public partial interface IMathcadPrimeValuesSetter
 {
-    [global::Quire.Mirror.MirrorStub]
-    void AddScalarValue(string aliasArg, double valueArg, string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddMatrixValue(string aliasArg, object[,] valueArg, string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddStringValue(string aliasArg, string valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AddSExprValue(string aliasArg, string sexpressionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Automation.IMathcadPrimeSetValueResults SetValues(int secondsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
