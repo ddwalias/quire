@@ -28,7 +28,7 @@
 
 ## Test cases
 
-Direct comparisons in `MatValStorageDifferentialTests` invoke 29 direct cases across all 18 storage, packing, pointer enumeration, transformation and copy constructor members on both artifacts. Comparisons verify return values, exception behaviors, shape, stride, offset, flags, dimension, backing arrays and pointer tables across receivers and arguments. Conclusions are limited to the inputs and branches exercised in the current focused validation run.
+Direct comparisons in `MatValStorageDifferentialTests` invoke 35 direct cases across all 18 storage, packing, pointer enumeration, transformation and copy constructor members on both artifacts. Comparisons verify return values, exception behaviors, shape, stride, offset, flags, dimension, backing arrays and pointer tables across receivers and arguments. Conclusions are limited to the inputs and branches exercised in the current focused validation run.
 
 ## Structure mismatches observed in the focused run
 

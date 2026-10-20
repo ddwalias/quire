@@ -119,6 +119,8 @@ public class MatValStorageDifferentialTests
         // 0x06000544: PackReal(int, int, int, int)
         CompareBoth("PackReal.sub_0_1_0_1", "PackReal", [typeof(int), typeof(int), typeof(int), typeof(int)],
             0x06000544, [0, 1, 0, 1], rows: 2, cols: 2, stride: 3, offset: 1);
+        CompareBoth("PackReal.sub_1_4_1_4", "PackReal", [typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x06000544, [1, 4, 1, 4], rows: 4, cols: 4, stride: 5, offset: 2);
 
         // 0x06000545: PackImag()
         CompareBoth("PackImag.none", "PackImag", [], 0x06000545, [], imaginary: false);
@@ -130,10 +132,13 @@ public class MatValStorageDifferentialTests
         // 0x06000547: PackImag(int, int, int, int)
         CompareBoth("PackImag.sub", "PackImag", [typeof(int), typeof(int), typeof(int), typeof(int)],
             0x06000547, [0, 2, 0, 1], imaginary: true);
+        CompareBoth("PackImag.sub_1_4_1_4", "PackImag", [typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x06000547, [1, 4, 1, 4], rows: 4, cols: 4, stride: 5, offset: 2, imaginary: true);
 
         // 0x06000541: PackZero(double[])
         CompareBoth("PackZero.all_zero", "PackZero", [typeof(double[])], 0x06000541, [new double[] { 0, 0, 0 }]);
         CompareBoth("PackZero.nonzero", "PackZero", [typeof(double[])], 0x06000541, [new double[] { 0, 1.5, 0 }]);
+        CompareBoth("PackZero.leading_nonzero", "PackZero", [typeof(double[])], 0x06000541, [new double[] { 1.5, 0, 0 }]);
 
         // 0x06000535: Pack(double[])
         CompareBoth("Pack.arr", "Pack", [typeof(double[])], 0x06000535, [new double[] { 1, 2, 3, 4, 5, 6, 7 }]);
@@ -142,6 +147,9 @@ public class MatValStorageDifferentialTests
         // 0x06000536: Pack(double[], int, int, int, int)
         CompareBoth("Pack.arr_sub", "Pack", [typeof(double[]), typeof(int), typeof(int), typeof(int), typeof(int)],
             0x06000536, [new double[] { 1, 2, 3, 4, 5, 6, 7 }, 0, 1, 0, 1]);
+        var bigArray = Enumerable.Range(0, 30).Select(i => (double)i).ToArray();
+        CompareBoth("Pack.arr_sub_1_4_1_4", "Pack", [typeof(double[]), typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x06000536, [bigArray, 1, 4, 1, 4], rows: 4, cols: 4, stride: 5, offset: 2);
     }
 
     [SkippableFact]
@@ -155,6 +163,14 @@ public class MatValStorageDifferentialTests
         // 0x0600054b: PackPtrs(int, int, int, int)
         CompareBoth("PackPtrs.sub_present", "PackPtrs", [typeof(int), typeof(int), typeof(int), typeof(int)],
             0x0600054b, [0, 1, 0, 1], setup: (s, m) => Call(m, "set_ptrs_2", 0, 0, s.Str("ptr")));
+        CompareBoth("PackPtrs.sub_multi_ptrs", "PackPtrs", [typeof(int), typeof(int), typeof(int), typeof(int)],
+            0x0600054b, [1, 4, 1, 4],
+            setup: (s, m) =>
+            {
+                Call(m, "set_ptrs_2", 2, 2, s.Str("ptr22"));
+                Call(m, "set_ptrs_2", 3, 3, s.Num(9, 10, "L"));
+            },
+            rows: 4, cols: 4, stride: 5, offset: 1);
 
         // 0x0600048d: .ctor(MatVal) copy constructor
         {
@@ -248,6 +264,14 @@ public class MatValStorageDifferentialTests
             var qDel2 = CreatePtrDelegate(Side.Quire, qTarget2);
             var mDel2 = CreatePtrDelegate(Side.Mathcad, mTarget2);
             Compare("TransformPtrs.no_ptrs", qMethod, qTarget2, [qEmpty, qDel2], mMethod, mTarget2, [mEmpty, mDel2], 0x0600054d);
+
+            var qTarget3 = Matrix(Side.Quire);
+            var mTarget3 = Matrix(Side.Mathcad);
+            Call(qTarget3, "set_ptrs_2", 1, 0, Side.Quire.Str("pre_existing"));
+            Call(mTarget3, "set_ptrs_2", 1, 0, Side.Mathcad.Str("pre_existing"));
+            var qDel3 = CreatePtrDelegate(Side.Quire, qTarget3);
+            var mDel3 = CreatePtrDelegate(Side.Mathcad, mTarget3);
+            Compare("TransformPtrs.pre_existing_receiver_ptrs", qMethod, qTarget3, [qSrc, qDel3], mMethod, mTarget3, [mSrc, mDel3], 0x0600054d);
         }
 
         // 0x06000555: CopyPtrs(MatVal)
