@@ -11,32 +11,13 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.AssemblyBuilder, mplasb")]
 public partial class AssemblyBuilder : global::System.Reflection.Assembly
 {
-    [global::Quire.Mirror.MirrorStub]
     private bool _previouslySaved;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.AssemblyName _assemblyName;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _module;
-    [global::Quire.Mirror.MirrorStub]
     private string _fullName;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Version _version;
-    [global::Quire.Mirror.MirrorStub]
     private string _culture;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Metadata.AssemblyDefinitionHandle _assemblyDef;
-    [global::Quire.Mirror.MirrorStub]
-    public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string FullName { get => base.FullName; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Version Version { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Culture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private AssemblyBuilder(global::System.Reflection.AssemblyName name) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.AssemblyName GetName() => base.GetName();
     [global::Quire.Mirror.MirrorStub]
     public void Save(string assemblyFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
