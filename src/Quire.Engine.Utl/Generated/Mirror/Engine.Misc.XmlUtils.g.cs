@@ -124,22 +124,298 @@ public partial class XmlUtils
         Dbg("FindElementStart failing");
         return false;
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ScanElement(string str, ref int startPos, out int endPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool SkipElement(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ScanTag(string str, ref int startPos, out int endPos, out string elementName, out bool isEmpty, out bool isClosing) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ScanTagName(string str, ref int startPos, out int endPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ScanAttributeString(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool SkipMatchingTag(string str, string elementName, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool SkipBracketedSGML(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool SkipSgmlComment(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool ScanElement(string str, ref int startPos, out int endPos)
+    {
+        int startPos2 = startPos;
+        endPos = startPos;
+        if (!FindElementStart(str, ref startPos2))
+        {
+            return false;
+        }
+        int scanPos = startPos2;
+        if (!SkipElement(str, ref scanPos))
+        {
+            return false;
+        }
+        startPos = startPos2;
+        endPos = scanPos;
+        return true;
+    }
+    public static bool SkipElement(string str, ref int scanPos)
+    {
+        if (!FindElementStart(str, ref scanPos))
+        {
+            return false;
+        }
+        char c = str[scanPos];
+        if (c.Equals(s_OpenAngle))
+        {
+            string elementName;
+            bool isEmpty;
+            bool isClosing;
+            int startPos = scanPos;
+            int endPos = startPos;
+            if (ScanTag(str, ref startPos, out endPos, out elementName, out isEmpty, out isClosing))
+            {
+                startPos = endPos;
+                if (!isEmpty)
+                {
+                    if (isClosing)
+                    {
+                        BadSyntax(str, startPos, "</{0}> seen out of context.", elementName);
+                    }
+                    if (!SkipMatchingTag(str, elementName, ref endPos))
+                    {
+                        BadSyntax(str, scanPos, "Unable to find matching tag.");
+                    }
+                }
+            }
+            else if (!SkipBracketedSGML(str, ref endPos))
+            {
+                BadSyntax(str, scanPos, "Unable to scan tag.");
+            }
+            scanPos = endPos;
+            return true;
+        }
+        BadSyntax(str, scanPos, "Bad character where '<' expected.");
+        return false;
+    }
+    public static bool ScanTag(string str, ref int startPos, out int endPos, out string elementName, out bool isEmpty, out bool isClosing)
+    {
+        bool flag = false;
+        bool flag2 = false;
+        int num = startPos;
+        int num2 = num;
+        elementName = null;
+        endPos = startPos;
+        isEmpty = false;
+        isClosing = false;
+        if (num2 == str.Length || !str[num2].Equals(s_OpenAngle))
+        {
+            BadSyntax(str, startPos, "Tag must start with '<'");
+        }
+        num2++;
+        if (num2 == str.Length)
+        {
+            BadSyntax(str, startPos, "Premature end of stream while reading tag.");
+        }
+        if (str[num2].Equals(s_Slash))
+        {
+            num2++;
+            flag2 = true;
+        }
+        else if (str[num2].Equals(s_Excl))
+        {
+            return false;
+        }
+        int i;
+        if (!ScanTagName(str, ref num2, out i))
+        {
+            BadSyntax(str, startPos, "Missing tag name.");
+        }
+        string text = str.Substring(num2, i - num2);
+        endPos = startPos;
+        for (; i < str.Length; i++)
+        {
+            char c = str[i];
+            if (c.Equals(s_Slash))
+            {
+                flag = true;
+                continue;
+            }
+            if (c.Equals(s_CloseAngle))
+            {
+                if (text == null)
+                {
+                    BadSyntax(str, startPos, "Missing tag name.");
+                }
+                elementName = text;
+                isEmpty = flag;
+                isClosing = flag2;
+                startPos = num;
+                endPos = i + 1;
+                Dbg("Found tag {0} @ {1}", str.Substring(startPos, endPos - startPos), endPos);
+                return true;
+            }
+            flag = false;
+            if (c.Equals(s_SingleQuote) || c.Equals(s_DoubleQuote))
+            {
+                if (!ScanAttributeString(str, ref i))
+                {
+                    BadSyntax(str, i, "Bad string literal.");
+                }
+                i--;
+            }
+        }
+        BadSyntax(str, startPos, "Missing '>' in tag.");
+        return false;
+    }
+    public static bool ScanTagName(string str, ref int startPos, out int endPos)
+    {
+        int i;
+        for (i = startPos; i < str.Length; i++)
+        {
+            if (s_TagBreakChars.IndexOf(str[i]) < 0)
+            {
+                break;
+            }
+        }
+        endPos = startPos;
+        for (int j = i; j < str.Length; j++)
+        {
+            if (s_TagBreakChars.IndexOf(str[j]) >= 0)
+            {
+                if (j == startPos)
+                {
+                    BadSyntax(str, startPos, "Missing tag name.");
+                }
+                startPos = i;
+                endPos = j;
+                Dbg("ScanTagName win @ {0}", endPos);
+                return true;
+            }
+        }
+        BadSyntax(str, startPos, "No end to tag name.");
+        return false;
+    }
+    public static bool ScanAttributeString(string str, ref int scanPos)
+    {
+        Dbg("Scanning attribute string @ {0}", scanPos);
+        if (scanPos >= str.Length)
+        {
+            BadSyntax(str, scanPos, "Scan string at end of file.");
+        }
+        int num = scanPos;
+        char obj = str[num];
+        if (!obj.Equals(s_SingleQuote) && !obj.Equals(s_DoubleQuote))
+        {
+            BadSyntax(str, scanPos, "Trying to ScanAttributeString on non-String");
+        }
+        for (num++; num < str.Length; num++)
+        {
+            char c = str[num];
+            if (c.Equals(s_CloseAngle))
+            {
+                BadSyntax(str, num, "Found '>' in attribute value. Should be &gt;.");
+                return false;
+            }
+            if (c.Equals(obj))
+            {
+                scanPos = num + 1;
+                Dbg("ScanAttributeString win @ {0}", num);
+                return true;
+            }
+        }
+        BadSyntax(str, scanPos, "String not closed.");
+        return false;
+    }
+    public static bool SkipMatchingTag(string str, string elementName, ref int scanPos)
+    {
+        if (elementName == null || elementName.Length == 0)
+        {
+            throw new global::System.Exception("Matching null tag?");
+        }
+        int num = 1;
+        for (int i = scanPos; i < str.Length; i++)
+        {
+            char c = str[i];
+            if (!c.Equals(s_OpenAngle))
+            {
+                continue;
+            }
+            string elementName2;
+            int endPos;
+            int startPos = i;
+            bool isEmpty;
+            bool isClosing;
+            if (ScanTag(str, ref startPos, out endPos, out elementName2, out isEmpty, out isClosing))
+            {
+                if (elementName2 != null && elementName2.Equals(elementName) && !isEmpty)
+                {
+                    if (isClosing)
+                    {
+                        scanPos = endPos;
+                        num--;
+                        if (num < 1)
+                        {
+                            Dbg("Found " + elementName + " matching tag @ " + endPos.ToString());
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        num++;
+                    }
+                }
+            }
+            else if (SkipCDATA(str, ref i))
+            {
+                i--;
+            }
+            else if (SkipSgmlComment(str, ref i))
+            {
+                i--;
+            }
+            else
+            {
+                BadSyntax(str, scanPos, "Stray <");
+            }
+        }
+        BadSyntax(str, scanPos, "Can't find </{0}>", elementName);
+        return false;
+    }
+    public static bool SkipBracketedSGML(string str, ref int scanPos)
+    {
+        int scanPos2 = scanPos;
+        if (SkipSgmlComment(str, ref scanPos2))
+        {
+            scanPos = scanPos2;
+            return true;
+        }
+        if (SkipCDATA(str, ref scanPos2))
+        {
+            scanPos = scanPos2;
+            return true;
+        }
+        return false;
+    }
+    public static bool SkipSgmlComment(string str, ref int scanPos)
+    {
+        int i = scanPos;
+        Dbg("SgmlComment entered, pos={0}", i);
+        RequireText(str, ref i, "<!");
+        int num = 0;
+        bool flag = false;
+        for (; i < str.Length; i++)
+        {
+            char value = str[i];
+            if (value.Equals(s_Hyphen))
+            {
+                num++;
+                if (num == 2)
+                {
+                    num = 0;
+                    flag = !flag;
+                }
+                continue;
+            }
+            num = 0;
+            if (!flag)
+            {
+                if (value.Equals(s_CloseAngle))
+                {
+                    scanPos = i + 1;
+                    Dbg("SgmlCommentEnd = {0}", scanPos);
+                    return true;
+                }
+                if (s_WhitepaceChars.IndexOf(value) < 0)
+                {
+                    BadSyntax(str, i, "Strange state of SGML comment.");
+                }
+            }
+        }
+        return false;
+    }
     [global::Quire.Mirror.MirrorStub]
     private static bool FindCandidateXmlnsAttr(string str, ref int scan_pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -154,8 +430,43 @@ public partial class XmlUtils
     private static bool SkipWhitespace(string str, ref int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static int BackOverWhitespace(string str, int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool SkipCDATA(string str, ref int scanPos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool SkipCDATA(string str, ref int scanPos)
+    {
+        int i = scanPos;
+        int num = 0;
+        if (!RequireText(str, ref i, "<![CDATA["))
+        {
+            Dbg("CDATA failing @ {0} (no prefix), not updating scan pointer", i);
+            return false;
+        }
+        for (; i < str.Length; i++)
+        {
+            char c = str[i];
+            if (c.Equals(s_CloseBracket))
+            {
+                num++;
+                Dbg("CDATA bracket count = {0} @ pos {1}", num, i);
+                if (num > 2)
+                {
+                    num = 2;
+                    Dbg("CDATA Resetting bracket count to 2 @ pos {0}", i);
+                }
+            }
+            else
+            {
+                if (num == 2 && c.Equals(s_CloseAngle))
+                {
+                    i++;
+                    scanPos = i;
+                    Dbg("CDATA winning @ {0}, updating scan pointer", i);
+                    return true;
+                }
+                num = 0;
+            }
+        }
+        Dbg("CDATA failing @ {0}, not updating scan pointer", i);
+        return false;
+    }
     [global::Quire.Mirror.MirrorStub]
     public static bool UnorderedEqual(string actual, string expected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -192,6 +503,5 @@ public partial class XmlUtils
     }
     [global::Quire.Mirror.MirrorStub]
     public static void SelfTest(string[] ignored_data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public XmlUtils() { }
 }
