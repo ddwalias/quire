@@ -13,6 +13,4 @@ public partial class GeneralTransformToTransformConverter : global::System.Windo
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Wpf.GeneralTransformToTransformConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
-    public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
