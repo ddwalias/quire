@@ -30,10 +30,6 @@ internal partial class DynamicAssemblyModel
     [global::Quire.Mirror.MirrorStub]
     public DynamicAssemblyModel(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder moduleBuilder, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referenceTracker, global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> typesList) { }
     [global::Quire.Mirror.MirrorStub]
-    private void AddTypeDefinition(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddFieldDefinition(global::System.Reflection.Emit.Quire.Mpl.FieldBuilder field) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AddMethodDefinition(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddMethodBodiesOffsets(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
