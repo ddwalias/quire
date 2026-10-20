@@ -14,11 +14,12 @@ public sealed partial class EngineError : IEngineError
 {
     public EngineError(string message, string? symbol = null)
     {
-        Message = message;
+        _message = message;
         Symbol = symbol;
     }
 
-    public string Message { get; }
+    [MirrorVerified("PtcCalculationCoreEngineErrorRelationsDifferentialTests")]
+    public string Message => _message;
     public string? Symbol { get; }
 
     [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]
