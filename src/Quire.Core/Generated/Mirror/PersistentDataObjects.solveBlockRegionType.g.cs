@@ -13,6 +13,4 @@ public partial class solveBlockRegionType : global::Quire.PersistentDataObjects.
 {
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Type[] SupportedTypes;
-    [global::Quire.Mirror.MirrorStub]
-    public solveBlockRegionType(global::Quire.PersistentDataObjects.worksheetRegionType regionType) { }
 }
