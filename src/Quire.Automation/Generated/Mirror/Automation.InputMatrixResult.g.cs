@@ -11,20 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.InputMatrixResult, Ptc.MathcadPrime.Automation")]
 public partial class InputMatrixResult : global::Quire.Automation.IMathcadPrimeInputMatrixResult
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Automation.IMathcadPrimeInputMatrixResult _realSubjectInstance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Automation.IMathcadPrimeInputMatrixResult RealSubjectInstance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Automation.IMathcadPrimeMatrix MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private InputMatrixResult() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal InputMatrixResult(global::Quire.Automation.IMathcadPrimeInputMatrixResult mathcadPrimeInputMatrixResult) { }
-    [global::Quire.Mirror.MirrorStub]
-    ~InputMatrixResult() { } // stub finalizers must not throw: they also run for objects whose constructor threw
 }

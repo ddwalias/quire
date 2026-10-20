@@ -11,10 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.IMathcadPrimeSetValueResults, Ptc.MathcadPrime.Automation")]
 public partial interface IMathcadPrimeSetValueResults
 {
-    [global::Quire.Mirror.MirrorStub]
-    int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int GetResultByIndex(int indexArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int GetResultByAlias(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
