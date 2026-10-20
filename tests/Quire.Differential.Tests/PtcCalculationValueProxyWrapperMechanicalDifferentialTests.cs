@@ -103,9 +103,7 @@ public class PtcCalculationValueProxyWrapperMechanicalDifferentialTests
 
     private static void CheckOriginal(MethodBase method, int token)
     {
-        Assert.True(method.Module.ModuleVersionId == Guid.Parse("82391b36-0d84-45c3-b21a-f7dccf288c68"),
-            $"Expected Calculation MVID 82391b36-0d84-45c3-b21a-f7dccf288c68, got {method.Module.ModuleVersionId} at {method.Module.Assembly.Location}");
-        Assert.True(method.MetadataToken == token,
-            $"Expected Calculation token 0x{token:x8}, got 0x{method.MetadataToken:x8} for {method}");
+        Assert.Equal(Guid.Parse("82391b36-0d84-45c3-b21a-f7dccf288c68"), method.Module.ModuleVersionId);
+        Assert.Equal(token, method.MetadataToken);
     }
 }
