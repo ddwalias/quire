@@ -11,10 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DirectionOps, Ptc.Core")]
 public static partial class DirectionOps
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Direction Opposite(global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsHorizontal(global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsVertical(global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
