@@ -141,8 +141,8 @@ public sealed partial class MatVal
                     uniformDim = d.dim(k, l);
                     if (uniformDim != Dim.identity)
                     {
-                        int num2 = Index(k, l);
-                        set_ptrs_at(num2, new NumVal(get_real_raw(num2), get_imag_raw(num2), uniformDim));
+                        int cellIndex = Index(k, l);
+                        set_ptrs_at(cellIndex, new NumVal(get_real_raw(cellIndex), get_imag_raw(cellIndex), uniformDim));
                     }
                 }
             }
