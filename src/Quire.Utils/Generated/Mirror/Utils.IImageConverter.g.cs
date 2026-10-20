@@ -11,6 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.IImageConverter, utilsmgd")]
 public partial interface IImageConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    void ImageStreamToImageStream(global::Quire.Utils.ImageFormatter formatter, object inStream, object outStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

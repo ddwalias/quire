@@ -12,7 +12,5 @@ namespace Quire.Utils;
 public partial class BMPFormatter : global::Quire.Utils.ImageFormatter, global::Quire.Utils.IBMPFormatter
 {
     [global::Quire.Mirror.MirrorStub]
-    internal override string MimeType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public BMPFormatter() { }
 }

@@ -11,6 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.ITransformHelper, utilsmgd")]
 public partial interface ITransformHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Base64JPGToBase64PNG(string base64JPG) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

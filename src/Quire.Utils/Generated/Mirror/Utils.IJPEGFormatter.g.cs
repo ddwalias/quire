@@ -11,6 +11,4 @@ namespace Quire.Utils;
 [global::Quire.Mirror.MirrorOf("Mathsoft.Utils.IJPEGFormatter, utilsmgd")]
 public partial interface IJPEGFormatter
 {
-    [global::Quire.Mirror.MirrorStub]
-    long Quality { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
