@@ -55,10 +55,10 @@ public sealed partial class MatVal : DimVal
     public MatVal() : this(null, null, 0, 0, 0, null, Flags.MatrixTag, 0) { }
 
     [MirrorVerified("MatValDifferentialTests")]
-    public MatVal(int r) : this(r, 1) { }
+    public MatVal(int r) : this(r, 1, false, r) { }
 
     [MirrorVerified("MatValDifferentialTests")]
-    public MatVal(int r, int c) : this(r, c, false) { }
+    public MatVal(int r, int c) : this(r, c, false, r) { }
 
     [MirrorVerified("MatValDifferentialTests")]
     public MatVal(int r, int c, bool imag) : this(r, c, imag, r) { }
@@ -66,26 +66,28 @@ public sealed partial class MatVal : DimVal
     [MirrorVerified("MatValDifferentialTests")]
     public MatVal(int r, int c, bool imag, int anr)
     {
+        m_rarr = new double[c * anr];
+        m_iarr = imag ? new double[c * anr] : null;
+        m_parr = null;
+        m_offset = 0;
         Data.m_rows = r;
         Data.m_cols = c;
         Data.m_anr = anr;
-        m_rarr = new double[anr * c];
-        m_iarr = imag ? new double[m_rarr.Length] : null;
         Data.m_flags = Flags.MatrixTag;
     }
 
     [MirrorVerified("MatValDifferentialTests")]
     public MatVal(double[] rarr, double[] iarr, int r, int c, int anr, Hashtable ptrs, Flags flags, int offset)
     {
-        Data.m_rows = r;
-        Data.m_cols = c;
-        Data.m_anr = anr;
-        Data.m_flags = flags;
+        m_dim = Dim.identity;
         m_rarr = rarr;
         m_iarr = iarr;
         m_parr = ptrs;
         m_offset = offset;
-        m_dim = Dim.identity;
+        Data.m_rows = r;
+        Data.m_cols = c;
+        Data.m_anr = anr;
+        Data.m_flags = flags;
     }
 
     [MirrorVerified("MatValDifferentialTests")]
@@ -93,17 +95,17 @@ public sealed partial class MatVal : DimVal
         : this(rarr, iarr, r, c, anr, ptrs, Flags.MatrixTag, 0) { }
     [MirrorVerified("MatValDifferentialTests")]
     public MatVal(double[] rarr, double[] iarr, int r, int c, int anr)
-        : this(rarr, iarr, r, c, anr, null) { }
+        : this(rarr, iarr, r, c, anr, null, Flags.MatrixTag, 0) { }
     [MirrorVerified("MatValDifferentialTests")]
     public MatVal(double[] rarr, double[] iarr, int r, int c)
-        : this(rarr, iarr, r, c, r) { }
+        : this(rarr, iarr, r, c, r, null, Flags.MatrixTag, 0) { }
     [MirrorVerified("MatValDifferentialTests")]
     public MatVal(double[] rarr, double[] iarr, int r)
-        : this(rarr, iarr, r, 1) { }
+        : this(rarr, iarr, r, 1, r, null, Flags.MatrixTag, 0) { }
     [MirrorVerified("MatValDifferentialTests")]
-    public MatVal(double[] rarr, double[] iarr) : this(rarr, iarr, rarr.Length) { }
+    public MatVal(double[] rarr, double[] iarr) : this(rarr, iarr, rarr.Length, 1, rarr.Length, null, Flags.MatrixTag, 0) { }
     [MirrorVerified("MatValDifferentialTests")]
-    public MatVal(double[] rarr) : this(rarr, null) { }
+    public MatVal(double[] rarr) : this(rarr, null, rarr.Length, 1, rarr.Length, null, Flags.MatrixTag, 0) { }
 
     [MirrorVerified("MatValDifferentialTests")]
     public int Rows => Data.m_rows;
@@ -126,37 +128,63 @@ public sealed partial class MatVal : DimVal
     }
 
     [MirrorVerified("MatValDifferentialTests")]
-    public bool Packed => Rows * Cols == m_rarr.Length;
+    public bool Packed => Data.m_rows * Data.m_cols == m_rarr.Length;
     [MirrorVerified("MatValDifferentialTests")]
     public bool Immutable
     {
         get => (Data.m_flags & Flags.CopyOnWrite) != 0;
-        set => Data.m_flags = value ? Data.m_flags | Flags.CopyOnWrite : Data.m_flags & ~Flags.CopyOnWrite;
+        set
+        {
+            if (value)
+                Data.m_flags |= Flags.CopyOnWrite;
+            else
+                Data.m_flags &= ~Flags.CopyOnWrite;
+        }
     }
     [MirrorVerified("MatValDifferentialTests")]
     public bool Shared
     {
         get => (Data.m_flags & Flags.Shared) != 0;
-        set => Data.m_flags = value ? Data.m_flags | Flags.Shared : Data.m_flags & ~Flags.Shared;
+        set
+        {
+            if (value)
+                Data.m_flags |= Flags.Shared;
+            else
+                Data.m_flags &= ~Flags.Shared;
+        }
     }
     [MirrorVerified("MatValDifferentialTests")]
     public override int Isize => Rows * Cols;
     [MirrorVerified("MatValDifferentialTests")]
-    public override int GetHashCode() => unchecked(Rows * 64 + Cols);
+    public override int GetHashCode() => Rows.GetHashCode() * 64 + Cols.GetHashCode();
     [MirrorVerified("MatValDifferentialTests")]
-    public static double ThePtrNan() => BitConverter.Int64BitsToDouble(-1L);
+    public static unsafe double ThePtrNan()
+    {
+        double val;
+        int* p = (int*)&val;
+        *p = -1;
+        p[1] = -1;
+        return *(double*)p;
+    }
     [MirrorVerified("MatValDifferentialTests")]
-    public static bool IsPtrNan(ref double r) => (uint)(BitConverter.DoubleToInt64Bits(r) >> 32) == uint.MaxValue;
+    public static unsafe bool IsPtrNan(ref double r)
+    {
+        fixed (double* p = &r)
+        {
+            int* ptr = (int*)p;
+            return ptr[1] == -1;
+        }
+    }
     [MirrorTested("Mcd.MatVal")]
     private bool IsPtrNan(int r, int c) => IsPtrNan(ref m_rarr[Index(r, c)]);
     [MirrorVerified("MatValDifferentialTests")]
     public void AllocImaginary() => m_iarr = new double[m_rarr.Length];
 
     [MirrorVerified("MatValDifferentialTests")]
-    public int Index(int r) => m_offset + r;
+    public int Index(int r) => r + m_offset;
 
     [MirrorVerified("MatValDifferentialTests")]
-    public int Index(int r, int c) => m_offset + c * Anr + r;
+    public int Index(int r, int c) => m_offset + r + Anr * c;
 
     [MirrorVerified("MatValDifferentialTests")]
     public int RowOf(int idx) => (idx - m_offset) % Anr;
