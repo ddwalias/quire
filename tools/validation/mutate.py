@@ -264,6 +264,20 @@ def write_bytes_retry(path, data, attempts=12):
             time.sleep(min(0.05 * (2 ** attempt), 0.8))
 
 
+def replace_retry(source, destination, attempts=12):
+    """Retry transient Windows sharing/teardown locks while renaming test artifact files."""
+    source = Path(source)
+    destination = Path(destination)
+    for attempt in range(attempts):
+        try:
+            source.replace(destination)
+            return
+        except OSError:
+            if attempt + 1 == attempts:
+                raise
+            time.sleep(min(0.05 * (2 ** attempt), 0.8))
+
+
 def test_filter(tests):
     return '|'.join(f'FullyQualifiedName={t}' for t in sorted(tests))
 
@@ -368,7 +382,7 @@ def run(coverage, types, test_dll, project, dotnet='dotnet', jobs=1, timeout=600
         with sdk_directory(global_json) as cwd:
             code = execute(command, dict(env, QUIRE_MUTATION_KILLS=str(kills)), limit, cwd)
         if kills.is_file():
-            kills.replace(directory / 'kills.txt')
+            replace_retry(kills, directory / 'kills.txt')
         return code, directory
 
     def unchanged(copy):

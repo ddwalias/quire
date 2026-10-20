@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 import unittest
 from unittest import mock
-from mutate import annotate, cache_directory, key, reasons, run, select, stale_entries, write_bytes_retry
+from mutate import annotate, cache_directory, key, reasons, run, select, stale_entries, write_bytes_retry, replace_retry
 
 BODY = 'ab' * 32
 
@@ -104,6 +104,26 @@ class MutationTests(unittest.TestCase):
 
         self.assertEqual(len(attempts), 3)
         self.assertEqual(path.read_bytes(), b'assembly')
+
+    def test_replace_retry_recovers_from_transient_os_error(self):
+        source = Path(self.directory.name) / 'src.txt'
+        dest = Path(self.directory.name) / 'dst.txt'
+        source.write_text('content')
+        replace = Path.replace
+        attempts = []
+
+        def flaky_replace(src, dst):
+            attempts.append((src, dst))
+            if len(attempts) < 3:
+                raise OSError(32, 'The process cannot access the file because it is being used by another process')
+            return replace(src, dst)
+
+        with mock.patch('mutate.time.sleep'), mock.patch.object(Path, 'replace', flaky_replace):
+            replace_retry(source, dest)
+
+        self.assertEqual(len(attempts), 3)
+        self.assertEqual(dest.read_text(), 'content')
+        self.assertFalse(source.exists())
 
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
