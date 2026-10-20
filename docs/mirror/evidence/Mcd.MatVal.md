@@ -110,6 +110,61 @@
 | PackObjects() | 0x06000539 | — | Delegates to PackObjects(0). | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
 | op_Division(class:532, r8) | 0x06000556 | — | Divides matrix by scalar; mutates if Packed and mutable, otherwise copies first. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Verified |
 | Scale(r8) | 0x06000557 | — | Scales real, imaginary, and pointer values in-place by scalar divisor. | Observed direct Mathcad cases in MatValIndexedDifferentialTests | Analyzed |
+| get_IsMatrix() | 0x0600045a | — | Return target MatVal instance. | Static observed | Analyzed |
+| get_MatrixDimension() | 0x06000454 | — | Delegate to MatDim.make(this). | Static observed | Analyzed |
+| get_1(i4) | 0x060004d0 | — | Single-index element getter; returns pointer or boxed real element. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_2(i4, i4) | 0x060004d1 | — | Two-index element getter; returns pointer or boxed real element. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get(i4) | 0x060004da | — | Flat offset element getter; returns pointer or boxed real element. | Static observed | Analyzed |
+| get_1_dim(i4) | 0x060004d2 | — | Single-index element dimension getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_2_dim(i4, i4) | 0x060004d3 | — | Two-index element dimension getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_dim(i4) | 0x060004e4 | — | Flat offset element dimension getter. | Static observed | Analyzed |
+| get_1_matdim(i4) | 0x060004d4 | — | Single-index element MatDim getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_2_matdim(i4, i4) | 0x060004d5 | — | Two-index element MatDim getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_matdim(i4) | 0x060004e5 | — | Flat offset element MatDim getter. | Static observed | Analyzed |
+| get_1_ptr(i4) | 0x060004d6 | — | Single-index raw pointer getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_2_ptr(i4, i4) | 0x060004d7 | — | Two-index raw pointer getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_ptr(i4) | 0x060004e7 | — | Flat offset raw pointer getter. | Static observed | Analyzed |
+| get_1_na(class:584, i4) | 0x060004d8 | — | Vector numeric/pointer accessor with fallback. | Static observed | Analyzed |
+| get_2_na(class:584, i4, i4) | 0x060004d9 | — | Matrix numeric/pointer accessor with fallback. | Static observed | Analyzed |
+| get_na(class:584, i4) | 0x060004e6 | — | Flat offset numeric/pointer accessor with fallback. | Static observed | Analyzed |
+| get_real(i4) | 0x060004e8 | — | Single-index real component getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real(i4, i4) | 0x060004e9 | — | Two-index real component getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_imag(i4) | 0x060004ea | — | Single-index imaginary component getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_imag(i4, i4) | 0x060004eb | — | Two-index imaginary component getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real_raw(i4) | 0x060004ec | — | Flat index raw real array getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_imag_raw(i4) | 0x060004ed | — | Flat index raw imaginary array getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real_mixed(i4) | 0x060004ee | — | Single-index mixed real component getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real_mixed(i4, i4) | 0x060004ef | — | Two-index mixed real component getter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real_mixed_handle(i4, u4) | 0x060004f0 | — | Single-index mixed real component getter with error handle. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real_mixed_handle(i4, i4, u4) | 0x060004f1 | — | Two-index mixed real component getter with error handle. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| get_real_mixed_raw(i4, u4) | 0x060004f2 | — | Flat index mixed real component getter with error handle. | Static observed | Analyzed |
+| DimActual() | 0x06000440 | — | Determine actual dimension across live elements. | Static observed | Analyzed |
+| dvm(class:515) | 0x06000445 | — | Wrap dimension in MatVal. | Static observed | Analyzed |
+| set_1(i4, object) | 0x06000509 | — | Single-index object element setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_2(i4, i4, object) | 0x0600050a | — | Two-index object element setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set(i4, object) | 0x0600050c | — | Flat offset object element setter. | Static observed | Analyzed |
+| setNaN(i4, object) | 0x0600050b | — | Set pointer NaN sentinel and object at flat offset. | Static observed | Analyzed |
+| setspec(i4, object) | 0x0600050d | — | Set special object/dimension at flat offset. | Static observed | Analyzed |
+| set_1(i4, r8, class:515) | 0x0600050e | — | Single-index real element setter with dimension. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_2(i4, i4, r8, class:515) | 0x0600050f | — | Two-index real element setter with dimension. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_1(i4, r8, r8, class:515) | 0x06000510 | — | Single-index complex element setter with dimension. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_2(i4, i4, r8, r8, class:515) | 0x06000511 | — | Two-index complex element setter with dimension. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set(i4, r8, class:515) | 0x06000512 | — | Flat offset real element setter with dimension. | Static observed | Analyzed |
+| set(i4, r8) | 0x06000513 | — | Flat offset real double setter. | Static observed | Analyzed |
+| set(i4, r8, r8, class:515) | 0x06000514 | — | Flat offset complex element setter with dimension. | Static observed | Analyzed |
+| set(i4, r8, r8) | 0x06000515 | — | Flat offset complex double setter. | Static observed | Analyzed |
+| set(i4, class:584) | 0x06000516 | — | Flat offset NumVal setter. | Static observed | Analyzed |
+| set_ptrs_1(i4, object) | 0x06000517 | — | Single-index pointer object setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_ptrs_2(i4, i4, object) | 0x06000518 | — | Two-index pointer object setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_ptrs(i4, object) | 0x06000519 | — | Flat offset pointer object setter. | Static observed | Analyzed |
+| set_ptrs_raw(i4, object) | 0x0600051b | — | Raw backing offset pointer object setter. | Static observed | Analyzed |
+| set_2i(i4, i4, r8) | 0x0600051c | — | Two-index imaginary component setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_1(i4, r8) | 0x0600051d | — | Single-index real double setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_2(i4, i4, r8) | 0x0600051e | — | Two-index real double setter. | Observed direct Mathcad cases in MatValAccessDifferentialTests | Verified |
+| set_at(i4, r8) | 0x0600051f | — | Raw array index real double setter. | Static observed | Analyzed |
+| set_at(i4, r8, r8) | 0x06000520 | — | Raw array index complex double setter. | Static observed | Analyzed |
+| set_ptrs_at(i4, object) | 0x06000521 | — | Raw array index pointer object setter. | Static observed | Analyzed |
+| AllocImaginary(r8[]) | 0x06000531 | — | Replace imaginary backing array with specified array. | Static observed | Analyzed |
 
 The static initializer is explicit (the original type is not beforefieldinit). Fields marked Verified below are compared by the constructor/storage scenarios.
 
