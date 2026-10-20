@@ -66,8 +66,6 @@ internal sealed partial class TypeNameBuilder
     [global::Quire.Mirror.MirrorStub]
     private void Append(char c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal static string ToString(global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeNameBuilder.Format format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AddElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddAssemblyQualifiedName(global::System.Type type, global::System.Reflection.Emit.Quire.Mpl.TypeNameBuilder.Format format) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
