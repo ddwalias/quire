@@ -47,14 +47,6 @@ internal partial class EntityWrappers
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+CustomAttributeWrapper, mplasb")]
     internal partial class CustomAttributeWrapper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal global::System.Reflection.ConstructorInfo constructorInfo;
-        [global::Quire.Mirror.MirrorStub]
-        internal byte[] binaryAttribute;
-        [global::Quire.Mirror.MirrorStub]
-        internal int conToken;
-        [global::Quire.Mirror.MirrorStub]
-        public CustomAttributeWrapper(global::System.Reflection.ConstructorInfo constructorInfo, byte[] binaryAttribute) { }
     }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.EntityWrappers+LocalBuilderReferenceWrapper, mplasb")]
