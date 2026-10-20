@@ -20,4 +20,7 @@ public class PtcCalculationCoreImaginarySimpleResultNodeMechanicalDifferentialTe
 
     [SkippableFact]
     public void ToString_0600019f() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.ImaginarySimpleResultNode), 0x0600019f);
+
+    [SkippableFact]
+    public void Equals_060001a0() => Mechanical.Compare(typeof(global::Quire.Calculation.Core.ImaginarySimpleResultNode), 0x060001a0);
 }

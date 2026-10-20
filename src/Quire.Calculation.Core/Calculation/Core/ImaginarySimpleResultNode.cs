@@ -17,4 +17,14 @@ public partial class ImaginarySimpleResultNode
 
     [MirrorVerified("PtcCalculationCoreImaginarySimpleResultNodeMechanicalDifferentialTests")]
     public override string ToString() => string.Format("Imaginary: {0}i", Value);
+
+    [MirrorVerified("PtcCalculationCoreImaginarySimpleResultNodeMechanicalDifferentialTests")]
+    public override bool Equals(object obj)
+    {
+        if (obj is ImaginarySimpleResultNode { Value: var value })
+        {
+            return value.Equals(Value);
+        }
+        return false;
+    }
 }

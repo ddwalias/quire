@@ -17,4 +17,14 @@ public partial class RealSimpleResultNode
 
     [MirrorVerified("PtcCalculationCoreRealSimpleResultNodeMechanicalDifferentialTests")]
     public override string ToString() => string.Format("Real: {0}", Value);
+
+    [MirrorVerified("PtcCalculationCoreRealSimpleResultNodeMechanicalDifferentialTests")]
+    public override bool Equals(object obj)
+    {
+        if (obj is RealSimpleResultNode { Value: var value })
+        {
+            return value.Equals(Value);
+        }
+        return false;
+    }
 }

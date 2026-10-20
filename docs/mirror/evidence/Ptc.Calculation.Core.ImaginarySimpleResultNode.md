@@ -11,6 +11,7 @@
 | `Value get` | 0x0600019d | MemberGen: `public double Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Value set` | 0x0600019e | MemberGen: `public double Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `ToString()` | 0x0600019f | MemberGen: `string.Format("Imaginary: {0}i", Value)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Equals(object)` | 0x060001a0 | Same type only; compare `Value` with `double.Equals` | Direct Mathcad comparison; NaN values compare equal | Verified |
 
 ## Test cases
 

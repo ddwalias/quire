@@ -11,6 +11,7 @@
 | `Value get` | 0x060001ab | MemberGen: `public string Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Value set` | 0x060001ac | MemberGen: `public string Value { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `ToString()` | 0x060001ad | MemberGen: `string.Format("String: \"{0}\"", Value)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Equals(object)` | 0x060001ae | Same type only; call the other node's `Value.Equals(Value)` | Direct Mathcad comparison; a null other-node value throws as in Mathcad | Verified |
 
 ## Test cases
 

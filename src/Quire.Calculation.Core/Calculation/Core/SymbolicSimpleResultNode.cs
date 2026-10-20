@@ -17,4 +17,14 @@ public partial class SymbolicSimpleResultNode
 
     [MirrorVerified("PtcCalculationCoreSymbolicSimpleResultNodeMechanicalDifferentialTests")]
     public override string ToString() => string.Format("Symbolic: {0}", Xml);
+
+    [MirrorVerified("PtcCalculationCoreSymbolicSimpleResultNodeMechanicalDifferentialTests")]
+    public override bool Equals(object obj)
+    {
+        if (obj is SymbolicSimpleResultNode other)
+        {
+            return other.Xml.Equals(Xml);
+        }
+        return false;
+    }
 }

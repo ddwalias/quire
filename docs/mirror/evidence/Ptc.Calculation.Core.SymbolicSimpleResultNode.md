@@ -11,6 +11,7 @@
 | `Xml get` | 0x060001e7 | MemberGen: `public string Xml { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `Xml set` | 0x060001e8 | MemberGen: `public string Xml { get; set; }` | Mechanical; Release IL equals Mathcad's | Verified |
 | `ToString()` | 0x060001e9 | MemberGen: `string.Format("Symbolic: {0}", Xml)` | Mechanical; Release IL equals Mathcad's | Verified |
+| `Equals(object)` | 0x060001ea | Same type only; call the other node's `Xml.Equals(Xml)` | Direct Mathcad comparison; a null other-node `Xml` throws as in Mathcad | Verified |
 
 ## Test cases
 
