@@ -26,4 +26,7 @@ public partial class AssertionResult
 
     [MirrorVerified("Release IL")]
     public bool Failed => !_passed;
+
+    [MirrorVerified("Release IL")]
+    public override int GetHashCode() => _passed.GetHashCode();
 }
