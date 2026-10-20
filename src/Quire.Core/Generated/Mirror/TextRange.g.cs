@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TextRange, Ptc.Core")]
 public partial struct TextRange
 {
-    [global::Quire.Mirror.MirrorStub]
-    public TextRange(int startPosition, int endPosition) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEquivalentTo(global::Quire.TextRange another) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
