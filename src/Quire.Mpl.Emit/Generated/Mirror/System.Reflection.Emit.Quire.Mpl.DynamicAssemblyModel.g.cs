@@ -29,9 +29,6 @@ internal partial class DynamicAssemblyModel
     private global::System.Reflection.Metadata.Ecma335.MetadataBuilder _metadata;
     [global::Quire.Mirror.MirrorStub]
     public DynamicAssemblyModel(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder moduleBuilder, global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referenceTracker, global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> typesList) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void AddMethodBodiesOffsets(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.DynamicAssemblyModel+TypeIndexInfo, mplasb")]
     internal partial class TypeIndexInfo
     {

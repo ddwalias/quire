@@ -1,3 +1,6 @@
+using System;
+using System.Reflection.Metadata;
+
 namespace System.Reflection.Emit.Quire.Mpl;
 
 internal partial class DynamicAssemblyModel
@@ -35,5 +38,22 @@ internal partial class DynamicAssemblyModel
             MethodBuilder method2 = item as MethodBuilder ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
             _moduleBuilder._definedMethods[new EntityWrappers.MethodReferenceWrapper(method2)] = default;
         }
+    }
+
+    private void AddMethodBodiesOffsets(TypeBuilder typeBuilder, object item)
+    {
+        int item2 = 0;
+        TypeDefinitionHandle typeHandle = _moduleBuilder._currentTypeHandle ?? throw new InvalidOperationException("_moduleBuilder._currentTypeHandle can not be null");
+        if (item is ConstructorBuilder)
+        {
+            ConstructorBuilder ctrBuilder = item as ConstructorBuilder ?? throw new InvalidOperationException("Operand must be a ConstructorBuilder");
+            item2 = MetadataHelper.AddConstructorDefintionBody(_metadata, _metadataReferenceTracker, typeBuilder, typeHandle, ctrBuilder, _methodBodyStream);
+        }
+        else if (item is MethodBuilder)
+        {
+            MethodBuilder methodBuilder = item as MethodBuilder ?? throw new InvalidOperationException("Operand must be a MethodBuilder");
+            item2 = MetadataHelper.AddMethodDefintionBody(_metadata, _metadataReferenceTracker, typeBuilder, typeHandle, methodBuilder, _methodBodyStream);
+        }
+        _typeIndexes[new EntityWrappers.TypeReferenceWrapper(typeBuilder)].offsets.Add(item2);
     }
 }
