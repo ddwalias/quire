@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-media3d-20261021-m3.
+- Branch: mirror/c-media3d-20261021-m4.
 - UTC start time: 2026-10-20T18:12:36Z.
 - Eight-hour deadline: 2026-10-21T02:12:36Z.
 - Current assembly: Quire.Media3D (in progress).
@@ -33,12 +33,13 @@
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
     - Batch 3: MeshGeneratorBase (Name, Geometry, PropertyChanged, Triangulate, .cctor), FlatSurfaceMeshBase (Slices, ValidateSlices, TriangleSubdivide, Point3DWeight, Vector3DWeight, PointWeight, .cctor), PolyhedronMeshBase (TextureCoordinates, Triangulate, ctor, .cctor), CubeMesh (Faces, ctor, CreateInstanceCore, .cctor), TetrahedronMesh (Faces, ctor, CreateInstanceCore, .cctor), OctahedronMesh (Faces, ctor, CreateInstanceCore, .cctor), DodecahedronMesh (Faces, ctor, CreateInstanceCore, .cctor), IcosahedronMesh (Faces, ctor, CreateInstanceCore, .cctor).
+    - Batch 4: CylindricalMeshBase (Length, Radius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, .cctor), CylinderMesh (EndStacks, Fold, ValidateEndStacks, ValidateFold, ctor, Triangulate, CreateInstanceCore, .cctor), HollowCylinderMesh (ctor, Triangulate, CreateInstanceCore), SphereMesh (Center, Radius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, Triangulate, CreateInstanceCore, .cctor), TorusMesh (Radius, TubeRadius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, Triangulate, CreateInstanceCore, .cctor), TubeMesh (Thickness, EndStacks, Fold, ValidateThickness, ValidateEndStacks, ValidateFold, ctor, Triangulate, CreateInstanceCore, .cctor).
 - Release IL report:
   - Quire.Automation: PASS; 275 checked; 231 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebook.Automation: PASS; 409 checked; 215 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebookPlus.Automation: PASS; 407 checked; 214 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.Calculation.Core: PASS; 383 checked; 0 failures; exact bodies rose to 383 (+7 exact bodies); unfinished reduced to 397 (-7 unfinished).
-  - Quire.Media3D: PASS; 107 checked; 0 failures; exact bodies rose from 65 to 107 (+42 exact bodies); unfinished reduced from 508 to 474 (-34 unfinished).
+  - Quire.Media3D: PASS; 172 checked; 0 failures; exact bodies rose from 107 to 172 (+65 exact bodies); unfinished reduced from 474 to 414 (-60 unfinished).
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
