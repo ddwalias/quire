@@ -1,5 +1,7 @@
 #nullable disable
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
@@ -142,6 +144,65 @@ public static partial class UrlUtils
             DebugTools.FailAssertion(ex);
             return null;
         }
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool TryOpenUrl(string url, bool useBrowser, bool assert = true)
+    {
+        Exception ex = null;
+        bool flag = false;
+        try
+        {
+            if (useBrowser)
+            {
+                string standardBrowserPath = GetStandardBrowserPath();
+                if (standardBrowserPath != null)
+                {
+                    Process.Start(standardBrowserPath, url);
+                    return true;
+                }
+            }
+            else
+            {
+                string fileName = makeValidExtension(url);
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = fileName,
+                    UseShellExecute = true
+                });
+                return true;
+            }
+        }
+        catch (FileNotFoundException ex2)
+        {
+            flag = assert;
+            ex = ex2;
+        }
+        catch (Win32Exception ex3)
+        {
+            flag = assert;
+            ex = ex3;
+        }
+        catch (ObjectDisposedException ex4)
+        {
+            flag = true;
+            ex = ex4;
+        }
+        catch (InvalidOperationException ex5)
+        {
+            flag = true;
+            ex = ex5;
+        }
+        catch (Exception ex6)
+        {
+            flag = true;
+            ex = ex6;
+        }
+        if ((ex != null) & flag)
+        {
+            DebugTools.FailAssertion(ex);
+        }
+        return false;
     }
 
     [MirrorVerified("Release IL")]

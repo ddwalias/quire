@@ -22,8 +22,6 @@ public static partial class UrlUtils
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.List<global::Quire.IO.UrlUtils.UriProtocolCreationData> _schemeDetectionList;
     [global::Quire.Mirror.MirrorStub]
-    public static bool TryOpenUrl(string url, bool useBrowser, bool assert = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool TryCreateKnownUri(string text, out global::System.Uri newUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+RegConstants, Ptc.Core")]
