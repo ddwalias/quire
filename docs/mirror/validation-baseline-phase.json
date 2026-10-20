@@ -7654,7 +7654,7 @@
     "Quire.Automation|Quire.Automation.Worksheets::get_RealSubjectInstance`0()->[Quire.Automation]Quire.Automation.IMathcadPrimeWorksheets|False": "missing",
     "Quire.Automation|Quire.ProductInfo.Constants::.ctor`0()->[System.Runtime]System.Void|False": "missing",
     "Quire.Calculation.Core|Quire.Calculation.Core.CalcResultsProcessingPriorities::.cctor`0()->[System.Runtime]System.Void|True": "compared",
-    "Quire.Calculation.Core|Quire.Calculation.Core.CalculatableAggregateExtensions::GetAggregateRl`0([Quire.Calculation.Core]Quire.Calculation.Core.ICalculatableAggregate)->[System.Runtime]System.Collections.Generic.IList`1<[System.Runtime]System.String>|True": "missing",
+    "Quire.Calculation.Core|Quire.Calculation.Core.CalculatableAggregateExtensions::GetAggregateRl`0([Quire.Calculation.Core]Quire.Calculation.Core.ICalculatableAggregate)->[System.Runtime]System.Collections.Generic.IList`1<[System.Runtime]System.String>|True": "structure_mismatch",
     "Quire.Calculation.Core|Quire.Calculation.Core.CalculatableEventArgs::.ctor`0([Quire.Calculation.Core]Quire.Calculation.Core.ICalculatable,[Quire.Calculation.Core]Quire.Calculation.Core.ICalculatable)->[System.Runtime]System.Void|False": "no_counterpart",
     "Quire.Calculation.Core|Quire.Calculation.Core.CalculatableEventArgs::get_Calculatable`0()->[Quire.Calculation.Core]Quire.Calculation.Core.ICalculatable|False": "no_counterpart",
     "Quire.Calculation.Core|Quire.Calculation.Core.CalculatableEventArgs::get_Previous`0()->[Quire.Calculation.Core]Quire.Calculation.Core.ICalculatable|False": "no_counterpart",
