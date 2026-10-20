@@ -24,13 +24,7 @@ public static partial class UrlUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool TryOpenUrl(string url, bool useBrowser, bool assert = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string GetStandardBrowserPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string RetriveBrowserPath(global::Microsoft.Win32.RegistryKey root, string regKeyPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool TryCreateKnownUri(string text, out global::System.Uri newUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Uri CreateUriForScheme(string text, global::Quire.IO.UrlUtils.UriProtocolCreationData uriCreationData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+RegConstants, Ptc.Core")]
     private static partial class RegConstants
