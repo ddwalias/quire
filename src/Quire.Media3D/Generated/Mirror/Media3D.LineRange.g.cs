@@ -11,20 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.LineRange, Ptc.Media3D")]
 public partial struct LineRange
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.Point3D point1;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.Point3D point2;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public LineRange(global::System.Windows.Media.Media3D.Point3D point1, global::System.Windows.Media.Media3D.Point3D point2) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D PointFromX(double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D PointFromY(double y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D PointFromZ(double z) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
