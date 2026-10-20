@@ -4,6 +4,49 @@ namespace System.Reflection.Emit.Quire.Mpl;
 
 internal sealed partial class TypeNameBuilder
 {
+    private void AddName(string name)
+    {
+        if (_nestedName)
+        {
+            Append('+');
+        }
+        _nestedName = true;
+        EscapeName(name);
+    }
+
+    private static bool ContainsReservedChar(string name)
+    {
+        foreach (char c in name)
+        {
+            if (c == '\0')
+            {
+                break;
+            }
+            if (IsTypeNameReservedChar(c))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static bool IsTypeNameReservedChar(char ch)
+    {
+        switch (ch)
+        {
+            case '&':
+            case '*':
+            case '+':
+            case ',':
+            case '[':
+            case '\\':
+            case ']':
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private void OpenGenericArguments()
     {
         _instNesting++;
