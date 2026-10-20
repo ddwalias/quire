@@ -11,20 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.EngineResult, Ptc.Calculation.Core")]
 public partial struct EngineResult
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string ResultXml { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineResult(global::Quire.Calculation.Core.EngineResult result, global::Quire.Calculation.Core.SynchronizationStatus synchronizationStatus) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineResult(global::Quire.Calculation.Core.EngineResult result, global::Quire.Calculation.Core.IResultNode resultNode) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineResult(global::Quire.Calculation.Core.EngineResult result, global::Quire.Calculation.Core.EngineError error) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineResult(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.EngineErrorCollection errorCollection, global::Quire.Calculation.Core.SynchronizationStatus synchronizationStatus) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineResult(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.EngineErrorCollection errorCollection, global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineRedefInfo> warnings, global::Quire.Calculation.Core.SynchronizationStatus synchronizationStatus) { }
-    [global::Quire.Mirror.MirrorStub]
-    public EngineResult(global::Quire.Calculation.Core.EngineResult result, global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.EngineRedefInfo> warnings) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
