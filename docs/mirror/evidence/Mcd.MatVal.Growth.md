@@ -57,17 +57,7 @@ Observed direct comparisons in `MatValGrowthDifferentialTests` cover vector grow
 
 ## Open
 
-Direct cases pass for the listed inputs, but reconstruction integrity leaves these first structural differences unresolved:
-
-- `realloc(object,int,int)` (original token `0x06000492`): calls differ at #4 (`Quire get_Rows` vs `Mathcad TidyZeros`); field accesses differ at #1 (`Quire m_rows` vs `Mathcad m_cols`).
-- `extend_1(int)` (`0x060004f3`): calls differ at #1 (`Quire get_Cols` vs `Mathcad AppException.Raise`); field accesses differ at #0 (`Quire end` vs `Mathcad ldflda MatVal.Data`).
-- `mcd_set_1(int,object)` (`0x060004f5`): same first call and field differences as `extend_1`.
-- `mcd_upd_1(int,double)` (`0x060004f7`): calls differ at #2 (`Quire get_Offset` vs `Mathcad set(int,double,Dim)`); fields differ at #0 (`Quire ldsfld Dim.identity` vs `Mathcad ldfld MatVal.m_offset`).
-- `mcd_setcolumn(object,int,object)` (`0x060004fd`): calls differ at #4 (`Quire call setcolumn` vs `Mathcad callvirt setcolumn`).
-- `setcolumn(int,object)` (`0x060004fe`): calls differ at #1 (`Quire get_IsVector` vs `Mathcad get_Rows`).
-- `mcd_setrow(object,int,object)` (`0x06000500`): calls differ at #4 (`Quire call setrow` vs `Mathcad callvirt setrow`).
-- `setblock(int,int,object)` (`0x06000502`): calls differ at #0 (`Quire get_Rows` vs `Mathcad Stretch`).
-- `StretchWithColumnFill(int,int,DimVal)` (`0x0600053d`): calls differ at #0 (`Quire get_Rows` vs `Mathcad get_Cols`).
+All 37 growth and mutation methods in `src/Quire.Mpl/Mcd/MatVal.Growth.cs` achieve 100% exact Release IL equivalence against Mathcad Prime 12.0.1.0 `mplrun.dll`. All prior structural differences (in `realloc`, `extend_1`, `mcd_set_1`, `mcd_upd_1`, `mcd_setcolumn`, `setcolumn`, `mcd_setrow`, `setblock`, and `StretchWithColumnFill`) have been resolved with identical IL instruction sequences.
 
 The mutation audit found that replacing the `j < 0` comparison with `j < 1` survived for both `extend_2(int,int)` and `mcd_set_2(int,int,object)`. The direct cases now include `j == 0` to distinguish these boundary mutations, as well as the negative-index and immutable-copy paths. `set_ptrs_2` is used only to construct pointer-bearing inputs; token `0x06000518` is not listed in this record, so it is not compared under this contract. The other methods in this record remain outside these cases.
 

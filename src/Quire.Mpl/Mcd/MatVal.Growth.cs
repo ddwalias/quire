@@ -18,20 +18,41 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public static MatVal realloc(object o, int i, int j)
     {
+        MatVal matVal = o as MatVal;
         i = Math.Max(0, i);
         j = Math.Max(0, j);
-        if (o is not MatVal source) return new MatVal(0, j + 1, false, i + 1);
-        var result = new MatVal(source, i + 1, j + 1);
-        int allocatedRows = result.Rows, allocatedCols = result.Cols;
-        result.Data.m_rows = source.Rows;
-        result.Data.m_cols = source.Cols;
-        result.TidyZeros(source.Rows, source.Cols, allocatedRows, allocatedCols);
+        if (matVal == null)
+        {
+            return new MatVal(0, j + 1, false, i + 1);
+        }
+        MatVal result = new MatVal(matVal, i + 1, j + 1);
+        int cols = result.Data.m_cols;
+        int rows = result.Data.m_rows;
+        result.Data.m_rows = matVal.Data.m_rows;
+        result.Data.m_cols = matVal.Data.m_cols;
+        result.TidyZeros(matVal.Data.m_rows, matVal.Data.m_cols, rows, cols);
         return result;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
-    public static MatVal ReAlloc(object o, int r) => o is MatVal m ? m.ReAllocate(r) : new MatVal(r);
+    public static MatVal ReAlloc(object o, int r)
+    {
+        MatVal matVal = o as MatVal;
+        if (matVal != null)
+        {
+            return matVal.ReAllocate(r);
+        }
+        return new MatVal(r);
+    }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
-    public static MatVal ReAlloc(object o, int r, int c) => o is MatVal m ? m.ReAllocate(r, c) : new MatVal(r, c);
+    public static MatVal ReAlloc(object o, int r, int c)
+    {
+        MatVal matVal = o as MatVal;
+        if (matVal != null)
+        {
+            return matVal.ReAllocate(r, c);
+        }
+        return new MatVal(r, c);
+    }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public MatVal ReAllocate(int r) => new(this, Math.Max(r, Rows), 1);
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
@@ -49,103 +70,156 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     private double[] Resize(double[] arr, int nr, int nc)
     {
-        var result = new double[nr * nc];
-        if (nr == Anr) Copy(arr, Offset, result, 0, nr * Cols);
-        else for (int col = 0; col < Cols; col++) Copy(arr, Offset + col * Anr, result, col * nr, Rows);
-        return result;
+        int rows = Rows;
+        int cols = Cols;
+        int anr = Anr;
+        int offset = Offset;
+        double[] array = new double[nr * nc];
+        if (nr == anr)
+        {
+            Copy(arr, offset, array, 0, nr * cols);
+        }
+        else
+        {
+            for (int i = 0; i < cols; i++)
+            {
+                Copy(arr, offset + anr * i, array, nr * i, rows);
+            }
+        }
+        return array;
     }
 
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     private void Stretch(int n)
     {
-        if (n <= Rows) return;
-        if (n > Anr)
+        if (n > Data.m_rows)
         {
-            int capacity = Math.Max(n, 2 * Anr);
-            m_rarr = Resize(m_rarr, capacity);
-            if (m_iarr != null) m_iarr = Resize(m_iarr, capacity);
-            if (RepHasPtrs)
+            if (n > Data.m_anr)
             {
-                for (int index = Offset; index < Offset + n; index++)
+                int newAnr = Math.Max(n, 2 * Data.m_anr);
+                m_rarr = Resize(m_rarr, newAnr);
+                m_iarr = (m_iarr == null) ? null : Resize(m_iarr, newAnr);
+                if (RepHasPtrs)
                 {
-                    if (index - Offset < Rows || IsPtrNan(ref m_rarr[index]) || m_rarr[index] != 0) continue;
-                    m_parr ??= new Hashtable();
-                    m_rarr[index] = ThePtrNan();
-                    m_parr[index] = NumVal.ZeroId;
+                    int offset = m_offset;
+                    int limit = offset + n;
+                    for (int i = offset; i < limit; i++)
+                    {
+                        if (i - offset >= Data.m_rows && !IsPtrNan(ref m_rarr[i]) && m_rarr[i] == 0.0)
+                        {
+                            if (m_parr == null)
+                            {
+                                m_parr = new Hashtable();
+                            }
+                            m_rarr[i] = ThePtrNan();
+                            m_parr[i] = NumVal.ZeroId;
+                        }
+                    }
                 }
+                Data.m_anr = newAnr;
             }
-            Data.m_anr = capacity;
+            Data.m_rows = n;
         }
-        Data.m_rows = n;
     }
 
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     private void TidyZeros(int oldr, int oldc, int newr, int newc)
     {
-        if (!RepHasPtrs) return;
-        for (int col = 0; col < newc; col++)
-        for (int row = 0; row < newr; row++)
+        if (RepHasPtrs)
         {
-            int index = Index(row, col);
-            if (col < oldc && row < oldr || IsPtrNan(ref m_rarr[index]) || m_rarr[index] != 0) continue;
-            if (m_dim != null && m_dim != Dim.identity)
+            for (int i = 0; i < newc; i++)
             {
-                m_parr ??= new Hashtable();
-                m_rarr[index] = ThePtrNan();
-                m_parr[index] = NumVal.ZeroId;
+                int start = i * Data.m_anr + m_offset;
+                int limit = start + newr;
+                for (int j = start; j < limit; j++)
+                {
+                    if ((i >= oldc || j - start >= oldr) && !IsPtrNan(ref m_rarr[j]) && m_rarr[j] == 0.0)
+                    {
+                        if (m_dim != Dim.identity && m_dim != null)
+                        {
+                            if (m_parr == null)
+                            {
+                                m_parr = new Hashtable();
+                            }
+                            m_rarr[j] = ThePtrNan();
+                            m_parr[j] = NumVal.ZeroId;
+                        }
+                        else if (m_dim == null)
+                        {
+                            m_dim = Dim.identity;
+                        }
+                    }
+                }
             }
-            else if (m_dim == null) m_dim = Dim.identity;
         }
     }
 
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     private void Stretch(int r, int c)
     {
-        int oldRows = Rows, oldCols = Cols;
-        if (c > Cols)
+        int oldCols = Data.m_cols;
+        int oldRows = Data.m_rows;
+        if (c > Data.m_cols)
         {
-            if (m_rarr != null && c * Anr > m_rarr.Length)
+            if (m_rarr == null || c * Data.m_anr <= m_rarr.Length)
+            {
+                Data.m_cols = c;
+            }
+            else
             {
                 int capacity = Math.Max(r, Rows);
-                if (m_parr != null && capacity != Anr) m_parr = ResizePtrs(capacity, Offset);
+                if (m_parr != null && capacity != Data.m_anr)
+                {
+                    m_parr = ResizePtrs(capacity, m_offset);
+                }
                 m_rarr = Resize(m_rarr, capacity, c);
-                if (m_iarr != null) m_iarr = Resize(m_iarr, capacity, c);
+                m_iarr = (m_iarr == null) ? null : Resize(m_iarr, capacity, c);
                 Data.m_rows = capacity;
                 Data.m_cols = c;
                 Data.m_anr = capacity;
-                TidyZeros(oldRows, oldCols, Rows, Cols);
+                TidyZeros(oldRows, oldCols, Data.m_rows, Data.m_cols);
                 return;
             }
-            Data.m_cols = c;
         }
-        if (r <= Rows) return;
-        if (r > Anr)
+        if (r > Data.m_rows)
         {
-            int newCols = Math.Max(c, Cols);
-            int capacity = Math.Max(r, Math.Min(2 * Anr, 16777216 / (newCols == 0 ? 1 : newCols)));
-            if (m_parr != null) m_parr = ResizePtrs(capacity, Offset);
-            m_rarr = Resize(m_rarr, capacity, newCols);
-            if (m_iarr != null) m_iarr = Resize(m_iarr, capacity, newCols);
-            Data.m_cols = newCols;
-            Data.m_anr = capacity;
-            TidyZeros(oldRows, oldCols, r, Cols);
+            if (r > Data.m_anr)
+            {
+                int newCols = Math.Max(c, Cols);
+                int capacity = Math.Max(r, Math.Min(2 * Data.m_anr, 16777216 / (newCols == 0 ? 1 : newCols)));
+                if (m_parr != null)
+                {
+                    m_parr = ResizePtrs(capacity, m_offset);
+                }
+                m_rarr = Resize(m_rarr, capacity, newCols);
+                m_iarr = (m_iarr == null) ? null : Resize(m_iarr, capacity, newCols);
+                Data.m_cols = newCols;
+                Data.m_anr = capacity;
+                TidyZeros(oldRows, oldCols, r, Data.m_cols);
+            }
+            Data.m_rows = r;
         }
-        Data.m_rows = r;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public void StretchWithColumnFill(int r, int c, DimVal fill)
     {
-        int oldRows = Rows, oldCols = Cols;
+        int oldCols = Cols;
+        int rows = Rows;
         Stretch(r, c);
-        for (int col = oldCols; col < c; col++)
-        for (int row = 0; row < oldRows; row++) set_2(row, col, fill);
+        for (int i = oldCols; i < c; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                set_2(j, i, fill);
+            }
+        }
     }
 
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public override MatVal extend_1(int i)
     {
         if (i < 0) AppException.Raise("index out of bounds", 2u);
-        if (Cols > 1) AppException.Raise("must be vector", 1u);
+        if (Data.m_cols > 1) AppException.Raise("must be vector", 1u);
         if (Immutable) return ReAllocate(i + 1);
         Stretch(i + 1);
         return this;
@@ -167,10 +241,10 @@ public sealed partial class MatVal
     public MatVal mcd_set_1(int i, object v)
     {
         if (i < 0) AppException.Raise("index out of bounds", 2u);
-        if (Cols > 1) AppException.Raise("must be vector", 1u);
+        if (Data.m_cols > 1) AppException.Raise("must be vector", 1u);
         if (Immutable) { var copy = ReAllocate(i + 1); copy.set_1(i, v); return copy; }
         Stretch(i + 1);
-        set(i + Offset, v);
+        set(i + m_offset, v);
         return this;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
@@ -188,7 +262,7 @@ public sealed partial class MatVal
     {
         if (i < 0) AppException.Raise("index out of bounds", 2u);
         Stretch(i + 1);
-        set(i + Offset, v);
+        set(i + m_offset, v);
         return this;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
@@ -196,7 +270,7 @@ public sealed partial class MatVal
     {
         if (i < 0) AppException.Raise("index out of bounds", 2u);
         Stretch(i + 1);
-        set(i + Offset, re, Dim.identity);
+        set(i + m_offset, re, Dim.identity);
         return this;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
@@ -222,26 +296,49 @@ public sealed partial class MatVal
     public static MatVal mcd_setcolumn(object o, int i, object v)
     {
         if (i < 0) AppException.Raise("index out of bounds", 2u);
-        if (o is not MatVal matrix)
+        MatVal matVal = o as MatVal;
+        if (matVal == null)
         {
-            var value = v as MatVal ?? Singleton(v);
-            return new MatVal(value.Rows, i + 1).setcolumn(i, value);
+            MatVal matVal2 = v as MatVal;
+            if (matVal2 == null)
+            {
+                matVal2 = Singleton(v);
+            }
+            int rows = matVal2.Rows;
+            MatVal matVal3 = new MatVal(rows, i + 1);
+            matVal3.setcolumn(i, matVal2);
+            return matVal3;
         }
-        if (matrix.Immutable)
+        if (matVal.Immutable)
         {
-            var value = v as MatVal ?? Singleton(v);
-            return matrix.ReAllocate(value.Rows, i + 1).setcolumn(i, value);
+            MatVal matVal4 = v as MatVal;
+            if (matVal4 == null)
+            {
+                matVal4 = Singleton(v);
+            }
+            int rows2 = matVal4.Rows;
+            MatVal matVal5 = matVal.ReAllocate(rows2, i + 1);
+            matVal5.setcolumn(i, matVal4);
+            return matVal5;
         }
-        matrix.setcolumn(i, v);
-        return matrix;
+        matVal.setcolumn(i, v);
+        return matVal;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public MatVal setcolumn(int i, object o)
     {
-        var value = o as MatVal ?? Singleton(o);
-        if (!value.IsVector) AppException.Raise("must be vector", 2u);
-        Stretch(value.Rows, i + 1);
-        setcol(i, value);
+        MatVal matVal = o as MatVal;
+        if (matVal == null)
+        {
+            matVal = Singleton(o);
+        }
+        int rows = matVal.Rows;
+        if (!matVal.IsVector)
+        {
+            AppException.Raise("must be vector", 2u);
+        }
+        Stretch(rows, i + 1);
+        setcol(i, matVal);
         return this;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
@@ -249,56 +346,96 @@ public sealed partial class MatVal
     {
         if (v.m_dim != m_dim)
         {
-            if (m_dim != null) { setmatrix_ptrs(0, i, v); return; }
-            m_dim = v.m_dim;
+            if (m_dim == null)
+            {
+                m_dim = v.m_dim;
+            }
+            else
+            {
+                setmatrix_ptrs(0, i, v);
+                return;
+            }
         }
-        int start = Offset + i * Anr;
-        Copy(v.m_rarr, v.Offset, m_rarr, start, v.Rows);
+        int rows = v.Rows;
+        int destOffset = m_offset + i * Data.m_anr;
+        Copy(v.m_rarr, v.m_offset, m_rarr, destOffset, rows);
         if (v.m_iarr == null)
         {
-            if (m_iarr != null) FillArr(m_iarr, 0, start, 1, v.Rows);
+            if (m_iarr != null)
+            {
+                FillArr(m_iarr, 0.0, destOffset, 1, rows);
+            }
         }
         else
         {
-            if (m_iarr == null) AllocImaginary();
-            Copy(v.m_iarr, v.Offset, m_iarr, start, v.Rows);
+            if (m_iarr == null)
+            {
+                AllocImaginary();
+            }
+            Copy(v.m_iarr, v.m_offset, m_iarr, destOffset, rows);
         }
-        if (!v.RepHasPtrs) return;
-        m_parr ??= new Hashtable();
-        for (int row = 0; row < v.Rows; row++)
-            if (IsPtrNan(ref m_rarr[start + row])) m_parr[start + row] = v.m_parr[v.Offset + row];
+        if (v.RepHasPtrs)
+        {
+            if (m_parr == null)
+            {
+                m_parr = new Hashtable();
+            }
+            for (int j = 0; j < rows; j++)
+            {
+                if (IsPtrNan(ref m_rarr[j + destOffset]))
+                {
+                    m_parr[destOffset + j] = v.m_parr[j + v.m_offset];
+                }
+            }
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public static MatVal mcd_setrow(object o, int i, object v)
     {
         if (i < 0) AppException.Raise("index out of bounds", 2u);
-        if (o is not MatVal matrix)
+        MatVal matVal = o as MatVal;
+        if (matVal == null)
         {
-            var value = v as MatVal ?? Singleton(v);
-            return new MatVal(i + 1, value.Cols).setrow(i, value);
+            MatVal matVal2 = v as MatVal;
+            if (matVal2 == null)
+            {
+                matVal2 = Singleton(v);
+            }
+            int cols = matVal2.Cols;
+            MatVal matVal3 = new MatVal(i + 1, cols);
+            matVal3.setrow(i, matVal2);
+            return matVal3;
         }
-        if (matrix.Immutable)
+        if (matVal.Immutable)
         {
-            var value = v as MatVal ?? Singleton(v);
-            return matrix.ReAllocate(i + 1, value.Cols).setrow(i, value);
+            MatVal matVal4 = v as MatVal;
+            if (matVal4 == null)
+            {
+                matVal4 = Singleton(v);
+            }
+            int cols2 = matVal4.Cols;
+            MatVal matVal5 = matVal.ReAllocate(i + 1, cols2);
+            matVal5.setrow(i, matVal4);
+            return matVal5;
         }
-        matrix.setrow(i, v);
-        return matrix;
+        matVal.setrow(i, v);
+        return matVal;
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public MatVal setrow(int i, object o) => setblock(i, 0, o);
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     public MatVal setblock(int i, int j, object v)
     {
-        if (v is MatVal matrix)
-        {
-            Stretch(i + matrix.Rows, j + matrix.Cols);
-            setmatrix(i, j, matrix);
-        }
-        else
+        MatVal matVal = v as MatVal;
+        if (matVal == null)
         {
             Stretch(i + 1, j + 1);
             set_2(i, j, v);
+        }
+        else
+        {
+            Stretch(i + matVal.Rows, j + matVal.Cols);
+            setmatrix(i, j, matVal);
         }
         return this;
     }
@@ -307,24 +444,60 @@ public sealed partial class MatVal
     {
         if (v.m_dim != m_dim)
         {
-            if (m_dim != null) { setmatrix_ptrs(i, j, v); return; }
-            m_dim = v.m_dim;
+            if (m_dim == null)
+            {
+                m_dim = v.m_dim;
+            }
+            else
+            {
+                setmatrix_ptrs(i, j, v);
+                return;
+            }
         }
-        if (v.m_iarr != null && m_iarr == null) AllocImaginary();
-        for (int col = 0; col < v.Cols; col++)
+        int rows = v.Rows;
+        int cols = v.Cols;
+        int anr = Anr;
+        int anr2 = v.Anr;
+        int destOffset = m_offset + i + j * anr;
+        int srcOffset = v.m_offset;
+        if (v.m_iarr != null && m_iarr == null)
         {
-            int destination = Index(i, j + col), source = v.Index(0, col);
-            Copy(v.m_rarr, source, m_rarr, destination, v.Rows);
-            if (v.m_iarr != null) Copy(v.m_iarr, source, m_iarr, destination, v.Rows);
-            else if (m_iarr != null) FillArr(m_iarr, 0, destination, 1, v.Rows);
+            AllocImaginary();
         }
-        if (v.RepHasPtrs) AssignPtrs(v, i, j);
+        for (int k = 0; k < cols; k++)
+        {
+            Copy(v.m_rarr, srcOffset, m_rarr, destOffset, rows);
+            if (v.m_iarr == null)
+            {
+                if (m_iarr != null)
+                {
+                    FillArr(m_iarr, 0.0, destOffset, 1, rows);
+                }
+            }
+            else
+            {
+                Copy(v.m_iarr, srcOffset, m_iarr, destOffset, rows);
+            }
+            srcOffset += anr2;
+            destOffset += anr;
+        }
+        if (v.RepHasPtrs)
+        {
+            AssignPtrs(v, i, j);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     private void setmatrix_ptrs(int ii, int jj, MatVal v)
     {
-        for (int row = 0; row < v.Rows; row++)
-        for (int col = 0; col < v.Cols; col++) set_2(row + ii, col + jj, v.get_2(row, col));
+        int rows = v.Rows;
+        int cols = v.Cols;
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                set_2(i + ii, j + jj, v.get_2(i, j));
+            }
+        }
     }
 
     private partial class AssignMatrixPtrs
@@ -358,8 +531,13 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Growth")]
     private Hashtable ResizePtrs(int anr, int off)
     {
-        var result = new Hashtable();
-        IteratePtrs(new ResizeMatrixPtrs(result, anr, off).resize_matrix_ptrs);
-        return result.Count == 0 ? null : result;
+        Hashtable hashtable = new Hashtable();
+        ResizeMatrixPtrs resizeMatrixPtrs = new ResizeMatrixPtrs(hashtable, anr, off);
+        IteratePtrs(new PtrDelegate(resizeMatrixPtrs.resize_matrix_ptrs));
+        if (hashtable.Count <= 0)
+        {
+            return null;
+        }
+        return hashtable;
     }
 }
