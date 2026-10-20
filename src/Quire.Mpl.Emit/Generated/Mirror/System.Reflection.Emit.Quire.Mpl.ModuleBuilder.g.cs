@@ -29,10 +29,8 @@ public partial class ModuleBuilder : global::System.Reflection.Module
     internal global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder Assembly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string ScopeName { get => base.ScopeName; }
+    public override global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder Assembly { get; }
+    public override string ScopeName { get; }
     [global::Quire.Mirror.MirrorStub]
     internal ModuleBuilder(string name, global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder assemblyBuilder) { }
     [global::Quire.Mirror.MirrorStub]
