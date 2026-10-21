@@ -76,8 +76,25 @@ public static partial class EnumHelper
 
         return false;
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static TOutputEnum[] TryConvertFlagsToList<TInputEnum, TOutputEnum>(TInputEnum flagsEnumString, global::Quire.EnumHelper.EnumHelperSettings enumSettings) where TInputEnum : struct where TOutputEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static TOutputEnum[] TryConvertFlagsToList<TInputEnum, TOutputEnum>(TInputEnum flagsEnumString, global::Quire.EnumHelper.EnumHelperSettings enumSettings) where TInputEnum : struct where TOutputEnum : struct
+    {
+        global::System.Collections.Generic.List<TOutputEnum> list;
+        TOutputEnum enumValue;
+        string[] array = flagsEnumString.ToString().Split(new string[1] { ", " }, global::System.StringSplitOptions.RemoveEmptyEntries);
+        list = new global::System.Collections.Generic.List<TOutputEnum>();
+        string[] array2 = array;
+        for (int i = 0; i < array2.Length; i++)
+        {
+            if (!TryParse<TOutputEnum>(array2[i], out enumValue, enumSettings))
+            {
+                return null;
+            }
+
+            list.Add(enumValue);
+        }
+
+        return list.ToArray();
+    }
     public static bool TryCallAction<TEnum>(object param, global::System.Action<TEnum> action) where TEnum : struct
     {
         if (TryParse<TEnum>(param, out var enumValue, true))
