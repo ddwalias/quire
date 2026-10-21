@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ResourceString, Ptc.Core")]
 public partial class ResourceString
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
 }

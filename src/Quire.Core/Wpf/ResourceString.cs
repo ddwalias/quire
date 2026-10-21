@@ -16,4 +16,14 @@ public partial class ResourceString
 
     [MirrorVerified("PtcWpfResourceStringMechanicalDifferentialTests")]
     public string String => ToString();
+
+    [MirrorVerified("Release IL")]
+    public override string ToString()
+    {
+        if (!EnumerableExtensions.IsNotEmpty<char>(StringFormat))
+        {
+            return Value;
+        }
+        return string.Format(StringFormat, Value);
+    }
 }
