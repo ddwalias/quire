@@ -402,6 +402,26 @@ public partial class TextFormat
     public double FontSize { get => (double)base.GetValue(FontSizeProperty); set => SetValueSafely(FontSizeProperty, value); }
 
     [MirrorVerified("Release IL")]
+    public double FontSizeInPoints
+    {
+        get
+        {
+            if (MixedFontSize)
+            {
+                return double.NaN;
+            }
+            return Math.Round(global::Quire.Wpf.WpfUtils.DipsToPoints(FontSize), 1);
+        }
+        set
+        {
+            if (!double.IsNaN(value) && FontSize != global::Quire.Wpf.WpfUtils.PointsToDips(value))
+            {
+                FontSize = global::Quire.Wpf.WpfUtils.PointsToDips(value);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public Nullable<Thickness> Margin { get => new Thickness?((Thickness)base.GetValue(MarginProperty)); set => SetValueSafely(MarginProperty, value); }
 
     [MirrorVerified("Release IL")]
