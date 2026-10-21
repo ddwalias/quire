@@ -385,4 +385,13 @@ public static partial class WpfUtils
             return null;
         }
     }
+
+    public static void SetMostRecentInputDeviceToKeyboardDevice()
+    {
+        global::System.Reflection.FieldInfo fieldInfo = typeof(InputManager).GetMember("_mostRecentInputDevice", global::System.Reflection.MemberTypes.Field, global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.Static | global::System.Reflection.BindingFlags.NonPublic)[0] as global::System.Reflection.FieldInfo;
+        if (fieldInfo != null)
+        {
+            fieldInfo.SetValue(InputManager.Current, InputManager.Current.PrimaryKeyboardDevice);
+        }
+    }
 }
