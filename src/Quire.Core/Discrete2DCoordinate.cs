@@ -6,6 +6,9 @@ namespace Quire;
 public partial struct Discrete2DCoordinate
 {
     [MirrorVerified("Release IL")]
+    public static Discrete2DCoordinate Origin;
+
+    [MirrorVerified("Release IL")]
     public int First;
 
     [MirrorVerified("Release IL")]

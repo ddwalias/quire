@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Discrete2DCoordinate, Ptc.Core")]
 public partial struct Discrete2DCoordinate
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Discrete2DCoordinate Origin;
 }

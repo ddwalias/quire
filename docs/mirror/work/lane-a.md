@@ -1,1 +1,11 @@
-# Lane A — Quire.Core\n\n- Scope: all managed members in `src/Quire.Core`, including former C/D tier members (D18).\n- Status: active; passing batches are being landed.\n- Owner: Lane A.\n- Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.\n- Selected members: 346 accepted mechanical methods (+63 fields), 357 manually reconstructed methods (+64 fields), and 659 abstract interface declarations across Core, WPF, serialization, undo, quality agent, service contracts, WPF COM sinks, and XPS print interfaces; 12 mechanical candidates rejected by MemberGen. Latest member: `TextFormat.UpdateAccordingTo and SetTextFormatValuesAccordingTo`.\n- Release IL report: `.mirror-cache/release-il-fe0ccbb98f69/release-il.json` — PASS, 2,690 exact, 0 mismatches; Quire.Core has 830 unfinished methods.\n- Remaining mismatches: 830 unfinished methods in the full Quire.Core inventory.\n\nUse only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).\n
+# Lane A — Quire.Core
+
+- Scope: all managed members in `src/Quire.Core`, including former C/D tier members (D18).
+- Status: active; passing batches are being landed.
+- Owner: Lane A.
+- Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
+- Selected members: 346 accepted mechanical methods (+63 fields), 357 manually reconstructed methods (+65 fields), and 659 abstract interface declarations across Core, WPF, serialization, undo, quality agent, service contracts, WPF COM sinks, and XPS print interfaces; 12 mechanical candidates rejected by MemberGen. Latest member: `Discrete2DCoordinate.Origin`.
+- Release IL report: `.mirror-cache/release-il-fc18ccddf5a3/release-il.json` — PASS, 2,690 exact, 0 mismatches; Quire.Core has 830 unfinished methods.
+- Remaining mismatches: 830 unfinished methods in the full Quire.Core inventory.
+
+Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
