@@ -193,7 +193,22 @@ var matched = new List<(Artifact Artifact, RawMethod Raw, TypeModel Type, Method
 foreach (var artifact in quire)
     foreach (var raw in artifact.Methods)
     {
-        var type = artifact.Model.Types.Single(t => t.FullName == raw.Owner);
+        var type = artifact.Model.Types.SingleOrDefault(t => t.FullName == raw.Owner);
+        // C++/CLI global functions and CRT support live on <Module>, which no [MirrorOf] can bind: report them
+        // unsupported so the Release checker blocks them, never pairs or exempts them.
+        if (type == null)
+        {
+            if (raw.Owner != "<Module>") throw new InvalidDataException($"{artifact.Name}: no type model for {raw.Owner}");
+            if (diffs == null && (selectedTypes.Count == 0 || selectedTypes.Contains(raw.Owner)))
+                rows.Add(new {
+                    // Keys omit custom modifiers, so C++/CLI overloads can share one; the token keeps each row.
+                    id = $"{artifact.Name}::{raw.Owner}::{raw.Key}@0x{raw.Token:x8}", project = artifact.Name, type = raw.Owner,
+                    signature = raw.Key, declared_signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
+                    access = raw.Access, quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid, original = (object?)null,
+                    engine_native = false, declaration_only = false, shape_matches = false, exact_match = (bool?)null,
+                    unsupported = "global <Module> method has no reviewed Mathcad binding" });
+            continue;
+        }
         var candidates = type.Methods.Concat(type.Properties.SelectMany(p => new[] { p.Getter, p.Setter }))
             .Concat(type.Events.SelectMany(e => new[] { e.Adder, e.Remover })).OfType<MethodModel>();
         var method = candidates.Single(m => Key(m, false) == raw.Key);
@@ -238,10 +253,10 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
     bool wanted = diffs != null && diffs.Any(d => d == raw.Owner || d == $"{raw.Owner}::{raw.Name}"
         || d == $"{raw.Owner}::{raw.Key}" || d == $"{raw.Owner}::{Canonical.MethodName(method)}" || d == $"{raw.Owner}::{identity}");
     if (diffs != null && !wanted) continue;
-    var body = raw.BodyRva == 0 ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
+    var body = raw.BodyRva == 0 || raw.NativeCode ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
     List<string>? differences = null, diff = null;
     bool exact = false;
-    if (counterpart is { BodyRva: not 0 } && raw.BodyRva != 0)
+    if (counterpart is { BodyRva: not 0, NativeCode: false } && raw.BodyRva != 0 && !raw.NativeCode)
     {
         try
         {
@@ -286,7 +301,8 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
             version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
         // D10: utl-mgd is a mixed-mode engine boundary. Matched bodies with a 0-7 original
         // maxstack and emitted bodies lacking a managed signature match are native routines.
-        engine_native = typeNames.TryGetValue((artifact.Name, type.FullName), out var nativeBinding)
+        // An IL-only port cannot reproduce those bodies; a mixed-mode (C++/CLI) candidate can, so it gets no exemption.
+        engine_native = artifact.IlOnly && typeNames.TryGetValue((artifact.Name, type.FullName), out var nativeBinding)
             && nativeBinding[1].Equals("utl-mgd", StringComparison.OrdinalIgnoreCase)
             && raw.BodyRva != 0
             && (counterpart == null || original?.Name.Equals("utl-mgd", StringComparison.OrdinalIgnoreCase) == true
@@ -298,6 +314,7 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         structure_differences = differences ?? [],
         // Same instructions in the same order (Structure.Exact); null where the structure is not compared.
         exact_match = differences == null ? (bool?)null : exact,
+        unsupported = raw.NativeCode ? "native code body has no IL to compare" : null,
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
         body_sha256 = body?.Hash
     });

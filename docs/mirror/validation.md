@@ -26,6 +26,35 @@ and a build log alongside it. `--results <new directory>` selects another local 
 Exit 0 means pass; exit 1 means mismatch or inspection/build failure. Reports contain artifact
 identities, signatures and verdicts, not original IL. No committed validation baseline is used.
 
+## C++/CLI candidate
+
+```powershell
+python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
+```
+
+The base is still the project's C# Release build. The candidate is built from the `.vcxproj` with
+MSBuild (`-t:Rebuild -p:Configuration=Release -p:Platform=x64`, OutDir/IntDir in the temporary
+directory) and must produce `<project>.dll` (its `TargetName`). It needs Windows, Visual Studio with
+the C++/CLI component (`Microsoft.VisualStudio.Component.VC.CLI.Support`, found through `vswhere`),
+the v145 MSVC x64 toolset, the Windows SDK desktop x64 libraries, the .NET 10 SDK, and the Mathcad
+install. A missing prerequisite fails the run. The path must be inside the repository. Release is
+selected by configuration name; the DebuggableAttribute Debug check is not verified for MSVC
+output, so exact IL matching is what rules out a Debug-shaped candidate.
+
+MethodAudit reads the mixed image's metadata and IL bodies with the same exactness rules, but it
+cannot pair everything a C++/CLI build emits:
+
+- global `<Module>` functions (CRT startup, native-call stubs) have no `[MirrorOf]` binding, and
+  methods whose RVA holds native code have no IL. Both are marked `unsupported`; they are always
+  checked and always fail, even when unchanged.
+- the D10 `engine_native` exemption applies only to IL-only Quire assemblies; a mixed candidate
+  can emit those bodies, so it must match them.
+- C++/CLI support types (`<CrtImplementationDetails>.*`, `vc.cppcli.*`) have no counterpart and fail.
+
+So no current C++/CLI build can pass. The three-type Utl spike (no `[MirrorOf]`) fails with 136
+checked, 0 exact: 87 unsupported `<Module>` methods, 49 without a Mathcad counterpart (including all
+23 `Quire.utl_mgd` methods), and 292 C# methods removed.
+
 ## Inspect a mismatch
 
 ```powershell

@@ -61,6 +61,12 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertFalse(compare(inventory(), inventory(), types=['Missing'])['passed'])
         self.assertFalse(compare(inventory(), inventory(), methods=['Missing::M'])['passed'])
 
+    def test_unsupported_mixed_mode_rows_always_fail_even_unchanged_or_engine_native(self):
+        row = method('<Module>::f', exact=None, unsupported='global <Module> method has no reviewed Mathcad binding',
+                     engine_native=True)
+        result = compare(inventory(row), inventory(row))
+        self.assertEqual(result['failures'], [{'method': 'P::T::<Module>::f', 'reason': row['unsupported']}])
+
     def test_matching_declaration_needs_no_body(self):
         row = method(exact=None)
         row.update(body_sha256=None, declaration_only=True)

@@ -6,6 +6,12 @@ No test host, test execution, coverage, mutation, status gate or stored baseline
 The base is built from a temporary checkout; the candidate is the current working tree.
 Reports contain identities and verdicts, never original IL. --method selects additional
 Type::signature keys; --type selects all methods declared on a type (including stubs).
+
+    python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj PATH
+
+builds the candidate from a Windows C++/CLI .vcxproj (MSBuild, Release|x64) instead of
+src/<project>/<project>.csproj; the base is still the C# Release build. Methods the scanner cannot
+compare (mixed-mode global <Module> functions, native-code bodies) are always checked and fail.
 """
 import argparse
 import json
@@ -73,9 +79,13 @@ def compare(before, after, types=(), methods=()):
         previous = old.get(key)
         changed = previous is None or any(previous.get(k) != row.get(k) for k in
                                          ('body_sha256', 'shape_matches', 'declaration_only'))
-        if not (changed or selected(row, types, methods) or previous and previous.get('exact_match') is True):
+        if not (changed or row.get('unsupported') or selected(row, types, methods)
+                or previous and previous.get('exact_match') is True):
             continue
         checked.append(key)
+        if row.get('unsupported'):
+            failures.append({'method': key, 'reason': row['unsupported']})
+            continue
         if row.get('engine_native') is True:
             continue
         if row.get('shape_matches') is not True or not (row.get('exact_match') is True or row.get('declaration_only') is True):
@@ -112,9 +122,25 @@ def run(command, cwd, log, timeout):
         raise RuntimeError(f'command failed ({result.returncode}); see {log}\n{detail}')
 
 
-def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout):
+def msbuild(environ=os.environ):
+    """MSBuild of the latest Visual Studio with the C++/CLI component; fails closed without one."""
+    vswhere = Path(environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'), 'Microsoft Visual Studio', 'Installer', 'vswhere.exe')
+    if not vswhere.is_file():
+        raise RuntimeError(f'a .vcxproj candidate needs Visual Studio on Windows; {vswhere} not found')
+    found = subprocess.run([vswhere, '-latest', '-products', '*', '-requires', 'Microsoft.VisualStudio.Component.VC.CLI.Support',
+                            '-find', r'MSBuild\**\Bin\MSBuild.exe'], capture_output=True, text=True, check=True).stdout.splitlines()
+    if not found:
+        raise RuntimeError('no Visual Studio with C++/CLI support (Microsoft.VisualStudio.Component.VC.CLI.Support)')
+    return found[0]
+
+
+def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vcxproj=None):
     assemblies = work / 'assemblies'
-    for project in projects:
+    if vcxproj:
+        # OutDir/IntDir keep outputs out of the tree; MethodAudit then requires <project>.dll there (the TargetName).
+        run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64',
+             f'-p:OutDir={assemblies}{os.sep}', f'-p:IntDir={work / "obj"}{os.sep}', '-nologo', '-v:m'], root, log, timeout)
+    for project in [] if vcxproj else projects:
         target = root / 'src' / project / f'{project}.csproj'
         if not target.is_file():
             raise RuntimeError(f'production project missing from comparison: {target}')
@@ -131,14 +157,15 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout):
 
 
 def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeout=1800,
-          root=ROOT, install=None):
+          root=ROOT, install=None, vcxproj=None):
     install = Path(install or mathcad_install())
     results.mkdir(parents=True, exist_ok=False)
     log = results / 'build.log'
     base = git('rev-parse', '--verify', f'{base}^{{commit}}', cwd=root)
     report = {'base': base, 'tip': git('rev-parse', 'HEAD', cwd=root),
               'working_tree': git('status', '--porcelain', cwd=root), 'projects': projects,
-              'types': list(types), 'methods': list(methods), 'passed': False}
+              'types': list(types), 'methods': list(methods), 'passed': False,
+              'candidate': str(vcxproj) if vcxproj else 'csproj'}
     try:
         if not projects:
             if types or methods:
@@ -157,12 +184,13 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
             print('Building base Release assemblies', flush=True)
             before = build_and_scan(original, projects, tool, work / 'before', install, dotnet, log, timeout)
             print('Building candidate Release assemblies', flush=True)
-            after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout)
+            after = build_and_scan(root, projects, tool, work / 'after', install, dotnet, log, timeout, vcxproj)
             # The same reference artifact must have been read by both scans.
             identities = lambda data: {m['original']['assembly']: (m['original']['sha256'], m['original']['mvid'])
                                        for m in data['methods'] if m.get('original')}
             old_id, new_id = identities(before), identities(after)
-            if any(new_id.get(name) != identity for name, identity in old_id.items()):
+            # A .vcxproj candidate may pair nothing with the C# base's original; its methods then fail on their own.
+            if any((vcxproj is None or name in new_id) and new_id.get(name) != identity for name, identity in old_id.items()):
                 raise RuntimeError('Mathcad reference identity changed between scans')
             report.update(compare(before, after, types, methods))
             report['originals'] = new_id
@@ -185,13 +213,19 @@ def main(argv=None):
     parser.add_argument('--results', type=Path)
     parser.add_argument('--dotnet', default='dotnet')
     parser.add_argument('--timeout', type=int, default=1800)
+    parser.add_argument('--candidate-vcxproj', type=Path,
+                        help='build the candidate of the single --project from this C++/CLI .vcxproj')
     args = parser.parse_args(argv)
+    vcxproj = args.candidate_vcxproj and args.candidate_vcxproj.resolve()
+    if vcxproj and (len(args.project) != 1 or vcxproj.suffix != '.vcxproj' or not vcxproj.is_file()
+                    or not vcxproj.is_relative_to(ROOT)):
+        parser.error('--candidate-vcxproj needs an existing .vcxproj in this repository and exactly one --project')
     projects = sorted(set(args.project) if args.project else set(affected_projects(args.base)))
     unknown = set(projects) - production_projects()
     if unknown:
         parser.error(f'unknown production projects: {sorted(unknown)}')
     results = args.results or ROOT / '.mirror-cache' / ('release-il-' + uuid.uuid4().hex[:12])
-    report = check(args.base, projects, results, args.type, args.method, args.dotnet, args.timeout)
+    report = check(args.base, projects, results, args.type, args.method, args.dotnet, args.timeout, vcxproj=vcxproj)
     for failure in report.get('failures', [])[:20]:
         print(f"  {failure['method']}: {failure['reason']}")
     if len(report.get('failures', [])) > 20:

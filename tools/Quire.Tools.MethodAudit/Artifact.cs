@@ -7,9 +7,9 @@ using Quire.Tools.MirrorGen;
 
 /// <summary><paramref name="Modifiers"/>: the custom modifiers of the return type and each parameter, which the key leaves
 /// out (see ModifierProvider). <paramref name="Import"/>: the P/Invoke metadata of a pinvokeimpl method, which has no
-/// IL body to compare.</summary>
+/// IL body to compare. <paramref name="NativeCode"/>: the RVA holds machine code (C++/CLI), not an IL body.</summary>
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva,
-    string Modifiers = "", int? MaxStack = null, PInvoke? Import = null);
+    string Modifiers = "", int? MaxStack = null, PInvoke? Import = null, bool NativeCode = false);
 /// <summary>What metadata records of a P/Invoke beside its name and parameter types: the method and implementation
 /// flags, the signature calling convention, and the ImplMap module, entry point and import attributes.</summary>
 sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttributes, SignatureHeader Header,
@@ -72,6 +72,8 @@ sealed class Artifact
     public string Mvid { get; }
     public string Version { get; }
     public bool OptimizationsDisabled { get; }
+    /// <summary>False for mixed-mode (C++/CLI) images, which carry native code beside their IL.</summary>
+    public bool IlOnly => (Pe.PEHeaders.CorHeader!.Flags & CorFlags.ILOnly) != 0;
     public List<RawMethod> Methods { get; } = [];
     public PEReader Pe { get; }
     private readonly MetadataReader? _debug;
@@ -123,7 +125,8 @@ sealed class Artifact
         Pe = new PEReader(new MemoryStream(image));
         var md = Metadata = Pe.GetMetadataReader();
         string pdb = Path.ChangeExtension(path, ".pdb");
-        if (File.Exists(pdb))
+        // MSVC writes Windows PDBs, which carry no portable sequence points; only a portable PDB ("BSJB") is read.
+        if (File.Exists(pdb) && File.ReadAllBytes(pdb) is [0x42, 0x53, 0x4A, 0x42, ..])
             _debug = MetadataReaderProvider.FromPortablePdbStream(new MemoryStream(File.ReadAllBytes(pdb))).GetMetadataReader();
         Mvid = md.GetGuid(md.GetModuleDefinition().Mvid).ToString();
         Version = md.GetAssemblyDefinition().Version.ToString();
@@ -163,8 +166,10 @@ sealed class Artifact
                 if ((m.Attributes & MethodAttributes.PinvokeImpl) != 0 && m.GetImport() is { Module.IsNil: false } map)
                     import = new(m.Attributes, m.ImplAttributes, sig.Header, md.GetString(md.GetModuleReference(map.Module).Name),
                         md.GetString(map.Name), map.Attributes);
+                bool native = m.RelativeVirtualAddress != 0 && ((m.ImplAttributes & MethodImplAttributes.CodeTypeMask) != MethodImplAttributes.IL
+                    || (m.ImplAttributes & MethodImplAttributes.Unmanaged) != 0);
                 Methods.Add(new(owner, name, key, MetadataTokens.GetToken(mh), access,
-                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import));
+                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import, native));
             }
         }
     }
