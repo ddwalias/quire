@@ -11,34 +11,19 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IClipboard, Ptc.Core")]
 public partial interface IClipboard
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetText(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Imaging.BitmapSource GetImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasImage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object GetPrimeObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasPrimeObject() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Xml.XmlDocument GetXMLSpreadsheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasXMLSpreadsheet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetFormattedText(out string dataFormat, out bool isPlainText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.Stream GetPrimeXamlStream() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetSExpression(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool HasSExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetSExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void Clear();
+    string GetText();
+    void SetText(string text);
+    bool HasText();
+    global::System.Windows.Media.Imaging.BitmapSource GetImage();
+    bool HasImage();
+    object GetPrimeObject();
+    bool HasPrimeObject();
+    global::System.Xml.XmlDocument GetXMLSpreadsheet();
+    bool HasXMLSpreadsheet();
+    string GetFormattedText(out string dataFormat, out bool isPlainText);
+    global::System.IO.Stream GetPrimeXamlStream();
+    void SetSExpression(string sExpression);
+    bool HasSExpression();
+    string GetSExpression();
 }

@@ -4,8 +4,8 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Selected members: 346 accepted mechanical methods (+63 fields), 157 manually reconstructed methods (+5 fields), and five abstract `IPositionProvider` members; 12 mechanical candidates rejected by MemberGen.
-- Release IL report: `.mirror-cache/release-il-52e53a523644/release-il.json` — Core: 2,428 exact, 1,690 unfinished, 0 Core failures; overall compare has three Quire.Media3D failures.
-- Remaining mismatches: 1,690 unfinished methods in the full Quire.Core inventory. Known current IL blockers include `EnumerableExtensions.IsNullOrEmpty` branch ordering, `DoubleComparer.GetDoubles(Point3D)` iterator naming, and `HashAlgorithmProvider.Dispose`; `BooleanToLayoutTransformConverter.Convert`, `AppVariantToVisibilityConverter.Convert`, `WpfUtils.CombineRelativeUris`, `DateFormatConverter.Convert`, and `BuildArchitectureToBitnessConverter.ConvertBack`; `FileUtils.GetProductNamePerVariant` needs its unmapped Ptc.License dependency; `VCardFactory.GetInstance` differs by compiler local initialization.
+- Selected members: 346 accepted mechanical methods (+63 fields), 157 manually reconstructed methods (+5 fields), and 20 abstract interface declarations in `IPositionProvider` and `IClipboard`; 12 mechanical candidates rejected by MemberGen.
+- Release IL report: `.mirror-cache/release-il-7d33542537e8/release-il.json` — PASS, 2,443 checked, 0 mismatches; Quire.Core has 1,675 unfinished methods.
+- Remaining mismatches: 1,675 unfinished methods in the full Quire.Core inventory. Known current IL blockers include `EnumerableExtensions.IsNullOrEmpty` branch ordering, `DoubleComparer.GetDoubles(Point3D)` iterator naming, `HashAlgorithmProvider.Dispose`, and `ArrayExtension.ToStringFormatted`; `BooleanToLayoutTransformConverter.Convert`, `AppVariantToVisibilityConverter.Convert`, `WpfUtils.CombineRelativeUris`, `DateFormatConverter.Convert`, and `BuildArchitectureToBitnessConverter.ConvertBack`; `FileUtils.GetProductNamePerVariant` needs its unmapped Ptc.License dependency; `VCardFactory.GetInstance` differs by compiler local initialization.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
