@@ -479,4 +479,13 @@ public static partial class WpfUtils
         }
         return false;
     }
+
+    public static bool PropertyValueIsNullOrUnset(UIElement obj, DependencyProperty dp)
+    {
+        if (((DependencyObject)obj).ReadLocalValue(dp) != null)
+        {
+            return ((DependencyObject)obj).ReadLocalValue(dp).Equals(DependencyProperty.UnsetValue);
+        }
+        return true;
+    }
 }

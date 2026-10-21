@@ -80,8 +80,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool IsSignificantMouseMove(global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool PropertyValueIsNullOrUnset(global::System.Windows.UIElement obj, global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.DependencyObject GetParentDependencyObject(global::System.Windows.DependencyObject d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
