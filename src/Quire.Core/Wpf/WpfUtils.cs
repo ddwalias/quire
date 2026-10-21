@@ -63,6 +63,46 @@ public static partial class WpfUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static T FindVisualDescendantIncludingSelf<T>(DependencyObject currentObject) where T : DependencyObject
+    {
+        if (currentObject == null)
+        {
+            return default;
+        }
+        T val = currentObject as T;
+        if (val != null)
+        {
+            return val;
+        }
+        return FindVisualDescendant<T>(currentObject);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static T FindVisualDescendant<T>(DependencyObject parent) where T : DependencyObject
+    {
+        if (parent == null)
+        {
+            return default;
+        }
+        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+        for (int i = 0; i < childrenCount; i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+            T val = child as T;
+            if (val != null)
+            {
+                return val;
+            }
+            T val2 = FindVisualDescendant<T>(child);
+            if (val2 != null)
+            {
+                return val2;
+            }
+        }
+        return default;
+    }
+
+    [MirrorVerified("Release IL")]
     public static double InchesToDips(double inches) => inches * 96.0;
 
     [MirrorVerified("Release IL")]
