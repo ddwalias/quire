@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-calc-core-20261021-c14.
+- Branch: mirror/c-calc-core-20261021-c15.
 - UTC start time: 2026-10-21T13:33:29Z.
 - Eight-hour deadline: 2026-10-21T21:33:29Z.
 - Current assembly: Quire.Calculation.Core (in progress).
@@ -56,12 +56,13 @@
     - Batch 14: WirePoints (Positions get/set, PositionsPropertyChanged, CreateSpheres, Generate, .ctor, .cctor).
     - Batch 15: TeapotTriangleRange.Parse, WirePoints.UpdateColor (with closure <>c__DisplayClass7_0), ViewportsListManager (AddToList, RemoveFromList, .ctor, LoadedViewports, ReplaceLoadedViewports, AddToLoadedViewports, RemoveFromLoadedViewports, AllViewportsAlive with <>c.<get_AllViewportsAlive>b__12_0, ReplaceAllViewports, FindInAllViewports with <>c__DisplayClass14_0, RenderingEnabled get/set, OnRendering overloads, RemoveOrRenderViewportRef, OnViewportLoaded, OnViewportUnloaded, .cctor).
     - Batch 16: TeapotMesh (TriangleRange get/set, .ctor, ValidateTriangleRange, Triangulate, CreateInstanceCore, .cctor with static array initialization for indicesTeapot, verticesTeapot, normalsTeapot).
+    - Batch 17: Cylinder (Point1 get/set, Point2 get/set, Radius1 get/set, Radius2 get/set, Fold1 get/set, Fold2 get/set, Slices get/set, Stacks get/set, EndStacks get/set, .ctor, Triangulate, .cctor with 9 static DependencyProperty registrations and 7 closures <>c.<.cctor>b__40_0..6). Complete for all actionable managed members in Quire.Media3D.
 - Release IL report:
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.Calculation.Core: PASS; 464 checked; 0 failures; exact bodies rose from 437 to 464 (+27 exact bodies); unfinished reduced from 359 to 337 (-22 unfinished).
-  - Quire.Media3D: PASS; 619 checked; 0 failures; exact bodies rose from 584 to 619 (+35 exact bodies); unfinished reduced from 31 to 5 (-26 unfinished).
+  - Quire.Media3D: PASS; 629 checked; 0 failures; exact bodies rose from 619 to 629 (+10 exact bodies); 5 unfinished remaining (blocked by legacy CSC conv.r8 double boxing and compiler closure ordinal shift). Complete for all actionable managed members.
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
