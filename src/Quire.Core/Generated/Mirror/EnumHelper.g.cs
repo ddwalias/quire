@@ -11,16 +11,11 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.EnumHelper, Ptc.Core")]
 public static partial class EnumHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.Dictionary<global::System.Type, global::System.Collections.IDictionary> _cache;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCacheAndAssert;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCache;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.EnumHelper.EnumHelperSettings EmptySettings;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithAssert;
+    private static readonly global::System.Collections.Generic.Dictionary<global::System.Type, global::System.Collections.IDictionary> _cache = new();
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCacheAndAssert = new() { UseCache = true, AssertOnParseFailure = true };
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCache = new() { UseCache = true };
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings EmptySettings = default;
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithAssert = new() { AssertOnParseFailure = true };
     public static bool TryParse<TEnum>(object value, out TEnum enumValue) where TEnum : struct => TryParse<TEnum>(value, out enumValue, true);
     public static bool TryParse<TEnum>(object value, out TEnum enumValue, bool assert) where TEnum : struct => TryParse<TEnum>(value, out enumValue, assert ? SettingsWithAssert : EmptySettings);
     public static bool TryParse<TEnum>(object value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
@@ -119,13 +114,9 @@ public static partial class EnumHelper
     [global::Quire.Mirror.MirrorOf("Ptc.EnumHelper+EnumHelperSettings, Ptc.Core")]
     public partial struct EnumHelperSettings
     {
-        [global::Quire.Mirror.MirrorStub]
         public bool AssertOnParseFailure;
-        [global::Quire.Mirror.MirrorStub]
         public bool IgnoreCase;
-        [global::Quire.Mirror.MirrorStub]
         public bool UseCache;
-        [global::Quire.Mirror.MirrorStub]
         public bool AllowUndefinedNumericValues;
     }
 }
