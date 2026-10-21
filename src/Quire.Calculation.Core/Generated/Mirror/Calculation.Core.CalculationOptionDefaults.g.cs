@@ -11,20 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.CalculationOptionDefaults, Ptc.Calculation.Core")]
 public static partial class CalculationOptionDefaults
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const bool StrictComparisions = true;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool StringsIndexedFromOrigin = false;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool StrictSingularityChecking = false;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool UnitsAndConstantsInSymbolics = false;
-    [global::Quire.Mirror.MirrorStub]
-    public const int NumberOfWorkerThreads = 1;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool RestrictedMode = false;
-    [global::Quire.Mirror.MirrorStub]
-    public static int SymbolicResultMaximumSize;
-    [global::Quire.Mirror.MirrorStub]
-    public const bool BinOctHexMode = false;
 }

@@ -1,14 +1,14 @@
-using Quire.Mirror;
+#nullable disable
 using System.Windows.Threading;
+using Quire.Mirror;
 
 namespace Quire.Calculation.Core;
 
 public static partial class CalcResultsProcessingPriorities
 {
-    [MirrorVerified("PtcCalculationCoreStaticConstantsCctorsMechanicalDifferentialTests")]
-    static CalcResultsProcessingPriorities()
-    {
-        DefaultResultDispatchPriority_Background = DispatcherPriority.Background;
-        ShadowResultsProcessingPriority_Send = DispatcherPriority.Send;
-    }
+    [MirrorVerified("PtcCalculationCoreCalcResultsProcessingPrioritiesMechanicalDifferentialTests")]
+    public static readonly DispatcherPriority DefaultResultDispatchPriority_Background = DispatcherPriority.Background;
+
+    [MirrorVerified("PtcCalculationCoreCalcResultsProcessingPrioritiesMechanicalDifferentialTests")]
+    public static readonly DispatcherPriority ShadowResultsProcessingPriority_Send = DispatcherPriority.Send;
 }
