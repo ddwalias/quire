@@ -162,4 +162,45 @@ public partial class TypeBuilder
     {
         SetCustomAttribute(customBuilder.Constructor, customBuilder._blob);
     }
+
+    public void SetCustomAttribute(ConstructorInfo constructorInfo, byte[] binaryAttribute)
+    {
+        if (constructorInfo == null)
+        {
+            throw new ArgumentNullException("constructorInfo");
+        }
+        if (binaryAttribute == null)
+        {
+            throw new ArgumentNullException("binaryAttribute");
+        }
+        if (constructorInfo.DeclaringType == null)
+        {
+            throw new ArgumentException("Attribute constructor has no type.");
+        }
+        if (constructorInfo.DeclaringType.Name.Equals("ComImportAttribute"))
+        {
+            UserTypeAttribute |= TypeAttributes.Import;
+            return;
+        }
+        EntityWrappers.CustomAttributeWrapper item = new EntityWrappers.CustomAttributeWrapper(constructorInfo, binaryAttribute);
+        _customAttributes.Add(item);
+    }
+
+    public Type? CreateType()
+    {
+        if (!IsInterface && !IsStatic() && !HasConstructor())
+        {
+            Type type = ((parentType == null) ? typeof(object) : parentType);
+            ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
+            if (constructor == null)
+            {
+                throw new InvalidOperationException(type.Name + " must have a parameterless .ctor");
+            }
+            ILGenerator iLGenerator = DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, Type.EmptyTypes).GetILGenerator();
+            iLGenerator.Emit(OpCodes.Ldarg_0);
+            iLGenerator.Emit(OpCodes.Call, constructor);
+            iLGenerator.Emit(OpCodes.Ret);
+        }
+        return this;
+    }
 }
