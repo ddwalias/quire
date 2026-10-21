@@ -358,7 +358,17 @@ public partial class FileUtils
     [global::Quire.Mirror.MirrorStub]
     public static string ExpandUnicode(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void InitCharMappings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void InitCharMappings()
+    {
+        _ = s_CharMappings.Length;
+        for (int i = 0; i < s_CharMappings.Length; i += 2)
+        {
+            char c = s_CharMappings[i];
+            char c2 = s_CharMappings[i + 1];
+            s_UnicodeToAsciiTable[c2] = c;
+            s_AsciiToUnicodeTable[c] = c2;
+        }
+    }
     public static bool UnicodeToAscii(char unicode, ref char ascii)
     {
         if (s_UnicodeToAsciiTable.Count == 0)
@@ -386,7 +396,65 @@ public partial class FileUtils
         return false;
     }
     [global::Quire.Mirror.MirrorStub]
-    private static void InitNamedCharMap() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void InitNamedCharMap()
+    {
+        _ = s_NameMappings.Length;
+        for (int i = 0; i < s_NameMappings.Length; i += 4)
+        {
+            string shortcut_key = s_NameMappings[i];
+            string long_shortcut_key = s_NameMappings[i + 1];
+            string unicode_string = s_NameMappings[i + 2];
+            string char_name = s_NameMappings[i + 3];
+
+            if (char_name != null)
+            {
+                s_CharNameToUnicodeStringTable[char_name] = unicode_string;
+            }
+
+            if (unicode_string != null && unicode_string.Length == 1)
+            {
+                s_UnicodeToCharNameTable[unicode_string[0]] = char_name;
+            }
+
+            if (long_shortcut_key != null)
+            {
+                if (long_shortcut_key.Length != 1)
+                {
+                    throw new global::System.Exception(global::System.String.Format("Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", char_name, long_shortcut_key));
+                }
+                char c = long_shortcut_key[0];
+                if (unicode_string != null)
+                {
+                    s_LongUnicodeToShortcutKeyTable.Add(new Pair<string, char>(unicode_string, c));
+                }
+                else
+                {
+                    throw new global::System.ArgumentNullException("unicode_string", "Input shouldn't be null.");
+                }
+            }
+
+            if (shortcut_key != null)
+            {
+                if (shortcut_key.Length != 1)
+                {
+                    throw new global::System.Exception("Greek Name Table init failed(2).");
+                }
+                char c2 = shortcut_key[0];
+                if (unicode_string != null && unicode_string.Length != 1)
+                {
+                    throw new global::System.Exception(global::System.String.Format("Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", char_name, unicode_string));
+                }
+                if (unicode_string == null)
+                {
+                    throw new global::System.ArgumentNullException("unicode_string", "Input shouldn't be null.");
+                }
+                char c3 = unicode_string[0];
+                s_GreekShortcutKeyToUnicodeTable[c2] = c3;
+                s_UnicodeToGreekShortcutKeyTable[c3] = c2;
+            }
+        }
+        s_bNamedCharMapInitialized = true;
+    }
     public static bool CharNameToUnicodeString(string name, ref string unicode)
     {
         if (!s_bNamedCharMapInitialized)

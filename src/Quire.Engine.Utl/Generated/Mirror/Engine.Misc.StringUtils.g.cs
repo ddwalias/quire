@@ -157,7 +157,19 @@ public partial class StringUtils
     }
 
     [global::Quire.Mirror.MirrorStub]
-    public static string ToCommandString(string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string ToCommandString(string[] args)
+    {
+        var stringBuilder = new global::System.Text.StringBuilder();
+        foreach (string text in args)
+        {
+            if (stringBuilder.Length > 0)
+            {
+                stringBuilder.Append(' ');
+            }
+            stringBuilder.AppendFormat(text.IndexOfAny(s_CommandSpecialChars) >= 0 ? StringQuote(text) : text);
+        }
+        return stringBuilder.ToString();
+    }
 
     public static string StringQuote(string str)
     {
