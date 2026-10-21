@@ -25,6 +25,21 @@ public partial class CachedDoubleStringConverter
         return number.ToString(CultureInfo.InvariantCulture);
     }
 
+    [MirrorVerified("Release IL")]
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        strCache = (string)value;
+        try
+        {
+            doubleCache = double.Parse(strCache, NumberStyles.Float, CultureInfo.InvariantCulture);
+        }
+        catch
+        {
+            DebugTools.FailAssertion("String parsing failed: Unable to convert input to double.");
+        }
+        return doubleCache;
+    }
+
     [MirrorVerified("PtcWpfCachedDoubleStringConverterMechanicalDifferentialTests")]
     public CachedDoubleStringConverter() { }
 }
