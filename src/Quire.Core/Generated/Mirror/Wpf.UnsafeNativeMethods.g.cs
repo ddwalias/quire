@@ -540,74 +540,45 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfProperty, Ptc.Core")]
     public partial interface ITfProperty
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetType(out global::System.Guid type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int EnumRanges(int editcookie, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges, global::Quire.Wpf.UnsafeNativeMethods.ITfRange targetRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetValue(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetContext(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void FindRange(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange inRange, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange outRange, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_SetValueStore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetValue(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Clear(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetType(out global::System.Guid type);
+        int EnumRanges(int editcookie, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges, global::Quire.Wpf.UnsafeNativeMethods.ITfRange targetRange);
+        void GetValue(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out object value);
+        void GetContext(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context);
+        void FindRange(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange inRange, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange outRange, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void stub_SetValueStore();
+        void SetValue(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, object value);
+        void Clear(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContext, Ptc.Core")]
     public partial interface ITfContext
     {
-        [global::Quire.Mirror.MirrorStub]
-        int stub_RequestEditSession() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void InWriteSession(int clientId, out bool inWriteSession) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_SetSelection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetStart(int ec, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetActiveView() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnumViews() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetProperty(ref global::System.Guid guid, out global::Quire.Wpf.UnsafeNativeMethods.ITfProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetAppProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_TrackProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnumProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetDocumentMgr() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_CreateRangeBackup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        int stub_RequestEditSession();
+        void InWriteSession(int clientId, out bool inWriteSession);
+        void stub_GetSelection();
+        void stub_SetSelection();
+        void GetStart(int ec, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange range);
+        void stub_GetEnd();
+        void stub_GetActiveView();
+        void stub_EnumViews();
+        void stub_GetStatus();
+        void GetProperty(ref global::System.Guid guid, out global::Quire.Wpf.UnsafeNativeMethods.ITfProperty property);
+        void stub_GetAppProperty();
+        void stub_TrackProperties();
+        void stub_EnumProperties();
+        void stub_GetDocumentMgr();
+        void stub_CreateRangeBackup();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfDocumentMgr, Ptc.Core")]
     public partial interface ITfDocumentMgr
     {
-        [global::Quire.Mirror.MirrorStub]
-        void CreateContext(int clientId, global::Quire.Wpf.UnsafeNativeMethods.CreateContextFlags flags, object obj, out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, out int editCookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Push(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Pop(global::Quire.Wpf.UnsafeNativeMethods.PopFlags flags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetTop(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetBase(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumContexts(out object enumContexts) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void CreateContext(int clientId, global::Quire.Wpf.UnsafeNativeMethods.CreateContextFlags flags, object obj, out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, out int editCookie);
+        void Push(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context);
+        void Pop(global::Quire.Wpf.UnsafeNativeMethods.PopFlags flags);
+        void GetTop(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context);
+        void GetBase(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context);
+        void EnumContexts(out object enumContexts);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumTfDocumentMgrs, Ptc.Core")]
@@ -618,12 +589,9 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfFunctionProvider, Ptc.Core")]
     public partial interface ITfFunctionProvider
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetType(out global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetDescription(out string desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetFunction(ref global::System.Guid guid, ref global::System.Guid riid, out object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetType(out global::System.Guid guid);
+        void GetDescription(out string desc);
+        int GetFunction(ref global::System.Guid guid, ref global::System.Guid riid, out object obj);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfFunction, Ptc.Core")]
@@ -635,54 +603,40 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCandidateString, Ptc.Core")]
     public partial interface ITfCandidateString
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetString(out string funcName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetIndex(out int nIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetString(out string funcName);
+        void GetIndex(out int nIndex);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCandidateList, Ptc.Core")]
     public partial interface ITfCandidateList
     {
-        [global::Quire.Mirror.MirrorStub]
-        void EnumCandidates(out object enumCand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetCandidate(int nIndex, out global::Quire.Wpf.UnsafeNativeMethods.ITfCandidateString candstring) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetCandidateNum(out int nCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetResult(int nIndex, global::Quire.Wpf.UnsafeNativeMethods.TfCandidateResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void EnumCandidates(out object enumCand);
+        void GetCandidate(int nIndex, out global::Quire.Wpf.UnsafeNativeMethods.ITfCandidateString candstring);
+        void GetCandidateNum(out int nCount);
+        void SetResult(int nIndex, global::Quire.Wpf.UnsafeNativeMethods.TfCandidateResult result);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfFnReconversion, Ptc.Core")]
     public partial interface ITfFnReconversion
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetDisplayName(out string funcName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int QueryRange(global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange newRange, out bool isConvertable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetReconversion(global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out global::Quire.Wpf.UnsafeNativeMethods.ITfCandidateList candList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Reconvert(global::Quire.Wpf.UnsafeNativeMethods.ITfRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetDisplayName(out string funcName);
+        int QueryRange(global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange newRange, out bool isConvertable);
+        int GetReconversion(global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out global::Quire.Wpf.UnsafeNativeMethods.ITfCandidateList candList);
+        int Reconvert(global::Quire.Wpf.UnsafeNativeMethods.ITfRange range);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfFnConfigure, Ptc.Core")]
     public partial interface ITfFnConfigure
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetDisplayName(out string funcName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Show(nint hwndParent, short langid, ref global::System.Guid guidProfile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetDisplayName(out string funcName);
+        int Show(nint hwndParent, short langid, ref global::System.Guid guidProfile);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfFnConfigureRegisterWord, Ptc.Core")]
     public partial interface ITfFnConfigureRegisterWord
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetDisplayName(out string funcName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Show(nint hwndParent, short langid, ref global::System.Guid guidProfile, string bstrRegistered) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetDisplayName(out string funcName);
+        int Show(nint hwndParent, short langid, ref global::System.Guid guidProfile, string bstrRegistered);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumTfFunctionProviders, Ptc.Core")]
@@ -693,10 +647,8 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCompartment, Ptc.Core")]
     public partial interface ITfCompartment
     {
-        [global::Quire.Mirror.MirrorStub]
-        int SetValue(int tid, ref object varValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetValue(out object varValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        int SetValue(int tid, ref object varValue);
+        void GetValue(out object varValue);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCompartmentEventSink, Ptc.Core")]
@@ -708,296 +660,186 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCompartmentMgr, Ptc.Core")]
     public partial interface ITfCompartmentMgr
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetCompartment(ref global::System.Guid guid, out global::Quire.Wpf.UnsafeNativeMethods.ITfCompartment comp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ClearCompartment(int tid, global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumCompartments(out object enumGuid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetCompartment(ref global::System.Guid guid, out global::Quire.Wpf.UnsafeNativeMethods.ITfCompartment comp);
+        void ClearCompartment(int tid, global::System.Guid guid);
+        void EnumCompartments(out object enumGuid);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfThreadMgr, Ptc.Core")]
     public partial interface ITfThreadMgr
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Activate(out int clientId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Deactivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void CreateDocumentMgr(out global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr docMgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumDocumentMgrs(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfDocumentMgrs enumDocMgrs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetFocus(out global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr docMgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetFocus(global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr docMgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void AssociateFocus(nint hwnd, global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr newDocMgr, out global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr prevDocMgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsThreadFocus(out bool isFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetFunctionProvider(ref global::System.Guid classId, out global::Quire.Wpf.UnsafeNativeMethods.ITfFunctionProvider funcProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumFunctionProviders(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfFunctionProviders enumProviders) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetGlobalCompartment(out global::Quire.Wpf.UnsafeNativeMethods.ITfCompartmentMgr compartmentMgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Activate(out int clientId);
+        void Deactivate();
+        void CreateDocumentMgr(out global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr docMgr);
+        void EnumDocumentMgrs(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfDocumentMgrs enumDocMgrs);
+        void GetFocus(out global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr docMgr);
+        void SetFocus(global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr docMgr);
+        void AssociateFocus(nint hwnd, global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr newDocMgr, out global::Quire.Wpf.UnsafeNativeMethods.ITfDocumentMgr prevDocMgr);
+        void IsThreadFocus(out bool isFocus);
+        int GetFunctionProvider(ref global::System.Guid classId, out global::Quire.Wpf.UnsafeNativeMethods.ITfFunctionProvider funcProvider);
+        void EnumFunctionProviders(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfFunctionProviders enumProviders);
+        void GetGlobalCompartment(out global::Quire.Wpf.UnsafeNativeMethods.ITfCompartmentMgr compartmentMgr);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITextStoreACPSink, Ptc.Core")]
     public partial interface ITextStoreACPSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnTextChange(global::Quire.Wpf.UnsafeNativeMethods.OnTextChangeFlags flags, ref global::Quire.Wpf.UnsafeNativeMethods.TS_TEXTCHANGE change) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnSelectionChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnLayoutChange(global::Quire.Wpf.UnsafeNativeMethods.TsLayoutCode lcode, int viewCookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnStatusChange(global::Quire.Wpf.UnsafeNativeMethods.DynamicStatusFlags flags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnAttrsChange(int start, int end, int count, global::System.Guid[] attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int OnLockGranted(global::Quire.Wpf.UnsafeNativeMethods.LockFlags flags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnStartEditTransaction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnEndEditTransaction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnTextChange(global::Quire.Wpf.UnsafeNativeMethods.OnTextChangeFlags flags, ref global::Quire.Wpf.UnsafeNativeMethods.TS_TEXTCHANGE change);
+        void OnSelectionChange();
+        void OnLayoutChange(global::Quire.Wpf.UnsafeNativeMethods.TsLayoutCode lcode, int viewCookie);
+        void OnStatusChange(global::Quire.Wpf.UnsafeNativeMethods.DynamicStatusFlags flags);
+        void OnAttrsChange(int start, int end, int count, global::System.Guid[] attributes);
+        int OnLockGranted(global::Quire.Wpf.UnsafeNativeMethods.LockFlags flags);
+        void OnStartEditTransaction();
+        void OnEndEditTransaction();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfThreadFocusSink, Ptc.Core")]
     public partial interface ITfThreadFocusSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnSetThreadFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnKillThreadFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnSetThreadFocus();
+        void OnKillThreadFocus();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfSource, Ptc.Core")]
     public partial interface ITfSource
     {
-        [global::Quire.Mirror.MirrorStub]
-        void AdviseSink(ref global::System.Guid riid, object obj, out int cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void UnadviseSink(int cookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void AdviseSink(ref global::System.Guid riid, object obj, out int cookie);
+        void UnadviseSink(int cookie);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfKeystrokeMgr, Ptc.Core")]
     public partial interface ITfKeystrokeMgr
     {
-        [global::Quire.Mirror.MirrorStub]
-        void AdviseKeyEventSink(int clientId, object obj, bool fForeground) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void UnadviseKeyEventSink(int clientId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetForeground(out global::System.Guid clsid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void TestKeyDown(int wParam, int lParam, out bool eaten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void TestKeyUp(int wParam, int lParam, out bool eaten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void KeyDown(int wParam, int lParam, out bool eaten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void KeyUp(int wParam, int lParam, out bool eaten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetPreservedKey(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key, out global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsPreservedKey(ref global::System.Guid guid, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key, out bool registered) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void PreserveKey(int clientId, ref global::System.Guid guid, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key, char[] desc, int descCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void UnpreserveKey(ref global::System.Guid guid, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetPreservedKeyDescription(ref global::System.Guid guid, char[] desc, int descCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetPreservedKeyDescription(ref global::System.Guid guid, out string desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SimulatePreservedKey(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, ref global::System.Guid guid, out bool eaten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void AdviseKeyEventSink(int clientId, object obj, bool fForeground);
+        void UnadviseKeyEventSink(int clientId);
+        void GetForeground(out global::System.Guid clsid);
+        void TestKeyDown(int wParam, int lParam, out bool eaten);
+        void TestKeyUp(int wParam, int lParam, out bool eaten);
+        void KeyDown(int wParam, int lParam, out bool eaten);
+        void KeyUp(int wParam, int lParam, out bool eaten);
+        void GetPreservedKey(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key, out global::System.Guid guid);
+        void IsPreservedKey(ref global::System.Guid guid, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key, out bool registered);
+        void PreserveKey(int clientId, ref global::System.Guid guid, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key, char[] desc, int descCount);
+        void UnpreserveKey(ref global::System.Guid guid, ref global::Quire.Wpf.UnsafeNativeMethods.TF_PRESERVEDKEY key);
+        void SetPreservedKeyDescription(ref global::System.Guid guid, char[] desc, int descCount);
+        void GetPreservedKeyDescription(ref global::System.Guid guid, out string desc);
+        void SimulatePreservedKey(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, ref global::System.Guid guid, out bool eaten);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfRange, Ptc.Core")]
     public partial interface ITfRange
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetText(int ec, int flags, char[] text, int countMax, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetText(int ec, int flags, char[] text, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetFormattedText(int ec, out object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetEmbedded(int ec, ref global::System.Guid guidService, ref global::System.Guid iid, out object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void InsertEmbedded(int ec, int flags, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftStart(int ec, int count, out int result, int ZeroForNow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftEnd(int ec, int count, out int result, int ZeroForNow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftStartToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftEndToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftStartRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftEndRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsEmpty(int ec, out bool empty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Collapse(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsEqualStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsEqualEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void CompareStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void CompareEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void AdjustForInsert(int ec, int count, out bool insertOk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetGravity(out global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, out global::Quire.Wpf.UnsafeNativeMethods.TfGravity end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetGravity(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, global::Quire.Wpf.UnsafeNativeMethods.TfGravity end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.ITfRange clone) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetContext(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetText(int ec, int flags, char[] text, int countMax, out int count);
+        void SetText(int ec, int flags, char[] text, int count);
+        void GetFormattedText(int ec, out object data);
+        void GetEmbedded(int ec, ref global::System.Guid guidService, ref global::System.Guid iid, out object obj);
+        void InsertEmbedded(int ec, int flags, object data);
+        void ShiftStart(int ec, int count, out int result, int ZeroForNow);
+        void ShiftEnd(int ec, int count, out int result, int ZeroForNow);
+        void ShiftStartToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void ShiftEndToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void ShiftStartRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion);
+        void ShiftEndRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion);
+        void IsEmpty(int ec, out bool empty);
+        void Collapse(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void IsEqualStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal);
+        void IsEqualEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal);
+        void CompareStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result);
+        void CompareEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result);
+        void AdjustForInsert(int ec, int count, out bool insertOk);
+        void GetGravity(out global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, out global::Quire.Wpf.UnsafeNativeMethods.TfGravity end);
+        void SetGravity(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, global::Quire.Wpf.UnsafeNativeMethods.TfGravity end);
+        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.ITfRange clone);
+        void GetContext(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfRangeACP, Ptc.Core")]
     public partial interface ITfRangeACP
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetText(int ec, int flags, char[] text, int countMax, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetText(int ec, int flags, char[] text, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetFormattedText(int ec, out object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetEmbedded(int ec, ref global::System.Guid guidService, ref global::System.Guid iid, out object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void InsertEmbedded(int ec, int flags, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftStart(int ec, int count, out int result, int ZeroForNow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftEnd(int ec, int count, out int result, int ZeroForNow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftStartToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftEndToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftStartRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ShiftEndRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsEmpty(int ec, out bool empty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Collapse(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsEqualStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void IsEqualEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void CompareStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void CompareEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void AdjustForInsert(int ec, int count, out bool insertOk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetGravity(out global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, out global::Quire.Wpf.UnsafeNativeMethods.TfGravity end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetGravity(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, global::Quire.Wpf.UnsafeNativeMethods.TfGravity end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.ITfRange clone) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetContext(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetExtent(out int start, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void SetExtent(int start, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetText(int ec, int flags, char[] text, int countMax, out int count);
+        void SetText(int ec, int flags, char[] text, int count);
+        void GetFormattedText(int ec, out object data);
+        void GetEmbedded(int ec, ref global::System.Guid guidService, ref global::System.Guid iid, out object obj);
+        void InsertEmbedded(int ec, int flags, object data);
+        void ShiftStart(int ec, int count, out int result, int ZeroForNow);
+        void ShiftEnd(int ec, int count, out int result, int ZeroForNow);
+        void ShiftStartToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void ShiftEndToRange(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void ShiftStartRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion);
+        void ShiftEndRegion(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfShiftDir dir, out bool noRegion);
+        void IsEmpty(int ec, out bool empty);
+        void Collapse(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position);
+        void IsEqualStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal);
+        void IsEqualEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out bool equal);
+        void CompareStart(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result);
+        void CompareEnd(int ec, global::Quire.Wpf.UnsafeNativeMethods.ITfRange with, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor position, out int result);
+        void AdjustForInsert(int ec, int count, out bool insertOk);
+        void GetGravity(out global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, out global::Quire.Wpf.UnsafeNativeMethods.TfGravity end);
+        void SetGravity(int ec, global::Quire.Wpf.UnsafeNativeMethods.TfGravity start, global::Quire.Wpf.UnsafeNativeMethods.TfGravity end);
+        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.ITfRange clone);
+        void GetContext(out global::Quire.Wpf.UnsafeNativeMethods.ITfContext context);
+        void GetExtent(out int start, out int count);
+        void SetExtent(int start, int count);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCompositionView, Ptc.Core")]
     public partial interface ITfCompositionView
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetOwnerClsid(out global::System.Guid clsid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetRange(out global::Quire.Wpf.UnsafeNativeMethods.ITfRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetOwnerClsid(out global::System.Guid clsid);
+        void GetRange(out global::Quire.Wpf.UnsafeNativeMethods.ITfRange range);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionSink, Ptc.Core")]
     public partial interface ITfContextOwnerCompositionSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnStartComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, out bool ok) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnUpdateComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, global::Quire.Wpf.UnsafeNativeMethods.ITfRange rangeNew) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnEndComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnStartComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, out bool ok);
+        void OnUpdateComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, global::Quire.Wpf.UnsafeNativeMethods.ITfRange rangeNew);
+        void OnEndComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContextComposition, Ptc.Core")]
     public partial interface ITfContextComposition
     {
-        [global::Quire.Mirror.MirrorStub]
-        void StartComposition(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, object sink, out object composition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumCompositions(out global::Quire.Wpf.UnsafeNativeMethods.IEnumITfCompositionView enumView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void FindComposition(int ecRead, global::Quire.Wpf.UnsafeNativeMethods.ITfRange testRange, out object enumView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void TakeOwnership(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, object sink, out object composition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void StartComposition(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, object sink, out object composition);
+        void EnumCompositions(out global::Quire.Wpf.UnsafeNativeMethods.IEnumITfCompositionView enumView);
+        void FindComposition(int ecRead, global::Quire.Wpf.UnsafeNativeMethods.ITfRange testRange, out object enumView);
+        void TakeOwnership(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, object sink, out object composition);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContextOwnerCompositionServices, Ptc.Core")]
     public partial interface ITfContextOwnerCompositionServices
     {
-        [global::Quire.Mirror.MirrorStub]
-        void StartComposition(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, object sink, out object composition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumCompositions(out object enumView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void FindComposition(int ecRead, global::Quire.Wpf.UnsafeNativeMethods.ITfRange testRange, out object enumView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void TakeOwnership(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, object sink, out object composition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int TerminateComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void StartComposition(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, object sink, out object composition);
+        void EnumCompositions(out object enumView);
+        void FindComposition(int ecRead, global::Quire.Wpf.UnsafeNativeMethods.ITfRange testRange, out object enumView);
+        void TakeOwnership(int ecWrite, global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view, object sink, out object composition);
+        int TerminateComposition(global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView view);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumITfCompositionView, Ptc.Core")]
     public partial interface IEnumITfCompositionView
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView[] compositionview, out int fetched) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Skip(int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges);
+        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.ITfCompositionView[] compositionview, out int fetched);
+        void Reset();
+        int Skip(int count);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumTfRanges, Ptc.Core")]
     public partial interface IEnumTfRanges
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.ITfRange[] ranges, out int fetched) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Skip(int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges);
+        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.ITfRange[] ranges, out int fetched);
+        void Reset();
+        int Skip(int count);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfEditRecord, Ptc.Core")]
     public partial interface ITfEditRecord
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetSelectionStatus(out bool selectionChanged) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetTextAndPropertyUpdates(int flags, ref nint properties, int count, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetSelectionStatus(out bool selectionChanged);
+        void GetTextAndPropertyUpdates(int flags, ref nint properties, int count, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRanges ranges);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfTextEditSink, Ptc.Core")]
@@ -1009,181 +851,116 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup, Ptc.Core")]
     public partial interface IEnumTfRenderingMarkup
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRenderingMarkup clone) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.TF_RENDERINGMARKUP[] markup, out int fetched) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Skip(int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRenderingMarkup clone);
+        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.TF_RENDERINGMARKUP[] markup, out int fetched);
+        void Reset();
+        int Skip(int count);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContextRenderingMarkup, Ptc.Core")]
     public partial interface ITfContextRenderingMarkup
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetRenderingMarkup(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.GetRenderingMarkupFlags flags, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRenderingMarkup enumMarkup) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void FindNextRenderingMarkup(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.FindRenderingMarkupFlags flags, global::Quire.Wpf.UnsafeNativeMethods.ITfRange queryRange, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor queryAnchor, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange foundRange, out global::Quire.Wpf.UnsafeNativeMethods.TF_RENDERINGMARKUP foundMarkup) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetRenderingMarkup(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.GetRenderingMarkupFlags flags, global::Quire.Wpf.UnsafeNativeMethods.ITfRange range, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfRenderingMarkup enumMarkup);
+        void FindNextRenderingMarkup(int editCookie, global::Quire.Wpf.UnsafeNativeMethods.FindRenderingMarkupFlags flags, global::Quire.Wpf.UnsafeNativeMethods.ITfRange queryRange, global::Quire.Wpf.UnsafeNativeMethods.TfAnchor queryAnchor, out global::Quire.Wpf.UnsafeNativeMethods.ITfRange foundRange, out global::Quire.Wpf.UnsafeNativeMethods.TF_RENDERINGMARKUP foundMarkup);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfInputProcessorProfiles, Ptc.Core")]
     public partial interface ITfInputProcessorProfiles
     {
-        [global::Quire.Mirror.MirrorStub]
-        void stub_Register() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_Unregister() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_AddLanguageProfile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_RemoveLanguageProfile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnumInputProcessorInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetDefaultLanguageProfile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_SetDefaultLanguageProfile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void ActivateLanguageProfile(ref global::System.Guid clsid, short langid, ref global::System.Guid guidProfile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetActiveLanguageProfile(ref global::System.Guid clsid, out short langid, out global::System.Guid profile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetLanguageProfileDescription() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetCurrentLanguage(out short langid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int ChangeCurrentLanguage(short langid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetLanguageList(out nint langids, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void EnumLanguageProfiles(short langid, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfLanguageProfiles enumIPP) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnableLanguageProfile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_IsEnabledLanguageProfile() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnableLanguageProfileByDefault() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_SubstituteKeyboardLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void stub_Register();
+        void stub_Unregister();
+        void stub_AddLanguageProfile();
+        void stub_RemoveLanguageProfile();
+        void stub_EnumInputProcessorInfo();
+        void stub_GetDefaultLanguageProfile();
+        void stub_SetDefaultLanguageProfile();
+        void ActivateLanguageProfile(ref global::System.Guid clsid, short langid, ref global::System.Guid guidProfile);
+        int GetActiveLanguageProfile(ref global::System.Guid clsid, out short langid, out global::System.Guid profile);
+        void stub_GetLanguageProfileDescription();
+        void GetCurrentLanguage(out short langid);
+        int ChangeCurrentLanguage(short langid);
+        int GetLanguageList(out nint langids, out int count);
+        void EnumLanguageProfiles(short langid, out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfLanguageProfiles enumIPP);
+        void stub_EnableLanguageProfile();
+        void stub_IsEnabledLanguageProfile();
+        void stub_EnableLanguageProfileByDefault();
+        void stub_SubstituteKeyboardLayout();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumTfLanguageProfiles, Ptc.Core")]
     public partial interface IEnumTfLanguageProfiles
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfLanguageProfiles enumIPP) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.TF_LANGUAGEPROFILE[] profiles, out int fetched) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Skip(int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Clone(out global::Quire.Wpf.UnsafeNativeMethods.IEnumTfLanguageProfiles enumIPP);
+        int Next(int count, global::Quire.Wpf.UnsafeNativeMethods.TF_LANGUAGEPROFILE[] profiles, out int fetched);
+        void Reset();
+        void Skip(int count);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfLanguageProfileNotifySink, Ptc.Core")]
     public partial interface ITfLanguageProfileNotifySink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnLanguageChange(short langid, out bool bAccept) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void OnLanguageChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnLanguageChange(short langid, out bool bAccept);
+        void OnLanguageChanged();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfDisplayAttributeMgr, Ptc.Core")]
     public partial interface ITfDisplayAttributeMgr
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnUpdateInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnumDisplayAttributeInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetDisplayAttributeInfo(ref global::System.Guid guid, out global::Quire.Wpf.UnsafeNativeMethods.ITfDisplayAttributeInfo info, out global::System.Guid clsid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnUpdateInfo();
+        void stub_EnumDisplayAttributeInfo();
+        void GetDisplayAttributeInfo(ref global::System.Guid guid, out global::Quire.Wpf.UnsafeNativeMethods.ITfDisplayAttributeInfo info, out global::System.Guid clsid);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfDisplayAttributeInfo, Ptc.Core")]
     public partial interface ITfDisplayAttributeInfo
     {
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetGUID() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetDescription() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetAttributeInfo(out global::Quire.Wpf.UnsafeNativeMethods.TF_DISPLAYATTRIBUTE attr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_SetAttributeInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void stub_GetGUID();
+        void stub_GetDescription();
+        void GetAttributeInfo(out global::Quire.Wpf.UnsafeNativeMethods.TF_DISPLAYATTRIBUTE attr);
+        void stub_SetAttributeInfo();
+        void stub_Reset();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCategoryMgr, Ptc.Core")]
     public partial interface ITfCategoryMgr
     {
-        [global::Quire.Mirror.MirrorStub]
-        void stub_RegisterCategory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_UnregisterCategory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnumCategoriesInItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_EnumItemsInCategory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_FindClosestCategory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_RegisterGUIDDescription() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_UnregisterGUIDDescription() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetGUIDDescription() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_RegisterGUIDDWORD() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_UnregisterGUIDDWORD() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_GetGUIDDWORD() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_RegisterGUID() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetGUID(int guidatom, out global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_IsEqualTfGuidAtom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void stub_RegisterCategory();
+        void stub_UnregisterCategory();
+        void stub_EnumCategoriesInItem();
+        void stub_EnumItemsInCategory();
+        void stub_FindClosestCategory();
+        void stub_RegisterGUIDDescription();
+        void stub_UnregisterGUIDDescription();
+        void stub_GetGUIDDescription();
+        void stub_RegisterGUIDDWORD();
+        void stub_UnregisterGUIDDWORD();
+        void stub_GetGUIDDWORD();
+        void stub_RegisterGUID();
+        int GetGUID(int guidatom, out global::System.Guid guid);
+        void stub_IsEqualTfGuidAtom();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContextOwner, Ptc.Core")]
     public partial interface ITfContextOwner
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetACPFromPoint(ref global::Quire.Wpf.UnsafeNativeMethods.POINT point, global::Quire.Wpf.UnsafeNativeMethods.GetPositionFromPointFlags flags, out int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetTextExt(int start, int end, out global::Quire.Wpf.UnsafeNativeMethods.RECT rect, out bool clipped) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetScreenExt(out global::Quire.Wpf.UnsafeNativeMethods.RECT rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetStatus(out global::Quire.Wpf.UnsafeNativeMethods.TS_STATUS status) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetWnd(out nint hwnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetValue(ref global::System.Guid guidAttribute, out object varValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetACPFromPoint(ref global::Quire.Wpf.UnsafeNativeMethods.POINT point, global::Quire.Wpf.UnsafeNativeMethods.GetPositionFromPointFlags flags, out int position);
+        void GetTextExt(int start, int end, out global::Quire.Wpf.UnsafeNativeMethods.RECT rect, out bool clipped);
+        void GetScreenExt(out global::Quire.Wpf.UnsafeNativeMethods.RECT rect);
+        void GetStatus(out global::Quire.Wpf.UnsafeNativeMethods.TS_STATUS status);
+        void GetWnd(out nint hwnd);
+        void GetValue(ref global::System.Guid guidAttribute, out object varValue);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfContextOwnerServices, Ptc.Core")]
     public partial interface ITfContextOwnerServices
     {
-        [global::Quire.Mirror.MirrorStub]
-        void stub_OnLayoutChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_OnStatusChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_OnAttributeChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_Serialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_Unserialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void stub_ForceLoadProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void CreateRange(int acpStart, int acpEnd, out global::Quire.Wpf.UnsafeNativeMethods.ITfRangeACP range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void stub_OnLayoutChange();
+        void stub_OnStatusChange();
+        void stub_OnAttributeChange();
+        void stub_Serialize();
+        void stub_Unserialize();
+        void stub_ForceLoadProperty();
+        void CreateRange(int acpStart, int acpEnd, out global::Quire.Wpf.UnsafeNativeMethods.ITfRangeACP range);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfTransitoryExtensionSink, Ptc.Core")]
@@ -1195,25 +972,18 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfInputScope, Ptc.Core")]
     public partial interface ITfInputScope
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetInputScopes(out nint ppinputscopes, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetPhrase(out nint ppbstrPhrases, out int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetRegularExpression(out string desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetSRGC(out string desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int GetXML(out string desc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetInputScopes(out nint ppinputscopes, out int count);
+        int GetPhrase(out nint ppbstrPhrases, out int count);
+        int GetRegularExpression(out string desc);
+        int GetSRGC(out string desc);
+        int GetXML(out string desc);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfMouseTrackerACP, Ptc.Core")]
     public partial interface ITfMouseTrackerACP
     {
-        [global::Quire.Mirror.MirrorStub]
-        int AdviceMouseSink(global::Quire.Wpf.UnsafeNativeMethods.ITfRangeACP range, global::Quire.Wpf.UnsafeNativeMethods.ITfMouseSink sink, out int dwCookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        int UnadviceMouseSink(int dwCookie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        int AdviceMouseSink(global::Quire.Wpf.UnsafeNativeMethods.ITfRangeACP range, global::Quire.Wpf.UnsafeNativeMethods.ITfMouseSink sink, out int dwCookie);
+        int UnadviceMouseSink(int dwCookie);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfMouseSink, Ptc.Core")]
