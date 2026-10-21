@@ -11,6 +11,5 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IService, Ptc.Core")]
 public partial interface IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsConnected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    bool IsConnected { get; set; }
 }
