@@ -11,30 +11,17 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.IFileOperationsProvider, Ptc.Core")]
 public partial interface IFileOperationsProvider : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    string CurrentDirectory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool FileExists(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool DirectoryExists(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.TextReader GetFileReader(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.TextWriter GetFileWriter(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.TextWriter GetFileWriter(string path, bool appendFlag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string[] GetFiles(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string[] GetFiles(string path, string filter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string[] GetDirectories(string path) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string[] GetDirectories(string path, string filter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Exception CreateDirectory(string directory) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetFullPath(string relativePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetExtension(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    string CurrentDirectory { get; set; }
+    bool FileExists(string fileName) ;
+    bool DirectoryExists(string path) ;
+    global::System.IO.TextReader GetFileReader(string fileName) ;
+    global::System.IO.TextWriter GetFileWriter(string fileName) ;
+    global::System.IO.TextWriter GetFileWriter(string path, bool appendFlag) ;
+    string[] GetFiles(string path) ;
+    string[] GetFiles(string path, string filter) ;
+    string[] GetDirectories(string path) ;
+    string[] GetDirectories(string path, string filter) ;
+    global::System.Exception CreateDirectory(string directory) ;
+    string GetFullPath(string relativePath) ;
+    string GetExtension(string fileName) ;
 }

@@ -11,10 +11,7 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IDialogManager, Ptc.Core")]
 public partial interface IDialogManager : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsDialogOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Forms.DialogResult ShowDialog(global::System.Windows.Forms.FileDialog fileDialog) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<bool> ShowDialog(global::Microsoft.Win32.FileDialog fileDialog) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsDialogOpen { get; set; }
+    global::System.Windows.Forms.DialogResult ShowDialog(global::System.Windows.Forms.FileDialog fileDialog) ;
+    global::System.Nullable<bool> ShowDialog(global::Microsoft.Win32.FileDialog fileDialog) ;
 }
