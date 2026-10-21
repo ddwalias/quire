@@ -6,6 +6,15 @@ namespace Quire;
 public static partial class FrameworkVersion
 {
     [MirrorVerified("Release IL")]
+    private const string RegistryFrameworkVersionsKey = "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP";
+
+    [MirrorVerified("Release IL")]
+    private const string RegistryFrameworkVersionKey_4 = "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full";
+
+    [MirrorVerified("Release IL")]
+    private const string RegistryFrameworkVersionRelease = "Release";
+
+    [MirrorVerified("Release IL")]
     private static List<Pair<Versions, int>> _registryReleaseKeyLegend;
 
     [MirrorVerified("Release IL")]
