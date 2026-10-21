@@ -12,7 +12,5 @@ namespace Quire.Wpf;
 public partial class EnvironmentVariableMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.EnvironmentVariableMultiConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
