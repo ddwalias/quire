@@ -30,8 +30,6 @@ public static partial class BoundsHelper
         [global::Quire.Mirror.MirrorStub]
         private static double CalculateSlope(global::System.Windows.Point start, global::System.Windows.Point end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private double Length() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Point NPoint(double gradient) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Point Intersect(global::Quire.Wpf.BoundsHelper.Line line) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
