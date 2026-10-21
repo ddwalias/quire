@@ -11,6 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.PointThatSnapsToPixelHelperExtensions, Ptc.Core")]
 public static partial class PointThatSnapsToPixelHelperExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.GeneralTransform GroupTransforms(this global::Quire.Core.ISnapToPixelHelper parentHelper, global::System.Windows.UIElement childElement, global::System.Windows.Media.GeneralTransform transform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
