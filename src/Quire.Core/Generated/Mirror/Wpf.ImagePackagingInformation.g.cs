@@ -21,6 +21,4 @@ public partial struct ImagePackagingInformation
     public const string DefaultImageNameFormat = "Image{0}";
     [global::Quire.Mirror.MirrorStub]
     public string ImageExtension;
-    [global::Quire.Mirror.MirrorStub]
-    public string ImageName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
