@@ -60,4 +60,6 @@ public partial class DoubleComparer
         }
         return 0;
     }
+
+    private static IEnumerable<double> GetDoubles(Rect rect) => GetDoubles(rect.TopLeft).Concat(GetDoubles(rect.BottomRight));
 }

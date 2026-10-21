@@ -17,6 +17,4 @@ public partial class DoubleComparer : global::System.Collections.Generic.ICompar
     private static global::System.Collections.Generic.IEnumerable<double> GetDoubles(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IEnumerable<double> GetDoubles(global::System.Windows.Media.Media3D.Point3D point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<double> GetDoubles(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
