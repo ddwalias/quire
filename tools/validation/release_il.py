@@ -63,6 +63,8 @@ def compare(before, after, types=(), methods=()):
     Unmapped changed methods are blockers, including generated helpers. Unchanged
     unfinished methods stay out of the batch. D10 engine-native methods are identified
     by MethodAudit from their original artifact and do not require a managed IL match.
+    Removing a compiler-generated member with no Mathcad counterpart (a renumbered
+    closure or state machine) does not fail the gate.
     """
     old = {m['id']: m for m in before['methods']}
     new = {m['id']: m for m in after['methods']}
@@ -82,6 +84,9 @@ def compare(before, after, types=(), methods=()):
                       '; '.join(row.get('structure_differences', [])[:2]) or 'Release IL differs')
             failures.append({'method': key, 'reason': reason})
     for key in old.keys() - new.keys():
+        # Renumbered compiler-generated members Mathcad never had; their replacements are new rows checked above.
+        if old[key].get('original') is None and '<' in old[key]['type'] + old[key]['signature']:
+            continue
         failures.append({'method': key, 'reason': 'method removed'})
     for name in types:
         if not any(m['type'] == name for m in new.values()):

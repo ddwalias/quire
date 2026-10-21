@@ -34,6 +34,18 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         result = compare(inventory(method(exact=False)), inventory())
         self.assertEqual(result['failures'][0]['reason'], 'method removed')
 
+    def test_renumbered_generated_members_without_counterpart_may_be_removed(self):
+        stale = method('MoveNext', exact=False)
+        stale.update(id='P::T+<Get>d__13::MoveNext', type='T+<Get>d__13', original=None)
+        renumbered = method('MoveNext')
+        renumbered.update(id='P::T+<Get>d__10::MoveNext', type='T+<Get>d__10')
+        self.assertTrue(compare(inventory(stale), inventory(renumbered))['passed'])
+        closure = method('<Recalculate>b__7_0', exact=False)
+        closure['original'] = None
+        self.assertTrue(compare(inventory(closure), inventory())['passed'])
+        mapped = method('<Recalculate>b__7_0', exact=False)
+        self.assertFalse(compare(inventory(mapped), inventory())['passed'])
+
     def test_generated_helpers_and_missing_counterparts_are_not_exempt(self):
         generated = method('<M>b__0', exact=False)
         generated['original'] = None
