@@ -15,6 +15,47 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    public static void SetTextFormat(DependencyProperty property, object value, TextBox control)
+    {
+        if (property == FontFamilyProperty)
+        {
+            control.FontFamily = (FontFamily)value;
+        }
+        else if (property == FontSizeProperty)
+        {
+            control.FontSize = (double)value;
+        }
+        else if (property == FontWeightProperty)
+        {
+            control.FontWeight = (FontWeight)value;
+        }
+        else if (property == FontStyleProperty)
+        {
+            control.FontStyle = (FontStyle)value;
+        }
+        else if (property == TextDecorationsProperty)
+        {
+            control.TextDecorations = (TextDecorationCollection)value;
+        }
+        else if (property == BackgroundProperty)
+        {
+            control.Background = (Brush)value;
+        }
+        else if (property == ForegroundProperty)
+        {
+            control.Foreground = (Brush)value;
+        }
+        else if (property == TextAlignmentProperty)
+        {
+            control.TextAlignment = (TextAlignment)value;
+        }
+        else if (property == MarginProperty)
+        {
+            control.Margin = (Thickness)value;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private static object HandleBrushCoerceValue(DependencyObject d, object basevalue)
     {
         if (basevalue is Brush brush && !((Freezable)brush).IsFrozen)

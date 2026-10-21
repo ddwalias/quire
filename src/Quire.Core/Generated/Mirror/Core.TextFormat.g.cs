@@ -54,8 +54,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public void ApplyAllTextFormatValuesToControl(global::Quire.Core.ITextFormatCreation control, global::System.Windows.Documents.Block block = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SetTextFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Controls.TextBox control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SetTextFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.FlowDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ApplyPropertyValueFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.TextRange textRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
