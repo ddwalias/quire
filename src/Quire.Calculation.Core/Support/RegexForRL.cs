@@ -4,7 +4,6 @@ using Quire.Mirror;
 
 namespace Quire.Calculation.Core.Support;
 
-[StructLayout(LayoutKind.Sequential, Size = 1)]
 public partial struct RegexForRL
 {
     [MirrorVerified("PtcCalculationCoreSupportRegexForRLMechanicalDifferentialTests")]
