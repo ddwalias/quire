@@ -11,6 +11,36 @@ public static partial class BoundsHelper
         return topLeft;
     }
 
+    private static global::System.Windows.Point IntersectRectangle(global::System.Windows.Rect rect, Line intersectLine)
+    {
+        global::System.Windows.Point val;
+        Line line = Line.CalculateLine(rect.TopLeft, rect.TopRight);
+        val = intersectLine.Intersect(line);
+        if (intersectLine.Contains(val) && rect.Contains(val))
+        {
+            return val;
+        }
+        line = Line.CalculateLine(rect.TopRight, rect.BottomRight);
+        val = intersectLine.Intersect(line);
+        if (intersectLine.Contains(val) && rect.Contains(val))
+        {
+            return val;
+        }
+        line = Line.CalculateLine(rect.BottomRight, rect.BottomLeft);
+        val = intersectLine.Intersect(line);
+        if (intersectLine.Contains(val) && rect.Contains(val))
+        {
+            return val;
+        }
+        line = Line.CalculateLine(rect.BottomLeft, rect.TopLeft);
+        val = intersectLine.Intersect(line);
+        if (intersectLine.Contains(val) && rect.Contains(val))
+        {
+            return val;
+        }
+        return new global::System.Windows.Point(double.NaN, double.NaN);
+    }
+
     private partial struct Line
     {
         public static Line CalculateLine(global::System.Windows.Point a, global::System.Windows.Point b)
