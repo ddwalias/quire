@@ -9,6 +9,17 @@ public static partial class BoundsHelper
             return global::System.Math.Sqrt(global::System.Math.Pow(End.X - Begin.X, 2.0) + global::System.Math.Pow(End.Y - Begin.Y, 2.0));
         }
 
+        private static double CalculateSlope(global::System.Windows.Point start, global::System.Windows.Point end)
+        {
+            double num = end.X - start.X;
+            double num2 = end.Y - start.Y;
+            if (num == 0.0)
+            {
+                return double.NaN;
+            }
+            return num2 / num;
+        }
+
         public global::System.Windows.Point NPoint(double gradient)
         {
             if (double.IsNaN(Slope))
