@@ -12,10 +12,6 @@ namespace Quire.Media3D;
 public partial class Cylinder : global::Quire.Media3D.ModelVisualBase
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.AxisAngleRotation3D rotate;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.RotateTransform3D xform;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty Point1Property;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty Point2Property;
@@ -33,26 +29,4 @@ public partial class Cylinder : global::Quire.Media3D.ModelVisualBase
     public static readonly global::System.Windows.DependencyProperty StacksProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty EndStacksProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Point2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Radius1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Radius2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Fold1 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Fold2 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Slices { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int Stacks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int EndStacks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Cylinder() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Triangulate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection vertices, global::System.Windows.Media.Media3D.Vector3DCollection normals, global::System.Windows.Media.Int32Collection indices, global::System.Windows.Media.PointCollection textures) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
