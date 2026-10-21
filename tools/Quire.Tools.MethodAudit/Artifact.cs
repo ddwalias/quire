@@ -8,10 +8,27 @@ using Quire.Tools.MirrorGen;
 /// <summary><paramref name="Modifiers"/>: the custom modifiers of the return type and each parameter, which the key leaves
 /// out (see ModifierProvider).</summary>
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva,
-    string Modifiers = "");
+    string Modifiers = "", int? MaxStack = null);
 sealed class Artifact
 {
     private readonly Dictionary<int, MethodModel[]> methodModels = [];
+
+    // PEReader.GetMethodBody rejects mixed-mode native entry points in C++/CLI images.
+    // Read only the ECMA-335 header prefix and leave native/unknown headers unclassified.
+    private static int? ReadMaxStack(PEReader pe, int rva)
+    {
+        if (rva == 0) return null;
+        try
+        {
+            var header = pe.GetSectionData(rva).GetContent(0, 4);
+            byte format = (byte)(header[0] & 0x3);
+            if (format == 0x2) return 8; // tiny headers have a fixed maxstack of 8
+            if (format == 0x3) return System.Buffers.Binary.BinaryPrimitives.ReadUInt16LittleEndian(header.AsSpan(2, 2));
+        }
+        catch (ArgumentOutOfRangeException) { }
+        catch (BadImageFormatException) { }
+        return null;
+    }
 
     /// <summary>Use MethodImpl metadata to identify explicit implementations independently
     /// of the compiler's spelling of their interface prefix.</summary>
@@ -125,8 +142,9 @@ sealed class Artifact
                 var modified = m.DecodeSignature(new ModifierProvider(), null);
                 string modifiers = string.Join(";", new[] { modified.ReturnType }.Concat(modified.ParameterTypes)
                     .Select(t => string.Join(" ", ModifierProvider.Modifier.Matches(t).Select(x => x.Value))));
+                int? maxStack = ReadMaxStack(Pe, m.RelativeVirtualAddress);
                 Methods.Add(new(owner, name, key, MetadataTokens.GetToken(mh), access,
-                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers));
+                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack));
             }
         }
     }

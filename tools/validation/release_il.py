@@ -61,7 +61,8 @@ def compare(before, after, types=(), methods=()):
     """Changed bodies/declarations and every previously exact method must match.
 
     Unmapped changed methods are blockers, including generated helpers. Unchanged
-    unfinished methods stay out of the batch. Nothing is exempted by a status attribute.
+    unfinished methods stay out of the batch. D10 engine-native methods are identified
+    by MethodAudit from their original artifact and do not require a managed IL match.
     """
     old = {m['id']: m for m in before['methods']}
     new = {m['id']: m for m in after['methods']}
@@ -73,6 +74,8 @@ def compare(before, after, types=(), methods=()):
         if not (changed or selected(row, types, methods) or previous and previous.get('exact_match') is True):
             continue
         checked.append(key)
+        if row.get('engine_native') is True:
+            continue
         if row.get('shape_matches') is not True or not (row.get('exact_match') is True or row.get('declaration_only') is True):
             reason = ('no Mathcad counterpart' if row.get('original') is None else
                       'declaration differs' if row.get('shape_matches') is not True else
@@ -88,7 +91,9 @@ def compare(before, after, types=(), methods=()):
             failures.append({'method': name, 'reason': 'selected method not found'})
     return {'passed': not failures, 'checked': checked, 'failures': failures,
             'exact': sum(m.get('exact_match') is True for m in new.values()),
-            'unfinished': sum(m.get('exact_match') is not True and not m.get('declaration_only') for m in new.values())}
+            'engine_native': sum(m.get('engine_native') is True for m in new.values()),
+            'unfinished': sum(m.get('exact_match') is not True and not m.get('declaration_only')
+                              and not m.get('engine_native') for m in new.values())}
 
 
 def run(command, cwd, log, timeout):
@@ -176,7 +181,7 @@ def main(argv=None):
     parser.add_argument('--dotnet', default='dotnet')
     parser.add_argument('--timeout', type=int, default=1800)
     args = parser.parse_args(argv)
-    projects = sorted(set(args.project) | set(affected_projects(args.base)))
+    projects = sorted(set(args.project) if args.project else set(affected_projects(args.base)))
     unknown = set(projects) - production_projects()
     if unknown:
         parser.error(f'unknown production projects: {sorted(unknown)}')

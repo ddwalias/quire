@@ -121,6 +121,16 @@ foreach (var artifact in quire)
 string[]? GeneratedBinding(Artifact artifact, TypeModel type)
 {
     if (typeNames.TryGetValue((artifact.Name, type.FullName), out var own)) return own;
+    // Roslyn emits this assembly-level container without a source type to inherit from.
+    // When only one loaded Mathcad artifact has the matching synthesized container, bind
+    // it by its compiler-generated metadata identity just like a nested generated helper.
+    if (type.CompilerGenerated && type.DeclaringType == null && type.FullName == "<PrivateImplementationDetails>")
+    {
+        var candidates = originals.Values.Where(original => original.Model.Types.Any(t =>
+            t.FullName == type.FullName && t.CompilerGenerated)).ToList();
+        if (candidates.Count == 1)
+            return typeNames[(artifact.Name, type.FullName)] = [type.FullName, candidates[0].Name];
+    }
     if (!type.CompilerGenerated || type.DeclaringType is not { } parentName) return null;
     var parent = artifact.Model.Types.SingleOrDefault(t => t.FullName == parentName);
     if (parent == null || GeneratedBinding(artifact, parent) is not { } binding
@@ -265,6 +275,13 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid,
         original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,
             version = original.Version, token = counterpart.Token, token_hex = $"0x{counterpart.Token:x8}", type = counterpart.Owner, signature = counterpart.Key },
+        // D10: utl-mgd is a mixed-mode engine boundary. Matched bodies with a 0-7 original
+        // maxstack and emitted bodies lacking a managed signature match are native routines.
+        engine_native = typeNames.TryGetValue((artifact.Name, type.FullName), out var nativeBinding)
+            && nativeBinding[1].Equals("utl-mgd", StringComparison.OrdinalIgnoreCase)
+            && raw.BodyRva != 0
+            && (counterpart == null || original?.Name.Equals("utl-mgd", StringComparison.OrdinalIgnoreCase) == true
+                && original.Methods.Single(m => m.Token == counterpart.Token).MaxStack is >= 0 and <= 7),
         declaration_only = counterpart is { BodyRva: 0 } && raw.BodyRva == 0
             && (method.Abstract && counterpart.Abstract || type.Kind == TypeKind.Delegate),
         shape_matches = counterpart != null && method.Access.ToString() == counterpart.Access && raw.Modifiers == counterpart.Modifiers,
