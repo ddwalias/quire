@@ -532,4 +532,11 @@ public static partial class WpfUtils
         }
         return true;
     }
+
+    public static PreemptiveCommandBinding AddPreemptiveCommandBinding(UIElement element, global::System.Windows.Input.ICommand command, ExecutedRoutedEventHandler executed, CanExecuteRoutedEventHandler canExecute, bool bindingMarksEventAsHandled)
+    {
+        PreemptiveCommandBinding preemptiveCommandBinding = new PreemptiveCommandBinding(element, command, executed, canExecute, bindingMarksEventAsHandled);
+        preemptiveCommandBinding.Add();
+        return preemptiveCommandBinding;
+    }
 }

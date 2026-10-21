@@ -48,8 +48,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static string ApplicationFullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.PreemptiveCommandBinding AddPreemptiveCommandBinding(global::System.Windows.UIElement element, global::System.Windows.Input.ICommand command, global::System.Windows.Input.ExecutedRoutedEventHandler executed, global::System.Windows.Input.CanExecuteRoutedEventHandler canExecute, bool bindingMarksEventAsHandled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IList<string> DumpLogicalTreeLines(object root) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.GeneralTransform GroupTransformsAsFrozen(params global::System.Windows.Media.GeneralTransform[] children) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
