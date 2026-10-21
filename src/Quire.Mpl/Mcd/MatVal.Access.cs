@@ -19,8 +19,19 @@ public sealed partial class MatVal
     {
         get
         {
-            if (m_parr == null) return false;
-            foreach (int index in m_parr.Keys) if (IsPtrNan(ref m_rarr[index])) return true;
+            if (m_parr == null)
+            {
+                return false;
+            }
+            System.Collections.IEnumerator enumerator = m_parr.Keys.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                int num = (int)enumerator.Current;
+                if (IsPtrNan(ref m_rarr[num]))
+                {
+                    return true;
+                }
+            }
             m_parr.Clear();
             m_parr = null;
             return false;
@@ -54,11 +65,17 @@ public sealed partial class MatVal
     {
         get
         {
-            if (m_parr == null) return true;
-            foreach (DictionaryEntry entry in m_parr)
+            if (m_parr == null)
             {
-                if (IsPtrNan(ref m_rarr[(int)entry.Key]) && !(entry.Value is NumVal))
+                return true;
+            }
+            foreach (DictionaryEntry item in m_parr)
+            {
+                int num = (int)item.Key;
+                if (IsPtrNan(ref m_rarr[num]) && !(item.Value is NumVal))
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -68,15 +85,27 @@ public sealed partial class MatVal
     {
         get
         {
-            if (HasImag) return false;
-            if (m_parr == null) return true;
-            foreach (DictionaryEntry entry in m_parr)
+            if (HasImag)
             {
-                if (IsPtrNan(ref m_rarr[(int)entry.Key]))
+                return false;
+            }
+            if (m_parr == null)
+            {
+                return true;
+            }
+            foreach (DictionaryEntry item in m_parr)
+            {
+                int num = (int)item.Key;
+                if (IsPtrNan(ref m_rarr[num]))
                 {
-                    NumVal numVal = entry.Value as NumVal;
-                    if (numVal == null || numVal.Data.ip != 0.0)
+                    if (!(item.Value is NumVal numVal))
+                    {
                         return false;
+                    }
+                    if (numVal.Data.ip != 0.0)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
@@ -487,8 +516,19 @@ public sealed partial class MatVal
     public bool contains(object p)
     {
         if (m_parr != null)
-            foreach (DictionaryEntry entry in m_parr)
-                if (ReferenceEquals(entry.Value, p) || entry.Value is MatVal nested && nested.contains(p)) return true;
+        {
+            foreach (DictionaryEntry item in m_parr)
+            {
+                if (item.Value == p)
+                {
+                    return true;
+                }
+                if (item.Value is MatVal matVal && matVal.contains(p))
+                {
+                    return true;
+                }
+            }
+        }
         return false;
     }
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -546,8 +586,21 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool DimActual()
     {
-        for (int col = 0; col < Cols; col++)
-        for (int row = 0; row < Rows; row++) if (!IsPtrNan(row, col)) return true;
+        int rows = Rows;
+        int cols = Cols;
+        int anr = Anr;
+        for (int i = 0; i < cols; i++)
+        {
+            int num = i * anr + m_offset;
+            int num2 = num + rows;
+            for (int j = num; j < num2; j++)
+            {
+                if (!IsPtrNan(ref m_rarr[j]))
+                {
+                    return true;
+                }
+            }
+        }
         return false;
     }
     [MirrorAnalyzed("Mcd.MatVal")]

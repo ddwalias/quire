@@ -1,11 +1,12 @@
 # Lane E — Quire.Mpl
 
 - Owner: Lane E (Claude).
-- Branch: `mirror/e-mpl-20261021-e6`.
+- Branch: `mirror/e-mpl-20261021-e7`.
 - Selected members:
-  - `Quire.Mcd.MatDim` (65/65 exact managed bodies): `Uniform(Dim[])`, `Eq_b(Dim[], Dim[])`, `IsScalarMultiple(Dim[], Dim[])`, `Mult(Dim[], Dim[])`, `Mult(Dim, Dim[])`, `Invert(Dim[])`, `Product(Dim, Dim[])`, `Pwr(MatDim, int)`, `make(Dim[], Dim[])`, `makeArrayDim(MatVal)`.
-  - `Quire.Mpl.Run.DynamicType` (30/30 exact managed methods): `DefineTuple(ModuleBuilder, string)`, `DefineTuple(ModuleBuilder, Type[])`, `DefineNullaryRecord`, `DefineRecord` (3 overloads), `DefineConstructor`, `DefinePrinter` (2 overloads), `DefineFields`, `RemovePrefix`, `NameDemangle`, `TupleNameDemangle`, `Ldarg`.
-  - `Quire.Mpl.Run.Function`: `IsFunctionN(int)`, `DynApply(object[])`, `AssertFullApp(int)`, `AssertFullApp(int, uint)`, `VecCall(object)`, `VecCall(object, object)`, `VecCall(object, object, object)` brought to exact Release IL match (7 methods).
-  - `Quire.Mcd.MatVal`: `.ctor(object[])`, `FillArr(double[], double, int, int, int)`, `IsUniformPtrs()`, `IsUniformPtrsNoChange()`, `DivideByDimension(Dim)`, `ApplyLinearDimension(MatDim)`, `MatCreateDim(object, object, object)` brought to exact Release IL match (7 methods).
-- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Mpl` PASS; 1,776 checked (`.mirror-cache/release-il-fbab7bddc254/release-il.json`).
-- Remaining managed members: 39 unfinished methods with Mathcad originals (primarily `Quire.Mcd.MatVal` (18), `Quire.Mpl.Run.Delegates` (13), `Quire.Mpl.Run.Function` (7 closures), and `Mcd.NumVal::LoadNaN` structure-only).
+  - `Quire.Mcd.MatVal`: `get_RepHasPtrs`, `contains`, `get_IsScalarMatrix`, `get_IsRealMatrixMixed`, `DimActual` brought to exact Release IL match (5 methods).
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Mpl` PASS; 1,781 checked (`.mirror-cache/release-il-9d66a305c069/release-il.json`).
+- Remaining managed members: 34 unfinished methods with Mathcad originals:
+  - `Quire.Mcd.MatVal` (13): 6 display classes/iterators (`CastPtrs`, `offsets`, `element_types`, `get_doubles`, `get_data`), 5 legacy temp/loop patterns (`ThePtrNan`, `ReinsertPtrs`, `ReinsertPtrs1`, `get_type`, `get_data`), and 2 Hashtable loop differences (`IsUniformScalarPtrs`, `CanonicalizePtrs`).
+  - `Quire.Mpl.Run.Delegates` (13): compiler display class numbering across `Premium_1..4`, `Closure_1..4`, `Wrap1..3`, `project21`, `project22`.
+  - `Quire.Mpl.Run.Function` (7): compiler closure display class numbering across `CurryMatVal`, `UnCurryMatVal`, `VectorFunction`, and `AsF<...>`.
+  - `Quire.Mcd.NumVal` (1): `LoadNaN` compiler temp allocation.
