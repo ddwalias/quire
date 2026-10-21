@@ -34,8 +34,21 @@ public static partial class EnumHelper
     }
     [global::Quire.Mirror.MirrorStub]
     private static bool TryParseWithCache<TEnum>(string valueToParse, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool TryParseWithoutCache<TEnum>(string value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool TryParseWithoutCache<TEnum>(string value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
+    {
+        if (global::System.Enum.TryParse<TEnum>(value, settings.IgnoreCase, out enumValue) && (settings.AllowUndefinedNumericValues || global::System.Enum.IsDefined(typeof(TEnum), enumValue) || enumValue.ToString().Contains(",")))
+        {
+            return true;
+        }
+
+        enumValue = default;
+        if (settings.AssertOnParseFailure)
+        {
+            global::Quire.DebugTools.FailAssertion("Unsupported Enum value");
+        }
+
+        return false;
+    }
     [global::Quire.Mirror.MirrorStub]
     public static TOutputEnum[] TryConvertFlagsToList<TInputEnum, TOutputEnum>(TInputEnum flagsEnumString, global::Quire.EnumHelper.EnumHelperSettings enumSettings) where TInputEnum : struct where TOutputEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static bool TryCallAction<TEnum>(object param, global::System.Action<TEnum> action) where TEnum : struct
