@@ -13,6 +13,14 @@ public static partial class ArrayExtension
 {
     [global::Quire.Mirror.MirrorStub]
     public static string ToStringFormatted(this global::System.Array array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Fill<T>(this T[] array, T value, int startIndex = 0, int endIndex = -1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void Fill<T>(this T[] array, T value, int startIndex = 0, int endIndex = -1)
+    {
+        endIndex = ((endIndex < 0 || endIndex > array.Length) ? array.Length : endIndex);
+        startIndex = ((startIndex < 0 || startIndex > array.Length) ? 0 : startIndex);
+
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            array[i] = value;
+        }
+    }
 }
