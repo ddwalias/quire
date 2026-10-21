@@ -2,7 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.IO;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows;
@@ -75,5 +77,46 @@ public partial class ImageUtils
     {
         Size val = DpiScaleForApplication();
         return new Size(val.Width * 96.0, val.Height * 96.0);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static List<Visual> GetAncestors(DependencyObject obj)
+    {
+        List<Visual> list = new List<Visual>();
+        while (true)
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            if (parent == null)
+            {
+                break;
+            }
+            list.Add((Visual)(object)obj);
+            obj = parent;
+        }
+        return list;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static Visual GetRoot(DependencyObject obj)
+    {
+        while (true)
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            if (parent == null)
+            {
+                return obj as Visual;
+            }
+            obj = parent;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public static AdornerDecorator GetAdornerDecoratorAncestor(DependencyObject obj)
+    {
+        while (obj != null && !(obj is AdornerDecorator))
+        {
+            obj = VisualTreeHelper.GetParent(obj);
+        }
+        return obj as AdornerDecorator;
     }
 }

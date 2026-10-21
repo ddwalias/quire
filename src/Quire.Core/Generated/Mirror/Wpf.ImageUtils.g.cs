@@ -14,12 +14,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public string ImageExtension;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<global::System.Windows.Media.Visual> GetAncestors(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Visual GetRoot(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.AdornerDecorator GetAdornerDecoratorAncestor(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void SavePngFromElementUsingScreenDpi(global::System.Windows.FrameworkElement element, global::System.IO.Stream outStream, global::System.Windows.Media.Visual rootVisual = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromElementUsingScreenDpi(global::System.Windows.FrameworkElement element, global::System.Windows.Media.Visual rootVisual = default, global::System.Nullable<global::System.Windows.Rect> bounds = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
