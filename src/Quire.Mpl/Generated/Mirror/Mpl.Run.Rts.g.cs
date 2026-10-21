@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Rts, mplrun")]
 public static partial class Rts
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder GetTypeInitializer(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -72,8 +72,13 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static object dyn(object o, Dim d)
     {
-        if (o is DimVal v) v.m_dim = d;
-        return o;
+        DimVal dimVal = o as DimVal;
+        if (dimVal == null)
+        {
+            return o;
+        }
+        dimVal.m_dim = d;
+        return dimVal;
     }
 
     [MirrorVerified("DimValDifferentialTests")]
@@ -86,8 +91,16 @@ public abstract partial class DimVal
     /// <summary><see cref="nearly_equal"/> when both are values, else <see cref="object.Equals(object)"/> on
     /// <paramref name="x1"/>.</summary>
     [MirrorVerified("DimValDifferentialTests")]
-    public static bool NearlyEqual(object x1, object x2, double fuzz) =>
-        x1 is DimVal a && x2 is DimVal b ? a.nearly_equal(b, fuzz) : x1.Equals(x2);
+    public static bool NearlyEqual(object x1, object x2, double fuzz)
+    {
+        DimVal dimVal = x1 as DimVal;
+        DimVal dimVal2 = x2 as DimVal;
+        if (dimVal == null || dimVal2 == null)
+        {
+            return x1.Equals(x2);
+        }
+        return dimVal.nearly_equal(dimVal2, fuzz);
+    }
 
     [MirrorVerified("DimValDifferentialTests")]
     public virtual bool nearly_equal(DimVal obj, double fuzz) => Equals(obj);
@@ -100,9 +113,12 @@ public abstract partial class DimVal
     [MirrorVerified("DimValDifferentialTests")]
     public static Units GetUnits(Dim d, bool simplify)
     {
-        int[] coordinates = d != null ? d.Coordinates : Dim.identity.Coordinates;
-        if (!simplify) return RuntimeOptions.the_unit_system.Normalize(coordinates);
-        return RuntimeOptions.the_unit_system.Simplify(coordinates);
+        int[] global = (d == null) ? Dim.identity.Coordinates : d.Coordinates;
+        if (!simplify)
+        {
+            return RuntimeOptions.the_unit_system.Normalize(global);
+        }
+        return RuntimeOptions.the_unit_system.Simplify(global);
     }
 
     [MirrorVerified("DimValDifferentialTests")]
@@ -360,7 +376,15 @@ public abstract partial class DimVal
     public virtual DimVal asResult() => this;
 
     [MirrorVerified("DimValDifferentialTests")]
-    public static object as_result(object o) => o is DimVal v ? v.asResult() : o;
+    public static object as_result(object o)
+    {
+        DimVal dimVal = o as DimVal;
+        if (dimVal != null)
+        {
+            return dimVal.asResult();
+        }
+        return o;
+    }
 
     /// <summary>Raises "bad_function\t<c>this</c>" (argument 0).</summary>
     [MirrorVerified("DimValDifferentialTests")]

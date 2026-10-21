@@ -151,6 +151,9 @@ public static partial class Rts
     [MirrorVerified("RtsDifferentialTests")]
     public static System.Type TagType() => typeof(Tag);
 
+    [MirrorVerified("RtsDifferentialTests")]
+    public static System.Reflection.Emit.Quire.Mpl.ConstructorBuilder GetTypeInitializer(System.Reflection.Emit.Quire.Mpl.TypeBuilder tb) => tb.DefineTypeInitializer();
+
     /// <summary>For the current domain, the first <c>name.dll</c> found in a search directory, loaded by path.</summary>
     [MirrorVerified("RtsDifferentialTests")]
     private static Assembly OnResolveAssembly(object s, ResolveEventArgs a)

@@ -30,15 +30,14 @@ public partial class MplSignature
     [MirrorVerified("MplRunHelpersDifferentialTests")]
     public override int GetHashCode()
     {
-        int hash = return_type.GetHashCode();
+        int num = return_type.GetHashCode();
         for (int i = 0; i < parameter_types.Length; i++)
         {
             System.Type paramType = parameter_types[i];
-            hash += paramType.GetHashCode();
+            num += paramType.GetHashCode();
         }
-        hash *= 64;
-        hash += parameter_types.Length;
-        return hash;
+        num = num * 64 + parameter_types.Length;
+        return num;
     }
 
     /// <summary>

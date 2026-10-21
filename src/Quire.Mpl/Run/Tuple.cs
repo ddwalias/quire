@@ -56,8 +56,8 @@ public partial class Tuple
     [MirrorVerified("MplRunHelpersDifferentialTests")]
     public static System.Type TupleType(System.Type[] tys)
     {
-        if (tys.Length < tup_types.Length) return IType(tys);
-        return null;
+        if (tys.Length >= tup_types.Length) return null;
+        return IType(tys);
     }
 
     /// <summary>

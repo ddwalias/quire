@@ -63,12 +63,17 @@ public partial class UnitSystemGroup : MarshalByRefObject
     [MirrorVerified("RuntimeOptionsDifferentialTests")]
     public void resetMember(int num)
     {
-        if (num == 0 || !m_unitsys_list.ContainsKey(num)) return;
-        var member = m_unitsys_list[num];
-        if (!m_unitsys_list.ContainsKey(init_id)) return;
-        var initial = m_unitsys_list[init_id];
-        member.Basis = initial.Basis;
-        member.Defaults = initial.Defaults;
+        if (num == 0) return;
+        if (m_unitsys_list.ContainsKey(num))
+        {
+            var member = m_unitsys_list[num];
+            if (m_unitsys_list.ContainsKey(init_id))
+            {
+                var initial = m_unitsys_list[init_id];
+                member.Basis = initial.Basis;
+                member.Defaults = initial.Defaults;
+            }
+        }
     }
 
     /// <summary>Resets member <paramref name="num"/>, or else the initial member, to its construction-time units

@@ -192,26 +192,38 @@ public partial class UnitSystem : MarshalByRefObject
             m_base = value;
             m_dims = new Type[m_rank];
             m_ltog = new double[m_rank, m_rank];
-            int found = 0;
+            int num = 0;
             try
             {
-                foreach (var unit in value)
+                Unit[] array2 = value;
+                foreach (Unit unit in array2)
                 {
                     m_unit_syms[unit.Symbol] = true;
-                    foreach (var power in unit.Dimensions.Constants)
-                        if (Array.IndexOf(m_dims, power.Base) < 0) m_dims[found++] = power.Base;
+                    Type.Product.Power[] constants = unit.Dimensions.Constants;
+                    for (int j = 0; j < constants.Length; j++)
+                    {
+                        Type.Product.Power power = constants[j];
+                        if (Array.IndexOf(m_dims, power.Base) < 0)
+                        {
+                            m_dims[num++] = power.Base;
+                        }
+                    }
                 }
                 Array.Sort(m_dims);
                 for (int k = 0; k != m_rank; k++)
                 {
-                    int[] column = GetCoordinates(m_base[k].Dimensions);
-                    for (int l = 0; l != m_rank; l++) m_ltog[l, k] = column[l];
+                    Type.Product dimensions = m_base[k].Dimensions;
+                    int[] coordinates = GetCoordinates(dimensions);
+                    for (int l = 0; l != m_rank; l++)
+                    {
+                        m_ltog[l, k] = coordinates[l];
+                    }
                 }
                 m_gtol = Inverse(m_ltog);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException innerException)
             {
-                throw new ArgumentException("not a basis", nameof(value), e);
+                throw new ArgumentException("not a basis", "value", innerException);
             }
         }
     }
@@ -330,50 +342,72 @@ public partial class UnitSystem : MarshalByRefObject
     [MirrorVerified("UnitSystemDifferentialTests")]
     public int[] GetCoordinates(Type.Product product)
     {
-        var coordinates = new int[m_rank];
-        foreach (var power in product.Constants) coordinates[GetDimensionIndex(power.Base)] += power.Exponent;
-        return coordinates;
+        int[] array = new int[m_rank];
+        Type.Product.Power[] constants = product.Constants;
+        for (int i = 0; i < constants.Length; i++)
+        {
+            Type.Product.Power power = constants[i];
+            int dimensionIndex = GetDimensionIndex(power.Base);
+            array[dimensionIndex] += power.Exponent;
+        }
+        return array;
     }
 
     /// <summary>The nonzero basis-unit exponents, each converted to a <see cref="Rational"/>.</summary>
     [MirrorVerified("UnitSystemDifferentialTests")]
     public Units GetUnits(double[] local)
     {
-        var powers = new Units.Power[Count(local)];
-        for (int i = 0, n = 0; n != powers.Length; i++)
+        int num = Count(local);
+        Units.Power[] array = new Units.Power[num];
+        int num2 = 0;
+        int num3 = 0;
+        while (num3 != num)
         {
-            if (local[i] == 0.0) continue;
-            powers[n].Base = m_base[i];
-            powers[n].Exponent = local[i];
-            n++;
+            if (local[num2] != 0.0)
+            {
+                array[num3].Base = m_base[num2];
+                array[num3].Exponent = local[num2];
+                num3++;
+            }
+            num2++;
         }
-        return new Units(powers);
+        return new Units(array);
     }
 
     /// <summary>A monomorphic product of the nonzero coordinates, in coordinate order.</summary>
     [MirrorVerified("UnitSystemDifferentialTests")]
     public Type.Product GetDimensions(int[] global)
     {
-        var powers = new Type.Product.Power[Count(global)];
-        for (int i = 0, n = 0; n != powers.Length; i++)
+        int num = Count(global);
+        Type.Product.Power[] array = new Type.Product.Power[num];
+        int num2 = 0;
+        int num3 = 0;
+        while (num3 != num)
         {
-            if (global[i] == 0) continue;
-            powers[n].Base = m_dims[i];
-            powers[n].Exponent = global[i];
-            n++;
+            if (global[num2] != 0)
+            {
+                array[num3].Base = m_dims[num2];
+                array[num3].Exponent = global[num2];
+                num3++;
+            }
+            num2++;
         }
-        return new Type.Product(powers, 0);
+        return new Type.Product(array, 0);
     }
 
     /// <summary>Dimension coordinates to basis-unit exponents.</summary>
     [MirrorVerified("UnitSystemDifferentialTests")]
     public double[] ChangeBasis(int[] global)
     {
-        var local = new double[m_rank];
+        double[] array = new double[m_rank];
         for (int i = 0; i != m_rank; i++)
+        {
             for (int j = 0; j != m_rank; j++)
-                local[i] += m_gtol[i, j] * global[j];
-        return local;
+            {
+                array[i] += (double)(m_gtol[i, j] * (double)global[j]);
+            }
+        }
+        return array;
     }
 
     /// <summary>Basis-unit exponents to dimension coordinates, truncating each product term to int.</summary>
@@ -527,9 +561,14 @@ public partial class UnitSystem : MarshalByRefObject
         [MirrorVerified("UnitSystemDifferentialTests")]
         public override int GetHashCode()
         {
-            int h = 0;
-            foreach (int x in Vector) h = ((h << 4) | (h >> 28)) ^ (x % 16);
-            return h;
+            int num = 0;
+            int[] vector = Vector;
+            foreach (int num2 in vector)
+            {
+                num = (num << 4) | (num >> 28);
+                num ^= num2 % 16;
+            }
+            return num;
         }
 
         [MirrorVerified("UnitSystemDifferentialTests")]

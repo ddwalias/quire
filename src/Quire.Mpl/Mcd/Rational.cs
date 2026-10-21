@@ -48,19 +48,21 @@ public partial struct Rational
         double abs = Math.Abs(xx);
         double whole = Math.Floor(abs);
         double frac = abs - whole;
+        double tolerance = err;
+        double a;
         double rest = frac;
         double pPrev = 1.0;
         double qPrev = 0.0;
         double p = 0.0;
         double q = 1.0;
-        while (Math.Abs(p / q - frac) > err && rest > 9.313225746154785E-10)
+        while (Math.Abs(p / q - frac) > tolerance && rest > 9.313225746154785E-10)
         {
             rest = 1.0 / rest;
-            double a = Math.Floor(rest);
+            a = Math.Floor(rest);
             rest -= a;
             double pNext = a * p + pPrev;
             double qNext = a * q + qPrev;
-            if (Math.Max(p + whole * qNext, qNext) > int.MaxValue) break;
+            if (Math.Max(p + whole * qNext, qNext) > 2147483647.0) break;
             pPrev = p;
             qPrev = q;
             p = pNext;
@@ -70,7 +72,7 @@ public partial struct Rational
         Denominator = (int)q;
         if (xx < 0.0)
         {
-            Numerator = ~(Numerator + -1);
+            Numerator *= -1;
         }
     }
 
@@ -127,7 +129,14 @@ public partial struct Rational
         new(unchecked(a.Numerator * b.Denominator), unchecked(a.Denominator * b.Numerator));
 
     [MirrorVerified("RationalDifferentialTests")]
-    public override bool Equals(object? o) => o is Rational r && this == r;
+    public override bool Equals(object? o)
+    {
+        if (o is Rational)
+        {
+            return this == (Rational)o;
+        }
+        return false;
+    }
 
     /// <summary>The truncated value, so it throws for a zero denominator, <c>default</c> included.</summary>
     [MirrorVerified("RationalDifferentialTests")]
@@ -145,7 +154,13 @@ public partial struct Rational
     [MirrorVerified("RationalDifferentialTests")]
     public static int GCD(int m, int n)
     {
-        while (n != 0) (m, n) = (n, m % n);
+        while (n != 0)
+        {
+            int num = m;
+            m = n;
+            n = num;
+            n %= m;
+        }
         return Math.Abs(m);
     }
 }
