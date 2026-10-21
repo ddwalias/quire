@@ -32,6 +32,9 @@ public partial class EagerMatrixSimpleResultNode
     public SimpleResultNode this[int r, int c] { get => _children[r * Columns + c]; set => _children[r * Columns + c] = value; }
 
     [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    IResultNode IMatrixResultNode.this[int r, int c] => this[r, c];
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
     public EagerMatrixSimpleResultNode(int rowCount, int colCount)
     {
         Columns = colCount;
@@ -39,6 +42,34 @@ public partial class EagerMatrixSimpleResultNode
         for (int i = 0; i < rowCount * colCount; i++)
         {
             _children.Add(null);
+        }
+    }
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    private EagerMatrixSimpleResultNode(IMatrixResultNode node)
+        : this(node.Rows, node.Columns)
+    {
+        for (int i = 0; i < node.Rows; i++)
+        {
+            for (int j = 0; j < node.Columns; j++)
+            {
+                IResultNode resultNode = node[i, j];
+                IMatrixResultNode matrixNode = resultNode as IMatrixResultNode;
+                if (matrixNode != null)
+                {
+                    resultNode = ConvertToEagerMatrix(matrixNode);
+                }
+                UnitedValueSimpleResultNode unitedValueSimpleResultNode = resultNode as UnitedValueSimpleResultNode;
+                if (unitedValueSimpleResultNode != null)
+                {
+                    matrixNode = unitedValueSimpleResultNode.Value as IMatrixResultNode;
+                    if (matrixNode != null)
+                    {
+                        unitedValueSimpleResultNode.Value = (SimpleResultNode)ConvertToEagerMatrix(matrixNode);
+                    }
+                }
+                SetElementAt(i, j, resultNode);
+            }
         }
     }
 
@@ -66,5 +97,27 @@ public partial class EagerMatrixSimpleResultNode
             return IsChildrenEquals(obj2);
         }
         return false;
+    }
+
+    [MirrorVerified("PtcCalculationCoreEagerMatrixSimpleResultNodeMechanicalDifferentialTests")]
+    private bool IsChildrenEquals(EagerMatrixSimpleResultNode obj)
+    {
+        bool result = false;
+        if (Rows == obj.Rows && Columns == obj.Columns)
+        {
+            for (int i = 0; i < _children.Count; i++)
+            {
+                if (_children[i] == null && _children[i] != null)
+                {
+                    break;
+                }
+                if (_children[i] != null && !_children[i].Equals(obj._children[i]))
+                {
+                    break;
+                }
+            }
+            result = true;
+        }
+        return result;
     }
 }
