@@ -11,10 +11,7 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.PointExtension, Ptc.Core")]
 public static partial class PointExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.DoubleComparer Epsilon;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Point NaN;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Point Zero;
+    public static readonly global::Quire.DoubleComparer Epsilon = new global::Quire.DoubleComparer(1E-05);
+    public static readonly global::System.Windows.Point NaN = new global::System.Windows.Point(double.NaN, double.NaN);
+    public static readonly global::System.Windows.Point Zero = new global::System.Windows.Point(0.0, 0.0);
 }
