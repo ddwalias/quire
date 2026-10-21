@@ -13,8 +13,6 @@ public static partial class SchemasManager
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<global::Quire.Xml.SchemasManager.SchemaData> RuntimeSchemaDatas;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.SchemasManager.SchemaData GetSchemaData(global::System.Func<global::Quire.Xml.SchemasManager.SchemaData, bool> compareFunc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Xml.SchemasManager+SchemaNameEnum, Ptc.Core")]
     public enum SchemaNameEnum

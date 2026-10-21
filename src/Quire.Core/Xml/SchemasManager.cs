@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using Quire.Mirror;
 using Quire.Mirror;
 
@@ -38,6 +39,32 @@ public static partial class SchemasManager
 
     [MirrorVerified("PtcXmlSchemasManagerMechanicalDifferentialTests")]
     public static SchemaData SimpleTypes => ConstantSchemaDatas[SchemaNameEnum.SimpleTypes];
+
+    [MirrorVerified("Release IL")]
+    public static SchemaData GetSchemaData(Func<SchemaData, bool> compareFunc)
+    {
+        SchemaData schemaData = null;
+        foreach (SchemaData value in ConstantSchemaDatas.Values)
+        {
+            if (compareFunc(value))
+            {
+                schemaData = value;
+                break;
+            }
+        }
+        if (schemaData == null)
+        {
+            foreach (SchemaData runtimeSchemaData in RuntimeSchemaDatas)
+            {
+                if (compareFunc(runtimeSchemaData))
+                {
+                    schemaData = runtimeSchemaData;
+                    break;
+                }
+            }
+        }
+        return schemaData;
+    }
 
     partial class SchemaData
     {
