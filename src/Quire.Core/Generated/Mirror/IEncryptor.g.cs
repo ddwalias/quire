@@ -11,12 +11,8 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IEncryptor, Ptc.Core")]
 public partial interface IEncryptor : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    byte[] Encrypt(string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool MatchesEncrypted(byte[] encryptedData, string data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ShouldUpdateEncryption(global::System.Version formatVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    byte[] UpdateEncryption(byte[] encryptedData, global::System.Version formatVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    byte[] Encrypt(string data);
+    bool MatchesEncrypted(byte[] encryptedData, string data);
+    bool ShouldUpdateEncryption(global::System.Version formatVersion);
+    byte[] UpdateEncryption(byte[] encryptedData, global::System.Version formatVersion);
 }
