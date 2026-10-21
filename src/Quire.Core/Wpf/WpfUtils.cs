@@ -274,4 +274,14 @@ public static partial class WpfUtils
         }
         return solidColorBrush;
     }
+
+    public static void BindToSetting(object source, DependencyObject bindingTarget, DependencyProperty targetProperty, string settingName)
+    {
+        global::System.Windows.Data.Binding binding = new global::System.Windows.Data.Binding(settingName)
+        {
+            Source = source,
+            Mode = global::System.Windows.Data.BindingMode.OneWay
+        };
+        global::System.Windows.Data.BindingOperations.SetBinding(bindingTarget, targetProperty, binding);
+    }
 }
