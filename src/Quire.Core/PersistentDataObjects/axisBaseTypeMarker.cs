@@ -1,11 +1,32 @@
 #nullable disable
+using System.Xml.Serialization;
 using Quire.Mirror;
 using Quire.Mirror;
+using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
 
 public partial class axisBaseTypeMarker
 {
+    [MirrorVerified("Release IL")]
+    public static XmlSerializer XmlSerializer
+    {
+        get
+        {
+            if (_xmlSerializer == null)
+            {
+                using (new XmlSerializerCreationWrapper())
+                {
+                    _xmlSerializer = new XmlSerializer(_typeOfThis, new XmlRootAttribute("marker")
+                    {
+                        Namespace = "http://schemas.mathsoft.com/worksheet50"
+                    });
+                }
+            }
+            return _xmlSerializer;
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsaxisBaseTypeMarkerMechanicalDifferentialTests")]
     private bool displayField;
 

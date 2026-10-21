@@ -1,10 +1,31 @@
 #nullable disable
+using System.Xml.Serialization;
 using Quire.Mirror;
+using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
 
 public partial class calculation
 {
+    [MirrorVerified("Release IL")]
+    public static XmlSerializer XmlSerializer
+    {
+        get
+        {
+            if (_xmlSerializer == null)
+            {
+                using (new XmlSerializerCreationWrapper())
+                {
+                    _xmlSerializer = new XmlSerializer(_typeOfThis, new XmlRootAttribute("calculation")
+                    {
+                        Namespace = "http://schemas.ptc.com/mathcad/settings/calculation10"
+                    });
+                }
+            }
+            return _xmlSerializer;
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectscalculationMechanicalDifferentialTests")]
     private bool cacheworksheetField;
 
