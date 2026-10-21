@@ -11,6 +11,4 @@ namespace Quire.Wpf.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.LocalPrintServerExtensions, Ptc.Core")]
 public static partial class LocalPrintServerExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<global::System.Printing.PrintQueue> GetLocalNonRedirectedPrintQueues(this global::System.Printing.LocalPrintServer server) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
