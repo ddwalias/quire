@@ -2,13 +2,13 @@
 
 ## Outcome
 
-The Windows C++/CLI proof now includes `SafeWaitHandle`, `SafeEvent`, `SafeMutex`, `InterruptControl`, `Function`, `FunctionBase`, and `_Hex` members. Its managed .NET 10 consumer loads `Quire.Engine.Utl.dll`, exercises a Win32 event, the interrupt controller, and a named mutex. REA classifies the DLL as `mixed-clr-native` / `cpp-cli-mixed`; Ghidra imported and auto-analyzed the x64 PE. The direct kernel32 imports now emit the original global P/Invoke call targets, allowing substantially more original Release IL to match.
+The Windows C++/CLI proof now contains ported members for `SafeWaitHandle`, `SafeEvent`, `SafeMutex`, `InterruptControl`, `Function`, `FunctionBase`, `_Hex`, `SafeReadWriteLock`, `SortedStringSet`, `VFunc`, `ThreadingUtils`, `Str`, `LabelSet`, `LabelTrie`, and `LabelUtils`. Its managed .NET 10 consumer loads `Quire.Engine.Utl.dll` and exercises the Win32 handles, concurrency helpers, sorted string set, and label utilities. REA classifies the rebuilt DLL as `mixed-clr-native` / `cpp-cli-mixed`; Ghidra imported and auto-analyzed this exact candidate build. The direct kernel32 imports also preserve original global P/Invoke call targets for several mapped methods.
 
-This remains a feasibility spike, not a replacement for the 89-type C# assembly. The candidate carries only seven application types plus C++/CLI compiler support types and does not preserve the full public API. Forty-four mapped methods are exact against the original. Three mapped methods still differ: `_Hex.FromHex`, the named `SafeMutex` constructor, and generated `SafeMutex.Dispose(Boolean)`. The production C# project remains intact; no same-DLL Release IL parity claim is made.
+This remains a feasibility spike, not a replacement for the C# assembly. The candidate carries only a subset of application types plus C++/CLI compiler support types and does not preserve the full public API. Ninety mapped methods are exact against the original, and eight mapped methods still differ. The production C# project remains intact; no same-DLL Release IL parity claim is made.
 
-The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. Its current local report is `.mirror-cache/release-il-ec2a23097a05/release-il.json`. The C++/CLI candidate path builds successfully, then fails closed with 374 failures, detailed below.
+The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. Its latest local report is `.mirror-cache/release-il-e1dfadc5b8d1/release-il.json`. The C++/CLI candidate path builds successfully, then fails closed with 328 failures, detailed below.
 
-The reference REA report was not present in this worktree's `.mirror-cache/rea`, so I repeated the static boundary inspection against the supplied file. It matched the required SHA-256 and MVID. REA reported 55 native P/Invoke methods, two IL P/Invokes, eight runtime-provided methods (65 native-boundary rows total), and two module references. The native procedures are interop/runtime support, not an application-authored algorithm to port. The earlier addition routine exists only in the separate call-path proof; it is not proposed for production.
+The reference REA report was not present in this worktree's `.mirror-cache/rea`, so I repeated the static boundary inspection against the supplied file. It matched the required SHA-256 and MVID. REA reported 51 P/Invoke imports, 65 native-boundary rows (57 P/Invoke boundaries and eight runtime-provided methods), and two module references. The native procedures are interop/runtime support, not an application-authored algorithm to port. The earlier addition routine exists only in the separate call-path proof; it is not proposed for production.
 
 ## Proof project
 
@@ -39,7 +39,7 @@ The C++ compiler emitted the mixed-mode startup/runtime code. No CRT, exception,
 
 `UtlPortSpike.vcxproj` and `UtlPortSpike.cpp` are an isolated x64 Visual C++ DLL project under `proofs/utl-mixed-mode/`. The project targets `net10.0-windows`, sets `CLRSupport=NetCore` (MSVC `/clr:netcore`), uses the installed v145 toolset, names the output `Quire.Engine.Utl.dll`, and sets assembly version `0.1.0.0`. The C# project already has that name and version. The C++/CLI output is x64-only and unsigned, whereas the C# output is AnyCPU/IL-only and unsigned.
 
-The spike ports `SafeWaitHandle`, `SafeEvent`, and `SafeMutex`, then adds `InterruptControl`, `Function`/`FunctionBase`, and `_Hex` methods. Managed C++ calls Win32 directly; the compiler emits native module calls for `CreateEventW`, `CreateMutexW`, `SetEvent`, `ResetEvent`, `CloseHandle`, `ReleaseMutex`, `WaitForSingleObject`, and `WaitForMultipleObjects`. No dummy native method or reverse-engineered CRT/startup implementation was added. The C++ compiler generated its own exception, cookie, startup, and mixed-mode support.
+The spike ports the 15 application types listed in the outcome above. Managed C++ calls Win32 directly; the compiler emits native module calls for `CreateEventW`, `CreateMutexW`, `SetEvent`, `ResetEvent`, `CloseHandle`, `ReleaseMutex`, `WaitForSingleObject`, and `WaitForMultipleObjects`. No dummy native method or reverse-engineered CRT/startup implementation was added. The C++ compiler generated its own exception, cookie, startup, and mixed-mode support.
 
 Build and load the spike on Windows with the MSVC x64 C++/CLI workload and the Windows SDK desktop x64 libraries installed:
 
@@ -50,27 +50,27 @@ dotnet build proofs\utl-mixed-mode\UtlPortConsumer\UtlPortConsumer.csproj -c Rel
 dotnet proofs\utl-mixed-mode\UtlPortConsumer\bin\Release\net10.0-windows\UtlPortConsumer.dll
 ```
 
-On this machine the mixed DLL compiled with zero warnings or errors. The managed consumer compiled with zero warnings or errors and ran successfully, printing `managed consumer loaded the C++/CLI Utl spike and exercised its Win32 event`. The output folder contains `Ijwhost.dll`; the consumer includes it beside the application. This confirms the tested direct-reference deployment path, not deployment on a clean machine.
+On this machine the mixed DLL compiled with zero warnings or errors. The managed consumer compiled with zero warnings or errors and ran successfully, exercising a Win32 event, interrupt control, named mutex, sorted string set, string/thread helpers, read/write lock, label trie, and label utilities. The output folder contains `Ijwhost.dll`; the consumer includes it beside the application. This confirms the tested direct-reference deployment path, not deployment on a clean machine.
 
 ### Metadata and IL assessment
 
-REA inspected the current spike without loading it. It has SHA-256 `89ca12be763406c42906cfdc35c84e0ac351c09b064f85af419f764bef72a7f8`, assembly name/version `Quire.Engine.Utl, 0.1.0.0`, target framework `.NETCoreApp,Version=v10.0`, no public key, PE32+, x64 machine type, and the `native-entry-point` CLI flag with `ILONLY` clear. Its MVID is `a479992a-8931-4b07-87b5-5c949f6e604e`. REA reports 477 TypeDefs, 170 MethodDefs, 168 AssemblyRefs, 14 P/Invoke rows, and 16 methods with native implementation flags. The candidate output was rebuilt and loaded by the managed consumer.
+REA statically inspected the rebuilt candidate without loading it. It has SHA-256 `9cfa764ddd9552372f47e27951ead28d7eb6aac2293a31c07d16d4b352072eb1`, assembly name/version `Quire.Engine.Utl, 0.1.0.0`, target framework `.NETCoreApp,Version=v10.0`, no public key, PE32+, x64 machine type, and the `native-entry-point` CLI flag with `ILONLY` clear. Its MVID is `2f5e8dec-1440-4c32-bcc2-7011f3251362`. REA reports 485 TypeDefs, 221 MethodDefs, 168 AssemblyRefs, 14 P/Invoke imports, and 16 methods with native implementation flags. The managed consumer loaded this exact rebuilt output.
 
 The current strict Release IL validator compares mapped candidate methods to the Mathcad artifact and checks the full candidate surface:
 
 | Comparison | Result |
 |---|---:|
-| Candidate methods checked by the current validator | 150 |
-| Exact mapped methods | 44 |
-| Mapped methods still differing | 3 |
-| Existing Quire methods removed from the candidate | 258 |
+| Candidate methods checked by the current validator | 185 |
+| Exact mapped methods | 90 |
+| Mapped methods still differing | 8 |
+| Existing Quire methods removed from the candidate | 207 |
 | Generated global `<Module>` methods without original bindings | 87 |
 | Other candidate methods without Mathcad counterparts | 26 |
-| Total validator failures | 374 |
-| MethodDef rows, current C# / C++/CLI | 310 / 170 |
+| Total validator failures | 328 |
+| MethodDef rows, current C# / C++/CLI | 310 / 221 |
 | AssemblyRef rows, current C# / C++/CLI | 8 / 168 |
 
-The 44 exact methods comprise the `InterruptControl` class (10), `FunctionBase` (9), `_Hex` (4), and the Safe handle classes (21). `_Hex.FromHex` differs because MSVC emits a `conv.u1` where the original has a Boolean local store/load. The named `SafeMutex` constructor still differs in its C++ string conversion and exception regions. `SafeMutex.Dispose(Boolean)` differs in compiler-generated destructor/finalizer IL. Direct Win32 imports made the mapped wait, event, release, and disposal bodies exact. Most removed members belong to types not yet ported. This remains a failed full-assembly compatibility assessment, not an IL-parity pass.
+The 90 exact methods comprise `InterruptControl` (10), `FunctionBase` (9), `_Hex` (4), Safe handle classes (21), `SortedStringSet` (10), `VFunc` (2), `ThreadingUtils` (2), `Str` (4), `SafeReadWriteLock` (5), `LabelSet` (8), `LabelTrie` (6), and `LabelUtils` (9). Eight mapped methods differ: the named `SafeMutex` constructor and `Dispose(Boolean)` have call/field differences; `LabelSet.Empty`, `LabelTrie.Find`, `LabelUtils.SplitMangledLabels`, `LookupPossiblyWild`, `FindBinding`, and `_Hex.FromHex` differ in Release IL. Most removed members belong to types not yet ported. This remains a failed full-assembly compatibility assessment, not an IL-parity pass.
 
 ### Maintainer validator run
 
@@ -80,26 +80,26 @@ The new candidate option builds the `.vcxproj` with MSBuild and sends its mixed-
 python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
 ```
 
-The current command built both the C# base and the C++/CLI candidate, then returned `Release IL: FAIL; 150 checked`. The local report is `.mirror-cache/release-il-aa563c954f10/release-il.json`.
+The current command built both the C# base and the C++/CLI candidate, then returned `Release IL: FAIL; 185 checked`. The local report is `.mirror-cache/release-il-cb499f37abb8/release-il.json`.
 
 | Validator result | Count |
 |---|---:|
-| Candidate methods checked | 150 |
-| Exact methods | 44 |
-| Total failures | 374 |
-| Existing methods absent from this candidate | 258 |
+| Candidate methods checked | 185 |
+| Exact methods | 90 |
+| Total failures | 328 |
+| Existing methods absent from this candidate | 207 |
 | Global `<Module>` methods without a reviewed Mathcad binding | 87 |
 | Other methods without a Mathcad counterpart | 26 |
 
-The validator keeps generated global methods and unbound candidate methods visible; no suppression or gate relaxation was added. It catches three mapped body mismatches. All ten `InterruptControl` methods, nine `FunctionBase` methods, four `_Hex` methods, and 21 Safe handle methods except the three listed above compare exact. The candidate remains incomplete and fails the Release IL gate.
+The validator keeps generated global methods and unbound candidate methods visible; no suppression or gate relaxation was added. Eight mapped method bodies or call/field sequences differ. The candidate remains incomplete and fails the Release IL gate.
 
 The assembly simple name and version can be set to match. The output still differs in architecture, CLI flags, references, MVID, and managed surface. Current consumers reference `Quire.Engine.Utl.csproj`; replacing it with this `.vcxproj` would require a repository-wide project-reference migration, which is outside this spike and Lane D's allowed edits.
 
 ### Native inspection and dependencies
 
-Ghidra 12.1.4 imported and auto-analyzed the current mixed DLL as an x64 PE through `ghidra-agent-cli`. It parsed the PDB and native sections; C++/CLI attributes and generated functions produced unresolved-constructor and PDB-type warnings, but analysis succeeded. `dumpbin /headers` confirmed executable `.text` (`0x180001000–0x180004267`) and `.nep` (`0x180005000–0x18000546f`) ranges. `dumpbin /imports` confirmed direct imports of `KERNEL32.dll`, `VCRUNTIME140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, and `ijwhost.dll`; the Win32 handle operations call the kernel32 event, mutex, handle, and wait APIs listed above.
+Ghidra 12.1.4 imported and auto-analyzed the rebuilt mixed DLL as an x64 PE through `ghidra-agent-cli`. It parsed the PDB and native sections; C++/CLI attributes and generated functions produced unresolved-constructor and PDB-type warnings, but the import log reported successful analysis for this exact output. A separate repeat `auto-analyze` invocation failed because the installed helper requested a missing `AutoAnalyze.java` script; it was not needed for the successful import analysis. `dumpbin /headers` confirmed executable `.text` (`0x180001000–0x180005027`) and `.nep` (`0x180006000–0x18000646f`) ranges. `dumpbin /imports` confirmed direct imports of `KERNEL32.dll`, `VCRUNTIME140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, and `ijwhost.dll`; the Win32 handle operations call the kernel32 event, mutex, handle, and wait APIs listed above.
 
-The managed consumer build and execution succeeded after the current DLL rebuild. It exercised the event, the `InterruptControl` API, and the named mutex constructor. The consumer output carries `Ijwhost.dll`; deployment also needs the x64 .NET 10 runtime and compatible MSVC/UCRT runtime components. The machine already had these runtimes, so clean-machine deployment was not tested. A usable x64 Windows SDK desktop library component is required to build the project.
+The managed consumer build and execution succeeded after the current DLL rebuild. It exercised the event, `InterruptControl`, named mutex, sorted set, thread/string helpers, read/write lock, and label helpers. The consumer output carries `Ijwhost.dll`; deployment also needs the x64 .NET 10 runtime and compatible MSVC/UCRT runtime components. The machine already had these runtimes, so clean-machine deployment was not tested. A usable x64 Windows SDK desktop library component is required to build the project.
 
 The original `utl-mgd.dll` was statically inspected by REA for its identity and native boundaries; it was never modified or executed. The spike implements existing Win32 handle operations from Quire's managed source and does not reproduce native bodies from the original assembly or inspect `UTL.DLL`.
 
