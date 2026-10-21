@@ -15,6 +15,28 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    private static TextMarkerStyle GetMarkerStyleForRange(System.Windows.Documents.TextRange textRange, out bool mixed)
+    {
+        mixed = false;
+        List list = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.Start.Parent);
+        List list2 = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.End.Parent);
+        if (textRange.End.Parent is FlowDocument flowDocument)
+        {
+            list2 = flowDocument.Blocks.LastBlock as List;
+        }
+        if (list?.MarkerStyle != list2?.MarkerStyle)
+        {
+            mixed = true;
+            return TextMarkerStyle.None;
+        }
+        if (list == null)
+        {
+            return TextMarkerStyle.None;
+        }
+        return list.MarkerStyle;
+    }
+
+    [MirrorVerified("Release IL")]
     public static void SetTextFormat(DependencyProperty property, object value, TextBox control)
     {
         if (property == FontFamilyProperty)
