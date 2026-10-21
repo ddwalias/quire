@@ -226,4 +226,13 @@ public static partial class WpfUtils
         }
         adornersOfElement.Each(adorners.Add);
     }
+
+    public static bool ShouldSuspendInputMethod()
+    {
+        if (SystemInfo.OsBeforeXp())
+        {
+            return EastAsianLanguagesInstalled;
+        }
+        return false;
+    }
 }
