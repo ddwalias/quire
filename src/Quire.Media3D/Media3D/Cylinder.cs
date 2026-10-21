@@ -9,10 +9,17 @@ public partial class Cylinder : ModelVisualBase
     private AxisAngleRotation3D rotate;
     private RotateTransform3D xform;
 
+    public Cylinder()
+    {
+        rotate = new AxisAngleRotation3D();
+        xform = new RotateTransform3D(rotate);
+        PropertyChanged(default(DependencyPropertyChangedEventArgs));
+    }
+
     public Point3D Point1
     {
-        get => (Point3D)GetValue(Point1Property);
         set => SetValue(Point1Property, value);
+        get => (Point3D)GetValue(Point1Property);
     }
 
     public Point3D Point2
@@ -23,14 +30,14 @@ public partial class Cylinder : ModelVisualBase
 
     public double Radius1
     {
-        get => (double)GetValue(Radius1Property);
         set => SetValue(Radius1Property, value);
+        get => (double)GetValue(Radius1Property);
     }
 
     public double Radius2
     {
-        get => (double)GetValue(Radius2Property);
         set => SetValue(Radius2Property, value);
+        get => (double)GetValue(Radius2Property);
     }
 
     public double Fold1
@@ -47,27 +54,20 @@ public partial class Cylinder : ModelVisualBase
 
     public int Slices
     {
-        get => (int)GetValue(SlicesProperty);
         set => SetValue(SlicesProperty, value);
+        get => (int)GetValue(SlicesProperty);
     }
 
     public int Stacks
     {
-        get => (int)GetValue(StacksProperty);
         set => SetValue(StacksProperty, value);
+        get => (int)GetValue(StacksProperty);
     }
 
     public int EndStacks
     {
-        get => (int)GetValue(EndStacksProperty);
         set => SetValue(EndStacksProperty, value);
-    }
-
-    public Cylinder()
-    {
-        rotate = new AxisAngleRotation3D();
-        xform = new RotateTransform3D(rotate);
-        PropertyChanged(default(DependencyPropertyChangedEventArgs));
+        get => (int)GetValue(EndStacksProperty);
     }
 
     protected override void Triangulate(DependencyPropertyChangedEventArgs args, Point3DCollection vertices, Vector3DCollection normals, Int32Collection indices, PointCollection textures)
@@ -168,4 +168,22 @@ public partial class Cylinder : ModelVisualBase
             }
         }
     }
+
+    public static readonly DependencyProperty Point1Property = DependencyProperty.Register("Point1", typeof(Point3D), typeof(Cylinder), new PropertyMetadata((object)new Point3D(0.0, 1.0, 0.0), (PropertyChangedCallback)ModelVisualBase.PropertyChanged));
+
+    public static readonly DependencyProperty Point2Property = DependencyProperty.Register("Point2", typeof(Point3D), typeof(Cylinder), new PropertyMetadata((object)new Point3D(0.0, 0.0, 0.0), (PropertyChangedCallback)ModelVisualBase.PropertyChanged));
+
+    public static readonly DependencyProperty Radius1Property = DependencyProperty.Register("Radius1", typeof(double), typeof(Cylinder), new PropertyMetadata((object)1.0, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (double)value >= 0.0));
+
+    public static readonly DependencyProperty Radius2Property = DependencyProperty.Register("Radius2", typeof(double), typeof(Cylinder), new PropertyMetadata((object)1.0, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (double)value >= 0.0));
+
+    public static readonly DependencyProperty Fold1Property = DependencyProperty.Register("Fold1", typeof(double), typeof(Cylinder), new PropertyMetadata((object)0.1, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (double)value >= 0.0 && (double)value <= 1.0));
+
+    public static readonly DependencyProperty Fold2Property = DependencyProperty.Register("Fold2", typeof(double), typeof(Cylinder), new PropertyMetadata((object)0.9, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (double)value >= 0.0 && (double)value <= 1.0));
+
+    public static readonly DependencyProperty SlicesProperty = DependencyProperty.Register("Slices", typeof(int), typeof(Cylinder), new PropertyMetadata((object)36, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (int)value > 2));
+
+    public static readonly DependencyProperty StacksProperty = DependencyProperty.Register("Stacks", typeof(int), typeof(Cylinder), new PropertyMetadata((object)1, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (int)value > 0));
+
+    public static readonly DependencyProperty EndStacksProperty = DependencyProperty.Register("EndStacks", typeof(int), typeof(Cylinder), new PropertyMetadata((object)1, (PropertyChangedCallback)ModelVisualBase.PropertyChanged), (ValidateValueCallback)((object value) => (int)value > 0));
 }
