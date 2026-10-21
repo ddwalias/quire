@@ -27,6 +27,4 @@ public static partial class EnumerableExtensions
     public static global::System.Collections.Generic.IEnumerable<T> Yield<T>(this T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> YieldOrEmpty<T>(this T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool HasCommonValue<T>(this global::System.Collections.Generic.IEnumerable<T> values, out T commonValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

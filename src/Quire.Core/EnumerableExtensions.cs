@@ -93,6 +93,32 @@ public static partial class EnumerableExtensions
         }
     }
 
+    public static bool HasCommonValue<T>(this IEnumerable<T> values, out T commonValue)
+    {
+        commonValue = default;
+        if (values.IsNullOrEmpty())
+        {
+            return false;
+        }
+        bool flag = false;
+        foreach (T value in values)
+        {
+            if (flag)
+            {
+                if (!object.Equals(commonValue, value))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                flag = true;
+                commonValue = value;
+            }
+        }
+        return true;
+    }
+
     [MirrorVerified("PtcEnumerableExtensionsMechanicalDifferentialTests")]
     public static IEnumerable<TRetType> Collect<T, TRetType>(this IEnumerable<T> items, Func<T, TRetType> action) => CollectAsList<T, TRetType>(items, action);
 
