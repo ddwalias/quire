@@ -21,6 +21,9 @@ public static partial class StringExtension
     public static bool IsValidXmlString(this string str) => _validXmlString.IsMatch(str);
 
     [MirrorVerified("Release IL")]
+    public static bool ContainsUnicodeCharOrSlash(this string str) => str.Any((char ch) => !IsAscii(ch) || ch.CompareTo('\\') == 0);
+
+    [MirrorVerified("Release IL")]
     private static int AsciiEndCode;
 
     [MirrorVerified("Release IL")]
