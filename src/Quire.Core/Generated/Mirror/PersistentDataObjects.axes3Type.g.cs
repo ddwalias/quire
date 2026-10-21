@@ -23,6 +23,4 @@ public partial class axes3Type
     public global::System.Xml.XmlNode zAxisRaw;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

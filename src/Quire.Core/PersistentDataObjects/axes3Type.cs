@@ -1,10 +1,31 @@
 #nullable disable
+using System.Xml.Serialization;
 using Quire.Mirror;
+using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
 
 public partial class axes3Type
 {
+    [MirrorVerified("Release IL")]
+    public static XmlSerializer XmlSerializer
+    {
+        get
+        {
+            if (_xmlSerializer == null)
+            {
+                using (new XmlSerializerCreationWrapper())
+                {
+                    _xmlSerializer = new XmlSerializer(_typeOfThis, new XmlRootAttribute("axes")
+                    {
+                        Namespace = "http://schemas.mathsoft.com/worksheet50"
+                    });
+                }
+            }
+            return _xmlSerializer;
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsaxes3TypeMechanicalDifferentialTests")]
     public axes3Type() { }
 
