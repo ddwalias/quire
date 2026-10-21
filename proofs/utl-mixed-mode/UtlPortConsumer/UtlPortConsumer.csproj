@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Quire.Engine.Utl">
+      <HintPath>..\artifacts\bin\UtlPortSpike\Release\Quire.Engine.Utl.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Content Include="..\artifacts\bin\UtlPortSpike\Release\Ijwhost.dll" Link="Ijwhost.dll" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\artifacts\bin\UtlPortSpike\Release\Ijwhost.dll')" />
+  </ItemGroup>
+</Project>

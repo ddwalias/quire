@@ -2,11 +2,11 @@
 
 ## Outcome
 
-The isolated Windows proof builds and runs: a managed .NET 10 consumer references a C++/CLI DLL, calls its public managed wrapper, and receives a result from native x64 code in that same DLL. REA identifies the output as `cpp-cli-mixed`, and Ghidra locates the native function in an executable section.
+The Windows C++/CLI proof now includes a small port of `SafeWaitHandle`, `SafeEvent`, and `SafeMutex`. Its managed .NET 10 consumer loads `Quire.Engine.Utl.dll`, exercises an event, and returns successfully. REA classifies the DLL as `mixed-clr-native` / `cpp-cli-mixed`; Ghidra imported and auto-analyzed the x64 PE. This proves that real Utl Win32 handle behavior can be built into a mixed-mode Quire-named DLL.
 
-The first proof did not justify replacing `Quire.Engine.Utl`; I had not yet tested whether its C#-compiled IL could be retained inside the C++/CLI output. The follow-up module experiment below does test that route. It fails on .NET 10: a consumer cannot load the multi-module assembly. Rewriting the managed methods as C++/CLI could produce a mixed-mode DLL, but would be a new IL implementation and would not satisfy exact Release IL parity. Therefore the production C# project remains intact, and no same-DLL parity claim is made.
+This is a three-type feasibility spike, not a replacement for the 89-type C# assembly. Its shared methods retain matching metadata signatures, but their Release IL is different. It also drops the rest of the managed API and adds C++/CLI compiler support types. The production C# project remains intact; no same-DLL Release IL parity claim is made.
 
-The existing C# project passed the documented Release IL validator against `origin/main` at `54e7afa7ef523d275894370c602badd2ffc2218a`: 129 methods checked, 129 exact, zero failures. The local report is `.mirror-cache/release-il-c43007dff9c2/release-il.json`. This validates the existing C# assembly only; none of the merge spikes changed production code.
+The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passed: 129 methods checked, 129 exact, zero failures. The report is in the local ignored `.mirror-cache/release-il-28d8e663e644/release-il.json`. This validates the current C# project only. The validator accepts production `.csproj` projects and cannot build or select a `.vcxproj` candidate, so it did not validate the C++/CLI spike.
 
 The reference REA investigation found 55 native P/Invoke declarations, two IL P/Invokes, eight runtime-provided delegate methods, and 57 analyzed internal native procedures. Those procedures are C++/CLI, CRT, exception, allocation, security, and generated wrapper support; it identified no application-authored native algorithm to implement in Quire. The proof's addition routine exists only to exercise the native-to-managed call path. It is not proposed for production.
 
@@ -34,6 +34,52 @@ Observed toolchain: Visual Studio Professional 2026 18.11, MSVC 14.51.36231 / co
 After the successful build and run, a later rebuild attempt stopped before compilation with MSBuild `MSB8037`: this machine's registered Windows SDK 10.0.26100.0 lacks `Lib\10.0.26100.0\um\x64\gdi32.lib`, which Visual C++ uses to detect installed desktop SDK support. The already-built DLL remained the artifact used for REA, Ghidra, and load verification. The helper script checks this prerequisite and reports the missing SDK component; rebuilding from a clean checkout requires installing the Windows SDK desktop x64 libraries.
 
 The C++ compiler emitted the mixed-mode startup/runtime code. No CRT, exception, security-cookie, or startup pseudocode was copied from Ghidra.
+
+## C++/CLI Utl port spike
+
+`UtlPortSpike.vcxproj` and `UtlPortSpike.cpp` are an isolated x64 Visual C++ DLL project under `proofs/utl-mixed-mode/`. The project targets `net10.0-windows`, sets `CLRSupport=NetCore` (MSVC `/clr:netcore`), uses the installed v145 toolset, names the output `Quire.Engine.Utl.dll`, and sets assembly version `0.1.0.0`. The C# project already has that name and version. The C++/CLI output is x64-only and unsigned, whereas the C# output is AnyCPU/IL-only and unsigned.
+
+The spike ports the constructors and operations for `SafeWaitHandle`, `SafeEvent`, and `SafeMutex`. Native helpers call the actual Win32 APIs those classes already use: `CreateEventW`, `CreateMutexW`, `SetEvent`, `ResetEvent`, `CloseHandle`, `ReleaseMutex`, `WaitForSingleObject`, and `WaitForMultipleObjects`. They provide the handle-management behavior required by the managed types. No dummy native method or reverse-engineered CRT/startup implementation was added. The C++ compiler generated its own exception, cookie, startup, and mixed-mode support.
+
+Build and load the spike on Windows with the MSVC x64 C++/CLI workload and the Windows SDK desktop x64 libraries installed:
+
+```powershell
+$vs = (& "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -all -products '*' -format json | ConvertFrom-Json | Select-Object -First 1)
+& "$($vs.installationPath)\MSBuild\Current\Bin\MSBuild.exe" proofs\utl-mixed-mode\UtlPortSpike.vcxproj /m /p:Configuration=Release /p:Platform=x64 /v:minimal
+dotnet build proofs\utl-mixed-mode\UtlPortConsumer\UtlPortConsumer.csproj -c Release
+dotnet proofs\utl-mixed-mode\UtlPortConsumer\bin\Release\net10.0-windows\UtlPortConsumer.dll
+```
+
+On this machine the mixed DLL compiled with zero warnings or errors. The managed consumer compiled with zero warnings or errors and ran successfully, printing `managed consumer loaded the C++/CLI Utl spike and exercised its Win32 event`. The output folder contains `Ijwhost.dll`; the consumer includes it beside the application. This confirms the tested direct-reference deployment path, not deployment on a clean machine.
+
+### Metadata and IL assessment
+
+REA inspected both the C# Release output and the spike without loading either assembly. The final spike had SHA-256 `858bdd5af5fa7b4eda48af34484b20c8f1f1d4be72c0cecfb6a8901f8e801e3a`, assembly name/version `Quire.Engine.Utl, 0.1.0.0`, target framework `.NETCoreApp,Version=v10.0`, no public key, PE32+, x64 machine type, and the `native-entry-point` CLI flag with `ILONLY` clear. Its MVID was `5e1a6c3b-7408-4dab-8a22-b8490181f63a`. The final output was rebuilt and loaded by the managed consumer.
+
+REA compared the spike with the current C# Release output by metadata signatures and normalized CIL:
+
+| Comparison | Result |
+|---|---:|
+| Shared methods with exact signatures | 18 |
+| Shared methods with exact Release IL | 0 |
+| Changed methods among shared signatures | 18 |
+| Removed / unimplemented methods | 359 |
+| Added compiler/runtime methods | 224 |
+| Unknown matches | 5 |
+| MethodDef rows, C# / C++/CLI | 310 / 136 |
+| AssemblyRef rows, C# / C++/CLI | 8 / 167 |
+
+The 18 signature matches are the methods from the three ported types. None retained identical C# Release IL. Most of the removed members belong to types not included in this deliberately limited spike; the removed list also includes implementation helpers in those three types. Added C++/CLI metadata includes compiler/runtime support. REA marked the overall comparison partial because some C++-generated metadata was not fully decoded. This is a failed full-assembly compatibility assessment, not an IL-parity pass.
+
+The assembly simple name and version can be set to match. The output still differs in architecture, CLI flags, references, MVID, and managed surface. Current consumers reference `Quire.Engine.Utl.csproj`; replacing it with this `.vcxproj` would require a repository-wide project-reference migration, which is outside this spike and Lane D's allowed edits.
+
+### Native inspection and dependencies
+
+Ghidra 12.1.4 imported the final mixed DLL as an x64 PE through `ghidra-agent-cli` and reported successful analysis. It parsed the PDB and native sections; C++/CLI attributes and generated functions produced unresolved-constructor and PDB-type warnings. Ghidra's import operation performs its own automatic analysis. Separate CLI `auto-analyze`, baseline export, and decompile operations could not run because the installed `ghidra-agent-cli` distribution referenced missing scripts (`AutoAnalyze.java`, `ExportBaseline.java`, and `DecompileFunction.java`). `dumpbin` independently confirmed the executable code regions and decoded the native Win32-call wrappers; the native helpers are in `.text` at approximately `0x180001100–0x1800011c6`. The PE has executable `.text` (`0x180001000–0x1800044b7`) and `.nep` (`0x180005000–0x18000546f`) sections.
+
+The generated DLL's direct imports are `KERNEL32.dll`, `VCRUNTIME140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, and `ijwhost.dll`. Kernel32 imports include the eight Win32 calls above plus compiler/runtime calls. The consumer output must carry `Ijwhost.dll`; deployment also needs the x64 .NET 10 runtime and compatible MSVC/UCRT runtime components. The machine already had these runtimes, so clean-machine deployment was not tested. A usable x64 Windows SDK desktop library component is required to build the project.
+
+The original `utl-mgd.dll` was only statically inspected by REA to confirm the supplied SHA-256 and MVID; it was never modified or executed. This spike implements existing Win32 handle operations from Quire's managed source and does not reproduce native bodies from the original assembly or inspect `UTL.DLL`.
 
 ## Inspection results
 
