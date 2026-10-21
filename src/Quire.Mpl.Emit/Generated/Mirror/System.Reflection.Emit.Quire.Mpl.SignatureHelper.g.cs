@@ -11,6 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.SignatureHelper, mplasb")]
 internal static partial class SignatureHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Reflection.Metadata.BlobBuilder MethodSignatureEnconder(global::System.Reflection.ParameterInfo[] parameters, global::System.Reflection.ParameterInfo returnType, bool isInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
