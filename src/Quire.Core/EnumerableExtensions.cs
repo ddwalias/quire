@@ -10,6 +10,30 @@ public static partial class EnumerableExtensions
 
     public static int IndexOf<T>(this IEnumerable<T> items, T item) => new List<T>(items).IndexOf(item);
 
+    public static void Times(this int count, Action action)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            action();
+        }
+    }
+
+    public static void UpTo(this int start, int end, Action<int> action)
+    {
+        for (int i = start; i <= end; i++)
+        {
+            action(i);
+        }
+    }
+
+    public static void DownTo(this int start, int end, Action<int> action)
+    {
+        for (int i = start; i >= end; i--)
+        {
+            action(i);
+        }
+    }
+
     [MirrorVerified("PtcEnumerableExtensionsMechanicalDifferentialTests")]
     public static IEnumerable<TRetType> Collect<T, TRetType>(this IEnumerable<T> items, Func<T, TRetType> action) => CollectAsList<T, TRetType>(items, action);
 
