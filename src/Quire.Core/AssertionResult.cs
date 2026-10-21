@@ -19,6 +19,24 @@ public partial class AssertionResult
         return PassedResult;
     }
 
+    public static implicit operator AssertionE(AssertionResult result)
+    {
+        if (!result.Passed)
+        {
+            return AssertionE.Failed;
+        }
+        return AssertionE.Passed;
+    }
+
+    public static bool operator ==(AssertionResult lhs, AssertionResult rhs)
+    {
+        if (lhs != null && rhs != null)
+        {
+            return lhs.Passed == rhs.Passed;
+        }
+        return false;
+    }
+
     [MirrorVerified("PtcAssertionResultMechanicalDifferentialTests")]
     private readonly bool _passed;
 
