@@ -11,12 +11,22 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DevelopmentEnvironmentState, Ptc.Core")]
 public static partial class DevelopmentEnvironmentState
 {
-    [global::Quire.Mirror.MirrorStub]
     public const string EnableRtEnvValue = "true";
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<bool>> RtNameToWrapperFuncMap;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CheckRtEnvState(string env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool CheckRtEnvState(string env)
+    {
+        try
+        {
+            string environmentVariable = global::System.Environment.GetEnvironmentVariable(env, global::System.EnvironmentVariableTarget.Process);
+            return !string.IsNullOrEmpty(environmentVariable) && environmentVariable.Equals("true", global::System.StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+        }
+
+        return false;
+    }
     public static bool CheckRtEnvStateCached(string env)
     {
         if (!RtStateCache.ContainsKey(env))
