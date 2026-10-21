@@ -12,12 +12,6 @@ namespace Quire;
 public partial class AssertionResult
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.AssertionResult PassedResult;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.AssertionResult FailedResult;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.AssertionResult Get(bool passed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static implicit operator global::Quire.AssertionE(global::Quire.AssertionResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool operator ==(global::Quire.AssertionResult lhs, global::Quire.AssertionResult rhs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

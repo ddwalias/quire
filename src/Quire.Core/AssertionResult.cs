@@ -6,6 +6,19 @@ namespace Quire;
 
 public partial class AssertionResult
 {
+    public static readonly AssertionResult PassedResult = new(passed: true);
+
+    public static readonly AssertionResult FailedResult = new(passed: false);
+
+    public static AssertionResult Get(bool passed)
+    {
+        if (!passed)
+        {
+            return FailedResult;
+        }
+        return PassedResult;
+    }
+
     [MirrorVerified("PtcAssertionResultMechanicalDifferentialTests")]
     private readonly bool _passed;
 
