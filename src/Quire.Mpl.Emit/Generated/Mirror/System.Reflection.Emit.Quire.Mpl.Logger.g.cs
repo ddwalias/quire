@@ -26,6 +26,6 @@ public static partial class Logger
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Threading.Thread _logThread;
     private static volatile bool _isRunning;
-    [global::Quire.Mirror.MirrorStub]
-    private static uint GetCurrentThreadId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::System.Runtime.InteropServices.DllImport("kernel32.dll")]
+    private static extern uint GetCurrentThreadId();
 }

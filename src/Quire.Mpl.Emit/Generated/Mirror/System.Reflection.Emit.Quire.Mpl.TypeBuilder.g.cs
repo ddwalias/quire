@@ -14,5 +14,13 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public const int UnspecifiedTypeSize = 0;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer()
+    {
+        if (new global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder(".cctor", (global::System.Reflection.MethodAttributes.Public | global::System.Reflection.MethodAttributes.Static | global::System.Reflection.MethodAttributes.HideBySig | global::System.Reflection.MethodAttributes.SpecialName | global::System.Reflection.MethodAttributes.RTSpecialName) is var attributes ? attributes : default, (global::System.Reflection.CallingConventions)0, typeof(void), null, this) is var constructorBuilder)
+        {
+            _methodDefStore.Add(constructorBuilder);
+            return constructorBuilder;
+        }
+        return null!;
+    }
 }
