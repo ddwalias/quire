@@ -321,6 +321,23 @@ public static partial class WpfUtils
         }
     }
 
+    public static T TryFindAncestorIncludingSelfUntilGivenAncestorIsReached<T>(this DependencyObject child, DependencyObject topParent, bool includeLogical = false) where T : class
+    {
+        if (child == null)
+        {
+            return null;
+        }
+        if (child is T result)
+        {
+            return result;
+        }
+        if (topParent == child)
+        {
+            return null;
+        }
+        return child.TryFindVisualAncestorUntilGivenAncestorIsReached<T>(topParent, includeLogical);
+    }
+
     public static DependencyObject FindParentInGroup(DependencyObject element, global::System.Collections.Generic.IEnumerable<DependencyObject> group)
     {
         while (element != null)
