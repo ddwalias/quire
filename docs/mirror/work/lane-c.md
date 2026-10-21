@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-calc-core-20261021-c12.
+- Branch: mirror/c-calc-core-20261021-c13.
 - UTC start time: 2026-10-21T13:33:29Z.
 - Eight-hour deadline: 2026-10-21T21:33:29Z.
 - Current assembly: Quire.Calculation.Core (in progress).
@@ -37,6 +37,7 @@
     - Batch 9: VectorsListJSonSerializer<T> (CreateListNode, Read(Stream, int), Write(Stream, IList<IListResultNode>, int) with closure <>c__DisplayClass3_0, Write(Stream, T[]), Read(Stream), .cctor).
     - Batch 10: TraceResultAnalyzer (GetLabels with <>c.<GetLabels>b__0_0, AddOneDataSegment overloads, StringVectorToIndices, ToDoubleDataList, BuildPointsForWaterfall, BuildPointsForBoxes, BuildTuplesOfPoints with <>c.<BuildTuplesOfPoints>b__7_0), ProductInfo.Constants (.ctor), CalcResultsProcessingPriorities (.cctor), CalculationOptionDefaults (.cctor).
     - Batch 11: ListResultNode<T> (abstract NeutralValue, abstract IsMeaningfulValue), Trace2DResultNode (.ctor, RangeAxisInfo, ResultAxisInfo, DataPoints, TraceResultType, Accept), Unit, ResolvedId, TraceErrorCodes (all const error codes), CalculatableInfoProperties, CalculationOptionNames, RedefinitionWarningMsgCodes, Support.CalculationPropertyNames, Support.RegexForRL.
+    - Batch 12: DoubleListResultNode (const _neutralValue), StringListResultNode (const _neutralValue), UnitDescriptor (KeyPropertyName, QuantityPropertyName, CGS_Keys, RL_prefix).
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
