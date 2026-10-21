@@ -11,64 +11,34 @@ namespace Quire.OLE;
 [global::Quire.Mirror.MirrorOf("Ptc.OLE.IOleSiteManager, Ptc.Core")]
 public partial interface IOleSiteManager : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsOutOfPlaceActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsRunning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string ProgId { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool SiteCreated { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action Saved { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action Shown { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action Hidden { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action ViewChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action Closed { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action DataChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action EditingStarted { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action EditingEnded { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    bool CreateSiteFromProgID(string progID, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool CreateSiteFromFile(string filePath, bool link, string oleContainerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool SetExtent(int width, int height) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void GetExtent(out int width, out int height) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool Save(string filename, string[] excludeElementsNames) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool Load(string filename, global::System.Collections.Generic.Dictionary<global::System.Guid, global::System.Guid> guidsConversionDict) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool UpdateStorage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ActivateOutOfPlace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ActivateInPlace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool ActivatePrimary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Deactivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    nint CreateHBitmap(global::System.Windows.Int32Rect newRect, nint hwndPtr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetHostNames(string appName, string objName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.OLE.OleResult Run() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object GetOleObject(bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool CreateSiteWithDialog(nint winHandle, string title, string oleContainerPath, out bool isNew, out bool isLink, out bool isCanceled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.OLE.OleResult UpdateLink() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void SetOleContainerPath(string containerPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsOutOfPlaceActive { get; }
+    bool IsRunning { get; }
+    string ProgId { get; }
+    bool SiteCreated { get; }
+    event global::System.Action Saved ;
+    event global::System.Action Shown ;
+    event global::System.Action Hidden ;
+    event global::System.Action ViewChanged ;
+    event global::System.Action Closed ;
+    event global::System.Action DataChanged ;
+    event global::System.Action EditingStarted ;
+    event global::System.Action EditingEnded ;
+    bool CreateSiteFromProgID(string progID, string oleContainerPath) ;
+    bool CreateSiteFromFile(string filePath, bool link, string oleContainerPath) ;
+    bool SetExtent(int width, int height) ;
+    void GetExtent(out int width, out int height) ;
+    bool Save(string filename, string[] excludeElementsNames) ;
+    bool Load(string filename, global::System.Collections.Generic.Dictionary<global::System.Guid, global::System.Guid> guidsConversionDict) ;
+    bool UpdateStorage() ;
+    bool ActivateOutOfPlace() ;
+    bool ActivateInPlace() ;
+    bool ActivatePrimary() ;
+    void Deactivate() ;
+    nint CreateHBitmap(global::System.Windows.Int32Rect newRect, nint hwndPtr) ;
+    void SetHostNames(string appName, string objName) ;
+    global::Quire.OLE.OleResult Run() ;
+    object GetOleObject(bool forceRun) ;
+    bool CreateSiteWithDialog(nint winHandle, string title, string oleContainerPath, out bool isNew, out bool isLink, out bool isCanceled) ;
+    global::Quire.OLE.OleResult UpdateLink() ;
+    void SetOleContainerPath(string containerPath) ;
 }
