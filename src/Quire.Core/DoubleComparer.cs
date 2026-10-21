@@ -28,4 +28,18 @@ public partial class DoubleComparer
 
     [MirrorVerified("Release IL")]
     public int Compare(Rect rect1, Rect rect2) => Compare(GetDoubles(rect1), GetDoubles(rect2));
+
+    [MirrorVerified("Release IL")]
+    public int Compare(double x, double y)
+    {
+        if (Math.Abs(x - y) < Epsilon)
+        {
+            return 0;
+        }
+        if (!(x > y))
+        {
+            return -1;
+        }
+        return 1;
+    }
 }
