@@ -11,8 +11,19 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ArrayExtension, Ptc.Core")]
 public static partial class ArrayExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string ToStringFormatted(this global::System.Array array) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string ToStringFormatted(this global::System.Array array)
+    {
+        global::System.Text.StringBuilder stringBuilder = new();
+        foreach (object item in array)
+        {
+            global::System.Array array2 = item as global::System.Array;
+            string arg = array2 != null ? array2.ToStringFormatted() : item.ToString();
+            stringBuilder.AppendFormat("{0},", arg);
+        }
+
+        stringBuilder.Remove(stringBuilder.Length - 1, 1);
+        return global::System.String.Format("[{0}]", stringBuilder);
+    }
     public static void Fill<T>(this T[] array, T value, int startIndex = 0, int endIndex = -1)
     {
         endIndex = ((endIndex < 0 || endIndex > array.Length) ? array.Length : endIndex);
