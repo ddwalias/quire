@@ -12,7 +12,5 @@ namespace Quire;
 public static partial class DataObjectExtensions
 {
     [global::Quire.Mirror.MirrorStub]
-    public static void SetTextWithEmbeddedItemsInfo(this global::System.Windows.IDataObject dataObject, global::Quire.RichTextEmbeddedItemsInfo data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Nullable<global::Quire.RichTextEmbeddedItemsInfo> GetTextWithEmbeddedItemsInfo(this global::System.Windows.IDataObject dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
