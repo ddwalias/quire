@@ -331,4 +331,14 @@ public static partial class WpfUtils
         }
         return element;
     }
+
+    public static T GetParent<T>(DependencyObject d) where T : class
+    {
+        DependencyObject parentDependencyObject = GetParentDependencyObject(d);
+        while (parentDependencyObject != null && !(parentDependencyObject is T))
+        {
+            parentDependencyObject = GetParentDependencyObject(parentDependencyObject);
+        }
+        return parentDependencyObject as T;
+    }
 }
