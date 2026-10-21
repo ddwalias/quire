@@ -14,8 +14,6 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static bool IsNullOrEmpty<T>(this global::System.Collections.Generic.IEnumerable<T> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsNotEmpty<T>(this global::System.Collections.Generic.IEnumerable<T> items, out global::System.Collections.Generic.IList<T> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void RemoveAll(this global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void RemoveLast(this global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

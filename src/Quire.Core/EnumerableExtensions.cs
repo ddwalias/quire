@@ -10,6 +10,16 @@ public static partial class EnumerableExtensions
 
     public static int IndexOf<T>(this IEnumerable<T> items, T item) => new List<T>(items).IndexOf(item);
 
+    public static bool IsNotEmpty<T>(this IEnumerable<T> items, out IList<T> list)
+    {
+        list = null;
+        if (items.IsNotEmpty<T>())
+        {
+            list = (items as IList<T>) ?? items.ToList();
+        }
+        return list != null;
+    }
+
     public static void Times(this int count, Action action)
     {
         for (int i = 0; i < count; i++)
