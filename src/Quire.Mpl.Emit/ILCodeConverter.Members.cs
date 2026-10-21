@@ -21,6 +21,662 @@ internal partial class ILCodeConverter
         _moduleBuilder = typeBuilder.Module;
     }
 
+    private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
+	{
+		if (inst.OpCode == OpCodes.Ldc_R8)
+		{
+			double value = (double)inst.Operand;
+			instructionEncoder.OpCode(ILOpCode.Ldc_r8);
+			instructionEncoder.CodeBuilder.WriteUInt64(BitConverter.DoubleToUInt64Bits(value));
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4)
+		{
+			int value2 = (int)inst.Operand;
+			instructionEncoder.OpCode(ILOpCode.Ldc_i4);
+			instructionEncoder.CodeBuilder.WriteInt32(value2);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_S)
+		{
+			byte value3 = (byte)inst.Operand;
+			instructionEncoder.OpCode(ILOpCode.Ldc_i4_s);
+			instructionEncoder.CodeBuilder.WriteByte(value3);
+		}
+		else if (inst.OpCode == OpCodes.Ldstr)
+		{
+			string value4 = (inst.Operand as string) ?? throw new InvalidOperationException("Operand must be a String");
+			UserStringHandle orAddUserString = _metadata.GetOrAddUserString(value4);
+			instructionEncoder.LoadString(orAddUserString);
+		}
+		else if (inst.OpCode == OpCodes.Ldarg_S)
+		{
+            if (inst.decalaredType == typeof(byte))
+			{
+                if (inst.Operand == null)
+                {
+                    throw new ArgumentNullException("Object is null.");
+                }
+                byte value5 = (byte)inst.Operand;
+                instructionEncoder.OpCode(ILOpCode.Ldarg_s);
+                instructionEncoder.CodeBuilder.WriteByte(value5);
+			}
+            else
+            {
+                throw new NotImplementedException();
+            }
+		}
+		else if (inst.OpCode == OpCodes.Box)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			Type type = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.TypeDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Box);
+					instructionEncoder.Token((TypeDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.TypeReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Box);
+				instructionEncoder.Token((TypeReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
+				}
+			}, (Type type6) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Unbox)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			Type type2 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type2, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.TypeDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Unbox);
+					instructionEncoder.Token((TypeDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.TypeReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Unbox);
+				instructionEncoder.Token((TypeReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
+				}
+			}, (Type type6) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Ldobj)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			Type type3 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type3, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.TypeDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Ldobj);
+					instructionEncoder.Token((TypeDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.TypeReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Ldobj);
+				instructionEncoder.Token((TypeReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
+				}
+			}, (Type type6) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Isinst)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			Type type4 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type4, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.TypeDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Isinst);
+					instructionEncoder.Token((TypeDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.TypeReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Isinst);
+				instructionEncoder.Token((TypeReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
+				}
+			}, (Type type6) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Newarr)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			Type type5 = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+			TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type5, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.TypeDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Newarr);
+					instructionEncoder.Token((TypeDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.TypeReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Newarr);
+				instructionEncoder.Token((TypeReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
+				}
+			}, (Type type6) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + type6.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Stfld || inst.OpCode == OpCodes.Stsfld)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			ILOpCode code = ((inst.OpCode == OpCodes.Stfld) ? ILOpCode.Stfld : ILOpCode.Stsfld);
+			FieldInfo field = (inst.Operand as FieldInfo) ?? throw new InvalidOperationException("Operand must be a FieldInfo");
+			FieldHandleResolver.ResolveHandleEmit(_typeBuilder, field, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.FieldDefinition)
+				{
+					instructionEncoder.OpCode(code);
+					instructionEncoder.Token((FieldDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MemberReference)
+				{
+				instructionEncoder.OpCode(code);
+				instructionEncoder.Token((MemberReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a FieldDefinitionHandle or MemberReferenceHandle");
+				}
+			}, (FieldInfo fieldInfo) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for fiedl " + fieldInfo.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Ldfld || inst.OpCode == OpCodes.Ldsfld)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			ILOpCode code = ((inst.OpCode == OpCodes.Ldfld) ? ILOpCode.Ldfld : ILOpCode.Ldsfld);
+			FieldInfo field2 = (inst.Operand as FieldInfo) ?? throw new InvalidOperationException("Operand must be a FieldInfo");
+			FieldHandleResolver.ResolveHandleEmit(_typeBuilder, field2, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.FieldDefinition)
+				{
+					instructionEncoder.OpCode(code);
+					instructionEncoder.Token((FieldDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MemberReference)
+				{
+				instructionEncoder.OpCode(code);
+				instructionEncoder.Token((MemberReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a FieldDefinitionHandle or MemberReferenceHandle");
+				}
+			}, (FieldInfo fieldInfo) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for fiedl " + fieldInfo.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Callvirt)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			MethodBase methodBase = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.MethodDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Callvirt);
+					instructionEncoder.Token((MethodDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MemberReference)
+				{
+					instructionEncoder.OpCode(ILOpCode.Callvirt);
+					instructionEncoder.Token((MemberReferenceHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MethodSpecification)
+				{
+				instructionEncoder.OpCode(ILOpCode.Callvirt);
+				instructionEncoder.Token((MethodSpecificationHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle, MethodSpecificationHandle or MemberReferenceHandle");
+				}
+			}, (MethodBase methodBase5) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + methodBase5.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Ldftn)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			MethodBase methodBase2 = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase2, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.MethodDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Ldftn);
+					instructionEncoder.Token((MethodDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MemberReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Ldftn);
+				instructionEncoder.Token((MemberReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle or MemberReferenceHandle");
+				}
+			}, (MethodBase methodBase5) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + methodBase5.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Call)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			MethodBase methodBase3 = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase3, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.MethodDefinition)
+				{
+					instructionEncoder.Call((MethodDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MemberReference)
+				{
+					instructionEncoder.Call((MemberReferenceHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MethodSpecification)
+				{
+				instructionEncoder.Call((MethodSpecificationHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle, MethodSpecificationHandle or MemberReferenceHandle");
+				}
+			}, (MethodBase methodBase5) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for " + methodBase5.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Newobj)
+		{
+			if ((object)inst.decalaredType == null)
+			{
+				throw new InvalidOperationException("Declared type must be not null");
+			}
+			MethodBase methodBase4 = (inst.Operand as MethodBase) ?? throw new InvalidOperationException("Operand type must be MethodBase");
+			MethodHandleResolver.ResolveHandleEmit(typeBuilder, methodBase4, (Handle handle) =>
+			{
+				if (handle.Kind == HandleKind.MethodDefinition)
+				{
+					instructionEncoder.OpCode(ILOpCode.Newobj);
+					instructionEncoder.Token((MethodDefinitionHandle)handle);
+				}
+				else if (handle.Kind == HandleKind.MemberReference)
+				{
+				instructionEncoder.OpCode(ILOpCode.Newobj);
+				instructionEncoder.Token((MemberReferenceHandle)handle);
+				
+				}
+				else
+				{
+					throw new InvalidOperationException("Operand must be a MethodDefinitionHandle or MemberReferenceHandle");
+				}
+			}, (MethodBase methodBase5) =>
+			{
+				throw new InvalidOperationException("Cannot resolve the handle for method " + methodBase5.Name);
+			});
+		}
+		else if (inst.OpCode == OpCodes.Leave)
+		{
+            if (inst.decalaredType == typeof(Label))
+			{
+                if (inst.Operand == null)
+                {
+                    throw new ArgumentNullException("Object is null.");
+                }
+                instructionEncoder.Branch(ILOpCode.Leave, _labelManager.GetLabelHandle((Label)inst.Operand));
+			}
+            else
+			{
+                throw new ArgumentException("The 'Operand' must be 'Label' here");
+			}
+		}
+		else if (inst.OpCode == OpCodes.Stloc)
+		{
+			LocalBuilder localBuilder = (inst.Operand as LocalBuilder) ?? throw new InvalidOperationException("Operand must be a LocalBuilder");
+			instructionEncoder.StoreLocal(localBuilder.LocalIndex);
+		}
+		else if (inst.OpCode == OpCodes.Ldloc)
+		{
+			LocalBuilder localBuilder2 = (inst.Operand as LocalBuilder) ?? throw new InvalidOperationException("Operand must be a LocalBuilder");
+			instructionEncoder.LoadLocal(localBuilder2.LocalIndex);
+		}
+		else if (inst.OpCode == OpCodes.Br)
+		{
+			if (inst.Operand == null)
+			{
+				throw new InvalidOperationException("Operand must be not null");
+			}
+			if (inst.Operand.GetType() != typeof(Label))
+			{
+				throw new InvalidOperationException("Operand type must be Label");
+			}
+			Label label = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Br, _labelManager.GetLabelHandle(label));
+		}
+		else if (inst.OpCode == OpCodes.Brfalse)
+		{
+			if (inst.Operand == null)
+			{
+				throw new InvalidOperationException("Operand must be not null");
+			}
+			if (inst.Operand.GetType() != typeof(Label))
+			{
+				throw new InvalidOperationException("Operand type must be Label");
+			}
+			Label label2 = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Brfalse, _labelManager.GetLabelHandle(label2));
+		}
+		else if (inst.OpCode == OpCodes.Brtrue)
+		{
+			if (inst.Operand == null)
+			{
+				throw new InvalidOperationException("Operand must be not null");
+			}
+			if (inst.Operand.GetType() != typeof(Label))
+			{
+				throw new InvalidOperationException("Operand type must be Label");
+			}
+			Label label3 = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Brtrue, _labelManager.GetLabelHandle(label3));
+		}
+		else if (inst.OpCode == OpCodes.Bne_Un)
+		{
+			if (inst.Operand == null)
+			{
+				throw new InvalidOperationException("Operand must be not null");
+			}
+			if (inst.Operand.GetType() != typeof(Label))
+			{
+				throw new InvalidOperationException("Operand type must be Label");
+			}
+			Label label4 = (Label)inst.Operand;
+			instructionEncoder.Branch(ILOpCode.Bne_un, _labelManager.GetLabelHandle(label4));
+		}
+		else if (inst.OpCode == OpCodes.Switch)
+		{
+			if (inst.Operand == null)
+			{
+				throw new InvalidOperationException("Operand must be not null");
+			}
+			if (inst.Operand.GetType() != typeof(Label[]))
+			{
+				throw new InvalidOperationException("Operand type must be Label[]");
+			}
+			LabelHandle[] array = ((Label[])inst.Operand).Select((Label l) => _labelManager.GetLabelHandle(l)).ToArray();
+			SwitchInstructionEncoder switchInstructionEncoder = instructionEncoder.Switch(array.Length);
+			LabelHandle[] array2 = array;
+			foreach (LabelHandle label5 in array2)
+			{
+				switchInstructionEncoder.Branch(label5);
+			}
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_0)
+		{
+			instructionEncoder.LoadConstantI4(0);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_1)
+		{
+			instructionEncoder.LoadConstantI4(1);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_2)
+		{
+			instructionEncoder.LoadConstantI4(2);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_3)
+		{
+			instructionEncoder.LoadConstantI4(3);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_4)
+		{
+			instructionEncoder.LoadConstantI4(4);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_5)
+		{
+			instructionEncoder.LoadConstantI4(5);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_6)
+		{
+			instructionEncoder.LoadConstantI4(6);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_7)
+		{
+			instructionEncoder.LoadConstantI4(7);
+		}
+		else if (inst.OpCode == OpCodes.Ldc_I4_8)
+		{
+			instructionEncoder.LoadConstantI4(8);
+		}
+		else if (inst.OpCode == OpCodes.Dup)
+		{
+			instructionEncoder.OpCode(ILOpCode.Dup);
+		}
+		else if (inst.OpCode == OpCodes.Ldnull)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldnull);
+		}
+		else if (inst.OpCode == OpCodes.Stelem_Ref)
+		{
+			instructionEncoder.OpCode(ILOpCode.Stelem_ref);
+		}
+		else if (inst.OpCode == OpCodes.Stelem_R8)
+		{
+			instructionEncoder.OpCode(ILOpCode.Stelem_r8);
+		}
+		else if (inst.OpCode == OpCodes.Stelem_I4)
+		{
+			instructionEncoder.OpCode(ILOpCode.Stelem_i4);
+		}
+		else if (inst.OpCode == OpCodes.Ldelem_Ref)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldelem_ref);
+		}
+		else if (inst.OpCode == OpCodes.Ret)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ret);
+		}
+		else if (inst.OpCode == OpCodes.Ldarg_0)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldarg_0);
+		}
+		else if (inst.OpCode == OpCodes.Ldarg_1)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldarg_1);
+		}
+		else if (inst.OpCode == OpCodes.Ldarg_2)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldarg_2);
+		}
+		else if (inst.OpCode == OpCodes.Ldarg_3)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldarg_3);
+		}
+		else if (inst.OpCode == OpCodes.Ldlen)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ldlen);
+		}
+		else if (inst.OpCode == OpCodes.Ceq)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ceq);
+		}
+		else if (inst.OpCode == OpCodes.Clt)
+		{
+			instructionEncoder.OpCode(ILOpCode.Clt);
+		}
+		else if (inst.OpCode == OpCodes.Clt_Un)
+		{
+			instructionEncoder.OpCode(ILOpCode.Clt_un);
+		}
+		else if (inst.OpCode == OpCodes.Cgt)
+		{
+			instructionEncoder.OpCode(ILOpCode.Cgt);
+		}
+		else if (inst.OpCode == OpCodes.Cgt_Un)
+		{
+			instructionEncoder.OpCode(ILOpCode.Cgt_un);
+		}
+		else if (inst.OpCode == OpCodes.Pop)
+		{
+			instructionEncoder.OpCode(ILOpCode.Pop);
+		}
+		else if (inst.OpCode == OpCodes.Add)
+		{
+			instructionEncoder.OpCode(ILOpCode.Add);
+		}
+		else if (inst.OpCode == OpCodes.Sub)
+		{
+			instructionEncoder.OpCode(ILOpCode.Sub);
+		}
+		else if (inst.OpCode == OpCodes.Mul)
+		{
+			instructionEncoder.OpCode(ILOpCode.Mul);
+		}
+		else if (inst.OpCode == OpCodes.Div)
+		{
+			instructionEncoder.OpCode(ILOpCode.Div);
+		}
+		else if (inst.OpCode == OpCodes.Or)
+		{
+			instructionEncoder.OpCode(ILOpCode.Or);
+		}
+		else if (inst.OpCode == OpCodes.And)
+		{
+			instructionEncoder.OpCode(ILOpCode.And);
+		}
+		else if (inst.OpCode == OpCodes.Xor)
+		{
+			instructionEncoder.OpCode(ILOpCode.Xor);
+		}
+		else if (inst.OpCode == OpCodes.Throw)
+		{
+			instructionEncoder.OpCode(ILOpCode.Throw);
+		}
+		else if (inst.OpCode == OpCodes.Tailcall)
+		{
+			instructionEncoder.OpCode(ILOpCode.Tail);
+		}
+		else if (inst.OpCode == OpCodes.Conv_Ovf_I4)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_ovf_i4);
+		}
+		else if (inst.OpCode == OpCodes.Conv_R4)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_r4);
+		}
+		else if (inst.OpCode == OpCodes.Conv_R8)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_r8);
+		}
+		else if (inst.OpCode == OpCodes.Conv_I4)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_i4);
+		}
+		else if (inst.OpCode == OpCodes.Conv_I8)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_i8);
+		}
+		else if (inst.OpCode == OpCodes.Conv_U4)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_u4);
+		}
+		else if (inst.OpCode == OpCodes.Conv_U8)
+		{
+			instructionEncoder.OpCode(ILOpCode.Conv_u8);
+		}
+		else if (inst.OpCode == OpCodes.Neg)
+		{
+			instructionEncoder.OpCode(ILOpCode.Neg);
+		}
+		else if (inst.OpCode == OpCodes.Rem)
+		{
+			instructionEncoder.OpCode(ILOpCode.Rem);
+		}
+        else if (inst.OpCode == OpCodes.Ckfinite)
+		{
+			instructionEncoder.OpCode(ILOpCode.Ckfinite);
+		}
+        else
+        {
+            throw new NotImplementedException();
+        }
+	}
+
     public void Convert(InstructionEncoder instructionEncoder)
     {
         foreach (ILInstruction instruction in _codeStore.Instructions)
@@ -55,6 +711,9 @@ internal partial class ILCodeConverter
             }
         }
     }
+
+
+
 
     private void ConvertEmitCall(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
     {
