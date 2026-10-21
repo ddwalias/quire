@@ -4,6 +4,23 @@ public static partial class BoundsHelper
 {
     private partial struct Line
     {
+        public static Line CalculateLine(global::System.Windows.Point a, global::System.Windows.Point b)
+        {
+            Line result = default;
+            result.Begin = a;
+            result.End = b;
+            result.Slope = CalculateSlope(a, b);
+            if (double.IsNaN(result.Slope))
+            {
+                result.YItercept = double.NaN;
+            }
+            else
+            {
+                result.YItercept = a.Y - result.Slope * a.X;
+            }
+            return result;
+        }
+
         private double Length()
         {
             return global::System.Math.Sqrt(global::System.Math.Pow(End.X - Begin.X, 2.0) + global::System.Math.Pow(End.Y - Begin.Y, 2.0));
