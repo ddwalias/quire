@@ -24,6 +24,16 @@ public static partial class WpfUtils
     [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
     public static void Stall(int milliseconds) => Stall(milliseconds, (DispatcherPriority)9);
 
+    public static void Stall(int milliseconds, DispatcherPriority priorityOfEventsToProcess)
+    {
+        TimeSpan timeSpan = new TimeSpan(0, 0, 0, 0, milliseconds);
+        DateTime now = DateTime.Now;
+        while (DateTime.Now.Subtract(now) < timeSpan)
+        {
+            DoEvents(Dispatcher.CurrentDispatcher, priorityOfEventsToProcess);
+        }
+    }
+
     [MirrorVerified("PtcWpfWpfUtilsMechanicalDifferentialTests")]
     public static DependencyObject GetVisualParent(this Visual visual) => VisualTreeHelper.GetParent(visual);
 
