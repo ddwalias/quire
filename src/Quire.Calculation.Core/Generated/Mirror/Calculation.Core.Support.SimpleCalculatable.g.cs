@@ -12,20 +12,6 @@ namespace Quire.Calculation.Core.Support;
 public partial class SimpleCalculatable : global::Quire.Calculation.Core.Support.ISimpleCalculatable, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.Support.ICalcWithSyncStatus, global::Quire.Calculation.Core.ICalcWithCache
 {
     [global::Quire.Mirror.MirrorStub]
-    public virtual void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual bool IsErrorOnScalingUnits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsEngineWarningsEquals(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> cacheWarningsOrOther, global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> newWarnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.IResultNode FireGetValueOfIdentifierBefore(string idRl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public SimpleCalculatable() { }
-    [global::Quire.Mirror.MirrorStub]
     void global::Quire.Calculation.Core.ICalculatable.SetResult(global::Quire.Calculation.Core.CalculationResult result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     event global::System.EventHandler global::Quire.Calculation.Core.ICalculatable.RlChanged { add { } remove { } }
