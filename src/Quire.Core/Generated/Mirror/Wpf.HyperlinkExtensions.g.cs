@@ -20,8 +20,6 @@ public static partial class HyperlinkExtensions
     [global::Quire.Mirror.MirrorStub]
     private static bool ApplyNeighborFormattingValueIfUnset(global::System.Collections.Generic.List<global::System.Windows.Documents.Inline> inlines, global::System.Windows.Documents.TextPointer currentPosition, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string GetText(this global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Documents.InlineCollection GetParentInlines(this global::System.Windows.Documents.Inline inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ClearForegroundInDepth(this global::System.Windows.Documents.Hyperlink link) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

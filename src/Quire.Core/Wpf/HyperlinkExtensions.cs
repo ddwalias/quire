@@ -15,4 +15,11 @@ public static partial class HyperlinkExtensions
         link.ClearValue(TextBlock.TextDecorationsProperty);
         link.ClearValue(FrameworkContentElement.ToolTipProperty);
     }
+
+    [MirrorVerified("Release IL")]
+    public static string GetText(this Hyperlink link)
+    {
+        System.Windows.Documents.TextRange textRange = new System.Windows.Documents.TextRange(link.ContentStart, link.ContentEnd);
+        return textRange.Text;
+    }
 }
