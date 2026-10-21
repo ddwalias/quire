@@ -13,6 +13,4 @@ public partial class ScaleConverter : global::System.Windows.Data.IValueConverte
 {
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsNumeric(object expression, out double number) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
