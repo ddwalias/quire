@@ -226,6 +226,29 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public TextFormat(TextBox control) : this()
+    {
+        FontFamily = control.FontFamily;
+        FontSize = control.FontSize;
+        FontWeight = control.FontWeight;
+        FontStyle = control.FontStyle;
+        TextDecorations = control.TextDecorations;
+        Background = control.Background ?? Background;
+        Foreground = control.Foreground;
+        TextAlignment = control.TextAlignment;
+        TextAlignmentExt = TextAlignmentExt.None;
+        MixedFontFamily = false;
+        MixedFontSize = false;
+        MixedFontWeight = false;
+        MixedFontStyle = false;
+        MixedTextDecorations = false;
+        MixedForeground = false;
+        MixedBackground = false;
+        MixedMarkerStyle = false;
+        MixedTextAlignment = false;
+    }
+
+    [MirrorVerified("Release IL")]
     public void SetDefaults()
     {
         FontFamily = new FontFamily("Tahoma");
