@@ -16,13 +16,9 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static bool IsNotEmpty<T>(this global::System.Collections.Generic.IEnumerable<T> items, out global::System.Collections.Generic.IList<T> list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<T> EmptyIfNull<T>(this global::System.Collections.Generic.IEnumerable<T> source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void Each<T>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Action<T> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void EachWithIndex<T>(this global::System.Collections.Generic.IEnumerable<T> items, global::System.Action<int, T> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int IndexOf<T>(this global::System.Collections.Generic.IEnumerable<T> items, T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void RemoveAll(this global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

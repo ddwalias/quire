@@ -6,6 +6,10 @@ namespace Quire;
 
 public static partial class EnumerableExtensions
 {
+    public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source) => source ?? Enumerable.Empty<T>();
+
+    public static int IndexOf<T>(this IEnumerable<T> items, T item) => new List<T>(items).IndexOf(item);
+
     [MirrorVerified("PtcEnumerableExtensionsMechanicalDifferentialTests")]
     public static IEnumerable<TRetType> Collect<T, TRetType>(this IEnumerable<T> items, Func<T, TRetType> action) => CollectAsList<T, TRetType>(items, action);
 
