@@ -17,6 +17,4 @@ public static partial class SystemInfo
     public static global::Quire.OSVersions OSVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.OSVersions IdentifyOSVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsWindows8Point1orGreater() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
