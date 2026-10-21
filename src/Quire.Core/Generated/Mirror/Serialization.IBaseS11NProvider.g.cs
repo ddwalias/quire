@@ -11,14 +11,9 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IBaseS11NProvider, Ptc.Core")]
 public partial interface IBaseS11NProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.Packaging.PackagePart PackagePart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Serialization.ISerializationHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Xml.XmlNamespaceManager NameSpaceManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Xml.XmlDocument XmlContentDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool UseOverrides { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::System.IO.Packaging.PackagePart PackagePart { get; }
+    global::Quire.Serialization.ISerializationHelper Helper { get; }
+    global::System.Xml.XmlNamespaceManager NameSpaceManager { get; }
+    global::System.Xml.XmlDocument XmlContentDocument { get; }
+    bool UseOverrides { get; }
 }

@@ -11,16 +11,10 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IDeS11NProvider, Ptc.Core")]
 public partial interface IDeS11NProvider : global::Quire.Serialization.IBaseS11NProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    string FilePath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool SkipRegionsNotAffectingCalculation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string UnpackExternalObject(string itemidref) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UnpackFlowDocument(ref global::System.Windows.Documents.FlowDocument flowDocument, string itemidref) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.IO.Stream UnpackProtectedPart(string itemIdRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    string FilePath { get; }
+    global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get; }
+    bool SkipRegionsNotAffectingCalculation { get; }
+    string UnpackExternalObject(string itemidref) ;
+    void UnpackFlowDocument(ref global::System.Windows.Documents.FlowDocument flowDocument, string itemidref) ;
+    global::System.IO.Stream UnpackProtectedPart(string itemIdRef) ;
 }

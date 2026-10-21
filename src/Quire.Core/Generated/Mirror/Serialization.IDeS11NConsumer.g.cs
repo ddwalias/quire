@@ -11,6 +11,5 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IDeS11NConsumer, Ptc.Core")]
 public partial interface IDeS11NConsumer
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Serialization.IDeS11NProvider DeS11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::Quire.Serialization.IDeS11NProvider DeS11NProvider { get; set; }
 }
