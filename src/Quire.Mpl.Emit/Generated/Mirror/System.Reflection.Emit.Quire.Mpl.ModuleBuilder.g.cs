@@ -26,7 +26,5 @@ public partial class ModuleBuilder : global::System.Reflection.Module
     public override global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder Assembly { get; }
     public override string ScopeName { get; }
     [global::Quire.Mirror.MirrorStub]
-    internal void AppendMetadata(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder methodBodyStreamEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AddTargetFrameworkAttribute(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Metadata.AssemblyDefinitionHandle assemblyHandle, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker metadataReferenceTracker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
