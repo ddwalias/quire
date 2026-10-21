@@ -19,4 +19,14 @@ public static partial class RectExtension
         }
         return false;
     }
+
+    public static bool IntersectsWithNonZeroArea(this global::System.Windows.Rect rect1, global::System.Windows.Rect rect2)
+    {
+        global::System.Windows.Rect val = global::System.Windows.Rect.Intersect(rect1, rect2);
+        if (!val.IsEmpty && !val.Width.IsEqualTo(0.0))
+        {
+            return !val.Height.IsEqualTo(0.0);
+        }
+        return false;
+    }
 }

@@ -18,7 +18,5 @@ public static partial class RectExtension
     [global::Quire.Mirror.MirrorStub]
     public static bool IntersectsWithAccountingForMeasurementError(this global::System.Windows.Rect rect, global::System.Windows.Rect rectAnother) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IntersectsWithNonZeroArea(this global::System.Windows.Rect rect1, global::System.Windows.Rect rect2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsEqualTo(this global::System.Windows.Rect first, global::System.Windows.Rect second, global::Quire.DoubleComparer doubleComparer = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
