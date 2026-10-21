@@ -11,40 +11,4 @@ namespace Quire.Media2D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media2D.ArrowLineBase, Ptc.Media3D")]
 public abstract partial class ArrowLineBase : global::System.Windows.Shapes.Shape
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.PathGeometry pathgeo;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.PathFigure pathfigLine;
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.PolyLineSegment polysegLine;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PathFigure pathfigHead1;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PolyLineSegment polysegHead1;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PathFigure pathfigHead2;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PolyLineSegment polysegHead2;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ArrowAngleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ArrowLengthProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ArrowEndsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsArrowClosedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public double ArrowAngle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double ArrowLength { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Media2D.ArrowEnds ArrowEnds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsArrowClosed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry DefiningGeometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ArrowLineBase() { }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.PathFigure CalculateArrow(global::System.Windows.Media.PathFigure pathfig, global::System.Windows.Point pt1, global::System.Windows.Point pt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,12 +11,4 @@ namespace Quire.Media2D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media2D.ArrowPolyline, Ptc.Media3D")]
 public partial class ArrowPolyline : global::Quire.Media2D.ArrowLineBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PointsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.PointCollection Points { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Geometry DefiningGeometry { get => base.DefiningGeometry; }
-    [global::Quire.Mirror.MirrorStub]
-    public ArrowPolyline() { }
 }
