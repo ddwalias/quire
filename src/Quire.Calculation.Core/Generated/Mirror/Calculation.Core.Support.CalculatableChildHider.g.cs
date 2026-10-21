@@ -11,4 +11,26 @@ namespace Quire.Calculation.Core.Support;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Support.CalculatableChildHider, Ptc.Calculation.Core")]
 public partial class CalculatableChildHider
 {
+    [global::Quire.Mirror.MirrorStub]
+    private global::System.Collections.Generic.IEnumerable<object> _containerChildren;
+    [global::Quire.Mirror.MirrorStub]
+    private bool _adoptCalculatableContainerChildren;
+    [global::Quire.Mirror.MirrorStub]
+    public CalculatableChildHider(global::System.Collections.Generic.IEnumerable<object> getChildren, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableAdded, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableRemoved, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableMoved, bool adoptCalculatableContainerChildren) { }
+    [global::Quire.Mirror.MirrorStub]
+    protected void Initialize(global::System.Collections.Generic.IEnumerable<object> getChildren, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableAdded, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableRemoved, global::System.Action<global::Quire.Calculation.Core.ICalculatable> fireCalculatableMoved, bool adoptCalculatableContainerChildren) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public virtual void ChildAdded(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public virtual void ChildRemoved(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public virtual void ChildMoved(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void SubscribeToPropertyChangedEvents(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void UnsubscribeFromPropertyChangedEvents(object child) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    protected virtual void HandleCalculatablePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    protected virtual void HiddenStateChanged(global::Quire.Calculation.Core.ICalculatable calc, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
