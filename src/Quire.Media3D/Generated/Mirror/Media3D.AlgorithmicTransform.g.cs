@@ -11,8 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.AlgorithmicTransform, Ptc.Media3D")]
 public abstract partial class AlgorithmicTransform : global::System.Windows.Media.Animation.Animatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract void Transform(global::System.Windows.Media.Media3D.Point3DCollection points);
-    [global::Quire.Mirror.MirrorStub]
-    protected AlgorithmicTransform() { }
 }

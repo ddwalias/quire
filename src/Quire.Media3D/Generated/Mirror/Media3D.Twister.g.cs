@@ -11,32 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.Twister, Ptc.Media3D")]
 public partial class Twister : global::Quire.Media3D.AlgorithmicTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.AxisAngleRotation3D axisRotate;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.RotateTransform3D xform;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AxisProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CenterProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AngleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AttenuationProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Vector3D Axis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3D Center { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Angle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Attenuation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Twister() { }
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ValidateAttenuation(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Transform(global::System.Windows.Media.Media3D.Point3DCollection points) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

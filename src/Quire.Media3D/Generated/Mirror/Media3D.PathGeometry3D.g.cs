@@ -11,20 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.PathGeometry3D, Ptc.Media3D")]
 public partial class PathGeometry3D : global::System.Windows.Media.Animation.Animatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FiguresProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TransformProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Media3D.PathFigure3DCollection Figures { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Transform3D Transform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PathGeometry3D() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void GetPointAtFractionLength(double progress, out global::System.Windows.Media.Media3D.Point3D point, out global::System.Windows.Media.Media3D.Vector3D tangent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

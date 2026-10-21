@@ -11,8 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.AlgorithmicTransformCollection, Ptc.Media3D")]
 public partial class AlgorithmicTransformCollection : global::System.Windows.FreezableCollection<global::Quire.Media3D.AlgorithmicTransform>
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => base.CreateInstanceCore();
-    [global::Quire.Mirror.MirrorStub]
-    public AlgorithmicTransformCollection() { }
 }
