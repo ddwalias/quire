@@ -78,8 +78,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.DependencyObject GetParentDependencyObject(global::System.Windows.DependencyObject d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLayoutUpdated(global::System.Windows.UIElement element, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

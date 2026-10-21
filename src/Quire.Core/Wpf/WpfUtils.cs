@@ -386,6 +386,15 @@ public static partial class WpfUtils
         }
     }
 
+    private static DependencyObject GetParentDependencyObject(DependencyObject d)
+    {
+        if (!(d is Visual) && !(d is global::System.Windows.Media.Media3D.Visual3D))
+        {
+            return null;
+        }
+        return VisualTreeHelper.GetParent(d);
+    }
+
     public static void SetMostRecentInputDeviceToKeyboardDevice()
     {
         global::System.Reflection.FieldInfo fieldInfo = typeof(InputManager).GetMember("_mostRecentInputDevice", global::System.Reflection.MemberTypes.Field, global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.Static | global::System.Reflection.BindingFlags.NonPublic)[0] as global::System.Reflection.FieldInfo;
