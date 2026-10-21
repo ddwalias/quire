@@ -14,29 +14,15 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public const int UnspecifiedTypeSize = 0;
     [global::Quire.Mirror.MirrorStub]
-    internal static void DefineCustomAttribute(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, int tkOwner, object value, byte[] m_blob) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineConstructor(global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCustomAttribute(global::System.Reflection.ConstructorInfo constructorInfo, byte[] binaryAttribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetCustomAttribute(global::System.Reflection.Emit.Quire.Mpl.CustomAttributeBuilder customBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void AddInterfaceImplementation(global::System.Type interfaceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Type CreateType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool _IsInterface() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsStatic() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.TypeInfo CreateTypeInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.ConstructorBuilder DefineConstructor(global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type[] parameterTypes, global::System.Type[][] requiredCustomModifiers, global::System.Type[][] optionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -57,8 +43,6 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     public global::System.Reflection.Emit.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] returnTypeRequiredCustomModifiers, global::System.Type[] returnTypeOptionalCustomModifiers, global::System.Type[] parameterTypes, global::System.Type[][] parameterTypeRequiredCustomModifiers, global::System.Type[][] parameterTypeOptionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DefineMethodOverride(global::System.Reflection.MethodInfo methodInfoBody, global::System.Reflection.MethodInfo methodInfoDeclaration) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.TypeBuilder DefineNestedType(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -180,7 +164,7 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Type MakePointerType() => base.MakePointerType();
     [global::Quire.Mirror.MirrorStub]
-    public void SetParent(global::System.Type parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
+    [global::Quire.Mirror.MirrorStub]
+    private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

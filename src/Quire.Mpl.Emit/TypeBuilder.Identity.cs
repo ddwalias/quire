@@ -69,4 +69,48 @@ public partial class TypeBuilder
             Name = Name.Substring(num + 1);
         }
     }
+
+    internal static void DefineCustomAttribute(ModuleBuilder mod, int tkOwner, object value, byte[] m_blob)
+    {
+        throw new NotImplementedException();
+    }
+
+    public MethodBuilder DefineMethod(string name, MethodAttributes attributes)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddInterfaceImplementation(Type interfaceType)
+    {
+        throw new NotImplementedException();
+    }
+
+    public TypeInfo? CreateTypeInfo()
+    {
+        throw new NotImplementedException();
+    }
+
+    private bool _IsInterface()
+    {
+        return (UserTypeAttribute & TypeAttributes.ClassSemanticsMask) == TypeAttributes.ClassSemanticsMask;
+    }
+
+    private bool IsStatic()
+    {
+        if ((UserTypeAttribute & TypeAttributes.Abstract) == TypeAttributes.Abstract)
+        {
+            return (UserTypeAttribute & TypeAttributes.Sealed) == TypeAttributes.Sealed;
+        }
+        return false;
+    }
+
+    public void DefineMethodOverride(MethodInfo methodInfoBody, MethodInfo methodInfoDeclaration)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetParent(Type? parent)
+    {
+        throw new NotImplementedException();
+    }
 }
