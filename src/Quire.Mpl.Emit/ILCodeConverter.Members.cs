@@ -117,4 +117,30 @@ internal partial class ILCodeConverter
         (instructionEncoder.ControlFlowBuilder ?? throw new ArgumentNullException("ControlFlowBuilder must be not null")).AddCatchRegion(tryCatchBlockInfo.labelTryStart, tryCatchBlockInfo.labelTryEnd, tryCatchBlockInfo.labelCatchStart, tryCatchBlockInfo.labelCatchEnd, tryCatchBlockInfo.exceptionToken);
     }
 
+    private void ConvertBeginExceptionBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
+    {
+        TryCatchBlockInfo tryCatchBlockInfo = new TryCatchBlockInfo();
+        if (inst.decalaredType == typeof(Label))
+        {
+            if (inst.Operand == null)
+            {
+                throw new ArgumentNullException("Object is null.");
+            }
+            Label label = (Label)inst.Operand;
+            LabelHandle labelHandle = instructionEncoder.DefineLabel();
+            _labelManager.AddLabelHandle(label, labelHandle);
+            tryCatchBlockInfo.endExceptionBlockLabel = labelHandle;
+        }
+        else
+        {
+            throw new ArgumentException("The 'Operand' must be 'Label' here");
+        }
+        tryCatchBlockInfo.labelTryStart = instructionEncoder.DefineLabel();
+        tryCatchBlockInfo.labelTryEnd = instructionEncoder.DefineLabel();
+        tryCatchBlockInfo.labelCatchStart = instructionEncoder.DefineLabel();
+        tryCatchBlockInfo.labelCatchEnd = instructionEncoder.DefineLabel();
+        instructionEncoder.MarkLabel(tryCatchBlockInfo.labelTryStart);
+        _tryCatchStack.Push(tryCatchBlockInfo);
+    }
+
 }
