@@ -30,8 +30,6 @@ public static partial class MsiHelper
     [global::Quire.Mirror.MirrorStub]
     private static uint MsiGetProductInfo(string szProduct, string szProperty, global::System.Text.StringBuilder lpValueBuf, ref int pcchValueBuf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<global::System.Guid> EnumRelatedProducts(global::System.Guid upgradeCode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string GetProductInfo(global::System.Guid productCode, global::Quire.MsiHelper.InstallProperty property) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.MsiHelper+InstallProperty, Ptc.Core")]
