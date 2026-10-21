@@ -11,6 +11,5 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.ITextFormatOwner, Ptc.Core")]
 public partial interface ITextFormatOwner : global::Quire.Core.ICurrentTextFormatProperty, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatCreation
 {
-    [global::Quire.Mirror.MirrorStub]
-    void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void SetTextFormatPropertyValue(global::System.Windows.DependencyProperty property, object value, bool isUndoRedo) ;
 }

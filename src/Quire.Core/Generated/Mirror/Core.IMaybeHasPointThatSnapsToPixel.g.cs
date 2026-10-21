@@ -11,6 +11,5 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.IMaybeHasPointThatSnapsToPixel, Ptc.Core")]
 public partial interface IMaybeHasPointThatSnapsToPixel
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Core.ISnapToPixelHelper SnappingHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::Quire.Core.ISnapToPixelHelper SnappingHelper { get; }
 }
