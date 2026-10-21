@@ -13,6 +13,4 @@ public partial class header : global::Quire.PersistentData.headerFooterRegions, 
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "header";
-    [global::Quire.Mirror.MirrorStub]
-    public bool HeaderConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

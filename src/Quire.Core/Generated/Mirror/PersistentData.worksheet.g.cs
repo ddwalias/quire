@@ -13,6 +13,4 @@ public partial class worksheet : global::Quire.PersistentData.IRegionCollectionT
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "worksheet";
-    [global::Quire.Mirror.MirrorStub]
-    public bool WorksheetConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

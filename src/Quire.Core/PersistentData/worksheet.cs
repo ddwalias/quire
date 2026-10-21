@@ -40,4 +40,17 @@ public partial class worksheet
 
     [MirrorVerified("Release IL")]
     public IEnumerable<IRegionType> Regions { get => regions; set => regions = Enumerable.ToArray<worksheetRegionType>(Enumerable.Cast<worksheetRegionType>(value)); }
+
+    [MirrorVerified("Release IL")]
+    public bool WorksheetConvertedFromMC14
+    {
+        get
+        {
+            if (convertedfromFieldSpecified)
+            {
+                return convertedfrom == applicationVersionType.Mathcad14;
+            }
+            return false;
+        }
+    }
 }
