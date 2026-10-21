@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Support;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Support.CalculationPropertyNames, Ptc.Calculation.Core")]
 public static partial class CalculationPropertyNames
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string HideFromCalculationContext = "HideFromCalculationContext";
 }

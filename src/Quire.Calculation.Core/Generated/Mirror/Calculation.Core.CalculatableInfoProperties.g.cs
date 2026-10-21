@@ -11,10 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.CalculatableInfoProperties, Ptc.Calculation.Core")]
 public static partial class CalculatableInfoProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string CalculatingStatus = "CalculatingStatus";
-    [global::Quire.Mirror.MirrorStub]
-    public const string SynchronizationStatus = "SynchronizationStatus";
-    [global::Quire.Mirror.MirrorStub]
-    public const string Error = "Error";
 }

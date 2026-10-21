@@ -11,10 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ResolvedId, Ptc.Calculation.Core")]
 public partial struct ResolvedId
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string Name;
-    [global::Quire.Mirror.MirrorStub]
-    public int Tag;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatable Calculatable;
 }

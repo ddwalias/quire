@@ -11,26 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.RedefinitionWarningMsgCodes, Ptc.Calculation.Core")]
 public static partial class RedefinitionWarningMsgCodes
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesGeneric = "RedefinesGeneric";
-    [global::Quire.Mirror.MirrorStub]
-    public const string MultipleGeneric = "MultipleGeneric";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesBuiltIn_Matrix = "RedefinesBuiltIn_Matrix";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesBuiltIn_Function = "RedefinesBuiltIn_Function";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesBuiltIn_Unit = "RedefinesBuiltIn_Unit";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesBuiltIn_Variable = "RedefinesBuiltIn_Variable";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesBuiltIn_Constant = "RedefinesBuiltIn_Constant";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesBuiltIn_SysVariable = "RedefinesBuiltIn_SysVariable";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesUserValue_Variable = "RedefinesUserValue_Variable";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesUserValue_Function = "RedefinesUserValue_Function";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RedefinesUserValue_Matrix = "RedefinesUserValue_Matrix";
 }

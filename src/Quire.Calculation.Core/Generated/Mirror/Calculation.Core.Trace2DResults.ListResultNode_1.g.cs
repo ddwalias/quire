@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.ListResultNode`1, Ptc.Calculation.Core")]
 public abstract partial class ListResultNode<T> : global::Quire.Calculation.Core.IListResultNode<T>, global::Quire.Calculation.Core.IListResultNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public abstract T NeutralValue { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public abstract bool IsMeaningfulValue(T valueIndex);
 }

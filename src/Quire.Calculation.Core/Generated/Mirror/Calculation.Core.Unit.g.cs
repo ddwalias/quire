@@ -11,12 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Unit, Ptc.Calculation.Core")]
 public partial struct Unit
 {
-    [global::Quire.Mirror.MirrorStub]
-    public string CanonicalName;
-    [global::Quire.Mirror.MirrorStub]
-    public string Symbol;
-    [global::Quire.Mirror.MirrorStub]
-    public int PowerNumerator;
-    [global::Quire.Mirror.MirrorStub]
-    public int PowerDenominator;
 }

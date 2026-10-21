@@ -1,16 +1,17 @@
 #nullable disable
+using System.Collections.Generic;
 using System.Linq;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core.Trace2DResults;
 
-public partial class ListResultNode<T>
+public abstract partial class ListResultNode<T> : IListResultNode<T>, IListResultNode
 {
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
+    private readonly IList<T> _data;
+
     private int _meaningfulValuesCount = -1;
 
-    [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1MechanicalDifferentialTests")]
-    private readonly IList<T> _data;
+    public abstract T NeutralValue { get; }
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     public int MeaningfulValuesCount
@@ -21,7 +22,6 @@ public partial class ListResultNode<T>
             {
                 _meaningfulValuesCount = _data.Count(IsMeaningfulValue);
             }
-
             return _meaningfulValuesCount;
         }
     }
@@ -30,7 +30,11 @@ public partial class ListResultNode<T>
     public int Count => _data.Count;
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1MechanicalDifferentialTests")]
-    public T this[int index] { get => _data[index]; set => _data[index] = value; }
+    public T this[int index]
+    {
+        get => _data[index];
+        set => _data[index] = value;
+    }
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1MechanicalDifferentialTests")]
     public IList<T> List => _data;
@@ -51,20 +55,20 @@ public partial class ListResultNode<T>
     [MirrorVerified("PtcCalculationCoreTrace2DResultsListResultNode1Lifecycle_MechanicalDifferentialTests")]
     public static IList<T> ExtendList(IList<T> data, int minLength, T paddingValue)
     {
-        int count = data.Count();
-        if (count >= minLength)
+        int num = data.Count();
+        if (num >= minLength)
         {
             return data;
         }
-
-        List<T> extended = new List<T>(minLength);
-        extended.AddRange(data);
-        IList<T> result = extended;
-        for (int i = count; i < minLength; i++)
+        List<T> list = new List<T>(minLength);
+        list.AddRange(data);
+        IList<T> list2 = list;
+        for (int i = num; i < minLength; i++)
         {
-            result.Add(paddingValue);
+            list2.Add(paddingValue);
         }
-
-        return result;
+        return list2;
     }
+
+    public abstract bool IsMeaningfulValue(T valueIndex);
 }

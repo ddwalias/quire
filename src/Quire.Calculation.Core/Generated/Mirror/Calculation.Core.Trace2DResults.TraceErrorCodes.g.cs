@@ -11,22 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.TraceErrorCodes, Ptc.Calculation.Core")]
 public static partial class TraceErrorCodes
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string ResultShouldBeRealVector = "PlotControl.Error.ResultShouldBeRealVector";
-    [global::Quire.Mirror.MirrorStub]
-    public const string QuickPlotElementsOutOfRange = "PlotControl.Error.QuickPlotElementsOutOfRange";
-    [global::Quire.Mirror.MirrorStub]
-    public const string EffectsShouldHaveTwoColumnsOnTheYEquation = "PlotControl.Error.EffectsShouldHaveTwoColumnsOnTheYEquation";
-    [global::Quire.Mirror.MirrorStub]
-    public const string BoxesResultsNotCorrect = "PlotControl.Error.BoxesResultsNotCorrect";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorsResultShouldHaveTwoColumnsOnY = "PlotControl.Error.ErrorsResultShouldHaveTwoColumnsOnY";
-    [global::Quire.Mirror.MirrorStub]
-    public const string NotValidTypeWhenYAxisHasLabels = "PlotControl.Error.NotValidTypeWhenYAxisHasLabels";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UnitsAreNotSupportedInRange = "PlotControl.Error.UnitsAreNotSupportedInRange";
-    [global::Quire.Mirror.MirrorStub]
-    public const string ErrorTooManyPointsInResult = "PlotControl.Error.TooManyPoints";
-    [global::Quire.Mirror.MirrorStub]
-    public const string UnsupportedType = "PlotControl.Error.UnsupportedType";
 }
