@@ -292,4 +292,22 @@ public static partial class WpfUtils
             command.Execute(null, null);
         }
     }
+
+    public static bool IsLogicalFocusWithin(this UIElement element)
+    {
+        if (DebugTools.AssertNotNull(element, null).Failed)
+        {
+            return false;
+        }
+        try
+        {
+            global::System.Windows.IInputElement focusedElementInSameScope = GetFocusedElementInSameScope(element);
+            DependencyObject val = focusedElementInSameScope as DependencyObject;
+            return val != null && element.IsAncestorOf(val);
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
