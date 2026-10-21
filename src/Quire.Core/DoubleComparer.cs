@@ -42,4 +42,22 @@ public partial class DoubleComparer
         }
         return 1;
     }
+
+    [MirrorVerified("Release IL")]
+    public int Compare(IEnumerable<double> seq1, IEnumerable<double> seq2)
+    {
+        using (IEnumerator<double> enumerator = seq1.GetEnumerator())
+        {
+            using IEnumerator<double> enumerator2 = seq2.GetEnumerator();
+            while (enumerator.MoveNext() && enumerator2.MoveNext())
+            {
+                int num = Compare(enumerator.Current, enumerator2.Current);
+                if (num != 0)
+                {
+                    return num;
+                }
+            }
+        }
+        return 0;
+    }
 }
