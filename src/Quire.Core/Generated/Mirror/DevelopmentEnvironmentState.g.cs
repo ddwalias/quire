@@ -17,6 +17,13 @@ public static partial class DevelopmentEnvironmentState
     public static readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<bool>> RtNameToWrapperFuncMap;
     [global::Quire.Mirror.MirrorStub]
     public static bool CheckRtEnvState(string env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CheckRtEnvStateCached(string env) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool CheckRtEnvStateCached(string env)
+    {
+        if (!RtStateCache.ContainsKey(env))
+        {
+            RtStateCache[env] = CheckRtEnvState(env);
+        }
+
+        return RtStateCache[env];
+    }
 }
