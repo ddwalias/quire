@@ -21,10 +21,8 @@ public static partial class EnumHelper
     public static readonly global::Quire.EnumHelper.EnumHelperSettings EmptySettings;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithAssert;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool TryParse<TEnum>(object value, out TEnum enumValue) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool TryParse<TEnum>(object value, out TEnum enumValue, bool assert) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool TryParse<TEnum>(object value, out TEnum enumValue) where TEnum : struct => TryParse<TEnum>(value, out enumValue, true);
+    public static bool TryParse<TEnum>(object value, out TEnum enumValue, bool assert) where TEnum : struct => TryParse<TEnum>(value, out enumValue, assert ? SettingsWithAssert : EmptySettings);
     [global::Quire.Mirror.MirrorStub]
     public static bool TryParse<TEnum>(object value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
