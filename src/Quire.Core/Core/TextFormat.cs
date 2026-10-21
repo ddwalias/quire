@@ -15,6 +15,31 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    public static bool AreColorsEqual(Brush first, Brush second, bool assertOnNull = true)
+    {
+        if (assertOnNull)
+        {
+            DebugTools.AssertNotNull(first, null);
+            DebugTools.AssertNotNull(second, null);
+        }
+        if (first == null && second == null)
+        {
+            return true;
+        }
+        if (first == null || second == null)
+        {
+            return false;
+        }
+        SolidColorBrush solidColorBrush = first as SolidColorBrush;
+        SolidColorBrush solidColorBrush2 = second as SolidColorBrush;
+        if (DebugTools.AssertNotNull(solidColorBrush, null).Passed && DebugTools.AssertNotNull(solidColorBrush2, null).Passed)
+        {
+            return solidColorBrush.Color == solidColorBrush2.Color;
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool TextDecorationsEquals(object object1, object object2)
     {
         if (object1 is ICollection<TextDecoration> t && object2 is ICollection<TextDecoration> t2)
