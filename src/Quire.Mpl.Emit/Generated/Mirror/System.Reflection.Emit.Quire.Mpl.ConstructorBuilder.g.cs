@@ -11,88 +11,10 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ConstructorBuilder, mplasb")]
 public partial class ConstructorBuilder : global::System.Reflection.ConstructorInfo
 {
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Type _returnType;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Type[] _parameters;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.ParameterInfo[] _paramInfos;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.ILGenerator _codeStore;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.LocalVariableManager _localVariableManager;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MethodAttributes Attributes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.CallingConventions CallingConvention { get => base.CallingConvention; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DeclaringType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Module Module { get => base.Module; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool ContainsGenericParameters { get => base.ContainsGenericParameters; }
-    [global::Quire.Mirror.MirrorStub]
-    public bool InitLocals { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsGenericMethod { get => base.IsGenericMethod; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsGenericMethodDefinition { get => base.IsGenericMethodDefinition; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSecurityCritical { get => base.IsSecurityCritical; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSecuritySafeCritical { get => base.IsSecuritySafeCritical; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSecurityTransparent { get => base.IsSecurityTransparent; }
-    [global::Quire.Mirror.MirrorStub]
-    public override int MetadataToken { get => base.MetadataToken; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.RuntimeMethodHandle MethodHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type ReflectedType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal ConstructorBuilder(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConventions, global::System.Type returnType, global::System.Type[] parameters, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder declaringType) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.ParameterBuilder DefineParameter(int position, global::System.Reflection.ParameterAttributes attributes, string strParamName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetImplementationFlags(global::System.Reflection.MethodImplAttributes attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetParameters(params global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetReturnType(global::System.Type returnType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetSignature(global::System.Type returnType, global::System.Type[] returnTypeRequiredCustomModifiers, global::System.Type[] returnTypeOptionalCustomModifiers, global::System.Type[] parameterTypes, global::System.Type[][] parameterTypeRequiredCustomModifiers, global::System.Type[][] parameterTypeOptionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.GenericTypeParameterBuilder[] DefineGenericParameters(params string[] names) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object[] GetCustomAttributes(bool inherit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object[] GetCustomAttributes(global::System.Type attributeType, bool inherit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type[] GetGenericArguments() => base.GetGenericArguments();
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ILGenerator GetILGenerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.ILGenerator GetILGenerator(int size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MethodImplAttributes GetMethodImplementationFlags() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.ParameterInfo[] GetParameters() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Invoke(object obj, global::System.Reflection.BindingFlags invokeAttr, global::System.Reflection.Binder binder, object[] parameters, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsDefined(global::System.Type attributeType, bool inherit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCustomAttribute(global::System.Reflection.ConstructorInfo con, byte[] binaryAttribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCustomAttribute(global::System.Reflection.Emit.CustomAttributeBuilder customBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Invoke(global::System.Reflection.BindingFlags invokeAttr, global::System.Reflection.Binder binder, object[] parameters, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
