@@ -107,4 +107,7 @@ public static partial class DebugTools
             _loggingData = null;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public static DateTime? LogData(string line) => null;
 }
