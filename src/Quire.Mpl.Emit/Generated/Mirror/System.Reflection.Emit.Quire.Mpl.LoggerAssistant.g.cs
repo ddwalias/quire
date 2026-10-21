@@ -11,8 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.LoggerAssistant, mplasb")]
 public static partial class LoggerAssistant
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetFullMethodName(global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetFullConstructorName(global::System.Reflection.ConstructorInfo ctor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

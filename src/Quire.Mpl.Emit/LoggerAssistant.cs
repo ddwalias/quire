@@ -13,6 +13,27 @@ public static partial class LoggerAssistant
         return $"{value}:{value2}.{member.Name}";
     }
 
+    public static string GetFullMethodName(MethodInfo method)
+    {
+        string text = method.Name;
+        if (method.IsGenericMethod)
+        {
+            Type[] genericArguments = method.GetGenericArguments();
+            text = text + "<" + string.Join(",", Array.ConvertAll(genericArguments, (Type t) => t.Name)) + ">";
+        }
+        string fullName = method.ReturnType.FullName;
+        ParameterInfo[] parameters = method.GetParameters();
+        string value = string.Join(",", Array.ConvertAll(parameters, (ParameterInfo p) => p.ParameterType.Name + " " + p.Name));
+        return $"{fullName} {method.DeclaringType?.FullName}.{text}({value})";
+    }
+
+    public static string GetFullConstructorName(ConstructorInfo ctor)
+    {
+        ParameterInfo[] parameters = ctor.GetParameters();
+        string text = string.Join(",", Array.ConvertAll(parameters, (ParameterInfo p) => p.ParameterType.Name + " " + p.Name));
+        return ctor.DeclaringType?.FullName + ".ctor(" + text + ")";
+    }
+
     public static string GetFullFieldName(FieldInfo field)
     {
         return $"{field.DeclaringType?.FullName}.{field.Name} : {field.FieldType.Name}";

@@ -21,7 +21,44 @@ internal partial class ILCodeConverter
         _moduleBuilder = typeBuilder.Module;
     }
 
-    private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
+    
+
+    public void Convert(InstructionEncoder instructionEncoder)
+    {
+        foreach (ILInstruction instruction in _codeStore.Instructions)
+        {
+            if (instruction.CallCommand == ILCallsEncoding.eEmit)
+            {
+                ConvertEmit(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+            else if (instruction.CallCommand == ILCallsEncoding.eEmitCall)
+            {
+                ConvertEmitCall(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+            else if (instruction.CallCommand == ILCallsEncoding.eDeclareLabel)
+            {
+                ConvertDeclareLabel(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+            else if (instruction.CallCommand == ILCallsEncoding.eMarkLabel)
+            {
+                ConvertMarkLabel(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+            else if (instruction.CallCommand == ILCallsEncoding.eBeginExceptionBlock)
+            {
+                ConvertBeginExceptionBlock(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+            else if (instruction.CallCommand == ILCallsEncoding.eBeginCatchBlock)
+            {
+                ConvertBeginCatchBlock(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+            else if (instruction.CallCommand == ILCallsEncoding.eEndExceptionBlock)
+            {
+                ConvertEndExceptionBlock(_metadata, _typeBuilder, instruction, instructionEncoder);
+            }
+        }
+    }
+
+private void ConvertEmit(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
 	{
 		if (inst.OpCode == OpCodes.Ldc_R8)
 		{
@@ -677,41 +714,6 @@ internal partial class ILCodeConverter
         }
 	}
 
-    public void Convert(InstructionEncoder instructionEncoder)
-    {
-        foreach (ILInstruction instruction in _codeStore.Instructions)
-        {
-            if (instruction.CallCommand == ILCallsEncoding.eEmit)
-            {
-                ConvertEmit(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-            else if (instruction.CallCommand == ILCallsEncoding.eEmitCall)
-            {
-                ConvertEmitCall(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-            else if (instruction.CallCommand == ILCallsEncoding.eDeclareLabel)
-            {
-                ConvertDeclareLabel(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-            else if (instruction.CallCommand == ILCallsEncoding.eMarkLabel)
-            {
-                ConvertMarkLabel(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-            else if (instruction.CallCommand == ILCallsEncoding.eBeginExceptionBlock)
-            {
-                ConvertBeginExceptionBlock(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-            else if (instruction.CallCommand == ILCallsEncoding.eBeginCatchBlock)
-            {
-                ConvertBeginCatchBlock(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-            else if (instruction.CallCommand == ILCallsEncoding.eEndExceptionBlock)
-            {
-                ConvertEndExceptionBlock(_metadata, _typeBuilder, instruction, instructionEncoder);
-            }
-        }
-    }
-
 
 
 
@@ -759,22 +761,9 @@ internal partial class ILCodeConverter
         throw new NotImplementedException();
     }
 
-    private void ConvertEndExceptionBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
-    {
-        TryCatchBlockInfo tryCatchBlockInfo = _tryCatchStack.Pop();
-        if (tryCatchBlockInfo.endExceptionBlockLabel.GetType() == typeof(LabelHandle))
-        {
-            LabelHandle endExceptionBlockLabel = tryCatchBlockInfo.endExceptionBlockLabel;
-            instructionEncoder.Branch(ILOpCode.Leave, endExceptionBlockLabel);
-            instructionEncoder.MarkLabel(tryCatchBlockInfo.labelCatchEnd);
-            instructionEncoder.MarkLabel(endExceptionBlockLabel);
-        }
-        else
-        {
-            throw new ArgumentException("The 'exception block' label must be 'LabelHandle'");
-        }
-        (instructionEncoder.ControlFlowBuilder ?? throw new ArgumentNullException("ControlFlowBuilder must be not null")).AddCatchRegion(tryCatchBlockInfo.labelTryStart, tryCatchBlockInfo.labelTryEnd, tryCatchBlockInfo.labelCatchStart, tryCatchBlockInfo.labelCatchEnd, tryCatchBlockInfo.exceptionToken);
-    }
+
+
+
 
     private void ConvertBeginExceptionBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
     {
@@ -802,4 +791,64 @@ internal partial class ILCodeConverter
         _tryCatchStack.Push(tryCatchBlockInfo);
     }
 
+private void ConvertBeginCatchBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
+	{
+		TryCatchBlockInfo tryCatchInfo = _tryCatchStack.Peek();
+		if ((object)inst.decalaredType == null)
+		{
+			throw new InvalidOperationException("Declared type must be not null");
+		}
+		Type type = (inst.Operand as Type) ?? throw new InvalidOperationException("Operand must be a Type");
+		TypeHandleResolver.ResolveHandleEmit(_typeBuilder, type, (Handle handle) =>
+		{
+			if (handle.Kind == HandleKind.TypeDefinition)
+			{
+				tryCatchInfo.exceptionToken = (TypeDefinitionHandle)handle;
+			}
+            else if (handle.Kind == HandleKind.TypeReference)
+			{
+				tryCatchInfo.exceptionToken = (TypeReferenceHandle)handle;
+			}
+            else
+            {
+                throw new InvalidOperationException("Operand must be a TypeDefinitionHandle or TypeReferenceHandle");
+            }
+		}, (Type type2) =>
+		{
+			throw new InvalidOperationException("Cannot resolve the handle for " + type2.Name);
+		});
+        if (tryCatchInfo.endExceptionBlockLabel.GetType() == typeof(LabelHandle))
+		{
+            instructionEncoder.Branch(ILOpCode.Leave, tryCatchInfo.endExceptionBlockLabel);
+		}
+        else
+        {
+            throw new ArgumentException("The 'Operand' must be 'LabelHandle' here");
+        }
+        instructionEncoder.MarkLabel(tryCatchInfo.labelTryEnd);
+        instructionEncoder.MarkLabel(tryCatchInfo.labelCatchStart);
+	}
+
+	
+
+	private void ConvertEndExceptionBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
+    {
+        TryCatchBlockInfo tryCatchBlockInfo = _tryCatchStack.Pop();
+        if (tryCatchBlockInfo.endExceptionBlockLabel.GetType() == typeof(LabelHandle))
+        {
+            LabelHandle endExceptionBlockLabel = tryCatchBlockInfo.endExceptionBlockLabel;
+            instructionEncoder.Branch(ILOpCode.Leave, endExceptionBlockLabel);
+            instructionEncoder.MarkLabel(tryCatchBlockInfo.labelCatchEnd);
+            instructionEncoder.MarkLabel(endExceptionBlockLabel);
+        }
+        else
+        {
+            throw new ArgumentException("The 'exception block' label must be 'LabelHandle'");
+        }
+        (instructionEncoder.ControlFlowBuilder ?? throw new ArgumentNullException("ControlFlowBuilder must be not null")).AddCatchRegion(tryCatchBlockInfo.labelTryStart, tryCatchBlockInfo.labelTryEnd, tryCatchBlockInfo.labelCatchStart, tryCatchBlockInfo.labelCatchEnd, tryCatchBlockInfo.exceptionToken);
+    }
+
+
+
 }
+

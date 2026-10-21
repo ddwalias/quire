@@ -23,6 +23,4 @@ internal partial class ILCodeConverter
     private global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _moduleBuilder;
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertBeginCatchBlock(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
