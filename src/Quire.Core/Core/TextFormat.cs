@@ -226,6 +226,19 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public TextFormat(FlowDocument document) : this()
+    {
+        FontFamily = document.FontFamily;
+        FontSize = document.FontSize;
+        FontWeight = document.FontWeight;
+        FontStyle = document.FontStyle;
+        Background = document.Background ?? Background;
+        Foreground = document.Foreground;
+        TextAlignment = document.TextAlignment;
+        Variants = (FontVariants)((DependencyObject)document).GetValue(VariantsProperty);
+    }
+
+    [MirrorVerified("Release IL")]
     public TextFormat(TextBox control) : this()
     {
         FontFamily = control.FontFamily;
