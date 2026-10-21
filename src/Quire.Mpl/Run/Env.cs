@@ -190,6 +190,25 @@ public partial class LocalEnv : MplEnv
         m_table.Add(s.name, bindingInfo);
         return bindingInfo;
     }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override MplEnv AddFunctionMacro(Sym s, uint handle, MplEnv env, Sexpr def)
+    {
+        if (Level > 1)
+        {
+            MplMacro.NotAtTopLevel(s, handle);
+        }
+        m_table.Add(s.name, new MacroBindingInfo(handle, new MplLocalFunctionMacro(env, s, handle, def)));
+        return this;
+    }
+
+    [MirrorVerified("EnvDifferentialTests")]
+    public override BindingInfo AddForeignMacro(Sym s, uint handle, string sig)
+    {
+        BindingInfo bindingInfo = new MacroBindingInfo(handle, new MplForeignMacro(this, s, sig));
+        m_table.Add(s.name, bindingInfo);
+        return bindingInfo;
+    }
 }
 
 /// <summary>

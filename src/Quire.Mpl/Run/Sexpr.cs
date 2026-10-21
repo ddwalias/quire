@@ -126,14 +126,16 @@ public abstract partial class Sexpr : Tag
     [MirrorVerified("SexprDifferentialTests")]
     public static object[] Walk(MplEnv env, Sexpr block)
     {
-        Cons defs = block.walk(env, out MplEnv outenv);
-        return [outenv, defs];
+        MplEnv outenv;
+        Cons defs = block.walk(env, out outenv);
+        return new object[2] { outenv, defs };
     }
 
     [MirrorVerified("SexprDifferentialTests")]
     public static Sexpr WalkModule(MplEnv env, Sexpr block)
     {
-        Cons defs = block.walk(env, out _);
+        MplEnv outenv;
+        Cons defs = block.walk(env, out outenv);
         return new SCons(block_keyword.NewTok(0u), SCons.as_Sexpr(defs));
     }
 
@@ -151,9 +153,13 @@ public abstract partial class Sexpr : Tag
     [MirrorVerified("SexprDifferentialTests")]
     private static Cons walk_definitions(Cons decls, MplEnv env)
     {
-        for (Cons c = decls; c != null; c = c.Field2 as Cons)
-            c.Field1 = walk_definition(c.Field1 as SCons, env);
-        return decls;
+        Cons result = decls;
+        while (decls != null)
+        {
+            decls.Field1 = walk_definition(decls.Field1 as SCons, env);
+            decls = decls.Field2 as Cons;
+        }
+        return result;
     }
 
     [MirrorTested("Mpl.Run.Sexpr")]

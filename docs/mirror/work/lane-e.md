@@ -1,16 +1,14 @@
 # Lane E — Quire.Mpl
 
 - Owner: Lane E (Claude).
-- Branch: `mirror/e-mpl-20261021-e4`.
+- Branch: `mirror/e-mpl-20261021-e5`.
 - Selected members:
-  - `Quire.Mpl.Run.case_keyword`: `NewTok`, `walk_expression_as` brought to exact Release IL match (4/4 exact).
-  - `Quire.Mpl.Run.do_keyword`: `NewTok`, `walk_expression_as` brought to exact Release IL match (4/4 exact).
-  - `Quire.Mpl.Run.try_keyword`: `NewTok`, `walk_expression_as` brought to exact Release IL match (4/4 exact).
-  - `Quire.Mpl.Run.if_keyword`: `NewTok`, `walk_expression_as`, `MakeIf(uint, Sexpr)`, `MakeIf(uint, Sexpr, Sexpr, Sexpr)` brought to exact Release IL match (6/6 exact).
-  - `Quire.Mpl.Run.lambda_keyword`: `NewTok`, `walk_expression_as`, `MakeLambda(uint, Sexpr)`, `MakeLambda(uint, Sexpr, Sexpr)` brought to exact Release IL match (5/5 exact).
-  - `Quire.Mpl.Run.define_keyword`: `NewTok`, `walk_declaration_as`, `walk_definition_as`, `MakeDefine(uint, Sexpr)`, `MakeDefine(uint, Sexpr, Sexpr)` brought to exact Release IL match (7/7 exact).
-  - `Quire.Mpl.Run.defun_keyword`: `NewTok`, `walk_declaration_as`, `walk_definition_as`, `MakeDefun(uint, Sexpr)`, `MakeDefun(uint, Sexpr, Sexpr, Sexpr)` brought to exact Release IL match (6/6 exact).
-  - `Quire.Mpl.Run.declare_keyword`: `NewTok`, `walk_declaration_as`, `IsMacro`, `IsSymMacro` brought to exact Release IL match (6/6 exact).
-  - `Quire.Mpl.Run.let_keyword`: `ExpandDefs`, `ExpandLet`, `walk_expression_as` brought to exact Release IL match (6/6 exact).
-- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Mpl` PASS; 1,716 checked (`.mirror-cache/release-il-c1b5a8c673d9/release-il.json`).
-- Remaining managed members: 90 unfinished methods with Mathcad originals (primarily `Quire.Mcd.MatVal`, `Quire.Mcd.MatDim`, `Quire.Mpl.Run.DynamicType`, `Quire.Mpl.Run.Function`, `Quire.Mpl.Run.Delegates`, macros `MplForeignMacro`/`MplLocalFunctionMacro`/`MplDestructuringBind`/`LocalEnv`/`Sexpr`, and `Mcd.NumVal::LoadNaN` structure-only).
+  - `Quire.Mpl.Run.Fn_papp`: `.ctor`, `get_Name`, `invVec<R>` brought to exact Release IL match (3/3 exact).
+  - `Quire.Mpl.Run.MethFunction`: all three constructors and `invVec<R>` brought to exact Release IL match (4/4 exact).
+  - `Quire.Mpl.Run.MplForeignMacro`: `.ctor`, `get_Macro`, `ExpandCall`, `ExpandRef` brought to exact Release IL match (4/4 exact).
+  - `Quire.Mpl.Run.MplLocalFunctionMacro`: `.ctor`, `ExpandCall`, `ExpandRef` brought to exact Release IL match (3/3 exact).
+  - `Quire.Mpl.Run.MplDestructuringBind`: `.cctor`, `.ctor`, `ExpandCall` brought to exact Release IL match (4/4 exact).
+  - `Quire.Mpl.Run.LocalEnv`: `AddFunctionMacro`, `AddForeignMacro` brought to exact Release IL match (10/10 exact).
+  - `Quire.Mpl.Run.Sexpr`: `Walk`, `WalkModule`, `walk_definitions` brought to exact Release IL match (31/31 exact).
+- Release IL report: `python tools/validation/release_il.py --base main --project Quire.Mpl` PASS; 1,738 checked (`.mirror-cache/release-il-f2359b116f9f/release-il.json`).
+- Remaining managed members: 77 unfinished methods with Mathcad originals (primarily `Quire.Mcd.MatVal` (25), `Quire.Mcd.MatDim` (10), `Quire.Mpl.Run.DynamicType` (14), `Quire.Mpl.Run.Function` (14), `Quire.Mpl.Run.Delegates` (13), and `Mcd.NumVal::LoadNaN` structure-only).

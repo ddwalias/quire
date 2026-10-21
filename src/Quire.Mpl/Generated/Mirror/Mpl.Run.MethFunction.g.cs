@@ -11,18 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MethFunction, mplrun")]
 public partial class MethFunction : global::Quire.Mpl.Run.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Reflection.MethodBase m_method;
-    [global::Quire.Mirror.MirrorStub]
-    private object m_clo;
-    [global::Quire.Mirror.MirrorStub]
-    private object[] m_args;
-    [global::Quire.Mirror.MirrorStub]
-    public MethFunction(global::System.RuntimeMethodHandle mh, int purity) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MethFunction(global::System.RuntimeMethodHandle mh, int purity, object clo) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    private MethFunction(global::System.Reflection.MethodBase mi, object clo, object[] args, int purity) : base(default(int), default(int)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void invVec<R>(out R r, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

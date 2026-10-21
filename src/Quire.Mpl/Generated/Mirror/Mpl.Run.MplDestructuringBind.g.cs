@@ -11,12 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.MplDestructuringBind, mplrun")]
 public partial class MplDestructuringBind : global::Quire.Mpl.Run.MplMacro
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Mpl.Run.Sym sym_destructuring;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Mpl.Run.MplDestructuringBind singleton;
-    [global::Quire.Mirror.MirrorStub]
-    private MplDestructuringBind() : base(default(global::Quire.Mpl.Run.Sym)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.Sexpr ExpandCall(global::Quire.Mpl.Run.MplEnv e, global::Quire.Mpl.Run.Sexpr form) => base.ExpandCall(e, form);
 }

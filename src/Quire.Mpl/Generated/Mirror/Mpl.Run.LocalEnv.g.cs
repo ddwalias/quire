@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.LocalEnv, mplrun")]
 public partial class LocalEnv : global::Quire.Mpl.Run.MplEnv
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.MplEnv AddFunctionMacro(global::Quire.Mpl.Run.Sym s, uint handle, global::Quire.Mpl.Run.MplEnv env, global::Quire.Mpl.Run.Sexpr def) => base.AddFunctionMacro(s, handle, env, def);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.Mpl.Run.BindingInfo AddForeignMacro(global::Quire.Mpl.Run.Sym s, uint handle, string sig) => base.AddForeignMacro(s, handle, sig);
 }
