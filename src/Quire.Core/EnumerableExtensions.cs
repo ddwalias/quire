@@ -34,6 +34,23 @@ public static partial class EnumerableExtensions
         }
     }
 
+    public static void Each<T>(this IEnumerable<T> items, Action<T> action)
+    {
+        foreach (T item in items)
+        {
+            action(item);
+        }
+    }
+
+    public static void EachWithIndex<T>(this IEnumerable<T> items, Action<int, T> action)
+    {
+        int num = 0;
+        foreach (T item in items)
+        {
+            action(num++, item);
+        }
+    }
+
     [MirrorVerified("PtcEnumerableExtensionsMechanicalDifferentialTests")]
     public static IEnumerable<TRetType> Collect<T, TRetType>(this IEnumerable<T> items, Func<T, TRetType> action) => CollectAsList<T, TRetType>(items, action);
 
