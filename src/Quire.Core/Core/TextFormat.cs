@@ -633,4 +633,10 @@ public partial class TextFormat
 
     [MirrorVerified("Release IL")]
     public Brush Background { get => (Brush)base.GetValue(BackgroundProperty); set => SetValueSafely(BackgroundProperty, value); }
+
+    public static partial class PropertyNames
+    {
+        [MirrorVerified("Release IL")]
+        public const string FontSizeInPoints = "FontSizeInPoints";
+    }
 }
