@@ -14,7 +14,5 @@ public static partial class SystemInfo
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::Quire.OSVersions> _osVersion;
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.OSVersions OSVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.OSVersions IdentifyOSVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
