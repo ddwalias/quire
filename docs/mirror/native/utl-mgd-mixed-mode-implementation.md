@@ -8,7 +8,7 @@ This is a three-type feasibility spike, not a replacement for the 89-type C# ass
 
 The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passed: 129 methods checked, 129 exact, zero failures. The report is in the local ignored `.mirror-cache/release-il-28d8e663e644/release-il.json`. This validates the current C# project only. The validator accepts production `.csproj` projects and cannot build or select a `.vcxproj` candidate, so it did not validate the C++/CLI spike.
 
-The reference REA investigation found 55 native P/Invoke declarations, two IL P/Invokes, eight runtime-provided delegate methods, and 57 analyzed internal native procedures. Those procedures are C++/CLI, CRT, exception, allocation, security, and generated wrapper support; it identified no application-authored native algorithm to implement in Quire. The proof's addition routine exists only to exercise the native-to-managed call path. It is not proposed for production.
+The reference REA report was not present in this worktree's `.mirror-cache/rea`, so I repeated the static boundary inspection against the supplied file. It matched the required SHA-256 and MVID. REA reported 55 native P/Invoke methods, two IL P/Invokes, eight runtime-provided methods (65 native-boundary rows total), and two module references. The native procedures are interop/runtime support, not an application-authored algorithm to port. The earlier addition routine exists only in the separate call-path proof; it is not proposed for production.
 
 ## Proof project
 
@@ -79,7 +79,7 @@ Ghidra 12.1.4 imported the final mixed DLL as an x64 PE through `ghidra-agent-cl
 
 The generated DLL's direct imports are `KERNEL32.dll`, `VCRUNTIME140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, and `ijwhost.dll`. Kernel32 imports include the eight Win32 calls above plus compiler/runtime calls. The consumer output must carry `Ijwhost.dll`; deployment also needs the x64 .NET 10 runtime and compatible MSVC/UCRT runtime components. The machine already had these runtimes, so clean-machine deployment was not tested. A usable x64 Windows SDK desktop library component is required to build the project.
 
-The original `utl-mgd.dll` was only statically inspected by REA to confirm the supplied SHA-256 and MVID; it was never modified or executed. This spike implements existing Win32 handle operations from Quire's managed source and does not reproduce native bodies from the original assembly or inspect `UTL.DLL`.
+The original `utl-mgd.dll` was statically inspected by REA for its identity and native boundaries; it was never modified or executed. The spike implements existing Win32 handle operations from Quire's managed source and does not reproduce native bodies from the original assembly or inspect `UTL.DLL`.
 
 ## Inspection results
 
