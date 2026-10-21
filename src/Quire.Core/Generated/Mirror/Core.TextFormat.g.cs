@@ -28,8 +28,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TextFormatProperty;
     [global::Quire.Mirror.MirrorStub]
-    public bool MixedFontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public TextFormat(global::Quire.Core.TextFormat tf, global::Quire.Core.TextFormat agreesWith) { }
     [global::Quire.Mirror.MirrorStub]
     private void Initialize(global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

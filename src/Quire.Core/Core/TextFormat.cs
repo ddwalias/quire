@@ -437,6 +437,20 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public bool MixedFontSize
+    {
+        get => _mixedFontSize;
+        set
+        {
+            if (value != _mixedFontSize)
+            {
+                _mixedFontSize = value;
+                FirePropertyChanged("FontSizeInPoints");
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public Nullable<Thickness> Margin { get => new Thickness?((Thickness)base.GetValue(MarginProperty)); set => SetValueSafely(MarginProperty, value); }
 
     [MirrorVerified("Release IL")]
