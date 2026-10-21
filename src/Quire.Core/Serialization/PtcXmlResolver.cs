@@ -1,5 +1,7 @@
 #nullable disable
+using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Net;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -8,6 +10,14 @@ namespace Quire.Serialization;
 
 public partial class PtcXmlResolver
 {
+    [MirrorVerified("Release IL")]
+    public Stream GetStream(string schemaName)
+    {
+        Assembly executingAssembly = Assembly.GetExecutingAssembly();
+        string name = string.Format(_fullSchemaNameFormat, schemaName);
+        return executingAssembly.GetManifestResourceStream(name);
+    }
+
     [MirrorVerified("PtcSerializationPtcXmlResolverMechanicalDifferentialTests")]
     protected string _fullSchemaNameFormat;
 
