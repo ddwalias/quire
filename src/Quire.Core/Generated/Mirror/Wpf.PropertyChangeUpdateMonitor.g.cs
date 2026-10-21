@@ -17,6 +17,4 @@ public partial class PropertyChangeUpdateMonitor : global::System.IDisposable
     private readonly global::System.ComponentModel.INotifyPropertyChanged _objectToMonitor;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Action<global::System.Collections.Generic.IDictionary<string, global::System.ValueTuple<object, object>>> _actionToPerform;
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
