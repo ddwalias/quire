@@ -11,6 +11,5 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IsProtectedConverter, Ptc.Core")]
 public partial class IsProtectedConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.IsProtectedConverter Instance;
+    public static readonly global::Quire.IsProtectedConverter Instance = new global::Quire.IsProtectedConverter();
 }
