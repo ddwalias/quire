@@ -13,8 +13,28 @@ public abstract partial class ApplicationSettingsSafe : global::System.Configura
 {
     [global::Quire.Mirror.MirrorStub]
     public override object this[string propertyName] { get => base[propertyName]; set => base[propertyName] = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Save() => base.Save();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Upgrade() => base.Upgrade();
+    public override void Save()
+    {
+        try
+        {
+            base.Save();
+            DebugTools.DevAssert(FallbackValues.IsNullOrEmpty(), null);
+        }
+        catch (global::System.Configuration.ConfigurationErrorsException)
+        {
+        }
+    }
+
+    public override void Upgrade()
+    {
+        try
+        {
+            base.Upgrade();
+            FallbackValues.Clear();
+        }
+        catch (global::System.Configuration.ConfigurationErrorsException ex)
+        {
+            DebugTools.FailAssertion(ex);
+        }
+    }
 }
