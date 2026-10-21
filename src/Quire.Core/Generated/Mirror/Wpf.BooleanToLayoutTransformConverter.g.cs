@@ -11,8 +11,7 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BooleanToLayoutTransformConverter, Ptc.Core")]
 public partial class BooleanToLayoutTransformConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Wpf.BooleanToLayoutTransformConverter Instance;
+    public static readonly global::Quire.Wpf.BooleanToLayoutTransformConverter Instance = new global::Quire.Wpf.BooleanToLayoutTransformConverter();
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object value, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
