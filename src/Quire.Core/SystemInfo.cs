@@ -6,6 +6,9 @@ namespace Quire;
 public static partial class SystemInfo
 {
     [MirrorVerified("Release IL")]
+    private static OSVersions? _osVersion;
+
+    [MirrorVerified("Release IL")]
     public static OSVersions OSVersion
     {
         get
