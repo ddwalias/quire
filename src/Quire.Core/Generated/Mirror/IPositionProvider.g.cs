@@ -11,14 +11,9 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IPositionProvider, Ptc.Core")]
 public partial interface IPositionProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    double ActualHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double ActualWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point TranslatePoint(global::System.Windows.Point point, global::System.Windows.UIElement relativeTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point PointToScreen(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    double ActualHeight { get; }
+    double ActualWidth { get; }
+    bool IsVisible { get; }
+    global::System.Windows.Point TranslatePoint(global::System.Windows.Point point, global::System.Windows.UIElement relativeTo);
+    global::System.Windows.Point PointToScreen(global::System.Windows.Point point);
 }
