@@ -123,7 +123,7 @@ public partial class ResultManager : IResultManager
         }
         bool found = false;
         string[] array = rl.Split(':');
-        if (error.NodeHandle != 0 && error.NodeHandle < array.Length)
+        if (error.NodeHandle > 0 && error.NodeHandle < array.Length)
         {
             string text = array[error.NodeHandle];
             if (text.Length > 9 && uint.TryParse(text.Substring(2, 8), NumberStyles.HexNumber, null, out var result))
@@ -167,15 +167,14 @@ public partial class ResultManager : IResultManager
         }
         resultOwner.SetSynchronizationStatus(engineResult.SynchronizationStatus);
         resultOwner.SetResult(engineResult.ResultNode);
-        if (engineResult.Errors == null)
+        if (engineResult.Errors != null)
         {
-            return;
-        }
-        foreach (EngineError error2 in engineResult.Errors)
-        {
-            EngineError error = error2.Clone();
-            SerialNumberToErrorHandles(error, resultOwner.Rl);
-            resultOwner.SetError(error);
+            foreach (EngineError error2 in engineResult.Errors)
+            {
+                EngineError error = error2.Clone();
+                SerialNumberToErrorHandles(error, resultOwner.Rl);
+                resultOwner.SetError(error);
+            }
         }
     }
 
@@ -194,14 +193,13 @@ public partial class ResultManager : IResultManager
         catch (Exception)
         {
         }
-        if (result.Errors == null)
+        if (result.Errors != null)
         {
-            return;
-        }
-        foreach (EngineError error2 in result.Errors)
-        {
-            EngineError error = error2.Clone();
-            resultOwner.SetError(error);
+            foreach (EngineError error2 in result.Errors)
+            {
+                EngineError error = error2.Clone();
+                resultOwner.SetError(error);
+            }
         }
     }
 
@@ -265,19 +263,20 @@ public partial class ResultManager : IResultManager
     [MirrorVerified("PtcCalculationCoreResultManagerMechanicalDifferentialTests")]
     public void SetResultByRefId(int resultId, ICalculatableResultOwner calculatable, bool isForceAdd = false)
     {
+        Pair<EngineResult, ICalculatableResultOwner> value;
         if (isForceAdd)
         {
             resultId += forceAddIndex++;
         }
         if (_results.ContainsKey(resultId))
         {
-            Pair<EngineResult, ICalculatableResultOwner> value = _results[resultId];
+            value = _results[resultId];
             value.Second = calculatable;
             AddResult(resultId, value);
         }
         else
         {
-            Pair<EngineResult, ICalculatableResultOwner> value = new Pair<EngineResult, ICalculatableResultOwner>(default(EngineResult), calculatable);
+            value = new Pair<EngineResult, ICalculatableResultOwner>(default(EngineResult), calculatable);
             AddResult(resultId, value);
         }
     }
