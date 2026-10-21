@@ -118,8 +118,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     private static void GetDescendantsOfType<T>(global::System.Windows.DependencyObject obj, global::System.Collections.Generic.ICollection<T> descendantsList, bool recurseAllLevels = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void GetAdornersOfDescendants(global::System.Windows.UIElement element, global::System.Collections.Generic.ICollection<global::System.Windows.Documents.Adorner> adorners) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool ShouldSuspendInputMethod() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void DoWork(global::System.Action work) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -196,4 +196,34 @@ public static partial class WpfUtils
         GetAdornersOfDescendants(element, list);
         return list;
     }
+
+    private static void GetAdornersOfDescendants(UIElement element, global::System.Collections.Generic.ICollection<global::System.Windows.Documents.Adorner> adorners)
+    {
+        int childrenCount;
+        global::System.Windows.Documents.AdornerLayer adornerLayer;
+        global::System.Windows.Documents.Adorner[] adornersOfElement;
+        int i;
+        if (element == null)
+        {
+            return;
+        }
+        childrenCount = VisualTreeHelper.GetChildrenCount(element);
+        i = 0;
+        while (i < childrenCount)
+        {
+            GetAdornersOfDescendants(VisualTreeHelper.GetChild(element, i) as UIElement, adorners);
+            i++;
+        }
+        adornerLayer = global::System.Windows.Documents.AdornerLayer.GetAdornerLayer(element);
+        if (adornerLayer == null)
+        {
+            return;
+        }
+        adornersOfElement = adornerLayer.GetAdorners(element);
+        if (adornersOfElement == null)
+        {
+            return;
+        }
+        adornersOfElement.Each(adorners.Add);
+    }
 }
