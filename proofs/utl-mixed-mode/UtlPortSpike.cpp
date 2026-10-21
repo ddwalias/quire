@@ -3,6 +3,7 @@
 #using <Quire.Mirror.dll>
 
 using namespace System;
+using namespace System::Collections;
 using namespace System::Diagnostics;
 using namespace System::Reflection;
 using namespace System::Text;
@@ -248,6 +249,183 @@ namespace Quire { namespace utl_mgd {
 
 namespace Quire { namespace utl_mgd {
 
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.SafeReadWriteLock, utl-mgd")]
+    public ref class SafeReadWriteLock
+    {
+    private:
+        SafeMutex^ m_write_lock = gcnew SafeMutex("SafeReadWriteLock:write");
+        SafeMutex^ m_reader_count_lock = gcnew SafeMutex("SafeReadWriteLock:rcount");
+        Int32 m_reader_count = 0;
+        SafeEvent^ m_no_readers = gcnew SafeEvent("SafeReadWriteLock:no readers");
+
+    public:
+        SafeReadWriteLock()
+        {
+            m_no_readers->Set();
+            GC::KeepAlive(this);
+        }
+
+        void WaitReadLock()
+        {
+            m_write_lock->WaitOne();
+            m_reader_count_lock->WaitOne();
+            try
+            {
+                Int32 count = ++m_reader_count;
+                if (count == 1)
+                    m_no_readers->Reset();
+            }
+            finally
+            {
+                m_reader_count_lock->ReleaseMutex();
+                m_write_lock->ReleaseMutex();
+            }
+            GC::KeepAlive(this);
+        }
+
+        void ReleaseReadLock()
+        {
+            m_reader_count_lock->WaitOne();
+            try
+            {
+                Int32 count = m_reader_count + -1;
+                m_reader_count = count;
+                if (count == 0)
+                    m_no_readers->Set();
+            }
+            finally
+            {
+                m_reader_count_lock->ReleaseMutex();
+            }
+            GC::KeepAlive(this);
+        }
+
+        void WaitWriteLock()
+        {
+            m_write_lock->WaitOne();
+            m_no_readers->WaitOne();
+            GC::KeepAlive(this);
+        }
+
+        void ReleaseWriteLock()
+        {
+            m_write_lock->ReleaseMutex();
+            GC::KeepAlive(this);
+        }
+    };
+}}
+
+namespace Quire { namespace utl_mgd {
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.SortedStringSet, utl-mgd")]
+    public ref class SortedStringSet : IEnumerable
+    {
+    private:
+        SortedList^ m_strings;
+
+    public:
+        SortedStringSet(array<String^>^ strings) : m_strings(gcnew SortedList())
+        {
+            Int32 num = 0;
+            if (0 < strings->Length)
+            {
+                do
+                {
+                    m_strings->Add(strings[num], true);
+                    num++;
+                }
+                while (num < strings->Length);
+            }
+            GC::KeepAlive(this);
+        }
+
+        SortedStringSet(SortedStringSet^ other) : m_strings(gcnew SortedList(other->m_strings))
+        {
+        }
+
+        SortedStringSet() : m_strings(gcnew SortedList())
+        {
+        }
+
+        property Int32 Count
+        {
+            Int32 get()
+            {
+                Int32 count = m_strings->Count;
+                GC::KeepAlive(this);
+                return count;
+            }
+        }
+
+        virtual IEnumerator^ GetEnumerator()
+        {
+            IEnumerator^ enumerator = m_strings->Keys->GetEnumerator();
+            GC::KeepAlive(this);
+            return enumerator;
+        }
+
+        Boolean IsSubsetOf(SortedStringSet^ other)
+        {
+            IEnumerator^ enumerator = m_strings->Keys->GetEnumerator();
+            try
+            {
+                while (enumerator->MoveNext())
+                {
+                    String^ key = safe_cast<String^>(enumerator->Current);
+                    if (!other->m_strings->Contains(key))
+                    {
+                        return false;
+                    }
+                }
+            }
+            finally
+            {
+                IDisposable^ disposable = dynamic_cast<IDisposable^>(enumerator);
+                if (disposable != nullptr)
+                    delete disposable;
+            }
+
+            GC::KeepAlive(this);
+            return true;
+        }
+
+        Boolean SetEquals(SortedStringSet^ other)
+        {
+            Int32 count = m_strings->Count;
+            GC::KeepAlive(this);
+            Int32 count2 = other->m_strings->Count;
+            GC::KeepAlive(other);
+            if (count != count2)
+            {
+                GC::KeepAlive(this);
+                return false;
+            }
+            return IsSubsetOf(other);
+        }
+
+        void CopyTo(array<String^>^ a)
+        {
+            m_strings->Keys->CopyTo(a, 0);
+            GC::KeepAlive(this);
+        }
+
+        void Add(String^ s)
+        {
+            m_strings->Add(s, true);
+            GC::KeepAlive(this);
+        }
+
+        Boolean Contains(String^ s)
+        {
+            Boolean result = m_strings->Contains(s);
+            GC::KeepAlive(this);
+            return result;
+        }
+    };
+}}
+
+namespace Quire { namespace utl_mgd {
+
     [Quire::Mirror::MirrorOfAttribute("utl_mgd.Function, utl-mgd")]
     public interface class Function
     {
@@ -341,6 +519,510 @@ namespace Quire { namespace utl_mgd {
             args[5] = a5;
             args[6] = a6;
             return Invoke(args);
+        }
+    };
+}}
+
+namespace Quire { namespace utl_mgd {
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.LabelSet, utl-mgd")]
+    public ref class LabelSet
+    {
+    private:
+        SortedStringSet^ m_labels;
+        Boolean m_wild;
+        String^ m_cached_name;
+
+    public:
+        LabelSet(SortedStringSet^ labels, Boolean wild)
+            : m_labels(labels), m_wild(wild) {}
+
+        Boolean Unifies(LabelSet^ other)
+        {
+            if (this == other)
+                return true;
+
+            if (m_wild)
+            {
+                if (other->m_wild)
+                    return true;
+                Boolean result = m_labels->IsSubsetOf(other->m_labels);
+                GC::KeepAlive(this);
+                return result;
+            }
+
+            if (other->m_wild)
+            {
+                Boolean result2 = other->m_labels->IsSubsetOf(m_labels);
+                GC::KeepAlive(this);
+                return result2;
+            }
+
+            Boolean result3 = m_labels->SetEquals(other->m_labels);
+            GC::KeepAlive(this);
+            return result3;
+        }
+
+        static Boolean _unifies(LabelSet^ a, LabelSet^ b)
+        {
+            return a->Unifies(b);
+        }
+
+        SortedStringSet^ Labels() { return m_labels; }
+
+        Boolean Wild() { return m_wild; }
+
+        Boolean Empty()
+        {
+            Int32 num;
+            if (m_labels->Count != 0)
+                goto empty;
+            if (m_wild)
+                goto empty;
+            num = 1;
+            goto done;
+        empty:
+            num = 0;
+        done:
+            return static_cast<Boolean>(num);
+        }
+
+        virtual String^ ToString() override
+        {
+            if (m_cached_name == nullptr)
+            {
+                StringBuilder^ stringBuilder = gcnew StringBuilder();
+                stringBuilder->Append(static_cast<Char>('{'));
+                EmitLabels(stringBuilder, ',');
+                stringBuilder->Append(static_cast<Char>('}'));
+                m_cached_name = stringBuilder->ToString();
+            }
+
+            GC::KeepAlive(this);
+            return m_cached_name;
+        }
+
+        void EmitLabels(StringBuilder^ builder, Char delimiter)
+        {
+            Boolean flag = true;
+            IEnumerator^ enumerator = m_labels->GetEnumerator();
+            try
+            {
+                while (enumerator->MoveNext())
+                {
+                    String^ label = safe_cast<String^>(enumerator->Current);
+                    if (!flag)
+                    {
+                        builder->Append(delimiter);
+                    }
+                    else
+                    {
+                        flag = false;
+                    }
+
+                    builder->Append(label);
+                }
+            }
+            finally
+            {
+                IDisposable^ disposable = dynamic_cast<IDisposable^>(enumerator);
+                if (disposable != nullptr)
+                    delete disposable;
+            }
+
+            if (m_wild)
+            {
+                if (!flag)
+                    builder->Append(delimiter);
+                builder->Append(static_cast<Char>('*'));
+            }
+
+            GC::KeepAlive(this);
+        }
+
+        array<String^>^ ToVector()
+        {
+            array<String^>^ result = gcnew array<String^>(m_labels->Count);
+            m_labels->CopyTo(result);
+            GC::KeepAlive(this);
+            return result;
+        }
+    };
+}}
+
+namespace Quire { namespace utl_mgd {
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.LabelTrie, utl-mgd")]
+    public ref class LabelTrie
+    {
+    public:
+        SortedStringSet^ m_labels;
+        LabelSet^ m_wild;
+        LabelSet^ m_non_wild;
+        System::Collections::Generic::Dictionary<String^, LabelTrie^>^ m_map;
+        static LabelTrie^ s_root;
+        static SafeReadWriteLock^ s_lock;
+
+    private:
+        static array<Char>^ s_braces;
+        static array<Char>^ s_comma;
+
+    public:
+        LabelTrie(SortedStringSet^ labels)
+            : m_labels(labels),
+              m_wild(gcnew LabelSet(labels, true)),
+              m_non_wild(gcnew LabelSet(labels, false)),
+              m_map(gcnew System::Collections::Generic::Dictionary<String^, LabelTrie^>()) {}
+
+        static LabelSet^ Find(SortedStringSet^ labels, Boolean wild)
+        {
+            IEnumerator^ enumerator = nullptr;
+            LabelTrie^ labelTrie = nullptr;
+            InterruptControl::ProhibitInterruption();
+            s_lock->WaitReadLock();
+            try
+            {
+                LabelTrie^ labelTrie2 = s_root;
+                enumerator = labels->GetEnumerator();
+                try
+                {
+                    while (enumerator->MoveNext())
+                    {
+                        String^ text = safe_cast<String^>(enumerator->Current);
+                        labelTrie = nullptr;
+                        if (!labelTrie2->m_map->TryGetValue(text, labelTrie))
+                        {
+                            s_lock->ReleaseReadLock();
+                            s_lock->WaitWriteLock();
+                            try
+                            {
+                                if (!labelTrie2->m_map->TryGetValue(text, labelTrie))
+                                {
+                                    SortedStringSet^ sortedStringSet = gcnew SortedStringSet(labelTrie2->m_labels);
+                                    sortedStringSet->Add(text);
+                                    labelTrie = gcnew LabelTrie(sortedStringSet);
+                                    labelTrie2->m_map[text] = labelTrie;
+                                }
+                            }
+                            finally
+                            {
+                                s_lock->ReleaseWriteLock();
+                                s_lock->WaitReadLock();
+                            }
+                        }
+
+                        labelTrie2 = labelTrie;
+                    }
+                }
+                finally
+                {
+                    delete dynamic_cast<IDisposable^>(enumerator);
+                }
+
+                return wild ? labelTrie2->m_wild : labelTrie2->m_non_wild;
+            }
+            finally
+            {
+                s_lock->ReleaseReadLock();
+                InterruptControl::AllowInterruption();
+            }
+        }
+
+        static LabelSet^ InternLabels(String^ s)
+        {
+            Boolean wild = false;
+            SortedStringSet^ sortedStringSet = gcnew SortedStringSet();
+            Int32 num = s->IndexOf('{');
+            if (num == -1)
+                return s_root->m_non_wild;
+
+            s = s->Substring(num + 1);
+            s = s->Trim(s_braces);
+            array<String^>^ labels = s->Split(s_comma);
+            Int32 num2 = labels->Length;
+            Int32 num3 = 0;
+            if (0 < num2)
+            {
+                do
+                {
+                    String^ text = labels[num3]->Trim();
+                    labels[num3] = text;
+                    if (labels[num3]->Length != 0)
+                    {
+                        if (labels[num3]->Equals("*"))
+                            wild = true;
+                        else
+                            sortedStringSet->Add(labels[num3]);
+                    }
+                    num3++;
+                }
+                while (num3 < num2);
+            }
+
+            return Find(sortedStringSet, wild);
+        }
+
+        static LabelSet^ InternLabels(array<String^>^ labels, Boolean wild)
+        {
+            return Find(gcnew SortedStringSet(labels), wild);
+        }
+
+        static LabelSet^ Empty()
+        {
+            return s_root->m_non_wild;
+        }
+
+        static LabelSet^ WithWild(LabelSet^ labelSet, Boolean wild)
+        {
+            if (labelSet->Wild() == wild)
+                return labelSet;
+            return Find(labelSet->Labels(), wild);
+        }
+
+    private:
+        static LabelTrie()
+        {
+            s_root = gcnew LabelTrie(gcnew SortedStringSet());
+            s_lock = gcnew SafeReadWriteLock();
+            s_braces = (static_cast<String^>("{}"))->ToCharArray();
+            s_comma = (static_cast<String^>(","))->ToCharArray();
+        }
+    };
+}}
+
+namespace Quire { namespace utl_mgd {
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.LabelUtils, utl-mgd")]
+    public value class LabelUtils
+    {
+    public:
+        static array<Char>^ s_sharp;
+
+        static String^ SplitName(String^ s)
+        {
+            Int32 num = s->IndexOf('{');
+            return (num == -1) ? s : s->Substring(0, num);
+        }
+
+        static LabelSet^ SplitLabels(String^ s)
+        {
+            return LabelTrie::InternLabels(s);
+        }
+
+        static String^ SplitMangledName(String^ s)
+        {
+            Int32 num = s->IndexOf('#');
+            return (num == -1) ? s : s->Substring(0, num);
+        }
+
+        static LabelSet^ SplitMangledLabels(String^ s)
+        {
+            Boolean wild = false;
+            Int32 num = s->IndexOf('#');
+            if (num == -1)
+                return LabelTrie::Empty();
+
+            s = s->Substring(num + 1);
+            Int32 num3;
+            array<String^>^ labels = s->Split(s_sharp);
+            Int32 num2 = labels->Length;
+            num3 = num2 - 1;
+            if (labels[num3]->Equals("wild"))
+            {
+                wild = true;
+                num3 = num2 - 1;
+                array<String^>^ labels2 = gcnew array<String^>(num3);
+                Int32 num4 = 0;
+                num3 = num2 - 1;
+                if (0 < num3)
+                {
+                    do
+                    {
+                        labels2[num4] = labels[num4];
+                        num4++;
+                    }
+                    while (num4 < num3);
+                }
+                labels = labels2;
+            }
+
+            return LabelTrie::InternLabels(labels, wild);
+        }
+
+        static String^ Unmangle(String^ mangled)
+        {
+            String^ text = SplitMangledLabels(mangled)->ToString();
+            Int32 num = mangled->IndexOf('#');
+            return ((num == -1) ? mangled : mangled->Substring(0, num)) + text;
+        }
+
+        static String^ Canonicalize(String^ s, Boolean% wild)
+        {
+            LabelSet^ labelSet = LabelTrie::InternLabels(s);
+            wild = labelSet->Wild();
+            String^ text = labelSet->ToString();
+            Int32 num = s->IndexOf('{');
+            return ((num == -1) ? s : s->Substring(0, num)) + text;
+        }
+
+        static String^ Canonicalize(String^ s)
+        {
+            String^ text = LabelTrie::InternLabels(s)->ToString();
+            Int32 num = s->IndexOf('{');
+            return ((num == -1) ? s : s->Substring(0, num)) + text;
+        }
+
+        static String^ ForceWild(String^ s)
+        {
+            LabelSet^ labelSet = LabelTrie::InternLabels(s);
+            labelSet = LabelTrie::WithWild(labelSet, true);
+            String^ text = labelSet->ToString();
+            Int32 num = s->IndexOf('{');
+            return ((num == -1) ? s : s->Substring(0, num)) + text;
+        }
+
+        static Boolean Unifies(String^ c, String^ c_non_wild)
+        {
+            Int32 num = c->IndexOf('{');
+            String^ obj = ((num == -1) ? c : c->Substring(0, num));
+            Int32 num2 = c_non_wild->IndexOf('{');
+            String^ value = ((num2 == -1) ? c_non_wild : c_non_wild->Substring(0, num2));
+            if (!obj->Equals(value))
+                return false;
+
+            LabelSet^ labelSet = LabelTrie::InternLabels(c);
+            LabelSet^ other = LabelTrie::InternLabels(c_non_wild);
+            return labelSet->Unifies(other);
+        }
+
+        static Object^ LookupPossiblyWild(String^ c, IDictionary^ dictionary)
+        {
+            LabelSet^ labelSet = LabelTrie::InternLabels(c);
+            if (!labelSet->Wild())
+                return dictionary[c];
+
+            Int32 num = c->IndexOf('{');
+            String^ text = ((num == -1) ? c : c->Substring(0, num));
+            for each (Object^ item in dictionary)
+            {
+                DictionaryEntry entry = safe_cast<DictionaryEntry>(item);
+                String^ s = dynamic_cast<String^>(entry.Key);
+                String^ value = SplitName(s);
+                if (text->Equals(value))
+                {
+                    LabelSet^ labelSet2 = LabelTrie::InternLabels(s);
+                    if (labelSet->Unifies(labelSet2))
+                        return entry.Value;
+                }
+            }
+
+            return nullptr;
+        }
+
+        static String^ FindBinding(String^ s, IDictionary^ dictionary)
+        {
+            Int32 num = s->IndexOf('{');
+            String^ text = ((num == -1) ? s : s->Substring(0, num));
+            LabelSet^ labelSet = LabelTrie::InternLabels(s);
+            for each (Object^ item in dictionary)
+            {
+                DictionaryEntry entry = safe_cast<DictionaryEntry>(item);
+                String^ text2 = dynamic_cast<String^>(entry.Key);
+                String^ value = SplitName(text2);
+                if (text->Equals(value))
+                {
+                    LabelSet^ labelSet2 = LabelTrie::InternLabels(text2);
+                    if (labelSet->Unifies(labelSet2))
+                        return text2;
+                }
+            }
+
+            return nullptr;
+        }
+
+    private:
+        static LabelUtils()
+        {
+            s_sharp = (static_cast<String^>("#"))->ToCharArray();
+        }
+    };
+}}
+
+namespace Quire { namespace utl_mgd {
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.VFunc, utl-mgd")]
+    ref class VFunc
+    {
+    public:
+        Function^ m_function;
+
+        VFunc(Function^ f) : m_function(f) {}
+
+        void Invoke()
+        {
+            m_function->Invoke0();
+            GC::KeepAlive(this);
+        }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.ThreadingUtils, utl-mgd")]
+    public ref class ThreadingUtils abstract
+    {
+    public:
+        static void Spawn(Function^ f)
+        {
+            Thread^ thread = gcnew Thread(gcnew ThreadStart(gcnew VFunc(f), &VFunc::Invoke), 4194304);
+            thread->IsBackground = true;
+            thread->Start();
+        }
+
+        ThreadingUtils() {}
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.Str, utl-mgd")]
+    public ref class Str
+    {
+    private:
+        static Predicate<Char>^ s_is_white = gcnew Predicate<Char>(&Char::IsWhiteSpace);
+
+        static String^ remove_if(Predicate<Char>^ p, String^ s)
+        {
+            Int32 length = s->Length;
+            Int32 num = 0;
+            if (0 < length)
+            {
+                do
+                {
+                    if (!p(s[num]))
+                    {
+                        num++;
+                        continue;
+                    }
+
+                    StringBuilder^ stringBuilder = gcnew StringBuilder(length);
+                    Int32 num2 = 0;
+                    do
+                    {
+                        if (!p(s[num2]))
+                            stringBuilder->Append(s[num2]);
+                        num2++;
+                    }
+                    while (num2 < length);
+
+                    return stringBuilder->ToString();
+                }
+                while (num < length);
+            }
+
+            return s;
+        }
+
+    public:
+        Str() {}
+
+        static String^ RemoveWhite(String^ s)
+        {
+            return remove_if(s_is_white, s);
         }
     };
 }}
