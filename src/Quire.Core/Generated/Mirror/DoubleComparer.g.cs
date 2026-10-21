@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DoubleComparer, Ptc.Core")]
 public partial class DoubleComparer : global::System.Collections.Generic.IComparer<double>, global::System.Collections.Generic.IComparer<global::System.Windows.Point>, global::System.Collections.Generic.IComparer<global::System.Windows.Media.Media3D.Point3D>, global::System.Collections.Generic.IComparer<global::System.Windows.Rect>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<double> GetDoubles(global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<double> GetDoubles(global::System.Windows.Media.Media3D.Point3D point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

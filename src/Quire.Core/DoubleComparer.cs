@@ -11,9 +11,6 @@ public partial class DoubleComparer
     public static readonly DoubleComparer DefaultDoubleComparer = new DoubleComparer();
 
     [MirrorVerified("PtcDoubleComparerMechanicalDifferentialTests")]
-    private DoubleComparer() : this(1E-10) { }
-
-    [MirrorVerified("PtcDoubleComparerMechanicalDifferentialTests")]
     public double Epsilon { get; private set; }
 
     [MirrorVerified("Release IL")]
@@ -22,14 +19,8 @@ public partial class DoubleComparer
         Epsilon = epsilon;
     }
 
-    [MirrorVerified("Release IL")]
-    public int Compare(Point pt1, Point pt2) => Compare(GetDoubles(pt1), GetDoubles(pt2));
-
-    [MirrorVerified("Release IL")]
-    public int Compare(Point3D pt1, Point3D pt2) => Compare(GetDoubles(pt1), GetDoubles(pt2));
-
-    [MirrorVerified("Release IL")]
-    public int Compare(Rect rect1, Rect rect2) => Compare(GetDoubles(rect1), GetDoubles(rect2));
+    [MirrorVerified("PtcDoubleComparerMechanicalDifferentialTests")]
+    private DoubleComparer() : this(1E-10) { }
 
     [MirrorVerified("Release IL")]
     public int Compare(double x, double y)
@@ -44,6 +35,15 @@ public partial class DoubleComparer
         }
         return 1;
     }
+
+    [MirrorVerified("Release IL")]
+    public int Compare(Point pt1, Point pt2) => Compare(GetDoubles(pt1), GetDoubles(pt2));
+
+    [MirrorVerified("Release IL")]
+    public int Compare(Point3D pt1, Point3D pt2) => Compare(GetDoubles(pt1), GetDoubles(pt2));
+
+    [MirrorVerified("Release IL")]
+    public int Compare(Rect rect1, Rect rect2) => Compare(GetDoubles(rect1), GetDoubles(rect2));
 
     [MirrorVerified("Release IL")]
     public int Compare(IEnumerable<double> seq1, IEnumerable<double> seq2)
@@ -61,6 +61,21 @@ public partial class DoubleComparer
             }
         }
         return 0;
+    }
+
+    [MirrorVerified("Release IL")]
+    private static IEnumerable<double> GetDoubles(Point point)
+    {
+        yield return point.X;
+        yield return point.Y;
+    }
+
+    [MirrorVerified("Release IL")]
+    private static IEnumerable<double> GetDoubles(Point3D point)
+    {
+        yield return point.X;
+        yield return point.Y;
+        yield return point.Z;
     }
 
     private static IEnumerable<double> GetDoubles(Rect rect) => GetDoubles(rect.TopLeft).Concat(GetDoubles(rect.BottomRight));
