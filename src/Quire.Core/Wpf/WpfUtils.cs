@@ -189,4 +189,11 @@ public static partial class WpfUtils
 
     [MirrorVerified("Release IL")]
     private static MessageBoxResult DisplayQuestionMessage(string message) => AppServiceRegistry.GetService<IMessageBoxManager>().ShowCriticalQuestionMessage.Invoke(global::System.Windows.Application.Current.MainWindow, message, ApplicationFullName, (MessageBoxButton)4);
+
+    public static global::System.Collections.Generic.IList<global::System.Windows.Documents.Adorner> GetAdornersOfDescendants(UIElement element)
+    {
+        global::System.Collections.Generic.IList<global::System.Windows.Documents.Adorner> list = new global::System.Collections.Generic.List<global::System.Windows.Documents.Adorner>();
+        GetAdornersOfDescendants(element, list);
+        return list;
+    }
 }

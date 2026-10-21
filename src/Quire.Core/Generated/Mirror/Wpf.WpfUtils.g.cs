@@ -110,8 +110,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLayoutUpdated(global::System.Windows.UIElement element, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<global::System.Windows.Documents.Adorner> GetAdornersOfDescendants(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool AtLeastOneChildSatisfyPassedCondition<T>(global::System.Windows.DependencyObject parent, global::System.Predicate<T> condition, out T satisfiesCondition) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T GetNamedDescendant<T>(global::System.Windows.DependencyObject obj, string nameToFind, bool shouldAssert = true) where T : global::System.Windows.FrameworkElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
