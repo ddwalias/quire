@@ -12,4 +12,17 @@ public partial class footer
 
     [MirrorVerified("Release IL")]
     public IEnumerable<IRegionType> Regions { get => regions; set => regions = Enumerable.ToArray<headerFooterRegionType>(Enumerable.Cast<headerFooterRegionType>(value)); }
+
+    [MirrorVerified("Release IL")]
+    public bool FooterConvertedFromMC14
+    {
+        get
+        {
+            if (convertedfromSpecified)
+            {
+                return convertedfrom == applicationVersionType.Mathcad14;
+            }
+            return false;
+        }
+    }
 }
