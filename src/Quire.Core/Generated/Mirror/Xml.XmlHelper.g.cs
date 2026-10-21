@@ -16,8 +16,6 @@ public static partial class XmlHelper
     [global::Quire.Mirror.MirrorStub]
     public static string ReplaceNonPrintableCharacters(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void SearchForNodesInXml(global::System.Xml.XmlNode root, string nodeName, global::Quire.Delegate1<global::System.Xml.XmlNode> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static object CreateXamlCopy(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<string> GetNodeValueFromXml(string xmlPath, string xPathExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

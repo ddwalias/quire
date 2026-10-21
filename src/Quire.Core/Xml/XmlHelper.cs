@@ -86,5 +86,21 @@ public static partial class XmlHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static void SearchForNodesInXml(XmlNode root, string nodeName, global::Quire.Delegate1<XmlNode> action)
+    {
+        foreach (XmlNode childNode in root.ChildNodes)
+        {
+            if (childNode.Name.Equals(nodeName))
+            {
+                action(childNode);
+            }
+            else if (childNode.HasChildNodes)
+            {
+                SearchForNodesInXml(childNode, nodeName, action);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static StreamWriter CreateStreamWriterForXamlCopy(Stream stream, bool leaveOpen) => new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen);
 }
