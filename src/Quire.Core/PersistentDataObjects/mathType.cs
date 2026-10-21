@@ -3,11 +3,32 @@ using System.Xml;
 using System.Xml;
 using Quire.Mirror;
 using Quire.Mirror;
+using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
 
 public partial class mathType
 {
+    [MirrorVerified("Release IL")]
+    public void SetXmlNodeOrSExpression(Action<XmlNode> setXmlNode, Action<string> setSExpression)
+    {
+        if (EquationSExpression != null && EquationSExpression.Length != 0)
+        {
+            setSExpression(EquationSExpression[0]);
+        }
+        else if (InnerXml != null && InnerXml.Length != 0)
+        {
+            XmlNode xmlNode = InnerXml[0];
+            XmlDocument ownerDocument = xmlNode.OwnerDocument;
+            if (ownerDocument != null)
+            {
+                XmlElement xmlElement = ownerDocument.CreateElement("math", XmlWorksheetData.McdxNameSpaceManager.LookupNamespace(string.Empty));
+                xmlElement.AppendChild(xmlNode);
+                setXmlNode(xmlElement);
+            }
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsmathTypeMechanicalDifferentialTests")]
     private resultFormatType resultFormatField;
 
