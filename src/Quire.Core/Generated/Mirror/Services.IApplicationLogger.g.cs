@@ -11,20 +11,12 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IApplicationLogger, Ptc.Core")]
 public partial interface IApplicationLogger : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    string LogFolder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string WriteToLog(string logType, string logContents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetListOfLoadedModulesData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetEnvironmentVariablesAndCommandLineArgumentsData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetLastApplicationLogPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetApplicationStartTime() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetMiscInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    string GetSystemInfoIfAvailable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    string LogFolder { get; set; }
+    string WriteToLog(string logType, string logContents) ;
+    string GetListOfLoadedModulesData() ;
+    string GetEnvironmentVariablesAndCommandLineArgumentsData() ;
+    string GetLastApplicationLogPath() ;
+    string GetApplicationStartTime() ;
+    string GetMiscInfo() ;
+    string GetSystemInfoIfAvailable() ;
 }

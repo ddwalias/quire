@@ -11,8 +11,6 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IFunctionalityService, Ptc.Core")]
 public partial interface IFunctionalityService
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsFunctionalityEnabled(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsFunctionalityHasUnsupportedLicenseTypes(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsFunctionalityEnabled(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) ;
+    bool IsFunctionalityHasUnsupportedLicenseTypes(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) ;
 }

@@ -11,14 +11,9 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IMouseFacade, Ptc.Core")]
 public partial interface IMouseFacade : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Input.Cursor ShowWaitCursor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void ClearOverrideCursor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Input.Cursor GetOverrideCursor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Input.Cursor SetOverrideCursor(global::System.Windows.Input.Cursor cursor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool SetCursor(global::System.Windows.Input.Cursor cursor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Windows.Input.Cursor ShowWaitCursor() ;
+    void ClearOverrideCursor() ;
+    global::System.Windows.Input.Cursor GetOverrideCursor() ;
+    global::System.Windows.Input.Cursor SetOverrideCursor(global::System.Windows.Input.Cursor cursor) ;
+    bool SetCursor(global::System.Windows.Input.Cursor cursor) ;
 }
