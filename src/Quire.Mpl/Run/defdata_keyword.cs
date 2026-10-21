@@ -6,7 +6,18 @@ namespace Quire.Mpl.Run;
 public partial class defdata_keyword
 {
     [MirrorVerified("MplRundefdata_keywordMechanicalDifferentialTests")]
+    public static defdata_keyword singleton;
+
+    static defdata_keyword()
+    {
+        singleton = new defdata_keyword();
+    }
+
+    [MirrorVerified("MplRundefdata_keywordMechanicalDifferentialTests")]
     public defdata_keyword() : base("defdata", 3) { }
+
+    [MirrorVerified("MplRundefdata_keywordMechanicalDifferentialTests")]
+    public static Tok NewTok(uint handle) => new Tok(singleton, handle);
 
     [MirrorVerified("MplRundefdata_keywordMechanicalDifferentialTests")]
     public override Cons walk_declaration_as(MplEnv env, SCons form) => new Cons(form, null);

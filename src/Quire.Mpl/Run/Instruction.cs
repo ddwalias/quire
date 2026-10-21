@@ -17,6 +17,9 @@ internal partial class Instruction
     }
 
     [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
+    public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator g) => g.Emit(m_op);
+
+    [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
     public static Instruction Op(OpCode op) => new Instruction(op);
 
     [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
@@ -41,6 +44,9 @@ internal partial class Instruction
         {
             m_type = ty;
         }
+
+        [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator g) => g.Emit(m_op, m_type);
     }
 
     partial class InstructionArgInt
@@ -53,6 +59,9 @@ internal partial class Instruction
         {
             m_int = i;
         }
+
+        [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator g) => g.Emit(m_op, m_int);
     }
 
     partial class InstructionArgField
@@ -65,6 +74,9 @@ internal partial class Instruction
         {
             m_field = fi;
         }
+
+        [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator g) => g.Emit(m_op, m_field);
     }
 
     partial class InstructionArgCtor
@@ -77,5 +89,8 @@ internal partial class Instruction
         {
             m_ctor = ci;
         }
+
+        [MirrorVerified("MplRunInstructionMechanicalDifferentialTests")]
+        public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator g) => g.Emit(m_op, m_ctor);
     }
 }

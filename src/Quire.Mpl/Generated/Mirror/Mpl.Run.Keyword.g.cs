@@ -43,8 +43,4 @@ public partial class Keyword : global::Quire.Mpl.Run.Sym
     public const int KeyTuple = 14;
     [global::Quire.Mirror.MirrorStub]
     public const int Nkeys = 15;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Keyword key(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok keytok(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -13,4 +13,13 @@ internal partial class InstructionSeq
     {
         m_ops = ops;
     }
+
+    [MirrorVerified("MplRunInstructionSeqMechanicalDifferentialTests")]
+    public override void EmitCode(System.Reflection.Emit.Quire.Mpl.ILGenerator g)
+    {
+        for (int i = 0; i < m_ops.Length; i++)
+        {
+            m_ops[i].EmitCode(g);
+        }
+    }
 }

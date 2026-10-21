@@ -11,34 +11,23 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction, mplrun")]
 internal partial class Instruction : global::Quire.Mpl.Run.Code
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
-
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction+InstructionArgType, mplrun")]
     private partial class InstructionArgType : global::Quire.Mpl.Run.Instruction
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
     }
 
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction+InstructionArgInt, mplrun")]
     private partial class InstructionArgInt : global::Quire.Mpl.Run.Instruction
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
     }
 
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction+InstructionArgField, mplrun")]
     private partial class InstructionArgField : global::Quire.Mpl.Run.Instruction
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
     }
 
     [global::Quire.Mirror.MirrorOf("Mpl.Run.Instruction+InstructionArgCtor, mplrun")]
     private partial class InstructionArgCtor : global::Quire.Mpl.Run.Instruction
     {
-        [global::Quire.Mirror.MirrorStub]
-        public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
     }
 }

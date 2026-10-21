@@ -18,7 +18,8 @@ public partial class locally_keyword
     public override Sexpr walk_expression_as(MplEnv env, SCons form)
     {
         if (form.Length != 3) Sexpr.BadExpression(form);
-        Cons cons = block_keyword.MakeBlock(form.handle, form.second).walk(env, out MplEnv outenv);
+        MplEnv outenv;
+        Cons cons = block_keyword.MakeBlock(form.handle, form.second).walk(env, out outenv);
         Sexpr sexpr = form.third.walk_expression(outenv);
         if (cons != null) return MakeLocally(form.handle, cons, sexpr);
         return sexpr;

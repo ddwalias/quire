@@ -11,8 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.deftype_keyword, mplrun")]
 public partial class deftype_keyword : global::Quire.Mpl.Run.Keyword
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.deftype_keyword singleton;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mpl.Run.Tok NewTok(uint handle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

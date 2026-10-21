@@ -397,6 +397,32 @@ public partial class Keyword : Sym
     }
 
     [MirrorVerified("SexprDifferentialTests")]
+    public static Keyword key(int n)
+    {
+        switch (n)
+        {
+            case 0: return defun_keyword.singleton;
+            case 1: return define_keyword.singleton;
+            case 2: return deftype_keyword.singleton;
+            case 3: return defdata_keyword.singleton;
+            case 4: return block_keyword.singleton;
+            case 5: return declare_keyword.singleton;
+            case 6: return lambda_keyword.singleton;
+            case 7: return let_keyword.singleton;
+            case 8: return locally_keyword.singleton;
+            case 9: return if_keyword.singleton;
+            case 10: return case_keyword.singleton;
+            case 11: return do_keyword.singleton;
+            case 12: return try_keyword.singleton;
+            case 13: return List_keyword.singleton;
+            case 14: return Tuple_keyword.singleton;
+            default: return defun_keyword.singleton;
+        }
+    }
+
+    [MirrorVerified("SexprDifferentialTests")]
+    public static Tok keytok(int n) => new Tok(key(n), 0);
+
     public override Sexpr walk_expression_as(MplEnv env, SCons form)
     {
         Sexpr sexpr = SCons.walk_expressions(env, form.tail);

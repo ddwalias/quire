@@ -11,6 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.InstructionSeq, mplrun")]
 internal partial class InstructionSeq : global::Quire.Mpl.Run.Code
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override void EmitCode(global::System.Reflection.Emit.Quire.Mpl.ILGenerator il) => base.EmitCode(il);
 }
