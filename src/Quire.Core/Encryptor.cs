@@ -25,4 +25,15 @@ public partial class Encryptor
         Version key = _legacyDecryptorsDictionary.LastOrDefault().Key;
         return formatVersion.CompareTo(key) <= 0;
     }
+
+    [MirrorVerified("Release IL")]
+    public byte[] UpdateEncryption(byte[] encryptedData, Version formatVersion)
+    {
+        ICryptoTransform decryptorForVersion = GetDecryptorForVersion(formatVersion);
+        if (decryptorForVersion == null)
+        {
+            return encryptedData;
+        }
+        return Encrypt(Decrypt(decryptorForVersion, encryptedData));
+    }
 }
