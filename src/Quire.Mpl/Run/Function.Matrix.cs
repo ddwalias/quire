@@ -15,9 +15,23 @@ public abstract partial class Function
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public bool IsFullyApplied(int n) => m_varargs || (m_minargs <= n && n <= m_purity);
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public void AssertFullApp(int n) { if (!IsFullyApplied(n)) BadCall(n < m_minargs ? m_minargs : m_purity, n); }
+    public void AssertFullApp(int n)
+    {
+        if (IsFullyApplied(n))
+        {
+            return;
+        }
+        BadCall(n < m_minargs ? m_minargs : m_purity, n);
+    }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
-    public void AssertFullApp(int n, uint errpos) { if (!IsFullyApplied(n)) BadCall(n < m_minargs ? m_minargs : m_purity, n, errpos); }
+    public void AssertFullApp(int n, uint errpos)
+    {
+        if (IsFullyApplied(n))
+        {
+            return;
+        }
+        BadCall(n < m_minargs ? m_minargs : m_purity, n, errpos);
+    }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]
     public override object Apply(object[] args) { appVec(out object result, args); return result; }
     [MirrorAnalyzed("Mpl.Run.Function.Matrix")]

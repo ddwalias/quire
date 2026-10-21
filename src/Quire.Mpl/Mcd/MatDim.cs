@@ -49,51 +49,97 @@ public abstract partial class MatDim
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim Uniform(Dim[] dims)
     {
-        if (dims == null) return null;
-        Dim candidate = dims[0];
-        foreach (Dim d in dims) if (d != candidate) return null;
-        return candidate;
+        if (dims == null)
+        {
+            return null;
+        }
+        Dim dim = dims[0];
+        foreach (Dim dim2 in dims)
+        {
+            if (dim != dim2)
+            {
+                return null;
+            }
+        }
+        return dim;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static bool Eq_b(Dim[] d1, Dim[] d2)
     {
-        if (d1.Length != d2.Length) return false;
-        for (int i = 0; i < d1.Length; i++) if (!Dim.Eq_b(d1[i], d2[i])) return false;
+        int num = d1.Length;
+        if (num != d2.Length)
+        {
+            return false;
+        }
+        for (int i = 0; i < num; i++)
+        {
+            if (!Dim.Eq_b(d1[i], d2[i]))
+            {
+                return false;
+            }
+        }
         return true;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim IsScalarMultiple(Dim[] d1, Dim[] d2)
     {
-        var factor = Dim.Div(d2[0], d1[0]);
-        for (int i = 1; i < d1.Length; i++) if (!ReferenceEquals(factor, Dim.Div(d2[i], d1[i]))) return null;
-        return factor;
+        Dim dim = Dim.Div(d2[0], d1[0]);
+        int num = d1.Length;
+        for (int i = 1; i < num; i++)
+        {
+            if (dim != Dim.Div(d2[i], d1[i]))
+            {
+                return null;
+            }
+        }
+        return dim;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim Mult(Dim[] d1, Dim[] d2)
     {
-        var product = Dim.Mult(d2[0], d1[0]);
-        for (int i = 1; i < d1.Length; i++) if (!ReferenceEquals(product, Dim.Mult(d2[i], d1[i]))) return null;
-        return product;
+        Dim dim = Dim.Mult(d2[0], d1[0]);
+        int num = d1.Length;
+        for (int i = 1; i < num; i++)
+        {
+            if (dim != Dim.Mult(d2[i], d1[i]))
+            {
+                return null;
+            }
+        }
+        return dim;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim[] Mult(Dim d, Dim[] dv)
     {
-        var result = new Dim[dv.Length];
-        for (int i = 0; i < result.Length; i++) result[i] = Dim.Mult(d, dv[i]);
-        return result;
+        int num = dv.Length;
+        Dim[] array = new Dim[num];
+        for (int i = 0; i < num; i++)
+        {
+            array[i] = Dim.Mult(d, dv[i]);
+        }
+        return array;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim[] Invert(Dim[] d1)
     {
-        var result = new Dim[d1.Length];
-        for (int i = 0; i < result.Length; i++) result[i] = Dim.Pwr(d1[i], -1.0);
-        return result;
+        int num = d1.Length;
+        Dim[] array = new Dim[num];
+        for (int i = 0; i < num; i++)
+        {
+            array[i] = Dim.Pwr(d1[i], -1.0);
+        }
+        return array;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim Product(Dim scalar, Dim[] dv)
     {
-        foreach (var value in dv) scalar = Dim.Mult(scalar, value);
-        return scalar;
+        int num = dv.Length;
+        Dim dim = scalar;
+        for (int i = 0; i < num; i++)
+        {
+            dim = Dim.Mult(dim, dv[i]);
+        }
+        return dim;
     }
     [MirrorVerified("MatDimDifferentialTests")]
     public static Dim[] Push(Dim d1, Dim[] d2)

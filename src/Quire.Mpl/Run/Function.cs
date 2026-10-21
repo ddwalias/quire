@@ -139,7 +139,14 @@ public abstract partial class Function : FunctionUtilities
     public override Function asFunction(string m, uint a) => this;
 
     [MirrorAnalyzed("Mpl.Run.Function")]
-    public override Function IsFunctionN(int argc) => !IsFullyApplied(argc) ? null : this;
+    public override Function IsFunctionN(int argc)
+    {
+        if (!IsFullyApplied(argc))
+        {
+            return null;
+        }
+        return this;
+    }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override Function asFunctionN(int argc, uint errpos)
@@ -552,24 +559,30 @@ public abstract partial class Function : FunctionUtilities
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b)
     {
-        if (!m_no_vectorize & b is MatVal)
-            return MatVal.vectorize(this, [b]);
+        if (!(m_no_vectorize | (b as MatVal) == null))
+        {
+            return MatVal.vectorize(this, new object[1] { b });
+        }
         return DynCall(b);
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b, object c)
     {
-        if (!m_no_vectorize & (b is MatVal | c is MatVal))
-            return MatVal.vectorize(this, [b, c]);
+        if (!(m_no_vectorize | ((b as MatVal) == null & (c as MatVal) == null)))
+        {
+            return MatVal.vectorize(this, new object[2] { b, c });
+        }
         return DynCall(b, c);
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]
     public override object VecCall(object b, object c, object d)
     {
-        if (!m_no_vectorize & (b is MatVal | c is MatVal | d is MatVal))
-            return MatVal.vectorize(this, [b, c, d]);
+        if (!(m_no_vectorize | ((b as MatVal) == null & (c as MatVal) == null & (d as MatVal) == null)))
+        {
+            return MatVal.vectorize(this, new object[3] { b, c, d });
+        }
         return DynCall(b, c, d);
     }
 
@@ -584,17 +597,20 @@ public abstract partial class Function : FunctionUtilities
     public override object DynApply(object[] args)
     {
         AssertFullApp(args.Length);
+        object r;
         try
         {
-            appVec<object>(out var r, args);
-            return r;
+            appVec<object>(out r, args);
         }
         catch (TargetInvocationException ex)
         {
             if (ex.InnerException != null)
+            {
                 throw ex.InnerException;
+            }
             throw;
         }
+        return r;
     }
 
     [MirrorAnalyzed("Mpl.Run.Function")]

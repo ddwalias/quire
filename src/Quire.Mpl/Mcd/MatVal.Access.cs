@@ -643,27 +643,53 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool IsUniformPtrs()
     {
-        Dim common = null;
-        int count = 0;
-        foreach (DictionaryEntry entry in m_parr)
+        int num = 0;
+        Dim dim = null;
+        foreach (DictionaryEntry item in m_parr)
         {
-            if (!IsPtrNan(ref m_rarr[(int)entry.Key])) continue;
-            var d = DimVal.DimOf(entry.Value);
-            if (Dim.Eq_b(d, common)) common = Dim.Eq(d, common);
-            else if (d != Dim.mcd_zero) return false;
-            count++;
+            int num2 = (int)item.Key;
+            if (!IsPtrNan(ref m_rarr[num2]))
+            {
+                continue;
+            }
+            Dim dim2 = DimVal.DimOf(item.Value);
+            if (Dim.Eq_b(dim2, dim))
+            {
+                dim = Dim.Eq(dim2, dim);
+                num++;
+                continue;
+            }
+            if (dim2 == Dim.mcd_zero)
+            {
+                num++;
+                continue;
+            }
+            return false;
         }
-        return TidyPtrs(count, 0, common, false);
+        return TidyPtrs(num, 0, dim, hasOtherPntr: false);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool IsUniformPtrsNoChange()
     {
-        if (m_parr == null) return true;
-        foreach (DictionaryEntry entry in m_parr)
+        if (m_parr == null)
         {
-            if (!IsPtrNan(ref m_rarr[(int)entry.Key])) continue;
-            var d = DimVal.DimOf(entry.Value);
-            if (Dim.NonScalar_b(d) || d != m_dim && !Dim.IsSpecial(d)) return false;
+            return true;
+        }
+        foreach (DictionaryEntry item in m_parr)
+        {
+            int num = (int)item.Key;
+            if (IsPtrNan(ref m_rarr[num]))
+            {
+                Dim dim = DimVal.DimOf(item.Value);
+                if (Dim.NonScalar_b(dim))
+                {
+                    return false;
+                }
+                if (dim != m_dim && !Dim.IsSpecial(dim))
+                {
+                    return false;
+                }
+            }
         }
         return true;
     }

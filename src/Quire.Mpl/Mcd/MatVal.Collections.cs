@@ -29,8 +29,12 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public MatVal(object[] vals) : this(vals.Length, 1)
     {
+        int num = vals.Length;
         Data.m_rows = 0;
-        foreach (object value in vals) PushRaw(value);
+        for (int i = 0; i < num; i++)
+        {
+            PushRaw(vals[i]);
+        }
     }
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     public static MatVal MakeVector(object[] vals) => new(vals);
@@ -265,20 +269,24 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal.Collections")]
     private static void FillArr(double[] arr, double v, int init, int incr, int n)
     {
+        int num;
+        int i;
+        int num2;
+        int j;
         if (incr == 1)
         {
-            int end = init + n;
-            for (int i = init; i < end; i++)
+            num = init + n;
+            for (i = init; i < num; i++)
             {
                 arr[i] = v;
             }
             return;
         }
-        int idx = init;
-        for (int j = 0; j < n; j++)
+        num2 = init;
+        for (j = 0; j < n; j++)
         {
-            arr[idx] = v;
-            idx += incr;
+            arr[num2] = v;
+            num2 += incr;
         }
     }
 }

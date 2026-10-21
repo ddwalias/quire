@@ -25,27 +25,37 @@ public sealed partial class MatVal
     public Dim DivideByDefaultDimension() => DivideByDimension(m_dim);
 
     [MirrorAnalyzed("Mcd.MatVal.Dimensions")]
-    public Dim DivideByDimension(Dim dimension)
+    public Dim DivideByDimension(Dim d)
     {
         Canonicalize();
-        var quotient = Dim.Div(m_dim, dimension);
-        if (!Dim.Id_b(dimension) && m_parr != null)
+        Dim dim = Dim.Div(m_dim, d);
+        if (!Dim.Id_b(d) && m_parr != null)
         {
-            var pointers = new Hashtable();
-            foreach (DictionaryEntry entry in m_parr)
+            Hashtable hashtable = new Hashtable();
+            foreach (DictionaryEntry item in m_parr)
             {
-                int index = (int)entry.Key;
-                if (!IsPtrNan(ref m_rarr[index])) continue;
-                if (entry.Value is NumVal number)
-                    pointers[index] = new NumVal(number, Dim.Div(number.m_dim, dimension));
-                else if (entry.Value is MatVal matrix)
-                    pointers[index] = new MatVal(matrix).DivideByDimension(dimension);
-                else if (entry.Value != null) pointers[index] = entry.Value;
+                int num = (int)item.Key;
+                if (IsPtrNan(ref m_rarr[num]))
+                {
+                    if (item.Value is NumVal numVal)
+                    {
+                        Dim d2 = Dim.Div(numVal.m_dim, d);
+                        hashtable[num] = new NumVal(numVal, d2);
+                    }
+                    else if (item.Value is MatVal m)
+                    {
+                        hashtable[num] = new MatVal(m).DivideByDimension(d);
+                    }
+                    else if (item.Value != null)
+                    {
+                        hashtable[num] = item.Value;
+                    }
+                }
             }
-            m_parr = pointers;
+            m_parr = hashtable;
         }
-        m_dim = quotient;
-        return dimension;
+        m_dim = dim;
+        return d;
     }
 
     [MirrorAnalyzed("Mcd.MatVal.Dimensions")]
@@ -58,19 +68,46 @@ public sealed partial class MatVal
     public static MatVal AsPolymorphic(MatVal matrix) => matrix.IsUniformScalar & matrix.IsPolymorphic ? matrix : new(matrix, null);
 
     [MirrorAnalyzed("Mcd.MatVal.Dimensions")]
-    public MatVal ApplyLinearDimension(MatDim dimension)
+    public MatVal ApplyLinearDimension(MatDim d)
     {
-        var uniform = dimension.UniformDim;
-        if (uniform != null) { m_dim = uniform; return this; }
-        m_dim = Dim.identity;
-        int rows = Rows, cols = Cols;
-        for (int row = 0; row < rows; row++)
-        for (int col = 0; col < cols; col++)
+        Dim uniformDim = d.UniformDim;
+        if (uniformDim != null)
         {
-            var unit = dimension.dim(row, col);
-            if (unit == Dim.identity) continue;
-            int index = Index(row, col);
-            set_ptrs_at(index, new NumVal(m_rarr[index], m_iarr == null ? 0 : m_iarr[index], unit));
+            m_dim = uniformDim;
+            return this;
+        }
+        m_dim = Dim.identity;
+        int rows = Rows;
+        int cols = Cols;
+        if (m_iarr == null)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    uniformDim = d.dim(i, j);
+                    if (uniformDim != Dim.identity)
+                    {
+                        int num = Index(i, j);
+                        set_ptrs_at(num, new NumVal(get_real_raw(num), 0.0, uniformDim));
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int k = 0; k < rows; k++)
+            {
+                for (int l = 0; l < cols; l++)
+                {
+                    uniformDim = d.dim(k, l);
+                    if (uniformDim != Dim.identity)
+                    {
+                        int num2 = Index(k, l);
+                        set_ptrs_at(num2, new NumVal(get_real_raw(num2), get_imag_raw(num2), uniformDim));
+                    }
+                }
+            }
         }
         return this;
     }
@@ -93,25 +130,46 @@ public sealed partial class MatVal
     public static object MDimCast(object value, MatDim dimension) => value is MatVal matrix && dimension != null ? StripDimension(matrix).ApplyLinearDimension(dimension) : value;
 
     [MirrorAnalyzed("Mcd.MatVal.Dimensions")]
-    public static object MatCreateDim(object order, object point, object value)
+    public static object MatCreateDim(object icord, object icpnt, object icval)
     {
-        var pointDimension = DimVal.DimOf(point);
-        if (pointDimension == null || order is not MatVal orderMatrix || value is not MatVal matrix) return value;
-        if (matrix.IsDimless) return value;
-        var units = matrix.ColDimArray(0);
-        var first = units[0];
-        if (first == null) return value;
-        for (int row = 1; row < orderMatrix.Data.m_rows; row++)
+        Dim dim = DimVal.DimOf(icpnt);
+        if (dim == null)
         {
-            int previous = (int)orderMatrix.m_rarr[row];
-            if (previous >= row) continue;
-            if (units[previous] != units[row])
-            {
-                units[row] = first;
-                return StripDimension(matrix).ApplyRowDimensions(units);
-            }
-            units[row] = Dim.Div(first, Dim.Pwr(pointDimension, row));
+            return icval;
         }
-        return StripDimension(matrix).ApplyRowDimensions(units);
+        MatVal matVal = icord as MatVal;
+        MatVal matVal2 = icval as MatVal;
+        if (matVal == null || matVal2 == null)
+        {
+            return icval;
+        }
+        if (matVal2.IsDimless)
+        {
+            return icval;
+        }
+        int rows = matVal.Data.m_rows;
+        Dim[] array = matVal2.ColDimArray(0);
+        Dim dim2 = array[0];
+        if (dim2 == null)
+        {
+            return icval;
+        }
+        for (int i = 1; i < rows; i++)
+        {
+            int num = (int)matVal.m_rarr[i];
+            if (num < i)
+            {
+                if (array[num] == array[i])
+                {
+                    array[i] = Dim.Div(dim2, Dim.Pwr(dim, (double)i));
+                }
+                else
+                {
+                    array[i] = dim2;
+                    return StripDimension(matVal2).ApplyRowDimensions(array);
+                }
+            }
+        }
+        return StripDimension(matVal2).ApplyRowDimensions(array);
     }
 }

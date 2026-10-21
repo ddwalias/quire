@@ -11,32 +11,4 @@ namespace Quire.Mpl.Run;
 [global::Quire.Mirror.MirrorOf("Mpl.Run.DynamicType, mplrun")]
 public partial class DynamicType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineTuple(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineTuple(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, global::System.Type[] fieldTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineNullaryRecord(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName, int tag, out global::System.Reflection.ConstructorInfo ctor, out global::System.Reflection.FieldInfo[] fields) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineRecord(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName, global::System.Type[] fieldTypes, int tag, out global::System.Reflection.ConstructorInfo ctor, out global::System.Reflection.FieldInfo[] fields) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineRecord(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName, global::System.Type[] fieldTypes, int tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.Emit.Quire.Mpl.TypeBuilder DefineRecord(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, string tyName, global::System.Type[] fieldTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo DefineConstructor(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, int tag, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo DefinePrinter(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo DefinePrinter(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, string tyName, global::System.Reflection.FieldInfo[] fields, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.FieldInfo[] DefineFields(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder tb, global::System.Type[] types) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string RemovePrefix(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type[] NameDemangle(string tyName, string prefix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type[] TupleNameDemangle(string tyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Ldarg(global::System.Reflection.Emit.Quire.Mpl.ILGenerator m_il, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

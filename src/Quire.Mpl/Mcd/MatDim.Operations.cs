@@ -32,13 +32,24 @@ public abstract partial class MatDim
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim Pwr(MatDim m, int n)
     {
-        if (n > 0) return m.pwr((uint)n);
+        if (n > 0)
+        {
+            return m.pwr((uint)n);
+        }
         if (n < 0)
         {
-            var inverse = m.invert();
-            return n == -1 || inverse == null ? inverse : inverse.pwr(unchecked((uint)-n));
+            MatDim matDim = m.invert();
+            if (n != -1 && matDim != null)
+            {
+                return matDim.pwr((uint)(-n));
+            }
+            return matDim;
         }
-        return m.pwr(2) == null ? null : MMult(m, m.invert());
+        if (m.pwr(2u) == null)
+        {
+            return null;
+        }
+        return MMult(m, m.invert());
     }
 
     [MirrorVerified("MatDimOperationsDifferentialTests")]
@@ -101,20 +112,26 @@ public abstract partial class MatDim
         return uniform_dim.make(common, dims.Length, dims.Length);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
-    public static MatDim makeRowDimension(Dim d1, Dim d2, int c) => make(RC.ROW, [d1, d2], c);
+    public static MatDim makeRowDimension(Dim d1, Dim d2, int c) => make(RC.ROW, new Dim[2] { d1, d2 }, c);
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim makeRowDimension(Dim d1, Dim[] d2, int c) => make(RC.ROW, Push(d1, d2), c);
     [MirrorAnalyzed("Mcd.MatDim")]
-    public static MatDim makeColDimension(Dim d1, Dim d2, int r) => make(RC.COL, [d1, d2], r);
+    public static MatDim makeColDimension(Dim d1, Dim d2, int r) => make(RC.COL, new Dim[2] { d1, d2 }, r);
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim makeColDimension(Dim d1, Dim[] d2, int r) => make(RC.COL, Push(d1, d2), r);
     [MirrorAnalyzed("Mcd.MatDim")]
     public static MatDim make(Dim[] rows, Dim[] cols)
     {
-        Dim common = Uniform(rows);
-        if (common != null) return make(RC.COL, Mult(common, cols), rows.Length);
-        common = Uniform(cols);
-        if (common != null) return make(RC.ROW, Mult(common, rows), cols.Length);
+        Dim dim = Uniform(rows);
+        if (dim != null)
+        {
+            return make(RC.COL, Mult(dim, cols), rows.Length);
+        }
+        Dim dim2 = Uniform(cols);
+        if (dim2 != null)
+        {
+            return make(RC.ROW, Mult(dim2, rows), cols.Length);
+        }
         return rc_dim.make_rc(rows, cols);
     }
     [MirrorAnalyzed("Mcd.MatDim")]
@@ -138,27 +155,46 @@ public abstract partial class MatDim
     [MirrorAnalyzed("Mcd.MatDim")]
     private static MatDim makeArrayDim(MatVal m)
     {
-        var rows = m.ColDimArray(0);
-        var cols = m.RowDimArray(0);
-        if (Uniform(rows) != null)
+        Dim[] array = m.ColDimArray(0);
+        Dim[] array2 = m.RowDimArray(0);
+        if (Uniform(array) != null)
         {
-            for (int c = 1; c < m.Cols; c++) if (Uniform(m.ColDimArray(c)) == null) return crazy_dim.make(m);
-            return c_dim.make(cols, rows.Length);
+            for (int i = 1; i < m.Cols; i++)
+            {
+                if (Uniform(m.ColDimArray(i)) == null)
+                {
+                    return crazy_dim.make(m);
+                }
+            }
+            return c_dim.make(array2, array.Length);
         }
-        if (Uniform(cols) != null)
+        if (Uniform(array2) != null)
         {
-            for (int r = 1; r < m.Rows; r++) if (Uniform(m.RowDimArray(r)) == null) return crazy_dim.make(m);
-            return r_dim.make(rows, cols.Length);
+            for (int j = 1; j < m.Rows; j++)
+            {
+                if (Uniform(m.RowDimArray(j)) == null)
+                {
+                    return crazy_dim.make(m);
+                }
+            }
+            return r_dim.make(array, array2.Length);
         }
-        if (rows == null || cols == null) return crazy_dim.make(m);
-        var factors = new Dim[m.Cols];
-        factors[0] = Dim.identity;
-        for (int c = 1; c < factors.Length; c++)
+        if (array == null || array2 == null)
         {
-            factors[c] = IsScalarMultiple(rows, m.ColDimArray(c));
-            if (factors[c] == null) return crazy_dim.make(m);
+            return crazy_dim.make(m);
         }
-        return rc_dim.make_rc(rows, factors);
+        Dim[] array3 = new Dim[m.Cols];
+        array3[0] = Dim.identity;
+        for (int k = 1; k < m.Cols; k++)
+        {
+            Dim dim = IsScalarMultiple(array, m.ColDimArray(k));
+            if (dim == null)
+            {
+                return crazy_dim.make(m);
+            }
+            array3[k] = dim;
+        }
+        return rc_dim.make_rc(array, array3);
     }
 
     [MirrorAnalyzed("Mcd.MatDim")]
