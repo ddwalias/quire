@@ -21,5 +21,18 @@ public static partial class BoundsHelper
             double num4 = CalculateY(num3);
             return new global::System.Windows.Point(num3, num4);
         }
+
+        public bool Contains(global::System.Windows.Point p)
+        {
+            double num = global::System.Math.Min(Begin.X, End.X);
+            double num2 = global::System.Math.Max(Begin.X, End.X);
+            double num3 = global::System.Math.Min(Begin.Y, End.Y);
+            double num4 = global::System.Math.Max(Begin.Y, End.Y);
+            if (num <= p.X && p.X <= num2 && num3 <= p.Y && p.Y <= num4)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

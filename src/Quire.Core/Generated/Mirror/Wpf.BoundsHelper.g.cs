@@ -32,8 +32,6 @@ public static partial class BoundsHelper
         [global::Quire.Mirror.MirrorStub]
         public global::System.Windows.Point Intersect(global::Quire.Wpf.BoundsHelper.Line line) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        public bool Contains(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public static global::System.Windows.Point Intersect(global::Quire.Wpf.BoundsHelper.Line l1, global::Quire.Wpf.BoundsHelper.Line l2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
