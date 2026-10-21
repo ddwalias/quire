@@ -14,8 +14,6 @@ public static partial class BoundsHelper
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point FindPointOnPathBetween(global::System.Windows.Rect box1, global::System.Windows.Rect box2, double gradient) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Point FindCenter(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Point IntersectRectangle(global::System.Windows.Rect rect, global::Quire.Wpf.BoundsHelper.Line intersectLine) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BoundsHelper+Line, Ptc.Core")]

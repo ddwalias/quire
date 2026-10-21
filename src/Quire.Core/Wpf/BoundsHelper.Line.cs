@@ -2,6 +2,15 @@ namespace Quire.Wpf;
 
 public static partial class BoundsHelper
 {
+    public static global::System.Windows.Point FindCenter(global::System.Windows.Rect rect)
+    {
+        double num = rect.Width / 2.0;
+        double num2 = rect.Height / 2.0;
+        global::System.Windows.Point topLeft = rect.TopLeft;
+        topLeft.Offset(num, num2);
+        return topLeft;
+    }
+
     private partial struct Line
     {
         public static Line CalculateLine(global::System.Windows.Point a, global::System.Windows.Point b)
