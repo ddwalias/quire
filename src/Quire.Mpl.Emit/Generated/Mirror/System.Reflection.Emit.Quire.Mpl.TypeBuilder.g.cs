@@ -14,7 +14,5 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public const int UnspecifiedTypeSize = 0;
     [global::Quire.Mirror.MirrorStub]
-    private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Linq;
 
 namespace System.Reflection.Emit.Quire.Mpl;
 
@@ -112,6 +113,15 @@ public partial class TypeBuilder
     public void SetParent(Type? parent)
     {
         throw new NotImplementedException();
+    }
+
+    private bool HasConstructor()
+    {
+        return _methodDefStore.Any((object item) =>
+        {
+            MethodBuilder methodBuilder = item as MethodBuilder;
+            return (methodBuilder is not null && methodBuilder.Name == ".ctor") || (item is ConstructorBuilder constructorBuilder && constructorBuilder.Name == ".ctor");
+        });
     }
 
     public MethodBuilder DefineMethod(string name, MethodAttributes attributes, CallingConventions callingConvention, Type? returnType, Type[]? parameterTypes)
