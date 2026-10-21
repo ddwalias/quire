@@ -11,22 +11,13 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IRegionPersistentData, Ptc.Core")]
 public partial interface IRegionPersistentData : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IDeS11NConsumer, global::Quire.IVisitableFunc<global::Quire.IVisitor, object>
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.UIElement Control { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Point Location { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> Children { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Exception DeserializationException { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::System.Exception> AllDeserializationExceptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool HasDeserializationErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.PersistentDataObjects.IRegionType RegionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    void Deserialize(global::Quire.PersistentDataObjects.IRegionType regionData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void DeserializeEpilog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Windows.UIElement Control { get; }
+    global::System.Windows.Point Location { get; set; }
+    global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> Children { set; }
+    global::System.Exception DeserializationException { set; }
+    global::System.Collections.Generic.IEnumerable<global::System.Exception> AllDeserializationExceptions { get; }
+    bool HasDeserializationErrors { get; }
+    global::Quire.PersistentDataObjects.IRegionType RegionData { get; }
+    void Deserialize(global::Quire.PersistentDataObjects.IRegionType regionData) ;
+    void DeserializeEpilog() ;
 }
