@@ -4,7 +4,9 @@
 
 The isolated Windows proof builds and runs: a managed .NET 10 consumer references a C++/CLI DLL, calls its public managed wrapper, and receives a result from native x64 code in that same DLL. REA identifies the output as `cpp-cli-mixed`, and Ghidra locates the native function in an executable section.
 
-This does **not** establish a viable same-DLL migration of `Quire.Engine.Utl`. The production C# project was left intact. No exact Release IL claim is made for a C++/CLI replacement. After integration, the existing C# project passed the documented Release IL validator against `main` at `26214212c3d6a388693089b68a8bc30704dc9a36`: 129 methods checked, 129 exact, zero failures. The local report is `.mirror-cache/release-il-0c6041e49e98/release-il.json`. This report validates the existing C# assembly only. `lane_merge.py` also passed after refreshing main; that commit changed no production project, so its gate correctly reported no production project changed.
+The first proof did not justify replacing `Quire.Engine.Utl`; I had not yet tested whether its C#-compiled IL could be retained inside the C++/CLI output. The follow-up module experiment below does test that route. It fails on .NET 10: a consumer cannot load the multi-module assembly. Rewriting the managed methods as C++/CLI could produce a mixed-mode DLL, but would be a new IL implementation and would not satisfy exact Release IL parity. Therefore the production C# project remains intact, and no same-DLL parity claim is made.
+
+The existing C# project passed the documented Release IL validator against `origin/main` at `782167ecb629d4dd23a7ebbc3f13b70bd73c5d8b`: 129 methods checked, 129 exact, zero failures. The local report is `.mirror-cache/release-il-7c28da18c9ea/release-il.json`. This validates the existing C# assembly only. The earlier `lane_merge.py` gate also passed and correctly reported no production project changed.
 
 The reference REA investigation found 55 native P/Invoke declarations, two IL P/Invokes, eight runtime-provided delegate methods, and 57 analyzed internal native procedures. Those procedures are C++/CLI, CRT, exception, allocation, security, and generated wrapper support; it identified no application-authored native algorithm to implement in Quire. The proof's addition routine exists only to exercise the native-to-managed call path. It is not proposed for production.
 
@@ -62,6 +64,19 @@ Ghidra 12.1.4 imported and analyzed the generated DLL as an x64 PE. It reported 
 
 `Ijwhost.dll` must ship beside the consuming managed application for the tested setup. Deployment must also provide the matching x64 .NET 10 runtime and MSVC/UCRT runtime components. The test machine already had the runtime DLLs installed, so deployment on a clean machine was not exercised. The Windows SDK desktop x64 library component is a build prerequisite and was incomplete on the host during the later rebuild attempt.
 
+## Why existing C# IL cannot be linked into this .NET 10 mixed-mode DLL
+
+To avoid rewriting the existing methods, I compiled a small C# type into `ModuleApi.netmodule`, attached that module to a manifest DLL with Roslyn's `/addmodule`, and referenced the DLL from a normal `net10.0-windows` consumer. The reproducible source and runner are in [`ModuleSpike`](../../../proofs/utl-mixed-mode/ModuleSpike/). The consumer build succeeds, but execution fails with:
+
+```text
+System.IO.FileLoadException: Could not load file or assembly 'ModuleApi.netmodule'.
+The module cannot be loaded because only single file assemblies are supported. (0x8013101E)
+```
+
+The same multi-module limitation applies to the C++ linker route: `/ASSEMBLYMODULE` imports a separate MSIL module into the assembly. Microsoft documents that assemblies consisting of multiple modules are unsupported on .NET 6 and later in [technologies unavailable on .NET 6+](https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable#loading-multi-module-assemblies) and describes the linker option in [MSVC linker options](https://learn.microsoft.com/en-us/cpp/build/reference/linker-options?view=msvc-170). The build proof targets .NET 10, so that route cannot ship the existing C# module beside the C++/CLI module and still load it as Quire's single assembly.
+
+This leaves two practical choices: keep C# and ship native code separately, or reauthor the managed methods for C++/CLI and accept that their generated IL must be independently compared and will not automatically preserve the existing Release IL. The requested same-DLL output and current exact-IL gate do not have a demonstrated supported bridge. The production project is therefore not converted in this change.
+
 ## Quire compatibility assessment
 
 The literal mixed-mode output can carry both native machine code and managed metadata, and the proof confirms that an ordinary managed .NET 10 consumer can call its managed surface. Microsoft's .NET C++/CLI model requires a Windows `.vcxproj` DLL using `CLRSupport=NetCore` / `/clr:netcore`; mixed managed and native functions are supported in one assembly. See [C++/CLI migration guidance](https://learn.microsoft.com/en-us/dotnet/core/porting/cpp-cli) and [mixed native and managed assemblies](https://learn.microsoft.com/en-us/cpp/dotnet/mixed-native-and-managed-assemblies?view=msvc-170).
@@ -70,10 +85,10 @@ What remains unproven for Quire is material:
 
 1. **Assembly identity and API:** the proof has another assembly name and version. A production project could configure the output name/version, but this work did not port Quire's 89 types and their managed declarations or compare its full public surface.
 2. **Project references:** `Quire.Engine`, `Quire.Engine.Native`, `Quire.Efi`, and `Quire.Mcd` currently reference `Quire.Engine.Utl.csproj`. Replacing that project with `.vcxproj` requires updating or deliberately preserving those reference paths. Those consumers are outside Lane D's edit scope, so no integration claim is made.
-3. **Exact Release IL:** C++/CLI emits compiler-authored managed wrappers and runtime support, while this proof's wrapper IL is already different in shape from ordinary C# compilation. The proof did not rebuild the existing C# members into the mixed-mode assembly, and exact parity for them has not been demonstrated.
+3. **Exact Release IL:** the standard C# module-link path is concretely rejected by the .NET 10 loader (`0x8013101E`). Reauthoring existing methods in C++/CLI would not retain their original C#-emitted IL. Exact parity for a rewritten full API has not been demonstrated.
 4. **Validator support:** `tools/validation/release_il.py` discovers production projects only from `src/*/*.csproj` (`production_projects`, line 34) and `build_and_scan` constructs `<project>.csproj` and invokes `dotnet build` (lines 113–116). It has no `.vcxproj` build path or candidate-project override. Therefore it cannot validate a C++/CLI replacement as written. This is a concrete validation blocker, not a failed IL comparison.
 
-The safe disposition for this batch is to retain the C# project, its passing Release IL state, and this proof. A future same-DLL migration needs an explicit way to retain the existing managed methods and compatible references, then a validator path that builds the `.vcxproj` and inspects the resulting assembly. Until those conditions are satisfied, do not describe `Quire.Engine.Utl.dll` as mixed-mode or claim same-DLL Release IL parity.
+The safe disposition is to retain the C# project and its passing Release IL state. A future same-DLL migration would require a supported single-file IL-preserving merge or a decision to relax exact IL parity, along with compatible consumer references and a validator path that builds the `.vcxproj`. Until then, `Quire.Engine.Utl.dll` remains C# and must not be described as mixed-mode.
 
 ## Original artifact handling
 
