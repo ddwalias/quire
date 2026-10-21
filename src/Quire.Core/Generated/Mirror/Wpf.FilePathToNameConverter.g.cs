@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.FilePathToNameConverter, Ptc.Core")]
 public partial class FilePathToNameConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Convert(string filePath, string fallbackName = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
