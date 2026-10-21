@@ -12,8 +12,6 @@ namespace Quire;
 public static partial class DebugTools
 {
     [global::Quire.Mirror.MirrorStub]
-    public const string DEBUG = "DEBUG";
-    [global::Quire.Mirror.MirrorStub]
     private static readonly object _loggingLockObj;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.List<string> _loggingData;

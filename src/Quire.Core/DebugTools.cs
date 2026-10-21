@@ -10,6 +10,9 @@ namespace Quire;
 public static partial class DebugTools
 {
     [MirrorVerified("Release IL")]
+    public const string DEBUG = "DEBUG";
+
+    [MirrorVerified("Release IL")]
     private static DateTime? _lastLogTime;
 
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]
