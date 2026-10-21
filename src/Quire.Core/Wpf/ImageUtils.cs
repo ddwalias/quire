@@ -58,4 +58,15 @@ public partial class ImageUtils
         bitmapImage.EndInit();
         return bitmapImage;
     }
+
+    [MirrorVerified("Release IL")]
+    public static VisualBrush CreateVisualBrush(Visual visual, Rect box, bool stretch = false)
+    {
+        return new VisualBrush(visual)
+        {
+            ViewboxUnits = BrushMappingMode.Absolute,
+            Stretch = (stretch ? Stretch.Uniform : Stretch.None),
+            Viewbox = box
+        };
+    }
 }

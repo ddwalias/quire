@@ -34,8 +34,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Media.Imaging.BitmapSource CreateBitmapFromVisual(double dpiX, double dpiY, global::System.Windows.Rect box, global::System.Windows.Media.Visual visual, bool coerceBoxPoints, global::System.Windows.Media.GeneralTransform transformToRoot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.VisualBrush CreateVisualBrush(global::System.Windows.Media.Visual visual, global::System.Windows.Rect box, bool stretch = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Uri CopyStreamToTempFile(global::System.IO.Stream source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CopyImageToTempBitmap(global::System.Uri sourceUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
