@@ -13,10 +13,6 @@ public static partial class StringExtension
 {
     [global::Quire.Mirror.MirrorStub]
     public static bool ContainsUnicodeCharOrSlash(this string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsAnyQuoteChar(this char toCheck) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsOpenCloseUnicodeQuoteChar(this char toCheck) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.StringExtension+QuotesType, Ptc.Core")]
     public enum QuotesType

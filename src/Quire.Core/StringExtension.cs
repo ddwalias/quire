@@ -1,5 +1,6 @@
 #nullable disable
 using System.Linq;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Quire.Mirror;
 
@@ -27,6 +28,25 @@ public static partial class StringExtension
 
     [MirrorVerified("Release IL")]
     public static bool IsStraightQuoteChar(this char toCheck) => toCheck == '"';
+
+    public static bool IsAnyQuoteChar(this char toCheck)
+    {
+        if (!toCheck.IsStraightQuoteChar())
+        {
+            return toCheck.IsOpenCloseUnicodeQuoteChar();
+        }
+        return true;
+    }
+
+    public static bool IsOpenCloseUnicodeQuoteChar(this char toCheck)
+    {
+        UnicodeCategory unicodeCategory = char.GetUnicodeCategory(toCheck);
+        if (unicodeCategory != UnicodeCategory.InitialQuotePunctuation)
+        {
+            return unicodeCategory == UnicodeCategory.FinalQuotePunctuation;
+        }
+        return true;
+    }
 
     public static bool IsWrappedWithQuotes(this string stringToCheck, QuotesType quotesType)
     {
