@@ -11,14 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.StrokeCharacter, Ptc.Media3D")]
 internal partial class StrokeCharacter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private int width;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Geometry geo;
-    [global::Quire.Mirror.MirrorStub]
-    public int Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Geometry Geometry { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public StrokeCharacter(int width, string strGeometry) { }
 }

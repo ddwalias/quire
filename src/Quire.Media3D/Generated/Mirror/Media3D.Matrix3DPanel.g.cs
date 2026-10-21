@@ -11,32 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.Matrix3DPanel, Ptc.Media3D")]
 public partial class Matrix3DPanel : global::System.Windows.FrameworkElement
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.UniformGrid unigrid;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey MatrixKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MatrixProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MinimumProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MaximumProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Matrix3D Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Minimum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Maximum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
-    public Matrix3DPanel() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void ScrollBarOnValueChanged(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
 }
