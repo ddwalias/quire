@@ -422,6 +422,21 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public string StyleKey
+    {
+        get
+        {
+            string text = (string)base.GetValue(StyleKeyProperty);
+            if (text != null)
+            {
+                return text;
+            }
+            return (string)base.GetValue(NameProperty);
+        }
+        set => SetValueSafely(StyleKeyProperty, value);
+    }
+
+    [MirrorVerified("Release IL")]
     public Nullable<Thickness> Margin { get => new Thickness?((Thickness)base.GetValue(MarginProperty)); set => SetValueSafely(MarginProperty, value); }
 
     [MirrorVerified("Release IL")]
