@@ -9,14 +9,8 @@
 namespace Quire.Calculation.Core.Trace2DResults;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorListResultNode, Ptc.Calculation.Core")]
-public partial class VectorListResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.IVectorListResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
+public partial class VectorListResultNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ResultValueType CommonValuesType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public VectorListResultNode(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> input, int singleVectorLength, global::Quire.Calculation.Core.VectorsType vectorsType = (global::Quire.Calculation.Core.VectorsType)(0)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.ResultValueType GetResultType(global::Quire.Calculation.Core.IListResultNode resultNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
