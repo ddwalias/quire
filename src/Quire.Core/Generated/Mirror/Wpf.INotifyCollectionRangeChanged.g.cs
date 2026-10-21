@@ -11,12 +11,8 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.INotifyCollectionRangeChanged, Ptc.Core")]
 public partial interface INotifyCollectionRangeChanged : global::System.Collections.IEnumerable, global::System.Collections.Specialized.INotifyCollectionChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    int Count() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsEmpty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanging;
+    event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler RangeChanged;
+    int Count();
+    bool IsEmpty();
 }

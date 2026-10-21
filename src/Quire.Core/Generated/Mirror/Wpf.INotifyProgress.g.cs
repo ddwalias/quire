@@ -11,18 +11,11 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.INotifyProgress, Ptc.Core")]
 public partial interface INotifyProgress
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsTrackingInProgress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.ComponentModel.ProgressChangedEventHandler ProgressChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::System.Action<bool> ProgressStopped { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void SetProgressAbortTimeout(int msThreshold) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void StartProgressTracking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void AbortProgressTracking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsProgressTrackingAborted() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsTrackingInProgress { get; }
+    event global::System.ComponentModel.ProgressChangedEventHandler ProgressChanged ;
+    event global::System.Action<bool> ProgressStopped ;
+    void SetProgressAbortTimeout(int msThreshold) ;
+    void StartProgressTracking() ;
+    void AbortProgressTracking() ;
+    bool IsProgressTrackingAborted() ;
 }
