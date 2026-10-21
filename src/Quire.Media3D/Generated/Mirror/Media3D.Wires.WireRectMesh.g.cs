@@ -11,8 +11,4 @@ namespace Quire.Media3D.Wires;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.Wires.WireRectMesh, Ptc.Media3D")]
 public partial class WireRectMesh : global::Quire.Media3D.WireFrame
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Generate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection lines) => base.Generate(args, lines);
-    [global::Quire.Mirror.MirrorStub]
-    public WireRectMesh() { }
 }

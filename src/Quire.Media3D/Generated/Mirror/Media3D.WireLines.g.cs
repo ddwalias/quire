@@ -11,12 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.WireLines, Ptc.Media3D")]
 public partial class WireLines : global::Quire.Media3D.WireBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LinesProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Point3DCollection Lines { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Generate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection lines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WireLines() { }
 }
