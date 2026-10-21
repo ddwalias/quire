@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.Discrete2DCoordinateConverter, Ptc.Core")]
 public partial class Discrete2DCoordinateConverter : global::System.ComponentModel.TypeConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public override object ConvertFrom(global::System.ComponentModel.ITypeDescriptorContext context, global::System.Globalization.CultureInfo culture, object value) => base.ConvertFrom(context, culture, value);
 }
