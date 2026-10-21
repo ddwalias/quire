@@ -13,8 +13,4 @@ public static partial class InlineExtensions
 {
     [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.DependencyPropertyKey IsSearchScopePropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.Inline InlineAt(this global::System.Windows.Documents.Inline inline, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Documents.InlineCollection Inlines(this global::System.Windows.Documents.Inline inline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
