@@ -2,6 +2,24 @@ namespace Quire.Wpf;
 
 public static partial class BoundsHelper
 {
+    public static global::System.Windows.Point FindPointOnPathBetween(global::System.Windows.Rect box1, global::System.Windows.Rect box2, double gradient)
+    {
+        if (box1 == box2)
+        {
+            throw new global::System.ArgumentException("Rectangles are identical");
+        }
+        if (box1.IntersectsWith(box2))
+        {
+            throw new global::System.ArgumentException("Rectangles overlap, there is no point 'between' them");
+        }
+        global::System.Windows.Point a = FindCenter(box1);
+        global::System.Windows.Point b = FindCenter(box2);
+        Line intersectLine = Line.CalculateLine(a, b);
+        global::System.Windows.Point a2 = IntersectRectangle(box1, intersectLine);
+        global::System.Windows.Point b2 = IntersectRectangle(box2, intersectLine);
+        return Line.CalculateLine(a2, b2).NPoint(gradient);
+    }
+
     public static global::System.Windows.Point FindCenter(global::System.Windows.Rect rect)
     {
         double num = rect.Width / 2.0;
