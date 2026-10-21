@@ -11,48 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.ViewportsListManager, Ptc.Media3D")]
 public partial class ViewportsListManager : global::Quire.Media3D.IViewportsListManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Media3D.ViewportsListManager Instance;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.List<global::System.WeakReference> _loadedViewportsNeverUseDirectly;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.List<global::System.WeakReference> _allViewportsNeverUseDirectly;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _renderingEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<global::System.WeakReference> LoadedViewports { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<global::System.WeakReference> AllViewportsAlive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool RenderingEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void AddToList(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveFromList(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private ViewportsListManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    private static void ReplaceLoadedViewports(global::System.Collections.Generic.List<global::System.WeakReference> loadedViewports) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void AddToLoadedViewports(global::System.WeakReference viewportRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RemoveFromLoadedViewports(global::System.WeakReference viewportRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ReplaceAllViewports(global::System.Collections.Generic.List<global::System.WeakReference> allViewports) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.WeakReference FindInAllViewports(object sender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnRendering(object sender, global::System.EventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnRendering() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RemoveOrRenderViewportRef(global::System.WeakReference weakReference, ref global::System.Collections.Generic.List<global::System.WeakReference> viewportsAlive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnRendering(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnRendering(global::System.Windows.DependencyObject visual2Or3D, global::System.Windows.Media.Media3D.Matrix3D matx) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnViewportLoaded(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnViewportUnloaded(object sender, global::System.Windows.RoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
