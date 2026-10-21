@@ -24,19 +24,7 @@ internal partial class ILCodeConverter
     [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _moduleBuilder;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Stack<global::System.Reflection.Emit.Quire.Mpl.TryCatchBlockInfo> _tryCatchStack;
-    [global::Quire.Mirror.MirrorStub]
-    public ILCodeConverter(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker referencesTracker, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.CommonMemberData commonMemberData) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Convert(global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ConvertEmit(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertEmitCall(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertDeclareLabel(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertMarkLabel(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ConvertBeginExceptionBlock(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
