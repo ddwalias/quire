@@ -14,4 +14,7 @@ public partial class Encryptor
 
     [MirrorVerified("PtcEncryptorMechanicalDifferentialTests")]
     public bool IsConnected { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public bool MatchesEncrypted(byte[] encryptedData, string data) => encryptedData.SequenceEqual(Encrypt(data));
 }
