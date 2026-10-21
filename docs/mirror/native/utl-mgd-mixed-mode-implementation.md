@@ -6,7 +6,7 @@ The Windows C++/CLI proof now includes a small port of `SafeWaitHandle`, `SafeEv
 
 This is a three-type feasibility spike, not a replacement for the 89-type C# assembly. Its shared methods retain matching metadata signatures, but their Release IL is different. It also drops the rest of the managed API and adds C++/CLI compiler support types. The production C# project remains intact; no same-DLL Release IL parity claim is made.
 
-The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passed: 129 methods checked, 129 exact, zero failures. The report is in the local ignored `.mirror-cache/release-il-28d8e663e644/release-il.json`. This validates the current C# project only. The validator accepts production `.csproj` projects and cannot build or select a `.vcxproj` candidate, so it did not validate the C++/CLI spike.
+The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. Its local report is `.mirror-cache/release-il-28d8e663e644/release-il.json`. The maintainer has added a C++/CLI candidate path; the spike was subsequently run through that gate and failed closed with 428 mismatches, detailed below.
 
 The reference REA report was not present in this worktree's `.mirror-cache/rea`, so I repeated the static boundary inspection against the supplied file. It matched the required SHA-256 and MVID. REA reported 55 native P/Invoke methods, two IL P/Invokes, eight runtime-provided methods (65 native-boundary rows total), and two module references. The native procedures are interop/runtime support, not an application-authored algorithm to port. The earlier addition routine exists only in the separate call-path proof; it is not proposed for production.
 
@@ -70,6 +70,28 @@ REA compared the spike with the current C# Release output by metadata signatures
 | AssemblyRef rows, C# / C++/CLI | 8 / 167 |
 
 The 18 signature matches are the methods from the three ported types. None retained identical C# Release IL. Most of the removed members belong to types not included in this deliberately limited spike; the removed list also includes implementation helpers in those three types. Added C++/CLI metadata includes compiler/runtime support. REA marked the overall comparison partial because some C++-generated metadata was not fully decoded. This is a failed full-assembly compatibility assessment, not an IL-parity pass.
+
+### Maintainer validator run
+
+The new candidate option builds the `.vcxproj` with MSBuild and sends its mixed-mode output through the unchanged Release IL comparison:
+
+```powershell
+python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
+```
+
+The command built both the C# base and the C++/CLI candidate, then returned `Release IL: FAIL; 136 checked`. The local report is `.mirror-cache/release-il-b8f81404f448/release-il.json`.
+
+| Validator result | Count |
+|---|---:|
+| Candidate methods checked | 136 |
+| Exact methods | 0 |
+| Unfinished candidate methods | 136 |
+| Total failures | 428 |
+| Existing methods absent from this three-type spike | 292 |
+| Global `<Module>` methods without a reviewed Mathcad binding | 87 |
+| Other methods without a Mathcad counterpart | 49 |
+
+The gate also reports failures among the three spike types: 3 `SafeEvent`, 6 `SafeMutex`, and 14 `SafeWaitHandle` methods lack Mathcad counterparts; three existing helper methods are absent. REA's separate C#-to-C++/CLI metadata comparison matched 18 signatures but found zero exact IL matches. The validator correctly keeps generated global methods and unbound candidate methods visible; no suppression or gate relaxation was added. This confirms that the current spike cannot replace the production assembly under the exact Release IL rule. The maintainer's `.vcxproj` build support is working; the candidate itself remains incomplete and non-parity.
 
 The assembly simple name and version can be set to match. The output still differs in architecture, CLI flags, references, MVID, and managed surface. Current consumers reference `Quire.Engine.Utl.csproj`; replacing it with this `.vcxproj` would require a repository-wide project-reference migration, which is outside this spike and Lane D's allowed edits.
 
@@ -141,9 +163,9 @@ What remains unproven for Quire is material:
 1. **Assembly identity and API:** the proof has another assembly name and version. A production project could configure the output name/version, but this work did not port Quire's 89 types and their managed declarations or compare its full public surface.
 2. **Project references:** `Quire.Engine`, `Quire.Engine.Native`, `Quire.Efi`, and `Quire.Mcd` currently reference `Quire.Engine.Utl.csproj`. Replacing that project with `.vcxproj` requires updating or deliberately preserving those reference paths. Those consumers are outside Lane D's edit scope, so no integration claim is made.
 3. **Exact Release IL:** the standard C# module-link path is concretely rejected by the .NET 10 loader (`0x8013101E`), and ILRepack cannot write a mixed-mode output. Reauthoring existing methods in C++/CLI would not retain their original C#-emitted IL. Exact parity for a rewritten full API has not been demonstrated.
-4. **Validator support:** `tools/validation/release_il.py` discovers production projects only from `src/*/*.csproj` (`production_projects`, line 34) and `build_and_scan` constructs `<project>.csproj` and invokes `dotnet build` (lines 113–116). It has no `.vcxproj` build path or candidate-project override. Therefore it cannot validate a C++/CLI replacement as written. This is a concrete validation blocker, not a failed IL comparison.
+4. **Validator support:** `tools/validation/release_il.py` now accepts `--candidate-vcxproj` for one production project and builds it in Release with MSBuild. The new path ran successfully against this spike and reported the concrete missing-method, unbound-method, and generated global-method failures above. A full C++/CLI candidate still needs complete managed coverage and exact IL before it can pass.
 
-The safe disposition is to retain the C# project and its passing Release IL state. A future same-DLL migration would require a supported single-file IL-preserving merge or a decision to relax exact IL parity, along with compatible consumer references and a validator path that builds the `.vcxproj`. Until then, `Quire.Engine.Utl.dll` remains C# and must not be described as mixed-mode.
+The safe disposition is to retain the C# project and its passing Release IL state. A future same-DLL migration would require a supported single-file IL-preserving merge or a decision to relax exact IL parity, plus complete API coverage and compatible consumer project references. Until then, the production `Quire.Engine.Utl.dll` remains C#; the separate spike is mixed-mode.
 
 ## Original artifact handling
 
