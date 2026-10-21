@@ -49,9 +49,16 @@ public abstract partial class Type
     private static Product.Power[] Take(Product.Power[] array, int start, int count)
     {
         if (start == 0 && count == array.Length) return array;
-        var slice = new Product.Power[count];
-        for (int i = 0; i < count; i++) slice[i] = array[start + i];
-        return slice;
+        Product.Power[] array2 = new Product.Power[count];
+        int num = 0;
+        int num2 = start;
+        while (num < count)
+        {
+            array2[num] = array[num2];
+            num++;
+            num2++;
+        }
+        return array2;
     }
 
     public abstract void Accept(Visitor _);
@@ -313,8 +320,14 @@ public abstract partial class Type
 
         /// <summary>The application, or <paramref name="type"/> itself when there are no operands.</summary>
         [MirrorVerified("TypeDifferentialTests")]
-        public Type NewApplication(Type type, Type[] operands) =>
-            operands == null || operands.Length == 0 ? type : new Application(type, operands);
+        public Type NewApplication(Type type, Type[] operands)
+        {
+            if (operands == null || operands.Length == 0)
+            {
+                return type;
+            }
+            return new Application(type, operands);
+        }
 
         /// <summary>An application of the bottom one of the top <paramref name="types"/> terms to the others.</summary>
         [MirrorVerified("TypeDifferentialTests")]
@@ -337,22 +350,33 @@ public abstract partial class Type
         }
 
         [MirrorVerified("TypeDifferentialTests")]
-        public Type NewFunction(Type domain, Type range) => new Application(NewConstant(">"), [domain, range]);
+        public Type NewFunction(Type domain, Type range)
+        {
+            Type o = NewConstant(">");
+            Type[] a = new Type[2] { domain, range };
+            return new Application(o, a);
+        }
 
         [MirrorVerified("TypeDifferentialTests")]
-        public Type NewList(Type element) => new Application(NewConstant("[]"), [element]);
+        public Type NewList(Type element)
+        {
+            Type o = NewConstant("[]");
+            Type[] a = new Type[1] { element };
+            return new Application(o, a);
+        }
 
         /// <summary>A product of the top <c>variables + constants</c> (base, exponent) pairs, in pushed order.</summary>
         [MirrorVerified("TypeDifferentialTests")]
         public Product NewProduct(int variables, int constants)
         {
-            var powers = new Product.Power[variables + constants];
-            for (int i = powers.Length - 1; i >= 0; i--)
+            int num = variables + constants;
+            Product.Power[] array = new Product.Power[num];
+            for (int num2 = num - 1; num2 >= 0; num2--)
             {
-                powers[i].Exponent = (int)m_stk.Pop();
-                powers[i].Base = (Type)m_stk.Pop();
+                array[num2].Exponent = (int)m_stk.Pop();
+                array[num2].Base = (Type)m_stk.Pop();
             }
-            return new Product(powers, variables);
+            return new Product(array, variables);
         }
     }
 
@@ -439,8 +463,12 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         public Type Parse()
         {
-            var domain = ParseApplication();
-            return GetNextTokenIf(">") ? m_fac.NewFunction(domain, Parse()) : domain;
+            Type type = ParseApplication();
+            if (GetNextTokenIf(">"))
+            {
+                return m_fac.NewFunction(type, Parse());
+            }
+            return type;
         }
 
         /// <summary>An atomic term followed by atomic operands while the next token can start one.</summary>
@@ -456,30 +484,52 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         private Type ParseAtomic()
         {
-            switch (GetNextToken())
+            char c = GetNextToken();
+            switch (c)
             {
                 case 'C':
                     return m_fac.NewConstant(m_val);
                 case 'a':
                     return m_fac.NewVariable(m_val);
                 case '[':
-                    var element = Parse();
+                {
+                    Type element = Parse();
                     SkipToken(']');
                     return m_fac.NewList(element);
+                }
                 case '{':
-                    // variable powers come first, then constant ones
-                    int variables = 0, constants = 0;
-                    for (; IsNextToken("a"); variables++) m_fac.Push(ParseAtomic(), ParseExponent());
-                    for (; IsNextToken("C"); constants++) m_fac.Push(ParseAtomic(), ParseExponent());
+                {
+                    int num2 = 0;
+                    int num3 = 0;
+                    while (IsNextToken("a"))
+                    {
+                        m_fac.Push(ParseAtomic(), ParseExponent());
+                        num2++;
+                    }
+                    while (IsNextToken("C"))
+                    {
+                        m_fac.Push(ParseAtomic(), ParseExponent());
+                        num3++;
+                    }
                     SkipToken('}');
-                    return m_fac.NewProduct(variables, constants);
+                    return m_fac.NewProduct(num2, num3);
+                }
                 case '(':
-                    if (GetNextTokenIf(")")) return m_fac.NewTuple(0);
-                    int count = 1;
+                {
+                    if (GetNextTokenIf(")"))
+                    {
+                        return m_fac.NewTuple(0);
+                    }
+                    int num = 1;
                     m_fac.Push(Parse());
-                    for (; GetNextTokenIf(","); count++) m_fac.Push(Parse());
+                    while (GetNextTokenIf(","))
+                    {
+                        m_fac.Push(Parse());
+                        num++;
+                    }
                     SkipToken(')');
-                    return m_fac.NewTuple(count);
+                    return m_fac.NewTuple(num);
+                }
                 default:
                     throw new Exception("ParseAtomic: syntax error");
             }
@@ -517,9 +567,12 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         private bool GetNextTokenIf(string tokens)
         {
-            if (!IsNextToken(tokens)) return false;
-            m_tok = '$';
-            return true;
+            if (IsNextToken(tokens))
+            {
+                m_tok = '$';
+                return true;
+            }
+            return false;
         }
 
         [MirrorVerified("TypeDifferentialTests")]
@@ -545,34 +598,47 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         public override void Visit(Application t)
         {
-            switch (t.Root)
+            char root = t.Root;
+            switch (root)
             {
                 case '(':
-                    bool first = true;
+                {
+                    bool flag = true;
                     m_out.Append('(');
-                    foreach (var operand in t.Operands)
+                    Type[] operands = t.Operands;
+                    foreach (Type t3 in operands)
                     {
-                        if (first) first = false;
-                        else m_out.Append(", ");
-                        Traverse(operand);
+                        if (flag)
+                        {
+                            flag = false;
+                        }
+                        else
+                        {
+                            m_out.Append(", ");
+                        }
+                        Traverse(t3);
                     }
                     m_out.Append(')');
                     break;
+                }
                 case '>':
                     Traverse(t.Operands[0]);
                     m_out.Append("->");
                     Traverse(t.Operands[1]);
                     break;
                 default:
+                {
                     m_out.Append('(');
                     Traverse(t.Operator);
-                    foreach (var operand in t.Operands)
+                    Type[] operands = t.Operands;
+                    foreach (Type t4 in operands)
                     {
                         m_out.Append(' ');
-                        Traverse(operand);
+                        Traverse(t4);
                     }
                     m_out.Append(')');
                     break;
+                }
             }
         }
 
@@ -670,21 +736,31 @@ public abstract partial class Type
         [MirrorVerified("TypeDifferentialTests")]
         private void OnFunction(Type t, int n)
         {
+            Application application;
             if (t.Root == '>')
             {
-                var app = t as Application;
-                m_fac.Push(app.Operands[0]);
-                OnFunction(app.Operands[1], n + 1);
+                application = t as Application;
+                m_fac.Push(application.Operands[0]);
+                OnFunction(application.Operands[1], n + 1);
                 return;
             }
-            m_out.Append("ƒ(");
-            var domains = m_fac.Pop(n);
-            for (int i = 0; i < domains.Length; i++)
+            bool flag = true;
+            m_out.Append("\u0192(");
+            Type[] array = m_fac.Pop(n);
+            for (int i = 0; i < array.Length; i++)
             {
-                if (i > 0) m_out.Append(", ");
-                Traverse(domains[i]);
+                Type t2 = array[i];
+                if (flag)
+                {
+                    flag = false;
+                }
+                else
+                {
+                    m_out.Append(", ");
+                }
+                Traverse(t2);
             }
-            m_out.Append(") → ");
+            m_out.Append(") \u2192 ");
             Traverse(t);
         }
 
@@ -698,11 +774,21 @@ public abstract partial class Type
                 m_out.Append("Unitless");
                 return;
             }
-            bool first = true;
-            foreach (var power in t.Variables)
+            bool flag = true;
+            Product.Power[] variables = t.Variables;
+            int i;
+            Product.Power power;
+            for (i = 0; i < variables.Length; i++)
             {
-                if (!first) m_out.Append(" · ");
-                first = false;
+                power = variables[i];
+                if (flag)
+                {
+                    flag = false;
+                }
+                else
+                {
+                    m_out.Append(" \u00b7 ");
+                }
                 Traverse(power.Base);
                 if (power.Exponent != 1)
                 {
@@ -710,15 +796,24 @@ public abstract partial class Type
                     m_out.Append(power.Exponent);
                 }
             }
-            foreach (var power in m_sys.Simplify(t).Powers)
+            Units.Power[] powers = m_sys.Simplify(t).Powers;
+            Units.Power power2;
+            for (i = 0; i < powers.Length; i++)
             {
-                if (!first) m_out.Append(" · ");
-                first = false;
-                m_out.Append(power.Base.Quantity);
-                if (power.Exponent != 1)
+                power2 = powers[i];
+                if (flag)
+                {
+                    flag = false;
+                }
+                else
+                {
+                    m_out.Append(" \u00b7 ");
+                }
+                m_out.Append(power2.Base.Quantity);
+                if (power2.Exponent != 1)
                 {
                     m_out.Append('^');
-                    m_out.Append(power.Exponent.ToString());
+                    m_out.Append(((Rational)power2.Exponent).ToString());
                 }
             }
         }
