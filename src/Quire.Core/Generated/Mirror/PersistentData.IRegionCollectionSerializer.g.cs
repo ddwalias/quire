@@ -11,12 +11,8 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IRegionCollectionSerializer, Ptc.Core")]
 public partial interface IRegionCollectionSerializer
 {
-    [global::Quire.Mirror.MirrorStub]
-    string RootNodeName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    string RootNodeName { get; }
+    global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get; set; }
+    global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) ;
+    void Deserialize(global::System.Xml.XmlElement regionCollectionXml, bool useOverrides) ;
 }

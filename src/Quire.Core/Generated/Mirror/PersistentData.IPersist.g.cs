@@ -11,6 +11,5 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IPersist, Ptc.Core")]
 public partial interface IPersist
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Guid GetClassID() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Guid GetClassID() ;
 }

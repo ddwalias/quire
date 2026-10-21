@@ -11,10 +11,7 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IProtectableDataType, Ptc.Core")]
 public partial interface IProtectableDataType
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool Protect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string XmlRootElementName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool Protect { get; }
+    string XmlRootElementName { get; }
+    global::System.Xml.Serialization.XmlSerializer GetXmlSerializer(bool useOverrides) ;
 }
