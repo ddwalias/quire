@@ -11,8 +11,6 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IObservableRangeCollection`1, Ptc.Core")]
 public partial interface IObservableRangeCollection<T> : global::System.Collections.Generic.ICollection<T>, global::System.Collections.Generic.IEnumerable<T>, global::System.Collections.IEnumerable, global::Quire.Wpf.INotifyCollectionRangeChanged<T>, global::Quire.Wpf.INotifyCollectionRangeChanged, global::System.Collections.Specialized.INotifyCollectionChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    void AddRange(global::System.Collections.Generic.IEnumerable<T> itemsToAdd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    int RemoveRange(global::System.Collections.Generic.IEnumerable<T> itemsToRemove) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void AddRange(global::System.Collections.Generic.IEnumerable<T> itemsToAdd);
+    int RemoveRange(global::System.Collections.Generic.IEnumerable<T> itemsToRemove);
 }
