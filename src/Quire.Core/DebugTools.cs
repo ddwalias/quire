@@ -46,4 +46,19 @@ public static partial class DebugTools
 
     [MirrorVerified("Release IL")]
     public static AssertionResult AssertNotNullDoNotThrow(object objectToCheck, string message = default, params object[] messageArgs) => DevAssert(objectToCheck != null, 1, AssertionModifiers.DoNotThrow, message, messageArgs);
+
+    [MirrorVerified("Release IL")]
+    public static TException AssertThrows<TException>(Action action) where TException : Exception
+    {
+        try
+        {
+            action();
+        }
+        catch (TException ex)
+        {
+            return ex;
+        }
+        FailAssertion("Expected exception was not thrown");
+        return default;
+    }
 }

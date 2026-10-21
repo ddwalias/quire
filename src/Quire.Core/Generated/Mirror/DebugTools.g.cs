@@ -28,8 +28,6 @@ public static partial class DebugTools
     [global::Quire.Mirror.MirrorStub]
     public static void LogData(string line, ref global::System.Nullable<global::System.DateTime> refTime) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static TException AssertThrows<TException>(global::System.Action action) where TException : global::System.Exception => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void FailAssertion(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void FailAssertionDoNotThrow(global::System.Exception ex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
