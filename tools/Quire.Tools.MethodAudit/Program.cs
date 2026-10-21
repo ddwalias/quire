@@ -116,6 +116,22 @@ var typeNames = new Dictionary<(string Assembly, string Name), string[]>();
 foreach (var artifact in quire)
     foreach (var t in artifact.Model.Types.Where(t => t.MirrorOf != null))
         typeNames.TryAdd((artifact.Name, t.FullName), t.MirrorOf!.Split(',').Select(s => s.Trim()).ToArray());
+// Synthesized types cannot carry a source MirrorOf. Inherit only an exact nested name
+// under a reviewed parent, and require a compiler-generated counterpart in that artifact.
+string[]? GeneratedBinding(Artifact artifact, TypeModel type)
+{
+    if (typeNames.TryGetValue((artifact.Name, type.FullName), out var own)) return own;
+    if (!type.CompilerGenerated || type.DeclaringType is not { } parentName) return null;
+    var parent = artifact.Model.Types.SingleOrDefault(t => t.FullName == parentName);
+    if (parent == null || GeneratedBinding(artifact, parent) is not { } binding
+        || !originals.TryGetValue(binding[1], out var original)) return null;
+    string nested = binding[0] + type.FullName[parentName.Length..];
+    if (!original.Model.Types.Any(t => t.FullName == nested && t.CompilerGenerated)) return null;
+    return typeNames[(artifact.Name, type.FullName)] = [nested, binding[1]];
+}
+foreach (var artifact in quire)
+    foreach (var type in artifact.Model.Types.Where(t => t.CompilerGenerated))
+        GeneratedBinding(artifact, type);
 var referenced = new Dictionary<string, AssemblyModel?>();
 var assemblyNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 // A type of a project not audited here (one a signature or a call names) maps through the reviewed type map, as its
@@ -155,6 +171,14 @@ TypeSig Map(TypeSig sig) => sig switch
     _ => sig
 };
 string Key(MethodModel m, bool map) => Signatures.Method(m.Name, m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
+string ComparisonKey(MethodModel m, bool map) => Signatures.Method(Canonical.MethodName(m, map ? Map : null),
+    m.GenericParams.Length, m.Params.Select(p => map ? Map(p.Type) : p.Type), map ? Map(m.Return) : m.Return, m.Static);
+var originalKeys = new Dictionary<(Artifact Artifact, int Token), string>();
+string OriginalKey(Artifact artifact, RawMethod raw)
+{
+    if (originalKeys.TryGetValue((artifact, raw.Token), out var key)) return key;
+    return originalKeys[(artifact, raw.Token)] = artifact.ComparisonKey(raw);
+}
 var matched = new List<(Artifact Artifact, RawMethod Raw, TypeModel Type, MethodModel Method, Artifact? Original, RawMethod? Counterpart)>();
 foreach (var artifact in quire)
     foreach (var raw in artifact.Methods)
@@ -165,12 +189,12 @@ foreach (var artifact in quire)
         var method = candidates.Single(m => Key(m, false) == raw.Key);
         RawMethod? counterpart = null;
         Artifact? original = null;
-        if (type.MirrorOf is { } mirror)
+        if (typeNames.TryGetValue((artifact.Name, type.FullName), out var fields))
         {
-            string[] fields = mirror.Split(',');
             if (originals.TryGetValue(fields[1].Trim(), out original))
             {
-                var sameKey = original.Methods.Where(m => m.Owner == fields[0].Trim() && m.Key == Key(method, true)).ToList();
+                var sameKey = original.Methods.Where(m => m.Owner == fields[0].Trim()
+                    && OriginalKey(original, m) == ComparisonKey(method, true)).ToList();
                 // Keys leave out custom modifiers, which C# cannot write (C++/CLI's IsLong, IsConst...). They only break a
                 // tie between originals that differ in nothing else, for the one whose modifiers are the Quire method's.
                 if (sameKey.Count > 1)
@@ -200,7 +224,9 @@ var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.P
 foreach (var (artifact, raw, type, method, original, counterpart) in matched)
 {
     if (selectedTypes.Count > 0 && !selectedTypes.Contains(raw.Owner)) continue;
-    bool wanted = diffs != null && diffs.Any(d => d == raw.Owner || d == $"{raw.Owner}::{raw.Name}" || d == $"{raw.Owner}::{raw.Key}");
+    string identity = artifact.ComparisonKey(raw);
+    bool wanted = diffs != null && diffs.Any(d => d == raw.Owner || d == $"{raw.Owner}::{raw.Name}"
+        || d == $"{raw.Owner}::{raw.Key}" || d == $"{raw.Owner}::{Canonical.MethodName(method)}" || d == $"{raw.Owner}::{identity}");
     if (diffs != null && !wanted) continue;
     var body = raw.BodyRva == 0 ? null : bodies[artifact].Body(MetadataTokens.MethodDefinitionHandle(raw.Token));
     List<string>? differences = null, diff = null;
@@ -230,7 +256,11 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         continue;
     }
     rows.Add(new {
-        id = artifact.Name + "::" + raw.Owner + "::" + raw.Key, project = artifact.Name, type = raw.Owner, signature = raw.Key, token = raw.Token, token_hex = $"0x{raw.Token:x8}",
+        // Stable across explicit-interface source qualifiers; retain the literal metadata
+        // signature separately so a spelling change does not look like a removed method.
+        id = artifact.Name + "::" + raw.Owner + "::" + identity, project = artifact.Name,
+        type = raw.Owner, signature = identity, declared_signature = raw.Key,
+        token = raw.Token, token_hex = $"0x{raw.Token:x8}",
         is_static = method.Static, is_constructor = method.IsConstructor, access = method.Access.ToString(),
         quire_sha256 = artifact.Hash, quire_mvid = artifact.Mvid,
         original = counterpart == null ? null : new { assembly = original!.Name, sha256 = original.Hash, mvid = original.Mvid,

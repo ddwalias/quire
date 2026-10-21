@@ -45,6 +45,18 @@ because Quire has its own assembly identities and metadata layout. Framework ass
 is normalized through framework type names. Unresolved compiler-generated members fail when
 changed; the workflow does not claim they have been compared.
 
+Generated nested types inherit the reviewed enclosing type's mapping only when the exact
+nested name exists as a compiler-generated type in the same original artifact. Unmapped
+or differently numbered helpers still fail; no generated body is exempted.
+Generated ordinals depend on member declaration order, including field declarations;
+align source order when the compiler emits different numeric suffixes.
+
+Explicit implementation names come from their MethodImpl interface identities. Inventory
+IDs/signatures use that canonical identity, while `declared_signature` retains the compiled
+spelling. Changing `global::` or namespace qualification therefore does not remove a method.
+Selectors accept both canonical and declared signatures.
+Field `ldtoken` operands include their field type and available RVA data hash in strict IL.
+
 ## Merge
 
 ```powershell

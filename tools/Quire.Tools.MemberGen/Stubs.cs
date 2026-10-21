@@ -27,10 +27,11 @@ static class Stubs
             var original = world.Mathcad(binding[1]);
             Pair Pair(string role, MethodModel m)
             {
-                string key = Key(world, m, false), mapped = Key(world, m, true);
+                string key = Key(world, m, false);
                 var q = quire.Methods.Single(r => r.Owner == t.FullName && r.Key == key);
+                string mapped = quire.ComparisonKey(q, world.ToMathcad);
                 // C++/CLI overloads can differ only in modifiers the key leaves out: such a counterpart is ambiguous.
-                var counterparts = original?.Methods.Where(r => r.Owner == binding[0] && r.Key == mapped).Take(2).ToList();
+                var counterparts = original?.Methods.Where(r => r.Owner == binding[0] && original.ComparisonKey(r) == mapped).Take(2).ToList();
                 return new(role, m, q, counterparts is [var only] ? only : null);
             }
             Stub Make(string kind, string name, IHasStatus member, List<Pair> methods) => new(kind, name, t, member, methods, binding[0], original);

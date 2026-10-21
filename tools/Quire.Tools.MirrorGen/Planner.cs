@@ -464,7 +464,7 @@ public sealed class HandWritten
     }
 
     public static string MethodKey(MethodModel m) =>
-        $"{m.Name}`{m.GenericParams.Length}({string.Join(",", m.Params.Select(p => p.Type))})";
+        $"{Canonical.MethodName(m)}`{m.GenericParams.Length}({string.Join(",", m.Params.Select(p => p.Type))})";
 
     private IEnumerable<MethodModel> HandMethods(TypeModel q) => Find(q) is { } t ? HandMethodsOf(t) : [];
 

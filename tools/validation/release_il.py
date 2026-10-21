@@ -49,7 +49,12 @@ def affected_projects(base, root=ROOT):
 
 def selected(row, types, methods):
     key = f"{row['type']}::{row['signature']}"
-    return row['type'] in types or key in methods or row['id'] in methods
+    aliases = {key, row['id']}
+    if declared := row.get('declared_signature'):
+        aliases.add(f"{row['type']}::{declared}")
+        if project := row.get('project'):
+            aliases.add(f"{project}::{row['type']}::{declared}")
+    return row['type'] in types or any(alias in methods for alias in aliases)
 
 
 def compare(before, after, types=(), methods=()):

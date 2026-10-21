@@ -159,7 +159,13 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 case OperandType.InlineType:
                 case OperandType.InlineTok:
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
-                    if (code == OpCodes.Ldtoken && token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference)
+                    if (code == OpCodes.Ldtoken && IsField(token))
+                    {
+                        operand = Field(token);
+                        if (releaseIl) operand += $" : {Render(FieldType(token))}{InitialData(token)}";
+                        fields.Add($"ldtoken {operand}");
+                    }
+                    else if (code == OpCodes.Ldtoken && token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
                         calls.Add($"ldtoken {operand = Method(token)}");
                     else if (code != OpCodes.Constrained && code != OpCodes.Ldobj && code != OpCodes.Stobj
                              && code != OpCodes.Initobj && code != OpCodes.Ldelema)
@@ -283,8 +289,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     break;
                 case OperandType.InlineMethod or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok:
                     var token = MetadataTokens.EntityHandle(il.ReadInt32());
-                    if (token.Kind is HandleKind.FieldDefinition || token.Kind is HandleKind.MemberReference
-                        && md.GetMemberReference((MemberReferenceHandle)token).GetKind() == MemberReferenceKind.Field)
+                    if (IsField(token))
                     {
                         text.Append(Field(token)).Append(' ').Append(Render(FieldType(token))).Append(InitialData(token));
                         string id = FieldId(token);
@@ -324,6 +329,10 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                 System.Text.RegularExpressions.Regex.Escape(form) + @"(?=[/\\]|$)", "<repo>");
         return literal;
     }
+
+    private bool IsField(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition
+        || handle.Kind == HandleKind.MemberReference
+        && md.GetMemberReference((MemberReferenceHandle)handle).GetKind() == MemberReferenceKind.Field;
 
     private TypeSig FieldType(EntityHandle handle) => handle.Kind == HandleKind.FieldDefinition
         ? md.GetFieldDefinition((FieldDefinitionHandle)handle).DecodeSignature(decoder, null)

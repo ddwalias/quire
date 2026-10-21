@@ -117,6 +117,16 @@ public sealed class TypeModel
 /// <summary>Canonical text for signatures: stable, comparable, and parseable for names with C++ punctuation.</summary>
 public static class Canonical
 {
+    /// <summary>Identify explicit implementations by their MethodImpl interface, not the compiler's
+    /// spelling of its prefix (global::, a simple name, or a mapped namespace).</summary>
+    public static string MethodName(MethodModel method, Func<TypeSig, TypeSig>? map = null)
+    {
+        if (method.Access != Access.Private || !method.Name.Contains('.') || method.Implements.Length != 1)
+            return method.Name;
+        var (iface, member) = method.Implements[0];
+        return $"{Write(map == null ? iface : map(iface))}.{member}";
+    }
+
     public static string Write(TypeSig t)
     {
         var sb = new StringBuilder();
