@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.DoubleToStringWithoutNotationConverter, Ptc.Core")]
 public partial class DoubleToStringWithoutNotationConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
     private const double ScientificNotationThreshold = 0.0001d;
 }
