@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-calc-core-20261021-c15.
+- Branch: mirror/c-calc-core-20261021-c17.
 - UTC start time: 2026-10-21T13:33:29Z.
 - Eight-hour deadline: 2026-10-21T21:33:29Z.
 - Current assembly: Quire.Calculation.Core (in progress).
@@ -39,6 +39,7 @@
     - Batch 11: ListResultNode<T> (abstract NeutralValue, abstract IsMeaningfulValue), Trace2DResultNode (.ctor, RangeAxisInfo, ResultAxisInfo, DataPoints, TraceResultType, Accept), Unit, ResolvedId, TraceErrorCodes (all const error codes), CalculatableInfoProperties, CalculationOptionNames, RedefinitionWarningMsgCodes, Support.CalculationPropertyNames, Support.RegexForRL.
     - Batch 12: DoubleListResultNode (const _neutralValue), StringListResultNode (const _neutralValue), UnitDescriptor (KeyPropertyName, QuantityPropertyName, CGS_Keys, RL_prefix).
     - Batch 13: ResultManager (all 22 methods including ReplaceCalculatableAndResult with <>c__DisplayClass12_0, ReplaceCalculatable with <>c__DisplayClass13_0, DispatchResult overloads, DispatchResultToDataExchange, ErrorHandlesToSerialNumber, SerialNumberToErrorHandles, VerifyNodeHandle, AddResult overloads, AddOldResult, Clear, CreateResultRef, CreateResultRefId, CreateOldResultRefId, SetResultByRefId, SetEngineResult, UpdateResultRef, FindCalculatable, PushResultsToOwners, .ctor, .cctor, Results property).
+    - Batch 14: CalculatableChildHider (all 20 methods and closures exact: .ctor overloads, Initialize with closures <>c__DisplayClass7_0 and <>c__DisplayClass7_1, IsHiddenFromCalculation, CalculatableChildren with iterator state machine <get_CalculatableChildren>d__10 and all 10 methods, ChildAdded with closure <>c__DisplayClass11_0, ChildRemoved with closure <>c__DisplayClass12_0, ChildMoved with closure <>c__DisplayClass13_0, SubscribeToPropertyChangedEvents, UnsubscribeFromPropertyChangedEvents, SubscribeToCalculatableContainerEvents, UnsubscribeFromCalculatableContainerEvents, HandleCalculatablePropertyChanged, HiddenStateChanged with closure <>c.<HiddenStateChanged>b__19_0, HandleCalculatableAddedToChildContainer, HandleCalculatableRemovedFromChildContainer, HandleCalculatableMovedInChildContainer, GetContainerChildren).
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
@@ -61,7 +62,7 @@
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
-  - Quire.Calculation.Core: PASS; 464 checked; 0 failures; exact bodies rose from 437 to 464 (+27 exact bodies); unfinished reduced from 359 to 337 (-22 unfinished).
+  - Quire.Calculation.Core: PASS; 492 checked; 0 failures; exact bodies rose from 464 to 492 (+28 exact bodies); unfinished reduced from 337 to 317 (-20 unfinished).
   - Quire.Media3D: PASS; 629 checked; 0 failures; exact bodies rose from 619 to 629 (+10 exact bodies); 5 unfinished remaining (blocked by legacy CSC conv.r8 double boxing and compiler closure ordinal shift). Complete for all actionable managed members.
 - Unfinished members:
   - Quire.Automation:
