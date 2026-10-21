@@ -17,6 +17,4 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.InterfaceMapping GetInterfaceMap(global::System.Type interfaceType) => base.GetInterfaceMap(interfaceType);
 }
