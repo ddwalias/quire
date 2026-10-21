@@ -21,6 +21,19 @@ public partial class WirePoints : WirePointBase
         set => SetValue(PositionsProperty, value);
     }
 
+    protected override void UpdateColor()
+    {
+        Material material = Tools3D.MaterialForColor(Color);
+        Model3DGroup model3DGroup = Content as Model3DGroup;
+        if (DebugTools.AssertNotNull(model3DGroup, null).Passed)
+        {
+            model3DGroup.Children.OfType<GeometryModel3D>().Each(delegate(GeometryModel3D model)
+            {
+                model.Material = material;
+            });
+        }
+    }
+
     private static void PositionsPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
     {
         WirePoints wirePoints = sender as WirePoints;

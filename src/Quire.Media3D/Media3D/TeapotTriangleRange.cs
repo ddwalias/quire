@@ -47,6 +47,30 @@ public partial class TeapotTriangleRange : Animatable
         End = end;
     }
 
+    public static TeapotTriangleRange Parse(string str)
+    {
+        string[] array = str.Split(' ', ',');
+        int num = 0;
+        int[] array2 = new int[2];
+        string[] array3 = array;
+        foreach (string text in array3)
+        {
+            if (text.Length > 0)
+            {
+                if (num == 2)
+                {
+                    throw new FormatException("Too many tokens in string.");
+                }
+                array2[num++] = int.Parse(text);
+            }
+        }
+        if (num != 2)
+        {
+            throw new FormatException("Not enough tokens in string.");
+        }
+        return new TeapotTriangleRange(array2[0], array2[1]);
+    }
+
     public override string ToString()
     {
         return string.Format("{0},{1}", Begin, End);

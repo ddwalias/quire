@@ -11,6 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.TeapotTriangleRange, Ptc.Media3D")]
 public partial class TeapotTriangleRange : global::System.Windows.Media.Animation.Animatable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Media3D.TeapotTriangleRange Parse(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

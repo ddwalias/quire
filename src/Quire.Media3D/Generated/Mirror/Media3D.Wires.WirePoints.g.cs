@@ -12,7 +12,5 @@ namespace Quire.Media3D.Wires;
 public partial class WirePoints : global::Quire.Media3D.Wires.WirePointBase
 {
     [global::Quire.Mirror.MirrorStub]
-    protected override void UpdateColor() => base.UpdateColor();
-    [global::Quire.Mirror.MirrorStub]
     protected override void Recalculate() => base.Recalculate();
 }
