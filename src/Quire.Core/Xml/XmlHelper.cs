@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using Quire.Mirror;
 
 namespace Quire.Xml;
@@ -25,6 +26,17 @@ public static partial class XmlHelper
             return null;
         }
         return element as XmlElement;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static XElement XmlNodeToXElement(XmlNode source)
+    {
+        XDocument document = new XDocument();
+        using (XmlWriter writer = document.CreateWriter())
+        {
+            source.WriteTo(writer);
+        }
+        return document.Root;
     }
 
     [MirrorVerified("Release IL")]

@@ -20,8 +20,6 @@ public static partial class XmlHelper
     [global::Quire.Mirror.MirrorStub]
     public static void UpdateToLowerCase(global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> elements, global::System.Collections.Generic.IEnumerable<string> names) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.Linq.XElement XmlNodeToXElement(global::System.Xml.XmlNode source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.XmlNode XElementToXmlNode(global::System.Xml.Linq.XElement source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void UpdateNameSpace(global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> elements, string newNameSpaceName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
