@@ -9,13 +9,13 @@ namespace Quire;
 public static partial class StringExtension
 {
     [MirrorVerified("PtcStringExtensionMechanicalDifferentialTests")]
-    private static Regex _invalidXmlChars;
+    private static Regex _invalidXmlChars = new("[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\uD800-\\uDFFF\\uFFFE\\uFFFF]+");
 
     [MirrorVerified("PtcStringExtensionMechanicalDifferentialTests")]
     public static string StripInvalidXmlChars(this string str) => _invalidXmlChars.Replace(str, "");
 
     [MirrorVerified("PtcStringExtensionMechanicalDifferentialTests")]
-    private static Regex _validXmlString;
+    private static Regex _validXmlString = new("^[\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD]*$");
 
     [MirrorVerified("PtcStringExtensionMechanicalDifferentialTests")]
     public static bool IsValidXmlString(this string str) => _validXmlString.IsMatch(str);
@@ -24,7 +24,7 @@ public static partial class StringExtension
     public static bool ContainsUnicodeCharOrSlash(this string str) => str.Any((char ch) => !IsAscii(ch) || ch.CompareTo('\\') == 0);
 
     [MirrorVerified("Release IL")]
-    private static int AsciiEndCode;
+    private static int AsciiEndCode = 127;
 
     [MirrorVerified("Release IL")]
     public static bool IsAscii(char c) => c <= AsciiEndCode;
