@@ -11,6 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.ParserContextFactory, Ptc.Core")]
 public static partial class ParserContextFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Markup.XamlTypeMapper _xamlMapper;
 }
