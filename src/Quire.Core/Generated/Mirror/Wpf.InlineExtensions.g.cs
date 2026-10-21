@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.InlineExtensions, Ptc.Core")]
 public static partial class InlineExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::System.Windows.DependencyPropertyKey IsSearchScopePropertyKey;
+    internal static readonly global::System.Windows.DependencyPropertyKey IsSearchScopePropertyKey = global::System.Windows.DependencyProperty.RegisterAttachedReadOnly("IsSearchScope", typeof(bool), typeof(global::System.Windows.Documents.Inline), new global::System.Windows.PropertyMetadata((object)false));
 }
