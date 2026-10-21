@@ -1,5 +1,6 @@
 #nullable disable
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -76,5 +77,34 @@ public static partial class DebugTools
             LogError(message ?? "Assertion Failed");
         }
         return AssertionResult.Get(value);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static void StartLogging(ref List<string> prevData)
+    {
+        if (_loggingLockObj == null)
+        {
+            return;
+        }
+        lock (_loggingLockObj)
+        {
+            prevData = _loggingData;
+            _loggingData = new List<string>();
+        }
+    }
+
+    [Conditional("DEBUG")]
+    [MirrorVerified("Release IL")]
+    public static void StopLogging(ref List<string> prevData)
+    {
+        if (_loggingLockObj == null)
+        {
+            return;
+        }
+        lock (_loggingLockObj)
+        {
+            prevData = _loggingData;
+            _loggingData = null;
+        }
     }
 }

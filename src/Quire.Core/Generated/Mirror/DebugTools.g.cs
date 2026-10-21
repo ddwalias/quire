@@ -20,10 +20,6 @@ public static partial class DebugTools
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::System.DateTime> _lastLogTime;
     [global::Quire.Mirror.MirrorStub]
-    public static void StartLogging(ref global::System.Collections.Generic.List<string> prevData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void StopLogging(ref global::System.Collections.Generic.List<string> prevData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Nullable<global::System.DateTime> LogData(string line) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void LogData(string line, ref global::System.Nullable<global::System.DateTime> refTime) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
