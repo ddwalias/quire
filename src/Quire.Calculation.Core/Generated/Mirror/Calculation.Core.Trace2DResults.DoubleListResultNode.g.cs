@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.DoubleListResultNode, Ptc.Calculation.Core")]
 public partial class DoubleListResultNode : global::Quire.Calculation.Core.Trace2DResults.ListResultNode<double>, global::Quire.Calculation.Core.IDoubleListResultNode, global::Quire.Calculation.Core.IListResultNode<double>, global::Quire.Calculation.Core.IListResultNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const double _neutralValue = double.NaN;
 }

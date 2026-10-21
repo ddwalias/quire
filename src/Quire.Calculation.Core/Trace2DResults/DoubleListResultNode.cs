@@ -7,6 +7,8 @@ namespace Quire.Calculation.Core.Trace2DResults;
 
 public partial class DoubleListResultNode
 {
+    private const double _neutralValue = double.NaN;
+
     public DoubleListResultNode(double paddingValue, int length)
         : base((IList<double>)new List<double>(length), paddingValue.IsValid() ? length : 0)
     {
