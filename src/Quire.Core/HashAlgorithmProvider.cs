@@ -9,6 +9,37 @@ namespace Quire;
 
 public partial class HashAlgorithmProvider
 {
+    private static HashAlgorithm _hashAlgorithm;
+
+    private static HashAlgorithm Sha256Service
+    {
+        get
+        {
+            if (_hashAlgorithm != null)
+            {
+                _hashAlgorithm.Initialize();
+            }
+            else
+            {
+                _hashAlgorithm = CreateHash();
+            }
+            return _hashAlgorithm;
+        }
+    }
+
+    private static HashAlgorithm CreateHash()
+    {
+        try
+        {
+            return SHA256.Create();
+        }
+        catch (Exception)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return new SHA256Managed();
+        }
+    }
+
     [MirrorVerified("PtcHashAlgorithmProviderMechanicalDifferentialTests")]
     public HashAlgorithm GetDisposableHash() => CreateHash();
 
@@ -23,4 +54,5 @@ public partial class HashAlgorithmProvider
 
     [MirrorVerified("Release IL")]
     public byte[] ComputeHash(byte[] sourceBytes) => Sha256Service.ComputeHash(sourceBytes);
+
 }
