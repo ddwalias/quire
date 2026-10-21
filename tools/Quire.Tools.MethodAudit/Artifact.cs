@@ -6,9 +6,25 @@ using System.Security.Cryptography;
 using Quire.Tools.MirrorGen;
 
 /// <summary><paramref name="Modifiers"/>: the custom modifiers of the return type and each parameter, which the key leaves
-/// out (see ModifierProvider).</summary>
+/// out (see ModifierProvider). <paramref name="Import"/>: the P/Invoke metadata of a pinvokeimpl method, which has no
+/// IL body to compare.</summary>
 sealed record RawMethod(string Owner, string Name, string Key, int Token, string Access, bool Abstract, int BodyRva,
-    string Modifiers = "", int? MaxStack = null);
+    string Modifiers = "", int? MaxStack = null, PInvoke? Import = null);
+/// <summary>What metadata records of a P/Invoke beside its name and parameter types: the method and implementation
+/// flags, the signature calling convention, and the ImplMap module, entry point and import attributes.</summary>
+sealed record PInvoke(MethodAttributes Attributes, MethodImplAttributes ImplAttributes, SignatureHeader Header,
+    string Module, string EntryPoint, MethodImportAttributes ImportAttributes)
+{
+    public IEnumerable<string> Differences(PInvoke other)
+    {
+        if (Attributes != other.Attributes) yield return $"method flags {Attributes} vs {other.Attributes}";
+        if (ImplAttributes != other.ImplAttributes) yield return $"implementation flags {ImplAttributes} vs {other.ImplAttributes}";
+        if (Header != other.Header) yield return $"signature header {Header} vs {other.Header}";
+        if (Module != other.Module) yield return $"module {Module} vs {other.Module}";
+        if (EntryPoint != other.EntryPoint) yield return $"entry point {EntryPoint} vs {other.EntryPoint}";
+        if (ImportAttributes != other.ImportAttributes) yield return $"import attributes {ImportAttributes} vs {other.ImportAttributes}";
+    }
+}
 sealed class Artifact
 {
     private readonly Dictionary<int, MethodModel[]> methodModels = [];
@@ -143,8 +159,12 @@ sealed class Artifact
                 string modifiers = string.Join(";", new[] { modified.ReturnType }.Concat(modified.ParameterTypes)
                     .Select(t => string.Join(" ", ModifierProvider.Modifier.Matches(t).Select(x => x.Value))));
                 int? maxStack = ReadMaxStack(Pe, m.RelativeVirtualAddress);
+                PInvoke? import = null;
+                if ((m.Attributes & MethodAttributes.PinvokeImpl) != 0 && m.GetImport() is { Module.IsNil: false } map)
+                    import = new(m.Attributes, m.ImplAttributes, sig.Header, md.GetString(md.GetModuleReference(map.Module).Name),
+                        md.GetString(map.Name), map.Attributes);
                 Methods.Add(new(owner, name, key, MetadataTokens.GetToken(mh), access,
-                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack));
+                    (m.Attributes & MethodAttributes.Abstract) != 0, m.RelativeVirtualAddress, modifiers, maxStack, import));
             }
         }
     }

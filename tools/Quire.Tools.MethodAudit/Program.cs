@@ -256,6 +256,15 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
             differences = [$"IL unreadable: {e.Message}"];
         }
     }
+    // A P/Invoke has no IL body: its metadata is the whole member. Its name and parameter types already paired it.
+    else if (counterpart != null && (raw.Import != null || counterpart.Import != null))
+    {
+        differences = raw.Import == null || counterpart.Import == null
+            ? [$"P/Invoke in {(raw.Import == null ? "Mathcad" : "Quire")} only"]
+            : [.. raw.Import.Differences(counterpart.Import)];
+        if (raw.Modifiers != counterpart.Modifiers) differences.Add($"custom modifiers {raw.Modifiers} vs {counterpart.Modifiers}");
+        exact = differences.Count == 0;
+    }
     if (wanted)
     {
         shown++;
