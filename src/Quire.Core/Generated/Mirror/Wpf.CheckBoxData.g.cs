@@ -13,10 +13,6 @@ public partial class CheckBoxData : global::System.ComponentModel.INotifyPropert
 {
     [global::Quire.Mirror.MirrorStub]
     private bool _isChecked;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.CheckBoxData+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
