@@ -8,6 +8,8 @@ namespace Quire;
 
 public partial class DoubleComparer
 {
+    public static readonly DoubleComparer DefaultDoubleComparer = new DoubleComparer();
+
     [MirrorVerified("PtcDoubleComparerMechanicalDifferentialTests")]
     private DoubleComparer() : this(1E-10) { }
 
