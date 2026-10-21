@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.IO;
 using System.IO.Packaging;
 using System.IO;
@@ -11,6 +12,7 @@ using Quire.Mirror;
 using Quire.Mirror;
 using Quire.Serialization;
 using Quire.Serialization;
+using Quire.Wpf;
 
 namespace Quire.PersistentDataObjects;
 
@@ -30,6 +32,15 @@ public partial class pictureType
 
     [MirrorVerified("PtcPersistentDataObjectspictureTypeMechanicalDifferentialTests")]
     public string PackProtectedPart(Stream content, string uniqueId, string regionType) => throw new NotImplementedException();
+
+    [MirrorVerified("Release IL")]
+    public string PackImage(ImagePackagingInformation pictureInfo)
+    {
+        pictureInfo.ImageExtension = Enum.GetName(typeof(ItemChoiceType), ItemElementName);
+        pictureInfo.ImageSourceUri = PictureSourceUri;
+        pictureInfo.Image = ImageUtils.CreateBitmapImageWithCacheOptions(PictureSourceUri);
+        return S11NProvider.PackImageExt(pictureInfo);
+    }
 
     [MirrorVerified("PtcPersistentDataObjectspictureTypeMechanicalDifferentialTests")]
     private basePictureType itemField;
