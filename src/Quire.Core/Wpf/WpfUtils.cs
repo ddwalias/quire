@@ -248,4 +248,20 @@ public static partial class WpfUtils
             Mouse.OverrideCursor = null;
         }
     }
+
+    public static bool IsAncestorOf(DependencyObject possibleAncestor, DependencyObject element)
+    {
+        try
+        {
+            while (element != possibleAncestor && element != null)
+            {
+                element = VisualTreeHelper.GetParent(element);
+            }
+            return element != null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
