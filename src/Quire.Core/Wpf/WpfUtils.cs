@@ -394,4 +394,16 @@ public static partial class WpfUtils
             fieldInfo.SetValue(InputManager.Current, InputManager.Current.PrimaryKeyboardDevice);
         }
     }
+
+    public static void ClearValuePreserveBinding(FrameworkElement element, DependencyProperty dependencyProperty, object defaultValue)
+    {
+        if (global::System.Windows.Data.BindingOperations.IsDataBound(element, dependencyProperty))
+        {
+            element.SetValue(dependencyProperty, defaultValue);
+        }
+        else
+        {
+            element.ClearValue(dependencyProperty);
+        }
+    }
 }
