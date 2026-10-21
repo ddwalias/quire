@@ -11,12 +11,8 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ITextStyleObject, Ptc.Core")]
 public partial interface ITextStyleObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string StyleKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string BasedOnKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.TextDecorationCollection TextDecorations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    string Name { get; set; }
+    string StyleKey { get; set; }
+    string BasedOnKey { get; set; }
+    global::System.Windows.TextDecorationCollection TextDecorations { get; set; }
 }

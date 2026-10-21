@@ -11,66 +11,35 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ITextStyle, Ptc.Core")]
 public partial interface ITextStyle : global::Quire.ITextStyleObject
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Style Style { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Weight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.Thickness> Margin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    double Stretch { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<double> TextIndent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.FontFamily FontFamily { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.FontWeight> FontWeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.FontVariants> FontVariants { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.FontStyle> FontStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<double> FontSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Bold { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Normal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Italic { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Oblique { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.TextMarkerStyle> MarkerStyle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.TextEffectCollection TextEffects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.BaselineAlignment> BaselineAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::System.Windows.TextAlignment> TextAlignment { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<global::Quire.Core.TextAlignmentExt> TextAlignmentExt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Brush Foreground { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool Condenst { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> GetSetters(global::System.Windows.Style textStyle, global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> setterCollection, bool isInherited = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object GetSetterValue(string propertyName, bool isFixInHeritage = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void UpdateBasedOn(global::Quire.ITextStyle basedOn, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> stylesCollection, bool isFixInHeritage = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsDeletedProperty(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsModifyProperty(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsModifyPropertyCollection(string propertyName, global::System.Collections.ICollection value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsModifyPropertyString(string propertyName, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool IsModifyProperty(string propertyName, double value, double tolerance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void MergeBasedOn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::System.Windows.Style Style { get; }
+    double Weight { get; }
+    global::System.Nullable<global::System.Windows.Thickness> Margin { get; set; }
+    double Stretch { get; }
+    global::System.Nullable<double> TextIndent { get; set; }
+    global::System.Windows.Media.FontFamily FontFamily { get; set; }
+    global::System.Nullable<global::System.Windows.FontWeight> FontWeight { get; set; }
+    global::System.Nullable<global::System.Windows.FontVariants> FontVariants { get; set; }
+    global::System.Nullable<global::System.Windows.FontStyle> FontStyle { get; set; }
+    global::System.Nullable<double> FontSize { get; set; }
+    bool Bold { get; }
+    bool Normal { get; }
+    bool Italic { get; }
+    bool Oblique { get; }
+    global::System.Nullable<global::System.Windows.TextMarkerStyle> MarkerStyle { get; set; }
+    global::System.Windows.Media.TextEffectCollection TextEffects { get; }
+    global::System.Nullable<global::System.Windows.BaselineAlignment> BaselineAlignment { get; set; }
+    global::System.Nullable<global::System.Windows.TextAlignment> TextAlignment { get; set; }
+    global::System.Nullable<global::Quire.Core.TextAlignmentExt> TextAlignmentExt { get; }
+    global::System.Windows.Media.Brush Background { get; set; }
+    global::System.Windows.Media.Brush Foreground { get; set; }
+    bool Condenst { get; }
+    global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> GetSetters(global::System.Windows.Style textStyle, global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> setterCollection, bool isInherited = false) ;
+    object GetSetterValue(string propertyName, bool isFixInHeritage = false) ;
+    void UpdateBasedOn(global::Quire.ITextStyle basedOn, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> stylesCollection, bool isFixInHeritage = true) ;
+    bool IsDeletedProperty(string propertyName, object value) ;
+    bool IsModifyProperty(string propertyName, object value) ;
+    bool IsModifyPropertyCollection(string propertyName, global::System.Collections.ICollection value) ;
+    bool IsModifyPropertyString(string propertyName, object value) ;
+    bool IsModifyProperty(string propertyName, double value, double tolerance) ;
+    void MergeBasedOn() ;
 }
