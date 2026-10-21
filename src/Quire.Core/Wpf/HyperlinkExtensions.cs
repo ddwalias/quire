@@ -9,6 +9,12 @@ namespace Quire.Wpf;
 public static partial class HyperlinkExtensions
 {
     [MirrorVerified("Release IL")]
+    public static void ClearForegroundInDepth(this Hyperlink link)
+    {
+        link.ClearLocalValuesRecursively(TextElement.ForegroundProperty);
+    }
+
+    [MirrorVerified("Release IL")]
     public static void ResetLinkStyleProps(this Hyperlink link)
     {
         link.ClearValue(TextElement.ForegroundProperty);
