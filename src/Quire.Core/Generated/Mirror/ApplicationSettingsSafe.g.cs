@@ -13,7 +13,36 @@ public abstract partial class ApplicationSettingsSafe : global::System.Configura
 {
     public override object this[string propertyName]
     {
-        get => base[propertyName];
+        get
+        {
+            if (FallbackValues.TryGetValue(propertyName, out var value))
+            {
+                return value;
+            }
+
+            try
+            {
+                return base[propertyName];
+            }
+            catch (global::System.Configuration.ConfigurationErrorsException)
+            {
+                global::System.Reflection.PropertyInfo property = GetType().GetProperty(propertyName);
+                if (property != null)
+                {
+                    string text = (global::System.Reflection.CustomAttributeExtensions.GetCustomAttribute(property, typeof(global::System.Configuration.DefaultSettingValueAttribute)) as global::System.Configuration.DefaultSettingValueAttribute)?.Value;
+                    if (text is not null)
+                    {
+                        global::System.ComponentModel.TypeConverter converter = global::System.ComponentModel.TypeDescriptor.GetConverter(property.PropertyType);
+                        if (converter.CanConvertFrom(text.GetType()))
+                        {
+                            FallbackValues[propertyName] = value = converter.ConvertFrom(text);
+                        }
+                    }
+                }
+
+                return value;
+            }
+        }
         set
         {
             try
