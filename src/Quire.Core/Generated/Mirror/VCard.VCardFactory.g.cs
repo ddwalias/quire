@@ -11,6 +11,4 @@ namespace Quire.VCard;
 [global::Quire.Mirror.MirrorOf("Ptc.VCard.VCardFactory, Ptc.Core")]
 public partial class VCardFactory
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.VCard.VCard GetInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
