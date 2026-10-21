@@ -788,8 +788,22 @@ public partial class XmlUtils
         s_TestNum = 0;
         s_TestPos = 0;
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static void TestCheck(string str, bool result, bool expected_result, int expected_pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void TestCheck(string str, bool result, bool expected_result, int expected_pos)
+    {
+        if (result != expected_result)
+        {
+            global::System.Console.WriteLine("Test #{0} failed. res={1}, expected={2}, pos={3}", s_TestNum, result, expected_result, s_TestPos);
+        }
+        else if (!expected_result || s_TestPos != expected_pos)
+        {
+            global::System.Console.WriteLine("Test #{0} failed. pos={1}, expected={2}", s_TestNum, s_TestPos, expected_pos);
+        }
+        else
+        {
+            s_TestsPassed++;
+        }
+        BumpTest();
+    }
     public static void TestCheck(bool b)
     {
         if (b)
@@ -809,7 +823,43 @@ public partial class XmlUtils
         string text = (s_TestsPassed == s_TestsDone) ? "Passed." : "Failed.";
         global::System.Console.WriteLine("{0} {1}/{2} tests succeeded.", text, s_TestsPassed, s_TestsDone);
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static void SelfTest(string[] ignored_data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void SelfTest(string[] ignored_data)
+    {
+        TestInit();
+        string str;
+        TestCheck(str = "<!--foo-->a", SkipSgmlComment(str, ref s_TestPos), true, 10);
+        TestCheck(str = "<!--foo>-->a", SkipSgmlComment(str, ref s_TestPos), true, 11);
+        TestCheck(str = "<!--foo<-->a", SkipSgmlComment(str, ref s_TestPos), true, 11);
+        TestCheck(str = "<![CDATA[foo]]>a", SkipCDATA(str, ref s_TestPos), true, 15);
+        TestCheck(str = "<![CDATA[foo]>]]>a", SkipCDATA(str, ref s_TestPos), true, 17);
+        TestCheck(str = "<![CDATA[foo]]]]>a", SkipCDATA(str, ref s_TestPos), true, 17);
+        TestCheck(str = "<![CDATA[foo]>]]]>a", SkipCDATA(str, ref s_TestPos), true, 18);
+        TestCheck(str = "<x>foo</x>a", SkipElement(str, ref s_TestPos), true, 10);
+        TestCheck(str = "<x>foo</x>a", SkipElement(str, ref s_TestPos), true, 10);
+        TestCheck(str = "<x>foo<y/></x>a", SkipElement(str, ref s_TestPos), true, 14);
+        TestCheck(str = "<x>foo<y></x>a", SkipElement(str, ref s_TestPos), true, 13);
+        TestCheck(str = "<x>foo<x/>bar</x>a", SkipElement(str, ref s_TestPos), true, 17);
+        TestCheck(str = "<x>foo<x>bar</x>baz</x>a", SkipElement(str, ref s_TestPos), true, 23);
+        TestCheck(str = "<x foo=\"xxx\"/>abc</x>", SkipElement(str, ref s_TestPos), true, 14);
+        TestCheck(str = "<x foo='xxx'/>abc</x>", SkipElement(str, ref s_TestPos), true, 14);
+        TestCheck(EquivalentXml("<foo x='3'   y='4' />", "<foo x='3' y='4'   />"));
+        TestCheck(EquivalentXml("<foo  x='3'  >  <bar xml:space=\"preserve\">  abc </bar> </foo>", "<foo x='3'><bar xml:space=\"preserve\">  abc </bar></foo>"));
+        TestCheck(TightenXmlWhitespace("<foo x='3'   y='4' />") == "<foo x='3' y='4' />");
+        TestCheck(TightenXmlWhitespace("<foo  x='3'  >  <bar xml:space=\"preserve\">  abc </bar> </foo>") == "<foo x='3'><bar xml:space=\"preserve\">  abc </bar></foo>");
+        TestCheck(TightenXmlWhitespace("<foo  x='3'  >  <bar >  abc\n   def   </bar> </foo>") == "<foo x='3'><bar>abc def</bar></foo>");
+        TestFinalize();
+        string text = "<x y=\"alpha\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q/></x>";
+        string text2 = "<x xmlns=\"foo\" y=\"alpha\" xmlns:zip=\"xyz\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q xmlns:zing=\"hm\"/></x>";
+        global::System.Console.WriteLine("Trying Xmlns tests...");
+        string text3 = StripXmlnsAttrs(text2);
+        if (text3.Equals(text))
+        {
+            global::System.Console.WriteLine("OK: {0} ==> {1}", text2, text3);
+        }
+        else
+        {
+            global::System.Console.WriteLine("FAILED: {0} != {1}", text3, text);
+        }
+    }
     public XmlUtils() { }
 }

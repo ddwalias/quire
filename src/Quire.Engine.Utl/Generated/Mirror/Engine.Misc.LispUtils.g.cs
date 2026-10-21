@@ -23,8 +23,13 @@ public partial class LispUtils
     private static char s_CommentChar = ';';
     private static char[] s_SymbolSeps = "{:".ToCharArray();
     private static string[] s_Definers = "define|global|define-eval|lambda".Split("|".ToCharArray());
-    [global::Quire.Mirror.MirrorStub]
-    public static void badSyntax(string msg, string str, int pos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void badSyntax(string msg, string str, int pos)
+    {
+        string nearby_text;
+        int num = global::Quire.Engine.Misc.FileUtils.ComputeLineNumber(str, pos, out nearby_text);
+        global::System.Console.WriteLine("Bad syntax ({0}) @ pos={1} line={2}\n Context (line {2}): {3}", msg, pos, num, nearby_text);
+        throw new global::System.Exception("bad_syntax");
+    }
     private static void Dbg(string str)
     {
         if (s_Debug)
@@ -408,8 +413,102 @@ public partial class LispUtils
         }
         return op_name;
     }
-    [global::Quire.Mirror.MirrorStub]
-    private static void PrettyStringWorker(string exp, bool top, ref int spos, ref int epos, int indent, global::System.IO.TextWriter writer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void PrettyStringWorker(string exp, bool top, ref int spos, ref int epos, int indent, global::System.IO.TextWriter writer)
+    {
+        int num = 0;
+        int num2 = global::System.Int32.MaxValue;
+        bool flag = false;
+        while (findExpressionStart(exp, ref spos))
+        {
+            if ((num > 0) & top)
+            {
+                throw new global::System.Exception("More than one expression");
+            }
+            int endPos = spos;
+            if (exp[spos] == s_CloseParen)
+            {
+                if (top)
+                {
+                    throw new global::System.Exception("Extra close paren at top level.");
+                }
+                return;
+            }
+            if (exp[spos] == s_CommentChar)
+            {
+                throw new global::System.Exception("Pretty printer doesn't handle comments.");
+            }
+            if (!scanExpression(exp, ref spos, out endPos))
+            {
+                throw new global::System.Exception("Incomplete expression.");
+            }
+            if (flag)
+            {
+                IndentTo(indent, writer);
+            }
+            else if (num > 0)
+            {
+                writer.Write(" ");
+            }
+            bool flag2 = exp[spos] == s_OpenParen;
+            if (flag2 && num == 0)
+            {
+                flag = true;
+            }
+            num2--;
+            if (num2 <= 0)
+            {
+                flag = true;
+            }
+            if (flag2)
+            {
+                writer.Write(s_OpenParen);
+                spos++;
+                PrettyStringWorker(exp, false, ref spos, ref epos, indent + 1, writer);
+                if (exp[spos] != s_CloseParen)
+                {
+                    throw new global::System.Exception("Missing close paren");
+                }
+                spos++;
+                writer.Write(s_CloseParen);
+            }
+            else
+            {
+                string text = exp.Substring(spos, endPos - spos);
+                string text2 = IdentifierName(text);
+                if (num == 0)
+                {
+                    if (IsDefinerName(text2))
+                    {
+                        num2 = 1;
+                        indent++;
+                    }
+                    else if (text2 == "progn")
+                    {
+                        flag = true;
+                        indent++;
+                    }
+                    else if (text2 == "op_matrix")
+                    {
+                        num2 = 2;
+                        indent++;
+                    }
+                    else if (text.Length > 8)
+                    {
+                        flag = true;
+                        indent += 3;
+                    }
+                    else
+                    {
+                        num2 = 1;
+                        indent = indent + text.Length + 1;
+                    }
+                }
+                writer.Write("{0}", text);
+            }
+            spos = endPos;
+            num++;
+        }
+    }
     public static void IndentTo(int n, global::System.IO.TextWriter writer)
     {
         writer.Write("\n");
@@ -418,8 +517,75 @@ public partial class LispUtils
             writer.Write(" ");
         }
     }
-    [global::Quire.Mirror.MirrorStub]
-    public static string SelfTest(string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static string SelfTest(string[] args)
+    {
+        bool flag = false;
+        bool flag2 = false;
+        foreach (string text in args)
+        {
+            if (text.Equals("--selftest"))
+            {
+                continue;
+            }
+            if (text.Equals("-o"))
+            {
+                flag = !flag;
+                continue;
+            }
+            if (text.Equals("-d"))
+            {
+                s_Debug = !s_Debug;
+                continue;
+            }
+            if (text.Equals("-pp"))
+            {
+                flag2 = !flag2;
+                continue;
+            }
+            global::System.Console.WriteLine("arg=" + text);
+            try
+            {
+                string text2 = global::Quire.Engine.Misc.FileUtils.ExpandUnicode(text);
+                if (flag)
+                {
+                    int cursor = 0;
+                    while (true)
+                    {
+                        global::System.Collections.Generic.Queue<string> queue = scanExpressionLine(text2, ref cursor);
+                        if (queue == null)
+                        {
+                            goto EndTry;
+                        }
+                        foreach (string item in queue)
+                        {
+                            global::System.Console.WriteLine(" exp=" + item);
+                        }
+                        global::System.Console.WriteLine("--------------------");
+                    }
+                }
+                if (flag2)
+                {
+                    PrettyPrint(text2);
+                    goto EndTry;
+                }
+                foreach (string item2 in scanExpressions(text2))
+                {
+                    global::System.Console.WriteLine(" exp=" + item2);
+                }
+            EndTry:
+                ;
+            }
+            catch (global::System.Exception ex)
+            {
+                global::System.Console.WriteLine("Error: " + ex);
+            }
+        }
+        if (flag | flag2)
+        {
+            return "Done.";
+        }
+        return "";
+    }
     public LispUtils() { }
 
     [global::Quire.Mirror.MirrorOf("Engine.Misc.LispUtils+LinePartition, mcmisc")]
