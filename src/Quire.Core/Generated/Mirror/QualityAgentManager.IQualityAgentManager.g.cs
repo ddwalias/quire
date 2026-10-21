@@ -11,10 +11,7 @@ namespace Quire.QualityAgentManager;
 [global::Quire.Mirror.MirrorOf("Ptc.QualityAgentManager.IQualityAgentManager, Ptc.Core")]
 public partial interface IQualityAgentManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool IsReportSendingEnabled { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool SendReport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    bool SendReport(out global::Quire.QualityAgentManager.IQualityAgentReportData reportedData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    bool IsReportSendingEnabled { set; }
+    bool SendReport() ;
+    bool SendReport(out global::Quire.QualityAgentManager.IQualityAgentReportData reportedData) ;
 }

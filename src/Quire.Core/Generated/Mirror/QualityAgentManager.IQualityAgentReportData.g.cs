@@ -11,36 +11,20 @@ namespace Quire.QualityAgentManager;
 [global::Quire.Mirror.MirrorOf("Ptc.QualityAgentManager.IQualityAgentReportData, Ptc.Core")]
 public partial interface IQualityAgentReportData
 {
-    [global::Quire.Mirror.MirrorStub]
-    string HostID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string DomainName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string InstallationDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string LicenseDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string LicenseType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Scn { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string StartTime { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string EndTime { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string TimeZone { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Checksum { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string MathcadVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string MathcadReleaseVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string CurrentCulture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string CurrentUICulture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string InstallSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string Bitness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    string HostID { get; }
+    string DomainName { get; }
+    string InstallationDate { get; }
+    string LicenseDate { get; }
+    string LicenseType { get; }
+    string Scn { get; }
+    string StartTime { get; }
+    string EndTime { get; }
+    string TimeZone { get; }
+    string Checksum { get; }
+    string MathcadVersion { get; }
+    string MathcadReleaseVersion { get; }
+    string CurrentCulture { get; }
+    string CurrentUICulture { get; }
+    string InstallSource { get; }
+    string Bitness { get; }
 }
