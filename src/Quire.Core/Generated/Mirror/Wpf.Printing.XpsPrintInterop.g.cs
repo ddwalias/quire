@@ -45,20 +45,15 @@ public static partial class XpsPrintInterop
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+IXpsPrintJob, Ptc.Core")]
     private partial interface IXpsPrintJob
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Cancel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        global::Quire.Wpf.Printing.XpsPrintInterop.XPS_JOB_STATUS GetJobStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Cancel();
+        global::Quire.Wpf.Printing.XpsPrintInterop.XPS_JOB_STATUS GetJobStatus();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream, Ptc.Core")]
     private partial interface IXpsPrintJobStream
     {
-        [global::Quire.Mirror.MirrorStub]
-        void Read(byte[] pv, uint cb, out uint pcbRead) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Write(byte[] pv, uint cb, out uint pcbWritten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void Close() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void Read(byte[] pv, uint cb, out uint pcbRead);
+        void Write(byte[] pv, uint cb, out uint pcbWritten);
+        void Close();
     }
 }
