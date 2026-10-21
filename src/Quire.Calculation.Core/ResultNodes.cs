@@ -81,12 +81,15 @@ public sealed record UnitPower(string Name, double Exponent);
 
 public enum ResultValueType
 {
-    Empty,
-    UnitedValue,
-    String,
-    Matrix,
-    Function,
-    Trace2D,
+    Empty = 0,
+    Numeric = 1,
+    UnitedValue = 1,
+    String = 2,
+    Mixed = 3,
+    Matrix = 3,
+    NaNs = 4,
+    Function = 4,
+    Trace2D = 5,
 }
 
 /// <summary>Display-ready result tree; values are already converted to their display units.</summary>

@@ -9,30 +9,6 @@
 namespace Quire.Calculation.Core.Trace2DResults;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter, Ptc.Calculation.Core")]
-public partial class VectorsLazyMatrixConverter : global::Quire.Calculation.Core.Trace2DResults.VectorsConverterBase, global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter
+public partial class VectorsLazyMatrixConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.ILazyMatrixResultNode _node;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper _plainDataAccessor;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _vectorsNum;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _singleVectorLength;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Func<int, int, global::System.Collections.Generic.IList<global::System.Collections.IList>> _getPlainDataValues;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ResultValueType _commonValueType;
-    [global::Quire.Mirror.MirrorStub]
-    private VectorsLazyMatrixConverter(global::Quire.Calculation.Core.ILazyMatrixResultNode node, bool readAsColumns) { }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::System.Collections.IList> GetPlainDataValues(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.Trace2DResults.VectorsLazyMatrixConverter Create(global::Quire.Calculation.Core.ILazyMatrixResultNode node, bool readAsColumns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ResultValueType GetCommonType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> ReadVectors(int maxCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> BuildResultVectors(int maxCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

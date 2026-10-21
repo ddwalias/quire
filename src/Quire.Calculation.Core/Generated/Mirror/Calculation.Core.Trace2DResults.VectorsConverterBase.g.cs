@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorsConverterBase, Ptc.Calculation.Core")]
 public partial class VectorsConverterBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.ResultValueType GetVectorsValueType(global::Quire.Calculation.Core.PlainDataTypes vectorType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
