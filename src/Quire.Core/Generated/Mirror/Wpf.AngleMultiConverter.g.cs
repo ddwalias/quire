@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.AngleMultiConverter, Ptc.Core")]
 public partial class AngleMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Wpf.AngleMultiConverter Instance;
+    public static readonly global::Quire.Wpf.AngleMultiConverter Instance = new global::Quire.Wpf.AngleMultiConverter();
 }
