@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IHasFunctionalityKeyAccordingToParameter, Ptc.Core")]
 public partial interface IHasFunctionalityKeyAccordingToParameter
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey GetFunctionalityKeyAccordingParameter(object parameter, bool failAssertionIfNotFound = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey GetFunctionalityKeyAccordingParameter(object parameter, bool failAssertionIfNotFound = true) ;
 }

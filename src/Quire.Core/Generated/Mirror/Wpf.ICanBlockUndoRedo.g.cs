@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ICanBlockUndoRedo, Ptc.Core")]
 public partial interface ICanBlockUndoRedo
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool BlockUndoRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    bool BlockUndoRedo { get; }
 }
