@@ -113,6 +113,16 @@ public static partial class WpfUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static FrameworkElement GetClosestAncestor(FrameworkElement ancestor, FrameworkElement descendant)
+    {
+        while (descendant != null && (object)descendant.Parent != ancestor)
+        {
+            descendant = (FrameworkElement)(object)descendant.Parent;
+        }
+        return descendant;
+    }
+
+    [MirrorVerified("Release IL")]
     public static System.Drawing.Color WpfToGdi(System.Windows.Media.Color color)
     {
         return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
