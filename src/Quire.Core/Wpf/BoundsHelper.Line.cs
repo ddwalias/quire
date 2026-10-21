@@ -62,5 +62,10 @@ public static partial class BoundsHelper
             }
             return false;
         }
+
+        public global::System.Windows.Point Intersect(Line line)
+        {
+            return Intersect(this, line);
+        }
     }
 }
