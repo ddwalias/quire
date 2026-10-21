@@ -12,75 +12,7 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class TypeBuilder : global::System.Reflection.TypeInfo
 {
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.List<object> _methodDefStore;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.FieldBuilder> _fieldDefStore;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.CustomAttributeWrapper> _customAttributes;
-    [global::Quire.Mirror.MirrorStub]
     public const int UnspecifiedTypeSize = 0;
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder Assembly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder Module { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string Namespace { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Type parentType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Reflection.TypeAttributes UserTypeAttribute { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string AssemblyQualifiedName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type BaseType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MethodBase DeclaringMethod { get => base.DeclaringMethod; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type DeclaringType { get => base.DeclaringType; }
-    [global::Quire.Mirror.MirrorStub]
-    public override string FullName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.GenericParameterAttributes GenericParameterAttributes { get => base.GenericParameterAttributes; }
-    [global::Quire.Mirror.MirrorStub]
-    public override int GenericParameterPosition { get => base.GenericParameterPosition; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Guid GUID { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsByRefLike { get => base.IsByRefLike; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsConstructedGenericType { get => base.IsConstructedGenericType; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsGenericParameter { get => base.IsGenericParameter; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsGenericType { get => base.IsGenericType; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsGenericTypeDefinition { get => base.IsGenericTypeDefinition; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSecurityCritical { get => base.IsSecurityCritical; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSecuritySafeCritical { get => base.IsSecuritySafeCritical; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSecurityTransparent { get => base.IsSecurityTransparent; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsSZArray { get => base.IsSZArray; }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsTypeDefinition { get => base.IsTypeDefinition; }
-    [global::Quire.Mirror.MirrorStub]
-    public override int MetadataToken { get => base.MetadataToken; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.PackingSize PackingSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type ReflectedType { get => base.ReflectedType; }
-    [global::Quire.Mirror.MirrorStub]
-    public int Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.RuntimeTypeHandle TypeHandle { get => base.TypeHandle; }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type UnderlyingSystemType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal TypeBuilder(string name, global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder module, global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder assemblyBuilder, global::System.Reflection.TypeAttributes typeAttributes, global::System.Type parent) { }
     [global::Quire.Mirror.MirrorStub]
     internal static void DefineCustomAttribute(global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder mod, int tkOwner, object value, byte[] m_blob) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
