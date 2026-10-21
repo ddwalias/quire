@@ -11,14 +11,9 @@ namespace Quire.Matrices;
 [global::Quire.Mirror.MirrorOf("Ptc.Matrices.IMatrix`1, Ptc.Core")]
 public partial interface IMatrix<T>
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.TableSize Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Rows { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    T this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    T this[global::Quire.TableCoordinate position] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::Quire.TableSize Size { get; }
+    int Rows { get; }
+    int Columns { get; }
+    T this[int r, int c] { get; set; }
+    T this[global::Quire.TableCoordinate position] { get; set; }
 }
