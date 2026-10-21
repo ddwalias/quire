@@ -15,4 +15,23 @@ public static partial class MsiHelper
         }
         return list;
     }
+
+    public static string GetProductInfo(global::System.Guid productCode, InstallProperty property)
+    {
+        string szProduct = GuidToString(productCode);
+        string szProperty = property.ToString();
+        int pcchValueBuf = 512;
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder(pcchValueBuf);
+        uint num = MsiGetProductInfo(szProduct, szProperty, stringBuilder, ref pcchValueBuf);
+        if (num == 234 && ++pcchValueBuf < stringBuilder.MaxCapacity)
+        {
+            stringBuilder.Capacity = pcchValueBuf;
+            num = MsiGetProductInfo(szProduct, szProperty, stringBuilder, ref pcchValueBuf);
+        }
+        if (num != 0)
+        {
+            return null;
+        }
+        return stringBuilder.ToString();
+    }
 }
