@@ -124,32 +124,38 @@ public sealed record EmptyResultNode : IEmptyResultNode
 {
     public static readonly EmptyResultNode Instance = new();
     public ResultValueType ValueType => ResultValueType.Empty;
+    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }
 
 public sealed record UnitedValueResultNode(double DisplayValue, IReadOnlyList<UnitPower> Units) : IUnitedValueResultNode
 {
     public ResultValueType ValueType => ResultValueType.UnitedValue;
+    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }
 
 public sealed record StringResultNode(string Value) : IStringResultNode
 {
     public ResultValueType ValueType => ResultValueType.String;
+    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }
 
 public sealed record MatrixResultNode(int Rows, int Cols, IReadOnlyList<double> DisplayValues, IReadOnlyList<UnitPower> Units,
     IReadOnlyList<IReadOnlyList<UnitPower>>? ElementUnits, bool IsRangeTable) : IMatrixResultNode
 {
     public ResultValueType ValueType => ResultValueType.Matrix;
+    public void Accept(IResultNodeVisitor visitor) { }
 }
 
 public sealed record FunctionResultNode(string Signature) : IFunctionResultNode
 {
     public ResultValueType ValueType => ResultValueType.Function;
+    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }
 
 public sealed record Trace2DResultNode(IReadOnlyList<TraceData> Traces) : ITrace2DResultNode
 {
     public ResultValueType ValueType => ResultValueType.Trace2D;
+    public void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
 }
 
 /// <summary>The engine's answer for one calculatable.</summary>
