@@ -15,6 +15,12 @@ public static partial class FrameworkVersion
     private const string RegistryFrameworkVersionRelease = "Release";
 
     [MirrorVerified("Release IL")]
+    private static MajorVersions _majorVersion;
+
+    [MirrorVerified("Release IL")]
+    private static int _versionID;
+
+    [MirrorVerified("Release IL")]
     private static List<Pair<Versions, int>> _registryReleaseKeyLegend;
 
     [MirrorVerified("Release IL")]

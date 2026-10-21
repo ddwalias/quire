@@ -12,10 +12,6 @@ namespace Quire;
 public static partial class FrameworkVersion
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.FrameworkVersion.MajorVersions _majorVersion;
-    [global::Quire.Mirror.MirrorStub]
-    private static int _versionID;
-    [global::Quire.Mirror.MirrorStub]
     private static void IdentifyFrameworkVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsGreaterThan(global::Quire.FrameworkVersion.Versions frameworkVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
