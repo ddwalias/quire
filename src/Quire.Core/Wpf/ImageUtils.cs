@@ -169,4 +169,16 @@ public partial class ImageUtils
         }
         return DpiScaleForVisual(Application.Current.MainWindow);
     }
+
+    [MirrorVerified("Release IL")]
+    public static ImageSource GetImageSourceFromIcon(System.Drawing.Icon icon, int imageSize = 0)
+    {
+        if (icon == null)
+        {
+            return null;
+        }
+        int num = ((imageSize <= 0) ? icon.Width : imageSize);
+        int num2 = ((imageSize <= 0) ? icon.Height : imageSize);
+        return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, new Int32Rect(0, 0, num, num2), BitmapSizeOptions.FromEmptyOptions());
+    }
 }
