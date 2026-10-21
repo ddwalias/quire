@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.AppVariantToVisibilityConverter, Ptc.Core")]
 public partial class AppVariantToVisibilityConverter : global::System.Windows.Data.IValueConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Wpf.AppVariantToVisibilityConverter Instance;
+    public static global::Quire.Wpf.AppVariantToVisibilityConverter Instance = new global::Quire.Wpf.AppVariantToVisibilityConverter();
 }
