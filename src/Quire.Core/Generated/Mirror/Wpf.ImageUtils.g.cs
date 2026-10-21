@@ -54,8 +54,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool CompareBitmapsHash(global::System.Windows.Media.Imaging.BitmapSource bm1, global::System.Windows.Media.Imaging.BitmapSource bm2, bool convertIfNeeded = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Size DpiScaleForVisual(global::System.Windows.Media.Visual visual, out global::System.Windows.Interop.HwndSource compositionTargetOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Drawing.Icon MessageBoxImageToIcon(global::System.Windows.MessageBoxImage image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ImageUtils+BitmapFormats, Ptc.Core")]

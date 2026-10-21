@@ -161,6 +161,23 @@ public partial class ImageUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static Size DpiScaleForVisual(Visual visual, out HwndSource compositionTargetOwner)
+    {
+        if (DebugTools.AssertNotNull(visual, null).Failed)
+        {
+            compositionTargetOwner = null;
+            return Size.Empty;
+        }
+        compositionTargetOwner = PresentationSource.FromVisual(visual) as HwndSource;
+        if (compositionTargetOwner == null || compositionTargetOwner.CompositionTarget == null)
+        {
+            return Size.Empty;
+        }
+        Matrix transformToDevice = compositionTargetOwner.CompositionTarget.TransformToDevice;
+        return new Size(transformToDevice.M11, transformToDevice.M22);
+    }
+
+    [MirrorVerified("Release IL")]
     public static Size DpiScaleForApplication()
     {
         if (Application.Current == null || Application.Current.MainWindow == null)
