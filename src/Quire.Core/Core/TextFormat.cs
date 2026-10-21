@@ -15,6 +15,15 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public void SetValueSafely(DependencyProperty prop, object value)
     {
         try
