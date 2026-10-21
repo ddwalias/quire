@@ -11,9 +11,10 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DevelopmentEnvironmentState, Ptc.Core")]
 public static partial class DevelopmentEnvironmentState
 {
+    [global::Quire.Mirror.MirrorVerified("PtcDevelopmentEnvironmentStateMechanicalDifferentialTests")]
+    private static readonly global::System.Collections.Generic.Dictionary<string, bool> RtStateCache = new();
     public const string EnableRtEnvValue = "true";
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<bool>> RtNameToWrapperFuncMap;
+    public static readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<bool>> RtNameToWrapperFuncMap = new();
     public static bool CheckRtEnvState(string env)
     {
         try

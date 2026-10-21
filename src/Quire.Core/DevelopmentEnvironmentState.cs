@@ -6,9 +6,6 @@ namespace Quire;
 public static partial class DevelopmentEnvironmentState
 {
     [MirrorVerified("PtcDevelopmentEnvironmentStateMechanicalDifferentialTests")]
-    private static readonly Dictionary<string, bool> RtStateCache;
-
-    [MirrorVerified("PtcDevelopmentEnvironmentStateMechanicalDifferentialTests")]
     public static void ClearRtStateCache() => RtStateCache.Clear();
 
     [MirrorVerified("PtcDevelopmentEnvironmentStateMechanicalDifferentialTests")]
