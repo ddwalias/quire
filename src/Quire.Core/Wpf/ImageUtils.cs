@@ -119,4 +119,36 @@ public partial class ImageUtils
         }
         return obj as AdornerDecorator;
     }
+
+    [MirrorVerified("Release IL")]
+    public static BitmapImage GetBitmapImage(Stream stream)
+    {
+        BitmapImage bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        bitmapImage.StreamSource = stream;
+        bitmapImage.EndInit();
+        return bitmapImage;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool IsStreamContentEqual(Stream sourceStream, Stream targetStream)
+    {
+        if (sourceStream.Length != targetStream.Length)
+        {
+            return false;
+        }
+        sourceStream.Position = 0L;
+        targetStream.Position = 0L;
+        int num;
+        int num2;
+        while ((num = sourceStream.ReadByte()) != -1 && (num2 = targetStream.ReadByte()) != -1)
+        {
+            if (num != num2)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
