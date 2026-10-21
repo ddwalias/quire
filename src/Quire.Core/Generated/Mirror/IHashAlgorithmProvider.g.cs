@@ -11,10 +11,7 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IHashAlgorithmProvider, Ptc.Core")]
 public partial interface IHashAlgorithmProvider : global::Quire.Services.IService
 {
-    [global::Quire.Mirror.MirrorStub]
-    byte[] ComputeHash(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    byte[] ComputeHash(byte[] sourceBytes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Security.Cryptography.HashAlgorithm GetDisposableHash() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    byte[] ComputeHash(global::System.IO.Stream stream);
+    byte[] ComputeHash(byte[] sourceBytes);
+    global::System.Security.Cryptography.HashAlgorithm GetDisposableHash();
 }
