@@ -1,6 +1,8 @@
 #nullable disable
 using Quire.Mirror;
 using Quire.Mirror;
+using System.Collections.Specialized;
+using Quire.Wpf;
 
 namespace Quire;
 
@@ -66,6 +68,28 @@ public static partial class EnumerableExtensions
         if (list != null && list.Count > 0 && DebugTools.DevAssert(!list.IsFixedSize && !list.IsReadOnly, null).Passed)
         {
             list.RemoveAt(list.Count - 1);
+        }
+    }
+
+    public static void RemoveAll(this System.Collections.IList list)
+    {
+        try
+        {
+            if (list is INotifyCollectionChanged && !(list is INotifyCollectionRangeChanged))
+            {
+                while (list.Count > 0)
+                {
+                    list.RemoveAt(list.Count - 1);
+                }
+            }
+            else if (list.Count > 0)
+            {
+                list.Clear();
+            }
+        }
+        catch (InvalidOperationException ex)
+        {
+            DebugTools.FailAssertion(ex.StackTrace);
         }
     }
 
