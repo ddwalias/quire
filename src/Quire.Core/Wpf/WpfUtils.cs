@@ -351,4 +351,38 @@ public static partial class WpfUtils
         }
         return parentDependencyObject as T;
     }
+
+    public static DependencyObject GetParentObject(DependencyObject child, bool includeLogical = false)
+    {
+        if (child == null)
+        {
+            return null;
+        }
+        if (child is ContentElement contentElement)
+        {
+            DependencyObject parent = ContentOperations.GetParent(contentElement);
+            if (parent != null)
+            {
+                return parent;
+            }
+            if (!(contentElement is FrameworkContentElement frameworkContentElement))
+            {
+                return null;
+            }
+            return frameworkContentElement.Parent;
+        }
+        try
+        {
+            DependencyObject parent2 = VisualTreeHelper.GetParent(child);
+            if ((parent2 == null) & includeLogical)
+            {
+                parent2 = LogicalTreeHelper.GetParent(child);
+            }
+            return parent2;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }
