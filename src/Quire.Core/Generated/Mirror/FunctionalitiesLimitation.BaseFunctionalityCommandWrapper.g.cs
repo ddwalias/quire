@@ -13,8 +13,11 @@ public abstract partial class BaseFunctionalityCommandWrapper : global::System.W
 {
     [global::Quire.Mirror.MirrorStub]
     public abstract global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey { get; }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual event global::System.EventHandler CanExecuteChanged;
+    public virtual event global::System.EventHandler CanExecuteChanged
+    {
+        add => NestedCommand.CanExecuteChanged += value;
+        remove => NestedCommand.CanExecuteChanged -= value;
+    }
     [global::Quire.Mirror.MirrorStub]
     protected BaseFunctionalityCommandWrapper(global::System.Windows.Input.RoutedUICommand nestedCommand) { }
 }
