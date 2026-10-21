@@ -67,5 +67,31 @@ public static partial class BoundsHelper
         {
             return Intersect(this, line);
         }
+
+        public static global::System.Windows.Point Intersect(Line l1, Line l2)
+        {
+            if (l1.Slope == l2.Slope)
+            {
+                return new global::System.Windows.Point(double.NaN, double.NaN);
+            }
+            double num;
+            double num2;
+            if (double.IsNaN(l1.Slope))
+            {
+                num = l1.Begin.X;
+                num2 = l2.Slope * num + l2.YItercept;
+            }
+            else if (double.IsNaN(l2.Slope))
+            {
+                num = l2.Begin.X;
+                num2 = l1.Slope * num + l1.YItercept;
+            }
+            else
+            {
+                num = (l2.YItercept - l1.YItercept) / (l1.Slope - l2.Slope);
+                num2 = l1.Slope * num + l1.YItercept;
+            }
+            return new global::System.Windows.Point(num, num2);
+        }
     }
 }
