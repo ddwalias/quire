@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.StringListResultNode, Ptc.Calculation.Core")]
 public partial class StringListResultNode : global::Quire.Calculation.Core.Trace2DResults.ListResultNode<string>, global::Quire.Calculation.Core.IStringListResultNode, global::Quire.Calculation.Core.IListResultNode<string>, global::Quire.Calculation.Core.IListResultNode
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string _neutralValue = null;
 }

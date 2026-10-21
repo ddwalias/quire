@@ -1,11 +1,13 @@
 #nullable disable
-using Quire.Mirror;
+using System.Collections.Generic;
 using Quire.Mirror;
 
 namespace Quire.Calculation.Core.Trace2DResults;
 
 public partial class StringListResultNode
 {
+    private const string _neutralValue = null;
+
     [MirrorVerified("PtcCalculationCoreTrace2DResultsStringListResultNodeMechanicalDifferentialTests")]
     public StringListResultNode(IList<string> data) : base(data, -1) { }
 

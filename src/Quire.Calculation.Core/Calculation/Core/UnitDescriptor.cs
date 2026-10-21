@@ -7,6 +7,18 @@ namespace Quire.Calculation.Core;
 
 public partial class UnitDescriptor
 {
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public const string KeyPropertyName = "Key";
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public const string QuantityPropertyName = "Quantity";
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public const string CGS_Keys = ",oersted,gauss,";
+
+    [MirrorVerified("PtcCalculationCoreUnitDescriptorMechanicalDifferentialTests")]
+    public const string RL_prefix = "mc_";
+
     private string _rl;
     private string _key;
 

@@ -11,12 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.UnitDescriptor, Ptc.Calculation.Core")]
 public partial class UnitDescriptor : global::System.IComparable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string KeyPropertyName = "Key";
-    [global::Quire.Mirror.MirrorStub]
-    public const string QuantityPropertyName = "Quantity";
-    [global::Quire.Mirror.MirrorStub]
-    public const string CGS_Keys = ",oersted,gauss,";
-    [global::Quire.Mirror.MirrorStub]
-    public const string RL_prefix = "mc_";
 }
