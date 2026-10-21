@@ -18,8 +18,6 @@ public static partial class PointExtension
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Point Zero;
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsNaN(this global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point Floor(this global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Point Round(this global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
