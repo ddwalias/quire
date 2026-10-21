@@ -52,7 +52,5 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     [global::Quire.Mirror.MirrorStub]
     private static string GetExceptionLogLocation(string appConfigFolderPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string ReplaceMultiSpaceWithSingleSpace(string stringToReplace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public ApplicationLogger() { }
 }
