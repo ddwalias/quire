@@ -61,6 +61,14 @@ public static partial class EnumerableExtensions
         }
     }
 
+    public static void RemoveLast(this System.Collections.IList list)
+    {
+        if (list != null && list.Count > 0 && DebugTools.DevAssert(!list.IsFixedSize && !list.IsReadOnly, null).Passed)
+        {
+            list.RemoveAt(list.Count - 1);
+        }
+    }
+
     [MirrorVerified("PtcEnumerableExtensionsMechanicalDifferentialTests")]
     public static IEnumerable<TRetType> Collect<T, TRetType>(this IEnumerable<T> items, Func<T, TRetType> action) => CollectAsList<T, TRetType>(items, action);
 

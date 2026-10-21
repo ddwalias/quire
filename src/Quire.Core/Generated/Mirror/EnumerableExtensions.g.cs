@@ -16,8 +16,6 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static void RemoveAll(this global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void RemoveLast(this global::System.Collections.IList list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<int> Range(this int max) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<int> Range(this int start, int end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
