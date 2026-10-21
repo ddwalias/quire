@@ -333,9 +333,10 @@ namespace Quire { namespace utl_mgd {
             return stringBuilder->ToString();
         }
 
+#pragma optimize("", off)
         static array<Byte>^ FromHex(String^ s)
         {
-            volatile Boolean evenLength = s->Length % 2 == 0;
+            Boolean evenLength = s->Length % 2 == 0;
             Debug::Assert(evenLength, nullptr);
             Int32 num = s->Length / 2;
             array<Byte>^ result = gcnew array<Byte>(num);
@@ -356,5 +357,6 @@ namespace Quire { namespace utl_mgd {
 
             return result;
         }
+#pragma optimize("", on)
     };
 }}
