@@ -17,10 +17,4 @@ public static partial class PointExtension
     public static readonly global::System.Windows.Point NaN;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Point Zero;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Point Floor(this global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Point Round(this global::System.Windows.Point point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsEqualTo(this global::System.Windows.Point first, global::System.Windows.Point second, global::Quire.DoubleComparer doubleComparer = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
