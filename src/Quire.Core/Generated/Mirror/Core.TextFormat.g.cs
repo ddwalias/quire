@@ -74,10 +74,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     private void SetTextFormatValuesAccordingTo(global::Quire.Core.TextFormat tf, bool useDefaultValues) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool TextDecorationsEquals(object object1, object object2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static bool EqualsAllValues(global::System.Collections.Generic.ICollection<global::System.Windows.TextDecoration> t1, global::System.Collections.Generic.ICollection<global::System.Windows.TextDecoration> t2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetValueSafely(global::System.Windows.DependencyProperty prop, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat+PropertyNames, Ptc.Core")]

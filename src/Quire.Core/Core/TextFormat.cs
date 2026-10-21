@@ -1,5 +1,6 @@
 #nullable disable
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,33 @@ namespace Quire.Core;
 
 public partial class TextFormat
 {
+    [MirrorVerified("Release IL")]
+    public static bool TextDecorationsEquals(object object1, object object2)
+    {
+        if (object1 is ICollection<TextDecoration> t && object2 is ICollection<TextDecoration> t2)
+        {
+            return EqualsAllValues(t, t2);
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
+    internal static bool EqualsAllValues(ICollection<TextDecoration> t1, ICollection<TextDecoration> t2)
+    {
+        if (t1.Count != t2.Count)
+        {
+            return false;
+        }
+        foreach (TextDecoration item in t1)
+        {
+            if (!t2.Contains(item))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     [MirrorVerified("PtcCoreTextFormatMechanicalDifferentialTests")]
     public TextFormat Clone() => new TextFormat(this);
 
