@@ -20,8 +20,6 @@ public partial class EnvironmentScope
     [global::Quire.Mirror.MirrorStub]
     public static bool IsCurrentlyInsideUndoOrRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool Contains(global::Quire.DelegateFunction1<bool, global::Quire.ActionItem> predicate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void RegisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void UnregisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

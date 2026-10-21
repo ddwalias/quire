@@ -24,4 +24,17 @@ public partial class EnvironmentScope
         DebugTools.DevAssert(_actionItemsStack.Peek().Command == e.Command, null, Array.Empty<object>());
         _actionItemsStack.Pop();
     }
+
+    [MirrorVerified("Release IL")]
+    public bool Contains(DelegateFunction1<bool, ActionItem> predicate)
+    {
+        foreach (ActionItem item in _actionItemsStack)
+        {
+            if (predicate(item))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
