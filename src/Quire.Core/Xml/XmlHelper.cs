@@ -1,12 +1,22 @@
 #nullable disable
 using System.IO;
 using System.Text;
+using System.Xml;
 using Quire.Mirror;
 
 namespace Quire.Xml;
 
 public static partial class XmlHelper
 {
+    [MirrorVerified("Release IL")]
+    public static XmlAttribute AddAttribute(XmlElement node, string name, string value)
+    {
+        XmlAttribute attribute = node.OwnerDocument.CreateAttribute(name);
+        attribute.Value = value;
+        node.Attributes.Append(attribute);
+        return attribute;
+    }
+
     [MirrorVerified("Release IL")]
     public static StreamWriter CreateStreamWriterForXamlCopy(Stream stream, bool leaveOpen) => new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen);
 }
