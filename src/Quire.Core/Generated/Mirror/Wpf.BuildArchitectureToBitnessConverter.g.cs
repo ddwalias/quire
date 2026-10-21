@@ -12,8 +12,6 @@ namespace Quire.Wpf;
 public partial class BuildArchitectureToBitnessConverter : global::System.Windows.Data.IValueConverter
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::Quire.Wpf.BuildArchitectureToBitnessConverter Instance;
-    [global::Quire.Mirror.MirrorStub]
     private const string ThirtyTwoBit = "32-bit";
     [global::Quire.Mirror.MirrorStub]
     private const string SixtyFourBit = "64-bit";

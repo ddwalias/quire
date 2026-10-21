@@ -9,6 +9,9 @@ namespace Quire.Wpf;
 
 public partial class BuildArchitectureToBitnessConverter
 {
+    [MirrorVerified("Release IL")]
+    public static readonly BuildArchitectureToBitnessConverter Instance = new BuildArchitectureToBitnessConverter();
+
     [MirrorVerified("PtcWpfBuildArchitectureToBitnessConverterMechanicalDifferentialTests")]
     private BuildArchitectureToBitnessConverter() { }
 
