@@ -17,8 +17,4 @@ public abstract partial class ApplicationSettingsSafe : global::System.Configura
     public override void Save() => base.Save();
     [global::Quire.Mirror.MirrorStub]
     public override void Upgrade() => base.Upgrade();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reload() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
