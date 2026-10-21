@@ -237,4 +237,45 @@ public partial class ImageUtils
         }
         return result;
     }
+
+    [MirrorVerified("Release IL")]
+    public static bool CompareBitmapsHash(BitmapSource bm1, BitmapSource bm2, bool convertIfNeeded = false)
+    {
+        if (bm1 == null || bm2 == null)
+        {
+            DebugTools.FailAssertion(null, Array.Empty<object>());
+            return bm1 == bm2;
+        }
+        if (bm1.PixelWidth != bm2.PixelWidth || bm1.PixelHeight != bm2.PixelHeight)
+        {
+            return false;
+        }
+        BitmapSource[] array = new BitmapSource[2] { bm1, bm2 };
+        PixelFormat format = bm1.Format;
+        PixelFormat format2 = bm2.Format;
+        if (format != format2)
+        {
+            if (!convertIfNeeded || format.BitsPerPixel > 32 || format2.BitsPerPixel > 32)
+            {
+                return false;
+            }
+            PixelFormat bgra = PixelFormats.Bgra32;
+            for (int i = 0; i < array.Length; i++)
+            {
+                BitmapSource bitmapSource = array[i];
+                if (bitmapSource.Format != bgra)
+                {
+                    FormatConvertedBitmap formatConvertedBitmap = new FormatConvertedBitmap();
+                    formatConvertedBitmap.BeginInit();
+                    formatConvertedBitmap.Source = bitmapSource;
+                    formatConvertedBitmap.DestinationFormat = bgra;
+                    formatConvertedBitmap.EndInit();
+                    array[i] = formatConvertedBitmap;
+                }
+            }
+        }
+        byte[] imageHash = GetImageHash(array[0]);
+        byte[] imageHash2 = GetImageHash(array[1]);
+        return CompareHashes(imageHash, imageHash2);
+    }
 }
