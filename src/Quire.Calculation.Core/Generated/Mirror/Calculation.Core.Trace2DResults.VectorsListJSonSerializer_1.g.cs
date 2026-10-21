@@ -11,12 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorsListJSonSerializer`1, Ptc.Calculation.Core")]
 public static partial class VectorsListJSonSerializer<T>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Calculation.Core.IListResultNode CreateListNode(global::System.Collections.Generic.IList<T> data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> Read(global::System.IO.Stream stream, int singleVectorLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Write(global::System.IO.Stream jsonStream, global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> nodesListList, int singleVectorLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static global::System.Collections.Generic.IList<T> Read(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
