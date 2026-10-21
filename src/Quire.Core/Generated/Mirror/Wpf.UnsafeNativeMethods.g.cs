@@ -629,8 +629,7 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfFunction, Ptc.Core")]
     public partial interface ITfFunction
     {
-        [global::Quire.Mirror.MirrorStub]
-        void GetDisplayName(out string funcName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void GetDisplayName(out string funcName);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCandidateString, Ptc.Core")]
@@ -703,8 +702,7 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCompartmentEventSink, Ptc.Core")]
     public partial interface ITfCompartmentEventSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnChange(ref global::System.Guid rguid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnChange(ref global::System.Guid rguid);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfCompartmentMgr, Ptc.Core")]
@@ -1005,8 +1003,7 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfTextEditSink, Ptc.Core")]
     public partial interface ITfTextEditSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnEndEdit(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, int ecReadOnly, global::Quire.Wpf.UnsafeNativeMethods.ITfEditRecord editRecord) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnEndEdit(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, int ecReadOnly, global::Quire.Wpf.UnsafeNativeMethods.ITfEditRecord editRecord);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+IEnumTfRenderingMarkup, Ptc.Core")]
@@ -1192,8 +1189,7 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfTransitoryExtensionSink, Ptc.Core")]
     public partial interface ITfTransitoryExtensionSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        void OnTransitoryExtensionUpdated(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, int ecReadOnly, global::Quire.Wpf.UnsafeNativeMethods.ITfRange rangeResult, global::Quire.Wpf.UnsafeNativeMethods.ITfRange rangeComposition, out bool fDeleteResultRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void OnTransitoryExtensionUpdated(global::Quire.Wpf.UnsafeNativeMethods.ITfContext context, int ecReadOnly, global::Quire.Wpf.UnsafeNativeMethods.ITfRange rangeResult, global::Quire.Wpf.UnsafeNativeMethods.ITfRange rangeComposition, out bool fDeleteResultRange);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfInputScope, Ptc.Core")]
@@ -1223,7 +1219,6 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfMouseSink, Ptc.Core")]
     public partial interface ITfMouseSink
     {
-        [global::Quire.Mirror.MirrorStub]
-        int OnMouseEvent(int edge, int quadrant, int btnStatus, out bool eaten) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        int OnMouseEvent(int edge, int quadrant, int btnStatus, out bool eaten);
     }
 }
