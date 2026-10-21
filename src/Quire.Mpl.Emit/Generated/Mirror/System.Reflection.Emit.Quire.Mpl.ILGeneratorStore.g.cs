@@ -12,77 +12,7 @@ namespace System.Reflection.Emit.Quire.Mpl;
 public partial class ILGeneratorStore : global::System.Reflection.Emit.Quire.Mpl.ILGenerator
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> instructions;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.MethodBase _method;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Reflection.Emit.Quire.Mpl.CommonMemberData _memberData;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.ILInstruction> Instructions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int ILOffset { get => base.ILOffset; }
-    [global::Quire.Mirror.MirrorStub]
-    internal ILGeneratorStore(global::System.Reflection.MethodBase method, global::System.Reflection.Emit.Quire.Mpl.CommonMemberData commonMemberData) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void BeginCatchBlock(global::System.Type exceptionType) => base.BeginCatchBlock(exceptionType);
-    [global::Quire.Mirror.MirrorStub]
-    public override void BeginExceptFilterBlock() => base.BeginExceptFilterBlock();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Label BeginExceptionBlock() => base.BeginExceptionBlock();
-    [global::Quire.Mirror.MirrorStub]
-    public override void BeginFaultBlock() => base.BeginFaultBlock();
-    [global::Quire.Mirror.MirrorStub]
-    public override void BeginFinallyBlock() => base.BeginFinallyBlock();
-    [global::Quire.Mirror.MirrorStub]
-    public override void BeginScope() => base.BeginScope();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Quire.Mpl.LocalBuilder DeclareLocal(global::System.Type localType, bool pinned = false) => base.DeclareLocal(localType, pinned);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.Emit.Label DefineLabel() => base.DefineLabel();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode) => base.Emit(opcode);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, byte arg) => base.Emit(opcode, arg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, double arg) => base.Emit(opcode, arg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, short arg) => base.Emit(opcode, arg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, int arg) => base.Emit(opcode, arg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, long arg) => base.Emit(opcode, arg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.ConstructorInfo ctor) => base.Emit(opcode, ctor);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.Emit.Label label) => base.Emit(opcode, label);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.Emit.Label[] labels) => base.Emit(opcode, labels);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.Emit.Quire.Mpl.LocalBuilder local) => base.Emit(opcode, local);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.Emit.SignatureHelper signature) => base.Emit(opcode, signature);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.FieldInfo field) => base.Emit(opcode, field);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.MethodInfo methodInfo) => base.Emit(opcode, methodInfo);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, float arg) => base.Emit(opcode, arg);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, string str) => base.Emit(opcode, str);
-    [global::Quire.Mirror.MirrorStub]
-    public override void Emit(global::System.Reflection.Emit.OpCode opcode, global::System.Type cls) => base.Emit(opcode, cls);
-    [global::Quire.Mirror.MirrorStub]
-    public override void EmitCall(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.MethodInfo methodInfo, global::System.Type[] optionalParameterTypes) => base.EmitCall(opcode, methodInfo, optionalParameterTypes);
-    [global::Quire.Mirror.MirrorStub]
-    public override void EmitCalli(global::System.Reflection.Emit.OpCode opcode, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes, global::System.Type[] optionalParameterTypes) => base.EmitCalli(opcode, callingConvention, returnType, parameterTypes, optionalParameterTypes);
-    [global::Quire.Mirror.MirrorStub]
-    public override void EmitCalli(global::System.Reflection.Emit.OpCode opcode, global::System.Runtime.InteropServices.CallingConvention unmanagedCallConv, global::System.Type returnType, global::System.Type[] parameterTypes) => base.EmitCalli(opcode, unmanagedCallConv, returnType, parameterTypes);
-    [global::Quire.Mirror.MirrorStub]
-    public override void EndExceptionBlock() => base.EndExceptionBlock();
-    [global::Quire.Mirror.MirrorStub]
-    public override void EndScope() => base.EndScope();
-    [global::Quire.Mirror.MirrorStub]
-    public override void MarkLabel(global::System.Reflection.Emit.Label label) => base.MarkLabel(label);
-    [global::Quire.Mirror.MirrorStub]
-    public override void UsingNamespace(string usingNamespace) => base.UsingNamespace(usingNamespace);
 }
