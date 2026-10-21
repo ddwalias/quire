@@ -1,7 +1,6 @@
 #nullable disable
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Text.RegularExpressions;
-using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire;
@@ -28,4 +27,35 @@ public static partial class StringExtension
 
     [MirrorVerified("Release IL")]
     public static bool IsStraightQuoteChar(this char toCheck) => toCheck == '"';
+
+    public static bool IsWrappedWithQuotes(this string stringToCheck, QuotesType quotesType)
+    {
+        if (stringToCheck.Length < 2)
+        {
+            return false;
+        }
+        switch (quotesType)
+        {
+            case QuotesType.Any:
+                if (stringToCheck.First().IsAnyQuoteChar())
+                {
+                    return stringToCheck.Last().IsAnyQuoteChar();
+                }
+                return false;
+            case QuotesType.BothStraight:
+                if (stringToCheck.First().IsStraightQuoteChar())
+                {
+                    return stringToCheck.Last().IsStraightQuoteChar();
+                }
+                return false;
+            case QuotesType.BothNonStraight:
+                if (stringToCheck.IsWrappedWithQuotes(QuotesType.Any))
+                {
+                    return !stringToCheck.IsWrappedWithQuotes(QuotesType.BothStraight);
+                }
+                return false;
+            default:
+                return false;
+        }
+    }
 }
