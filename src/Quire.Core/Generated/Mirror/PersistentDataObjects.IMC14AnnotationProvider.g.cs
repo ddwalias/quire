@@ -11,8 +11,6 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.IMC14AnnotationProvider, Ptc.Core")]
 public partial interface IMC14AnnotationProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get; }
+    global::System.Collections.Generic.List<string> MC14ConversionLossAnnotationsLocal { get; set; }
 }
