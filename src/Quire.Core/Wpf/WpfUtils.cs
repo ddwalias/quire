@@ -470,4 +470,13 @@ public static partial class WpfUtils
             }
         }
     }
+
+    public static bool HasLocalValue(this DependencyObject obj, DependencyProperty dp)
+    {
+        if (obj != null)
+        {
+            return !DependencyProperty.UnsetValue.Equals(obj.ReadLocalValue(dp));
+        }
+        return false;
+    }
 }
