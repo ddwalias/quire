@@ -19,8 +19,6 @@ public partial class CustomAttributeBuilder
     internal byte[] _blob;
     [global::Quire.Mirror.MirrorStub]
     private bool ValidateType(global::System.Type t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CustomAttributeBuilder(global::System.Reflection.ConstructorInfo con, object[] constructorArgs, global::System.Reflection.PropertyInfo[] namedProperties, object[] propertyValues, global::System.Reflection.FieldInfo[] namedFields, object[] fieldValues) { }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.CustomAttributeBuilder+CustomAttributeEncoding, mplasb")]
     internal enum CustomAttributeEncoding
