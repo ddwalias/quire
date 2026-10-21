@@ -31,10 +31,18 @@ public partial class EnvironmentScope
         _actionItemsStack.Pop();
     }
 
-    [global::Quire.Mirror.MirrorStub]
-    public static void RegisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void UnregisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void RegisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer)
+    {
+        commandBuffer.BeforeCommand += _currentInstance.HandleBeforeCommand;
+        commandBuffer.AfterCommand += _currentInstance.HandleAfterCommand;
+    }
+
+    public static void UnregisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer)
+    {
+        commandBuffer.BeforeCommand -= _currentInstance.HandleBeforeCommand;
+        commandBuffer.AfterCommand -= _currentInstance.HandleAfterCommand;
+        _currentInstance.ClearStaleCommands();
+    }
     [global::Quire.Mirror.MirrorStub]
     private void ClearStaleCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
