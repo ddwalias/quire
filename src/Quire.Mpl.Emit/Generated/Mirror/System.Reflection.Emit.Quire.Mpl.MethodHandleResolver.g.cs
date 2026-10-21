@@ -12,7 +12,5 @@ namespace System.Reflection.Emit.Quire.Mpl;
 internal partial class MethodHandleResolver
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Nullable<global::System.Reflection.Metadata.Handle> ResolveMethod(global::System.Reflection.Emit.Quire.Mpl.TypeBuilder thisTypeBuilder, global::System.Reflection.MethodInfo methodInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public MethodHandleResolver() { }
 }
