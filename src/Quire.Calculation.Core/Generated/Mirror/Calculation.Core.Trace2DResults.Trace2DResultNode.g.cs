@@ -12,18 +12,6 @@ namespace Quire.Calculation.Core.Trace2DResults;
 public partial class Trace2DResultNode : global::Quire.Calculation.Core.SimpleResultNode, global::Quire.Calculation.Core.ITrace2DResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ITraceAxisInfo RangeAxisInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ITraceAxisInfo ResultAxisInfo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ITraceDataPoints DataPoints { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.Trace2DResultType TraceResultType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Trace2DResultNode(global::Quire.Calculation.Core.ITraceAxisInfo rangeAxisInfo, global::Quire.Calculation.Core.ITraceAxisInfo resultAxisInfo, global::Quire.Calculation.Core.ITraceDataPoints dataDataPoints, global::Quire.Calculation.Core.Trace2DResultType type) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void Accept(global::Quire.Calculation.Core.IResultNodeVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     global::System.Collections.Generic.IReadOnlyList<global::Quire.Calculation.Core.TraceData> global::Quire.Calculation.Core.ITrace2DResultNode.Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.ResultValueType global::Quire.Calculation.Core.IResultNode.ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
