@@ -406,4 +406,23 @@ public static partial class WpfUtils
             element.ClearValue(dependencyProperty);
         }
     }
+
+    public static bool AtLeastOneChildSatisfyPassedCondition<T>(DependencyObject parent, global::System.Predicate<T> condition, out T satisfiesCondition) where T : class
+    {
+        if (parent is T val && condition(val))
+        {
+            satisfiesCondition = val;
+            return true;
+        }
+        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+        for (int i = 0; i < childrenCount; i++)
+        {
+            if (AtLeastOneChildSatisfyPassedCondition(VisualTreeHelper.GetChild(parent, i), condition, out satisfiesCondition))
+            {
+                return true;
+            }
+        }
+        satisfiesCondition = null;
+        return false;
+    }
 }
