@@ -9,7 +9,7 @@ acceptance rule. Never inspect Debug IL.
 |---|---|---|---|
 | [A](work/lane-a.md) | `Quire.Core` | `mirror/a-core-<unique>` | `C:/Projects/Quire-wt/lane-a-core` |
 | [B](work/lane-b.md) | `Quire.Mpl.Emit` | `mirror/b-mpl-emit-<unique>` | `C:/Projects/Quire-wt/lane-b-mpl-emit` |
-| [C](work/lane-c.md) | `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Calculation.Core`, `Quire.Media3D` | `mirror/c-media3d-20261021-m10` | `C:/Projects/Quire-wt/lane-c-automation` |
+| [C](work/lane-c.md) | `Quire.Automation`, `Quire.EngNotebook.Automation`, `Quire.EngNotebookPlus.Automation`, `Quire.Calculation.Core`, `Quire.Media3D` | `mirror/c-media3d-20261021-m11` | `C:/Projects/Quire-wt/lane-c-automation` |
 | [D](work/lane-d.md) | `Quire.Engine.Utl` | `mirror/d-engine-utl-<unique>` | `C:/Projects/Quire-wt/lane-d-engine-utl` |
 
 The user launches these agents in separate Codex/AGY/Claude threads using the

@@ -11,18 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.Tools3D, Ptc.Media3D")]
 public static partial class Tools3D
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Media.Media3D.Material _emptyMaterial;
-    [global::Quire.Mirror.MirrorStub]
-    public static void GetLineGeometry(global::System.Windows.Media.Media3D.Point3D pt1, global::System.Windows.Media.Media3D.Point3D pt2, double thickness, global::System.Windows.Media.Media3D.Matrix3D matxVisualToScreen, global::System.Windows.Media.Media3D.Matrix3D matxScreenToVisual, global::System.Windows.Media.Media3D.Point3DCollection points, global::System.Windows.Media.Int32Collection indices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Media3D.Point3D Widen(global::System.Windows.Media.Media3D.Point3D pointIn, global::System.Windows.Vector screenDelta, global::System.Windows.Media.Media3D.Matrix3D matxVisualToScreen, global::System.Windows.Media.Media3D.Matrix3D matxScreenToVisual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.Media3D.Point3D Correct3DPointCoordinates(global::System.Windows.Media.Media3D.Point3D point) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Media3D.Vector3D InverseVector(global::System.Windows.Media.Media3D.Vector3D vector) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Media3D.Vector3D BoxCenter(global::System.Windows.Media.Media3D.Rect3D box) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Media3D.Material MaterialForColor(global::System.Nullable<global::System.Windows.Media.Color> color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
