@@ -55,4 +55,15 @@ public partial class HashAlgorithmProvider
     [MirrorVerified("Release IL")]
     public byte[] ComputeHash(byte[] sourceBytes) => Sha256Service.ComputeHash(sourceBytes);
 
+    [MirrorVerified("Release IL")]
+    public void Dispose()
+    {
+        if (_hashAlgorithm == null)
+        {
+            return;
+        }
+        _hashAlgorithm.Dispose();
+        _hashAlgorithm = null;
+    }
+
 }

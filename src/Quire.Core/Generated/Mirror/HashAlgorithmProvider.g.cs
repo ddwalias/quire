@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.HashAlgorithmProvider, Ptc.Core")]
 public partial class HashAlgorithmProvider : global::Quire.IHashAlgorithmProvider, global::Quire.Services.IService, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }
