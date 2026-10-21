@@ -72,8 +72,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteTask(global::System.Windows.Forms.MethodInvoker work, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Brush ChangeBrushColor(global::System.Windows.Media.Brush oldBrush, global::System.Drawing.Color newColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void BindToSetting(object source, global::System.Windows.DependencyObject bindingTarget, global::System.Windows.DependencyProperty targetProperty, string settingName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void Blink(global::System.Collections.Generic.IEnumerable<global::System.Windows.UIElement> elements, int period) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

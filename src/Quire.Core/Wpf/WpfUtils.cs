@@ -264,4 +264,14 @@ public static partial class WpfUtils
             return false;
         }
     }
+
+    public static Brush ChangeBrushColor(Brush oldBrush, global::System.Drawing.Color newColor)
+    {
+        SolidColorBrush solidColorBrush = new SolidColorBrush(GdiToWpf(newColor));
+        if (oldBrush != null)
+        {
+            solidColorBrush.Opacity = oldBrush.Opacity;
+        }
+        return solidColorBrush;
+    }
 }
