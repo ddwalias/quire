@@ -1,10 +1,28 @@
 #nullable disable
+using System.Xml.Serialization;
 using Quire.Mirror;
+using Quire.Xml;
 
 namespace Quire.PersistentDataObjects;
 
 public partial class propertiesType
 {
+    [MirrorVerified("Release IL")]
+    public static XmlSerializer XmlSerializer
+    {
+        get
+        {
+            if (_xmlSerializer == null)
+            {
+                using (new XmlSerializerCreationWrapper())
+                {
+                    _xmlSerializer = new XmlSerializer(_typeOfThis);
+                }
+            }
+            return _xmlSerializer;
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectspropertiesTypeMechanicalDifferentialTests")]
     private string applicationField;
 
