@@ -11,24 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.EngineErrorMessages, Ptc.Calculation.Core")]
 public partial class EngineErrorMessages : global::System.Windows.ResourceDictionary, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::Quire.Calculation.Core.EngineErrorMessages _instance;
-    [global::Quire.Mirror.MirrorStub]
-    public const string FreemiumErrorCode = "premium%_only";
-    [global::Quire.Mirror.MirrorStub]
-    public const string IllegalRange = "illegal_range";
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public EngineErrorMessages() { }
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetStringByKey(string key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetDisplayMessage(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void MergeDictionary(global::System.Windows.ResourceDictionary dictionary) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
