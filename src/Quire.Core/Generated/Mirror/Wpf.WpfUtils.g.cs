@@ -94,8 +94,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static T GetParent<T>(global::System.Windows.DependencyObject d) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyObject FindParentInGroup(global::System.Windows.DependencyObject element, global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLoad(global::System.Windows.FrameworkElement element, global::System.Action action, bool condition = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteOnLayoutUpdated(global::System.Windows.UIElement element, global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

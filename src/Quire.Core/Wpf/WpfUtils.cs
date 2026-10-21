@@ -310,4 +310,25 @@ public static partial class WpfUtils
             return false;
         }
     }
+
+    public static DependencyObject FindParentInGroup(DependencyObject element, global::System.Collections.Generic.IEnumerable<DependencyObject> group)
+    {
+        while (element != null)
+        {
+            try
+            {
+                element = VisualTreeHelper.GetParent(element);
+                if (group.Contains(element))
+                {
+                    break;
+                }
+            }
+            catch
+            {
+                element = null;
+                break;
+            }
+        }
+        return element;
+    }
 }
