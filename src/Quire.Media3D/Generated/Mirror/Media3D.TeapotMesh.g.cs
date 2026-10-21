@@ -11,22 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.TeapotMesh, Ptc.Media3D")]
 public partial class TeapotMesh : global::Quire.Media3D.MeshGeneratorBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static int[] indicesTeapot;
-    [global::Quire.Mirror.MirrorStub]
-    private static double[] verticesTeapot;
-    [global::Quire.Mirror.MirrorStub]
-    private static double[] normalsTeapot;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TriangleRangeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Media3D.TeapotTriangleRange TriangleRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public TeapotMesh() { }
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ValidateTriangleRange(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void Triangulate(global::System.Windows.DependencyPropertyChangedEventArgs args, global::System.Windows.Media.Media3D.Point3DCollection vertices, global::System.Windows.Media.Media3D.Vector3DCollection normals, global::System.Windows.Media.Int32Collection indices, global::System.Windows.Media.PointCollection textures) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Freezable CreateInstanceCore() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
