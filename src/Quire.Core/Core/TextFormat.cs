@@ -15,6 +15,19 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    public static TextFormat GetTextFormatForWholeDocument(FlowDocument document)
+    {
+        TextFormat textFormat = new TextFormat(new System.Windows.Documents.TextRange(document.ContentStart, document.ContentEnd));
+        TextFormat documentTextFormat = new TextFormat(document);
+        if (documentTextFormat.Background == null || !AreColorsEqual(textFormat.Background, documentTextFormat.Background, assertOnNull: false))
+        {
+            textFormat.Background = Brushes.Transparent;
+            textFormat.MixedBackground = true;
+        }
+        return textFormat;
+    }
+
+    [MirrorVerified("Release IL")]
     object global::System.ICloneable.Clone() => Clone();
 
     [MirrorVerified("Release IL")]
