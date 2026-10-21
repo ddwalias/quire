@@ -11,8 +11,6 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.ICustomFontSizeOwner, Ptc.Core")]
 public partial interface ICustomFontSizeOwner
 {
-    [global::Quire.Mirror.MirrorStub]
-    double FontSizeForReport { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Nullable<double> FontSizeToRestore { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    double FontSizeForReport { get; }
+    global::System.Nullable<double> FontSizeToRestore { set; }
 }

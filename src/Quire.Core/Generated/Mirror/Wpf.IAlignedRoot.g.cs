@@ -11,6 +11,5 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IAlignedRoot, Ptc.Core")]
 public partial interface IAlignedRoot
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Media.Visual Visual { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::System.Windows.Media.Visual Visual { get; }
 }
