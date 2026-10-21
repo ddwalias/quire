@@ -72,8 +72,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static void ExecuteTask(global::System.Windows.Forms.MethodInvoker work, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static double DistancePointToPoint(global::System.Windows.Point pt1, global::System.Windows.Point pt2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.FrameworkElement GetClosestAncestor(global::System.Windows.FrameworkElement ancestor, global::System.Windows.FrameworkElement descendant) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Drawing.Color WpfToGdi(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

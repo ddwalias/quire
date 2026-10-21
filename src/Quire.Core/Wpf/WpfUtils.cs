@@ -1,4 +1,5 @@
 #nullable disable
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms;
@@ -104,6 +105,12 @@ public static partial class WpfUtils
 
     [MirrorVerified("Release IL")]
     public static double InchesToDips(double inches) => inches * 96.0;
+
+    [MirrorVerified("Release IL")]
+    public static double DistancePointToPoint(Point pt1, Point pt2)
+    {
+        return Math.Sqrt(Math.Pow(pt1.X - pt2.X, 2.0) + Math.Pow(pt1.Y - pt2.Y, 2.0));
+    }
 
     [MirrorVerified("Release IL")]
     public static double DipsToInches(double dips) => dips / 96.0;
