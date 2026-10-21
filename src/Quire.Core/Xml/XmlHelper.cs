@@ -20,6 +20,19 @@ public static partial class XmlHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static XmlElement AddChild(XmlElement node, string name, string innerText, bool nonPrintableExpected)
+    {
+        XmlElement element = node.OwnerDocument.CreateElement(name);
+        element.InnerText = ReplaceNonPrintableCharacters(innerText);
+        if (!nonPrintableExpected)
+        {
+            DebugTools.DevAssert(innerText.Length == element.InnerText.Length, null);
+        }
+        node.AppendChild(element);
+        return element;
+    }
+
+    [MirrorVerified("Release IL")]
     public static XmlElement GetXmlElementIfLocalNameIsSuitable(XmlNode element, string expectedLocalName)
     {
         if (element == null || !(element.LocalName == expectedLocalName))

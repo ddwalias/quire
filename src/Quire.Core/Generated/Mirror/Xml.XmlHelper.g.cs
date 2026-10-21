@@ -12,8 +12,6 @@ namespace Quire.Xml;
 public static partial class XmlHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlElement AddChild(global::System.Xml.XmlElement node, string name, string innerText, bool nonPrintableExpected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string ReplaceNonPrintableCharacters(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object CreateXamlCopy(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
