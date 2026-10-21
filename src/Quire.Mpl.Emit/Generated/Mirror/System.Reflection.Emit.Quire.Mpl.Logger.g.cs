@@ -28,6 +28,4 @@ public static partial class Logger
     private static volatile bool _isRunning;
     [global::Quire.Mirror.MirrorStub]
     private static uint GetCurrentThreadId() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ProcessLogQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
