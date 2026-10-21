@@ -61,4 +61,7 @@ public static partial class DebugTools
         FailAssertion("Expected exception was not thrown");
         return default;
     }
+
+    [MirrorVerified("Release IL")]
+    public static void FailAssertion(Exception ex) => FailAssertion(1, AssertionModifiers.None, "{0}", ex);
 }
