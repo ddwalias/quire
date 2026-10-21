@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows;
@@ -150,5 +151,22 @@ public partial class ImageUtils
             }
         }
         return true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static Size DpiScaleForVisual(Visual visual)
+    {
+        HwndSource compositionTargetOwner;
+        return DpiScaleForVisual(visual, out compositionTargetOwner);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static Size DpiScaleForApplication()
+    {
+        if (Application.Current == null || Application.Current.MainWindow == null)
+        {
+            return new Size(1.0, 1.0);
+        }
+        return DpiScaleForVisual(Application.Current.MainWindow);
     }
 }

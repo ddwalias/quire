@@ -56,10 +56,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Size DpiScaleForVisual(global::System.Windows.Media.Visual visual, out global::System.Windows.Interop.HwndSource compositionTargetOwner) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Size DpiScaleForVisual(global::System.Windows.Media.Visual visual) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Size DpiScaleForApplication() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.ImageSource GetImageSourceFromIcon(global::System.Drawing.Icon icon, int imageSize = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Drawing.Icon MessageBoxImageToIcon(global::System.Windows.MessageBoxImage image) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
