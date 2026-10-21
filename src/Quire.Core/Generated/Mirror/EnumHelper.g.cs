@@ -32,8 +32,35 @@ public static partial class EnumHelper
 
         return TryParseWithCache<TEnum>(value.ToString(), out enumValue, settings);
     }
-    [global::Quire.Mirror.MirrorStub]
-    private static bool TryParseWithCache<TEnum>(string valueToParse, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool TryParseWithCache<TEnum>(string valueToParse, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
+    {
+        global::System.Type typeFromHandle = typeof(TEnum);
+        if (!_cache.TryGetValue(typeFromHandle, out global::System.Collections.IDictionary value))
+        {
+            value = null;
+        }
+
+        global::System.Collections.Generic.Dictionary<string, TEnum> dictionary = value as global::System.Collections.Generic.Dictionary<string, TEnum>;
+        if (dictionary != null && dictionary.TryGetValue(valueToParse, out enumValue))
+        {
+            return true;
+        }
+
+        if (!TryParseWithoutCache<TEnum>(valueToParse, out enumValue, settings))
+        {
+            return false;
+        }
+
+        if (dictionary == null)
+        {
+            global::Quire.DebugTools.DevAssert(value == null, null);
+            dictionary = new global::System.Collections.Generic.Dictionary<string, TEnum>();
+            _cache.Add(typeFromHandle, dictionary);
+        }
+
+        dictionary.Add(valueToParse, enumValue);
+        return true;
+    }
     private static bool TryParseWithoutCache<TEnum>(string value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
     {
         if (global::System.Enum.TryParse<TEnum>(value, settings.IgnoreCase, out enumValue) && (settings.AllowUndefinedNumericValues || global::System.Enum.IsDefined(typeof(TEnum), enumValue) || enumValue.ToString().Contains(",")))
