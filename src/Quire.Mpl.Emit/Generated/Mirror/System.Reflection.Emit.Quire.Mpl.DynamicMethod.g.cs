@@ -23,8 +23,4 @@ public partial class DynamicMethod : global::System.Reflection.MethodInfo
     private readonly int _idxId;
     [global::Quire.Mirror.MirrorStub]
     private static int _s_counter;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.Dictionary<global::System.Func<global::System.Reflection.Emit.Quire.Mpl.DynamicMethod, bool>, global::System.Func<global::System.Reflection.Emit.Quire.Mpl.DynamicMethod, global::System.Reflection.Emit.Quire.Mpl.DynamicMethod_ILGenerator>> extra_creators;
-    [global::Quire.Mirror.MirrorStub]
-    public DynamicMethod(string name, global::System.Type returnType, global::System.Type[] parameters, global::System.Type declaringType) { }
 }
