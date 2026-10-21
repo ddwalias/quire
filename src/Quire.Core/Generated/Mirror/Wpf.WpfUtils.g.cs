@@ -74,12 +74,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.FrameworkElement GetClosestAncestor(global::System.Windows.FrameworkElement ancestor, global::System.Windows.FrameworkElement descendant) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Drawing.Color WpfToGdi(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Color GdiToWpf(global::System.Drawing.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static uint WpfColorToRgb(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Brush ChangeBrushColor(global::System.Windows.Media.Brush oldBrush, global::System.Drawing.Color newColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void BindToSetting(object source, global::System.Windows.DependencyObject bindingTarget, global::System.Windows.DependencyProperty targetProperty, string settingName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

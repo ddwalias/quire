@@ -113,6 +113,24 @@ public static partial class WpfUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static System.Drawing.Color WpfToGdi(System.Windows.Media.Color color)
+    {
+        return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static System.Windows.Media.Color GdiToWpf(System.Drawing.Color color)
+    {
+        return System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static uint WpfColorToRgb(System.Windows.Media.Color color)
+    {
+        return (uint)((color.R << 16) | (color.G << 8) | color.B);
+    }
+
+    [MirrorVerified("Release IL")]
     public static double DipsToInches(double dips) => dips / 96.0;
 
     [MirrorVerified("Release IL")]
