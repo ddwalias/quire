@@ -6,7 +6,7 @@ The isolated Windows proof builds and runs: a managed .NET 10 consumer reference
 
 The first proof did not justify replacing `Quire.Engine.Utl`; I had not yet tested whether its C#-compiled IL could be retained inside the C++/CLI output. The follow-up module experiment below does test that route. It fails on .NET 10: a consumer cannot load the multi-module assembly. Rewriting the managed methods as C++/CLI could produce a mixed-mode DLL, but would be a new IL implementation and would not satisfy exact Release IL parity. Therefore the production C# project remains intact, and no same-DLL parity claim is made.
 
-The existing C# project passed the documented Release IL validator against `origin/main` at `782167ecb629d4dd23a7ebbc3f13b70bd73c5d8b`: 129 methods checked, 129 exact, zero failures. The local report is `.mirror-cache/release-il-7c28da18c9ea/release-il.json`. This validates the existing C# assembly only. The earlier `lane_merge.py` gate also passed and correctly reported no production project changed.
+The existing C# project passed the documented Release IL validator against `origin/main` at `54e7afa7ef523d275894370c602badd2ffc2218a`: 129 methods checked, 129 exact, zero failures. The local report is `.mirror-cache/release-il-c43007dff9c2/release-il.json`. This validates the existing C# assembly only; none of the merge spikes changed production code.
 
 The reference REA investigation found 55 native P/Invoke declarations, two IL P/Invokes, eight runtime-provided delegate methods, and 57 analyzed internal native procedures. Those procedures are C++/CLI, CRT, exception, allocation, security, and generated wrapper support; it identified no application-authored native algorithm to implement in Quire. The proof's addition routine exists only to exercise the native-to-managed call path. It is not proposed for production.
 
@@ -75,6 +75,15 @@ The module cannot be loaded because only single file assemblies are supported. (
 
 The same multi-module limitation applies to the C++ linker route: `/ASSEMBLYMODULE` imports a separate MSIL module into the assembly. Microsoft documents that assemblies consisting of multiple modules are unsupported on .NET 6 and later in [technologies unavailable on .NET 6+](https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable#loading-multi-module-assemblies) and describes the linker option in [MSVC linker options](https://learn.microsoft.com/en-us/cpp/build/reference/linker-options?view=msvc-170). The build proof targets .NET 10, so that route cannot ship the existing C# module beside the C++/CLI module and still load it as Quire's single assembly.
 
+## Single-file merge spike
+
+I also tried merging the real Release `Quire.Engine.Utl.dll` into the generated mixed-mode proof with ILRepack 2.0.48. The reproducible command is in [`singlefile-merge-spike.ps1`](../../../proofs/utl-mixed-mode/singlefile-merge-spike.ps1); the tool is the [NuGet `dotnet-ilrepack` package](https://www.nuget.org/packages/dotnet-ilrepack/2.0.48).
+
+- Without `/zeropekind`, ILRepack rejects the mixed-mode primary with `Failed to load assembly with Zero PeKind`.
+- With `/zeropekind`, it reads and processes the mixed-mode and Quire metadata, then fails while writing: `System.NotSupportedException: Writing mixed-mode assemblies is not supported` from `Mono.Cecil.ModuleWriter.Write`.
+
+No merged output was produced. This is a second concrete blocker: the C# IL merger can inspect the metadata, but its writer cannot emit the combined single-file mixed-mode PE. A custom PE/metadata writer would be a different, substantially larger project and would still need IL validation; this spike does not establish that it is impossible in principle.
+
 This leaves two practical choices: keep C# and ship native code separately, or reauthor the managed methods for C++/CLI and accept that their generated IL must be independently compared and will not automatically preserve the existing Release IL. The requested same-DLL output and current exact-IL gate do not have a demonstrated supported bridge. The production project is therefore not converted in this change.
 
 ## Quire compatibility assessment
@@ -85,7 +94,7 @@ What remains unproven for Quire is material:
 
 1. **Assembly identity and API:** the proof has another assembly name and version. A production project could configure the output name/version, but this work did not port Quire's 89 types and their managed declarations or compare its full public surface.
 2. **Project references:** `Quire.Engine`, `Quire.Engine.Native`, `Quire.Efi`, and `Quire.Mcd` currently reference `Quire.Engine.Utl.csproj`. Replacing that project with `.vcxproj` requires updating or deliberately preserving those reference paths. Those consumers are outside Lane D's edit scope, so no integration claim is made.
-3. **Exact Release IL:** the standard C# module-link path is concretely rejected by the .NET 10 loader (`0x8013101E`). Reauthoring existing methods in C++/CLI would not retain their original C#-emitted IL. Exact parity for a rewritten full API has not been demonstrated.
+3. **Exact Release IL:** the standard C# module-link path is concretely rejected by the .NET 10 loader (`0x8013101E`), and ILRepack cannot write a mixed-mode output. Reauthoring existing methods in C++/CLI would not retain their original C#-emitted IL. Exact parity for a rewritten full API has not been demonstrated.
 4. **Validator support:** `tools/validation/release_il.py` discovers production projects only from `src/*/*.csproj` (`production_projects`, line 34) and `build_and_scan` constructs `<project>.csproj` and invokes `dotnet build` (lines 113–116). It has no `.vcxproj` build path or candidate-project override. Therefore it cannot validate a C++/CLI replacement as written. This is a concrete validation blocker, not a failed IL comparison.
 
 The safe disposition is to retain the C# project and its passing Release IL state. A future same-DLL migration would require a supported single-file IL-preserving merge or a decision to relax exact IL parity, along with compatible consumer references and a validator path that builds the `.vcxproj`. Until then, `Quire.Engine.Utl.dll` remains C# and must not be described as mixed-mode.
