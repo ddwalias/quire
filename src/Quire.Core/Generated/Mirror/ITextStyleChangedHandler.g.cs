@@ -11,12 +11,8 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ITextStyleChangedHandler, Ptc.Core")]
 public partial interface ITextStyleChangedHandler
 {
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<global::System.Collections.Generic.ICollection<global::Quire.TextStyleData>> StyleChanged { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    event global::Quire.Delegate1<global::Quire.Core.TextFormat> StyleCreateRequest { add { } remove { } }
-    [global::Quire.Mirror.MirrorStub]
-    void UpdateStyle(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void CreateNewStyle(global::Quire.Core.TextFormat textFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    event global::Quire.Delegate1<global::System.Collections.Generic.ICollection<global::Quire.TextStyleData>> StyleChanged;
+    event global::Quire.Delegate1<global::Quire.Core.TextFormat> StyleCreateRequest;
+    void UpdateStyle(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles);
+    void CreateNewStyle(global::Quire.Core.TextFormat textFormat);
 }
