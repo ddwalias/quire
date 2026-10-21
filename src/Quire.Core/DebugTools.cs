@@ -110,4 +110,10 @@ public static partial class DebugTools
 
     [MirrorVerified("Release IL")]
     public static DateTime? LogData(string line) => null;
+
+    [MirrorVerified("Release IL")]
+    public static void AttemptEnablingDebugVerifications(bool value)
+    {
+        DebugVerificationsAllowed = value && (IsDebug || ReplaceAssertionWithException);
+    }
 }
