@@ -50,4 +50,6 @@ public partial class Matrix
     {
         return RealSubjectInstance.GetMatrixElement(rowIndexArg, columnIndexArg, out valueArg);
     }
+
+    double[][] IMathcadPrimeMatrix.Matrix => RealSubjectInstance.Matrix;
 }
