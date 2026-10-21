@@ -8,10 +8,10 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-media3d-20261021-m15.
-- UTC start time: 2026-10-21T07:14:21Z.
-- Eight-hour deadline: 2026-10-21T15:14:21Z.
-- Current assembly: Quire.Media3D (in progress).
+- Branch: mirror/c-calc-core-20261021-c9.
+- UTC start time: 2026-10-21T13:33:29Z.
+- Eight-hour deadline: 2026-10-21T21:33:29Z.
+- Current assembly: Quire.Calculation.Core (in progress).
 - Selected members:
   - Quire.Automation:
     - Batch 1: Result interfaces and classes (IMathcadPrimeGetValueResult, IMathcadPrimeInputResult, IMathcadPrimeInputMatrixResult, IMathcadPrimeOutputResult, IMathcadPrimeOutputResultAs, IMathcadPrimeOutputMatrixResult, IMathcadPrimeOutputMatrixResultAs, IMathcadPrimeSetValueResults and implementations).
@@ -33,6 +33,7 @@
     - Batch 5: EngineResult (ResultXml getter/setter, 6 constructors, IsEmpty).
     - Batch 6: Trace2DResultConverterHelperBase (ctor, CurrentType, IsTypeDefault, AssertValuesTypeMatchTraceType, ValidateColumnsAndUnits, ValidateNumberOfPointsLimit, ValidateEnoughResultColumnsForTraceType).
     - Batch 7: RedefinitionWarningsDictionary (.ctor, InitializeComponent, explicit IComponentConnector.Connect).
+    - Batch 8: EngineErrorMessages (.ctor, GetStringByKey, GetDisplayMessage, MergeDictionary, InitializeComponent, explicit IComponentConnector.Connect), EngineError (MessagesForXamlSerialization get/set, Clone, explicit ICloneable.Clone), CalculatableAggregateExtensions (GetAggregateRl), SimpleCalculatable (.ctor, Commit, SetStatusSynchronized, SetSynchronizationStatus, IsErrorOnScalingUnits, IsEngineWarningsEquals, FireGetValueOfIdentifierBefore).
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
@@ -54,7 +55,7 @@
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
-  - Quire.Calculation.Core: PASS; 387 checked; 0 failures; exact bodies rose to 387 (+3 exact bodies); unfinished reduced to 399.
+  - Quire.Calculation.Core: PASS; 409 checked; 0 failures; exact bodies rose from 387 to 409 (+22 exact bodies); unfinished reduced to 381 (-18 unfinished).
   - Quire.Media3D: PASS; 619 checked; 0 failures; exact bodies rose from 584 to 619 (+35 exact bodies); unfinished reduced from 31 to 5 (-26 unfinished).
 - Unfinished members:
   - Quire.Automation:
@@ -67,7 +68,7 @@
   - Quire.Media3D:
     1. `WireDashes.Pitch` (and dependent `WireDashes` members): legacy CSC compiler emits `conv.r8` before boxing double, not emitted by modern Roslyn.
     2. `WirePoints.Recalculate`: implementation shifts `UpdateColor` closure ordinal from `7_0` to `6_0` under current compiler declaration layout; stub retained.
-- Next assembly: `Quire.Media3D` (`Ptc.Media3D.dll`).
+- Next assembly: `Quire.Calculation.Core` (`Ptc.Calculation.Core.dll`).
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
 All former reservations are released. Preserve previously exact methods, land passing

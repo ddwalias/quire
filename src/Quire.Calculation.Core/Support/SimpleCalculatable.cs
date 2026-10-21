@@ -7,7 +7,7 @@ namespace Quire.Calculation.Core.Support;
 
 public partial class SimpleCalculatable
 {
-    private CalculatingStatus _calculatingStatus = CalculatingStatus.NotComputing;
+    private CalculatingStatus _calculatingStatus = (CalculatingStatus)2;
 
     private IResultNode _evaluationResult = new EmptySimpleResultNode();
 
@@ -47,7 +47,7 @@ public partial class SimpleCalculatable
     public virtual void SetSynchronizationStatus(SynchronizationStatus syncStatus)
     {
         _syncStatus = syncStatus;
-        if (syncStatus == SynchronizationStatus.Synchronized && Synchronized != null)
+        if (syncStatus == (SynchronizationStatus)3 && Synchronized != null)
         {
             Synchronized(this);
         }
