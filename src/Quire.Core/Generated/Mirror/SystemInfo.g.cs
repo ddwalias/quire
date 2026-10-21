@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.SystemInfo, Ptc.Core")]
 public static partial class SystemInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.OSVersions IdentifyOSVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
