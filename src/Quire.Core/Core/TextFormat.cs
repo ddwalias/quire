@@ -368,6 +368,108 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public void UpdateAccordingTo(TextFormat tf)
+    {
+        if (tf != null && this != tf)
+        {
+            if (!tf.TextAlignment.Equals(TextAlignment))
+            {
+                TextAlignment = tf.TextAlignment;
+            }
+            SetTextFormatValuesAccordingTo(tf, useDefaultValues: false);
+            if (!tf.MixedFontFamily.Equals(MixedFontFamily))
+            {
+                MixedFontFamily = tf.MixedFontFamily;
+            }
+            if (!tf.MixedFontSize.Equals(MixedFontSize))
+            {
+                MixedFontSize = tf.MixedFontSize;
+            }
+            if (!tf.MixedFontWeight.Equals(MixedFontWeight))
+            {
+                MixedFontWeight = tf.MixedFontWeight;
+            }
+            if (!tf.MixedFontStyle.Equals(MixedFontStyle))
+            {
+                MixedFontStyle = tf.MixedFontStyle;
+            }
+            if (!tf.MixedTextDecorations.Equals(MixedTextDecorations))
+            {
+                MixedTextDecorations = tf.MixedTextDecorations;
+            }
+            if (!tf.MixedForeground.Equals(MixedForeground))
+            {
+                MixedForeground = tf.MixedForeground;
+            }
+            if (!tf.MixedBackground.Equals(MixedBackground))
+            {
+                MixedBackground = tf.MixedBackground;
+            }
+            if (!tf.MixedMarkerStyle.Equals(MixedMarkerStyle))
+            {
+                MixedMarkerStyle = tf.MixedMarkerStyle;
+            }
+            if (!tf.MixedTextAlignment.Equals(MixedTextAlignment))
+            {
+                MixedTextAlignment = tf.MixedTextAlignment;
+            }
+            if (!tf.MixedStyle.Equals(MixedStyle))
+            {
+                MixedStyle = tf.MixedStyle;
+            }
+            if (!tf.FontSizeInPoints.Equals(FontSizeInPoints))
+            {
+                FontSizeInPoints = tf.FontSizeInPoints;
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    private void SetTextFormatValuesAccordingTo(TextFormat tf, bool useDefaultValues)
+    {
+        if (!tf.FontFamily.Equals(FontFamily))
+        {
+            FontFamily = useDefaultValues ? new FontFamily(string.Empty) : tf.FontFamily;
+        }
+        if (!tf.FontWeight.Equals(FontWeight))
+        {
+            FontWeight = useDefaultValues ? FontWeights.Normal : tf.FontWeight;
+        }
+        if (!tf.FontStyle.Equals(FontStyle))
+        {
+            FontStyle = useDefaultValues ? FontStyles.Normal : tf.FontStyle;
+        }
+        if (TextDecorations != null && !EqualsAllValues(tf.TextDecorations, TextDecorations))
+        {
+            TextDecorations = useDefaultValues ? new TextDecorationCollection() : tf.TextDecorations;
+        }
+        if (!tf.Variants.Equals(Variants))
+        {
+            Variants = useDefaultValues ? FontVariants.Normal : tf.Variants;
+        }
+        if (Background != null && !AreColorsEqual(tf.Background, Background, assertOnNull: false))
+        {
+            Background = useDefaultValues ? Brushes.Transparent : tf.Background;
+        }
+        if (!AreColorsEqual(tf.Foreground, Foreground))
+        {
+            Foreground = useDefaultValues ? Brushes.Black : tf.Foreground;
+        }
+        if (!tf.MarkerStyle.Equals(MarkerStyle))
+        {
+            MarkerStyle = useDefaultValues ? TextMarkerStyle.None : tf.MarkerStyle;
+        }
+        if (tf.StyleKey == null || !tf.StyleKey.Equals(StyleKey))
+        {
+            StyleKey = "";
+        }
+        if (!tf.TextAlignmentExt.Equals(TextAlignmentExt))
+        {
+            TextAlignmentExt = useDefaultValues ? TextAlignmentExt.None : tf.TextAlignmentExt;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static readonly DependencyProperty VariantsProperty;
 
     [MirrorVerified("Release IL")]

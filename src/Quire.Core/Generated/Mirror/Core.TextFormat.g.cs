@@ -43,10 +43,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     public static void SetTextFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.FlowDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void ApplyPropertyValueFormat(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.TextRange textRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateAccordingTo(global::Quire.Core.TextFormat tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetTextFormatValuesAccordingTo(global::Quire.Core.TextFormat tf, bool useDefaultValues) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames
