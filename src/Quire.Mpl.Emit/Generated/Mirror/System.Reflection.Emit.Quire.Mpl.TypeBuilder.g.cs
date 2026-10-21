@@ -14,27 +14,17 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public const int UnspecifiedTypeSize = 0;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineConstructor(global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetCustomAttribute(global::System.Reflection.ConstructorInfo constructorInfo, byte[] binaryAttribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetCustomAttribute(global::System.Reflection.Emit.Quire.Mpl.CustomAttributeBuilder customBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Type CreateType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.ConstructorBuilder DefineConstructor(global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type[] parameterTypes, global::System.Type[][] requiredCustomModifiers, global::System.Type[][] optionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.FieldBuilder DefineField(string fieldName, global::System.Type type, global::System.Reflection.FieldAttributes attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.FieldBuilder DefineField(string fieldName, global::System.Type type, global::System.Type[] requiredCustomModifiers, global::System.Type[] optionalCustomModifiers, global::System.Reflection.FieldAttributes attributes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Reflection.CallingConventions callingConvention, global::System.Type returnType, global::System.Type[] returnTypeRequiredCustomModifiers, global::System.Type[] returnTypeOptionalCustomModifiers, global::System.Type[] parameterTypes, global::System.Type[][] parameterTypeRequiredCustomModifiers, global::System.Type[][] parameterTypeOptionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.MethodBuilder DefineMethod(string name, global::System.Reflection.MethodAttributes attributes, global::System.Type returnType, global::System.Type[] parameterTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.TypeBuilder DefineNestedType(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -64,10 +54,6 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.PropertyBuilder DefineProperty(string name, global::System.Reflection.PropertyAttributes attributes, global::System.Type returnType, global::System.Type[] returnTypeRequiredCustomModifiers, global::System.Type[] returnTypeOptionalCustomModifiers, global::System.Type[] parameterTypes, global::System.Type[][] parameterTypeRequiredCustomModifiers, global::System.Type[][] parameterTypeOptionalCustomModifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Reflection.TypeAttributes GetAttributeFlagsImpl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Reflection.ConstructorInfo GetConstructor(global::System.Type type, global::System.Reflection.ConstructorInfo constructor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Reflection.ConstructorInfo GetConstructorImpl(global::System.Reflection.BindingFlags bindingAttr, global::System.Reflection.Binder binder, global::System.Reflection.CallingConventions callConvention, global::System.Type[] types, global::System.Reflection.ParameterModifier[] modifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -93,4 +79,6 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     public override bool IsAssignableFrom(global::System.Type c) => base.IsAssignableFrom(c);
     [global::Quire.Mirror.MirrorStub]
     private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -113,4 +113,53 @@ public partial class TypeBuilder
     {
         throw new NotImplementedException();
     }
+
+    public MethodBuilder DefineMethod(string name, MethodAttributes attributes, CallingConventions callingConvention, Type? returnType, Type[]? parameterTypes)
+    {
+        MethodBuilder methodBuilder = new MethodBuilder(name, attributes, callingConvention, returnType, parameterTypes, this);
+        _methodDefStore.Add(methodBuilder);
+        return methodBuilder;
+    }
+
+    public ConstructorBuilder DefineConstructor(MethodAttributes attributes, CallingConventions callingConvention, Type[]? parameterTypes)
+    {
+        string name = (((attributes & MethodAttributes.Static) == 0) ? ".ctor" : ".cctor");
+        if ((attributes & MethodAttributes.SpecialName) == 0)
+        {
+            attributes |= MethodAttributes.SpecialName;
+        }
+        if ((attributes & MethodAttributes.RTSpecialName) == 0)
+        {
+            attributes |= MethodAttributes.RTSpecialName;
+        }
+        if ((attributes & MethodAttributes.HideBySig) == 0)
+        {
+            attributes |= MethodAttributes.HideBySig;
+        }
+        ConstructorBuilder constructorBuilder = new ConstructorBuilder(name, attributes, callingConvention, typeof(void), parameterTypes, this);
+        _methodDefStore.Add(constructorBuilder);
+        return constructorBuilder;
+    }
+
+    public FieldBuilder DefineField(string fieldName, Type type, FieldAttributes attributes)
+    {
+        FieldBuilder fieldBuilder = new FieldBuilder(Module, Assembly, fieldName, type, attributes, this);
+        _fieldDefStore.Add(fieldBuilder);
+        return fieldBuilder;
+    }
+
+    public MethodBuilder DefineMethod(string name, MethodAttributes attributes, Type? returnType, Type[]? parameterTypes)
+    {
+        return DefineMethod(name, attributes, (CallingConventions)0, returnType, parameterTypes);
+    }
+
+    protected override TypeAttributes GetAttributeFlagsImpl()
+    {
+        return UserTypeAttribute;
+    }
+
+    public void SetCustomAttribute(CustomAttributeBuilder customBuilder)
+    {
+        SetCustomAttribute(customBuilder.Constructor, customBuilder._blob);
+    }
 }
