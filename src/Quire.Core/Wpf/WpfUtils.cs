@@ -48,6 +48,21 @@ public static partial class WpfUtils
     public static T FindLogicalAncestor<T>(DependencyObject child) where T : DependencyObject => FindLogicalAncestorIncludingSelf<T>(LogicalTreeHelper.GetParent(child));
 
     [MirrorVerified("Release IL")]
+    public static T FindLogicalAncestorIncludingSelf<T>(DependencyObject currentObject) where T : DependencyObject
+    {
+        if (currentObject == null)
+        {
+            return default;
+        }
+        T val = currentObject as T;
+        if (val != null)
+        {
+            return val;
+        }
+        return FindLogicalAncestor<T>(currentObject);
+    }
+
+    [MirrorVerified("Release IL")]
     public static double InchesToDips(double inches) => inches * 96.0;
 
     [MirrorVerified("Release IL")]

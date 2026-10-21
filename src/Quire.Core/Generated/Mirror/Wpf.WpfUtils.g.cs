@@ -70,8 +70,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyObject GetParentObject(global::System.Windows.DependencyObject child, bool includeLogical = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static T FindLogicalAncestorIncludingSelf<T>(global::System.Windows.DependencyObject currentObject) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T FindVisualDescendantIncludingSelf<T>(global::System.Windows.DependencyObject currentObject) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T FindVisualDescendant<T>(global::System.Windows.DependencyObject parent) where T : global::System.Windows.DependencyObject => throw global::Quire.Mirror.MirrorStub.NotImplemented();
