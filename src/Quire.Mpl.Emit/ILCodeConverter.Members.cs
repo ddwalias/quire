@@ -100,4 +100,21 @@ internal partial class ILCodeConverter
         throw new NotImplementedException();
     }
 
+    private void ConvertEndExceptionBlock(MetadataBuilder metadata, TypeBuilder typeBuilder, ILInstruction inst, InstructionEncoder instructionEncoder)
+    {
+        TryCatchBlockInfo tryCatchBlockInfo = _tryCatchStack.Pop();
+        if (tryCatchBlockInfo.endExceptionBlockLabel.GetType() == typeof(LabelHandle))
+        {
+            LabelHandle endExceptionBlockLabel = tryCatchBlockInfo.endExceptionBlockLabel;
+            instructionEncoder.Branch(ILOpCode.Leave, endExceptionBlockLabel);
+            instructionEncoder.MarkLabel(tryCatchBlockInfo.labelCatchEnd);
+            instructionEncoder.MarkLabel(endExceptionBlockLabel);
+        }
+        else
+        {
+            throw new ArgumentException("The 'exception block' label must be 'LabelHandle'");
+        }
+        (instructionEncoder.ControlFlowBuilder ?? throw new ArgumentNullException("ControlFlowBuilder must be not null")).AddCatchRegion(tryCatchBlockInfo.labelTryStart, tryCatchBlockInfo.labelTryEnd, tryCatchBlockInfo.labelCatchStart, tryCatchBlockInfo.labelCatchEnd, tryCatchBlockInfo.exceptionToken);
+    }
+
 }

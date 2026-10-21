@@ -29,6 +29,4 @@ internal partial class ILCodeConverter
     private void ConvertBeginExceptionBlock(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ConvertBeginCatchBlock(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertEndExceptionBlock(global::System.Reflection.Metadata.Ecma335.MetadataBuilder metadata, global::System.Reflection.Emit.Quire.Mpl.TypeBuilder typeBuilder, global::System.Reflection.Emit.Quire.Mpl.ILInstruction inst, global::System.Reflection.Metadata.Ecma335.InstructionEncoder instructionEncoder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
