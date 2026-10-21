@@ -10,4 +10,13 @@ public static partial class RectExtension
         }
         return false;
     }
+
+    public static bool IsValidSizeRect(this global::System.Windows.Int32Rect rect)
+    {
+        if (!rect.IsEmpty && rect.Height > 0)
+        {
+            return rect.Width > 0;
+        }
+        return false;
+    }
 }
