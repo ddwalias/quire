@@ -284,4 +284,12 @@ public static partial class WpfUtils
         };
         global::System.Windows.Data.BindingOperations.SetBinding(bindingTarget, targetProperty, binding);
     }
+
+    public static void ExecuteCommandIfFocusedElementIsDescendantOf<T>(T ancestorElement, RoutedCommand command) where T : UIElement
+    {
+        if (GetFocusedAncestorOfTypeElement<T>(ancestorElement, includeLogical: true) == ancestorElement)
+        {
+            command.Execute(null, null);
+        }
+    }
 }

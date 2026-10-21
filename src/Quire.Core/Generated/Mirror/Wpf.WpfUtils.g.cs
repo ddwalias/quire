@@ -54,8 +54,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool IsLogicalFocusWithin(this global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void ExecuteCommandIfFocusedElementIsDescendantOf<T>(T ancestorElement, global::System.Windows.Input.RoutedCommand command) where T : global::System.Windows.UIElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.GeneralTransform GroupTransformsAsFrozen(params global::System.Windows.Media.GeneralTransform[] children) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object TryFindFirstAncestorIncludingSelfLimited<T>(global::System.Windows.DependencyObject child, global::System.Collections.Generic.IList<global::System.Type> types, bool includeLogical = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
