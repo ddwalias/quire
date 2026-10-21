@@ -425,4 +425,49 @@ public static partial class WpfUtils
         satisfiesCondition = null;
         return false;
     }
+
+    public static global::System.Collections.Generic.List<T> GetDescendantsOfType<T>(DependencyObject obj, bool recurseAllLevels = false, bool includingSelf = false) where T : class
+    {
+        if (DebugTools.AssertNotNull(obj, null).Failed)
+        {
+            return null;
+        }
+        global::System.Collections.Generic.List<T> list = new global::System.Collections.Generic.List<T>();
+        T val = null;
+        if (includingSelf)
+        {
+            val = obj as T;
+            if (val != null)
+            {
+                list.Add(val);
+            }
+        }
+        if ((val == null) | recurseAllLevels)
+        {
+            GetDescendantsOfType(obj, list, recurseAllLevels);
+        }
+        return list;
+    }
+
+    private static void GetDescendantsOfType<T>(DependencyObject obj, global::System.Collections.Generic.ICollection<T> descendantsList, bool recurseAllLevels = false) where T : class
+    {
+        if (DebugTools.DevAssert(descendantsList != null && obj != null, null).Failed)
+        {
+            return;
+        }
+        int childrenCount = VisualTreeHelper.GetChildrenCount(obj);
+        for (int i = 0; i < childrenCount; i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+            T val = child as T;
+            if (val != null)
+            {
+                descendantsList.Add(val);
+            }
+            if ((val == null) | recurseAllLevels)
+            {
+                GetDescendantsOfType(child, descendantsList);
+            }
+        }
+    }
 }

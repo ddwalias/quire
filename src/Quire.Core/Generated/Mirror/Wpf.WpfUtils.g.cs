@@ -94,10 +94,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static T GetNamedDescendant<T>(global::System.Windows.DependencyObject obj, string nameToFind, bool shouldAssert = true) where T : global::System.Windows.FrameworkElement => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<T> GetDescendantsOfType<T>(global::System.Windows.DependencyObject obj, bool recurseAllLevels = false, bool includingSelf = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void GetDescendantsOfType<T>(global::System.Windows.DependencyObject obj, global::System.Collections.Generic.ICollection<T> descendantsList, bool recurseAllLevels = false) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> GetVisualChildren(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> GetVisualDescendantsBreadthFirstOfType<T>(this global::System.Windows.DependencyObject dependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
