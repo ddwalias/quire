@@ -26,33 +26,5 @@ public partial class DynamicMethod : global::System.Reflection.MethodInfo
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<global::System.Func<global::System.Reflection.Emit.Quire.Mpl.DynamicMethod, bool>, global::System.Func<global::System.Reflection.Emit.Quire.Mpl.DynamicMethod, global::System.Reflection.Emit.Quire.Mpl.DynamicMethod_ILGenerator>> extra_creators;
     [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.ICustomAttributeProvider ReturnTypeCustomAttributes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MethodAttributes Attributes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.RuntimeMethodHandle MethodHandle { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type DeclaringType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Type ReflectedType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public DynamicMethod(string name, global::System.Type returnType, global::System.Type[] parameters, global::System.Type declaringType) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MethodInfo GetBaseDefinition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object[] GetCustomAttributes(bool inherit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object[] GetCustomAttributes(global::System.Type attributeType, bool inherit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MethodImplAttributes GetMethodImplementationFlags() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.ParameterInfo[] GetParameters() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override object Invoke(object obj, global::System.Reflection.BindingFlags invokeAttr, global::System.Reflection.Binder binder, object[] parameters, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsDefined(global::System.Type attributeType, bool inherit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Reflection.Emit.Quire.Mpl.ILGenerator GetILGenerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
