@@ -38,10 +38,26 @@ public static partial class EnumHelper
     private static bool TryParseWithoutCache<TEnum>(string value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static TOutputEnum[] TryConvertFlagsToList<TInputEnum, TOutputEnum>(TInputEnum flagsEnumString, global::Quire.EnumHelper.EnumHelperSettings enumSettings) where TInputEnum : struct where TOutputEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool TryCallAction<TEnum>(object param, global::System.Action<TEnum> action) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static TEnum TryParseLogError<TEnum>(object value, string errMsg) where TEnum : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool TryCallAction<TEnum>(object param, global::System.Action<TEnum> action) where TEnum : struct
+    {
+        if (TryParse<TEnum>(param, out var enumValue, true))
+        {
+            action(enumValue);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static TEnum TryParseLogError<TEnum>(object value, string errMsg) where TEnum : struct
+    {
+        if (!TryParse<TEnum>(value, out var enumValue, false))
+        {
+            global::Quire.DebugTools.LogError(errMsg);
+        }
+
+        return enumValue;
+    }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EnumHelper+EnumHelperSettings, Ptc.Core")]
     public partial struct EnumHelperSettings
