@@ -7,6 +7,18 @@ namespace Quire.Wpf;
 public partial class ScaleConverter
 {
     [MirrorVerified("Release IL")]
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        double number;
+        double scale;
+        if (!IsNumeric(value, out number) || !IsNumeric(parameter, out scale))
+        {
+            return 0;
+        }
+        return number * scale;
+    }
+
+    [MirrorVerified("Release IL")]
     public bool IsNumeric(object expression, out double number)
     {
         number = 0.0;
