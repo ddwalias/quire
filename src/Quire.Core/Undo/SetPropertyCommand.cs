@@ -24,6 +24,19 @@ public partial class SetPropertyCommand
     [MirrorVerified("PtcUndoSetPropertyCommandMechanicalDifferentialTests")]
     public void Redo() => Value = _newValue;
 
+    [MirrorVerified("Release IL")]
+    public void Undo()
+    {
+        if (_hasLocalValue)
+        {
+            Value = _oldValue;
+        }
+        else
+        {
+            ClearValue();
+        }
+    }
+
     [MirrorVerified("PtcUndoSetPropertyCommandMechanicalDifferentialTests")]
     protected virtual object Value { get => _dependencyObject.GetValue(_dependencyProperty); set => _dependencyObject.SetValue(_dependencyProperty, value); }
 

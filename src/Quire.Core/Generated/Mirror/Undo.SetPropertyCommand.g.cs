@@ -11,6 +11,4 @@ namespace Quire.Undo;
 [global::Quire.Mirror.MirrorOf("Ptc.Undo.SetPropertyCommand, Ptc.Core")]
 public partial class SetPropertyCommand : global::Quire.Undo.IUndoableCommand
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
