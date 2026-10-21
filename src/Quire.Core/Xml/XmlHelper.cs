@@ -66,5 +66,25 @@ public static partial class XmlHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static void UpdateNameSpace(IEnumerable<XElement> elements, string newNameSpaceName)
+    {
+        if (elements == null)
+        {
+            return;
+        }
+        foreach (XElement element in elements)
+        {
+            if (string.IsNullOrEmpty(element.Name.Namespace.NamespaceName))
+            {
+                element.Name = XName.Get(element.Name.LocalName, newNameSpaceName);
+                if (element.HasElements)
+                {
+                    UpdateNameSpace(element.Elements(), newNameSpaceName);
+                }
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static StreamWriter CreateStreamWriterForXamlCopy(Stream stream, bool leaveOpen) => new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen);
 }
