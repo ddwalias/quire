@@ -21,8 +21,4 @@ public static partial class SettingsHelper
     public const string LicensePath = "LicensePath";
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IDictionary<string, string> GetMathcadPrimeLicenseConfigValues(params string[] keys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetPerUserMathcadPrimeConfigFile(bool copyIfNeeded) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetAllUsersMathcadPrimeConfigFile(bool copyIfNeeded) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
