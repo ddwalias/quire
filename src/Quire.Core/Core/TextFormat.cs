@@ -15,6 +15,9 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    object global::System.ICloneable.Clone() => Clone();
+
+    [MirrorVerified("Release IL")]
     private void FirePropertyChanged(string propertyName)
     {
         if (PropertyChanged != null)
