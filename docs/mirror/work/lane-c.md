@@ -8,20 +8,23 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-media3d-20261021-m14.
-- UTC start time: 2026-10-21T02:53:02Z.
-- Eight-hour deadline: 2026-10-21T10:53:02Z.
-- Current assembly: Quire.Media3D (in progress).
+- Branch: mirror/c-resumed-20261021-b1.
+- UTC start time: 2026-10-21T07:14:21Z.
+- Eight-hour deadline: 2026-10-21T15:14:21Z.
+- Current assembly: Quire.Calculation.Core (in progress).
 - Selected members:
   - Quire.Automation:
     - Batch 1: Result interfaces and classes (IMathcadPrimeGetValueResult, IMathcadPrimeInputResult, IMathcadPrimeInputMatrixResult, IMathcadPrimeOutputResult, IMathcadPrimeOutputResultAs, IMathcadPrimeOutputMatrixResult, IMathcadPrimeOutputMatrixResultAs, IMathcadPrimeSetValueResults and implementations).
     - Batch 2: Support interfaces and classes (Matrix, Inputs, Outputs, InputsOutputsConflicts, InputsOutputsStates, ValuesSetter, Worksheets, WorksheetReadonlyOptions, IProxyComRealSubject, IReleasableRealSubject, IProxyComClassManagerAgent, ProxyComClassManagerAgent, ProxyComClassManager).
     - Batch 3a: Worksheet interfaces and proxy class (IMathcadPrimeWorksheet, IMathcadPrimeWorksheet2, IMathcadPrimeWorksheet3, Worksheet).
     - Batch 3b: Application and Events interfaces and proxy classes (IMathcadPrimeApplication, IMathcadPrimeApplication2, IMathcadPrimeApplication3, IMathcadPrimeEvents, IMathcadPrimeEvents2, Application, ApplicationObsolete, ProductInfo.Constants).
+    - Batch 4: Matrix (explicit IMathcadPrimeMatrix.Matrix getter). Complete for all actionable managed members.
   - Quire.EngNotebook.Automation:
     - Batch 1: Complete assembly implementation across 48 source files (all Result types, Support types, Worksheet types including SaveAndPush, Application types including UpdateInputs and SetContextData, Events including Ping, and Constants).
+    - Batch 2: Matrix (explicit IMathcadPrimeMatrix.Matrix getter). Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation:
     - Batch 1: Complete assembly implementation across 48 source files (all Result types, Support types, Worksheet types including SaveAndPush, Application types including UpdateInputs, Events including Ping, and Constants).
+    - Batch 2: Matrix (explicit IMathcadPrimeMatrix.Matrix getter). Complete for all actionable managed members.
   - Quire.Calculation.Core:
     - Batch 1: All interface declarations cleaned of default stub bodies (ICalculatable, ICalculatableContainer, ICalculatableContext, IResultManager, IResultNode, IEngineError, etc.).
     - Batch 2: SimpleResultNode implementations (RealSimpleResultNode, ComplexSimpleResultNode, ImaginarySimpleResultNode, UnitedValueSimpleResultNode, DisplayMatrixSimpleResultNode, LazyMatrixSimpleResultNode, EagerMatrixSimpleResultNode).
@@ -45,21 +48,18 @@
     - Batch 13: Cylinder (Point1 get/set, Point2 get/set, Radius1 get/set, Radius2 get/set, Fold1 get/set, Fold2 get/set, Slices get/set, Stacks get/set, EndStacks get/set, .ctor, Triangulate).
     - Batch 14: WirePoints (Positions get/set, PositionsPropertyChanged, CreateSpheres, Generate, .ctor, .cctor).
 - Release IL report:
-  - Quire.Automation: PASS; 275 checked; 231 exact bodies/declarations; 2 unfinished remaining; 0 failures.
-  - Quire.EngNotebook.Automation: PASS; 409 checked; 215 exact bodies/declarations; 2 unfinished remaining; 0 failures.
-  - Quire.EngNotebookPlus.Automation: PASS; 407 checked; 214 exact bodies/declarations; 2 unfinished remaining; 0 failures.
+  - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
+  - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
+  - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.Calculation.Core: PASS; 383 checked; 0 failures; exact bodies rose to 383 (+7 exact bodies); unfinished reduced to 397 (-7 unfinished).
   - Quire.Media3D: PASS; 584 checked; 0 failures; exact bodies rose from 577 to 584 (+7 exact bodies); unfinished reduced from 37 to 31 (-6 unfinished).
 - Unfinished members:
   - Quire.Automation:
-    1. `Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
-    2. `Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
+    1. `Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
   - Quire.EngNotebook.Automation:
-    1. `EngNotebook.Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
-    2. `EngNotebook.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
+    1. `EngNotebook.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
   - Quire.EngNotebookPlus.Automation:
-    1. `EngNotebookPlus.Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.
-    2. `EngNotebookPlus.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
+    1. `EngNotebookPlus.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
   - Quire.Calculation.Core:
     1. `Calculation.Core.RedefinitionWarningsDictionary.g.cs`: explicit interface method `global::System.Windows.Markup.IComponentConnector.Connect` blocked by shared tool MirrorGen stub emission prefix `global::` creating mismatch against Mathcad's `System.Windows.Markup.IComponentConnector.Connect` (`method removed` if clean, `no Mathcad counterpart` if prefixed).
   - Quire.Media3D:
@@ -67,7 +67,7 @@
     2. `WirePoints.UpdateColor`: compiler-generated closure class `c__DisplayClass` missing `MirrorOf` mapping in `Quire.Tools.MethodAudit` type-map.
     3. `WireDashes.Pitch`: legacy CSC compiler emits `conv.r8` before boxing double, not emitted by modern Roslyn.
     4. `ViewportsListManager`: closures (`get_AllViewportsAlive` lambda `<>c` and `FindInAllViewports` lambda `<>c__DisplayClass`) blocked by shared tool `Quire.Tools.MethodAudit` (no `MirrorOf` on compiler-generated nested types).
-- Next assembly: `Quire.Media3D` (`Ptc.Media3D.dll`).
+- Next assembly: `Quire.Calculation.Core` (`Ptc.Calculation.Core.dll`).
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
 All former reservations are released. Preserve previously exact methods, land passing
