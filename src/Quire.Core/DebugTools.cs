@@ -64,4 +64,7 @@ public static partial class DebugTools
 
     [MirrorVerified("Release IL")]
     public static void FailAssertion(Exception ex) => FailAssertion(1, AssertionModifiers.None, "{0}", ex);
+
+    [MirrorVerified("Release IL")]
+    public static void FailAssertionDoNotThrow(Exception ex) => FailAssertion(1, AssertionModifiers.DoNotThrow, "{0}", ex);
 }
