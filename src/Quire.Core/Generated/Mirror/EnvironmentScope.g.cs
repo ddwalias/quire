@@ -11,14 +11,26 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.EnvironmentScope, Ptc.Core")]
 public partial class EnvironmentScope
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.EnvironmentScope _currentInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsCurrentlyInsideUndo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsCurrentlyInsideRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsCurrentlyInsideUndoOrRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private static global::Quire.EnvironmentScope _currentInstance = new global::Quire.EnvironmentScope();
+    public static bool IsCurrentlyInsideUndo => _currentInstance.Contains((global::Quire.ActionItem item) => global::Quire.Undo.CommandEventArgs.ActionTypeEnum.Undo == item.ActionType);
+    public static bool IsCurrentlyInsideRedo => _currentInstance.Contains((global::Quire.ActionItem item) => global::Quire.Undo.CommandEventArgs.ActionTypeEnum.Redo == item.ActionType);
+    public static bool IsCurrentlyInsideUndoOrRedo => _currentInstance.Contains((global::Quire.ActionItem item) => global::Quire.Undo.CommandEventArgs.ActionTypeEnum.Redo == item.ActionType || global::Quire.Undo.CommandEventArgs.ActionTypeEnum.Undo == item.ActionType);
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    private EnvironmentScope()
+    {
+        _actionItemsStack = new global::System.Collections.Generic.Stack<global::Quire.ActionItem>();
+    }
+
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    private void HandleBeforeCommand(object sender, global::Quire.Undo.CommandEventArgs e) => _actionItemsStack.Push(new global::Quire.ActionItem(e));
+
+    [global::Quire.Mirror.MirrorVerified("Release IL")]
+    private void HandleAfterCommand(object sender, global::Quire.Undo.CommandEventArgs e)
+    {
+        global::Quire.DebugTools.DevAssert(_actionItemsStack.Peek().Command == e.Command, null, global::System.Array.Empty<object>());
+        _actionItemsStack.Pop();
+    }
+
     [global::Quire.Mirror.MirrorStub]
     public static void RegisterWithCommandBuffer(global::Quire.Undo.CommandBuffer commandBuffer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

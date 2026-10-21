@@ -10,22 +10,6 @@ public partial class EnvironmentScope
     private Stack<ActionItem> _actionItemsStack;
 
     [MirrorVerified("Release IL")]
-    private EnvironmentScope()
-    {
-        _actionItemsStack = new Stack<ActionItem>();
-    }
-
-    [MirrorVerified("Release IL")]
-    private void HandleBeforeCommand(object sender, CommandEventArgs e) => _actionItemsStack.Push(new ActionItem(e));
-
-    [MirrorVerified("Release IL")]
-    private void HandleAfterCommand(object sender, CommandEventArgs e)
-    {
-        DebugTools.DevAssert(_actionItemsStack.Peek().Command == e.Command, null, Array.Empty<object>());
-        _actionItemsStack.Pop();
-    }
-
-    [MirrorVerified("Release IL")]
     public bool Contains(DelegateFunction1<bool, ActionItem> predicate)
     {
         foreach (ActionItem item in _actionItemsStack)
