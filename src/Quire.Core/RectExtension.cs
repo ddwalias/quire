@@ -29,4 +29,9 @@ public static partial class RectExtension
         }
         return false;
     }
+
+    public static bool IsEqualTo(this global::System.Windows.Rect first, global::System.Windows.Rect second, global::Quire.DoubleComparer doubleComparer = default)
+    {
+        return (doubleComparer ?? UiLayoutComparer).Compare(first, second) == 0;
+    }
 }
