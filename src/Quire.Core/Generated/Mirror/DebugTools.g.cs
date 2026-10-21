@@ -32,8 +32,6 @@ public static partial class DebugTools
     [global::Quire.Mirror.MirrorStub]
     private static bool NotCalledFromApplicationLogger(global::System.Diagnostics.StackTrace stackTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.AssertionResult LogAssert(bool value, string message = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void AttemptEnablingDebugVerifications(bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.DebugTools+AssertionOutput, Ptc.Core")]

@@ -67,4 +67,14 @@ public static partial class DebugTools
 
     [MirrorVerified("Release IL")]
     public static void FailAssertionDoNotThrow(Exception ex) => FailAssertion(1, AssertionModifiers.DoNotThrow, "{0}", ex);
+
+    [MirrorVerified("Release IL")]
+    public static AssertionResult LogAssert(bool value, string message = default)
+    {
+        if (!value)
+        {
+            LogError(message ?? "Assertion Failed");
+        }
+        return AssertionResult.Get(value);
+    }
 }
