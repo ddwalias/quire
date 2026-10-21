@@ -8,10 +8,10 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-resumed-20261021-b1.
+- Branch: mirror/c-media3d-20261021-m15.
 - UTC start time: 2026-10-21T07:14:21Z.
 - Eight-hour deadline: 2026-10-21T15:14:21Z.
-- Current assembly: Quire.Calculation.Core (in progress).
+- Current assembly: Quire.Media3D (in progress).
 - Selected members:
   - Quire.Automation:
     - Batch 1: Result interfaces and classes (IMathcadPrimeGetValueResult, IMathcadPrimeInputResult, IMathcadPrimeInputMatrixResult, IMathcadPrimeOutputResult, IMathcadPrimeOutputResultAs, IMathcadPrimeOutputMatrixResult, IMathcadPrimeOutputMatrixResultAs, IMathcadPrimeSetValueResults and implementations).
@@ -48,12 +48,14 @@
     - Batch 12: StrokeCharacter (Width, Geometry, ctor), TextGenerator (chars, Font, FontSize, Thickness, Rounding, Origin, BaselineDirection, UpDirection, HorizontalAlignment, VerticalAlignment, NormalizedBaselineDirection, NormalizedUpDirection, Generate, ProcessText, Convert, ctor, .cctor), WireText (Text, Font, FontSize, Origin, BaselineDirection, UpDirection, HorizontalAlignment, VerticalAlignment, Generate, ctor, .cctor), Axes (Extent, ShowNumbers, LargeTick, SmallTick, Font, FontSize, Labels, ValidateLabels, Generate, ctor, .cctor), Matrix3DPanel (MatrixKey, MatrixProperty, MinimumProperty, MaximumProperty, Matrix, Minimum, Maximum, VisualChildrenCount, ctor, ScrollBarOnValueChanged, GetVisualChild, MeasureOverride, ArrangeOverride, .cctor).
     - Batch 13: Cylinder (Point1 get/set, Point2 get/set, Radius1 get/set, Radius2 get/set, Fold1 get/set, Fold2 get/set, Slices get/set, Stacks get/set, EndStacks get/set, .ctor, Triangulate).
     - Batch 14: WirePoints (Positions get/set, PositionsPropertyChanged, CreateSpheres, Generate, .ctor, .cctor).
+    - Batch 15: TeapotTriangleRange.Parse, WirePoints.UpdateColor (with closure <>c__DisplayClass7_0), ViewportsListManager (AddToList, RemoveFromList, .ctor, LoadedViewports, ReplaceLoadedViewports, AddToLoadedViewports, RemoveFromLoadedViewports, AllViewportsAlive with <>c.<get_AllViewportsAlive>b__12_0, ReplaceAllViewports, FindInAllViewports with <>c__DisplayClass14_0, RenderingEnabled get/set, OnRendering overloads, RemoveOrRenderViewportRef, OnViewportLoaded, OnViewportUnloaded, .cctor).
+    - Batch 16: TeapotMesh (TriangleRange get/set, .ctor, ValidateTriangleRange, Triangulate, CreateInstanceCore, .cctor with static array initialization for indicesTeapot, verticesTeapot, normalsTeapot).
 - Release IL report:
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.Calculation.Core: PASS; 387 checked; 0 failures; exact bodies rose to 387 (+3 exact bodies); unfinished reduced to 399.
-  - Quire.Media3D: PASS; 584 checked; 0 failures; exact bodies rose from 577 to 584 (+7 exact bodies); unfinished reduced from 37 to 31 (-6 unfinished).
+  - Quire.Media3D: PASS; 619 checked; 0 failures; exact bodies rose from 584 to 619 (+35 exact bodies); unfinished reduced from 31 to 5 (-26 unfinished).
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
@@ -63,10 +65,8 @@
     1. `EngNotebookPlus.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
   - Quire.Calculation.Core: none blocked by shared tooling. Remaining unfinished members are independent stubs.
   - Quire.Media3D:
-    1. `TeapotTriangleRange.Parse` and `TeapotMesh..cctor` (plus dependent `TeapotMesh` members): blocked by shared tool `Quire.Tools.MethodAudit.Structure` (line 166 / line 495) which throws `BadImageFormatException: Unexpected type token kind FieldDefinition` when `ldtoken` operates on a `FieldDefinition` handle (emitted by Mathcad for `RuntimeHelpers.InitializeArray` static array initializers and `RuntimeHelpers.CreateSpan<char>`).
-    2. `WirePoints.UpdateColor`: compiler-generated closure class `c__DisplayClass` missing `MirrorOf` mapping in `Quire.Tools.MethodAudit` type-map.
-    3. `WireDashes.Pitch`: legacy CSC compiler emits `conv.r8` before boxing double, not emitted by modern Roslyn.
-    4. `ViewportsListManager`: closures (`get_AllViewportsAlive` lambda `<>c` and `FindInAllViewports` lambda `<>c__DisplayClass`) blocked by shared tool `Quire.Tools.MethodAudit` (no `MirrorOf` on compiler-generated nested types).
+    1. `WireDashes.Pitch` (and dependent `WireDashes` members): legacy CSC compiler emits `conv.r8` before boxing double, not emitted by modern Roslyn.
+    2. `WirePoints.Recalculate`: implementation shifts `UpdateColor` closure ordinal from `7_0` to `6_0` under current compiler declaration layout; stub retained.
 - Next assembly: `Quire.Media3D` (`Ptc.Media3D.dll`).
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
