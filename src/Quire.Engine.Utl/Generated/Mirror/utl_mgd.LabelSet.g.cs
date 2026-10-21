@@ -11,28 +11,7 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.LabelSet, utl-mgd")]
 public partial class LabelSet
 {
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.utl_mgd.SortedStringSet m_labels;
-    [global::Quire.Mirror.MirrorStub]
     private bool m_wild;
-    [global::Quire.Mirror.MirrorStub]
     private string m_cached_name;
-    [global::Quire.Mirror.MirrorStub]
-    public LabelSet(global::Quire.utl_mgd.SortedStringSet labels, bool wild) { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool Unifies(global::Quire.utl_mgd.LabelSet other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool _unifies(global::Quire.utl_mgd.LabelSet a, global::Quire.utl_mgd.LabelSet b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.utl_mgd.SortedStringSet Labels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Wild() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Empty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    public void EmitLabels(global::System.Text.StringBuilder b, char delimiter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string[] ToVector() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

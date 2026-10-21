@@ -11,46 +11,15 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.MessageQueue`3, utl-mgd")]
 public partial class MessageQueue<Owner, Data, Msg> : global::System.Collections.Queue, global::System.IDisposable where Owner : class
 {
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.utl_mgd.Mailbox<Msg> m_mailbox;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Threading.Thread m_thread;
-    [global::Quire.Mirror.MirrorStub]
     private int m_stack_size;
-    [global::Quire.Mirror.MirrorStub]
     private unsafe void* m_death_handle;
-    [global::Quire.Mirror.MirrorStub]
-    private static void MsgLoop(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Init(int stack_size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public MessageQueue(Owner owner, Data data, global::Quire.utl_mgd.MessageQueue<Owner, Data, Msg>.OnInit oi, global::Quire.utl_mgd.MessageQueue<Owner, Data, Msg>.OnMessage om) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MessageQueue(Owner owner, Data data, global::Quire.utl_mgd.MessageQueue<Owner, Data, Msg>.OnInit oi, global::Quire.utl_mgd.MessageQueue<Owner, Data, Msg>.OnMessage om, int stack_size) { }
-    [global::Quire.Mirror.MirrorStub]
-    public MessageQueue(int stack_size) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void _bangMessageQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void _tildeMessageQueue() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Start(Owner owner, Data data, global::Quire.utl_mgd.MessageQueue<Owner, Data, Msg>.OnInit oi, global::Quire.utl_mgd.MessageQueue<Owner, Data, Msg>.OnMessage om, bool bStopThreadOnFinalize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Stop() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.utl_mgd.Mailbox<Msg> GetMailbox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Threading.Thread GetThread() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void Dispose(bool A_0) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    ~MessageQueue() { } // stub finalizers must not throw: they also run for objects whose constructor threw
 
     [global::Quire.Mirror.MirrorOf("utl_mgd.MessageQueue`3+OnInit, utl-mgd")]
     public delegate void OnInit(Owner owner, Data data);
 
     [global::Quire.Mirror.MirrorOf("utl_mgd.MessageQueue`3+OnMessage, utl-mgd")]
+    [return: global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.U1)]
     public delegate bool OnMessage(Owner owner, Data data, Msg msg);
 }

@@ -11,10 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.SafeEvent, utl-mgd")]
 public partial class SafeEvent : global::Quire.utl_mgd.SafeWaitHandle
 {
-    [global::Quire.Mirror.MirrorStub]
-    public unsafe SafeEvent(string A_0) : base(default(string), default(void*)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Set() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

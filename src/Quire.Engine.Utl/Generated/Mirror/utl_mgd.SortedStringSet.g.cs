@@ -11,26 +11,5 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.SortedStringSet, utl-mgd")]
 public partial class SortedStringSet : global::System.Collections.IEnumerable
 {
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.SortedList m_strings;
-    [global::Quire.Mirror.MirrorStub]
-    public int Count { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SortedStringSet(string[] strings) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SortedStringSet(global::Quire.utl_mgd.SortedStringSet other) { }
-    [global::Quire.Mirror.MirrorStub]
-    public SortedStringSet() { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::System.Collections.IEnumerator GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSubsetOf(global::Quire.utl_mgd.SortedStringSet other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool SetEquals(global::Quire.utl_mgd.SortedStringSet other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CopyTo(string[] a) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Add(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Contains(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

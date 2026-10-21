@@ -11,32 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.InterruptControl, utl-mgd")]
 public partial class InterruptControl
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.utl_mgd.InterruptControl s_interrupt_control;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.utl_mgd.SafeMutex m_request_mutex;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.utl_mgd.SafeMutex m_abort_mutex;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_interrupt_requested;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Threading.CancellationTokenSource m_cts;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Threading.CancellationTokenSource Cts { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public InterruptControl() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void BeginRequestInterrupt() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void EndRequestInterrupt() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ThreadInitialize(global::Quire.utl_mgd.InterruptControl c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void ProhibitInterruption() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void AllowInterruption() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int ProhibitInterruption_(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int AllowInterruption_(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

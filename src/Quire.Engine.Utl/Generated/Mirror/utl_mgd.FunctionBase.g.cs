@@ -11,23 +11,5 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.FunctionBase, utl-mgd")]
 public abstract partial class FunctionBase : global::Quire.utl_mgd.Function
 {
-    [global::Quire.Mirror.MirrorStub]
-    public FunctionBase() { }
     public abstract object Invoke(object[] args);
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke0() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke1(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke2(object A_0, object A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke3(object A_0, object A_1, object A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke4(object A_0, object A_1, object A_2, object A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke5(object A_0, object A_1, object A_2, object A_3, object A_4) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke6(object A_0, object A_1, object A_2, object A_3, object A_4, object A_5) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual object Invoke7(object A_0, object A_1, object A_2, object A_3, object A_4, object A_5, object A_6) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

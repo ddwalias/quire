@@ -11,12 +11,5 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.Logging, utl-mgd")]
 public partial class Logging
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsLoggingEnabled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Log(string logname, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void LogLine(string logname, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public Logging() { }
 }

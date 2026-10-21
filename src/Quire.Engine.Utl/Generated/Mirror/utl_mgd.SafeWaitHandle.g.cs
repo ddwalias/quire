@@ -11,32 +11,6 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.SafeWaitHandle, utl-mgd")]
 public abstract partial class SafeWaitHandle : global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
     protected string m_name;
-    [global::Quire.Mirror.MirrorStub]
     protected unsafe void* m_handle;
-    [global::Quire.Mirror.MirrorStub]
-    protected unsafe SafeWaitHandle(string A_0, void* A_1) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void _bangSafeWaitHandle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void _tildeSafeWaitHandle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void WaitOne() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool WaitOneWithTimeout(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public unsafe bool WaitTwoWithTimeout(void* A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Free() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public unsafe void* GetUnmanagedHandle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override string ToString() => base.ToString();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void Dispose(bool A_0) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
-    [global::Quire.Mirror.MirrorStub]
-    ~SafeWaitHandle() { } // stub finalizers must not throw: they also run for objects whose constructor threw
 }

@@ -4,6 +4,6 @@
 - Branch: `mirror/d-engine-utl-20261021-e1`.
 - Worktree: `C:/Projects/Quire-wt/lane-d-engine-utl-e1`.
 - Original assemblies: utl-mgd and mcmisc.
-- Selected members: `FileUtils.ExpandUnicode`; `LispUtils.badSyntax`, `PrettyStringWorker`, `SelfTest`; `XmlUtils.TestCheck(string, bool, bool, int)` and `SelfTest`.
-- Release IL report: PASS against the latest `main`; all 31 manifest types selected; 298 checked; 129 exact managed bodies; 159 engine-native methods; 0 unfinished methods (`.mirror-cache/release-il-978ff91eb080/release-il.json`).
-- Remaining mismatches: none among managed methods with IL bodies. Native implementation for the 159 engine-native methods remains outside this managed IL batch.
+- Selected members: complete `utl-mgd` surface in `Quire.Engine.Utl`: labels and dictionaries, safe handles and synchronization, queues and interruption, string/hex helpers, function wrappers and logging; retain the earlier `mcmisc` helper batch.
+- Release IL report: PASS against `main`; 286 checked; 129 exact managed bodies; 163 engine-native classifications; 0 unfinished; `.mirror-cache/release-il-0bf2344789dc/release-il.json`.
+- Remaining mismatches: none in checked Release IL. Native behavior is ported through Windows APIs and UTL/MSVC exports but remains unverified at runtime; C++ stream-formatting parity and process-exit cleanup need a Windows integration pass.

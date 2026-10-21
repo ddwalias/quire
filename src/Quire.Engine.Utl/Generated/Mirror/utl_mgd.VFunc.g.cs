@@ -11,10 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.VFunc, utl-mgd")]
 internal partial class VFunc
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.utl_mgd.Function m_function;
-    [global::Quire.Mirror.MirrorStub]
-    public VFunc(global::Quire.utl_mgd.Function f) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Invoke() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

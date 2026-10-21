@@ -11,8 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.ThreadingUtils, utl-mgd")]
 public abstract partial class ThreadingUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static void Spawn(global::Quire.utl_mgd.Function f) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ThreadingUtils() { }
 }

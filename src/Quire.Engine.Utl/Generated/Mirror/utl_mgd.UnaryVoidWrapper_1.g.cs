@@ -11,10 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.UnaryVoidWrapper`1, utl-mgd")]
 public partial class UnaryVoidWrapper<T>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.utl_mgd.Function m_f;
-    [global::Quire.Mirror.MirrorStub]
-    public UnaryVoidWrapper(global::Quire.utl_mgd.Function f) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Invoke(T a1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

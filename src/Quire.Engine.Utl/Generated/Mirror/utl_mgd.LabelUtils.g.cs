@@ -12,28 +12,4 @@ namespace Quire.utl_mgd;
 [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
 public partial struct LabelUtils
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static char[] s_sharp;
-    [global::Quire.Mirror.MirrorStub]
-    public static string SplitName(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.utl_mgd.LabelSet SplitLabels(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string SplitMangledName(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.utl_mgd.LabelSet SplitMangledLabels(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string Unmangle(string mangled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string Canonicalize(string s, ref bool wild) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string Canonicalize(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string ForceWild(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool Unifies(string c, string c_non_wild) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static object LookupPossiblyWild(string c, global::System.Collections.IDictionary d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string FindBinding(string s, global::System.Collections.IDictionary d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
