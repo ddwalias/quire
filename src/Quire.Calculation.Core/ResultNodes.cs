@@ -18,8 +18,28 @@ public sealed partial class EngineError : IEngineError
         Symbol = symbol;
     }
 
+    private string _message;
+
     [MirrorVerified("PtcCalculationCoreEngineErrorRelationsMechanicalDifferentialTests")]
-    public string Message => _message;
+    public string Message
+    {
+        get => _message;
+        set
+        {
+            _message = value;
+            if (_message != null)
+            {
+                if (!_message.IsValidXmlString())
+                {
+                    _message = _message.StripInvalidXmlChars();
+                }
+                StringCollection stringCollection = new StringCollection(_message.Split('\t'));
+                _code = stringCollection[0];
+                stringCollection.RemoveAt(0);
+                _arguments = stringCollection;
+            }
+        }
+    }
     public string? Symbol { get; }
 
     [MirrorVerified("PtcCalculationCoreEngineErrorMechanicalDifferentialTests")]

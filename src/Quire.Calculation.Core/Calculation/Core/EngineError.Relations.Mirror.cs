@@ -56,4 +56,25 @@ public sealed partial class EngineError
         }
         return false;
     }
+
+    public WhitespacePreservingStringCollection MessagesForXamlSerialization
+    {
+        get => new WhitespacePreservingStringCollection { Message };
+        set => Message = (value.IsNotEmpty() ? value[0] : null);
+    }
+
+    public EngineError Clone()
+    {
+        return new EngineError
+        {
+            Argument = Argument,
+            Message = Message,
+            ErrorSource = ErrorSource,
+            NodeHandle = NodeHandle,
+            OriginalError = ((OriginalError == null) ? null : OriginalError.Clone()),
+            ResourceString = ResourceString
+        };
+    }
+
+    object System.ICloneable.Clone() => Clone();
 }

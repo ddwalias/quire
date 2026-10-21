@@ -23,18 +23,23 @@ public partial class EngineErrorMessages : ResourceDictionary, IComponentConnect
 
     public static string GetStringByKey(string key)
     {
+        string text;
         try
         {
             if (_instance.Contains(key))
             {
-                return _instance[key].ToString();
+                text = _instance[key].ToString();
             }
-            return _instance["nonlisted_error"]?.ToString() + " " + EscapeForFormatString(key) + ".";
+            else
+            {
+                text = _instance["nonlisted_error"]?.ToString() + " " + EscapeForFormatString(key) + ".";
+            }
         }
         catch (Exception ex)
         {
-            return string.Format("Exception retrieving message for \"{0}\", Exception \"{1}\" : \"{2}\"", key, ex.GetType(), ex.Message);
+            text = string.Format("Exception retrieving message for \"{0}\", Exception \"{1}\" : \"{2}\"", key, ex.GetType(), ex.Message);
         }
+        return text;
     }
 
     public static string GetDisplayMessage(EngineError error)
@@ -48,8 +53,7 @@ public partial class EngineErrorMessages : ResourceDictionary, IComponentConnect
         {
             try
             {
-                object[] array = error.ErrorMessageArguments.ToArray();
-                return string.Format(stringByKey, array);
+                return string.Format(stringByKey, (ReadOnlySpan<object>)error.ErrorMessageArguments.ToArray());
             }
             catch (FormatException ex)
             {

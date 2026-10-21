@@ -11,12 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.EngineError, Ptc.Calculation.Core")]
 public partial class EngineError : global::Quire.Calculation.Core.IEngineError, global::System.ICloneable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string _message;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.WhitespacePreservingStringCollection MessagesForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
