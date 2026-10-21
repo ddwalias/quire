@@ -69,4 +69,11 @@ public partial class ImageUtils
             Viewbox = box
         };
     }
+
+    [MirrorVerified("Release IL")]
+    public static Size GetScreenDpiForApplication()
+    {
+        Size val = DpiScaleForApplication();
+        return new Size(val.Width * 96.0, val.Height * 96.0);
+    }
 }
