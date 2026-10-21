@@ -1,5 +1,6 @@
 #nullable disable
 using System.IO;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -46,6 +47,22 @@ public static partial class XmlHelper
         XmlDocument document = new XmlDocument(reader.NameTable);
         document.Load(reader);
         return document;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static void UpdateToLowerCase(IEnumerable<XElement> elements, IEnumerable<string> names)
+    {
+        foreach (XElement element in elements)
+        {
+            foreach (string name in names)
+            {
+                XAttribute attribute = element.Attribute(XName.Get(name, ""));
+                if (attribute != null)
+                {
+                    attribute.Value = attribute.Value.ToLowerInvariant();
+                }
+            }
+        }
     }
 
     [MirrorVerified("Release IL")]

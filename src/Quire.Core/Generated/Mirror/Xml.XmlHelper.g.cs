@@ -18,8 +18,6 @@ public static partial class XmlHelper
     [global::Quire.Mirror.MirrorStub]
     public static void SearchForNodesInXml(global::System.Xml.XmlNode root, string nodeName, global::Quire.Delegate1<global::System.Xml.XmlNode> action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void UpdateToLowerCase(global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> elements, global::System.Collections.Generic.IEnumerable<string> names) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static void UpdateNameSpace(global::System.Collections.Generic.IEnumerable<global::System.Xml.Linq.XElement> elements, string newNameSpaceName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object CreateXamlCopy(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
