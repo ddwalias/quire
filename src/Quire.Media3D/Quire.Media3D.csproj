@@ -3,4 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <Import Project="Generated\Mirror.props" />
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
+  </ItemGroup>
 </Project>

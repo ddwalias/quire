@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-media3d-20261021-m7.
+- Branch: mirror/c-media3d-20261021-m8.
 - UTC start time: 2026-10-21T02:53:02Z.
 - Eight-hour deadline: 2026-10-21T10:53:02Z.
 - Current assembly: Quire.Media3D (in progress).
@@ -36,12 +36,13 @@
     - Batch 4: CylindricalMeshBase (Length, Radius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, .cctor), CylinderMesh (EndStacks, Fold, ValidateEndStacks, ValidateFold, ctor, Triangulate, CreateInstanceCore, .cctor), HollowCylinderMesh (ctor, Triangulate, CreateInstanceCore), SphereMesh (Center, Radius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, Triangulate, CreateInstanceCore, .cctor), TorusMesh (Radius, TubeRadius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, Triangulate, CreateInstanceCore, .cctor), TubeMesh (Thickness, EndStacks, Fold, ValidateThickness, ValidateEndStacks, ValidateFold, ctor, Triangulate, CreateInstanceCore, .cctor).
     - Batch 5: BoxMesh (Width, Height, Depth, Slices, Stacks, Layers, ValidateDivisions, ctor, Triangulate, CreateInstanceCore, .cctor), PolygonMesh (Length, Sides, ctor, Triangulate, CreateInstanceCore, .cctor), TeapotTriangleRange (Begin, End, All, Pot, Body, Handle, Spout, Lid, ctor, ctor(begin, end), ToString, CreateInstanceCore, .cctor; Parse deferred due to MethodAudit InlineTok FieldDefinition bug), TeapotTriangleRangeConverter (CanConvertFrom, CanConvertTo, ConvertFrom, ConvertTo, ctor).
     - Batch 6: WireBaseAndUltimateParent (ctor), WirePointBase (GetRadiusScale, ctor, .cctor), WireRectMesh (ctor, Generate), WireLine (Point1, Point2, Generate, ctor, .cctor), WireLines (Lines, Generate, ctor, .cctor), WirePath (Data, Generate, ctor, .cctor), WirePolyline (Points, Generate, ctor, .cctor), WirePoint (Center, Model, ctor, Recalculate, Generate, .cctor).
+    - Batch 7: IViewportsListManager (AddToList, RemoveFromList), VisualInfo (ZeroMatrix, ModelVisual3D, TotalTransform, ModelVisual3DChanged, GetTotalTransform, ToString, CreateInstanceCore, ctor, .cctor), ViewportInfo (ZeroMatrix, Viewport3D, Transform, Viewport3DChanged, GetTotalTransform(vis), GetTotalTransform(viewport), GetCameraTransform(vis), GetCameraTransform(viewport), GetViewportTransform(vis), GetViewportTransform(viewport), GetViewportTransform(w,h,l,t), IsViewportArranged(vis), IsViewportArranged(viewport), Point3DtoPoint2D, Point2DtoPoint3D(range), Point2DtoPoint3D(box), CreateInstanceCore, GetZValueForHitTesting, ctor, .cctor), CameraInfo (ZeroMatrix, Name, Camera, ViewportWidth, ViewportHeight, ViewMatrix, ProjectionMatrix, TotalTransform, InverseTransform, CameraPropertyChanged, ViewportPropertyChanged, GetViewMatrix, GetProjectionMatrix, GetTotalTransform, GetInverseTransform, ToString, CreateInstanceCore, ctor, .cctor).
 - Release IL report:
   - Quire.Automation: PASS; 275 checked; 231 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebook.Automation: PASS; 409 checked; 215 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebookPlus.Automation: PASS; 407 checked; 214 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.Calculation.Core: PASS; 383 checked; 0 failures; exact bodies rose to 383 (+7 exact bodies); unfinished reduced to 397 (-7 unfinished).
-  - Quire.Media3D: PASS; 245 checked; 0 failures; exact bodies rose from 218 to 245 (+27 exact bodies); unfinished reduced from 372 to 345 (-27 unfinished).
+  - Quire.Media3D: PASS; 303 checked; 0 failures; exact bodies rose from 245 to 303 (+58 exact bodies); unfinished reduced from 345 to 287 (-58 unfinished).
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.

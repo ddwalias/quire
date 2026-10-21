@@ -11,8 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.IViewportsListManager, Ptc.Media3D")]
 public partial interface IViewportsListManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    void AddToList(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void RemoveFromList(global::System.Windows.Controls.Viewport3D viewport) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
