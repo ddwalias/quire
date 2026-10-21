@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-calc-core-20261021-c9.
+- Branch: mirror/c-calc-core-20261021-c10.
 - UTC start time: 2026-10-21T13:33:29Z.
 - Eight-hour deadline: 2026-10-21T21:33:29Z.
 - Current assembly: Quire.Calculation.Core (in progress).
@@ -34,6 +34,7 @@
     - Batch 6: Trace2DResultConverterHelperBase (ctor, CurrentType, IsTypeDefault, AssertValuesTypeMatchTraceType, ValidateColumnsAndUnits, ValidateNumberOfPointsLimit, ValidateEnoughResultColumnsForTraceType).
     - Batch 7: RedefinitionWarningsDictionary (.ctor, InitializeComponent, explicit IComponentConnector.Connect).
     - Batch 8: EngineErrorMessages (.ctor, GetStringByKey, GetDisplayMessage, MergeDictionary, InitializeComponent, explicit IComponentConnector.Connect), EngineError (MessagesForXamlSerialization get/set, Clone, explicit ICloneable.Clone), CalculatableAggregateExtensions (GetAggregateRl), SimpleCalculatable (.ctor, Commit, SetStatusSynchronized, SetSynchronizationStatus, IsErrorOnScalingUnits, IsEngineWarningsEquals, FireGetValueOfIdentifierBefore).
+    - Batch 9: VectorsListJSonSerializer<T> (CreateListNode, Read(Stream, int), Write(Stream, IList<IListResultNode>, int) with closure <>c__DisplayClass3_0, Write(Stream, T[]), Read(Stream), .cctor).
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
@@ -55,7 +56,7 @@
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
-  - Quire.Calculation.Core: PASS; 409 checked; 0 failures; exact bodies rose from 387 to 409 (+22 exact bodies); unfinished reduced to 381 (-18 unfinished).
+  - Quire.Calculation.Core: PASS; 415 checked; 0 failures; exact bodies rose from 409 to 415 (+6 exact bodies); unfinished reduced to 377 (-4 unfinished).
   - Quire.Media3D: PASS; 619 checked; 0 failures; exact bodies rose from 584 to 619 (+35 exact bodies); unfinished reduced from 31 to 5 (-26 unfinished).
 - Unfinished members:
   - Quire.Automation:
