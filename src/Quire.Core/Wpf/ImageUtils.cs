@@ -198,4 +198,43 @@ public partial class ImageUtils
         int num2 = ((imageSize <= 0) ? icon.Height : imageSize);
         return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, new Int32Rect(0, 0, num, num2), BitmapSizeOptions.FromEmptyOptions());
     }
+
+    [MirrorVerified("Release IL")]
+    public static System.Drawing.Icon MessageBoxImageToIcon(MessageBoxImage image)
+    {
+        System.Drawing.Icon result = null;
+        if (image == MessageBoxImage.Asterisk)
+        {
+            result = System.Drawing.SystemIcons.Asterisk;
+        }
+        else if (image == MessageBoxImage.Asterisk)
+        {
+            result = System.Drawing.SystemIcons.Information;
+        }
+        else if (image == MessageBoxImage.Hand || image == MessageBoxImage.Hand)
+        {
+            result = System.Drawing.SystemIcons.Error;
+        }
+        else if (image == MessageBoxImage.Hand)
+        {
+            result = System.Drawing.SystemIcons.Hand;
+        }
+        else if (image == MessageBoxImage.Exclamation)
+        {
+            result = System.Drawing.SystemIcons.Exclamation;
+        }
+        else if (image == MessageBoxImage.Exclamation)
+        {
+            result = System.Drawing.SystemIcons.Warning;
+        }
+        else if (image == MessageBoxImage.Question)
+        {
+            result = System.Drawing.SystemIcons.Question;
+        }
+        else if (image == MessageBoxImage.None)
+        {
+            result = null;
+        }
+        return result;
+    }
 }
