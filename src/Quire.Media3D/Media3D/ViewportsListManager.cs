@@ -71,7 +71,7 @@ public partial class ViewportsListManager : IViewportsListManager
 
     private static void ReplaceLoadedViewports(List<WeakReference> loadedViewports)
     {
-        if (_loadedViewportsNeverUseDirectly.Count != 0)
+        if (_loadedViewportsNeverUseDirectly.Count() != 0)
         {
             CompositionTarget.Rendering -= OnRendering;
         }
@@ -81,7 +81,7 @@ public partial class ViewportsListManager : IViewportsListManager
         {
             _loadedViewportsNeverUseDirectly = new List<WeakReference>();
         }
-        if (_loadedViewportsNeverUseDirectly.Count != 0)
+        if (_loadedViewportsNeverUseDirectly.Count() != 0)
         {
             CompositionTarget.Rendering += OnRendering;
         }
@@ -135,13 +135,14 @@ public partial class ViewportsListManager : IViewportsListManager
         }
         set
         {
-            if (_renderingEnabled != value)
+            if (_renderingEnabled == value)
             {
-                _renderingEnabled = value;
-                if (_renderingEnabled)
-                {
-                    OnRendering();
-                }
+                return;
+            }
+            _renderingEnabled = value;
+            if (_renderingEnabled)
+            {
+                OnRendering();
             }
         }
     }
@@ -179,7 +180,7 @@ public partial class ViewportsListManager : IViewportsListManager
         Matrix3D totalTransform = ViewportInfo.GetTotalTransform(viewport);
         foreach (Visual3D child in viewport.Children)
         {
-            OnRendering((DependencyObject)(object)child, totalTransform);
+            OnRendering(child, totalTransform);
         }
     }
 
