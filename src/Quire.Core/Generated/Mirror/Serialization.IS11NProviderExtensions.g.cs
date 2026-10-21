@@ -11,8 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IS11NProviderExtensions, Ptc.Core")]
 public static partial class IS11NProviderExtensions
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string PackImageExt(this global::Quire.Serialization.IS11NProvider provider, global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string PackExternalObjectExt(this global::Quire.Serialization.IS11NProvider provider, string sourceFileName, string excelUniqueId, global::Quire.Serialization.ExternalObjectType objType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
