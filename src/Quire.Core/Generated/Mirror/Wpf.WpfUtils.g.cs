@@ -76,10 +76,6 @@ public static partial class WpfUtils
     [global::Quire.Mirror.MirrorStub]
     public static void TextRangeCopy(global::System.Windows.Documents.TextRange source, global::System.Windows.Documents.TextRange destination, string dataFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsSignificantMouseMove(global::System.Windows.Point initialMousePosition, global::System.Windows.Point currentPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsSignificantMouseMove(global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Uri CombineRelativeUris(global::System.Uri baseUri, global::System.Uri rel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.DependencyObject GetParentDependencyObject(global::System.Windows.DependencyObject d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

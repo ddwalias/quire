@@ -488,4 +488,22 @@ public static partial class WpfUtils
         }
         return true;
     }
+
+    public static bool IsSignificantMouseMove(Point initialMousePosition, Point currentPosition)
+    {
+        if (!(global::System.Math.Abs(currentPosition.X - initialMousePosition.X) >= SystemParameters.MinimumHorizontalDragDistance))
+        {
+            return global::System.Math.Abs(currentPosition.Y - initialMousePosition.Y) >= SystemParameters.MinimumVerticalDragDistance;
+        }
+        return true;
+    }
+
+    public static bool IsSignificantMouseMove(Vector offset)
+    {
+        if (!(offset.Length >= SystemParameters.MinimumHorizontalDragDistance))
+        {
+            return offset.Length >= SystemParameters.MinimumVerticalDragDistance;
+        }
+        return true;
+    }
 }
