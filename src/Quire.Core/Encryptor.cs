@@ -1,5 +1,6 @@
 #nullable disable
 using System.Security.Cryptography;
+using System.Linq;
 using Quire.Mirror;
 
 namespace Quire;
@@ -17,4 +18,11 @@ public partial class Encryptor
 
     [MirrorVerified("Release IL")]
     public bool MatchesEncrypted(byte[] encryptedData, string data) => encryptedData.SequenceEqual(Encrypt(data));
+
+    [MirrorVerified("Release IL")]
+    public bool ShouldUpdateEncryption(Version formatVersion)
+    {
+        Version key = _legacyDecryptorsDictionary.LastOrDefault().Key;
+        return formatVersion.CompareTo(key) <= 0;
+    }
 }
