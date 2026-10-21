@@ -11,6 +11,5 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IVisitable`1, Ptc.Core")]
 public partial interface IVisitable<T> where T : global::Quire.IVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    void Accept(T visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    void Accept(T visitor);
 }
