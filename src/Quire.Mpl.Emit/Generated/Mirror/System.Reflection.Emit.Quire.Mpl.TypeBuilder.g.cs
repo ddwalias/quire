@@ -18,31 +18,9 @@ public partial class TypeBuilder : global::System.Reflection.TypeInfo
     [global::Quire.Mirror.MirrorStub]
     public global::System.Type CreateType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.ConstructorInfo GetConstructor(global::System.Type type, global::System.Reflection.ConstructorInfo constructor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Reflection.ConstructorInfo GetConstructorImpl(global::System.Reflection.BindingFlags bindingAttr, global::System.Reflection.Binder binder, global::System.Reflection.CallingConventions callConvention, global::System.Type[] types, global::System.Reflection.ParameterModifier[] modifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.FieldInfo GetField(string name, global::System.Reflection.BindingFlags bindingAttr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.FieldInfo GetField(global::System.Type type, global::System.Reflection.FieldInfo field) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.InterfaceMapping GetInterfaceMap(global::System.Type interfaceType) => base.GetInterfaceMap(interfaceType);
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Reflection.MemberInfo[] GetMember(string name, global::System.Reflection.MemberTypes type, global::System.Reflection.BindingFlags bindingAttr) => base.GetMember(name, type, bindingAttr);
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Reflection.MethodInfo GetMethod(global::System.Type type, global::System.Reflection.MethodInfo method) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Reflection.MethodInfo GetMethodImpl(string name, global::System.Reflection.BindingFlags bindingAttr, global::System.Reflection.Binder binder, global::System.Reflection.CallingConventions callConvention, global::System.Type[] types, global::System.Reflection.ParameterModifier[] modifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Reflection.PropertyInfo GetPropertyImpl(string name, global::System.Reflection.BindingFlags bindingAttr, global::System.Reflection.Binder binder, global::System.Type returnType, global::System.Type[] types, global::System.Reflection.ParameterModifier[] modifiers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override bool IsArrayImpl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsAssignableFrom(global::System.Reflection.TypeInfo typeInfo) => base.IsAssignableFrom(typeInfo);
-    [global::Quire.Mirror.MirrorStub]
-    public override bool IsAssignableFrom(global::System.Type c) => base.IsAssignableFrom(c);
-    [global::Quire.Mirror.MirrorStub]
     private bool HasConstructor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.Emit.Quire.Mpl.ConstructorBuilder DefineTypeInitializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public override global::System.Reflection.InterfaceMapping GetInterfaceMap(global::System.Type interfaceType) => base.GetInterfaceMap(interfaceType);
 }
