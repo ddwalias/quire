@@ -2,6 +2,15 @@ namespace Quire;
 
 public static partial class RectExtension
 {
+    public static bool ContainsAccountingForMeasurementError(this global::System.Windows.Rect rect, global::System.Windows.Point pt)
+    {
+        if (pt.X.IsBetween(rect.TopLeft.X, rect.BottomRight.X, isInclusive: true, 1E-05))
+        {
+            return pt.Y.IsBetween(rect.TopLeft.Y, rect.BottomRight.Y, isInclusive: true, 1E-05);
+        }
+        return false;
+    }
+
     public static bool IntersectsWithAccountingForMeasurementError(this global::System.Windows.Rect rect, global::System.Windows.Rect rectAnother)
     {
         if (rect.IntersectsWith(rectAnother))
