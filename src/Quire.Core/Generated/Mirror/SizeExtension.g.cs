@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.SizeExtension, Ptc.Core")]
 public static partial class SizeExtension
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsEqualTo(this global::System.Windows.Size size1, global::System.Windows.Size size2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
