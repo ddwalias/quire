@@ -527,14 +527,10 @@ public partial class UnsafeNativeMethods
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfMessagePump, Ptc.Core")]
     internal partial interface ITfMessagePump
     {
-        [global::Quire.Mirror.MirrorStub]
-        void PeekMessageA(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetMessageA(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void PeekMessageW(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void GetMessageW(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, out bool result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        void PeekMessageA(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result);
+        void GetMessageA(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, out int result);
+        void PeekMessageW(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, int removeMsg, out int result);
+        void GetMessageW(ref global::System.Windows.Interop.MSG msg, int hwnd, int msgFilterMin, int msgFilterMax, out bool result);
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.UnsafeNativeMethods+ITfProperty, Ptc.Core")]
