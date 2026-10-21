@@ -235,4 +235,17 @@ public static partial class WpfUtils
         }
         return false;
     }
+
+    public static void DoWork(Action work)
+    {
+        Mouse.OverrideCursor = global::System.Windows.Input.Cursors.Wait;
+        try
+        {
+            work();
+        }
+        finally
+        {
+            Mouse.OverrideCursor = null;
+        }
+    }
 }
