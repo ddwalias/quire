@@ -297,6 +297,55 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public TextFormat(TextFormat tf, TextFormat agreesWith) : this(tf)
+    {
+        if (agreesWith != null)
+        {
+            SetTextFormatValuesAccordingTo(agreesWith, useDefaultValues: true);
+            if (MixedFontFamily || agreesWith.MixedFontFamily || !FontFamily.Equals(agreesWith.FontFamily))
+            {
+                MixedFontFamily = true;
+            }
+            if (MixedFontSize || agreesWith.MixedFontSize || Math.Abs(agreesWith.FontSize - FontSize) > 1E-09)
+            {
+                MixedFontSize = true;
+            }
+            if (MixedFontWeight || agreesWith.MixedFontWeight || !FontWeight.Equals(agreesWith.FontWeight))
+            {
+                MixedFontWeight = true;
+            }
+            if (MixedFontStyle || agreesWith.MixedFontStyle || !FontStyle.Equals(agreesWith.FontStyle))
+            {
+                MixedFontStyle = true;
+            }
+            if (MixedTextDecorations || agreesWith.MixedTextDecorations || !((object)TextDecorations).Equals(agreesWith.TextDecorations))
+            {
+                MixedTextDecorations = true;
+            }
+            if (MixedForeground || agreesWith.MixedForeground || !AreColorsEqual(Foreground, agreesWith.Foreground))
+            {
+                MixedForeground = true;
+            }
+            if (MixedBackground || agreesWith.MixedBackground || !AreColorsEqual(Background, agreesWith.Background, assertOnNull: false))
+            {
+                MixedBackground = true;
+            }
+            if (MixedMarkerStyle || agreesWith.MixedMarkerStyle || !MarkerStyle.Equals(agreesWith.MarkerStyle))
+            {
+                MixedMarkerStyle = true;
+            }
+            if (MixedTextAlignment || agreesWith.MixedTextAlignment || !TextAlignment.Equals(agreesWith.TextAlignment))
+            {
+                MixedTextAlignment = true;
+            }
+            if (MixedStyle || agreesWith.MixedStyle || !StyleKey.Equals(agreesWith.StyleKey))
+            {
+                MixedStyle = true;
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public TextFormat(TextFormat parenTextFormat, global::System.Windows.Documents.TextRange textRange, bool onlyFirstRun = false) : this(parenTextFormat)
     {
         Initialize(textRange, onlyFirstRun);
