@@ -157,6 +157,19 @@ public abstract class CalculatableRegionControl : RegionControl, ICalculatable
 
     protected abstract void OnResult(CalculationResult result);
 
+    public event Action<ICalculatable>? RequestEvaluation;
+    public event Func<ICalculatable, string, IResultNode>? GetValueOfIdentifierBefore;
+    public event Action<ICalculatable>? TreatAsUpToDate;
+
+    public void Commit() { }
+    public void SetStatusSynchronized() => SetSynchronizationStatus(SynchronizationStatus.Synchronized);
+    public void SetCalculatingStatus(CalculatingStatus computingStatus) { }
+    public void SetResult(IResultNode result) { }
+    public void SetError(EngineError error) { }
+    public void SetIdentifierLabels(IDictionary<ResolvedId, string[]> idLabelMap) { }
+    public void SetAutoSelectAlgorithm(IDictionary<int, string> autoAlgorithmMap) { }
+    public void SetRedefinitionWarnings(IList<EngineRedefInfo> warnings) { }
+
     /// <summary>Re-apply the last result, e.g. after the display format changed.</summary>
     protected override void OnResultFormatChanged()
     {
