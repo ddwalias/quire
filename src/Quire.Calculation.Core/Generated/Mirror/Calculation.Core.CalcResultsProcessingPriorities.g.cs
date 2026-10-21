@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.CalcResultsProcessingPriorities, Ptc.Calculation.Core")]
 public static partial class CalcResultsProcessingPriorities
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Threading.DispatcherPriority DefaultResultDispatchPriority_Background;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.Threading.DispatcherPriority ShadowResultsProcessingPriority_Send;
 }

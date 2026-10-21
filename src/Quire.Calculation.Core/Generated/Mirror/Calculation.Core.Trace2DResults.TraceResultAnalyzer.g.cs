@@ -11,20 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.TraceResultAnalyzer, Ptc.Calculation.Core")]
 public static partial class TraceResultAnalyzer
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string[] GetLabels(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IStringListResultNode> vectors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool AddOneDataSegment(global::System.Collections.Generic.IList<global::System.Windows.Point> pointsList, global::System.Collections.Generic.IList<double> xData, global::System.Collections.Generic.IList<double> yData, bool ensureTrailingNaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool AddOneDataSegment(global::System.Collections.Generic.IList<global::System.Windows.Point> pointsList, double xCoordinate, global::System.Collections.Generic.IList<double> yData, bool ensureTrailingNaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IList<double> StringVectorToIndices(global::Quire.Calculation.Core.IStringListResultNode strData, int offset = 0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<double>> ToDoubleDataList(global::Quire.Calculation.Core.IVectorListResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool BuildPointsForWaterfall(global::System.Collections.Generic.IList<global::System.Windows.Point> pointsList, global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<double>> xData, global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<double>> yData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool BuildPointsForBoxes(global::System.Collections.Generic.IList<global::System.Windows.Point> pointsList, global::System.Collections.Generic.IList<double> xValues, global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<double>> yData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool BuildTuplesOfPoints(global::System.Collections.Generic.IList<global::System.Windows.Point> pointsList, global::System.Collections.Generic.IList<double> xVector, global::System.Collections.Generic.IList<double>[] yVectors, global::System.Collections.Generic.IList<double> xOffsets = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
