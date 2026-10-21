@@ -14,12 +14,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.DependencyProperty[] ClearFormatPropsList;
     [global::Quire.Mirror.MirrorStub]
-    public const double DefaultFontSizeInPoints = 11d;
-    [global::Quire.Mirror.MirrorStub]
-    private const double FontSizeAccuracy = 1E-09d;
-    [global::Quire.Mirror.MirrorStub]
-    public const string DefaultTextFormatFontFamiliy = "Tahoma";
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty StyleKeyProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.Core.TextFormat DefaultTextFormat;

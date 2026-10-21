@@ -15,6 +15,15 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    public const double DefaultFontSizeInPoints = 11d;
+
+    [MirrorVerified("Release IL")]
+    private const double FontSizeAccuracy = 1E-09d;
+
+    [MirrorVerified("Release IL")]
+    public const string DefaultTextFormatFontFamiliy = "Tahoma";
+
+    [MirrorVerified("Release IL")]
     private static TextMarkerStyle GetMarkerStyleForRange(System.Windows.Documents.TextRange textRange, out bool mixed)
     {
         mixed = false;
