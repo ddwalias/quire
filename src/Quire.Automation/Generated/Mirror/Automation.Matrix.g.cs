@@ -11,6 +11,4 @@ namespace Quire.Automation;
 [global::Quire.Mirror.MirrorOf("Ptc.MathcadPrime.Automation.Matrix, Ptc.MathcadPrime.Automation")]
 public partial class Matrix : global::Quire.Automation.IProxyComRealSubject<global::Quire.Automation.IMathcadPrimeMatrix>, global::Quire.Automation.IMathcadPrimeMatrix
 {
-    [global::Quire.Mirror.MirrorStub]
-    double[][] global::Quire.Automation.IMathcadPrimeMatrix.Matrix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
