@@ -11,10 +11,7 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.IHelpSettings, Ptc.Core")]
 public partial interface IHelpSettings : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    bool DocOptionsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    bool IsHelpDefault { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string HelpPath { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    bool DocOptionsEnabled { get; set; }
+    bool IsHelpDefault { get; set; }
+    string HelpPath { get; set; }
 }

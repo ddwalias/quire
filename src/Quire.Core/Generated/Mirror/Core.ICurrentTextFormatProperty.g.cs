@@ -11,6 +11,5 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.ICurrentTextFormatProperty, Ptc.Core")]
 public partial interface ICurrentTextFormatProperty : global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.Core.TextFormat CurrentTextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::Quire.Core.TextFormat CurrentTextFormat { get; set; }
 }
