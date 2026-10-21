@@ -1,5 +1,6 @@
 #nullable disable
 using System.IO;
+using System.Linq;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -35,4 +36,26 @@ public partial class ImageUtils
 
     [MirrorVerified("Release IL")]
     public static int BytesNeeded(int bits) => (bits + 7) / 8;
+
+    [MirrorVerified("Release IL")]
+    public static bool CompareHashes(byte[] hash1, byte[] hash2)
+    {
+        if (hash1 != null && hash2 != null)
+        {
+            return hash1.SequenceEqual(hash2);
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static BitmapImage CreateBitmapImageWithCacheOptions(Uri uri)
+    {
+        BitmapImage bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        bitmapImage.UriSource = uri;
+        bitmapImage.EndInit();
+        return bitmapImage;
+    }
 }

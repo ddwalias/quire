@@ -64,10 +64,6 @@ public partial class ImageUtils
     [global::Quire.Mirror.MirrorStub]
     public static bool CompareBitmapsHash(global::System.Windows.Media.Imaging.BitmapSource bm1, global::System.Windows.Media.Imaging.BitmapSource bm2, bool convertIfNeeded = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool CompareHashes(byte[] hash1, byte[] hash2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Media.Imaging.BitmapImage CreateBitmapImageWithCacheOptions(global::System.Uri uri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Media.Imaging.BitmapImage GetBitmapImage(global::System.IO.Stream stream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsStreamContentEqual(global::System.IO.Stream sourceStream, global::System.IO.Stream targetStream) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
