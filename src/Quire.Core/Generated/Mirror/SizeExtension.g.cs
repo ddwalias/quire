@@ -13,6 +13,4 @@ public static partial class SizeExtension
 {
     [global::Quire.Mirror.MirrorStub]
     public static bool IsEqualTo(this global::System.Windows.Size size1, global::System.Windows.Size size2, double eps = double.NaN) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Size RoundWithDecimal(this global::System.Windows.Size size, int decimals = 2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

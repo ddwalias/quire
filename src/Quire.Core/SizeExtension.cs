@@ -6,4 +6,9 @@ public static partial class SizeExtension
     {
         return new global::System.Windows.Size(global::System.Math.Round(size.Width), global::System.Math.Round(size.Height));
     }
+
+    public static global::System.Windows.Size RoundWithDecimal(this global::System.Windows.Size size, int decimals = 2)
+    {
+        return new global::System.Windows.Size(global::System.Math.Round(size.Width, decimals), global::System.Math.Round(size.Height, decimals));
+    }
 }
