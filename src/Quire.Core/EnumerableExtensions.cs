@@ -119,6 +119,21 @@ public static partial class EnumerableExtensions
         return true;
     }
 
+    public static TValue GetCommonValue<TObject, TValue>(this IEnumerable<TObject> items, Func<TObject, TValue> getState, TValue defaultValue)
+    {
+        IEnumerator<TValue> enumerator = items.Select(getState).Distinct().GetEnumerator();
+        TValue result = defaultValue;
+        if (enumerator.MoveNext())
+        {
+            result = enumerator.Current;
+            if (enumerator.MoveNext())
+            {
+                result = defaultValue;
+            }
+        }
+        return result;
+    }
+
     [MirrorVerified("PtcEnumerableExtensionsMechanicalDifferentialTests")]
     public static IEnumerable<TRetType> Collect<T, TRetType>(this IEnumerable<T> items, Func<T, TRetType> action) => CollectAsList<T, TRetType>(items, action);
 

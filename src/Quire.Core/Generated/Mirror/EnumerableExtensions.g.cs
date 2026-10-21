@@ -22,8 +22,6 @@ public static partial class EnumerableExtensions
     [global::Quire.Mirror.MirrorStub]
     public static TSource MinBy<TSource, TKey>(this global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, TKey> selector, global::System.Collections.Generic.IComparer<TKey> comparer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static TValue GetCommonValue<TObject, TValue>(this global::System.Collections.Generic.IEnumerable<TObject> items, global::System.Func<TObject, TValue> getState, TValue defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> Yield<T>(this T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<T> YieldOrEmpty<T>(this T item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
