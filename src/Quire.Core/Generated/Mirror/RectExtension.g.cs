@@ -15,6 +15,4 @@ public static partial class RectExtension
     public static readonly global::Quire.DoubleComparer UiLayoutComparer;
     [global::Quire.Mirror.MirrorStub]
     public static bool ContainsAccountingForMeasurementError(this global::System.Windows.Rect rect, global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IntersectsWithAccountingForMeasurementError(this global::System.Windows.Rect rect, global::System.Windows.Rect rectAnother) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

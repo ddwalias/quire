@@ -2,6 +2,19 @@ namespace Quire;
 
 public static partial class RectExtension
 {
+    public static bool IntersectsWithAccountingForMeasurementError(this global::System.Windows.Rect rect, global::System.Windows.Rect rectAnother)
+    {
+        if (rect.IntersectsWith(rectAnother))
+        {
+            return true;
+        }
+        if (!rect.ContainsAccountingForMeasurementError(rectAnother.TopLeft) && !rect.ContainsAccountingForMeasurementError(rectAnother.TopRight) && !rect.ContainsAccountingForMeasurementError(rectAnother.BottomLeft))
+        {
+            return rect.ContainsAccountingForMeasurementError(rectAnother.BottomRight);
+        }
+        return true;
+    }
+
     public static bool IsValidSizeRect(this global::System.Windows.Rect rect)
     {
         if (!rect.IsEmpty && rect.Height > 0.0)
