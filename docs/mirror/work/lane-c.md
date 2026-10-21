@@ -8,7 +8,7 @@
   5. `Quire.Media3D` — `Ptc.Media3D.dll`
 - Status: in progress. Quire.Automation, Quire.EngNotebook.Automation, and Quire.EngNotebookPlus.Automation actionable members completed. Quire.Calculation.Core actionable members landed around tooling blockers. Quire.Media3D in progress.
 - Worktree: `C:/Projects/Quire-wt/lane-c-automation`.
-- Branch: mirror/c-media3d-20261021-m5.
+- Branch: mirror/c-media3d-20261021-m6.
 - UTC start time: 2026-10-20T18:12:36Z.
 - Eight-hour deadline: 2026-10-21T02:12:36Z.
 - Current assembly: Quire.Media3D (in progress).
@@ -35,12 +35,13 @@
     - Batch 3: MeshGeneratorBase (Name, Geometry, PropertyChanged, Triangulate, .cctor), FlatSurfaceMeshBase (Slices, ValidateSlices, TriangleSubdivide, Point3DWeight, Vector3DWeight, PointWeight, .cctor), PolyhedronMeshBase (TextureCoordinates, Triangulate, ctor, .cctor), CubeMesh (Faces, ctor, CreateInstanceCore, .cctor), TetrahedronMesh (Faces, ctor, CreateInstanceCore, .cctor), OctahedronMesh (Faces, ctor, CreateInstanceCore, .cctor), DodecahedronMesh (Faces, ctor, CreateInstanceCore, .cctor), IcosahedronMesh (Faces, ctor, CreateInstanceCore, .cctor).
     - Batch 4: CylindricalMeshBase (Length, Radius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, .cctor), CylinderMesh (EndStacks, Fold, ValidateEndStacks, ValidateFold, ctor, Triangulate, CreateInstanceCore, .cctor), HollowCylinderMesh (ctor, Triangulate, CreateInstanceCore), SphereMesh (Center, Radius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, Triangulate, CreateInstanceCore, .cctor), TorusMesh (Radius, TubeRadius, Slices, Stacks, ValidateSlices, ValidateStacks, ctor, Triangulate, CreateInstanceCore, .cctor), TubeMesh (Thickness, EndStacks, Fold, ValidateThickness, ValidateEndStacks, ValidateFold, ctor, Triangulate, CreateInstanceCore, .cctor).
     - Batch 5: BoxMesh (Width, Height, Depth, Slices, Stacks, Layers, ValidateDivisions, ctor, Triangulate, CreateInstanceCore, .cctor), PolygonMesh (Length, Sides, ctor, Triangulate, CreateInstanceCore, .cctor), TeapotTriangleRange (Begin, End, All, Pot, Body, Handle, Spout, Lid, ctor, ctor(begin, end), ToString, CreateInstanceCore, .cctor; Parse deferred due to MethodAudit InlineTok FieldDefinition bug), TeapotTriangleRangeConverter (CanConvertFrom, CanConvertTo, ConvertFrom, ConvertTo, ctor).
+    - Batch 6: WireBaseAndUltimateParent (ctor), WirePointBase (GetRadiusScale, ctor, .cctor).
 - Release IL report:
   - Quire.Automation: PASS; 275 checked; 231 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebook.Automation: PASS; 409 checked; 215 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.EngNotebookPlus.Automation: PASS; 407 checked; 214 exact bodies/declarations; 2 unfinished remaining; 0 failures.
   - Quire.Calculation.Core: PASS; 383 checked; 0 failures; exact bodies rose to 383 (+7 exact bodies); unfinished reduced to 397 (-7 unfinished).
-  - Quire.Media3D: PASS; 215 checked; 0 failures; exact bodies rose from 172 to 215 (+43 exact bodies); unfinished reduced from 414 to 374 (-40 unfinished).
+  - Quire.Media3D: PASS; 218 checked; 0 failures; exact bodies rose from 215 to 218 (+3 exact bodies); unfinished reduced from 374 to 372 (-2 unfinished).
 - Unfinished members:
   - Quire.Automation:
     1. `Automation.Matrix.g.cs`: explicit interface property `IMathcadPrimeMatrix.Matrix` blocked by shared tool `Quire.Tools.MethodAudit` type prefix bug.

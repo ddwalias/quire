@@ -11,10 +11,4 @@ namespace Quire.Media3D;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.WireBaseAndUltimateParent, Ptc.Media3D")]
 internal partial class WireBaseAndUltimateParent
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Media3D.WireBase wirebase;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Window window;
-    [global::Quire.Mirror.MirrorStub]
-    public WireBaseAndUltimateParent(global::Quire.Media3D.WireBase wirebase) { }
 }

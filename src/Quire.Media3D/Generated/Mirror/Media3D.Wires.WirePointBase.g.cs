@@ -11,10 +11,4 @@ namespace Quire.Media3D.Wires;
 [global::Quire.Mirror.MirrorOf("Ptc.Media3D.Wires.WirePointBase, Ptc.Media3D")]
 public abstract partial class WirePointBase : global::Quire.Media3D.WireBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected static global::Quire.Media3D.SphereMesh Mesh;
-    [global::Quire.Mirror.MirrorStub]
-    protected double GetRadiusScale(global::System.Windows.Media.Media3D.Point3D center) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected WirePointBase() { }
 }
