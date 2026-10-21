@@ -43,6 +43,7 @@
     - Batch 15: EagerMatrixSimpleResultNode (IMatrixResultNode.this[r, c] explicit getter, .ctor(IMatrixResultNode), IsChildrenEquals). All genuine managed members of EagerMatrixSimpleResultNode now exact.
     - Batch 16: VectorsConverterBase (GetVectorsValueType), VectorsLazyMatrixConverter (.ctor, GetPlainDataValues with closures <>c__DisplayClass1_0 and <>c__DisplayClass1_1, Create, GetCommonType, ReadAsColumns, ReadVectors with exact 5-case jump table switch, BuildResultVectors). All genuine managed members now exact.
     - Batch 17: VectorsLegacyConverter (Create, .ctor, ReadVectors, GetCommonType, ReadAsColumns, ReadElement with closures <>c__DisplayClass14_0 and <>c__DisplayClass14_1, ConvertAndCache, TryConvertSingleVector, ReadStringValues, ReadDoubleValues, GetFirstMeaningfulValueType, ReadDoubleOrNone, ReadString). All genuine managed members now exact.
+    - Batch 18: VectorListResultNode (.ctor with closure <>c__DisplayClass11_0, CommonValuesType, GetResultType, ElementsCount, SingleVectorLength, VectorsType, Vectors, GetVectorValuesType, Count, Item, Accept). All genuine managed members now exact.
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
@@ -65,7 +66,7 @@
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
-  - Quire.Calculation.Core: PASS; 518 checked; 0 failures; exact bodies rose from 504 to 518 (+14 exact bodies); unfinished reduced from 307 to 295 (-12 unfinished).
+  - Quire.Calculation.Core: PASS; 523 checked; 0 failures; exact bodies rose from 518 to 523 (+5 exact bodies); unfinished reduced from 295 to 292 (-3 unfinished).
   - Quire.Media3D: PASS; 629 checked; 0 failures; exact bodies rose from 619 to 629 (+10 exact bodies); 5 unfinished remaining (blocked by legacy CSC conv.r8 double boxing and compiler closure ordinal shift). Complete for all actionable managed members.
 - Unfinished members:
   - Quire.Automation:
