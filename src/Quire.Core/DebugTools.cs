@@ -13,6 +13,12 @@ public static partial class DebugTools
     public const string DEBUG = "DEBUG";
 
     [MirrorVerified("Release IL")]
+    private static readonly object _loggingLockObj;
+
+    [MirrorVerified("Release IL")]
+    private static List<string> _loggingData;
+
+    [MirrorVerified("Release IL")]
     private static DateTime? _lastLogTime;
 
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]

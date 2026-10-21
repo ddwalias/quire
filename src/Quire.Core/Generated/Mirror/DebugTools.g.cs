@@ -12,10 +12,6 @@ namespace Quire;
 public static partial class DebugTools
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly object _loggingLockObj;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.List<string> _loggingData;
-    [global::Quire.Mirror.MirrorStub]
     public static void LogData(string line, ref global::System.Nullable<global::System.DateTime> refTime) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.AssertionResult DevAssert(bool condition, int framesToSkip, global::Quire.DebugTools.AssertionModifiers modifiers, string message = default, params object[] messageArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

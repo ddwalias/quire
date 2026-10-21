@@ -4,8 +4,8 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Selected members: 346 accepted mechanical methods (+63 fields), 368 manually reconstructed methods (+71 fields), and 659 abstract interface declarations across Core, WPF, serialization, undo, quality agent, service contracts, WPF COM sinks, and XPS print interfaces; 12 mechanical candidates rejected by MemberGen. Latest member: `DebugTools.DEBUG`.
-- Release IL report: `.mirror-cache/release-il-cc0b4e770329/release-il.json` — PASS, 2,701 exact, 0 mismatches; Quire.Core has 821 unfinished methods.
+- Selected members: 346 accepted mechanical methods (+63 fields), 368 manually reconstructed methods (+73 fields), and 659 abstract interface declarations across Core, WPF, serialization, undo, quality agent, service contracts, WPF COM sinks, and XPS print interfaces; 12 mechanical candidates rejected by MemberGen. Latest members: `DebugTools._loggingLockObj`, `_loggingData`.
+- Release IL report: `.mirror-cache/release-il-6b99fbc7eafe/release-il.json` — PASS, 2,701 exact, 0 mismatches; Quire.Core has 821 unfinished methods.
 - Remaining mismatches: 821 unfinished methods in the full Quire.Core inventory.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
