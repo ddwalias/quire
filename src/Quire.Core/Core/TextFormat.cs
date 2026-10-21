@@ -15,6 +15,16 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    private static object HandleBrushCoerceValue(DependencyObject d, object basevalue)
+    {
+        if (basevalue is Brush brush && !((Freezable)brush).IsFrozen)
+        {
+            return ((Freezable)brush).GetCurrentValueAsFrozen();
+        }
+        return basevalue;
+    }
+
+    [MirrorVerified("Release IL")]
     public static TextFormat GetTextFormatForWholeDocument(FlowDocument document)
     {
         TextFormat textFormat = new TextFormat(new System.Windows.Documents.TextRange(document.ContentStart, document.ContentEnd));
