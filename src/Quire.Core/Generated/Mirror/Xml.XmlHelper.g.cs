@@ -28,7 +28,5 @@ public static partial class XmlHelper
     [global::Quire.Mirror.MirrorStub]
     public static object CreateXamlCopy(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.XmlElement GetXmlElementIfLocalNameIsSuitable(global::System.Xml.XmlNode element, string expectedLocalName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.List<string> GetNodeValueFromXml(string xmlPath, string xPathExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

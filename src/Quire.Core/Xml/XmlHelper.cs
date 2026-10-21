@@ -18,5 +18,15 @@ public static partial class XmlHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static XmlElement GetXmlElementIfLocalNameIsSuitable(XmlNode element, string expectedLocalName)
+    {
+        if (element == null || !(element.LocalName == expectedLocalName))
+        {
+            return null;
+        }
+        return element as XmlElement;
+    }
+
+    [MirrorVerified("Release IL")]
     public static StreamWriter CreateStreamWriterForXamlCopy(Stream stream, bool leaveOpen) => new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen);
 }
