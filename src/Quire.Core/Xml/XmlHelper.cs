@@ -40,5 +40,14 @@ public static partial class XmlHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static XmlNode XElementToXmlNode(XElement source)
+    {
+        using XmlReader reader = source.CreateReader();
+        XmlDocument document = new XmlDocument(reader.NameTable);
+        document.Load(reader);
+        return document;
+    }
+
+    [MirrorVerified("Release IL")]
     public static StreamWriter CreateStreamWriterForXamlCopy(Stream stream, bool leaveOpen) => new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen);
 }
