@@ -13,6 +13,4 @@ public static partial class ParserContextFactory
 {
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.Markup.XamlTypeMapper _xamlMapper;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.Markup.ParserContext Create(global::System.Uri packageUri, global::System.Uri partUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
