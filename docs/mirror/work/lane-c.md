@@ -32,6 +32,7 @@
     - Batch 4: ResultNodeUtils (ParsePlottableValue, TryParsePlottableValue), IResultManagerHelper (SetResultIfRefIdSpecified, IsResultRefIdSpecified), TraceTypeDefinitions (.cctor, GetMinRangeColumns, GetMaxRangeColumns, GetMinResultColumns, GetMaxResultColumns), SimpleResultNodeFactory (CreateRealResultNode, CreateImaginaryResultNode, CreateComplexResultNode, CreateStringResultNode, CreateFunctionResultNode, CreateSymbolicResultNode).
     - Batch 5: EngineResult (ResultXml getter/setter, 6 constructors, IsEmpty).
     - Batch 6: Trace2DResultConverterHelperBase (ctor, CurrentType, IsTypeDefault, AssertValuesTypeMatchTraceType, ValidateColumnsAndUnits, ValidateNumberOfPointsLimit, ValidateEnoughResultColumnsForTraceType).
+    - Batch 7: RedefinitionWarningsDictionary (.ctor, InitializeComponent, explicit IComponentConnector.Connect).
   - Quire.Media3D:
     - Batch 1: LineRange (ctor, Point1 get/set, Point2 get/set, PointFromX, PointFromY, PointFromZ), ProductInfo.Constants (ctor).
     - Batch 2: PathSegment3D (IsStroked, IsSmoothJoin, ctor, .cctor), LineSegment3D (Point, ToString, CreateInstanceCore, ctor, .cctor), PolyLineSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), BezierSegment3D (Point1, Point2, Point3, ToString, CreateInstanceCore, ctor, .cctor), PolyBezierSegment3D (Points, ToString, CreateInstanceCore, ctor, .cctor), PathSegment3DCollection (ctor, ToString, CreateInstanceCore).
@@ -51,7 +52,7 @@
   - Quire.Automation: PASS; 232 checked; 232 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebook.Automation: PASS; 216 checked; 216 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
   - Quire.EngNotebookPlus.Automation: PASS; 215 checked; 215 exact bodies/declarations (+1 exact body); 1 unfinished remaining (`ApplicationCreatorClass..ctor`); 0 failures. Complete for all actionable managed members.
-  - Quire.Calculation.Core: PASS; 383 checked; 0 failures; exact bodies rose to 383 (+7 exact bodies); unfinished reduced to 397 (-7 unfinished).
+  - Quire.Calculation.Core: PASS; 387 checked; 0 failures; exact bodies rose to 387 (+3 exact bodies); unfinished reduced to 399.
   - Quire.Media3D: PASS; 584 checked; 0 failures; exact bodies rose from 577 to 584 (+7 exact bodies); unfinished reduced from 37 to 31 (-6 unfinished).
 - Unfinished members:
   - Quire.Automation:
@@ -60,14 +61,13 @@
     1. `EngNotebook.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
   - Quire.EngNotebookPlus.Automation:
     1. `EngNotebookPlus.Automation.ApplicationCreatorClass.g.cs`: `.ctor` COM runtime constructor without readable IL (`0x06000002 no body`).
-  - Quire.Calculation.Core:
-    1. `Calculation.Core.RedefinitionWarningsDictionary.g.cs`: explicit interface method `global::System.Windows.Markup.IComponentConnector.Connect` blocked by shared tool MirrorGen stub emission prefix `global::` creating mismatch against Mathcad's `System.Windows.Markup.IComponentConnector.Connect` (`method removed` if clean, `no Mathcad counterpart` if prefixed).
+  - Quire.Calculation.Core: none blocked by shared tooling. Remaining unfinished members are independent stubs.
   - Quire.Media3D:
     1. `TeapotTriangleRange.Parse` and `TeapotMesh..cctor` (plus dependent `TeapotMesh` members): blocked by shared tool `Quire.Tools.MethodAudit.Structure` (line 166 / line 495) which throws `BadImageFormatException: Unexpected type token kind FieldDefinition` when `ldtoken` operates on a `FieldDefinition` handle (emitted by Mathcad for `RuntimeHelpers.InitializeArray` static array initializers and `RuntimeHelpers.CreateSpan<char>`).
     2. `WirePoints.UpdateColor`: compiler-generated closure class `c__DisplayClass` missing `MirrorOf` mapping in `Quire.Tools.MethodAudit` type-map.
     3. `WireDashes.Pitch`: legacy CSC compiler emits `conv.r8` before boxing double, not emitted by modern Roslyn.
     4. `ViewportsListManager`: closures (`get_AllViewportsAlive` lambda `<>c` and `FindInAllViewports` lambda `<>c__DisplayClass`) blocked by shared tool `Quire.Tools.MethodAudit` (no `MirrorOf` on compiler-generated nested types).
-- Next assembly: `Quire.Calculation.Core` (`Ptc.Calculation.Core.dll`).
+- Next assembly: `Quire.Media3D` (`Ptc.Media3D.dll`).
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
 All former reservations are released. Preserve previously exact methods, land passing
