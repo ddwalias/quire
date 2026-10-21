@@ -9,44 +9,6 @@
 namespace Quire.Calculation.Core.Trace2DResults;
 
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.VectorsLegacyConverter, Ptc.Calculation.Core")]
-internal partial class VectorsLegacyConverter : global::Quire.Calculation.Core.Trace2DResults.VectorsConverterBase, global::Quire.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter
+internal partial class VectorsLegacyConverter
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.IMatrixResultNode _node;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _hasCache;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _vectorsNum;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly int _singleVectorLength;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Func<int, int, global::Quire.Calculation.Core.IResultNode> _readElement;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Calculation.Core.IListResultNode> _vectorsRes;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ResultValueType _commonValueType;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Calculation.Core.Trace2DResults.VectorsLegacyConverter Create(global::Quire.Calculation.Core.IMatrixResultNode node, bool readAsColumns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private VectorsLegacyConverter(global::Quire.Calculation.Core.IMatrixResultNode node, bool readAsColumns) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> ReadVectors(int maxCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ResultValueType GetCommonType() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IResultNode ReadElement(int iVector, int iElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertAndCache() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.IListResultNode TryConvertSingleVector(int iVector, out global::Quire.Calculation.Core.PlainDataTypes primaryDataType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<string> ReadStringValues(int iVector, int startValueIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IList<double> ReadDoubleValues(int iVector, int startValueIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::Quire.Calculation.Core.ResultValueType> GetFirstMeaningfulValueType(int iVector, out int firstMeaningfullValueIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ReadDoubleOrNone(global::Quire.Calculation.Core.IResultNode element, out double doubleValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ReadString(global::Quire.Calculation.Core.IResultNode element, out string stringValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
