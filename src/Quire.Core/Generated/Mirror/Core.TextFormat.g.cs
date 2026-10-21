@@ -71,8 +71,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     public void UpdateAccordingTo(global::Quire.Core.TextFormat tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetTextFormatValuesAccordingTo(global::Quire.Core.TextFormat tf, bool useDefaultValues) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetValueSafely(global::System.Windows.DependencyProperty prop, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Core.TextFormat+PropertyNames, Ptc.Core")]
     public static partial class PropertyNames

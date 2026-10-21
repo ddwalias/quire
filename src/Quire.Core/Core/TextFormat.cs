@@ -15,6 +15,19 @@ namespace Quire.Core;
 public partial class TextFormat
 {
     [MirrorVerified("Release IL")]
+    public void SetValueSafely(DependencyProperty prop, object value)
+    {
+        try
+        {
+            ((DependencyObject)this).SetValue(prop, value);
+        }
+        catch (ArgumentException ex)
+        {
+            DebugTools.DevAssert(false, ex.Message);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool AreColorsEqual(Brush first, Brush second, bool assertOnNull = true)
     {
         if (assertOnNull)
