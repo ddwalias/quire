@@ -8,6 +8,16 @@ namespace Quire.Wpf;
 
 public static partial class TextRangeExtension
 {
+    [MirrorVerified("Release IL")]
+    public static bool IsNullOrEmpty(this global::System.Windows.Documents.TextRange range)
+    {
+        if (range != null)
+        {
+            return range.IsEmpty;
+        }
+        return true;
+    }
+
     [MirrorVerified("PtcWpfTextRangeExtensionMechanicalDifferentialTests")]
     public static IEnumerable<Hyperlink> EnumerateHyperlinksInRange(this global::System.Windows.Documents.TextRange range, bool allowEmpty = false) => EnumerateInlinesInRange<Hyperlink>(range, allowEmpty);
 
