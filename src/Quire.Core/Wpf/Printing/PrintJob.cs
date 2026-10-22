@@ -36,6 +36,15 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private void FireJobStarted()
+    {
+        if (JobStarted != null)
+        {
+            JobStarted(this, new WritingProgressChangedEventArgs((WritingProgressChangeLevel)2, 0, 0, null));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private void HandleWritingCancelled(object sender, WritingCancelledEventArgs cancelledArgs) => HandleWritingCompleted(sender, new WritingCompletedEventArgs(true, null, cancelledArgs.Error));
 
     [MirrorVerified("Release IL")]
