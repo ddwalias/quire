@@ -34,8 +34,6 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     public static void RemoveTopUndo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Undo.IUndoableCommand[] GetUndoCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Undo.IUndoableCommand[] GetRedoCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

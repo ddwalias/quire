@@ -79,6 +79,31 @@ public partial class CommandBuffer
         }
     }
 
+    [MirrorVerified("Release IL")]
+    public static void Undo()
+    {
+        if (!CanUndo)
+        {
+            return;
+        }
+        IUndoableCommand command = _currentInstance._undoStack.Pop();
+        CommandEventArgs args = new CommandEventArgs(command, (CommandEventArgs.ActionTypeEnum)1);
+        FireCommandEvent(_currentInstance.BeforeCommand, args);
+        CompoundCommand compoundCommand = new CompoundCommand();
+        try
+        {
+            using (new CommandScope(compoundCommand))
+            {
+                command.Undo();
+            }
+        }
+        finally
+        {
+            _currentInstance._redoStack.Push(command);
+            FireCommandEvent(_currentInstance.AfterCommand, args);
+        }
+    }
+
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public event EventHandler<CommandEventArgs> BeforeCommand;
 
