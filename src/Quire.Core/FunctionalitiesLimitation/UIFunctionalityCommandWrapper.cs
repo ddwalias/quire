@@ -8,6 +8,13 @@ namespace Quire.FunctionalitiesLimitation;
 public partial class UIFunctionalityCommandWrapper
 {
     [MirrorVerified("Release IL")]
+    private void Initialize(FrameworkElement lockedUIItem)
+    {
+        LockedUIItem = lockedUIItem;
+        base.CanExecuteChanged += OnBaseCanExecuteChanged;
+    }
+
+    [MirrorVerified("Release IL")]
     public void Execute(object parameter, out bool executed)
     {
         executed = false;
