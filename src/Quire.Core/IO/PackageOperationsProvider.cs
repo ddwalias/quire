@@ -55,6 +55,19 @@ public partial class PackageOperationsProvider
         return sourcePart.Package.GetPart(uriForFirstRelashionshipInCollection);
     }
 
+    [MirrorVerified("Release IL")]
+    private static Uri GetUriForFirstRelashionshipInCollection(IEnumerable<PackageRelationship> relshipCollection)
+    {
+        IEnumerator<PackageRelationship> enumerator = relshipCollection.GetEnumerator();
+        enumerator.MoveNext();
+        PackageRelationship relationship = enumerator.Current;
+        if (relationship == null)
+        {
+            return null;
+        }
+        return relationship.TargetUri;
+    }
+
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     private static readonly Uri _worksheet;
 
