@@ -15,8 +15,7 @@ public partial class WeakDelegate
     private readonly global::System.WeakReference _weakReference;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Reflection.MethodInfo _method;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsWeakReferenceAlive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool IsWeakReferenceAlive { get => _weakReference == null || _weakReference.Target != null; }
     [global::Quire.Mirror.MirrorStub]
     public WeakDelegate(global::System.Delegate realDelegate) { }
     [global::Quire.Mirror.MirrorStub]
