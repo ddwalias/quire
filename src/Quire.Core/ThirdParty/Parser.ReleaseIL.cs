@@ -5,6 +5,59 @@ namespace Quire.ThirdParty;
 
 public sealed partial class Parser
 {
+    [MirrorVerified("Release IL")]
+    public Parser(global::System.Type argumentSpecification, ErrorReporter reporter)
+    {
+        this.reporter = reporter;
+        arguments = new global::System.Collections.ArrayList();
+        argumentMap = new global::System.Collections.Hashtable();
+        global::System.Reflection.FieldInfo[] fields = argumentSpecification.GetFields();
+        foreach (global::System.Reflection.FieldInfo fieldInfo in fields)
+        {
+            if (!fieldInfo.IsStatic && !fieldInfo.IsInitOnly && !fieldInfo.IsLiteral)
+            {
+                ArgumentAttribute attribute = GetAttribute(fieldInfo);
+                if (attribute is DefaultArgumentAttribute)
+                {
+                    defaultArgument = new Argument(attribute, fieldInfo, reporter);
+                }
+                else
+                {
+                    arguments.Add(new Argument(attribute, fieldInfo, reporter));
+                }
+            }
+        }
+        foreach (Argument argument3 in arguments)
+        {
+            argumentMap[argument3.LongName] = argument3;
+            if (argument3.ExplicitShortName)
+            {
+                if (!global::System.String.IsNullOrEmpty(argument3.ShortName))
+                {
+                    argumentMap[argument3.ShortName] = argument3;
+                }
+                else
+                {
+                    argument3.ClearShortName();
+                }
+            }
+        }
+        foreach (Argument argument4 in arguments)
+        {
+            if (!argument4.ExplicitShortName)
+            {
+                if (!global::System.String.IsNullOrEmpty(argument4.ShortName) && !argumentMap.ContainsKey(argument4.ShortName))
+                {
+                    argumentMap[argument4.ShortName] = argument4;
+                }
+                else
+                {
+                    argument4.ClearShortName();
+                }
+            }
+        }
+    }
+
     [global::System.Runtime.InteropServices.DllImport("kernel32.dll", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.StdCall, CharSet = global::System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
     private static extern int GetStdHandle(int nStdHandle);
 
