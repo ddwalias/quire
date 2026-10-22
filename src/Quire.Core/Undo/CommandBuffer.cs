@@ -47,6 +47,13 @@ public partial class CommandBuffer
     }
 
     [MirrorVerified("Release IL")]
+    public static void Reset()
+    {
+        _instances.Clear();
+        CurrentInstance = _defaultBuffer = new CommandBuffer();
+    }
+
+    [MirrorVerified("Release IL")]
     public static bool Execute(string name, DelegateFunction0<bool> doMethod, Delegate0 undoMethod) => Execute(new UndoableCommand(name, doMethod, undoMethod), null);
 
     [MirrorVerified("Release IL")]

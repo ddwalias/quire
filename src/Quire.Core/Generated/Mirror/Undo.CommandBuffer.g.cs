@@ -24,8 +24,6 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.IUndoableCommand NextRedoCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public static void Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Undo.CommandBuffer SwitchBuffer(object key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Undo.CommandBuffer CreateBufferForKey(object key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
