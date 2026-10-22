@@ -17,6 +17,4 @@ public partial class AreaType : global::Quire.PersistentData.mathBoardType, glob
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Xml.Serialization.XmlSerializer GetXmlSerializerStatic(bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

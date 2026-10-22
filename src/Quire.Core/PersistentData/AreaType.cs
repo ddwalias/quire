@@ -63,6 +63,16 @@ public partial class AreaType
     [MirrorVerified("PtcPersistentDataAreaTypeMechanicalDifferentialTests")]
     public XmlSerializer GetXmlSerializer(bool useOverrides) => GetXmlSerializerStatic(useOverrides);
 
+    [MirrorVerified("Release IL")]
+    private static XmlSerializer GetXmlSerializerStatic(bool useOverrides)
+    {
+        if (useOverrides)
+        {
+            return _xmlSerializerWithOverrides ?? (_xmlSerializerWithOverrides = worksheetRegionType.CreateSerializerWithOverrides(TypeOfThis, XmlRootElementName));
+        }
+        return _xmlSerializerDefault ?? (_xmlSerializerDefault = worksheetRegionType.CreateDefaultSerializer(TypeOfThis, XmlRootElementName));
+    }
+
     [MirrorVerified("PtcPersistentDataAreaTypeMechanicalDifferentialTests")]
     private worksheetRegionType[] regionsField;
 

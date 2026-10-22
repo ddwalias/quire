@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: `IO.PackageOperationsProvider.CreateNewImagePart`, `MouseEventGenerator.NormalizeCoordinates(Point, out int, out int)`, `MouseEventGenerator.GenerateMouseClick(Point, int)`, `MouseEventGenerator.SendMouseInput(int, int, SendMouseInputFlags)`, `PersistentData.ProtectableTypesRegistry.GetXmlSerializer(string, bool)`, `PersistentData.ProtectableTypesRegistry.Register(string, Type)`, `PersistentData.ProtectableTypesRegistry..cctor`, `Properties.SettingsHelper.GetMathcadPrimeLicenseConfigValues(string[])` landed.
-- Release IL report: `.mirror-cache/release-il-4364ca8183fb/release-il.json` — PASS, 2,995 exact, 546 unfinished; no mismatches.
+- Members: `IO.PackageOperationsProvider.CreateNewImagePart`, `MouseEventGenerator.NormalizeCoordinates(Point, out int, out int)`, `MouseEventGenerator.GenerateMouseClick(Point, int)`, `MouseEventGenerator.SendMouseInput(int, int, SendMouseInputFlags)`, `PersistentData.ProtectableTypesRegistry.GetXmlSerializer(string, bool)`, `PersistentData.ProtectableTypesRegistry.Register(string, Type)`, `PersistentData.ProtectableTypesRegistry..cctor`, `PersistentData.AreaType.GetXmlSerializerStatic(bool)`, `Properties.SettingsHelper.GetMathcadPrimeLicenseConfigValues(string[])` landed.
+- Release IL report: `.mirror-cache/release-il-a6f88ccffa1c/release-il.json` — PASS, 2,996 exact, 545 unfinished; no mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
