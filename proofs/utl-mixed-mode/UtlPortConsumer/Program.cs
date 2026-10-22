@@ -138,6 +138,13 @@ finally
 
 Console.WriteLine("managed consumer exercised the C++/CLI FileUtils line context helper");
 
+var mailbox = new Mailbox<string>();
+mailbox.PutMessage("queued");
+if (mailbox.Count() != 1 || mailbox.GetMessage() != "queued" || mailbox.Count() != 0)
+    return 28;
+
+Console.WriteLine("managed consumer exercised the C++/CLI generic mailbox");
+
 if (StringUtils.StringQuote("a\"b") != "\"a\\\"b\"")
     return 12;
 var pair = new Pair<int, string>(7, "seven");

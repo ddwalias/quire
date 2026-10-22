@@ -164,6 +164,68 @@ namespace Quire { namespace utl_mgd {
         !SafeMutex() { EnsureReleased(); }
     };
 
+    generic <typename T>
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.Mailbox`1, utl-mgd")]
+    public ref class Mailbox
+    {
+    private:
+        SafeMutex^ m_mutex;
+        SafeEvent^ m_nonempty;
+        System::Collections::Generic::Queue<T>^ m_queue;
+
+    public:
+        Mailbox()
+        {
+            m_mutex = gcnew SafeMutex("mailbox mutex");
+            m_nonempty = gcnew SafeEvent("mailbox non-empty");
+            m_queue = gcnew System::Collections::Generic::Queue<T>();
+            m_nonempty->Reset();
+            GC::KeepAlive(this);
+        }
+
+        T GetMessage()
+        {
+            T message = T();
+            GetMessage(message, reinterpret_cast<void*>(-1));
+            return message;
+        }
+
+        Boolean GetMessage(T% message, void* timeout)
+        {
+            do
+            {
+                m_mutex->WaitOne();
+                try
+                {
+                    if (m_queue->Count > 0)
+                    {
+                        message = m_queue->Dequeue();
+                        if (m_queue->Count == 0) m_nonempty->Reset();
+                        return true;
+                    }
+                }
+                finally { m_mutex->EnsureReleased(1); }
+            }
+            while (m_nonempty->WaitTwoWithTimeout(timeout));
+            return false;
+        }
+
+        void PutMessage(T message)
+        {
+            m_mutex->WaitOne();
+            try { m_queue->Enqueue(message); m_nonempty->Set(); }
+            finally { m_mutex->EnsureReleased(1); }
+            GC::KeepAlive(this);
+        }
+
+        Int32 Count()
+        {
+            m_mutex->WaitOne();
+            try { Int32 count = m_queue->Count; GC::KeepAlive(this); return count; }
+            finally { m_mutex->EnsureReleased(1); }
+        }
+    };
+
 }}
 
 namespace Quire { namespace Engine { namespace Misc {
