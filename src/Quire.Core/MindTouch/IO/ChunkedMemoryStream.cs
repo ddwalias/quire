@@ -32,4 +32,17 @@ public partial class ChunkedMemoryStream
 
     [MirrorVerified("Release IL")]
     public override bool CanSeek => !_closed;
+
+    [MirrorVerified("Release IL")]
+    public override bool CanWrite
+    {
+        get
+        {
+            if (!_closed)
+            {
+                return !_readonly;
+            }
+            return false;
+        }
+    }
 }
