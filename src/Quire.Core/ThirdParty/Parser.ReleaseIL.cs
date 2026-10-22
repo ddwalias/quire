@@ -6,6 +6,32 @@ namespace Quire.ThirdParty;
 public sealed partial class Parser
 {
     [MirrorVerified("Release IL")]
+    public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
+    {
+        for (int i = startIndex; i < text.Length; i++)
+        {
+            if (text[i] == value)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static int LastIndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
+    {
+        for (int num = global::System.Math.Min(startIndex, text.Length - 1); num >= 0; num--)
+        {
+            if (text[num] == value)
+            {
+                return num;
+            }
+        }
+        return -1;
+    }
+
+    [MirrorVerified("Release IL")]
     private static ArgumentAttribute GetAttribute(global::System.Reflection.FieldInfo fieldInfo)
     {
         object[] attributes = fieldInfo.GetCustomAttributes(typeof(ArgumentAttribute), false);

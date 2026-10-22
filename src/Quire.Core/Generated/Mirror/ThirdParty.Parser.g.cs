@@ -44,10 +44,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public static int GetConsoleWindowWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int LastIndexOf(global::System.Text.StringBuilder text, char value, int startIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public Parser(global::System.Type argumentSpecification, global::Quire.ThirdParty.ErrorReporter reporter) { }
     [global::Quire.Mirror.MirrorStub]
     private bool ParseArgumentList(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
