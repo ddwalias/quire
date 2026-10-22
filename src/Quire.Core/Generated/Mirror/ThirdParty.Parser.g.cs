@@ -247,7 +247,29 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         private bool ParseValue(global::System.Type type, string stringData, out object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void AppendValue(global::System.Text.StringBuilder builder, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private void AppendValue(global::System.Text.StringBuilder builder, object value)
+        {
+            if (value is string || value is int || value is uint || value.GetType().IsEnum)
+            {
+                builder.Append(value.ToString());
+                return;
+            }
+            if (value is bool)
+            {
+                builder.Append(((bool)value) ? "+" : "-");
+                return;
+            }
+            bool first = true;
+            foreach (object item in (global::System.Array)value)
+            {
+                if (!first)
+                {
+                    builder.Append(", ");
+                }
+                AppendValue(builder, item);
+                first = false;
+            }
+        }
         [global::Quire.Mirror.MirrorStub]
         private string GetValidValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
