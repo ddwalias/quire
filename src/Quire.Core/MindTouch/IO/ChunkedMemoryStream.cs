@@ -45,4 +45,15 @@ public partial class ChunkedMemoryStream
             return false;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public override long Length
+    {
+        get
+        {
+            EnsureOpen();
+            return _length;
+        }
+    }
+
 }
