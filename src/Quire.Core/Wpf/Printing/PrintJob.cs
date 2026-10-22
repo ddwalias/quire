@@ -83,6 +83,21 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private void JobFinalize(XpsDocumentWriter docWriter, WritingCompletedEventArgs args)
+    {
+        DebugTools.DevAssert(docWriter == _docWriter, "This PrintJob was finished by a different document writer than was used to start it!", Array.Empty<object>());
+        DetachWriteEventHandlers(docWriter);
+        if (_activeXpsDocument != null)
+        {
+            _activeXpsDocument.Close();
+            _activeXpsDocument = null;
+        }
+        _docWriter = null;
+        IsRunning = false;
+        FireJobCompleted(args);
+    }
+
+    [MirrorVerified("Release IL")]
     private void HandleWritingCancelled(object sender, WritingCancelledEventArgs cancelledArgs) => HandleWritingCompleted(sender, new WritingCompletedEventArgs(true, null, cancelledArgs.Error));
 
     [MirrorVerified("Release IL")]
