@@ -15,6 +15,15 @@ public partial class SparseMatrix<TItem>
         }
     }
 
+    [MirrorVerified("Release IL")]
+    private void FireChanged(SparseMatrixItemChangedEventArgs e)
+    {
+        if (Changed != null)
+        {
+            Changed(this, e);
+        }
+    }
+
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
     protected Dictionary<TableCoordinate, TItem> _itemMap;
 

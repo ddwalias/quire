@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `Matrices.SparseMatrix<TItem>.PositionCheck`; 589 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-6ed03614d0a6/release-il.json` — PASS, 2,933 exact, 0 mismatches.
+- Members: latest exact member: `Matrices.SparseMatrix<TItem>.FireChanged`; 588 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-df3cc99f177e/release-il.json` — PASS, 2,934 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
