@@ -168,8 +168,15 @@ public static partial class User32
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+HWND, Ptc.Core")]
     public partial struct HWND
     {
-        [global::Quire.Mirror.MirrorStub]
-        public static global::Quire.Win32.User32.HWND NULL { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+        public static global::Quire.Win32.User32.HWND NULL
+        {
+            get
+            {
+                global::Quire.Win32.User32.HWND hwnd = default;
+                hwnd._value = global::System.IntPtr.Zero;
+                return hwnd;
+            }
+        }
         [global::Quire.Mirror.MirrorStub]
         public static global::Quire.Win32.User32.HWND Cast(nint hwnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
