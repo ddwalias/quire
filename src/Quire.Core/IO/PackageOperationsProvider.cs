@@ -17,6 +17,13 @@ public partial class PackageOperationsProvider
     public Package GetPackageForRead(string packageName) => Package.Open(packageName, (FileMode)3, (FileAccess)1, (FileShare)1);
 
     [MirrorVerified("Release IL")]
+    public void DeletePartFromPackage(Package package, string uriString)
+    {
+        Uri partUri = new Uri(uriString, UriKind.Relative);
+        package.DeletePart(partUri);
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart GetSinglePartByContentType(Package package, string contentType)
     {
         return package.GetParts().FirstOrDefault((PackagePart part) => part.ContentType == contentType);
@@ -32,13 +39,6 @@ public partial class PackageOperationsProvider
     public int CountPartsByContentType(Package package, string contentType)
     {
         return package.GetParts().Count((PackagePart part) => part.ContentType == contentType);
-    }
-
-    [MirrorVerified("Release IL")]
-    public void DeletePartFromPackage(Package package, string uriString)
-    {
-        Uri partUri = new Uri(uriString, UriKind.Relative);
-        package.DeletePart(partUri);
     }
 
     [MirrorVerified("Release IL")]
@@ -195,6 +195,20 @@ public partial class PackageOperationsProvider
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     private static readonly Uri _footersContainer;
+
+    [MirrorVerified("Release IL")]
+    public static PackagePart CreateNewImagePart(PackagePart referencingPackagePart, global::System.Windows.Media.Imaging.BitmapSource image, string imageExtension, byte[] originalStreamHash, string uniqueImageName, Uri imageSourceUri)
+    {
+        string contentType = "image/" + imageExtension;
+        string uri = global::System.String.Format("/mathcad/media/{0}.{1}", uniqueImageName, imageExtension);
+        PackagePart packagePart = Instance.AddPartToPackage(referencingPackagePart.Package, uri, contentType);
+        global::System.Action<Stream> action = (Stream targetStream) => global::Quire.Wpf.ImageUtils.CopyImageToStream(imageExtension, imageSourceUri, targetStream, image, originalStreamHash);
+        using (Stream stream = packagePart.GetStream(FileMode.Create))
+        {
+            action(stream);
+        }
+        return packagePart;
+    }
 
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public PackagePart GetFootersContainerPartFromPackage(Package package) => GetPartIfExists(package, _footersContainer);

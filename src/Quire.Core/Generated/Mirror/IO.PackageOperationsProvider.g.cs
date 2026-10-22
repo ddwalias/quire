@@ -59,6 +59,4 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     private readonly string[] _compressedTypes;
     [global::Quire.Mirror.MirrorStub]
     private PackageOperationsProvider() { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.IO.Packaging.PackagePart CreateNewImagePart(global::System.IO.Packaging.PackagePart referencingPackagePart, global::System.Windows.Media.Imaging.BitmapSource image, string imageExtension, byte[] originalStreamHash, string uniqueImageName, global::System.Uri imageSourceUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
