@@ -27,9 +27,9 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     private string _fullProductName;
     [global::Quire.Mirror.MirrorStub]
     private string _logFolder;
-    public string SubProduct { get => _subProduct; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    protected string FullProductName { get => _fullProductName; private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public string LogFolder { get => _logFolder; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string SubProduct { get => _subProduct; set { _subProduct = value; FullProductName = string.IsNullOrEmpty(value) ? _product : string.Format("{0}_{1}", _product, value); } }
+    protected string FullProductName { get => _fullProductName; private set => _fullProductName = string.IsNullOrEmpty(value) ? _product : value; }
+    public string LogFolder { get => _logFolder; set => _logFolder = string.IsNullOrEmpty(value) ? _defaultApplicationLogFolderPath : value; }
     [global::Quire.Mirror.MirrorStub]
     public virtual string GetMiscInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
