@@ -24,8 +24,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Collections.Hashtable _htOldPropertyToIndex;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Core.TextAlignmentExt> TextAlignmentExt { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected TextStyleBase(global::Quire.TextStyleData textStyleData, bool basedOnValues = true) { }
     [global::Quire.Mirror.MirrorStub]
     public void UpdateDeletedProperties(global::System.Windows.Style oldStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

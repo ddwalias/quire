@@ -23,6 +23,9 @@ public partial class TextStyleBase
     public Style Style { get; private set; }
 
     [MirrorVerified("Release IL")]
+    public Nullable<Quire.Core.TextAlignmentExt> TextAlignmentExt => default;
+
+    [MirrorVerified("Release IL")]
     public static string TextStyleUniqueKeyGenerator(string key)
     {
         return string.Concat(TextStyleStripKeyGenerator(key), "~", DateTime.Now.Ticks.ToString());
