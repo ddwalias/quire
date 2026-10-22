@@ -93,6 +93,10 @@ internal static class BodyTransplant
             {
                 (".ctor", 0)
             }),
+            ("utl-mgd", "Quire.utl_mgd.MessageQueue`3", "utl_mgd.MessageQueue`3", new[]
+            {
+                ("Init", 1), ("MsgLoop", 1)
+            }),
             ("utl-mgd", "Quire.utl_mgd.LabelSet", "utl_mgd.LabelSet", new[]
             {
                 ("Empty", 0)
@@ -366,6 +370,19 @@ internal static class BodyTransplant
     private static bool EncodeLocalType(string type, MetadataReader target, List<byte> bytes)
     {
         type = MapSignatureType(target, type);
+        if (type.StartsWith("!!", StringComparison.Ordinal)
+            && int.TryParse(type.AsSpan(2), out var genericMethodParameter))
+        {
+            bytes.Add(0x1e); // MVAR
+            WriteCompressedUInt(bytes, genericMethodParameter);
+            return true;
+        }
+        if (type.StartsWith('!') && int.TryParse(type.AsSpan(1), out var genericTypeParameter))
+        {
+            bytes.Add(0x13); // VAR
+            WriteCompressedUInt(bytes, genericTypeParameter);
+            return true;
+        }
         var genericOpen = type.IndexOf('<');
         if (genericOpen > 0 && type.EndsWith('>'))
         {

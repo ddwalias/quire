@@ -244,7 +244,6 @@ namespace Quire { namespace utl_mgd {
     private:
         Mailbox<Msg>^ m_mailbox;
         Thread^ m_thread;
-        Int32 m_stack_size;
         void* m_death_handle;
 
     public:
@@ -287,7 +286,6 @@ namespace Quire { namespace utl_mgd {
         {
             m_mailbox = gcnew Mailbox<Msg>();
             m_death_handle = reinterpret_cast<void*>(-1);
-            m_stack_size = stack_size;
             m_thread = gcnew Thread(gcnew ParameterizedThreadStart(&MessageQueue::MsgLoop), stack_size);
             m_thread->IsBackground = true;
         }
