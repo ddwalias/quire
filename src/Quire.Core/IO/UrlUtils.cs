@@ -236,6 +236,25 @@ public static partial class UrlUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static bool TryCreateKnownUri(string text, out Uri newUri)
+    {
+        newUri = null;
+        if (text.IsNullOrEmpty())
+        {
+            return false;
+        }
+        if (!Uri.TryCreate(text, UriKind.Absolute, out newUri))
+        {
+            newUri = global::System.Linq.Enumerable.FirstOrDefault(global::System.Linq.Enumerable.Select(_schemeDetectionList, (UriProtocolCreationData data) => CreateUriForScheme(text, data)), (Uri uri) => uri != null);
+        }
+        if (newUri != null && ((newUri.PathAndQuery.IsNullOrEmpty() && newUri.Authority.IsNullOrEmpty()) || !UriProtocols.Contains(newUri.Scheme)))
+        {
+            newUri = null;
+        }
+        return newUri != null;
+    }
+
+    [MirrorVerified("Release IL")]
     private static string RetriveBrowserPath(RegistryKey root, string regKeyPath)
     {
         if (!regKeyPath.IsNullOrEmpty())

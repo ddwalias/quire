@@ -21,8 +21,6 @@ public static partial class UrlUtils
     private const string PrimeExtenstion = ".mcdx";
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Collections.Generic.List<global::Quire.IO.UrlUtils.UriProtocolCreationData> _schemeDetectionList;
-    [global::Quire.Mirror.MirrorStub]
-    public static bool TryCreateKnownUri(string text, out global::System.Uri newUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+RegConstants, Ptc.Core")]
     private static partial class RegConstants
