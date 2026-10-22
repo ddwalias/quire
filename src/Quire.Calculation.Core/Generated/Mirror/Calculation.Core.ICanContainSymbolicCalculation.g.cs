@@ -11,5 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICanContainSymbolicCalculation, Ptc.Calculation.Core")]
 public partial interface ICanContainSymbolicCalculation
 {
-    bool ContainsSymbolicEvaluation { get; }
 }

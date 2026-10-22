@@ -11,5 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.EnvironmentVariableConverter, Ptc.Core")]
 public partial class EnvironmentVariableConverter : global::System.Windows.Data.IValueConverter
 {
-    public static global::Quire.Wpf.EnvironmentVariableConverter Instance = new global::Quire.Wpf.EnvironmentVariableConverter();
 }

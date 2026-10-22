@@ -11,5 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IRegionCollectionType, Ptc.Core")]
 public partial interface IRegionCollectionType
 {
-    global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get; set; }
 }

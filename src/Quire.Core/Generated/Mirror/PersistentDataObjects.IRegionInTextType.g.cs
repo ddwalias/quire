@@ -11,5 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.IRegionInTextType, Ptc.Core")]
 public partial interface IRegionInTextType : global::Quire.PersistentDataObjects.IRegionType, global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
-    string textcaretposition { get; set; }
 }

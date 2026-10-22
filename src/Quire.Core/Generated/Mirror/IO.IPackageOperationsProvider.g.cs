@@ -11,27 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.IPackageOperationsProvider, Ptc.Core")]
 public partial interface IPackageOperationsProvider
 {
-    global::System.IO.Packaging.CompressionOption CompressionLevel { get; set; }
-    global::System.IO.Packaging.Package GetPackageForRead(string packageName) ;
-    global::System.IO.Packaging.Package GetPackageForWrite(string packageName) ;
-    global::System.IO.Packaging.Package GetPackageForWrite(global::System.IO.FileStream stream) ;
-    global::System.IO.Packaging.PackagePart GetMainPartFromPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart GetHeaderPartFromPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart GetFooterPartFromPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart GetHeadersContainerPartFromPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart GetFootersContainerPartFromPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart GetCoreMetadataPartFromPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.Package package, string relationshipType) ;
-    global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.PackagePart part, string relationshipType) ;
-    global::System.IO.Packaging.PackagePart AddMainPartToPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart AddHeaderPartToPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart AddFooterPartToPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart AddHeadersContainerPartToPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart AddFootersContainerPartToPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart AddCoreMetadataPartToPackage(global::System.IO.Packaging.Package package) ;
-    global::System.IO.Packaging.PackagePart AddPartToPackage(global::System.IO.Packaging.Package package, string uri, string contentType) ;
-    global::System.IO.Packaging.PackagePart GetSinglePartByContentType(global::System.IO.Packaging.Package package, string contentType) ;
-    global::System.Collections.Generic.List<global::System.IO.Packaging.PackagePart> GetPartsByContentType(global::System.IO.Packaging.Package package, string contentType) ;
-    int CountPartsByContentType(global::System.IO.Packaging.Package package, string contentType) ;
-    void DeletePartFromPackage(global::System.IO.Packaging.Package package, string URI) ;
 }

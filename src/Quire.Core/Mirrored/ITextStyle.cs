@@ -1,0 +1,39 @@
+#nullable disable
+#pragma warning disable
+
+namespace Quire;
+
+partial interface ITextStyle
+{
+    global::System.Windows.Style Style { get; }
+    double Weight { get; }
+    global::System.Nullable<global::System.Windows.Thickness> Margin { get; set; }
+    double Stretch { get; }
+    global::System.Nullable<double> TextIndent { get; set; }
+    global::System.Windows.Media.FontFamily FontFamily { get; set; }
+    global::System.Nullable<global::System.Windows.FontWeight> FontWeight { get; set; }
+    global::System.Nullable<global::System.Windows.FontVariants> FontVariants { get; set; }
+    global::System.Nullable<global::System.Windows.FontStyle> FontStyle { get; set; }
+    global::System.Nullable<double> FontSize { get; set; }
+    bool Bold { get; }
+    bool Normal { get; }
+    bool Italic { get; }
+    bool Oblique { get; }
+    global::System.Nullable<global::System.Windows.TextMarkerStyle> MarkerStyle { get; set; }
+    global::System.Windows.Media.TextEffectCollection TextEffects { get; }
+    global::System.Nullable<global::System.Windows.BaselineAlignment> BaselineAlignment { get; set; }
+    global::System.Nullable<global::System.Windows.TextAlignment> TextAlignment { get; set; }
+    global::System.Nullable<global::Quire.Core.TextAlignmentExt> TextAlignmentExt { get; }
+    global::System.Windows.Media.Brush Background { get; set; }
+    global::System.Windows.Media.Brush Foreground { get; set; }
+    bool Condenst { get; }
+    global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> GetSetters(global::System.Windows.Style textStyle, global::System.Collections.Generic.Dictionary<string, global::Quire.TextStylePropertyInfoExt> setterCollection, bool isInherited = false) ;
+    object GetSetterValue(string propertyName, bool isFixInHeritage = false) ;
+    void UpdateBasedOn(global::Quire.ITextStyle basedOn, global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> stylesCollection, bool isFixInHeritage = true) ;
+    bool IsDeletedProperty(string propertyName, object value) ;
+    bool IsModifyProperty(string propertyName, object value) ;
+    bool IsModifyPropertyCollection(string propertyName, global::System.Collections.ICollection value) ;
+    bool IsModifyPropertyString(string propertyName, object value) ;
+    bool IsModifyProperty(string propertyName, double value, double tolerance) ;
+    void MergeBasedOn() ;
+}

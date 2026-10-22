@@ -17,7 +17,6 @@ public partial class headersContainerRegionCollectionSerializer : global::Quire.
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerWithOverrides;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializerDefault;
-    public global::Quire.PersistentData.headersContainerWrapper ContainerWrapper { get => _containerWrapper ?? (_containerWrapper = new global::Quire.PersistentData.headersContainerWrapper()); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlElement Serialize(global::System.Xml.XmlDocument xmlContentDocument, bool useOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

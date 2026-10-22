@@ -13,7 +13,6 @@ public partial class FunctionalityService : global::Quire.Services.IFunctionalit
 {
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Services.FunctionalityService _instance;
-    public static global::Quire.Services.FunctionalityService Instance { get => _instance ?? (_instance = new global::Quire.Services.FunctionalityService()); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsFunctionalityEnabled(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey functionality) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

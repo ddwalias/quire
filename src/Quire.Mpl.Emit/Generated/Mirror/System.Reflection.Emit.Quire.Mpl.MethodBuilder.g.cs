@@ -11,10 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.MethodBuilder, mplasb")]
 public partial class MethodBuilder : global::System.Reflection.MethodInfo
 {
-    internal global::System.Type _returnType;
-    internal global::System.Type[] _parameters;
-    internal global::System.Reflection.ParameterInfo[] _paramInfos;
-    internal global::System.Reflection.Emit.Quire.Mpl.ILGenerator _codeStore;
-    internal global::System.Reflection.Emit.Quire.Mpl.LocalVariableManager _localVariableManager;
-    internal global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager;
 }

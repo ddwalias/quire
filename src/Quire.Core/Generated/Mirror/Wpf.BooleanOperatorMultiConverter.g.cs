@@ -11,9 +11,6 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BooleanOperatorMultiConverter, Ptc.Core")]
 public partial class BooleanOperatorMultiConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    public const string OperatorAnd = "and";
-    public const string OperatorOr = "or";
-    public static readonly global::Quire.Wpf.BooleanOperatorMultiConverter Instance = new global::Quire.Wpf.BooleanOperatorMultiConverter();
     [global::Quire.Mirror.MirrorStub]
     public object Convert(object[] values, global::System.Type targetType, object parameter, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

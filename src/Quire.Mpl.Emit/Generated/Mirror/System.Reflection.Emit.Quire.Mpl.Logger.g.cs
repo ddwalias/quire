@@ -25,7 +25,4 @@ public static partial class Logger
     private static readonly global::System.Threading.AutoResetEvent _logSignal;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Threading.Thread _logThread;
-    private static volatile bool _isRunning;
-    [global::System.Runtime.InteropServices.DllImport("kernel32.dll")]
-    private static extern uint GetCurrentThreadId();
 }

@@ -13,28 +13,8 @@ public abstract partial class oleBaseContainerType : global::Quire.Serialization
 {
     [global::Quire.Mirror.MirrorStub]
     private string itemidrefField;
-    public string itemidref
-    {
-        get
-        {
-            if (global::System.String.IsNullOrEmpty(itemidrefField))
-            {
-                itemidrefField = global::Quire.Serialization.IS11NProviderExtensions.PackExternalObjectExt(S11NProvider, StorageFileName, null, ExternalObjectType);
-            }
-            return itemidrefField;
-        }
-        set => itemidrefField = value;
-    }
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Serialization.ExternalObjectType ExternalObjectType { get; }
-    protected global::System.Windows.Size GetOleViewportSize()
-    {
-        if (OleViewportSize != null)
-        {
-            return new global::System.Windows.Size(OleViewportSize.width, OleViewportSize.height);
-        }
-        return global::System.Windows.Size.Empty;
-    }
     [global::Quire.Mirror.MirrorStub]
     protected void CopyFrom(global::Quire.PersistentData.IOleSizeData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

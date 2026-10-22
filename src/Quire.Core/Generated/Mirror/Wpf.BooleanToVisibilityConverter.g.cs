@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.BooleanToVisibilityConverter, Ptc.Core")]
 public partial class BooleanToVisibilityConverter : global::System.Windows.Data.IValueConverter
 {
-    public static global::Quire.Wpf.BooleanToVisibilityConverter Instance = new global::Quire.Wpf.BooleanToVisibilityConverter(true);
-    public static global::Quire.Wpf.BooleanToVisibilityConverter InverseInstance = new global::Quire.Wpf.BooleanToVisibilityConverter(false);
 }

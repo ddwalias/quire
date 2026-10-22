@@ -11,5 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IReflectionVisitor, Ptc.Core")]
 public partial interface IReflectionVisitor : global::Quire.IVisitor
 {
-    void Visit(object visitable);
 }

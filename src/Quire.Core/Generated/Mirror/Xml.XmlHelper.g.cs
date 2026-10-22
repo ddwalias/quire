@@ -11,44 +11,5 @@ namespace Quire.Xml;
 [global::Quire.Mirror.MirrorOf("Ptc.Xml.XmlHelper, Ptc.Core")]
 public static partial class XmlHelper
 {
-    [global::Quire.Mirror.MirrorVerified("Release IL")]
-    public static global::System.Xml.XmlAttribute AddAttribute(global::System.Xml.XmlElement node, string name, string value)
-    {
-        global::System.Xml.XmlAttribute attribute = node.OwnerDocument.CreateAttribute(name);
-        attribute.Value = value;
-        node.Attributes.Append(attribute);
-        return attribute;
-    }
 
-    [global::Quire.Mirror.MirrorVerified("Release IL")]
-    public static global::System.Xml.XmlElement AddChild(global::System.Xml.XmlElement node, string name, string innerText, bool nonPrintableExpected)
-    {
-        global::System.Xml.XmlElement element = node.OwnerDocument.CreateElement(name);
-        element.InnerText = ReplaceNonPrintableCharacters(innerText);
-        if (!nonPrintableExpected)
-        {
-            global::Quire.DebugTools.DevAssert(innerText.Length == element.InnerText.Length, null);
-        }
-        node.AppendChild(element);
-        return element;
-    }
-
-    [global::Quire.Mirror.MirrorVerified("Release IL")]
-    public static string ReplaceNonPrintableCharacters(string text)
-    {
-        if (global::Quire.EnumerableExtensions.IsNullOrEmpty<char>(text))
-        {
-            return text;
-        }
-        return global::System.Text.RegularExpressions.Regex.Replace(text, "[\0-\b]|[\v-\f]|[\u000e-\u001f]", match =>
-        {
-            string value = match.Groups[0].Value;
-            return string.Format("&#x{0:x4};", (int)value[0]);
-        });
-    }
-
-    [global::Quire.Mirror.MirrorStub]
-    public static object CreateXamlCopy(object source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.List<string> GetNodeValueFromXml(string xmlPath, string xPathExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

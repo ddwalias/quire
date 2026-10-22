@@ -11,5 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IImaginaryResultNode, Ptc.Calculation.Core")]
 public partial interface IImaginaryResultNode : global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    double Value { get; set; }
 }

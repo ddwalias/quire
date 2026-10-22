@@ -11,5 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.SortedStringSet, utl-mgd")]
 public partial class SortedStringSet : global::System.Collections.IEnumerable
 {
-    private global::System.Collections.SortedList m_strings;
 }

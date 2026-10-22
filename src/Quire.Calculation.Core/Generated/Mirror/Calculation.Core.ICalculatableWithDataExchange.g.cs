@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculatableWithDataExchange, Ptc.Calculation.Core")]
 public partial interface ICalculatableWithDataExchange
 {
-    global::Quire.Calculation.Core.IDataExchangeModel DataExchangeModel { get; }
-    global::System.Nullable<int> ComponentHandle { get; set; }
-    int ComponentCookieMultiThreaded { get; }
-    int IncrementComponentCookieMultiThreaded(bool isAutoCalc = false);
 }

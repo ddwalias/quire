@@ -25,18 +25,6 @@ public partial class UserSettingsProvider : global::System.Configuration.Setting
     private const string SettingsGroupName = "userSettings";
     [global::Quire.Mirror.MirrorStub]
     private static bool _useAssemblyVersionInConfigPath;
-    public static bool UseAssemblyVersionInConfigPath
-    {
-        get => _useAssemblyVersionInConfigPath;
-        set
-        {
-            if (_useAssemblyVersionInConfigPath != value)
-            {
-                _useAssemblyVersionInConfigPath = value;
-                ConfigFolderName = null;
-            }
-        }
-    }
     [global::Quire.Mirror.MirrorStub]
     public override void Initialize(string name, global::System.Collections.Specialized.NameValueCollection values) => base.Initialize(name, values);
     [global::Quire.Mirror.MirrorStub]

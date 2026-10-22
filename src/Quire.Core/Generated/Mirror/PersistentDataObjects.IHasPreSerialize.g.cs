@@ -11,5 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.IHasPreSerialize, Ptc.Core")]
 public partial interface IHasPreSerialize
 {
-    void PreSerialize() ;
 }

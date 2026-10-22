@@ -11,12 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IApplicationLogger, Ptc.Core")]
 public partial interface IApplicationLogger : global::Quire.Services.IService
 {
-    string LogFolder { get; set; }
-    string WriteToLog(string logType, string logContents) ;
-    string GetListOfLoadedModulesData() ;
-    string GetEnvironmentVariablesAndCommandLineArgumentsData() ;
-    string GetLastApplicationLogPath() ;
-    string GetApplicationStartTime() ;
-    string GetMiscInfo() ;
-    string GetSystemInfoIfAvailable() ;
 }

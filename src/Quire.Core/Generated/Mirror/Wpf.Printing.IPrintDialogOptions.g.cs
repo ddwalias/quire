@@ -11,10 +11,4 @@ namespace Quire.Wpf.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.IPrintDialogOptions, Ptc.Core")]
 public partial interface IPrintDialogOptions
 {
-    global::Quire.Wpf.Printing.Win32PrintRange PrintRange { get; }
-    global::Quire.Wpf.Printing.PageIndexRange PageRange { get; }
-    bool PrintToFile { get; }
-    string FileName { get; }
-    global::System.Printing.PrintQueue PrintQueue { get; }
-    global::System.Printing.PrintTicket PrintTicket { get; }
 }

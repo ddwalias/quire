@@ -11,11 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IDataExchangeModel, Ptc.Calculation.Core")]
 public partial interface IDataExchangeModel
 {
-    bool ShouldCommitAtLeastOnce { get; }
-    bool ShouldCommitIfDirty { get; }
-    global::System.Windows.Threading.Dispatcher Dispatcher { get; }
-    bool Lock(bool wait);
-    void Unlock();
-    bool ShouldSkipUnchangedValueMultiThreaded(string id);
-    void Commit();
 }

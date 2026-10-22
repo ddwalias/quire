@@ -168,21 +168,6 @@ public static partial class User32
     [global::Quire.Mirror.MirrorOf("Ptc.Win32.User32+HWND, Ptc.Core")]
     public partial struct HWND
     {
-        public static global::Quire.Win32.User32.HWND NULL
-        {
-            get
-            {
-                global::Quire.Win32.User32.HWND hwnd = default;
-                hwnd._value = global::System.IntPtr.Zero;
-                return hwnd;
-            }
-        }
-        public static global::Quire.Win32.User32.HWND Cast(nint hwnd)
-        {
-            global::Quire.Win32.User32.HWND result = default;
-            result._value = hwnd;
-            return result;
-        }
         [global::Quire.Mirror.MirrorStub]
         public override bool Equals(object oCompare) => base.Equals(oCompare);
     }

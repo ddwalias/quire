@@ -11,6 +11,4 @@ namespace Quire.FunctionalitiesLimitation;
 [global::Quire.Mirror.MirrorOf("Ptc.FunctionalitiesLimitation.FunctionalitiesLimitationCommands, Ptc.Core")]
 public static partial class FunctionalitiesLimitationCommands
 {
-    private static readonly global::System.Type _typeOfThis = typeof(FunctionalitiesLimitationCommands);
-    public static readonly global::System.Windows.Input.RoutedUICommand DisplayFreemiumAboutBox = new("Display Freemium About Box", "DisplayFreemiumAboutBox", _typeOfThis);
 }

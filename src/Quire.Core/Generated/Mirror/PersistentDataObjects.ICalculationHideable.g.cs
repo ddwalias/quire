@@ -11,5 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.ICalculationHideable, Ptc.Core")]
 public partial interface ICalculationHideable
 {
-    bool IsCalculationDisabled { get; }
 }

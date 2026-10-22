@@ -11,5 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.IVisitable`1, Ptc.Core")]
 public partial interface IVisitable<T> where T : global::Quire.IVisitor
 {
-    void Accept(T visitor);
 }

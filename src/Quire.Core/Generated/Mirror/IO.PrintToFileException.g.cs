@@ -11,6 +11,4 @@ namespace Quire.IO;
 [global::Quire.Mirror.MirrorOf("Ptc.IO.PrintToFileException, Ptc.Core")]
 public partial class PrintToFileException : global::System.ApplicationException
 {
-    public readonly global::Quire.IO.PrintFileErrorCode ErrorCode;
-    public readonly object[] MessageArgs;
 }

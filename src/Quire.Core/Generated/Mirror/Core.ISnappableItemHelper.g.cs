@@ -11,6 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.ISnappableItemHelper, Ptc.Core")]
 public partial interface ISnappableItemHelper : global::Quire.Core.ISnapToPixelHelper
 {
-    bool IsPageDescendant { get; }
-    global::System.Windows.UIElement RenderTarget { get; }
 }

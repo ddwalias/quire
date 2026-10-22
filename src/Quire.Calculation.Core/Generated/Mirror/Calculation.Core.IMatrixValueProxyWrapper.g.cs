@@ -11,11 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IMatrixValueProxyWrapper, Ptc.Calculation.Core")]
 public partial interface IMatrixValueProxyWrapper
 {
-    bool IsUniform { get; }
-    uint Rows { get; }
-    uint Cols { get; }
-    string Xml { get; }
-    global::Quire.Calculation.Core.IValueProxyWrapper Get(uint rowIndex, uint columnIndex);
-    void WriteXml(global::System.Xml.XmlWriter writer);
-    global::Quire.Calculation.Core.IMatrixValueDataAccessorWrapper GetPlainData();
 }

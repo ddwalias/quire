@@ -15,7 +15,5 @@ public partial class SafeMonitor
     [global::Quire.Mirror.MirrorOf("utl_mgd.SafeMonitor+CSecRecord, utl-mgd")]
     private partial class CSecRecord
     {
-        public long csec;
-        public int count;
     }
 }

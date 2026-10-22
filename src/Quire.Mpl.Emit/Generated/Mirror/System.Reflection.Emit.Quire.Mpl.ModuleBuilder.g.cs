@@ -11,18 +11,10 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.ModuleBuilder, mplasb")]
 public partial class ModuleBuilder : global::System.Reflection.Module
 {
-    internal global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder> _typeDefStore = new global::System.Collections.Generic.List<global::System.Reflection.Emit.Quire.Mpl.TypeBuilder>();
-    internal global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeDefinitionHandle> _definedTypes = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.TypeReferenceWrapper, global::System.Reflection.Metadata.TypeDefinitionHandle>();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.TypeBuilder _currentType;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Nullable<global::System.Reflection.Metadata.TypeDefinitionHandle> _currentTypeHandle;
-    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.FieldReferenceWrapper, global::System.Reflection.Metadata.FieldDefinitionHandle> _definedFields = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.FieldReferenceWrapper, global::System.Reflection.Metadata.FieldDefinitionHandle>();
-    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle> _definedMethods = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.MethodReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle>();
-    internal readonly global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.ConstructorReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle> _definedConstructors = new global::System.Collections.Generic.Dictionary<global::System.Reflection.Emit.Quire.Mpl.EntityWrappers.ConstructorReferenceWrapper, global::System.Reflection.Metadata.MethodDefinitionHandle>();
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Reflection.Emit.Quire.Mpl.MetadataReferenceTracker _metadataReferenceTracker;
-    internal global::System.Reflection.Emit.Quire.Mpl.LabelManager _labelManager = new global::System.Reflection.Emit.Quire.Mpl.LabelManager();
-    public override global::System.Reflection.Emit.Quire.Mpl.AssemblyBuilder Assembly { get; }
-    public override string ScopeName { get; }
 }

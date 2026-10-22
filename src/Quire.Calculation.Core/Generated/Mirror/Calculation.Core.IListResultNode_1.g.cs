@@ -11,8 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IListResultNode`1, Ptc.Calculation.Core")]
 public partial interface IListResultNode<T> : global::Quire.Calculation.Core.IListResultNode
 {
-    global::System.Collections.Generic.IList<T> List { get; }
-    T NeutralValue { get; }
-    T this[int index] { get; }
-    bool IsMeaningfulValue(T valueIndex);
 }

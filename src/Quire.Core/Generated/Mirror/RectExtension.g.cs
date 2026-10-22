@@ -11,5 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.RectExtension, Ptc.Core")]
 public static partial class RectExtension
 {
-    public static readonly global::Quire.DoubleComparer UiLayoutComparer = new global::Quire.DoubleComparer(1E-05);
 }

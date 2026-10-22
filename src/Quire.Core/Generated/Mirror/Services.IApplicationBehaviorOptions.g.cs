@@ -11,6 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IApplicationBehaviorOptions, Ptc.Core")]
 public partial interface IApplicationBehaviorOptions : global::Quire.Services.IService
 {
-    int CollectInputOutputStatesTimeout { get; set; }
-    int DelayRecalculationInMsecAfterCloseExcel { get; set; }
 }

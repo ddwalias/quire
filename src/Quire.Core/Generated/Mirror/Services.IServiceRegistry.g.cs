@@ -11,7 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IServiceRegistry, Ptc.Core")]
 public partial interface IServiceRegistry : global::System.ComponentModel.Design.IServiceContainer, global::System.IServiceProvider
 {
-    void AddService<T>(global::Quire.Services.IService service, bool shouldConnect = true) where T : global::Quire.Services.IService ;
-    void RemoveService<T>(bool shouldDisconnect = true) where T : class, global::Quire.Services.IService ;
-    T GetService<T>() where T : global::Quire.Services.IService ;
 }

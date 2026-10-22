@@ -11,5 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.ITextFormatCreation, Ptc.Core")]
 public partial interface ITextFormatCreation
 {
-    void ApplyTextFormatPropertyValueToControl(global::System.Windows.DependencyProperty property, object value, global::System.Windows.Documents.Block block = default) ;
 }

@@ -11,8 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.TableCoordinate, Ptc.Core")]
 public partial struct TableCoordinate
 {
-    public int Row { get => _coordinate.First; set => _coordinate.First = value; }
-    public int Column { get => _coordinate.Second; set => _coordinate.Second = value; }
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]

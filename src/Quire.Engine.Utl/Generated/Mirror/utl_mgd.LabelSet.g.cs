@@ -11,7 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.LabelSet, utl-mgd")]
 public partial class LabelSet
 {
-    private global::Quire.utl_mgd.SortedStringSet m_labels;
-    private bool m_wild;
-    private string m_cached_name;
 }

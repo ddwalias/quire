@@ -1,0 +1,115 @@
+#nullable disable
+#pragma warning disable
+
+namespace Quire;
+
+static partial class EnumHelper
+{
+    private static readonly global::System.Collections.Generic.Dictionary<global::System.Type, global::System.Collections.IDictionary> _cache = new();
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCacheAndAssert = new() { UseCache = true, AssertOnParseFailure = true };
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithCache = new() { UseCache = true };
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings EmptySettings = default;
+    public static readonly global::Quire.EnumHelper.EnumHelperSettings SettingsWithAssert = new() { AssertOnParseFailure = true };
+    public static bool TryParse<TEnum>(object value, out TEnum enumValue) where TEnum : struct => TryParse<TEnum>(value, out enumValue, true);
+    public static bool TryParse<TEnum>(object value, out TEnum enumValue, bool assert) where TEnum : struct => TryParse<TEnum>(value, out enumValue, assert ? SettingsWithAssert : EmptySettings);
+    public static bool TryParse<TEnum>(object value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
+    {
+        if (!settings.UseCache)
+        {
+            return TryParseWithoutCache<TEnum>(value.ToString(), out enumValue, settings);
+        }
+
+        return TryParseWithCache<TEnum>(value.ToString(), out enumValue, settings);
+    }
+    private static bool TryParseWithCache<TEnum>(string valueToParse, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
+    {
+        global::System.Type typeFromHandle = typeof(TEnum);
+        if (!_cache.TryGetValue(typeFromHandle, out global::System.Collections.IDictionary value))
+        {
+            value = null;
+        }
+
+        global::System.Collections.Generic.Dictionary<string, TEnum> dictionary = value as global::System.Collections.Generic.Dictionary<string, TEnum>;
+        if (dictionary != null && dictionary.TryGetValue(valueToParse, out enumValue))
+        {
+            return true;
+        }
+
+        if (!TryParseWithoutCache<TEnum>(valueToParse, out enumValue, settings))
+        {
+            return false;
+        }
+
+        if (dictionary == null)
+        {
+            global::Quire.DebugTools.DevAssert(value == null, null);
+            dictionary = new global::System.Collections.Generic.Dictionary<string, TEnum>();
+            _cache.Add(typeFromHandle, dictionary);
+        }
+
+        dictionary.Add(valueToParse, enumValue);
+        return true;
+    }
+    private static bool TryParseWithoutCache<TEnum>(string value, out TEnum enumValue, global::Quire.EnumHelper.EnumHelperSettings settings) where TEnum : struct
+    {
+        if (global::System.Enum.TryParse<TEnum>(value, settings.IgnoreCase, out enumValue) && (settings.AllowUndefinedNumericValues || global::System.Enum.IsDefined(typeof(TEnum), enumValue) || enumValue.ToString().Contains(",")))
+        {
+            return true;
+        }
+
+        enumValue = default;
+        if (settings.AssertOnParseFailure)
+        {
+            global::Quire.DebugTools.FailAssertion("Unsupported Enum value");
+        }
+
+        return false;
+    }
+    public static TOutputEnum[] TryConvertFlagsToList<TInputEnum, TOutputEnum>(TInputEnum flagsEnumString, global::Quire.EnumHelper.EnumHelperSettings enumSettings) where TInputEnum : struct where TOutputEnum : struct
+    {
+        global::System.Collections.Generic.List<TOutputEnum> list;
+        TOutputEnum enumValue;
+        string[] array = flagsEnumString.ToString().Split(new string[1] { ", " }, global::System.StringSplitOptions.RemoveEmptyEntries);
+        list = new global::System.Collections.Generic.List<TOutputEnum>();
+        string[] array2 = array;
+        for (int i = 0; i < array2.Length; i++)
+        {
+            if (!TryParse<TOutputEnum>(array2[i], out enumValue, enumSettings))
+            {
+                return null;
+            }
+
+            list.Add(enumValue);
+        }
+
+        return list.ToArray();
+    }
+    public static bool TryCallAction<TEnum>(object param, global::System.Action<TEnum> action) where TEnum : struct
+    {
+        if (TryParse<TEnum>(param, out var enumValue, true))
+        {
+            action(enumValue);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static TEnum TryParseLogError<TEnum>(object value, string errMsg) where TEnum : struct
+    {
+        if (!TryParse<TEnum>(value, out var enumValue, false))
+        {
+            global::Quire.DebugTools.LogError(errMsg);
+        }
+
+        return enumValue;
+    }
+
+    partial struct EnumHelperSettings
+    {
+        public bool AssertOnParseFailure;
+        public bool IgnoreCase;
+        public bool UseCache;
+        public bool AllowUndefinedNumericValues;
+    }
+}

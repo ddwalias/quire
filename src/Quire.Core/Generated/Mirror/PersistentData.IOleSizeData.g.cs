@@ -11,7 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IOleSizeData, Ptc.Core")]
 public partial interface IOleSizeData
 {
-    bool AutoResize { get; }
-    global::System.Windows.Size OleViewportSize { get; }
-    bool HasFakeOleViewportSize { get; }
 }

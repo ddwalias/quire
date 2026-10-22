@@ -11,8 +11,4 @@ namespace Quire.Undo;
 [global::Quire.Mirror.MirrorOf("Ptc.Undo.IUndoableCommand, Ptc.Core")]
 public partial interface IUndoableCommand
 {
-    string Name { get; }
-    bool Do();
-    void Undo();
-    void Redo();
 }

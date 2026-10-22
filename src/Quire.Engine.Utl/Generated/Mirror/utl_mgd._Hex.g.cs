@@ -11,5 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd._Hex, utl-mgd")]
 public partial class _Hex
 {
-    public _Hex() { }
 }

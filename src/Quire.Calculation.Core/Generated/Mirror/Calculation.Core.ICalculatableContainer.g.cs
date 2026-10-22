@@ -9,8 +9,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculatableContainer, Ptc.Calculation.Core")]
 public partial interface ICalculatableContainer
 {
-    global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get; }
-    event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
-    event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
 }

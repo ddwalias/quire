@@ -11,5 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.excelContainerType, Ptc.Core")]
 public partial class excelContainerType : global::Quire.PersistentData.oleBaseContainerType, global::Quire.PersistentData.IOleObjectPersistentData, global::Quire.PersistentData.IOleSizeData
 {
-    global::System.Windows.Size global::Quire.PersistentData.IOleSizeData.OleViewportSize { get => GetOleViewportSize(); }
 }

@@ -11,5 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.StringsMatchToBooleanConverter, Ptc.Core")]
 public partial class StringsMatchToBooleanConverter : global::System.Windows.Data.IMultiValueConverter
 {
-    public static global::Quire.Wpf.StringsMatchToBooleanConverter Instance = new global::Quire.Wpf.StringsMatchToBooleanConverter();
 }

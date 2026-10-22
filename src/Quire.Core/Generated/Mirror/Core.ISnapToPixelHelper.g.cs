@@ -11,7 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.ISnapToPixelHelper, Ptc.Core")]
 public partial interface ISnapToPixelHelper
 {
-    global::System.Windows.Media.GeneralTransform TransformFromPoint { get; }
-    bool HasPointThatSnapsToPixel { get; }
-    global::System.Windows.UIElement ItemElement { get; }
 }

@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IListResultNode, Ptc.Calculation.Core")]
 public partial interface IListResultNode
 {
-    int Count { get; }
-    int MeaningfulValuesCount { get; }
 }

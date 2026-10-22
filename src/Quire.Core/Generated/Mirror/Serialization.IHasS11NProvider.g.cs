@@ -11,5 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IHasS11NProvider, Ptc.Core")]
 public partial interface IHasS11NProvider
 {
-    global::Quire.Serialization.IS11NProvider S11NProvider { get; }
 }

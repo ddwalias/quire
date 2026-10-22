@@ -11,6 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IShouldValidate, Ptc.Core")]
 public partial interface IShouldValidate
 {
-    bool ShouldValidateOnWrite { get; }
-    bool ShouldValidateOnRead { get; }
 }

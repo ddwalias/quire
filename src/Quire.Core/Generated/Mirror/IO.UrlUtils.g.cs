@@ -27,10 +27,6 @@ public static partial class UrlUtils
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+RegConstants, Ptc.Core")]
     private static partial class RegConstants
     {
-        public const string OpenCommand = "\\shell\\open\\command";
-        public const string DefaultBrowser = "Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice";
-        public const string HttpRegKey = "Software\\Classes\\http";
-        public const string ProgId = "ProgId";
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.IO.UrlUtils+UriProtocols, Ptc.Core")]

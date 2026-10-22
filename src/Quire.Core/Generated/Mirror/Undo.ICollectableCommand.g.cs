@@ -11,5 +11,4 @@ namespace Quire.Undo;
 [global::Quire.Mirror.MirrorOf("Ptc.Undo.ICollectableCommand, Ptc.Core")]
 public partial interface ICollectableCommand : global::Quire.Undo.IUndoableCommand
 {
-    bool CollectNewCommand(global::Quire.Undo.ICollectableCommand nextCommand);
 }

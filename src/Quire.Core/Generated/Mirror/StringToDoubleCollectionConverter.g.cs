@@ -11,6 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.StringToDoubleCollectionConverter, Ptc.Core")]
 public partial class StringToDoubleCollectionConverter : global::System.Windows.Data.IValueConverter
 {
-    public static global::Quire.StringToDoubleCollectionConverter Instance = new global::Quire.StringToDoubleCollectionConverter();
-    private const char Separator = '\u002C';
 }

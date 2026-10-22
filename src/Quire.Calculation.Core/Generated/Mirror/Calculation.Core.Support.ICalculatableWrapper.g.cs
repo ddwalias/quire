@@ -11,5 +11,4 @@ namespace Quire.Calculation.Core.Support;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Support.ICalculatableWrapper, Ptc.Calculation.Core")]
 public partial interface ICalculatableWrapper : global::Quire.Calculation.Core.ICanContainSymbolicCalculation
 {
-    global::Quire.Calculation.Core.ICalculatable WrappedCalculatable { get; }
 }

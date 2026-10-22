@@ -1,0 +1,20 @@
+#nullable disable
+#pragma warning disable
+
+namespace Quire.Calculation.Core;
+
+partial interface IResultManager
+{
+    global::System.Collections.Generic.IEnumerable<global::System.Collections.Generic.KeyValuePair<int, global::Quire.Pair<global::Quire.Calculation.Core.EngineResult, global::Quire.Calculation.Core.ICalculatableResultOwner>>> Results { get; }
+    void Clear();
+    void ReplaceCalculatableAndResult(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable);
+    void ReplaceCalculatable(global::Quire.Calculation.Core.ICalculatable oldCalculatable, global::Quire.Calculation.Core.ICalculatableResultOwner newCalculatable);
+    int CreateResultRefId(global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner);
+    int CreateOldResultRefId(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable);
+    void CreateResultRef(global::System.Xml.XmlElement xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatableResultOwner);
+    void SetResultByRefId(int resultId, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable, bool isForceAdd = false);
+    bool UpdateResultRef(global::System.Xml.XmlNode xmlNode, global::Quire.Calculation.Core.ICalculatableResultOwner calculatable);
+    void SetEngineResult(int resultId, global::Quire.Calculation.Core.EngineResult engineResult);
+    global::Quire.Calculation.Core.ICalculatable FindCalculatable(int resultId);
+    void PushResultsToOwners(bool isScriptingRunWorksheetRecalculate = false);
+}

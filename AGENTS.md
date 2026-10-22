@@ -24,6 +24,14 @@ Release is the default for every IL operation. Never inspect or compare Debug IL
 Changed methods must match; previously exact methods in affected projects must remain exact.
 Missing/unreadable counterparts and structure-only matches are incomplete.
 
+Never edit `src/*/Generated/`: MirrorGen rewrites those files. Implement members in
+hand-written partials (`src/<Project>/Mirrored/<Type>.cs` or the type's own file); a
+hand-written member without `[MirrorStub]` replaces the generated stub. Remove the stub from
+the `.g.cs` in the same change, exactly as regeneration would. When a closure or iterator
+needs Mathcad's member ordinal while other members are unfinished, declare those members as
+unmarked placeholder stubs (`=> throw global::Quire.Mirror.MirrorStub.NotImplemented();`) in
+Mathcad order in the hand-written file ([validation](docs/mirror/validation.md)).
+
 Tests, coverage, mutation, status ladders, evidence essays, approval handoffs and phase
 audits are not batch requirements. Keep only a short checkpoint: owner, branch, members,
 Release IL report, remaining mismatches. This is the complete workflow (decision D17).

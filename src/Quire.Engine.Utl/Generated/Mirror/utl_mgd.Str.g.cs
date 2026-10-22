@@ -11,5 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.Str, utl-mgd")]
 public partial class Str
 {
-    public Str() { }
 }

@@ -13,18 +13,6 @@ public partial class ResourceProvider<TDictionary> where TDictionary : global::S
 {
     [global::Quire.Mirror.MirrorStub]
     private static TDictionary _dictionary;
-    public static TDictionary Instance
-    {
-        get
-        {
-            if ((object)_dictionary == null)
-            {
-                _dictionary = global::System.Activator.CreateInstance<TDictionary>();
-                VerifyResources(_dictionary, global::System.Array.Empty<global::System.Type>());
-            }
-            return _dictionary;
-        }
-    }
     [global::Quire.Mirror.MirrorStub]
     public static void VerifyResources(global::System.Windows.ResourceDictionary dictionary, params global::System.Type[] keysOwnerTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

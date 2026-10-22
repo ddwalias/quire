@@ -11,7 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.IMatrixToVectorsConverter, Ptc.Calculation.Core")]
 public partial interface IMatrixToVectorsConverter
 {
-    bool ReadAsColumns { get; }
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.IListResultNode> ReadVectors(int maxCount);
-    global::Quire.Calculation.Core.ResultValueType GetCommonType();
 }

@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ILazyMatrixResultNode, Ptc.Calculation.Core")]
 public partial interface ILazyMatrixResultNode : global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    global::Quire.Calculation.Core.IMatrixValueProxyWrapper MatrixProxy { get; }
-    global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> TransformValueToResult { get; }
 }

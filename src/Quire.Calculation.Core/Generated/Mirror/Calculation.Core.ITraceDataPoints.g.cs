@@ -11,7 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ITraceDataPoints, Ptc.Calculation.Core")]
 public partial interface ITraceDataPoints
 {
-    global::Quire.Calculation.Core.IVectorListResultNode RangePoints { get; }
-    global::Quire.Calculation.Core.IVectorListResultNode ResultPoints { get; }
-    bool IsEmpty { get; }
 }

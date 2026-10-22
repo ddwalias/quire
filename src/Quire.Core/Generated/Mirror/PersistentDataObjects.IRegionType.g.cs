@@ -11,21 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.IRegionType, Ptc.Core")]
 public partial interface IRegionType : global::Quire.Serialization.IS11NConsumer, global::Quire.Serialization.IHasS11NProvider, global::Quire.Serialization.IS11NProvider, global::Quire.Serialization.IBaseS11NProvider, global::Quire.PersistentDataObjects.IHasPreSerialize
 {
-    string regionid { get; set; }
-    double height { get; }
-    bool heightSpecified { get; }
-    double width { get; }
-    bool widthSpecified { get; }
-    double actualWidth { get; set; }
-    bool actualWidthSpecified { get; set; }
-    double actualHeight { get; set; }
-    bool actualHeightSpecified { get; set; }
-    string[] mc14conversionlossannotations { get; set; }
-    object Item { get; set; }
-    bool mc14conversionloss { get; }
-    bool ConvertedFromMC14 { get; }
-    string Tag { get; set; }
-    bool ShowBorder { get; set; }
-    void SetHeight(double newHeight) ;
-    void SetWidth(double newWidth) ;
 }

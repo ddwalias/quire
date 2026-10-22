@@ -11,5 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IResultOwnerWithSerializableEngineResult, Ptc.Calculation.Core")]
 public partial interface IResultOwnerWithSerializableEngineResult : global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatable
 {
-    global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get; }
 }

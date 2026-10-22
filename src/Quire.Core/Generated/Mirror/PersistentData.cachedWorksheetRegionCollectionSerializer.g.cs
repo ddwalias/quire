@@ -13,5 +13,4 @@ public partial class cachedWorksheetRegionCollectionSerializer : global::Quire.P
 {
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentData.cachedWorksheetType _cachedWorksheet;
-    public override global::Quire.PersistentData.cachedWorksheetType RegionCollection { get => _cachedWorksheet ?? (_cachedWorksheet = new global::Quire.PersistentData.cachedWorksheetType()); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

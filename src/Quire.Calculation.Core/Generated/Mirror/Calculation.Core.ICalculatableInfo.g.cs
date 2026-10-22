@@ -11,12 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalculatableInfo, Ptc.Calculation.Core")]
 public partial interface ICalculatableInfo : global::System.ComponentModel.INotifyPropertyChanged
 {
-    global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get; }
-    global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get; }
-    bool IsCommitted { get; }
-    global::Quire.Calculation.Core.EngineError Error { get; }
-    int ErrorCount { get; }
-    string ErrorCode { get; }
-    string ErrorText { get; }
-    string ErrorSExpression { get; }
 }

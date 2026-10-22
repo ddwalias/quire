@@ -11,10 +11,4 @@ namespace Quire.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Serialization.IDeS11NProvider, Ptc.Core")]
 public partial interface IDeS11NProvider : global::Quire.Serialization.IBaseS11NProvider
 {
-    string FilePath { get; }
-    global::Quire.ITextStyleChangedHandler TextStyleChangedHandler { get; }
-    bool SkipRegionsNotAffectingCalculation { get; }
-    string UnpackExternalObject(string itemidref) ;
-    void UnpackFlowDocument(ref global::System.Windows.Documents.FlowDocument flowDocument, string itemidref) ;
-    global::System.IO.Stream UnpackProtectedPart(string itemIdRef) ;
 }

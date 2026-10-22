@@ -11,7 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ICalcWithCache, Ptc.Calculation.Core")]
 public partial interface ICalcWithCache
 {
-    global::Quire.Calculation.Core.EngineError Error { get; }
-    global::Quire.Calculation.Core.IResultNode Result { get; }
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> EngineWarnings { get; }
 }

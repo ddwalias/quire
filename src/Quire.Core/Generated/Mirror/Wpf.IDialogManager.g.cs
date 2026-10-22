@@ -11,7 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IDialogManager, Ptc.Core")]
 public partial interface IDialogManager : global::Quire.Services.IService
 {
-    bool IsDialogOpen { get; set; }
-    global::System.Windows.Forms.DialogResult ShowDialog(global::System.Windows.Forms.FileDialog fileDialog) ;
-    global::System.Nullable<bool> ShowDialog(global::Microsoft.Win32.FileDialog fileDialog) ;
 }

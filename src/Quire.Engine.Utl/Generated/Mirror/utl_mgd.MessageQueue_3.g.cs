@@ -11,10 +11,6 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.MessageQueue`3, utl-mgd")]
 public partial class MessageQueue<Owner, Data, Msg> : global::System.Collections.Queue, global::System.IDisposable where Owner : class
 {
-    private global::Quire.utl_mgd.Mailbox<Msg> m_mailbox;
-    private global::System.Threading.Thread m_thread;
-    private int m_stack_size;
-    private unsafe void* m_death_handle;
 
     [global::Quire.Mirror.MirrorOf("utl_mgd.MessageQueue`3+OnInit, utl-mgd")]
     public delegate void OnInit(Owner owner, Data data);

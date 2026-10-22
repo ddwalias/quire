@@ -11,6 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.SafeWaitHandle, utl-mgd")]
 public abstract partial class SafeWaitHandle : global::System.IDisposable
 {
-    protected string m_name;
-    protected unsafe void* m_handle;
 }

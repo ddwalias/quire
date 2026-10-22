@@ -11,7 +11,4 @@ namespace Quire.Services;
 [global::Quire.Mirror.MirrorOf("Ptc.Services.IExceptionLogger, Ptc.Core")]
 public partial interface IExceptionLogger : global::Quire.Services.IApplicationLogger, global::Quire.Services.IService
 {
-    string LogException(global::System.Exception exception) ;
-    string GetExceptionInfo(global::System.Collections.Generic.IEnumerable<global::System.Exception> exceptions) ;
-    string LogExceptions(global::System.Collections.Generic.IEnumerable<global::System.Exception> exceptions) ;
 }

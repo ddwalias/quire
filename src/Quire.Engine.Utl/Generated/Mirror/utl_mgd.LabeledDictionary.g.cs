@@ -11,6 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.LabeledDictionary, utl-mgd")]
 public partial class LabeledDictionary : global::System.Collections.IDictionary
 {
-    private global::System.Collections.Hashtable m_table;
-    private bool m_locked;
 }

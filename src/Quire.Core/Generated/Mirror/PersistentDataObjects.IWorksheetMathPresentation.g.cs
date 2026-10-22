@@ -11,5 +11,4 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.IWorksheetMathPresentation, Ptc.Core")]
 public partial interface IWorksheetMathPresentation
 {
-    global::Quire.PersistentDataObjects.presentationMathRenderingOperatorsDerivative getDerivativeStyle { get; }
 }

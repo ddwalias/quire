@@ -11,5 +11,4 @@ namespace Quire.utl_mgd;
 [global::Quire.Mirror.MirrorOf("utl_mgd.FunctionBase, utl-mgd")]
 public abstract partial class FunctionBase : global::Quire.utl_mgd.Function
 {
-    public abstract object Invoke(object[] args);
 }

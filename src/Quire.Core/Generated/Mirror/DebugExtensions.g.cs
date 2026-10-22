@@ -11,31 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.DebugExtensions, Ptc.Core")]
 public static partial class DebugExtensions
 {
-    private static global::System.Collections.Generic.Dictionary<global::System.Type, string[]> _types;
-    [global::System.Diagnostics.Conditional("DEBUG")]
-    [global::System.Diagnostics.DebuggerStepThrough]
-    public static void VerifyPropertyName(this global::System.ComponentModel.INotifyPropertyChanged obj, string propertyName)
-    {
-        global::Quire.DebugTools.DevAssert(VerifyPropertyName(obj.GetType(), propertyName), "Invalid property name: {0}", propertyName);
-    }
-
-    private static bool VerifyPropertyName(global::System.Type type, string propertyName)
-    {
-        if (_types == null)
-        {
-            _types = new global::System.Collections.Generic.Dictionary<global::System.Type, string[]>();
-        }
-
-        if (!_types.TryGetValue(type, out string[] value))
-        {
-            value = global::System.Linq.Enumerable.ToArray(
-                global::System.Linq.Enumerable.Select(
-                    global::System.Linq.Enumerable.OfType<global::System.ComponentModel.PropertyDescriptor>(global::System.ComponentModel.TypeDescriptor.GetProperties(type)),
-                    (global::System.ComponentModel.PropertyDescriptor prop) => prop.Name));
-            global::System.Array.Sort(value);
-            _types.Add(type, value);
-        }
-
-        return global::System.Array.BinarySearch(value, propertyName) > -1;
-    }
 }

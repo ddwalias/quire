@@ -11,6 +11,4 @@ namespace Quire.Wpf;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.IPropertyChangedEventArgsExtended, Ptc.Core")]
 public partial interface IPropertyChangedEventArgsExtended
 {
-    object OldValue { get; }
-    object NewValue { get; }
 }

@@ -11,7 +11,4 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.IAreaType, Ptc.Core")]
 public partial interface IAreaType
 {
-    bool IsCollapsed { get; set; }
-    bool IsBorderVisible { get; set; }
-    global::Quire.ProtectionData ProtectionDataWrapper { get; set; }
 }

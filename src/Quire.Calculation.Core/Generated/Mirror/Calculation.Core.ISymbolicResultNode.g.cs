@@ -11,5 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ISymbolicResultNode, Ptc.Calculation.Core")]
 public partial interface ISymbolicResultNode : global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    string Xml { get; set; }
 }

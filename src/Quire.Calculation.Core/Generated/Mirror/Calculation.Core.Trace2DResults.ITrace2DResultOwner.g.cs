@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core.Trace2DResults;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.Trace2DResults.ITrace2DResultOwner, Ptc.Calculation.Core")]
 public partial interface ITrace2DResultOwner
 {
-    bool IsTypeDefault { get; }
-    global::Quire.Calculation.Core.Trace2DResults.TraceType Type { get; }
 }

@@ -11,20 +11,4 @@ namespace System.Reflection.Emit.Quire.Mpl;
 [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.AssemblyBuilder, mplasb")]
 public partial class AssemblyBuilder : global::System.Reflection.Assembly
 {
-    private bool _previouslySaved;
-    private global::System.Reflection.AssemblyName _assemblyName;
-
-    public void LoadAssembly()
-    {
-        if (!global::System.Linq.Enumerable.Any(global::System.AppDomain.CurrentDomain.GetAssemblies(), (global::System.Reflection.Assembly a) => (a.GetName()?.Name?.Equals(Name, global::System.StringComparison.OrdinalIgnoreCase)).GetValueOrDefault()))
-        {
-            global::System.Reflection.Assembly.Load(EmitAssembly());
-        }
-    }
-
-    private global::System.Reflection.Emit.Quire.Mpl.ModuleBuilder _module;
-    private string _fullName;
-    private global::System.Version _version;
-    private string _culture;
-    internal global::System.Reflection.Metadata.AssemblyDefinitionHandle _assemblyDef;
 }

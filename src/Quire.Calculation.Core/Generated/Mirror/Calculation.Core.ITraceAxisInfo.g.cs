@@ -11,7 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.ITraceAxisInfo, Ptc.Calculation.Core")]
 public partial interface ITraceAxisInfo
 {
-    double Max { get; }
-    double Min { get; }
-    global::System.Collections.Generic.IList<global::Quire.Calculation.Core.Unit> Units { get; }
 }

@@ -17,7 +17,6 @@ public partial class WpfClipboard : global::Quire.IClipboard
     private static global::Quire.IClipboard _current;
     [global::Quire.Mirror.MirrorStub]
     private static readonly string _canPasteIntoTextRegion;
-    public static global::Quire.IClipboard Current { get => _current ?? Default; }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.IDisposable Override(global::Quire.IClipboard clipboard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

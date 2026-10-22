@@ -11,7 +11,4 @@ namespace Quire.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.IHelpSettings, Ptc.Core")]
 public partial interface IHelpSettings : global::System.ComponentModel.INotifyPropertyChanged
 {
-    bool DocOptionsEnabled { get; set; }
-    bool IsHelpDefault { get; set; }
-    string HelpPath { get; set; }
 }

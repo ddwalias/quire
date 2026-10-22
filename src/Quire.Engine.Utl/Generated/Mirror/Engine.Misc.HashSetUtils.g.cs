@@ -13,6 +13,4 @@ namespace Quire.Engine.Misc;
 [global::Quire.Mirror.MirrorOf("Engine.Misc.HashSetUtils, mcmisc")]
 public partial class HashSetUtils
 {
-    public static T[] HashSetToArray<T>(ref global::System.Collections.Generic.HashSet<T> hash) => hash.ToArray();
-    public HashSetUtils() { }
 }

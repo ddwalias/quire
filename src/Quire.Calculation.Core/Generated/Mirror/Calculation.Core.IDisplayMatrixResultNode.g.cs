@@ -11,6 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IDisplayMatrixResultNode, Ptc.Calculation.Core")]
 public partial interface IDisplayMatrixResultNode : global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
-    global::Quire.TableCoordinate ViewportOffset { get; }
-    global::Quire.Calculation.Core.IEagerMatrixResultNode Viewport { get; }
 }

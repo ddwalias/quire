@@ -11,8 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.ITextStyleObject, Ptc.Core")]
 public partial interface ITextStyleObject
 {
-    string Name { get; set; }
-    string StyleKey { get; set; }
-    string BasedOnKey { get; set; }
-    global::System.Windows.TextDecorationCollection TextDecorations { get; set; }
 }

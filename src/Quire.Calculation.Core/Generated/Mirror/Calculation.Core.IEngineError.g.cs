@@ -11,15 +11,4 @@ namespace Quire.Calculation.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Calculation.Core.IEngineError, Ptc.Calculation.Core")]
 public partial interface IEngineError : global::System.ICloneable
 {
-    string ErrorCode { get; }
-    global::Quire.Calculation.Core.StringCollection ErrorMessageArguments { get; }
-    uint NodeHandle { get; set; }
-    uint Argument { get; set; }
-    global::Quire.Calculation.Core.ICalculatable ErrorSource { get; }
-    string ResourceString { get; set; }
-    bool IsRuntime { get; set; }
-    global::Quire.Calculation.Core.EngineError OriginalError { get; }
-    bool IsEquivalentTo(global::Quire.Calculation.Core.EngineError error, bool checkNodeHandle = true);
-    global::Quire.Calculation.Core.EngineError FindNextError(global::Quire.Calculation.Core.EngineError error);
-    bool IsAncestorOf(global::Quire.Calculation.Core.EngineError error);
 }

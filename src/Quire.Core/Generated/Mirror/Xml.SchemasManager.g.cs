@@ -36,31 +36,6 @@ public static partial class SchemasManager
         private global::System.Xml.Schema.XmlSchema _schema;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Xml.Schema.XmlSchemaSet _schemaSet;
-        public global::System.Xml.Schema.XmlSchema Schema
-        {
-            get
-            {
-                if (_schema == null)
-                {
-                    global::System.IO.Stream stream = global::Quire.Serialization.SpiritResolver.Instance.GetStream(SchemaName);
-                    _schema = global::System.Xml.Schema.XmlSchema.Read(stream, null);
-                }
-                return _schema;
-            }
-        }
-        public global::System.Xml.Schema.XmlSchemaSet CompiledSchemaSet
-        {
-            get
-            {
-                if (_schemaSet == null)
-                {
-                    _schemaSet = new global::System.Xml.Schema.XmlSchemaSet { XmlResolver = global::Quire.Serialization.SpiritResolver.Instance };
-                    _schemaSet.Add(Schema);
-                    _schemaSet.Compile();
-                }
-                return _schemaSet;
-            }
-        }
         [global::Quire.Mirror.MirrorStub]
         public static implicit operator string(global::Quire.Xml.SchemasManager.SchemaData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }

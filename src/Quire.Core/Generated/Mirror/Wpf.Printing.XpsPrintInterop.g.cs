@@ -45,15 +45,10 @@ public static partial class XpsPrintInterop
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+IXpsPrintJob, Ptc.Core")]
     private partial interface IXpsPrintJob
     {
-        void Cancel();
-        global::Quire.Wpf.Printing.XpsPrintInterop.XPS_JOB_STATUS GetJobStatus();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.XpsPrintInterop+IXpsPrintJobStream, Ptc.Core")]
     private partial interface IXpsPrintJobStream
     {
-        void Read(byte[] pv, uint cb, out uint pcbRead);
-        void Write(byte[] pv, uint cb, out uint pcbWritten);
-        void Close();
     }
 }
