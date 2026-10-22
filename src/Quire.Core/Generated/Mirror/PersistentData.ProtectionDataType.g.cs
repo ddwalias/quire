@@ -51,6 +51,15 @@ public partial class ProtectionDataType
             global::Quire.EnumHelper.TryParse<global::Quire.ProtectionLevel>(value, out protectionLevel, settings);
             return protectionLevel;
         }
-        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        set
+        {
+            global::Quire.EnumHelper.EnumHelperSettings settings;
+            global::Quire.EnumHelper.EnumHelperSettings defaultSettings = default;
+            defaultSettings.IgnoreCase = true;
+            defaultSettings.AssertOnParseFailure = true;
+            settings = defaultSettings;
+            ProtectionLevel = global::Quire.EnumHelper.TryConvertFlagsToList<global::Quire.ProtectionLevel, global::Quire.PersistentData.ProtectionLevelType>(value, settings)
+                ?? new global::Quire.PersistentData.ProtectionLevelType[1];
+        }
     }
 }
