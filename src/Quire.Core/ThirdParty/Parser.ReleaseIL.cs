@@ -5,6 +5,9 @@ namespace Quire.ThirdParty;
 
 public sealed partial class Parser
 {
+    [global::System.Runtime.InteropServices.DllImport("kernel32.dll", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.StdCall, CharSet = global::System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+    private static extern int GetStdHandle(int nStdHandle);
+
     [MirrorVerified("Release IL")]
     public static bool ParseArgumentsWithUsage(string[] arguments, object destination)
     {
