@@ -41,6 +41,14 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    private PackagePart AddWorksheetPartToPackage(Package package, Uri uri)
+    {
+        PackagePart result = CreatePackagePart(package, uri, MainPartContentType);
+        package.CreateRelationship(uri, TargetMode.Internal, MainPartRelashinshipType);
+        return result;
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart GetSinglePartByRelationshipType(PackagePart sourcePart, string relationshipType)
     {
         Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(sourcePart.GetRelationshipsByType(relationshipType));
