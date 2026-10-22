@@ -22,6 +22,28 @@ public partial class TextStyleBase
     [MirrorVerified("PtcTextStyleBaseMechanicalDifferentialTests")]
     public Style Style { get; private set; }
 
+    [MirrorVerified("Release IL")]
+    public void MergeBasedOn()
+    {
+        _baseOnKey = null;
+        ClearHeritageProperties();
+        _htPropertyToIndex.Clear();
+        if (Style.BasedOn != null)
+        {
+            Style style = CloneStyleAndSetters(Style);
+            MergeBasedOnSetters(style, style.BasedOn);
+            style.BasedOn = null;
+            Style = style;
+            int index = 0;
+            foreach (System.Windows.Setter setter in System.Linq.Enumerable.OfType<System.Windows.Setter>(Style.Setters))
+            {
+                _htPropertyToIndex[setter.Property.Name] = index;
+                index++;
+                UpdateMemberValue(setter.Property.Name, setter.Value);
+            }
+        }
+    }
+
     [MirrorVerified("PtcTextStyleBaseMechanicalDifferentialTests")]
     protected string _baseOnKey;
 
