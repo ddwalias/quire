@@ -110,4 +110,34 @@ public partial class ChunkedMemoryStream
         return _buffer;
     }
 
+    [MirrorVerified("Release IL")]
+    public long Capacity
+    {
+        get
+        {
+            int capacity = _bufferCount;
+            if (_chunks != null)
+            {
+                capacity += _chunks.Length * ChunkSize;
+            }
+            return capacity;
+        }
+        set
+        {
+            if (value == Capacity)
+            {
+                return;
+            }
+            if (_fixed)
+            {
+                throw new NotSupportedException("Cannot expand this ChunkedMemoryStream");
+            }
+            if (value < _length)
+            {
+                throw new ArgumentOutOfRangeException("value", string.Format("New capacity cannot be negative or less than the current length {0} {1}", value, _length));
+            }
+            ConsolidateChunks(value);
+        }
+    }
+
 }
