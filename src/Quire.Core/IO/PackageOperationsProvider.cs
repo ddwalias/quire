@@ -17,6 +17,18 @@ public partial class PackageOperationsProvider
     public Package GetPackageForRead(string packageName) => Package.Open(packageName, (FileMode)3, (FileAccess)1, (FileShare)1);
 
     [MirrorVerified("Release IL")]
+    public PackagePart GetSinglePartByContentType(Package package, string contentType)
+    {
+        return package.GetParts().FirstOrDefault((PackagePart part) => part.ContentType == contentType);
+    }
+
+    [MirrorVerified("Release IL")]
+    public List<PackagePart> GetPartsByContentType(Package package, string contentType)
+    {
+        return package.GetParts().Where((PackagePart part) => part.ContentType == contentType).ToList();
+    }
+
+    [MirrorVerified("Release IL")]
     public int CountPartsByContentType(Package package, string contentType)
     {
         return package.GetParts().Count((PackagePart part) => part.ContentType == contentType);
