@@ -13,14 +13,54 @@ public partial class footersContainerWrapper : global::Quire.PersistentData.IReg
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "footers";
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.footer Footer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.footer FirstPageFooter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool FooterConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool FirstPageFooterConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.PersistentData.footer Footer
+    {
+        get
+        {
+            global::Quire.PersistentData.footer footer = new global::Quire.PersistentData.footer();
+            if (_container.footer?.regions != null)
+            {
+                footer.regions = _container.footer.regions;
+            }
+            return footer;
+        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+    public global::Quire.PersistentData.footer FirstPageFooter
+    {
+        get
+        {
+            global::Quire.PersistentData.footer footer = new global::Quire.PersistentData.footer();
+            if (_container.firstPageFooter?.regions != null)
+            {
+                footer.regions = _container.firstPageFooter.regions;
+            }
+            return footer;
+        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+    public bool FooterConvertedFromMC14
+    {
+        get
+        {
+            if (_container.footer != null && _container.footer.convertedfromSpecified)
+            {
+                return _container.footer.convertedfrom == (global::Quire.PersistentDataObjects.applicationVersionType)0;
+            }
+            return false;
+        }
+    }
+    public bool FirstPageFooterConvertedFromMC14
+    {
+        get
+        {
+            if (_container.firstPageFooter != null && _container.firstPageFooter.convertedfromSpecified)
+            {
+                return _container.firstPageFooter.convertedfrom == (global::Quire.PersistentDataObjects.applicationVersionType)0;
+            }
+            return false;
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     public footersContainerWrapper() { }
 }
