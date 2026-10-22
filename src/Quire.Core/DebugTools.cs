@@ -21,6 +21,37 @@ public static partial class DebugTools
     [MirrorVerified("Release IL")]
     private static DateTime? _lastLogTime;
 
+    [Conditional("DEBUG")]
+    [MirrorVerified("Release IL")]
+    public static void LogData(string line, ref DateTime? refTime)
+    {
+        if (_loggingLockObj == null)
+        {
+            return;
+        }
+        if (_loggingData == null)
+        {
+            return;
+        }
+        lock (_loggingLockObj)
+        {
+            if (_loggingData != null)
+            {
+                DateTime now = DateTime.Now;
+                if (!refTime.HasValue)
+                {
+                    refTime = now;
+                }
+                else
+                {
+                    line += string.Format(" ({0} ms elapsed)", (now - refTime.Value).TotalMilliseconds.Round());
+                }
+                _loggingData.Add(now.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss.fff") + "\t" + (now - (_lastLogTime ?? now)).ToString("mm':'ss'.'fff") + "\t" + line);
+                _lastLogTime = now;
+            }
+        }
+    }
+
     [MirrorVerified("PtcDebugToolsMechanicalDifferentialTests")]
     public static void FailAssertion(string message = default, params object[] messageArgs) => FailAssertion(1, AssertionModifiers.None, message, messageArgs);
 
