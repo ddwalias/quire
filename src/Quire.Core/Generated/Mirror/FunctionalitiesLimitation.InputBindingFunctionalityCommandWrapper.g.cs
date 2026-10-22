@@ -11,10 +11,4 @@ namespace Quire.FunctionalitiesLimitation;
 [global::Quire.Mirror.MirrorOf("Ptc.FunctionalitiesLimitation.InputBindingFunctionalityCommandWrapper, Ptc.Core")]
 public partial class InputBindingFunctionalityCommandWrapper : global::Quire.FunctionalitiesLimitation.BaseFunctionalityCommandWrapper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanExecute(object parameter, global::System.Windows.IInputElement commandTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool CanExecute(object parameter) => base.CanExecute(parameter);
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute(object parameter, global::System.Windows.IInputElement commandTarget) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
