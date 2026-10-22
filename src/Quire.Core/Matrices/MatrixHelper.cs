@@ -6,6 +6,22 @@ namespace Quire.Matrices;
 
 public partial class MatrixHelper
 {
+    [MirrorVerified("Release IL")]
+    public static T[] SwapRowsColumns<T>(int rows, int columns, global::System.Collections.Generic.IEnumerable<T> elements)
+    {
+        T[] array = new T[rows * columns];
+        int num = 0;
+        foreach (T element in elements)
+        {
+            array[num++] = element;
+        }
+        if (array.Length > num)
+        {
+            throw new global::System.ArgumentException("Too few elements passed in");
+        }
+        return SwapRowsColumns(rows, columns, array);
+    }
+
     [MirrorVerified("PtcMatricesMatrixHelperMechanicalDifferentialTests")]
     public MatrixHelper() { }
 

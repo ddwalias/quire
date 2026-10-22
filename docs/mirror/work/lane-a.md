@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `Matrices.MatrixHelper.SwapRowsColumns<T>(int, int, T[])`; 595 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-863e0fb50dcb/release-il.json` — PASS, 2,927 exact, 0 mismatches.
+- Members: latest exact members: `Matrices.MatrixHelper.SwapRowsColumns<T>(int, int, IEnumerable<T>)`, `Matrices.MatrixHelper.SwapRowsColumns<T>(int, int, T[])`; 594 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-5f84c49611f4/release-il.json` — PASS, 2,928 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
