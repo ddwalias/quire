@@ -17,8 +17,7 @@ public partial class matrix : global::Quire.PersistentDataObjects.exprElementTyp
     private static global::System.Xml.Serialization.XmlSerializer _xmlSerializer;
     [global::Quire.Mirror.MirrorStub]
     public const string RootAttributeName = "matrix";
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public static global::System.Xml.Serialization.XmlSerializer XmlSerializer { get => _xmlSerializer ?? (_xmlSerializer = CreateSerializer(_typeOfThis, "matrix")); }
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Xml.Serialization.XmlSerializer CreateSerializer(global::System.Type typeOfRoot, string rootNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
