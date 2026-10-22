@@ -92,6 +92,70 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private void Write(XpsDocumentWriter docWriter, System.Printing.PrintTicket ticket)
+    {
+        if (!JobInitialize(docWriter))
+        {
+            return;
+        }
+        Exception exception = null;
+        try
+        {
+            try
+            {
+                if (ticket == null)
+                {
+                    docWriter.Write(PrintableDocument.DocumentPaginator);
+                }
+                else
+                {
+                    docWriter.Write(PrintableDocument.DocumentPaginator, ticket);
+                }
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+        }
+        finally
+        {
+            JobFinalize(docWriter, new WritingCompletedEventArgs(true, null, exception));
+        }
+        if (exception != null)
+        {
+            DebugTools.FailAssertion(exception);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    private void WriteAsync(XpsDocumentWriter docWriter, System.Printing.PrintTicket ticket)
+    {
+        if (!JobInitialize(docWriter))
+        {
+            return;
+        }
+        try
+        {
+            if (ticket == null)
+            {
+                _docWriter.WriteAsync(PrintableDocument.DocumentPaginator);
+            }
+            else
+            {
+                _docWriter.WriteAsync(PrintableDocument.DocumentPaginator, ticket);
+            }
+        }
+        catch (Exception ex)
+        {
+            if (_docWriter != null)
+            {
+                JobFinalize(docWriter, new WritingCompletedEventArgs(true, null, ex));
+            }
+            DebugTools.FailAssertion(ex);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private bool JobInitialize(XpsDocumentWriter docWriter)
     {
         if (DebugTools.AssertNotNull(docWriter, null, Array.Empty<object>()).Failed)

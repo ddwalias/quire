@@ -19,8 +19,4 @@ public partial class PrintJob
     public void Print(global::System.Printing.PrintQueue queue, global::System.Printing.PrintTicket ticket, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void PrintToFile(string filePath, bool async) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Write(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Printing.PrintTicket ticket) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void WriteAsync(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Printing.PrintTicket ticket) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
