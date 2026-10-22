@@ -79,4 +79,21 @@ public partial struct QualityAgentReportData
             return _currentUiCulture.ToString();
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public string LicenseDate
+    {
+        get
+        {
+            if ((object)_licenseIssueDate is DateTime)
+            {
+                goto HasLicenseIssueDate;
+            }
+            return string.Empty;
+
+        HasLicenseIssueDate:
+            DateTime licenseIssueDate = _licenseIssueDate.Value;
+            return licenseIssueDate.ToString(DateTimeReportFormat);
+        }
+    }
 }
