@@ -66,8 +66,6 @@ public static partial class OleUtils
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Guid GetExcelSheetGuid(string excelSheetProgId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsSupportedExcelGuid(global::System.Guid guid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool IsOleAppSupportZoom(string progId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Nullable<bool> IsVersionInstalled(object comObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
