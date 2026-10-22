@@ -40,6 +40,14 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    public static int GetConsoleWindowWidth()
+    {
+        CONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo = default;
+        GetConsoleScreenBufferInfo(GetStdHandle(-11), ref lpConsoleScreenBufferInfo);
+        return lpConsoleScreenBufferInfo.dwSize.x;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
     {
         for (int i = startIndex; i < text.Length; i++)

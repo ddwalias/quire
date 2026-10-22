@@ -34,8 +34,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     private static int GetConsoleScreenBufferInfo(int hConsoleOutput, ref global::Quire.ThirdParty.Parser.CONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int GetConsoleWindowWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public Parser(global::System.Type argumentSpecification, global::Quire.ThirdParty.ErrorReporter reporter) { }
     [global::Quire.Mirror.MirrorStub]
     private bool ParseArgumentList(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
