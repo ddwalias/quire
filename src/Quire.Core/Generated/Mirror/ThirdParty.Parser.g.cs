@@ -239,7 +239,18 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         public Argument(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo, global::Quire.ThirdParty.ErrorReporter reporter) { }
         [global::Quire.Mirror.MirrorStub]
-        public bool Finish(object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public bool Finish(object destination)
+        {
+            if (!SeenValue && HasDefaultValue)
+            {
+                fieldInfo.SetValue(destination, DefaultValue);
+            }
+            if (IsCollection)
+            {
+                fieldInfo.SetValue(destination, collectionValues.ToArray(elementType));
+            }
+            return ReportMissingRequiredArgument();
+        }
         [global::Quire.Mirror.MirrorStub]
         private bool ReportMissingRequiredArgument()
         {
