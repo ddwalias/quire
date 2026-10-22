@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <new>
 #include <vcclr.h>
+#ifdef IsLoggingEnabled
+#undef IsLoggingEnabled
+#endif
 #using <Quire.Mirror.dll>
 #pragma warning(push)
 #pragma warning(disable:4564)
@@ -12,8 +15,28 @@ using namespace System;
 using namespace System::Collections;
 using namespace System::Diagnostics;
 using namespace System::Reflection;
+using namespace System::Runtime::InteropServices;
 using namespace System::Text;
 using namespace System::Threading;
+
+namespace utl
+{
+    __declspec(noinline) Boolean IsLoggingEnabled()
+    {
+        IntPtr module = NativeLibrary::Load("UTL.DLL");
+        try
+        {
+            using IsLoggingEnabledFunction = Boolean(__cdecl*)();
+            auto function = reinterpret_cast<IsLoggingEnabledFunction>(NativeLibrary::GetExport(module,
+                "?IsLoggingEnabled@utl@@YA_NXZ").ToPointer());
+            return function();
+        }
+        finally
+        {
+            NativeLibrary::Free(module);
+        }
+    }
+}
 
 [assembly:AssemblyVersionAttribute("0.1.0.0")];
 
@@ -172,6 +195,110 @@ namespace Quire { namespace utl_mgd {
     public:
         __declspec(noinline) ~SafeMutex() { EnsureReleased(); }
         !SafeMutex() { EnsureReleased(); }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.Logging, utl-mgd")]
+    public ref class Logging
+    {
+    public:
+        Logging() {}
+
+        static Boolean IsLoggingEnabled()
+        {
+            return utl::IsLoggingEnabled();
+        }
+
+        static void Log(String^ logname, String^ message)
+        {
+            using LogFunction = IntPtr(__cdecl*)(IntPtr);
+            using PutFunction = IntPtr(__cdecl*)(IntPtr, Byte);
+            array<Byte>^ nameBytes = Encoding::UTF8->GetBytes(logname);
+            Int32 nameLength = nameBytes->Length;
+            if (nameLength == 0)
+                nameBytes = gcnew array<Byte>(1);
+            array<Byte>^ messageBytes = Encoding::UTF8->GetBytes(message);
+            IntPtr utlModule = NativeLibrary::Load("UTL.DLL");
+            try
+            {
+                pin_ptr<Byte> nameData = &nameBytes[0];
+                array<IntPtr>^ nameView = gcnew array<IntPtr>(2);
+                nameView[0] = IntPtr(nameData);
+                nameView[1] = IntPtr(nameData + nameLength);
+                pin_ptr<IntPtr> pinnedNameView = &nameView[0];
+                auto log = reinterpret_cast<LogFunction>(NativeLibrary::GetExport(utlModule,
+                    "?Log@utl@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@V?$Substring@$$CBD@@@Z").ToPointer());
+                IntPtr stream = log(IntPtr(pinnedNameView));
+                IntPtr streamModule = NativeLibrary::Load("msvcp140.dll");
+                try
+                {
+                    auto put = reinterpret_cast<PutFunction>(NativeLibrary::GetExport(streamModule,
+                        "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@D@Z").ToPointer());
+                    if (messageBytes->Length != 0)
+                    {
+                        pin_ptr<Byte> data = &messageBytes[0];
+                        for (Int32 i = 0; i < messageBytes->Length; ++i)
+                            put(stream, data[i]);
+                    }
+                }
+                finally
+                {
+                    NativeLibrary::Free(streamModule);
+                }
+            }
+            finally
+            {
+                NativeLibrary::Free(utlModule);
+            }
+        }
+
+        static void LogLine(String^ logname, String^ message)
+        {
+            using LogFunction = IntPtr(__cdecl*)(IntPtr);
+            using PutFunction = IntPtr(__cdecl*)(IntPtr, Byte);
+            using FlushFunction = IntPtr(__cdecl*)(IntPtr);
+            array<Byte>^ nameBytes = Encoding::UTF8->GetBytes(logname);
+            Int32 nameLength = nameBytes->Length;
+            if (nameLength == 0)
+                nameBytes = gcnew array<Byte>(1);
+            array<Byte>^ messageBytes = Encoding::UTF8->GetBytes(message);
+            IntPtr utlModule = NativeLibrary::Load("UTL.DLL");
+            try
+            {
+                pin_ptr<Byte> nameData = &nameBytes[0];
+                array<IntPtr>^ nameView = gcnew array<IntPtr>(2);
+                nameView[0] = IntPtr(nameData);
+                nameView[1] = IntPtr(nameData + nameLength);
+                pin_ptr<IntPtr> pinnedNameView = &nameView[0];
+                auto log = reinterpret_cast<LogFunction>(NativeLibrary::GetExport(utlModule,
+                    "?Log@utl@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@V?$Substring@$$CBD@@@Z").ToPointer());
+                IntPtr stream = log(IntPtr(pinnedNameView));
+                IntPtr streamModule = NativeLibrary::Load("msvcp140.dll");
+                try
+                {
+                    auto put = reinterpret_cast<PutFunction>(NativeLibrary::GetExport(streamModule,
+                        "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@D@Z").ToPointer());
+                    if (messageBytes->Length != 0)
+                    {
+                        pin_ptr<Byte> data = &messageBytes[0];
+                        for (Int32 i = 0; i < messageBytes->Length; ++i)
+                            put(stream, data[i]);
+                    }
+                    put(stream, 10);
+                    auto flush = reinterpret_cast<FlushFunction>(NativeLibrary::GetExport(streamModule,
+                        "?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@XZ").ToPointer());
+                    flush(stream);
+                }
+                finally
+                {
+                    NativeLibrary::Free(streamModule);
+                }
+            }
+            finally
+            {
+                NativeLibrary::Free(utlModule);
+            }
+        }
+
     };
 
     generic <typename T>

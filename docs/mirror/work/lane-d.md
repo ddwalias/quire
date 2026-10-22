@@ -2,6 +2,6 @@
 
 - Owner: Lane D.
 - Branch: `mirror/d-engine-utl-nativeinterop-20261022-f5`.
-- Members: C++/CLI mixed-mode proof and managed consumers; production C# project remains unchanged.
-- Release IL: FAIL, 390 checked / 280 exact / 166 failures (`.mirror-cache/release-il-d0daa6350eca/release-il.json`).
-- Remaining: 117 generated globals lack reviewed bindings, 34 methods have no original counterpart, nine methods are removed, and six mapped methods differ. Mixed-mode proof loads and runs on Windows; see `docs/mirror/native/utl-mgd-mixed-mode-implementation.md`.
+- Members: C++/CLI mixed-mode proof; exact `Logging::.ctor` and `Logging.IsLoggingEnabled` port, with `Logging.Log`/`LogLine` still differing.
+- Release IL: VCX candidate FAIL, 394 checked / 282 exact / 165 failures (`.mirror-cache/release-il-65bd10a0f829/release-il.json`).
+- Remaining: 118 unbound global methods, 34 methods without counterparts, five removals, eight mapped differences. Production C# inventory remains 129 exact / 154 different / 27 unresolved.
