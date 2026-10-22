@@ -27,6 +27,15 @@ public partial class PrintJob
     public event EventHandler<WritingCompletedEventArgs> JobCompleted;
 
     [MirrorVerified("Release IL")]
+    public void CancelAsyncJob()
+    {
+        if (DebugTools.AssertNotNull(_docWriter, null, Array.Empty<object>()).Passed)
+        {
+            _docWriter.CancelAsync();
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private void HandleWritingCancelled(object sender, WritingCancelledEventArgs cancelledArgs) => HandleWritingCompleted(sender, new WritingCompletedEventArgs(true, null, cancelledArgs.Error));
 
     [MirrorVerified("Release IL")]
