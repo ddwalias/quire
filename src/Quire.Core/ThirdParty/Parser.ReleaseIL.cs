@@ -29,6 +29,17 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    public static string ArgumentsUsage(global::System.Type argumentType)
+    {
+        int num = GetConsoleWindowWidth();
+        if (num == 0)
+        {
+            num = 80;
+        }
+        return ArgumentsUsage(argumentType, num);
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
     {
         for (int i = startIndex; i < text.Length; i++)
