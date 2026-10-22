@@ -308,7 +308,54 @@ public sealed partial class Parser
             return true;
         }
         [global::Quire.Mirror.MirrorStub]
-        private bool ParseValue(global::System.Type type, string stringData, out object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private bool ParseValue(global::System.Type type, string stringData, out object value)
+        {
+            if ((stringData != null || type == typeof(bool)) && (stringData == null || stringData.Length > 0))
+            {
+                try
+                {
+                    if (type == typeof(string))
+                    {
+                        value = stringData;
+                        return true;
+                    }
+                    if (type == typeof(bool))
+                    {
+                        if (stringData == null || stringData == "+")
+                        {
+                            value = true;
+                            return true;
+                        }
+                        if (stringData == "-")
+                        {
+                            value = false;
+                            return true;
+                        }
+                    }
+                    else if (type == typeof(int))
+                    {
+                        value = int.Parse(stringData);
+                        return true;
+                    }
+                    else if (type == typeof(uint))
+                    {
+                        value = int.Parse(stringData);
+                        return true;
+                    }
+                    else
+                    {
+                        value = global::System.Enum.Parse(type, stringData, true);
+                        return true;
+                    }
+                }
+                catch
+                {
+                }
+            }
+            ReportBadArgumentValue(stringData);
+            value = null;
+            return false;
+        }
         [global::Quire.Mirror.MirrorStub]
         private void AppendValue(global::System.Text.StringBuilder builder, object value)
         {
