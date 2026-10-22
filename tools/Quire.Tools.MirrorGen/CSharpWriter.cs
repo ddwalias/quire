@@ -43,6 +43,19 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
 
     private void WriteType(StringBuilder sb, TypeModel t, int indent)
     {
+        if (plan.HandBound.Contains(t))
+        {
+            // Hand-written code carries [MirrorOf]: emit a shell only for generated members, without the attribute.
+            var shell = new StringBuilder();
+            WriteType(shell, t, indent, bind: false);
+            if (shell.ToString().Split('\n').Count(l => l.Trim().Length > 0) > 3) sb.Append(shell);
+            return;
+        }
+        WriteType(sb, t, indent, bind: true);
+    }
+
+    private void WriteType(StringBuilder sb, TypeModel t, int indent, bool bind)
+    {
         string pad = new(' ', indent * 4);
         if (plan.TypeSkip.ContainsKey(t)) return;
         var all = t.GenericParams.Select(g => Identifier.Source(g.Name)).ToImmutableArray();
@@ -54,7 +67,7 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             (t.Kind is TypeKind.Interface or TypeKind.Delegate ? g.Variance switch { 1 => "out ", -1 => "in ", _ => "" } : "") + Identifier.Source(g.Name))) + ">";
         string access = AccessText(TypeAccess(t));
 
-        sb.AppendLine($"{pad}[global::Quire.Mirror.MirrorOf(\"{t.MirrorOf}\")]");
+        if (bind) sb.AppendLine($"{pad}[global::Quire.Mirror.MirrorOf(\"{t.MirrorOf}\")]");
         if (t.IsFlags) sb.AppendLine($"{pad}[global::System.Flags]");
 
         if (t.Kind == TypeKind.Enum)
@@ -106,8 +119,9 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
         if (_nested.TryGetValue((t.Project!, t.FullName), out var nested))
             foreach (var n in nested)
             {
-                sb.AppendLine();
-                WriteType(sb, n, indent + 1);
+                var inner = new StringBuilder();
+                WriteType(inner, n, indent + 1);
+                if (inner.Length > 0) sb.AppendLine().Append(inner);
             }
         sb.AppendLine($"{pad}}}");
     }

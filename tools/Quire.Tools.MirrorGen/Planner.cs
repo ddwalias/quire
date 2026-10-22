@@ -33,6 +33,12 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
     public HashSet<MethodModel> CallsBase { get; } = new(ReferenceEqualityComparer.Instance);
     public Dictionary<TypeModel, string> TypeSkip { get; } = [];
     public HashSet<TypeModel> DropBase { get; } = [];
+    /// <summary>
+    /// Nested types whose hand-written declaration carries [MirrorOf]. Roslyn numbers closures by member ordinal,
+    /// nested types included, and the generated file compiles first; leaving their shells out lets hand-written
+    /// code place them where Mathcad declared them.
+    /// </summary>
+    public HashSet<TypeModel> HandBound { get; } = [];
 
     public void Run()
     {
@@ -346,6 +352,7 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             t.Notes.Add("not generated: " + TypeSkip[t]);
             return;
         }
+        if (t.DeclaringType != null && hw.MirrorOf != null) HandBound.Add(t);
         if (hw.Access != t.Access)
         {
             t.Notes.Add($"hand-written code declares it {hw.Access.ToString().ToLowerInvariant()}; Mathcad's is {t.Access.ToString().ToLowerInvariant()}");
