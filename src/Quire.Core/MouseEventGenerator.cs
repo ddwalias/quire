@@ -19,6 +19,18 @@ public partial class MouseEventGenerator
     [MirrorVerified("PtcMouseEventGeneratorMechanicalDifferentialTests")]
     public static void GenerateMouseClick(Point screenPoint) => GenerateMouseClick(screenPoint, 1);
 
+    [MirrorVerified("Release IL")]
+    public static void GenerateMouseClick(Point wpfScreenPoint, int clickCount)
+    {
+        NormalizeCoordinates(wpfScreenPoint, out int num, out int num2);
+        for (int i = 0; i < clickCount; i++)
+        {
+            MouseClickFromNormalizedCoordinates(num, num2);
+        }
+        Quire.Wpf.WpfUtils.DoEvents();
+        System.Threading.Thread.Sleep(unchecked((int)(User32.GetDoubleClickTime() + 1)));
+    }
+
     [MirrorVerified("PtcMouseEventGeneratorMechanicalDifferentialTests")]
     public MouseEventGenerator() { }
 
