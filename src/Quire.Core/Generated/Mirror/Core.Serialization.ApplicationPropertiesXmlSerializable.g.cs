@@ -11,6 +11,4 @@ namespace Quire.Core.Serialization;
 [global::Quire.Mirror.MirrorOf("Ptc.Core.Serialization.ApplicationPropertiesXmlSerializable, Ptc.Core")]
 public partial class ApplicationPropertiesXmlSerializable : global::System.Xml.Serialization.IXmlSerializable, global::Quire.Serialization.IShouldValidate
 {
-    [global::Quire.Mirror.MirrorStub]
-    public void ReadXml(global::System.Xml.XmlReader reader) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

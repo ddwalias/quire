@@ -43,6 +43,32 @@ public partial class ApplicationPropertiesXmlSerializable
     private static propertiesType DeserializeAppProperties(XmlReader reader) => (propertiesType)propertiesType.XmlSerializer.Deserialize(reader);
 
     [MirrorVerified("Release IL")]
+    public void ReadXml(XmlReader reader)
+    {
+        propertiesType propertiesType2 = DeserializeAppProperties(reader);
+        _helper.ApplicationName = propertiesType2.application;
+        _helper.AppVersion = new Version(propertiesType2.appVersion.Value);
+        _helper.Release = propertiesType2.appVersion.release;
+        _helper.FormatVersion = new Version(propertiesType2.serializationVersion.Value);
+        _helper.EngineVersion = propertiesType2.engineVersion;
+        if (!IsFormatVersionCompatible(_helper.FormatVersion))
+        {
+            throw new IncompatibleFormatWorksheetException();
+        }
+        if (propertiesType2.schemaPropertiesList != null)
+        {
+            schemaPropertiesType[] schemaPropertiesList = propertiesType2.schemaPropertiesList;
+            foreach (schemaPropertiesType schemaPropertiesType2 in schemaPropertiesList)
+            {
+                if (EnumHelper.TryParse<SchemasManager.SchemaNameEnum>(schemaPropertiesType2.name, out var enumValue))
+                {
+                    _helper.SerializedSchemaVersions.Add(enumValue, new Version(schemaPropertiesType2.version));
+                }
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public void WriteXml(XmlWriter writer)
     {
         List<schemaPropertiesType> list = new List<schemaPropertiesType>();
