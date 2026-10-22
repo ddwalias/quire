@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.InteropServices;
 using System.Text;
 using Quire.utl_mgd;
@@ -21,9 +22,22 @@ unsafe
             (nint)message, (nint)(message + logMessage.Length), 1);
 }
 Console.WriteLine("native UtlNativeLogUtf8 export called");
-using var mutex = new SafeMutex($"UtlNetmoduleSpike-{Guid.NewGuid():N}");
+var labeled = new LabeledDictionary();
+labeled["item"] = "value";
+if (!((IDictionary)labeled).GetEnumerator().MoveNext()
+    || !((IEnumerable)labeled).GetEnumerator().MoveNext())
+    return 3;
+Console.WriteLine("LabeledDictionary explicit interface implementations loaded");
+using var mutex = new SafeMutex($"UtlNetmoduleSpike-{Guid.NewGuid():N}", 0);
 mutex.WaitOne();
 mutex.ReleaseMutex();
+var monitor = new object();
+SafeMonitor.Enter(monitor);
+if (!SafeMonitor.TryEnter(monitor))
+    return 4;
+SafeMonitor.Exit(monitor);
+SafeMonitor.Exit(monitor);
+Console.WriteLine("SafeMonitor critical-section methods loaded");
 Console.WriteLine("managed consumer loaded C# netmodule types with the C++/CLI Utl port");
 return 0;
 

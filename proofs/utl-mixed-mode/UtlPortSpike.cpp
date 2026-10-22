@@ -33,6 +33,32 @@ public:
     Substring(T* first, T* last) : begin(first), end(last) {}
 };
 
+std::wstring* ToWStrng(std::wstring* result, Object^ value)
+{
+    String^ text = value == nullptr ? String::Empty : value->ToString();
+    pin_ptr<const wchar_t> pinnedText = PtrToStringChars(text);
+    ::new (result) std::wstring(pinnedText, static_cast<size_t>(text->Length));
+    return result;
+}
+
+std::wstring* strrpl(std::wstring* result, Substring<const wchar_t> source,
+    Substring<const wchar_t> find, Substring<const wchar_t> replacement)
+{
+    ::new (result) std::wstring(source.begin, source.end);
+    std::wstring findText(find.begin, find.end);
+    std::wstring replacementText(replacement.begin, replacement.end);
+    if (!findText.empty())
+    {
+        size_t position = 0;
+        while ((position = result->find(findText, position)) != std::wstring::npos)
+        {
+            result->replace(position, findText.size(), replacementText);
+            position += replacementText.size();
+        }
+    }
+    return result;
+}
+
 namespace utl
 {
     std::string ToStrng(Object^ value)
@@ -127,10 +153,6 @@ namespace Quire { namespace utl_mgd {
             GC::KeepAlive(this);
         }
 
-    private:
-        void _bangSafeWaitHandle() { ::CloseHandle(static_cast<HANDLE>(m_handle)); GC::KeepAlive(this); }
-        void _tildeSafeWaitHandle() { ::CloseHandle(static_cast<HANDLE>(m_handle)); GC::KeepAlive(this); }
-
     public:
         void* GetUnmanagedHandle() { return m_handle; }
         virtual String^ ToString() override { return m_name; }
@@ -175,9 +197,19 @@ namespace Quire { namespace utl_mgd {
         SafeMutex(String^ name, Int32)
             : SafeWaitHandle(String::Format("SafeMutex {0}", name), nullptr)
         {
-            String^ nativeName = "Global\\" + name->Replace("\\", "_");
-            pin_ptr<const wchar_t> pinnedName = PtrToStringChars(nativeName);
-            m_handle = ::CreateMutexW(nullptr, FALSE, pinnedName);
+            std::wstring convertedName;
+            ToWStrng(&convertedName, name);
+            const wchar_t* separatorBegin = L"\\";
+            const wchar_t* separatorEnd = separatorBegin + 1;
+            const wchar_t* replacementBegin = L"_";
+            const wchar_t* replacementEnd = replacementBegin + 1;
+            std::wstring transformedName;
+            strrpl(&transformedName,
+                Substring<const wchar_t>(convertedName.data(), convertedName.data() + convertedName.size()),
+                Substring<const wchar_t>(separatorBegin, separatorEnd),
+                Substring<const wchar_t>(replacementBegin, replacementEnd));
+            std::wstring nativeName = std::wstring(L"Global\\") + transformedName;
+            m_handle = ::CreateMutexW(nullptr, FALSE, nativeName.c_str());
         }
 
         SafeMutex(String^ name)
@@ -217,10 +249,6 @@ namespace Quire { namespace utl_mgd {
             while (count != 1000);
             GC::KeepAlive(this);
         }
-
-    private:
-        void _bangSafeMutex() { EnsureReleased(); }
-        void _tildeSafeMutex() { EnsureReleased(); }
 
     public:
         __declspec(noinline) ~SafeMutex() { EnsureReleased(); }
@@ -384,10 +412,6 @@ namespace Quire { namespace utl_mgd {
         }
 
         MessageQueue(Int32 stack_size) { Init(stack_size); }
-
-    private:
-        void _bangMessageQueue() { Stop(); }
-        void _tildeMessageQueue() { _bangMessageQueue(); }
 
     public:
         void Start(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage, Boolean stopThreadOnFinalize)

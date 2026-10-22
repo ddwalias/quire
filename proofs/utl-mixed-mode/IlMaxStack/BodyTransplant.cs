@@ -103,7 +103,7 @@ internal static class BodyTransplant
             }),
             ("utl-mgd", "Quire.utl_mgd.SafeMutex", "utl_mgd.SafeMutex", new[]
             {
-                ("Dispose", 1)
+                (".ctor", 2), ("Dispose", 1)
             }),
             ("utl-mgd", "Quire.utl_mgd.SafeMonitor+CSecRecord", "utl_mgd.SafeMonitor+CSecRecord", new[]
             {

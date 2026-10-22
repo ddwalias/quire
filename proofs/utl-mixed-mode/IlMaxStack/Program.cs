@@ -27,6 +27,7 @@ using (var metadataProbePe = new PEReader(metadataProbeStream))
         ("mcmisc", "Engine.Misc.XmlUtils", "TestCheck", 4),
         ("mcmisc", "Engine.Misc.LispUtils", "badSyntax", 3),
         ("utl-mgd", "utl_mgd.MessageQueue`3", "Start", 5),
+        ("utl-mgd", "utl_mgd.SafeMutex", ".ctor", 2),
         ("utl-mgd", "utl_mgd.Logging", "Log", 2),
         ("utl-mgd", "utl_mgd.Logging", "LogLine", 2)
     }
