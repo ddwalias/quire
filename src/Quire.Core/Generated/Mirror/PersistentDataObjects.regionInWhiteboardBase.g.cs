@@ -13,6 +13,4 @@ public abstract partial class regionInWhiteboardBase : global::Quire.PersistentD
 {
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point Location { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double MC15Top { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }

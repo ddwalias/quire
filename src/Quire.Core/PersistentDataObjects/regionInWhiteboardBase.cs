@@ -22,4 +22,14 @@ public partial class regionInWhiteboardBase
 
     [MirrorVerified("PtcPersistentDataObjectsregionInWhiteboardBaseMechanicalDifferentialTests")]
     public double MC15TopOffset { get; set; }
+
+    [MirrorVerified("Release IL")]
+    public double MC15Top
+    {
+        get
+        {
+            System.Windows.Point location = Location;
+            return location.Y - MC15TopOffset;
+        }
+    }
 }
