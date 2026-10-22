@@ -303,10 +303,6 @@ namespace Quire { namespace utl_mgd {
 
         MessageQueue(Int32 stack_size) { Init(stack_size); }
 
-    private:
-        void _bangMessageQueue() { Stop(); }
-        void _tildeMessageQueue() { _bangMessageQueue(); }
-
     public:
         void Start(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage, Boolean stopThreadOnFinalize)
         {
@@ -334,8 +330,8 @@ namespace Quire { namespace utl_mgd {
         Mailbox<Msg>^ GetMailbox() { return m_mailbox; }
         Thread^ GetThread() { return m_thread; }
 
-        ~MessageQueue() { _tildeMessageQueue(); GC::SuppressFinalize(this); GC::KeepAlive(this); }
-        !MessageQueue() { _bangMessageQueue(); }
+        ~MessageQueue() { Stop(); GC::SuppressFinalize(this); GC::KeepAlive(this); }
+        !MessageQueue() { Stop(); }
     };
 
 }}

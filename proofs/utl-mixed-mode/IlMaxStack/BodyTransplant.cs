@@ -95,7 +95,7 @@ internal static class BodyTransplant
             }),
             ("utl-mgd", "Quire.utl_mgd.MessageQueue`3", "utl_mgd.MessageQueue`3", new[]
             {
-                ("Init", 1), ("MsgLoop", 1)
+                ("Init", 1), ("MsgLoop", 1), ("!MessageQueue`3", 0), ("~MessageQueue`3", 0)
             }),
             ("utl-mgd", "Quire.utl_mgd.LabelSet", "utl_mgd.LabelSet", new[]
             {
