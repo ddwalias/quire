@@ -56,6 +56,12 @@ public partial class regionBase
     [MirrorVerified("Release IL")]
     public string PackExternalObject(string sourceFileName, string uniqueId, ExternalObjectType objectType) => S11NProvider.PackExternalObjectExt(sourceFileName, uniqueId ?? regionid, objectType);
 
+    [MirrorVerified("Release IL")]
+    public string PackIncludedWorksheet(string fullFilePath, DateTime lastSavedDate, string uniqueId, Func<Package, string, PackagePart> writePackagePart) => S11NProvider.PackIncludedWorksheet(fullFilePath, lastSavedDate, uniqueId ?? regionid, writePackagePart);
+
+    [MirrorVerified("Release IL")]
+    public string PackFlowDocument(System.Windows.Documents.FlowDocument flowDocument, string flowDocumentRegionId) => S11NProvider.PackFlowDocument(flowDocument, string.IsNullOrWhiteSpace(flowDocumentRegionId) ? regionid : flowDocumentRegionId);
+
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     private double heightField;
 
