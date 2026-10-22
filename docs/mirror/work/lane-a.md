@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact members: default-reporter `ParseArgumentsWithUsage` and `ParseArguments` overloads; 623 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-84c7047dc1be/release-il.json` — PASS, 2,899 exact, 0 mismatches.
+- Members: latest exact member: explicit-reporter `ParseArgumentsWithUsage` overload; 622 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-684e99affaf8/release-il.json` — PASS, 2,900 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).

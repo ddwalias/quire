@@ -18,6 +18,17 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    public static bool ParseArgumentsWithUsage(string[] arguments, object destination, ErrorReporter reporter)
+    {
+        if (ParseHelp(arguments) || !ParseArguments(arguments, destination, reporter))
+        {
+            reporter(ArgumentsUsage(destination.GetType()));
+            return false;
+        }
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
     {
         for (int i = startIndex; i < text.Length; i++)
