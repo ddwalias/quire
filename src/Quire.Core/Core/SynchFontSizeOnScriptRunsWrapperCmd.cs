@@ -6,6 +6,21 @@ namespace Quire.Core;
 public partial class SynchFontSizeOnScriptRunsWrapperCmd
 {
     [MirrorVerified("Release IL")]
+    public static SynchFontSizeOnScriptRunsWrapperCmd CreateSynchFontSizeOnScriptRunsWrapperCmd(global::System.Windows.Documents.TextRange range, double newFontSize, global::Quire.Delegate0 internalCmdDelegate, string name)
+    {
+        SynchFontSizeOnScriptRunsWrapperCmd synchFontSizeOnScriptRunsWrapperCmd = null;
+        if (range.Start.DocumentStart.Parent is global::System.Windows.Documents.FlowDocument flowDocument && flowDocument.Parent is global::Quire.Core.ITextFormatOwner)
+        {
+            synchFontSizeOnScriptRunsWrapperCmd = new SynchFontSizeOnScriptRunsWrapperCmd(range, newFontSize, flowDocument, internalCmdDelegate, name);
+        }
+        if (synchFontSizeOnScriptRunsWrapperCmd == null)
+        {
+            DebugTools.FailAssertion(null, global::System.Array.Empty<object>());
+        }
+        return synchFontSizeOnScriptRunsWrapperCmd;
+    }
+
+    [MirrorVerified("Release IL")]
     private global::System.Windows.Documents.TextRange GetRange()
     {
         return new global::System.Windows.Documents.TextRange(_document.ContentStart.GetPositionAtOffset(_rangeStart.Item1, _rangeStart.Item2), _document.ContentEnd.GetPositionAtOffset(_rangeEnd.Item1, _rangeEnd.Item2));

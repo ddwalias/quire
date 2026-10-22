@@ -26,8 +26,6 @@ public partial class SynchFontSizeOnScriptRunsWrapperCmd : global::Quire.Undo.IU
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.Dictionary<int, double> _dicScriptElementsSzs;
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Core.SynchFontSizeOnScriptRunsWrapperCmd CreateSynchFontSizeOnScriptRunsWrapperCmd(global::System.Windows.Documents.TextRange range, double newFontSize, global::Quire.Delegate0 internalCmdDelegate, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private SynchFontSizeOnScriptRunsWrapperCmd(global::System.Windows.Documents.TextRange range, double newFontSize, global::System.Windows.Documents.FlowDocument ownerDocument, global::Quire.Delegate0 internalCmdDelegate, string name) { }
     [global::Quire.Mirror.MirrorStub]
     public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
