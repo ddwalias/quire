@@ -97,6 +97,16 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    public static Stream GetSourceStream(PackagePart packagePart, string itemIdRef)
+    {
+        if (itemIdRef != null)
+        {
+            return packagePart.Package.GetPart(packagePart.GetRelationship(itemIdRef).TargetUri).GetStream((FileMode)3, (FileAccess)1);
+        }
+        return null;
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart GetSinglePartByRelationshipType(Package package, string relationshipType)
     {
         Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(package.GetRelationshipsByType(relationshipType));
