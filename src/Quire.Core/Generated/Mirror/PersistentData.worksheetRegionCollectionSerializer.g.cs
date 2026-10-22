@@ -13,6 +13,5 @@ public partial class worksheetRegionCollectionSerializer : global::Quire.Persist
 {
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentData.worksheet _worksheet;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.PersistentData.worksheet RegionCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public override global::Quire.PersistentData.worksheet RegionCollection { get => _worksheet ?? (_worksheet = new global::Quire.PersistentData.worksheet()); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
