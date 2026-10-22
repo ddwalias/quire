@@ -79,6 +79,4 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     public static string PackPartAndGetId(global::System.IO.Packaging.PackagePart sourcePackagePart, global::System.Func<global::Quire.Pair<string, global::System.Uri>> getExistingPartRelationshipId, global::System.Action<string, global::System.IO.Packaging.PackagePart> cacheRelationshipIdForNewPart, global::System.Func<global::System.IO.Packaging.PackagePart> writeNewPartToPackage, string partRelationshipUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.IO.Stream GetSourceStream(global::System.IO.Packaging.PackagePart packagePart, string itemIdRef) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsTypeToCompress(string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

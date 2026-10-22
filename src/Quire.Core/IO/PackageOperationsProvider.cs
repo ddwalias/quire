@@ -69,6 +69,16 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    private bool IsTypeToCompress(string contentType)
+    {
+        if (!_compressedTypes.Contains(contentType))
+        {
+            return contentType.StartsWith("image/");
+        }
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart GetSinglePartByRelationshipType(Package package, string relationshipType)
     {
         Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(package.GetRelationshipsByType(relationshipType));
