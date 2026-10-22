@@ -19,6 +19,4 @@ public static partial class SettingsHelper
     public const string LicensePathForm = "LicensePathForm";
     [global::Quire.Mirror.MirrorStub]
     public const string LicensePath = "LicensePath";
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<string, string> GetMathcadPrimeLicenseConfigValues(params string[] keys) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
