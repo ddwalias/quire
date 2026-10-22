@@ -55,6 +55,13 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    public PackagePart AddPartToPackage(Package package, string uriString, string contentType)
+    {
+        Uri uri = new Uri(uriString, UriKind.Relative);
+        return CreatePackagePart(package, uri, contentType);
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart GetSinglePartByRelationshipType(PackagePart sourcePart, string relationshipType)
     {
         Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(sourcePart.GetRelationshipsByType(relationshipType));
