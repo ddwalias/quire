@@ -68,23 +68,84 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     private bool LexFileArguments(string fileName, out string[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static string LongName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static string LongName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
+    {
+        if (attribute != null && !attribute.DefaultLongName)
+        {
+            return attribute.LongName;
+        }
+        return fieldInfo.Name;
+    }
     [global::Quire.Mirror.MirrorStub]
-    private static string ShortName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static string ShortName(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
+    {
+        if (attribute is global::Quire.ThirdParty.DefaultArgumentAttribute)
+        {
+            return null;
+        }
+        if (!ExplicitShortName(attribute))
+        {
+            return LongName(attribute, fieldInfo).Substring(0, 1);
+        }
+        return attribute.ShortName;
+    }
     [global::Quire.Mirror.MirrorStub]
     private static string HelpText(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool HasHelpText(global::Quire.ThirdParty.ArgumentAttribute attribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool ExplicitShortName(global::Quire.ThirdParty.ArgumentAttribute attribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool ExplicitShortName(global::Quire.ThirdParty.ArgumentAttribute attribute)
+    {
+        if (attribute != null)
+        {
+            return !attribute.DefaultShortName;
+        }
+        return false;
+    }
     [global::Quire.Mirror.MirrorStub]
-    private static object DefaultValue(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static object DefaultValue(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
+    {
+        if (attribute != null && attribute.HasDefaultValue)
+        {
+            return attribute.DefaultValue;
+        }
+        return null;
+    }
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Type ElementType(global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::System.Type ElementType(global::System.Reflection.FieldInfo fieldInfo)
+    {
+        if (IsCollectionType(fieldInfo.FieldType))
+        {
+            return fieldInfo.FieldType.GetElementType();
+        }
+        return null;
+    }
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.ThirdParty.ArgumentType Flags(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::Quire.ThirdParty.ArgumentType Flags(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
+    {
+        if (attribute != null)
+        {
+            return attribute.Type;
+        }
+        if (IsCollectionType(fieldInfo.FieldType))
+        {
+            return global::Quire.ThirdParty.ArgumentType.MultipleUnique;
+        }
+        return global::Quire.ThirdParty.ArgumentType.AtMostOnce;
+    }
     [global::Quire.Mirror.MirrorStub]
-    private static bool IsValidElementType(global::System.Type type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool IsValidElementType(global::System.Type type)
+    {
+        if (type != null)
+        {
+            if (!(type == typeof(int)) && !(type == typeof(uint)) && !(type == typeof(string)) && !(type == typeof(bool)))
+            {
+                return type.IsEnum;
+            }
+            return true;
+        }
+        return false;
+    }
 
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+HelpArgument, Ptc.Core")]
     private partial class HelpArgument
