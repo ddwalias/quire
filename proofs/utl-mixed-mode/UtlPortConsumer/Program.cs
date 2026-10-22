@@ -1,4 +1,6 @@
 using Quire.utl_mgd;
+using Quire.Engine.Misc;
+using System.Collections.Generic;
 using System.Threading;
 
 using var ev = new SafeEvent("port-spike");
@@ -71,6 +73,19 @@ if (LabelUtils.SplitName("scope{alpha}") != "scope" ||
     return 11;
 
 Console.WriteLine("managed consumer exercised the C++/CLI label utilities");
+
+if (StringUtils.StringQuote("a\"b") != "\"a\\\"b\"")
+    return 12;
+var pair = new Pair<int, string>(7, "seven");
+var triple = new Triple<int, string, bool>(3, "three", true);
+if (pair.First != 7 || pair.Second != "seven" || triple.Third != true)
+    return 13;
+var values = new HashSet<string> { "one", "two" };
+var valuesArray = HashSetUtils.HashSetToArray(ref values);
+if (valuesArray.Length != 2 || !valuesArray.Contains("one") || !valuesArray.Contains("two"))
+    return 14;
+
+Console.WriteLine("managed consumer exercised the ported StringUtils, Pair, Triple, and HashSetUtils types");
 return 0;
 
 sealed class ConsumerFunction : FunctionBase

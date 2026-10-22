@@ -1,6 +1,10 @@
 #include <Windows.h>
 #include <vcclr.h>
 #using <Quire.Mirror.dll>
+#pragma warning(push)
+#pragma warning(disable:4564)
+#using <System.Linq.dll>
+#pragma warning(pop)
 
 using namespace System;
 using namespace System::Collections;
@@ -158,6 +162,317 @@ namespace Quire { namespace utl_mgd {
         !SafeMutex() { EnsureReleased(); }
     };
 }}
+
+namespace Quire { namespace Engine { namespace Misc {
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.StringUtils, mcmisc")]
+    public ref class StringUtils
+    {
+    public:
+        static array<Char>^ Whitespace;
+
+    private:
+        static array<Char>^ s_CommandSpecialChars;
+
+        static StringUtils()
+        {
+            Whitespace = gcnew array<Char>{ L' ', L'\t' };
+            s_CommandSpecialChars = gcnew array<Char>{ L'\\', L'"', L'\'', L'\t', L' ' };
+        }
+
+    public:
+        StringUtils() {}
+
+#pragma optimize("", off)
+        static String^ Capitalize(String^ s)
+        {
+            volatile Char ch = s->Length > 0 ? s[0] : 0;
+            return (gcnew String(ch, 1))->ToUpper()->Trim()->ToLower()->ToUpper()
+                ->Trim()->ToUpper()->Trim()->ToLower()->ToUpper();
+        }
+#pragma optimize("", on)
+
+        static String^ CharName(Char ch)
+        {
+            if (ch == 32) return "Space";
+            if (ch == 9) return "Tab";
+            if (ch == 12) return "Form";
+            if (ch == 13) return "Return";
+            if (ch == 10) return "Newline";
+            return gcnew String(ch, 1);
+        }
+
+        static bool ContainsString(String^ candidate, array<String^>^ set)
+        {
+            array<String^>^ values = gcnew array<String^>(set->Length);
+            Array::Copy(set, values, set->Length);
+            Int32 i = 0;
+            while (i < values->Length)
+            {
+                if (values[i]->Equals(candidate))
+                    return true;
+                i++;
+            }
+            return false;
+        }
+
+        static String^ PrefixLines(String^ s, String^ prefix)
+        {
+            StringBuilder^ stringBuilder = gcnew StringBuilder();
+            String^ text = s->Substring(0);
+            if (s->Length > 0)
+                stringBuilder->Append(prefix);
+            for (Int32 i = 0; i < text->Length; ++i)
+            {
+                Char value = text[i];
+                if (value == '\n')
+                    stringBuilder->AppendFormat("\n{0}", prefix);
+                else
+                    stringBuilder->Append(value);
+            }
+            return static_cast<Object^>(stringBuilder)->ToString();
+        }
+
+        static String^ CharNames(String^ str)
+        {
+            if (str == nullptr)
+                return String::Format("{0}{1}", str[0].ToString()->ToUpper(), str->Substring(1, str->Length - 1));
+            StringBuilder^ stringBuilder = gcnew StringBuilder();
+            Boolean first = true;
+            for (Int32 i = 0; i < str->Length; ++i)
+            {
+                Char ch = str[i];
+                if (first)
+                    first = false;
+                else
+                    stringBuilder->Append(' ');
+                stringBuilder->Append(CharName(ch));
+            }
+            return static_cast<Object^>(stringBuilder)->ToString();
+        }
+
+        static String^ StringSubstitute(String^ str, String^ substr, String^ replacement)
+        {
+            Int32 num2;
+            Int32 length = substr->Length;
+            Int32 num = 0;
+            StringBuilder^ stringBuilder = gcnew StringBuilder();
+            while ((num2 = str->IndexOf(substr, num)) >= 0)
+            {
+                stringBuilder->Append(str, num, num2 - num);
+                stringBuilder->Append(replacement);
+                num = num2 + length;
+            }
+            stringBuilder->Append(str, num, str->Length - num);
+            return static_cast<Object^>(stringBuilder)->ToString();
+        }
+
+    private:
+        static Boolean IsWhitespace(Char ch)
+        {
+            return ch.Equals(' ') || ch.Equals('\t');
+        }
+
+    public:
+        static String^ StringQuote(String^ str)
+        {
+            return StringQuote(str, '"', '\\');
+        }
+
+        static String^ StringQuote(String^ str, Char quoter)
+        {
+            return StringQuote(str, quoter, '\\');
+        }
+
+        static String^ StringQuote(String^ str, Char quoter, Char escaper)
+        {
+            StringBuilder^ stringBuilder = gcnew StringBuilder();
+            String^ text = str->Substring(0);
+            stringBuilder->Append(static_cast<Char>('"'));
+            for (Int32 i = 0; i < text->Length; ++i)
+            {
+                Char c = text[i];
+                if (c == quoter || c == escaper)
+                    stringBuilder->Append(static_cast<Char>(escaper));
+                stringBuilder->Append(static_cast<Char>(c));
+            }
+            stringBuilder->Append(static_cast<Char>('"'));
+            return static_cast<Object^>(stringBuilder)->ToString();
+        }
+
+        static String^ StringUnquote(String^ str)
+        {
+            Int32 length = str->Length;
+            if (length < 2)
+                return str;
+            if (!str->StartsWith("\"") || !str->EndsWith("\""))
+                return str;
+            return ExpandStringEscapes(str->Substring(1, length - 2));
+        }
+
+        static String^ ExpandStringEscapes(String^ str)
+        {
+            StringBuilder^ stringBuilder = gcnew StringBuilder();
+            Boolean escaped = false;
+            String^ text = str->Substring(0);
+            for (Int32 i = 0; i < text->Length; ++i)
+            {
+                Char c = text[i];
+                if (escaped)
+                {
+                    escaped = false;
+                    switch (c)
+                    {
+                    case 'f': stringBuilder->Append(static_cast<Char>('\f')); break;
+                    case 't': stringBuilder->Append(static_cast<Char>('\t')); break;
+                    case 'r': stringBuilder->Append(static_cast<Char>('\f')); break;
+                    case 'n': stringBuilder->Append(static_cast<Char>('\n')); break;
+                    case '\\': stringBuilder->Append(static_cast<Char>('\\')); break;
+                    case '\'': stringBuilder->Append(static_cast<Char>('\'')); break;
+                    case '"': stringBuilder->Append(static_cast<Char>('"')); break;
+                    default:
+                        throw gcnew Exception(String::Format("Bad char after backslash: {0}", c));
+                    }
+                }
+                else if (c == '\\')
+                    escaped = true;
+                else
+                    stringBuilder->Append(static_cast<Char>(c));
+            }
+            return static_cast<Object^>(stringBuilder)->ToString();
+        }
+
+        static Boolean SameLines(String^ str1, String^ str2)
+        {
+            return SameLines(str1, str2, 0, str1->Length, 0, str2->Length);
+        }
+
+        static Boolean SameLines(String^ str1, String^ str2, Int32 start1, Int32 end1,
+            Int32 start2, Int32 end2)
+        {
+            UNREFERENCED_PARAMETER(start1);
+            UNREFERENCED_PARAMETER(end1);
+            UNREFERENCED_PARAMETER(start2);
+            UNREFERENCED_PARAMETER(end2);
+            System::Collections::Generic::List<String^>^ list = gcnew System::Collections::Generic::List<String^>();
+            System::Collections::Generic::List<String^>^ list2 = gcnew System::Collections::Generic::List<String^>();
+            array<String^>^ lines = str1->Split(L'\n', StringSplitOptions::None);
+            for (Int32 i = 0; i < lines->Length; ++i)
+            {
+                String^ text = lines[i]->Trim();
+                if (text != "")
+                    list->Add(text);
+            }
+            lines = str2->Split(L'\n', StringSplitOptions::None);
+            for (Int32 i = 0; i < lines->Length; ++i)
+            {
+                String^ text = lines[i]->Trim();
+                if (text != "")
+                    list2->Add(text);
+            }
+            if (list->Count != list2->Count)
+                return false;
+            Int32 count = list->Count;
+            for (Int32 j = 0; j < count; ++j)
+            {
+                if (list[j] != list2[j])
+                    return false;
+            }
+            return true;
+        }
+
+#pragma warning(push)
+#pragma warning(disable:4996)
+        static String^ ToCommandString(array<String^>^ args)
+        {
+            StringBuilder^ stringBuilder = gcnew StringBuilder();
+            array<String^>^ values = safe_cast<array<String^>^>(args->Clone());
+            for (Int32 i = 0; i < values->Length; ++i)
+            {
+                String^ text = values[i];
+                if (stringBuilder->Length > 0)
+                    stringBuilder->Append(L' ');
+                String^ formatted = text->IndexOfAny(s_CommandSpecialChars) >= 0
+                    ? StringQuote(text) : text;
+                ReadOnlySpan<Object^> empty = ReadOnlySpan<Object^>();
+                stringBuilder->AppendFormat(formatted, empty);
+            }
+            return static_cast<Object^>(stringBuilder)->ToString();
+        }
+#pragma warning(pop)
+    };
+
+    generic <typename T1, typename T2>
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.Pair`2, mcmisc")]
+    public ref class Pair
+    {
+    private:
+        T1 m_Datum1;
+        T2 m_Datum2;
+
+    public:
+        property T1 First
+        {
+            T1 get() { return m_Datum1; }
+            void set(T1 value) { m_Datum1 = value; }
+        }
+
+        property T2 Second
+        {
+            T2 get() { return m_Datum2; }
+            void set(T2 value) { m_Datum2 = value; }
+        }
+
+        Pair(T1 first, T2 second) : m_Datum1(first), m_Datum2(second) {}
+    };
+
+    generic <typename T1, typename T2, typename T3>
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.Triple`3, mcmisc")]
+    public ref class Triple
+    {
+    private:
+        T1 m_Datum1;
+        T2 m_Datum2;
+        T3 m_Datum3;
+
+    public:
+        property T1 First
+        {
+            T1 get() { return m_Datum1; }
+            void set(T1 value) { m_Datum1 = value; }
+        }
+
+        property T2 Second
+        {
+            T2 get() { return m_Datum2; }
+            void set(T2 value) { m_Datum2 = value; }
+        }
+
+        property T3 Third
+        {
+            T3 get() { return m_Datum3; }
+            void set(T3 value) { m_Datum3 = value; }
+        }
+
+        Triple(T1 first, T2 second, T3 third) : m_Datum1(first), m_Datum2(second), m_Datum3(third) {}
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.HashSetUtils, mcmisc")]
+    public ref class HashSetUtils abstract
+    {
+    public:
+        HashSetUtils() {}
+
+#pragma warning(push)
+#pragma warning(disable:4564)
+        generic <typename T>
+        static array<T>^ HashSetToArray(System::Collections::Generic::HashSet<T>^% hash)
+        {
+            return System::Linq::Enumerable::ToArray<T>(hash);
+        }
+#pragma warning(pop)
+    };
+}}}
 
 namespace Quire { namespace utl_mgd {
 

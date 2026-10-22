@@ -64,6 +64,13 @@
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)'=='' and '$(MATHCAD_DIR)'!=''">$(MATHCAD_DIR)</MathcadInstallDir>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)'==''">C:\Program Files\PTC\Mathcad Prime 12.0.1.0</MathcadInstallDir>
+  </PropertyGroup>
+  <Target Name="SetMappedMethodMaxStack" AfterTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="dotnet run --project &quot;$(MSBuildThisFileDirectory)IlMaxStack\IlMaxStack.csproj&quot; --configuration Release --no-launch-profile -- &quot;$(TargetPath)&quot; &quot;$(MathcadInstallDir)&quot;" />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
