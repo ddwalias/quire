@@ -53,6 +53,9 @@ public partial class regionBase
         }
     }
 
+    [MirrorVerified("Release IL")]
+    public string PackExternalObject(string sourceFileName, string uniqueId, ExternalObjectType objectType) => S11NProvider.PackExternalObjectExt(sourceFileName, uniqueId ?? regionid, objectType);
+
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     private double heightField;
 

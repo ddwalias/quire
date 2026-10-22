@@ -24,8 +24,6 @@ public abstract partial class regionBase : global::Quire.PersistentDataObjects.I
     [global::Quire.Mirror.MirrorStub]
     public static void GetOverrides(global::System.Xml.Serialization.XmlAttributeOverrides overrides, global::System.Type[] typesOf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string PackExternalObject(string sourceFileName, string uniqueId, global::Quire.Serialization.ExternalObjectType objectType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string PackIncludedWorksheet(string fullFilePath, global::System.DateTime lastSavedDate, string uniqueId, global::System.Func<global::System.IO.Packaging.Package, string, global::System.IO.Packaging.PackagePart> writePackagePart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string PackFlowDocument(global::System.Windows.Documents.FlowDocument flowDocument, string flowDocumentRegionId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
