@@ -48,8 +48,19 @@ public static partial class SchemasManager
                 return _schema;
             }
         }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Xml.Schema.XmlSchemaSet CompiledSchemaSet { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+        public global::System.Xml.Schema.XmlSchemaSet CompiledSchemaSet
+        {
+            get
+            {
+                if (_schemaSet == null)
+                {
+                    _schemaSet = new global::System.Xml.Schema.XmlSchemaSet { XmlResolver = global::Quire.Serialization.SpiritResolver.Instance };
+                    _schemaSet.Add(Schema);
+                    _schemaSet.Compile();
+                }
+                return _schemaSet;
+            }
+        }
         [global::Quire.Mirror.MirrorStub]
         public static implicit operator string(global::Quire.Xml.SchemasManager.SchemaData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
