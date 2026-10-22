@@ -40,6 +40,21 @@ public partial class PackageOperationsProvider
         return null;
     }
 
+    [MirrorVerified("Release IL")]
+    public PackagePart GetSinglePartByRelationshipType(PackagePart sourcePart, string relationshipType)
+    {
+        Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(sourcePart.GetRelationshipsByType(relationshipType));
+        if (uriForFirstRelashionshipInCollection == null)
+        {
+            throw new Exception(string.Format("Part doesn't contain relationship of type {0}", relationshipType));
+        }
+        if (!sourcePart.Package.PartExists(uriForFirstRelashionshipInCollection))
+        {
+            throw new Exception(string.Format("Part doesn't contain part by URI {0}", uriForFirstRelashionshipInCollection.OriginalString));
+        }
+        return sourcePart.Package.GetPart(uriForFirstRelashionshipInCollection);
+    }
+
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     private static readonly Uri _worksheet;
 

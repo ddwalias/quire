@@ -60,8 +60,6 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     private PackageOperationsProvider() { }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.PackagePart sourcePart, string relationshipType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Uri GetUriForFirstRelashionshipInCollection(global::System.Collections.Generic.IEnumerable<global::System.IO.Packaging.PackageRelationship> relshipCollection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart GetSinglePartByRelationshipType(global::System.IO.Packaging.Package package, string relationshipType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
