@@ -15,4 +15,11 @@ public partial class InputBindingFunctionalityCommandWrapper
 
     [MirrorVerified("Release IL")]
     public override EnumFunctionalityBehaviorKey CommandFunctionalityBehaviorKey => FunctionalityServiceWrapper.Instance.GetFunctionalityBehaviorKey(FunctionalityKey);
+
+    [MirrorVerified("Release IL")]
+    private static EnumFunctionalityBehaviorKey GetFunctionalityBehaviorAccordingParameter(object parameter, Quire.Wpf.IHasFunctionalityKeyAccordingToParameter commandWithParameter)
+    {
+        EnumFunctionalityKey functionalityKey = commandWithParameter.GetFunctionalityKeyAccordingParameter(parameter, false);
+        return FunctionalityServiceWrapper.Instance.GetFunctionalityBehaviorKey(functionalityKey);
+    }
 }
