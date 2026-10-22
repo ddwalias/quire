@@ -14,9 +14,5 @@ public partial class UIFunctionalityCommandWrapper : global::Quire.Functionaliti
     [global::Quire.Mirror.MirrorStub]
     public override event global::System.EventHandler CanExecuteChanged { add => base.CanExecuteChanged += value; remove => base.CanExecuteChanged -= value; }
     [global::Quire.Mirror.MirrorStub]
-    public UIFunctionalityCommandWrapper(global::System.Windows.Input.RoutedUICommand nestedCommand, global::System.Windows.FrameworkElement lockedUIItem) : base(default(global::System.Windows.Input.RoutedUICommand)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public UIFunctionalityCommandWrapper(global::Quire.FunctionalitiesLimitation.UIFunctionalityCommandWrapper previousUIFunctionalityCommandWrapper, global::System.Windows.FrameworkElement lockedUIItem) : base(default(global::System.Windows.Input.RoutedUICommand)) { }
-    [global::Quire.Mirror.MirrorStub]
     private void OnBaseCanExecuteChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

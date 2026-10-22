@@ -8,6 +8,32 @@ namespace Quire.FunctionalitiesLimitation;
 public partial class UIFunctionalityCommandWrapper
 {
     [MirrorVerified("Release IL")]
+    public UIFunctionalityCommandWrapper(global::System.Windows.Input.RoutedUICommand nestedCommand, FrameworkElement lockedUIItem)
+        : base(nestedCommand)
+    {
+        if (nestedCommand is global::Quire.Wpf.RoutedUICommandWithFunctionalityKey)
+        {
+            _commandFunctionalityBehaviorKey = FunctionalityServiceWrapper.Instance.GetFunctionalityBehaviorKey(FunctionalityKey);
+            FunctionalityServiceWrapper.Instance.FunctionalityServiceLicenseTypeChanged += OnFunctionalityServiceWrapperPropertyChanged;
+        }
+        else
+        {
+            DebugTools.FailAssertion(nestedCommand.Name + " : " + nestedCommand.GetType().Name);
+        }
+        Initialize(lockedUIItem);
+    }
+
+    [MirrorVerified("Release IL")]
+    public UIFunctionalityCommandWrapper(UIFunctionalityCommandWrapper previousUIFunctionalityCommandWrapper, FrameworkElement lockedUIItem)
+        : base(previousUIFunctionalityCommandWrapper)
+    {
+        _commandFunctionalityBehaviorKey = previousUIFunctionalityCommandWrapper.CommandFunctionalityBehaviorKey;
+        CommandTarget = previousUIFunctionalityCommandWrapper.CommandTarget;
+        FunctionalityServiceWrapper.Instance.FunctionalityServiceLicenseTypeChanged += OnFunctionalityServiceWrapperPropertyChanged;
+        Initialize(lockedUIItem);
+    }
+
+    [MirrorVerified("Release IL")]
     private void Initialize(FrameworkElement lockedUIItem)
     {
         LockedUIItem = lockedUIItem;
@@ -62,7 +88,7 @@ public partial class UIFunctionalityCommandWrapper
     private FrameworkElement LockedUIItem { get; set; }
 
     [MirrorVerified("Release IL")]
-    public event EventHandler<EventArgs> FunctionalityBehaviorChanged;
+    public event EventHandler<EventArgs> FunctionalityBehaviorChanged = delegate { };
 
     [MirrorVerified("Release IL")]
     private void UpdateFunctionalityBehaviour()
