@@ -62,6 +62,19 @@ public partial class regionBase
     [MirrorVerified("Release IL")]
     public string PackFlowDocument(System.Windows.Documents.FlowDocument flowDocument, string flowDocumentRegionId) => S11NProvider.PackFlowDocument(flowDocument, string.IsNullOrWhiteSpace(flowDocumentRegionId) ? regionid : flowDocumentRegionId);
 
+    [MirrorVerified("Release IL")]
+    public string PackProtectedPart(System.IO.Stream content, string uniqueId, string regionType) => S11NProvider.PackProtectedPart(content, string.IsNullOrWhiteSpace(uniqueId) ? regionid : uniqueId, regionType);
+
+    [MirrorVerified("Release IL")]
+    public string PackImage(Quire.Wpf.ImagePackagingInformation pictureInfo)
+    {
+        if (pictureInfo.ImageId == null)
+        {
+            pictureInfo.ImageId = regionid;
+        }
+        return S11NProvider.PackImageExt(pictureInfo);
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     private double heightField;
 

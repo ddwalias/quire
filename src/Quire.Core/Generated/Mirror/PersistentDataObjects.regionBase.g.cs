@@ -23,8 +23,4 @@ public abstract partial class regionBase : global::Quire.PersistentDataObjects.I
     public void PreSerialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void GetOverrides(global::System.Xml.Serialization.XmlAttributeOverrides overrides, global::System.Type[] typesOf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackProtectedPart(global::System.IO.Stream content, string uniqueId, string regionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string PackImage(global::Quire.Wpf.ImagePackagingInformation pictureInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
