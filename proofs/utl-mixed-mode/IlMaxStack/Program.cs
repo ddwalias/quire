@@ -16,6 +16,34 @@ if (reserved.Writer.AlreadyPatched)
 }
 candidateBytes = reserved.Bytes;
 var ilSection = reserved.Writer;
+var helperNameEdits = NormalizeInlineHelperNames(candidateBytes);
+using (var metadataProbeStream = new MemoryStream(candidateBytes, writable: false))
+using (var metadataProbePe = new PEReader(metadataProbeStream))
+{
+    var metadataProbeReader = metadataProbePe.GetMetadataReader();
+    var signatures = new[]
+    {
+        ("mcmisc", "Engine.Misc.FileUtils", "ReadExpanded", 2),
+        ("utl-mgd", "utl_mgd.Logging", "Log", 2),
+        ("utl-mgd", "utl_mgd.Logging", "LogLine", 2)
+    }
+        .Select(item => BodyTransplant.MappedLocalSignature(installPath, item.Item1,
+            item.Item2, item.Item3, item.Item4, metadataProbeReader))
+        .Where(signature => signature is not null && !BodyTransplant.HasStandaloneSignature(metadataProbeReader, signature))
+        .Select(signature => signature!)
+        .ToArray();
+    if (signatures.Length > 0)
+    {
+        var metadataRoot = MetadataRootEditor.AppendStandaloneSignatures(
+            candidateBytes, metadataProbePe.PEHeaders, signatures);
+        var metadataRva = ilSection.PlaceMetadataRoot(candidateBytes, metadataRoot);
+        var cliDirectory = metadataProbePe.PEHeaders.PEHeader!.CorHeaderTableDirectory;
+        var cliOffset = RvaToOffset(metadataProbePe.PEHeaders, cliDirectory.RelativeVirtualAddress);
+        BitConverter.TryWriteBytes(candidateBytes.AsSpan(cliOffset + 8, sizeof(int)), metadataRva);
+        BitConverter.TryWriteBytes(candidateBytes.AsSpan(cliOffset + 12, sizeof(int)), metadataRoot.Length);
+        helperNameEdits.Add($"added {signatures.Length} exact method StandaloneSig row(s) to relocated metadata");
+    }
+}
 using var candidateStream = new MemoryStream(candidateBytes, writable: false);
 using var candidatePe = new PEReader(candidateStream);
 var candidateReader = candidatePe.GetMetadataReader();
@@ -90,13 +118,15 @@ foreach (var candidateTypeHandle in candidateReader.TypeDefinitions)
 foreach (var edit in edits)
     BitConverter.TryWriteBytes(candidateBytes.AsSpan(edit.Offset, sizeof(ushort)), checked((ushort)edit.Value));
 var transplantMessages = BodyTransplant.Apply(candidateBytes, candidatePe, candidateReader, installPath, ilSection);
-if (edits.Count > 0)
+if (edits.Count > 0 || helperNameEdits.Count > 0)
     File.WriteAllBytes(candidatePath, candidateBytes);
 else if (transplantMessages.Any(message => message.StartsWith("transplanted ", StringComparison.Ordinal)))
     File.WriteAllBytes(candidatePath, candidateBytes);
 
 foreach (var edit in edits)
     Console.WriteLine($"maxstack {edit.Key}: {edit.Value}");
+foreach (var item in helperNameEdits)
+    Console.WriteLine(item);
 foreach (var item in skipped)
     Console.WriteLine($"skip {item}");
 foreach (var item in transplantMessages)
@@ -122,6 +152,93 @@ static (string Type, string Assembly)? ReadMirrorOf(MetadataReader reader, TypeD
         return (value[..separator].Trim(), value[(separator + 1)..].Trim());
     }
     return null;
+}
+
+static List<string> NormalizeInlineHelperNames(byte[] image)
+{
+    using var stream = new MemoryStream(image, writable: false);
+    using var pe = new PEReader(stream);
+    var reader = pe.GetMetadataReader();
+    var helperType = reader.TypeDefinitions
+        .Select(handle => (Handle: handle, Type: reader.GetTypeDefinition(handle)))
+        .FirstOrDefault(item => reader.GetString(item.Type.Name)
+            .StartsWith("<PrivateImplementationDetails><UtlInlineHelpers_netmodule>", StringComparison.Ordinal));
+    if (helperType.Type.Name.IsNil)
+        return [];
+
+    var stringsOffset = FindStringHeapFileOffset(image, pe.PEHeaders);
+    var edits = new List<string>();
+    TruncateString(image, stringsOffset, helperType.Type.Name,
+        "<PrivateImplementationDetails>".Length, "<PrivateImplementationDetails>", edits);
+    foreach (var nestedHandle in helperType.Type.GetNestedTypes())
+    {
+        var nestedType = reader.GetTypeDefinition(nestedHandle);
+        var nestedName = reader.GetString(nestedType.Name);
+        const string alignmentSuffix = "_Align=2";
+        if (nestedName.EndsWith(alignmentSuffix, StringComparison.Ordinal))
+            TruncateString(image, stringsOffset, nestedType.Name,
+                nestedName.Length - alignmentSuffix.Length, nestedName[..^alignmentSuffix.Length], edits);
+    }
+    foreach (var fieldHandle in helperType.Type.GetFields())
+    {
+        var field = reader.GetFieldDefinition(fieldHandle);
+        var fieldName = reader.GetString(field.Name);
+        var hashLength = fieldName.StartsWith('F') ? 65 : 64;
+        if (fieldName.Length == hashLength + 1 && fieldName[^1] == '2'
+            && fieldName[..hashLength].All(character => character == 'F' || Uri.IsHexDigit(character)))
+            TruncateString(image, stringsOffset, field.Name, hashLength, fieldName[..hashLength], edits);
+    }
+    using var verifyStream = new MemoryStream(image, writable: false);
+    using var verifyPe = new PEReader(verifyStream);
+    var verifyReader = verifyPe.GetMetadataReader();
+    var normalized = verifyReader.TypeDefinitions
+        .Select(handle => (Handle: handle, Type: verifyReader.GetTypeDefinition(handle)))
+        .FirstOrDefault(item => verifyReader.GetString(item.Type.Name) == "<PrivateImplementationDetails>");
+    if (normalized.Type.Name.IsNil)
+        throw new BadImageFormatException("C# inline helper TypeDef name normalization failed");
+    return edits;
+}
+
+static void TruncateString(byte[] image, int stringsOffset, StringHandle handle,
+    int prefixLength, string expectedPrefix, List<string> edits)
+{
+    var heapOffset = MetadataTokens.GetHeapOffset(handle);
+    var fileOffset = checked(stringsOffset + heapOffset);
+    var endOffset = checked(fileOffset + prefixLength);
+    var currentEnd = Array.IndexOf(image, (byte)0, fileOffset);
+    var current = System.Text.Encoding.UTF8.GetString(image, fileOffset,
+        currentEnd < 0 ? 0 : currentEnd - fileOffset);
+    if (!current.StartsWith(expectedPrefix, StringComparison.Ordinal))
+        throw new BadImageFormatException($"unexpected metadata name while normalizing: {current}");
+    if (current.Length == prefixLength)
+        return;
+    image[endOffset] = 0;
+    edits.Add($"metadata name {current} -> {expectedPrefix}");
+}
+
+static int FindStringHeapFileOffset(byte[] image, PEHeaders headers)
+{
+    var metadataOffset = RvaToOffset(headers, headers.CorHeader!.MetadataDirectory.RelativeVirtualAddress);
+    var versionLength = BitConverter.ToInt32(image, metadataOffset + 12);
+    var streamHeader = (metadataOffset + 16 + versionLength + 3) & ~3;
+    var streamCount = BitConverter.ToUInt16(image, streamHeader + 2);
+    var position = streamHeader + 4;
+    for (var index = 0; index < streamCount; index++)
+    {
+        var offset = BitConverter.ToInt32(image, position);
+        var size = BitConverter.ToInt32(image, position + 4);
+        var nameStart = position + 8;
+        var nameEnd = Array.IndexOf(image, (byte)0, nameStart);
+        if (nameEnd < 0)
+            throw new BadImageFormatException("unterminated metadata stream name");
+        var name = System.Text.Encoding.ASCII.GetString(image, nameStart, nameEnd - nameStart);
+        if (name == "#Strings")
+            return checked(metadataOffset + offset);
+        position = (nameEnd + 1 + 3) & ~3;
+        if (offset < 0 || size < 0)
+            throw new BadImageFormatException("invalid metadata stream bounds");
+    }
+    throw new BadImageFormatException("metadata has no #Strings heap");
 }
 
 static string? GetAttributeType(MetadataReader reader, EntityHandle constructor)

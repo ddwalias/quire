@@ -19,6 +19,10 @@ internal static class BodyTransplant
         var claimedLocalSignatures = new HashSet<StandaloneSignatureHandle>();
         var types = new (string Assembly, string Candidate, string Original, (string Name, int ParameterCount)[] Methods)[]
         {
+            ("mcmisc", "<PrivateImplementationDetails>", "<PrivateImplementationDetails>", new[]
+            {
+                ("InlineArrayAsReadOnlySpan", 2), ("InlineArrayElementRef", 2)
+            }),
             ("mcmisc", "Quire.Engine.Misc.StringUtils", "Engine.Misc.StringUtils", new[]
             {
                 ("Capitalize", 1), ("IsWhitespace", 1), ("StringSubstitute", 3),
@@ -134,6 +138,10 @@ internal static class BodyTransplant
             ("utl-mgd", "Quire.utl_mgd._Hex", "utl_mgd._Hex", new[]
             {
                 ("FromHex", 1)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.Logging", "utl_mgd.Logging", new[]
+            {
+                ("Log", 2), ("LogLine", 2)
             })
         };
         foreach (var type in types)
@@ -213,6 +221,38 @@ internal static class BodyTransplant
         return messages;
     }
 
+    public static byte[]? MappedLocalSignature(string installPath, string assemblyName,
+        string typeName, string methodName, int parameterCount, MetadataReader candidateReader)
+    {
+        var originalPath = Path.Combine(installPath, assemblyName + ".dll");
+        if (!File.Exists(originalPath))
+            return null;
+        using var originalStream = File.OpenRead(originalPath);
+        using var originalPe = new PEReader(originalStream);
+        var originalReader = originalPe.GetMetadataReader();
+        var originalType = FindType(originalReader, typeName);
+        var originalMethod = FindMethodAt(originalReader, originalType, methodName, parameterCount, 0);
+        if (originalType.IsNil || originalMethod.IsNil)
+            return null;
+        var localSignature = originalPe.GetMethodBody(
+            originalReader.GetMethodDefinition(originalMethod).RelativeVirtualAddress).LocalSignature;
+        if (localSignature.IsNil)
+            return null;
+        var locals = originalReader.GetStandaloneSignature(localSignature)
+            .DecodeLocalSignature(NameProvider.Instance, null)
+            .Select(local => MapSignatureType(candidateReader, local))
+            .ToImmutableArray();
+        return EncodeLocalSignature(locals, candidateReader);
+    }
+
+    public static bool HasStandaloneSignature(MetadataReader reader, byte[] signature)
+    {
+        foreach (var handle in EnumerateStandaloneSignatures(reader))
+            if (reader.GetBlobBytes(reader.GetStandaloneSignature(handle).Signature).AsSpan().SequenceEqual(signature))
+                return true;
+        return false;
+    }
+
     private static bool PatchLocalSignature(byte[] body, MetadataReader originalReader,
         MetadataReader candidateReader, byte[] candidateBytes, PEReader candidatePe, PEHeaders candidateHeaders,
         StandaloneSignatureHandle candidateLocalSignature,
@@ -247,6 +287,16 @@ internal static class BodyTransplant
         var targetSignature = EncodeLocalSignature(mappedOriginalLocals, candidateReader);
         if (targetSignature is null)
             return false;
+
+        foreach (var signatureHandle in EnumerateStandaloneSignatures(candidateReader))
+        {
+            if (!candidateReader.GetBlobBytes(candidateReader.GetStandaloneSignature(signatureHandle).Signature)
+                    .AsSpan().SequenceEqual(targetSignature))
+                continue;
+            BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
+                unchecked((uint)MetadataTokens.GetToken(signatureHandle)));
+            return true;
+        }
 
         if (candidateLocalSignature.IsNil)
         {
@@ -410,6 +460,13 @@ internal static class BodyTransplant
             WriteCompressedUInt(bytes, genericTypeParameter);
             return true;
         }
+        var concreteDefinition = FindType(target, type);
+        if (!concreteDefinition.IsNil)
+        {
+            bytes.Add(IsValueType(type) ? (byte)0x11 : (byte)0x12);
+            WriteCompressedUInt(bytes, MetadataTokens.GetRowNumber(concreteDefinition) << 2);
+            return true;
+        }
         var genericOpen = type.IndexOf('<');
         if (genericOpen > 0 && type.EndsWith('>'))
         {
@@ -487,7 +544,10 @@ internal static class BodyTransplant
     }
 
     private static bool IsValueType(string type) => type is "System.Collections.DictionaryEntry" or "_RTL_CRITICAL_SECTION"
+        || type.StartsWith("std.basic_string<", StringComparison.Ordinal)
+        || type.StartsWith("Substring<", StringComparison.Ordinal)
         || type.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal)
+        || type.StartsWith("System.Runtime.CompilerServices.InlineArray4`1", StringComparison.Ordinal)
         || type.StartsWith("System.Collections.Generic.List`1+Enumerator", StringComparison.Ordinal)
         || type.StartsWith("System.Collections.Generic.List`1/Enumerator", StringComparison.Ordinal)
         || type.StartsWith("System.Collections.Generic.Queue`1+Enumerator", StringComparison.Ordinal)
@@ -871,7 +931,7 @@ internal static class BodyTransplant
                     var candidateKey = candidateSignature.ReturnType + "("
                         + string.Join(",", candidateSignature.ParameterTypes) + ")";
                     if (target.GetString(target.GetMethodDefinition(candidateHandle).Name) == source.GetString(method.Name)
-                        && candidateKey == key)
+                        && CanonicalTypeName(candidateKey) == CanonicalTypeName(key))
                     {
                         mapped = unchecked((uint)MetadataTokens.GetToken(candidateHandle));
                         return true;
@@ -1093,10 +1153,13 @@ internal static class BodyTransplant
     private static TypeDefinitionHandle FindType(MetadataReader reader, string fullName)
     {
         foreach (var handle in reader.TypeDefinitions)
-            if (MetadataNames.TypeDefName(reader, reader.GetTypeDefinition(handle)) == fullName)
+            if (CanonicalTypeName(MetadataNames.TypeDefName(reader, reader.GetTypeDefinition(handle)))
+                == CanonicalTypeName(fullName))
                 return handle;
         return default;
     }
+
+    private static string CanonicalTypeName(string name) => name.Replace(" >", ">", StringComparison.Ordinal);
 
     private static string? FindMappedTypeName(MetadataReader reader, string originalTypeName)
     {

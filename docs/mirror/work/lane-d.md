@@ -1,7 +1,7 @@
 # Lane D — Quire.Engine.Utl
 
-- Owner: Lane D.
-- Branch: `mirror/d-engine-utl-nativeinterop-20261022-f5`.
-- Members: C++/CLI mixed-mode proof; `Logging::.ctor` and `Logging.IsLoggingEnabled` exact; `Logging.Log`/`LogLine` differ.
-- Release IL: VCX candidate FAIL, 394 checked / 282 exact / 165 failures (`.mirror-cache/release-il-81e62a36a16b/release-il.json`, base `69a6b0df`).
-- Remaining: 118 unbound global methods, 34 methods without counterparts, five removals, eight mapped differences. Production C# inventory remains 129 exact / 154 different / 27 unresolved.
+- Owner: Lane D; branch `mirror/d-engine-utl-nativeinterop-20261022-f5`.
+- Members: Windows C++/CLI mixed-mode proof; `Logging.Log` and `Logging.LogLine` now transplant exact Release IL.
+- Release IL: strict VCX gate FAIL, 548 checked / 291 exact / 308 failures; `.mirror-cache/release-il-lane-d-final/release-il.json` (base `987703a6`, tip `ce913339`).
+- Remaining mismatches: 267 global `<Module>` methods without reviewed bindings, 37 methods without Mathcad counterparts, three reported removals, and one `SafeMutex` IL difference. Production C# project remains unchanged.
+- Implementation and REA/Ghidra/build details: [mixed-mode implementation note](../native/utl-mgd-mixed-mode-implementation.md).

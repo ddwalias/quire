@@ -8,6 +8,7 @@ internal sealed class IlSectionWriter
     private readonly int _fileOffset;
     private readonly int _rva;
     private readonly int _capacity;
+    private int _bodyCapacity;
     public bool AlreadyPatched { get; }
     private int _used;
 
@@ -16,6 +17,7 @@ internal sealed class IlSectionWriter
         _fileOffset = fileOffset;
         _rva = rva;
         _capacity = capacity;
+        _bodyCapacity = capacity;
         AlreadyPatched = alreadyPatched;
     }
 
@@ -62,13 +64,23 @@ internal sealed class IlSectionWriter
         MethodDefinitionHandle method, ReadOnlySpan<byte> body)
     {
         var offset = Align(_used, 4);
-        if (offset + body.Length > _capacity)
+        if (offset + body.Length > _bodyCapacity)
             throw new InvalidOperationException("reserved IL section is full");
         body.CopyTo(image.AsSpan(_fileOffset + offset, body.Length));
         var rva = checked(_rva + offset);
         var rvaField = MethodDefinitionRvaOffset(image, headers, reader, method);
         WriteInt32(image, rvaField, rva);
         _used = offset + body.Length;
+    }
+
+    public int PlaceMetadataRoot(byte[] image, byte[] metadataRoot)
+    {
+        var offset = (_capacity - metadataRoot.Length) & ~3;
+        if (offset < _used)
+            throw new InvalidOperationException("reserved IL section has no room for relocated metadata");
+        metadataRoot.CopyTo(image.AsSpan(_fileOffset + offset, metadataRoot.Length));
+        _bodyCapacity = offset;
+        return checked(_rva + offset);
     }
 
     private static int MethodDefinitionRvaOffset(byte[] image, PEHeaders headers,

@@ -49,6 +49,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(IntDir)UtlInlineHelpers\UtlInlineHelpers.netmodule;$(IntDir)UTLLogging.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -65,6 +66,12 @@
   </PropertyGroup>
   <Target Name="SetMappedMethodMaxStack" AfterTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Exec Command="dotnet run --project &quot;$(MSBuildThisFileDirectory)IlMaxStack\IlMaxStack.csproj&quot; --configuration Release --no-launch-profile -- &quot;$(TargetPath)&quot; &quot;$(MathcadInstallDir)&quot;" />
+  </Target>
+  <Target Name="BuildUtlInlineHelpers" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)InlineHelpers\InlineHelpers.csproj&quot; --configuration Release --output &quot;$(IntDir)UtlInlineHelpers&quot; --nologo" />
+  </Target>
+  <Target Name="BuildUtlLoggingImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)UTLLogging.def&quot; /machine:x64 /out:&quot;$(IntDir)UTLLogging.lib&quot;" />
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

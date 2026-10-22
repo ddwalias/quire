@@ -1,6 +1,9 @@
 #include <Windows.h>
 #include <cstdlib>
+#include <iostream>
 #include <new>
+#include <ostream>
+#include <string>
 #include <vcclr.h>
 #ifdef IsLoggingEnabled
 #undef IsLoggingEnabled
@@ -18,8 +21,33 @@ using namespace System::Runtime::InteropServices;
 using namespace System::Text;
 using namespace System::Threading;
 
+template <typename T>
+class Substring
+{
+public:
+    T* begin;
+    T* end;
+    Substring(T* first, T* last) : begin(first), end(last) {}
+};
+
 namespace utl
 {
+    std::string ToStrng(Object^ value)
+    {
+        if (value == nullptr)
+            return std::string("null");
+        String^ text = value->ToString();
+        if (text->Length > 0)
+        {
+            array<Byte>^ bytes = Encoding::UTF8->GetBytes(text);
+            pin_ptr<Byte> data = &bytes[0];
+            return std::string(reinterpret_cast<const char*>(data), bytes->Length);
+        }
+        return std::string();
+    }
+
+    __declspec(dllimport) std::ostream& __cdecl Log(Substring<const char> name);
+
     __declspec(noinline) Boolean IsLoggingEnabled()
     {
         IntPtr module = NativeLibrary::Load("UTL.DLL");
@@ -209,93 +237,18 @@ namespace Quire { namespace utl_mgd {
 
         static void Log(String^ logname, String^ message)
         {
-            using LogFunction = IntPtr(__cdecl*)(IntPtr);
-            using PutFunction = IntPtr(__cdecl*)(IntPtr, Byte);
-            array<Byte>^ nameBytes = Encoding::UTF8->GetBytes(logname);
-            Int32 nameLength = nameBytes->Length;
-            if (nameLength == 0)
-                nameBytes = gcnew array<Byte>(1);
-            array<Byte>^ messageBytes = Encoding::UTF8->GetBytes(message);
-            IntPtr utlModule = NativeLibrary::Load("UTL.DLL");
-            try
-            {
-                pin_ptr<Byte> nameData = &nameBytes[0];
-                array<IntPtr>^ nameView = gcnew array<IntPtr>(2);
-                nameView[0] = IntPtr(nameData);
-                nameView[1] = IntPtr(nameData + nameLength);
-                pin_ptr<IntPtr> pinnedNameView = &nameView[0];
-                auto log = reinterpret_cast<LogFunction>(NativeLibrary::GetExport(utlModule,
-                    "?Log@utl@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@V?$Substring@$$CBD@@@Z").ToPointer());
-                IntPtr stream = log(IntPtr(pinnedNameView));
-                IntPtr streamModule = NativeLibrary::Load("msvcp140.dll");
-                try
-                {
-                    auto put = reinterpret_cast<PutFunction>(NativeLibrary::GetExport(streamModule,
-                        "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@D@Z").ToPointer());
-                    if (messageBytes->Length != 0)
-                    {
-                        pin_ptr<Byte> data = &messageBytes[0];
-                        for (Int32 i = 0; i < messageBytes->Length; ++i)
-                            put(stream, data[i]);
-                    }
-                }
-                finally
-                {
-                    NativeLibrary::Free(streamModule);
-                }
-            }
-            finally
-            {
-                NativeLibrary::Free(utlModule);
-            }
+            std::string name = utl::ToStrng(logname);
+            std::string text = utl::ToStrng(message);
+            std::ostream& stream = utl::Log(Substring<const char>(name.data(), name.data() + name.size()));
+            stream << text;
         }
 
         static void LogLine(String^ logname, String^ message)
         {
-            using LogFunction = IntPtr(__cdecl*)(IntPtr);
-            using PutFunction = IntPtr(__cdecl*)(IntPtr, Byte);
-            using FlushFunction = IntPtr(__cdecl*)(IntPtr);
-            array<Byte>^ nameBytes = Encoding::UTF8->GetBytes(logname);
-            Int32 nameLength = nameBytes->Length;
-            if (nameLength == 0)
-                nameBytes = gcnew array<Byte>(1);
-            array<Byte>^ messageBytes = Encoding::UTF8->GetBytes(message);
-            IntPtr utlModule = NativeLibrary::Load("UTL.DLL");
-            try
-            {
-                pin_ptr<Byte> nameData = &nameBytes[0];
-                array<IntPtr>^ nameView = gcnew array<IntPtr>(2);
-                nameView[0] = IntPtr(nameData);
-                nameView[1] = IntPtr(nameData + nameLength);
-                pin_ptr<IntPtr> pinnedNameView = &nameView[0];
-                auto log = reinterpret_cast<LogFunction>(NativeLibrary::GetExport(utlModule,
-                    "?Log@utl@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@V?$Substring@$$CBD@@@Z").ToPointer());
-                IntPtr stream = log(IntPtr(pinnedNameView));
-                IntPtr streamModule = NativeLibrary::Load("msvcp140.dll");
-                try
-                {
-                    auto put = reinterpret_cast<PutFunction>(NativeLibrary::GetExport(streamModule,
-                        "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@D@Z").ToPointer());
-                    if (messageBytes->Length != 0)
-                    {
-                        pin_ptr<Byte> data = &messageBytes[0];
-                        for (Int32 i = 0; i < messageBytes->Length; ++i)
-                            put(stream, data[i]);
-                    }
-                    put(stream, 10);
-                    auto flush = reinterpret_cast<FlushFunction>(NativeLibrary::GetExport(streamModule,
-                        "?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@XZ").ToPointer());
-                    flush(stream);
-                }
-                finally
-                {
-                    NativeLibrary::Free(streamModule);
-                }
-            }
-            finally
-            {
-                NativeLibrary::Free(utlModule);
-            }
+            std::string name = utl::ToStrng(logname);
+            std::string text = utl::ToStrng(message);
+            std::ostream& stream = utl::Log(Substring<const char>(name.data(), name.data() + name.size()));
+            stream << text << std::endl;
         }
 
     };
