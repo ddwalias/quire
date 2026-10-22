@@ -1,6 +1,7 @@
 #nullable disable
 using System.Windows;
 using Quire.Mirror;
+using Quire.Services;
 
 namespace Quire.FunctionalitiesLimitation;
 
@@ -26,4 +27,15 @@ public partial class UIFunctionalityCommandWrapper
 
     [MirrorVerified("Release IL")]
     public event EventHandler<EventArgs> FunctionalityBehaviorChanged;
+
+    [MirrorVerified("Release IL")]
+    private void UpdateFunctionalityBehaviour()
+    {
+        EnumFunctionalityBehaviorKey commandFunctionalityBehaviorKey = CommandFunctionalityBehaviorKey;
+        _commandFunctionalityBehaviorKey = FunctionalityServiceWrapper.Instance.GetFunctionalityBehaviorKey(FunctionalityKey);
+        if (CommandFunctionalityBehaviorKey != commandFunctionalityBehaviorKey)
+        {
+            FunctionalityBehaviorChanged(this, EventArgs.Empty);
+        }
+    }
 }

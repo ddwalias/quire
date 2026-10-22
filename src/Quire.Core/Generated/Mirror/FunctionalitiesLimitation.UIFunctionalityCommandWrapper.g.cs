@@ -25,6 +25,4 @@ public partial class UIFunctionalityCommandWrapper : global::Quire.Functionaliti
     public override void Execute(object parameter) => base.Execute(parameter);
     [global::Quire.Mirror.MirrorStub]
     public void Execute(object parameter, out bool executed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateFunctionalityBehaviour() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
