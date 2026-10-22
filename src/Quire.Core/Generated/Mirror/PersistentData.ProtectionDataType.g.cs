@@ -37,6 +37,20 @@ public partial class ProtectionDataType
             }
         }
     }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.ProtectionLevel ProtectionLevelWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.ProtectionLevel ProtectionLevelWrapper
+    {
+        get
+        {
+            global::Quire.ProtectionLevel protectionLevel;
+            global::Quire.EnumHelper.EnumHelperSettings settings;
+            global::Quire.EnumHelper.EnumHelperSettings defaultSettings = default;
+            defaultSettings.IgnoreCase = true;
+            defaultSettings.AssertOnParseFailure = true;
+            settings = defaultSettings;
+            string value = global::System.String.Join<global::Quire.PersistentData.ProtectionLevelType>(", ", ProtectionLevel);
+            global::Quire.EnumHelper.TryParse<global::Quire.ProtectionLevel>(value, out protectionLevel, settings);
+            return protectionLevel;
+        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 }
