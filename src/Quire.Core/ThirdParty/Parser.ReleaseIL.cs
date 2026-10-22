@@ -44,6 +44,23 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    private ArgumentHelpStrings[] GetAllHelpStrings()
+    {
+        ArgumentHelpStrings[] array = new ArgumentHelpStrings[NumberOfParametersToDisplay()];
+        int num = 0;
+        foreach (Argument argument in arguments)
+        {
+            array[num] = GetHelpStrings(argument);
+            num++;
+        }
+        if (defaultArgument != null)
+        {
+            array[num++] = GetHelpStrings(defaultArgument);
+        }
+        return array;
+    }
+
+    [MirrorVerified("Release IL")]
     private static string LongName(ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
     {
         if (attribute != null && !attribute.DefaultLongName)
