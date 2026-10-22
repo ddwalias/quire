@@ -26,5 +26,12 @@ public partial class MatrixHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static int SwapIndex(int index, int rows, int columns)
+    {
+        int column = index / columns;
+        return IndexOf(index % columns, column, rows);
+    }
+
+    [MirrorVerified("Release IL")]
     public static DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => new DiscreteRect(RowOf(corner1, columns), ColumnOf(corner1, columns), RowOf(corner2, columns), ColumnOf(corner2, columns));
 }
