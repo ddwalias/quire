@@ -69,6 +69,8 @@ def compare(before, after, types=(), methods=()):
     Unmapped changed methods are blockers, including generated helpers. Unchanged
     unfinished methods stay out of the batch. D10 engine-native methods are identified
     by MethodAudit from their original artifact and do not require a managed IL match.
+    A stub whose body is a MirrorStub throw before and after is unchanged even if the
+    file it records moved; it is still unfinished and is checked once implemented.
     Removing a compiler-generated member with no Mathcad counterpart (a renumbered
     closure or state machine) does not fail the gate.
     """
@@ -79,6 +81,9 @@ def compare(before, after, types=(), methods=()):
         previous = old.get(key)
         changed = previous is None or any(previous.get(k) != row.get(k) for k in
                                          ('body_sha256', 'shape_matches', 'declaration_only'))
+        # A MirrorStub throw records its source file; moving an unfinished stub is not a change.
+        if changed and previous is not None and previous.get('stub_body') and row.get('stub_body')                 and previous.get('shape_matches') == row.get('shape_matches'):
+            changed = False
         if not (changed or row.get('unsupported') or selected(row, types, methods)
                 or previous and previous.get('exact_match') is True):
             continue

@@ -316,7 +316,9 @@ foreach (var (artifact, raw, type, method, original, counterpart) in matched)
         exact_match = differences == null ? (bool?)null : exact,
         unsupported = raw.NativeCode ? "native code body has no IL to compare" : null,
         source = raw.BodyRva == 0 ? null : artifact.Source(raw.Token),
-        body_sha256 = body?.Hash
+        body_sha256 = body?.Hash,
+        // A MirrorStub throw: unfinished, whichever file it records.
+        stub_body = body?.Stub == true
     });
 }
 if (output == null)

@@ -22,6 +22,17 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
     def test_changed_body_passes_on_exact_match_without_test_or_status_records(self):
         self.assertTrue(compare(inventory(method(body='old', exact=False)), inventory(method(body='new')))['passed'])
 
+    def test_moved_stub_is_unchanged_but_an_implemented_stub_is_checked(self):
+        moved = compare(inventory(method(body='a.g.cs', exact=False, stub_body=True)),
+                        inventory(method(body='b.cs', exact=False, stub_body=True)))
+        self.assertTrue(moved['passed'])
+        self.assertEqual(moved['checked'], [])
+        implemented = compare(inventory(method(body='a.g.cs', exact=False, stub_body=True)),
+                              inventory(method(body='real', exact=False, stub_body=False)))
+        self.assertFalse(implemented['passed'])
+        self.assertFalse(compare(inventory(method(body='a.g.cs', stub_body=True)),
+                                 inventory(method(body='b.cs', exact=False, stub_body=True)))['passed'])
+
     def test_unchanged_unfinished_methods_do_not_block(self):
         result = compare(inventory(method(exact=False)), inventory(method(exact=False)))
         self.assertTrue(result['passed'])

@@ -227,7 +227,7 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
 
     /// <summary>What <see cref="Body"/> reports of one method body.</summary>
     public sealed record BodyFacts(string Hash, int[] Calls, string[] VirtualCalls, string[] Reads, string[] Writes,
-        string[] ReferenceReads);
+        string[] ReferenceReads, bool Stub = false);
 
     /// <summary>
     /// A SHA-256 of everything in the body that decides what it does, independent of metadata token numbering: each
@@ -258,11 +258,13 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         var reads = new SortedSet<string>(StringComparer.Ordinal);
         var writes = new SortedSet<string>(StringComparer.Ordinal);
         var referenceReads = new SortedSet<string>(StringComparer.Ordinal);
+        var shape = new List<string>();  // opcodes, and the callee of calls, to recognise a MirrorStub body
         while (il.RemainingBytes > 0)
         {
             text.Append(il.Offset).Append(' ');
             byte first = il.ReadByte();
             var code = Codes[first == 0xFE ? (ushort)(0xFE00 | il.ReadByte()) : first];
+            if (code != OpCodes.Nop) shape.Add(code.Name!);
             text.Append(code.Name).Append(' ');
             switch (code.OperandType)
             {
@@ -303,7 +305,9 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     }
                     else if (token.Kind is HandleKind.MethodDefinition or HandleKind.MemberReference or HandleKind.MethodSpecification)
                     {
-                        text.Append(Method(token));
+                        string callee = Method(token);
+                        text.Append(callee);
+                        if (code == OpCodes.Call) shape[^1] = "call " + callee;
                         Callees(token, calls);
                         if (code == OpCodes.Callvirt || code == OpCodes.Ldvirtftn) slots.Add(Slot(token));
                     }
@@ -314,7 +318,10 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
             text.Append('\n');
         }
         string hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text.ToString())));
-        return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads]);
+        // Generated stubs throw MirrorStub.NotImplemented(file, member), the file from [CallerFilePath].
+        bool stub = shape.Count == 4 && shape[0] == "ldstr" && shape[1] == "ldstr" && shape[3] == "throw"
+            && shape[2].StartsWith("call ", StringComparison.Ordinal) && shape[2].Contains("Quire.Mirror.MirrorStub::NotImplemented", StringComparison.Ordinal);
+        return new(hash.ToLowerInvariant(), [.. calls], [.. slots], [.. reads], [.. writes], [.. referenceReads], stub);
     }
 
     /// <summary>A string literal with the checkout's path <paramref name="root"/> (either separator style, any
