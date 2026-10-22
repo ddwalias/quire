@@ -68,6 +68,30 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private XpsDocumentWriter GetXpsDocumentWriter(string filePath)
+    {
+        if (System.IO.File.Exists(filePath))
+        {
+            try
+            {
+                using (System.IO.FileStream fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite))
+                {
+                }
+                System.IO.File.Delete(filePath);
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+            }
+            catch (System.IO.IOException ex)
+            {
+                throw new Quire.IO.FileIsUsedByAnotherProcessException(ex);
+            }
+        }
+        _activeXpsDocument = new System.Windows.Xps.Packaging.XpsDocument(filePath, System.IO.FileAccess.ReadWrite);
+        return System.Windows.Xps.Packaging.XpsDocument.CreateXpsDocumentWriter(_activeXpsDocument);
+    }
+
+    [MirrorVerified("Release IL")]
     private bool JobInitialize(XpsDocumentWriter docWriter)
     {
         if (DebugTools.AssertNotNull(docWriter, null, Array.Empty<object>()).Failed)
