@@ -1,5 +1,6 @@
 #nullable disable
 using Quire.Mirror;
+using System.Runtime.InteropServices;
 
 namespace Quire.PersistentData;
 
@@ -35,6 +36,31 @@ public static partial class OleUtils
             return true;
         }
         return false;
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool? IsVersionInstalled(object comObject)
+    {
+        bool? result;
+        IPersist persist = comObject as IPersist;
+        if (persist != null)
+        {
+            Guid classId = persist.GetClassID();
+            try
+            {
+                ProgIDFromCLSID(ref classId);
+                result = new bool?(true);
+            }
+            catch (COMException)
+            {
+                result = new bool?(!(classId == _excel8Guid) ? false : CanCreateExcelContainer());
+            }
+        }
+        else
+        {
+            result = null;
+        }
+        return result;
     }
 
     [MirrorVerified("Release IL")]
