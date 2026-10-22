@@ -271,6 +271,15 @@ public sealed partial class Parser
             }
         }
         [global::Quire.Mirror.MirrorStub]
-        private string GetValidValues() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        private string GetValidValues()
+        {
+            string text = "";
+            string text2 = validValues;
+            foreach (object obj in text2)
+            {
+                text += string.Format("\"{0}\" ", obj.ToString());
+            }
+            return text;
+        }
     }
 }
