@@ -50,10 +50,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public Parser(global::System.Type argumentSpecification, global::Quire.ThirdParty.ErrorReporter reporter) { }
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.ThirdParty.ArgumentAttribute GetAttribute(global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ReportError(string errorMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool ParseArgumentList(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool Parse(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

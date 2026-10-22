@@ -6,6 +6,26 @@ namespace Quire.ThirdParty;
 public sealed partial class Parser
 {
     [MirrorVerified("Release IL")]
+    private static ArgumentAttribute GetAttribute(global::System.Reflection.FieldInfo fieldInfo)
+    {
+        object[] attributes = fieldInfo.GetCustomAttributes(typeof(ArgumentAttribute), false);
+        if (attributes.Length == 1)
+        {
+            return (ArgumentAttribute)attributes[0];
+        }
+        return null;
+    }
+
+    [MirrorVerified("Release IL")]
+    private void ReportError(string errorMessage)
+    {
+        if (reporter != null)
+        {
+            reporter(errorMessage);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private static string LongName(ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
     {
         if (attribute != null && !attribute.DefaultLongName)
