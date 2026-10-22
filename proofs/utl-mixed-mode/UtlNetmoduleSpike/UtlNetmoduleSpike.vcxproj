@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{E8B5AF2A-A5EA-4B56-8BC7-34EF4E8118A6}</ProjectGuid>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>Quire.Engine.Utl</RootNamespace>
+    <ProjectName>UtlNetmoduleSpike</ProjectName>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CLRSupport>NetCore</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)artifacts\bin\UtlNetmoduleSpike\Release\</OutDir>
+    <IntDir>$(SolutionDir)artifacts\obj\UtlNetmoduleSpike\Release\</IntDir>
+    <TargetName>Quire.Engine.Utl</TargetName>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4679</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalUsingDirectories>$(IntDir)UtlManagedModule;$(OutDir);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(IntDir)UtlManagedModule\UtlManagedModule.netmodule;$(IntDir)UTLLogging.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\UtlPortSpike.cpp">
+      <PreprocessorDefinitions>UTL_CSHARP_MCMISC_SIMPLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="UtlNativeLog.cpp">
+      <CompileAsManaged>false</CompileAsManaged>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Quire.Mirror\Quire.Mirror.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Target Name="BuildUtlManagedModule" BeforeTargets="ClCompile" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="dotnet build &quot;$(MSBuildThisFileDirectory)UtlManagedModule.csproj&quot; --configuration Release --output &quot;$(IntDir)UtlManagedModule&quot; --nologo" />
+  </Target>
+  <Target Name="BuildUtlLoggingImportLibrary" BeforeTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="&quot;$(VCToolsInstallDir)bin\HostX64\x64\lib.exe&quot; /nologo /def:&quot;$(MSBuildThisFileDirectory)UTLLogging.def&quot; /machine:x64 /out:&quot;$(IntDir)UTLLogging.lib&quot;" />
+  </Target>
+  <Target Name="SetMappedMethodMaxStack" AfterTargets="Link" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Exec Command="dotnet run --project &quot;$(MSBuildThisFileDirectory)..\IlMaxStack\IlMaxStack.csproj&quot; --configuration Release --no-launch-profile -- &quot;$(TargetPath)&quot; &quot;$(MathcadInstallDir)&quot;" />
+  </Target>
+  <PropertyGroup>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)'=='' and '$(MATHCAD_DIR)'!=''">$(MATHCAD_DIR)</MathcadInstallDir>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)'==''">C:\Program Files\PTC\Mathcad Prime 12.0.1.0</MathcadInstallDir>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

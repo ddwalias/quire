@@ -159,18 +159,19 @@ static List<string> NormalizeInlineHelperNames(byte[] image)
     using var stream = new MemoryStream(image, writable: false);
     using var pe = new PEReader(stream);
     var reader = pe.GetMetadataReader();
-    var helperType = reader.TypeDefinitions
-        .Select(handle => (Handle: handle, Type: reader.GetTypeDefinition(handle)))
-        .FirstOrDefault(item => reader.GetString(item.Type.Name)
-            .StartsWith("<PrivateImplementationDetails><UtlInlineHelpers_netmodule>", StringComparison.Ordinal));
-    if (helperType.Type.Name.IsNil)
+    var helperTypeHandle = reader.TypeDefinitions
+        .FirstOrDefault(handle => reader.GetString(reader.GetTypeDefinition(handle).Name)
+            .StartsWith("<PrivateImplementationDetails><", StringComparison.Ordinal)
+            && reader.GetString(reader.GetTypeDefinition(handle).Name).EndsWith("_netmodule>", StringComparison.Ordinal));
+    if (helperTypeHandle.IsNil)
         return [];
+    var helperType = reader.GetTypeDefinition(helperTypeHandle);
 
     var stringsOffset = FindStringHeapFileOffset(image, pe.PEHeaders);
     var edits = new List<string>();
-    TruncateString(image, stringsOffset, helperType.Type.Name,
+    TruncateString(image, stringsOffset, helperType.Name,
         "<PrivateImplementationDetails>".Length, "<PrivateImplementationDetails>", edits);
-    foreach (var nestedHandle in helperType.Type.GetNestedTypes())
+    foreach (var nestedHandle in helperType.GetNestedTypes())
     {
         var nestedType = reader.GetTypeDefinition(nestedHandle);
         var nestedName = reader.GetString(nestedType.Name);
@@ -179,7 +180,7 @@ static List<string> NormalizeInlineHelperNames(byte[] image)
             TruncateString(image, stringsOffset, nestedType.Name,
                 nestedName.Length - alignmentSuffix.Length, nestedName[..^alignmentSuffix.Length], edits);
     }
-    foreach (var fieldHandle in helperType.Type.GetFields())
+    foreach (var fieldHandle in helperType.GetFields())
     {
         var field = reader.GetFieldDefinition(fieldHandle);
         var fieldName = reader.GetString(field.Name);

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Module</OutputType>
+    <TargetExt>.netmodule</TargetExt>
+    <AssemblyName>UtlManagedModule</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.HashSetUtils.g.cs" />
+    <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.Pair_2.g.cs" />
+    <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.StringUtils.g.cs" />
+    <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.Triple_3.g.cs" />
+    <Compile Include="McmiscInlineSupport.cs" />
+    <ProjectReference Include="..\..\..\src\Quire.Mirror\Quire.Mirror.csproj" />
+  </ItemGroup>
+</Project>

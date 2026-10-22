@@ -5,6 +5,9 @@
 #include <ostream>
 #include <string>
 #include <vcclr.h>
+#if defined(UTL_CSHARP_MCMISC_SIMPLE)
+#using "UtlManagedModule.netmodule"
+#endif
 #ifdef IsLoggingEnabled
 #undef IsLoggingEnabled
 #endif
@@ -434,6 +437,7 @@ namespace Quire { namespace utl_mgd {
 
 namespace Quire { namespace Engine { namespace Misc {
 
+#if !defined(UTL_CSHARP_MCMISC_SIMPLE)
     [Quire::Mirror::MirrorOfAttribute("Engine.Misc.StringUtils, mcmisc")]
     public ref class StringUtils
     {
@@ -670,7 +674,9 @@ namespace Quire { namespace Engine { namespace Misc {
         }
 #pragma warning(pop)
     };
+#endif
 
+#if !defined(UTL_CSHARP_MCMISC_SIMPLE)
     generic <typename T1, typename T2>
     [Quire::Mirror::MirrorOfAttribute("Engine.Misc.Pair`2, mcmisc")]
     public ref class Pair
@@ -741,6 +747,7 @@ namespace Quire { namespace Engine { namespace Misc {
         }
 #pragma warning(pop)
     };
+#endif
 
 #pragma warning(push)
 #pragma warning(disable:4100 4702)
