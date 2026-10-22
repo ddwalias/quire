@@ -64,7 +64,5 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.IO.Packaging.PackagePart> GetPartsByContentType(global::System.IO.Packaging.Package package, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public int CountPartsByContentType(global::System.IO.Packaging.Package package, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.IO.Packaging.PackagePart CreateNewImagePart(global::System.IO.Packaging.PackagePart referencingPackagePart, global::System.Windows.Media.Imaging.BitmapSource image, string imageExtension, byte[] originalStreamHash, string uniqueImageName, global::System.Uri imageSourceUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
