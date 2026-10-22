@@ -19,8 +19,7 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
     private global::Quire.Serialization.IDeS11NProvider _deS11NProvider;
     [global::Quire.Mirror.MirrorStub]
     private bool _saveInline;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.IS11NProvider S11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.Serialization.IS11NProvider S11NProvider { get => _s11NProvider; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public bool SaveInline
     {
         get => _saveInline;
@@ -38,8 +37,7 @@ public partial class textType : global::Quire.PersistentData.RegionCollectionPre
             _saveInline = value;
         }
     }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Serialization.IDeS11NProvider DeS11NProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.Serialization.IDeS11NProvider DeS11NProvider { get => _deS11NProvider; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> Regions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
