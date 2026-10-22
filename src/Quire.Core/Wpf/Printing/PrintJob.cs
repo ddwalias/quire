@@ -68,6 +68,21 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private bool JobInitialize(XpsDocumentWriter docWriter)
+    {
+        if (DebugTools.AssertNotNull(docWriter, null, Array.Empty<object>()).Failed)
+        {
+            return false;
+        }
+        DebugTools.DevAssert(_docWriter == null, null, Array.Empty<object>());
+        _docWriter = docWriter;
+        IsRunning = true;
+        FireJobStarted();
+        AttachWriteEventHandlers(docWriter);
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
     private void HandleWritingCancelled(object sender, WritingCancelledEventArgs cancelledArgs) => HandleWritingCompleted(sender, new WritingCompletedEventArgs(true, null, cancelledArgs.Error));
 
     [MirrorVerified("Release IL")]
