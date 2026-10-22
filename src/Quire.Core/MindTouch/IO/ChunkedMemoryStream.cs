@@ -84,4 +84,16 @@ public partial class ChunkedMemoryStream
         }
     }
 
+    [MirrorVerified("Release IL")]
+    public byte[] ToArray()
+    {
+        EnsureOpen();
+        byte[] array = new byte[Length];
+        long position = _position;
+        Position = 0L;
+        Read(array, 0, array.Length);
+        Position = position;
+        return array;
+    }
+
 }
