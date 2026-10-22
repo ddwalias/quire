@@ -40,6 +40,12 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    public static string ArgumentsUsage(global::System.Type argumentType, int columns)
+    {
+        return new Parser(argumentType, null).GetUsageString(columns);
+    }
+
+    [MirrorVerified("Release IL")]
     public static int GetConsoleWindowWidth()
     {
         CONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo = default;
