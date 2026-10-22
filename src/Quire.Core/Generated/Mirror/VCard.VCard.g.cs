@@ -14,10 +14,6 @@ public partial class VCard
     [global::Quire.Mirror.MirrorStub]
     private static readonly string[] Newline;
     [global::Quire.Mirror.MirrorStub]
-    public string PrimaryPhone { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string PrimaryFax { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string SafeUrl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public VCard(string vCardString) { }

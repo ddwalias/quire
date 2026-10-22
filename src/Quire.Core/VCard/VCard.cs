@@ -37,4 +37,46 @@ public partial class VCard
 
     [MirrorVerified("PtcVCardVCardMechanicalDifferentialTests")]
     public byte[] Photo { get; private set; }
+
+    [MirrorVerified("Release IL")]
+    public string PrimaryPhone
+    {
+        get
+        {
+            if (TelephoneList != null)
+            {
+                Telephone[] telephoneList = TelephoneList;
+                for (int i = 0; i < telephoneList.Length; i++)
+                {
+                    Telephone telephone = telephoneList[i];
+                    if (telephone.IsVoice)
+                    {
+                        return telephone.Number;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public string PrimaryFax
+    {
+        get
+        {
+            if (TelephoneList != null)
+            {
+                Telephone[] telephoneList = TelephoneList;
+                for (int i = 0; i < telephoneList.Length; i++)
+                {
+                    Telephone telephone = telephoneList[i];
+                    if (telephone.IsFax)
+                    {
+                        return telephone.Number;
+                    }
+                }
+            }
+            return null;
+        }
+    }
 }
