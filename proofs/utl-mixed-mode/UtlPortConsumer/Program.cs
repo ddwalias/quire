@@ -107,6 +107,12 @@ lineParts.PutSegment(8, 12);
 if (lineParts.Count != 2 || lineParts.PeekSegment() != "alpha" || lineParts.JoinedText() != "alpha + beta" ||
     lineParts.TakeSegment() != "alpha" || lineParts.SegmentsFrom(0).Count != 1)
     return 24;
+using (var indentWriter = new StringWriter())
+{
+    LispUtils.IndentTo(2, indentWriter);
+    if (indentWriter.ToString() != "\n  ")
+        return 37;
+}
 
 Console.WriteLine("managed consumer exercised the C++/CLI Lisp scanner and line partition");
 

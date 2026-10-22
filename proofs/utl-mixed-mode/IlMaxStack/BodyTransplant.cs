@@ -58,7 +58,7 @@ internal static class BodyTransplant
             ("mcmisc", "Quire.Engine.Misc.LispUtils", "Engine.Misc.LispUtils", new[]
             {
                 ("skipLine", 2), ("PrettyPrint", 1), ("PrettyString", 1),
-                ("IsDefinerName", 1), ("IdentifierName", 1)
+                ("IsDefinerName", 1), ("IdentifierName", 1), ("IndentTo", 2)
             }),
             ("mcmisc", "Quire.Engine.Misc.FileUtils", "Engine.Misc.FileUtils", new[]
             {

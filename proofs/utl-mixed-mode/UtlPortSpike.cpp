@@ -1548,7 +1548,11 @@ namespace Quire { namespace Engine { namespace Misc {
             Int32 indent, System::IO::TextWriter^ writer) { }
 
     public:
-        static void IndentTo(Int32 n, System::IO::TextWriter^ writer) { }
+        static void IndentTo(Int32 n, System::IO::TextWriter^ writer)
+        {
+            writer->Write(L"\n");
+            for (Int32 i = 0; i < n; ++i) writer->Write(L" ");
+        }
         static String^ SelfTest(array<String^>^ args) { return nullptr; }
         LispUtils() {}
 
