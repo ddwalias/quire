@@ -13,8 +13,7 @@ public partial class oleObjectRegionType : global::Quire.PersistentData.oleBaseC
 {
     [global::Quire.Mirror.MirrorStub]
     global::System.Windows.Size global::Quire.PersistentData.IOleSizeData.OleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasFakeOleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool HasFakeOleViewportSize { get => FakeOleViewportSize.HasValue; }
     [global::Quire.Mirror.MirrorStub]
     public oleObjectRegionType(global::Quire.PersistentData.IOleSizeData sizeData) { }
 }
