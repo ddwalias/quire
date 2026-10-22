@@ -44,6 +44,22 @@ public partial class TextStyleBase
         }
     }
 
+    [MirrorVerified("Release IL")]
+    public static void MergeBasedOnSetters(Style style, Style basedOn)
+    {
+        if (basedOn.BasedOn != null)
+        {
+            MergeBasedOnSetters(style, basedOn.BasedOn);
+        }
+        foreach (System.Windows.Setter setter in System.Linq.Enumerable.OfType<System.Windows.Setter>(basedOn.Setters))
+        {
+            if (Quire.Wpf.StylesExtensions.GetSetterValue(style, setter.Property) == null)
+            {
+                style.Setters.Add(new System.Windows.Setter(setter.Property, setter.Value));
+            }
+        }
+    }
+
     [MirrorVerified("PtcTextStyleBaseMechanicalDifferentialTests")]
     protected string _baseOnKey;
 
