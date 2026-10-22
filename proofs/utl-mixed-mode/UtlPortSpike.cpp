@@ -74,6 +74,11 @@ namespace Quire { namespace utl_mgd {
             GC::KeepAlive(this);
         }
 
+    private:
+        void _bangSafeWaitHandle() { ::CloseHandle(static_cast<HANDLE>(m_handle)); GC::KeepAlive(this); }
+        void _tildeSafeWaitHandle() { ::CloseHandle(static_cast<HANDLE>(m_handle)); GC::KeepAlive(this); }
+
+    public:
         void* GetUnmanagedHandle() { return m_handle; }
         virtual String^ ToString() override { return m_name; }
 
@@ -160,6 +165,11 @@ namespace Quire { namespace utl_mgd {
             GC::KeepAlive(this);
         }
 
+    private:
+        void _bangSafeMutex() { EnsureReleased(); }
+        void _tildeSafeMutex() { EnsureReleased(); }
+
+    public:
         __declspec(noinline) ~SafeMutex() { EnsureReleased(); }
         !SafeMutex() { EnsureReleased(); }
     };
