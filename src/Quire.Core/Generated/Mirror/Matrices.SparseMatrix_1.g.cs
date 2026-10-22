@@ -24,8 +24,6 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
     [global::Quire.Mirror.MirrorStub]
     public TItem this[global::Quire.TableCoordinate position] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private void PositionCheck(global::Quire.TableCoordinate position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void FireChanged(global::Quire.Matrices.SparseMatrix<TItem>.SparseMatrixItemChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SparseMatrix() { }

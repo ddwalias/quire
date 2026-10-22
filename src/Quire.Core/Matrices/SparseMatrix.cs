@@ -6,6 +6,15 @@ namespace Quire.Matrices;
 
 public partial class SparseMatrix<TItem>
 {
+    [MirrorVerified("Release IL")]
+    private void PositionCheck(TableCoordinate position)
+    {
+        if (position.Row < 0 || position.Column < 0)
+        {
+            throw new global::System.ArgumentOutOfRangeException("position", "The position row and column values must be 0 or greater.");
+        }
+    }
+
     [MirrorVerified("PtcMatricesSparseMatrix1MechanicalDifferentialTests")]
     protected Dictionary<TableCoordinate, TItem> _itemMap;
 
