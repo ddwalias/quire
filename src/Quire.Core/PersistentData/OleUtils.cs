@@ -9,6 +9,9 @@ public static partial class OleUtils
     public static bool CanCreateExcelContainer() => IsSupportedExcelGuid(GetExcelSheetGuid("Excel.Sheet"));
 
     [MirrorVerified("Release IL")]
+    public static bool IsMicrosoftEquationGuid(Guid guid) => new System.Collections.Generic.List<Guid> { _equation1Guid, _equation2Guid, _equation3Guid }.Contains(guid);
+
+    [MirrorVerified("Release IL")]
     private static readonly Guid _excel8Guid;
 
     [MirrorVerified("Release IL")]
