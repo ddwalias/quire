@@ -16,6 +16,13 @@ public partial class PackageOperationsProvider
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public Package GetPackageForRead(string packageName) => Package.Open(packageName, (FileMode)3, (FileAccess)1, (FileShare)1);
 
+    [MirrorVerified("Release IL")]
+    public void DeletePartFromPackage(Package package, string uriString)
+    {
+        Uri partUri = new Uri(uriString, UriKind.Relative);
+        package.DeletePart(partUri);
+    }
+
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     private static readonly Uri _worksheet;
 

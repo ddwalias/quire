@@ -82,8 +82,6 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart AddPartToPackage(global::System.IO.Packaging.Package package, string uriString, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void DeletePartFromPackage(global::System.IO.Packaging.Package package, string uriString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.IO.Packaging.PackagePart CreateNewImagePart(global::System.IO.Packaging.PackagePart referencingPackagePart, global::System.Windows.Media.Imaging.BitmapSource image, string imageExtension, byte[] originalStreamHash, string uniqueImageName, global::System.Uri imageSourceUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string PackPartAndGetId(global::System.IO.Packaging.PackagePart sourcePackagePart, global::System.Func<global::Quire.Pair<string, global::System.Uri>> getExistingPartRelationshipId, global::System.Action<string, global::System.IO.Packaging.PackagePart> cacheRelationshipIdForNewPart, global::System.Func<global::System.IO.Packaging.PackagePart> writeNewPartToPackage, string partRelationshipUri) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
