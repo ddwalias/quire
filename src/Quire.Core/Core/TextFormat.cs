@@ -145,6 +145,29 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    private static void HandleTextFormatPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        TextFormat textFormat = d as TextFormat;
+        if (textFormat != null)
+        {
+            if (e.NewValue != null || e.OldValue != null)
+            {
+                if (e.NewValue == null || !e.NewValue.Equals(e.OldValue))
+                {
+                    goto Changed;
+                }
+            }
+        }
+        return;
+    Changed:
+        if (e.Property == FontSizeProperty)
+        {
+            textFormat.FirePropertyChanged("FontSizeInPoints");
+        }
+        textFormat.FormatChanged?.Invoke(e);
+    }
+
+    [MirrorVerified("Release IL")]
     private static object HandleBrushCoerceValue(DependencyObject d, object basevalue)
     {
         if (basevalue is Brush brush && !((Freezable)brush).IsFrozen)
