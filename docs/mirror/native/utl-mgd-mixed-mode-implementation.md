@@ -40,7 +40,7 @@ The maintainer's strict C++/CLI-aware validator was run against the current mixe
 python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlNetmoduleSpike/UtlNetmoduleSpike.vcxproj --results .mirror-cache/release-il-netmodule-hybrid-postmerge
 ```
 
-It failed: **544 checked, 291 exact, 304 failures, 303 unfinished**. The latest ignored report is `.mirror-cache/release-il-netmodule-safemonitor-v7/release-il.json` (base `2d2e1eff62a519937c4747446681dec88af90cee`, tip `58df593e5dcc2305326f74af9d335ff15dc1192d`). The proof-local post-link transplant now preserves exact bodies for the inline-array helpers, `StringUtils::.cctor`, `XmlUtils.TestCheck`, `LispUtils.badSyntax`, `FileUtils.ReadExpanded`, and `MessageQueue.Start`. The reported remaining failure groups are:
+It failed: **544 checked, 291 exact, 304 failures, 303 unfinished**. The latest ignored report is `.mirror-cache/release-il-netmodule-safemonitor-v8/release-il.json` (base and tip `43d81915ca49581473406127209027846a2a0aa0`). The proof-local post-link transplant now preserves exact bodies for the inline-array helpers, `StringUtils::.cctor`, `XmlUtils.TestCheck`, `LispUtils.badSyntax`, `FileUtils.ReadExpanded`, and `MessageQueue.Start`. The reported remaining failure groups are:
 
 | Failure | Count | Detail |
 |---|---:|---|
