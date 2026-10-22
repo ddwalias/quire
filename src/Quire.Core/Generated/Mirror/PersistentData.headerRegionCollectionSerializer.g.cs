@@ -13,6 +13,5 @@ public partial class headerRegionCollectionSerializer : global::Quire.Persistent
 {
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentData.header _header;
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.PersistentData.header RegionCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public override global::Quire.PersistentData.header RegionCollection { get => _header ?? (_header = new global::Quire.PersistentData.header()); protected set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
