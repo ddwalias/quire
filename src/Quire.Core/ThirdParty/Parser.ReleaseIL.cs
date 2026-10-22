@@ -8,6 +8,9 @@ public sealed partial class Parser
     [global::System.Runtime.InteropServices.DllImport("kernel32.dll", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.StdCall, CharSet = global::System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
     private static extern int GetStdHandle(int nStdHandle);
 
+    [global::System.Runtime.InteropServices.DllImport("kernel32.dll", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.StdCall, CharSet = global::System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+    private static extern int GetConsoleScreenBufferInfo(int hConsoleOutput, ref CONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo);
+
     [MirrorVerified("Release IL")]
     public static bool ParseArgumentsWithUsage(string[] arguments, object destination)
     {
