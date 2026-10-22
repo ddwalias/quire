@@ -40,4 +40,17 @@ public partial struct QualityAgentReportData
 
     [MirrorVerified("Release IL")]
     public string EndTime => _endTime.ToString(DateTimeReportFormat);
+
+    [MirrorVerified("Release IL")]
+    public string TimeZone
+    {
+        get
+        {
+            if (_timeZone == null)
+            {
+                return string.Empty;
+            }
+            return _timeZone.ToString();
+        }
+    }
 }
