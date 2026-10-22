@@ -15,6 +15,22 @@ public partial class presentationPageModel
     private global::System.Nullable<global::System.Windows.Thickness> _pageMargin;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.ThicknessConverter _thicknessConverter;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.Windows.Thickness> PageMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::System.Nullable<global::System.Windows.Thickness> PageMargin
+    {
+        get
+        {
+            if (!global::System.String.IsNullOrEmpty(pagemargin))
+            {
+                return (global::System.Nullable<global::System.Windows.Thickness>)_thicknessConverter.ConvertFromInvariantString(pagemargin);
+            }
+            return default(global::System.Nullable<global::System.Windows.Thickness>);
+        }
+        set
+        {
+            if (value.HasValue)
+            {
+                pagemargin = _thicknessConverter.ConvertToInvariantString(value);
+            }
+        }
+    }
 }
