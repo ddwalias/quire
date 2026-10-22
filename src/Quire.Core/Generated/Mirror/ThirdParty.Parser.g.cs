@@ -56,8 +56,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     public string GetUsageString(int screenWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void AddNewLine(string newLine, global::System.Text.StringBuilder builder, ref int currentColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.ThirdParty.Parser.ArgumentHelpStrings[] GetAllHelpStrings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool LexFileArguments(string fileName, out string[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

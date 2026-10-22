@@ -37,6 +37,13 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    private static void AddNewLine(string newLine, global::System.Text.StringBuilder builder, ref int currentColumn)
+    {
+        builder.Append(newLine);
+        currentColumn = 0;
+    }
+
+    [MirrorVerified("Release IL")]
     private static string LongName(ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
     {
         if (attribute != null && !attribute.DefaultLongName)
