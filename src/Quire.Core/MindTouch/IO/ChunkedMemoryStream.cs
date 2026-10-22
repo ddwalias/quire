@@ -96,4 +96,18 @@ public partial class ChunkedMemoryStream
         return array;
     }
 
+    [MirrorVerified("Release IL")]
+    public byte[] GetBuffer()
+    {
+        if (!_publiclyVisible)
+        {
+            throw new UnauthorizedAccessException();
+        }
+        if (_chunks != null)
+        {
+            ConsolidateChunks(Capacity);
+        }
+        return _buffer;
+    }
+
 }
