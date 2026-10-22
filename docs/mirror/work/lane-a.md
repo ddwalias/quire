@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `IO.UrlUtils.TryCreateKnownUri`; 567 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-231a0dbbf2a9/release-il.json` — PASS, 2,962 exact, 0 mismatches.
+- Members: latest exact members: `FunctionalitiesLimitation.UIFunctionalityCommandWrapper.Execute(object, out bool)`, `Execute(object)`; 565 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-980c89b4c971/release-il.json` — PASS, 2,964 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).

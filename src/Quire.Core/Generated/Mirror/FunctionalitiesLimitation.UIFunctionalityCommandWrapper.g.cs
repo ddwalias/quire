@@ -21,8 +21,4 @@ public partial class UIFunctionalityCommandWrapper : global::Quire.Functionaliti
     private void Initialize(global::System.Windows.FrameworkElement lockedUIItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnBaseCanExecuteChanged(object sender, global::System.EventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Execute(object parameter) => base.Execute(parameter);
-    [global::Quire.Mirror.MirrorStub]
-    public void Execute(object parameter, out bool executed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

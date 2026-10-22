@@ -8,6 +8,35 @@ namespace Quire.FunctionalitiesLimitation;
 public partial class UIFunctionalityCommandWrapper
 {
     [MirrorVerified("Release IL")]
+    public void Execute(object parameter, out bool executed)
+    {
+        executed = false;
+        DisplayFreemiumAboutBoxCommandParameter displayFreemiumAboutBoxCommandParameter;
+        switch (CommandFunctionalityBehaviorKey)
+        {
+            case EnumFunctionalityBehaviorKey.FreemiumBehavior:
+            {
+                displayFreemiumAboutBoxCommandParameter = new DisplayFreemiumAboutBoxCommandParameter(LockedUIItem, FunctionalityKey);
+                FunctionalitiesLimitationCommands.DisplayFreemiumAboutBox.Execute(displayFreemiumAboutBoxCommandParameter, null);
+                break;
+            }
+            case EnumFunctionalityBehaviorKey.FullBehavior:
+            case EnumFunctionalityBehaviorKey.TrialBehavior:
+                NestedCommand.Execute(parameter, CommandTarget);
+                executed = true;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public override void Execute(object parameter)
+    {
+        Execute(parameter, out bool executed);
+    }
+
+    [MirrorVerified("Release IL")]
     public override bool CanExecute(object parameter) => NestedCommand.CanExecute(parameter, CommandTarget);
 
     [MirrorVerified("Release IL")]
