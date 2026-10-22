@@ -44,6 +44,32 @@ public partial class CommandBuffer
         }
     }
 
+    [MirrorVerified("Release IL")]
+    private static IUndoableCommand NextUndoCommand
+    {
+        get
+        {
+            if (_currentInstance._undoStack.Count <= 0)
+            {
+                return null;
+            }
+            return _currentInstance._undoStack.Peek();
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    private static IUndoableCommand NextRedoCommand
+    {
+        get
+        {
+            if (_currentInstance._redoStack.Count <= 0)
+            {
+                return null;
+            }
+            return _currentInstance._redoStack.Peek();
+        }
+    }
+
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public event EventHandler<CommandEventArgs> BeforeCommand;
 
