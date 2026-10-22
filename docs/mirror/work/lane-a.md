@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `Core.Serialization.ApplicationPropertiesXmlSerializable.ReadXml`; 583 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-8267bedf1183/release-il.json` — PASS, 2,939 exact, 0 mismatches.
+- Members: latest exact member: `Encryptor.GetDecryptorForVersion`; 582 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-a127969605e3/release-il.json` — PASS, 2,942 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).

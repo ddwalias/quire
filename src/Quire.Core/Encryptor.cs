@@ -36,4 +36,10 @@ public partial class Encryptor
         }
         return Encrypt(Decrypt(decryptorForVersion, encryptedData));
     }
+
+    [MirrorVerified("Release IL")]
+    private ICryptoTransform GetDecryptorForVersion(Version formatVersion)
+    {
+        return _legacyDecryptorsDictionary?.FirstOrDefault((KeyValuePair<Version, ICryptoTransform> el) => formatVersion.CompareTo(el.Key) <= 0).Value;
+    }
 }

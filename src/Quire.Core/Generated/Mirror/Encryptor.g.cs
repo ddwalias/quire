@@ -18,7 +18,5 @@ public partial class Encryptor : global::Quire.IEncryptor, global::Quire.Service
     [global::Quire.Mirror.MirrorStub]
     internal static string Decrypt(global::System.Security.Cryptography.ICryptoTransform decryptor, byte[] encryptedData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Security.Cryptography.ICryptoTransform GetDecryptorForVersion(global::System.Version formatVersion) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private Encryptor() { }
 }
