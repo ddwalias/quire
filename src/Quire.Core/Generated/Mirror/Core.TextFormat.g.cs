@@ -26,8 +26,6 @@ public partial class TextFormat : global::System.Windows.DependencyObject, globa
     [global::Quire.Mirror.MirrorStub]
     public void UpdateTextFormat(global::System.Windows.Style style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void UpdateTextFormat(global::Quire.Core.TextFormat tf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void HandleTextFormatPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void HandleTextAlignmentChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

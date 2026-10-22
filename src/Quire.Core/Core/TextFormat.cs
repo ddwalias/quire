@@ -87,6 +87,41 @@ public partial class TextFormat
     }
 
     [MirrorVerified("Release IL")]
+    public void UpdateTextFormat(TextFormat tf)
+    {
+        if (tf == null)
+        {
+            return;
+        }
+        StyleKey = tf.StyleKey;
+        BasedOnKey = tf.BasedOnKey;
+        TextStyleData = tf.TextStyleData;
+        Name = tf.Name;
+        FontFamily = tf.FontFamily;
+        FontSize = tf.FontSize;
+        FontWeight = tf.FontWeight;
+        FontStyle = tf.FontStyle;
+        TextDecorations = tf.TextDecorations?.Clone();
+        Variants = tf.Variants;
+        Background = tf.Background;
+        Foreground = tf.Foreground;
+        TextAlignment = tf.TextAlignment;
+        TextAlignmentExt = tf.TextAlignmentExt;
+        MarkerStyle = tf.MarkerStyle;
+        MixedFontFamily = tf.MixedFontFamily;
+        MixedFontSize = tf.MixedFontSize;
+        MixedFontWeight = tf.MixedFontWeight;
+        MixedFontStyle = tf.MixedFontStyle;
+        MixedTextDecorations = tf.MixedTextDecorations;
+        MixedForeground = tf.MixedForeground;
+        MixedBackground = tf.MixedBackground;
+        MixedMarkerStyle = tf.MixedMarkerStyle;
+        MixedTextAlignment = tf.MixedTextAlignment;
+        Margin = tf.Margin;
+        TextIndent = tf.TextIndent;
+    }
+
+    [MirrorVerified("Release IL")]
     private static object HandleBrushCoerceValue(DependencyObject d, object basevalue)
     {
         if (basevalue is Brush brush && !((Freezable)brush).IsFrozen)

@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact members: `MsiHelper.MsiEnumRelatedProducts`, `MsiHelper.MsiGetProductInfo`; 571 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-3954408cb82c/release-il.json` — PASS, 2,953 exact, 0 mismatches.
+- Members: latest exact member: `Core.TextFormat.UpdateTextFormat(TextFormat)`; 570 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-9c2eaff73424/release-il.json` — PASS, 2,954 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
