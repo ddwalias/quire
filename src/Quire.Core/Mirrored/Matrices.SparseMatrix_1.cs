@@ -5,6 +5,26 @@ namespace Quire.Matrices;
 
 partial class SparseMatrix<TItem>
 {
+    public TItem this[int r, int c]
+    {
+        get
+        {
+            return this[new global::Quire.TableCoordinate
+            {
+                Row = r,
+                Column = c
+            }];
+        }
+        set
+        {
+            this[new global::Quire.TableCoordinate
+            {
+                Row = r,
+                Column = c
+            }] = value;
+        }
+    }
+
     public TItem this[global::Quire.TableCoordinate position]
     {
         get

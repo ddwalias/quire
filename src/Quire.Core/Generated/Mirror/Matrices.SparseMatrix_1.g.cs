@@ -20,8 +20,6 @@ public partial class SparseMatrix<TItem> : global::Quire.Matrices.IMatrix<TItem>
     [global::Quire.Mirror.MirrorStub]
     public int Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public TItem this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public SparseMatrix() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Matrices.SparseMatrix`1+SparseMatrixChangedEventHandler, Ptc.Core")]
