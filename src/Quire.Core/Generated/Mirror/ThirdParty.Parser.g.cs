@@ -145,7 +145,38 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.ArrayList collectionValues;
         [global::Quire.Mirror.MirrorStub]
-        public string FullHelpText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+        public string FullHelpText
+        {
+            get
+            {
+                global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+                if (HasHelpText)
+                {
+                    stringBuilder.Append(HelpText);
+                }
+                if (HasDefaultValue)
+                {
+                    if (stringBuilder.Length > 0)
+                    {
+                        stringBuilder.Append(" ");
+                    }
+                    stringBuilder.Append("Default value:'");
+                    AppendValue(stringBuilder, DefaultValue);
+                    stringBuilder.Append('\'');
+                }
+                if (HasShortName)
+                {
+                    if (stringBuilder.Length > 0)
+                    {
+                        stringBuilder.Append(" ");
+                    }
+                    stringBuilder.Append("(short form /");
+                    stringBuilder.Append(ShortName);
+                    stringBuilder.Append(")");
+                }
+                return stringBuilder.ToString();
+            }
+        }
         [global::Quire.Mirror.MirrorStub]
         public string SyntaxHelp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
