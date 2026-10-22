@@ -145,8 +145,6 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.ArrayList collectionValues;
         [global::Quire.Mirror.MirrorStub]
-        public global::System.Type ValueType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public string FullHelpText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public string SyntaxHelp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

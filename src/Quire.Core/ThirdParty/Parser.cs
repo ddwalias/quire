@@ -126,6 +126,19 @@ public partial class Parser
         public bool AllowMultiple => (uint)(flags & ArgumentType.Multiple) > 0u;
 
         [MirrorVerified("Release IL")]
+        public Type ValueType
+        {
+            get
+            {
+                if (!IsCollection)
+                {
+                    return Type;
+                }
+                return elementType;
+            }
+        }
+
+        [MirrorVerified("Release IL")]
         private ErrorReporter reporter;
 
         [MirrorVerified("Release IL")]
