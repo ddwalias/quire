@@ -34,4 +34,10 @@ public partial struct QualityAgentReportData
 
     [MirrorVerified("PtcQualityAgentManagerQualityAgentReportDataMechanicalDifferentialTests")]
     public string Bitness { get; private set; }
+
+    [MirrorVerified("Release IL")]
+    public string StartTime => _startTime.ToString(DateTimeReportFormat);
+
+    [MirrorVerified("Release IL")]
+    public string EndTime => _endTime.ToString(DateTimeReportFormat);
 }
