@@ -28,6 +28,16 @@ public static partial class OleUtils
     }
 
     [MirrorVerified("Release IL")]
+    public static bool IsOleAppSupportZoom(string progId)
+    {
+        if (progId != null && "OrgPlusWOPX,Mathcad,AcroExch.Document,PDFPlus.Document,MSGraph.Chart,PowerPoint.,Word.Document,Excel.Sheet".Contains(progId.Split('.', StringSplitOptions.None)[0]))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
     private static readonly Guid _excel8Guid;
 
     [MirrorVerified("Release IL")]
