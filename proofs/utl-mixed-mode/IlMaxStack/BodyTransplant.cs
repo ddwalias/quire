@@ -64,7 +64,7 @@ internal static class BodyTransplant
                 ("skipExpression", 2), ("skipList", 2), ("skipAtom", 2),
                 ("findExpressionStart", 2), ("findExpressionStart", 3), ("skipString", 2),
                 ("scanExpressionLine", 1), ("scanExpressionLine", 2), ("scanExpressionLine", 3),
-                ("scanExpressions", 2), ("partitionExpressionLine", 3)
+                ("scanExpressions", 2), ("partitionExpressionLine", 3), (".cctor", 0)
             }),
             ("mcmisc", "Quire.Engine.Misc.LispUtils+LinePartition", "Engine.Misc.LispUtils+LinePartition", new[]
             {
@@ -96,6 +96,10 @@ internal static class BodyTransplant
                 ("GetCriticalSection", 2), ("Free", 0), ("on_exit", 0), (".cctor", 0),
                 ("Enter", 1), ("TryEnter", 1), ("Exit", 1), (".ctor", 0)
             }),
+            ("utl-mgd", "Quire.utl_mgd.SafeMutex", "utl_mgd.SafeMutex", new[]
+            {
+                ("Dispose", 1)
+            }),
             ("utl-mgd", "Quire.utl_mgd.SafeMonitor+CSecRecord", "utl_mgd.SafeMonitor+CSecRecord", new[]
             {
                 (".ctor", 2)
@@ -111,7 +115,8 @@ internal static class BodyTransplant
             }),
             ("utl-mgd", "Quire.utl_mgd.MessageQueue`3", "utl_mgd.MessageQueue`3", new[]
             {
-                ("Init", 1), ("MsgLoop", 1), ("!MessageQueue`3", 0), ("~MessageQueue`3", 0)
+                ("Init", 1), ("MsgLoop", 1), ("Start", 5),
+                ("!MessageQueue`3", 0), ("~MessageQueue`3", 0)
             }),
             ("utl-mgd", "Quire.utl_mgd.LabelSet", "utl_mgd.LabelSet", new[]
             {
@@ -477,6 +482,8 @@ internal static class BodyTransplant
 
     private static bool IsValueType(string type) => type is "System.Collections.DictionaryEntry" or "_RTL_CRITICAL_SECTION"
         || type.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal)
+        || type.StartsWith("System.Collections.Generic.List`1+Enumerator", StringComparison.Ordinal)
+        || type.StartsWith("System.Collections.Generic.List`1/Enumerator", StringComparison.Ordinal)
         || type.StartsWith("System.Collections.Generic.Queue`1+Enumerator", StringComparison.Ordinal);
 
     private static List<string> SplitGenericArguments(string arguments)
@@ -872,13 +879,14 @@ internal static class BodyTransplant
                         source, target, out var mappedMethod))
                     return false;
                 var arguments = specification.DecodeSignature(NameProvider.Instance, null);
+                var mappedArguments = arguments.Select(argument => MapSignatureType(target, argument)).ToArray();
                 for (var row = 1; row <= target.GetTableRowCount(TableIndex.MethodSpec); row++)
                 {
                     var candidateHandle = MetadataTokens.MethodSpecificationHandle(row);
                     var candidate = target.GetMethodSpecification(candidateHandle);
                     var candidateArguments = candidate.DecodeSignature(NameProvider.Instance, null);
                     if (unchecked((uint)MetadataTokens.GetToken(candidate.Method)) == mappedMethod
-                        && arguments.SequenceEqual(candidateArguments))
+                        && mappedArguments.SequenceEqual(candidateArguments))
                     {
                         mapped = unchecked((uint)MetadataTokens.GetToken(candidateHandle));
                         return true;

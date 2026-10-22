@@ -310,14 +310,27 @@ namespace Quire { namespace utl_mgd {
     public:
         void Start(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage, Boolean stopThreadOnFinalize)
         {
+            System::Tuple<WeakReference^, Data, Mailbox<Msg>^, OnInit^, OnMessage^, Int64>^ parameter = nullptr;
+            Mailbox<Msg>^ mailbox = nullptr;
+            void* deathHandle = nullptr;
+            String^ name = nullptr;
+            String^ text = nullptr;
+            String^ text2 = nullptr;
             if (m_thread->Name == nullptr)
-                m_thread->Name = String::Concat("MsgLoop(", owner->ToString(), ")");
+            {
+                text = ")";
+                text2 = owner->ToString();
+                name = String::Concat(String::Concat("MsgLoop(", text2), text);
+                m_thread->Name = name;
+            }
             if (stopThreadOnFinalize)
                 m_death_handle = ::CreateEventW(nullptr, TRUE, FALSE, nullptr);
 
-            Int64 handle = System::IntPtr(m_death_handle).ToInt64();
-            auto parameter = gcnew System::Tuple<WeakReference^, Data, Mailbox<Msg>^, OnInit^, OnMessage^, Int64>(
-                gcnew WeakReference(owner), data, m_mailbox, onInit, onMessage, handle);
+            deathHandle = m_death_handle;
+            mailbox = m_mailbox;
+            parameter = System::Tuple::Create<WeakReference^, Data, Mailbox<Msg>^, OnInit^, OnMessage^, Int64>(
+                gcnew WeakReference(owner), data, mailbox, onInit, onMessage,
+                System::IntPtr(deathHandle).ToInt64());
             m_thread->Start(parameter);
             GC::KeepAlive(this);
         }
@@ -1387,8 +1400,9 @@ namespace Quire { namespace Engine { namespace Misc {
             s_LispBreakChars = " \t\f\n\r()\";";
             s_EscapeChar = '\\'; s_OpenParen = '('; s_CloseParen = ')';
             s_StringQuote = '"'; s_CommentChar = ';';
-            s_SymbolSeps = gcnew array<Char>{ '{', ':' };
-            s_Definers = gcnew array<String^>{ "define", "global", "define-eval", "lambda" };
+            s_SymbolSeps = (gcnew String("{:"))->ToCharArray();
+            s_Definers = (gcnew String("define|global|define-eval|lambda"))->Split(
+                (gcnew String("|"))->ToCharArray());
         }
 
     public:
@@ -2005,18 +2019,29 @@ namespace Quire { namespace Engine { namespace Misc {
 
         static void ReadExpanded(String^ path, System::IO::TextWriter^ output)
         {
-            auto readers = gcnew System::Collections::Generic::Stack<System::IO::StreamReader^>();
-            auto paths = gcnew System::Collections::Generic::Stack<String^>();
-            auto references = gcnew System::Collections::Generic::Stack<Boolean>();
+            System::Collections::Generic::Stack<System::IO::StreamReader^>^ readers =
+                gcnew System::Collections::Generic::Stack<System::IO::StreamReader^>();
+            System::Collections::Generic::Stack<String^>^ paths =
+                gcnew System::Collections::Generic::Stack<String^>();
+            System::Collections::Generic::Stack<Boolean>^ references =
+                gcnew System::Collections::Generic::Stack<Boolean>();
+            System::IO::StreamReader^ reader = nullptr;
+            Boolean isReference = false;
+            Int32 commentDepth = 0;
+            String^ line = nullptr;
+            String^ includePath = nullptr;
+            Boolean includeReference = false;
+            String^ directory = nullptr;
+            String^ childPath = nullptr;
+            System::Collections::Generic::List<Object^>^ formatArguments = nullptr;
+            static_cast<void>(formatArguments);
             try
             {
-                auto reader = StreamToPath(path);
-                Boolean isReference = false;
-                Int32 commentDepth = 0;
+                reader = StreamToPath(path);
                 readers->Push(reader); paths->Push(path); references->Push(isReference);
                 while (reader != nullptr)
                 {
-                    String^ line = reader->ReadLine();
+                    line = reader->ReadLine();
                     if (line != nullptr)
                     {
                         if (line->IndexOf("/*") >= 0 && line->Trim() == "/*") commentDepth++;
@@ -2024,13 +2049,13 @@ namespace Quire { namespace Engine { namespace Misc {
                         else
                         {
                             if (commentDepth != 0) continue;
-                            Boolean includeReference = false;
-                            String^ includePath = ProcessInclude(line, includeReference);
+                            includeReference = false;
+                            includePath = ProcessInclude(line, includeReference);
                             if (includePath != nullptr)
                             {
-                                String^ directory = System::IO::Path::GetDirectoryName(path);
+                                directory = System::IO::Path::GetDirectoryName(path);
                                 if (directory == nullptr) continue;
-                                String^ childPath = System::IO::Path::Combine(directory, includePath);
+                                childPath = System::IO::Path::Combine(directory, includePath);
                                 reader = StreamToPath(childPath); path = childPath; isReference = includeReference;
                                 readers->Push(reader); paths->Push(childPath); references->Push(isReference);
                                 if (isReference) SkipPast(reader, "### END PREAMBLE ###");
@@ -2043,7 +2068,8 @@ namespace Quire { namespace Engine { namespace Misc {
                     }
                     else
                     {
-                        if (commentDepth > 0) throw gcnew System::Exception("End of file within comment.");
+                        if (commentDepth > 0)
+                            throw gcnew System::Exception("End of file within comment.");
                         readers->Pop(); paths->Pop(); references->Pop(); reader->Close();
                         if (readers->Count > 0)
                         {
@@ -2217,17 +2243,44 @@ namespace Quire { namespace Engine { namespace Misc {
         static Boolean LongUnicodeToShortcutKey(String^ str, Int32% pos, Char% shortcutKey)
         {
             if (!s_bNamedCharMapInitialized) InitNamedCharMap();
-            for (Int32 n = 0; n < s_LongUnicodeToShortcutKeyTable->Count; ++n)
+            using PairList = System::Collections::Generic::List<Quire::Engine::Misc::Pair<String^, Char>^>;
+            Boolean result = false;
+            PairList::Enumerator enumerator;
+            String^ value = nullptr;
+            Char mapped = 0;
+            Boolean mismatch = false;
+            Int32 i = 0;
+            enumerator = s_LongUnicodeToShortcutKeyTable->GetEnumerator();
+            try
             {
-                Quire::Engine::Misc::Pair<String^, Char>^ item = s_LongUnicodeToShortcutKeyTable[n];
-                String^ value = item->First;
-                if (str->Length < pos + value->Length) continue;
-                Boolean equal = true;
-                for (Int32 i = 0; i < value->Length; ++i)
-                    if (str[pos + i] != value[i]) { equal = false; break; }
-                if (equal) { shortcutKey = item->Second; pos += value->Length - 1; return true; }
+                while (enumerator.MoveNext())
+                {
+                    value = enumerator.Current->First;
+                    mapped = enumerator.Current->Second;
+                    if (str->Length < pos + value->Length) continue;
+                    mismatch = false;
+                    i = 0;
+                    while (i < value->Length)
+                    {
+                        if (str[pos + i] != value[i])
+                        {
+                            mismatch = true;
+                            break;
+                        }
+                        ++i;
+                    }
+                    if (mismatch) continue;
+                    shortcutKey = mapped;
+                    pos += value->Length - 1;
+                    result = true;
+                    break;
+                }
             }
-            return false;
+            finally
+            {
+                delete static_cast<System::IDisposable^>(enumerator);
+            }
+            return result;
         }
         static Boolean UnicodeToGreekShortcutKey(Char unicode, Char% greekShortcut)
         {
@@ -3198,50 +3251,95 @@ namespace Quire { namespace utl_mgd {
 
         static Object^ LookupPossiblyWild(String^ c, IDictionary^ dictionary)
         {
+            System::Collections::IDictionaryEnumerator^ enumerator = nullptr;
+            System::IDisposable^ disposable = nullptr;
+            LabelSet^ labelSet2 = nullptr;
+            String^ text = nullptr;
+            Int32 num = 0;
             LabelSet^ labelSet = LabelTrie::InternLabels(c);
-            LabelSet^ keepLabelSetAlive = LabelTrie::InternLabels(c);
-            GC::KeepAlive(keepLabelSetAlive);
+            Object^ item = nullptr;
+            String^ key = nullptr;
+            String^ value = nullptr;
+            LabelSet^ labelSet3 = nullptr;
+            System::Collections::DictionaryEntry entry;
             if (!labelSet->Wild())
                 return dictionary[c];
 
-            Int32 num = c->IndexOf('{');
-            String^ text = ((num == -1) ? c : c->Substring(0, num));
-            for each (Object^ item in dictionary)
+            num = c->IndexOf('{');
+            text = ((num == -1) ? c : c->Substring(0, num));
+            enumerator = dictionary->GetEnumerator();
+            try
             {
-                DictionaryEntry entry = safe_cast<DictionaryEntry>(item);
-                String^ s = dynamic_cast<String^>(entry.Key);
-                String^ value = SplitName(s);
-                if (text->Equals(value))
+                while (enumerator->MoveNext())
                 {
-                    LabelSet^ labelSet2 = LabelTrie::InternLabels(s);
-                    if (labelSet->Unifies(labelSet2))
-                        return entry.Value;
+                    item = enumerator->Current;
+                    entry = safe_cast<System::Collections::DictionaryEntry>(item);
+                    key = dynamic_cast<String^>(entry.Key);
+                    value = SplitName(key);
+                    if (text->Equals(value))
+                    {
+                        labelSet2 = LabelTrie::InternLabels(key);
+                        labelSet3 = labelSet2;
+                        if (labelSet->Unifies(labelSet2))
+                        {
+                            item = entry.Value;
+                            return item;
+                        }
+                    }
                 }
             }
+            finally
+            {
+                disposable = dynamic_cast<System::IDisposable^>(enumerator);
+                if (disposable != nullptr) delete disposable;
+            }
 
+            GC::KeepAlive(labelSet3);
             return nullptr;
         }
 
         static String^ FindBinding(String^ s, IDictionary^ dictionary)
         {
-            Int32 num = s->IndexOf('{');
-            String^ text = ((num == -1) ? s : s->Substring(0, num));
+            String^ text = nullptr;
+            System::Collections::IDictionaryEnumerator^ enumerator = nullptr;
+            System::IDisposable^ disposable = nullptr;
+            LabelSet^ labelSet2 = nullptr;
+            Int32 num = 0;
+            String^ key = nullptr;
+            String^ value = nullptr;
             LabelSet^ labelSet = LabelTrie::InternLabels(s);
-            LabelSet^ keepLabelSetAlive = LabelTrie::InternLabels(s);
-            GC::KeepAlive(keepLabelSetAlive);
-            for each (Object^ item in dictionary)
+            String^ prefix = nullptr;
+            LabelSet^ labelSet3 = nullptr;
+            System::Collections::DictionaryEntry entry;
+            num = s->IndexOf('{');
+            prefix = ((num == -1) ? s : s->Substring(0, num));
+            enumerator = dictionary->GetEnumerator();
+            try
             {
-                DictionaryEntry entry = safe_cast<DictionaryEntry>(item);
-                String^ text2 = dynamic_cast<String^>(entry.Key);
-                String^ value = SplitName(text2);
-                if (text->Equals(value))
+                while (enumerator->MoveNext())
                 {
-                    LabelSet^ labelSet2 = LabelTrie::InternLabels(text2);
-                    if (labelSet->Unifies(labelSet2))
-                        return text2;
+                    entry = safe_cast<System::Collections::DictionaryEntry>(enumerator->Current);
+                    text = dynamic_cast<String^>(entry.Key);
+                    value = SplitName(text);
+                    if (prefix->Equals(value))
+                    {
+                        labelSet2 = LabelTrie::InternLabels(text);
+                        labelSet3 = labelSet2;
+                        if (labelSet->Unifies(labelSet2))
+                        {
+                            key = text;
+                            return key;
+                        }
+                    }
                 }
             }
+            finally
+            {
+                disposable = dynamic_cast<System::IDisposable^>(enumerator);
+                if (disposable != nullptr) delete disposable;
+            }
 
+            GC::KeepAlive(labelSet3);
             return nullptr;
         }
 

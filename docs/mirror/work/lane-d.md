@@ -3,6 +3,6 @@
 - Owner: Lane D.
 - Branch: `mirror/d-engine-utl-nativeinterop-20261022-d3`.
 - Worktree: `C:/Projects/Quire-wt/lane-d-engine-utl-nativeinterop-20261022-d3`.
-- Members: C++/CLI spike ports Win32-backed Utl methods and transplants exact queue, XML, FileUtils, Lisp parser, formatter, and nested line-partition bodies; consumer covers these paths.
-- Release IL: production C# base 129/129 (prior report `.mirror-cache/release-il-a8226ea73911/release-il.json`); C++/CLI candidate FAIL, 390 checked / 272 exact / 174 failures (`.mirror-cache/release-il-b12f1dfb953a/release-il.json`).
-- Remaining: candidate public API is incomplete; 117 generated global methods lack reviewed bindings, 34 methods have no original counterpart, nine are removed, and 14 mapped bodies differ. Ghidra imported/analyzed the candidate; P1 export helper is unavailable. See `docs/mirror/native/utl-mgd-mixed-mode-implementation.md`.
+- Members: C++/CLI proof and consumer; this batch makes `FileUtils.LongUnicodeToShortcutKey` an exact, loadable transplant and corrects the proof-local enumerator value-type signature mapping.
+- Release IL: candidate FAIL, 390 checked / 278 exact / 168 failures (`.mirror-cache/release-il-1400f5b52bda/release-il.json`); production C# project remains unchanged.
+- Remaining: 117 generated global methods lack reviewed bindings, 34 methods have no counterpart, nine are removed, and eight mapped bodies differ. REA confirmed mixed-mode metadata; Ghidra imported/analyzed the candidate, but the configured AutoAnalyze helper is missing. See `docs/mirror/native/utl-mgd-mixed-mode-implementation.md`.
