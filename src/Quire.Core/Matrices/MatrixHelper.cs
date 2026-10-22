@@ -16,6 +16,17 @@ public partial class MatrixHelper
     public static int ColumnOf(int index, int columns) => index % columns;
 
     [MirrorVerified("Release IL")]
+    public static T[] SwapRowsColumns<T>(int rows, int columns, T[] elements)
+    {
+        T[] array = new T[elements.Length];
+        for (int i = 0; i < elements.Length; i++)
+        {
+            array[SwapIndex(i, rows, columns)] = elements[i];
+        }
+        return array;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(int row, int column, int numOfColumns)
     {
         if (!DebugTools.DevAssert(0 <= column && column < numOfColumns, null).Passed)
