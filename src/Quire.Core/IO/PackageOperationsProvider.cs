@@ -68,6 +68,21 @@ public partial class PackageOperationsProvider
         return relationship.TargetUri;
     }
 
+    [MirrorVerified("Release IL")]
+    public PackagePart GetSinglePartByRelationshipType(Package package, string relationshipType)
+    {
+        Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(package.GetRelationshipsByType(relationshipType));
+        if (uriForFirstRelashionshipInCollection == null)
+        {
+            throw new Exception(string.Format("Package doesn't contain relationship of type {0}", relationshipType));
+        }
+        if (!package.PartExists(uriForFirstRelashionshipInCollection))
+        {
+            throw new Exception(string.Format("Package doesn't contain part by URI {0}", uriForFirstRelashionshipInCollection.OriginalString));
+        }
+        return package.GetPart(uriForFirstRelashionshipInCollection);
+    }
+
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     private static readonly Uri _worksheet;
 
