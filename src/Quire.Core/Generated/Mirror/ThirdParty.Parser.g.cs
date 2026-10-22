@@ -258,7 +258,44 @@ public sealed partial class Parser
             return false;
         }
         [global::Quire.Mirror.MirrorStub]
-        public bool SetValue(string value, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public bool SetValue(string value, object destination)
+        {
+            if (SeenValue && !AllowMultiple)
+            {
+                reporter(global::System.String.Format("Duplicate '{0}' argument", LongName));
+                return false;
+            }
+            seenValue = true;
+            if (!ParseValue(ValueType, value, out object value2))
+            {
+                return false;
+            }
+            if (IsCollection)
+            {
+                if (Unique && collectionValues.Contains(value2))
+                {
+                    ReportDuplicateArgumentValue(value);
+                    return false;
+                }
+                collectionValues.Add(value2);
+            }
+            else if (validValues != "")
+            {
+                global::System.Collections.Specialized.StringCollection stringCollection = new global::System.Collections.Specialized.StringCollection();
+                stringCollection.AddRange(validValues.Split('|'));
+                if (!stringCollection.Contains(value))
+                {
+                    ReportInvalidValue(value);
+                    return false;
+                }
+                fieldInfo.SetValue(destination, value2);
+            }
+            else
+            {
+                fieldInfo.SetValue(destination, value2);
+            }
+            return true;
+        }
         [global::Quire.Mirror.MirrorStub]
         private bool ParseValue(global::System.Type type, string stringData, out object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
