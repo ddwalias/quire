@@ -104,6 +104,11 @@ internal static class BodyTransplant
             {
                 (".ctor", 0)
             }),
+            ("utl-mgd", "Quire.utl_mgd.Mailbox`1", "utl_mgd.Mailbox`1", new[]
+            {
+                (".ctor", 0), ("GetMessage", 0), ("GetMessage", 2),
+                ("PutMessage", 1), ("Count", 0)
+            }),
             ("utl-mgd", "Quire.utl_mgd.MessageQueue`3", "utl_mgd.MessageQueue`3", new[]
             {
                 ("Init", 1), ("MsgLoop", 1), ("!MessageQueue`3", 0), ("~MessageQueue`3", 0)
