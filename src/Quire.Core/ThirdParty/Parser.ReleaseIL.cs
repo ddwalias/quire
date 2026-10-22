@@ -6,6 +6,82 @@ namespace Quire.ThirdParty;
 public sealed partial class Parser
 {
     [MirrorVerified("Release IL")]
+    public string GetUsageString(int screenWidth)
+    {
+        ArgumentHelpStrings[] allHelpStrings = GetAllHelpStrings();
+        int num = 0;
+        int num3;
+        int num2;
+        string newLine;
+        global::System.Text.StringBuilder stringBuilder;
+        ArgumentHelpStrings[] array = allHelpStrings;
+        int i;
+        ArgumentHelpStrings argumentHelpStrings;
+        ArgumentHelpStrings argumentHelpStrings2;
+        for (i = 0; i < array.Length; i++)
+        {
+            argumentHelpStrings = array[i];
+            num = global::System.Math.Max(num, argumentHelpStrings.syntax.Length);
+        }
+        num2 = num + 2;
+        screenWidth = global::System.Math.Max(screenWidth, 15);
+        if (screenWidth < num2 + 10)
+        {
+            num3 = 5;
+        }
+        else
+        {
+            num3 = num2;
+        }
+        newLine = global::System.Environment.NewLine;
+        stringBuilder = new global::System.Text.StringBuilder();
+        array = allHelpStrings;
+        for (i = 0; i < array.Length; i++)
+        {
+            argumentHelpStrings2 = array[i];
+            int length = argumentHelpStrings2.syntax.Length;
+            stringBuilder.Append(argumentHelpStrings2.syntax);
+            int currentColumn = length;
+            if (length >= num3)
+            {
+                stringBuilder.Append(newLine);
+                currentColumn = 0;
+            }
+            int num4 = screenWidth - num3;
+            int j = 0;
+            while (j < argumentHelpStrings2.help.Length)
+            {
+                stringBuilder.Append(' ', num3 - currentColumn);
+                currentColumn = num3;
+                int num5 = j + num4;
+                if (num5 >= argumentHelpStrings2.help.Length)
+                {
+                    num5 = argumentHelpStrings2.help.Length;
+                }
+                else
+                {
+                    num5 = argumentHelpStrings2.help.LastIndexOf(' ', num5 - 1, global::System.Math.Min(num5 - j, num4));
+                    if (num5 <= j)
+                    {
+                        num5 = j + num4;
+                    }
+                }
+                stringBuilder.Append(argumentHelpStrings2.help, j, num5 - j);
+                j = num5;
+                AddNewLine(newLine, stringBuilder, ref currentColumn);
+                for (; j < argumentHelpStrings2.help.Length && argumentHelpStrings2.help[j] == ' '; j++)
+                {
+                }
+            }
+            if (argumentHelpStrings2.help.Length == 0)
+            {
+                stringBuilder.Append(newLine);
+            }
+        }
+        return stringBuilder.ToString();
+    }
+
+    [MirrorVerified("Release IL")]
     public Parser(global::System.Type argumentSpecification, ErrorReporter reporter)
     {
         this.reporter = reporter;
