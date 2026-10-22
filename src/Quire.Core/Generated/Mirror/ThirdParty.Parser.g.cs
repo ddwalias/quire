@@ -151,11 +151,7 @@ public sealed partial class Parser
         [global::Quire.Mirror.MirrorStub]
         public string SyntaxHelp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public bool IsRequired { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
         public bool AllowMultiple { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public bool Unique { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public Argument(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo, global::Quire.ThirdParty.ErrorReporter reporter) { }
         [global::Quire.Mirror.MirrorStub]

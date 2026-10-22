@@ -117,6 +117,12 @@ public partial class Parser
     partial class Argument
     {
         [MirrorVerified("Release IL")]
+        public bool IsRequired => (uint)(flags & ArgumentType.Required) > 0u;
+
+        [MirrorVerified("Release IL")]
+        public bool Unique => (uint)(flags & ArgumentType.Unique) > 0u;
+
+        [MirrorVerified("Release IL")]
         private ErrorReporter reporter;
 
         [MirrorVerified("Release IL")]
