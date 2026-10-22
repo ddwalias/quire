@@ -39,6 +39,20 @@ public partial class TextStyleBase
     }
 
     [MirrorVerified("Release IL")]
+    public object GetSetterValue(string propertyName, bool isFixInHeritage = false)
+    {
+        if (_htPropertyToIndex[propertyName] != null)
+        {
+            return ((System.Windows.Setter)Style.Setters[(int)_htPropertyToIndex[propertyName]]).Value;
+        }
+        if (isFixInHeritage)
+        {
+            return GetBasedOnSetterValue(Style, propertyName);
+        }
+        return null;
+    }
+
+    [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
         _baseOnKey = null;

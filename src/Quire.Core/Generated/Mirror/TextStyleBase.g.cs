@@ -62,8 +62,6 @@ public abstract partial class TextStyleBase : global::Quire.ITextStyle, global::
     [global::Quire.Mirror.MirrorStub]
     public global::System.Reflection.FieldInfo GetDependencyProperties(global::System.Type type, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public object GetSetterValue(string propertyName, bool isFixInHeritage = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static object GetBasedOnSetterValue(global::System.Windows.Style style, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static object GetSetterValue(global::System.Windows.Style style, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
