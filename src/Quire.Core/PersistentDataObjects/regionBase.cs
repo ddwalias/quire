@@ -40,6 +40,19 @@ public partial class regionBase
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     public bool convertedfromSpecified { get => convertedfromFieldSpecified; set => convertedfromFieldSpecified = value; }
 
+    [MirrorVerified("Release IL")]
+    public bool ConvertedFromMC14
+    {
+        get
+        {
+            if (convertedfromSpecified)
+            {
+                return convertedfrom == 0;
+            }
+            return false;
+        }
+    }
+
     [MirrorVerified("PtcPersistentDataObjectsregionBaseMechanicalDifferentialTests")]
     private double heightField;
 
