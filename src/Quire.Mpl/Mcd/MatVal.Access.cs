@@ -140,14 +140,27 @@ public sealed partial class MatVal
     {
         if (m_parr != null)
         {
-            int live = 0;
-            foreach (DictionaryEntry entry in m_parr)
+            int num = 0;
+            foreach (DictionaryEntry item in m_parr)
             {
-                if (!IsPtrNan(ref m_rarr[(int)entry.Key])) continue;
-                if (!DimVal.IsDimOf(entry.Value, m_dim)) return false;
-                live++;
+                int num2 = (int)item.Key;
+                if (IsPtrNan(ref m_rarr[num2]))
+                {
+                    if (DimVal.IsDimOf(item.Value, m_dim))
+                    {
+                        num++;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
-            if (live == Rows * Cols) { m_dim = d; return true; }
+            if (num == Rows * Cols)
+            {
+                m_dim = d;
+                return true;
+            }
         }
         return Dim.Eq_b(m_dim, d);
     }
@@ -571,17 +584,35 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool IsUniformScalarPtrs()
     {
-        int count = 0;
-        Dim common = null;
-        foreach (DictionaryEntry entry in m_parr)
+        int num = 0;
+        Dim dim = null;
+        foreach (DictionaryEntry item in m_parr)
         {
-            if (!IsPtrNan(ref m_rarr[(int)entry.Key])) continue;
-            if (entry.Value is not NumVal n) return false;
-            if (Dim.Eq_b(n.m_dim, common)) common = Dim.Eq(n.m_dim, common);
-            else if (n.m_dim != Dim.mcd_zero) return false;
-            count++;
+            int num2 = (int)item.Key;
+            if (!IsPtrNan(ref m_rarr[num2]))
+            {
+                continue;
+            }
+            NumVal numVal = item.Value as NumVal;
+            if (numVal == null)
+            {
+                return false;
+            }
+            Dim dim2 = numVal.m_dim;
+            if (Dim.Eq_b(dim2, dim))
+            {
+                dim = Dim.Eq(dim2, dim);
+                num++;
+                continue;
+            }
+            if (dim2 == Dim.mcd_zero)
+            {
+                num++;
+                continue;
+            }
+            return false;
         }
-        return TidyPtrs(count, 0, common, false);
+        return TidyPtrs(num, 0, dim, hasOtherPntr: false);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool DimActual()
@@ -606,20 +637,50 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool CanonicalizePtrs()
     {
-        if (m_dim == Dim.string_dim) m_dim = Dim.identity;
-        Dim common = DimActual() ? m_dim : null;
-        int count = 0, zeros = 0;
-        bool other = false;
-        foreach (DictionaryEntry entry in m_parr)
+        if (m_dim == Dim.string_dim)
         {
-            if (!IsPtrNan(ref m_rarr[(int)entry.Key])) continue;
-            if (entry.Value is not NumVal n) { other = true; continue; }
-            if (Dim.Eq_b(n.m_dim, common)) common = Dim.Eq(n.m_dim, common);
-            else if (n.m_dim != Dim.mcd_zero) { other = true; continue; }
-            count++;
-            if (n.m_dim == Dim.mcd_zero) zeros++;
+            m_dim = Dim.identity;
         }
-        return TidyPtrs(count, zeros, common, other);
+        int num = 0;
+        int num2 = 0;
+        Dim dim = (DimActual() ? m_dim : null);
+        bool hasOtherPntr = false;
+        foreach (DictionaryEntry item in m_parr)
+        {
+            int num3 = (int)item.Key;
+            if (!IsPtrNan(ref m_rarr[num3]))
+            {
+                continue;
+            }
+            NumVal numVal = item.Value as NumVal;
+            if (numVal == null)
+            {
+                hasOtherPntr = true;
+            }
+            else
+            {
+                Dim dim2 = numVal.m_dim;
+                if (Dim.Eq_b(dim2, dim))
+                {
+                    dim = Dim.Eq(dim2, dim);
+                    num++;
+                    if (dim2 == Dim.mcd_zero)
+                    {
+                        num2++;
+                    }
+                }
+                else if (dim2 == Dim.mcd_zero)
+                {
+                    num2++;
+                    num++;
+                }
+                else
+                {
+                    hasOtherPntr = true;
+                }
+            }
+        }
+        return TidyPtrs(num, num2, dim, hasOtherPntr);
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private bool TidyPtrs(int n, int nz, Dim d, bool hasOtherPntr)
@@ -647,50 +708,95 @@ public sealed partial class MatVal
     [MirrorAnalyzed("Mcd.MatVal")]
     private void ReinsertPtrs()
     {
-        var table = m_parr;
-        var oldReal = m_rarr;
-        int oldOffset = Offset, oldStride = Anr;
-        bool shared = Shared;
-        if (shared)
+        if (Shared)
         {
+            double[] rarr = m_rarr;
             m_rarr = PackReal();
             m_iarr = PackImag();
+            int anr = Anr;
+            int offset = m_offset;
             m_offset = 0;
             Data.m_anr = Rows;
             Shared = false;
+            Hashtable parr = m_parr;
+            m_parr = null;
+            foreach (DictionaryEntry item in parr)
+            {
+                int num = (int)item.Key;
+                if (IsPtrNan(ref rarr[num]))
+                {
+                    num -= offset;
+                    set(num % anr + num / anr * Rows, item.Value);
+                }
+            }
         }
-        m_parr = null;
-        foreach (DictionaryEntry entry in table)
+        else
         {
-            int oldIndex = (int)entry.Key;
-            if (!IsPtrNan(ref oldReal[oldIndex])) continue;
-            int index = shared ? (oldIndex - oldOffset) % oldStride + (oldIndex - oldOffset) / oldStride * Rows : oldIndex;
-            set(index, entry.Value);
+            Hashtable parr2 = m_parr;
+            m_parr = null;
+            foreach (DictionaryEntry item2 in parr2)
+            {
+                int num2 = (int)item2.Key;
+                if (IsPtrNan(ref m_rarr[num2]))
+                {
+                    set(num2, item2.Value);
+                }
+            }
         }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
     private void ReinsertPtrs1()
     {
-        var table = m_parr;
-        var oldReal = m_rarr;
-        int oldOffset = Offset, oldStride = Anr;
-        bool shared = Shared;
-        if (shared)
+        if (Shared)
         {
+            double[] rarr = m_rarr;
             m_rarr = PackReal();
             m_iarr = PackImag();
+            int anr = Anr;
+            int offset = m_offset;
             m_offset = 0;
             Data.m_anr = Rows;
             Shared = false;
+            Hashtable parr = m_parr;
+            m_parr = null;
+            foreach (DictionaryEntry item in parr)
+            {
+                int num = (int)item.Key;
+                if (IsPtrNan(ref rarr[num]))
+                {
+                    num -= offset;
+                    if (item.Value is NumVal numVal && numVal.m_dim == Dim.mcd_zero)
+                    {
+                        numVal.m_dim = Dim.identity;
+                        set(num % anr + num / anr * Rows, numVal);
+                    }
+                    else
+                    {
+                        set(num % anr + num / anr * Rows, item.Value);
+                    }
+                }
+            }
         }
-        m_parr = null;
-        foreach (DictionaryEntry entry in table)
+        else
         {
-            int oldIndex = (int)entry.Key;
-            if (!IsPtrNan(ref oldReal[oldIndex])) continue;
-            if (entry.Value is NumVal n && n.m_dim == Dim.mcd_zero) n.m_dim = Dim.identity;
-            int index = shared ? (oldIndex - oldOffset) % oldStride + (oldIndex - oldOffset) / oldStride * Rows : oldIndex;
-            set(index, entry.Value);
+            Hashtable parr2 = m_parr;
+            m_parr = null;
+            foreach (DictionaryEntry item2 in parr2)
+            {
+                int num2 = (int)item2.Key;
+                if (IsPtrNan(ref m_rarr[num2]))
+                {
+                    if (item2.Value is NumVal numVal2 && numVal2.m_dim == Dim.mcd_zero)
+                    {
+                        numVal2.m_dim = Dim.identity;
+                        set(num2, numVal2);
+                    }
+                    else
+                    {
+                        set(num2, item2.Value);
+                    }
+                }
+            }
         }
     }
     [MirrorAnalyzed("Mcd.MatVal")]
