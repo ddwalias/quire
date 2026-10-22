@@ -22,6 +22,37 @@ public partial class MatrixHelper
         return SwapRowsColumns(rows, columns, array);
     }
 
+    [MirrorVerified("Release IL")]
+    public static T[] AddRow<T>(int rowToAdd, int rows, int cols, T[] elements, global::Quire.DelegateFunction0<T> createDefaultElement)
+    {
+        if (rowToAdd < 0 || rowToAdd > rows)
+        {
+            throw new global::System.ArgumentException(global::System.String.Format("rowToAdd({0}) must be in the range 0 - # of rows({1})", rowToAdd, rows));
+        }
+        if (rows * cols != elements.Length)
+        {
+            throw new global::System.ArgumentException(global::System.String.Format("There must be exactly rows x cols ({0}) but there were {1}", rows * cols, elements.Length));
+        }
+        T[] array = new T[(rows + 1) * cols];
+        int num = IndexOf(rowToAdd, 0, cols);
+        if (num > 0)
+        {
+            global::System.Array.Copy(elements, 0, array, 0, num);
+        }
+        if (createDefaultElement != null)
+        {
+            for (int i = num; i < num + cols; i++)
+            {
+                array[i] = createDefaultElement();
+            }
+        }
+        if (num < elements.Length)
+        {
+            global::System.Array.Copy(elements, num, array, num + cols, elements.Length - num);
+        }
+        return array;
+    }
+
     [MirrorVerified("PtcMatricesMatrixHelperMechanicalDifferentialTests")]
     public MatrixHelper() { }
 
