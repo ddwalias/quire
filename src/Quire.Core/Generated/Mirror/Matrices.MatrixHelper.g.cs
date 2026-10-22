@@ -18,8 +18,6 @@ public partial class MatrixHelper
     [global::Quire.Mirror.MirrorStub]
     public static int SwapIndex(int index, int rows, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int IndexOf(int row, int column, int numOfColumns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static T[] AddRow<T>(int rowToAdd, int rows, int cols, T[] elements, global::Quire.DelegateFunction0<T> createDefaultElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static T[] AddColumn<T>(int colToAdd, int rows, int cols, T[] elements, global::Quire.DelegateFunction0<T> createDefaultElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

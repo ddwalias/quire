@@ -16,5 +16,15 @@ public partial class MatrixHelper
     public static int ColumnOf(int index, int columns) => index % columns;
 
     [MirrorVerified("Release IL")]
+    public static int IndexOf(int row, int column, int numOfColumns)
+    {
+        if (!DebugTools.DevAssert(0 <= column && column < numOfColumns, null).Passed)
+        {
+            return -1;
+        }
+        return row * numOfColumns + column;
+    }
+
+    [MirrorVerified("Release IL")]
     public static DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => new DiscreteRect(RowOf(corner1, columns), ColumnOf(corner1, columns), RowOf(corner2, columns), ColumnOf(corner2, columns));
 }
