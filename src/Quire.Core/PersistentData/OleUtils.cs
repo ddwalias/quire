@@ -15,6 +15,19 @@ public static partial class OleUtils
     public static bool IsSupportedExcelGuid(Guid guid) => new System.Collections.Generic.List<Guid> { _excel8Guid, _excel12Guid, _excelMacroEnabled12Guid, _excelBinaryMacroEnabled12Guid }.Contains(guid);
 
     [MirrorVerified("Release IL")]
+    public static Guid GetExcelSheetGuid(string excelSheetProgId)
+    {
+        Type type = Type.GetTypeFromProgID(excelSheetProgId);
+        if (null != type)
+        {
+            goto HasProgramId;
+        }
+        return Guid.Empty;
+    HasProgramId:
+        return type.GUID;
+    }
+
+    [MirrorVerified("Release IL")]
     private static readonly Guid _excel8Guid;
 
     [MirrorVerified("Release IL")]
