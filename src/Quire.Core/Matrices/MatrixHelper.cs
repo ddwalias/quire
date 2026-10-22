@@ -74,6 +74,36 @@ public partial class MatrixHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static T[] AddColumn<T>(int colToAdd, int rows, int cols, T[] elements, global::Quire.DelegateFunction0<T> createDefaultElement)
+    {
+        if (colToAdd < 0 || colToAdd > cols)
+        {
+            throw new global::System.ArgumentException(global::System.String.Format("colToAdd({0}) must be in the range 0 - # of columns({1})", colToAdd, cols));
+        }
+        if (rows * cols != elements.Length)
+        {
+            throw new global::System.ArgumentException(global::System.String.Format("There must be exactly rows x cols ({0}) but there were {1}", rows * cols, elements.Length));
+        }
+        T[] array = new T[rows * (cols + 1)];
+        for (int i = 0; i < rows; i++)
+        {
+            if (colToAdd > 0)
+            {
+                global::System.Array.Copy(elements, IndexOf(i, 0, cols), array, IndexOf(i, 0, cols + 1), colToAdd);
+            }
+            if (createDefaultElement != null)
+            {
+                array[IndexOf(i, colToAdd, cols + 1)] = createDefaultElement();
+            }
+            if (colToAdd < cols)
+            {
+                global::System.Array.Copy(elements, IndexOf(i, colToAdd, cols), array, IndexOf(i, colToAdd + 1, cols + 1), cols - colToAdd);
+            }
+        }
+        return array;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(int row, int column, int numOfColumns)
     {
         if (!DebugTools.DevAssert(0 <= column && column < numOfColumns, null).Passed)
