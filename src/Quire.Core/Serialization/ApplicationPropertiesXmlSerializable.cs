@@ -1,4 +1,6 @@
 #nullable disable
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
 using System.Xml;
@@ -39,6 +41,41 @@ public partial class ApplicationPropertiesXmlSerializable
 
     [MirrorVerified("Release IL")]
     private static propertiesType DeserializeAppProperties(XmlReader reader) => (propertiesType)propertiesType.XmlSerializer.Deserialize(reader);
+
+    [MirrorVerified("Release IL")]
+    public void WriteXml(XmlWriter writer)
+    {
+        List<schemaPropertiesType> list = new List<schemaPropertiesType>();
+        foreach (KeyValuePair<SchemasManager.SchemaNameEnum, Version> serializedSchemaVersion in _helper.SerializedSchemaVersions)
+        {
+            list.Add(new schemaPropertiesType
+            {
+                name = serializedSchemaVersion.Key.ToString(),
+                version = serializedSchemaVersion.Value.ToString()
+            });
+        }
+        propertiesType propertiesType2 = new propertiesType
+        {
+            application = _helper.ApplicationName,
+            appVersion = new propertiesTypeAppVersion
+            {
+                Value = _helper.AppVersion.ToString(),
+                release = _helper.Release
+            },
+            serializationVersion = new propertiesTypeSerializationVersion
+            {
+                Value = _helper.FormatVersion.ToString(),
+                architecture = XmlWorksheetData.Architecture,
+                architectureSpecified = true,
+                Culture = CultureInfo.CurrentCulture.ToString(),
+                UiCulture = CultureInfo.CurrentUICulture.ToString()
+            },
+            engineVersion = _helper.EngineVersion,
+            build = XmlWorksheetData.BuildId,
+            schemaPropertiesList = list.ToArray()
+        };
+        propertiesType.XmlSerializer.Serialize(writer, propertiesType2);
+    }
 
     [MirrorVerified("Release IL")]
     public static bool TryGetFormatVersionFromFile(string filePath, out Version formatVersion)
