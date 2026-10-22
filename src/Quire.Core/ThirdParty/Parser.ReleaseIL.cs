@@ -6,6 +6,26 @@ namespace Quire.ThirdParty;
 public sealed partial class Parser
 {
     [MirrorVerified("Release IL")]
+    private static string HelpText(ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
+    {
+        if (attribute == null)
+        {
+            return null;
+        }
+        return attribute.HelpText;
+    }
+
+    [MirrorVerified("Release IL")]
+    private static bool HasHelpText(ArgumentAttribute attribute)
+    {
+        if (attribute != null)
+        {
+            return attribute.HasHelpText;
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
     public string GetUsageString(int screenWidth)
     {
         ArgumentHelpStrings[] allHelpStrings = GetAllHelpStrings();

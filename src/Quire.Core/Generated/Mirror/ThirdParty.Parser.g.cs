@@ -29,10 +29,6 @@ public sealed partial class Parser
     public static bool ParseArguments(string[] arguments, object destination, global::Quire.ThirdParty.ErrorReporter reporter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool ParseArgumentList(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string HelpText(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool HasHelpText(global::Quire.ThirdParty.ArgumentAttribute attribute) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorOf("Ptc.ThirdParty.Parser+HelpArgument, Ptc.Core")]
     private partial class HelpArgument
     {
