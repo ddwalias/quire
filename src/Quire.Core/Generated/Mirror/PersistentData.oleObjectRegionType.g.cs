@@ -11,8 +11,22 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.oleObjectRegionType, Ptc.Core")]
 public partial class oleObjectRegionType : global::Quire.PersistentData.oleBaseContainerType, global::Quire.PersistentData.IOleObjectPersistentData, global::Quire.PersistentData.IOleSizeData
 {
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Windows.Size global::Quire.PersistentData.IOleSizeData.OleViewportSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    global::System.Windows.Size global::Quire.PersistentData.IOleSizeData.OleViewportSize
+    {
+        get
+        {
+            global::System.Nullable<global::System.Windows.Size> fakeOleViewportSize = FakeOleViewportSize;
+            if (!fakeOleViewportSize.HasValue)
+            {
+                if (OleViewportSize != null)
+                {
+                    return new global::System.Windows.Size(OleViewportSize.width, OleViewportSize.height);
+                }
+                return global::System.Windows.Size.Empty;
+            }
+            return fakeOleViewportSize.GetValueOrDefault();
+        }
+    }
     public bool HasFakeOleViewportSize { get => FakeOleViewportSize.HasValue; }
     [global::Quire.Mirror.MirrorStub]
     public oleObjectRegionType(global::Quire.PersistentData.IOleSizeData sizeData) { }
