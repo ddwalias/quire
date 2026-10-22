@@ -23,6 +23,22 @@ public partial class TextStyleBase
     public Style Style { get; private set; }
 
     [MirrorVerified("Release IL")]
+    public static string TextStyleUniqueKeyGenerator(string key)
+    {
+        return string.Concat(TextStyleStripKeyGenerator(key), "~", DateTime.Now.Ticks.ToString());
+    }
+
+    [MirrorVerified("Release IL")]
+    public static string TextStyleStripKeyGenerator(string key)
+    {
+        if (key.Split('~', StringSplitOptions.None).Length != 1)
+        {
+            return key.Substring(0, key.LastIndexOf('~'));
+        }
+        return key;
+    }
+
+    [MirrorVerified("Release IL")]
     public void MergeBasedOn()
     {
         _baseOnKey = null;
