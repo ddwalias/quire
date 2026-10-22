@@ -13,8 +13,11 @@ public partial class ApplicationBehaviorOptions : global::Quire.Services.IApplic
 {
     [global::Quire.Mirror.MirrorStub]
     private int _delayRecalculationInMsecAfterCloseExcel;
-    [global::Quire.Mirror.MirrorStub]
-    public int DelayRecalculationInMsecAfterCloseExcel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public int DelayRecalculationInMsecAfterCloseExcel
+    {
+        get => _delayRecalculationInMsecAfterCloseExcel;
+        set => _delayRecalculationInMsecAfterCloseExcel = value < 0 ? 0 : value;
+    }
     [global::Quire.Mirror.MirrorStub]
     public ApplicationBehaviorOptions() { }
 }
