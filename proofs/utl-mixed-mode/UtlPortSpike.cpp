@@ -226,6 +226,110 @@ namespace Quire { namespace utl_mgd {
         }
     };
 
+    generic <typename Owner, typename Data, typename Msg>
+    where Owner : ref class
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.MessageQueue`3, utl-mgd")]
+    public ref class MessageQueue : System::Collections::Queue, IDisposable
+    {
+    private:
+        Mailbox<Msg>^ m_mailbox;
+        Thread^ m_thread;
+        Int32 m_stack_size;
+        void* m_death_handle;
+
+    public:
+        [Quire::Mirror::MirrorOfAttribute("utl_mgd.MessageQueue`3+OnInit, utl-mgd")]
+        delegate void OnInit(Owner owner, Data data);
+
+        [Quire::Mirror::MirrorOfAttribute("utl_mgd.MessageQueue`3+OnMessage, utl-mgd")]
+        delegate Boolean OnMessage(Owner owner, Data data, Msg message);
+
+    private:
+        static void MsgLoop(Object^ obj)
+        {
+            auto args = safe_cast<System::Tuple<WeakReference^, Data, Mailbox<Msg>^, OnInit^, OnMessage^, Int64>^>(obj);
+            WeakReference^ ownerReference = args->Item1;
+            Data data = args->Item2;
+            Mailbox<Msg>^ mailbox = args->Item3;
+            OnInit^ onInit = args->Item4;
+            OnMessage^ onMessage = args->Item5;
+            void* deathHandle = System::IntPtr(args->Item6).ToPointer();
+            if (onInit != nullptr)
+            {
+                Object^ target = ownerReference->Target;
+                if (target != nullptr) onInit(safe_cast<Owner>(target), data);
+            }
+
+            Msg message = Msg();
+            Object^ target;
+            do
+            {
+                message = Msg();
+                if (!mailbox->GetMessage(message, deathHandle)) break;
+                target = ownerReference->Target;
+            }
+            while (target != nullptr && onMessage(safe_cast<Owner>(target), data, message));
+
+            if (deathHandle != reinterpret_cast<void*>(-1)) ::CloseHandle(static_cast<HANDLE>(deathHandle));
+        }
+
+        void Init(Int32 stack_size)
+        {
+            m_mailbox = gcnew Mailbox<Msg>();
+            m_death_handle = reinterpret_cast<void*>(-1);
+            m_stack_size = stack_size;
+            m_thread = gcnew Thread(gcnew ParameterizedThreadStart(&MessageQueue::MsgLoop), stack_size);
+            m_thread->IsBackground = true;
+        }
+
+    public:
+        MessageQueue(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage)
+        {
+            Init(1048576); Start(owner, data, onInit, onMessage, true);
+        }
+
+        MessageQueue(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage, Int32 stack_size)
+        {
+            Init(stack_size); Start(owner, data, onInit, onMessage, true);
+        }
+
+        MessageQueue(Int32 stack_size) { Init(stack_size); }
+
+    private:
+        void _bangMessageQueue() { Stop(); }
+        void _tildeMessageQueue() { _bangMessageQueue(); }
+
+    public:
+        void Start(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage, Boolean stopThreadOnFinalize)
+        {
+            if (m_thread->Name == nullptr)
+                m_thread->Name = String::Concat("MsgLoop(", owner->ToString(), ")");
+            if (stopThreadOnFinalize)
+                m_death_handle = ::CreateEventW(nullptr, TRUE, FALSE, nullptr);
+
+            Int64 handle = System::IntPtr(m_death_handle).ToInt64();
+            auto parameter = gcnew System::Tuple<WeakReference^, Data, Mailbox<Msg>^, OnInit^, OnMessage^, Int64>(
+                gcnew WeakReference(owner), data, m_mailbox, onInit, onMessage, handle);
+            m_thread->Start(parameter);
+            GC::KeepAlive(this);
+        }
+
+        void Stop()
+        {
+            if (m_death_handle != reinterpret_cast<void*>(-1))
+            {
+                ::SetEvent(static_cast<HANDLE>(m_death_handle));
+                m_death_handle = reinterpret_cast<void*>(-1);
+            }
+        }
+
+        Mailbox<Msg>^ GetMailbox() { return m_mailbox; }
+        Thread^ GetThread() { return m_thread; }
+
+        ~MessageQueue() { _tildeMessageQueue(); GC::SuppressFinalize(this); GC::KeepAlive(this); }
+        !MessageQueue() { _bangMessageQueue(); }
+    };
+
 }}
 
 namespace Quire { namespace Engine { namespace Misc {
@@ -1974,6 +2078,50 @@ namespace Quire { namespace utl_mgd {
             args[6] = a6;
             return Invoke(args);
         }
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.TaskQueue, utl-mgd")]
+    public ref class TaskQueue : MessageQueue<TaskQueue^, Int32, Function^>
+    {
+    private:
+        SafeMutex^ m_empty_mutex;
+        SafeEvent^ m_empty;
+
+        static Boolean ExecuteTask(TaskQueue^ queue, Int32, Function^ function)
+        {
+            function->Invoke0(); queue->OnTaskExecuted(); return true;
+        }
+
+    protected:
+        void OnTaskExecuted()
+        {
+            m_empty_mutex->WaitOne();
+            try { if (GetMailbox()->Count() == 0) m_empty->Set(); }
+            finally { m_empty_mutex->EnsureReleased(1); }
+            GC::KeepAlive(this);
+        }
+
+    public:
+        TaskQueue() : MessageQueue<TaskQueue^, Int32, Function^>(1048576)
+        {
+            m_empty_mutex = gcnew SafeMutex("task queue empty mutex");
+            m_empty = gcnew SafeEvent("task queue empty");
+            MessageQueue<TaskQueue^, Int32, Function^>::OnMessage^ callback =
+                gcnew MessageQueue<TaskQueue^, Int32, Function^>::OnMessage(&TaskQueue::ExecuteTask);
+            Start(this, 0, nullptr, callback, true);
+            m_empty->Set(); GC::KeepAlive(this);
+        }
+
+        void EnqueueTask(Function^ function)
+        {
+            m_empty_mutex->WaitOne();
+            try { m_empty->Reset(); GetMailbox()->PutMessage(function); }
+            finally { m_empty_mutex->EnsureReleased(1); }
+            GC::KeepAlive(this);
+        }
+
+        void WaitEmpty() { m_empty->WaitOne(); GC::KeepAlive(this); }
+        Int32 Count() { Int32 count = GetMailbox()->Count(); GC::KeepAlive(this); return count; }
     };
 
     generic <typename T>

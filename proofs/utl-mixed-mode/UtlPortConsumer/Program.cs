@@ -145,6 +145,38 @@ if (mailbox.Count() != 1 || mailbox.GetMessage() != "queued" || mailbox.Count() 
 
 Console.WriteLine("managed consumer exercised the C++/CLI generic mailbox");
 
+using var queueReceived = new ManualResetEventSlim();
+var queueOwner = new QueueConsumerOwner(queueReceived);
+using (var queue = new MessageQueue<QueueConsumerOwner, int, string>(256))
+{
+    queue.Start(queueOwner, 42, null, (owner, data, message) =>
+    {
+        owner.Receive(data, message);
+        return true;
+    }, true);
+    queue.GetMailbox().PutMessage("threaded message");
+    if (!queueReceived.Wait(5000))
+        return 29;
+    queue.Stop();
+    if (!queue.GetThread().Join(5000))
+        return 30;
+}
+
+Console.WriteLine("managed consumer exercised the C++/CLI threaded message queue");
+
+using var taskFinished = new ManualResetEventSlim();
+using (var taskQueue = new TaskQueue())
+{
+    taskQueue.EnqueueTask(new ConsumerFunction(taskFinished));
+    if (!taskFinished.Wait(5000))
+        return 31;
+    taskQueue.WaitEmpty();
+    if (taskQueue.Count() != 0)
+        return 32;
+}
+
+Console.WriteLine("managed consumer exercised the C++/CLI task queue");
+
 if (StringUtils.StringQuote("a\"b") != "\"a\\\"b\"")
     return 12;
 var pair = new Pair<int, string>(7, "seven");
@@ -191,5 +223,14 @@ sealed class ConsumerFunction : FunctionBase
     {
         _finished.Set();
         return null;
+    }
+}
+
+sealed class QueueConsumerOwner(ManualResetEventSlim received)
+{
+    public void Receive(int data, string message)
+    {
+        if (data == 42 && message == "threaded message")
+            received.Set();
     }
 }
