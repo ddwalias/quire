@@ -27,12 +27,9 @@ public partial class ApplicationLogger : global::Quire.Services.IApplicationLogg
     private string _fullProductName;
     [global::Quire.Mirror.MirrorStub]
     private string _logFolder;
-    [global::Quire.Mirror.MirrorStub]
-    public string SubProduct { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected string FullProductName { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string LogFolder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string SubProduct { get => _subProduct; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    protected string FullProductName { get => _fullProductName; private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string LogFolder { get => _logFolder; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public virtual string GetMiscInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
