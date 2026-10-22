@@ -101,12 +101,21 @@ if (!LispUtils.scanExpression("foo", ref lispStart, ref lispEnd) || lispStart !=
 var lispExpressions = LispUtils.scanExpressions("(+ 1 2) foo");
 if (lispExpressions.Count != 2 || lispExpressions.Dequeue() != "(+ 1 2)" || lispExpressions.Dequeue() != "foo")
     return 23;
+var prettyLisp = LispUtils.PrettyString("(foo 1 2)");
+if (prettyLisp != "(foo 1\n     2)")
+    return 39;
+if (LispUtils.SelfTest(new[] { "--selftest" }) != "")
+    return 40;
 var lineParts = new LispUtils.LinePartition("alpha + beta");
 lineParts.PutSegment(0, 5);
 lineParts.PutSegment(8, 12);
 if (lineParts.Count != 2 || lineParts.PeekSegment() != "alpha" || lineParts.JoinedText() != "alpha + beta" ||
     lineParts.TakeSegment() != "alpha" || lineParts.SegmentsFrom(0).Count != 1)
     return 24;
+var partitionCursor = 0;
+var parsedLine = LispUtils.partitionExpressionLine("alpha <foo/>", ref partitionCursor, true);
+if (parsedLine is null || partitionCursor != 12 || parsedLine.Segments().Count != 2)
+    return 38;
 using (var indentWriter = new StringWriter())
 {
     LispUtils.IndentTo(2, indentWriter);

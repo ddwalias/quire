@@ -57,8 +57,19 @@ internal static class BodyTransplant
             }),
             ("mcmisc", "Quire.Engine.Misc.LispUtils", "Engine.Misc.LispUtils", new[]
             {
-                ("skipLine", 2), ("PrettyPrint", 1), ("PrettyString", 1),
-                ("IsDefinerName", 1), ("IdentifierName", 1), ("IndentTo", 2)
+                ("skipLine", 2), ("PrettyPrint", 1), ("PrettyString", 1), ("PrettyStringTop", 2),
+                ("PrettyStringWorker", 6),
+                ("IsDefinerName", 1), ("IdentifierName", 1), ("IndentTo", 2),
+                ("scanExpression", 3),
+                ("skipExpression", 2), ("skipList", 2), ("skipAtom", 2),
+                ("findExpressionStart", 2), ("findExpressionStart", 3), ("skipString", 2),
+                ("scanExpressionLine", 1), ("scanExpressionLine", 2), ("scanExpressionLine", 3),
+                ("scanExpressions", 2), ("partitionExpressionLine", 3)
+            }),
+            ("mcmisc", "Quire.Engine.Misc.LispUtils+LinePartition", "Engine.Misc.LispUtils+LinePartition", new[]
+            {
+                (".ctor", 1), ("get_Count", 0), ("PutSegment", 2), ("PeekSegment", 0), ("TakeSegment", 0),
+                ("SegmentsFrom", 1), ("JoinedTextFrom", 1)
             }),
             ("mcmisc", "Quire.Engine.Misc.FileUtils", "Engine.Misc.FileUtils", new[]
             {

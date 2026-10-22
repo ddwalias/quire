@@ -303,6 +303,10 @@ namespace Quire { namespace utl_mgd {
 
         MessageQueue(Int32 stack_size) { Init(stack_size); }
 
+    private:
+        void _bangMessageQueue() { Stop(); }
+        void _tildeMessageQueue() { _bangMessageQueue(); }
+
     public:
         void Start(Owner owner, Data data, OnInit^ onInit, OnMessage^ onMessage, Boolean stopThreadOnFinalize)
         {
@@ -1429,46 +1433,68 @@ namespace Quire { namespace Engine { namespace Misc {
             Boolean escaped = false; Int32 pos = startPos, level = 0;
             Dbg("skipList entered, level=0, pos=" + startPos);
             if (!findExpressionStart(str, pos)) { Dbg("skipList found no start."); return false; }
-            if (str[pos] != s_OpenParen) badSyntax("missing open paren at start of skipList", str, pos);
+            if (str[pos] != s_OpenParen)
+            {
+                Dbg(String::Concat(gcnew array<String^>{ "str=", str, " pos=", pos.ToString(), " ch=", str[pos].ToString() }));
+                badSyntax("missing open paren at start of skipList", str, pos);
+            }
             level++;
             for (pos++; pos < str->Length; pos++)
             {
                 Char c = str[pos];
+                Dbg("pos=" + pos + " ch=" + c + " level=" + level);
                 if (escaped) escaped = false;
                 else if (c == s_EscapeChar) escaped = true;
                 else if (c == s_CommentChar)
                 {
                     if (!skipLine(str, pos)) break;
+                    Dbg("stringList skipped comment; pos=" + pos + " str[pos]=" + str[pos] + " level=" + level);
                     pos--;
                 }
                 else if (c == s_StringQuote)
                 {
                     if (!skipString(str, pos)) break;
+                    Dbg("stringList skipped string; pos=" + pos + " str[pos]=" + str[pos] + " level=" + level);
                     pos--;
                 }
                 else if (c == s_OpenParen) level++;
-                else if (c == s_CloseParen && --level == 0) { startPos = pos + 1; return true; }
+                else if (c == s_CloseParen && --level == 0)
+                {
+                    startPos = pos + 1;
+                    Dbg("Leaving skipList @ " + startPos);
+                    return true;
+                }
             }
+            Dbg("Leaving failing skipList @ " + pos + "/" + str->Length);
             return false;
         }
         static Boolean skipAtom(String^ str, Int32% startPos)
         {
             Boolean escaped = false; Int32 pos = startPos;
-            if (!findExpressionStart(str, pos)) return false;
+            Dbg("skipAtom entered, pos=" + startPos);
+            if (!findExpressionStart(str, pos)) { Dbg("skipAtom found no start."); return false; }
             if (str[pos] == s_StringQuote)
             {
                 if (!skipString(str, pos)) return false;
-                startPos = pos; return true;
+                startPos = pos; Dbg("Leaving skipAtom after string @ " + startPos); return true;
             }
-            if (s_LispBreakChars->IndexOf(str[pos]) >= 0) badSyntax("skipAtom found no start of atom", str, pos);
+            if (s_LispBreakChars->IndexOf(str[pos]) >= 0)
+            {
+                Dbg(String::Concat(gcnew array<String^>{ "str=", str, " pos=", pos.ToString(), " ch=", str[pos].ToString() }));
+                badSyntax("skipAtom found no start of atom", str, pos);
+            }
             for (; pos < str->Length; pos++)
             {
                 Char c = str[pos];
                 if (escaped) escaped = false;
                 else if (c == s_EscapeChar) escaped = true;
-                else if (s_LispBreakChars->IndexOf(c) >= 0) { startPos = pos; return true; }
+                else if (s_LispBreakChars->IndexOf(c) >= 0)
+                {
+                    startPos = pos; Dbg("Leaving skipAtom @ " + startPos); return true;
+                }
             }
-            if (!escaped && pos != startPos) { startPos = pos; return true; }
+            if (!escaped && pos != startPos) { Dbg("Leaving skipAtom @ eof=" + startPos); startPos = pos; return true; }
+            Dbg("Leaving failing skipAtom @ " + pos + "/" + str->Length);
             return false;
         }
         static Boolean findExpressionStart(String^ str, Int32% startPos) { return findExpressionStart(str, startPos, s_LispWhitepaceChars); }
@@ -1478,12 +1504,18 @@ namespace Quire { namespace Engine { namespace Misc {
             {
                 Char c = str[pos];
                 if (c == s_CommentChar) { if (!skipLine(str, pos)) break; pos--; continue; }
-                if (whitespace->IndexOf(c) < 0)
+                Int32 wspos = whitespace->IndexOf(c);
+                Dbg("ch=" + c + " wspos=" + wspos);
+                if (wspos < 0)
                 {
-                    if (s_LispWhitepaceChars->IndexOf(c) >= 0) { startPos = pos; return false; }
-                    startPos = pos; return true;
+                    if (s_LispWhitepaceChars->IndexOf(c) >= 0)
+                    {
+                        startPos = pos; Dbg("findExpressionStart whitespace barrier @ " + pos); return false;
+                    }
+                    startPos = pos; Dbg("findExpressionStart succeeded @ " + pos); return true;
                 }
             }
+            Dbg("findExpressionStart failing");
             return false;
         }
         static Boolean skipLine(String^ str, Int32% startPos)
@@ -1494,13 +1526,18 @@ namespace Quire { namespace Engine { namespace Misc {
         }
         static Boolean skipString(String^ str, Int32% startPos)
         {
+            Dbg("skipString entered @" + startPos);
             if (str[startPos] != s_StringQuote) badSyntax("missing string quote in skipString", str, startPos);
             for (Int32 pos = startPos + 1; pos < str->Length; pos++)
             {
                 Char c = str[pos];
                 if (c == s_EscapeChar) pos++;
-                else if (c == s_StringQuote) { startPos = pos + 1; return true; }
+                else if (c == s_StringQuote)
+                {
+                    startPos = pos + 1; Dbg("skipString accepting position " + startPos); return true;
+                }
             }
+            Dbg("skipString failing @ " + str->Length);
             return false;
         }
         static System::Collections::Generic::Queue<String^>^ scanExpressionLine(String^ s) { Int32 cursor = 0; return scanExpressionLine(s, cursor); }
@@ -1518,13 +1555,67 @@ namespace Quire { namespace Engine { namespace Misc {
             }
             cursor = end; return queue;
         }
-        static System::Collections::Generic::Queue<String^>^ scanExpressionLine(String^ s, Int32% cursor, Boolean permitXML) { return nullptr; }
-        static LinePartition^ partitionExpressionLine(String^ s, Int32% cursor, Boolean permitXML) { return nullptr; }
+        static System::Collections::Generic::Queue<String^>^ scanExpressionLine(String^ s, Int32% cursor, Boolean permitXML)
+        {
+            LinePartition^ linePartition = partitionExpressionLine(s, cursor, permitXML);
+            if (linePartition != nullptr) return linePartition->Segments();
+            return nullptr;
+        }
+        static LinePartition^ partitionExpressionLine(String^ s, Int32% cursor, Boolean permitXML)
+        {
+            LinePartition^ linePartition = gcnew LinePartition(s);
+            Int32 startPos = cursor;
+            Int32 endPos = cursor;
+            Char c = s[startPos];
+            Dbg(String::Format("* Looking at {0}", static_cast<Object^>(c)));
+            if (!findExpressionStart(s, startPos)) return nullptr;
+            Dbg(String::Format("** Looking at {0}", static_cast<Object^>(s[startPos])));
+            while (findExpressionStart(s, startPos, s_LispHorizontalWhitespaceChars))
+            {
+                Dbg(String::Format("*** Looking at {0}", static_cast<Object^>(s[startPos])));
+                endPos = startPos;
+                if (s_LispVerticalWhitespaceChars->IndexOf(s[startPos]) >= 0)
+                {
+                    skipLine(s, startPos);
+                    endPos = startPos;
+                    break;
+                }
+                c = s[startPos];
+                if (c == '<')
+                {
+                    Dbg("Saw <");
+                    if (Quire::Engine::Misc::XmlUtils::ScanElement(s, startPos, endPos))
+                    {
+                        linePartition->PutSegment(startPos, endPos);
+                        startPos = endPos;
+                    }
+                    else badSyntax("ill-formed xml", s, startPos);
+                }
+                else if (scanExpression(s, startPos, endPos))
+                {
+                    linePartition->PutSegment(startPos, endPos);
+                    startPos = endPos;
+                }
+                else badSyntax("ill-formed expression", s, startPos);
+            }
+            cursor = endPos;
+            return linePartition;
+        }
         static System::Collections::Generic::Queue<String^>^ scanExpressions(String^ s) { return scanExpressions(s, 0); }
         static System::Collections::Generic::Queue<String^>^ scanExpressions(String^ s, Int32 startPos)
         {
             auto queue = gcnew System::Collections::Generic::Queue<String^>(); Int32 start = startPos, end = startPos;
-            while (scanExpression(s, start, end)) { queue->Enqueue(s->Substring(start, end - start)); start = end; }
+            while (true)
+            {
+                Boolean found = scanExpression(s, start, end);
+                Dbg(found ? "scanExpressions found expression" : "scanExpressions found no expression");
+                if (!found) break;
+                Dbg(String::Concat("s=", s));
+                Dbg(String::Concat("i=", start.ToString()));
+                Dbg(String::Concat("e=", end.ToString()));
+                queue->Enqueue(s->Substring(start, end - start));
+                start = end;
+            }
             return queue;
         }
 
@@ -1533,13 +1624,71 @@ namespace Quire { namespace Engine { namespace Misc {
 
     public:
         static String^ PrettyString(String^ exp) { return nullptr; }
-        static String^ PrettyStringTop(String^ exp, Int32 target_indentation) { return nullptr; }
+        static String^ PrettyStringTop(String^ exp, Int32 target_indentation)
+        {
+            System::IO::TextWriter^ textWriter = gcnew System::IO::StringWriter();
+            Int32 spos = 0;
+            Int32 epos = exp->Length;
+            PrettyStringWorker(exp, true, spos, epos, target_indentation, textWriter);
+            return textWriter->ToString();
+        }
         static Boolean IsDefinerName(String^ op_name) { return false; }
         static String^ IdentifierName(String^ op_name) { return nullptr; }
 
     private:
         static void PrettyStringWorker(String^ exp, Boolean top, Int32% spos, Int32% epos,
-            Int32 indent, System::IO::TextWriter^ writer) { }
+            Int32 indent, System::IO::TextWriter^ writer)
+        {
+            Int32 num = 0;
+            Int32 num2 = Int32::MaxValue;
+            Boolean flag = false;
+            Int32 endPos = 0;
+            String^ text = nullptr;
+            String^ text2 = nullptr;
+            while (findExpressionStart(exp, spos))
+            {
+                if ((num > 0) & top) throw gcnew Exception("More than one expression");
+                endPos = spos;
+                if (exp[spos] == s_CloseParen)
+                {
+                    if (top) throw gcnew Exception("Extra close paren at top level.");
+                    break;
+                }
+                if (exp[spos] == s_CommentChar) throw gcnew Exception("Pretty printer doesn't handle comments.");
+                if (!scanExpression(exp, spos, endPos)) throw gcnew Exception("Incomplete expression.");
+                if (flag) IndentTo(indent, writer);
+                else if (num > 0) writer->Write(" ");
+                Boolean flag2 = exp[spos] == s_OpenParen;
+                if (flag2 && num == 0) flag = true;
+                num2--;
+                if (num2 <= 0) flag = true;
+                if (flag2)
+                {
+                    writer->Write(s_OpenParen);
+                    spos++;
+                    PrettyStringWorker(exp, false, spos, epos, indent + 1, writer);
+                    if (exp[spos] != s_CloseParen) throw gcnew Exception("Missing close paren");
+                    spos++;
+                    writer->Write(s_CloseParen);
+                }
+                else
+                {
+                    text = exp->Substring(spos, endPos - spos);
+                    text2 = IdentifierName(text);
+                    if (num == 0)
+                    {
+                        if (IsDefinerName(text2)) { num2 = 1; indent++; }
+                        else if (text2 == "progn") { flag = true; indent++; }
+                        else if (text2 == "op_matrix") { num2 = 2; indent++; }
+                        else if (text->Length > 8) { flag = true; indent += 3; }
+                        else { num2 = 1; indent = indent + text->Length + 1; }
+                    }
+                    writer->Write("{0}", text);
+                }
+                spos = endPos;
+                num++;
+            }
+        }
 
     public:
         static void IndentTo(Int32 n, System::IO::TextWriter^ writer)
@@ -1547,7 +1696,7 @@ namespace Quire { namespace Engine { namespace Misc {
             writer->Write(L"\n");
             for (Int32 i = 0; i < n; ++i) writer->Write(L" ");
         }
-        static String^ SelfTest(array<String^>^ args) { return nullptr; }
+        static String^ SelfTest(array<String^>^ args);
         LispUtils() {}
 
         [Quire::Mirror::MirrorOfAttribute("Engine.Misc.LispUtils+LinePartition, mcmisc")]
@@ -2188,6 +2337,65 @@ namespace Quire { namespace Engine { namespace Misc {
 
         FileUtils() {}
     };
+
+    String^ LispUtils::SelfTest(array<String^>^ args)
+    {
+        Boolean flag = false;
+        Boolean flag2 = false;
+        array<String^>^ values = args;
+        Int32 index = 0;
+        String^ text = nullptr;
+        String^ expanded = nullptr;
+        Int32 cursor = 0;
+        System::Collections::Generic::Queue<String^>^ queue = nullptr;
+        System::Collections::Generic::Queue<String^>::Enumerator enumerator;
+        String^ item = nullptr;
+        String^ item2 = nullptr;
+        for (index = 0; index < values->Length; index++)
+        {
+            text = values[index];
+            if (text->Equals("--selftest")) continue;
+            if (text->Equals("-o")) { flag = !flag; continue; }
+            if (text->Equals("-d")) { s_Debug = !s_Debug; continue; }
+            if (text->Equals("-pp")) { flag2 = !flag2; continue; }
+            Console::WriteLine("arg=" + text);
+            try
+            {
+                expanded = FileUtils::ExpandUnicode(text);
+                if (flag)
+                {
+                    cursor = 0;
+                    while (true)
+                    {
+                        queue = scanExpressionLine(expanded, cursor);
+                        if (queue == nullptr) break;
+                        enumerator = queue->GetEnumerator();
+                        while (enumerator.MoveNext())
+                        {
+                            item = enumerator.Current;
+                            Console::WriteLine(" exp=" + item);
+                        }
+                        Console::WriteLine("--------------------");
+                    }
+                    continue;
+                }
+                if (flag2) { PrettyPrint(expanded); continue; }
+                queue = scanExpressions(expanded);
+                enumerator = queue->GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    item2 = enumerator.Current;
+                    Console::WriteLine(" exp=" + item2);
+                }
+            }
+            catch (Exception^ exception)
+            {
+                Console::WriteLine("Error: " + exception);
+            }
+        }
+        if (flag | flag2) return "Done.";
+        return "";
+    }
 #pragma warning(pop)
 
 }}}
