@@ -1218,7 +1218,21 @@ namespace Quire { namespace Engine { namespace Misc {
         }
 
     public:
-        static void badSyntax(String^ msg, String^ str, Int32 pos) { throw gcnew NotImplementedException(); }
+        static void badSyntax(String^ msg, String^ str, Int32 pos)
+        {
+            auto nearby = gcnew System::Text::StringBuilder();
+            Int32 lineNumber = 1, index = 0, limit = Math::Min(Math::Max(pos, 0), str->Length);
+            while (index < limit)
+            {
+                Char c = str[index++];
+                if (c == '\n') { lineNumber++; nearby->Length = 0; }
+                else nearby->Append(c);
+            }
+            while (index < str->Length && str[index] != '\n' && str[index] != '\r') nearby->Append(str[index++]);
+            Console::WriteLine("Bad syntax ({0}) @ pos={1} line={2}\n Context (line {2}): {3}",
+                gcnew array<Object^>{ msg, pos, lineNumber, nearby->ToString() });
+            throw gcnew Exception("bad_syntax");
+        }
 
     private:
         static void Dbg(String^ str) { if (s_Debug) Console::WriteLine(str); }
@@ -1399,6 +1413,140 @@ namespace Quire { namespace Engine { namespace Misc {
                 return m_Line->Substring(start, end - start);
             }
         };
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.FileUtils, mcmisc")]
+    public ref class FileUtils
+    {
+    public:
+        static System::IO::StreamReader^ StreamToPath(String^ path)
+        {
+            return gcnew System::IO::StreamReader(path, System::Text::Encoding::UTF8, true);
+        }
+
+        static void ReadExpanded(String^ path, System::IO::TextWriter^ output)
+        {
+            auto readers = gcnew System::Collections::Generic::Stack<System::IO::StreamReader^>();
+            auto paths = gcnew System::Collections::Generic::Stack<String^>();
+            auto references = gcnew System::Collections::Generic::Stack<Boolean>();
+            try
+            {
+                auto reader = StreamToPath(path);
+                Boolean isReference = false;
+                Int32 commentDepth = 0;
+                readers->Push(reader); paths->Push(path); references->Push(isReference);
+                while (reader != nullptr)
+                {
+                    String^ line = reader->ReadLine();
+                    if (line != nullptr)
+                    {
+                        if (line->IndexOf("/*") >= 0 && line->Trim() == "/*") commentDepth++;
+                        else if (line->IndexOf("*/") >= 0 && line->Trim() == "*/") commentDepth--;
+                        else
+                        {
+                            if (commentDepth != 0) continue;
+                            Boolean includeReference = false;
+                            String^ includePath = ProcessInclude(line, includeReference);
+                            if (includePath != nullptr)
+                            {
+                                String^ directory = System::IO::Path::GetDirectoryName(path);
+                                if (directory == nullptr) continue;
+                                String^ childPath = System::IO::Path::Combine(directory, includePath);
+                                reader = StreamToPath(childPath); path = childPath; isReference = includeReference;
+                                readers->Push(reader); paths->Push(childPath); references->Push(isReference);
+                                if (isReference) SkipPast(reader, "### END PREAMBLE ###");
+                            }
+                            else if (isReference && line->StartsWith("### BEGIN TEST CASE"))
+                                SkipPast(reader, "### END TEST CASE");
+                            else
+                                output->WriteLine(line);
+                        }
+                    }
+                    else
+                    {
+                        if (commentDepth > 0) throw gcnew System::Exception("End of file within comment.");
+                        readers->Pop(); paths->Pop(); references->Pop(); reader->Close();
+                        if (readers->Count > 0)
+                        {
+                            reader = readers->Peek(); path = paths->Peek(); isReference = references->Peek();
+                        }
+                        else
+                        {
+                            reader = nullptr; path = nullptr; isReference = false;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                while (readers->Count > 0) readers->Pop()->Close();
+            }
+        }
+
+        static String^ ReadExpanded(String^ path)
+        {
+            auto writer = gcnew System::IO::StringWriter();
+            ReadExpanded(path, writer); writer->Close(); return writer->ToString();
+        }
+
+    private:
+        static String^ ProcessInclude(String^ line, Boolean% isReference)
+        {
+            Int32 i = 0;
+            for (; i < line->Length && (line[i] == ' ' || line[i] == '\t'); i++) { }
+            String^ text = i > 0 ? line->Substring(i) : line;
+            if (text->StartsWith("#include") || text->StartsWith("#reference"))
+            {
+                isReference = text->StartsWith("#reference");
+                Int32 first = text->IndexOf('"'), last = text->LastIndexOf('"');
+                if (first < 0 || last - first < 2) throw gcnew System::Exception("bad #include directive");
+                return text->Substring(first + 1, last - first - 1);
+            }
+            isReference = false; return nullptr;
+        }
+
+        static void SkipPast(System::IO::StreamReader^ reader, String^ seek)
+        {
+            String^ line;
+            do { line = reader->ReadLine(); } while (line != nullptr && !line->StartsWith(seek));
+        }
+
+    public:
+        static Int32 ComputeLineNumber(String^ str, Int32 pos)
+        {
+            String^ nearby; return ComputeLineNumber(str, pos, nearby);
+        }
+
+        static Int32 ComputeLineNumber(String^ str, Int32 pos, String^% nearby_text)
+        {
+            String^ pointer; return ComputeLineNumber(str, pos, nearby_text, pointer);
+        }
+
+        static Int32 ComputeLineNumber(String^ str, Int32 pos, String^% nearby_text, String^% pointer_text)
+        {
+            auto line = gcnew System::Text::StringBuilder();
+            auto pointer = gcnew System::Text::StringBuilder();
+            Int32 lineNumber = 1, index = 0, limit = pos;
+            if (limit < 0) limit = 0;
+            if (limit > str->Length) limit = str->Length;
+            while (index < limit)
+            {
+                Char c = str[index];
+                if (c == '\n') { lineNumber++; line->Length = 0; pointer->Length = 0; }
+                else { pointer->Append(' '); line->Append(c); }
+                index++;
+            }
+            pointer->Append("^");
+            while (index < str->Length)
+            {
+                Char c = str[index];
+                if (c == '\n' || c == '\r') break;
+                line->Append(c); index++;
+            }
+            nearby_text = line->ToString(); pointer_text = pointer->ToString(); return lineNumber;
+        }
+
+        FileUtils() {}
     };
 #pragma warning(pop)
 

@@ -110,6 +110,34 @@ if (lineParts.Count != 2 || lineParts.PeekSegment() != "alpha" || lineParts.Join
 
 Console.WriteLine("managed consumer exercised the C++/CLI Lisp scanner and line partition");
 
+var contextLine = "not a problem\nsecond line";
+var nearbyText = "";
+var pointerText = "";
+var sourceLine = FileUtils.ComputeLineNumber(contextLine, 14, ref nearbyText, ref pointerText);
+if (sourceLine != 2 || nearbyText != "second line" || pointerText != "^")
+    return 26;
+var includeDirectory = Path.Combine(Path.GetTempPath(), $"UtlPortSpike-{Guid.NewGuid():N}");
+Directory.CreateDirectory(includeDirectory);
+try
+{
+    var includedPath = Path.Combine(includeDirectory, "included.txt");
+    var sourcePath = Path.Combine(includeDirectory, "source.txt");
+    File.WriteAllText(includedPath, "included");
+    File.WriteAllText(sourcePath, "before\n#include \"included.txt\"\nafter\n");
+    var expandedSource = FileUtils.ReadExpanded(sourcePath);
+    if (expandedSource != $"before{Environment.NewLine}included{Environment.NewLine}after{Environment.NewLine}")
+    {
+        Console.WriteLine($"FileUtils.ReadExpanded produced [{expandedSource.Replace("\n", "\\n")}]");
+        return 27;
+    }
+}
+finally
+{
+    Directory.Delete(includeDirectory, recursive: true);
+}
+
+Console.WriteLine("managed consumer exercised the C++/CLI FileUtils line context helper");
+
 if (StringUtils.StringQuote("a\"b") != "\"a\\\"b\"")
     return 12;
 var pair = new Pair<int, string>(7, "seven");

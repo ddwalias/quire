@@ -60,6 +60,11 @@ internal static class BodyTransplant
                 ("skipLine", 2), ("PrettyPrint", 1), ("PrettyString", 1),
                 ("IsDefinerName", 1), ("IdentifierName", 1)
             }),
+            ("mcmisc", "Quire.Engine.Misc.FileUtils", "Engine.Misc.FileUtils", new[]
+            {
+                ("StreamToPath", 1), ("ProcessInclude", 2), ("SkipPast", 2),
+                ("ComputeLineNumber", 2), ("ComputeLineNumber", 3), ("ComputeLineNumber", 4)
+            }),
             ("utl-mgd", "Quire.utl_mgd.LabeledDictionary", "utl_mgd.LabeledDictionary", new[]
             {
                 (".ctor", 1), (".ctor", 1), (".ctor", 0), ("Lock", 0), ("OnChange", 0),
