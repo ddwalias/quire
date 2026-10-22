@@ -506,10 +506,11 @@ public sealed partial class NumVal : DimVal
     public static unsafe double LoadNaN(int payload)
     {
         double result;
-        int* words = (int*)&result;
+        double* bits = &result;
+        int* words = (int*)bits;
         words[0] = payload;
         words[1] = 0x7FF80000;
-        return result;
+        return *bits;
     }
 
     [MirrorVerified("NumValDifferentialTests")]

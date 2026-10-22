@@ -11,24 +11,4 @@ namespace Quire.Mcd;
 [global::Quire.Mirror.MirrorOf("Mcd.MatVal, mplrun")]
 public sealed partial class MatVal : global::Quire.Mcd.DimVal
 {
-
-    [global::Quire.Mirror.MirrorOf("Mcd.MatVal+arg_desc, mplrun")]
-    private partial struct arg_desc
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Mcd.MatVal+TrimSubMatrixPtrs, mplrun")]
-    private partial class TrimSubMatrixPtrs
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Mcd.MatVal+AssignMatrixPtrs, mplrun")]
-    private partial class AssignMatrixPtrs
-    {
-    }
-
-    [global::Quire.Mirror.MirrorOf("Mcd.MatVal+ResizeMatrixPtrs, mplrun")]
-    private partial class ResizeMatrixPtrs
-    {
-    }
 }
