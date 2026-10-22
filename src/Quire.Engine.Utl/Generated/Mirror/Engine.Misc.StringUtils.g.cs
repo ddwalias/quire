@@ -19,19 +19,4 @@ public partial class StringUtils
     public static char[] Whitespace;
     [global::Quire.Mirror.MirrorStub]
     private static char[] s_CommandSpecialChars;
-
-    [global::Quire.Mirror.MirrorStub]
-    public static string ToCommandString(string[] args)
-    {
-        var stringBuilder = new global::System.Text.StringBuilder();
-        foreach (string text in args)
-        {
-            if (stringBuilder.Length > 0)
-            {
-                stringBuilder.Append(' ');
-            }
-            stringBuilder.AppendFormat(text.IndexOfAny(s_CommandSpecialChars) >= 0 ? StringQuote(text) : text);
-        }
-        return stringBuilder.ToString();
-    }
 }

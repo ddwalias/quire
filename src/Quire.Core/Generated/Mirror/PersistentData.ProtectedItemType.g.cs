@@ -15,6 +15,4 @@ public partial class ProtectedItemType : global::Quire.Serialization.IS11NConsum
     private string dataidrefField;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.PersistentData.IProtectableDataType _dataToProtect;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.IProtectableDataType DataToProtect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => _dataToProtect = value; }
 }

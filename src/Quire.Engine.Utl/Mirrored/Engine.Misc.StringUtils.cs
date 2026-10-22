@@ -235,3 +235,20 @@ partial class StringUtils
 
     public StringUtils() { }
 }
+
+partial class StringUtils
+{
+    public static string ToCommandString(string[] args)
+    {
+        var stringBuilder = new global::System.Text.StringBuilder();
+        foreach (string text in args)
+        {
+            if (stringBuilder.Length > 0)
+            {
+                stringBuilder.Append(' ');
+            }
+            stringBuilder.AppendFormat(text.IndexOfAny(s_CommandSpecialChars) >= 0 ? StringQuote(text) : text);
+        }
+        return stringBuilder.ToString();
+    }
+}

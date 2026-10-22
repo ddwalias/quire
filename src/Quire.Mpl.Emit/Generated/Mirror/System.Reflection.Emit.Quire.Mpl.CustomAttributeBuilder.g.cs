@@ -17,39 +17,6 @@ public partial class CustomAttributeBuilder
     private object[] _constructorArgs;
     [global::Quire.Mirror.MirrorStub]
     internal byte[] _blob;
-    [global::Quire.Mirror.MirrorStub]
-    private bool ValidateType(global::System.Type t)
-    {
-        if (t.IsPrimitive)
-        {
-            if (t != typeof(nint))
-            {
-                return t != typeof(nuint);
-            }
-            return false;
-        }
-        if (t == typeof(string) || t == typeof(global::System.Type))
-        {
-            return true;
-        }
-        if (t.IsEnum)
-        {
-            if (global::System.Type.GetTypeCode(global::System.Enum.GetUnderlyingType(t)) is var typeCode && (uint)(typeCode - 5) <= 7u)
-            {
-                return true;
-            }
-            return false;
-        }
-        if (t.IsArray)
-        {
-            if (t.GetArrayRank() == 1)
-            {
-                return ValidateType(t.GetElementType());
-            }
-            return false;
-        }
-        return t == typeof(object);
-    }
 
     [global::Quire.Mirror.MirrorOf("System.Reflection.Emit.PTC.Mathcad.Mpl.CustomAttributeBuilder+CustomAttributeEncoding, mplasb")]
     internal enum CustomAttributeEncoding
