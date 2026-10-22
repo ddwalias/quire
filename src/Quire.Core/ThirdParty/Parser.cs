@@ -123,6 +123,9 @@ public partial class Parser
         public bool Unique => (uint)(flags & ArgumentType.Unique) > 0u;
 
         [MirrorVerified("Release IL")]
+        public bool AllowMultiple => (uint)(flags & ArgumentType.Multiple) > 0u;
+
+        [MirrorVerified("Release IL")]
         private ErrorReporter reporter;
 
         [MirrorVerified("Release IL")]
