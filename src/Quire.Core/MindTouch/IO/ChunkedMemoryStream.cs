@@ -75,4 +75,13 @@ public partial class ChunkedMemoryStream
         }
     }
 
+    [MirrorVerified("Release IL")]
+    private void EnsureOpen()
+    {
+        if (_closed)
+        {
+            throw new ObjectDisposedException("stream has already been closed or disposed");
+        }
+    }
+
 }
