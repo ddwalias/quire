@@ -177,8 +177,12 @@ public static partial class User32
                 return hwnd;
             }
         }
-        [global::Quire.Mirror.MirrorStub]
-        public static global::Quire.Win32.User32.HWND Cast(nint hwnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public static global::Quire.Win32.User32.HWND Cast(nint hwnd)
+        {
+            global::Quire.Win32.User32.HWND result = default;
+            result._value = hwnd;
+            return result;
+        }
         [global::Quire.Mirror.MirrorStub]
         public override bool Equals(object oCompare) => base.Equals(oCompare);
     }
