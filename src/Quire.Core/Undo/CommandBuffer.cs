@@ -70,6 +70,15 @@ public partial class CommandBuffer
         }
     }
 
+    [MirrorVerified("Release IL")]
+    private static void FireCommandEvent(EventHandler<CommandEventArgs> ev, CommandEventArgs args)
+    {
+        if (ev != null)
+        {
+            ev(_currentInstance, args);
+        }
+    }
+
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public event EventHandler<CommandEventArgs> BeforeCommand;
 

@@ -26,8 +26,6 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     public static bool ExecuteAndAttach(global::Quire.Undo.IUndoableCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void FireCommandEvent(global::System.EventHandler<global::Quire.Undo.CommandEventArgs> ev, global::Quire.Undo.CommandEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.CompoundCommand SafeDo(global::Quire.Undo.IUndoableCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.IUndoableCommand GetTopCommand(global::Quire.Undo.IUndoableCommand cmd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
