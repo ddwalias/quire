@@ -237,7 +237,26 @@ public sealed partial class Parser
             }
         }
         [global::Quire.Mirror.MirrorStub]
-        public Argument(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo, global::Quire.ThirdParty.ErrorReporter reporter) { }
+        public Argument(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo, global::Quire.ThirdParty.ErrorReporter reporter)
+        {
+            longName = LongName(attribute, fieldInfo);
+            explicitShortName = ExplicitShortName(attribute);
+            shortName = ShortName(attribute, fieldInfo);
+            hasHelpText = HasHelpText(attribute);
+            helpText = HelpText(attribute, fieldInfo);
+            defaultValue = DefaultValue(attribute, fieldInfo);
+            elementType = ElementType(fieldInfo);
+            flags = Flags(attribute, fieldInfo);
+            this.fieldInfo = fieldInfo;
+            seenValue = false;
+            this.reporter = reporter;
+            isDefault = attribute != null && attribute is global::Quire.ThirdParty.DefaultArgumentAttribute;
+            if (IsCollection)
+            {
+                collectionValues = new global::System.Collections.ArrayList();
+            }
+            validValues = ValidValues(attribute, fieldInfo);
+        }
         [global::Quire.Mirror.MirrorStub]
         public bool Finish(object destination)
         {
