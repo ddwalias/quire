@@ -15,6 +15,4 @@ public abstract partial class oleBaseContainerType : global::Quire.Serialization
     private string itemidrefField;
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Serialization.ExternalObjectType ExternalObjectType { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected void CopyFrom(global::Quire.PersistentData.IOleSizeData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

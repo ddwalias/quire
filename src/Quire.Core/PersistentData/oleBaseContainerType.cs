@@ -2,6 +2,7 @@
 using Quire.Mirror;
 using Quire.PersistentDataObjects;
 using Quire.Serialization;
+using System.Windows;
 
 namespace Quire.PersistentData;
 
@@ -21,4 +22,17 @@ public partial class oleBaseContainerType
 
     [MirrorVerified("PtcPersistentDataoleBaseContainerTypeMechanicalDifferentialTests")]
     public IS11NProvider S11NProvider { get; set; }
+
+    [MirrorVerified("Release IL")]
+    protected void CopyFrom(IOleSizeData data)
+    {
+        if (!data.OleViewportSize.IsEmpty)
+        {
+            OleViewportSize = new SizeType
+            {
+                width = data.OleViewportSize.Width,
+                height = data.OleViewportSize.Height
+            };
+        }
+    }
 }
