@@ -53,4 +53,30 @@ public partial struct QualityAgentReportData
             return _timeZone.ToString();
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public string CurrentCulture
+    {
+        get
+        {
+            if (_currentCulture == null)
+            {
+                return string.Empty;
+            }
+            return _currentCulture.ToString();
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public string CurrentUICulture
+    {
+        get
+        {
+            if (_currentUiCulture == null)
+            {
+                return string.Empty;
+            }
+            return _currentUiCulture.ToString();
+        }
+    }
 }

@@ -29,8 +29,4 @@ public partial struct QualityAgentReportData : global::Quire.QualityAgentManager
     public string LicenseDate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string LicenseType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CurrentCulture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string CurrentUICulture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
