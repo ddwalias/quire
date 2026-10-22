@@ -29,4 +29,14 @@ public partial class VCardContentLine
             return null;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public string GetParam(string paramName)
+    {
+        if (!Params.ContainsKey(paramName))
+        {
+            return null;
+        }
+        return Params[paramName];
+    }
 }

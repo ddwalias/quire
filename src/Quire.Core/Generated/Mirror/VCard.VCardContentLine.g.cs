@@ -20,7 +20,5 @@ public partial class VCardContentLine
     [global::Quire.Mirror.MirrorStub]
     public string GetValue(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string GetParam(string paramName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static string DecodePrinatbleQuoted(string encodedString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
