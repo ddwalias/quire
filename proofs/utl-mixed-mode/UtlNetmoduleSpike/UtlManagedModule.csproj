@@ -15,7 +15,7 @@
   <ItemGroup>
     <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.HashSetUtils.g.cs" />
     <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.Pair_2.g.cs" />
-    <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.StringUtils.g.cs" />
+    <Compile Include="Engine.Misc.StringUtils.LinkProbe.cs" />
     <Compile Include="..\..\..\src\Quire.Engine.Utl\Generated\Mirror\Engine.Misc.Triple_3.g.cs" />
     <Compile Include="McmiscInlineSupport.cs" />
     <ProjectReference Include="..\..\..\src\Quire.Mirror\Quire.Mirror.csproj" />

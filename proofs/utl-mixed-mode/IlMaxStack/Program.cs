@@ -24,6 +24,9 @@ using (var metadataProbePe = new PEReader(metadataProbeStream))
     var signatures = new[]
     {
         ("mcmisc", "Engine.Misc.FileUtils", "ReadExpanded", 2),
+        ("mcmisc", "Engine.Misc.XmlUtils", "TestCheck", 4),
+        ("mcmisc", "Engine.Misc.LispUtils", "badSyntax", 3),
+        ("utl-mgd", "utl_mgd.MessageQueue`3", "Start", 5),
         ("utl-mgd", "utl_mgd.Logging", "Log", 2),
         ("utl-mgd", "utl_mgd.Logging", "LogLine", 2)
     }

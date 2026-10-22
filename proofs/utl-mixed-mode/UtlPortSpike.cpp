@@ -3641,27 +3641,28 @@ namespace Quire { namespace utl_mgd {
         static CRITICAL_SECTION* GetCriticalSection(Object^ key, Int32 increment)
         {
             s_mutex->WaitOne();
-            CRITICAL_SECTION* result = nullptr;
+            IntPtr result = IntPtr::Zero;
             try
             {
                 CSecRecord^ record = dynamic_cast<CSecRecord^>(s_csecmap[key]);
                 if (record != nullptr)
                 {
-                    result = reinterpret_cast<CRITICAL_SECTION*>(record->csec);
+                    result = IntPtr(reinterpret_cast<void*>(record->csec));
                     record->count += increment;
                 }
                 else if (s_csecpool->Count == 0)
                 {
-                    result = new CRITICAL_SECTION();
-                    ::InitializeCriticalSection(result);
-                    record = gcnew CSecRecord(reinterpret_cast<Int64>(result), increment);
+                    CRITICAL_SECTION* criticalSection = new CRITICAL_SECTION();
+                    result = IntPtr(criticalSection);
+                    ::InitializeCriticalSection(criticalSection);
+                    record = gcnew CSecRecord(reinterpret_cast<Int64>(criticalSection), increment);
                     s_csecmap[key] = record;
                 }
                 else
                 {
-                    CRITICAL_SECTION* value = reinterpret_cast<CRITICAL_SECTION*>(safe_cast<Int64>(s_csecpool->Pop()));
-                    result = value;
-                    record = gcnew CSecRecord(reinterpret_cast<Int64>(value), increment);
+                    Int64 value = safe_cast<Int64>(s_csecpool->Pop());
+                    result = IntPtr(reinterpret_cast<void*>(value));
+                    record = gcnew CSecRecord(value, increment);
                     s_csecmap[key] = record;
                 }
 
@@ -3677,7 +3678,7 @@ namespace Quire { namespace utl_mgd {
                 throw;
             }
             s_mutex->ReleaseMutex();
-            return result;
+            return static_cast<CRITICAL_SECTION*>(result.ToPointer());
         }
 
         static void Free()

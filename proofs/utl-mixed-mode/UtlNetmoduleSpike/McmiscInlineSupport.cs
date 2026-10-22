@@ -2,6 +2,11 @@ namespace Quire.Engine.Misc;
 
 public partial class StringUtils
 {
+    static StringUtils()
+    {
+        s_CommandSpecialChars = new char[] { '\\', '"', '\'', '\t', ' ' };
+    }
+
     private static readonly char[] s_NativeCharMapData = new char[]
     {
         'e', '∈', 'h', 'ℏ', 'o', '°', 'p', 'π', 'w', 'ω',
