@@ -643,6 +643,26 @@ public partial class TextFormat
     [MirrorVerified("Release IL")]
     public Brush Background { get => (Brush)base.GetValue(BackgroundProperty); set => SetValueSafely(BackgroundProperty, value); }
 
+    [MirrorVerified("Release IL")]
+    public void ApplyAllTextFormatValuesToControl(ITextFormatCreation control, Block block = null)
+    {
+        control.ApplyTextFormatPropertyValueToControl(FontFamilyProperty, FontFamily, block);
+        control.ApplyTextFormatPropertyValueToControl(FontSizeProperty, FontSize, block);
+        control.ApplyTextFormatPropertyValueToControl(FontWeightProperty, FontWeight, block);
+        control.ApplyTextFormatPropertyValueToControl(FontStyleProperty, FontStyle, block);
+        control.ApplyTextFormatPropertyValueToControl(TextDecorationsProperty, TextDecorations, block);
+        control.ApplyTextFormatPropertyValueToControl(VariantsProperty, Variants);
+        control.ApplyTextFormatPropertyValueToControl(BackgroundProperty, Background, block);
+        control.ApplyTextFormatPropertyValueToControl(ForegroundProperty, Foreground, block);
+        control.ApplyTextFormatPropertyValueToControl(TextAlignmentProperty, TextAlignment);
+        control.ApplyTextFormatPropertyValueToControl(MarkerStyleProperty, MarkerStyle);
+        control.ApplyTextFormatPropertyValueToControl(MarginProperty, Margin);
+        if (control is ICurrentTextFormatProperty)
+        {
+            ((ICurrentTextFormatProperty)control).CurrentTextFormat = Clone();
+        }
+    }
+
     public static partial class PropertyNames
     {
         [MirrorVerified("Release IL")]
