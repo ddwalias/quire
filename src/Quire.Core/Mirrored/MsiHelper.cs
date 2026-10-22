@@ -5,6 +5,12 @@ namespace Quire;
 
 static partial class MsiHelper
 {
+    [global::System.Runtime.InteropServices.DllImport("msi.dll", CharSet = global::System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+    private static extern uint MsiEnumRelatedProducts(string lpUpgradeCode, uint dwReserved, uint iProductIndex, [global::System.Runtime.InteropServices.Out] global::System.Text.StringBuilder lpProductBuf);
+
+    [global::System.Runtime.InteropServices.DllImport("msi.dll", CharSet = global::System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+    private static extern uint MsiGetProductInfo(string szProduct, string szProperty, [global::System.Runtime.InteropServices.Out] global::System.Text.StringBuilder lpValueBuf, ref int pcchValueBuf);
+
     public static readonly global::System.Guid MathcadConverterUpgradeCode = new("{B9AAFA82-4943-43DE-96F9-E764492972A5}");
     public static readonly global::System.Guid Mathcad15UpgradeCode = new("{9848B3F8-BB46-4678-A786-DB06BB6C637E}");
     public static readonly global::System.Guid MathcadPrimeUpgradeCode = new("{4C14DAE9-CB4C-4fbf-B892-FBCC8B3709C5}");

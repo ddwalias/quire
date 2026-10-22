@@ -11,10 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Ptc.MsiHelper, Ptc.Core")]
 public static partial class MsiHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static uint MsiEnumRelatedProducts(string lpUpgradeCode, uint dwReserved, uint iProductIndex, global::System.Text.StringBuilder lpProductBuf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static uint MsiGetProductInfo(string szProduct, string szProperty, global::System.Text.StringBuilder lpValueBuf, ref int pcchValueBuf) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.MsiHelper+InstallProperty, Ptc.Core")]
     public enum InstallProperty
