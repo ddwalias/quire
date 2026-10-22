@@ -27,8 +27,14 @@ public abstract partial class oleBaseContainerType : global::Quire.Serialization
     }
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Serialization.ExternalObjectType ExternalObjectType { get; }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Size GetOleViewportSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected global::System.Windows.Size GetOleViewportSize()
+    {
+        if (OleViewportSize != null)
+        {
+            return new global::System.Windows.Size(OleViewportSize.width, OleViewportSize.height);
+        }
+        return global::System.Windows.Size.Empty;
+    }
     [global::Quire.Mirror.MirrorStub]
     protected void CopyFrom(global::Quire.PersistentData.IOleSizeData data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
