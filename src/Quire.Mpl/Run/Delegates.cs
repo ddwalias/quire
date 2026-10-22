@@ -23,9 +23,6 @@ public partial class Delegates
     public static Function PI_2;
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
-    private static MethodInfo[] clo_method;
-
-    [MirrorAnalyzed("Mpl.Run.Delegates")]
     static Delegates()
     {
         clo_method = [null, typeof(Delegates).GetMethod("Closure_1")];
@@ -53,9 +50,6 @@ public partial class Delegates
             typeof(Delegates).GetMethod("Invoke3"), typeof(Delegates).GetMethod("Invoke4"),
         ];
     }
-
-    [MirrorVerified("DelegatesDifferentialTests")]
-    public Delegates() { }
 
     [MirrorVerified("DelegatesDifferentialTests")]
     public static Type[] clo_params(Type[] ftys)
@@ -143,6 +137,9 @@ public partial class Delegates
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     private static F<R, A, B, C, D> Closure_4<R, CLO, A, B, C, D>(F<R, CLO, A, B, C, D> f, CLO clo) => (A a, B b, C c, D d) => f(clo, a, b, c, d);
+
+    [MirrorAnalyzed("Mpl.Run.Delegates")]
+    private static MethodInfo[] clo_method;
 
     [MirrorAnalyzed("Mpl.Run.Delegates")]
     public static F<object, object> DelegateClosure_1<CLO>(Delegate d, CLO clo)
