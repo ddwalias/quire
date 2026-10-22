@@ -7,6 +7,10 @@ namespace Quire.PersistentData;
 public static partial class OleUtils
 {
     [MirrorVerified("Release IL")]
+    [DllImport("ole32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+    private static extern string ProgIDFromCLSID([In] ref Guid clsid);
+
+    [MirrorVerified("Release IL")]
     public static bool CanCreateExcelContainer() => IsSupportedExcelGuid(GetExcelSheetGuid("Excel.Sheet"));
 
     [MirrorVerified("Release IL")]

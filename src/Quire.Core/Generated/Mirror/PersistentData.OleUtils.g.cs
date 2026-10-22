@@ -61,6 +61,4 @@ public static partial class OleUtils
     private static readonly global::System.Guid _equation2Guid;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Guid _equation3Guid;
-    [global::Quire.Mirror.MirrorStub]
-    private static string ProgIDFromCLSID(ref global::System.Guid clsid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
