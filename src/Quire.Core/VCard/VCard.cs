@@ -79,4 +79,38 @@ public partial class VCard
             return null;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public string SafeUrl
+    {
+        get
+        {
+            if (Url == null)
+            {
+                return null;
+            }
+            string safeUrl = null;
+            try
+            {
+                System.Uri uri;
+                if (Url.ToLowerInvariant().IndexOf("://") <= 0)
+                {
+                    uri = new System.Uri("http://" + Url);
+                }
+                else
+                {
+                    uri = new System.Uri(Url);
+                }
+                string scheme = uri.Scheme;
+                if (scheme == "http" || scheme == "https")
+                {
+                    safeUrl = System.Uri.EscapeUriString(uri.ToString());
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return safeUrl;
+        }
+    }
 }
