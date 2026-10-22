@@ -49,6 +49,12 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    private PackagePart CreatePackagePart(Package package, Uri uri, string contentType)
+    {
+        return package.CreatePart(uri, contentType, IsTypeToCompress(contentType) ? CompressionLevel : CompressionOption.NotCompressed);
+    }
+
+    [MirrorVerified("Release IL")]
     public PackagePart GetSinglePartByRelationshipType(PackagePart sourcePart, string relationshipType)
     {
         Uri uriForFirstRelashionshipInCollection = GetUriForFirstRelashionshipInCollection(sourcePart.GetRelationshipsByType(relationshipType));

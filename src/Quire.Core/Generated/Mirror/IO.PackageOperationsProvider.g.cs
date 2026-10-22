@@ -66,8 +66,6 @@ public partial class PackageOperationsProvider : global::Quire.IO.IPackageOperat
     [global::Quire.Mirror.MirrorStub]
     public int CountPartsByContentType(global::System.IO.Packaging.Package package, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.IO.Packaging.PackagePart CreatePackagePart(global::System.IO.Packaging.Package package, global::System.Uri uri, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart AddCoreMetadataPartToPackage(global::System.IO.Packaging.Package package) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.IO.Packaging.PackagePart AddPartToPackage(global::System.IO.Packaging.Package package, string uriString, string contentType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
