@@ -11,8 +11,32 @@ namespace Quire.PersistentDataObjects;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentDataObjects.plotType, Ptc.Core")]
 public partial class plotType : global::Quire.PersistentDataObjects.IMC14AnnotationProvider, global::Quire.PersistentDataObjects.ICalculationHideable
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::System.Collections.Generic.IEnumerable<string> MC14ConversionLossAnnotations
+    {
+        get
+        {
+            global::System.Collections.Generic.List<string> annotations = MC14ConversionLossAnnotationsLocal == null
+                ? new global::System.Collections.Generic.List<string>()
+                : new global::System.Collections.Generic.List<string>(MC14ConversionLossAnnotationsLocal);
+            global::Quire.PersistentDataObjects.IMC14AnnotationProvider itemProvider = Item as global::Quire.PersistentDataObjects.IMC14AnnotationProvider;
+            if (itemProvider != null)
+            {
+                global::System.Collections.Generic.IEnumerable<string> itemAnnotations = itemProvider.MC14ConversionLossAnnotations;
+                if (itemAnnotations != null)
+                {
+                    annotations.AddRange(itemAnnotations);
+                }
+            }
+            if (annotations.Count > 0)
+            {
+                goto HasAnnotations;
+            }
+            return null;
+
+        HasAnnotations:
+            return annotations;
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     public static void GetOverrides(global::System.Xml.Serialization.XmlAttributeOverrides overrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
