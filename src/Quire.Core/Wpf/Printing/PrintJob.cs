@@ -45,6 +45,15 @@ public partial class PrintJob
     }
 
     [MirrorVerified("Release IL")]
+    private void FireJobCompleted(WritingCompletedEventArgs args)
+    {
+        if (JobCompleted != null)
+        {
+            JobCompleted(this, args);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     private void HandleWritingCancelled(object sender, WritingCancelledEventArgs cancelledArgs) => HandleWritingCompleted(sender, new WritingCompletedEventArgs(true, null, cancelledArgs.Error));
 
     [MirrorVerified("Release IL")]

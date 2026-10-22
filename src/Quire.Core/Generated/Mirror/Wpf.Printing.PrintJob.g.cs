@@ -33,6 +33,4 @@ public partial class PrintJob
     private bool JobInitialize(global::System.Windows.Xps.XpsDocumentWriter docWriter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void JobFinalize(global::System.Windows.Xps.XpsDocumentWriter docWriter, global::System.Windows.Documents.Serialization.WritingCompletedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireJobCompleted(global::System.Windows.Documents.Serialization.WritingCompletedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
