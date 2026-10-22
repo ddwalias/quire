@@ -24,6 +24,32 @@ public partial class fieldTypePageNumber
             return _enumSerializationValues;
         }
     }
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<string, string> GetEnumSerializationValues(global::System.Type enumType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::System.Collections.Generic.Dictionary<string, string> GetEnumSerializationValues(global::System.Type enumType)
+    {
+        global::System.Collections.Generic.Dictionary<string, string> values = new global::System.Collections.Generic.Dictionary<string, string>();
+        global::System.Reflection.FieldInfo[] fields = enumType.GetFields();
+        int index = 0;
+        global::System.Reflection.FieldInfo fieldInfo;
+        object[] attributes;
+        string name;
+        for (; index < fields.Length; index++)
+        {
+            fieldInfo = fields[index];
+            attributes = fieldInfo.GetCustomAttributes(typeof(global::System.Xml.Serialization.XmlEnumAttribute), false);
+            name = null;
+            if (attributes.Length != 0)
+            {
+                name = ((global::System.Xml.Serialization.XmlEnumAttribute)attributes[0]).Name;
+            }
+            if (name != null)
+            {
+                values.Add(fieldInfo.Name, name);
+            }
+            else
+            {
+                values.Add(fieldInfo.Name, fieldInfo.Name);
+            }
+        }
+        return values;
+    }
 }
