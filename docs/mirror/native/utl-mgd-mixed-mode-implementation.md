@@ -34,13 +34,13 @@ The Release build completed with zero compiler warnings and errors. The managed 
 
 ## Release IL result
 
-The maintainer's strict C++/CLI-aware validator was run against the current mixed-mode VCX candidate, using `origin/main` as the base:
+The maintainer's strict C++/CLI-aware validator was run against the current mixed-mode VCX candidate, using the integrated `main` commit as the base:
 
 ```powershell
-python tools/validation/release_il.py --base origin/main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlNetmoduleSpike/UtlNetmoduleSpike.vcxproj --results .mirror-cache/release-il-netmodule-hybrid-g6-final
+python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlNetmoduleSpike/UtlNetmoduleSpike.vcxproj --results .mirror-cache/release-il-netmodule-hybrid-postmerge
 ```
 
-It failed: **542 checked, 311 failures**. The ignored report is `.mirror-cache/release-il-netmodule-hybrid-g6-final/release-il.json`. The reported failure groups are:
+It failed: **542 checked, 311 failures**. The ignored report is `.mirror-cache/release-il-netmodule-hybrid-postmerge/release-il.json` (base and tip `dda988fa80bce6a77d65606741e56c8fd08f25c1`). The reported failure groups are:
 
 | Failure | Count | Detail |
 |---|---:|---|
