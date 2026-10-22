@@ -17,27 +17,4 @@ public partial class ProtectedItemType : global::Quire.Serialization.IS11NConsum
     private global::Quire.PersistentData.IProtectableDataType _dataToProtect;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentData.IProtectableDataType DataToProtect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => _dataToProtect = value; }
-    [global::Quire.Mirror.MirrorStub]
-    public string dataidref
-    {
-        get
-        {
-            if (dataidrefField == null)
-            {
-                global::Quire.Serialization.IS11NProvider s11NProvider = S11NProvider;
-                using (global::System.IO.Stream stream = new global::Quire.MindTouch.IO.ChunkedMemoryStream())
-                {
-                    global::System.Xml.Serialization.XmlSerializer xmlSerializer = DataToProtect.GetXmlSerializer(s11NProvider.UseOverrides);
-                    global::Quire.DebugTools.DevAssert(global::Quire.PersistentData.ProtectableTypesRegistry.GetXmlSerializer(itemtype, s11NProvider.UseOverrides) == xmlSerializer, null);
-                    using (global::System.Xml.XmlWriter xmlWriter = global::System.Xml.XmlWriter.Create(stream, new global::System.Xml.XmlWriterSettings()))
-                    {
-                        xmlSerializer.Serialize(xmlWriter, DataToProtect);
-                    }
-                    dataidrefField = s11NProvider.PackProtectedPart(stream, null, itemtype);
-                }
-            }
-            return dataidrefField;
-        }
-        set => dataidrefField = value;
-    }
 }

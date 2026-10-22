@@ -4,30 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Selected members: 346 accepted mechanical methods (+63 fields), 537 manually reconstructed methods (+79 fields), and 659 abstract interface declarations across Core, WPF, serialization, undo, quality agent, service contracts, WPF COM sinks, and XPS print interfaces; 12 mechanical candidates rejected by MemberGen. Latest exact members: `ThirdParty.Parser.LongName`, `ShortName`, `ExplicitShortName`, `DefaultValue`, `ElementType`, `Flags`, and `IsValidElementType`.
-- Release IL report: `.mirror-cache/release-il-930e0e641d0c/release-il.json` — PASS, 2,890 exact, 0 mismatches; Quire.Core has 632 unfinished methods.
-- Remaining mismatches: 632 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-1e7e7cd9ab8a/release-il.json` — PASS, 2,883 exact, 0 mismatches; Quire.Core has 639 unfinished methods.
-- Remaining mismatches: 639 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-1d68894ee9aa/release-il.json` — PASS, 2,882 exact, 0 mismatches; Quire.Core has 640 unfinished methods.
-- Remaining mismatches: 640 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-51b81cea404b/release-il.json` — PASS, 2,881 exact, 0 mismatches; Quire.Core has 641 unfinished methods.
-- Remaining mismatches: 641 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-dfebb53788a6/release-il.json` — PASS, 2,880 exact, 0 mismatches; Quire.Core has 642 unfinished methods.
-- Remaining mismatches: 642 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-c5c8a0b6e74d/release-il.json` — PASS, 2,879 exact, 0 mismatches; Quire.Core has 643 unfinished methods.
-- Remaining mismatches: 643 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-eaff8391596d/release-il.json` — PASS, 2,878 exact, 0 mismatches; Quire.Core has 644 unfinished methods.
-- Remaining mismatches: 644 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-155c76974d3f/release-il.json` — PASS, 2,877 exact, 0 mismatches; Quire.Core has 645 unfinished methods.
-- Remaining mismatches: 645 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-9822e7fa1e20/release-il.json` — PASS, 2,876 exact, 0 mismatches; Quire.Core has 646 unfinished methods.
-- Remaining mismatches: 646 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-dc77fb207214/release-il.json` — PASS, 2,875 exact, 0 mismatches; Quire.Core has 647 unfinished methods.
-- Remaining mismatches: 647 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-852270f43400/release-il.json` — PASS, 2,874 exact, 0 mismatches; Quire.Core has 648 unfinished methods.
-- Remaining mismatches: 648 unfinished methods in the full Quire.Core inventory.
-- Release IL report: `.mirror-cache/release-il-4a75f0e40c7f/release-il.json` — PASS, 2,873 exact, 0 mismatches; Quire.Core has 649 unfinished methods.
-- Remaining mismatches: 649 unfinished methods in the full Quire.Core inventory.
+- Members: latest exact batch: seven `ThirdParty.Parser` metadata helpers; 632 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-9da0df3535d0/release-il.json` — PASS, 2,890 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
