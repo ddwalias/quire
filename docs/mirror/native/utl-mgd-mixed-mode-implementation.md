@@ -6,7 +6,7 @@ The Windows C++/CLI proof now contains ported members for `SafeWaitHandle`, `Saf
 
 This remains a feasibility spike, not a replacement for the C# assembly. The candidate carries only a subset of application types plus C++/CLI compiler support types and does not preserve the full public API. The latest gate found 244 exact methods out of 390 checked; it still reports 202 failures, including nine removed methods, 117 generated `<Module>` methods without reviewed bindings, 34 methods without an original counterpart, and 44 mapped methods with IL differences. The production C# project remains intact; no same-DLL Release IL parity claim is made.
 
-The documented validator command, `python tools/validation/release_il.py --base origin/main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. This run's report is `.mirror-cache/release-il-9127d5ee8ae1/release-il.json`. The C++/CLI candidate path builds successfully, then fails closed with 202 failures, detailed below.
+The documented validator command, `python tools/validation/release_il.py --base origin/main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. This run's report is `.mirror-cache/release-il-ee1bd37eac55/release-il.json`. The C++/CLI candidate path builds successfully, then fails closed with 202 failures, detailed below.
 
 The reference REA report was not present in this worktree's `.mirror-cache/rea`, so I repeated the static boundary inspection against the supplied file. It matched the required SHA-256 and MVID. REA reported 51 P/Invoke imports, 65 native-boundary rows (57 P/Invoke boundaries and eight runtime-provided methods), and two module references. The native procedures are interop/runtime support, not an application-authored algorithm to port. The earlier addition routine exists only in the separate call-path proof; it is not proposed for production.
 
@@ -80,7 +80,7 @@ The new candidate option builds the `.vcxproj` with MSBuild and sends its mixed-
 python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
 ```
 
-The current command built both the C# base and the C++/CLI candidate against `origin/main`, then returned `Release IL: FAIL; 390 checked`. The local report is `.mirror-cache/release-il-bb8c34ffc442/release-il.json`.
+The current command built both the C# base and the C++/CLI candidate against `origin/main`, then returned `Release IL: FAIL; 390 checked`. The local report is `.mirror-cache/release-il-2364ba99a4b6/release-il.json`.
 
 | Validator result | Count |
 |---|---:|
