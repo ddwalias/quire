@@ -6,6 +6,18 @@ namespace Quire.ThirdParty;
 public sealed partial class Parser
 {
     [MirrorVerified("Release IL")]
+    public static bool ParseArgumentsWithUsage(string[] arguments, object destination)
+    {
+        return ParseArgumentsWithUsage(arguments, destination, global::System.Console.Error.WriteLine);
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool ParseArguments(string[] arguments, object destination)
+    {
+        return ParseArguments(arguments, destination, global::System.Console.Error.WriteLine);
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
     {
         for (int i = startIndex; i < text.Length; i++)

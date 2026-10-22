@@ -24,10 +24,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.ThirdParty.ErrorReporter reporter;
     [global::Quire.Mirror.MirrorStub]
-    public static bool ParseArgumentsWithUsage(string[] arguments, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool ParseArguments(string[] arguments, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool ParseArgumentsWithUsage(string[] arguments, object destination, global::Quire.ThirdParty.ErrorReporter reporter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool ParseArguments(string[] arguments, object destination, global::Quire.ThirdParty.ErrorReporter reporter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
