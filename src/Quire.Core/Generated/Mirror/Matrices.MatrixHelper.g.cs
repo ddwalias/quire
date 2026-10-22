@@ -25,6 +25,4 @@ public partial class MatrixHelper
     public static T[] DeleteColumn<T>(int colToDelete, int rows, int cols, T[] elements) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<int> SubMatrixIndices(int corner1, int corner2, int columnCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void Swap<T>(ref T first, ref T second) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `Matrices.MatrixHelper.SwapIndex`; 597 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-8fac5af07178/release-il.json` — PASS, 2,925 exact, 0 mismatches.
+- Members: latest exact member: `Matrices.MatrixHelper.Swap<T>`; 596 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-28491d3c36d3/release-il.json` — PASS, 2,926 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).

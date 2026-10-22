@@ -33,5 +33,13 @@ public partial class MatrixHelper
     }
 
     [MirrorVerified("Release IL")]
+    private static void Swap<T>(ref T first, ref T second)
+    {
+        T val = second;
+        second = first;
+        first = val;
+    }
+
+    [MirrorVerified("Release IL")]
     public static DiscreteRect RectFromCornerIndices(int corner1, int corner2, int columns) => new DiscreteRect(RowOf(corner1, columns), ColumnOf(corner1, columns), RowOf(corner2, columns), ColumnOf(corner2, columns));
 }
