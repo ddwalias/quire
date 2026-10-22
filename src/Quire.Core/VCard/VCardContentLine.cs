@@ -13,4 +13,20 @@ public partial class VCardContentLine
 
     [MirrorVerified("PtcVCardVCardContentLineMechanicalDifferentialTests")]
     public string[] Values { get; private set; }
+
+    [MirrorVerified("Release IL")]
+    public string Value
+    {
+        get
+        {
+            if (Values != null)
+            {
+                if (Values.Length != 0)
+                {
+                    return Values[0];
+                }
+            }
+            return null;
+        }
+    }
 }
