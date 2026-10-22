@@ -89,6 +89,10 @@ internal static class BodyTransplant
             {
                 (".ctor", 2)
             }),
+            ("utl-mgd", "Quire.utl_mgd.TaskQueue", "utl_mgd.TaskQueue", new[]
+            {
+                (".ctor", 0)
+            }),
             ("utl-mgd", "Quire.utl_mgd.LabelSet", "utl_mgd.LabelSet", new[]
             {
                 ("Empty", 0)

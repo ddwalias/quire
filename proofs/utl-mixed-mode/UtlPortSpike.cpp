@@ -2578,13 +2578,11 @@ namespace Quire { namespace utl_mgd {
         }
 
     public:
-        TaskQueue() : MessageQueue<TaskQueue^, Int32, Function^>(1048576)
+        TaskQueue() : MessageQueue<TaskQueue^, Int32, Function^>(this, 0, nullptr,
+            gcnew MessageQueue<TaskQueue^, Int32, Function^>::OnMessage(&TaskQueue::ExecuteTask))
         {
             m_empty_mutex = gcnew SafeMutex("task queue empty mutex");
             m_empty = gcnew SafeEvent("task queue empty");
-            MessageQueue<TaskQueue^, Int32, Function^>::OnMessage^ callback =
-                gcnew MessageQueue<TaskQueue^, Int32, Function^>::OnMessage(&TaskQueue::ExecuteTask);
-            Start(this, 0, nullptr, callback, true);
             m_empty->Set(); GC::KeepAlive(this);
         }
 
