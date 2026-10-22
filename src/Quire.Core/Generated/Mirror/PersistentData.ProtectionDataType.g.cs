@@ -11,8 +11,32 @@ namespace Quire.PersistentData;
 [global::Quire.Mirror.MirrorOf("Ptc.PersistentData.ProtectionDataType, Ptc.Core")]
 public partial class ProtectionDataType
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::System.DateTime> TimestampWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::System.Nullable<global::System.DateTime> TimestampWrapper
+    {
+        get
+        {
+            if (TimestampSpecified)
+            {
+                goto HasTimestamp;
+            }
+            return default(global::System.Nullable<global::System.DateTime>);
+
+        HasTimestamp:
+            return Timestamp;
+        }
+        set
+        {
+            if (value.HasValue)
+            {
+                Timestamp = global::System.DateTime.SpecifyKind(value.Value, global::System.DateTimeKind.Unspecified);
+                TimestampSpecified = true;
+            }
+            else
+            {
+                TimestampSpecified = false;
+            }
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.ProtectionLevel ProtectionLevelWrapper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
