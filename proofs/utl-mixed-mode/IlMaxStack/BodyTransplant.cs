@@ -64,7 +64,8 @@ internal static class BodyTransplant
                 ("skipExpression", 2), ("skipList", 2), ("skipAtom", 2),
                 ("findExpressionStart", 2), ("findExpressionStart", 3), ("skipString", 2),
                 ("scanExpressionLine", 1), ("scanExpressionLine", 2), ("scanExpressionLine", 3),
-                ("scanExpressions", 2), ("partitionExpressionLine", 3), (".cctor", 0)
+                ("scanExpressions", 2), ("partitionExpressionLine", 3), ("badSyntax", 3),
+                ("SelfTest", 1), (".cctor", 0)
             }),
             ("mcmisc", "Quire.Engine.Misc.LispUtils+LinePartition", "Engine.Misc.LispUtils+LinePartition", new[]
             {
@@ -185,6 +186,11 @@ internal static class BodyTransplant
                 if (!PatchInstructionTokens(body, originalDefinition.RelativeVirtualAddress, originalPe.PEHeaders,
                         originalReader, candidateReader, candidateBytes, candidatePe, candidatePe.PEHeaders,
                         out var transplantFailure))
+                {
+                    messages.Add($"skip {type.Original}::{name}: {transplantFailure}");
+                    continue;
+                }
+                if (!PatchExceptionTokens(body, originalReader, candidateReader, out transplantFailure))
                 {
                     messages.Add($"skip {type.Original}::{name}: {transplantFailure}");
                     continue;
@@ -484,7 +490,8 @@ internal static class BodyTransplant
         || type.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal)
         || type.StartsWith("System.Collections.Generic.List`1+Enumerator", StringComparison.Ordinal)
         || type.StartsWith("System.Collections.Generic.List`1/Enumerator", StringComparison.Ordinal)
-        || type.StartsWith("System.Collections.Generic.Queue`1+Enumerator", StringComparison.Ordinal);
+        || type.StartsWith("System.Collections.Generic.Queue`1+Enumerator", StringComparison.Ordinal)
+        || type.StartsWith("System.Collections.Generic.Queue`1/Enumerator", StringComparison.Ordinal);
 
     private static List<string> SplitGenericArguments(string arguments)
     {
@@ -752,6 +759,60 @@ internal static class BodyTransplant
             position += operandSize;
         }
         return true;
+    }
+
+    private static bool PatchExceptionTokens(byte[] body, MetadataReader originalReader,
+        MetadataReader candidateReader, out string failure)
+    {
+        failure = "exception clause token has no candidate metadata counterpart";
+        var flags = BitConverter.ToUInt16(body, 0);
+        if ((flags & 0x3) != 0x3 || (flags & 0x8) == 0)
+            return true;
+
+        var sectionOffset = Align4(GetCodeOffset(body) + GetCodeSize(body));
+        while (sectionOffset + 4 <= body.Length)
+        {
+            var kind = body[sectionOffset];
+            var fat = (kind & 0x40) != 0;
+            var sectionSize = fat
+                ? body[sectionOffset + 1] | (body[sectionOffset + 2] << 8) | (body[sectionOffset + 3] << 16)
+                : body[sectionOffset + 1];
+            if (sectionSize < 4 || sectionOffset + sectionSize > body.Length)
+                return false;
+
+            if ((kind & 0x3f) == 0x1)
+            {
+                var clauseSize = fat ? 24 : 12;
+                if ((sectionSize - 4) % clauseSize != 0)
+                    return false;
+                for (var clauseOffset = sectionOffset + 4;
+                     clauseOffset < sectionOffset + sectionSize;
+                     clauseOffset += clauseSize)
+                {
+                    var clauseFlags = fat
+                        ? unchecked((int)BitConverter.ToUInt32(body, clauseOffset))
+                        : BitConverter.ToUInt16(body, clauseOffset);
+                    if ((clauseFlags & 0x7) != 0) // filter, finally, or fault
+                        continue;
+
+                    var tokenOffset = clauseOffset + (fat ? 20 : 8);
+                    var token = BitConverter.ToUInt32(body, tokenOffset);
+                    if (!TryMapMetadataToken(token, originalReader, candidateReader, out var mapped))
+                    {
+                        failure = $"unmapped exception clause token 0x{token:x8}";
+                        return false;
+                    }
+                    BitConverter.TryWriteBytes(body.AsSpan(tokenOffset, sizeof(uint)), mapped);
+                }
+            }
+
+            if ((kind & 0x80) == 0)
+                return true;
+            sectionOffset = Align4(sectionOffset + sectionSize);
+        }
+
+        failure = "invalid exception section chain";
+        return false;
     }
 
     private static bool TryMapMetadataToken(uint token, MetadataReader source,

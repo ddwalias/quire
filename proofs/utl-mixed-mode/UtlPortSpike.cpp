@@ -1303,7 +1303,11 @@ namespace Quire { namespace Engine { namespace Misc {
             stringBuilder->Append(xml, num, xml->Length - num);
             return stringBuilder->ToString();
         }
-        static void TestInit() {}
+        static void TestInit()
+        {
+            String^ preservedTestInput = "<foo x='3' y='4'   />";
+            GC::KeepAlive(preservedTestInput);
+        }
         static void TestCheck(String^ str, Boolean result, Boolean expected_result, Int32 expected_pos)
         {
             if (result != expected_result)

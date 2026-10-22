@@ -10,20 +10,18 @@ The latest strict candidate comparison was run against `origin/main`:
 python tools/validation/release_il.py --base origin/main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
 ```
 
-It failed closed with 390 candidate members checked, 278 exact and 168 failures. The failure breakdown is 117 generated global `<Module>` methods without reviewed Mathcad bindings, 34 methods with no Mathcad counterpart, nine methods removed from the candidate, and eight mapped Release IL differences. The report is `.mirror-cache/release-il-1400f5b52bda/release-il.json`. No suppression or validator bypass was added.
+It failed closed with 390 candidate members checked, 280 exact and 166 failures. The failure breakdown is 117 generated global `<Module>` methods without reviewed Mathcad bindings, 34 methods with no Mathcad counterpart, nine methods removed from the candidate, and six mapped Release IL differences. The current report is `.mirror-cache/release-il-3114cf632f65/release-il.json`. No suppression or validator bypass was added.
 
-The eight remaining mapped differences are:
+The six remaining mapped differences are:
 
 - `SafeMutex::.ctor(String,Int32)`
 - `StringUtils::.cctor`
 - `XmlUtils.TestCheck(String,Boolean,Boolean,Int32)`
-- `XmlUtils.SelfTest(String[])`
 - `LispUtils.badSyntax(String,String,Int32)`
-- `LispUtils.SelfTest(String[])`
 - `FileUtils::.cctor`
 - `FileUtils.ReadExpanded(String,TextWriter)`
 
-`FileUtils.LongUnicodeToShortcutKey(String,Int32&,Char&)` now transplants exactly. Its first runtime check exposed an error in the proof transplant utility: `List<T>.Enumerator` had been encoded as a class. The proof utility now classifies both `+Enumerator` and `/Enumerator` spellings as value types. A rebuilt consumer then loaded and exercised the method successfully.
+`FileUtils.LongUnicodeToShortcutKey(String,Int32&,Char&)`, `XmlUtils.SelfTest(String[])`, and `LispUtils.SelfTest(String[])` transplant exactly. The Lisp self-test exposed a proof transplant defect: catch-clause type tokens were copied without mapping. `BodyTransplant.cs` now remaps catch tokens in small and fat exception sections. The exact Unicode shortcut body also exposed a `List<T>.Enumerator` value-type encoding error; both `+Enumerator` and `/Enumerator` spellings are now classified as value types. The rebuilt managed consumer loaded the candidate successfully after these fixes.
 
 The production `Quire.Engine.Utl` C# project remains intact. The current candidate has only a subset of its managed API, so no full migration or same-DLL parity claim is made.
 
@@ -31,11 +29,11 @@ The production `Quire.Engine.Utl` C# project remains intact. The current candida
 
 `proofs/utl-mixed-mode/UtlPortSpike.vcxproj` is an x64 Visual C++ Dynamic Library project using MSVC toolset v145, `CLRSupport=NetCore` (`/clr:netcore`) and target framework `net10.0-windows`. It emits the assembly simple name `Quire.Engine.Utl` and version `0.1.0.0`, matching the current production C# assembly identity. The proof source ports existing managed utility behavior to C++/CLI and uses Win32 synchronization APIs for events, mutexes, waits, and critical sections. It does not add a dummy native function or transcribe CRT, exception, cookie, or startup routines from Ghidra. MSVC supplies its own mixed-mode startup and transition code.
 
-The spike ports Utl synchronization and collection types, queue and mailbox types, `LabeledDictionary`, and selected `Engine.Misc` utility types including `XmlUtils`, `LispUtils` with its nested line partition, `FileUtils`, `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`. `IlMaxStack/BodyTransplant.cs` is a proof-local post-link helper: it raises candidate max-stack values when safe, maps metadata tokens for selected original method bodies, preserves exception sections, and stores relocated bodies in `.ilnew`. The helper rejects bodies whose metadata cannot be represented safely. The recent generic MethodSpec type mapping enables the exact `MessageQueue.Start` transplant; the value-type correction enables the exact FileUtils shortcut enumerator body.
+The spike ports Utl synchronization and collection types, queue and mailbox types, `LabeledDictionary`, and selected `Engine.Misc` utility types including `XmlUtils`, `LispUtils` with its nested line partition, `FileUtils`, `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`. `IlMaxStack/BodyTransplant.cs` is a proof-local post-link helper: it raises candidate max-stack values when safe, maps metadata tokens for selected original method bodies, remaps catch clauses, preserves exception sections, and stores relocated bodies in `.ilnew`. The helper rejects bodies whose metadata cannot be represented safely. The recent generic MethodSpec type mapping enables the exact `MessageQueue.Start` transplant; the value-type correction enables the exact FileUtils shortcut enumerator body.
 
 The earlier small proof in `MixedModeProof.vcxproj` demonstrates a standalone unmanaged function called by a public C++/CLI wrapper. The C# consumer references that DLL and successfully calls the wrapper. The Utl port consumer separately references the candidate by assembly path. These proofs establish Windows C++/CLI reference and load behavior before any production project replacement.
 
-The `ReadExpanded(String,TextWriter)` body remains different. Its original local signature uses the .NET compiler's `InlineArray4<object>` representation while lowering a `ReadOnlySpan<object>`. MSVC C++/CLI rejects declaring `ReadOnlySpan<Object>` as a local (`C3225`/`C4950`: embedded reference types are unsupported in this compiler mode), and the proof transplant utility cannot encode the original internal `InlineArray4<object>` local signature. The candidate keeps a source implementation and the strict report records the mismatch. The gate is not altered to hide it.
+Three of the six mapped differences are sensitive to C# compiler lowering: `XmlUtils.TestCheck`, `LispUtils.badSyntax`, and `FileUtils.ReadExpanded`. The C# compiler emits calls to generic helpers on `<PrivateImplementationDetails>` and uses a `ReadOnlySpan<object>` local in `ReadExpanded`. A C++/CLI helper with an equivalent implementation changes the helper's declaring type, so the strict comparison still sees different calls. C++/CLI also rejects a `ReadOnlySpan<Object>` local (`C3225`/`C4950`: embedded reference types are unsupported in this compiler mode); the proof transplant helper cannot safely create a matching local-signature entry. The source implementation remains functional and the strict report records these differences. No validator rule was weakened.
 
 ## Identity, API, and references
 
@@ -57,27 +55,27 @@ REA's static name-agnostic inventory comparison against the original `utl-mgd.dl
 
 The Windows Release build used Visual Studio Professional 2026 18.11, MSVC 14.51.36231, .NET SDK 10.0.200, and x64. The candidate compiled successfully. The existing `UtlPortConsumer` built with zero warnings and errors and ran successfully after the enumerator signature correction. It exercised the C++/CLI synchronization types, queues, mailbox, XML and Lisp routines, FileUtils Unicode maps, and the other ported utilities. This confirms loadability on the build machine; a clean-machine install was not tested.
 
-REA statically inspected the current candidate (SHA-256 `51c9d949fcce22ef813699321592667ce9ae850c778b442b112063a9e296123c`). It reported a complete CLI metadata parse, x86-64 PE32+, a native-entry-point CLI flag, native RVA entry point `0x92b0`, assembly identity above, and `.NETCoreApp,Version=v10.0`. It found 541 TypeDefs, 457 MethodDefs and 168 AssemblyRefs. Its native-boundary summary reports 26 P/Invoke declarations, 39 native implementation/runtime entries, and two module references.
+REA statically inspected the final candidate (SHA-256 `8d97f9f5760887b4a5324252a425a998801a2c43c41c8b4babc17849da6e557d`, MVID `527b5221-e708-4bd1-9337-7d6117e645fc`). It reported a complete CLI metadata parse, x86-64 PE32+, a native-entry-point CLI flag, CLI native RVA entry point `0x92d0`, assembly identity above, and `.NETCoreApp,Version=v10.0`. It found 541 TypeDefs, 457 MethodDefs and 168 AssemblyRefs. Its native-boundary summary reports 26 P/Invoke declarations, 39 native implementation/runtime entries, and two module references.
 
-`dumpbin /headers` reports `_CorDllMain` at `0x18000B82D` and these image ranges:
+`dumpbin /headers` reports `_CorDllMain` at `0x18000B84D` and these image ranges:
 
 | Section | Virtual address range | Use |
 |---|---|---|
-| `.text` | `0x180001000–0x18000B927` | Executable code |
+| `.text` | `0x180001000–0x18000B947` | Executable code |
 | `.nep` | `0x18000C000–0x18000C57F` | Native entry-point support |
 | `.ilnew` | `0x18002B000–0x18012AFFF` | Relocated managed IL bodies |
 
 `dumpbin /imports` reports `KERNEL32.dll`, `VCRUNTIME140.dll`, `MSVCP140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, `api-ms-win-crt-heap-l1-1-0.dll`, and `ijwhost.dll`.
 
-Ghidra 12.1.4 imported the same candidate through `ghidra-agent-cli` as an x64 PE and began analysis of all memory and code. Its output includes the executable sections and imported dependencies, with PDB alignment and unresolved C++/CLI constructor-decompilation warnings. The CLI's follow-on `auto-analyze` operation did not complete because its configured `AutoAnalyze.java` helper is absent; the P0 gate also reports the generated workspace state files as untracked. Therefore the import and native code analysis were observed, but a complete gated Ghidra baseline/export and per-function decompilation were not obtained. The PE ranges above are corroborated by `dumpbin`; the full Ghidra workflow remains a verification limitation.
+Ghidra 12.1.4 imported this exact candidate through `ghidra-agent-cli` as an x64 PE and reported successful analysis of all memory and code. It loaded the native dependencies for symbol resolution and reported PDB alignment and unresolved C++/CLI constructor-decompilation warnings. `ghidra-agent-cli ghidra export-baseline` could not complete because the configured `ExportBaseline.java` script is absent. Native code ranges are corroborated by `dumpbin`; a gated Ghidra baseline export and per-function decompilation were not obtained.
 
 ## Deployment and remaining migration work
 
-The tested consumer output carried `Ijwhost.dll` beside the application. Deployment requires a matching x64 .NET 10 runtime, `ijwhost.dll`, and compatible MSVC/UCRT runtime components (including the imported VCRUNTIME/MSVCP/CRT DLLs). The test machine already had those runtimes. Building requires the Visual Studio C++ workload, the MSVC C++/CLI component, and Windows SDK desktop x64 libraries.
+The tested consumer output carried `Ijwhost.dll` beside the application. The final managed consumer loaded the candidate and exercised Win32 event/interrupt/mutex operations, queues, mailbox, task queue, XML/Lisp scanners, FileUtils, and collection helpers. This confirms loadability on the build machine; a clean-machine install was not tested. Deployment requires a matching x64 .NET 10 runtime, `ijwhost.dll`, and compatible MSVC/UCRT runtime components (including the imported VCRUNTIME/MSVCP/CRT DLLs). Building requires the Visual Studio C++ workload, the MSVC C++/CLI component, and Windows SDK desktop x64 libraries.
 
 Two single-file approaches were also tested before considering a production conversion. The C# module linked with Roslyn `/addmodule` builds but .NET 10 rejects loading the multi-module assembly (`0x8013101E`, single-file assemblies only). ILRepack 2.0.48 can read the mixed-mode and C# metadata but fails while writing because its Mono.Cecil writer does not support mixed-mode assemblies. These experiments do not prove no custom writer could be built; they show neither available path preserves the C# module in the tested single mixed-mode output.
 
-Replacing the C# project with this `.vcxproj` would therefore still require complete managed API coverage, compatibility with all current project references, the eight mapped IL fixes, a treatment for 117 generated global methods and 34 unbound methods under the strict gate, removal of the nine missing methods, and a supported deployment/build setup. Until that is achieved, keep the production C# assembly. The mixed-mode DLL remains an isolated proof.
+Replacing the C# project with this `.vcxproj` would therefore still require complete managed API coverage, compatibility with all current project references, the six mapped IL fixes, a treatment for 117 generated global methods and 34 unbound methods under the strict gate, removal of the nine missing methods, and a supported deployment/build setup. Until that is achieved, keep the production C# assembly. The mixed-mode DLL remains an isolated proof.
 
 ## Reproduction
 
