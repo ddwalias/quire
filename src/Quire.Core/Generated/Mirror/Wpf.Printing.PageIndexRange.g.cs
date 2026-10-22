@@ -11,14 +11,4 @@ namespace Quire.Wpf.Printing;
 [global::Quire.Mirror.MirrorOf("Ptc.Wpf.Printing.PageIndexRange, Ptc.Core")]
 public partial struct PageIndexRange
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator ==(global::Quire.Wpf.Printing.PageIndexRange range1, global::Quire.Wpf.Printing.PageIndexRange range2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool operator !=(global::Quire.Wpf.Printing.PageIndexRange range1, global::Quire.Wpf.Printing.PageIndexRange range2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Equals(global::Quire.Wpf.Printing.PageIndexRange other) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override bool Equals(object obj) => base.Equals(obj);
-    [global::Quire.Mirror.MirrorStub]
-    public override int GetHashCode() => base.GetHashCode();
 }

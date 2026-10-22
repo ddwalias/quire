@@ -40,4 +40,34 @@ public partial struct PageIndexRange
             return pageNumRange.PageTo - 1;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public static bool operator ==(PageIndexRange range1, PageIndexRange range2) => range1.PageNumRange == range2.PageNumRange;
+
+    [MirrorVerified("Release IL")]
+    public static bool operator !=(PageIndexRange range1, PageIndexRange range2) => range1.PageNumRange != range2.PageNumRange;
+
+    [MirrorVerified("Release IL")]
+    public bool Equals(PageIndexRange other)
+    {
+        PageRange pageNumRange = PageNumRange;
+        return pageNumRange.Equals(other.PageNumRange);
+    }
+
+    [MirrorVerified("Release IL")]
+    public override bool Equals(object obj)
+    {
+        if (obj is PageIndexRange other)
+        {
+            return Equals(other);
+        }
+        return false;
+    }
+
+    [MirrorVerified("Release IL")]
+    public override int GetHashCode()
+    {
+        PageRange pageNumRange = PageNumRange;
+        return pageNumRange.GetHashCode();
+    }
 }
