@@ -35,7 +35,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalUsingDirectories>$(OutDir);$(MSBuildThisFileDirectory)..\..\src\Quire.Mirror\bin\x64\Release\net10.0;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories>$(OutDir);%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4679</DisableSpecificWarnings>
       <Optimization>MaxSpeed</Optimization>
@@ -53,11 +53,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="UtlPortSpike.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Quire.Mirror">
-      <HintPath>..\..\src\Quire.Mirror\bin\x64\Release\net10.0\Quire.Mirror.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Quire.Mirror\Quire.Mirror.csproj">

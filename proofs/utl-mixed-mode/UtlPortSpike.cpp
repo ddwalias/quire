@@ -5,7 +5,6 @@
 #ifdef IsLoggingEnabled
 #undef IsLoggingEnabled
 #endif
-#using <Quire.Mirror.dll>
 #pragma warning(push)
 #pragma warning(disable:4564)
 #using <System.Linq.dll>
@@ -1537,21 +1536,7 @@ namespace Quire { namespace Engine { namespace Misc {
         }
 
     public:
-        static void badSyntax(String^ msg, String^ str, Int32 pos)
-        {
-            auto nearby = gcnew System::Text::StringBuilder();
-            Int32 lineNumber = 1, index = 0, limit = Math::Min(Math::Max(pos, 0), str->Length);
-            while (index < limit)
-            {
-                Char c = str[index++];
-                if (c == '\n') { lineNumber++; nearby->Length = 0; }
-                else nearby->Append(c);
-            }
-            while (index < str->Length && str[index] != '\n' && str[index] != '\r') nearby->Append(str[index++]);
-            Console::WriteLine("Bad syntax ({0}) @ pos={1} line={2}\n Context (line {2}): {3}",
-                gcnew array<Object^>{ msg, pos, lineNumber, nearby->ToString() });
-            throw gcnew Exception("bad_syntax");
-        }
+        static void badSyntax(String^ msg, String^ str, Int32 pos);
 
     private:
         static void Dbg(String^ str) { if (s_Debug) Console::WriteLine(str); }
@@ -2521,6 +2506,15 @@ namespace Quire { namespace Engine { namespace Misc {
 
         FileUtils() {}
     };
+
+    void LispUtils::badSyntax(String^ msg, String^ str, Int32 pos)
+    {
+        String^ nearby;
+        Int32 lineNumber = FileUtils::ComputeLineNumber(str, pos, nearby);
+        Console::WriteLine("Bad syntax ({0}) @ pos={1} line={2}\n Context (line {2}): {3}",
+            gcnew array<Object^>{ msg, pos, lineNumber, nearby });
+        throw gcnew Exception("bad_syntax");
+    }
 
     String^ LispUtils::SelfTest(array<String^>^ args)
     {
