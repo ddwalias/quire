@@ -17,8 +17,24 @@ public static partial class AppVersionProvider
     private static readonly object Lock;
     [global::Quire.Mirror.MirrorStub]
     private const string ResourceName = "Quire.Core.AppVersion.json";
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Xml.AppVersionData VersionData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public static global::Quire.Xml.AppVersionData VersionData
+    {
+        get
+        {
+            if (_versionData != null)
+            {
+                return _versionData;
+            }
+            lock (Lock)
+            {
+                if (_versionData == null)
+                {
+                    _versionData = LoadVersionData();
+                }
+            }
+            return _versionData;
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Xml.AppVersionData LoadVersionData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
