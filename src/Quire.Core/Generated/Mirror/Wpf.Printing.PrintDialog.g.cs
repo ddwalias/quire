@@ -31,7 +31,27 @@ public partial class PrintDialog : global::System.Windows.Controls.PrintDialog, 
                     return (global::Quire.Wpf.Printing.Win32PrintRange)0;
             }
         }
-        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        set
+        {
+            switch (value)
+            {
+                case (global::Quire.Wpf.Printing.Win32PrintRange)0:
+                    base.PageRangeSelection = (global::System.Windows.Controls.PageRangeSelection)0;
+                    return;
+                case (global::Quire.Wpf.Printing.Win32PrintRange)2:
+                    base.PageRangeSelection = (global::System.Windows.Controls.PageRangeSelection)1;
+                    return;
+                case (global::Quire.Wpf.Printing.Win32PrintRange)4194304:
+                    base.PageRangeSelection = (global::System.Windows.Controls.PageRangeSelection)2;
+                    return;
+                case (global::Quire.Wpf.Printing.Win32PrintRange)1:
+                    base.PageRangeSelection = (global::System.Windows.Controls.PageRangeSelection)3;
+                    return;
+                default:
+                    global::Quire.DebugTools.DevAssert(false, $"{value} PrintRange is not supported", global::System.Array.Empty<object>());
+                    return;
+            }
+        }
     }
     [global::Quire.Mirror.MirrorStub]
     public PrintDialog(global::Quire.Wpf.Printing.PrintDialog.RangeSelectionOptions rangeSelectionOptions) { }
