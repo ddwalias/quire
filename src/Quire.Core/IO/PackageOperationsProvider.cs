@@ -23,6 +23,23 @@ public partial class PackageOperationsProvider
         package.DeletePart(partUri);
     }
 
+    [MirrorVerified("Release IL")]
+    private static PackagePart GetPartIfExists(Package package, Uri partName)
+    {
+        try
+        {
+            if (package.PartExists(partName))
+            {
+                return package.GetPart(partName);
+            }
+        }
+        catch (Exception ex)
+        {
+            DebugTools.DevAssert(false, ex.Message);
+        }
+        return null;
+    }
+
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     private static readonly Uri _worksheet;
 
