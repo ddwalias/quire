@@ -1,5 +1,7 @@
 #nullable disable
 using System.Windows;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows;
 using Quire.Mirror;
 using Quire.Mirror;
@@ -55,6 +57,23 @@ public partial class MouseEventGenerator
         SendMouseInput(x, y, (SendMouseInputFlags)49153);
         SendMouseInput(0, 0, (SendMouseInputFlags)16386);
         SendMouseInput(0, 0, (SendMouseInputFlags)16388);
+    }
+
+    [MirrorVerified("Release IL")]
+    private static void SendMouseInput(int x, int y, SendMouseInputFlags flags)
+    {
+        User32.INPUT input = default;
+        input.type = 0;
+        input.union.mouseInput.dx = x;
+        input.union.mouseInput.dy = y;
+        input.union.mouseInput.mouseData = 0;
+        input.union.mouseInput.dwFlags = (int)flags;
+        input.union.mouseInput.time = 0;
+        input.union.mouseInput.dwExtraInfo = new IntPtr(0);
+        if (User32.SendInput(1, ref input, Marshal.SizeOf(input)) == 0)
+        {
+            throw new Win32Exception(Marshal.GetLastWin32Error());
+        }
     }
 
     [MirrorVerified("Release IL")]
