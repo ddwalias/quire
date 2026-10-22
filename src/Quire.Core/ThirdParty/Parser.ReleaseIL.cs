@@ -128,6 +128,98 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    private bool LexFileArguments(string fileName, out string[] arguments)
+    {
+        string text = null;
+        try
+        {
+            using global::System.IO.FileStream stream = new global::System.IO.FileStream(fileName, global::System.IO.FileMode.Open, global::System.IO.FileAccess.Read);
+            text = new global::System.IO.StreamReader(stream).ReadToEnd();
+        }
+        catch (global::System.Exception ex)
+        {
+            ReportError(global::System.String.Format("Error: Can't open command line argument file '{0}' : '{1}'", fileName, ex.Message));
+            arguments = null;
+            return false;
+        }
+        bool result = false;
+        global::System.Collections.ArrayList arrayList = new global::System.Collections.ArrayList();
+        global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+        bool flag = false;
+        int i = 0;
+        try
+        {
+            while (true)
+            {
+                while (global::System.Char.IsWhiteSpace(text[i]))
+                {
+                    i++;
+                }
+                if (text[i] == '#')
+                {
+                    for (i++; text[i] != '\n'; i++)
+                    {
+                    }
+                    continue;
+                }
+                do
+                {
+                    if (text[i] == '\\')
+                    {
+                        int num = 1;
+                        i++;
+                        while (i == text.Length && text[i] == '\\')
+                        {
+                            num++;
+                        }
+                        if (i == text.Length || text[i] != '"')
+                        {
+                            stringBuilder.Append('\\', num);
+                            continue;
+                        }
+                        stringBuilder.Append('\\', num >> 1);
+                        if ((num & 1) != 0)
+                        {
+                            stringBuilder.Append('"');
+                        }
+                        else
+                        {
+                            flag = !flag;
+                        }
+                    }
+                    else if (text[i] == '"')
+                    {
+                        flag = !flag;
+                        i++;
+                    }
+                    else
+                    {
+                        stringBuilder.Append(text[i]);
+                        i++;
+                    }
+                }
+                while (!global::System.Char.IsWhiteSpace(text[i]) | flag);
+                arrayList.Add(stringBuilder.ToString());
+                stringBuilder.Length = 0;
+            }
+        }
+        catch (global::System.IndexOutOfRangeException)
+        {
+            if (flag)
+            {
+                ReportError(global::System.String.Format("Error: Unbalanced '\"' in command line argument file '{0}'", fileName));
+                result = true;
+            }
+            else if (stringBuilder.Length > 0)
+            {
+                arrayList.Add(stringBuilder.ToString());
+            }
+        }
+        arguments = (string[])arrayList.ToArray(typeof(string));
+        return result;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
     {
         for (int i = startIndex; i < text.Length; i++)
