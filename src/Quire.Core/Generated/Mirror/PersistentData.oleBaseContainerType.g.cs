@@ -13,8 +13,18 @@ public abstract partial class oleBaseContainerType : global::Quire.Serialization
 {
     [global::Quire.Mirror.MirrorStub]
     private string itemidrefField;
-    [global::Quire.Mirror.MirrorStub]
-    public string itemidref { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string itemidref
+    {
+        get
+        {
+            if (global::System.String.IsNullOrEmpty(itemidrefField))
+            {
+                itemidrefField = global::Quire.Serialization.IS11NProviderExtensions.PackExternalObjectExt(S11NProvider, StorageFileName, null, ExternalObjectType);
+            }
+            return itemidrefField;
+        }
+        set => itemidrefField = value;
+    }
     [global::Quire.Mirror.MirrorStub]
     protected abstract global::Quire.Serialization.ExternalObjectType ExternalObjectType { get; }
     [global::Quire.Mirror.MirrorStub]
