@@ -178,7 +178,64 @@ public sealed partial class Parser
             }
         }
         [global::Quire.Mirror.MirrorStub]
-        public string SyntaxHelp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+        public string SyntaxHelp
+        {
+            get
+            {
+                global::System.Text.StringBuilder stringBuilder = new global::System.Text.StringBuilder();
+                if (IsDefault)
+                {
+                    stringBuilder.Append("<");
+                    stringBuilder.Append(LongName);
+                    stringBuilder.Append(">");
+                }
+                else
+                {
+                    stringBuilder.Append("/");
+                    stringBuilder.Append(LongName);
+                    global::System.Type valueType = ValueType;
+                    if (valueType == typeof(int))
+                    {
+                        stringBuilder.Append(":<int>");
+                    }
+                    else if (valueType == typeof(uint))
+                    {
+                        stringBuilder.Append(":<uint>");
+                    }
+                    else if (valueType == typeof(bool))
+                    {
+                        stringBuilder.Append("[+|-]");
+                    }
+                    else if (valueType == typeof(string))
+                    {
+                        stringBuilder.Append(":<string>");
+                    }
+                    else
+                    {
+                        stringBuilder.Append(":{");
+                        bool flag = true;
+                        global::System.Reflection.FieldInfo[] fields = valueType.GetFields();
+                        foreach (global::System.Reflection.FieldInfo fieldInfo in fields)
+                        {
+                            if (fieldInfo.IsStatic)
+                            {
+                                if (flag)
+                                {
+                                    flag = false;
+                                }
+                                else
+                                {
+                                    stringBuilder.Append('|');
+                                }
+                                stringBuilder.Append(fieldInfo.Name);
+                            }
+                        }
+                        stringBuilder.Append('}');
+                    }
+                }
+                return stringBuilder.ToString();
+            }
+        }
         [global::Quire.Mirror.MirrorStub]
         public Argument(global::Quire.ThirdParty.ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo, global::Quire.ThirdParty.ErrorReporter reporter) { }
         [global::Quire.Mirror.MirrorStub]
