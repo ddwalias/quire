@@ -1594,6 +1594,262 @@ namespace Quire { namespace Engine { namespace Misc {
     [Quire::Mirror::MirrorOfAttribute("Engine.Misc.FileUtils, mcmisc")]
     public ref class FileUtils
     {
+    private:
+        static String^ s_Char_Alpha;
+        static String^ s_Char_alpha;
+        static String^ s_Char_Beta;
+        static String^ s_Char_beta;
+        static String^ s_Char_Gamma;
+        static String^ s_Char_gamma;
+        static String^ s_Char_Delta;
+        static String^ s_Char_delta;
+        static String^ s_Char_Epsilon;
+        static String^ s_Char_epsilon;
+        static String^ s_Char_Zeta;
+        static String^ s_Char_zeta;
+        static String^ s_Char_Eta;
+        static String^ s_Char_eta;
+        static String^ s_Char_Theta;
+        static String^ s_Char_theta;
+        static String^ s_Char_Iota;
+        static String^ s_Char_iota;
+        static String^ s_Char_Kappa;
+        static String^ s_Char_kappa;
+        static String^ s_Char_Lambda;
+        static String^ s_Char_lambda;
+        static String^ s_Char_Mu;
+        static String^ s_Char_mu;
+        static String^ s_Char_Nu;
+        static String^ s_Char_nu;
+        static String^ s_Char_Xi;
+        static String^ s_Char_xi;
+        static String^ s_Char_Omicron;
+        static String^ s_Char_omicron;
+        static String^ s_Char_Pi;
+        static String^ s_Char_pi;
+        static String^ s_Char_Rho;
+        static String^ s_Char_rho;
+        static String^ s_Char_Sigma;
+        static String^ s_Char_sigma;
+        static String^ s_Char_Tau;
+        static String^ s_Char_tau;
+        static String^ s_Char_Upsilon;
+        static String^ s_Char_upsilon;
+        static String^ s_Char_Phi;
+        static String^ s_Char_phi;
+        static String^ s_Char_Chi;
+        static String^ s_Char_chi;
+        static String^ s_Char_Psi;
+        static String^ s_Char_psi;
+        static String^ s_Char_Omega;
+        static String^ s_Char_omega;
+        static String^ s_Char_phi_alt;
+        static String^ s_Char_pi_alt;
+        static String^ s_Char_sigma_alt;
+        static String^ s_Char_theta_alt;
+        static String^ s_Char_bottom;
+        static String^ s_Char_ohm;
+        static String^ s_Char_currency;
+        static String^ s_Char_yen;
+        static String^ s_Char_deg;
+        static String^ s_Char_hbar;
+        static String^ s_Char_infinity;
+        static String^ s_Char_element_of;
+        static String^ s_Char_hooked_f;
+        static String^ s_Char_right_arrow;
+        static String^ s_Char_left_arrow;
+        static String^ s_Char_copyright;
+        static String^ s_Char_trademark;
+        static String^ s_Char_registered;
+        static String^ s_Char_DoubleStruckC;
+        static String^ s_Char_DoubleStruckQ;
+        static String^ s_Char_DoubleStruckR;
+        static String^ s_Char_DoubleStruckZ;
+        static String^ s_Start_Subscript;
+        static String^ s_End_Subscript;
+        static String^ s_Start_Superscript;
+        static String^ s_End_Superscript;
+        static array<Char>^ s_CharMappings;
+        static System::Collections::Generic::Dictionary<Char, Char>^ s_AsciiToUnicodeTable;
+        static System::Collections::Generic::Dictionary<Char, Char>^ s_UnicodeToAsciiTable;
+        static initonly array<String^>^ s_NameMappings;
+        static System::Collections::Generic::Dictionary<String^, String^>^ s_CharNameToUnicodeStringTable;
+        static System::Collections::Generic::Dictionary<Char, String^>^ s_UnicodeToCharNameTable;
+        static System::Collections::Generic::List<Quire::Engine::Misc::Pair<String^, Char>^>^ s_LongUnicodeToShortcutKeyTable;
+        static System::Collections::Generic::Dictionary<Char, Char>^ s_GreekShortcutKeyToUnicodeTable;
+        static System::Collections::Generic::Dictionary<Char, Char>^ s_UnicodeToGreekShortcutKeyTable;
+        static Boolean s_bNamedCharMapInitialized;
+
+        static FileUtils()
+        {
+            s_Char_Alpha = gcnew String(L"\u0391");
+            s_Char_alpha = gcnew String(L"\u03b1");
+            s_Char_Beta = gcnew String(L"\u0392");
+            s_Char_beta = gcnew String(L"\u03b2");
+            s_Char_Gamma = gcnew String(L"\u0393");
+            s_Char_gamma = gcnew String(L"\u03b3");
+            s_Char_Delta = gcnew String(L"\u0394");
+            s_Char_delta = gcnew String(L"\u03b4");
+            s_Char_Epsilon = gcnew String(L"\u0395");
+            s_Char_epsilon = gcnew String(L"\u03b5");
+            s_Char_Zeta = gcnew String(L"\u0396");
+            s_Char_zeta = gcnew String(L"\u03b6");
+            s_Char_Eta = gcnew String(L"\u0397");
+            s_Char_eta = gcnew String(L"\u03b7");
+            s_Char_Theta = gcnew String(L"\u0398");
+            s_Char_theta = gcnew String(L"\u03b8");
+            s_Char_Iota = gcnew String(L"\u0399");
+            s_Char_iota = gcnew String(L"\u03b9");
+            s_Char_Kappa = gcnew String(L"\u039a");
+            s_Char_kappa = gcnew String(L"\u03ba");
+            s_Char_Lambda = gcnew String(L"\u039b");
+            s_Char_lambda = gcnew String(L"\u03bb");
+            s_Char_Mu = gcnew String(L"\u039c");
+            s_Char_mu = gcnew String(L"\u03bc");
+            s_Char_Nu = gcnew String(L"\u039d");
+            s_Char_nu = gcnew String(L"\u03bd");
+            s_Char_Xi = gcnew String(L"\u039e");
+            s_Char_xi = gcnew String(L"\u03be");
+            s_Char_Omicron = gcnew String(L"\u039f");
+            s_Char_omicron = gcnew String(L"\u03bf");
+            s_Char_Pi = gcnew String(L"\u03a0");
+            s_Char_pi = gcnew String(L"\u03c0");
+            s_Char_Rho = gcnew String(L"\u03a1");
+            s_Char_rho = gcnew String(L"\u03c1");
+            s_Char_Sigma = gcnew String(L"\u03a3");
+            s_Char_sigma = gcnew String(L"\u03c3");
+            s_Char_Tau = gcnew String(L"\u03a4");
+            s_Char_tau = gcnew String(L"\u03c4");
+            s_Char_Upsilon = gcnew String(L"\u03a5");
+            s_Char_upsilon = gcnew String(L"\u03c5");
+            s_Char_Phi = gcnew String(L"\u03a6");
+            s_Char_phi = gcnew String(L"\u03c6");
+            s_Char_Chi = gcnew String(L"\u03a7");
+            s_Char_chi = gcnew String(L"\u03c7");
+            s_Char_Psi = gcnew String(L"\u03a8");
+            s_Char_psi = gcnew String(L"\u03c8");
+            s_Char_Omega = gcnew String(L"\u03a9");
+            s_Char_omega = gcnew String(L"\u03c9");
+            s_Char_phi_alt = gcnew String(L"\u03d5");
+            s_Char_pi_alt = gcnew String(L"\u03d6");
+            s_Char_sigma_alt = gcnew String(L"\u03c2");
+            s_Char_theta_alt = gcnew String(L"\u03d1");
+            s_Char_bottom = gcnew String(L"\u22a5");
+            s_Char_ohm = gcnew String(L"\u2126");
+            s_Char_currency = gcnew String(L"\u00a4");
+            s_Char_yen = gcnew String(L"\u00a5");
+            s_Char_deg = gcnew String(L"\u00b0");
+            s_Char_hbar = gcnew String(L"\u210f");
+            s_Char_infinity = gcnew String(L"\u221e");
+            s_Char_element_of = gcnew String(L"\u2208");
+            s_Char_hooked_f = gcnew String(L"\u0192");
+            s_Char_right_arrow = gcnew String(L"\u2192");
+            s_Char_left_arrow = gcnew String(L"\u2190");
+            s_Char_copyright = gcnew String(L"\u00a9");
+            s_Char_trademark = gcnew String(L"\u2122");
+            s_Char_registered = gcnew String(L"\u00ae");
+            s_Char_DoubleStruckC = gcnew String(L"\u2102");
+            s_Char_DoubleStruckQ = gcnew String(L"\u211a");
+            s_Char_DoubleStruckR = gcnew String(L"\u211d");
+            s_Char_DoubleStruckZ = gcnew String(L"\u2124");
+            s_Start_Subscript = gcnew String(L"\u0086\u208a");
+            s_End_Subscript = gcnew String(L"\u0087\u208a");
+            s_Start_Superscript = gcnew String(L"\u0086\u208a");
+            s_End_Superscript = gcnew String(L"\u0087\u208a");
+            s_CharMappings = gcnew array<Char>{
+            L'\u0065', L'\u2208', L'\u0068', L'\u210f', L'\u006f', L'\u00b0', L'\u0070', L'\u03c0',
+            L'\u0077', L'\u03c9', L'\u0041', L'\u2200', L'\u0043', L'\u2102', L'\u0045', L'\u2203',
+            L'\u004f', L'\u2126', L'\u0051', L'\u211a', L'\u0052', L'\u211d', L'\u0056', L'\u2207',
+            L'\u0059', L'\u00a5', L'\u005a', L'\u2124', L'\u0024', L'\u00a4', L'\u0038', L'\u221e',
+            L'\u0023', L'\u2260', L'\u003c', L'\u2264', L'\u003e', L'\u2265', L'\u005e', L'\u2227',
+            L'\u0076', L'\u2228', L'\u0021', L'\u00ac', L'\u007e', L'\u2248', L'\u003d', L'\u2261'
+            };
+            s_NameMappings = gcnew array<String^>{
+            gcnew String(L"\u0061"), nullptr, s_Char_alpha, gcnew String(L"\u0061\u006c\u0070\u0068\u0061"),
+            gcnew String(L"\u0041"), nullptr, s_Char_Alpha, gcnew String(L"\u0041\u006c\u0070\u0068\u0061"),
+            gcnew String(L"\u0062"), nullptr, s_Char_beta, gcnew String(L"\u0062\u0065\u0074\u0061"),
+            gcnew String(L"\u0042"), nullptr, s_Char_Beta, gcnew String(L"\u0042\u0065\u0074\u0061"),
+            gcnew String(L"\u0063"), nullptr, s_Char_chi, gcnew String(L"\u0063\u0068\u0069"),
+            gcnew String(L"\u0043"), nullptr, s_Char_Chi, gcnew String(L"\u0043\u0068\u0069"),
+            gcnew String(L"\u0064"), nullptr, s_Char_delta, gcnew String(L"\u0064\u0065\u006c\u0074\u0061"),
+            gcnew String(L"\u0044"), nullptr, s_Char_Delta, gcnew String(L"\u0044\u0065\u006c\u0074\u0061"),
+            gcnew String(L"\u0065"), nullptr, s_Char_epsilon, gcnew String(L"\u0065\u0070\u0073\u0069\u006c\u006f\u006e"),
+            gcnew String(L"\u0045"), nullptr, s_Char_Epsilon, gcnew String(L"\u0045\u0070\u0073\u0069\u006c\u006f\u006e"),
+            gcnew String(L"\u0066"), nullptr, s_Char_phi, gcnew String(L"\u0070\u0068\u0069"),
+            gcnew String(L"\u0046"), nullptr, s_Char_Phi, gcnew String(L"\u0050\u0068\u0069"),
+            gcnew String(L"\u0067"), nullptr, s_Char_gamma, gcnew String(L"\u0067\u0061\u006d\u006d\u0061"),
+            gcnew String(L"\u0047"), nullptr, s_Char_Gamma, gcnew String(L"\u0047\u0061\u006d\u006d\u0061"),
+            gcnew String(L"\u0068"), nullptr, s_Char_eta, gcnew String(L"\u0065\u0074\u0061"),
+            gcnew String(L"\u0048"), nullptr, s_Char_Eta, gcnew String(L"\u0045\u0074\u0061"),
+            gcnew String(L"\u0069"), nullptr, s_Char_iota, gcnew String(L"\u0069\u006f\u0074\u0061"),
+            gcnew String(L"\u0049"), nullptr, s_Char_Iota, gcnew String(L"\u0049\u006f\u0074\u0061"),
+            gcnew String(L"\u006a"), nullptr, s_Char_phi_alt, gcnew String(L"\u0070\u0068\u0069\u005f\u0061\u006c\u0074"),
+            gcnew String(L"\u004a"), nullptr, s_Char_theta_alt, gcnew String(L"\u0074\u0068\u0065\u0074\u0061\u005f\u0061\u006c\u0074"),
+            gcnew String(L"\u006b"), nullptr, s_Char_kappa, gcnew String(L"\u006b\u0061\u0070\u0070\u0061"),
+            gcnew String(L"\u004b"), nullptr, s_Char_Kappa, gcnew String(L"\u004b\u0061\u0070\u0070\u0061"),
+            gcnew String(L"\u006c"), nullptr, s_Char_lambda, gcnew String(L"\u006c\u0061\u006d\u0062\u0064\u0061"),
+            gcnew String(L"\u004c"), nullptr, s_Char_Lambda, gcnew String(L"\u004c\u0061\u006d\u0062\u0064\u0061"),
+            gcnew String(L"\u006d"), nullptr, s_Char_mu, gcnew String(L"\u006d\u0075"),
+            gcnew String(L"\u004d"), nullptr, s_Char_Mu, gcnew String(L"\u004d\u0075"),
+            gcnew String(L"\u006e"), nullptr, s_Char_nu, gcnew String(L"\u006e\u0075"),
+            gcnew String(L"\u004e"), nullptr, s_Char_Nu, gcnew String(L"\u004e\u0075"),
+            gcnew String(L"\u006f"), nullptr, s_Char_omicron, gcnew String(L"\u006f\u006d\u0069\u0063\u0072\u006f\u006e"),
+            gcnew String(L"\u004f"), nullptr, s_Char_Omicron, gcnew String(L"\u004f\u006d\u0069\u0063\u0072\u006f\u006e"),
+            gcnew String(L"\u0070"), nullptr, s_Char_pi, gcnew String(L"\u0070\u0069"),
+            gcnew String(L"\u0050"), nullptr, s_Char_Pi, gcnew String(L"\u0050\u0069"),
+            gcnew String(L"\u0071"), nullptr, s_Char_theta, gcnew String(L"\u0074\u0068\u0065\u0074\u0061"),
+            gcnew String(L"\u0051"), nullptr, s_Char_Theta, gcnew String(L"\u0054\u0068\u0065\u0074\u0061"),
+            gcnew String(L"\u0072"), nullptr, s_Char_rho, gcnew String(L"\u0072\u0068\u006f"),
+            gcnew String(L"\u0052"), nullptr, s_Char_Rho, gcnew String(L"\u0052\u0068\u006f"),
+            gcnew String(L"\u0073"), nullptr, s_Char_sigma, gcnew String(L"\u0073\u0069\u0067\u006d\u0061"),
+            gcnew String(L"\u0053"), nullptr, s_Char_Sigma, gcnew String(L"\u0053\u0069\u0067\u006d\u0061"),
+            gcnew String(L"\u0074"), nullptr, s_Char_tau, gcnew String(L"\u0074\u0061\u0075"),
+            gcnew String(L"\u0054"), nullptr, s_Char_Tau, gcnew String(L"\u0054\u0061\u0075"),
+            gcnew String(L"\u0075"), nullptr, s_Char_upsilon, gcnew String(L"\u0075\u0070\u0073\u0069\u006c\u006f\u006e"),
+            gcnew String(L"\u0055"), nullptr, s_Char_Upsilon, gcnew String(L"\u0055\u0070\u0073\u0069\u006c\u006f\u006e"),
+            gcnew String(L"\u0076"), nullptr, s_Char_pi_alt, gcnew String(L"\u0070\u0069\u005f\u0061\u006c\u0074"),
+            gcnew String(L"\u0056"), nullptr, s_Char_sigma_alt, gcnew String(L"\u0073\u0069\u0067\u006d\u0061\u005f\u0061\u006c\u0074"),
+            gcnew String(L"\u0077"), nullptr, s_Char_omega, gcnew String(L"\u006f\u006d\u0065\u0067\u0061"),
+            gcnew String(L"\u0057"), nullptr, s_Char_Omega, gcnew String(L"\u004f\u006d\u0065\u0067\u0061"),
+            gcnew String(L"\u0078"), nullptr, s_Char_xi, gcnew String(L"\u0078\u0069"),
+            gcnew String(L"\u0058"), nullptr, s_Char_Xi, gcnew String(L"\u0058\u0069"),
+            gcnew String(L"\u0079"), nullptr, s_Char_psi, gcnew String(L"\u0070\u0073\u0069"),
+            gcnew String(L"\u0059"), nullptr, s_Char_Psi, gcnew String(L"\u0050\u0073\u0069"),
+            gcnew String(L"\u007a"), nullptr, s_Char_zeta, gcnew String(L"\u007a\u0065\u0074\u0061"),
+            gcnew String(L"\u005a"), nullptr, s_Char_Zeta, gcnew String(L"\u005a\u0065\u0074\u0061"),
+            nullptr, nullptr, s_Char_currency, gcnew String(L"\u0063\u0075\u0072\u0072\u0065\u006e\u0063\u0079"),
+            nullptr, nullptr, s_Char_ohm, gcnew String(L"\u006f\u0068\u006d"),
+            nullptr, nullptr, s_Char_yen, gcnew String(L"\u0079\u0065\u006e"),
+            nullptr, nullptr, s_Char_deg, gcnew String(L"\u0064\u0065\u0067"),
+            nullptr, nullptr, s_Char_infinity, gcnew String(L"\u0069\u006e\u0066\u0069\u006e\u0069\u0074\u0079"),
+            nullptr, nullptr, s_Char_hbar, gcnew String(L"\u0068\u0062\u0061\u0072"),
+            nullptr, nullptr, s_Char_element_of, gcnew String(L"\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u005f\u006f\u0066"),
+            nullptr, nullptr, s_Char_bottom, gcnew String(L"\u0062\u006f\u0074\u0074\u006f\u006d"),
+            nullptr, nullptr, s_Char_right_arrow, gcnew String(L"\u0072\u0069\u0067\u0068\u0074\u005f\u0061\u0072\u0072\u006f\u0077"),
+            nullptr, nullptr, s_Char_left_arrow, gcnew String(L"\u006c\u0065\u0066\u0074\u005f\u0061\u0072\u0072\u006f\u0077"),
+            nullptr, nullptr, s_Char_copyright, gcnew String(L"\u0063\u006f\u0070\u0079\u0072\u0069\u0067\u0068\u0074"),
+            nullptr, nullptr, s_Char_trademark, gcnew String(L"\u0074\u0072\u0061\u0064\u0065\u006d\u0061\u0072\u006b"),
+            nullptr, nullptr, s_Char_registered, gcnew String(L"\u0072\u0065\u0067\u0069\u0073\u0074\u0065\u0072\u0065\u0064"),
+            nullptr, nullptr, s_Char_hooked_f, gcnew String(L"\u0068\u006f\u006f\u006b\u0065\u0064\u005f\u0066"),
+            nullptr, nullptr, s_Char_DoubleStruckC, gcnew String(L"\u0044\u006f\u0075\u0062\u006c\u0065\u0053\u0074\u0072\u0075\u0063\u006b\u0043"),
+            nullptr, nullptr, s_Char_DoubleStruckQ, gcnew String(L"\u0044\u006f\u0075\u0062\u006c\u0065\u0053\u0074\u0072\u0075\u0063\u006b\u0051"),
+            nullptr, nullptr, s_Char_DoubleStruckR, gcnew String(L"\u0044\u006f\u0075\u0062\u006c\u0065\u0053\u0074\u0072\u0075\u0063\u006b\u0052"),
+            nullptr, nullptr, s_Char_DoubleStruckZ, gcnew String(L"\u0044\u006f\u0075\u0062\u006c\u0065\u0053\u0074\u0072\u0075\u0063\u006b\u005a"),
+            nullptr, gcnew String(L"\u005b"), s_Start_Subscript, gcnew String(L"\u0053\u0074\u0061\u0072\u0074\u0053\u0075\u0062\u0073\u0063\u0072\u0069\u0070\u0074"),
+            nullptr, gcnew String(L"\u005d"), s_End_Subscript, gcnew String(L"\u0045\u006e\u0064\u0053\u0075\u0062\u0073\u0063\u0072\u0069\u0070\u0074"),
+            nullptr, gcnew String(L"\u0028"), s_Start_Superscript, gcnew String(L"\u0053\u0074\u0061\u0072\u0074\u0053\u0075\u0070\u0065\u0072\u0073\u0063\u0072\u0069\u0070\u0074"),
+            nullptr, gcnew String(L"\u0029"), s_End_Superscript, gcnew String(L"\u0045\u006e\u0064\u0053\u0075\u0070\u0065\u0072\u0073\u0063\u0072\u0069\u0070\u0074")
+            };
+            s_AsciiToUnicodeTable = gcnew System::Collections::Generic::Dictionary<Char, Char>();
+            s_UnicodeToAsciiTable = gcnew System::Collections::Generic::Dictionary<Char, Char>();
+            s_CharNameToUnicodeStringTable = gcnew System::Collections::Generic::Dictionary<String^, String^>();
+            s_UnicodeToCharNameTable = gcnew System::Collections::Generic::Dictionary<Char, String^>();
+            s_LongUnicodeToShortcutKeyTable = gcnew System::Collections::Generic::List<Quire::Engine::Misc::Pair<String^, Char>^>();
+            s_GreekShortcutKeyToUnicodeTable = gcnew System::Collections::Generic::Dictionary<Char, Char>();
+            s_UnicodeToGreekShortcutKeyTable = gcnew System::Collections::Generic::Dictionary<Char, Char>();
+            s_bNamedCharMapInitialized = false;
+        }
+
     public:
         static System::IO::StreamReader^ StreamToPath(String^ path)
         {
@@ -1662,7 +1918,175 @@ namespace Quire { namespace Engine { namespace Misc {
         static String^ ReadExpanded(String^ path)
         {
             auto writer = gcnew System::IO::StringWriter();
-            ReadExpanded(path, writer); writer->Close(); return writer->ToString();
+            ReadExpanded(path, writer);
+            safe_cast<System::IO::TextWriter^>(writer)->Close();
+            return writer->ToString();
+        }
+
+        static String^ ContractUnicode(String^ str)
+        {
+            auto result = gcnew StringBuilder();
+            for (Int32 i = 0; i < str->Length; ++i)
+            {
+                Char c = str[i], ascii = 0;
+                String^ charName = nullptr;
+                UInt32 value = c;
+                if (value < 128) result->Append(c);
+                else if (UnicodeToAscii(c, ascii)) result->AppendFormat(L"\\{0}", ascii);
+                else if (UnicodeToGreekShortcutKey(c, ascii)) result->AppendFormat(L"\\g{0}", ascii);
+                else if (LongUnicodeToShortcutKey(str, i, ascii)) result->AppendFormat(L"\\{0}", ascii);
+                else if (UnicodeToCharName(c, charName)) result->AppendFormat(L"\\&{0};", charName);
+                else result->AppendFormat(L"\\u{0:x4}", value);
+            }
+            return result->ToString();
+        }
+        static String^ ExpandUnicode(String^ str)
+        {
+            auto result = gcnew StringBuilder();
+            auto buffer = gcnew StringBuilder();
+            Boolean escape = false, greek = false, unicode = false, named = false;
+            Int32 pos = 0;
+            while (pos < str->Length)
+            {
+                Char c = str[pos++], mapped = 0;
+                if (escape)
+                {
+                    escape = false;
+                    if (AsciiToUnicode(c, mapped)) { result->Append(mapped); continue; }
+                    switch (c)
+                    {
+                    case 'f': result->Append('\f'); break;
+                    case 't': result->Append('\t'); break;
+                    case 'r': result->Append('\r'); break;
+                    case 'n': result->Append('\n'); break;
+                    case '\r': if (pos < str->Length && str[pos] == '\n') ++pos; break;
+                    case '\t':
+                    case ' ':
+                    {
+                        Int32 next = pos;
+                        while (next < str->Length)
+                        {
+                            Char space = str[next++];
+                            if (space == '\r')
+                            {
+                                if (next < str->Length && str[next] == '\n') ++next;
+                                continue;
+                            }
+                            if (space == '\t' || space == ' ') continue;
+                            if (space == '\n') break;
+                            throw gcnew Exception(String::Format(L"Bad escape sequence: {0}",
+                                StringUtils::CharNames(str->Substring(pos - 2, next - pos + 2))));
+                        }
+                        pos = next; break;
+                    }
+                    case '[': result->Append(L'\u0086'); result->Append(L'\u208a'); break;
+                    case ']': result->Append(L'\u0087'); result->Append(L'\u208a'); break;
+                    case '(': result->Append(L'\u0086'); result->Append(L'\u207a'); break;
+                    case ')': result->Append(L'\u0087'); result->Append(L'\u207a'); break;
+                    case 'g': greek = true; break;
+                    case '&': named = true; break;
+                    case 'u': unicode = true; break;
+                    case '\n': break;
+                    default: result->Append(L'\\'); result->Append(c); break;
+                    }
+                }
+                else if (greek)
+                {
+                    greek = false;
+                    if (GreekShortcutKeyToUnicode(c, mapped)) result->Append(mapped);
+                    else { --pos; result->AppendFormat(L"\\g{0}", c); }
+                }
+                else if (unicode)
+                {
+                    Boolean complete = false;
+                    if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))
+                    {
+                        buffer->Append(c);
+                        complete = buffer->Length == 4;
+                    }
+                    else
+                    {
+                        --pos; result->AppendFormat(L"\\u{0}", buffer); buffer->Length = 0; unicode = false;
+                    }
+                    if (complete)
+                    {
+                        result->Append(static_cast<Char>(Int32::Parse(buffer->ToString(), System::Globalization::NumberStyles::AllowHexSpecifier)));
+                        buffer->Length = 0; unicode = false;
+                    }
+                }
+                else if (named)
+                {
+                    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_')
+                    {
+                        buffer->Append(c); continue;
+                    }
+                    String^ name = buffer->ToString(); buffer->Length = 0; named = false;
+                    if (c == ';')
+                    {
+                        String^ value = nullptr;
+                        if (CharNameToUnicodeString(name, value)) result->Append(value);
+                        else result->AppendFormat(L"\\&{0};", name);
+                    }
+                    else
+                    {
+                        --pos; result->AppendFormat(L"\\&{0}", name);
+                    }
+                }
+                else if (c == L'\\') escape = true;
+                else result->Append(c);
+            }
+            return result->ToString();
+        }
+        static Boolean UnicodeToAscii(Char unicode, Char% ascii)
+        {
+            if (s_UnicodeToAsciiTable->Count == 0) InitCharMappings();
+            if (!s_UnicodeToAsciiTable->ContainsKey(unicode)) return false;
+            ascii = s_UnicodeToAsciiTable[unicode]; return true;
+        }
+        static Boolean AsciiToUnicode(Char ascii, Char% unicode)
+        {
+            if (s_AsciiToUnicodeTable->Count == 0) InitCharMappings();
+            if (!s_AsciiToUnicodeTable->ContainsKey(ascii)) return false;
+            unicode = s_AsciiToUnicodeTable[ascii]; return true;
+        }
+        static Boolean CharNameToUnicodeString(String^ name, String^% unicode)
+        {
+            if (!s_bNamedCharMapInitialized) InitNamedCharMap();
+            if (!s_CharNameToUnicodeStringTable->ContainsKey(name)) return false;
+            unicode = s_CharNameToUnicodeStringTable[name]; return true;
+        }
+        static Boolean UnicodeToCharName(Char unicode, String^% charName)
+        {
+            if (!s_bNamedCharMapInitialized) InitNamedCharMap();
+            if (!s_UnicodeToCharNameTable->ContainsKey(unicode)) return false;
+            charName = s_UnicodeToCharNameTable[unicode]; return true;
+        }
+        static Boolean GreekShortcutKeyToUnicode(Char greekShortcut, Char% unicode)
+        {
+            if (!s_bNamedCharMapInitialized) InitNamedCharMap();
+            if (!s_GreekShortcutKeyToUnicodeTable->ContainsKey(greekShortcut)) return false;
+            unicode = s_GreekShortcutKeyToUnicodeTable[greekShortcut]; return true;
+        }
+        static Boolean LongUnicodeToShortcutKey(String^ str, Int32% pos, Char% shortcutKey)
+        {
+            if (!s_bNamedCharMapInitialized) InitNamedCharMap();
+            for (Int32 n = 0; n < s_LongUnicodeToShortcutKeyTable->Count; ++n)
+            {
+                Quire::Engine::Misc::Pair<String^, Char>^ item = s_LongUnicodeToShortcutKeyTable[n];
+                String^ value = item->First;
+                if (str->Length < pos + value->Length) continue;
+                Boolean equal = true;
+                for (Int32 i = 0; i < value->Length; ++i)
+                    if (str[pos + i] != value[i]) { equal = false; break; }
+                if (equal) { shortcutKey = item->Second; pos += value->Length - 1; return true; }
+            }
+            return false;
+        }
+        static Boolean UnicodeToGreekShortcutKey(Char unicode, Char% greekShortcut)
+        {
+            if (!s_bNamedCharMapInitialized) InitNamedCharMap();
+            if (!s_UnicodeToGreekShortcutKeyTable->ContainsKey(unicode)) return false;
+            greekShortcut = s_UnicodeToGreekShortcutKeyTable[unicode]; return true;
         }
 
     private:
@@ -1684,7 +2108,49 @@ namespace Quire { namespace Engine { namespace Misc {
         static void SkipPast(System::IO::StreamReader^ reader, String^ seek)
         {
             String^ line;
-            do { line = reader->ReadLine(); } while (line != nullptr && !line->StartsWith(seek));
+            System::IO::TextReader^ textReader = reader;
+            do { line = textReader->ReadLine(); } while (line != nullptr && !line->StartsWith(seek));
+        }
+
+        static void InitCharMappings()
+        {
+            for (Int32 i = 0; i < s_CharMappings->Length; i += 2)
+            {
+                Char ascii = s_CharMappings[i], unicode = s_CharMappings[i + 1];
+                s_UnicodeToAsciiTable[unicode] = ascii;
+                s_AsciiToUnicodeTable[ascii] = unicode;
+            }
+        }
+        static void InitNamedCharMap()
+        {
+            for (Int32 i = 0; i < s_NameMappings->Length; i += 4)
+            {
+                String^ shortcut = s_NameMappings[i];
+                String^ longShortcut = s_NameMappings[i + 1];
+                String^ value = s_NameMappings[i + 2];
+                String^ name = s_NameMappings[i + 3];
+                if (name != nullptr) s_CharNameToUnicodeStringTable[name] = value;
+                if (value != nullptr && value->Length == 1) s_UnicodeToCharNameTable[value[0]] = name;
+                if (longShortcut != nullptr)
+                {
+                    if (longShortcut->Length != 1)
+                        throw gcnew Exception(String::Format(L"Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", name, longShortcut));
+                    if (value == nullptr) throw gcnew ArgumentNullException("unicode_string", "Input shouldn't be null.");
+                    s_LongUnicodeToShortcutKeyTable->Add(
+                        gcnew Quire::Engine::Misc::Pair<String^, Char>(value, longShortcut[0]));
+                }
+                if (shortcut != nullptr)
+                {
+                    if (shortcut->Length != 1) throw gcnew Exception("Greek Name Table init failed(2).");
+                    if (value != nullptr && value->Length != 1)
+                        throw gcnew Exception(String::Format(L"Greek Name Table init failed for char \"{0}\": \"{1}\".Length != 1", name, value));
+                    if (value == nullptr) throw gcnew ArgumentNullException("unicode_string", "Input shouldn't be null.");
+                    Char key = shortcut[0], mapped = value[0];
+                    s_GreekShortcutKeyToUnicodeTable[key] = mapped;
+                    s_UnicodeToGreekShortcutKeyTable[mapped] = key;
+                }
+            }
+            s_bNamedCharMapInitialized = true;
         }
 
     public:

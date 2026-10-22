@@ -138,6 +138,22 @@ finally
 
 Console.WriteLine("managed consumer exercised the C++/CLI FileUtils line context helper");
 
+char mappedChar = '\0';
+if (!FileUtils.AsciiToUnicode('p', ref mappedChar) || mappedChar != 'π' ||
+    FileUtils.ExpandUnicode("\\p") != "π" || FileUtils.ContractUnicode("π") != "\\p")
+    return 33;
+string? namedUnicode = null;
+if (!FileUtils.CharNameToUnicodeString("alpha", ref namedUnicode) || namedUnicode != "α")
+    return 34;
+char greekShortcut = '\0';
+if (!FileUtils.UnicodeToGreekShortcutKey('α', ref greekShortcut) || greekShortcut != 'a')
+    return 35;
+Int32 shortcutPosition = 0;
+char shortcut = '\0';
+if (!FileUtils.LongUnicodeToShortcutKey("\u0086₊", ref shortcutPosition, ref shortcut) || shortcut != '[')
+    return 36;
+Console.WriteLine("managed consumer exercised the C++/CLI FileUtils Unicode maps");
+
 var mailbox = new Mailbox<string>();
 mailbox.PutMessage("queued");
 if (mailbox.Count() != 1 || mailbox.GetMessage() != "queued" || mailbox.Count() != 0)

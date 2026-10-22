@@ -63,7 +63,13 @@ internal static class BodyTransplant
             ("mcmisc", "Quire.Engine.Misc.FileUtils", "Engine.Misc.FileUtils", new[]
             {
                 ("StreamToPath", 1), ("ProcessInclude", 2), ("SkipPast", 2),
-                ("ComputeLineNumber", 2), ("ComputeLineNumber", 3), ("ComputeLineNumber", 4)
+                ("ComputeLineNumber", 2), ("ComputeLineNumber", 3), ("ComputeLineNumber", 4),
+                ("ReadExpanded", 1), ("ReadExpanded", 2),
+                ("ContractUnicode", 1), ("ExpandUnicode", 1), ("UnicodeToAscii", 2),
+                ("AsciiToUnicode", 2), ("CharNameToUnicodeString", 2),
+                ("UnicodeToCharName", 2), ("GreekShortcutKeyToUnicode", 2),
+                ("LongUnicodeToShortcutKey", 3), ("UnicodeToGreekShortcutKey", 2),
+                ("InitCharMappings", 0), ("InitNamedCharMap", 0), (".cctor", 0)
             }),
             ("utl-mgd", "Quire.utl_mgd.LabeledDictionary", "utl_mgd.LabeledDictionary", new[]
             {
