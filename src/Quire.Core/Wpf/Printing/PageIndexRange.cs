@@ -12,6 +12,12 @@ public partial struct PageIndexRange
         PageNumRange = pageNumRange;
     }
 
+    [MirrorVerified("Release IL")]
+    public PageIndexRange(int firstIndex, int? lastIndex = null)
+    {
+        PageNumRange = new PageRange(firstIndex + 1, lastIndex.GetValueOrDefault(firstIndex) + 1);
+    }
+
     [MirrorVerified("PtcWpfPrintingPageIndexRangeMechanicalDifferentialTests")]
     public PageRange PageNumRange { get; }
 
