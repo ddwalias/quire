@@ -56,4 +56,23 @@ public partial class ChunkedMemoryStream
         }
     }
 
+    [MirrorVerified("Release IL")]
+    public override long Position
+    {
+        get
+        {
+            EnsureOpen();
+            return _position;
+        }
+        set
+        {
+            EnsureOpen();
+            if (value < 0L)
+            {
+                throw new ArgumentOutOfRangeException("value");
+            }
+            _position = value;
+        }
+    }
+
 }
