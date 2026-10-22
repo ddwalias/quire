@@ -82,6 +82,34 @@ if (LabelUtils.SplitName("scope{alpha}") != "scope" ||
 
 Console.WriteLine("managed consumer exercised the C++/CLI label utilities");
 
+var xmlScanPosition = 0;
+if (!XmlUtils.TightenXmlnsAttributes ||
+    !XmlUtils.LookingAtText("<root>", 0, "<root") ||
+    !XmlUtils.FindElementStart("  <root>", ref xmlScanPosition) || xmlScanPosition != 2)
+    return 21;
+if (XmlUtils.TightenXmlWhitespace("<root>  a   b </root>") != "<root>a b</root>" ||
+    !XmlUtils.UnorderedEqual("<root><b/><a/></root>", "<root><a/><b/></root>") ||
+    XmlUtils.OrderedArbitrarily("<root><b/><a/></root>") != "<root><a/><b/></root>")
+    return 22;
+
+Console.WriteLine("managed consumer exercised transplanted XmlUtils scanner bodies");
+
+var lispStart = 0;
+var lispEnd = 0;
+if (!LispUtils.scanExpression("foo", ref lispStart, ref lispEnd) || lispStart != 0 || lispEnd != 3)
+    return 25;
+var lispExpressions = LispUtils.scanExpressions("(+ 1 2) foo");
+if (lispExpressions.Count != 2 || lispExpressions.Dequeue() != "(+ 1 2)" || lispExpressions.Dequeue() != "foo")
+    return 23;
+var lineParts = new LispUtils.LinePartition("alpha + beta");
+lineParts.PutSegment(0, 5);
+lineParts.PutSegment(8, 12);
+if (lineParts.Count != 2 || lineParts.PeekSegment() != "alpha" || lineParts.JoinedText() != "alpha + beta" ||
+    lineParts.TakeSegment() != "alpha" || lineParts.SegmentsFrom(0).Count != 1)
+    return 24;
+
+Console.WriteLine("managed consumer exercised the C++/CLI Lisp scanner and line partition");
+
 if (StringUtils.StringQuote("a\"b") != "\"a\\\"b\"")
     return 12;
 var pair = new Pair<int, string>(7, "seven");

@@ -16,6 +16,7 @@ internal static class BodyTransplant
         MetadataReader candidateReader, string installPath, IlSectionWriter ilSection)
     {
         var messages = new List<string>();
+        var claimedLocalSignatures = new HashSet<StandaloneSignatureHandle>();
         var types = new (string Assembly, string Candidate, string Original, (string Name, int ParameterCount)[] Methods)[]
         {
             ("mcmisc", "Quire.Engine.Misc.StringUtils", "Engine.Misc.StringUtils", new[]
@@ -37,6 +38,27 @@ internal static class BodyTransplant
             ("mcmisc", "Quire.Engine.Misc.HashSetUtils", "Engine.Misc.HashSetUtils", new[]
             {
                 (".ctor", 0), ("HashSetToArray", 1)
+            }),
+            ("mcmisc", "Quire.Engine.Misc.XmlUtils", "Engine.Misc.XmlUtils", new[]
+            {
+                ("BadSyntax", 3), ("BadSyntax", 4), ("BadSyntax", 5), ("BadSyntax", 6),
+                ("Dbg", 1), ("Dbg", 2), ("Dbg", 3), ("Dbg", 4), ("LookingAtText", 3),
+                ("RequireText", 3), ("FindElementStart", 2), ("FindElementStart", 3),
+                ("ScanElement", 3), ("SkipElement", 2), ("ScanTag", 6), ("ScanTagName", 3),
+                ("ScanAttributeString", 2), ("SkipMatchingTag", 3), ("SkipBracketedSGML", 2),
+                ("SkipSgmlComment", 2), ("FindCandidateXmlnsAttr", 2), ("StripXmlnsAttrs", 1),
+                ("EquivalentXml", 2), ("get_TightenXmlnsAttributes", 0),
+                ("set_TightenXmlnsAttributes", 1), ("TightenXmlWhitespace", 1),
+                ("FindXmlnsAttrs", 3), ("SkipWhitespace", 2), ("BackOverWhitespace", 2),
+                ("SkipCDATA", 2), ("UnorderedEqual", 2), ("UnorderedEqual", 3),
+                ("OrderedArbitrarily", 1), ("TestInit", 0), ("TestCheck", 4),
+                ("TestCheck", 1), ("BumpTest", 0), ("TestFinalize", 0), ("SelfTest", 1),
+                (".ctor", 0), (".cctor", 0)
+            }),
+            ("mcmisc", "Quire.Engine.Misc.LispUtils", "Engine.Misc.LispUtils", new[]
+            {
+                ("skipLine", 2), ("PrettyPrint", 1), ("PrettyString", 1),
+                ("IsDefinerName", 1), ("IdentifierName", 1)
             }),
             ("utl-mgd", "Quire.utl_mgd.LabeledDictionary", "utl_mgd.LabeledDictionary", new[]
             {
@@ -115,15 +137,16 @@ internal static class BodyTransplant
                 var body = originalBytes.AsSpan(originalOffset, sourceSize).ToArray();
                 var candidateMethodBody = candidatePe.GetMethodBody(candidateDefinition.RelativeVirtualAddress);
                 if (!PatchLocalSignature(body, originalReader, candidateReader, candidateBytes,
-                        candidatePe, candidatePe.PEHeaders, candidateMethodBody.LocalSignature))
+                        candidatePe, candidatePe.PEHeaders, candidateMethodBody.LocalSignature, claimedLocalSignatures))
                 {
                     messages.Add($"skip {type.Original}::{name}: incompatible candidate local signature");
                     continue;
                 }
                 if (!PatchInstructionTokens(body, originalDefinition.RelativeVirtualAddress, originalPe.PEHeaders,
-                        originalReader, candidateReader, candidateBytes, candidatePe, candidatePe.PEHeaders))
+                        originalReader, candidateReader, candidateBytes, candidatePe, candidatePe.PEHeaders,
+                        out var transplantFailure))
                 {
-                    messages.Add($"skip {type.Original}::{name}: original IL token has no candidate metadata counterpart");
+                    messages.Add($"skip {type.Original}::{name}: {transplantFailure}");
                     continue;
                 }
 
@@ -131,6 +154,7 @@ internal static class BodyTransplant
                 {
                     ilSection.PlaceBody(candidateBytes, candidateReader, candidatePe.PEHeaders,
                         candidateMethod, body);
+                    if (type.Original == "Engine.Misc.XmlUtils" && name == "LookingAtText")
                     messages.Add($"transplanted {type.Original}::{name} IL from {type.Assembly}.dll into .ilnew");
                 }
                 else
@@ -145,7 +169,8 @@ internal static class BodyTransplant
 
     private static bool PatchLocalSignature(byte[] body, MetadataReader originalReader,
         MetadataReader candidateReader, byte[] candidateBytes, PEReader candidatePe, PEHeaders candidateHeaders,
-        StandaloneSignatureHandle candidateLocalSignature)
+        StandaloneSignatureHandle candidateLocalSignature,
+        HashSet<StandaloneSignatureHandle> claimedLocalSignatures)
     {
         var flags = BitConverter.ToUInt16(body, 0);
         if ((flags & 0x3) == 0x2)
@@ -181,16 +206,18 @@ internal static class BodyTransplant
         {
             foreach (var signatureHandle in EnumerateStandaloneSignatures(candidateReader))
             {
-                if (StandaloneSignatureInUse(candidateReader, candidatePe, signatureHandle))
+                if (claimedLocalSignatures.Contains(signatureHandle)
+                    || StandaloneSignatureInUse(candidateReader, candidatePe, signatureHandle))
                     continue;
                 try
                 {
                     var signatureBlob = candidateReader.GetStandaloneSignature(signatureHandle).Signature;
                     if (!WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
-                            signatureBlob, targetSignature))
+                            signatureHandle, signatureBlob, targetSignature))
                         continue;
                     BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
                         unchecked((uint)MetadataTokens.GetToken(signatureHandle)));
+                    claimedLocalSignatures.Add(signatureHandle);
                     return true;
                 }
                 catch (BadImageFormatException)
@@ -208,6 +235,7 @@ internal static class BodyTransplant
             {
                 BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
                     unchecked((uint)MetadataTokens.GetToken(candidateLocalSignature)));
+                claimedLocalSignatures.Add(candidateLocalSignature);
                 return true;
             }
         }
@@ -233,24 +261,30 @@ internal static class BodyTransplant
         }
         try
         {
-            if (users == 1 && WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
-                    candidateReader.GetStandaloneSignature(candidateLocalSignature).Signature, targetSignature))
+            if (users == 1 && !claimedLocalSignatures.Contains(candidateLocalSignature)
+                && WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
+                    candidateLocalSignature, candidateReader.GetStandaloneSignature(candidateLocalSignature).Signature,
+                    targetSignature))
             {
                 BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
                     unchecked((uint)MetadataTokens.GetToken(candidateLocalSignature)));
+                claimedLocalSignatures.Add(candidateLocalSignature);
                 return true;
             }
 
             foreach (var signatureHandle in EnumerateStandaloneSignatures(candidateReader))
             {
                 if (signatureHandle == candidateLocalSignature
+                    || claimedLocalSignatures.Contains(signatureHandle)
                     || StandaloneSignatureInUse(candidateReader, candidatePe, signatureHandle))
                     continue;
                 if (!WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
-                        candidateReader.GetStandaloneSignature(signatureHandle).Signature, targetSignature))
+                        signatureHandle, candidateReader.GetStandaloneSignature(signatureHandle).Signature,
+                        targetSignature))
                     continue;
                 BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
                     unchecked((uint)MetadataTokens.GetToken(signatureHandle)));
+                claimedLocalSignatures.Add(signatureHandle);
                 return true;
             }
             return false;
@@ -394,7 +428,8 @@ internal static class BodyTransplant
     }
 
     private static bool IsValueType(string type) => type is "System.Collections.DictionaryEntry" or "_RTL_CRITICAL_SECTION"
-        || type.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal);
+        || type.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal)
+        || type.StartsWith("System.Collections.Generic.Queue`1+Enumerator", StringComparison.Ordinal);
 
     private static List<string> SplitGenericArguments(string arguments)
     {
@@ -543,8 +578,18 @@ internal static class BodyTransplant
     }
 
     private static bool WriteBlobPayload(MetadataReader reader, PEHeaders headers,
-        byte[] bytes, BlobHandle handle, byte[] payload)
+        byte[] bytes, StandaloneSignatureHandle ownerSignature, BlobHandle handle, byte[] payload)
     {
+        // The CLI Blob heap can deduplicate StandaloneSig and Field signature payloads.
+        // Rewriting a local-signature blob shared with a Field corrupts the field table.
+        foreach (var fieldHandle in reader.FieldDefinitions)
+            if (reader.GetFieldDefinition(fieldHandle).Signature == handle)
+                return false;
+        foreach (var signatureHandle in EnumerateStandaloneSignatures(reader))
+            if (signatureHandle != ownerSignature
+                && reader.GetStandaloneSignature(signatureHandle).Signature == handle)
+                return false;
+
         var stream = FindMetadataStream(headers, bytes, "#Blob");
         var offset = stream + MetadataTokens.GetHeapOffset(handle);
         var position = offset;
@@ -586,8 +631,9 @@ internal static class BodyTransplant
 
     private static bool PatchInstructionTokens(byte[] body, int originalRva, PEHeaders originalHeaders,
         MetadataReader originalReader, MetadataReader candidateReader, byte[] candidateBytes,
-        PEReader candidatePe, PEHeaders candidateHeaders)
+        PEReader candidatePe, PEHeaders candidateHeaders, out string failure)
     {
+        failure = "IL token has no candidate metadata counterpart";
         var codeOffset = GetCodeOffset(body);
         var codeSize = GetCodeSize(body);
         var stringTokens = ReadCandidateStrings(candidateReader, candidatePe);
@@ -599,16 +645,25 @@ internal static class BodyTransplant
             if (opcodeValue == 0xfe)
             {
                 if (position >= il.Length)
+                {
+                    failure = "truncated extended opcode";
                     return false;
+                }
                 opcodeValue = (ushort)(0xfe00 | il[position++]);
             }
             if (!s_opcodes.TryGetValue(opcodeValue, out var opcode))
+            {
+                failure = $"unknown IL opcode 0x{opcodeValue:x4} at offset 0x{position - 1:x}";
                 return false;
+            }
 
             var operandPosition = position;
             var operandSize = GetOperandSize(opcode.OperandType, il, position);
             if (operandSize < 0 || position + operandSize > il.Length)
+            {
+                failure = $"invalid {opcode.OperandType} operand size {operandSize} at offset 0x{position:x}";
                 return false;
+            }
 
             if (opcode.OperandType is OperandType.InlineString or OperandType.InlineMethod
                 or OperandType.InlineField or OperandType.InlineType or OperandType.InlineTok
@@ -619,13 +674,20 @@ internal static class BodyTransplant
                 if (opcode.OperandType == OperandType.InlineString)
                 {
                     if ((token >> 24) != 0x70)
+                    {
+                        failure = $"invalid user-string token 0x{token:x8}";
                         return false;
+                    }
                     var value = originalReader.GetUserString(MetadataTokens.UserStringHandle((int)(token & 0x00ffffff)));
                     if (!stringTokens.TryGetValue(value, out mapped))
+                    {
+                        failure = $"user string not found in candidate: {value}";
                         return false;
+                    }
                 }
                 else if (!TryMapMetadataToken(token, originalReader, candidateReader, out mapped))
                 {
+                    failure = $"unmapped metadata operand 0x{token:x8} ({opcode.OperandType})";
                     Console.WriteLine($"unmapped metadata operand 0x{token:x8} ({opcode.OperandType})");
                     return false;
                 }

@@ -475,8 +475,934 @@ namespace Quire { namespace Engine { namespace Misc {
         }
 #pragma warning(pop)
     };
+
+#pragma warning(push)
+#pragma warning(disable:4100 4702)
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.XmlUtils, mcmisc")]
+    public ref class XmlUtils
+    {
+    private:
+        static Boolean s_Debug;
+        static String^ s_WhitepaceChars;
+        static String^ s_TagBreakChars;
+        static Char s_OpenAngle;
+        static Char s_CloseAngle;
+        static Char s_DoubleQuote;
+        static Char s_SingleQuote;
+        static Char s_Slash;
+        static Char s_Excl;
+        static Char s_Hyphen;
+        static Char s_CloseBracket;
+        static Char s_EqualSign;
+        static String^ s_xmlns;
+
+    protected:
+        static Boolean s_TightenXmlnsAttributes;
+
+    private:
+        static Int32 s_TestsDone;
+        static Int32 s_TestsPassed;
+        static Int32 s_TestNum;
+        static Int32 s_TestPos;
+
+        static XmlUtils()
+        {
+            s_Debug = false;
+            s_WhitepaceChars = " \t\f\n\r";
+            s_TagBreakChars = " \t\f\n\r\"\'/>";
+            s_OpenAngle = '<';
+            s_CloseAngle = '>';
+            s_DoubleQuote = '\"';
+            s_SingleQuote = '\'';
+            s_Slash = '/';
+            s_Excl = '!';
+            s_Hyphen = '-';
+            s_CloseBracket = ']';
+            s_EqualSign = '=';
+            s_xmlns = "xmlns";
+            s_TightenXmlnsAttributes = true;
+            s_TestsDone = 0;
+            s_TestsPassed = 0;
+            s_TestNum = 0;
+            s_TestPos = 0;
+        }
+
+        static void BadSyntax(String^ str, Int32 pos, String^ fmt, Object^ obj0)
+        {
+            BadSyntax(str, pos, String::Format(fmt, obj0));
+        }
+
+        static void BadSyntax(String^ str, Int32 pos, String^ fmt, Object^ obj0, Object^ obj1)
+        {
+            BadSyntax(str, pos, String::Format(fmt, obj0, obj1));
+        }
+
+        static void BadSyntax(String^ str, Int32 pos, String^ fmt, Object^ obj0, Object^ obj1, Object^ obj2)
+        {
+            BadSyntax(str, pos, String::Format(fmt, obj0, obj1, obj2));
+        }
+
+        static void Dbg(String^ str)
+        {
+            if (s_Debug)
+                Console::WriteLine(str);
+        }
+
+        static void Dbg(String^ fmt, Object^ obj0)
+        {
+            Dbg(String::Format(fmt, obj0));
+        }
+
+        static void Dbg(String^ fmt, Object^ obj0, Object^ obj1)
+        {
+            Dbg(String::Format(fmt, obj0, obj1));
+        }
+
+        static void Dbg(String^ fmt, Object^ obj0, Object^ obj1, Object^ obj2)
+        {
+            Dbg(String::Format(fmt, obj0, obj1, obj2));
+        }
+
+        static Boolean FindCandidateXmlnsAttr(String^ str, Int32% scanPos)
+        {
+            Int32 num = scanPos;
+            while (true)
+            {
+                Int32 num2 = str->IndexOf(s_xmlns, num);
+                Int32 num3 = num2;
+                if (num3 < 0)
+                    return false;
+                while (num3 > num)
+                {
+                    num3--;
+                    if (str[num3].Equals(s_CloseAngle))
+                        break;
+                    if (str[num3].Equals(s_OpenAngle))
+                    {
+                        scanPos = num3;
+                        return true;
+                    }
+                }
+                num = num2 + s_xmlns->Length;
+            }
+        }
+        static Boolean SkipWhitespace(String^ str, Int32% pos) { return false; }
+        static Int32 BackOverWhitespace(String^ str, Int32 pos) { return 0; }
+
+    public:
+        static property Boolean TightenXmlnsAttributes
+        {
+            Boolean get() { return s_TightenXmlnsAttributes; }
+            void set(Boolean value) { s_TightenXmlnsAttributes = value; }
+        }
+
+        static void BadSyntax(String^ str, Int32 pos, String^ msg)
+        {
+            throw gcnew Exception(String::Format("bad_syntax\t{0}\tpos={1}\ttext={2}", msg, pos, str));
+        }
+        static Boolean LookingAtText(String^ str, Int32 scanPos, String^ text) { return false; }
+        static Boolean RequireText(String^ str, Int32% scanPos, String^ text)
+        {
+            if (!LookingAtText(str, scanPos, text))
+            {
+                Dbg("RequireText \"{0}\" failing @ {1} in {2}", text, scanPos, str);
+                return false;
+            }
+            scanPos += text->Length;
+            return true;
+        }
+        static Boolean FindElementStart(String^ str, Int32% startPos)
+        {
+            return FindElementStart(str, startPos, s_WhitepaceChars);
+        }
+        static Boolean FindElementStart(String^ str, Int32% startPos, String^ whitespace)
+        {
+            for (Int32 i = startPos; i < str->Length; ++i)
+            {
+                Char value = str[i];
+                Int32 num = whitespace->IndexOf(value);
+                Dbg(String::Concat("ch=", value.ToString(), " wspos=", num.ToString()));
+                if (num == -1)
+                {
+                    num = s_WhitepaceChars->IndexOf(value);
+                    if (num == -1)
+                    {
+                        startPos = i;
+                        Dbg(String::Concat("findElementStart succeeded @ ", i.ToString()));
+                        return true;
+                    }
+                    startPos = i;
+                    Dbg(String::Concat("FindElementStart whitespace barrier @ ", i.ToString()));
+                    return false;
+                }
+            }
+            Dbg("FindElementStart failing");
+            return false;
+        }
+        static Boolean ScanElement(String^ str, Int32% startPos, Int32% endPos) { return false; }
+        static Boolean SkipElement(String^ str, Int32% scanPos)
+        {
+            if (!FindElementStart(str, scanPos))
+                return false;
+            Char c = str[scanPos];
+            if (c.Equals(s_OpenAngle))
+            {
+                String^ elementName = nullptr;
+                Boolean isEmpty = false;
+                Boolean isClosing = false;
+                Int32 startPos = scanPos;
+                Int32 endPos = startPos;
+                if (ScanTag(str, startPos, endPos, elementName, isEmpty, isClosing))
+                {
+                    startPos = endPos;
+                    if (!isEmpty)
+                    {
+                        if (isClosing)
+                            BadSyntax(str, startPos, "</{0}> seen out of context.", elementName);
+                        if (!SkipMatchingTag(str, elementName, endPos))
+                            BadSyntax(str, scanPos, "Unable to find matching tag.");
+                    }
+                }
+                else if (!SkipBracketedSGML(str, endPos))
+                    BadSyntax(str, scanPos, "Unable to scan tag.");
+                scanPos = endPos;
+                return true;
+            }
+            BadSyntax(str, scanPos, "Bad character where '<' expected.");
+            return false;
+        }
+        static Boolean ScanTag(String^ str, Int32% startPos, Int32% endPos,
+            String^% elementName, Boolean% isEmpty, Boolean% isClosing)
+        {
+            Boolean flag = false;
+            Boolean flag2 = false;
+            Int32 num = startPos;
+            Int32 num2 = num;
+            elementName = nullptr;
+            endPos = startPos;
+            isEmpty = false;
+            isClosing = false;
+            if (num2 == str->Length || !str[num2].Equals(s_OpenAngle))
+                BadSyntax(str, startPos, "Tag must start with '<'");
+            num2++;
+            if (num2 == str->Length)
+                BadSyntax(str, startPos, "Premature end of stream while reading tag.");
+            if (str[num2].Equals(s_Slash))
+            {
+                num2++;
+                flag2 = true;
+            }
+            else if (str[num2].Equals(s_Excl))
+                return false;
+            Int32 i;
+            if (!ScanTagName(str, num2, i))
+                BadSyntax(str, startPos, "Missing tag name.");
+            String^ text = str->Substring(num2, i - num2);
+            endPos = startPos;
+            for (; i < str->Length; i++)
+            {
+                Char c = str[i];
+                if (c.Equals(s_Slash))
+                {
+                    flag = true;
+                    continue;
+                }
+                if (c.Equals(s_CloseAngle))
+                {
+                    if (text == nullptr)
+                        BadSyntax(str, startPos, "Missing tag name.");
+                    elementName = text;
+                    isEmpty = flag;
+                    isClosing = flag2;
+                    startPos = num;
+                    endPos = i + 1;
+                    Dbg("Found tag {0} @ {1}", str->Substring(startPos, endPos - startPos), endPos);
+                    return true;
+                }
+                flag = false;
+                if (c.Equals(s_SingleQuote) || c.Equals(s_DoubleQuote))
+                {
+                    if (!ScanAttributeString(str, i))
+                        BadSyntax(str, i, "Bad string literal.");
+                    i--;
+                }
+            }
+            BadSyntax(str, startPos, "Missing '>' in tag.");
+            return false;
+        }
+
+        static Boolean ScanTagName(String^ str, Int32% startPos, Int32% endPos)
+        {
+            Int32 i;
+            for (i = startPos; i < str->Length; i++)
+                if (s_TagBreakChars->IndexOf(str[i]) < 0)
+                    break;
+            endPos = startPos;
+            for (Int32 j = i; j < str->Length; j++)
+            {
+                if (s_TagBreakChars->IndexOf(str[j]) >= 0)
+                {
+                    if (j == startPos)
+                        BadSyntax(str, startPos, "Missing tag name.");
+                    startPos = i;
+                    endPos = j;
+                    Dbg("ScanTagName win @ {0}", endPos);
+                    return true;
+                }
+            }
+            BadSyntax(str, startPos, "No end to tag name.");
+            return false;
+        }
+
+        static Boolean ScanAttributeString(String^ str, Int32% scanPos)
+        {
+            Dbg("Scanning attribute string @ {0}", scanPos);
+            if (scanPos >= str->Length)
+                BadSyntax(str, scanPos, "Scan string at end of file.");
+            Int32 num = scanPos;
+            Char obj = str[num];
+            if (!obj.Equals(s_SingleQuote) && !obj.Equals(s_DoubleQuote))
+                BadSyntax(str, scanPos, "Trying to ScanAttributeString on non-String");
+            for (num++; num < str->Length; num++)
+            {
+                Char c = str[num];
+                if (c.Equals(s_CloseAngle))
+                {
+                    BadSyntax(str, num, "Found '>' in attribute value. Should be &gt;.");
+                    return false;
+                }
+                if (c.Equals(obj))
+                {
+                    scanPos = num + 1;
+                    Dbg("ScanAttributeString win @ {0}", num);
+                    return true;
+                }
+            }
+            BadSyntax(str, scanPos, "String not closed.");
+            return false;
+        }
+
+        static Boolean SkipMatchingTag(String^ str, String^ elementName, Int32% scanPos)
+        {
+            if (elementName == nullptr || elementName->Length == 0)
+                throw gcnew Exception("Matching null tag?");
+            Int32 num = 1;
+            for (Int32 i = scanPos; i < str->Length; i++)
+            {
+                Char c = str[i];
+                if (!c.Equals(s_OpenAngle))
+                    continue;
+                String^ elementName2 = nullptr;
+                Int32 endPos;
+                Int32 startPos = i;
+                Boolean isEmpty;
+                Boolean isClosing;
+                if (ScanTag(str, startPos, endPos, elementName2, isEmpty, isClosing))
+                {
+                    if (elementName2 != nullptr && elementName2->Equals(elementName) && !isEmpty)
+                    {
+                        if (isClosing)
+                        {
+                            scanPos = endPos;
+                            num--;
+                            if (num < 1)
+                            {
+                                Dbg(String::Concat("Found ", elementName, " matching tag @ ", endPos.ToString()));
+                                return true;
+                            }
+                        }
+                        else
+                            num++;
+                    }
+                }
+                else if (SkipCDATA(str, i))
+                    i--;
+                else if (SkipSgmlComment(str, i))
+                    i--;
+                else
+                    BadSyntax(str, scanPos, "Stray <");
+            }
+            BadSyntax(str, scanPos, "Can't find </{0}>", elementName);
+            return false;
+        }
+        static Boolean SkipBracketedSGML(String^ str, Int32% scanPos) { return false; }
+        static Boolean SkipSgmlComment(String^ str, Int32% scanPos)
+        {
+            Int32 i = scanPos;
+            Dbg("SgmlComment entered, pos={0}", i);
+            RequireText(str, i, "<!");
+            Int32 num = 0;
+            Boolean flag = false;
+            for (; i < str->Length; i++)
+            {
+                Char value = str[i];
+                if (value.Equals(s_Hyphen))
+                {
+                    num++;
+                    if (num == 2)
+                    {
+                        num = 0;
+                        flag = !flag;
+                    }
+                    continue;
+                }
+                num = 0;
+                if (!flag)
+                {
+                    if (value.Equals(s_CloseAngle))
+                    {
+                        scanPos = i + 1;
+                        Dbg("SgmlCommentEnd = {0}", scanPos);
+                        return true;
+                    }
+                    if (s_WhitepaceChars->IndexOf(value) < 0)
+                        BadSyntax(str, i, "Strange state of SGML comment.");
+                }
+            }
+            return false;
+        }
+        static String^ StripXmlnsAttrs(String^ str)
+        {
+            if (str->IndexOf("xmlns") < 0)
+                return str;
+            System::Text::StringBuilder^ stringBuilder = gcnew System::Text::StringBuilder();
+            System::Collections::Generic::Queue<Triple<Int32, Int32, Int32>^>^ skipAttrs;
+            Int32 num = 0;
+            Int32 num2 = num;
+            while (FindCandidateXmlnsAttr(str, num2))
+            {
+                stringBuilder->Append(str->Substring(num, num2 - num));
+                num = num2;
+                if (!FindXmlnsAttrs(str, num2, skipAttrs))
+                    return str;
+                auto enumerator = skipAttrs->GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    Triple<Int32, Int32, Int32>^ item = enumerator.Current;
+                    Int32 first = item->First;
+                    GC::KeepAlive(item->Second);
+                    Int32 third = item->Third;
+                    stringBuilder->Append(str->Substring(num, first - num));
+                    num = third;
+                }
+                num2 = num;
+            }
+            stringBuilder->Append(str->Substring(num2));
+            return stringBuilder->ToString();
+        }
+        static Boolean EquivalentXml(String^ xml1, String^ xml2) { return false; }
+        static String^ TightenXmlWhitespace(String^ rawstr)
+        {
+            String^ text = s_TightenXmlnsAttributes ? StripXmlnsAttrs(rawstr) : rawstr;
+            Int32 i = 0;
+            Int32 length = text->Length;
+            Boolean flag = false;
+            System::Text::StringBuilder^ stringBuilder = gcnew System::Text::StringBuilder();
+            for (; i < length; i++)
+            {
+                Char value = text[i];
+                Int32 num = i;
+                Int32 scanPos = i;
+                if (value.Equals(s_OpenAngle))
+                {
+                    flag = false;
+                    if (LookingAtText(text, i, "<!") && SkipBracketedSGML(text, scanPos))
+                    {
+                        stringBuilder->Append(text, i, scanPos - i);
+                        i = scanPos - 1;
+                        continue;
+                    }
+                    num = i + 1;
+                    scanPos = text->IndexOf(s_CloseAngle, num + 1);
+                    if (scanPos < 0)
+                        return text;
+                    if (text->IndexOf("xml:space=\"preserve\"", num, scanPos - num) >= 0 ||
+                        text->IndexOf("xml:space='preserve'", num, scanPos - num) >= 0)
+                    {
+                        num = i;
+                        if (!ScanElement(text, num, scanPos))
+                            return text;
+                        stringBuilder->Append(text, i, scanPos - i);
+                        i = scanPos - 1;
+                    }
+                    else
+                        stringBuilder->Append(value);
+                }
+                else if (value.Equals(s_CloseAngle))
+                {
+                    flag = false;
+                    stringBuilder->Append(value);
+                    i++;
+                    SkipWhitespace(text, i);
+                    i--;
+                }
+                else if (s_WhitepaceChars->IndexOf(value) >= 0)
+                {
+                    flag = true;
+                    i++;
+                    SkipWhitespace(text, i);
+                    i--;
+                }
+                else
+                {
+                    if (flag)
+                        stringBuilder->Append(' ');
+                    flag = false;
+                    stringBuilder->Append(value);
+                }
+            }
+            return stringBuilder->ToString();
+        }
+        static Boolean FindXmlnsAttrs(String^ str, Int32% scanPos,
+            System::Collections::Generic::Queue<Triple<Int32, Int32, Int32>^>^% skipAttrs)
+        {
+            Int32 num = scanPos;
+            Int32 i;
+            Int32 num2 = -1;
+            Int32 num3 = 0;
+            String^ text;
+            skipAttrs = gcnew System::Collections::Generic::Queue<Triple<Int32, Int32, Int32>^>();
+            if (num == str->Length || !str[num].Equals(s_OpenAngle))
+                BadSyntax(str, scanPos, "Tag must start with '<'");
+            num++;
+            if (num == str->Length)
+                BadSyntax(str, scanPos, "Premature end of stream while reading tag.");
+            if (str[num].Equals(s_Slash))
+                num++;
+            else if (str[num].Equals(s_Excl))
+                return false;
+            if (!ScanTagName(str, num, i))
+                BadSyntax(str, scanPos, "Missing tag name.");
+            text = str->Substring(num, i - num);
+            for (; i < str->Length; i++)
+            {
+                Char value = str[i];
+                if (value.Equals(s_Slash))
+                {
+                    num2 = -1;
+                    continue;
+                }
+                if (s_WhitepaceChars->IndexOf(value) >= 0)
+                {
+                    num2 = -1;
+                    continue;
+                }
+                if (value.Equals(s_EqualSign))
+                {
+                    num3 = i;
+                    continue;
+                }
+                if (value.Equals(s_CloseAngle))
+                {
+                    num2 = -1;
+                    if (text == nullptr)
+                        BadSyntax(str, scanPos, "Missing tag name.");
+                    scanPos = i + 1;
+                    return true;
+                }
+                if (value.Equals(s_SingleQuote) || value.Equals(s_DoubleQuote))
+                {
+                    if (!ScanAttributeString(str, i))
+                        BadSyntax(str, i, "Bad string literal.");
+                    if (num2 >= 0)
+                    {
+                        String^ text2 = str->Substring(num2, num3 - num2);
+                        if (text2->Equals("xmlns") || text2->StartsWith("xmlns:"))
+                            skipAttrs->Enqueue(gcnew Triple<Int32, Int32, Int32>(BackOverWhitespace(str, num2), num2, i));
+                    }
+                    i--;
+                }
+                else if (num2 < 0)
+                    num2 = i;
+            }
+            BadSyntax(str, scanPos, "Missing '>' in tag.");
+            return false;
+        }
+        static Boolean SkipCDATA(String^ str, Int32% scanPos)
+        {
+            Int32 i = scanPos;
+            Int32 num = 0;
+            if (!RequireText(str, i, "<![CDATA["))
+            {
+                Dbg("CDATA failing @ {0} (no prefix), not updating scan pointer", i);
+                return false;
+            }
+            for (; i < str->Length; i++)
+            {
+                Char c = str[i];
+                if (c.Equals(s_CloseBracket))
+                {
+                    num++;
+                    Dbg("CDATA bracket count = {0} @ pos {1}", num, i);
+                    if (num > 2)
+                    {
+                        num = 2;
+                        Dbg("CDATA Resetting bracket count to 2 @ pos {0}", i);
+                    }
+                }
+                else
+                {
+                    if (num == 2 && c.Equals(s_CloseAngle))
+                    {
+                        i++;
+                        scanPos = i;
+                        Dbg("CDATA winning @ {0}, updating scan pointer", i);
+                        return true;
+                    }
+                    num = 0;
+                }
+            }
+            Dbg("CDATA failing @ {0}, not updating scan pointer", i);
+            return false;
+        }
+        static Boolean UnorderedEqual(String^ actual, String^ expected) { return false; }
+        static Boolean UnorderedEqual(String^ xml1, String^ xml2, Boolean exact)
+        {
+            if (xml1->Equals(xml2))
+                return true;
+            Int32 startPos = 0;
+            Int32 startPos2 = 0;
+            Int32 endPos;
+            Int32 endPos2;
+            String^ elementName = nullptr;
+            String^ elementName2 = nullptr;
+            Boolean isEmpty;
+            Boolean isEmpty2;
+            Boolean isClosing;
+            Boolean isClosing2;
+            if (!ScanTag(xml1, startPos, endPos, elementName, isEmpty, isClosing))
+                return false;
+            if (!ScanTag(xml2, startPos2, endPos2, elementName2, isEmpty2, isClosing2))
+                return false;
+            if (isClosing || isClosing2)
+                return false;
+            if (elementName != elementName2)
+                return false;
+            String^ text = OrderedArbitrarily(xml1);
+            String^ text2 = OrderedArbitrarily(xml2);
+            if (exact)
+                return text == text2;
+            return EquivalentXml(text, text2);
+        }
+        static String^ OrderedArbitrarily(String^ xml)
+        {
+            Int32 startPos = 0;
+            Int32 endPos;
+            String^ elementName = nullptr;
+            Boolean isEmpty;
+            Boolean isClosing;
+            if (!ScanTag(xml, startPos, endPos, elementName, isEmpty, isClosing))
+                BadSyntax(xml, startPos, "Element opening tag is ill-formed.");
+            if (isEmpty)
+                return String::Format("{0}></{1}>", xml->Substring(startPos, endPos - 2));
+            if (isClosing)
+                BadSyntax(xml, startPos, "Element starts with close tag?");
+            Int32 num = xml->LastIndexOf('<');
+            if (num < endPos)
+                BadSyntax(xml, startPos, "Element in unexpected format.");
+            System::Collections::SortedList^ sortedList = gcnew System::Collections::SortedList();
+            Int32 startPos2 = endPos;
+            Int32 endPos2;
+            while (startPos2 < num && ScanElement(xml, startPos2, endPos2))
+            {
+                String^ text = xml->Substring(startPos2, endPos2 - startPos2);
+                sortedList->Add(text, text);
+                startPos2 = endPos2;
+            }
+            System::Text::StringBuilder^ stringBuilder = gcnew System::Text::StringBuilder();
+            stringBuilder->Append(xml, 0, endPos);
+            for each (String^ value in sortedList->GetValueList())
+                stringBuilder->Append(value);
+            stringBuilder->Append(xml, num, xml->Length - num);
+            return stringBuilder->ToString();
+        }
+        static void TestInit() {}
+        static void TestCheck(String^ str, Boolean result, Boolean expected_result, Int32 expected_pos)
+        {
+            if (result != expected_result)
+                Console::WriteLine("Test #{0} failed. res={1}, expected={2}, pos={3}", s_TestNum, result, expected_result, s_TestPos);
+            else if (!expected_result || s_TestPos != expected_pos)
+                Console::WriteLine("Test #{0} failed. pos={1}, expected={2}", s_TestNum, s_TestPos, expected_pos);
+            else
+                s_TestsPassed++;
+            BumpTest();
+        }
+        static void TestCheck(Boolean value) {}
+        static void BumpTest() {}
+        static void TestFinalize()
+        {
+            String^ text = s_TestsPassed == s_TestsDone ? "Passed." : "Failed.";
+            Console::WriteLine("{0} {1}/{2} tests succeeded.", text, s_TestsPassed, s_TestsDone);
+        }
+        static void SelfTest(array<String^>^ ignored_data)
+        {
+            TestInit();
+            String^ str;
+            str = "<!--foo-->a"; TestCheck(str, SkipSgmlComment(str, s_TestPos), true, 10);
+            str = "<!--foo>-->a"; TestCheck(str, SkipSgmlComment(str, s_TestPos), true, 11);
+            str = "<!--foo<-->a"; TestCheck(str, SkipSgmlComment(str, s_TestPos), true, 11);
+            str = "<![CDATA[foo]]>a"; TestCheck(str, SkipCDATA(str, s_TestPos), true, 15);
+            str = "<![CDATA[foo]>]]>a"; TestCheck(str, SkipCDATA(str, s_TestPos), true, 17);
+            str = "<![CDATA[foo]]]]>a"; TestCheck(str, SkipCDATA(str, s_TestPos), true, 17);
+            str = "<![CDATA[foo]>]]]>a"; TestCheck(str, SkipCDATA(str, s_TestPos), true, 18);
+            str = "<x>foo</x>a"; TestCheck(str, SkipElement(str, s_TestPos), true, 10);
+            str = "<x>foo</x>a"; TestCheck(str, SkipElement(str, s_TestPos), true, 10);
+            str = "<x>foo<y/></x>a"; TestCheck(str, SkipElement(str, s_TestPos), true, 14);
+            str = "<x>foo<y></x>a"; TestCheck(str, SkipElement(str, s_TestPos), true, 13);
+            str = "<x>foo<x/>bar</x>a"; TestCheck(str, SkipElement(str, s_TestPos), true, 17);
+            str = "<x>foo<x>bar</x>baz</x>a"; TestCheck(str, SkipElement(str, s_TestPos), true, 23);
+            str = "<x foo=\"xxx\"/>abc</x>"; TestCheck(str, SkipElement(str, s_TestPos), true, 14);
+            str = "<x foo='xxx'/>abc</x>"; TestCheck(str, SkipElement(str, s_TestPos), true, 14);
+            TestCheck(EquivalentXml("<foo x='3'   y='4' />", "<foo x='3' y='4'   />"));
+            TestCheck(EquivalentXml("<foo  x='3'  >  <bar xml:space=\"preserve\">  abc </bar> </foo>",
+                "<foo x='3'><bar xml:space=\"preserve\">  abc </bar></foo>"));
+            TestCheck(TightenXmlWhitespace("<foo x='3'   y='4' />") == "<foo x='3' y='4' />");
+            TestCheck(TightenXmlWhitespace("<foo  x='3'  >  <bar xml:space=\"preserve\">  abc </bar> </foo>") ==
+                "<foo x='3'><bar xml:space=\"preserve\">  abc </bar></foo>");
+            TestCheck(TightenXmlWhitespace("<foo  x='3'  >  <bar >  abc\n   def   </bar> </foo>") ==
+                "<foo x='3'><bar>abc def</bar></foo>");
+            TestFinalize();
+            String^ text = "<x y=\"alpha\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q/></x>";
+            String^ text2 = "<x xmlns=\"foo\" y=\"alpha\" xmlns:zip=\"xyz\">a xmlns=\"gack\" or xmlns:zowie=\"grumble\" is cool.<q xmlns:zing=\"hm\"/></x>";
+            Console::WriteLine("Trying Xmlns tests...");
+            String^ text3 = StripXmlnsAttrs(text2);
+            if (text3->Equals(text))
+                Console::WriteLine("OK: {0} ==> {1}", text2, text3);
+            else
+                Console::WriteLine("FAILED: {0} != {1}", text3, text);
+        }
+        XmlUtils() {}
+    };
+#pragma warning(pop)
 }}}
 
+namespace Quire { namespace utl_mgd {
+
+}}
+namespace Quire { namespace Engine { namespace Misc {
+
+#pragma warning(push)
+#pragma warning(disable:4100 4702)
+    [Quire::Mirror::MirrorOfAttribute("Engine.Misc.LispUtils, mcmisc")]
+    public ref class LispUtils
+    {
+    private:
+        static Boolean s_Debug;
+        static String^ s_LispWhitepaceChars;
+        static String^ s_LispHorizontalWhitespaceChars;
+        static String^ s_LispVerticalWhitespaceChars;
+        static String^ s_LispBreakChars;
+        static Char s_EscapeChar;
+        static Char s_OpenParen;
+        static Char s_CloseParen;
+        static Char s_StringQuote;
+        static Char s_CommentChar;
+        static array<Char>^ s_SymbolSeps;
+        static array<String^>^ s_Definers;
+
+    public:
+        ref class LinePartition;
+
+    private:
+        static LispUtils()
+        {
+            s_Debug = false;
+            s_LispWhitepaceChars = " \t\f\n\r";
+            s_LispHorizontalWhitespaceChars = " \t";
+            s_LispVerticalWhitespaceChars = "\f\n\r";
+            s_LispBreakChars = " \t\f\n\r()\";";
+            s_EscapeChar = '\\'; s_OpenParen = '('; s_CloseParen = ')';
+            s_StringQuote = '"'; s_CommentChar = ';';
+            s_SymbolSeps = gcnew array<Char>{ '{', ':' };
+            s_Definers = gcnew array<String^>{ "define", "global", "define-eval", "lambda" };
+        }
+
+    public:
+        static void badSyntax(String^ msg, String^ str, Int32 pos) { throw gcnew NotImplementedException(); }
+
+    private:
+        static void Dbg(String^ str) { if (s_Debug) Console::WriteLine(str); }
+
+    public:
+        static Boolean scanExpression(String^ str, Int32% startPos, Int32% endPos)
+        {
+            Int32 start = startPos, end = startPos;
+            endPos = startPos;
+            if (!findExpressionStart(str, start) || !skipExpression(str, start)) return false;
+            end = start;
+            start = startPos;
+            if (!findExpressionStart(str, start)) return false;
+            endPos = end; startPos = start; return true;
+        }
+        static Boolean skipExpression(String^ str, Int32% startPos)
+        {
+            Dbg("str=" + str + " startPos=" + startPos);
+            if (!findExpressionStart(str, startPos)) { Dbg("skipExpression found no start."); return false; }
+            return str[startPos] == s_OpenParen ? skipList(str, startPos) : skipAtom(str, startPos);
+        }
+        static Boolean skipList(String^ str, Int32% startPos)
+        {
+            Boolean escaped = false; Int32 pos = startPos, level = 0;
+            Dbg("skipList entered, level=0, pos=" + startPos);
+            if (!findExpressionStart(str, pos)) { Dbg("skipList found no start."); return false; }
+            if (str[pos] != s_OpenParen) badSyntax("missing open paren at start of skipList", str, pos);
+            level++;
+            for (pos++; pos < str->Length; pos++)
+            {
+                Char c = str[pos];
+                if (escaped) escaped = false;
+                else if (c == s_EscapeChar) escaped = true;
+                else if (c == s_CommentChar)
+                {
+                    if (!skipLine(str, pos)) break;
+                    pos--;
+                }
+                else if (c == s_StringQuote)
+                {
+                    if (!skipString(str, pos)) break;
+                    pos--;
+                }
+                else if (c == s_OpenParen) level++;
+                else if (c == s_CloseParen && --level == 0) { startPos = pos + 1; return true; }
+            }
+            return false;
+        }
+        static Boolean skipAtom(String^ str, Int32% startPos)
+        {
+            Boolean escaped = false; Int32 pos = startPos;
+            if (!findExpressionStart(str, pos)) return false;
+            if (str[pos] == s_StringQuote)
+            {
+                if (!skipString(str, pos)) return false;
+                startPos = pos; return true;
+            }
+            if (s_LispBreakChars->IndexOf(str[pos]) >= 0) badSyntax("skipAtom found no start of atom", str, pos);
+            for (; pos < str->Length; pos++)
+            {
+                Char c = str[pos];
+                if (escaped) escaped = false;
+                else if (c == s_EscapeChar) escaped = true;
+                else if (s_LispBreakChars->IndexOf(c) >= 0) { startPos = pos; return true; }
+            }
+            if (!escaped && pos != startPos) { startPos = pos; return true; }
+            return false;
+        }
+        static Boolean findExpressionStart(String^ str, Int32% startPos) { return findExpressionStart(str, startPos, s_LispWhitepaceChars); }
+        static Boolean findExpressionStart(String^ str, Int32% startPos, String^ whitespace)
+        {
+            for (Int32 pos = startPos; pos < str->Length; pos++)
+            {
+                Char c = str[pos];
+                if (c == s_CommentChar) { if (!skipLine(str, pos)) break; pos--; continue; }
+                if (whitespace->IndexOf(c) < 0)
+                {
+                    if (s_LispWhitepaceChars->IndexOf(c) >= 0) { startPos = pos; return false; }
+                    startPos = pos; return true;
+                }
+            }
+            return false;
+        }
+        static Boolean skipLine(String^ str, Int32% startPos)
+        {
+            Int32 pos = startPos;
+            for (; pos < str->Length; pos++) if (str[pos] == '\n') { startPos = pos + 1; return true; }
+            startPos = pos; return false;
+        }
+        static Boolean skipString(String^ str, Int32% startPos)
+        {
+            if (str[startPos] != s_StringQuote) badSyntax("missing string quote in skipString", str, startPos);
+            for (Int32 pos = startPos + 1; pos < str->Length; pos++)
+            {
+                Char c = str[pos];
+                if (c == s_EscapeChar) pos++;
+                else if (c == s_StringQuote) { startPos = pos + 1; return true; }
+            }
+            return false;
+        }
+        static System::Collections::Generic::Queue<String^>^ scanExpressionLine(String^ s) { Int32 cursor = 0; return scanExpressionLine(s, cursor); }
+        static System::Collections::Generic::Queue<String^>^ scanExpressionLine(String^ s, Int32% cursor)
+        {
+            auto queue = gcnew System::Collections::Generic::Queue<String^>();
+            Int32 start = cursor, end = cursor;
+            if (!findExpressionStart(s, start)) return nullptr;
+            while (findExpressionStart(s, start, s_LispHorizontalWhitespaceChars))
+            {
+                end = start;
+                if (s_LispVerticalWhitespaceChars->IndexOf(s[start]) >= 0) { skipLine(s, start); break; }
+                if (!scanExpression(s, start, end)) badSyntax("ill-formed expression", s, start);
+                queue->Enqueue(s->Substring(start, end - start)); start = end;
+            }
+            cursor = end; return queue;
+        }
+        static System::Collections::Generic::Queue<String^>^ scanExpressionLine(String^ s, Int32% cursor, Boolean permitXML) { return nullptr; }
+        static LinePartition^ partitionExpressionLine(String^ s, Int32% cursor, Boolean permitXML) { return nullptr; }
+        static System::Collections::Generic::Queue<String^>^ scanExpressions(String^ s) { return scanExpressions(s, 0); }
+        static System::Collections::Generic::Queue<String^>^ scanExpressions(String^ s, Int32 startPos)
+        {
+            auto queue = gcnew System::Collections::Generic::Queue<String^>(); Int32 start = startPos, end = startPos;
+            while (scanExpression(s, start, end)) { queue->Enqueue(s->Substring(start, end - start)); start = end; }
+            return queue;
+        }
+
+    private:
+        static void PrettyPrint(String^ exp) { }
+
+    public:
+        static String^ PrettyString(String^ exp) { return nullptr; }
+        static String^ PrettyStringTop(String^ exp, Int32 target_indentation) { return nullptr; }
+        static Boolean IsDefinerName(String^ op_name) { return false; }
+        static String^ IdentifierName(String^ op_name) { return nullptr; }
+
+    private:
+        static void PrettyStringWorker(String^ exp, Boolean top, Int32% spos, Int32% epos,
+            Int32 indent, System::IO::TextWriter^ writer) { }
+
+    public:
+        static void IndentTo(Int32 n, System::IO::TextWriter^ writer) { }
+        static String^ SelfTest(array<String^>^ args) { return nullptr; }
+        LispUtils() {}
+
+        [Quire::Mirror::MirrorOfAttribute("Engine.Misc.LispUtils+LinePartition, mcmisc")]
+        ref class LinePartition
+        {
+        private:
+            String^ m_Line;
+            System::Collections::Generic::Queue<Quire::Engine::Misc::Pair<Int32, Int32>^>^ m_Locs;
+
+        public:
+            LinePartition(String^ line) { m_Line = line; m_Locs = gcnew System::Collections::Generic::Queue<Quire::Engine::Misc::Pair<Int32, Int32>^>(); }
+            property String^ Line { String^ get() { return m_Line; } }
+            property Int32 Count { Int32 get() { return m_Locs->Count; } }
+            void PutSegment(Int32 startPos, Int32 endPos) { m_Locs->Enqueue(gcnew Quire::Engine::Misc::Pair<Int32, Int32>(startPos, endPos)); }
+            String^ PeekSegment() { auto pair = m_Locs->Peek(); return m_Line->Substring(pair->First, pair->Second - pair->First); }
+            String^ TakeSegment() { auto pair = m_Locs->Dequeue(); return m_Line->Substring(pair->First, pair->Second - pair->First); }
+            System::Collections::Generic::Queue<String^>^ Segments() { return SegmentsFrom(0); }
+            System::Collections::Generic::Queue<String^>^ SegmentsFrom(Int32 n)
+            {
+                auto result = gcnew System::Collections::Generic::Queue<String^>(); Int32 i = 0;
+                for each (Quire::Engine::Misc::Pair<Int32, Int32>^ pair in m_Locs)
+                    if (i >= n) result->Enqueue(m_Line->Substring(pair->First, pair->Second - pair->First));
+                return result;
+            }
+            String^ JoinedText() { return JoinedTextFrom(0); }
+            String^ JoinedTextFrom(Int32 n)
+            {
+                Int32 start = m_Line->Length, end = m_Line->Length;
+                if (n >= m_Locs->Count) return "";
+                if (n < 0) n = 0;
+                Int32 i = -1;
+                for each (Quire::Engine::Misc::Pair<Int32, Int32>^ pair in m_Locs)
+                {
+                    if (++i == n) start = pair->First;
+                    end = pair->Second;
+                }
+                return m_Line->Substring(start, end - start);
+            }
+        };
+    };
+#pragma warning(pop)
+
+}}}
 namespace Quire { namespace utl_mgd {
 
     [Quire::Mirror::MirrorOfAttribute("utl_mgd.InterruptControl, utl-mgd")]
