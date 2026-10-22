@@ -54,6 +54,13 @@ if (!finished.Wait(5000))
 
 Console.WriteLine("managed consumer exercised the C++/CLI string and thread helpers");
 
+using var wrappedFinished = new ManualResetEventSlim();
+new UnaryVoidWrapper<int>(new ConsumerFunction(wrappedFinished)).Invoke(17);
+if (!wrappedFinished.Wait(1000))
+    return 19;
+
+Console.WriteLine("managed consumer exercised the transplanted generic UnaryVoidWrapper");
+
 var readWriteLock = new SafeReadWriteLock();
 readWriteLock.WaitReadLock();
 readWriteLock.ReleaseReadLock();

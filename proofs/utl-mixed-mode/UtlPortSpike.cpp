@@ -839,6 +839,23 @@ namespace Quire { namespace utl_mgd {
             return Invoke(args);
         }
     };
+
+    generic <typename T>
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.UnaryVoidWrapper`1, utl-mgd")]
+    public ref class UnaryVoidWrapper
+    {
+    private:
+        Function^ m_f;
+
+    public:
+        UnaryVoidWrapper(Function^ f) : m_f(f) {}
+
+        void Invoke(T a1)
+        {
+            m_f->Invoke1(a1);
+            GC::KeepAlive(this);
+        }
+    };
 }}
 
 namespace Quire { namespace utl_mgd {
