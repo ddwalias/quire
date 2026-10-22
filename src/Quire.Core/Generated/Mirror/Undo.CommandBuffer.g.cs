@@ -16,10 +16,6 @@ public partial class CommandBuffer
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<object, global::Quire.Undo.CommandBuffer> _instances;
     [global::Quire.Mirror.MirrorStub]
-    public static bool CanRedo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static bool CanUndo { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.IUndoableCommand NextUndoCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Undo.IUndoableCommand NextRedoCommand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

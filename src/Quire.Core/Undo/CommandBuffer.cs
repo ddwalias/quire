@@ -18,6 +18,32 @@ public partial class CommandBuffer
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public static int UndoStackDepth => _currentInstance._undoStack.Count;
 
+    [MirrorVerified("Release IL")]
+    public static bool CanUndo
+    {
+        get
+        {
+            if (_currentInstance != null)
+            {
+                return _currentInstance._undoStack.Count > 0;
+            }
+            return false;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public static bool CanRedo
+    {
+        get
+        {
+            if (_currentInstance != null)
+            {
+                return _currentInstance._redoStack.Count > 0;
+            }
+            return false;
+        }
+    }
+
     [MirrorVerified("PtcUndoCommandBufferMechanicalDifferentialTests")]
     public event EventHandler<CommandEventArgs> BeforeCommand;
 
