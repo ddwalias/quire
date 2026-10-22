@@ -27,6 +27,16 @@ public partial class SynchFontSizeOnScriptRunsWrapperCmd
         return new global::System.Windows.Documents.TextRange(textPointer, textPointer2);
     }
 
+    [MirrorVerified("Release IL")]
+    public bool Do()
+    {
+        using (new global::Quire.Undo.CommandScope(_nestedCommand))
+        {
+            _internalCmdDelegate();
+        }
+        return _nestedCommand.Count >= 1;
+    }
+
     [MirrorVerified("PtcCoreSynchFontSizeOnScriptRunsWrapperCmdMechanicalDifferentialTests")]
     public string Name { get; }
 }
