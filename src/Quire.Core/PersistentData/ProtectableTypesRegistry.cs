@@ -9,6 +9,13 @@ namespace Quire.PersistentData;
 public static partial class ProtectableTypesRegistry
 {
     [MirrorVerified("Release IL")]
+    static ProtectableTypesRegistry()
+    {
+        _map = new System.Collections.Generic.Dictionary<string, Type>();
+        Register("Area", AreaType.TypeOfThis);
+    }
+
+    [MirrorVerified("Release IL")]
     private static void Register(string rootElementName, Type typeToProtect)
     {
         if (DebugTools.DevAssert(typeof(IProtectableDataType).IsAssignableFrom(typeToProtect) && typeToProtect.IsClass, null, Array.Empty<object>()).Failed)
