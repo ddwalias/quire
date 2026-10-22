@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `Matrices.MatrixHelper.DeleteRow<T>`; 591 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-c534ff18c146/release-il.json` — PASS, 2,931 exact, 0 mismatches.
+- Members: latest exact member: `Matrices.MatrixHelper.DeleteColumn<T>`; 590 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-a6be526532ff/release-il.json` — PASS, 2,932 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).

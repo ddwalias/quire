@@ -128,6 +128,33 @@ public partial class MatrixHelper
     }
 
     [MirrorVerified("Release IL")]
+    public static T[] DeleteColumn<T>(int colToDelete, int rows, int cols, T[] elements)
+    {
+        if (colToDelete < 0 || colToDelete >= cols)
+        {
+            throw new global::System.ArgumentException(global::System.String.Format("colToDelete({0}) must be in the range 0 - # of columns - 1({1})", colToDelete, cols - 1));
+        }
+        if (rows * cols != elements.Length)
+        {
+            throw new global::System.ArgumentException(global::System.String.Format("There must be exactly rows x cols ({0}) but there were {1}", rows * cols, elements.Length));
+        }
+        int num = cols - 1;
+        T[] array = new T[rows * num];
+        for (int i = 0; i < rows; i++)
+        {
+            if (colToDelete > 0)
+            {
+                global::System.Array.Copy(elements, IndexOf(i, 0, cols), array, IndexOf(i, 0, num), colToDelete);
+            }
+            if (colToDelete < cols - 1)
+            {
+                global::System.Array.Copy(elements, IndexOf(i, colToDelete + 1, cols), array, IndexOf(i, colToDelete, num), num - colToDelete);
+            }
+        }
+        return array;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(int row, int column, int numOfColumns)
     {
         if (!DebugTools.DevAssert(0 <= column && column < numOfColumns, null).Passed)
