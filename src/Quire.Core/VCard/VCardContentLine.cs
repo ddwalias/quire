@@ -39,4 +39,20 @@ public partial class VCardContentLine
         }
         return Params[paramName];
     }
+
+    [MirrorVerified("Release IL")]
+    public string GetValue(int index)
+    {
+        if (Values != null)
+        {
+            if (index < Values.Length)
+            {
+                goto ReturnValue;
+            }
+        }
+        return null;
+
+    ReturnValue:
+        return Values[index];
+    }
 }
