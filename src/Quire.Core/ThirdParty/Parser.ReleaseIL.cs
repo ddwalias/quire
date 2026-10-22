@@ -60,6 +60,21 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    public bool Parse(string[] args, object destination)
+    {
+        bool flag = ParseArgumentList(args, destination);
+        foreach (Argument argument in arguments)
+        {
+            flag |= argument.Finish(destination);
+        }
+        if (defaultArgument != null)
+        {
+            flag |= defaultArgument.Finish(destination);
+        }
+        return !flag;
+    }
+
+    [MirrorVerified("Release IL")]
     public static int IndexOf(global::System.Text.StringBuilder text, char value, int startIndex)
     {
         for (int i = startIndex; i < text.Length; i++)

@@ -32,8 +32,6 @@ public sealed partial class Parser
     [global::Quire.Mirror.MirrorStub]
     private bool ParseArgumentList(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool Parse(string[] args, object destination) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string GetUsageString(int screenWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool LexFileArguments(string fileName, out string[] arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
