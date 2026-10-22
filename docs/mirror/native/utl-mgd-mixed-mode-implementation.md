@@ -4,13 +4,14 @@
 
 The reviewable proof builds an x64 C++/CLI DLL named `Quire.Engine.Utl.dll`. A managed .NET 10 consumer references and loads it successfully. REA confirms the PE has managed metadata and a native entry point; Ghidra imported the current image and analyzed its x64 code. The proof does not replace the production C# project and does not meet the complete Release IL or API parity requirement.
 
-The latest strict candidate comparison was run against `origin/main`:
+The strict candidate comparison was rerun against the current `origin/main` tip
+(`a0669653ef97d096199949e3416553d9cfc4d26f`):
 
 ```powershell
 python tools/validation/release_il.py --base origin/main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
 ```
 
-It failed closed with 390 candidate members checked, 280 exact and 166 failures. The failure breakdown is 117 generated global `<Module>` methods without reviewed Mathcad bindings, 34 methods with no Mathcad counterpart, nine methods removed from the candidate, and six mapped Release IL differences. The current report is `.mirror-cache/release-il-3114cf632f65/release-il.json`. No suppression or validator bypass was added.
+It failed closed with 390 candidate members checked, 280 exact and 166 failures. The failure breakdown is 117 generated global `<Module>` methods without reviewed Mathcad bindings, 34 methods with no Mathcad counterpart, nine methods removed from the candidate, and six mapped Release IL differences. The current report is `.mirror-cache/release-il-d0daa6350eca/release-il.json`. No suppression or validator bypass was added. The VCX project now adds `$(OutDir)` to the C++/CLI assembly search path so the strict candidate build also works when the validator redirects outputs to its isolated directory.
 
 The six remaining mapped differences are:
 
@@ -55,7 +56,7 @@ REA's static name-agnostic inventory comparison against the original `utl-mgd.dl
 
 The Windows Release build used Visual Studio Professional 2026 18.11, MSVC 14.51.36231, .NET SDK 10.0.200, and x64. The candidate compiled successfully. The existing `UtlPortConsumer` built with zero warnings and errors and ran successfully after the enumerator signature correction. It exercised the C++/CLI synchronization types, queues, mailbox, XML and Lisp routines, FileUtils Unicode maps, and the other ported utilities. This confirms loadability on the build machine; a clean-machine install was not tested.
 
-REA statically inspected the final candidate (SHA-256 `8d97f9f5760887b4a5324252a425a998801a2c43c41c8b4babc17849da6e557d`, MVID `527b5221-e708-4bd1-9337-7d6117e645fc`). It reported a complete CLI metadata parse, x86-64 PE32+, a native-entry-point CLI flag, CLI native RVA entry point `0x92d0`, assembly identity above, and `.NETCoreApp,Version=v10.0`. It found 541 TypeDefs, 457 MethodDefs and 168 AssemblyRefs. Its native-boundary summary reports 26 P/Invoke declarations, 39 native implementation/runtime entries, and two module references.
+REA statically inspected the current candidate (SHA-256 `8410a05da7de6864f6f63f4ebabdc3c88ec153baf0ef6eb72ebda5f285c356fd`, MVID `32f6d4c2-0b82-45b3-9e17-8459f54bd3ed`). It reported a complete CLI metadata parse, x86-64 PE32+, a native-entry-point CLI flag, CLI native RVA entry point `0x92d0`, assembly identity above, and `.NETCoreApp,Version=v10.0`. It found 541 TypeDefs, 457 MethodDefs and 168 AssemblyRefs. Its native-boundary summary reports 26 P/Invoke declarations, 39 native implementation/runtime entries, and two module references. The production C# Release build inspected in the same worktree has 38 TypeDefs, 310 MethodDefs and 8 AssemblyRefs.
 
 `dumpbin /headers` reports `_CorDllMain` at `0x18000B84D` and these image ranges:
 
@@ -67,7 +68,7 @@ REA statically inspected the final candidate (SHA-256 `8d97f9f5760887b4a5324252a
 
 `dumpbin /imports` reports `KERNEL32.dll`, `VCRUNTIME140.dll`, `MSVCP140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, `api-ms-win-crt-heap-l1-1-0.dll`, and `ijwhost.dll`.
 
-Ghidra 12.1.4 imported this exact candidate through `ghidra-agent-cli` as an x64 PE and reported successful analysis of all memory and code. It loaded the native dependencies for symbol resolution and reported PDB alignment and unresolved C++/CLI constructor-decompilation warnings. `ghidra-agent-cli ghidra export-baseline` could not complete because the configured `ExportBaseline.java` script is absent. Native code ranges are corroborated by `dumpbin`; a gated Ghidra baseline export and per-function decompilation were not obtained.
+Ghidra 12.1.4 imported this exact candidate through `ghidra-agent-cli` as an x64 PE and completed its automatic analysis during import. The executable code ranges are `.text` at `0x180001000–0x18000B947` and `.nep` at `0x18000C000–0x18000C57F`; `.ilnew` at `0x18002B000–0x18012AFFF` contains relocated IL bodies and is not executable. Ghidra loaded `VCRUNTIME140.dll`, `MSVCP140.dll`, the UCRT API sets, `KERNEL32.dll`, and `ijwhost.dll` for symbol resolution. It reported CLI custom-attribute blob size conflicts, PDB type-alignment warnings, and unresolved C++/CLI constructor-decompilation warnings. The separate `ghidra-agent-cli ghidra auto-analyze` and `ghidra-agent-cli ghidra export-baseline` wrappers fail because their configured `AutoAnalyze.java` and `ExportBaseline.java` scripts are absent; no custom Ghidra script was added. Therefore the import-time analysis and section map are available, but a gated Ghidra baseline export and per-function decompilation were not obtained.
 
 ## Deployment and remaining migration work
 
