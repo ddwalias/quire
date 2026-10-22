@@ -24,6 +24,17 @@ public partial class regionInWhiteboardBase
     public double MC15TopOffset { get; set; }
 
     [MirrorVerified("Release IL")]
+    public System.Windows.Point Location
+    {
+        get => new System.Windows.Point(left, top);
+        set
+        {
+            left = value.X;
+            top = value.Y;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
     public double MC15Top
     {
         get
