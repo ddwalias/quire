@@ -26,6 +26,17 @@ public sealed partial class Parser
     }
 
     [MirrorVerified("Release IL")]
+    private int NumberOfParametersToDisplay()
+    {
+        int num = arguments.Count;
+        if (HasDefaultArgument)
+        {
+            num++;
+        }
+        return num;
+    }
+
+    [MirrorVerified("Release IL")]
     private static string LongName(ArgumentAttribute attribute, global::System.Reflection.FieldInfo fieldInfo)
     {
         if (attribute != null && !attribute.DefaultLongName)
