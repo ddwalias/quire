@@ -4,7 +4,7 @@
 - Status: active; passing batches are being landed.
 - Owner: Lane A.
 - Branch: `mirror/a-core-20261021-quirecore`; worktree: `C:/Projects/Quire-wt/lane-a-core`.
-- Members: latest exact member: `Core.SynchFontSizeOnScriptRunsWrapperCmd.GetRange`; 576 unfinished methods remain.
-- Release IL report: `.mirror-cache/release-il-c2e8d90e0578/release-il.json` — PASS, 2,948 exact, 0 mismatches.
+- Members: latest exact member: `Core.SynchFontSizeOnScriptRunsWrapperCmd.GetExtendedRange`; 575 unfinished methods remain.
+- Release IL report: `.mirror-cache/release-il-fc32286d123e/release-il.json` — PASS, 2,949 exact, 0 mismatches.
 
 Use only the [five steps](../PLAN.md) and the [launch prompt](agent-prompts.md).
