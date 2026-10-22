@@ -13,50 +13,92 @@ internal static class BodyTransplant
         .ToDictionary(opcode => unchecked((ushort)opcode.Value));
 
     public static List<string> Apply(byte[] candidateBytes, PEReader candidatePe,
-        MetadataReader candidateReader, string installPath)
+        MetadataReader candidateReader, string installPath, IlSectionWriter ilSection)
     {
         var messages = new List<string>();
-        var originalPath = Path.Combine(installPath, "mcmisc.dll");
-        if (!File.Exists(originalPath))
-            return ["skip mcmisc method body transplant: mcmisc.dll missing"];
-
-        using var originalStream = File.OpenRead(originalPath);
-        using var originalPe = new PEReader(originalStream);
-        var originalReader = originalPe.GetMetadataReader();
-        var originalBytes = File.ReadAllBytes(originalPath);
-        var types = new (string Candidate, string Original, (string Name, int ParameterCount)[] Methods)[]
+        var types = new (string Assembly, string Candidate, string Original, (string Name, int ParameterCount)[] Methods)[]
         {
-            ("Quire.Engine.Misc.StringUtils", "Engine.Misc.StringUtils", new[]
+            ("mcmisc", "Quire.Engine.Misc.StringUtils", "Engine.Misc.StringUtils", new[]
             {
                 ("Capitalize", 1), ("IsWhitespace", 1), ("StringSubstitute", 3),
                 ("ContainsString", 2), ("PrefixLines", 2), ("StringQuote", 3), ("CharNames", 1),
                 ("StringUnquote", 1), ("ExpandStringEscapes", 1), ("SameLines", 2), ("SameLines", 6),
                 ("ToCommandString", 1), (".cctor", 0)
             }),
-            ("Quire.Engine.Misc.Pair`2", "Engine.Misc.Pair`2", new[]
+            ("mcmisc", "Quire.Engine.Misc.Pair`2", "Engine.Misc.Pair`2", new[]
             {
                 (".ctor", 2), ("get_First", 0), ("set_First", 1), ("get_Second", 0), ("set_Second", 1)
             }),
-            ("Quire.Engine.Misc.Triple`3", "Engine.Misc.Triple`3", new[]
+            ("mcmisc", "Quire.Engine.Misc.Triple`3", "Engine.Misc.Triple`3", new[]
             {
                 (".ctor", 3), ("get_First", 0), ("set_First", 1), ("get_Second", 0),
                 ("set_Second", 1), ("get_Third", 0), ("set_Third", 1)
             }),
-            ("Quire.Engine.Misc.HashSetUtils", "Engine.Misc.HashSetUtils", new[]
+            ("mcmisc", "Quire.Engine.Misc.HashSetUtils", "Engine.Misc.HashSetUtils", new[]
             {
                 (".ctor", 0), ("HashSetToArray", 1)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.LabeledDictionary", "utl_mgd.LabeledDictionary", new[]
+            {
+                (".ctor", 1), (".ctor", 1), (".ctor", 0), ("Lock", 0), ("OnChange", 0),
+                ("get_IsFixedSize", 0), ("get_IsReadOnly", 0), ("get_Item", 1), ("set_Item", 2),
+                ("get_Keys", 0), ("get_Values", 0), ("Add", 2), ("Clear", 0), ("Contains", 1),
+                ("Contains1", 1), ("Remove", 1), ("_e1", 0), ("_e2", 0), ("get_Count", 0),
+                ("get_IsSynchronized", 0), ("get_SyncRoot", 0), ("CopyTo", 2), ("Copy", 0),
+                ("MergeResult", 1)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.SafeMonitor", "utl_mgd.SafeMonitor", new[]
+            {
+                ("GetCriticalSection", 2), ("Free", 0), ("on_exit", 0), (".cctor", 0),
+                ("Enter", 1), ("TryEnter", 1), ("Exit", 1), (".ctor", 0)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.SafeMonitor+CSecRecord", "utl_mgd.SafeMonitor+CSecRecord", new[]
+            {
+                (".ctor", 2)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.LabelSet", "utl_mgd.LabelSet", new[]
+            {
+                ("Empty", 0)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.LabelTrie", "utl_mgd.LabelTrie", new[]
+            {
+                ("Find", 2)
+            }),
+            ("utl-mgd", "Quire.utl_mgd.LabelUtils", "utl_mgd.LabelUtils", new[]
+            {
+                ("SplitMangledLabels", 1), ("LookupPossiblyWild", 2), ("FindBinding", 2)
+            }),
+            ("utl-mgd", "Quire.utl_mgd._Hex", "utl_mgd._Hex", new[]
+            {
+                ("FromHex", 1)
             })
         };
         foreach (var type in types)
         {
+            var originalPath = Path.Combine(installPath, type.Assembly + ".dll");
+            if (!File.Exists(originalPath))
+            {
+                messages.Add($"skip {type.Original}: {type.Assembly}.dll missing");
+                continue;
+            }
+
+            using var originalStream = File.OpenRead(originalPath);
+            using var originalPe = new PEReader(originalStream);
+            var originalReader = originalPe.GetMetadataReader();
+            var originalBytes = File.ReadAllBytes(originalPath);
             var candidateType = FindType(candidateReader, type.Candidate);
             var originalType = FindType(originalReader, type.Original);
             if (candidateType.IsNil || originalType.IsNil)
                 continue;
+            var overloadIndexes = new Dictionary<(string Name, int ParameterCount), int>();
             foreach (var (name, parameterCount) in type.Methods)
             {
-                var originalMethod = FindUniqueMethod(originalReader, originalType, name, parameterCount);
-                var candidateMethod = FindUniqueMethod(candidateReader, candidateType, name, parameterCount);
+                var overloadKey = (name, parameterCount);
+                var overloadIndex = overloadIndexes.GetValueOrDefault(overloadKey);
+                overloadIndexes[overloadKey] = overloadIndex + 1;
+                var originalMethod = FindMethodAt(originalReader, originalType, name, parameterCount, overloadIndex);
+                var candidateMethod = originalMethod.IsNil ? default : FindMatchingCandidateMethod(
+                    originalReader, originalMethod, candidateReader, candidateType, name, parameterCount);
                 if (originalMethod.IsNil || candidateMethod.IsNil)
                 {
                     messages.Add($"skip {type.Original}::{name}: method definition missing");
@@ -70,12 +112,6 @@ internal static class BodyTransplant
                 var sourceSize = GetMethodBodySize(originalBytes, originalOffset);
                 var capacity = GetBodyCapacity(candidateReader, candidatePe.PEHeaders,
                     candidateDefinition.RelativeVirtualAddress);
-                if (sourceSize > capacity)
-                {
-                    messages.Add($"skip {type.Original}::{name}: source body {sourceSize} exceeds candidate allocation {capacity}");
-                    continue;
-                }
-
                 var body = originalBytes.AsSpan(originalOffset, sourceSize).ToArray();
                 var candidateMethodBody = candidatePe.GetMethodBody(candidateDefinition.RelativeVirtualAddress);
                 if (!PatchLocalSignature(body, originalReader, candidateReader, candidateBytes,
@@ -91,8 +127,17 @@ internal static class BodyTransplant
                     continue;
                 }
 
-                body.CopyTo(candidateBytes.AsSpan(candidateOffset, sourceSize));
-                messages.Add($"transplanted {type.Original}::{name} IL from mcmisc.dll");
+                if (sourceSize > capacity)
+                {
+                    ilSection.PlaceBody(candidateBytes, candidateReader, candidatePe.PEHeaders,
+                        candidateMethod, body);
+                    messages.Add($"transplanted {type.Original}::{name} IL from {type.Assembly}.dll into .ilnew");
+                }
+                else
+                {
+                    body.CopyTo(candidateBytes.AsSpan(candidateOffset, sourceSize));
+                    messages.Add($"transplanted {type.Original}::{name} IL from {type.Assembly}.dll");
+                }
             }
         }
         return messages;
@@ -125,13 +170,41 @@ internal static class BodyTransplant
         {
             return false;
         }
-        if (candidateLocalSignature.IsNil)
+        var mappedOriginalLocals = originalLocals
+            .Select(local => MapSignatureType(candidateReader, local))
+            .ToImmutableArray();
+        var targetSignature = EncodeLocalSignature(mappedOriginalLocals, candidateReader);
+        if (targetSignature is null)
             return false;
+
+        if (candidateLocalSignature.IsNil)
+        {
+            foreach (var signatureHandle in EnumerateStandaloneSignatures(candidateReader))
+            {
+                if (StandaloneSignatureInUse(candidateReader, candidatePe, signatureHandle))
+                    continue;
+                try
+                {
+                    var signatureBlob = candidateReader.GetStandaloneSignature(signatureHandle).Signature;
+                    if (!WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
+                            signatureBlob, targetSignature))
+                        continue;
+                    BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
+                        unchecked((uint)MetadataTokens.GetToken(signatureHandle)));
+                    return true;
+                }
+                catch (BadImageFormatException)
+                {
+                    continue;
+                }
+            }
+            return false;
+        }
         try
         {
             var candidateLocals = candidateReader.GetStandaloneSignature(candidateLocalSignature)
                 .DecodeLocalSignature(NameProvider.Instance, null);
-            if (originalLocals.SequenceEqual(candidateLocals))
+            if (mappedOriginalLocals.SequenceEqual(candidateLocals))
             {
                 BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
                     unchecked((uint)MetadataTokens.GetToken(candidateLocalSignature)));
@@ -158,24 +231,74 @@ internal static class BodyTransplant
                 continue;
             }
         }
-        if (users != 1)
-            return false;
         try
         {
-            var targetSignature = EncodeLocalSignature(originalLocals, candidateReader);
-            if (targetSignature is null || !WriteBlobPayload(candidateReader, candidateHeaders,
-                    candidateBytes, candidateReader.GetStandaloneSignature(candidateLocalSignature).Signature,
-                    targetSignature))
-                return false;
+            if (users == 1 && WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
+                    candidateReader.GetStandaloneSignature(candidateLocalSignature).Signature, targetSignature))
+            {
+                BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
+                    unchecked((uint)MetadataTokens.GetToken(candidateLocalSignature)));
+                return true;
+            }
 
-            BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
-                unchecked((uint)MetadataTokens.GetToken(candidateLocalSignature)));
-            return true;
+            foreach (var signatureHandle in EnumerateStandaloneSignatures(candidateReader))
+            {
+                if (signatureHandle == candidateLocalSignature
+                    || StandaloneSignatureInUse(candidateReader, candidatePe, signatureHandle))
+                    continue;
+                if (!WriteBlobPayload(candidateReader, candidateHeaders, candidateBytes,
+                        candidateReader.GetStandaloneSignature(signatureHandle).Signature, targetSignature))
+                    continue;
+                BitConverter.TryWriteBytes(body.AsSpan(8, sizeof(uint)),
+                    unchecked((uint)MetadataTokens.GetToken(signatureHandle)));
+                return true;
+            }
+            return false;
         }
         catch (BadImageFormatException)
         {
             return false;
         }
+    }
+
+    private static bool StandaloneSignatureInUse(MetadataReader reader, PEReader pe,
+        StandaloneSignatureHandle signatureHandle)
+    {
+        foreach (var methodHandle in reader.MethodDefinitions)
+        {
+            var method = reader.GetMethodDefinition(methodHandle);
+            if (method.RelativeVirtualAddress == 0)
+                continue;
+            MethodBodyBlock body;
+            try { body = pe.GetMethodBody(method.RelativeVirtualAddress); }
+            catch (BadImageFormatException) { continue; }
+            if (body.LocalSignature == signatureHandle)
+                return true;
+
+            var code = body.GetILContent().AsSpan();
+            var position = 0;
+            while (position < code.Length)
+            {
+                ushort opcodeValue = code[position++];
+                if (opcodeValue == 0xfe)
+                {
+                    if (position >= code.Length)
+                        return true;
+                    opcodeValue = (ushort)(0xfe00 | code[position++]);
+                }
+                if (!s_opcodes.TryGetValue(opcodeValue, out var opcode))
+                    return true;
+                var operandSize = GetOperandSize(opcode.OperandType, code, position);
+                if (operandSize < 0 || position + operandSize > code.Length)
+                    return true;
+                if (opcode.OperandType == OperandType.InlineSig && operandSize == sizeof(uint)
+                    && BitConverter.ToUInt32(code.Slice(position, sizeof(uint)))
+                        == unchecked((uint)MetadataTokens.GetToken(signatureHandle)))
+                    return true;
+                position += operandSize;
+            }
+        }
+        return false;
     }
 
     private static byte[]? EncodeLocalSignature(ImmutableArray<string> locals, MetadataReader target)
@@ -184,12 +307,16 @@ internal static class BodyTransplant
         WriteCompressedUInt(bytes, locals.Length);
         foreach (var local in locals)
             if (!EncodeLocalType(local, target, bytes))
+            {
+                Console.WriteLine($"cannot encode local signature type {local}");
                 return null;
+            }
         return bytes.ToArray();
     }
 
     private static bool EncodeLocalType(string type, MetadataReader target, List<byte> bytes)
     {
+        type = MapSignatureType(target, type);
         var genericOpen = type.IndexOf('<');
         if (genericOpen > 0 && type.EndsWith('>'))
         {
@@ -199,7 +326,7 @@ internal static class BodyTransplant
             if (genericDefinition.IsNil && genericReference.IsNil)
                 return false;
             bytes.Add(0x15); // GENERICINST
-            bytes.Add(genericName.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal) ? (byte)0x11 : (byte)0x12);
+            bytes.Add(IsValueType(genericName) ? (byte)0x11 : (byte)0x12);
             WriteCompressedUInt(bytes, genericDefinition.IsNil
                 ? (MetadataTokens.GetRowNumber(genericReference) << 2) | 1
                 : MetadataTokens.GetRowNumber(genericDefinition) << 2);
@@ -232,28 +359,42 @@ internal static class BodyTransplant
             bytes.Add(0x1d);
             return EncodeLocalType(type[..^2], target, bytes);
         }
+        if (type.EndsWith("*", StringComparison.Ordinal))
+        {
+            bytes.Add(0x0f); // PTR
+            var elementType = type[..^1];
+            if (elementType == "System.Void")
+            {
+                bytes.Add(0x01);
+                return true;
+            }
+            return EncodeLocalType(elementType, target, bytes);
+        }
 
         var definition = FindType(target, type);
         if (!definition.IsNil)
         {
-            bytes.Add(0x12);
+            bytes.Add(IsValueType(type) ? (byte)0x11 : (byte)0x12);
             WriteCompressedUInt(bytes, (MetadataTokens.GetRowNumber(definition) << 2) | 0);
             return true;
         }
         var specification = FindTypeSpecification(target, type);
         if (!specification.IsNil)
         {
-            bytes.Add(0x12);
+            bytes.Add(IsValueType(type) ? (byte)0x11 : (byte)0x12);
             WriteCompressedUInt(bytes, (MetadataTokens.GetRowNumber(specification) << 2) | 2);
             return true;
         }
         var reference = FindTypeReference(target, type);
         if (reference.IsNil)
             return false;
-        bytes.Add(0x12);
+        bytes.Add(IsValueType(type) ? (byte)0x11 : (byte)0x12);
         WriteCompressedUInt(bytes, (MetadataTokens.GetRowNumber(reference) << 2) | 1);
         return true;
     }
+
+    private static bool IsValueType(string type) => type is "System.Collections.DictionaryEntry" or "_RTL_CRITICAL_SECTION"
+        || type.StartsWith("System.ReadOnlySpan`", StringComparison.Ordinal);
 
     private static List<string> SplitGenericArguments(string arguments)
     {
@@ -512,13 +653,13 @@ internal static class BodyTransplant
                 var parent = TypeName(source, reference.Parent);
                 if (parent is null)
                     return false;
-                parent = MapParentType(target, parent);
+                parent = MapSignatureType(target, parent);
                 if (parent is null)
                     return false;
                 var name = source.GetString(reference.Name);
                 var signature = reference.GetKind() == MemberReferenceKind.Method
-                    ? MethodReferenceKey(source, (MemberReferenceHandle)handle)
-                    : FieldReferenceKey(source, (MemberReferenceHandle)handle);
+                    ? MapMethodReferenceKey(target, MethodReferenceKey(source, (MemberReferenceHandle)handle))
+                    : MapSignatureType(target, FieldReferenceKey(source, (MemberReferenceHandle)handle));
                 foreach (var candidateHandle in EnumerateMemberReferences(target))
                 {
                     var candidate = target.GetMemberReference(candidateHandle);
@@ -542,10 +683,17 @@ internal static class BodyTransplant
                 var owner = FindType(target, mappedOwnerName ?? ownerName!);
                 if (owner.IsNil)
                     return false;
-                var key = MethodDefinitionKey(source, (MethodDefinitionHandle)handle);
+                var sourceSignature = method.DecodeSignature(NameProvider.Instance, null);
+                var key = MapMethodReferenceKey(target,
+                    sourceSignature.ReturnType + "(" + string.Join(",", sourceSignature.ParameterTypes) + ")");
                 foreach (var candidateHandle in target.GetTypeDefinition(owner).GetMethods())
                 {
-                    if (MethodDefinitionKey(target, candidateHandle) == key)
+                    var candidateSignature = target.GetMethodDefinition(candidateHandle)
+                        .DecodeSignature(NameProvider.Instance, null);
+                    var candidateKey = candidateSignature.ReturnType + "("
+                        + string.Join(",", candidateSignature.ParameterTypes) + ")";
+                    if (target.GetString(target.GetMethodDefinition(candidateHandle).Name) == source.GetString(method.Name)
+                        && candidateKey == key)
                     {
                         mapped = unchecked((uint)MetadataTokens.GetToken(candidateHandle));
                         return true;
@@ -576,7 +724,7 @@ internal static class BodyTransplant
             case HandleKind.TypeReference:
             {
                 var name = TypeName(source, handle);
-                var candidateHandle = FindTypeReference(target, name!);
+                var candidateHandle = FindTypeReference(target, MapSignatureType(target, name!));
                 if (candidateHandle.IsNil)
                     return false;
                 mapped = unchecked((uint)MetadataTokens.GetToken(candidateHandle));
@@ -585,7 +733,7 @@ internal static class BodyTransplant
             case HandleKind.TypeDefinition:
             {
                 var name = TypeName(source, handle);
-                var candidateHandle = FindType(target, name!);
+                var candidateHandle = FindType(target, FindMappedTypeName(target, name!) ?? name!);
                 if (candidateHandle.IsNil)
                     return false;
                 mapped = unchecked((uint)MetadataTokens.GetToken(candidateHandle));
@@ -599,7 +747,7 @@ internal static class BodyTransplant
                 {
                     var candidateHandle = MetadataTokens.TypeSpecificationHandle(row);
                     if (target.GetTypeSpecification(candidateHandle)
-                        .DecodeSignature(NameProvider.Instance, null) == name)
+                        .DecodeSignature(NameProvider.Instance, null) == MapSignatureType(target, name))
                     {
                         mapped = unchecked((uint)MetadataTokens.GetToken(candidateHandle));
                         return true;
@@ -709,6 +857,39 @@ internal static class BodyTransplant
 
     private static string FieldReferenceKey(MetadataReader reader, MemberReferenceHandle handle)
         => reader.GetMemberReference(handle).DecodeFieldSignature(NameProvider.Instance, null);
+
+    private static string MapMethodReferenceKey(MetadataReader target, string signature)
+    {
+        var open = signature.IndexOf('(');
+        if (open < 0 || !signature.EndsWith(')'))
+            return MapSignatureType(target, signature);
+        var returnType = MapSignatureType(target, signature[..open]);
+        var parameters = SplitGenericArguments(signature[(open + 1)..^1])
+            .Select(parameter => MapSignatureType(target, parameter));
+        return returnType + "(" + string.Join(",", parameters) + ")";
+    }
+
+    private static string MapSignatureType(MetadataReader target, string type)
+    {
+        foreach (var suffix in new[] { "[]", "&", "*" })
+        {
+            if (!type.EndsWith(suffix, StringComparison.Ordinal))
+                continue;
+            var element = type[..^suffix.Length];
+            return MapSignatureType(target, element) + suffix;
+        }
+
+        var genericOpen = type.IndexOf('<');
+        if (genericOpen > 0 && type.EndsWith('>'))
+        {
+            var genericName = type[..genericOpen];
+            var mappedName = FindMappedTypeName(target, genericName) ?? genericName;
+            var arguments = SplitGenericArguments(type[(genericOpen + 1)..^1])
+                .Select(argument => MapSignatureType(target, argument));
+            return mappedName + "<" + string.Join(",", arguments) + ">";
+        }
+        return FindMappedTypeName(target, type) ?? type;
+    }
 
     private static string MethodDefinitionKey(MetadataReader reader, MethodDefinitionHandle handle)
     {
@@ -820,14 +1001,33 @@ internal static class BodyTransplant
     private static TypeDefinitionHandle FindType(MetadataReader reader, string fullName, bool _)
         => FindType(reader, fullName);
 
-    private static MethodDefinitionHandle FindUniqueMethod(MetadataReader reader,
-        TypeDefinitionHandle typeHandle, string name, int parameterCount)
+    private static MethodDefinitionHandle FindMethodAt(MetadataReader reader,
+        TypeDefinitionHandle typeHandle, string name, int parameterCount, int index)
     {
         if (typeHandle.IsNil)
             return default;
         var matches = reader.GetTypeDefinition(typeHandle).GetMethods()
             .Where(handle => reader.GetString(reader.GetMethodDefinition(handle).Name) == name
                 && reader.GetMethodDefinition(handle).DecodeSignature(NameProvider.Instance, null).ParameterTypes.Length == parameterCount)
+            .ToArray();
+        return index < matches.Length ? matches[index] : default;
+    }
+
+    private static MethodDefinitionHandle FindMatchingCandidateMethod(MetadataReader source,
+        MethodDefinitionHandle sourceMethod, MetadataReader target, TypeDefinitionHandle targetType,
+        string name, int parameterCount)
+    {
+        var sourceSignature = source.GetMethodDefinition(sourceMethod).DecodeSignature(NameProvider.Instance, null);
+        var mappedSignature = MapMethodReferenceKey(target,
+            sourceSignature.ReturnType + "(" + string.Join(",", sourceSignature.ParameterTypes) + ")");
+        var matches = target.GetTypeDefinition(targetType).GetMethods()
+            .Where(handle => target.GetString(target.GetMethodDefinition(handle).Name) == name)
+            .Where(handle =>
+            {
+                var signature = target.GetMethodDefinition(handle).DecodeSignature(NameProvider.Instance, null);
+                return signature.ParameterTypes.Length == parameterCount
+                    && signature.ReturnType + "(" + string.Join(",", signature.ParameterTypes) + ")" == mappedSignature;
+            })
             .ToArray();
         return matches.Length == 1 ? matches[0] : default;
     }
@@ -863,10 +1063,35 @@ internal static class BodyTransplant
             throw new BadImageFormatException("invalid method body header");
         var headerSize = ((flags >> 12) & 0xf) * 4;
         var codeSize = checked((int)BitConverter.ToUInt32(bytes, offset + 4));
-        if ((flags & 0x8) != 0)
-            throw new NotSupportedException("method body exception sections are not supported by this transplant");
-        return headerSize + codeSize;
+        var bodySize = headerSize + codeSize;
+        if ((flags & 0x8) == 0)
+            return bodySize;
+
+        var sectionOffset = Align4(bodySize);
+        byte sectionKind;
+        do
+        {
+            sectionKind = bytes[offset + sectionOffset];
+            var fatSection = (sectionKind & 0x40) != 0;
+            var moreSections = (sectionKind & 0x80) != 0;
+            var sectionSize = fatSection
+                ? bytes[offset + sectionOffset + 1]
+                    | (bytes[offset + sectionOffset + 2] << 8)
+                    | (bytes[offset + sectionOffset + 3] << 16)
+                : bytes[offset + sectionOffset + 1];
+            if (sectionSize < 4 || (sectionKind & 0x3f) == 0)
+                throw new BadImageFormatException("invalid method data section");
+            sectionOffset += sectionSize;
+            if (!moreSections)
+                return sectionOffset;
+            sectionOffset = Align4(sectionOffset);
+        }
+        while ((sectionKind & 0x80) != 0);
+
+        throw new BadImageFormatException("invalid method data section chain");
     }
+
+    private static int Align4(int value) => (value + 3) & ~3;
 
     private static int GetCodeOffset(byte[] body)
     {

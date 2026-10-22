@@ -1,5 +1,6 @@
 using Quire.utl_mgd;
 using Quire.Engine.Misc;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -86,6 +87,28 @@ if (valuesArray.Length != 2 || !valuesArray.Contains("one") || !valuesArray.Cont
     return 14;
 
 Console.WriteLine("managed consumer exercised the ported StringUtils, Pair, Triple, and HashSetUtils types");
+
+IDictionary initial = new Hashtable { ["scope{beta,alpha}"] = 4 };
+var labeled = new LabeledDictionary(initial);
+if (labeled.Count != 1 || (int)labeled["scope{alpha,beta}"]! != 4 || labeled.IsReadOnly || labeled.IsFixedSize)
+    return 15;
+labeled["extra{beta,alpha}"] = 7;
+if (!labeled.Contains("extra{alpha,beta}") || (int)labeled["extra{alpha,beta}"]! != 7)
+    return 16;
+var labeledCopy = labeled.Copy();
+if (labeledCopy.Count != 2 || labeledCopy["scope{alpha,beta}"] is null)
+    return 17;
+
+Console.WriteLine("managed consumer exercised the transplanted LabeledDictionary methods");
+
+var monitor = new object();
+SafeMonitor.Enter(monitor);
+if (!SafeMonitor.TryEnter(monitor))
+    return 18;
+SafeMonitor.Exit(monitor);
+SafeMonitor.Exit(monitor);
+
+Console.WriteLine("managed consumer exercised the unmanaged critical-section SafeMonitor");
 return 0;
 
 sealed class ConsumerFunction : FunctionBase

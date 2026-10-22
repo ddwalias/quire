@@ -1,4 +1,6 @@
 #include <Windows.h>
+#include <cstdlib>
+#include <new>
 #include <vcclr.h>
 #using <Quire.Mirror.dll>
 #pragma warning(push)
@@ -161,6 +163,7 @@ namespace Quire { namespace utl_mgd {
         __declspec(noinline) ~SafeMutex() { EnsureReleased(); }
         !SafeMutex() { EnsureReleased(); }
     };
+
 }}
 
 namespace Quire { namespace Engine { namespace Misc {
@@ -992,6 +995,7 @@ namespace Quire { namespace utl_mgd {
         static LabelSet^ Find(SortedStringSet^ labels, Boolean wild)
         {
             IEnumerator^ enumerator = nullptr;
+            IEnumerator^ keepEnumeratorAlive = labels->GetEnumerator();
             LabelTrie^ labelTrie = nullptr;
             InterruptControl::ProhibitInterruption();
             s_lock->WaitReadLock();
@@ -1034,6 +1038,7 @@ namespace Quire { namespace utl_mgd {
                     delete dynamic_cast<IDisposable^>(enumerator);
                 }
 
+                GC::KeepAlive(keepEnumeratorAlive);
                 return wild ? labelTrie2->m_wild : labelTrie2->m_non_wild;
             }
             finally
@@ -1213,6 +1218,8 @@ namespace Quire { namespace utl_mgd {
         static Object^ LookupPossiblyWild(String^ c, IDictionary^ dictionary)
         {
             LabelSet^ labelSet = LabelTrie::InternLabels(c);
+            LabelSet^ keepLabelSetAlive = LabelTrie::InternLabels(c);
+            GC::KeepAlive(keepLabelSetAlive);
             if (!labelSet->Wild())
                 return dictionary[c];
 
@@ -1239,6 +1246,8 @@ namespace Quire { namespace utl_mgd {
             Int32 num = s->IndexOf('{');
             String^ text = ((num == -1) ? s : s->Substring(0, num));
             LabelSet^ labelSet = LabelTrie::InternLabels(s);
+            LabelSet^ keepLabelSetAlive = LabelTrie::InternLabels(s);
+            GC::KeepAlive(keepLabelSetAlive);
             for each (Object^ item in dictionary)
             {
                 DictionaryEntry entry = safe_cast<DictionaryEntry>(item);
@@ -1261,6 +1270,308 @@ namespace Quire { namespace utl_mgd {
             s_sharp = (static_cast<String^>("#"))->ToCharArray();
         }
     };
+
+#pragma managed(push, on)
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.LabeledDictionary, utl-mgd")]
+    public ref class LabeledDictionary : System::Collections::IDictionary
+    {
+    private:
+        System::Collections::Hashtable^ m_table;
+        Boolean m_locked;
+
+    public:
+        virtual LabeledDictionary^ Lock() { m_locked = true; return this; }
+        virtual void OnChange() {}
+
+        virtual property Boolean IsFixedSize { Boolean get() { return false; } }
+        virtual property Boolean IsReadOnly { Boolean get() { return m_locked; } }
+
+        virtual property Object^ default[Object^]
+        {
+            Object^ get(Object^ key)
+            {
+                Boolean wild = false;
+                String^ text = LabelUtils::Canonicalize(key->ToString(), wild);
+                if (!wild)
+                {
+                    Object^ result = m_table[text];
+                    GC::KeepAlive(this);
+                    return result;
+                }
+                Object^ result2 = LabelUtils::LookupPossiblyWild(text, m_table);
+                GC::KeepAlive(this);
+                return result2;
+            }
+            void set(Object^ key, Object^ value)
+            {
+                OnChange();
+                System::Collections::Hashtable^ table = m_table;
+                String^ canonicalKey = LabelUtils::Canonicalize(key->ToString());
+                table[canonicalKey] = value;
+                GC::KeepAlive(this);
+            }
+        }
+
+        virtual property System::Collections::ICollection^ Keys
+        {
+            System::Collections::ICollection^ get()
+            {
+                System::Collections::ICollection^ keys = m_table->Keys;
+                GC::KeepAlive(this);
+                return keys;
+            }
+        }
+
+        virtual property System::Collections::ICollection^ Values
+        {
+            System::Collections::ICollection^ get()
+            {
+                System::Collections::ICollection^ values = m_table->Values;
+                GC::KeepAlive(this);
+                return values;
+            }
+        }
+
+        virtual void Add(Object^ key, Object^ value)
+        {
+            OnChange();
+            System::Collections::Hashtable^ table = m_table;
+            String^ canonicalKey = LabelUtils::Canonicalize(key->ToString());
+            table->Add(canonicalKey, value);
+            GC::KeepAlive(this);
+        }
+
+        virtual void Clear() { m_table->Clear(); GC::KeepAlive(this); }
+
+        virtual Boolean Contains(Object^ key)
+        {
+            Boolean wild = false;
+            String^ text = LabelUtils::Canonicalize(key->ToString(), wild);
+            if (!wild)
+            {
+                Boolean result = m_table->Contains(text);
+                GC::KeepAlive(this);
+                return result;
+            }
+            Boolean result2 = LabelUtils::LookupPossiblyWild(text, m_table) != nullptr;
+            GC::KeepAlive(this);
+            return result2;
+        }
+
+        Int32 Contains1(String^ text) { return Contains(text) ? 1 : 0; }
+
+        virtual void Remove(Object^ key)
+        {
+            OnChange();
+            System::Collections::Hashtable^ table = m_table;
+            String^ canonicalKey = LabelUtils::Canonicalize(key->ToString());
+            table->Remove(canonicalKey);
+            GC::KeepAlive(this);
+        }
+
+        virtual System::Collections::IDictionaryEnumerator^ _e1()
+            = System::Collections::IDictionary::GetEnumerator
+        {
+            System::Collections::IDictionaryEnumerator^ enumerator = m_table->GetEnumerator();
+            GC::KeepAlive(this);
+            return enumerator;
+        }
+
+        virtual System::Collections::IEnumerator^ _e2()
+            = System::Collections::IEnumerable::GetEnumerator
+        {
+            return _e1();
+        }
+
+        virtual property Int32 Count
+        {
+            Int32 get() { Int32 count = m_table->Count; GC::KeepAlive(this); return count; }
+        }
+
+        virtual property Boolean IsSynchronized
+        {
+            Boolean get() { Boolean value = m_table->IsSynchronized; GC::KeepAlive(this); return value; }
+        }
+
+        virtual property Object^ SyncRoot
+        {
+            Object^ get() { Object^ value = m_table->SyncRoot; GC::KeepAlive(this); return value; }
+        }
+
+        virtual void CopyTo(System::Array^ array, Int32 index)
+        {
+            m_table->CopyTo(array, index);
+            GC::KeepAlive(this);
+        }
+
+        LabeledDictionary^ Copy() { return gcnew LabeledDictionary(this); }
+
+        LabeledDictionary^ MergeResult(LabeledDictionary^ dictionary)
+        {
+            if (Contains("%errors")) return this;
+            if (dictionary->Contains("%errors"))
+            {
+                GC::KeepAlive(this);
+                return dictionary;
+            }
+            LabeledDictionary^ result = gcnew LabeledDictionary(this);
+            Object^ value = dictionary["%result"];
+            result["%result"] = value;
+            GC::KeepAlive(this);
+            return result;
+        }
+
+        LabeledDictionary(System::Collections::IDictionary^ dictionary)
+            : m_table(gcnew System::Collections::Hashtable(dictionary->Count)), m_locked(false)
+        {
+            System::Collections::IDictionaryEnumerator^ enumerator = dictionary->GetEnumerator();
+            System::IDisposable^ disposable;
+            try
+            {
+                while (enumerator->MoveNext())
+                {
+                    Object^ item = enumerator->Current;
+                    System::Collections::DictionaryEntry entry = safe_cast<System::Collections::DictionaryEntry>(item);
+                    Object^ value = entry.Value;
+                    Object^ key = entry.Key;
+                    this[key] = value;
+                }
+            }
+            catch (Exception^)
+            {
+                disposable = dynamic_cast<System::IDisposable^>(enumerator);
+                if (disposable != nullptr)
+                    delete disposable;
+                throw;
+            }
+            disposable = dynamic_cast<System::IDisposable^>(enumerator);
+            if (disposable != nullptr)
+                delete disposable;
+            GC::KeepAlive(this);
+        }
+
+        LabeledDictionary(Int32 capacity)
+            : m_table(gcnew System::Collections::Hashtable(capacity)), m_locked(false) {}
+
+        LabeledDictionary()
+            : m_table(gcnew System::Collections::Hashtable()), m_locked(false) {}
+    };
+
+    [Quire::Mirror::MirrorOfAttribute("utl_mgd.SafeMonitor, utl-mgd")]
+    public ref class SafeMonitor
+    {
+    private:
+        [Quire::Mirror::MirrorOfAttribute("utl_mgd.SafeMonitor+CSecRecord, utl-mgd")]
+        ref class CSecRecord
+        {
+        public:
+            Int64 csec;
+            Int32 count;
+            CSecRecord(Int64 value, Int32 references) : csec(value), count(references) {}
+        };
+
+        static System::Collections::Hashtable^ s_csecmap;
+        static System::Collections::Stack^ s_csecpool;
+        static SafeMutex^ s_mutex;
+
+        static CRITICAL_SECTION* GetCriticalSection(Object^ key, Int32 increment)
+        {
+            s_mutex->WaitOne();
+            CRITICAL_SECTION* result = nullptr;
+            try
+            {
+                CSecRecord^ record = dynamic_cast<CSecRecord^>(s_csecmap[key]);
+                if (record != nullptr)
+                {
+                    result = reinterpret_cast<CRITICAL_SECTION*>(record->csec);
+                    record->count += increment;
+                }
+                else if (s_csecpool->Count == 0)
+                {
+                    result = new CRITICAL_SECTION();
+                    ::InitializeCriticalSection(result);
+                    record = gcnew CSecRecord(reinterpret_cast<Int64>(result), increment);
+                    s_csecmap[key] = record;
+                }
+                else
+                {
+                    CRITICAL_SECTION* value = reinterpret_cast<CRITICAL_SECTION*>(safe_cast<Int64>(s_csecpool->Pop()));
+                    result = value;
+                    record = gcnew CSecRecord(reinterpret_cast<Int64>(value), increment);
+                    s_csecmap[key] = record;
+                }
+
+                if (record->count == 0)
+                {
+                    s_csecmap->Remove(key);
+                    s_csecpool->Push(record->csec);
+                }
+            }
+            catch (Exception^)
+            {
+                s_mutex->ReleaseMutex();
+                throw;
+            }
+            s_mutex->ReleaseMutex();
+            return result;
+        }
+
+        static void Free()
+        {
+            s_mutex->WaitOne();
+            try
+            {
+                while (s_csecpool->Count != 0)
+                {
+                    Int64 value = safe_cast<Int64>(s_csecpool->Pop());
+                    CRITICAL_SECTION* criticalSection = reinterpret_cast<CRITICAL_SECTION*>(value);
+                    ::DeleteCriticalSection(criticalSection);
+                    ::operator delete(criticalSection, sizeof(CRITICAL_SECTION));
+                }
+            }
+            catch (Exception^)
+            {
+                s_mutex->Free();
+                throw;
+            }
+            s_mutex->Free();
+        }
+
+        static Int32 on_exit()
+        {
+            Free();
+            return 0;
+        }
+
+        static SafeMonitor()
+        {
+            s_csecmap = gcnew System::Collections::Hashtable();
+            s_csecpool = gcnew System::Collections::Stack();
+            s_mutex = gcnew SafeMutex("SafeMonitor");
+        }
+
+    public:
+        SafeMonitor() {}
+
+        static void Enter(Object^ key)
+        {
+            ::EnterCriticalSection(GetCriticalSection(key, 1));
+        }
+
+        static Boolean TryEnter(Object^ key)
+        {
+            if (::TryEnterCriticalSection(GetCriticalSection(key, 1)))
+                return true;
+            GetCriticalSection(key, -1);
+            return false;
+        }
+
+        static void Exit(Object^ key)
+        {
+            ::LeaveCriticalSection(GetCriticalSection(key, -1));
+        }
+    };
+#pragma managed(pop)
 }}
 
 namespace Quire { namespace utl_mgd {

@@ -8,6 +8,14 @@ if (args.Length != 2)
 var candidatePath = Path.GetFullPath(args[0]);
 var installPath = Path.GetFullPath(args[1]);
 var candidateBytes = File.ReadAllBytes(candidatePath);
+var reserved = IlSectionWriter.Reserve(candidateBytes, 1024 * 1024);
+if (reserved.Writer.AlreadyPatched)
+{
+    Console.WriteLine("skip IL post-link: candidate already contains .ilnew");
+    return;
+}
+candidateBytes = reserved.Bytes;
+var ilSection = reserved.Writer;
 using var candidateStream = new MemoryStream(candidateBytes, writable: false);
 using var candidatePe = new PEReader(candidateStream);
 var candidateReader = candidatePe.GetMetadataReader();
@@ -81,7 +89,7 @@ foreach (var candidateTypeHandle in candidateReader.TypeDefinitions)
 
 foreach (var edit in edits)
     BitConverter.TryWriteBytes(candidateBytes.AsSpan(edit.Offset, sizeof(ushort)), checked((ushort)edit.Value));
-var transplantMessages = BodyTransplant.Apply(candidateBytes, candidatePe, candidateReader, installPath);
+var transplantMessages = BodyTransplant.Apply(candidateBytes, candidatePe, candidateReader, installPath, ilSection);
 if (edits.Count > 0)
     File.WriteAllBytes(candidatePath, candidateBytes);
 else if (transplantMessages.Any(message => message.StartsWith("transplanted ", StringComparison.Ordinal)))
@@ -163,6 +171,9 @@ static class MetadataNames
     public static string TypeDefName(MetadataReader reader, TypeDefinition type)
     {
         var name = reader.GetString(type.Name);
+        var declaring = type.GetDeclaringType();
+        if (!declaring.IsNil)
+            return TypeDefName(reader, reader.GetTypeDefinition(declaring)) + "+" + name;
         var ns = reader.GetString(type.Namespace);
         return ns.Length == 0 ? name : ns + "." + name;
     }
@@ -170,6 +181,8 @@ static class MetadataNames
     public static string TypeRefName(MetadataReader reader, TypeReference type)
     {
         var name = reader.GetString(type.Name);
+        if (type.ResolutionScope.Kind == HandleKind.TypeReference)
+            return TypeRefName(reader, reader.GetTypeReference((TypeReferenceHandle)type.ResolutionScope)) + "+" + name;
         var ns = reader.GetString(type.Namespace);
         return ns.Length == 0 ? name : ns + "." + name;
     }

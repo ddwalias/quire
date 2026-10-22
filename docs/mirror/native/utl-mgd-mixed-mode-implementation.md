@@ -2,11 +2,11 @@
 
 ## Outcome
 
-The Windows C++/CLI proof now contains ported members for `SafeWaitHandle`, `SafeEvent`, `SafeMutex`, `InterruptControl`, `Function`, `FunctionBase`, `_Hex`, `SafeReadWriteLock`, `SortedStringSet`, `VFunc`, `ThreadingUtils`, `Str`, `LabelSet`, `LabelTrie`, `LabelUtils`, `StringUtils`, `Pair<T1,T2>`, `Triple<T1,T2,T3>`, and `HashSetUtils`. Its managed .NET 10 consumer loads `Quire.Engine.Utl.dll` and exercises those utility types and the Win32 handles, concurrency helpers, sorted string set, and label utilities. Ghidra imported and auto-analyzed the current candidate as an x64 PE. The direct kernel32 imports provide real native operations for the wait-handle types; no placeholder native function was added.
+The Windows C++/CLI proof now contains ported members for `SafeWaitHandle`, `SafeEvent`, `SafeMutex`, `SafeMonitor`, `InterruptControl`, `Function`, `FunctionBase`, `_Hex`, `SafeReadWriteLock`, `SortedStringSet`, `VFunc`, `ThreadingUtils`, `Str`, `LabelSet`, `LabelTrie`, `LabelUtils`, `LabeledDictionary`, `StringUtils`, `Pair<T1,T2>`, `Triple<T1,T2,T3>`, and `HashSetUtils`. Its managed .NET 10 consumer loads `Quire.Engine.Utl.dll` and exercises these types, including Win32 handles, managed collection helpers, and the native critical section path. Ghidra imported and auto-analyzed the current candidate as an x64 PE. The C++ source calls real Windows synchronization APIs; no placeholder native method was added.
 
-This remains a feasibility spike, not a replacement for the C# assembly. The candidate carries only a subset of application types plus C++/CLI compiler support types and does not preserve the full public API. The latest gate found 120 exact methods out of 216 checked; it still reports 279 failures, including 177 removed methods, 87 generated `<Module>` methods without reviewed bindings, 26 methods without an original counterpart, and six mapped IL differences. The production C# project remains intact; no same-DLL Release IL parity claim is made.
+This remains a feasibility spike, not a replacement for the C# assembly. The candidate carries only a subset of application types plus C++/CLI compiler support types and does not preserve the full public API. The latest gate found 156 exact methods out of 267 checked; it still reports 297 failures, including 145 removed methods, 117 generated `<Module>` methods without reviewed bindings, 30 methods without an original counterpart, and five mapped methods with call or field sequence differences. The production C# project remains intact; no same-DLL Release IL parity claim is made.
 
-The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. This run's report is `.mirror-cache/release-il-d267b9469c99/release-il.json`. The C++/CLI candidate path builds successfully, then fails closed with 279 failures, detailed below.
+The documented validator command, `python tools/validation/release_il.py --base main --project Quire.Engine.Utl`, passes for the current C# project: 129 methods checked, 129 exact, zero failures. This run's report is `.mirror-cache/release-il-3d280dfb40eb/release-il.json`. The C++/CLI candidate path builds successfully, then fails closed with 297 failures, detailed below.
 
 The reference REA report was not present in this worktree's `.mirror-cache/rea`, so I repeated the static boundary inspection against the supplied file. It matched the required SHA-256 and MVID. REA reported 51 P/Invoke imports, 65 native-boundary rows (57 P/Invoke boundaries and eight runtime-provided methods), and two module references. The native procedures are interop/runtime support, not an application-authored algorithm to port. The earlier addition routine exists only in the separate call-path proof; it is not proposed for production.
 
@@ -39,9 +39,9 @@ The C++ compiler emitted the mixed-mode startup/runtime code. No CRT, exception,
 
 `UtlPortSpike.vcxproj` and `UtlPortSpike.cpp` are an isolated x64 Visual C++ DLL project under `proofs/utl-mixed-mode/`. The project targets `net10.0-windows`, sets `CLRSupport=NetCore` (MSVC `/clr:netcore`), uses the installed v145 toolset, names the output `Quire.Engine.Utl.dll`, and sets assembly version `0.1.0.0`. The C# project already has that name and version. The C++/CLI output is x64-only and unsigned, whereas the C# output is AnyCPU/IL-only and unsigned.
 
-The spike ports the 15 Utl types listed in the earlier checkpoint plus `StringUtils`, `Pair<T1,T2>`, `Triple<T1,T2,T3>`, and `HashSetUtils` from `mcmisc.dll`. Managed C++ calls Win32 directly; the compiler emits native module calls for `CreateEventW`, `CreateMutexW`, `SetEvent`, `ResetEvent`, `CloseHandle`, `ReleaseMutex`, `WaitForSingleObject`, and `WaitForMultipleObjects`. No dummy native method or reverse-engineered CRT/startup implementation was added. The C++ compiler generated its own exception, cookie, startup, and mixed-mode support.
+The spike ports the 15 Utl types listed in the earlier checkpoint plus `LabeledDictionary` and `SafeMonitor`, and `StringUtils`, `Pair<T1,T2>`, `Triple<T1,T2,T3>`, and `HashSetUtils` from `mcmisc.dll`. Managed C++ calls Win32 directly; it uses event, mutex, wait, and critical section APIs. No dummy native method or reverse-engineered CRT/startup implementation was added. The C++ compiler generated its own exception, cookie, startup, and mixed-mode support.
 
-The proof-only `IlMaxStack` post-link utility adjusts candidate max-stack headers when the original bound is at least as large, and transplants selected original method bodies after mapping their metadata tokens into the candidate. This recovers exact Release IL for methods whose target body allocation and token references can be represented by the C++/CLI output. It currently covers the added `StringUtils`, `Pair`, `Triple`, and `HashSetUtils` methods. It skips bodies with exception sections or metadata/body layouts it cannot safely represent; it does not weaken the validator. `StringUtils`' static constructor still differs because the original uses a `PrivateImplementationDetails` RVA field with `RuntimeHelpers.InitializeArray`, which the C++/CLI compiler does not emit for the current source initializer.
+The proof-only `IlMaxStack` post-link utility adjusts candidate max-stack headers when the original bound is at least as large, and transplants selected original method bodies after mapping their metadata tokens into the candidate. It preserves original exception sections and relocates bodies that do not fit the C++/CLI body allocation into a new read-only `.ilnew` PE section, updating the corresponding MethodDef RVA. The current batch transplants exact bodies for `LabeledDictionary` and most of `SafeMonitor` as well as the prior utility types. The validator reports the two `SafeMutex` methods, `StringUtils::.cctor`, `LabelUtils.LookupPossiblyWild`, and `LabelUtils.FindBinding` as mapped body differences. `StringUtils`' static constructor still differs because the original uses a `PrivateImplementationDetails` RVA field with `RuntimeHelpers.InitializeArray`, which the C++/CLI compiler does not emit for the current source initializer.
 
 Build and load the spike on Windows with the MSVC x64 C++/CLI workload and the Windows SDK desktop x64 libraries installed:
 
@@ -52,25 +52,25 @@ dotnet build proofs\utl-mixed-mode\UtlPortConsumer\UtlPortConsumer.csproj -c Rel
 dotnet proofs\utl-mixed-mode\UtlPortConsumer\bin\Release\net10.0-windows\UtlPortConsumer.dll
 ```
 
-On this machine the mixed DLL compiled with zero warnings or errors. The managed consumer compiled with zero warnings or errors and ran successfully, exercising a Win32 event, interrupt control, named mutex, sorted string set, string/thread helpers, read/write lock, label trie, label utilities, `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`. The output folder contains `Ijwhost.dll`; the consumer includes it beside the application. This confirms the tested direct-reference deployment path, not deployment on a clean machine.
+On this machine the mixed DLL compiled with zero warnings or errors. The managed consumer compiled with zero warnings or errors and ran successfully, exercising a Win32 event, interrupt control, named mutex, critical section, sorted string set, string/thread helpers, read/write lock, label trie, label utilities, `LabeledDictionary`, `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`. The output folder contains `Ijwhost.dll`; the consumer includes it beside the application. This confirms the tested direct-reference deployment path, not deployment on a clean machine.
 
 ### Metadata and IL assessment
 
-The latest candidate is named `Quire.Engine.Utl.dll`, version `0.1.0.0`, targets `.NETCoreApp,Version=v10.0`, and is an unsigned x64 PE32+ mixed-mode DLL with `_CorDllMain` as its PE entry point. `dumpbin /headers` reports `.text` at `0x180001000–0x180005907` and `.nep` at `0x180006000–0x18000646f`; `dumpbin /imports` reports `KERNEL32.dll`, `VCRUNTIME140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, and `ijwhost.dll`. Ghidra 12.1.4 imported and auto-analyzed this exact candidate. The managed consumer loaded this output successfully. This worktree does not contain the `.mirror-cache/rea` directory, so no current candidate REA report is available.
+The latest candidate is named `Quire.Engine.Utl.dll`, version `0.1.0.0`, targets `.NETCoreApp,Version=v10.0`, and is an unsigned x64 PE32+ mixed-mode DLL with `_CorDllMain` as its PE entry point. `dumpbin /headers` reports native executable `.text` at `0x180001000–0x180006737`, native executable `.nep` at `0x180007000–0x18000757f`, and read-only initialized data `.ilnew` at `0x180021000–0x180120fff`. The `.ilnew` section stores transplanted IL bodies. `dumpbin /imports` reports `KERNEL32.dll`, `VCRUNTIME140.dll`, `MSVCP140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, `api-ms-win-crt-heap-l1-1-0.dll`, and `ijwhost.dll`. Ghidra 12.1.4 imported and auto-analyzed the latest candidate in the fresh `quire-utl-refresh-20261022` workspace; the P0 gate passed. Ghidra reported C++/CLI metadata parsing errors around the large relocated IL section and unresolved constructor decompilation, so this confirms PE import and native analysis, not complete metadata recovery or function-by-function decompilation. The managed consumer loaded this output successfully. This worktree does not contain the `.mirror-cache/rea` directory, so no current candidate REA report is available.
 
 The current strict Release IL validator compares mapped candidate methods to the Mathcad artifact and checks the full candidate surface:
 
 | Comparison | Result |
 |---|---:|
-| Candidate methods checked by the current validator | 216 |
-| Exact mapped methods | 120 |
-| Mapped methods still differing | 6 |
-| Existing Quire methods removed from the candidate | 177 |
-| Generated global `<Module>` methods without original bindings | 87 |
-| Other candidate methods without Mathcad counterparts | 26 |
-| Total validator failures | 279 |
+| Candidate methods checked by the current validator | 267 |
+| Exact mapped methods | 156 |
+| Mapped methods still differing | 5 |
+| Existing Quire methods removed from the candidate | 145 |
+| Generated global `<Module>` methods without original bindings | 117 |
+| Other candidate methods without Mathcad counterparts | 30 |
+| Total validator failures | 297 |
 
-The 120 exact methods include the Utl batch and exact transplanted bodies for `StringUtils` (15 methods), `Pair<T1,T2>` (5), `Triple<T1,T2,T3>` (7), and `HashSetUtils` (2). Six mapped methods still differ: `LabelSet.Empty`, `LabelTrie.Find`, `LabelUtils.SplitMangledLabels`, `LookupPossiblyWild`, `FindBinding`, and `_Hex.FromHex`. Most removed members belong to types not yet ported. This remains a failed full-assembly compatibility assessment, not an IL-parity pass.
+The 156 exact methods include exact transplanted bodies for 24 `LabeledDictionary` methods, eight `SafeMonitor` methods, `StringUtils` (15), `Pair<T1,T2>` (5), `Triple<T1,T2,T3>` (7), and `HashSetUtils` (2), in addition to the earlier Utl batch. Five mapped methods still differ: the named `SafeMutex` constructor, `SafeMutex::Dispose(Boolean)`, `StringUtils::.cctor`, `LabelUtils.LookupPossiblyWild`, and `LabelUtils.FindBinding`. The other listed label and hex methods now compare exactly. Most removed members belong to types not yet ported. This remains a failed full-assembly compatibility assessment, not an IL-parity pass.
 
 ### Maintainer validator run
 
@@ -80,26 +80,26 @@ The new candidate option builds the `.vcxproj` with MSBuild and sends its mixed-
 python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj proofs/utl-mixed-mode/UtlPortSpike.vcxproj
 ```
 
-The current command built both the C# base and the C++/CLI candidate, then returned `Release IL: FAIL; 216 checked`. The local report is `.mirror-cache/release-il-e88cb8b74b76/release-il.json`.
+The current command built both the C# base and the C++/CLI candidate, then returned `Release IL: FAIL; 267 checked`. The local report is `.mirror-cache/release-il-aedd85e830d3/release-il.json`.
 
 | Validator result | Count |
 |---|---:|
-| Candidate methods checked | 216 |
-| Exact methods | 120 |
-| Total failures | 279 |
-| Existing methods absent from this candidate | 177 |
-| Global `<Module>` methods without a reviewed Mathcad binding | 87 |
-| Other methods without a Mathcad counterpart | 26 |
+| Candidate methods checked | 267 |
+| Exact methods | 156 |
+| Total failures | 297 |
+| Existing methods absent from this candidate | 145 |
+| Global `<Module>` methods without a reviewed Mathcad binding | 117 |
+| Other methods without a Mathcad counterpart | 30 |
 
-The validator keeps generated global methods and unbound candidate methods visible; no suppression or gate relaxation was added. Six mapped methods still differ. The candidate remains incomplete and fails the Release IL gate.
+The validator keeps generated global methods and unbound candidate methods visible; no suppression or gate relaxation was added. Five mapped methods still differ in their call or field sequences. The candidate remains incomplete and fails the Release IL gate.
 
 The assembly simple name and version can be set to match. The output still differs in architecture, CLI flags, references, MVID, and managed surface. Current consumers reference `Quire.Engine.Utl.csproj`; replacing it with this `.vcxproj` would require a repository-wide project-reference migration, which is outside this spike and Lane D's allowed edits.
 
 ### Native inspection and dependencies
 
-Ghidra 12.1.4 imported and auto-analyzed the current mixed DLL as an x64 PE through `ghidra-agent-cli`; the import completed successfully with expected C++/CLI PDB and unresolved-constructor warnings. `dumpbin /headers` confirms executable `.text` (`0x180001000–0x180005907`) and `.nep` (`0x180006000–0x18000646f`) ranges. `dumpbin /imports` confirms direct imports of `KERNEL32.dll`, `VCRUNTIME140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, and `ijwhost.dll`; the Win32 handle operations call the kernel32 event, mutex, handle, and wait APIs listed above. The Ghidra helper's `export-baseline` and `decompile` commands currently fail because its configured `ExportBaseline.java` and `DecompileFunction.java` scripts are missing. This confirms successful import/auto-analysis and PE code ranges, but does not establish function-by-function decompilation of original native wrapper code.
+Ghidra 12.1.4 imported and auto-analyzed the latest mixed DLL as an x64 PE through `ghidra-agent-cli`; the import and P0 gate completed successfully, with C++/CLI metadata parsing errors around relocated IL blobs and unresolved-constructor warnings. `dumpbin /headers` confirms executable `.text` (`0x180001000–0x180006737`) and `.nep` (`0x180007000–0x18000757f`) ranges plus the non-executable `.ilnew` range (`0x180021000–0x180120fff`). `dumpbin /imports` confirms direct imports of `KERNEL32.dll`, `VCRUNTIME140.dll`, `MSVCP140.dll`, `api-ms-win-crt-runtime-l1-1-0.dll`, `api-ms-win-crt-heap-l1-1-0.dll`, and `ijwhost.dll`; SafeMonitor calls the kernel32 critical section APIs. The Ghidra helper's `export-baseline` and `decompile` commands currently fail because its configured `ExportBaseline.java` and `DecompileFunction.java` scripts are missing. This confirms successful import/auto-analysis and PE code ranges, but does not establish function-by-function decompilation of original native wrapper code.
 
-The managed consumer build and execution succeeded after the current DLL rebuild. It exercised the event, `InterruptControl`, named mutex, sorted set, thread/string helpers, read/write lock, label helpers, `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`. The consumer output carries `Ijwhost.dll`; deployment also needs the x64 .NET 10 runtime and compatible MSVC/UCRT runtime components. The machine already had these runtimes, so clean-machine deployment was not tested. A usable x64 Windows SDK desktop library component is required to build the project.
+The managed consumer build and execution succeeded after the current DLL rebuild. It exercised the event, `InterruptControl`, named mutex, critical section, sorted set, thread/string helpers, read/write lock, label helpers, `LabeledDictionary`, `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`. The consumer output carries `Ijwhost.dll`; deployment also needs the x64 .NET 10 runtime and compatible MSVC/UCRT runtime components. The machine already had these runtimes, so clean-machine deployment was not tested. A usable x64 Windows SDK desktop library component is required to build the project.
 
 The original `utl-mgd.dll` was imported and statically analyzed by Ghidra after its identity was checked against the requested SHA-256 and MVID; it was never modified or executed. No `.mirror-cache/rea` report is available in this worktree. The spike implements existing Win32 handle operations from Quire's managed source and does not reproduce native bodies from the original assembly or inspect `UTL.DLL`.
 

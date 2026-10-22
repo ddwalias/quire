@@ -3,6 +3,6 @@
 - Owner: Lane D.
 - Branch: `mirror/d-engine-utl-nativeinterop-20261022-d3`.
 - Worktree: `C:/Projects/Quire-wt/lane-d-engine-utl-nativeinterop-20261022-d3`.
-- Members: C++/CLI spike covers 15 Utl types plus `StringUtils`, `Pair`, `Triple`, and `HashSetUtils`; managed consumer runs those plus the Win32 handle and label helpers.
-- Release IL: C# PASS, 129/129 (`.mirror-cache/release-il-d267b9469c99/release-il.json`); C++/CLI candidate FAIL, 216 checked / 120 exact / 279 failures (`.mirror-cache/release-il-e88cb8b74b76/release-il.json`).
-- Remaining: 177 methods removed, 87 generated global methods and 26 other methods unbound, six mapped methods differ. See `docs/mirror/native/utl-mgd-mixed-mode-implementation.md`.
+- Members: C++/CLI spike covers 15 Utl types, `LabeledDictionary`, `SafeMonitor`, and four `mcmisc` utility types; the managed consumer exercises the native synchronization and collection paths.
+- Release IL: C# PASS, 129/129 (`.mirror-cache/release-il-3d280dfb40eb/release-il.json`); C++/CLI candidate FAIL, 267 checked / 156 exact / 297 failures (`.mirror-cache/release-il-aedd85e830d3/release-il.json`).
+- Remaining: 145 methods removed, 117 generated global methods and 30 other methods unbound, and five mapped method differences. See `docs/mirror/native/utl-mgd-mixed-mode-implementation.md`.
