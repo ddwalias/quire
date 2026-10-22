@@ -69,6 +69,24 @@ public partial class PackageOperationsProvider
     }
 
     [MirrorVerified("Release IL")]
+    public static string PackPartAndGetId(PackagePart sourcePackagePart, Func<Pair<string, Uri>> getExistingPartRelationshipId, Action<string, PackagePart> cacheRelationshipIdForNewPart, Func<PackagePart> writeNewPartToPackage, string partRelationshipUri)
+    {
+        Pair<string, Uri> pair = getExistingPartRelationshipId();
+        string first = pair.First;
+        if (string.IsNullOrEmpty(first))
+        {
+            PackagePart packagePart = writeNewPartToPackage();
+            first = sourcePackagePart.CreateRelationship(packagePart.Uri, TargetMode.Internal, partRelationshipUri).Id;
+            cacheRelationshipIdForNewPart(first, packagePart);
+        }
+        else if (!sourcePackagePart.RelationshipExists(first))
+        {
+            sourcePackagePart.CreateRelationship(pair.Second, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", first);
+        }
+        return first;
+    }
+
+    [MirrorVerified("Release IL")]
     private bool IsTypeToCompress(string contentType)
     {
         if (!_compressedTypes.Contains(contentType))
@@ -147,3 +165,4 @@ public partial class PackageOperationsProvider
     [MirrorVerified("PtcIOPackageOperationsProviderMechanicalDifferentialTests")]
     public CompressionOption CompressionLevel { get; set; }
 }
+
