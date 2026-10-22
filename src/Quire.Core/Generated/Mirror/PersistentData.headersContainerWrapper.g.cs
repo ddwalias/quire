@@ -13,14 +13,54 @@ public partial class headersContainerWrapper : global::Quire.PersistentData.IReg
 {
     [global::Quire.Mirror.MirrorStub]
     public const string RootNodeName = "headers";
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.header Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentData.header FirstPageHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HeaderConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool FirstPageHeaderConvertedFromMC14 { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.PersistentData.header Header
+    {
+        get
+        {
+            global::Quire.PersistentData.header header = new global::Quire.PersistentData.header();
+            if (_container.header?.regions != null)
+            {
+                header.regions = _container.header.regions;
+            }
+            return header;
+        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+    public global::Quire.PersistentData.header FirstPageHeader
+    {
+        get
+        {
+            global::Quire.PersistentData.header header = new global::Quire.PersistentData.header();
+            if (_container.firstPageHeader?.regions != null)
+            {
+                header.regions = _container.firstPageHeader.regions;
+            }
+            return header;
+        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+    public bool HeaderConvertedFromMC14
+    {
+        get
+        {
+            if (_container.header != null && _container.header.convertedfromSpecified)
+            {
+                return _container.header.convertedfrom == (global::Quire.PersistentDataObjects.applicationVersionType)0;
+            }
+            return false;
+        }
+    }
+    public bool FirstPageHeaderConvertedFromMC14
+    {
+        get
+        {
+            if (_container.firstPageHeader != null && _container.firstPageHeader.convertedfromSpecified)
+            {
+                return _container.firstPageHeader.convertedfrom == (global::Quire.PersistentDataObjects.applicationVersionType)0;
+            }
+            return false;
+        }
+    }
     [global::Quire.Mirror.MirrorStub]
     public headersContainerWrapper() { }
 }
